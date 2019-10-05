@@ -124,7 +124,7 @@
 	var/turf/B = get_landmark_turf(ARENA_CORNER_B)
 	var/wh = abs(A.x - B.x)
 	var/hz = abs(A.y - B.y)
-	if(M.width > wh || M.height > hz)
+	if(M.width > (wh + 1) || M.height > (hz + 1)) // shouldn't include the point of origin
 		to_chat(user,"<span class='warning'>Arena template is too big for the current arena!</span>")
 		return
 	loading = TRUE
@@ -197,6 +197,12 @@
 	var/datum/atom_hud/antag/team_hud = team_huds[team]
 	team_hud.join_hud(M)
 	set_antag_hud(M,"arena",team_hud_index[team])
+
+/obj/machinery/computer/arena/proc/spawn_team(mob/user,team)
+	var/team_spawnpoint = get_spawn(team)
+	for(var/key in team_keys[team])
+		spawn_member(team_spawnpoint,key,team)
+	to_chat(user,"[team] team has been spawned.")
 
 /obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
 	outfits[team] = user.client.robust_dress_shop()
@@ -289,6 +295,8 @@
 				load_team(user,team)
 			if("outfit")
 				change_outfit(user,team)
+			if("spawnteam")
+				spawn_team(user,team)
 	if(href_list["special"])
 		switch(href_list["special"])
 			if("reset")
@@ -349,6 +357,7 @@
 		dat += "<a href='?src=[REF(src)];team_action=loadteam;team=[team]'>Load team</a>"
 		dat += "<a href='?src=[REF(src)];team_action=addmember;team=[team]'>Add member</a>"
 		dat += "<a href='?src=[REF(src)];team_action=outfit;team=[team]'>Change Outfit</a>"
+		dat += "<a href='?src=[REF(src)];team_action=spawnteam;team=[team]'>Spawn Team</a>"
 		//Add more per team features here
 
 	dat += "Current arena: [current_arena_template]"

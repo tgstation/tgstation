@@ -1,0 +1,263 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/igniter/on,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"b" = (
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"c" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"d" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"e" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"f" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"g" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"h" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"i" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"j" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"k" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"l" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"m" = (
+/turf/open/floor/circuit/green,
+/area/tdome/arena)
+"n" = (
+/obj/machinery/flasher{
+	id = "tdomeflash";
+	name = "Thunderdome Flash"
+	},
+/turf/open/floor/circuit/green,
+/area/tdome/arena)
+"o" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"p" = (
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/floor/circuit/green,
+/area/tdome/arena)
+"q" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+"r" = (
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/plasteel,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+d
+j
+l
+l
+q
+d
+a
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(3,1,1) = {"
+c
+e
+e
+e
+e
+e
+e
+c
+"}
+(4,1,1) = {"
+b
+f
+f
+f
+f
+f
+f
+b
+"}
+(5,1,1) = {"
+b
+g
+g
+g
+g
+g
+g
+b
+"}
+(6,1,1) = {"
+b
+g
+g
+g
+g
+g
+g
+b
+"}
+(7,1,1) = {"
+b
+g
+g
+m
+m
+g
+g
+b
+"}
+(8,1,1) = {"
+b
+g
+g
+n
+p
+g
+g
+b
+"}
+(9,1,1) = {"
+b
+g
+g
+m
+m
+g
+g
+b
+"}
+(10,1,1) = {"
+b
+g
+g
+g
+g
+g
+g
+b
+"}
+(11,1,1) = {"
+b
+g
+g
+g
+g
+g
+g
+b
+"}
+(12,1,1) = {"
+b
+h
+h
+h
+h
+h
+h
+b
+"}
+(13,1,1) = {"
+c
+e
+e
+e
+e
+e
+e
+c
+"}
+(14,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(15,1,1) = {"
+a
+i
+k
+o
+o
+r
+i
+a
+"}

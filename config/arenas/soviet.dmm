@@ -1,0 +1,406 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/yellowsiding/corner,
+/area/janitor)
+"b" = (
+/obj/structure/table,
+/obj/item/trash/can/food,
+/turf/open/floor/plasteel/yellowsiding,
+/area/janitor)
+"c" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/yellowsiding,
+/area/janitor)
+"d" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/yellowsiding,
+/area/janitor)
+"e" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/yellowsiding,
+/area/janitor)
+"f" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/yellowsiding,
+/area/janitor)
+"g" = (
+/obj/machinery/deepfryer,
+/obj/item/reagent_containers/food/snacks/badrecipe,
+/turf/open/floor/plasteel/yellowsiding,
+/area/janitor)
+"h" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/burger/human,
+/turf/open/floor/plasteel/yellowsiding,
+/area/janitor)
+"i" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/deadmouse,
+/turf/open/floor/plasteel/yellowsiding,
+/area/janitor)
+"j" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/yellowsiding/corner{
+	icon_state = "yellowcornersiding";
+	dir = 8
+	},
+/area/janitor)
+"k" = (
+/turf/open/floor/plasteel/yellowsiding{
+	icon_state = "yellowsiding";
+	dir = 4
+	},
+/area/janitor)
+"l" = (
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 6
+	},
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"m" = (
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 1
+	},
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 1
+	},
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"o" = (
+/obj/item/clothing/head/chicken,
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 1
+	},
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"p" = (
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 10
+	},
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/yellowsiding{
+	icon_state = "yellowsiding";
+	dir = 8
+	},
+/area/janitor)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 8
+	},
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"s" = (
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"t" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/burger/human,
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"u" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/deadmouse,
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"v" = (
+/obj/item/clothing/suit/chickensuit,
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 4
+	},
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"w" = (
+/turf/open/floor/plasteel/yellowsiding{
+	icon_state = "yellowsiding";
+	dir = 8
+	},
+/area/janitor)
+"x" = (
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 8
+	},
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"y" = (
+/obj/item/chair,
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"z" = (
+/obj/effect/decal/hammerandsickle,
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"A" = (
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 4
+	},
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 5
+	},
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"D" = (
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/red/line,
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"F" = (
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 9
+	},
+/turf/open/floor/plasteel/telecomms,
+/area/janitor)
+"G" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/yellowsiding/corner{
+	icon_state = "yellowcornersiding";
+	dir = 4
+	},
+/area/janitor)
+"H" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/deadmouse,
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/janitor)
+"I" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/janitor)
+"J" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/janitor)
+"K" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/janitor)
+"L" = (
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/janitor)
+"M" = (
+/obj/structure/table,
+/obj/item/trash/can/food,
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/janitor)
+"N" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/yellowsiding/corner{
+	icon_state = "yellowcornersiding";
+	dir = 1
+	},
+/area/janitor)
+"O" = (
+/turf/open/floor/plasteel/yellowsiding,
+/area/janitor)
+
+(1,1,1) = {"
+a
+k
+k
+k
+k
+k
+k
+G
+"}
+(2,1,1) = {"
+b
+l
+r
+r
+x
+x
+C
+H
+"}
+(3,1,1) = {"
+c
+m
+s
+s
+y
+s
+D
+I
+"}
+(4,1,1) = {"
+O
+n
+s
+s
+s
+s
+D
+L
+"}
+(5,1,1) = {"
+d
+n
+s
+s
+s
+s
+D
+J
+"}
+(6,1,1) = {"
+e
+m
+s
+s
+s
+s
+E
+K
+"}
+(7,1,1) = {"
+f
+m
+s
+t
+s
+s
+D
+I
+"}
+(8,1,1) = {"
+g
+m
+s
+u
+z
+s
+D
+L
+"}
+(9,1,1) = {"
+f
+m
+s
+t
+s
+s
+D
+J
+"}
+(10,1,1) = {"
+h
+m
+s
+s
+s
+s
+D
+M
+"}
+(11,1,1) = {"
+c
+o
+s
+s
+s
+s
+D
+I
+"}
+(12,1,1) = {"
+O
+n
+s
+s
+s
+s
+D
+L
+"}
+(13,1,1) = {"
+d
+m
+B
+s
+y
+B
+D
+J
+"}
+(14,1,1) = {"
+i
+p
+A
+v
+A
+A
+F
+K
+"}
+(15,1,1) = {"
+j
+q
+w
+w
+w
+w
+w
+N
+"}

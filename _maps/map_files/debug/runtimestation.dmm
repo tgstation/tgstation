@@ -841,7 +841,7 @@
 	name = "stadium seat"
 	},
 /turf/open/floor/plasteel/dark,
-/area/space)
+/area/awaymission/research/interior/maint)
 "bV" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -1009,7 +1009,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/space)
+/area/awaymission/research/interior/maint)
 "ct" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -1019,7 +1019,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/space)
+/area/awaymission/research/interior/maint)
 "cu" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1072,7 +1072,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/space)
+/area/awaymission/research/interior/maint)
 "cz" = (
 /obj/structure/chair/comfy/shuttle{
 	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
@@ -1085,7 +1085,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/space)
+/area/awaymission/research/interior/maint)
 "cA" = (
 /obj/screen/plane_master/floor,
 /turf/open/floor/plasteel,
@@ -1363,7 +1363,7 @@
 	},
 /obj/screen/plane_master/floor,
 /turf/open/floor/plasteel/dark,
-/area/space)
+/area/awaymission/research/interior/maint)
 "dm" = (
 /obj/structure/chair/comfy/shuttle{
 	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
@@ -1371,7 +1371,7 @@
 	},
 /obj/screen/plane_master/floor,
 /turf/open/floor/plasteel/dark,
-/area/space)
+/area/awaymission/research/interior/maint)
 "dn" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1524,7 +1524,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/screen/plane_master/floor,
 /turf/open/floor/plasteel/dark,
-/area/space)
+/area/awaymission/research/interior/maint)
 "dB" = (
 /obj/machinery/shower{
 	pixel_y = 24
@@ -1616,7 +1616,7 @@
 	},
 /obj/screen/plane_master/floor,
 /turf/open/floor/plasteel/dark,
-/area/space)
+/area/awaymission/research/interior/maint)
 "dN" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -2440,6 +2440,69 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+/area/space)
+"lw" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/research/interior/maint)
+"na" = (
+/obj/screen/plane_master/floor,
+/turf/open/floor/plasteel,
+/area/awaymission/research/interior/maint)
+"ul" = (
+/turf/open/floor/plasteel/stairs,
+/area/awaymission/research/interior/maint)
+"uN" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/screen/plane_master/floor,
+/turf/open/floor/plasteel,
+/area/awaymission/research/interior/maint)
+"wH" = (
+/turf/closed/indestructible/riveted,
+/area/awaymission/research/interior/maint)
+"GW" = (
+/obj/screen/plane_master/floor,
+/turf/open/floor/plasteel/stairs,
+/area/awaymission/research/interior/maint)
+"HI" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/research/interior/maint)
+"Jh" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/research/interior/maint)
+"NV" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/arena,
+/turf/open/floor/plasteel,
+/area/awaymission/research/interior/maint)
+"Qj" = (
+/obj/screen/plane_master/floor,
+/obj/effect/landmark/arena/start,
+/turf/open/floor/circuit,
+/area/space)
+"Up" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/screen/plane_master/floor,
+/turf/open/floor/plasteel,
+/area/awaymission/research/interior/maint)
+"WD" = (
+/obj/screen/plane_master/floor,
+/obj/effect/landmark/arena/end,
+/turf/open/floor/circuit,
 /area/space)
 
 (1,1,1) = {"
@@ -35187,9 +35250,9 @@ ae
 cG
 cG
 cG
-ck
-cA
-dP
+Jh
+na
+Up
 cs
 ac
 dj
@@ -35199,7 +35262,7 @@ dj
 dj
 dj
 dj
-dj
+Qj
 ac
 cf
 cj
@@ -35444,10 +35507,10 @@ ae
 ab
 ab
 ab
-ab
+wH
 dl
 dl
-cq
+HI
 ac
 dj
 dj
@@ -35704,7 +35767,7 @@ ab
 bU
 dm
 dm
-cq
+HI
 ac
 dj
 dj
@@ -35961,7 +36024,7 @@ ab
 bU
 bU
 bU
-cq
+HI
 ac
 dj
 dj
@@ -36218,7 +36281,7 @@ ab
 cy
 dA
 dA
-cq
+HI
 ac
 dj
 dj
@@ -36472,10 +36535,10 @@ ab
 ab
 ab
 ab
-cH
-dL
-dL
-cq
+ul
+GW
+GW
+HI
 ac
 dj
 dj
@@ -36732,7 +36795,7 @@ ab
 cz
 dl
 dl
-cq
+HI
 ac
 dj
 dj
@@ -36989,7 +37052,7 @@ ab
 bU
 dm
 dm
-cq
+NV
 ac
 dj
 dj
@@ -37246,7 +37309,7 @@ ab
 cy
 dA
 dA
-cq
+HI
 ac
 dj
 dj
@@ -37500,10 +37563,10 @@ ab
 ab
 ab
 ab
-cH
-dL
-dL
-cq
+ul
+GW
+GW
+HI
 ac
 dj
 dj
@@ -37760,7 +37823,7 @@ ab
 cz
 dl
 dl
-cq
+HI
 ac
 dj
 dj
@@ -38017,7 +38080,7 @@ ab
 bU
 bU
 bU
-cq
+HI
 ac
 dj
 dj
@@ -38274,7 +38337,7 @@ ab
 bU
 dm
 dm
-cq
+HI
 ac
 dj
 dj
@@ -38528,10 +38591,10 @@ ae
 ab
 ab
 ab
-ab
+wH
 dM
 dM
-cq
+HI
 ac
 dj
 dj
@@ -38785,12 +38848,12 @@ ae
 cB
 cB
 cB
-cj
-cA
-dQ
+lw
+na
+uN
 ct
 ac
-dj
+WD
 dj
 dj
 dj

@@ -1,0 +1,210 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"b" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"c" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"d" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"e" = (
+/obj/structure/flora/ausbushes/fernybush,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"f" = (
+/obj/structure/flora/tree/jungle/small,
+/obj/structure/spacevine,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"g" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/spacevine,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"h" = (
+/obj/structure/spacevine,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"i" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/spacevine,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"j" = (
+/obj/structure/flora/rock/jungle,
+/obj/structure/spacevine,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"k" = (
+/obj/structure/flora/ausbushes/fernybush,
+/obj/structure/spacevine,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"l" = (
+/obj/structure/flora/ausbushes/fernybush,
+/mob/living/carbon/monkey,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+"m" = (
+/obj/structure/flora/rock/jungle,
+/mob/living/carbon/monkey,
+/turf/open/floor/plating/grass,
+/area/engine/engineering)
+
+(1,1,1) = {"
+a
+d
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+e
+e
+e
+a
+c
+"}
+(3,1,1) = {"
+a
+a
+f
+i
+i
+i
+f
+a
+"}
+(4,1,1) = {"
+a
+a
+h
+a
+a
+a
+h
+a
+"}
+(5,1,1) = {"
+a
+a
+g
+a
+a
+a
+h
+l
+"}
+(6,1,1) = {"
+b
+a
+h
+h
+h
+h
+j
+a
+"}
+(7,1,1) = {"
+a
+d
+h
+b
+b
+b
+i
+a
+"}
+(8,1,1) = {"
+a
+a
+h
+a
+a
+a
+h
+a
+"}
+(9,1,1) = {"
+a
+e
+h
+h
+h
+h
+g
+a
+"}
+(10,1,1) = {"
+c
+a
+g
+i
+i
+i
+k
+a
+"}
+(11,1,1) = {"
+a
+a
+h
+a
+a
+a
+h
+m
+"}
+(12,1,1) = {"
+a
+a
+h
+a
+a
+a
+h
+a
+"}
+(13,1,1) = {"
+a
+a
+f
+h
+h
+h
+f
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+d
+d
+d
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+e
+a
+a
+a
+a
+a
+"}

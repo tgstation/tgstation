@@ -1,0 +1,701 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/center/cracked{
+	pixel_x = 8;
+	pixel_y = -8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ab" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ac" = (
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ad" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ae" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"af" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/center{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ag" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ah" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ai" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aj" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/slab/cracked{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ak" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8;
+	pixel_y = 16
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 1;
+	pixel_y = -16
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"al" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"am" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8;
+	pixel_y = 16
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 2;
+	pixel_y = 16
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4;
+	pixel_y = -16
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1;
+	pixel_y = -16
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"an" = (
+/obj/structure/stone_tile/slab,
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ao" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ap" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aq" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ar" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"as" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"at" = (
+/obj/structure/stone_tile/cracked,
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"au" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding/cracked,
+/turf/open/lava/smooth,
+/area/space)
+"av" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/lava/smooth,
+/area/space)
+"aw" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/slab/cracked{
+	dir = 8;
+	name = "cracked stone block";
+	pixel_y = 0
+	},
+/turf/open/lava/smooth,
+/area/space)
+"ax" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/lava/smooth,
+/area/space)
+"ay" = (
+/obj/structure/stone_tile/surrounding,
+/turf/open/lava/smooth,
+/area/space)
+"az" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aA" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aB" = (
+/obj/structure/stone_tile,
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aC" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1;
+	pixel_x = -16
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	pixel_x = -16
+	},
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/block/cracked,
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aD" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/slab/cracked{
+	dir = 8;
+	name = "cracked stone block";
+	pixel_y = 16
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aE" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4;
+	pixel_x = 16;
+	pixel_y = 0
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8;
+	pixel_x = 16
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aF" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/lava/smooth,
+/area/space)
+"aG" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 4
+	},
+/turf/open/lava/smooth,
+/area/space)
+"aH" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/obj/structure/stone_tile/center/burnt{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/structure/fluff/drake_statue/falling{
+	max_integrity = 2500
+	},
+/turf/open/lava/smooth,
+/area/space)
+"aI" = (
+/obj/structure/stone_tile/slab/burnt,
+/turf/open/lava/smooth,
+/area/space)
+"aJ" = (
+/obj/structure/stone_tile{
+	dir = 2
+	},
+/obj/structure/stone_tile/burnt{
+	dir = 1
+	},
+/turf/open/lava/smooth,
+/area/space)
+"aK" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block/burnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 2;
+	pixel_x = -16;
+	pixel_y = 0
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1;
+	pixel_x = -16;
+	pixel_y = 0
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aL" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block/burnt{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aM" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8;
+	pixel_x = 16;
+	pixel_y = 0
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 4;
+	pixel_x = 16;
+	pixel_y = 0
+	},
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block/burnt{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aN" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aO" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 2;
+	pixel_y = 16
+	},
+/turf/open/lava/smooth,
+/area/space)
+"aP" = (
+/obj/structure/stone_tile/block/burnt,
+/turf/open/lava/smooth,
+/area/space)
+"aQ" = (
+/obj/structure/stone_tile/surrounding/burnt,
+/turf/open/lava/smooth,
+/area/space)
+"aR" = (
+/obj/structure/stone_tile/burnt{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aS" = (
+/obj/structure/stone_tile/burnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/burnt{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aT" = (
+/obj/structure/stone_tile/burnt{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aU" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aV" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1;
+	pixel_y = -16
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4;
+	pixel_y = -16
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 2;
+	pixel_y = 16
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8;
+	pixel_y = 16
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aW" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/burnt{
+	dir = 4
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aX" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 4;
+	pixel_y = -16
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1;
+	pixel_y = -16
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	pixel_y = 16
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 8;
+	pixel_y = 16
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aY" = (
+/obj/structure/stone_tile/slab/burnt,
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"aZ" = (
+/obj/structure/stone_tile/burnt{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"ba" = (
+/obj/structure/stone_tile/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/burnt,
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"bb" = (
+/obj/structure/stone_tile/burnt,
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"bc" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/center{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"bd" = (
+/obj/structure/stone_tile/block,
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"be" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/burnt{
+	dir = 8
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"bf" = (
+/obj/structure/stone_tile/block/burnt,
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"bg" = (
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/burnt{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/structure/stone_tile/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/burnt{
+	dir = 1
+	},
+/turf/open/indestructible/necropolis/air,
+/area/space)
+"bh" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/obj/structure/stone_tile/center/burnt{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/open/lava/smooth,
+/area/space)
+
+(1,1,1) = {"
+aa
+ag
+ag
+ag
+ac
+aN
+aN
+bc
+"}
+(2,1,1) = {"
+ae
+ah
+as
+aM
+aD
+ao
+az
+bd
+"}
+(3,1,1) = {"
+ab
+ap
+aA
+aK
+aC
+ap
+aA
+bd
+"}
+(4,1,1) = {"
+ab
+ai
+as
+aL
+aD
+ap
+aA
+bd
+"}
+(5,1,1) = {"
+ab
+ac
+at
+aM
+aE
+aq
+aB
+bd
+"}
+(6,1,1) = {"
+ab
+aj
+au
+aF
+aF
+ay
+an
+bd
+"}
+(7,1,1) = {"
+ac
+ak
+av
+aG
+aG
+aO
+aV
+ac
+"}
+(8,1,1) = {"
+ad
+al
+aw
+bh
+aH
+aI
+aW
+be
+"}
+(9,1,1) = {"
+ac
+am
+ax
+aI
+aI
+aP
+aX
+ac
+"}
+(10,1,1) = {"
+ae
+an
+ay
+aJ
+aJ
+aQ
+aY
+bf
+"}
+(11,1,1) = {"
+ae
+ao
+az
+aC
+aK
+aR
+aZ
+bf
+"}
+(12,1,1) = {"
+ae
+ap
+aA
+aD
+aL
+aS
+ba
+bf
+"}
+(13,1,1) = {"
+ae
+ap
+aA
+aE
+aM
+aS
+ba
+bf
+"}
+(14,1,1) = {"
+ae
+aq
+aB
+aD
+aL
+aT
+bb
+bf
+"}
+(15,1,1) = {"
+af
+ar
+ar
+ar
+ac
+aU
+aU
+bg
+"}

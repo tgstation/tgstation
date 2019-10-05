@@ -1,0 +1,191 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/bridge)
+"b" = (
+/obj/structure/window/plasma/reinforced/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
+/area/bridge)
+"c" = (
+/obj/structure/closet/lasertag/red,
+/turf/open/floor/mineral/plastitanium/red,
+/area/bridge)
+"d" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/bridge)
+"e" = (
+/obj/item/crowbar,
+/turf/open/floor/mineral/plastitanium/red,
+/area/bridge)
+"f" = (
+/obj/structure/window/plasma/reinforced/plastitanium,
+/turf/open/floor/mineral/titanium/blue,
+/area/bridge)
+"g" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/mineral/plastitanium,
+/area/bridge)
+"h" = (
+/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/machinery/power/apc,
+/turf/open/floor/mineral/titanium/blue,
+/area/bridge)
+"i" = (
+/obj/item/crowbar,
+/turf/open/floor/mineral/titanium/blue,
+/area/bridge)
+"j" = (
+/obj/structure/closet/lasertag/blue,
+/turf/open/floor/mineral/titanium/blue,
+/area/bridge)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+i
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+j
+"}
+(8,1,1) = {"
+f
+b
+f
+b
+g
+b
+h
+b
+"}
+(9,1,1) = {"
+d
+c
+d
+d
+d
+d
+d
+d
+"}
+(10,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(11,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(12,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(13,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+"}
+(14,1,1) = {"
+d
+e
+d
+d
+d
+d
+d
+d
+"}
+(15,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+"}
