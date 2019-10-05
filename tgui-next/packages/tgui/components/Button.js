@@ -9,6 +9,7 @@ export const BUTTON_ACTIVATION_KEYCODES = [
 
 export const Button = props => {
   const {
+    className,
     fluid,
     icon,
     color,
@@ -33,6 +34,7 @@ export const Button = props => {
         (color && typeof color === 'string')
           ? 'Button--color--' + color
           : 'Button--color--normal',
+        className,
       ])}
       tabindex={!disabled && '0'}
       data-tooltip={tooltip}

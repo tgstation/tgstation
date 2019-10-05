@@ -14,6 +14,7 @@
     "cssnano": "^4.1.10",
     "extract-css-chunks-webpack-plugin": "^4.6.0",
     "fg-loadcss": "^2.1.0",
+    "fibers": "^4.0.1",
     "file-loader": "^4.2.0",
     "inferno": "^7.3.1",
     "lodash": "^4.17.15",

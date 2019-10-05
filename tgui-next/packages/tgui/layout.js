@@ -11,6 +11,7 @@ import { Acclimator } from './interfaces/Acclimator';
 import { AIAirlock } from './interfaces/AIAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
 import { ChemDispenser } from './interfaces/ChemDispenser';
+import { KitchenSink } from './interfaces/KitchenSink';
 import { createLogger } from './logging';
 
 const logger = createLogger('Layout');
@@ -34,7 +35,17 @@ const ROUTES = {
   },
 };
 
-export const getRoute = name => ROUTES[name];
+export const getRoute = state => {
+  // Show a kitchen sink
+  if (state.showKitchenSink) {
+    return {
+      component: () => KitchenSink,
+      scrollable: true,
+    };
+  }
+  // Refer to the routing table
+  return ROUTES[state.config && state.config.interface];
+};
 
 export class Layout extends Component {
   constructor() {
@@ -44,9 +55,9 @@ export class Layout extends Component {
 
   render() {
     const { props } = this;
-    const { state } = props;
+    const { state, dispatch } = props;
     const { config } = state;
-    const route = getRoute(config.interface);
+    const route = getRoute(state);
     if (!route) {
       return `Component for '${config.interface}' was not found.`;
     }
@@ -82,7 +93,7 @@ export class Layout extends Component {
               this.contentRef.current.focus();
             }
           }}>
-          <Component state={state} />
+          <Component state={state} dispatch={dispatch} />
         </div>
         {config.status !== UI_INTERACTIVE && (
           <div className="Layout__dimmer" />

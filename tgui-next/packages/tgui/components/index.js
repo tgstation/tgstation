@@ -7,5 +7,6 @@ export { LabeledList } from './LabeledList';
 export { NoticeBox } from './NoticeBox';
 export { ProgressBar } from './ProgressBar';
 export { Section } from './Section';
+export { Tabs } from './Tabs';
 export { TitleBar } from './TitleBar';
 export { Toast } from './Toast';

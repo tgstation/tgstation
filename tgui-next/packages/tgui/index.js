@@ -30,7 +30,7 @@ const renderLayout = () => {
   // Start rendering
   try {
     const { Layout } = require('./layout');
-    const element = <Layout state={state} />;
+    const element = <Layout state={state} dispatch={store.dispatch} />;
     render(element, reactRoot);
   }
   catch (err) {
@@ -46,7 +46,7 @@ const setupApp = () => {
   const state = JSON.parse(stateJson);
 
   // Determine if we can handle this route
-  const route = getRoute(state.config && state.config.interface);
+  const route = getRoute(state);
   if (!route) {
     // Load old TGUI using redirection method for IE8
     if (tridentVersion <= 4) {

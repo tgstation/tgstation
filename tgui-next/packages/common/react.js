@@ -33,3 +33,17 @@ export const classes = (...args) => {
   }
   return classNames.join(' ');
 };
+
+/**
+ * Normalizes children prop, so that it is always an array of VDom
+ * elements.
+ */
+export const normalizeChildren = children => {
+  if (Array.isArray(children)) {
+    return children;
+  }
+  if (typeof children === 'object') {
+    return [children];
+  }
+  return [];
+};
