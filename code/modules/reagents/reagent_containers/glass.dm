@@ -331,6 +331,7 @@
 	var/cap_on = TRUE
 	var/cap_lost = FALSE
 	var/mutable_appearance/cap_overlay
+	var/flip_chance = 10
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
 	. = ..()
@@ -400,7 +401,7 @@
 /obj/item/reagent_containers/glass/beaker/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(cap_on && reagents.total_volume)
-		if(prob(10)) // landed upright
+		if(prob(flip_chance)) // landed upright
 			src.visible_message("<span class='notice'>[src] lands upright!</span>")
 			SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
 		else // landed on it's side
