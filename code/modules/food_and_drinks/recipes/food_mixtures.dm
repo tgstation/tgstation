@@ -189,4 +189,4 @@
 	name = "BBQ Sauce"
 	id = /datum/reagent/consumable/bbqsauce
 	results = list(/datum/reagent/consumable/bbqsauce = 21)
-	required_reagents = list(/datum/reagent/ash = 5, /datum/reagent/consumable/capsaicin = 5, /datum/chemical_reaction/salglu_solution = 10, /datum/reagent/consumable/blackpepper = 1)
+	required_reagents = list(/datum/reagent/ash = 5, /datum/reagent/consumable/capsaicin = 5, /datum/reagent/medicine/salglu_solution = 10, /datum/reagent/consumable/blackpepper = 1)
