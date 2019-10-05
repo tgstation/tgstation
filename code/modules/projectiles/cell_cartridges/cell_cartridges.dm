@@ -134,3 +134,7 @@
 	to_chat(user, "<span class='warning'>You install [C] in [src].</span>")
 	update_icon(TRUE, user)
 	return TRUE
+
+
+/obj/item/cell_cartridge/dead //For those produced at autolathes
+	dead_cell = TRUE

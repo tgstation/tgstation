@@ -45,7 +45,7 @@
 			if(C)
 				. += "<span class='notice'>- \The [charging]'s cell is at <b>[C.percent()]%</b>.</span>"
 			else
-				. += "<span class='notice'>- \ [charging] has no cell loaded.</b>.</span>"
+				. += "<span class='notice'>- \The [charging] has no cell loaded.</b>.</span>"
 
 
 /obj/machinery/recharger/proc/setCharging(new_charging)

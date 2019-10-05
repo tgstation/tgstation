@@ -340,6 +340,6 @@
 	id = "cell_cartridge"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/plastic = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000)
-	build_path = /obj/item/cell_cartridge
+	build_path = /obj/item/cell_cartridge/dead
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
