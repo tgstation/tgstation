@@ -266,7 +266,8 @@
 			D.open()
 
 /obj/machinery/computer/arena/Topic(href, href_list)
-	. = ..()
+	if(..())
+		return
 	var/mob/user = usr
 
 	if(!user.client.holder) // Should it require specific perm ?
