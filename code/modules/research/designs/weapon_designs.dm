@@ -333,3 +333,13 @@
 	build_path = /obj/item/ammo_casing/shotgun/dart/noreact
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cell_cartridge
+	name = "Energy Weapon Cell Cartridge"
+	desc = "Power cell cartridge designed for loading into certain types of energy weapons."
+	id = "cell_cartridge"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 5000, /datum/material/glass = 1000, /datum/material/gold = 1000)
+	build_path = /obj/item/cell_cartridge
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

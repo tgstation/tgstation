@@ -15,7 +15,9 @@
 		/obj/item/gun/energy,
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
-		/obj/item/modular_computer))
+		/obj/item/modular_computer,
+		/obj/item/cell_cartridge
+		))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -36,7 +38,14 @@
 		. += "<span class='notice'>- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.</span>"
 		if(charging)
 			var/obj/item/stock_parts/cell/C = charging.get_cell()
-			. += "<span class='notice'>- \The [charging]'s cell is at <b>[C.percent()]%</b>.</span>"
+			if(istype(charging, /obj/item/gun/energy))
+				var/obj/item/gun/energy/E = charging
+				if(E.cartridge)
+					C = E.cartridge.get_cell() //If the gun uses a power cell cartridge, get the cartridge
+			if(C)
+				. += "<span class='notice'>- \The [charging]'s cell is at <b>[C.percent()]%</b>.</span>"
+			else
+				. += "<span class='notice'>- \ [charging] has no cell loaded.</b>.</span>"
 
 
 /obj/machinery/recharger/proc/setCharging(new_charging)
@@ -75,8 +84,25 @@
 
 			if (istype(G, /obj/item/gun/energy))
 				var/obj/item/gun/energy/E = G
+				if(E.cartridge)
+					var/obj/item/cell_cartridge/EC = E.cartridge
+					if(!EC.can_charge)
+						to_chat(user, "<span class='notice'>Your [G]'s [EC] has no external power connector.</span>")
+						return 1
+					if(!EC.cell)
+						to_chat(user, "<span class='notice'>Your [G]'s [EC] has no power cell loaded.</span>")
+						return 1
 				if(!E.can_charge)
-					to_chat(user, "<span class='notice'>Your gun has no external power connector.</span>")
+					to_chat(user, "<span class='notice'>Your [G] has no external power connector.</span>")
+					return 1
+
+			if (istype(G, /obj/item/cell_cartridge))
+				var/obj/item/cell_cartridge/CC = G
+				if(!CC.can_charge)
+					to_chat(user, "<span class='notice'>Your [G] has no external power connector.</span>")
+					return 1
+				if(!CC.cell)
+					to_chat(user, "<span class='notice'>Your [G] has no power cell loaded.</span>")
 					return 1
 
 			if(!user.transferItemToLoc(G, src))
@@ -121,7 +147,13 @@
 
 	var/using_power = 0
 	if(charging)
-		var/obj/item/stock_parts/cell/C = charging.get_cell()
+		var/obj/item/stock_parts/cell/C
+		C = charging.get_cell()
+		if(istype(charging, /obj/item/gun/energy))
+			var/obj/item/gun/energy/E = charging
+			if(E.cartridge)
+				C = E.cartridge.get_cell() //If the gun uses a power cell cartridge, get the cartridge
+
 		if(C)
 			if(C.charge < C.maxcharge)
 				C.give(C.chargerate * recharge_coeff)
@@ -154,6 +186,11 @@
 			var/obj/item/melee/baton/B = charging
 			if(B.cell)
 				B.cell.charge = 0
+
+		else if(istype(charging, /obj/item/cell_cartridge))
+			var/obj/item/cell_cartridge/C = charging
+			if(C.cell)
+				C.cell.charge = 0
 
 
 /obj/machinery/recharger/update_icon(using_power = 0, scan)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.

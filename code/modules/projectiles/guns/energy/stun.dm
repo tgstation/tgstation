@@ -42,6 +42,7 @@
 	flight_y_offset = 10
 	empty_alarm = TRUE
 	can_unload = TRUE
+	uses_cartridge = TRUE //If this gun uses cell cartridges
 
 /obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
