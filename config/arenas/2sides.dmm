@@ -1,43 +1,43 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/floor/mineral/titanium/blue,
-/area/bridge)
+/area/tdome/arena)
 "b" = (
 /obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/mineral/plastitanium/red,
-/area/bridge)
+/area/tdome/arena)
 "c" = (
 /obj/structure/closet/lasertag/red,
 /turf/open/floor/mineral/plastitanium/red,
-/area/bridge)
+/area/tdome/arena)
 "d" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/bridge)
+/area/tdome/arena)
 "e" = (
 /obj/item/crowbar,
 /turf/open/floor/mineral/plastitanium/red,
-/area/bridge)
+/area/tdome/arena)
 "f" = (
 /obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/mineral/titanium/blue,
-/area/bridge)
+/area/tdome/arena)
 "g" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/mineral/plastitanium,
-/area/bridge)
+/area/tdome/arena)
 "h" = (
 /obj/structure/window/plasma/reinforced/plastitanium,
 /obj/machinery/power/apc,
 /turf/open/floor/mineral/titanium/blue,
-/area/bridge)
+/area/tdome/arena)
 "i" = (
 /obj/item/crowbar,
 /turf/open/floor/mineral/titanium/blue,
-/area/bridge)
+/area/tdome/arena)
 "j" = (
 /obj/structure/closet/lasertag/blue,
 /turf/open/floor/mineral/titanium/blue,
-/area/bridge)
+/area/tdome/arena)
 
 (1,1,1) = {"
 a

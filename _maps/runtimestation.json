@@ -1,6 +1,6 @@
 {
     "map_name": "Runtime Station",
     "map_path": "map_files/debug",
-    "map_file": ["runtimestation.dmm","domelvl2.dmm"],
+    "map_file": ["runtimestation.dmm","domelvl2.dmm","domelvl3.dmm"],
 	"traits": [{"Up": 1}, {"Up": 1, "Down": -1}, {"Down": -1}]
 }

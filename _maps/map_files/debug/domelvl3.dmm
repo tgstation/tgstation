@@ -4,5248 +4,808 @@
 /area/space)
 "ab" = (
 /turf/closed/indestructible/riveted,
-/area/space)
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "ac" = (
-/turf/closed/indestructible/fakeglass,
-/area/space)
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "ad" = (
-/obj/structure/bookcase,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/corner{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/step_trigger/teleporter{
+	icon_state = "shield";
+	name = "top-left 3-2";
+	teleport_x = 124;
+	teleport_y = 153;
+	teleport_z = 3
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ae" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"af" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/space)
-"ae" = (
-/turf/open/floor/plasteel,
-/area/space)
-"af" = (
-/obj/structure/table,
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/space)
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "ag" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/space)
-"ah" = (
-/obj/machinery/door/poddoor{
-	id = "thunderdomegen";
-	name = "General Supply"
-	},
-/obj/effect/turf_decal/loading_area{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/space)
-"ai" = (
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
-/turf/open/indestructible,
+/obj/effect/step_trigger/teleporter{
+	icon_state = "shield";
+	name = "top-right 3-2";
+	teleport_x = 146;
+	teleport_y = 153;
+	teleport_z = 3
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
+	})
+"ah" = (
+/turf/open/floor/plasteel/stairs,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ai" = (
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
 	})
 "aj" = (
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/indestructible,
+/obj/structure/fluff/railing/corner,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "ak" = (
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/turf/open/indestructible,
+/obj/structure/fluff/railing{
+	density = 0;
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "al" = (
-/obj/machinery/door/poddoor{
-	id = "thunderdome";
-	name = "Thunderdome Blast Door"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"am" = (
-/obj/structure/window/reinforced{
+/obj/structure/fluff/railing/corner,
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
 	dir = 8
 	},
-/obj/structure/sink{
-	pixel_y = 24
-	},
-/turf/open/floor/plating,
-/area/space)
-"an" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/machinery/hydroponics/soil,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/space)
-"ao" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/machinery/hydroponics/soil,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/space)
-"ap" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/machinery/hydroponics/soil,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/space)
-"aq" = (
-/obj/machinery/seed_extractor,
-/turf/open/floor/plating,
-/area/space)
-"ar" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/sink{
-	pixel_y = 24
-	},
-/turf/open/floor/plating,
-/area/space)
-"as" = (
-/obj/machinery/door/poddoor{
-	id = "thunderdome";
-	name = "Thunderdome Blast Door"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"at" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/indestructible,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
+	})
+"am" = (
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"an" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 4;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ao" = (
+/turf/open/openspace,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ap" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 4;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 8;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"aq" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 8;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ar" = (
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"as" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 5;
+	density = 0
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"at" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 9;
+	density = 0
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
 	})
 "au" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
 	dir = 1
 	},
-/turf/open/indestructible,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "av" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/turf/open/indestructible,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aw" = (
-/obj/machinery/door/poddoor{
-	id = "thunderdomegen";
-	name = "General Supply"
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
 	},
-/obj/effect/turf_decal/loading_area{
-	dir = 8
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/space)
-"ax" = (
-/obj/machinery/vending/sustenance,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/space)
-"ay" = (
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 1;
+	icon_state = "railing";
+	layer = 3.1
 	},
-/turf/open/indestructible,
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
+	})
+"ax" = (
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
+	dir = 4
+	},
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ay" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
 	})
 "az" = (
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/delivery,
-/turf/open/indestructible,
+/obj/structure/lattice/catwalk,
+/turf/open/openspace,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aA" = (
-/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/indestructible,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aB" = (
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/turf/open/indestructible,
+/obj/structure/fluff/railing{
+	density = 0;
+	layer = 3.1
+	},
+/obj/structure/table,
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aC" = (
-/obj/machinery/vending/cola/random,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/corner,
-/turf/open/floor/plasteel,
-/area/space)
-"aD" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel,
-/area/space)
-"aE" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/obj/structure/fluff/railing{
+	density = 0;
+	layer = 3.1
 	},
-/turf/open/indestructible,
+/obj/structure/chair/comfy/shuttle{
+	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
+	name = "stadium seat"
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
+	})
+"aD" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"aE" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 4;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/chair/comfy/shuttle{
+	name = "stadium seat";
+	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
+	icon_state = "shuttle_chair";
+	dir = 4
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
 	})
 "aF" = (
-/obj/machinery/recharger{
-	pixel_y = 4
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/delivery,
-/turf/open/indestructible,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 8;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/chair/comfy/shuttle{
+	name = "stadium seat";
+	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
+	icon_state = "shuttle_chair";
+	dir = 8
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aG" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/indestructible,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aH" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/indestructible,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aI" = (
-/obj/machinery/camera{
-	c_tag = "Red Team";
-	network = list("thunder");
-	pixel_x = 11;
-	pixel_y = -9;
-	resistance_flags = 64
-	},
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 4;
+	icon_state = "railing";
+	layer = 3.1
 	},
-/turf/open/indestructible,
+/obj/structure/table,
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aJ" = (
-/turf/open/floor/plating,
-/area/space)
-"aK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4;
-	icon_state = "warningline"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"aL" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/rack,
-/turf/open/floor/plasteel,
-/area/space)
-"aM" = (
-/obj/structure/window/reinforced,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/item/plant_analyzer,
-/obj/item/cultivator,
-/turf/open/floor/plasteel,
-/area/space)
-"aN" = (
-/obj/machinery/camera{
-	c_tag = "Green Team";
-	network = list("thunder");
-	pixel_x = 12;
-	pixel_y = -10;
-	resistance_flags = 64
-	},
-/obj/effect/landmark/thunderdome/one,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral,
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 8;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/table,
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"aK" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"aL" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
-	dir = 8
+	dir = 1
 	},
-/turf/open/indestructible,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
+	})
+"aM" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 1;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/table,
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"aN" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 1;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/chair/comfy/shuttle{
+	name = "stadium seat";
+	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
+	icon_state = "shuttle_chair";
+	dir = 1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
 	})
 "aO" = (
-/obj/effect/turf_decal/tile/green{
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/structure/window/reinforced,
-/obj/machinery/hydroponics/soil,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/space)
+/obj/structure/fluff/railing/corner,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "aP" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
-/obj/machinery/hydroponics/soil,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/space)
-"aQ" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/green{
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 6;
+	density = 0
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"aQ" = (
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
-/obj/machinery/hydroponics/soil,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/space)
-"aR" = (
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
-/turf/open/indestructible,
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 10;
+	density = 0
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
+	})
+"aR" = (
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
+	dir = 1
+	},
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
 	})
 "aS" = (
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/indestructible,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aT" = (
-/obj/effect/landmark/thunderdome/two,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/turf/open/indestructible,
+/obj/effect/step_trigger/teleporter{
+	icon_state = "shield";
+	name = "bottom-left 3-2";
+	teleport_x = 124;
+	teleport_y = 130;
+	teleport_z = 3
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aU" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/turf/open/indestructible,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aV" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/indestructible,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aW" = (
-/obj/effect/landmark/thunderdome/one,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/turf/open/indestructible,
+/obj/effect/step_trigger/teleporter{
+	icon_state = "shield";
+	name = "bottom-right 3-2";
+	teleport_x = 146;
+	teleport_y = 130;
+	teleport_z = 3
+	},
+/turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 "aX" = (
-/obj/structure/window/reinforced,
-/obj/machinery/biogenerator,
-/turf/open/floor/plating,
-/area/space)
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 1;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/sign/warning{
+	name = "not finished okay it hard work"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "aY" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4;
-	icon_state = "warningline"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"aZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/storage/box/cups,
-/turf/open/floor/plasteel,
-/area/space)
-"ba" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/water_cooler,
-/turf/open/floor/plasteel,
-/area/space)
-"bb" = (
-/obj/structure/chair/stool,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/space)
-"bc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/storage/box/donkpockets{
-	pixel_x = 2;
-	pixel_y = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bd" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"be" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bf" = (
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/space)
-"bg" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/toy/cards/deck/cas,
-/obj/item/toy/cards/deck/cas/black{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/pen{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/pen,
-/turf/open/floor/plasteel,
-/area/space)
-"bi" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/toy/cards/deck,
-/turf/open/floor/plasteel,
-/area/space)
-"bj" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/storage/pill_bottle/dice,
-/turf/open/floor/plasteel,
-/area/space)
-"bk" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 8
-	},
-/turf/open/floor/plasteel/freezer,
-/area/space)
-"bl" = (
-/turf/open/floor/plasteel/freezer,
-/area/space)
-"bm" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plasteel/freezer,
-/area/space)
-"bn" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/space)
-"bo" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/space)
-"bp" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4;
-	icon_state = "warningline"
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/space)
-"bq" = (
-/obj/machinery/shower{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/turf/open/floor/plasteel/freezer,
-/area/space)
-"br" = (
-/obj/machinery/shower{
-	dir = 1
-	},
-/turf/open/floor/plasteel/freezer,
-/area/space)
-"bs" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/shower{
-	dir = 1
-	},
-/turf/open/floor/plasteel/freezer,
-/area/space)
-"bt" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/arcade,
-/turf/open/floor/plasteel,
-/area/space)
-"bu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/stool,
-/turf/open/floor/plasteel,
-/area/space)
-"bv" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/washing_machine,
-/turf/open/floor/plasteel/cafeteria,
-/area/space)
-"bw" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/table,
-/obj/structure/bedsheetbin,
-/obj/item/toy/dummy,
-/turf/open/floor/plasteel/cafeteria,
-/area/space)
-"bx" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/washing_machine,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/space)
-"by" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bz" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bA" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/turf/open/floor/plasteel,
-/area/space)
-"bB" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel,
-/area/space)
-"bC" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bD" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/floor/plasteel,
-/area/space)
-"bE" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/machinery/vending/boozeomat,
-/turf/open/floor/plasteel,
-/area/space)
-"bF" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/reagent_containers/food/drinks/shaker{
-	pixel_x = -5
-	},
-/obj/structure/sign/plaques/deempisi{
-	pixel_y = 24
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bG" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/floor/plasteel,
-/area/space)
-"bH" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/stripes/corner,
-/turf/open/floor/plasteel,
-/area/space)
-"bI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/rack,
-/turf/open/floor/plasteel,
-/area/space)
-"bJ" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bK" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4;
-	icon_state = "warningline"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bL" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table/reinforced,
-/obj/item/lighter,
-/turf/open/floor/plasteel,
-/area/space)
-"bM" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/chair/stool/bar,
-/turf/open/floor/plasteel,
-/area/space)
-"bN" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/chair,
-/turf/open/floor/plasteel,
-/area/space)
-"bO" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table,
-/obj/item/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
-	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bP" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bQ" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bR" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bS" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bT" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"bU" = (
-/obj/structure/chair/comfy/shuttle{
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	name = "stadium seat"
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"bV" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/machinery/disposal/bin,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"bW" = (
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"bX" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"bY" = (
-/obj/structure/table/reinforced,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"bZ" = (
-/obj/machinery/disposal/bin,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ca" = (
-/obj/structure/toilet,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cb" = (
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cc" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 12
-	},
-/obj/structure/mirror{
-	pixel_x = 28
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cd" = (
-/obj/structure/toilet{
-	icon_state = "toilet00";
-	dir = 1
-	},
-/obj/machinery/light/small,
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ce" = (
-/obj/structure/urinal{
-	pixel_y = -32
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cf" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cg" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ch" = (
-/obj/structure/chair/stool/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ci" = (
-/obj/structure/chair/stool/bar,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cj" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cl" = (
-/obj/structure/sign/barsign{
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cm" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cn" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"co" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cp" = (
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cq" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cr" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cs" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 4;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ct" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 8;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cu" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cv" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cw" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cx" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/door/airlock/highsecurity{
-	name = "Thunderdome Arena Access"
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cy" = (
-/obj/structure/chair/comfy/shuttle{
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	name = "stadium seat"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cz" = (
-/obj/structure/chair/comfy/shuttle{
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	name = "stadium seat"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cA" = (
-/obj/structure/fluff{
-	desc = "Has a valve and pump attached to it.";
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
-	icon_state = "scrub_on";
-	name = "scrubber"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cB" = (
-/turf/open/indestructible{
-	density = 0;
-	desc = "A staircase that goes to the bottom segment of the shuttle. Why would I want to go down there when there's a beach outside?";
-	icon_state = "stairs-m";
-	name = "staircase";
-	opacity = 1
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cC" = (
-/obj/structure/chair/comfy/shuttle{
-	name = "stadium seat";
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	icon_state = "shuttle_chair";
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cD" = (
-/obj/structure/chair/comfy/shuttle{
-	name = "stadium seat";
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	icon_state = "shuttle_chair";
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cF" = (
-/turf/open/indestructible{
-	density = 0;
-	desc = "A staircase that goes to the bottom segment of the shuttle. Why would I want to go down there when there's a beach outside?";
-	icon_state = "stairs-l";
-	name = "staircase"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cG" = (
-/turf/open/indestructible{
-	density = 0;
-	desc = "A staircase that goes to the bottom segment of the shuttle. Why would I want to go down there when there's a beach outside?";
-	icon_state = "stairs-r";
-	name = "staircase";
-	opacity = 1
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cH" = (
-/obj/machinery/light,
-/turf/open/indestructible{
-	icon_state = "stairs";
-	name = "staircase"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cI" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/vending/cola/random,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cJ" = (
-/turf/open/space/basic,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cK" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/chair/stool,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cL" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/computer/arcade,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cM" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/computer/arcade,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cN" = (
-/obj/structure/punching_bag,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cO" = (
-/obj/structure/weightmachine/stacklifter,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cP" = (
-/obj/structure/punching_bag,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cQ" = (
-/turf/open/floor/wood,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cR" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cS" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cT" = (
-/obj/structure/weightmachine/stacklifter,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cU" = (
-/obj/structure/closet/athletic_mixed,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cV" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cW" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cX" = (
-/obj/structure/closet/athletic_mixed,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cY" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/effect/turf_decal/bot,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -28
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"cZ" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/effect/turf_decal/bot,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 30
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"da" = (
-/obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/grenade/flashbang,
-/turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"db" = (
-/obj/machinery/vending/wardrobe/jani_wardrobe,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dc" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/bot,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dd" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/table,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"de" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"df" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/disposal/bin,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dg" = (
-/obj/structure/janitorialcart,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/mop,
-/obj/effect/turf_decal/bot,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dh" = (
-/obj/machinery/vending/security,
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"di" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dj" = (
-/turf/open/floor/plating,
-/area/tdome/arena)
-"dk" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dn" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/vending/snack/random,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"do" = (
-/obj/machinery/door/window/eastright{
-	dir = 8;
-	name = "Fitness Ring"
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dp" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dq" = (
-/obj/machinery/door/window/eastright{
-	base_state = "left";
-	dir = 8;
-	icon_state = "left";
-	name = "Fitness Ring"
-	},
-/obj/structure/window/reinforced,
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dr" = (
-/obj/structure/window/reinforced,
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ds" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dt" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"du" = (
-/obj/structure/reagent_dispensers/water_cooler,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dv" = (
-/obj/structure/weightmachine/weightlifter,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dw" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dx" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/weightmachine/stacklifter,
-/obj/structure/sign/poster/official/get_your_legs{
-	pixel_y = -32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dy" = (
-/obj/structure/closet/secure_closet/personal{
-	anchored = 1
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dz" = (
-/obj/structure/table,
-/obj/item/storage/box/cups,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dB" = (
-/obj/machinery/shower{
-	pixel_y = 24
-	},
-/obj/structure/curtain,
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dC" = (
-/obj/item/soap,
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dD" = (
-/obj/structure/window/reinforced,
-/obj/structure/fluff{
-	desc = "Has a valve and pump attached to it.";
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
-	icon_state = "vent_out";
-	name = "air vent"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dE" = (
-/obj/structure/table,
-/obj/structure/bedsheetbin{
-	desc = "It looks rather cosy. The words 'towel bin' have been slapped on it with a handheld labeler.";
-	name = "linen bin (towel bin)"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dF" = (
-/obj/item/bikehorn/rubberducky,
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dG" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/fluff{
-	desc = "Has a valve and pump attached to it.";
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
-	icon_state = "scrub_on";
-	name = "scrubber"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dH" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dI" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/washing_machine,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dJ" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/structure/bedsheetbin,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dK" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/closet/crate/bin{
-	desc = "A laundry bin, place your laundry here for your mom to collect.";
-	name = "laundry bin"
-	},
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dM" = (
-/obj/structure/chair/comfy/shuttle{
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	name = "stadium seat"
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dO" = (
-/obj/structure/table,
-/obj/item/storage/box/donkpockets,
-/obj/item/storage/box/donkpockets{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dR" = (
-/obj/machinery/shower{
-	dir = 1
-	},
-/obj/structure/curtain,
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dS" = (
-/obj/structure/chair/comfy/shuttle{
-	name = "stadium seat";
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	icon_state = "shuttle_chair";
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dV" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 9;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dW" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dX" = (
-/obj/structure/chair,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dY" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"dZ" = (
-/obj/structure/table,
-/obj/item/book/manual/wiki/cooking_to_serve_man,
-/obj/item/kitchen/rollingpin,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ea" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/punching_bag,
-/obj/machinery/light,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eb" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ec" = (
-/obj/structure/closet/athletic_mixed,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/light,
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 1;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ed" = (
-/obj/structure/closet/athletic_mixed,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/light,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ee" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ef" = (
-/obj/structure/chair/stool,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eg" = (
-/obj/structure/table,
-/obj/item/restraints/handcuffs,
-/obj/item/assembly/timer,
-/turf/open/floor/plasteel,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ek" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"el" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/snacks/mint,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"et" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eB" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	icon_state = "bulb";
-	dir = 8
-	},
-/obj/structure/bed,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eN" = (
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eQ" = (
-/obj/machinery/chem_master/condimaster,
-/turf/open/indestructible{
-	icon_state = "freezerfloor";
-	name = "cold room floor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eR" = (
-/turf/open/indestructible{
-	icon_state = "freezerfloor";
-	name = "cold room floor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eS" = (
-/obj/structure/kitchenspike,
-/turf/open/indestructible{
-	icon_state = "freezerfloor";
-	name = "cold room floor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eT" = (
-/obj/structure/reagent_dispensers/cooking_oil,
-/turf/open/indestructible{
-	icon_state = "freezerfloor";
-	name = "cold room floor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eU" = (
-/obj/machinery/icecream_vat,
-/turf/open/indestructible{
-	icon_state = "freezerfloor";
-	name = "cold room floor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eV" = (
-/obj/machinery/gibber,
-/turf/open/indestructible{
-	icon_state = "freezerfloor";
-	name = "cold room floor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eX" = (
-/obj/machinery/vending/dinnerware,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eY" = (
-/obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"eZ" = (
-/obj/machinery/processor,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fa" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fb" = (
-/obj/structure/table,
-/obj/item/reagent_containers/glass/beaker{
-	pixel_x = 5
-	},
-/obj/item/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/item/toy/figure/chef,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fc" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fd" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/soysauce,
-/obj/item/reagent_containers/food/condiment/sugar,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fe" = (
-/obj/machinery/deepfryer,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ff" = (
-/obj/machinery/food_cart,
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fh" = (
-/obj/structure/chair/stool/bar,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fj" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/brig{
-	id = "brig2";
-	name = "Cell 2 Locker"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fk" = (
-/obj/structure/sink/kitchen{
-	pixel_y = 28
-	},
-/turf/open/indestructible{
-	icon_state = "freezerfloor";
-	name = "cold room floor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fl" = (
-/obj/structure/reagent_dispensers/beerkeg,
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 6;
-	network = list("Arena Main")
-	},
-/turf/open/floor/wood,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fm" = (
-/obj/structure/sink/kitchen{
-	pixel_y = 28
-	},
-/turf/open/floor/wood,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fn" = (
-/obj/structure/table/wood,
-/obj/machinery/reagentgrinder,
-/turf/open/floor/wood,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fo" = (
-/obj/machinery/chem_master/condimaster{
-	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
-	name = "HoochMaster Deluxe";
-	pixel_x = -4
-	},
-/turf/open/floor/wood,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fp" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fq" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fr" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/machinery/vending/boozeomat,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ft" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
-/obj/structure/sign/plaques/deempisi{
-	pixel_y = 24
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fu" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/item/reagent_containers/food/drinks/shaker,
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 6;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fA" = (
-/obj/structure/table,
-/obj/item/assembly/flash/handheld,
-/turf/open/floor/plasteel,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fG" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/flasher{
-	id = "Cell 7";
-	pixel_y = 28
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fX" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 6;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fY" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"fZ" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/door_timer{
-	id = "Cell 8";
-	name = "Cell 8";
-	pixel_x = -32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ga" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gb" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 5;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gc" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/door/airlock/security{
-	name = "Brig";
-	req_access_txt = "63"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gd" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ge" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/structure/filingcabinet,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gf" = (
-/obj/effect/turf_decal/tile/red,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gg" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gh" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 5;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gi" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gj" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
-/obj/vehicle/ridden/secway,
-/obj/item/key/security,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gm" = (
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 10;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible{
-	icon_state = "freezerfloor";
-	name = "cold room floor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gn" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 9;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"go" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/brigdoor/westleft{
-	id = "Cell 8";
-	name = "Cell 8";
-	req_access_txt = "1"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gy" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gz" = (
-/obj/structure/chair,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gH" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/structure/filingcabinet,
-/obj/structure/sign/poster/official/here_for_your_safety{
-	pixel_y = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gO" = (
-/obj/structure/table,
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gS" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 4
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"gU" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/flasher{
-	id = "Cell 8";
-	pixel_y = 28
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hd" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hi" = (
-/obj/structure/table,
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/recharger,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hj" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hk" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/flasher/portable,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hl" = (
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/bot,
-/obj/machinery/flasher/portable,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hm" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hn" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/structure/table,
-/obj/item/storage/box/flashbangs{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/box/flashbangs,
-/obj/item/storage/box/handcuffs{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ho" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hp" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hq" = (
-/obj/item/grenade/barrier{
-	pixel_x = 4
-	},
-/obj/item/grenade/barrier,
-/obj/item/grenade/barrier{
-	pixel_x = -4
-	},
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hr" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/table,
-/obj/item/gun/magic/wand/resurrection/debug,
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hs" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/item/gun/magic/wand/resurrection/debug,
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ht" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/structure/fluff{
-	desc = "Has a valve and pump attached to it.";
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
-	icon_state = "scrub_on";
-	name = "scrubber"
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hu" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hv" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/structure/fluff{
-	desc = "Has a valve and pump attached to it.";
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
-	icon_state = "vent_out";
-	name = "air vent"
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hw" = (
-/obj/structure/rack,
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/ballistic/shotgun/riot,
-/obj/item/gun/ballistic/shotgun/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hx" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/closet/secure_closet/lethalshots,
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hy" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
-/obj/vehicle/ridden/secway,
-/obj/item/key/security,
-/obj/structure/sign/poster/official/space_cops{
-	pixel_x = 32
-	},
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 4
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 9;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hz" = (
-/obj/machinery/disposal/bin,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hA" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hB" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hC" = (
-/obj/machinery/computer/security{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hD" = (
-/obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/recharger,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hE" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hG" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/structure/sign/plaques/golden{
-	pixel_y = -32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hH" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hP" = (
-/obj/machinery/door/airlock/public{
-	name = "Leather Club"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"hU" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/step_trigger/teleporter{
-	icon_state = "shield";
-	name = "bottom-right 1-2";
-	teleport_x = 140;
-	teleport_y = 129;
-	teleport_z = 3
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"id" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/door_timer{
-	id = "Cell 1";
-	name = "Cell 1";
-	pixel_x = 32;
-	Radio = 0
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"iX" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/sign/departments/custodian{
-	pixel_y = -32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"iY" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/rack,
-/obj/item/storage/toolbox/emergency,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"jL" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/rack,
-/obj/item/storage/toolbox/emergency,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"jY" = (
-/obj/structure/table,
-/obj/item/folder/red,
-/obj/item/pen,
-/turf/open/floor/plasteel,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"kc" = (
-/obj/machinery/door/airlock{
-	id_tag = "f_stall5";
-	name = "Stall 5"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"km" = (
-/obj/structure/weightmachine/weightlifter,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 4;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"kq" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/sign/poster/official/enlist{
-	pixel_y = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"kF" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Office";
-	req_access_txt = "63"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ln" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/light,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ma" = (
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/bot,
-/obj/machinery/flasher/portable,
-/obj/item/wrench{
-	desc = "Any non security personnel holding this is to be considered a criminal.";
-	name = "security wrench"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"me" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/light,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"mr" = (
-/obj/machinery/door/airlock{
-	id_tag = "m_stall1";
-	name = "Stall 1"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"nd" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"nj" = (
-/obj/structure/rack,
-/obj/item/gun/energy/disabler{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/disabler,
-/obj/item/gun/energy/disabler{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"nr" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/weightmachine/stacklifter,
-/obj/structure/sign/poster/contraband/punch_shit{
-	pixel_y = -32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"og" = (
+/obj/structure/fluff/railing/corner,
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
-"oz" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/sign/poster/contraband/donut_corp{
-	pixel_y = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"oB" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 9;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"oD" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"oH" = (
-/obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/book/manual/wiki/security_space_law,
-/turf/open/floor/plasteel,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"oV" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/door_timer{
-	id = "Cell 4";
-	name = "Cell 4";
-	pixel_x = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"pc" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_y = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"pl" = (
-/obj/machinery/door/airlock{
-	name = "Women's Restroom"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"pm" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 6;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"pG" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+"aZ" = (
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
 	dir = 8
 	},
-/turf/open/floor/plasteel,
+/turf/closed/indestructible/fakeglass,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
-"pM" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	icon_state = "bulb";
+"ba" = (
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
 	dir = 4
 	},
-/obj/structure/bed,
-/turf/open/indestructible,
+/turf/closed/indestructible/fakeglass,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
-"pR" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"qz" = (
-/obj/structure/sign/poster/official/no_erp{
-	pixel_y = 32
-	},
-/obj/structure/fluff{
-	desc = "Has a valve and pump attached to it.";
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
-	icon_state = "scrub_on";
-	name = "scrubber"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"rc" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
+"bb" = (
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/weightmachine/stacklifter,
-/obj/structure/sign/poster/contraband/pwr_game{
-	pixel_y = -32
-	},
-/turf/open/indestructible,
+/turf/closed/indestructible/fakeglass,
 /area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"rj" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/flasher{
-	id = "Cell 6";
-	pixel_y = 28
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"rv" = (
-/obj/structure/fluff{
-	desc = "Has a valve and pump attached to it.";
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
-	icon_state = "scrub_on";
-	name = "scrubber"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"rS" = (
-/obj/machinery/door/airlock{
-	name = "Showers"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"sf" = (
-/obj/machinery/door/poddoor{
-	id = "thunderdomegen";
-	name = "General Supply"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"sB" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
-/obj/vehicle/ridden/secway,
-/obj/item/key/security,
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 4
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 9;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"sI" = (
-/obj/machinery/door/poddoor{
-	id = "thunderdomegen";
-	name = "General Supply"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"sL" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/sign/poster/contraband/eat{
-	pixel_y = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"sM" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/step_trigger/teleporter{
-	icon_state = "shield";
-	name = "bottom-left 1-2";
-	teleport_x = 130;
-	teleport_y = 129;
-	teleport_z = 3
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"sV" = (
-/obj/structure/sign/poster/official/no_erp{
-	pixel_y = 32
-	},
-/obj/structure/fluff{
-	desc = "Has a valve and pump attached to it.";
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
-	icon_state = "vent_out";
-	name = "air vent"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"tf" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/vending/snack/random,
-/turf/open/floor/plasteel,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"tK" = (
-/obj/machinery/door/airlock{
-	name = "Custodial Access"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"uk" = (
-/obj/structure/sign/departments/restroom{
-	desc = "A sign labelling a locker room with showers.";
-	name = "\improper LOCKER ROOM";
-	pixel_y = 0
-	},
-/turf/closed/indestructible/riveted,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ul" = (
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "stairs";
-	name = "staircase"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"uq" = (
-/obj/machinery/door/airlock{
-	id_tag = "f_stall6";
-	name = "Stall 6"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"uy" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/vending/cola/random,
-/turf/open/floor/plasteel,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"uO" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/sign/poster/official/cohiba_robusto_ad{
-	pixel_x = -32
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"uW" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 5;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"vF" = (
-/obj/structure/weightmachine/weightlifter,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"vH" = (
-/obj/structure/chair/comfy/shuttle{
-	name = "stadium seat";
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	icon_state = "shuttle_chair";
-	dir = 1
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 10;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"wD" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"wG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 4";
-	name = "Cell 4 Locker"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"wH" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/indestructible/riveted,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"xL" = (
-/obj/machinery/door/airlock{
-	name = "Men's Lockers"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"xN" = (
-/obj/effect/step_trigger/teleporter{
-	icon_state = "shield";
-	name = "top-left 1-2";
-	teleport_x = 130;
-	teleport_y = 154;
-	teleport_z = 3
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"yz" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/bot,
-/obj/vehicle/ridden/secway,
-/obj/item/key/security,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"yA" = (
-/obj/machinery/door/airlock{
-	id_tag = "f_stall4";
-	name = "Stall 4"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"yD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/flasher{
-	id = "Cell 3";
-	pixel_y = 28
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"yH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/brigdoor/eastleft{
-	id = "Cell 4";
-	name = "Cell 4";
-	req_access_txt = "1"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"yQ" = (
-/obj/machinery/door/airlock/public{
-	name = "Open-Access Kitchen"
-	},
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"yZ" = (
-/turf/closed/indestructible/riveted,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"zv" = (
-/obj/effect/step_trigger/teleporter{
-	icon_state = "shield";
-	name = "top-right 1-2";
-	teleport_x = 140;
-	teleport_y = 154;
-	teleport_z = 3
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"zx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 5";
-	name = "Cell 5 Locker"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"zK" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 4;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"zS" = (
-/obj/structure/window/reinforced,
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Ak" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/step_trigger/teleporter{
-	icon_state = "shield";
-	name = "top-right 1-2";
-	teleport_x = 140;
-	teleport_y = 154;
-	teleport_z = 3
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Ay" = (
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"AH" = (
-/obj/machinery/door/airlock{
-	id_tag = "m_stall3";
-	name = "Stall 3"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"AW" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/punching_bag,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Ba" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/step_trigger/teleporter{
-	icon_state = "shield";
-	name = "top-left 1-2";
-	teleport_x = 130;
-	teleport_y = 154;
-	teleport_z = 3
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Bu" = (
-/obj/machinery/door/airlock{
-	id_tag = "f_stall1";
-	name = "Stall 1"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"BD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 1";
-	name = "Cell 1 Locker"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"BF" = (
-/obj/structure/fluff{
-	desc = "Has a valve and pump attached to it.";
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
-	icon_state = "vent_out";
-	name = "air vent"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"BO" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 3";
-	name = "Cell 3 Locker"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"BV" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 4
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Cc" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/brigdoor/eastleft{
-	id = "Cell 5";
-	name = "Cell 5";
-	req_access_txt = "1"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Ck" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/brigdoor/eastleft{
-	id = "Cell 3";
-	name = "Cell 3";
-	req_access_txt = "1"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Cn" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 8;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Co" = (
-/turf/open/indestructible{
-	density = 1;
-	desc = "A staircase that goes to the bottom segment of the shuttle. Why would I want to go down there when there's a beach outside?";
-	icon_state = "stairs-l";
-	name = "staircase"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"CR" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/sign/poster/contraband/robust_softdrinks{
-	pixel_y = -32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Do" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/table,
-/obj/item/paicard,
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"DF" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"DT" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/sign/poster/contraband/shamblers_juice{
-	pixel_y = -32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Ek" = (
-/obj/machinery/door/airlock{
-	id_tag = "m_stall4";
-	name = "Stall 4"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"EG" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/sign/poster/contraband/space_cola{
-	pixel_y = -32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"EU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/bed,
-/obj/machinery/light/small{
-	icon_state = "bulb";
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Fv" = (
-/turf/open/indestructible{
-	density = 1;
-	desc = "A staircase that goes to the bottom segment of the shuttle. Why would I want to go down there when there's a beach outside?";
-	icon_state = "stairs-m";
-	name = "staircase";
-	opacity = 1
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"FD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 7";
-	name = "Cell 7 Locker"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"FN" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Gc" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 4;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Gf" = (
-/obj/effect/step_trigger/teleporter{
-	icon_state = "shield";
-	name = "bottom-left 1-2";
-	teleport_x = 130;
-	teleport_y = 129;
-	teleport_z = 3
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Gp" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Gr" = (
-/obj/machinery/door/poddoor{
-	id = "thunderdome";
-	name = "Thunderdome Blast Door"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Gv" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Gear Room";
-	req_access_txt = "63"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"GW" = (
-/turf/open/indestructible{
-	icon_state = "stairs";
-	name = "staircase"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Hf" = (
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 9;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible{
-	density = 0;
-	desc = "A staircase that goes to the bottom segment of the shuttle. Why would I want to go down there when there's a beach outside?";
-	icon_state = "stairs-r";
-	name = "staircase";
-	opacity = 1
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Hu" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Ib" = (
-/obj/structure/table,
-/obj/item/storage/crayons,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Ii" = (
-/obj/structure/table,
-/obj/item/storage/fancy/donut_box,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"IY" = (
-/obj/effect/step_trigger/teleporter{
-	icon_state = "shield";
-	name = "bottom-right 1-2";
-	teleport_x = 140;
-	teleport_y = 129;
-	teleport_z = 3
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Jh" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Jk" = (
-/obj/machinery/door/airlock{
-	name = "Custodial Access"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"JB" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/sign/poster/official/work_for_a_future{
-	pixel_y = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"JH" = (
-/obj/machinery/light,
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"KB" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/flasher{
-	id = "Cell 2";
-	pixel_y = 28
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"KT" = (
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"KX" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Office";
-	req_access_txt = "63"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Lb" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Lf" = (
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 4
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Lg" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/structure/table/reinforced,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Lj" = (
-/obj/machinery/door/airlock/freezer{
-	name = "Cold Storage"
-	},
-/turf/open/indestructible{
-	icon_state = "freezerfloor";
-	name = "cold room floor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"LH" = (
-/obj/structure/table,
-/obj/item/storage/pill_bottle/dice,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"LZ" = (
-/obj/machinery/door/airlock{
-	name = "Women's Lockers"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Mu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/flasher{
-	id = "Cell 1";
-	pixel_y = 28
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"MF" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/table,
-/obj/item/storage/fancy/donut_box,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"MM" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"MO" = (
-/obj/machinery/door/firedoor,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"MP" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/door_timer{
-	id = "Cell 2";
-	name = "Cell 2";
-	pixel_x = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Nb" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/brigdoor/westleft{
-	id = "Cell 7";
-	name = "Cell 7";
-	req_access_txt = "1"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"NN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/brigdoor/eastleft{
-	id = "Cell 6";
-	name = "Cell 6";
-	req_access_txt = "1"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Oy" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/door_timer{
-	id = "Cell 7";
-	name = "Cell 7";
-	pixel_x = -32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ON" = (
-/obj/machinery/door/airlock/security{
-	name = "Armory";
-	req_access_txt = "3"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Ps" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 9;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Px" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"PK" = (
-/turf/open/indestructible{
-	density = 1;
-	desc = "A staircase that goes to the bottom segment of the shuttle. Why would I want to go down there when there's a beach outside?";
-	icon_state = "stairs-r";
-	name = "staircase";
-	opacity = 1
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"PU" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/door_timer{
-	id = "Cell 6";
-	name = "Cell 6";
-	pixel_x = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Qc" = (
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 4;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible{
-	icon_state = "cafeteria"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Qj" = (
-/obj/effect/landmark/arena/start,
-/turf/open/floor/plating,
-/area/tdome/arena)
-"Qk" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 8";
-	name = "Cell 8 Locker"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Qr" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/light{
-	icon_state = "tube";
-	dir = 1
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Qy" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/brigdoor/eastleft{
-	id = "Cell 2";
-	name = "Cell 2";
-	req_access_txt = "1"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"QL" = (
-/obj/machinery/door/airlock{
-	id_tag = "f_stall2";
-	name = "Stall 2"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"QT" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"RV" = (
-/obj/structure/table,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"RY" = (
-/obj/structure/chair/comfy/shuttle{
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	name = "stadium seat"
-	},
-/obj/machinery/camera/autoname{
-	network = list("Arena Main")
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Si" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/brigdoor/eastleft{
-	id = "Cell 1";
-	name = "Cell 1";
-	req_access_txt = "1"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Sj" = (
-/obj/machinery/door/airlock{
-	id_tag = "f_stall3";
-	name = "Stall 3"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Sk" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen/blue,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Sn" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/sign/poster/contraband/red_rum{
-	pixel_y = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Sy" = (
-/obj/structure/table,
-/obj/item/radio/off,
-/obj/item/screwdriver{
-	pixel_y = 10
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"SO" = (
-/obj/structure/rack,
-/obj/item/gun/energy/e_gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/gun/energy/e_gun,
-/obj/item/gun/energy/e_gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"SS" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Tg" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Tk" = (
-/obj/machinery/door/poddoor{
-	id = "thunderdome";
-	name = "Thunderdome Blast Door"
-	},
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"TK" = (
-/obj/structure/toilet,
-/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{
-	pixel_y = 32
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"TL" = (
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 4;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"TM" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/door_timer{
-	id = "Cell 3";
-	name = "Cell 3";
-	pixel_x = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"TO" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"UO" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/machinery/door/airlock/public{
-	name = "Open-Access Bar"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Vk" = (
-/obj/machinery/door/airlock{
-	id_tag = "m_stall2";
-	name = "Stall 2"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Vw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/flasher{
-	id = "Cell 5";
-	pixel_y = 28
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"VK" = (
-/obj/machinery/door/airlock{
-	name = "Backroom Storage"
-	},
-/turf/open/floor/wood,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"VW" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 4;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"VX" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/sign/poster/contraband/space_up{
-	pixel_y = -32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Wi" = (
-/obj/structure/fluff{
-	desc = "Has a valve and pump attached to it.";
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
-	icon_state = "vent_out";
-	name = "air vent"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Wm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 6";
-	name = "Cell 6 Locker"
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Wn" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/effect/turf_decal/bot,
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Wu" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/machinery/door_timer{
-	id = "Cell 5";
-	name = "Cell 5";
-	pixel_x = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"Wy" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"WD" = (
-/obj/effect/landmark/arena/end,
-/turf/open/floor/plating,
-/area/tdome/arena)
-"WE" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 6;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"WK" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/sign/poster/contraband/sun_kist{
-	pixel_y = 32
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"WO" = (
-/obj/structure/sign/departments/restroom,
-/turf/closed/indestructible/riveted,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"XZ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/indestructible{
-	icon_state = "darkfull"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"YH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/flasher{
-	id = "Cell 4";
-	pixel_y = 28
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"YX" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 4;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"YZ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 4;
-	network = list("Arena Main")
-	},
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
-	})
-"ZZ" = (
-/obj/machinery/door/airlock{
-	name = "Men's Restroom"
-	},
-/turf/open/indestructible{
-	icon_state = "showroomfloor"
-	},
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 1"
+	name = "Thunderdome Floor 3"
 	})
 
 (1,1,1) = {"
@@ -31850,15 +27410,15 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -32100,22 +27660,22 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-dB
-cb
-dD
-dE
-dG
-cb
-dR
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -32357,22 +27917,22 @@ aa
 aa
 aa
 aa
-yZ
-dv
-dw
-km
-Jh
-cr
-dx
-yZ
-dB
-cb
-dC
-dF
-cb
-cb
-dR
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -32595,41 +28155,41 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-dw
-dw
-dw
-Jh
-cr
-ea
-yZ
-dB
-cb
-cb
-cb
-dC
-cb
-dR
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -32852,41 +28412,41 @@ aa
 aa
 aa
 aa
-yZ
-ca
-uq
-cb
-TL
-cb
-QL
-cd
-yZ
 aa
 aa
-yZ
-TK
-Vk
-cb
-TL
-cb
-Ek
-cd
-yZ
-dv
-dw
-dv
-Jh
-cr
-AW
-yZ
-dB
-Lf
-zS
-cb
-Px
-Lf
-dR
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -33109,41 +28669,41 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-cb
-rv
-cb
-yZ
-yZ
-yZ
 aa
 aa
-yZ
-yZ
-yZ
-cb
-rv
-cb
-yZ
-yZ
-yZ
-dw
-dw
-dw
-Jh
-cr
-AW
-yZ
-yZ
-yZ
-yZ
-rS
-yZ
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -33366,41 +28926,41 @@ aa
 aa
 aa
 aa
-yZ
-ca
-kc
-cb
-cb
-cb
-Bu
-cd
-yZ
-yZ
-yZ
-yZ
-ca
-mr
-cb
-cb
-cb
-AH
-cd
-yZ
-vF
-dw
-dv
-Jh
-cr
-nr
-yZ
-cb
-TO
-cb
-cb
-cb
-cb
-cb
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -33623,41 +29183,41 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-cb
-cb
-JH
-yZ
-yZ
-yZ
-cI
-dn
-yZ
-yZ
-yZ
-KT
-cb
-cb
-yZ
-yZ
-yZ
-cu
-cj
-cj
-Ay
-cr
-AW
-yZ
-dy
-dy
-dy
-cb
-dy
-dy
-dy
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -33880,41 +29440,41 @@ aa
 aa
 aa
 aa
-yZ
-ca
-yA
-cb
-cb
-cb
-TL
-cb
-yZ
-cg
-cq
-yZ
-cb
-TL
-cb
-cb
-cb
-ce
-yZ
-dt
-cj
-Ay
-Ay
-BF
-cr
-AW
-yZ
-qz
-cb
-cb
-cb
-cb
-cb
-Wi
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -34137,41 +29697,41 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-cb
-cb
-cb
-Wi
-cb
-pl
-cg
-cq
-ZZ
-cb
-Wi
-cb
-cb
-cb
-ce
-yZ
-du
-Ay
-ef
-ef
-ef
-cr
-ea
-yZ
-dy
-dy
-dy
-cb
-dy
-dy
-dy
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -34394,41 +29954,41 @@ aa
 aa
 aa
 aa
-yZ
-ca
-Sj
-cb
-cc
-cc
-cc
-cc
-yZ
-cg
-cq
-yZ
-cc
-cc
-cc
-cc
-cb
-ce
-yZ
-dz
-Jh
-RV
-LH
-RV
-cr
-rc
-yZ
-cb
-cb
-cb
-cb
-cb
-Lf
-cb
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -34646,46 +30206,46 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-WO
-cg
-cq
-WO
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-cu
-Ib
-RV
-Sk
-dW
-yZ
-yZ
-yZ
-yZ
-yZ
-xL
-uk
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -34903,45 +30463,45 @@ aa
 aa
 aa
 aa
-yZ
-eX
-Qc
-bZ
-ff
-yZ
-cf
-YX
-cn
-QT
-cn
-cn
-cn
-YX
-cj
-cr
-YX
-cn
-cn
-cn
-QT
-cn
-YX
-cv
-yZ
-cu
-ef
-ef
-ef
-cr
-YX
-cn
-cn
-cn
-cj
-Ay
-cr
-cU
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -35156,52 +30716,52 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-eY
-bW
-bW
-bW
-yZ
-oz
-Ay
-Ay
-MO
-Ay
-cA
-Ay
-Ay
-Ay
-Ay
-Ay
-Ay
-BF
-Ay
-MO
-Ay
-Ay
-cq
-og
-cu
-Ay
-cp
-co
-co
-co
-co
-co
-Jh
-Ay
-Ay
-Ay
-ec
-yZ
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -35413,52 +30973,52 @@ aa
 aa
 aa
 aa
-yZ
-eQ
-eT
-eU
-yZ
-eY
-bW
-dO
-bW
-bY
-ch
-Ay
-cp
-fG
-gn
-Gp
-co
-co
-co
-co
-co
-co
-Gp
-gn
-fG
-Jh
-Ay
-cq
-og
-cu
-Ay
-dW
-do
-dp
-dp
-dp
-dq
-cu
-Ay
-Ay
-Ay
-cr
-ee
-dH
-dI
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -35670,52 +31230,52 @@ aa
 aa
 aa
 aa
-yZ
-eR
-eR
-eR
-yZ
-eZ
-bW
-fe
-bW
-bY
-fh
-Ay
-cq
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-cu
-Ay
-cq
-og
-cu
-Ay
-dX
-cR
-cV
-cV
-cV
-dr
-eb
-Ay
-cP
-cN
-Ay
-dH
-dH
-dJ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -35927,52 +31487,52 @@ aa
 aa
 aa
 aa
-yZ
-fk
-eR
-eR
-Lj
-bW
-bW
-dZ
-bW
-bY
-fh
-Ay
-EG
-yZ
-cJ
-yZ
-iY
-iY
-iY
-iY
-iY
-iY
-yZ
-cJ
-yZ
-WK
-Ay
-cq
-og
-cu
-cA
-dX
-cR
-cV
-cV
-cV
-dr
-eb
-cA
-cT
-cO
-BF
-dH
-dH
-dK
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -36184,52 +31744,52 @@ aa
 aa
 aa
 aa
-yZ
-eR
-eR
-gm
-yZ
-fa
-bW
-fe
-bW
-bY
-fh
-Ay
-cq
-yZ
-yZ
-yZ
-sI
-sI
-sI
-sI
-sI
-sI
-yZ
-yZ
-yZ
-cu
-Ay
-cr
-yZ
-nd
-Ay
-dX
-cR
-cV
-cV
-cV
-dr
-eb
-Ay
-cP
-cN
-Ay
-dH
-dH
-dJ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ai
+ai
+ai
+ai
+ai
+ai
+aG
+ai
+ai
+ai
+ai
+aG
+ai
+ai
+ai
+ai
+ai
+ai
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -36441,52 +32001,52 @@ aa
 aa
 aa
 aa
-yZ
-eS
-eS
-eV
-yZ
-fb
-bW
-el
-bW
-bY
-ci
-Ay
-cr
-yZ
-Tg
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+ah
+ah
+ai
+ai
+ai
+ai
 ai
 ay
+az
+aH
+ai
+ai
 ay
-ay
-ay
-aR
-yZ
-Tg
-yZ
-cj
-Ay
-Ay
-hP
-Ay
-Ay
-dW
-cS
-cW
-cW
-cW
-ds
-cu
-Ay
-Ay
-Ay
-cp
-ee
-dH
-dI
-yZ
+az
+aH
+ai
+ai
+ai
+ai
+ai
+ah
+ah
+aS
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -36698,52 +32258,52 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-fc
-bW
-bW
-bW
-yZ
-sL
-Ay
-Ay
-cx
-Tg
-cx
-aj
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ad
+ab
+ab
+ab
+ai
+ai
+ai
+ay
 az
-aA
-aA
 az
-aS
-cx
-Tg
-cx
-Ay
-Ay
-cp
-yZ
-cK
-ef
-cr
-dY
-dY
-dY
-dY
-dY
-cj
-Ay
-Ay
-Ay
-ed
-yZ
-yZ
-yZ
-yZ
+az
+aL
+av
+az
+az
+az
+aH
+ai
+ai
+ai
+ab
+ab
+ab
+aT
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -36959,45 +32519,45 @@ aa
 aa
 aa
 aa
-yZ
-fd
-bW
-bW
-bW
-yQ
-cg
-Ay
-cp
-yZ
-Tg
-yZ
-aj
-aA
-aI
-aA
-aA
-aS
-yZ
-Tg
-yZ
-Jh
-Ay
-cq
-yZ
-cL
-cM
-dV
-dd
-MF
-df
-Do
-dd
-dV
-Jh
-Ay
-oB
-cX
-yZ
+aa
+aa
+ab
+ae
+ah
+ah
+ab
+ai
+ai
+av
+az
+az
+az
+az
+aL
+av
+az
+az
+az
+az
+aL
+ai
+ai
+ab
+ah
+ah
+aU
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -37216,46 +32776,46 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-Qr
-Ay
-cq
-yZ
-yZ
-yZ
+aa
+aa
+ab
+ab
+ab
+ab
 aj
-az
+an
+ar
+ai
 aA
-aA
 az
-aS
-yZ
-yZ
-yZ
-cu
-Ay
-ln
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-LZ
-uk
-yZ
-yZ
-yZ
+az
+az
+aL
+av
+az
+az
+az
+aK
+ai
+aj
+an
+ar
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -37473,46 +33033,46 @@ aa
 aa
 aa
 aa
-yZ
-cf
-cn
-cF
-cF
-cF
-cj
-Ay
-CR
-yZ
-cJ
-yZ
-ak
-aB
-aB
-aB
-aB
-aT
-yZ
-cJ
-yZ
-kq
-Ay
-cr
-cF
-cF
-cF
-cn
-cv
-yZ
 aa
-yZ
-cb
-cb
-cb
-cb
-cb
-TO
-cb
-yZ
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+as
+ar
+ai
+aD
+aD
+aD
+ai
+ai
+aD
+aD
+aD
+ai
+aj
+aP
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -37730,46 +33290,46 @@ aa
 aa
 aa
 aa
-yZ
-cg
-Ay
-cB
-cB
-cB
-Ay
-cA
-cq
-yZ
-yZ
-yZ
-Gr
-Gr
-Gr
-Gr
-Gr
-Gr
-yZ
-yZ
-yZ
-cu
-BF
-Ay
-cB
-cB
-cB
-Ay
-cq
-yZ
 aa
-yZ
-dy
-dy
-dy
-cb
-dy
-dy
-dy
-yZ
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+aY
+aE
+aE
+aI
+aE
+aE
+aI
+aE
+aE
+ba
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -37987,46 +33547,46 @@ aa
 aa
 aa
 aa
-yZ
-cg
-Ay
-cG
-Hf
-cG
-Jh
-Ay
-cr
-cs
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-Qj
-og
-YZ
-cj
-Ay
-cp
-cG
-cG
-cG
-Ay
-cq
-yZ
 aa
-yZ
-sV
-cb
-cb
-cb
-cb
-cb
-rv
-yZ
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+ak
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aw
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -38244,46 +33804,46 @@ aa
 aa
 aa
 aa
-yZ
-Ba
-xN
-yZ
-yZ
-yZ
-wH
-cz
-cz
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-cC
-cC
-wH
-yZ
-yZ
-yZ
-Gf
-sM
-yZ
 aa
-yZ
-dy
-dy
-dy
-cb
-dy
-dy
-dy
-yZ
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+aB
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aM
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -38501,46 +34061,46 @@ aa
 aa
 aa
 aa
-yZ
-cg
-Ay
-Co
-Co
-yZ
-bU
-bU
-bU
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-cD
-cD
-cD
-yZ
-Co
-Co
-Ay
-cq
-yZ
 aa
-yZ
-cb
-Lf
-cb
-cb
-cb
-cb
-cb
-yZ
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+aC
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aN
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -38758,46 +34318,46 @@ aa
 aa
 aa
 aa
-yZ
-cg
-Ay
-Fv
-Fv
-yZ
-bU
-bU
-bU
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-cD
-cD
-cD
-yZ
-Fv
-Fv
-Ay
-cq
-yZ
 aa
-yZ
-yZ
-yZ
-yZ
-rS
-yZ
-yZ
-yZ
-yZ
+aa
+aa
+ab
+ai
+ai
+al
+ap
+ap
+ax
+aC
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aN
+aO
+ap
+ap
+aR
+ai
+ai
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -39015,46 +34575,46 @@ aa
 aa
 aa
 aa
-yZ
-cg
-Ay
-PK
-PK
-yZ
-cy
-cy
-cy
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-dS
-dS
-dS
-yZ
-PK
-PK
-Ay
-cq
-yZ
 aa
-yZ
-dB
-TO
-zS
-cb
-Px
-TO
-dR
-yZ
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+ak
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aw
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -39272,46 +34832,46 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-ul
-GW
-GW
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-GW
-GW
-cH
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
 aa
-yZ
-dB
-cb
-cb
-dF
-cb
-dC
-dR
-yZ
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+aB
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aM
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -39532,43 +35092,43 @@ aa
 aa
 aa
 aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+aC
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aN
+ak
+ao
+ao
+aw
+ai
+ai
+ab
 aa
 aa
-yZ
-cz
-cz
-cz
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-cC
-cC
-cC
-yZ
 aa
 aa
 aa
 aa
 aa
 aa
-yZ
-dB
-cb
-cb
-cb
-cb
-cb
-dR
-yZ
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -39789,43 +35349,43 @@ aa
 aa
 aa
 aa
+ab
+ai
+ai
+ak
+ao
+ao
+aX
+aC
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aN
+ak
+ao
+ao
+aw
+ai
+ai
+ab
 aa
 aa
-yZ
-RY
-bU
-bU
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-cD
-cD
-vH
-yZ
 aa
 aa
 aa
 aa
 aa
 aa
-yZ
-dB
-dC
-dD
-dE
-dG
-cb
-dR
-yZ
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -40046,43 +35606,43 @@ aa
 aa
 aa
 aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+aC
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aN
+ak
+ao
+ao
+aw
+ai
+ai
+ab
 aa
 aa
-yZ
-cy
-cy
-cy
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-dS
-dS
-dS
-yZ
 aa
 aa
 aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -40300,36 +35860,36 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-ul
-GW
-GW
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-GW
-GW
-cH
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
+aa
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+aB
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aM
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
 aa
 aa
 aa
@@ -40557,36 +36117,36 @@ aa
 aa
 aa
 aa
-yZ
-cg
-Ay
-Co
-Co
-yZ
-cz
-cz
-cz
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-cC
-cC
-cC
-yZ
-Co
-Co
-Ay
-cq
-yZ
+aa
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+ak
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aw
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
 aa
 aa
 aa
@@ -40814,36 +36374,36 @@ aa
 aa
 aa
 aa
-yZ
-cg
-Ay
-Fv
-Fv
-yZ
-bU
-bU
-bU
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-cD
-cD
-cD
-yZ
-Fv
-Fv
-Ay
-cq
-yZ
+aa
+aa
+aa
+ab
+ai
+ai
+al
+ap
+ap
+ax
+aC
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aN
+aO
+ap
+ap
+aR
+ai
+ai
+ab
+aa
+aa
+aa
 aa
 aa
 aa
@@ -41071,36 +36631,36 @@ aa
 aa
 aa
 aa
-yZ
-cg
-Ay
-PK
-PK
-yZ
-bU
-bU
-bU
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-cD
-cD
-cD
-yZ
-PK
-PK
-Ay
-cq
-yZ
+aa
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+aC
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aN
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
 aa
 aa
 aa
@@ -41328,36 +36888,36 @@ aa
 aa
 aa
 aa
-yZ
-Ak
-zv
-yZ
-yZ
-yZ
-wH
-dM
-dM
-cq
-og
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-cg
-dS
-dS
-wH
-yZ
-yZ
-yZ
-IY
-hU
-yZ
+aa
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+aB
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aM
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
 aa
 aa
 aa
@@ -41585,36 +37145,36 @@ aa
 aa
 aa
 aa
-yZ
-cg
-Ay
-cF
-cF
-cF
-cj
-Ay
-cp
-ct
-og
-WD
-dj
-dj
-dj
-dj
-dj
-dj
-dj
-og
-Cn
-Jh
-Ay
-cr
-cF
-cF
-cF
-Ay
-cq
-yZ
+aa
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+ak
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aw
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
 aa
 aa
 aa
@@ -41842,36 +37402,36 @@ aa
 aa
 aa
 aa
-yZ
-cg
-Ay
-cB
-cB
-cB
-Ay
-BF
-cq
-yZ
-yZ
-yZ
-Tk
-Tk
-Tk
-Tk
-Tk
-Tk
-yZ
-yZ
-yZ
-cu
-cA
-Ay
-cB
-cB
-cB
-Ay
-cq
-yZ
+aa
+aa
+aa
+ab
+ai
+ai
+ak
+ao
+ao
+aw
+aZ
+aF
+aF
+aJ
+aF
+aF
+aJ
+aF
+aF
+bb
+ak
+ao
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
 aa
 aa
 aa
@@ -42099,36 +37659,36 @@ aa
 aa
 aa
 aa
-yZ
-cm
-co
-cG
-Hf
-cG
-Jh
-Ay
-DT
-yZ
-cJ
-yZ
+aa
+aa
+aa
+ab
+ai
+ai
+ak
+ao
 at
-aE
-aE
-aE
-aE
-aU
-yZ
-cJ
-yZ
-JB
-Ay
-cp
-cG
-cG
-cG
-co
-cw
-yZ
+au
+ai
+aG
+aG
+aG
+ai
+ai
+aG
+aG
+aG
+ai
+am
+aQ
+ao
+aw
+ai
+ai
+ab
+aa
+aa
+aa
 aa
 aa
 aa
@@ -42356,36 +37916,36 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-Qr
-Ay
-cq
-yZ
-yZ
-yZ
+aa
+aa
+ab
+ab
+ab
+ab
+am
+aq
 au
-aF
-aG
-aG
-aF
-aV
-yZ
-yZ
-yZ
-cu
-Ay
-ln
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
+ai
+ay
+az
+az
+az
+aL
+av
+az
+az
+az
+aH
+ai
+am
+aq
+au
+ab
+ab
+ab
+ab
+aa
+aa
 aa
 aa
 aa
@@ -42614,35 +38174,35 @@ aa
 aa
 aa
 aa
-yZ
-bV
-bX
-bX
-UO
-cg
-Ay
-cr
-yZ
-Tg
-yZ
-au
-aG
-aN
-aG
-aG
+aa
+ab
+af
+ah
+ah
+ab
+ai
+ai
+av
+az
+az
+az
+az
+aL
+av
+az
+az
+az
+az
+aL
+ai
+ai
+ab
+ah
+ah
 aV
-yZ
-Tg
-yZ
-cj
-Ay
-cq
-yZ
-Ay
-de
-Ay
-RV
-yZ
+ab
+aa
+aa
 aa
 aa
 aa
@@ -42871,35 +38431,35 @@ aa
 aa
 aa
 aa
-yZ
-bX
-bX
-bX
-yZ
-pc
-Ay
-Ay
-cx
-Tg
-cx
-au
-aF
-aG
-aG
-aF
-aV
-cx
-Tg
-cx
-Ay
-Ay
-cr
-yZ
-Ay
-BF
-Ay
-RV
-yZ
+aa
+ab
+ag
+ab
+ab
+ab
+ai
+ai
+ai
+aA
+az
+az
+az
+aL
+av
+az
+az
+az
+aK
+ai
+ai
+ai
+ab
+ab
+ab
+aW
+ab
+aa
+aa
 aa
 aa
 aa
@@ -43128,35 +38688,35 @@ aa
 aa
 aa
 aa
-yZ
-fp
-bX
-bX
-Lg
-ch
-Ay
-cp
-yZ
-Ps
-yZ
-av
-aH
-aH
-aH
-aH
-aW
-yZ
-Ps
-yZ
-Jh
-Ay
-Ay
-Jk
-Ay
-Ay
-Ay
-dg
-yZ
+aa
+ab
+ac
+ah
+ah
+ai
+ai
+ai
+ai
+ai
+aA
+az
+aK
+ai
+ai
+aA
+az
+aK
+ai
+ai
+ai
+ai
+ai
+ah
+ah
+aS
+ab
+aa
+aa
 aa
 aa
 aa
@@ -43385,35 +38945,35 @@ aa
 aa
 aa
 aa
-yZ
-fq
-bX
-bX
-Lg
-fh
-Ay
-cq
-yZ
-yZ
-yZ
-sf
-sf
-sf
-sf
-sf
-sf
-yZ
-yZ
-yZ
-cu
-Ay
-iX
-yZ
-Ay
-cA
-Ay
-RV
-yZ
+aa
+ab
+ab
+ab
+ab
+ai
+ai
+ai
+ai
+ai
+ai
+aD
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ab
+ab
+ab
+ab
+aa
+aa
 aa
 aa
 aa
@@ -43639,38 +39199,38 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-fr
-bX
-bX
-Lg
-fh
-Ay
-VX
-yZ
-cJ
-yZ
-jL
-jL
-jL
-jL
-jL
-jL
-yZ
-cJ
-yZ
-Sn
-Ay
-cq
-yZ
-db
-Ay
-Ay
-RV
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -43896,38 +39456,38 @@ aa
 aa
 aa
 aa
-yZ
-fl
-fo
-yZ
-ft
-bX
-bX
-Lg
-fh
-Ay
-cq
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-cu
-Ay
-cq
-yZ
-yZ
-tK
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -44153,37 +39713,37 @@ aa
 aa
 aa
 aa
-yZ
-fm
-cQ
-yZ
-fp
-bX
-bX
-Lg
-ci
-Ay
-cr
-QT
-cn
-uO
-cn
-cn
-cn
-cn
-cn
-cn
-hH
-cn
-QT
-cj
-Ay
-cq
-yZ
-dc
-Ay
-dc
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -44410,37 +39970,37 @@ aa
 aa
 aa
 aa
-yZ
-fn
-cQ
-VK
-bX
-bX
-bX
-yZ
-cl
-Ay
-Ay
-MO
-Ay
-BF
-Ay
-Ay
-Ay
-Ay
-Ay
-Ay
-cA
-Ay
-MO
-Ay
-Ay
-cq
-yZ
-dc
-Ay
-dc
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -44667,37 +40227,37 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-fu
-bX
-bX
-yZ
-cm
-gn
-co
-fG
-co
-co
-co
-gn
-Jh
-cp
-gn
-co
-co
-co
-fG
-co
-gn
-cw
-yZ
-yZ
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -44927,30 +40487,30 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-Wy
-pG
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -45192,18 +40752,18 @@ aa
 aa
 aa
 aa
-yZ
-gb
-gd
-SS
-gc
-Wy
-pG
-gc
-SS
-gd
-gh
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -45446,24 +41006,24 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-oD
-Ay
-Ay
-og
-Wy
-pG
-og
-Ay
-Ay
-FN
-yZ
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -45703,24 +41263,24 @@ aa
 aa
 aa
 aa
-yZ
-eH
-Qk
-yZ
-oD
-Ay
-Ay
-gc
-Wy
-pG
-gc
-Ay
-Ay
-FN
-yZ
-EU
-FD
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -45960,24 +41520,24 @@ aa
 aa
 aa
 aa
-yZ
-hc
-Lb
-yZ
-oD
-Ay
-Ay
-yZ
-uy
-tf
-yZ
-Ay
-Ay
-FN
-yZ
-fO
-Lb
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -46215,28 +41775,28 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-og
-go
-yZ
-gc
-og
-gc
-yZ
-og
-og
-yZ
-gc
-og
-gc
-yZ
-og
-Nb
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -46472,28 +42032,28 @@ aa
 aa
 aa
 aa
-yZ
-fX
-fZ
-gU
-gU
-gU
-gU
-gU
-gU
-uW
-gU
-gU
-uW
-gU
-gU
-gU
-Gc
-gU
-gU
-Oy
-gi
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -46729,28 +42289,28 @@ aa
 aa
 aa
 aa
-yZ
-fY
-Ay
-Ay
-Ay
-Ay
-BF
-Ay
-Ay
-Ay
-Ay
-Ay
-Ay
-Ay
-Ay
-cA
-Ay
-Ay
-Ay
-Ay
-me
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -46986,28 +42546,28 @@ aa
 aa
 aa
 aa
-yZ
-eB
-ga
-id
-ga
-ga
-MP
-ga
-ga
-TM
-pR
-gf
-oV
-ga
-ga
-Wu
-ga
-ga
-PU
-ga
-DF
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -47243,28 +42803,28 @@ aa
 aa
 aa
 aa
-yZ
-og
-Si
-yZ
-og
-Qy
-yZ
-og
-Ck
-yZ
-wD
-gg
-yZ
-og
-yH
-yZ
-og
-Cc
-yZ
-og
-NN
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -47500,28 +43060,28 @@ aa
 aa
 aa
 aa
-yZ
-Mu
-Lb
-yZ
-KB
-Lb
-yZ
-yD
-Lb
-yZ
-oD
-FN
-yZ
-YH
-Lb
-yZ
-Vw
-Lb
-yZ
-rj
-Lb
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -47757,28 +43317,28 @@ aa
 aa
 aa
 aa
-yZ
-pM
-BD
-yZ
-pM
-fj
-yZ
-pM
-BO
-yZ
-oD
-FN
-yZ
-pM
-wG
-yZ
-pM
-zx
-yZ
-pM
-Wm
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -48011,34 +43571,34 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-KX
-kF
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -48268,34 +43828,34 @@ aa
 aa
 aa
 aa
-yZ
-ek
-cY
-dk
-Wn
-Wn
-cY
-cb
-yZ
-gy
-hd
-hi
-hz
-hA
-hB
-hC
-hD
-VW
-hE
-yZ
-hk
-hl
-hm
-di
-zK
-hw
-SO
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -48525,34 +44085,34 @@ aa
 aa
 aa
 aa
-yZ
-ek
-cb
-cb
-cb
-cb
-cb
-cb
-og
-hA
-Ay
-Ay
-Ay
-Ay
-Ay
-Ay
-Ay
-Ay
-hB
-og
-hk
-ma
-hn
-hr
-ht
-XZ
-nj
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -48782,34 +44342,34 @@ aa
 aa
 aa
 aa
-yZ
-dh
-Wi
-da
-cb
-cb
-cb
-cb
-Gv
-Ay
-Ay
-gz
-eg
-Ay
-Ay
-fA
-hj
-Ay
-Ay
-ON
-Ay
-Ay
-ho
-ho
-hu
-XZ
-hx
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -49039,34 +44599,34 @@ aa
 aa
 aa
 aa
-yZ
-dh
-cb
-cb
-cb
-gO
-rv
-cb
-Gv
-Ay
-BF
-gz
-jY
-Ay
-Ay
-Sy
-hj
-cA
-Ay
-ON
-Ay
-Ay
-hp
-hp
-hu
-XZ
-hx
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -49296,34 +44856,34 @@ aa
 aa
 aa
 aa
-yZ
-pm
-cb
-cb
-cb
-cb
-cb
-cb
-og
-ge
-Ay
-gz
-oH
-Ay
-Ay
-eN
-hj
-Ay
-gf
-og
-hk
-hl
-hq
-hs
-hv
-XZ
-nj
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -49553,34 +45113,34 @@ aa
 aa
 aa
 aa
-yZ
-ek
-cZ
-Wn
-Wn
-BV
-cZ
-cb
-yZ
-gH
-pR
-Ay
-Ay
-Ay
-Ay
-Ay
-Ay
-gf
-hG
-yZ
-hk
-hl
-hm
-gS
-XZ
-hw
-SO
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -49810,34 +45370,34 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-et
-Ay
-Ay
-Ii
-RV
-Ay
-Ay
-FN
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -50076,16 +45636,16 @@ aa
 aa
 aa
 aa
-yZ
-WE
-Ay
-Ay
-MM
-MM
-Ay
-Ay
-FN
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -50333,16 +45893,16 @@ aa
 aa
 aa
 aa
-yZ
-yz
-hy
-Hu
-Hu
-Hu
-Hu
-sB
-gj
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -50590,16 +46150,16 @@ aa
 aa
 aa
 aa
-yZ
-yZ
-yZ
-og
-og
-og
-og
-yZ
-yZ
-yZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -62304,36 +57864,36 @@ aa
 "}
 (223,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -62561,36 +58121,36 @@ aa
 "}
 (224,1,1) = {"
 aa
-ab
-bI
-bI
-bI
-bI
-bI
-bI
-ab
 aa
 aa
 aa
-ab
-bI
-bI
-bI
-bI
-bI
-bI
-ab
 aa
 aa
 aa
-ab
-bI
-bI
-bI
-bI
-bI
-bI
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -62818,36 +58378,36 @@ aa
 "}
 (225,1,1) = {"
 aa
-ab
-ah
-ah
-ah
-ah
-ah
-ah
-ab
 aa
 aa
 aa
-ab
-ah
-ah
-ah
-ah
-ah
-ah
-ab
 aa
 aa
 aa
-ab
-ah
-ah
-ah
-ah
-ah
-ah
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -63075,36 +58635,36 @@ aa
 "}
 (226,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -63332,36 +58892,36 @@ aa
 "}
 (227,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -63589,36 +59149,36 @@ aa
 "}
 (228,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -63846,36 +59406,36 @@ aa
 "}
 (229,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -64103,36 +59663,36 @@ aa
 "}
 (230,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -64359,38 +59919,38 @@ aa
 aa
 "}
 (231,1,1) = {"
-ab
-ab
-al
-al
-al
-al
-al
-al
-ab
-ab
 aa
-ab
-ab
-al
-al
-al
-al
-al
-al
-ab
-ab
 aa
-ab
-ab
-al
-al
-al
-al
-al
-al
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -64616,29 +60176,6 @@ aa
 aa
 "}
 (232,1,1) = {"
-ac
-ad
-aD
-aD
-aD
-be
-be
-bk
-bq
-ac
-aa
-ac
-bz
-bJ
-bJ
-bJ
-bJ
-bJ
-bJ
-bS
-ac
-aa
-ac
 aa
 aa
 aa
@@ -64647,7 +60184,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -64873,29 +60433,6 @@ aa
 aa
 "}
 (233,1,1) = {"
-ac
-af
-ag
-ae
-ag
-ag
-ag
-bl
-br
-ac
-aa
-ac
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -64904,7 +60441,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -65130,29 +60690,6 @@ aa
 aa
 "}
 (234,1,1) = {"
-ac
-ag
-ag
-ag
-ae
-ae
-ag
-bm
-bs
-ac
-aa
-ac
-bB
-bA
-bB
-bA
-bA
-bA
-bA
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -65161,7 +60698,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -65387,29 +60947,6 @@ aa
 aa
 "}
 (235,1,1) = {"
-ac
-am
-aJ
-aM
-aZ
-ae
-ae
-ag
-bt
-ac
-aa
-ac
-bA
-bA
-bB
-bM
-bA
-bA
-bA
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -65418,7 +60955,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -65644,29 +61204,6 @@ aa
 aa
 "}
 (236,1,1) = {"
-ac
-an
-aJ
-aO
-ba
-ae
-ag
-ag
-bu
-ac
-aa
-ac
-bC
-bA
-bL
-bM
-bN
-bO
-bR
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -65675,7 +61212,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -65901,29 +61461,6 @@ aa
 aa
 "}
 (237,1,1) = {"
-ac
-ao
-aJ
-aP
-ag
-ag
-bb
-ag
-ag
-ac
-aa
-ac
-bD
-bA
-bB
-bM
-bA
-bA
-bA
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -65932,7 +61469,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -66158,29 +61718,6 @@ aa
 aa
 "}
 (238,1,1) = {"
-ac
-ap
-aJ
-aQ
-ae
-bf
-bi
-ag
-ag
-ac
-aa
-ac
-bE
-bA
-bB
-bM
-bA
-bP
-bA
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -66189,7 +61726,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -66415,29 +61975,6 @@ aa
 aa
 "}
 (239,1,1) = {"
-ac
-aq
-aJ
-aX
-bb
-bg
-bf
-bb
-ae
-ac
-aa
-ac
-bF
-bA
-bB
-bM
-bA
-bO
-bA
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -66446,7 +61983,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -66672,29 +62232,6 @@ aa
 aa
 "}
 (240,1,1) = {"
-ac
-an
-aJ
-aO
-ag
-bh
-bj
-ae
-ae
-ac
-aa
-ac
-bE
-bA
-bB
-bM
-bA
-bQ
-bA
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -66703,7 +62240,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -66929,29 +62489,6 @@ aa
 aa
 "}
 (241,1,1) = {"
-ac
-ao
-aJ
-aP
-ag
-bb
-ag
-ag
-ae
-ac
-aa
-ac
-by
-bA
-bB
-bM
-bA
-bA
-bA
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -66960,7 +62497,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -67186,29 +62746,6 @@ aa
 aa
 "}
 (242,1,1) = {"
-ac
-ap
-aJ
-aQ
-bc
-ag
-ag
-ag
-bu
-ac
-aa
-ac
-bG
-bA
-bL
-bM
-bN
-bO
-bR
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -67217,7 +62754,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -67443,29 +63003,6 @@ aa
 aa
 "}
 (243,1,1) = {"
-ac
-ar
-aJ
-aM
-bd
-ae
-ag
-ag
-bt
-ac
-aa
-ac
-bA
-bA
-bB
-bM
-bA
-bA
-bA
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -67474,7 +63011,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -67700,29 +63260,6 @@ aa
 aa
 "}
 (244,1,1) = {"
-ac
-ag
-ag
-ag
-ag
-ag
-ae
-bn
-bv
-ac
-aa
-ac
-bB
-bA
-bB
-bA
-bA
-bA
-bA
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -67731,7 +63268,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -67957,29 +63517,6 @@ aa
 aa
 "}
 (245,1,1) = {"
-ac
-ax
-ae
-ag
-ae
-ag
-ae
-bo
-bw
-ac
-aa
-ac
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-ac
-aa
-ac
 aa
 aa
 aa
@@ -67988,7 +63525,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -68214,29 +63774,6 @@ aa
 aa
 "}
 (246,1,1) = {"
-ac
-aC
-aK
-aY
-aY
-aY
-aK
-bp
-bx
-ac
-aa
-ac
-bH
-bK
-bK
-bK
-bK
-bK
-bK
-bT
-ac
-aa
-ac
 aa
 aa
 aa
@@ -68245,7 +63782,30 @@ aa
 aa
 aa
 aa
-ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -68471,38 +64031,38 @@ aa
 aa
 "}
 (247,1,1) = {"
-ab
-ab
-as
-as
-as
-as
-as
-as
-ab
-ab
 aa
-ab
-ab
-as
-as
-as
-as
-as
-as
-ab
-ab
 aa
-ab
-ab
-as
-as
-as
-as
-as
-as
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -68729,36 +64289,36 @@ aa
 "}
 (248,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -68986,36 +64546,36 @@ aa
 "}
 (249,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -69243,36 +64803,36 @@ aa
 "}
 (250,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -69500,36 +65060,36 @@ aa
 "}
 (251,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -69757,36 +65317,36 @@ aa
 "}
 (252,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -70014,36 +65574,36 @@ aa
 "}
 (253,1,1) = {"
 aa
-ab
-aw
-aw
-aw
-aw
-aw
-aw
-ab
 aa
 aa
 aa
-ab
-aw
-aw
-aw
-aw
-aw
-aw
-ab
 aa
 aa
 aa
-ab
-aw
-aw
-aw
-aw
-aw
-aw
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -70271,36 +65831,36 @@ aa
 "}
 (254,1,1) = {"
 aa
-ab
-aL
-aL
-aL
-aL
-aL
-aL
-ab
 aa
 aa
 aa
-ab
-aL
-aL
-aL
-aL
-aL
-aL
-ab
 aa
 aa
 aa
-ab
-aL
-aL
-aL
-aL
-aL
-aL
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -70528,36 +66088,36 @@ aa
 "}
 (255,1,1) = {"
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa

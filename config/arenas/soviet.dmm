@@ -5,47 +5,47 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellowsiding/corner,
-/area/janitor)
+/area/tdome/arena)
 "b" = (
 /obj/structure/table,
 /obj/item/trash/can/food,
 /turf/open/floor/plasteel/yellowsiding,
-/area/janitor)
+/area/tdome/arena)
 "c" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/plasteel/yellowsiding,
-/area/janitor)
+/area/tdome/arena)
 "d" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel/yellowsiding,
-/area/janitor)
+/area/tdome/arena)
 "e" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/yellowsiding,
-/area/janitor)
+/area/tdome/arena)
 "f" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/yellowsiding,
-/area/janitor)
+/area/tdome/arena)
 "g" = (
 /obj/machinery/deepfryer,
 /obj/item/reagent_containers/food/snacks/badrecipe,
 /turf/open/floor/plasteel/yellowsiding,
-/area/janitor)
+/area/tdome/arena)
 "h" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/burger/human,
 /turf/open/floor/plasteel/yellowsiding,
-/area/janitor)
+/area/tdome/arena)
 "i" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/deadmouse,
 /turf/open/floor/plasteel/yellowsiding,
-/area/janitor)
+/area/tdome/arena)
 "j" = (
 /obj/structure/chair{
 	dir = 8
@@ -54,27 +54,27 @@
 	icon_state = "yellowcornersiding";
 	dir = 8
 	},
-/area/janitor)
+/area/tdome/arena)
 "k" = (
 /turf/open/floor/plasteel/yellowsiding{
 	icon_state = "yellowsiding";
 	dir = 4
 	},
-/area/janitor)
+/area/tdome/arena)
 "l" = (
 /obj/effect/turf_decal/stripes/red/line{
 	icon_state = "warningline_red";
 	dir = 6
 	},
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "m" = (
 /obj/effect/turf_decal/stripes/red/line{
 	icon_state = "warningline_red";
 	dir = 1
 	},
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/red/line{
@@ -82,7 +82,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "o" = (
 /obj/item/clothing/head/chicken,
 /obj/effect/turf_decal/stripes/red/line{
@@ -90,21 +90,21 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "p" = (
 /obj/effect/turf_decal/stripes/red/line{
 	icon_state = "warningline_red";
 	dir = 10
 	},
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "q" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/yellowsiding{
 	icon_state = "yellowsiding";
 	dir = 8
 	},
-/area/janitor)
+/area/tdome/arena)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/red/line{
@@ -112,20 +112,20 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "s" = (
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "t" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/burger/human,
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "u" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/deadmouse,
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "v" = (
 /obj/item/clothing/suit/chickensuit,
 /obj/effect/turf_decal/stripes/red/line{
@@ -133,39 +133,39 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "w" = (
 /turf/open/floor/plasteel/yellowsiding{
 	icon_state = "yellowsiding";
 	dir = 8
 	},
-/area/janitor)
+/area/tdome/arena)
 "x" = (
 /obj/effect/turf_decal/stripes/red/line{
 	icon_state = "warningline_red";
 	dir = 8
 	},
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "y" = (
 /obj/item/chair,
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "z" = (
 /obj/effect/decal/hammerandsickle,
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "A" = (
 /obj/effect/turf_decal/stripes/red/line{
 	icon_state = "warningline_red";
 	dir = 4
 	},
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "B" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "C" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/red/line{
@@ -173,23 +173,23 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "D" = (
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "E" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "F" = (
 /obj/effect/turf_decal/stripes/red/line{
 	icon_state = "warningline_red";
 	dir = 9
 	},
 /turf/open/floor/plasteel/telecomms,
-/area/janitor)
+/area/tdome/arena)
 "G" = (
 /obj/structure/chair{
 	dir = 4
@@ -198,14 +198,14 @@
 	icon_state = "yellowcornersiding";
 	dir = 4
 	},
-/area/janitor)
+/area/tdome/arena)
 "H" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/deadmouse,
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
 	},
-/area/janitor)
+/area/tdome/arena)
 "I" = (
 /obj/structure/chair{
 	dir = 8
@@ -213,7 +213,7 @@
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
 	},
-/area/janitor)
+/area/tdome/arena)
 "J" = (
 /obj/structure/chair{
 	dir = 4
@@ -221,25 +221,25 @@
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
 	},
-/area/janitor)
+/area/tdome/arena)
 "K" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
 	},
-/area/janitor)
+/area/tdome/arena)
 "L" = (
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
 	},
-/area/janitor)
+/area/tdome/arena)
 "M" = (
 /obj/structure/table,
 /obj/item/trash/can/food,
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
 	},
-/area/janitor)
+/area/tdome/arena)
 "N" = (
 /obj/structure/chair{
 	dir = 8
@@ -249,10 +249,10 @@
 	icon_state = "yellowcornersiding";
 	dir = 1
 	},
-/area/janitor)
+/area/tdome/arena)
 "O" = (
 /turf/open/floor/plasteel/yellowsiding,
-/area/janitor)
+/area/tdome/arena)
 
 (1,1,1) = {"
 a
