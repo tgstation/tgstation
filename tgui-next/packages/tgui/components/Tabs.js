@@ -52,7 +52,6 @@ export class Tabs extends Component {
             const {
               className,
               label,
-              icon,
               content, // ignored
               children, // ignored
               onClick,
