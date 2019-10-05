@@ -137,14 +137,16 @@
 	permeability_coefficient = 0.01
 	transfer_prints = TRUE
 	resistance_flags = NONE
+	var/carrytrait = TRAIT_QUICK_CARRY
 
 /obj/item/clothing/gloves/color/latex/equipped(mob/user, slot)
 	..()
 	if(slot == SLOT_GLOVES)
-		ADD_TRAIT(user, TRAIT_QUICK_CARRY, CLOTHING_TRAIT)
+		ADD_TRAIT(user, carrytrait, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/dropped(mob/user)
-	REMOVE_TRAIT(user, TRAIT_QUICK_CARRY, CLOTHING_TRAIT)
+	..()
+	REMOVE_TRAIT(user, carrytrait, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/nitrile
 	name = "nitrile gloves"
@@ -152,14 +154,7 @@
 	icon_state = "nitrile"
 	item_state = "nitrilegloves"
 	transfer_prints = FALSE
-
-/obj/item/clothing/gloves/color/latex/nitrile/equipped(mob/user, slot)
-	if(slot == SLOT_GLOVES)
-		ADD_TRAIT(user, TRAIT_QUICKER_CARRY, CLOTHING_TRAIT)
-
-/obj/item/clothing/gloves/color/latex/nitrile/dropped(mob/user)
-	..()
-	REMOVE_TRAIT(user, TRAIT_QUICKER_CARRY, CLOTHING_TRAIT)
+	carrytrait = TRAIT_QUICKER_CARRY
 
 /obj/item/clothing/gloves/color/white
 	name = "white gloves"
