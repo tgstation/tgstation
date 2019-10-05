@@ -39,6 +39,8 @@ export const KEY_W = 87;
 export const KEY_X = 88;
 export const KEY_Y = 89;
 export const KEY_Z = 90;
+export const KEY_MINUS = 189;
+export const KEY_EQUAL = 187;
 
 const makeComboString = (ctrlKey, altKey, keyCode) => {
   const parts = [
@@ -64,7 +66,7 @@ export const hotKeyMiddleware = store => {
       logger.log(comboString);
       dispatch({
         type: 'hotKey',
-        payload: { ctrlKey, keyCode },
+        payload: { ctrlKey, altKey, keyCode },
       });
     }
   });
@@ -77,9 +79,9 @@ export const hotKeyReducer = (state, action) => {
   const { type, payload } = action;
 
   if (type === 'hotKey') {
-    const { ctrlKey, keyCode } = payload;
+    const { ctrlKey, altKey, keyCode } = payload;
 
-    if (ctrlKey && keyCode === KEY_1) {
+    if (ctrlKey && altKey && keyCode === KEY_EQUAL) {
       // Toggle kitchen sink mode
       return {
         ...state,

@@ -12,11 +12,35 @@
 <!--customheadhtml-->
 <script id="data" type="application/json" data-ref="[ref]">{}</script>
 
+</head>
+<body class="">
+
+<!-- Old TGUI container -->
+<div id="container" class="container">
+  <div class="notice">
+    <span>Loading...</span><br>
+  </div>
+</div>
+
+<!-- Error container -->
+<div id="error-container"></div>
+
 <!-- Scripts -->
 <script type="text/javascript">
-// Global error handling
+// Fill ref with data from query params
+var ref = location.search.replace('?ref=', '');
+document.getElementById('data').setAttribute('data-ref', ref);
+// Early global error handling
 window.onerror = function (msg, url, line, col, error) {
-  document.write(msg + ' (' + url + ' line ' + line + ')');
+  var logString = msg + ' (' + url + ' line ' + line + ')';
+  // Print to the page
+  document.getElementById('error-container').innerHTML = logString;
+  // Send to the backend
+  var ref = document.getElementById('data').getAttribute('data-ref');
+  location.href = 'byond://?src=' + ref
+    + '&action=tgui:log&error=true'
+    + '&log=' + encodeURIComponent(logString
+      + '\nUser Agent: ' + navigator.userAgent);
 };
 // Subscribe to backend updates
 window.update = function (dataString) {
@@ -29,21 +53,8 @@ window.update = function (dataString) {
     }
   }
 };
-// Fill ref with data from query params
-var ref = location.search.replace('?ref=', '');
-document.getElementById('data').setAttribute('data-ref', ref);
 </script>
 <script defer src='tgui.js'></script>
-
-</head>
-<body class="">
-
-<!-- Old TGUI container -->
-<div id="container" class="container">
-  <div class="notice">
-    <span>Loading...</span><br>
-  </div>
-</div>
 
 <noscript>
   <div class="notice">

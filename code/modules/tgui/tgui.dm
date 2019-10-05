@@ -392,13 +392,9 @@
 	titlebar = value
 
 /datum/tgui/proc/log_error(message)
-	var/out_message = {"ERROR: [user] ([user.ckey]) using "[title]":\n
-		[message]
-		"}
+	var/out_message = {"ERROR: [user] ([user.ckey]) using "[title]":\n[message]\n"}
 	log_tgui_error(out_message)
 
 /datum/tgui/proc/log_debug(message)
-	var/out_message = {"DEBUG: [user] ([user.ckey]) using "[title]":\n
-		[message]
-		"}
+	var/out_message = {"DEBUG: [user] ([user.ckey]) using "[title]":\n[message]\n"}
 	log_tgui_debug(out_message)

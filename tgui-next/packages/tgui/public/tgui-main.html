@@ -21,11 +21,22 @@
 <!-- Old TGUI container -->
 <div id="container" class="container"></div>
 
+<!-- Error container -->
+<div id="error-container"></div>
+
 <!-- Scripts -->
 <script type="text/javascript">
-// Global error handling
+// Early global error handling
 window.onerror = function (msg, url, line, col, error) {
-  document.write(msg + ' (' + url + ' line ' + line + ')');
+  var logString = msg + ' (' + url + ' line ' + line + ')';
+  // Print to the page
+  document.getElementById('error-container').innerHTML = logString;
+  // Send to the backend
+  var ref = document.getElementById('data').getAttribute('data-ref');
+  location.href = 'byond://?src=' + ref
+    + '&action=tgui:log&error=true'
+    + '&log=' + encodeURIComponent(logString
+      + '\nUser Agent: ' + navigator.userAgent);
 };
 </script>
 <script type="text/javascript" src="shim-console.js"></script>

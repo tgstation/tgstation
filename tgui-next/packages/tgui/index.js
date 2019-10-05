@@ -9,7 +9,7 @@ import { backendUpdate } from './backend';
 import { act, tridentVersion } from './byond';
 import { setupDrag } from './drag';
 import { getRoute } from './layout';
-import { createLogger } from './logging';
+import { createLogger, setLoggerRef } from './logging';
 import { createStore } from './store';
 
 const logger = createLogger();
@@ -19,16 +19,16 @@ const reactRoot = document.getElementById('react-root');
 let initialRender = true;
 
 const renderLayout = () => {
-  const state = store.getState();
-  // Initial render setup
-  if (initialRender) {
-    logger.log('initial render', state);
-    initialRender = false;
-    // Setup dragging
-    setupDrag(state);
-  }
-  // Start rendering
   try {
+    const state = store.getState();
+    // Initial render setup
+    if (initialRender) {
+      logger.log('initial render', state);
+      initialRender = false;
+      // Setup dragging
+      setupDrag(state);
+    }
+    // Start rendering
     const { Layout } = require('./layout');
     const element = <Layout state={state} dispatch={store.dispatch} />;
     render(element, reactRoot);
@@ -45,9 +45,13 @@ const setupApp = () => {
   const stateJson = holder.textContent;
   const state = JSON.parse(stateJson);
 
+  // Initialize logger
+  setLoggerRef(ref);
+
   // Determine if we can handle this route
   const route = getRoute(state);
   if (!route) {
+    logger.log('loading old tgui');
     // Load old TGUI using redirection method for IE8
     if (tridentVersion <= 4) {
       location.href = 'tgui-fallback.html?ref=' + ref;
@@ -89,7 +93,7 @@ const setupApp = () => {
 
   // Render the app
   if (state.config) {
-    logger.log('Found inlined state');
+    logger.log('found inlined state');
     store.dispatch(backendUpdate(state));
   }
 
