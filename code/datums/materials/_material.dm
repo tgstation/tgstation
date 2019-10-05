@@ -18,12 +18,14 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/list/categories = list()
 	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets.
 	var/sheet_type
-	///The type of coin this material spawns. This should be replaced as soon as possible by greyscale coins.
-	var/coin_type
 	///This is a modifier for force, and resembles the strength of the material
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material
 	var/integrity_modifier = 1
+	///This is the amount of value per 1 unit of the material
+	var/value_per_unit = 0
+	///Armor modifiers, multiplies an items normal armor vars by these amounts.
+	var/armor_modifiers = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
 
 ///This proc is called when the material is added to an object.
 /datum/material/proc/on_applied(atom/source, amount, material_flags)
@@ -32,6 +34,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 			source.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		if(alpha)
 			source.alpha = alpha
+
+	if(material_flags & MATERIAL_ADD_PREFIX)
+		source.name = "[name] [source.name]"
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
@@ -45,6 +50,12 @@ Simple datum which is instanced once per type and is used for every object of sa
 	o.force *= strength_modifier
 	o.throwforce *= strength_modifier
 
+	var/list/temp_armor_list = list() //Time to add armor modifiers!
+	var/list/current_armor = o.armor?.getList()
+
+	for(var/i in current_armor)
+		temp_armor_list[i] = current_armor[i] * armor_modifiers[i]
+	o.armor = getArmor(arglist(temp_armor_list))
 
 ///This proc is called when the material is removed from an object.
 /datum/material/proc/on_removed(atom/source, material_flags)
@@ -52,6 +63,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 		if(color)
 			source.remove_atom_colour(FIXED_COLOUR_PRIORITY, color)
 		source.alpha = initial(source.alpha)
+
+	if(material_flags & MATERIAL_ADD_PREFIX)
+		source.name = initial(source.name)
 	
 	if(istype(source, /obj)) //objs
 		on_removed_obj(source, material_flags)

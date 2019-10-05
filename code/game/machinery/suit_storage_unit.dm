@@ -176,7 +176,7 @@
 		add_overlay("human")
 
 /obj/machinery/suit_storage_unit/power_change()
-	..()
+	. = ..()
 	if(!is_operational() && state_open)
 		open_machine()
 		dump_contents()
@@ -239,13 +239,13 @@
   * All atoms still inside at the end of all cycles are ejected from the unit.
 */
 /obj/machinery/suit_storage_unit/proc/cook()
+	var/mob/living/mob_occupant = occupant
 	if(uv_cycles)
 		uv_cycles--
 		uv = TRUE
 		locked = TRUE
 		update_icon()
 		if(occupant)
-			var/mob/living/mob_occupant = occupant
 			if(uv_super)
 				mob_occupant.adjustFireLoss(rand(20, 36))
 			else
@@ -274,6 +274,7 @@
 				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
 			else
 				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
+				mob_occupant.radiation = 0
 			playsound(src, 'sound/machines/airlockclose.ogg', 25, TRUE)
 			var/list/things_to_clear = list() //Done this way since using GetAllContents on the SSU itself would include circuitry and such.
 			if(suit)
@@ -326,7 +327,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", \
 		"<span class='notice'>You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a thump from [src].</span>")
+		"<span class='hear'>You hear a thump from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return

@@ -688,6 +688,14 @@
 	build_path = /obj/machinery/harvester
 	req_components = list(/obj/item/stock_parts/micro_laser = 4)
 
+/obj/item/circuitboard/machine/medical_kiosk
+	name = "Medical Kiosk (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/medical_kiosk
+	req_components = list(
+		/obj/item/healthanalyzer = 1,
+		/obj/item/stock_parts/scanning_module = 1)
+
 /obj/item/circuitboard/machine/limbgrower
 	name = "Limb Grower (Machine Board)"
 	icon_state = "medical"

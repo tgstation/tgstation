@@ -23,9 +23,6 @@
 		to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
 	else
 		to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
-		if(user.stat != DEAD)
-			user.emote("deathgasp")
-			user.tod = station_time_timestamp()
 		user.fakedeath("changeling") //play dead
 		user.update_stat()
 		user.update_mobility()
@@ -45,7 +42,7 @@
 			reform, making a loud, grotesque sound!</span>",
 			"<span class='userdanger'>Your limbs regrow, making a \
 			loud, crunchy sound and giving you great pain!</span>",
-			"<span class='italics'>You hear organic matter ripping \
+			"<span class='hear'>You hear organic matter ripping \
 			and tearing!</span>")
 		user.emote("scream")
 		user.regenerate_limbs(0, list(BODY_ZONE_HEAD))

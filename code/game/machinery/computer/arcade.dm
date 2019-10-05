@@ -78,7 +78,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
+		visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
 		SSmedals.UnlockMedal(MEDAL_PULSE, user.client)
+		return
 
 	if(!contents.len)
 		var/prizeselect
@@ -661,7 +663,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	else if(href_list["killcrew"]) //shoot a crewmember
 		if(gameStatus == ORION_STATUS_NORMAL || event == ORION_TRAIL_LING)
 			var/sheriff = remove_crewmember() //I shot the sheriff
-			playsound(loc,'sound/weapons/gunshot.ogg', 100, TRUE)
+			playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
 
 			if(settlers.len == 0 || alive == 0)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
@@ -810,6 +812,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(ORION_TRAIL_OLDSHIP)
 			eventdat += "<br>Your crew spots an old ship floating through space. It might have some supplies, but then again it looks rather unsafe."
 			eventdat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];search=1'>Search it</a><a href='byond://?src=[REF(src)];eventclose=1'>Leave it</a></P><P ALIGN=Right><a href='byond://?src=[REF(src)];close=1'>Close</a></P>"
+			canContinueEvent = 1
 
 		if(ORION_TRAIL_SEARCH)
 			switch(rand(100))

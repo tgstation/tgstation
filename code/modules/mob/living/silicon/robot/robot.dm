@@ -1131,10 +1131,10 @@
 	shell = TRUE
 	cell = null
 
-/mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
-	. = ..()
-	if(!(M in buckled_mobs) && isliving(M))
-		buckle_mob(M)
+/mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
+	if(can_buckle && istype(M) && !(M in buckled_mobs) && ((user!=src)||(a_intent != INTENT_HARM)))
+		if(buckle_mob(M))
+			return TRUE
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))

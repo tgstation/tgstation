@@ -307,7 +307,7 @@
 				suit = /obj/item/clothing/suit/armor/bone
 				gloves = /obj/item/clothing/gloves/bracer
 			if(prob(5))
-				back = pickweight(list(/obj/item/twohanded/bonespear = 3, /obj/item/twohanded/fireaxe/boneaxe = 2))
+				back = pickweight(list(/obj/item/twohanded/spear/bonespear = 3, /obj/item/twohanded/fireaxe/boneaxe = 2))
 			if(prob(10))
 				belt = /obj/item/storage/belt/mining/primitive
 			if(prob(30))

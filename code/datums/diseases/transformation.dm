@@ -17,6 +17,7 @@
 	var/list/stage5 = list("Oh the humanity!")
 	var/new_form = /mob/living/carbon/human
 	var/bantype
+	var/transformed_antag_datum //Do we add a specific antag datum once the transformation is complete?
 
 /datum/disease/transformation/Copy()
 	var/datum/disease/transformation/D = ..()
@@ -68,7 +69,8 @@
 				affected_mob.mind.transfer_to(new_mob)
 			else
 				new_mob.key = affected_mob.key
-
+		if(transformed_antag_datum)
+			new_mob.mind.add_antag_datum(transformed_antag_datum)
 		new_mob.name = affected_mob.real_name
 		new_mob.real_name = new_mob.name
 		qdel(affected_mob)
@@ -285,6 +287,7 @@
 	stage5	= list("<span class='danger'>You have become a morph.</span>")
 	new_form = /mob/living/simple_animal/hostile/morph
 	infectable_biotypes = MOB_ORGANIC|MOB_MINERAL|MOB_UNDEAD //magic!
+	transformed_antag_datum = /datum/antagonist/morph
 
 /datum/disease/transformation/gondola
 	name = "Gondola Transformation"

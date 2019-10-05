@@ -44,7 +44,7 @@
 	if(W.tool_behaviour == TOOL_SCREWDRIVER && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
-			"<span class='italics'>You hear clicking.</span>")
+			"<span class='hear'>You hear clicking.</span>")
 		new /obj/item/deactivated_swarmer(get_turf(src))
 		qdel(src)
 	else
@@ -501,8 +501,8 @@
 	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	do_teleport(target, F, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 
-/mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
-	if(!tesla_shock)
+/mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	if(!(flags & SHOCK_TESLA))
 		return FALSE
 	return ..()
 
@@ -593,7 +593,7 @@
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
 			playsound(loc,'sound/effects/snap.ogg',50, TRUE, -1)
-			L.electrocute_act(0, src, 1, 1, 1)
+			L.electrocute_act(0, src, 1, flags = SHOCK_NOGLOVES|SHOCK_ILLUSION)
 			if(iscyborg(L))
 				L.Paralyze(100)
 			qdel(src)

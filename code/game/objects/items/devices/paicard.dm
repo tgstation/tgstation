@@ -52,6 +52,7 @@
 			var/mob/living/carbon/human/H = user
 			if(H.real_name == pai.master || H.dna.unique_enzymes == pai.master_dna)
 				dat += "<A href='byond://?src=[REF(src)];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
+		dat += "<A href='byond://?src=[REF(src)];fix_speech=1'>\[Reset speech synthesis module\]</a><br>"
 		dat += "<A href='byond://?src=[REF(src)];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
 		dat += "No personality installed.<br>"
@@ -92,8 +93,12 @@
 					to_chat(pai, "<span class='userdanger'>Your mental faculties leave you.</span>")
 					to_chat(pai, "<span class='rose'>oblivion... </span>")
 					qdel(pai)
+		if(href_list["fix_speech"])
+			pai.stuttering = 0
+			pai.slurring = 0
+			pai.derpspeech = 0
 		if(href_list["toggle_transmit"] || href_list["toggle_receive"])
-			var/transmitting = href_list["toggle_transmit"] //it can't be both so if we know it's not transmitting it must be receiving. 
+			var/transmitting = href_list["toggle_transmit"] //it can't be both so if we know it's not transmitting it must be receiving.
 			var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
 			if(transmitting)
 				pai.can_transmit = !pai.can_transmit
@@ -154,6 +159,8 @@
 				src.add_overlay("pai-what")
 			if(10)
 				src.add_overlay("pai-null")
+			if(11)
+				src.add_overlay("pai-sunglasses")
 
 /obj/item/paicard/proc/alertUpdate()
 	audible_message("<span class='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", "<span class='notice'>[src] vibrates with an alert.</span>")

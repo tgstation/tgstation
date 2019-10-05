@@ -999,10 +999,26 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
-	M.AdjustAllImmobility(-20, FALSE)
-	M.adjustStaminaLoss(-1, 0)
 	..()
+	M.AdjustAllImmobility(-20, FALSE)
+	M.adjustStaminaLoss(-10, 0)
+	M.Jitter(10)
+	M.Dizzy(10)
 	return TRUE
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.ignore_slowdown(type)
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
+	..()
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.unignore_slowdown(type)
+	L.Dizzy(0)
+	L.Jitter(0)
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
 	M.adjustToxLoss(1, 0)
@@ -1199,7 +1215,7 @@
 
 /datum/reagent/medicine/rhigoxane
 	name = "Rhigoxane"
-	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. It's high halogen content helps extiguish fires."
+	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
 	reagent_state = LIQUID
 	color = "#1E8BBE" // part of a system of burn meds going from orange to teal in color
 	overdose_threshold = 25
@@ -1226,6 +1242,13 @@
 	M.adjustFireLoss(3*REM, 0.)
 	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	..()
+
+/datum/reagent/medicine/silibinin
+	name = "Silibinin"
+	description = "A thistle derrived hepatoprotective flavolignan mixture that help reverse damage to the liver."
+	reagent_state = SOLID
+	color = "#FFFFD0"
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)//Add a chance to cure liver trauma once implemented.
@@ -1288,3 +1311,38 @@
 	M.adjustOrganLoss(ORGAN_SLOT_HEART,0.2)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS,0.2)
 	..()
+
+/datum/reagent/medicine/badstims  //These are bad for combat on purpose. Used in adrenal implant.
+	name = "Experimental Stimulants"
+	description = "Experimental Stimulants designed to get you away from trouble."
+	reagent_state = LIQUID
+	color = "#F5F5F5"
+
+/datum/reagent/medicine/badstims/on_mob_life(mob/living/carbon/M)
+	..()
+	if(prob(30) && iscarbon(M))
+		var/obj/item/I = M.get_active_held_item()
+		if(I && M.dropItemToGround(I))
+			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
+	if(prob(33))
+		M.losebreath++
+		M.adjustOxyLoss(1, 0)
+	M.adjustStaminaLoss(-10, 0)
+	M.Jitter(10)
+	M.Dizzy(15)
+
+/datum/reagent/medicine/badstims/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.35, blacklisted_movetypes=(FLYING|FLOATING))
+	L.ignore_slowdown(type)
+
+/datum/reagent/medicine/badstims/on_mob_end_metabolize(mob/living/L)
+	..()
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.remove_movespeed_modifier(type)
+	L.unignore_slowdown(type)
+	L.Dizzy(0)
+	L.Jitter(0)

@@ -133,9 +133,6 @@
 /obj/structure/chair/wood/narsie_act()
 	return
 
-/obj/structure/chair/wood/normal //Kept for map compatibility
-
-
 /obj/structure/chair/wood/wings
 	icon_state = "wooden_chair_wings"
 	item_chair = /obj/item/chair/wood/wings
@@ -431,6 +428,7 @@
 	buildstacktype = null
 	item_chair = null
 	flags_1 = NODECONSTRUCT_1
+	alpha = 0
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
 	M.pixel_y += 5

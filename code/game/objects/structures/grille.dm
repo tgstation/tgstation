@@ -87,6 +87,8 @@
 
 /obj/structure/grille/attack_animal(mob/user)
 	. = ..()
+	if(!.)
+		return
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
@@ -189,7 +191,7 @@
 				else if(istype(W, /obj/item/stack/sheet/titaniumglass))
 					WD = new/obj/structure/window/shuttle(drop_location())
 				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
-					WD = new/obj/structure/window/plastitanium(drop_location())
+					WD = new/obj/structure/window/plasma/reinforced/plastitanium(drop_location())
 				else
 					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
 				WD.setDir(dir_to_set)
