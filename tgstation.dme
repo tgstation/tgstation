@@ -1674,7 +1674,7 @@
 #include "code\modules\clothing\under\syndicate.dm"
 #include "code\modules\clothing\under\trek.dm"
 #include "code\modules\clothing\under\jobs\cargo.dm"
-#include "code\modules\clothing\under\jobs\centcomm.dm"
+#include "code\modules\clothing\under\jobs\centcom.dm"
 #include "code\modules\clothing\under\jobs\command.dm"
 #include "code\modules\clothing\under\jobs\engineering.dm"
 #include "code\modules\clothing\under\jobs\medical.dm"
