@@ -111,7 +111,7 @@
 			if(scooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M)||ismonkey(M))
-						M.electrocute_act(5, "[user]", safety = 1)
+						M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
 						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
 						M.update_mobility()
@@ -360,9 +360,11 @@
 	emaggedhitdamage = 0
 
 /obj/item/borg/lollipop/equipped()
+	. = ..()
 	check_amount()
 
 /obj/item/borg/lollipop/dropped()
+	. = ..()
 	check_amount()
 
 /obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
@@ -741,3 +743,191 @@
 /obj/item/borg/sight/hud/sec/Initialize()
 	. = ..()
 	hud = new /obj/item/clothing/glasses/hud/security(src)
+
+
+/**********************************************************************
+						Borg apparatus
+***********************************************************************/
+//These are tools that can hold only specific items. For example, the mediborg gets one that can only hold beakers and bottles.
+
+/obj/item/borg/apparatus/
+	name = "unknown storage apparatus"
+	desc = "This device seems nonfunctional."
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "hugmodule"
+	var/obj/item/stored
+	var/list/storable = list()
+
+/obj/item/borg/apparatus/Initialize()
+	. = ..()
+	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
+
+/obj/item/borg/apparatus/Destroy()
+	if(stored)
+		qdel(stored)
+	. = ..()
+
+///If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
+/obj/item/borg/apparatus/proc/safedecon()
+	if(stored)
+		stored.forceMove(get_turf(src))
+		stored = null
+
+/obj/item/borg/apparatus/Exited(atom/A)
+	if(A == stored) //sanity check
+		UnregisterSignal(stored, COMSIG_OBJ_UPDATE_ICON)
+		stored = null
+	update_icon()
+	. = ..()
+
+///A right-click verb, for those not using hotkey mode.
+/obj/item/borg/apparatus/verb/verb_dropHeld()
+	set category = "Object"
+	set name = "Drop"
+
+	if(usr != loc || !stored)
+		return
+	stored.forceMove(get_turf(usr))
+	return
+
+/obj/item/borg/apparatus/attack_self(mob/living/silicon/robot/user)
+	if(!stored)
+		return ..()
+	if(user.client?.keys_held["Alt"])
+		stored.forceMove(get_turf(user))
+		return
+	stored.attack_self(user)
+
+/obj/item/borg/apparatus/pre_attack(atom/A, mob/living/user, params)
+	if(!stored)
+		var/itemcheck = FALSE
+		for(var/i in storable)
+			if(istype(A, i))
+				itemcheck = TRUE
+				break
+		if(itemcheck)
+			var/obj/item/O = A
+			O.forceMove(src)
+			stored = O
+			RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
+			update_icon()
+			return
+	else
+		stored.melee_attack_chain(user, A, params)
+		return
+	. = ..()
+
+/obj/item/borg/apparatus/attackby(obj/item/W, mob/user, params)
+	if(stored)
+		W.melee_attack_chain(user, stored, params)
+		return
+	. = ..()
+
+/////////////////
+//beaker holder//
+/////////////////
+
+/obj/item/borg/apparatus/beaker
+	name = "beaker storage apparatus"
+	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
+	icon_state = "borg_beaker_apparatus"
+	storable = list(/obj/item/reagent_containers/glass/beaker,
+				/obj/item/reagent_containers/glass/bottle)
+
+/obj/item/borg/apparatus/beaker/Initialize()
+	. = ..()
+	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
+	RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
+	update_icon()
+
+/obj/item/borg/apparatus/beaker/Destroy()
+	if(stored)
+		var/obj/item/reagent_containers/C = stored
+		C.SplashReagents(get_turf(src))
+		qdel(stored)
+	. = ..()
+
+/obj/item/borg/apparatus/beaker/examine()
+	. = ..()
+	if(stored)
+		var/obj/item/reagent_containers/C = stored
+		. += "The apparatus currently has [C] secured, which contains:"
+		if(length(C.reagents.reagent_list))
+			for(var/datum/reagent/R in C.reagents.reagent_list)
+				. += "[R.volume] units of [R.name]"
+		else
+			. += "Nothing."
+
+/obj/item/borg/apparatus/beaker/update_icon()
+	cut_overlays()
+	if(stored)
+		COMPILE_OVERLAYS(stored)
+		stored.pixel_x = 0
+		stored.pixel_y = 0
+		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
+		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		if(istype(stored, /obj/item/reagent_containers/glass/beaker))
+			arm.pixel_y = arm.pixel_y - 3
+		img.plane = FLOAT_PLANE
+		add_overlay(img)
+		add_overlay(arm)
+	else
+		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		arm.pixel_y = arm.pixel_y - 5
+		add_overlay(arm)
+
+/obj/item/borg/apparatus/beaker/attack_self(mob/living/silicon/robot/user)
+	if(stored && !user.client?.keys_held["Alt"] && user.a_intent != "help")
+		var/obj/item/reagent_containers/C = stored
+		C.SplashReagents(get_turf(user))
+		loc.visible_message("<span class='notice'>[user] spills the contents of the [C] all over the floor.</span>")
+		return
+	. = ..()
+
+/obj/item/borg/apparatus/beaker/extra
+	name = "secondary beaker storage apparatus"
+	desc = "A supplementary beaker storage apparatus."
+
+////////////////////
+//engi part holder//
+////////////////////
+
+/obj/item/borg/apparatus/circuit
+	name = "circuit manipulation apparatus"
+	desc = "A special apparatus for carrying and manipulating circuit boards. Alt-Z or right-click to drop the stored object."
+	icon_state = "borg_hardware_apparatus"
+	storable = list(/obj/item/circuitboard,
+				/obj/item/electronics)
+
+/obj/item/borg/apparatus/circuit/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/borg/apparatus/circuit/update_icon()
+	cut_overlays()
+	if(stored)
+		COMPILE_OVERLAYS(stored)
+		stored.pixel_x = -3
+		stored.pixel_y = 0
+		var/image/arm
+		if(istype(stored, /obj/item/circuitboard))
+			arm = image("icon"="borg_hardware_apparatus_arm1", "layer"=FLOAT_LAYER)
+		else
+			arm = image("icon"="borg_hardware_apparatus_arm2", "layer"=FLOAT_LAYER)
+		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
+		img.plane = FLOAT_PLANE
+		add_overlay(arm)
+		add_overlay(img)
+	else
+		var/image/arm = image("icon"="borg_hardware_apparatus_arm1", "layer"=FLOAT_LAYER)
+		add_overlay(arm)
+
+/obj/item/borg/apparatus/circuit/examine()
+	. = ..()
+	if(stored)
+		. += "The apparatus currently has [stored] secured."
+
+/obj/item/borg/apparatus/circuit/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(istype(A, /obj/item/aiModule) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
+		to_chat(user, "<span class='warning'>This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up.</span>")

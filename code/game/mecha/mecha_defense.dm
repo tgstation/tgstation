@@ -193,16 +193,45 @@
 		return
 
 	if(istype(W, /obj/item/stock_parts/cell))
-		if(construction_state == MECHA_UNSECURE_CELL)
+		if(construction_state == MECHA_OPEN_HATCH)
 			if(!cell)
-				if(!user.transferItemToLoc(W, src))
+				if(!user.transferItemToLoc(W, src, silent = FALSE))
 					return
 				var/obj/item/stock_parts/cell/C = W
-				to_chat(user, "<span class='notice'>You install the powercell.</span>")
+				to_chat(user, "<span class='notice'>You install the power cell.</span>")
+				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 				cell = C
 				log_message("Powercell installed", LOG_MECHA)
 			else
-				to_chat(user, "<span class='notice'>There's already a powercell installed.</span>")
+				to_chat(user, "<span class='notice'>There's already a power cell installed.</span>")
+		return
+
+	if(istype(W, /obj/item/stock_parts/scanning_module))
+		if(construction_state == MECHA_OPEN_HATCH)
+			if(!scanmod)
+				if(!user.transferItemToLoc(W, src))
+					return
+				to_chat(user, "<span class='notice'>You install the scanning module.</span>")
+				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
+				scanmod = W
+				log_message("[W] installed", LOG_MECHA)
+				update_part_values()
+			else
+				to_chat(user, "<span class='notice'>There's already a scanning module installed.</span>")
+		return
+
+	if(istype(W, /obj/item/stock_parts/capacitor))
+		if(construction_state == MECHA_OPEN_HATCH)
+			if(!capacitor)
+				if(!user.transferItemToLoc(W, src))
+					return
+				to_chat(user, "<span class='notice'>You install the capacitor.</span>")
+				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
+				capacitor = W
+				log_message("[W] installed", LOG_MECHA)
+				update_part_values()
+			else
+				to_chat(user, "<span class='notice'>There's already a capacitor installed.</span>")
 		return
 
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -251,19 +280,6 @@
 		clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 		to_chat(user, "<span class='notice'>You repair the damaged temperature controller.</span>")
 		return
-	if(!cell)
-		to_chat(user, "<span class='notice'>There is no cell in [src].</span>")
-		return
-	if(construction_state == MECHA_OPEN_HATCH)
-		cell.forceMove(loc)
-		cell = null
-		construction_state = MECHA_UNSECURE_CELL
-		to_chat(user, "<span class='notice'>You unscrew and pry out the powercell.</span>")
-		log_message("Powercell removed", LOG_MECHA)
-		return
-	if(construction_state == MECHA_UNSECURE_CELL)
-		construction_state = MECHA_OPEN_HATCH
-		to_chat(user, "<span class='notice'>You screw the cell in place.</span>")
 
 /obj/mecha/welder_act(mob/living/user, obj/item/W)
 	. = ..()

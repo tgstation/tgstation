@@ -155,8 +155,7 @@
 	if(custom_materials && custom_materials.len)
 		var/temp_list = list()
 		for(var/i in custom_materials)
-			var/datum/material/material = getmaterialref(i) || i
-			temp_list[material] = custom_materials[material] //Get the proper instanced version
+			temp_list[getmaterialref(i)] = custom_materials[i] //Get the proper instanced version
 
 		custom_materials = null //Null the list to prepare for applying the materials properly
 		set_custom_materials(temp_list)
@@ -597,12 +596,6 @@
 	if(!blood_dna)
 		return FALSE
 	return add_blood_DNA(blood_dna)
-
-///wash cream off this object
-///
-///(for the love of space jesus please make this a component)
-/atom/proc/wash_cream()
-	return TRUE
 
 ///Is this atom in space
 /atom/proc/isinspace()

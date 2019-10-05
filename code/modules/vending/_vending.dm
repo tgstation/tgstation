@@ -225,33 +225,43 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	else
 		..()
 
-/obj/machinery/vending/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		stat |= BROKEN
+/obj/machinery/vending/update_icon()
+	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
+	else
+		if(powered())
+			icon_state = initial(icon_state)
+		else
+			icon_state = "[initial(icon_state)]-off"
 
-		var/dump_amount = 0
-		var/found_anything = TRUE
-		while (found_anything)
-			found_anything = FALSE
-			for(var/record in shuffle(product_records))
-				var/datum/data/vending_product/R = record
-				if(R.amount <= 0) //Try to use a record that actually has something to dump.
-					continue
-				var/dump_path = R.product_path
-				if(!dump_path)
-					continue
-				R.amount--
-				// busting open a vendor will destroy some of the contents
-				if(found_anything && prob(80))
-					continue
 
-				var/obj/O = new dump_path(loc)
-				step(O, pick(GLOB.alldirs))
-				found_anything = TRUE
-				dump_amount++
-				if (dump_amount >= 16)
-					return
+/obj/machinery/vending/obj_break(damage_flag)
+	. = ..()
+	if(!.)
+		return
+
+	var/dump_amount = 0
+	var/found_anything = TRUE
+	while (found_anything)
+		found_anything = FALSE
+		for(var/record in shuffle(product_records))
+			var/datum/data/vending_product/R = record
+			if(R.amount <= 0) //Try to use a record that actually has something to dump.
+				continue
+			var/dump_path = R.product_path
+			if(!dump_path)
+				continue
+			R.amount--
+			// busting open a vendor will destroy some of the contents
+			if(found_anything && prob(80))
+				continue
+
+			var/obj/O = new dump_path(loc)
+			step(O, pick(GLOB.alldirs))
+			found_anything = TRUE
+			dump_amount++
+			if (dump_amount >= 16)
+				return
 
 GLOBAL_LIST_EMPTY(vending_products)
 /**
@@ -666,6 +676,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		use_power(5)
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3) 
 		new R.product_path(get_turf(src))
 		R.amount--
 		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
@@ -710,16 +721,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 	say(message)
 
 /obj/machinery/vending/power_change()
-	if(stat & BROKEN)
-		icon_state = "[initial(icon_state)]-broken"
-	else
-		if(powered())
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-			START_PROCESSING(SSmachines, src)
-		else
-			icon_state = "[initial(icon_state)]-off"
-			stat |= NOPOWER
+	. = ..()
+	if(powered())
+		START_PROCESSING(SSmachines, src)
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /**
@@ -823,6 +827,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(loaded_items >= max_loaded_items)
 		say("There are too many items in stock.")
 		return
+	if(istype(I, /obj/item/stack))
+		say("Loose items may cause problems, try use it inside wrapping paper.")
+		return
 	if(I.custom_price)
 		return TRUE
 
@@ -831,7 +838,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	///what we are selling
 	var/obj/S
 
-	if((href_list["dispense"]) && (vend_ready))
+	if(href_list["dispense"] && vend_ready)
 		var/N = href_list["dispense"]
 		vend_ready = 0
 		if(ishuman(usr))
@@ -853,23 +860,34 @@ GLOBAL_LIST_EMPTY(vending_products)
 				if(O.name == N)
 					S = O
 					break
-			if(!account.has_money(S.custom_price))
-				say("You do not possess the funds to purchase this.")
-			else
-				account.adjust_money(-S.custom_price)
-				var/datum/bank_account/owner = private_a
-				if(owner)
-					owner.adjust_money(S.custom_price)
-				use_power(5)
-				vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
-				if(last_shopper != usr || purchase_message_cooldown < world.time)
-					say("Thank you for buying local and purchasing [S]!")
-					purchase_message_cooldown = world.time + 5 SECONDS
-					last_shopper = usr
-				S.forceMove(drop_location())
-				loaded_items--
-				vend_ready = 1
-	updateUsrDialog()
+			if(S)
+				if(compartmentLoadAccessCheck(usr))
+					vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
+					S.forceMove(drop_location())
+					loaded_items--
+					use_power(5)
+					vend_ready = 1
+					updateUsrDialog()
+					return
+				if(account.has_money(S.custom_price))
+					account.adjust_money(-S.custom_price)
+					var/datum/bank_account/owner = private_a
+					if(owner)
+						owner.adjust_money(S.custom_price)
+					vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
+					S.forceMove(drop_location())
+					loaded_items--
+					use_power(5)
+					if(last_shopper != usr || purchase_message_cooldown < world.time)
+						say("Thank you for buying local and purchasing [S]!")
+						purchase_message_cooldown = world.time + 5 SECONDS
+						last_shopper = usr
+					vend_ready = 1
+					updateUsrDialog()
+					return
+				else
+					say("You do not possess the funds to purchase this.")
+		vend_ready = 1
 
 /obj/machinery/vending/custom/ui_interact(mob/user)
 	var/list/dat = list()
@@ -904,7 +922,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 							break
 				dat += "<B>[O] ([price]): [N]</B><br>"
 		dat += "</div>"
-		dat += "<b>Balance: $[account.account_balance]</b>"
+		if(account && account.account_balance)
+			dat += "<b>Balance: $[account.account_balance]</b>"
 
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))

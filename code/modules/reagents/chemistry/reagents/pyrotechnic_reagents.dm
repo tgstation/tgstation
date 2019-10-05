@@ -94,8 +94,12 @@
 	taste_description = "salt"
 
 /datum/reagent/blackpowder/on_mob_life(mob/living/carbon/M)
+	. = TRUE
 	..()
-	if(isplasmaman(M))
+	if(!isplasmaman(M))
+		return
+	M.set_drugginess(15)
+	if(M.hallucination < volume)
 		M.hallucination += 5
 
 /datum/reagent/blackpowder/on_ex_act()
@@ -213,7 +217,7 @@
 	shock_timer++
 	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
-		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
+		M.electrocute_act(rand(5,20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, TRUE)
 	..()
 

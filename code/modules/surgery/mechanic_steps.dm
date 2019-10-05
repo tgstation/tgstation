@@ -14,7 +14,7 @@
 			"<span class='notice'>[user] begins to unscrew the shell of [target]'s [parse_zone(target_zone)].</span>")
 
 /datum/surgery_step/mechanic_incise/tool_check(mob/user, obj/item/tool)
-	if(implement_type == /obj/item && !tool.is_sharp())
+	if(implement_type == /obj/item && !tool.get_sharpness())
 		return FALSE
 
 	return TRUE
@@ -35,7 +35,7 @@
 			"<span class='notice'>[user] begins to screw the shell of [target]'s [parse_zone(target_zone)].</span>")
 
 /datum/surgery_step/mechanic_close/tool_check(mob/user, obj/item/tool)
-	if(implement_type == /obj/item && !tool.is_sharp())
+	if(implement_type == /obj/item && !tool.get_sharpness())
 		return FALSE
 
 	return TRUE

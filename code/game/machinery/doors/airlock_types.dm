@@ -234,10 +234,10 @@
 	return 0
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
-	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
+	if(C.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
 		log_game("Plasma airlock ignited by [key_name(user)] in [AREACOORD(src)]")
-		ignite(C.is_hot())
+		ignite(C.get_temperature())
 	else
 		return ..()
 
@@ -450,12 +450,9 @@
 /obj/machinery/door/airlock/cult/canAIControl(mob/user)
 	return (iscultist(user) && !isAllPowerCut())
 
-/obj/machinery/door/airlock/cult/obj_break(damage_flag)
-	if(!(flags_1 & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		stat |= BROKEN
-		if(!panel_open)
-			panel_open = TRUE
-		update_icon()
+/obj/machinery/door/airlock/cult/on_break()
+	if(!panel_open)
+		panel_open = TRUE
 
 /obj/machinery/door/airlock/cult/isElectrified()
 	return FALSE
@@ -602,6 +599,7 @@
 	return TRUE //yes we do have power
 
 /obj/machinery/door/airlock/clockwork/obj_break(damage_flag)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/machinery/door/airlock/clockwork/deconstruct(disassembled = TRUE)
