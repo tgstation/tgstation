@@ -326,19 +326,15 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 
-	var/cap_icon_state = "bottle_cap"
+	// The 2 bottles have separate cap overlay icons because if the bottle falls over while bottle flipping the cap stays fucked on the moved overlay
+	var/cap_icon_state = "bottle_cap_small"
 	var/cap_on = TRUE
 	var/cap_lost = FALSE
 	var/mutable_appearance/cap_overlay
-	var/cap_x_offset = 0
-	var/cap_y_offset = -5 // small bottle is shorter
-
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
 	. = ..()
 	cap_overlay = mutable_appearance(icon, cap_icon_state)
-	cap_overlay.pixel_x = cap_x_offset
-	cap_overlay.pixel_y = cap_y_offset
 	if(cap_on)
 		spillable = FALSE
 		add_overlay(cap_overlay, TRUE)
@@ -363,6 +359,7 @@
 		cap_on = FALSE
 		spillable = TRUE
 		cut_overlay(cap_overlay, TRUE)
+		animate(src, transform = null, time = 2, loop = 0)
 		if(fumbled)
 			to_chat(user, "<span class='warning'>You fumble with [src]'s cap! The cap falls onto the ground and simply vanishes. Where the hell did it go?</span>")
 			cap_lost = TRUE
@@ -423,7 +420,7 @@
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
-	cap_y_offset = 0
+	cap_icon_state = "bottle_cap"
 
 /obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
 	list_reagents = list()
