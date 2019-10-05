@@ -54,6 +54,7 @@
 	req_access = null
 	max_integrity = 200
 	integrity_failure = 50
+	damage_deflection = 10
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	ui_x = 535
@@ -788,10 +789,9 @@
 	set_nightshift(!nightshift_lights)
 
 /obj/machinery/power/apc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 10 && (!(stat & BROKEN) || malfai))
-		return 0
+	if(stat & BROKEN)
+		return damage_amount
 	. = ..()
-
 
 /obj/machinery/power/apc/obj_break(damage_flag)
 	. = ..()
