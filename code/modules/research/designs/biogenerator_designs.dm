@@ -63,7 +63,7 @@
 	id = "ez_nut"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass= 10)
-	make_reagents = list(/datum/reagent/plantnutriment/ezdnutriment = 30)
+	make_reagents = list(/datum/reagent/plantnutriment/eznutriment = 30)
 	category = list("initial","Botany Chemicals")
 
 /datum/design/l4z_nut
