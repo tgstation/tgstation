@@ -184,3 +184,9 @@
 	results = list(/datum/reagent/consumable/nutriment/peptides = 0.5)
 	required_reagents = list(/datum/reagent/consumable/nutriment/ = 0.5)
 	required_catalysts = list(/datum/reagent/medicine/metafactor = 0.5)
+
+/datum/chemical_reaction/bbqsauce
+	name = "BBQ Sauce"
+	id = /datum/reagent/consumable/bbqsauce
+	results = list(/datum/reagent/consumable/bbqsauce = 21)
+	required_reagents = list(/datum/reagent/ash = 5, /datum/reagent/consumable/capsaicin = 5, /datum/chemical_reaction/salglu_solution = 10, /datum/reagent/consumable/blackpepper = 1)
