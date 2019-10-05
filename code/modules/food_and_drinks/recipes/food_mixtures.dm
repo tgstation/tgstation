@@ -188,5 +188,5 @@
 /datum/chemical_reaction/bbqsauce
 	name = "BBQ Sauce"
 	id = /datum/reagent/consumable/bbqsauce
-	results = list(/datum/reagent/consumable/bbqsauce = 30)
+	results = list(/datum/reagent/consumable/bbqsauce = 5)
 	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/medicine/salglu_solution = 3, /datum/reagent/consumable/blackpepper = 1)
