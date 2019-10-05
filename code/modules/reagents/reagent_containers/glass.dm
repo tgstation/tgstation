@@ -116,6 +116,7 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	materials = list(/datum/material/glass=500)
+	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -123,36 +124,6 @@
 
 /obj/item/reagent_containers/glass/beaker/get_part_rating()
 	return reagents.maximum_volume
-
-/obj/item/reagent_containers/glass/beaker/on_reagent_change(changetype)
-	update_icon()
-
-/obj/item/reagent_containers/glass/beaker/update_icon()
-	cut_overlays()
-
-	if(reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state]10")
-
-		var/percent = round((reagents.total_volume / volume) * 100)
-		switch(percent)
-			if(0 to 9)
-				filling.icon_state = "[icon_state]-10"
-			if(10 to 24)
-				filling.icon_state = "[icon_state]10"
-			if(25 to 49)
-				filling.icon_state = "[icon_state]25"
-			if(50 to 74)
-				filling.icon_state = "[icon_state]50"
-			if(75 to 79)
-				filling.icon_state = "[icon_state]75"
-			if(80 to 90)
-				filling.icon_state = "[icon_state]80"
-			if(91 to INFINITY)
-				filling.icon_state = "[icon_state]100"
-
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
-	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
@@ -315,7 +286,7 @@
 		return
 	return ..()
 
-/obj/item/reagent_containers/glass/beaker/waterbottle
+/obj/item/reagent_containers/glass/waterbottle
 	name = "bottle of water"
 	desc = "A bottle of water filled at an old Earth bottling facility."
 	icon = 'icons/obj/drinks.dmi'
@@ -325,6 +296,7 @@
 	materials = list(/datum/material/glass=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
+	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
 
 	// The 2 bottles have separate cap overlay icons because if the bottle falls over while bottle flipping the cap stays fucked on the moved overlay
 	var/cap_icon_state = "bottle_cap_small"
@@ -333,14 +305,14 @@
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/Initialize()
+/obj/item/reagent_containers/glass/waterbottle/Initialize()
 	. = ..()
 	cap_overlay = mutable_appearance(icon, cap_icon_state)
 	if(cap_on)
 		spillable = FALSE
 		add_overlay(cap_overlay, TRUE)
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/examine(mob/user)
+/obj/item/reagent_containers/glass/waterbottle/examine(mob/user)
 	. = ..()
 	if(cap_lost)
 		. += "<span class='notice'>The cap seems to be missing.</span>"
@@ -349,7 +321,7 @@
 	else
 		. += "<span class='notice'>The cap has been taken off. Alt-click to put a cap on.</span>"
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/AltClick(mob/user)
+/obj/item/reagent_containers/glass/waterbottle/AltClick(mob/user)
 	. = ..()
 	if(cap_lost)
 		to_chat(user, "<span class='warning'>The cap seems to be missing! Where did it go?</span>")
@@ -373,32 +345,32 @@
 		to_chat(user, "<span class='notice'>You put the cap on [src].</span>")
 	update_icon()
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/is_refillable()
+/obj/item/reagent_containers/glass/waterbottle/is_refillable()
 	if(cap_on)
 		return FALSE
 	. = ..()
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/is_drainable()
+/obj/item/reagent_containers/glass/waterbottle/is_drainable()
 	if(cap_on)
 		return FALSE
 	. = ..()
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/attack(mob/M, mob/user, obj/target)
+/obj/item/reagent_containers/glass/waterbottle/attack(mob/M, mob/user, obj/target)
 	if(cap_on && reagents.total_volume && istype(M))
 		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
 	. = ..()
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/afterattack(obj/target, mob/user, proximity)
+/obj/item/reagent_containers/glass/waterbottle/afterattack(obj/target, mob/user, proximity)
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
 		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
-	else if(istype(target, /obj/item/reagent_containers/glass/beaker/waterbottle))
-		var/obj/item/reagent_containers/glass/beaker/waterbottle/WB = target
+	else if(istype(target, /obj/item/reagent_containers/glass/waterbottle))
+		var/obj/item/reagent_containers/glass/waterbottle/WB = target
 		if(WB.cap_on)
 			to_chat(user, "<span class='warning'>[WB] has a cap firmly twisted on!</span>")
 	. = ..()
 
 // heehoo bottle flipping
-/obj/item/reagent_containers/glass/beaker/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/reagent_containers/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(cap_on && reagents.total_volume)
 		if(prob(flip_chance)) // landed upright
@@ -407,15 +379,15 @@
 		else // landed on it's side
 			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/pickup(mob/user)
+/obj/item/reagent_containers/glass/waterbottle/pickup(mob/user)
 	. = ..()
 	animate(src, transform = null, time = 1, loop = 0)
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/empty
+/obj/item/reagent_containers/glass/waterbottle/empty
 	list_reagents = list()
 	cap_on = FALSE
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/large
+/obj/item/reagent_containers/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
 	materials = list(/datum/material/glass=0)
@@ -424,7 +396,7 @@
 	amount_per_transfer_from_this = 20
 	cap_icon_state = "bottle_cap"
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
+/obj/item/reagent_containers/glass/waterbottle/large/empty
 	list_reagents = list()
 	cap_on = FALSE
 

@@ -80,7 +80,7 @@
 		if(28)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 		if(29)
-			new /obj/item/reagent_containers/glass/beaker/waterbottle/relic(src)
+			new /obj/item/reagent_containers/glass/waterbottle/relic(src)
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -328,7 +328,7 @@
 		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
 
 // Relic water bottle
-/obj/item/reagent_containers/glass/beaker/waterbottle/relic
+/obj/item/reagent_containers/glass/waterbottle/relic
 	desc = "A bottle of water filled at an old Earth bottling facility. It seems to be radiating some kind of energy."
 	flip_chance = 100 // FLIPP
 
