@@ -75,7 +75,7 @@
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='danger'>[A] knees [D] in the stomach!</span>", \
 						"<span class='userdanger'>Your stomach is kneed by [A], making you gag!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
-		to_chat(A, "<span class='danger'>You knee [D] in the stomach, [D.p_them()] them gag!</span>")
+		to_chat(A, "<span class='danger'>You knee [D] in the stomach, making [D.p_them()] gag!</span>")
 		D.losebreath += 3
 		D.Stun(40)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
