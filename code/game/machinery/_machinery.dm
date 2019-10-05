@@ -530,9 +530,8 @@ Class Procs:
 
 /obj/machinery/tesla_act(power, tesla_flags, shocked_objects)
 	..()
-	if(prob(85) && (tesla_flags & TESLA_MACHINE_EXPLOSIVE))
-		if(!(resistance_flags & INDESTRUCTIBLE))
-			explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
+	if(prob(85) && (tesla_flags & TESLA_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
+		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	if(tesla_flags & TESLA_OBJ_DAMAGE)
 		take_damage(power/2000, BURN, "energy")
 		if(prob(40))
