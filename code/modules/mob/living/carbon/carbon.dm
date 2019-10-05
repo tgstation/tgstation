@@ -758,6 +758,7 @@
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
+			cure_blind(UNCONSCIOUS_BLIND)
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
