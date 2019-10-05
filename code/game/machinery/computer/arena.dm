@@ -122,8 +122,8 @@
 	clear_arena() //Clear current arena
 	var/turf/A = get_landmark_turf(ARENA_CORNER_A)
 	var/turf/B = get_landmark_turf(ARENA_CORNER_B)
-	var/wh = abs(A.x - B.x)
-	var/hz = abs(A.y - B.y)
+	var/wh = abs(A.x - B.x) + 1
+	var/hz = abs(A.y - B.y) + 1
 	if(M.width > wh || M.height > hz)
 		to_chat(user,"<span class='warning'>Arena template is too big for the current arena!</span>")
 		return
