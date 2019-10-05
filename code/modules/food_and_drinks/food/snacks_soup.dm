@@ -249,13 +249,15 @@
 	icon_state = "electronsoup"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity = 5)
 	tastes = list("mushroom" = 1, "electrons" = 4)
-	foodtypes = VEGETABLES | TOXIC
+	filling_color = "#CC2B52"
+	foodtype = VEGETABLES | TOXIC
 
 /obj/item/reagent_containers/food/snacks/soup/bungocurry
 	name = "bungo curry"
 	desc = "A spicy vegetable curry made with the humble bungo fruit, Exotic!"
-	icon = "bungocurry"
-	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 5)
+	icon_state = "bungocurry"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/bungojuice = 6)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/capsaicin = 5)
 	tastes = list("bungo" = 2, "hot curry" = 4, "tropical sweetness" = 1)
-	foodtypes = VEGETABLES | FRUIT | DAIRY
+	filling_color = "#E6A625"
+	foodtype = VEGETABLES | FRUIT | DAIRY
