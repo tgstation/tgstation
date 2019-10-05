@@ -432,7 +432,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	desc = "Someone's gotten on the naughty list."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "slag"
-	singular_name = "lump of coal"
+	singular_name = "coal lump"
 	merge_type = /obj/item/stack/sheet/mineral/coal
 	grind_results = list(/datum/reagent/carbon = 20)
 
