@@ -22,8 +22,9 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
-	materials = list(/datum/material/iron=80)
+	materials = list(/datum/material/iron=40,/datum/material/silver=40)
 	flags_1 = CONDUCT_1
+	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/silver = 1)
 	attack_verb = list("attacked", "stabbed", "poked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
