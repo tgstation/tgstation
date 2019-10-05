@@ -203,7 +203,8 @@
 	name = "BBQ Ribs"
 	reqs = list(
 		/datum/reagent/consumable/bbqsauce = 5,
-		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 2
+		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 2,
+		/obj/item/stack/rods = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/bbqribs
 	subcategory = CAT_MEAT
