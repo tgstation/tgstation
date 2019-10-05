@@ -18,7 +18,6 @@
 	///What type of power cell the cartridge has by default
 	var/obj/item/stock_parts/cell/cell
 	var/cell_type = /obj/item/stock_parts/cell
-	var/dead_cell = FALSE //set to true so the cartridge is given an empty cell
 	var/can_load = TRUE //if false, cannot load or unload cells.
 	var/can_charge = TRUE //if calse, cannot recharge in a recharger
 	var/charge_sections = 4 //Number of charge sections for visualization of remaining charge.
@@ -46,9 +45,6 @@
 	. = ..()
 	if(cell_type && !cell)
 		cell = new cell_type(src)
-
-	if(!dead_cell)
-		cell.give(cell.maxcharge)
 
 	update_icon()
 
@@ -137,4 +133,4 @@
 
 
 /obj/item/cell_cartridge/dead //For those produced at autolathes
-	dead_cell = TRUE
+	cell_type = /obj/item/stock_parts/cell/empty
