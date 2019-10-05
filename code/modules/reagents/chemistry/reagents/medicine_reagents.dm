@@ -325,10 +325,10 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-0.75*REM, 0)
-	M.adjustOxyLoss(-0.75*REM, 0)
-	M.adjustBruteLoss(-1*REM, 0)
-	M.adjustFireLoss(-1*REM, 0)
+	M.adjustToxLoss(-0.4*REM, 0)
+	M.adjustOxyLoss(-0.4*REM, 0)
+	M.adjustBruteLoss(-0.5*REM, 0)
+	M.adjustFireLoss(-0.5*REM, 0)
 	..()
 	. = 1
 
