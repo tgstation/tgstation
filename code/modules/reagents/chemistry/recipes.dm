@@ -19,7 +19,8 @@
 	var/RateUpLim 			= 10 //Optimal/max rate possible if all conditions are perfect
 	var/FermiExplode 		= FALSE //If the chemical explodes in a special way
 	var/PurityMin			= 0.1 //The minimum purity something has to be above, otherwise it explodes.
-	var/FermiChem = FALSE // If the chemical uses the Fermichem reaction mechanics\
+	var/FermiChem = FALSE // If the chemical uses the Fermichem reaction mechanics
+	var/clear_conversion	= REACTION_CLEAR_INVERSE
 
 	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
 	var/required_container = null // the exact container path required for the reaction to happen

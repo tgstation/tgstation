@@ -44,13 +44,15 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	//fermichem
 	var/pH = 7//potential of hydrogen = how acid/base it is
 	var/purity = 1 //Purity, affects Fermichem
-	var/addProc = FALSE 				//If the chemical should force an on_new() call
+	//var/addProc = FALSE 				//If the chemical should force an on_new() call
 	var/turf/loc = null
 	var/ImpureChem = /datum/reagent
 	var/InverseChemVal = 0.2 //purity sat which it flips
 	var/InverseChem = /datum/reagent
-	var/DoNotSplit = FALSE
-	var/OnMobMergeCheck 	= FALSE 	//Call on_mob_life proc when reagents are merging.
+	//var/DoNotSplit = FALSE
+	//var/OnMobMergeCheck 	= FALSE 	//Call on_mob_life proc when reagents are merging.
+	var/chemical_flags //bitflags for visibility/fermichem
+	var/cached_purity = 1
 
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
@@ -77,6 +79,15 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M)
 	current_cycle++
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
+	return
+
+//called when a mob processes chems when dead.
+/datum/reagent/proc/on_mob_dead(mob/living/carbon/M)
+	if(!(chemical_flags & REAGENT_DEAD_PROCESS)) //justincase
+		return
+	current_cycle++
+	if(holder)
+		holder.remove_reagent(src.type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
 
 /datum/reagent/proc/on_transfer(atom/A, method=TOUCH, trans_volume) //Called after a reagent is transfered

@@ -35,6 +35,7 @@
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
+		handle_death()
 		LoadComponent(/datum/component/rot/corpse)
 
 	check_cremation()
@@ -71,6 +72,12 @@
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src,0)
+
+mob/living/carbon/proc/handle_death()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		if(R.chemical_flags & REAGENT_DEAD_PROCESS)
+			R.on_mob_dead(src)
+
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()

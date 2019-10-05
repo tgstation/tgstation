@@ -724,7 +724,7 @@
 		deltapH = 1
 	//This should never proc:
 	else
-		WARNING("[my_atom] attempted to determine FermiChem pH for '[C.id]' which broke for some reason! ([usr])")
+		WARNING("[my_atom] attempted to determine FermiChem pH for '[C.type]' which broke for some reason! ([usr])")
 
 	//Calculate DeltaT (Deviation of T from optimal)
 	if (cached_temp < C.OptimalTempMax && cached_temp >= C.OptimalTempMin)
@@ -1027,10 +1027,10 @@
 	if(data)
 		R.data = data
 		R.on_new(data)
-	if(R.addProc)//Allows on new without data overhead.
+	if(R.chemical_flags & REAGENT_FORCEONNEW)//Allows on new without data overhead.
 		R.on_new(pH) //Add more as desired.
 	if(isliving(my_atom))
-		if(R.OnMobMergeCheck)//Forces on_mob_add proc when a chem is merged
+		if(R.chemical_flags & REAGENT_ONMOBMERGE)//Forces on_mob_add proc when a chem is merged
 			R.on_mob_add(my_atom, amount)
 		//else
 			//	R.on_merge(data, amount, my_atom, other_purity)
