@@ -144,6 +144,7 @@ Props:
 - `as: string` - The component used for the root node.
 - `color: string` - Applies an atomic `color-<name>` class to the element.
   - See `styles/atomic/color.scss` for color names.
+- `width: number` - Box width.
 - `height: number` - Box height.
 - `inline: boolean` - Forces element to appear as an `inline-block`.
 - `m: number` - Margin on all sides.
@@ -154,7 +155,6 @@ Props:
 - `mx: number` - Horizontal margin.
 - `my: number` - Vertical margin.
 - `opacity: number` - Opacity, from 0 to 1.
-- `width: number` - Box width.
 
 ### `Button`
 
@@ -277,7 +277,7 @@ if necessary. Inverse of `grow`.
 - `basis: string` - This defines the default size of an element before the
 remaining space is distributed. It can be a length (e.g. `20%`, `5rem`, etc.),
 an `auto` or `content` keyword.
-- `align: string` - This allows the default alignment (or the one specified by align-items) to be overridden for individual flex items. See: `<Flex>`.
+- `align: string` - This allows the default alignment (or the one specified by align-items) to be overridden for individual flex items. See: [Flex](#flex).
 
 ### `LabeledList`
 

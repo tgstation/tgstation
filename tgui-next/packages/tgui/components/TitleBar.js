@@ -14,9 +14,6 @@ const statusToColor = status => {
   }
 };
 
-import { createLogger } from '../logging';
-const logger = createLogger();
-
 export const TitleBar = props => {
   const { className, title, status, fancy, onDragStart, onClose } = props;
   return (
