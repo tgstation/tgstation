@@ -11,7 +11,7 @@
 	name = "Salicyclic Acid"
 	id = /datum/reagent/medicine/sal_acid
 	results = list(/datum/reagent/medicine/sal_acid = 1)
-	required_reagents = list(/datum/reagent/omnizine = 1, datum/reagent/medicine/C2/libital = 1)
+	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/medicine/C2/libital = 1)
 
 /******BURN******/
 
@@ -27,7 +27,7 @@
 	name = "Oxandrolone"
 	id = /datum/reagent/medicine/oxandrolone
 	results = list(/datum/reagent/medicine/oxandrolone = 1)
-	required_reagents = list(/datum/reagent/omnizine = 1, /datum/reagent/medicine/C2/aiuri = 1)
+	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/medicine/C2/aiuri = 1)
 
 
 /******TOX******/
@@ -35,7 +35,7 @@
 	name = "Pentetic Acid"
 	id = /datum/reagent/medicine/pen_acid
 	results = list(/datum/reagent/medicine/pen_acid = 1)
-	required_reagents = list(/datum/reagent/omnizine = 1, /datum/reagent/medicine/C2/syriniver = 1)
+	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/medicine/C2/syriniver = 1)
 
 /datum/chemical_reaction/calomel
 	name = "Calomel"
@@ -57,7 +57,7 @@
 	name = "Salbutamol"
 	id = /datum/reagent/medicine/salbutamol
 	results = list(/datum/reagent/medicine/salbutamol = 1)
-	required_reagents = list(/datum/reagent/omnizine = 1,/datum/reagent/medicine/C2/convermol = 1)
+	required_reagents = list(/datum/reagent/medicine/omnizine = 1,/datum/reagent/medicine/C2/convermol = 1)
 
 /******COMBOS******/
 /datum/chemical_reaction/salglu_solution
@@ -102,7 +102,7 @@
 	name = "Atropine"
 	id = /datum/reagent/medicine/atropine
 	results = list(/datum/reagent/medicine/atropine = 1)
-	required_reagents = list(/datum/reagent/omnizine = 1, /datum/reagent/medicine/epinephrine = 1)
+	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/medicine/epinephrine = 1)
 
 /datum/chemical_reaction/epinephrine
 	name = "Epinephrine"
