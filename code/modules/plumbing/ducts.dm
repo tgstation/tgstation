@@ -270,6 +270,8 @@ All the important duct code:
 	name = "duct layer-manifold"
 	icon = 'icons/obj/2x2.dmi'
 	icon_state = "multiduct"
+	pixel_x = -15
+	pixel_y = -15
 
 	color_to_color_support = FALSE
 	duct_layer = FIRST_DUCT_LAYER | SECOND_DUCT_LAYER | THIRD_DUCT_LAYER | FOURTH_DUCT_LAYER | FIFTH_DUCT_LAYER
@@ -283,20 +285,23 @@ All the important duct code:
 	active = FALSE
 	anchored = FALSE
 
-/obj/machinery/duct/multilayered/Move(atom/newloc, direct)
+/obj/machinery/duct/multilayered/Initialize(mapload, no_anchor, color_of_duct, layer_of_duct = DUCT_LAYER_DEFAULT, force_connects)
 	. = ..()
-	update_icon()
+	update_connects()
 
 /obj/machinery/duct/multilayered/update_icon()
-	icon_state = initial(icon_state)
+	return
+
+/obj/machinery/duct/multilayered/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	update_connects()
+
+/obj/machinery/duct/multilayered/proc/update_connects()
 	if(dir & NORTH || dir & SOUTH)
-		icon_state += "_vertical"
-		pixel_x = -17
-		pixel_y = -17
+		connects = NORTH | SOUTH
 	else
-		icon_state += "_horizontal"
-		pixel_x = -17
-		pixel_y = -17
+		connects = EAST | WEST
+
 ///don't connect to other multilayered stuff because honestly it shouldnt be done and I dont wanna deal with it
 /obj/machinery/duct/multilayered/connect_duct(obj/machinery/duct/D, direction, ignore_color)
 	if(istype(D, /obj/machinery/duct/multilayered))

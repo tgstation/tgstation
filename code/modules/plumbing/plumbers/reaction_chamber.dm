@@ -22,17 +22,17 @@
 		emptying = FALSE
 		reagents.flags |= NO_REACT
 
-/obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "reaction_chamber", name, 500, 300, master_ui, state)
-		ui.open()
-
 /obj/machinery/plumbing/reaction_chamber/power_change()
 	if(use_power != NO_POWER_USE)
 		icon_state = initial(icon_state) + "_on"
 	else
 		icon_state = initial(icon_state)
+
+/obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "reaction_chamber", name, 500, 300, master_ui, state)
+		ui.open()
 
 /obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
 	var/list/data = list()
@@ -40,6 +40,7 @@
 	for(var/A in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
 		var/datum/reagent/R = A
 		text_reagents[initial(R.name)] = required_reagents[R]
+	
 	data["reagents"] = text_reagents
 	data["emptying"] = emptying
 	return data
@@ -59,4 +60,3 @@
 				var/input_amount = CLAMP(round(input("Enter amount", "Input") as num|null), 1, 100)
 				if(input_amount)
 					required_reagents[input_reagent] = input_amount
-				emptying = FALSE //When entering the chems and already having a flow of them incoming, it could force you to plunger it empty unnecessarily

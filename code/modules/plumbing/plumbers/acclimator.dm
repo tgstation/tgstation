@@ -38,6 +38,8 @@
 		if(acclimate_state != NEUTRAL)
 			acclimate_state = NEUTRAL
 			update_icon()
+		if(!reagents.total_volume)
+			emptying = FALSE
 		return
 
 	if(reagents.chem_temp < target_temperature && acclimate_state != HEATING) //note that we check if the temperature is the same at the start

@@ -48,6 +48,7 @@
 		if(I.use_tool(src, user, rcd_delay * 2, volume=50))
 			deconstruct(TRUE)
 			to_chat(user, "<span class='notice'>You slice the [name] apart.</span")
+			return TRUE
 
 ///We can empty beakers in here and everything
 /obj/machinery/plumbing/input

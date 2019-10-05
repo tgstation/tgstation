@@ -2,7 +2,7 @@
 	<ui-section>
 		{{#each data.reagents: reagent}}
 			<span>{{reagent}} : {{data.reagents[reagent]}}</span>
-			<ui-button action='remove' params='{"chem": "{{reagent}}"}'>Remove</ui-button><br>
+			<ui-button action='remove' params='{"chem": {{reagent}}}'>Remove</ui-button><br>
 		{{/each}}
 		<ui-button action='add'>Add</ui-button><br>
 	</ui-section>
