@@ -81,15 +81,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				adjustHealth(-maxHealth*0.05)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
 				H.color = "#FF0000"
-	if(myparent)
-		if(myparent.activity == TUMOR_ACTIVE && myparent.activator.stat == DEAD)
-			myparent.onEliteWon()
 	update_health_hud()
-
-/mob/living/simple_animal/hostile/asteroid/elite/death()
-	. = ..()
-	if(myparent)
-		myparent.onEliteLoss()
 		
 /mob/living/simple_animal/hostile/asteroid/elite/update_health_hud()
 	if(hud_used)
@@ -242,6 +234,7 @@ obj/structure/elite_tumor/proc/return_elite()
 	if(src) //Checking to see if we still exist
 		INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
 		INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
+		INVOKE_ASYNC(src, .proc/fighters_check)  //Checks to see if our fighters died.
 	return
 		
 /obj/effect/temp_visual/elite_tumor_wall
@@ -285,6 +278,12 @@ obj/structure/elite_tumor/proc/return_elite()
 				mychild.forceMove(loc)
 				visible_message("<span class='boldwarning'>[mychild] suddenly reappears above the tumor!</span>")
 				playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
+				
+/obj/structure/elite_tumor/proc/fighters_check()
+	if(activity == TUMOR_ACTIVE && activator != null && activator.stat == DEAD || activity == TUMOR_ACTIVE && QDELETED(activator))
+		onEliteWon()
+	if(activity == TUMOR_ACTIVE && mychild != null && mychild.stat == DEAD || activity == TUMOR_ACTIVE && QDELETED(mychild))
+		onEliteLoss()
 	
 obj/structure/elite_tumor/proc/onEliteLoss()
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
