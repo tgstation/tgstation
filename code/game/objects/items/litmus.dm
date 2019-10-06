@@ -116,15 +116,15 @@
     icon = 'icons/obj/objects.dmi'
     resistance_flags = FLAMMABLE
     w_class = WEIGHT_CLASS_TINY
-    var/scanmode = 1
+    var/scanmode = TRUE
 
 /obj/item/fermichem/pHmeter/attack_self(mob/user)
 	if(!scanmode)
 		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a detailed report.</span>")
-		scanmode = 1
+		scanmode = TRUE
 	else
 		to_chat(user, "<span class='notice'>You switch the chemical analyzer to give a reduced report.</span>")
-		scanmode = 0
+		scanmode = FALSE
 
 /obj/item/fermichem/pHmeter/afterattack(atom/A, mob/user, proximity)
     . = ..()
