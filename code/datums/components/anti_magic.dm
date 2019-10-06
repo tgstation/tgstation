@@ -44,5 +44,6 @@
 		charges -= chargecost
 		if(charges <= 0)
 			expire?.Invoke(user)
+			qdel(src)
 		return COMPONENT_BLOCK_MAGIC
 

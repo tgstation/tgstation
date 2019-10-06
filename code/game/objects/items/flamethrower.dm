@@ -12,7 +12,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=500)
+	materials = list(/datum/material/iron=500)
 	resistance_flags = FIRE_PROOF
 	var/status = FALSE
 	var/lit = FALSE	//on or off
@@ -238,7 +238,8 @@
 	var/obj/item/projectile/P = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>\The [attack_text] hits the fueltank on [owner]'s [name], rupturing it! What a shot!</span>")
-		var/target_turf = get_turf(owner)
+		var/turf/target_turf = get_turf(owner)
+		log_game("A projectile ([hitby]) detonated a flamethrower tank held by [key_name(owner)] at [COORD(target_turf)]")
 		igniter.ignite_turf(src,target_turf, release_amount = 100)
 		qdel(ptank)
 		return 1 //It hit the flamethrower, not them

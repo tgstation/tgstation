@@ -73,7 +73,7 @@
 		O.setOxyLoss(getOxyLoss(), 0)
 		O.setCloneLoss(getCloneLoss(), 0)
 		O.adjustFireLoss(getFireLoss(), 0)
-		O.setBrainLoss(getBrainLoss(), 0)
+		O.setOrganLoss(ORGAN_SLOT_BRAIN, getOrganLoss(ORGAN_SLOT_BRAIN))
 		O.updatehealth()
 		O.radiation = radiation
 
@@ -246,7 +246,7 @@
 		O.setOxyLoss(getOxyLoss(), 0)
 		O.setCloneLoss(getCloneLoss(), 0)
 		O.adjustFireLoss(getFireLoss(), 0)
-		O.setBrainLoss(getBrainLoss(), 0)
+		O.adjustOrganLoss(ORGAN_SLOT_BRAIN, getOrganLoss(ORGAN_SLOT_BRAIN))
 		O.updatehealth()
 		O.radiation = radiation
 

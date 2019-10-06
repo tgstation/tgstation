@@ -42,7 +42,7 @@ Difficulty: Very Hard
 	ranged = TRUE
 	pixel_x = -32
 	del_on_death = TRUE
-	internal_type = /obj/item/gps/internal/colossus
+	gps_name = "Angelic Signal"
 	medal_type = BOSS_MEDAL_COLOSSUS
 	score_type = COLOSSUS_SCORE
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
@@ -124,7 +124,7 @@ Difficulty: Very Hard
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.mind)
-			if(H.mind.martial_art && prob(H.mind.martial_art.deflection_chance))
+			if(istype(H.mind.martial_art, /datum/martial_art/the_sleeping_carp))
 				. = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
@@ -164,7 +164,7 @@ Difficulty: Very Hard
 		if(counter < 1)
 			counter = 16
 		shoot_projectile(start_turf, counter * 22.5)
-		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
+		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		SLEEP_CHECK_DEATH(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
@@ -181,7 +181,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
 	ranged_cooldown = world.time + 30
 	var/turf/U = get_turf(src)
-	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
+	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)
 	for(var/T in RANGE_TURFS(12, U) - U)
 		if(prob(5))
 			shoot_projectile(T)
@@ -189,7 +189,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
 	ranged_cooldown = world.time + 20
 	var/turf/target_turf = get_turf(target)
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
+	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
 	newtonian_move(get_dir(target_turf, src))
 	var/angle_to_target = Get_Angle(src, target_turf)
 	if(isnum(set_angle))
@@ -201,7 +201,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
 	if(!islist(dirs))
 		dirs = GLOB.alldirs.Copy()
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
+	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
 	for(var/d in dirs)
 		var/turf/E = get_step(src, d)
 		shoot_projectile(E)
@@ -211,7 +211,7 @@ Difficulty: Very Hard
 		if(M.client)
 			flash_color(M.client, "#C80000", 1)
 			shake_camera(M, 4, 3)
-	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
+	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, TRUE)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
@@ -257,13 +257,6 @@ Difficulty: Very Hard
 	. = ..()
 	if(isturf(target) || isobj(target))
 		target.ex_act(EXPLODE_HEAVY)
-
-
-/obj/item/gps/internal/colossus
-	icon_state = null
-	gpstag = "Angelic Signal"
-	desc = "Get in the fucking robot."
-	invisibility = 100
 
 
 
@@ -427,7 +420,7 @@ Difficulty: Very Hard
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
 /obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, params)
-	if(I.is_hot())
+	if(I.get_temperature())
 		ActivationReaction(user, ACTIVATE_HEAT)
 	else
 		ActivationReaction(user, ACTIVATE_WEAPON)
@@ -448,7 +441,7 @@ Difficulty: Very Hard
 	if(method != activation_method)
 		return FALSE
 	last_use_timer = (world.time + cooldown_add)
-	playsound(user, activation_sound, 100, 1)
+	playsound(user, activation_sound, 100, TRUE)
 	return TRUE
 
 /obj/machinery/anomalous_crystal/Bumped(atom/movable/AM)
@@ -500,7 +493,7 @@ Difficulty: Very Hard
 		if("winter") //Snow terrain is slow to move in and cold! Get the assistants to shovel your driveway.
 			NewTerrainFloors = /turf/open/floor/grass/snow
 			NewTerrainWalls = /turf/closed/wall/mineral/wood
-			NewTerrainChairs = /obj/structure/chair/wood/normal
+			NewTerrainChairs = /obj/structure/chair/wood
 			NewTerrainTables = /obj/structure/table/glass
 			NewFlora = list(/obj/structure/flora/grass/green, /obj/structure/flora/grass/brown, /obj/structure/flora/grass/both)
 		if("jungle") //Beneficial due to actually having breathable air. Plus, monkeys and bows and arrows.
@@ -525,10 +518,7 @@ Difficulty: Very Hard
 				if(isturf(Stuff))
 					var/turf/T = Stuff
 					if((isspaceturf(T) || isfloorturf(T)) && NewTerrainFloors)
-						var/turf/open/O = T.ChangeTurf(NewTerrainFloors)
-						if(O.air)
-							var/datum/gas_mixture/G = O.air
-							G.copy_from_turf(O)
+						var/turf/open/O = T.ChangeTurf(NewTerrainFloors, flags = CHANGETURF_INHERIT_AIR)
 						if(prob(florachance) && NewFlora.len && !is_blocked_turf(O, TRUE))
 							var/atom/Picked = pick(NewFlora)
 							new Picked(O)
@@ -614,7 +604,7 @@ Difficulty: Very Hard
 	if(..() && !ready_to_deploy)
 		GLOB.poi_list |= src
 		ready_to_deploy = TRUE
-		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK)
+		notify_ghosts("An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.", enter_link = "<a href=?src=[REF(src)];ghostjoin=1>(Click to enter)</a>", ghost_sound = 'sound/effects/ghost2.ogg', source = src, action = NOTIFY_ATTACK, header = "Anomalous crystal activated")
 
 /obj/machinery/anomalous_crystal/helpers/attack_ghost(mob/dead/observer/user)
 	. = ..()

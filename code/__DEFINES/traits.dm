@@ -56,7 +56,9 @@
 #define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
 #define HAS_TRAIT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (source in target.status_traits[trait]) : FALSE) : FALSE)
 
-
+/*
+Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
+*/
 
 //mob traits
 #define TRAIT_BLIND 			"blind"
@@ -68,6 +70,7 @@
 #define TRAIT_HUSK				"husk"
 #define TRAIT_BADDNA			"baddna"
 #define TRAIT_CLUMSY			"clumsy"
+#define TRAIT_CHUNKYFINGERS		"chunkyfingers" //means that you can't use weapons with normal trigger guards.
 #define TRAIT_DUMB				"dumb"
 #define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
 #define TRAIT_PACIFISM			"pacifism"
@@ -78,6 +81,7 @@
 #define TRAIT_DISFIGURED		"disfigured"
 #define TRAIT_XENO_HOST			"xeno_host"	//Tracks whether we're gonna be a baby alien's mummy.
 #define TRAIT_STUNIMMUNE		"stun_immunity"
+#define TRAIT_STUNRESISTANCE    "stun_resistance"
 #define TRAIT_SLEEPIMMUNE		"sleep_immunity"
 #define TRAIT_PUSHIMMUNE		"push_immunity"
 #define TRAIT_SHOCKIMMUNE		"shock_immunity"
@@ -95,6 +99,8 @@
 #define TRAIT_NOFIRE			"nonflammable"
 #define TRAIT_NOGUNS			"no_guns"
 #define TRAIT_NOHUNGER			"no_hunger"
+#define TRAIT_NOMETABOLISM		"no_metabolism"
+#define TRAIT_TOXIMMUNE			"toxin_immune"
 #define TRAIT_EASYDISMEMBER		"easy_dismember"
 #define TRAIT_LIMBATTACHMENT 	"limb_attach"
 #define TRAIT_NOLIMBDISABLE		"no_limb_disable"
@@ -129,15 +135,21 @@
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_SURGEON           "surgeon"
 #define	TRAIT_STRONG_GRABBER	"strong_grabber"
-#define	TRAIT_CALCIUM_HEALER	"calcium_healer"
 #define	TRAIT_MAGIC_CHOKE		"magic_choke"
 #define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
 #define TRAIT_ALWAYS_CLEAN      "always-clean"
 #define TRAIT_BOOZE_SLIDER      "booze-slider"
+#define TRAIT_QUICK_CARRY		"quick-carry"
+#define TRAIT_QUICKER_CARRY		"quicker-carry"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
 #define TRAIT_UNSTABLE			"unstable"
 #define TRAIT_OIL_FRIED			"oil_fried"
+#define TRAIT_MEDICAL_HUD		"med_hud"
+#define TRAIT_SECURITY_HUD		"sec_hud"
+#define TRAIT_MEDIBOTCOMINGTHROUGH "medbot" //Is a medbot healing you
+#define TRAIT_PASSTABLE			"passtable"
+#define TRAIT_NOFLASH			"noflash" //Makes you immune to flashes
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
@@ -147,6 +159,7 @@
 #define TRAIT_T_RAY_VISIBLE     "t-ray-visible" // Visible on t-ray scanners if the atom/var/level == 1
 #define TRAIT_NO_TELEPORT		"no-teleport" //you just can't
 
+//quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"
 #define TRAIT_AGEUSIA			"ageusia"
 #define TRAIT_HEAVY_SLEEPER		"heavy_sleeper"
@@ -159,8 +172,6 @@
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
-#define	TRAIT_NEET				"NEET"
-#define	TRAIT_NEAT				"neat"
 #define TRAIT_DRUNK_HEALING		"drunk_healing"
 #define TRAIT_TAGGER			"tagger"
 #define TRAIT_PHOTOGRAPHER		"photographer"
@@ -168,6 +179,8 @@
 #define TRAIT_LIGHT_DRINKER		"light_drinker"
 #define TRAIT_EMPATH			"empath"
 #define TRAIT_FRIENDLY			"friendly"
+#define TRAIT_GRABWEAKNESS		"grab_weakness"
+#define TRAIT_SNOB				"snob"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
@@ -189,6 +202,9 @@
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 #define STATUS_EFFECT_TRAIT "status-effect"
 #define CLOTHING_TRAIT "clothing"
+#define GLASSES_TRAIT "glasses"
+#define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
+#define INNATE_TRAIT "innate"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
@@ -226,5 +242,8 @@
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
-#define HIVEMIND_ONE_MIND_TRAIT "one_mind"
 #define VR_ZONE_TRAIT "vr_zone_trait"
+#define SLEEPING_CARP_TRAIT "sleeping_carp"
+#define SANGUIOSE_TRAIT "sanguiose"
+#define FROGENITE_TRAIT "frogenite"
+#define FERVEATIUM_TRAIT "ferveatium"

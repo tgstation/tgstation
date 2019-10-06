@@ -21,14 +21,14 @@
 	if(_max_mobs)
 		max_mobs=_max_mobs
 
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETED), .proc/stop_spawning)
+	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/stop_spawning)
 	START_PROCESSING(SSprocessing, src)
 
 /datum/component/spawner/process()
 	try_spawn_mob()
 
 
-/datum/component/spawner/proc/stop_spawning(force, hint)
+/datum/component/spawner/proc/stop_spawning(force)
 	STOP_PROCESSING(SSprocessing, src)
 	for(var/mob/living/simple_animal/L in spawned_mobs)
 		if(L.nest == src)

@@ -82,15 +82,20 @@
 	my_atom = null
 
 // Used in attack logs for reagents in pills and such
-/datum/reagents/proc/log_list()
-	if(!length(reagent_list))
+// external list is list of reagent types = amounts
+/datum/reagents/proc/log_list(external_list)
+	if((external_list && !length(external_list)) || !length(reagent_list))
 		return "no reagents"
 
 	var/list/data = list()
-	for(var/r in reagent_list) //no reagents will be left behind
-		var/datum/reagent/R = r
-		data += "[R.type] ([round(R.volume, 0.1)]u)"
-		//Using IDs because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
+	if(external_list)
+		for(var/r in external_list)
+			data += "[r] ([round(external_list[r], 0.1)]u)"
+	else
+		for(var/r in reagent_list) //no reagents will be left behind
+			var/datum/reagent/R = r
+			data += "[R.type] ([round(R.volume, 0.1)]u)"
+			//Using types because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 	return english_list(data)
 
 /datum/reagents/proc/remove_any(amount = 1)
@@ -167,8 +172,9 @@
 
 	return master
 
-/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE)
+/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, method = null, show_message = TRUE, round_robin = FALSE)
 	//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+	//if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -186,22 +192,48 @@
 		R = target.reagents
 		target_atom = target
 
+	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
+	var/trans_data = null
+	var/transfer_log = list()
+	if(!round_robin)
+		var/part = amount / src.total_volume
+		for(var/reagent in cached_reagents)
+			var/datum/reagent/T = reagent
+			if(remove_blacklisted && !T.can_synth)
+				continue
+			var/transfer_amount = T.volume * part
+			if(preserve_data)
+				trans_data = copy_data(T)
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+			if(method)
+				R.react_single(T, target_atom, method, part, show_message)
+				T.on_transfer(target_atom, method, transfer_amount * multiplier)
+			remove_reagent(T.type, transfer_amount)
+			transfer_log[T.type] = transfer_amount
+	else
+		var/to_transfer = amount
+		for(var/reagent in cached_reagents)
+			if(!to_transfer)
+				break
+			var/datum/reagent/T = reagent
+			if(remove_blacklisted && !T.can_synth)
+				continue
+			if(preserve_data)
+				trans_data = copy_data(T)
+			var/transfer_amount = amount
+			if(amount > T.volume)
+				transfer_amount = T.volume
+			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1)
+			to_transfer = max(to_transfer - transfer_amount , 0)
+			if(method)
+				R.react_single(T, target_atom, method, transfer_amount, show_message)
+				T.on_transfer(target_atom, method, transfer_amount * multiplier)
+			remove_reagent(T.type, transfer_amount)
+			transfer_log[T.type] = transfer_amount
+
 	if(transfered_by && target_atom)
 		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
-		log_combat(transfered_by, target_atom, "transferred reagents ([log_list()]) from [my_atom] to")
-
-	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
-	var/part = amount / src.total_volume
-	var/trans_data = null
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/T = reagent
-		if(remove_blacklisted && !T.can_synth)
-			continue
-		var/transfer_amount = T.volume * part
-		if(preserve_data)
-			trans_data = copy_data(T)
-		R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
-		remove_reagent(T.type, transfer_amount)
+		log_combat(transfered_by, target_atom, "transferred reagents ([log_list(transfer_log)]) from [my_atom] to")
 
 	update_total()
 	R.update_total()
@@ -279,16 +311,17 @@
 		var/datum/reagent/R = reagent
 		if(QDELETED(R.holder))
 			continue
-		if(liverless && !R.self_consuming) //need to be metabolized
-			continue
+
 		if(!C)
 			C = R.holder.my_atom
-		if(!R.metabolizing)
-			R.metabolizing = TRUE
-			R.on_mob_metabolize(C)
 
 		if(C && R)
-			if(C.reagent_check(R) != 1)
+			if(C.reagent_check(R) != TRUE)
+				if(liverless && !R.self_consuming) //need to be metabolized
+					continue
+				if(!R.metabolizing)
+					R.metabolizing = TRUE
+					R.on_mob_metabolize(C)
 				if(can_overdose)
 					if(R.overdose_threshold)
 						if(R.volume >= R.overdose_threshold && !R.overdosed)
@@ -326,9 +359,7 @@
 						if(30 to 40)
 							need_mob_update += R.addiction_act_stage4(C)
 						if(40 to INFINITY)
-							to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
-							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
-							cached_addictions.Remove(R)
+							remove_addiction(R)
 						else
 							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
 		addiction_tick++
@@ -337,6 +368,12 @@
 		C.update_mobility()
 		C.update_stamina()
 	update_total()
+
+/datum/reagents/proc/remove_addiction(datum/reagent/R)
+	to_chat(my_atom, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
+	SEND_SIGNAL(my_atom, COMSIG_CLEAR_MOOD_EVENT, "[R.type]_overdose")
+	addiction_list.Remove(R)
+	qdel(R)
 
 //Signals that metabolization has stopped, triggering the end of trait-based effects
 /datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
@@ -465,7 +502,7 @@
 			if(cached_my_atom)
 				if(!ismob(cached_my_atom)) // No bubbling mobs
 					if(selected_reaction.mix_sound)
-						playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, 1)
+						playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 
 					for(var/mob/M in seen)
 						to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
@@ -558,6 +595,31 @@
 				R.reaction_turf(A, R.volume * volume_modifier, show_message)
 			if("OBJ")
 				R.reaction_obj(A, R.volume * volume_modifier, show_message)
+
+/datum/reagents/proc/react_single(datum/reagent/R, atom/A, method = TOUCH, volume_modifier = 1, show_message = TRUE)
+	var/react_type
+	if(isliving(A))
+		react_type = "LIVING"
+		if(method == INGEST)
+			var/mob/living/L = A
+			L.taste(src)
+	else if(isturf(A))
+		react_type = "TURF"
+	else if(isobj(A))
+		react_type = "OBJ"
+	else
+		return
+	switch(react_type)
+		if("LIVING")
+			var/touch_protection = 0
+			if(method == VAPOR)
+				var/mob/living/L = A
+				touch_protection = L.get_permeability_protection()
+			R.reaction_mob(A, method, R.volume * volume_modifier, show_message, touch_protection)
+		if("TURF")
+			R.reaction_turf(A, R.volume * volume_modifier, show_message)
+		if("OBJ")
+			R.reaction_obj(A, R.volume * volume_modifier, show_message)
 
 /datum/reagents/proc/holder_full()
 	if(total_volume >= maximum_volume)
@@ -678,15 +740,19 @@
 
 	return FALSE
 
-/datum/reagents/proc/has_reagent(reagent, amount = -1)
+/datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
 		if (R.type == reagent)
 			if(!amount)
+				if(needs_metabolizing && !R.metabolizing)
+					return 0
 				return R
 			else
 				if(round(R.volume, CHEMICAL_QUANTISATION_LEVEL) >= amount)
+					if(needs_metabolizing && !R.metabolizing)
+						return 0
 					return R
 				else
 					return 0
@@ -820,12 +886,19 @@
 	return english_list(out, "something indescribable")
 
 /datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
+	if(istype(my_atom,/obj/item/reagent_containers))
+		var/obj/item/reagent_containers/RCs = my_atom
+		if(RCs.reagent_flags & NO_REACT) //stasis holders IE cryobeaker
+			return
 	var/temp_delta = (temperature - chem_temp) * coeff
 	if(temp_delta > 0)
 		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
 	else
 		chem_temp = max(chem_temp + min(temp_delta, -1), temperature)
 	chem_temp = round(chem_temp)
+	for(var/i in reagent_list)
+		var/datum/reagent/R = i
+		R.on_temp_change()
 	handle_reactions()
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -848,3 +921,9 @@
 				random_reagents += R
 	var/picked_reagent = pick(random_reagents)
 	return picked_reagent
+
+/proc/get_chem_id(chem_name)
+	for(var/X in GLOB.chemical_reagents_list)
+		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
+		if(chem_name == replacetext(lowertext(R.name), " ", ""))
+			return X

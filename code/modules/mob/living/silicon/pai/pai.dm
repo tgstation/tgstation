@@ -13,6 +13,7 @@
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
+	radio = /obj/item/radio/headset/silicon/pai
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
@@ -63,7 +64,7 @@
 	var/can_receive = TRUE
 	var/obj/item/card/id/access_card = null
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE)		//assoc value is whether it can be picked up.
+	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE, "bat" = FALSE, "butterfly" = FALSE, "hawk" = FALSE, "lizard" = FALSE, "duffel" = TRUE)		//assoc value is whether it can be picked up.
 	var/static/item_head_icon = 'icons/mob/pai_item_head.dmi'
 	var/static/item_lh_icon = 'icons/mob/pai_item_lh.dmi'
 	var/static/item_rh_icon = 'icons/mob/pai_item_rh.dmi'
@@ -89,6 +90,8 @@
 
 /mob/living/silicon/pai/Destroy()
 	QDEL_NULL(internal_instrument)
+	if(cable)
+		QDEL_NULL(cable)
 	if (loc != card)
 		card.forceMove(drop_location())
 	card.pai = null
@@ -111,31 +114,26 @@
 	job = "Personal AI"
 	signaler = new(src)
 	hostscan = new /obj/item/healthanalyzer(src)
-	if(!radio)
-		radio = new /obj/item/radio/headset/silicon/pai(src)
 	newscaster = new /obj/machinery/newscaster(src)
 	if(!aicamera)
 		aicamera = new /obj/item/camera/siliconcam/ai_camera(src)
 		aicamera.flash_enabled = TRUE
 
-	//PDA
-	aiPDA = new/obj/item/pda/ai(src)
-	aiPDA.owner = real_name
-	aiPDA.ownjob = "pAI Messenger"
-	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
+	addtimer(CALLBACK(src, .proc/pdaconfig), 5)
 
 	. = ..()
 
 	emittersemicd = TRUE
 	addtimer(CALLBACK(src, .proc/emittercool), 600)
 
-/mob/living/silicon/pai/Life()
-	if(hacking)
-		process_hack()
-	return ..()
+/mob/living/silicon/pai/proc/pdaconfig()
+	//PDA
+	aiPDA = new/obj/item/pda/ai(src)
+	aiPDA.owner = real_name
+	aiPDA.ownjob = "pAI Messenger"
+	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
 /mob/living/silicon/pai/proc/process_hack()
-
 	if(cable && cable.machine && istype(cable.machine, /obj/machinery/door) && cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
 		hackprogress = CLAMP(hackprogress + 4, 0, 100)
 	else
@@ -266,16 +264,17 @@
 	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
 
 /mob/living/silicon/pai/Life()
-	if(stat == DEAD)
+	. = ..()
+	if(QDELETED(src) || stat == DEAD)
 		return
 	if(cable)
 		if(get_dist(src, cable) > 1)
-			var/turf/T = get_turf(src.loc)
-			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
-			qdel(src.cable)
-			cable = null
+			var/turf/T = get_turf(src)
+			T.visible_message("<span class='warning'>[cable] rapidly retracts back into its spool.</span>", "<span class='hear'>You hear a click and the sound of wire spooling rapidly.</span>")
+			QDEL_NULL(cable)
+	if(hacking)
+		process_hack()
 	silent = max(silent - 1, 0)
-	. = ..()
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
@@ -289,7 +288,7 @@
 /obj/item/paicard/attackby(obj/item/W, mob/user, params)
 	..()
 	user.set_machine(src)
-	if(pai.encryptmod == TRUE)
+	if(pai && pai.encryptmod == TRUE)
 		if(W.tool_behaviour == TOOL_SCREWDRIVER)
 			pai.radio.attackby(W, user, params)
 		else if(istype(W, /obj/item/encryptionkey))

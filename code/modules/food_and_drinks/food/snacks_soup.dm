@@ -113,7 +113,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("hot peppers" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | MEAT
 
 /obj/item/reagent_containers/food/snacks/soup/coldchili
 	name = "cold chili"
@@ -122,7 +122,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/frostoil = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("tomato" = 1, "mint" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | MEAT
 
 /obj/item/reagent_containers/food/snacks/soup/monkeysdelight
 	name = "monkey's delight"
@@ -156,7 +156,7 @@
 	icon_state = "milosoup"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("milo" = 1) // wtf is milo
-	foodtype = GROSS
+	foodtype = GROSS | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/soup/mushroom
 	name = "chantrelle soup"
@@ -226,3 +226,19 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("beet" = 1)
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/soup/onion
+	name = "french onion soup"
+	desc = "Good enough to make a grown mime cry."
+	icon_state = "onionsoup"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("caramelized onions" = 1)
+	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/soup/bisque
+	name = "bisque"
+	desc = "A classic entree from Space-France."
+	icon_state = "bisque"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("creamy texture" = 1, "crab" = 4)
+	foodtype = MEAT

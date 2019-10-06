@@ -146,7 +146,6 @@
 "aM" = (
 /obj/structure/closet/emcloset,
 /obj/item/radio/intercom{
-	broadcasting = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 23
 	},
@@ -199,7 +198,6 @@
 /area/shuttle/escape)
 "aW" = (
 /obj/item/radio/intercom{
-	broadcasting = 0;
 	name = "Station Intercom (General)";
 	pixel_y = 23
 	},

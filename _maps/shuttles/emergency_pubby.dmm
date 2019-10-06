@@ -483,7 +483,7 @@
 	layer = 2.9
 	},
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/beans{
+/obj/item/reagent_containers/food/snacks/canned/beans{
 	pixel_x = 3;
 	pixel_y = 4
 	},
@@ -503,7 +503,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/table,
 /obj/item/storage/bag/tray,
-/obj/item/clothing/under/waiter,
+/obj/item/clothing/under/suit/waiter,
 /turf/open/floor/plasteel/cafeteria,
 /area/shuttle/escape)
 "bg" = (
@@ -599,7 +599,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "bv" = (
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -652,7 +652,7 @@
 /area/shuttle/escape)
 "bE" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bG" = (
@@ -688,7 +688,6 @@
 	height = 8;
 	name = "PubbyStation emergency shuttle";
 	port_direction = 4;
-	preferred_direction = 1;
 	width = 46
 	},
 /turf/open/floor/plating,

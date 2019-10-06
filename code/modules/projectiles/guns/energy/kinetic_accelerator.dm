@@ -29,6 +29,7 @@
 	. = ..()
 	if(max_mod_capacity)
 		. += "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
+		. += "<span class='info'>You can use a <b>crowbar</b> to remove modules.</span>"
 		for(var/A in get_modkits())
 			var/obj/item/borg/upgrade/modkit/M = A
 			. += "<span class='notice'>There is \a [M] installed, using <b>[M.cost]%</b> capacity.</span>"
@@ -137,7 +138,7 @@
 /obj/item/gun/energy/kinetic_accelerator/proc/reload()
 	cell.give(cell.maxcharge)
 	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, TRUE)
 	else
 		to_chat(loc, "<span class='warning'>[src] silently charges up.</span>")
 	update_icon()
@@ -226,7 +227,7 @@
 	icon_state = "modkit"
 	w_class = WEIGHT_CLASS_SMALL
 	require_module = 1
-	module_type = /obj/item/robot_module/miner
+	module_type = list(/obj/item/robot_module/miner)
 	var/denied_type = null
 	var/maximum_of_type = 1
 	var/cost = 30
@@ -273,7 +274,7 @@
 			if(!user.transferItemToLoc(src, KA))
 				return
 			to_chat(user, "<span class='notice'>You install the modkit.</span>")
-			playsound(loc, 'sound/items/screwdriver.ogg', 100, 1)
+			playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
 			KA.modkits += src
 		else
 			to_chat(user, "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>")

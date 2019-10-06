@@ -4,11 +4,11 @@
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
+	materials = list(/datum/material/iron=10000, /datum/material/glass=4000)
 
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
-	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, it would be wise to immediately dispose of this."
+	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, so it would be wise to immediately dispose of this."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
 	density = FALSE
@@ -44,7 +44,7 @@
 	if(W.tool_behaviour == TOOL_SCREWDRIVER && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='warning'>[usr.name] deactivates [src].</span>",
 			"<span class='notice'>After some fiddling, you find a way to disable [src]'s power source.</span>",
-			"<span class='italics'>You hear clicking.</span>")
+			"<span class='hear'>You hear clicking.</span>")
 		new /obj/item/deactivated_swarmer(get_turf(src))
 		qdel(src)
 	else
@@ -56,11 +56,11 @@
 	name = "Swarmer"
 	unique_name = 1
 	icon = 'icons/mob/swarmer.dmi'
-	desc = "A robot of unknown design, they seek only to consume materials and replicate themselves indefinitely."
+	desc = "Robotic constructs of unknown design, swarmers seek only to consume materials and replicate themselves indefinitely."
 	speak_emote = list("tones")
 	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	health = 40
 	maxHealth = 40
 	status_flags = CANPUSH
@@ -189,7 +189,7 @@
 	return 0
 
 /obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
-	if(materials[MAT_METAL] || materials[MAT_GLASS])
+	if(materials[getmaterialref(/datum/material/iron)] || materials[getmaterialref(/datum/material/glass)])
 		return 1
 	return ..()
 
@@ -214,7 +214,7 @@
 /obj/item/clockwork/alloy_shards/small/IntegrateAmount()
 	return 1
 
-/turf/open/floor/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
+/turf/open/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
 	return FALSE
 
 /obj/structure/lattice/catwalk/swarmer_catwalk/swarmer_act()
@@ -416,7 +416,7 @@
 	to_chat(S, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/shieldwallgen/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+/obj/machinery/power/shieldwallgen/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>Destroying this object would have an unpredictable effect on structure integrity. Aborting.</span>")
 	return FALSE
 
@@ -498,11 +498,11 @@
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(4,0,get_turf(target))
 	S.start()
-	playsound(src,'sound/effects/sparks4.ogg',50,1)
+	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	do_teleport(target, F, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 
-/mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
-	if(!tesla_shock)
+/mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	if(!(flags & SHOCK_TESLA))
 		return FALSE
 	return ..()
 
@@ -541,7 +541,7 @@
 
 /obj/effect/temp_visual/swarmer/disintegration/Initialize()
 	. = ..()
-	playsound(loc, "sparks", 100, 1)
+	playsound(loc, "sparks", 100, TRUE)
 
 /obj/effect/temp_visual/swarmer/dismantle
 	icon_state = "dismantle"
@@ -571,9 +571,9 @@
 /obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src, 'sound/weapons/egloves.ogg', 80, 1)
+			playsound(src, 'sound/weapons/egloves.ogg', 80, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 100, 1)
+			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/swarmer/emp_act()
 	. = ..()
@@ -592,8 +592,8 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
-			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
-			L.electrocute_act(0, src, 1, 1, 1)
+			playsound(loc,'sound/effects/snap.ogg',50, TRUE, -1)
+			L.electrocute_act(0, src, 1, flags = SHOCK_NOGLOVES|SHOCK_ILLUSION)
 			if(iscyborg(L))
 				L.Paralyze(100)
 			qdel(src)
@@ -602,7 +602,7 @@
 /mob/living/simple_animal/hostile/swarmer/proc/CreateTrap()
 	set name = "Create trap"
 	set category = "Swarmer"
-	set desc = "Creates a simple trap that will non-lethally electrocute anything that steps on it. Costs 5 resources"
+	set desc = "Creates a simple trap that will non-lethally electrocute anything that steps on it. Costs 5 resources."
 	if(locate(/obj/structure/swarmer/trap) in loc)
 		to_chat(src, "<span class='warning'>There is already a trap here. Aborting.</span>")
 		return
@@ -650,7 +650,7 @@
 	if(do_mob(src, src, 100))
 		var/createtype = SwarmerTypeToCreate()
 		if(createtype && Fabricate(createtype, 50))
-			playsound(loc,'sound/items/poster_being_created.ogg',50, 1, -1)
+			playsound(loc,'sound/items/poster_being_created.ogg',50, TRUE, -1)
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/SwarmerTypeToCreate()

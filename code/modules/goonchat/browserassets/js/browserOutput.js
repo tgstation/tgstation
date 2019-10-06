@@ -73,6 +73,7 @@ var opts = {
 	'messageCombining': true,
 
 };
+var replaceRegexes = {};
 
 function clamp(val, min, max) {
 	return Math.max(min, Math.min(val, max))
@@ -171,6 +172,15 @@ function byondDecode(message) {
 		message = unescape(message);
 	}
 	return message;
+}
+
+function replaceRegex() {
+	var selectedRegex = replaceRegexes[$(this).attr('replaceRegex')];
+	if (selectedRegex) {
+		var replacedText = $(this).html().replace(selectedRegex[0], selectedRegex[1]);
+		$(this).html(replacedText);
+	}
+	$(this).removeAttr('replaceRegex');
 }
 
 //Actually turns the highlight term match into appropriate html
@@ -366,6 +376,7 @@ function output(message, flag) {
 				badge = $('<span/>', {'class': 'r', 'text': 2});
 			}
 			lastmessages.html(message);
+			lastmessages.find('[replaceRegex]').each(replaceRegex);
 			lastmessages.append(badge);
 			badge.animate({
 				"font-size": "0.9em"
@@ -387,6 +398,8 @@ function output(message, flag) {
 			entry.className += ' hidden';
 			entry.setAttribute('data-filter', filteredOut);
 		}
+
+		$(entry).find('[replaceRegex]').each(replaceRegex);
 
 		$last_message = trimmed_message;
 		$messages[0].appendChild(entry);
@@ -575,6 +588,16 @@ function ehjaxCallback(data) {
 				$('#adminMusic').prop('src', adminMusic);
 				$('#adminMusic').trigger("play");
 			}
+		} else if (data.syncRegex) {
+			for (var i in data.syncRegex) {
+
+				var regexData = data.syncRegex[i];
+				var regexName = regexData[0];
+				var regexFlags = regexData[1];
+				var regexReplaced = regexData[2];
+
+				replaceRegexes[i] = [new RegExp(regexName, regexFlags), regexReplaced];
+			}
 		}
 	}
 }
@@ -704,8 +727,8 @@ $(function() {
 	*
 	******************************************/
 	var savedConfig = {
-		'sfontSize': getCookie('fontsize'),
-		'slineHeight': getCookie('lineheight'),
+		fontsize: getCookie('fontsize'),
+		lineheight: getCookie('lineheight'),
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
@@ -714,13 +737,13 @@ $(function() {
 		'sdarkmode': getCookie('darkmode'),
 	};
 
-	if (savedConfig.sfontSize) {
-		$messages.css('font-size', savedConfig.sfontSize);
-		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>', 'internal');
+	if (savedConfig.fontsize) {
+		$messages.css('font-size', savedConfig.fontsize);
+		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.fontsize+'</span>', 'internal');
 	}
-	if (savedConfig.slineHeight) {
-		$("body").css('line-height', savedConfig.slineHeight);
-		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
+	if (savedConfig.lineheight) {
+		$("body").css('line-height', savedConfig.lineheight);
+		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.lineheight+'</span>', 'internal');
 	}
 	if(savedConfig.sdarkmode == 'true'){
 		swap();
@@ -951,41 +974,31 @@ $(function() {
 	});
 
 	$('#decreaseFont').click(function(e) {
-		var fontSize = parseInt($messages.css('font-size'));
-		fontSize = fontSize - 1 + 'px';
-		$messages.css({'font-size': fontSize});
-		setCookie('fontsize', fontSize, 365);
-		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
+		savedConfig.fontsize = Math.max(parseInt(savedConfig.fontsize || 13) - 1, 1) + 'px';
+		$messages.css({'font-size': savedConfig.fontsize});
+		setCookie('fontsize', savedConfig.fontsize, 365);
+		internalOutput('<span class="internal boldnshit">Font size set to '+savedConfig.fontsize+'</span>', 'internal');
 	});
 
 	$('#increaseFont').click(function(e) {
-		var fontSize = parseInt($messages.css('font-size'));
-		fontSize = fontSize + 1 + 'px';
-		$messages.css({'font-size': fontSize});
-		setCookie('fontsize', fontSize, 365);
-		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
+		savedConfig.fontsize = (parseInt(savedConfig.fontsize || 13) + 1) + 'px';
+		$messages.css({'font-size': savedConfig.fontsize});
+		setCookie('fontsize', savedConfig.fontsize, 365);
+		internalOutput('<span class="internal boldnshit">Font size set to '+savedConfig.fontsize+'</span>', 'internal');
 	});
 
 	$('#decreaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont
-		lineheightvar -= 0.1;
-		lineheightvar = lineheightvar.toFixed(1)
-		$("body").css({'line-height': lineheightvar});
-		setCookie('lineheight', lineheightvar, 365);
-		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
+		savedConfig.lineheight = Math.max(parseFloat(savedConfig.lineheight || 1.2) - 0.1, 0.1).toFixed(1);
+		$("body").css({'line-height': savedConfig.lineheight});
+		setCookie('lineheight', savedConfig.lineheight, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+savedConfig.lineheight+'</span>', 'internal');
 	});
 
 	$('#increaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont
-		lineheightvar += 0.1;
-		lineheightvar = lineheightvar.toFixed(1)
-		$("body").css({'line-height': lineheightvar});
-		setCookie('lineheight', lineheightvar, 365);
-		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
+		savedConfig.lineheight = (parseFloat(savedConfig.lineheight || 1.2) + 0.1).toFixed(1);
+		$("body").css({'line-height': savedConfig.lineheight});
+		setCookie('lineheight', savedConfig.lineheight, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+savedConfig.lineheight+'</span>', 'internal');
 	});
 
 	$('#togglePing').click(function(e) {
@@ -1003,7 +1016,7 @@ $(function() {
 		// Requires IE 10+ to issue download commands. Just opening a popup
 		// window will cause Ctrl+S to save a blank page, ignoring innerHTML.
 		if (!window.Blob) {
-			output('<span class="big red">This function is only supported on IE 10+. Upgrade if possible.</span>', 'internal');
+			output('<span class="big red">This function is only supported on IE 10 and up. Upgrade if possible.</span>', 'internal');
 			return;
 		}
 

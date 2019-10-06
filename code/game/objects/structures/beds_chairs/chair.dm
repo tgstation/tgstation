@@ -79,7 +79,7 @@
 			return
 		var/obj/item/assembly/shock_kit/SK = W
 		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		E.setDir(dir)
 		E.part = SK
 		SK.forceMove(E)
@@ -132,9 +132,6 @@
 
 /obj/structure/chair/wood/narsie_act()
 	return
-
-/obj/structure/chair/wood/normal //Kept for map compatibility
-
 
 /obj/structure/chair/wood/wings
 	icon_state = "wooden_chair_wings"
@@ -210,7 +207,7 @@
 /obj/structure/chair/office/Moved()
 	. = ..()
 	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, 1)
+		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
@@ -261,13 +258,13 @@
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
-	materials = list(MAT_METAL = 2000)
+	materials = list(/datum/material/iron = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
 /obj/item/chair/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src,hitsound,50,1)
+	playsound(src,hitsound,50,TRUE)
 	return BRUTELOSS
 
 /obj/item/chair/narsie_act()
@@ -279,7 +276,11 @@
 	plant(user)
 
 /obj/item/chair/proc/plant(mob/user)
-	for(var/obj/A in get_turf(loc))
+	var/turf/T = get_turf(loc)
+	if(!isfloorturf(T))
+		to_chat(user, "<span class='danger'>You need ground to plant this on!</span>")
+		return
+	for(var/obj/A in T)
 		if(istype(A, /obj/structure/chair))
 			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
 			return
@@ -302,7 +303,7 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(materials[MAT_METAL])
+	else if(materials[/datum/material/iron])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
@@ -427,6 +428,7 @@
 	buildstacktype = null
 	item_chair = null
 	flags_1 = NODECONSTRUCT_1
+	alpha = 0
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
 	M.pixel_y += 5

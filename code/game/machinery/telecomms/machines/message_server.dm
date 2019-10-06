@@ -153,6 +153,7 @@
 	var/recipient = "Unspecified"
 	var/message = "Blank"  // transferred message
 	var/datum/picture/picture  // attached photo
+	var/automated = 0 //automated message
 
 /datum/data_pda_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)

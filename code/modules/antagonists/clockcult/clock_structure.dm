@@ -59,7 +59,7 @@
 		return "<span class='[heavily_damaged ? "alloy":"brass"]'>[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity[heavily_damaged ? "!":"."]</span>"
 	return ..()
 
-/obj/structure/destructible/clockwork/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+/obj/structure/destructible/clockwork/attack_hulk(mob/living/carbon/human/user)
 	if(is_servant_of_ratvar(user) && immune_to_servant_attacks)
 		return FALSE
 	return ..()
@@ -112,7 +112,7 @@
 	else
 		icon_state = unanchored_icon
 		if(do_damage)
-			playsound(src, break_sound, 10 * (40 * (1 - get_efficiency_mod())), 1)
+			playsound(src, break_sound, 10 * (40 * (1 - get_efficiency_mod())), TRUE)
 			take_damage(round(max_integrity * 0.25, 1), BRUTE)
 			to_chat(user, "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>")
 

@@ -32,6 +32,10 @@
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
 
+/obj/machinery/power/rad_collector/anchored/delta //Deltastation's engine is shared by engineers and atmos techs
+	desc = "A device which uses Hawking Radiation and plasma to produce power. This model allows access by Atmospheric Technicians."
+	req_access = list(ACCESS_ENGINE_EQUIP, ACCESS_ATMOSPHERICS)
+
 /obj/machinery/power/rad_collector/Destroy()
 	return ..()
 
@@ -44,7 +48,7 @@
 	if(!bitcoinmining)
 		if(!loaded_tank.air_contents.gases[/datum/gas/plasma])
 			investigate_log("<font color='red'>out of fuel</font>.", INVESTIGATE_SINGULO)
-			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 			eject()
 		else
 			var/gasdrained = min(powerproduction_drain*drainratio,loaded_tank.air_contents.gases[/datum/gas/plasma][MOLES])
@@ -58,7 +62,7 @@
 			stored_energy-=power_produced
 	else if(is_station_level(z) && SSresearch.science_tech)
 		if(!loaded_tank.air_contents.gases[/datum/gas/tritium] || !loaded_tank.air_contents.gases[/datum/gas/oxygen])
-			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 			eject()
 		else
 			var/gasdrained = bitcoinproduction_drain*drainratio
@@ -78,7 +82,7 @@
 	if(anchored)
 		if(!src.locked)
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
+			user.visible_message("<span class='notice'>[user.name] turns the [src.name] [active? "on":"off"].</span>", \
 			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
 			var/fuel
 			if(loaded_tank)
@@ -134,6 +138,7 @@
 		return ..()
 
 /obj/machinery/power/rad_collector/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
 
@@ -196,9 +201,9 @@
 			. += "<span class='notice'><b>[src]'s display displays the words:</b> \"Research point production mode. Please insert <b>Tritium</b> and <b>Oxygen</b>. Use a multitool to change production modes.\"</span>"
 
 /obj/machinery/power/rad_collector/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+	. = ..()
+	if(.)
 		eject()
-		stat |= BROKEN
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = FALSE

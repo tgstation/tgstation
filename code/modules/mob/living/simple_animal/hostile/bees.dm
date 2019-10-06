@@ -37,7 +37,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	density = FALSE
 	mob_size = MOB_SIZE_TINY
-	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
+	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	movement_type = FLYING
 	gold_core_spawnable = HOSTILE_SPAWN
 	search_objects = 1 //have to find those plant trays!
@@ -149,6 +149,7 @@
 	if(istype(R))
 		beegent = R
 		name = "[initial(name)] ([R.name])"
+		real_name = name
 		poison_type = null
 		generate_bee_visuals()
 
@@ -161,9 +162,7 @@
 	target = null //so we pick a new hydro tray next FindTarget(), instead of loving the same plant for eternity
 	wanted_objects -= hydroponicstypecache //so we only hunt them while they're alive/seeded/not visisted
 	Hydro.recent_bee_visit = TRUE
-	spawn(BEE_TRAY_RECENT_VISIT)
-		if(Hydro)
-			Hydro.recent_bee_visit = FALSE
+	addtimer(VARSET_CALLBACK(Hydro, recent_bee_visit, FALSE), BEE_TRAY_RECENT_VISIT)
 
 	var/growth = health //Health also means how many bees are in the swarm, roughly.
 	//better healthier plants!
@@ -264,7 +263,7 @@
 				if(queen && queen.beegent)
 					qb.queen.assign_reagent(queen.beegent) //Bees use the global singleton instances of reagents, so we don't need to worry about one bee being deleted and her copies losing their reagents.
 				user.put_in_active_hand(qb)
-				user.visible_message("<span class='notice'>[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>","<span class ='warning'>You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>")
+				user.visible_message("<span class='notice'>[user] injects [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>","<span class='warning'>You inject [src] with royal bee jelly, causing it to split into two bees, MORE BEES!</span>")
 			else
 				to_chat(user, "<span class='warning'>You don't have enough royal bee jelly to split a bee in two!</span>")
 		else

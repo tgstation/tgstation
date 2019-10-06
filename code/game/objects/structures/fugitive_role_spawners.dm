@@ -38,6 +38,29 @@
 	back_story = "russian"
 	desc = "A small sleeper typically used to make long distance travel a bit more bearable."
 	mob_name = "russian"
-	outfit = /datum/outfit/russiancorpse
+	outfit = /datum/outfit/russiancorpse/hunter
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
+
+/obj/effect/mob_spawn/human/fugitive/bounty
+	name = "bounty hunter pod"
+	flavour_text = "We got a new bounty on some fugitives, dead or alive."
+	back_story = "bounty hunters"
+	desc = "A small sleeper typically used to make long distance travel a bit more bearable."
+	mob_name = "bounty hunter"
+	icon = 'icons/obj/machines/sleeper.dmi'
+	icon_state = "sleeper"
+
+/obj/effect/mob_spawn/human/fugitive/bounty/Destroy()
+	var/obj/structure/fluff/empty_sleeper/S = new(drop_location())
+	S.setDir(dir)
+	return ..()
+
+/obj/effect/mob_spawn/human/fugitive/bounty/armor
+	outfit = /datum/outfit/bountyarmor
+
+/obj/effect/mob_spawn/human/fugitive/bounty/hook
+	outfit = /datum/outfit/bountyhook
+
+/obj/effect/mob_spawn/human/fugitive/bounty/synth
+	outfit = /datum/outfit/bountysynth

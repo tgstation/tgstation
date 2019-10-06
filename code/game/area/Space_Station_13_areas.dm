@@ -390,6 +390,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/bar
 	name = "Bar"
 	icon_state = "bar"
+	mood_bonus = 5
+	mood_message = "<span class='nicegreen'>I love being in the bar!\n</span>"
 
 /area/crew_quarters/bar/atrium
 	name = "Atrium"
@@ -482,6 +484,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
 	icon_state = "atmos_engine"
+	valid_territory = FALSE
 
 /area/engine/engine_room //donut station specific
 	name = "Engine Room"
@@ -494,6 +497,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/supermatter
 	name = "Supermatter Engine"
 	icon_state = "engine_sm"
+	valid_territory = FALSE
 
 /area/engine/break_room
 	name = "Engineering Foyer"

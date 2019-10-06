@@ -13,7 +13,6 @@
 /area/shuttle/hunter)
 "d" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -42,18 +41,12 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
 "j" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "k" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/hunter)
-"l" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plating,
 /area/shuttle/hunter)
 "m" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -89,7 +82,6 @@
 /area/shuttle/hunter)
 "r" = (
 /obj/effect/turf_decal/arrows{
-	icon_state = "arrows";
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -130,7 +122,6 @@
 /area/shuttle/hunter)
 "z" = (
 /obj/structure/chair{
-	icon_state = "chair";
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -190,7 +181,7 @@
 /area/shuttle/hunter)
 "I" = (
 /obj/effect/turf_decal/bot,
-/obj/mecha/working/ripley,
+/obj/structure/mecha_wreckage/ripley,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "J" = (
@@ -201,7 +192,6 @@
 /obj/machinery/door/airlock/security/glass,
 /obj/structure/fans/tiny,
 /obj/docking_port/stationary{
-	dir = 1;
 	dwidth = 11;
 	height = 16;
 	id = "pirateship_home";
@@ -210,7 +200,6 @@
 	},
 /obj/docking_port/mobile{
 	dheight = 3;
-	dir = 1;
 	dwidth = 3;
 	height = 13;
 	id = "huntership";
@@ -226,6 +215,21 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/shuttle/hunter)
+"N" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"Q" = (
+/obj/item/book/manual/ripley_build_and_repair,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"Y" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter)
 
 (1,1,1) = {"
@@ -341,13 +345,13 @@ b
 f
 g
 b
-l
+x
 k
-u
-u
-q
-u
-k
+Y
+Y
+Y
+Y
+Q
 I
 b
 g
@@ -384,7 +388,7 @@ y
 y
 b
 k
-q
+N
 b
 b
 b

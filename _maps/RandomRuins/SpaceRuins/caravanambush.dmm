@@ -16,8 +16,8 @@
 /area/template_noop)
 "ae" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "plating";
-	dir = 4
+	dir = 4;
+	icon_state = "plating"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -41,7 +41,6 @@
 "ai" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	dir = 2;
 	icon_state = "plating"
 	},
 /turf/template_noop,
@@ -66,8 +65,8 @@
 "an" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	icon_state = "plating";
-	dir = 4
+	dir = 4;
+	icon_state = "plating"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -78,8 +77,8 @@
 "ap" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 8
+	dir = 8;
+	icon_state = "pile"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -96,7 +95,6 @@
 	dir = 8;
 	name = "Tiny Freighter APC";
 	pixel_x = -25;
-	req_access = null;
 	start_charge = 0
 	},
 /obj/machinery/button/door{
@@ -131,8 +129,8 @@
 /area/template_noop)
 "aE" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "pile";
-	dir = 4
+	dir = 4;
+	icon_state = "pile"
 	},
 /turf/template_noop,
 /area/template_noop)
@@ -240,7 +238,6 @@
 	dir = 8;
 	name = "Tiny Freighter APC";
 	pixel_x = -25;
-	req_access = null;
 	start_charge = 0
 	},
 /obj/machinery/button/door{
@@ -472,9 +469,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
 "gR" = (
-/obj/machinery/power/smes{
-	charge = 0
-	},
+/obj/machinery/power/smes,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -824,9 +819,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter2)
 "iq" = (
-/obj/machinery/power/smes{
-	charge = 0
-	},
+/obj/machinery/power/smes,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},

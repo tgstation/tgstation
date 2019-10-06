@@ -139,13 +139,13 @@
 	name = "flux wave anomaly"
 	icon_state = "electricity2"
 	density = TRUE
-	var/canshock = 0
+	var/canshock = FALSE
 	var/shockdamage = 20
 	var/explosive = TRUE
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
-	canshock = 1
+	canshock = TRUE
 	for(var/mob/living/M in range(0, src))
 		mobShock(M)
 
@@ -160,18 +160,8 @@
 
 /obj/effect/anomaly/flux/proc/mobShock(mob/living/M)
 	if(canshock && istype(M))
-		canshock = 0 //Just so you don't instakill yourself if you slam into the anomaly five times in a second.
-		if(iscarbon(M))
-			if(ishuman(M))
-				M.electrocute_act(shockdamage, "[name]", safety=1)
-				return
-			M.electrocute_act(shockdamage, "[name]")
-			return
-		else
-			M.adjustFireLoss(shockdamage)
-			M.visible_message("<span class='danger'>[M] was shocked by \the [name]!</span>", \
-		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='italics'>You hear a heavy electrical crack.</span>")
+		canshock = FALSE
+		M.electrocute_act(shockdamage, name, flags = SHOCK_NOGLOVES)
 
 /obj/effect/anomaly/flux/detonate()
 	if(explosive)
@@ -215,7 +205,7 @@
 			var/turf/FROM = T // the turf of origin we're travelling FROM
 			var/turf/TO = get_turf(chosen) // the turf of origin we're travelling TO
 
-			playsound(TO, 'sound/effects/phasein.ogg', 100, 1)
+			playsound(TO, 'sound/effects/phasein.ogg', 100, TRUE)
 			priority_announce("Massive bluespace translocation detected.", "Anomaly Alert")
 
 			var/list/flashers = list()
@@ -235,21 +225,23 @@
 				if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
 					A.forceMove(newloc)
 
-				spawn()
-					if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
-						var/mob/M = A
-						if(M.client)
-							var/obj/blueeffect = new /obj(src)
-							blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
-							blueeffect.icon = 'icons/effects/effects.dmi'
-							blueeffect.icon_state = "shieldsparkles"
-							blueeffect.layer = FLASH_LAYER
-							blueeffect.plane = FULLSCREEN_PLANE
-							blueeffect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-							M.client.screen += blueeffect
-							sleep(20)
-							M.client.screen -= blueeffect
-							qdel(blueeffect)
+				if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
+					var/mob/M = A
+					if(M.client)
+						INVOKE_ASYNC(src, .proc/blue_effect, M)
+
+/obj/effect/anomaly/bluespace/proc/blue_effect(mob/M)
+	var/obj/blueeffect = new /obj(src)
+	blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
+	blueeffect.icon = 'icons/effects/effects.dmi'
+	blueeffect.icon_state = "shieldsparkles"
+	blueeffect.layer = FLASH_LAYER
+	blueeffect.plane = FULLSCREEN_PLANE
+	blueeffect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	M.client.screen += blueeffect
+	sleep(20)
+	M.client.screen -= blueeffect
+	qdel(blueeffect)
 
 /////////////////////
 

@@ -44,7 +44,7 @@
 	if(overmind)
 		overmind.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
 	GLOB.blobs -= src //it's no longer in the all blobs list either
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Expand() is no longer broken, no check necessary.
 	return ..()
 
 /obj/structure/blob/blob_act()
@@ -167,7 +167,7 @@
 
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, T)) //is the target turf impassable
@@ -238,6 +238,7 @@
 		return ..()
 
 /obj/structure/blob/proc/chemeffectreport(mob/user)
+	RETURN_TYPE(/list)
 	. = list()
 	if(overmind)
 		. += list("<b>Material: <font color=\"[overmind.blobstrain.color]\">[overmind.blobstrain.name]</font><span class='notice'>.</span></b>",
@@ -247,6 +248,7 @@
 		. += "<b>No Material Detected!</b>"
 
 /obj/structure/blob/proc/typereport(mob/user)
+	RETURN_TYPE(/list)
 	return list("<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>",
 							"<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>",
 							"<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
@@ -261,11 +263,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)

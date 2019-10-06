@@ -88,8 +88,8 @@
 		var/obj/item/stack/S = I
 
 		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
-			if(S.materials[MAT_METAL])
-				S.cost = S.materials[MAT_METAL] * 0.25
+			if(S.materials[/datum/material/iron])
+				S.cost = S.materials[/datum/material/iron] * 0.25
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
 
 		else if(istype(S, /obj/item/stack/sheet/glass))
@@ -223,7 +223,7 @@
 	R.anchored = TRUE
 	sleep(1)
 	for(var/i in 1 to 4)
-		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
+		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 		sleep(7)
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
@@ -268,7 +268,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/borghypo,
-		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/surgical_drapes,
@@ -335,7 +335,8 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/melee/baton/loaded,
 		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/clothing/mask/gas/sechailer/cyborg)
+		/obj/item/clothing/mask/gas/sechailer/cyborg,
+		/obj/item/extinguisher/mini)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
 		/obj/item/clockwork/weapon/ratvarian_spear)
@@ -564,6 +565,7 @@
 		/obj/item/gun/ballistic/revolver/grenadelauncher/cyborg,
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
+		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg)
 
 	ratvar_modules = list(
@@ -589,7 +591,7 @@
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
-		/obj/item/twohanded/shockpaddles/syndicate,
+		/obj/item/twohanded/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer,
 		/obj/item/surgical_drapes,
 		/obj/item/retractor,
@@ -621,6 +623,7 @@
 		/obj/item/borg/sight/thermal,
 		/obj/item/construction/rcd/borg/syndicate,
 		/obj/item/pipe_dispenser,
+		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/screwdriver/nuke,

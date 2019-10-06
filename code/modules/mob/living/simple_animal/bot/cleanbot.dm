@@ -14,7 +14,7 @@
 	model = "Cleanbot"
 	bot_core_type = /obj/machinery/bot_core/cleanbot
 	window_id = "autoclean"
-	window_name = "Automatic Station Cleaner v1.2"
+	window_name = "Automatic Station Cleaner v1.3"
 	pass_flags = PASSMOB
 	path_image_color = "#993299"
 
@@ -133,6 +133,9 @@
 	if(!target && trash) //Then for trash.
 		target = scan(/obj/item/trash)
 
+	if(!target && trash) //Search for dead mices.
+		target = scan(/obj/item/reagent_containers/food/snacks/deadmouse)
+
 	if(!target && auto_patrol) //Search for cleanables it can see.
 		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
 			start_patrol()
@@ -201,31 +204,32 @@
 
 	if(trash)
 		target_types += /obj/item/trash
+		target_types += /obj/item/reagent_containers/food/snacks/deadmouse
 
 	target_types = typecacheof(target_types)
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
-	if(istype(A, /obj/effect/decal/cleanable))
-		anchored = TRUE
+	if(is_cleanable(A))
 		icon_state = "cleanbot-c"
-		visible_message("<span class='notice'>[src] begins to clean up [A].</span>")
 		mode = BOT_CLEANING
-		spawn(50)
-			if(mode == BOT_CLEANING)
-				if(A && isturf(A.loc))
-					var/atom/movable/AM = A
-					if(istype(AM, /obj/effect/decal/cleanable))
-						for(var/obj/effect/decal/cleanable/C in A.loc)
-							qdel(C)
 
-				anchored = FALSE
-				target = null
-			mode = BOT_IDLE
-			icon_state = "cleanbot[on]"
+		var/turf/T = get_turf(A)
+		if(do_after(src, 1, target = T))
+			SEND_SIGNAL(T, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+			visible_message("<span class='notice'>[src] cleans \the [T].</span>")
+			for(var/atom/dirtything in T)
+				if(is_cleanable(dirtything))
+					qdel(dirtything)
+
+			target = null
+
+		mode = BOT_IDLE
+		icon_state = "cleanbot[on]"
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
-		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
+		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		A.acid_act(75, 10)
+		target = null
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
 		if(!M.stat)
@@ -245,7 +249,7 @@
 				"MY ONLY MISSION IS TO CLEANSE THE WORLD OF EVIL.", "EXTERMINATING PESTS.")
 			say(phrase)
 			victim.emote("scream")
-			playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+			playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 			victim.acid_act(5, 100)
 		else if(A == src) // Wets floors and spawns foam randomly
 			if(prob(75))
@@ -276,7 +280,6 @@
 
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
-
 
 /mob/living/simple_animal/bot/cleanbot/get_controls(mob/user)
 	var/dat

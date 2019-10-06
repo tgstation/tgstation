@@ -99,10 +99,10 @@
 
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
+	. = ..()
 	if(slot == SLOT_HANDS)
 		return
 	qdel(src)
-	return
 
 /obj/item/tk_grab/examine(user)
 	if (focus)
@@ -151,7 +151,7 @@
 /proc/tkMaxRangeCheck(mob/user, atom/target)
 	var/d = get_dist(user, target)
 	if(d > TK_MAXRANGE)
-		to_chat(user, "<span class ='warning'>Your mind won't reach that far.</span>")
+		to_chat(user, "<span class='warning'>Your mind won't reach that far.</span>")
 		return
 	return TRUE
 

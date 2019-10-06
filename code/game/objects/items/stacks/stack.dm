@@ -22,6 +22,7 @@
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
+	var/obj/structure/table/tableVariant // we tables now (stores table variant to be built from this stack)
 
 /obj/item/stack/on_grind()
 	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
@@ -29,7 +30,7 @@
 
 /obj/item/stack/grind_requirements()
 	if(is_cyborg)
-		to_chat(usr, "<span class='danger'>[src] is electronically synthesized in your chassis and can't be ground up!</span>")
+		to_chat(usr, "<span class='warning'>[src] is electronically synthesized in your chassis and can't be ground up!</span>")
 		return
 	return TRUE
 
@@ -195,7 +196,7 @@
 			var/turf/T = usr.drop_location()
 			if(!isturf(T))
 				return
-			T.PlaceOnTop(R.result_type)
+			T.PlaceOnTop(R.result_type, flags = CHANGETURF_INHERIT_AIR)
 		else
 			O = new R.result_type(usr.drop_location())
 		if(O)
@@ -213,8 +214,7 @@
 
 		else if(istype(O, /obj/item/restraints/handcuffs/cable))
 			var/obj/item/cuffs = O
-			cuffs.item_color = item_color
-			cuffs.update_icon()
+			cuffs.color = color
 
 		if (QDELETED(O))
 			return //It's a stack and has already been merged
@@ -355,6 +355,9 @@
 		. = ..()
 
 /obj/item/stack/AltClick(mob/living/user)
+	. = ..()
+	if(isturf(loc)) // to prevent people that are alt clicking a tile to see its content from getting undesidered pop ups
+		return
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	if(is_cyborg)

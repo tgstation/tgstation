@@ -1,4 +1,0 @@
-author: "Akrilla"
-delete-after: True
-changes: 
-  - bugfix: "Fix bad icon state for bounty console printouts"

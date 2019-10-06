@@ -11,7 +11,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
+	materials = list(/datum/material/iron=2000) //one sheet, but where can you make them?
 	tool_behaviour = TOOL_MINING
 	toolspeed = 1
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
@@ -32,7 +32,7 @@
 	throwforce = 7
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=1000)
+	materials = list(/datum/material/iron=1000)
 
 /obj/item/pickaxe/silver
 	name = "silver-plated pickaxe"
@@ -84,7 +84,7 @@
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	toolspeed = 0.1 //the epitome of powertools. extremely fast mining, laughs at puny walls
+	toolspeed = 0.1 //the epitome of powertools. extremely fast mining
 	w_class = WEIGHT_CLASS_HUGE //the epitome of power(gamer)tools is CHUNCKY
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
@@ -106,7 +106,7 @@
 	throwforce = 4
 	item_state = "shovel"
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=50)
+	materials = list(/datum/material/iron=50)
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	sharpness = IS_SHARP
 

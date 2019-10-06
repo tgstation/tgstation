@@ -26,11 +26,13 @@
 /obj/item/soulstone/anybody
 	usability = TRUE
 
+/obj/item/soulstone/anybody/revolver
+	old_shard = TRUE
+
 /obj/item/soulstone/anybody/purified
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "purified_soulstone"
 	purified = TRUE
-
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
@@ -57,6 +59,14 @@
 		A.death()
 	return ..()
 
+/obj/item/soulstone/proc/hot_potato(mob/living/user)
+	to_chat(user, "<span class='userdanger'>Holy magics residing in \the [src] burn your hand!</span>")
+	var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+	affecting.receive_damage( 0, 10 )	// 10 burn damage
+	user.emote("scream")
+	user.update_damage_overlays()
+	user.dropItemToGround(src)
+
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 /obj/item/soulstone/attack(mob/living/carbon/human/M, mob/living/user)
@@ -69,10 +79,16 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
+	if(!M.mind.hasSoul || isdevil(M))
+		to_chat(user, "<span class='warning'>This... thing has no soul! It's filled with evil!</span>")
+		return
 	if(iscultist(M))
 		if(iscultist(user))
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
 			return
+	if(purified && iscultist(user))
+		hot_potato(user)
+		return
 	log_combat(user, M, "captured [M.name]'s soul", src)
 	transfer_soul("VICTIM", M, user)
 
@@ -85,6 +101,9 @@
 		user.Unconscious(100)
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
+	if(purified && iscultist(user))
+		hot_potato(user)
+		return
 	release_shades(user)
 
 /obj/item/soulstone/proc/release_shades(mob/user)
@@ -95,6 +114,8 @@
 		A.cancel_camera()
 		if(purified)
 			icon_state = "purified_soulstone"
+			A.icon_state = "ghost1"
+			A.name = "Purified [initial(A.name)]"
 		else
 			icon_state = "soulstone"
 		name = initial(name)
@@ -126,6 +147,9 @@
 		if(!iscultist(user) && !iswizard(user) && !SS.purified)
 			to_chat(user, "<span class='danger'>An overwhelming feeling of dread comes over you as you attempt to place the soulstone into the shell. It would be wise to be rid of this quickly.</span>")
 			user.Dizzy(30)
+			return
+		if(SS.purified && iscultist(user))
+			SS.hot_potato(user)
 			return
 		SS.transfer_soul("CONSTRUCT",src,user)
 		SS.was_used()
@@ -171,7 +195,7 @@
 					else
 						for(var/obj/item/W in T)
 							T.dropItemToGround(W)
-						init_shade(T, user, vic = 1)
+						init_shade(T, user, message_user = 1)
 						qdel(T)
 				else
 					to_chat(user, "<span class='userdanger'>Capture failed!</span>: Kill or maim the victim first!")
@@ -187,6 +211,8 @@
 				T.health = T.maxHealth
 				if(purified)
 					icon_state = "purified_soulstone2"
+					if(iscultist(T))
+						SSticker.mode.remove_cultist(T.mind, FALSE, FALSE)
 				else
 					icon_state = "soulstone2"
 				name = "soulstone: Shade of [T.real_name]"
@@ -260,7 +286,9 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/U, vic = 0)
+/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/T, mob/user, message_user = 0 , mob/shade_controller)
+	if(!shade_controller)
+		shade_controller = T
 	new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
 	T.stop_sound_channel(CHANNEL_HEARTBEAT)
 	T.invisibility = INVISIBILITY_ABSTRACT
@@ -270,11 +298,11 @@
 	S.mobility_flags = NONE //Can't move out of the soul stone
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
-	S.key = T.key
-	S.language_holder = U.language_holder.copy(S)
-	if(U)
-		S.faction |= "[REF(U)]" //Add the master as a faction, allowing inter-mob cooperation
-	if(U && iscultist(U))
+	S.key = shade_controller.key
+	S.language_holder = user.language_holder.copy(S)
+	if(user)
+		S.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
+	if(user && iscultist(user))
 		SSticker.mode.add_cultist(S.mind, 0)
 	S.cancel_camera()
 	name = "soulstone: Shade of [T.real_name]"
@@ -282,36 +310,32 @@
 		icon_state = "purified_soulstone2"
 	else
 		icon_state = "soulstone2"
-	if(U && (iswizard(U) || usability))
-		to_chat(S, "Your soul has been captured! You are now bound to [U.real_name]'s will. Help [U.p_them()] succeed in [U.p_their()] goals at all costs.")
-	else if(U && iscultist(U))
+	if(user && (iswizard(user) || usability))
+		to_chat(S, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")
+	else if(user && iscultist(user))
 		to_chat(S, "Your soul has been captured! You are now bound to the cult's will. Help them succeed in their goals at all costs.")
-	if(vic && U)
-		to_chat(U, "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from [T.p_their()] body and stored within the soul stone.")
+	if(message_user && user)
+		to_chat(user, "<span class='info'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from [T.p_their()] body and stored within the soul stone.")
 
 
-/obj/item/soulstone/proc/getCultGhost(mob/living/carbon/human/T, mob/U)
+/obj/item/soulstone/proc/getCultGhost(mob/living/carbon/human/T, mob/user)
 	var/mob/dead/observer/chosen_ghost
 
-	for(var/mob/dead/observer/ghost in GLOB.player_list) //We put them back in their body
-		if(ghost.mind && ghost.mind.current == T && ghost.client)
-			chosen_ghost = ghost
-			break
+	chosen_ghost = T.get_ghost(TRUE,TRUE) //Try to grab original owner's ghost first
 
-	if(!chosen_ghost)	//Failing that, we grab a ghost
+	if(!chosen_ghost || !chosen_ghost.client)	//Failing that, we grab a ghosts
 		var/list/consenting_candidates = pollGhostCandidates("Would you like to play as a Shade?", "Cultist", null, ROLE_CULTIST, 50, POLL_IGNORE_SHADE)
 		if(consenting_candidates.len)
 			chosen_ghost = pick(consenting_candidates)
 	if(!T)
 		return FALSE
-	if(!chosen_ghost)
-		to_chat(U, "<span class='danger'>There were no spirits willing to become a shade.</span>")
+	if(!chosen_ghost || !chosen_ghost.client)
+		to_chat(user, "<span class='danger'>There were no spirits willing to become a shade.</span>")
 		return FALSE
 	if(contents.len) //If they used the soulstone on someone else in the meantime
 		return FALSE
-	T.ckey = chosen_ghost.ckey
 	for(var/obj/item/W in T)
 		T.dropItemToGround(W)
-	init_shade(T, U)
+	init_shade(T, user , shade_controller = chosen_ghost)
 	qdel(T)
 	return TRUE

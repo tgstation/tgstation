@@ -22,27 +22,13 @@
 	name = /datum/reagent/medicine/inacusiate
 	id = /datum/reagent/medicine/inacusiate
 	results = list(/datum/reagent/medicine/inacusiate = 2)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/charcoal = 1)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/multiver = 1)
 
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
 	id = /datum/reagent/medicine/synaptizine
 	results = list(/datum/reagent/medicine/synaptizine = 3)
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/lithium = 1, /datum/reagent/water = 1)
-
-/datum/chemical_reaction/charcoal
-	name = "Charcoal"
-	id = /datum/reagent/medicine/charcoal
-	results = list(/datum/reagent/medicine/charcoal = 2)
-	required_reagents = list(/datum/reagent/ash = 1, /datum/reagent/consumable/sodiumchloride = 1)
-	mix_message = "The mixture yields a fine black powder."
-	required_temp = 380
-
-/datum/chemical_reaction/silver_sulfadiazine
-	name = "Silver Sulfadiazine"
-	id = /datum/reagent/medicine/silver_sulfadiazine
-	results = list(/datum/reagent/medicine/silver_sulfadiazine = 5)
-	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/silver = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
 
 /datum/chemical_reaction/salglu_solution
 	name = "Saline-Glucose Solution"
@@ -62,18 +48,11 @@
 	results = list(/datum/reagent/medicine/mine_salve = 15)
 	required_reagents = list(/datum/reagent/toxin/plasma = 5, /datum/reagent/iron = 5, /datum/reagent/consumable/sugar = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
 
-/datum/chemical_reaction/synthflesh
-	name = "Synthflesh"
-	id = /datum/reagent/medicine/synthflesh
-	results = list(/datum/reagent/medicine/synthflesh = 3)
-	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/styptic_powder = 1)
-
-/datum/chemical_reaction/styptic_powder
-	name = "Styptic Powder"
-	id = /datum/reagent/medicine/styptic_powder
-	results = list(/datum/reagent/medicine/styptic_powder = 4)
-	required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/hydrogen = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)
-	mix_message = "The solution yields an astringent powder."
+/datum/chemical_reaction/instabitaluri
+	name = "Synthflesh (Instabitaluri)"
+	id = /datum/reagent/medicine/C2/instabitaluri
+	results = list(/datum/reagent/medicine/C2/instabitaluri = 3)
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/libital = 1)
 
 /datum/chemical_reaction/calomel
 	name = "Calomel"
@@ -112,14 +91,6 @@
 	results = list(/datum/reagent/medicine/salbutamol = 5)
 	required_reagents = list(/datum/reagent/medicine/sal_acid = 1, /datum/reagent/lithium = 1, /datum/reagent/aluminium = 1, /datum/reagent/bromine = 1, /datum/reagent/ammonia = 1)
 
-/datum/chemical_reaction/perfluorodecalin
-	name = "Perfluorodecalin"
-	id = /datum/reagent/medicine/perfluorodecalin
-	results = list(/datum/reagent/medicine/perfluorodecalin = 3)
-	required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1, /datum/reagent/oil = 1)
-	required_temp = 370
-	mix_message = "The mixture rapidly turns into a dense pink liquid."
-
 /datum/chemical_reaction/ephedrine
 	name = "Ephedrine"
 	id = /datum/reagent/medicine/ephedrine
@@ -138,7 +109,7 @@
 	name = "Oculine"
 	id = /datum/reagent/medicine/oculine
 	results = list(/datum/reagent/medicine/oculine = 3)
-	required_reagents = list(/datum/reagent/medicine/charcoal = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
+	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
 	mix_message = "The mixture sputters loudly and becomes a pale pink color."
 
 /datum/chemical_reaction/atropine
@@ -182,7 +153,7 @@
 	name = /datum/reagent/medicine/antihol
 	id = /datum/reagent/medicine/antihol
 	results = list(/datum/reagent/medicine/antihol = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/charcoal = 1, /datum/reagent/copper = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/copper = 1)
 
 /datum/chemical_reaction/cryoxadone
 	name = "Cryoxadone"
@@ -209,35 +180,11 @@
 	results = list(/datum/reagent/medicine/haloperidol = 5)
 	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/medicine/potass_iodide = 1, /datum/reagent/oil = 1)
 
-/datum/chemical_reaction/bicaridine
-	name = "Bicaridine"
-	id = /datum/reagent/medicine/bicaridine
-	results = list(/datum/reagent/medicine/bicaridine = 3)
-	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/consumable/sugar = 1)
-
-/datum/chemical_reaction/kelotane
-	name = "Kelotane"
-	id = /datum/reagent/medicine/kelotane
-	results = list(/datum/reagent/medicine/kelotane = 2)
-	required_reagents = list(/datum/reagent/carbon = 1, /datum/reagent/silicon = 1)
-
-/datum/chemical_reaction/antitoxin
-	name = "Antitoxin"
-	id = /datum/reagent/medicine/antitoxin
-	results = list(/datum/reagent/medicine/antitoxin = 3)
-	required_reagents = list(/datum/reagent/nitrogen = 1, /datum/reagent/silicon = 1, /datum/reagent/potassium = 1)
-
-/datum/chemical_reaction/tricordrazine
-	name = "Tricordrazine"
-	id = /datum/reagent/medicine/tricordrazine
-	results = list(/datum/reagent/medicine/tricordrazine = 3)
-	required_reagents = list(/datum/reagent/medicine/bicaridine = 1, /datum/reagent/medicine/kelotane = 1, /datum/reagent/medicine/antitoxin = 1)
-
 /datum/chemical_reaction/regen_jelly
 	name = "Regenerative Jelly"
 	id = /datum/reagent/medicine/regen_jelly
 	results = list(/datum/reagent/medicine/regen_jelly = 2)
-	required_reagents = list(/datum/reagent/medicine/tricordrazine = 1, /datum/reagent/toxin/slimejelly = 1)
+	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/toxin/slimejelly = 1)
 
 /datum/chemical_reaction/corazone
 	name = "Corazone"
@@ -264,3 +211,24 @@
 	id = /datum/reagent/medicine/psicodine
 	results = list(/datum/reagent/medicine/psicodine = 5)
 	required_reagents = list( /datum/reagent/medicine/mannitol = 2, /datum/reagent/water = 2, /datum/reagent/impedrezene = 1)
+
+/datum/chemical_reaction/rhigoxane
+	name = "Rhigoxane"
+	id = /datum/reagent/medicine/rhigoxane
+	results = list(/datum/reagent/medicine/rhigoxane/ = 5)
+	required_reagents = list(/datum/reagent/cryostylane = 3, /datum/reagent/bromine = 1, /datum/reagent/lye = 1)
+	required_temp = 47
+	is_cold_recipe = TRUE
+
+/datum/chemical_reaction/trophazole
+	name = "Trophazole"
+	id  = /datum/reagent/medicine/trophazole
+	results = list(/datum/reagent/medicine/trophazole = 4)
+	required_reagents = list(/datum/reagent/copper = 1, /datum/reagent/acetone = 2,  /datum/reagent/phosphorus = 1)
+
+/datum/chemical_reaction/granibitaluri
+	name = "Granibitaluri"
+	id = /datum/reagent/medicine/granibitaluri
+	results = list(/datum/reagent/medicine/granibitaluri = 1)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/space_cleaner/sterilizine = 1) //haha guys totally not some sort of saline reference!
+	required_temp = 373

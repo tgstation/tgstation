@@ -267,7 +267,8 @@
 				return
 			var/dat = "<B>Showing DNA from blood.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
 			dat += "</table>"
@@ -277,7 +278,8 @@
 				return
 			var/dat = "<B>Showing Fingerprints.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
 			dat += "</table>"
@@ -287,9 +289,9 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Monkeyize All Humans"))
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
-				spawn(0)
-					H.monkeyize()
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
+				INVOKE_ASYNC(H, /mob/living/carbon.proc/monkeyize)
 			ok = 1
 
 		if("allspecies")
@@ -301,7 +303,8 @@
 				log_admin("[key_name(usr)] turned all humans into [result]", 1)
 				message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
 				var/newtype = GLOB.species_list[result]
-				for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+				for(var/i in GLOB.human_list)
+					var/mob/living/carbon/human/H = i
 					H.set_species(newtype)
 
 		if("tripleAI")
@@ -347,7 +350,7 @@
 			for(var/mob/living/H in GLOB.player_list)
 				if(!(ishuman(H)||istype(H, /mob/living/silicon/)))
 					continue
-				if(H.stat == DEAD || !H.client || !H.mind || ispAI(H))
+				if(H.stat == DEAD || !H.mind || ispAI(H))
 					continue
 				if(is_special_character(H))
 					continue
@@ -394,7 +397,8 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Chinese Cartoons"))
 			message_admins("[key_name_admin(usr)] made everything kawaii.")
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
 				SEND_SOUND(H, sound('sound/ai/animes.ogg'))
 
 				if(H.dna.species.id == "human")
@@ -410,8 +414,8 @@
 					H.fully_replace_character_name(H.real_name,newname)
 					H.update_mutant_bodyparts()
 					if(animetype == "Yes")
-						var/seifuku = pick(typesof(/obj/item/clothing/under/schoolgirl))
-						var/obj/item/clothing/under/schoolgirl/I = new seifuku
+						var/seifuku = pick(typesof(/obj/item/clothing/under/costume/schoolgirl))
+						var/obj/item/clothing/under/costume/schoolgirl/I = new seifuku
 						var/olduniform = H.w_uniform
 						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
 						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
@@ -453,7 +457,7 @@
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Braindamage"))
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>")
-				H.adjustBrainLoss(60, 80)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60, 80)
 			message_admins("[key_name_admin(usr)] made everybody retarded")
 
 		if("eagles")//SCRAW
@@ -528,8 +532,9 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Dwarf Beards"))
-			for(var/mob/living/carbon/human/B in GLOB.carbon_list)
-				B.facial_hair_style = "Dward Beard"
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/B = i
+				B.facial_hairstyle = "Dward Beard"
 				B.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")
 
@@ -753,4 +758,4 @@
 			H.equipOutfit(humanoutfit)
 	var/turf/T = get_step(loc, SOUTHWEST)
 	flick_overlay_static(portal_appearance, T, 15)
-	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), 1)
+	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)

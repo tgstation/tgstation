@@ -1,38 +1,37 @@
+/*****************************Dice Bags********************************/
+
 /obj/item/storage/pill_bottle/dice
 	name = "bag of dice"
 	desc = "Contains all the luck you'll ever need."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
 
-/obj/item/storage/pill_bottle/dice/Initialize()
-	. = ..()
-	var/special_die = pick("1","2","fudge","space","00","8bd20","4dd6","100")
-	if(special_die == "1")
-		new /obj/item/dice/d1(src)
-	if(special_die == "2")
-		new /obj/item/dice/d2(src)
+/obj/item/storage/pill_bottle/dice/PopulateContents()
+	new /obj/effect/spawner/lootdrop/special_die(src)
 	new /obj/item/dice/d4(src)
 	new /obj/item/dice/d6(src)
-	if(special_die == "fudge")
-		new /obj/item/dice/fudge(src)
-	if(special_die == "space")
-		new /obj/item/dice/d6/space(src)
 	new /obj/item/dice/d8(src)
 	new /obj/item/dice/d10(src)
-	if(special_die == "00")
-		new /obj/item/dice/d00(src)
 	new /obj/item/dice/d12(src)
 	new /obj/item/dice/d20(src)
-	if(special_die == "8bd20")
-		new /obj/item/dice/eightbd20(src)
-	if(special_die == "4dd6")
-		new /obj/item/dice/fourdd6(src)
-	if(special_die == "100")
-		new /obj/item/dice/d100(src)
 
 /obj/item/storage/pill_bottle/dice/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
+
+/obj/item/storage/pill_bottle/dice/hazard
+
+/obj/item/storage/pill_bottle/dice/hazard/PopulateContents()
+	new /obj/item/dice/d6(src)
+	new /obj/item/dice/d6(src)
+	new /obj/item/dice/d6(src)
+	for(var/i in 1 to 2)
+		if(prob(7))
+			new /obj/item/dice/d6/ebony(src)
+		else
+			new /obj/item/dice/d6(src)
+
+/*****************************Dice********************************/
 
 /obj/item/dice //depreciated d6, use /obj/item/dice/d6 if you actually want a d6
 	name = "die"
@@ -78,10 +77,16 @@
 
 /obj/item/dice/d4/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/caltrop, 4)
+	AddComponent(/datum/component/caltrop, 1, 4) //1d4 damage
 
 /obj/item/dice/d6
 	name = "d6"
+
+obj/item/dice/d6/ebony
+	name = "ebony die"
+	desc = "A die with six sides made of dense black wood. It feels cold and heavy in your hand."
+	icon_state = "de6"
+	microwave_riggable = FALSE // You can't melt wood in the microwave
 
 /obj/item/dice/d6/space
 	name = "space cube"
@@ -189,9 +194,9 @@
 	if(special_faces.len == sides)
 		result = special_faces[result]
 	if(user != null) //Dice was rolled in someone's hand
-		user.visible_message("[user] has thrown [src]. It lands on [result]. [comment]", \
+		user.visible_message("<span class='notice'>[user] has thrown [src]. It lands on [result]. [comment]</span>", \
 							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
-							 "<span class='italics'>You hear [src] rolling, it sounds like a [fake_result].</span>")
+							 "<span class='hear'>You hear [src] rolling, it sounds like a [fake_result].</span>")
 	else if(!src.throwing) //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 

@@ -22,24 +22,10 @@
 	synchronizer_coeff = 1
 	var/reek = 200
 
-/datum/mutation/human/olfaction/on_life()
-	var/hygiene_now = owner.hygiene
-
-	if(hygiene_now < 100 && prob(5))
-		owner.adjust_disgust(GET_MUTATION_SYNCHRONIZER(src) * (rand(3,5)))
-	if(hygiene_now < HYGIENE_LEVEL_DIRTY && prob(50))
-		to_chat(owner,"<span class='danger'>You get a whiff of your stench and feel sick!</span>")
-		owner.adjust_disgust(GET_MUTATION_SYNCHRONIZER(src) * rand(5,10))
-
-	if(hygiene_now < HYGIENE_LEVEL_NORMAL && reek >= HYGIENE_LEVEL_NORMAL)
-		to_chat(owner,"<span class='warning'>Your inhumanly strong nose picks up a faint odor. Maybe you should shower soon.</span>")
-	if(hygiene_now < 150 && reek >= 150)
-		to_chat(owner,"<span class='warning'>Your odor is getting bad, what with you having a super-nose and all.</span>")
-	if(hygiene_now < 100 && reek >= 100)
-		to_chat(owner,"<span class='danger'>Your odor begins to make you gag. You silently curse your godly nose. You should really get clean!</span>")
-	if(hygiene_now < HYGIENE_LEVEL_DIRTY && reek >= HYGIENE_LEVEL_DIRTY)
-		to_chat(owner,"<span class='userdanger'>Your super-nose is 100% fed up with your stench. You absolutely must get clean.</span>")
-	reek = hygiene_now
+/datum/mutation/human/olfaction/modify()
+	if(power)
+		var/obj/effect/proc_holder/spell/targeted/olfaction/S = power
+		S.sensitivity = GET_MUTATION_SYNCHRONIZER(src)
 
 /obj/effect/proc_holder/spell/targeted/olfaction
 	name = "Remember the Scent"
@@ -51,8 +37,18 @@
 	action_icon_state = "nose"
 	var/mob/living/carbon/tracking_target
 	var/list/mob/living/carbon/possible = list()
+	var/sensitivity = 1
 
 /obj/effect/proc_holder/spell/targeted/olfaction/cast(list/targets, mob/living/user = usr)
+	//can we sniff? is there miasma in the air?
+	var/datum/gas_mixture/air = user.loc.return_air()
+	var/list/cached_gases = air.gases
+
+	if(cached_gases[/datum/gas/miasma])
+		user.adjust_disgust(sensitivity * 45)
+		to_chat(user, "<span class='warning'>With your overly sensitive nose, you get a whiff of stench and feel sick! Try moving to a cleaner area!</span>")
+		return
+
 	var/atom/sniffed = user.get_active_held_item()
 	if(sniffed)
 		var/old_target = tracking_target
@@ -194,3 +190,43 @@
 /obj/effect/proc_holder/spell/self/void/cast(mob/user = usr)
 	. = ..()
 	new /obj/effect/immortality_talisman/void(get_turf(user), user)
+
+/datum/mutation/human/self_amputation
+	name = "Autotomy"
+	desc = "Allows a creature to voluntary discard a random appendage."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>Your joints feel loose.</span>"
+	instability = 30
+	power = /obj/effect/proc_holder/spell/self/self_amputation
+
+	energy_coeff = 1
+	synchronizer_coeff = 1
+
+/obj/effect/proc_holder/spell/self/self_amputation
+	name = "Drop a limb"
+	desc = "Concentrate to make a random limb pop right off your body."
+	clothes_req = FALSE
+	human_req = FALSE
+	charge_max = 100
+	action_icon_state = "autotomy"
+
+/obj/effect/proc_holder/spell/self/self_amputation/cast(mob/user = usr)
+	if(!iscarbon(user))
+		return
+
+	var/mob/living/carbon/C = user
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
+		return
+
+	var/list/parts = list()
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/BP = X
+		if(BP.body_part != HEAD && BP.body_part != CHEST)
+			if(BP.dismemberable)
+				parts += BP
+	if(!parts.len)
+		to_chat(usr, "<span class='notice'>You can't shed any more limbs!</span>")
+		return
+
+	var/obj/item/bodypart/BP = pick(parts)
+	BP.dismember()

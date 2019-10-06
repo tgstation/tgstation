@@ -16,43 +16,36 @@
 /area/awaymission/beach)
 "ad" = (
 /turf/open/floor/plating/beach/coastline_b{
-	icon_state = "sandwater_b";
 	dir = 1
 	},
 /area/awaymission/beach)
 "ae" = (
 /turf/open/floor/plating/beach/coastline_b{
-	icon_state = "sandwater_b";
 	dir = 8
 	},
 /area/awaymission/beach)
 "af" = (
 /turf/open/floor/plating/beach/coastline_t{
-	icon_state = "sandwater_t";
 	dir = 9
 	},
 /area/awaymission/beach)
 "ag" = (
 /turf/open/floor/plating/beach/coastline_t{
-	icon_state = "sandwater_t";
 	dir = 1
 	},
 /area/awaymission/beach)
 "ah" = (
 /turf/open/floor/plating/beach/coastline_t{
-	icon_state = "sandwater_t";
 	dir = 5
 	},
 /area/awaymission/beach)
 "ai" = (
 /turf/open/floor/plating/beach/coastline_b{
-	icon_state = "sandwater_b";
 	dir = 4
 	},
 /area/awaymission/beach)
 "aj" = (
 /turf/open/floor/plating/beach/coastline_t{
-	icon_state = "sandwater_t";
 	dir = 8
 	},
 /area/awaymission/beach)
@@ -69,7 +62,6 @@
 /area/awaymission/beach)
 "am" = (
 /turf/open/floor/plating/beach/coastline_t{
-	icon_state = "sandwater_t";
 	dir = 4
 	},
 /area/awaymission/beach)
@@ -82,7 +74,6 @@
 /area/awaymission/beach)
 "ao" = (
 /turf/open/floor/plating/beach/coastline_t{
-	icon_state = "sandwater_t";
 	dir = 10
 	},
 /area/awaymission/beach)
@@ -91,7 +82,6 @@
 /area/awaymission/beach)
 "aq" = (
 /turf/open/floor/plating/beach/coastline_t{
-	icon_state = "sandwater_t";
 	dir = 6
 	},
 /area/awaymission/beach)
@@ -158,25 +148,21 @@
 /area/awaymission/beach)
 "aw" = (
 /turf/open/floor/plating/beach/coastline_b{
-	icon_state = "sandwater_b";
 	dir = 6
 	},
 /area/awaymission/beach)
 "ax" = (
 /turf/open/floor/plating/beach/coastline_b{
-	icon_state = "sandwater_b";
 	dir = 10
 	},
 /area/awaymission/beach)
 "ay" = (
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner{
-	icon_state = "sandwater_inner";
 	dir = 4
 	},
 /area/awaymission/beach)
 "az" = (
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner{
-	icon_state = "sandwater_inner";
 	dir = 1
 	},
 /area/awaymission/beach)
@@ -229,7 +215,6 @@
 /area/awaymission/beach)
 "aJ" = (
 /obj/item/reagent_containers/food/drinks/beer/light{
-	pixel_w = 0;
 	pixel_x = -14;
 	pixel_y = 15
 	},
@@ -307,7 +292,6 @@
 /area/awaymission/beach)
 "aT" = (
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner{
-	icon_state = "sandwater_inner";
 	dir = 8
 	},
 /area/awaymission/beach)
@@ -342,7 +326,6 @@
 /area/awaymission/beach)
 "aY" = (
 /turf/open/floor/plating/beach/coastline_b{
-	icon_state = "sandwater_b";
 	dir = 5
 	},
 /area/awaymission/beach)
@@ -507,7 +490,6 @@
 /area/awaymission/beach)
 "bw" = (
 /turf/open/floor/plating/beach/coastline_b{
-	icon_state = "sandwater_b";
 	dir = 9
 	},
 /area/awaymission/beach)
@@ -571,9 +553,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "bF" = (
-/obj/structure/bedsheetbin{
-	pixel_y = 0
-	},
+/obj/structure/bedsheetbin,
 /obj/effect/turf_decal/sand,
 /obj/structure/table/wood,
 /turf/open/floor/plating/beach/sand,
@@ -621,8 +601,7 @@
 /area/awaymission/beach)
 "bM" = (
 /obj/structure/mirror{
-	pixel_x = 28;
-	pixel_y = 0
+	pixel_x = 28
 	},
 /obj/effect/turf_decal/sand,
 /obj/structure/sink{
@@ -632,8 +611,7 @@
 /area/awaymission/beach)
 "bN" = (
 /obj/structure/mirror{
-	pixel_x = -28;
-	pixel_y = 0
+	pixel_x = -28
 	},
 /obj/effect/turf_decal/sand,
 /obj/structure/sink{
@@ -739,8 +717,7 @@
 /area/awaymission/beach)
 "bZ" = (
 /obj/structure/dresser{
-	density = 0;
-	pixel_y = 0
+	density = 0
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
@@ -1102,6 +1079,14 @@
 /area/awaymission/beach)
 "dg" = (
 /obj/item/clothing/glasses/heat,
+/turf/open/floor/plating/beach/sand,
+/area/awaymission/beach)
+"iy" = (
+/obj/item/toy/seashell,
+/turf/open/floor/plating/beach/coastline_t,
+/area/awaymission/beach)
+"MD" = (
+/obj/item/toy/seashell,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 
@@ -4675,9 +4660,9 @@ ac
 aw
 af
 ay
+MD
 ak
-ak
-ak
+MD
 aT
 ao
 aY
@@ -4781,7 +4766,7 @@ ac
 aw
 af
 ay
-ak
+MD
 ak
 ak
 ak
@@ -4890,7 +4875,7 @@ ay
 ak
 ak
 ak
-ak
+MD
 ak
 ak
 ak
@@ -5231,7 +5216,7 @@ aY
 ae
 aw
 ag
-ak
+MD
 aZ
 ak
 ak
@@ -5332,7 +5317,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 aT
 aj
 aj
@@ -5343,7 +5328,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 aT
 ao
 ar
@@ -6309,7 +6294,7 @@ ak
 ak
 ak
 ak
-ap
+iy
 ar
 ac
 ac
@@ -6489,7 +6474,7 @@ ac
 ac
 ad
 ag
-ak
+MD
 ak
 ak
 ak
@@ -8971,7 +8956,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 ak
 ak
 cu
@@ -10343,7 +10328,7 @@ ac
 ac
 aw
 ag
-ak
+MD
 ak
 ak
 ak
@@ -10451,7 +10436,7 @@ ad
 af
 ay
 ak
-ak
+MD
 ak
 ak
 ak
@@ -10589,7 +10574,7 @@ ak
 ak
 cO
 ak
-ap
+iy
 ar
 ac
 ac
@@ -10802,7 +10787,7 @@ ak
 ak
 ak
 aK
-ak
+MD
 ap
 ar
 ac
@@ -10985,7 +10970,7 @@ ac
 ac
 ax
 ag
-ak
+MD
 ak
 ak
 ak
@@ -11015,7 +11000,7 @@ ak
 ak
 ak
 ak
-ak
+MD
 bo
 aq
 ar
@@ -15022,7 +15007,7 @@ ad
 ag
 al
 ak
-ak
+MD
 ap
 ar
 ab

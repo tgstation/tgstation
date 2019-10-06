@@ -28,6 +28,9 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
 
+	ui_x = 335
+	ui_y = 115
+
 /obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		on = !on
@@ -110,7 +113,7 @@
 																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_pump", name, 310, 115, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_pump", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_data()
@@ -174,10 +177,6 @@
 		return //do not update_icon
 
 	broadcast_status()
-	update_icon()
-
-/obj/machinery/atmospherics/components/binary/volume_pump/power_change()
-	..()
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)

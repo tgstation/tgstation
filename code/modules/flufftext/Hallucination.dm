@@ -225,7 +225,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	update_icon("alienh_pounce")
 	if(hit_atom == target && target.stat!=DEAD)
 		target.Paralyze(100)
-		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
+		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class='userdanger'>[name] pounces on you!</span>")
 
 /datum/hallucination/xeno_attack
 	//Xeno crawls from nearby vent,jumps at you, and goes back in
@@ -429,11 +429,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/mob/living/carbon/human/H = pick(mob_pool)
 	feedback_details += " Mob: [H.real_name]"
 
-	var/free_hand = H.get_empty_held_index_for_side(side = "left")
+	var/free_hand = H.get_empty_held_index_for_side(LEFT_HANDS)
 	if(free_hand)
 		side = "left"
 	else
-		free_hand = H.get_empty_held_index_for_side(side = "right")
+		free_hand = H.get_empty_held_index_for_side(RIGHT_HANDS)
 		if(free_hand)
 			side = "right"
 
@@ -592,7 +592,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	A.override = 1
 	if(target.client)
 		if(wabbajack)
-			to_chat(target, "<span class='italics'>...wabbajack...wabbajack...</span>")
+			to_chat(target, "<span class='hear'>...wabbajack...wabbajack...</span>")
 			target.playsound_local(target,'sound/magic/staff_change.ogg', 50, 1)
 		delusion = A
 		target.client.images |= A
@@ -1015,7 +1015,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					if(prob(25))
 						target.halitem.icon_state = "plasticx40"
 				if(3) //sword
-					target.halitem.icon = 'icons/obj/items_and_weapons.dmi'
+					target.halitem.icon = 'icons/obj/transforming_energy.dmi'
 					target.halitem.icon_state = "sword0"
 					target.halitem.name = "Energy Sword"
 				if(4) //stun baton

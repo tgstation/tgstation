@@ -402,9 +402,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "O" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/airlock/shuttle{
 	name = "Arrival Shuttle Airlock"
 	},

@@ -31,6 +31,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/Initialize()
 	. = ..()
 	GLOB.bodycontainers += src
+	recursive_organ_check(src)
 
 /obj/structure/bodycontainer/Destroy()
 	GLOB.bodycontainers -= src
@@ -101,6 +102,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal (loc, 5)
+	recursive_organ_check(src)
 	qdel(src)
 
 /obj/structure/bodycontainer/container_resist(mob/living/user)
@@ -111,7 +113,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(null, \
 		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
@@ -120,8 +122,9 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		open()
 
 /obj/structure/bodycontainer/proc/open()
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-	playsound(src, 'sound/effects/roll.ogg', 5, 1)
+	recursive_organ_check(src)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
 	var/turf/T = get_step(src, dir)
 	connected.setDir(dir)
 	for(var/atom/movable/AM in src)
@@ -129,13 +132,14 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	update_icon()
 
 /obj/structure/bodycontainer/proc/close()
-	playsound(src, 'sound/effects/roll.ogg', 5, 1)
-	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
 			if(ismob(AM) && !isliving(AM))
 				continue
 			AM.forceMove(src)
+	recursive_organ_check(src)
 	update_icon()
 
 /obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
@@ -188,7 +192,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 					icon_state = "morgue4" // Cloneable
 					if(mob_occupant.stat == DEAD && beeper)
 						if(world.time > next_beep)
-							playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, 0) //Clone them you blind fucks
+							playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Clone them you blind fucks
 							next_beep = world.time + beep_cooldown
 					break
 
@@ -225,6 +229,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	connected = new /obj/structure/tray/c_tray(src)
 	connected.connected = src
 
+/obj/structure/bodycontainer/crematorium/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	id = "[idnum][id]"
+
 /obj/structure/bodycontainer/crematorium/update_icon()
 	if(!connected || connected.loc != src)
 		icon_state = "crema0"
@@ -247,11 +254,11 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	var/list/conts = GetAllContents() - src - connected
 
 	if(!conts.len)
-		audible_message("<span class='italics'>You hear a hollow crackle.</span>")
+		audible_message("<span class='hear'>You hear a hollow crackle.</span>")
 		return
 
 	else
-		audible_message("<span class='italics'>You hear a roar as the crematorium activates.</span>")
+		audible_message("<span class='hear'>You hear a roar as the crematorium activates.</span>")
 
 		locked = TRUE
 		update_icon()
@@ -280,7 +287,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		if(!QDELETED(src))
 			locked = FALSE
 			update_icon()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE) //you horrible people
 
 /obj/structure/bodycontainer/crematorium/creamatorium
 	name = "creamatorium"

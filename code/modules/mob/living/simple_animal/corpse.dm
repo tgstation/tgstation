@@ -11,8 +11,8 @@
 /obj/effect/mob_spawn/human/corpse/syndicatesoldier
 	name = "Syndicate Operative"
 	id_job = "Operative"
-	hair_style = "Bald"
-	facial_hair_style = "Shaved"
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
 	outfit = /datum/outfit/syndicatesoldiercorpse
 
 /datum/outfit/syndicatesoldiercorpse
@@ -30,8 +30,8 @@
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
 	id_job = "Operative"
-	hair_style = "Bald"
-	facial_hair_style = "Shaved"
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
 	outfit = /datum/outfit/syndicatecommandocorpse
 
 /datum/outfit/syndicatecommandocorpse
@@ -50,8 +50,8 @@
 /obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
 	name = "Syndicate Stormtrooper"
 	id_job = "Operative"
-	hair_style = "Bald"
-	facial_hair_style = "Shaved"
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
 	outfit = /datum/outfit/syndicatestormtroopercorpse
 
 /datum/outfit/syndicatestormtroopercorpse
@@ -70,19 +70,19 @@
 	roundstart = FALSE
 	instant = TRUE
 	skin_tone = "caucasian1"
-	hair_style = "Bald"
-	facial_hair_style = "Shaved"
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
 
 /obj/effect/mob_spawn/human/corpse/pirate
 	name = "Pirate"
 	skin_tone = "caucasian1" //all pirates are white because it's easier that way
 	outfit = /datum/outfit/piratecorpse
-	hair_style = "Bald"
-	facial_hair_style = "Shaved"
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
 
 /datum/outfit/piratecorpse
 	name = "Pirate Corpse"
-	uniform = /obj/item/clothing/under/pirate
+	uniform = /obj/item/clothing/under/costume/pirate
 	shoes = /obj/item/clothing/shoes/jackboots
 	glasses = /obj/item/clothing/glasses/eyepatch
 	head = /obj/item/clothing/head/bandana
@@ -101,12 +101,12 @@
 /obj/effect/mob_spawn/human/corpse/russian
 	name = "Russian"
 	outfit = /datum/outfit/russiancorpse
-	hair_style = "Bald"
-	facial_hair_style = "Shaved"
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
 
 /datum/outfit/russiancorpse
 	name = "Russian Corpse"
-	uniform = /obj/item/clothing/under/soviet
+	uniform = /obj/item/clothing/under/costume/soviet
 	shoes = /obj/item/clothing/shoes/jackboots
 	head = /obj/item/clothing/head/bearpelt
 	gloves = /obj/item/clothing/gloves/color/black
@@ -142,7 +142,7 @@
 
 /datum/outfit/russiancorpse/officer
 	name = "Russian Officer Corpse"
-	uniform = /obj/item/clothing/under/rank/security/navyblue/russian
+	uniform = /obj/item/clothing/under/costume/russian_officer
 	suit = /obj/item/clothing/suit/security/officer/russian
 	shoes = /obj/item/clothing/shoes/combat
 	ears = /obj/item/radio/headset
@@ -152,8 +152,8 @@
 /obj/effect/mob_spawn/human/corpse/wizard
 	name = "Space Wizard Corpse"
 	outfit = /datum/outfit/wizardcorpse
-	hair_style = "Bald"
-	facial_hair_style = "Long Beard"
+	hairstyle = "Bald"
+	facial_hairstyle = "Long Beard"
 	skin_tone = "caucasian1"
 
 /datum/outfit/wizardcorpse
@@ -169,12 +169,12 @@
 	id_job = "Private Security Force"
 	id_access = "Security Officer"
 	outfit = /datum/outfit/nanotrasensoldiercorpse2
-	hair_style = "Bald"
-	facial_hair_style = "Shaved"
+	hairstyle = "Bald"
+	facial_hairstyle = "Shaved"
 
 /datum/outfit/nanotrasensoldiercorpse2
 	name = "NT Private Security Officer Corpse"
-	uniform = /obj/item/clothing/under/rank/security
+	uniform = /obj/item/clothing/under/rank/security/officer
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
@@ -188,14 +188,14 @@
 	name = "The Cat Surgeon"
 	id_job = "Cat Surgeon"
 	id_access_list = list(ACCESS_AWAY_GENERAL, ACCESS_AWAY_MAINT)
-	hair_style = "Cut Hair"
-	facial_hair_style = "Watson Mustache"
+	hairstyle = "Cut Hair"
+	facial_hairstyle = "Watson Mustache"
 	skin_tone = "caucasian1"
 	outfit = /datum/outfit/cat_butcher
 
 /datum/outfit/cat_butcher
 	name = "Cat Butcher Uniform"
-	uniform = /obj/item/clothing/under/rank/medical/green
+	uniform = /obj/item/clothing/under/rank/medical/doctor/green
 	suit = /obj/item/clothing/suit/apron/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
@@ -207,7 +207,7 @@
 /obj/effect/mob_spawn/human/corpse/bee_terrorist
 	name = "BLF Operative"
 	outfit = /datum/outfit/bee_terrorist
-	
+
 /datum/outfit/bee_terrorist
 	name = "BLF Operative"
 	uniform = /obj/item/clothing/under/color/yellow

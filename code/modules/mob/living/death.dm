@@ -47,6 +47,7 @@
 
 
 /mob/living/death(gibbed)
+	var/was_dead_before = stat == DEAD
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time
@@ -59,7 +60,7 @@
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
 	GLOB.alive_mob_list -= src
-	if(!gibbed)
+	if(!gibbed && !was_dead_before)
 		GLOB.dead_mob_list += src
 	set_drugginess(0)
 	set_disgust(0)

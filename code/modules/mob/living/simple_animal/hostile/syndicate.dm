@@ -22,7 +22,7 @@
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "pokes"
@@ -175,13 +175,13 @@
 	icon_state = "syndicate_pistol"
 	icon_living = "syndicate_pistol"
 	casingtype = /obj/item/ammo_casing/c10mm
-	projectilesound = 'sound/weapons/gunshot.ogg'
+	projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 	dodging = FALSE
 	rapid_melee = 1
 
 /mob/living/simple_animal/hostile/syndicate/ranged/infiltrator //shuttle loan event
-	projectilesound = 'sound/weapons/gunshot_silenced.ogg'
+	projectilesound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space
@@ -211,7 +211,7 @@
 	icon_state = "syndicate_smg"
 	icon_living = "syndicate_smg"
 	casingtype = /obj/item/ammo_casing/c45
-	projectilesound = 'sound/weapons/gunshot_smg.ogg'
+	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot //caravan ambush ruin
 	name = "Syndicate Salvage Pilot"
@@ -290,7 +290,7 @@
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE | PASSMOB
 	a_intent = INTENT_HARM
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	health = 25
 	maxHealth = 25
 	melee_damage_lower = 15

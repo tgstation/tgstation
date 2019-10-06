@@ -9,6 +9,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
+	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
@@ -34,6 +35,8 @@
 	item_state = "utility"
 	content_overlays = TRUE
 	custom_price = 50
+	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
+	pickup_sound =  'sound/items/handling/toolbelt_pickup.ogg'
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
@@ -131,7 +134,7 @@
 		/obj/item/reagent_containers/glass/bottle,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/medspray,
+		/obj/item/reagent_containers/medigel,
 		/obj/item/lighter,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
@@ -324,7 +327,7 @@
 	desc = "Proves to the world that you are the strongest!"
 	icon_state = "championbelt"
 	item_state = "champion"
-	materials = list(MAT_GOLD=400)
+	materials = list(/datum/material/gold=400)
 
 /obj/item/storage/belt/champion/ComponentInitialize()
 	. = ..()
@@ -445,7 +448,7 @@
 		/obj/item/lighter,
 		/obj/item/multitool,
 		/obj/item/reagent_containers/food/drinks/bottle/molotov,
-		/obj/item/grenade/plastic/c4,
+		/obj/item/grenade/c4,
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
@@ -567,7 +570,7 @@
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
-	item_color = "fannypackleather"
+	dying_key = DYE_REGISTRY_FANNYPACK
 	custom_price = 15
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
@@ -580,61 +583,51 @@
 	name = "black fannypack"
 	icon_state = "fannypack_black"
 	item_state = "fannypack_black"
-	item_color = "black"
 
 /obj/item/storage/belt/fannypack/red
 	name = "red fannypack"
 	icon_state = "fannypack_red"
 	item_state = "fannypack_red"
-	item_color = "red"
 
 /obj/item/storage/belt/fannypack/purple
 	name = "purple fannypack"
 	icon_state = "fannypack_purple"
 	item_state = "fannypack_purple"
-	item_color = "purple"
 
 /obj/item/storage/belt/fannypack/blue
 	name = "blue fannypack"
 	icon_state = "fannypack_blue"
 	item_state = "fannypack_blue"
-	item_color = "blue"
 
 /obj/item/storage/belt/fannypack/orange
 	name = "orange fannypack"
 	icon_state = "fannypack_orange"
 	item_state = "fannypack_orange"
-	item_color = "orange"
 
 /obj/item/storage/belt/fannypack/white
 	name = "white fannypack"
 	icon_state = "fannypack_white"
 	item_state = "fannypack_white"
-	item_color = "white"
 
 /obj/item/storage/belt/fannypack/green
 	name = "green fannypack"
 	icon_state = "fannypack_green"
 	item_state = "fannypack_green"
-	item_color = "green"
 
 /obj/item/storage/belt/fannypack/pink
 	name = "pink fannypack"
 	icon_state = "fannypack_pink"
 	item_state = "fannypack_pink"
-	item_color = "pink"
 
 /obj/item/storage/belt/fannypack/cyan
 	name = "cyan fannypack"
 	icon_state = "fannypack_cyan"
 	item_state = "fannypack_cyan"
-	item_color = "cyan"
 
 /obj/item/storage/belt/fannypack/yellow
 	name = "yellow fannypack"
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
-	item_color = "yellow"
 
 /obj/item/storage/belt/sabre
 	name = "sabre sheath"
@@ -663,11 +656,11 @@
 		return
 	if(length(contents))
 		var/obj/item/I = contents[1]
-		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>")
+		user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>")
 		user.put_in_hands(I)
 		update_icon()
 	else
-		to_chat(user, "[src] is empty.")
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
 /obj/item/storage/belt/sabre/update_icon()
 	icon_state = "sheath"

@@ -44,10 +44,6 @@ act(ref, 'tgui:initialize')
 
 // Load fonts.
 import { loadCSS } from 'fg-loadcss'
-loadCSS('font-awesome.min.css')
+loadCSS('v4shim.css')
+loadCSS('font-awesome.css')
 // Handle font loads.
-import FontFaceObserver from 'fontfaceobserver'
-const fontawesome = new FontFaceObserver('FontAwesome')
-fontawesome.check('\uf240')
-  .then(() => document.body.classList.add('icons'))
-  .catch(() => document.body.classList.add('no-icons'))

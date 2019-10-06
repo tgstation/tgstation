@@ -42,7 +42,7 @@
 	var/original_angle = 0		//Angle at firing
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
-	animate_movement = 0	//Use SLIDE_STEPS in conjunction with legacy
+	animate_movement = NO_STEPS	//Use SLIDE_STEPS in conjunction with legacy
 	var/ricochets = 0
 	var/ricochets_max = 2
 	var/ricochet_chance = 30
@@ -183,14 +183,14 @@
 		if(limb_hit)
 			organ_hit_text = " in \the [parse_zone(limb_hit)]"
 		if(suppressed)
-			playsound(loc, hitsound, 5, 1, -1)
+			playsound(loc, hitsound, 5, TRUE, -1)
 			to_chat(L, "<span class='userdanger'>You're shot by \a [src][organ_hit_text]!</span>")
 		else
 			if(hitsound)
 				var/volume = vol_by_damage()
-				playsound(loc, hitsound, volume, 1, -1)
+				playsound(loc, hitsound, volume, TRUE, -1)
 			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
-					"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
+					"<span class='userdanger'>You're hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
 		L.on_hit(src)
 
 	var/reagent_note
@@ -204,7 +204,7 @@
 	else
 		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
 
-	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter, paralyze, immobilize)
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -241,7 +241,7 @@
 		var/volume = CLAMP(vol_by_damage() + 20, 0, 100)
 		if(suppressed)
 			volume = 5
-		playsound(loc, hitsound_wall, volume, 1, -1)
+		playsound(loc, hitsound_wall, volume, TRUE, -1)
 
 	return process_hit(T, select_target(T, A))
 
@@ -257,6 +257,7 @@
 	permutated |= target		//Make sure we're never hitting it again. If we ever run into weirdness with piercing projectiles needing to hit something multiple times.. well.. that's a to-do.
 	if(!prehit(target))
 		return process_hit(T, select_target(T), qdel_self, hit_something)		//Hit whatever else we can since that didn't work.
+	SEND_SIGNAL(target, COMSIG_PROJECTILE_PREHIT, args)
 	var/result = target.bullet_act(src, def_zone)
 	if(result == BULLET_ACT_FORCE_PIERCE)
 		if(!CHECK_BITFIELD(movement_type, UNSTOPPABLE))

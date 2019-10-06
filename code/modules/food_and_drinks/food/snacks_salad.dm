@@ -20,7 +20,7 @@
 	bonus_reagents = list(/datum/reagent/medicine/omnizine = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/medicine/omnizine = 8, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("leaves" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | FRUIT
 
 /obj/item/reagent_containers/food/snacks/salad/herbsalad
 	name = "herb salad"
@@ -47,7 +47,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("oats" = 1, "milk" = 1)
-	foodtype = DAIRY | GRAIN
+	foodtype = DAIRY | GRAIN | BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/salad/fruit
 	name = "fruit salad"

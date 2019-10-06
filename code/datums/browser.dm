@@ -43,8 +43,12 @@
 		var/datum/asset/spritesheet/sheet = name
 		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
 	else
-		stylesheets["[ckey(name)].css"] = file
-		register_asset("[ckey(name)].css", file)
+		var/asset_name = "[name].css"
+		
+		stylesheets[asset_name] = file
+
+		if (!SSassets.cache[asset_name])
+			register_asset(asset_name, file)
 
 /datum/browser/proc/add_script(name, file)
 	scripts["[ckey(name)].js"] = file

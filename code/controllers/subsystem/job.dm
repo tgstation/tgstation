@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(job)
 	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
-	var/list/name_occupations = list()	//Dict of all jobs, keys are titles
+	var/list/datum/job/name_occupations = list()	//Dict of all jobs, keys are titles
 	var/list/type_occupations = list()	//Dict of all jobs, keys are types
 	var/list/unassigned = list()		//Players who need jobs
 	var/initial_players_to_assign = 0 	//used for checking against population caps
@@ -162,7 +162,8 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/ResetOccupations()
 	JobDebug("Occupations reset.")
-	for(var/mob/dead/new_player/player in GLOB.player_list)
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/player = i
 		if((player) && (player.mind))
 			player.mind.assigned_role = null
 			player.mind.special_role = null
@@ -242,7 +243,8 @@ SUBSYSTEM_DEF(job)
 			S.latejoin_active = TRUE
 
 	//Get the players who are ready
-	for(var/mob/dead/new_player/player in GLOB.player_list)
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.check_preferences() && player.mind && !player.mind.assigned_role)
 			unassigned += player
 
@@ -355,7 +357,7 @@ SUBSYSTEM_DEF(job)
 		if(!GiveRandomJob(player))
 			if(!AssignRole(player, SSjob.overflow_role)) //If everything is already filled, make them an assistant
 				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
-	
+
 	return validate_required_jobs(required_jobs)
 
 /datum/controller/subsystem/job/proc/validate_required_jobs(list/required_jobs)
@@ -411,6 +413,9 @@ SUBSYSTEM_DEF(job)
 	var/datum/job/job = GetJob(rank)
 
 	H.job = rank
+
+	SEND_SIGNAL(H, COMSIG_JOB_RECEIVED, H.job)
+		
 
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
@@ -527,7 +532,8 @@ SUBSYSTEM_DEF(job)
 		var/never = 0 //never
 		var/banned = 0 //banned
 		var/young = 0 //account too young
-		for(var/mob/dead/new_player/player in GLOB.player_list)
+		for(var/i in GLOB.new_player_list)
+			var/mob/dead/new_player/player = i
 			if(!(player.ready == PLAYER_READY_TO_PLAY && player.mind && !player.mind.assigned_role))
 				continue //This player is not ready
 			if(is_banned_from(player.ckey, job.title) || QDELETED(player))
@@ -652,7 +658,8 @@ SUBSYSTEM_DEF(job)
 ///////////////////////////////////
 /datum/controller/subsystem/job/proc/get_living_heads()
 	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.alive_mob_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/player = i
 		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.command_positions))
 			. |= player.mind
 
@@ -672,7 +679,8 @@ SUBSYSTEM_DEF(job)
 //////////////////////////////////////////////
 /datum/controller/subsystem/job/proc/get_living_sec()
 	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/player = i
 		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in GLOB.security_positions))
 			. |= player.mind
 
@@ -681,7 +689,8 @@ SUBSYSTEM_DEF(job)
 ////////////////////////////////////////
 /datum/controller/subsystem/job/proc/get_all_sec()
 	. = list()
-	for(var/mob/living/carbon/human/player in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/player = i
 		if(player.mind && (player.mind.assigned_role in GLOB.security_positions))
 			. |= player.mind
 

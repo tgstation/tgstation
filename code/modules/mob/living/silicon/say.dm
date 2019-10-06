@@ -1,5 +1,5 @@
 /mob/living/proc/robot_talk(message)
-	log_talk(message, LOG_SAY)
+	log_talk(message, LOG_SAY, tag="binary")
 	var/desig = "Default Cyborg" //ezmode for taters
 	if(issilicon(src))
 		var/mob/living/silicon/S = src

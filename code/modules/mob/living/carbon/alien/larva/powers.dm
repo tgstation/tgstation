@@ -15,7 +15,7 @@
 						"<span class='noticealien'>You are now hiding.</span>")
 	else
 		user.layer = MOB_LAYER
-		user.visible_message("[user] slowly peeks up from the ground...", \
+		user.visible_message("<span class='notice'>[user] slowly peeks up from the ground...</span>", \
 					"<span class='noticealien'>You stop hiding.</span>")
 	return 1
 
@@ -33,7 +33,7 @@
 	var/mob/living/carbon/alien/larva/L = user
 
 	if(L.handcuffed || L.legcuffed) // Cuffing larvas ? Eh ?
-		to_chat(user, "<span class='danger'>You cannot evolve when you are cuffed.</span>")
+		to_chat(user, "<span class='warning'>You cannot evolve when you are cuffed!</span>")
 		return
 
 	if(L.amount_grown >= L.max_grown)	//TODO ~Carn
@@ -59,5 +59,5 @@
 		L.alien_evolve(new_xeno)
 		return 0
 	else
-		to_chat(user, "<span class='danger'>You are not fully grown.</span>")
+		to_chat(user, "<span class='warning'>You are not fully grown!</span>")
 		return 0

@@ -37,6 +37,19 @@
 	lose_text = "<span class='danger'>You no longer feel like drinking would ease your pain.</span>"
 	medical_record_text = "Patient has unusually efficient liver metabolism and can slowly regenerate wounds by drinking alcoholic beverages."
 
+/datum/quirk/drunkhealing/on_process()
+	var/mob/living/carbon/C = quirk_holder
+	switch(C.drunkenness)
+		if (6 to 40)
+			C.adjustBruteLoss(-0.1, FALSE)
+			C.adjustFireLoss(-0.05, FALSE)
+		if (41 to 60)
+			C.adjustBruteLoss(-0.4, FALSE)
+			C.adjustFireLoss(-0.2, FALSE)
+		if (61 to INFINITY)
+			C.adjustBruteLoss(-0.8, FALSE)
+			C.adjustFireLoss(-0.4, FALSE)
+
 /datum/quirk/empath
 	name = "Empath"
 	desc = "Whether it's a sixth sense or careful study of body language, it only takes you a quick glance at someone to understand how they feel."
@@ -122,7 +135,7 @@
 
 /datum/quirk/photographer
 	name = "Photographer"
-	desc = "You know how to handle a camera, shortening the delay between each shot."
+	desc = "You carry your camera and personal photo album everywhere you go and can snap photos faster."
 	value = 1
 	mob_trait = TRAIT_PHOTOGRAPHER
 	gain_text = "<span class='notice'>You know everything about photography.</span>"
@@ -131,9 +144,24 @@
 
 /datum/quirk/photographer/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/storage/photo_album/photo_album = new(get_turf(H))
+	var/list/album_slots = list (
+		"backpack" = SLOT_IN_BACKPACK,
+		"hands" = SLOT_HANDS
+	)
+	H.equip_in_one_of_slots(photo_album, album_slots , qdel_on_fail = TRUE)
+	photo_album.persistence_id = "personal_[H.mind.key]" // this is a persistent album, the ID is tied to the account's key to avoid tampering
+	photo_album.persistence_load()
+	photo_album.name = "[H.real_name]'s photo album"
 	var/obj/item/camera/camera = new(get_turf(H))
-	H.put_in_hands(camera)
-	H.equip_to_slot(camera, SLOT_NECK)
+	var/list/camera_slots = list (
+		"neck" = SLOT_NECK,
+		"left pocket" = SLOT_L_STORE,
+		"right pocket" = SLOT_R_STORE,
+		"backpack" = SLOT_IN_BACKPACK,
+		"hands" = SLOT_HANDS
+	)
+	H.equip_in_one_of_slots(camera, camera_slots , qdel_on_fail = TRUE)
 	H.regenerate_icons()
 
 /datum/quirk/selfaware
@@ -166,7 +194,7 @@
 
 /datum/quirk/tagger
 	name = "Tagger"
-	desc = "You're an experienced artist. While drawing graffiti, you can get twice as many uses out of drawing supplies."
+	desc = "You're an experienced artist. People will actually be impressed by your graffiti, and you can get twice as many uses out of drawing supplies."
 	value = 1
 	mob_trait = TRAIT_TAGGER
 	gain_text = "<span class='notice'>You know how to tag walls efficiently.</span>"
@@ -187,28 +215,3 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
-	medical_record_text = "Patient demonstrates a disturbing capacity for eating."
-
-/datum/quirk/neet
-	name = "NEET"
-	desc = "For some reason you qualified for social welfare and you don't really care about your own personal hygiene."
-	value = 1
-	mob_trait = TRAIT_NEET
-	gain_text = "<span class='notice'>You feel useless to society.</span>"
-	lose_text = "<span class='danger'>You no longer feel useless to society.</span>"
-	mood_quirk = TRUE
-	medical_record_text = "Patient continues to qualify for welfare and has made no efforts to improve hygiene."
-
-/datum/quirk/neet/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	var/datum/bank_account/D = H.get_bank_account()
-	if(!D) //if their current mob doesn't have a bank account, likely due to them being a special role (ie nuke op)
-		return
-	D.welfare = TRUE
-
-/datum/quirk/neet/on_process()
-	var/mob/living/carbon/human/H = quirk_holder
-	if (H.hygiene <= HYGIENE_LEVEL_DIRTY)
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "NEET", /datum/mood_event/happy_neet)
-	else
-		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "NEET")

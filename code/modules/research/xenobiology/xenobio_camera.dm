@@ -105,20 +105,20 @@
 		potion_action.target = src
 		potion_action.Grant(user)
 		actions += potion_action
-	
+
 	if(hotkey_help)
 		hotkey_help.target = src
 		hotkey_help.Grant(user)
 		actions += hotkey_help
 
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)	
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)	
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)	
-	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)	
-	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)	
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)
+	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)
+	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)
+	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)
 	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
 
-	//Checks for recycler on every interact, prevents issues with load order on certain maps. 
+	//Checks for recycler on every interact, prevents issues with load order on certain maps.
 	if(!connected_recycler)
 		for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
 			if(get_area(recycler.loc) == get_area(loc))
@@ -126,13 +126,13 @@
 				connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
-	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)	
-	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT)	
-	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)	
-	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT)	
-	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL)	
-	UnregisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)	
-	..() 
+	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)
+	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT)
+	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)
+	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT)
+	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL)
+	UnregisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)
+	..()
 
 /obj/machinery/computer/camera_advanced/xenobio/proc/on_contents_del(datum/source, atom/deleted)
 	if(current_potion == deleted)
@@ -170,6 +170,7 @@
 	..()
 
 /obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/I)
+	. = ..()
 	if (istype(I) && istype(I.buffer,/obj/machinery/monkey_recycler))
 		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
 		connected_recycler = I.buffer
@@ -191,7 +192,7 @@
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
 			S.forceMove(remote_eye.loc)
-			S.visible_message("[S] warps in!")
+			S.visible_message("<span class='notice'>[S] warps in!</span>")
 			X.stored_slimes -= S
 	else
 		to_chat(owner, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
@@ -215,7 +216,7 @@
 			if(!S.ckey)
 				if(S.buckled)
 					S.Feedstop(silent = TRUE)
-				S.visible_message("[S] vanishes in a flash of light!")
+				S.visible_message("<span class='notice'>[S] vanishes in a flash of light!</span>")
 				S.forceMove(X)
 				X.stored_slimes += S
 	else
@@ -244,8 +245,8 @@
 				to_chat(owner, "[X] now has [X.monkeys] monkeys stored.")
 		else
 			to_chat(owner, "[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.")
-	else 
-		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
+	else
+		to_chat(owner, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 
 
 /datum/action/innate/monkey_recycle
@@ -267,10 +268,10 @@
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
 			if(M.stat)
-				M.visible_message("[M] vanishes as [M.p_theyre()] reclaimed for recycling!")
+				M.visible_message("<span class='notice'>[M] vanishes as [M.p_theyre()] reclaimed for recycling!</span>")
 				recycler.use_power(500)
 				X.monkeys += recycler.cube_production
-				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors	
+				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
 				qdel(M)
 				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
 	else
@@ -408,7 +409,7 @@
 			return
 		if(S.buckled)
 			S.Feedstop(silent = TRUE)
-		S.visible_message("[S] vanishes in a flash of light!")
+		S.visible_message("<span class='notice'>[S] vanishes in a flash of light!</span>")
 		S.forceMove(X)
 		X.stored_slimes += S
 
@@ -424,7 +425,7 @@
 	if(turfarea.name == E.allowed_area || turfarea.xenobiology_compatible)
 		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
 			S.forceMove(T)
-			S.visible_message("[S] warps in!")
+			S.visible_message("<span class='notice'>[S] warps in!</span>")
 			X.stored_slimes -= S
 
 //Place monkey
@@ -462,9 +463,9 @@
 	if(mobarea.name == E.allowed_area || mobarea.xenobiology_compatible)
 		if(!M.stat)
 			return
-		M.visible_message("[M] vanishes as [p_theyre()] reclaimed for recycling!")
+		M.visible_message("<span class='notice'>[M] vanishes as [p_theyre()] reclaimed for recycling!</span>")
 		X.connected_recycler.use_power(500)
 		X.monkeys += connected_recycler.cube_production
-		X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors	
+		X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
 		qdel(M)
 		to_chat(C, "[X] now has [X.monkeys] monkeys available.")

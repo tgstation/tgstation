@@ -12,8 +12,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
-	flags_cover = MASKCOVERSMOUTH
-	visor_flags_cover = MASKCOVERSMOUTH
+	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	var/aggressiveness = 2
 	var/cooldown_special
 	var/recent_uses = 0
@@ -62,6 +62,7 @@
 	return TRUE
 
 /obj/item/clothing/mask/gas/sechailer/wirecutter_act(mob/living/user, obj/item/I)
+	..()
 	if(aggressiveness != 4)
 		to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
 		aggressiveness = 4
@@ -186,6 +187,6 @@
 					phrase_sound = "dredd"
 
 		usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
-		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
+		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, FALSE, 4)
 		cooldown = world.time
 		cooldown_special = world.time

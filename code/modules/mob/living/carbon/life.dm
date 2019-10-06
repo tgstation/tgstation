@@ -10,8 +10,8 @@
 
 	if(!IS_IN_STASIS(src))
 
-		if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
-			handle_organs()
+		//Reagent processing needs to come before breathing, to prevent edge cases.
+		handle_organs()
 
 		. = ..()
 
@@ -30,15 +30,14 @@
 		if(stat != DEAD)
 			handle_brain_damage()
 
-		if(stat != DEAD)
-			handle_liver()
-
 	else
 		. = ..()
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 		LoadComponent(/datum/component/rot/corpse)
+
+	check_cremation()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -52,8 +51,18 @@
 
 //Start of a breath chain, calls breathe()
 /mob/living/carbon/handle_breathing(times_fired)
-	if((times_fired % 4) == 2 || failed_last_breath)
-		breathe() //Breathe per 4 ticks, unless suffocating
+	var/next_breath = 4
+	var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
+	if(L)
+		if(L.damage > L.high_threshold)
+			next_breath--
+	if(H)
+		if(H.damage > H.high_threshold)
+			next_breath--
+
+	if((times_fired % next_breath) == 0 || failed_last_breath)
+		breathe() //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
 		if(failed_last_breath)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 		else
@@ -65,7 +74,8 @@
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
-	if(reagents.has_reagent(/datum/reagent/toxin/lexorin))
+	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
@@ -77,7 +87,7 @@
 	var/datum/gas_mixture/breath
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE))
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
 		else if(health <= crit_threshold)
@@ -131,13 +141,13 @@
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return
 
-	var/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		adjustOxyLoss(2)
 
 	//CRIT
 	if(!breath || (breath.total_moles() == 0) || !lungs)
-		if(reagents.has_reagent(/datum/reagent/medicine/epinephrine) && lungs)
+		if(reagents.has_reagent(/datum/reagent/medicine/epinephrine, needs_metabolizing = TRUE) && lungs)
 			return
 		adjustOxyLoss(1)
 
@@ -323,9 +333,14 @@
 			. |= BP.on_life(stam_regen)
 
 /mob/living/carbon/proc/handle_organs()
-	for(var/V in internal_organs)
-		var/obj/item/organ/O = V
-		O.on_life()
+	if(stat != DEAD)
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
+			O.on_life()
+	else
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
+			O.on_death() //Needed so organs decay while inside the body.
 
 /mob/living/carbon/handle_diseases()
 	for(var/thing in diseases)
@@ -493,9 +508,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(prob(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
-			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING))
-				adjustBruteLoss(-0.12, FALSE)
-				adjustFireLoss(-0.06, FALSE)
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 
@@ -523,9 +535,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(prob(25))
 				confused += 2
 			Dizzy(10)
-			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING)) // effects stack with lower tiers
-				adjustBruteLoss(-0.3, FALSE)
-				adjustFireLoss(-0.15, FALSE)
 
 		if(drunkenness >= 51)
 			if(prob(3))
@@ -536,9 +545,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(drunkenness >= 61)
 			if(prob(50))
 				blur_eyes(5)
-			if(HAS_TRAIT(src, TRAIT_DRUNK_HEALING))
-				adjustBruteLoss(-0.4, FALSE)
-				adjustFireLoss(-0.2, FALSE)
 
 		if(drunkenness >= 71)
 			blur_eyes(5)
@@ -550,7 +556,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 		if(drunkenness >= 91)
 			adjustToxLoss(1)
-			adjustBrainLoss(0.4, 60)
+			adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(z)) //QoL mainly
 					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
@@ -573,45 +579,90 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+
 /////////
 //LIVER//
 /////////
 
+///Decides if the liver is failing or not.
 /mob/living/carbon/proc/handle_liver()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
+	if(!dna)
 		return
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
-		if(liver.damage >= liver.maxHealth)
-			liver.failing = TRUE
-			liver_failure()
-	else
-		liver_failure()
+		if(liver.damage < liver.maxHealth)
+			return
+		liver.organ_flags |= ORGAN_FAILING
+	liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver && liver.failing)
+	if(liver && (liver.organ_flags & ORGAN_FAILING))
 		return TRUE
-
-/mob/living/carbon/proc/return_liver_damage()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		return liver.damage
-
-/mob/living/carbon/proc/applyLiverDamage(var/d)
-	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
-	if(L)
-		L.damage += d
 
 /mob/living/carbon/proc/liver_failure()
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
 	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
-	if(HAS_TRAIT(src, TRAIT_STABLELIVER))
+	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
 		return
 	adjustToxLoss(4, TRUE,  TRUE)
 	if(prob(30))
 		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 
+/////////////
+//CREMATION//
+/////////////
+/mob/living/carbon/proc/check_cremation()
+	//Only cremate while actively on fire
+	if(!on_fire)
+		return
+
+	//Only starts when the chest has taken full damage
+	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
+	if(!(chest.get_damage() >= chest.max_damage))
+		return
+
+	//Burn off limbs one by one
+	var/obj/item/bodypart/limb
+	var/list/limb_list = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/still_has_limbs = FALSE
+	for(var/zone in limb_list)
+		limb = get_bodypart(zone)
+		if(limb)
+			still_has_limbs = TRUE
+			if(limb.get_damage() >= limb.max_damage)
+				limb.cremation_progress += rand(2,5)
+				if(limb.cremation_progress >= 100)
+					if(limb.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+						limb.drop_limb()
+						limb.visible_message("<span class='warning'>[src]'s [limb.name] crumbles into ash!</span>")
+						qdel(limb)
+					else
+						limb.drop_limb()
+						limb.visible_message("<span class='warning'>[src]'s [limb.name] detaches from [p_their()] body!</span>")
+	if(still_has_limbs)
+		return
+
+	//Burn the head last
+	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+	if(head)
+		if(head.get_damage() >= head.max_damage)
+			head.cremation_progress += rand(2,5)
+			if(head.cremation_progress >= 100)
+				if(head.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+					head.drop_limb()
+					head.visible_message("<span class='warning'>[src]'s head crumbles into ash!</span>")
+					qdel(head)
+				else
+					head.drop_limb()
+					head.visible_message("<span class='warning'>[src]'s head detaches from [p_their()] body!</span>")
+		return
+
+	//Nothing left: dust the body, drop the items (if they're flammable they'll burn on their own)
+	chest.cremation_progress += rand(2,5)
+	if(chest.cremation_progress >= 100)
+		visible_message("<span class='warning'>[src]'s body crumbles into a pile of ash!</span>")
+		dust(TRUE, TRUE)
 
 ////////////////
 //BRAIN DAMAGE//
@@ -622,13 +673,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		var/datum/brain_trauma/BT = T
 		BT.on_life()
 
-	if(getBrainLoss() >= BRAIN_DAMAGE_DEATH) //rip
-		to_chat(src, "<span class='userdanger'>The last spark of life in your brain fizzles out...</span>")
-		death()
-		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
-		if(B)
-			B.brain_death = TRUE
-
 /////////////////////////////////////
 //MONKEYS WITH TOO MUCH CHOLOESTROL//
 /////////////////////////////////////
@@ -637,7 +681,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(!needs_heart())
 		return FALSE
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(!heart || heart.synthetic)
+	if(!heart || (heart.organ_flags & ORGAN_SYNTHETIC))
 		return FALSE
 	return TRUE
 
@@ -648,6 +692,13 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		return FALSE
 	return TRUE
 
+/*
+ * The mob is having a heart attack
+ *
+ * NOTE: this is true if the mob has no heart and needs one, which can be suprising,
+ * you are meant to use it in combination with can_heartattack for heart attack
+ * related situations (i.e not just cardiac arrest)
+ */
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)

@@ -1,6 +1,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon
 	name = "mecha weapon"
-	range = RANGED
+	range = MECHA_RANGED
+	destroy_sound = 'sound/mecha/weapdestr.ogg'
 	var/projectile
 	var/fire_sound
 	var/projectiles_per_shot = 1
@@ -50,7 +51,7 @@
 		A.preparePixelProjectile(target, chassis.occupant, params, spread)
 
 		A.fire()
-		playsound(chassis, fire_sound, 50, 1)
+		playsound(chassis, fire_sound, 50, TRUE)
 
 		sleep(max(0, projectile_delay))
 
@@ -166,7 +167,7 @@
 	icon_state = "mecha_honker"
 	energy_drain = 200
 	equip_cooldown = 150
-	range = MELEE|RANGED
+	range = MECHA_MELEE|MECHA_RANGED
 	kickback = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M)
@@ -178,7 +179,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target, params)
 	if(!action_checks(target))
 		return
-	playsound(chassis, 'sound/items/airhorn.ogg', 100, 1)
+	playsound(chassis, 'sound/items/airhorn.ogg', 100, TRUE)
 	chassis.occupant_message("<font color='red' size='5'>HONK</font>")
 	for(var/mob/living/carbon/M in ohearers(6, chassis))
 		if(ishuman(M))
@@ -209,7 +210,7 @@
 //Base ballistic weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic
 	name = "general ballistic weapon"
-	fire_sound = 'sound/weapons/gunshot.ogg'
+	fire_sound = 'sound/weapons/gun/smg/shot.ogg'
 	var/projectiles
 	var/projectiles_cache //ammo to be loaded in, if possible.
 	var/projectiles_cache_max
@@ -289,7 +290,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
 	desc = "A weapon for combat exosuits. A mime invention, field tests have shown that targets cannot even scream before going down."
-	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
+	fire_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 	icon_state = "mecha_mime"
 	equip_cooldown = 30
 	projectile = /obj/item/projectile/bullet/mime
@@ -332,7 +333,7 @@
 	desc = "A weapon for combat exosuits. Launches light explosive missiles."
 	icon_state = "mecha_missilerack"
 	projectile = /obj/item/projectile/bullet/a84mm_he
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	projectiles = 8
 	projectiles_cache = 0
 	projectiles_cache_max = 0
@@ -346,7 +347,7 @@
 	desc = "A weapon for combat exosuits. Launches low-explosive breaching missiles designed to explode only when striking a sturdy target."
 	icon_state = "mecha_missilerack_six"
 	projectile = /obj/item/projectile/bullet/a84mm_br
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	projectiles = 6
 	projectiles_cache = 0
 	projectiles_cache_max = 0
@@ -365,7 +366,7 @@
 	if(!action_checks(target))
 		return
 	var/obj/O = new projectile(chassis.loc)
-	playsound(chassis, fire_sound, 50, 1)
+	playsound(chassis, fire_sound, 50, TRUE)
 	log_message("Launched a [O.name] from [name], targeting [target].", LOG_MECHA)
 	projectiles--
 	proj_init(O)
@@ -382,7 +383,7 @@
 	desc = "A weapon for combat exosuits. Launches primed flashbangs."
 	icon_state = "mecha_grenadelnchr"
 	projectile = /obj/item/grenade/flashbang
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	projectiles = 6
 	projectiles_cache = 6
 	projectiles_cache_max = 24
@@ -453,7 +454,7 @@
 	icon_state = "mecha_punching_glove"
 	energy_drain = 250
 	equip_cooldown = 20
-	range = MELEE|RANGED
+	range = MECHA_MELEE|MECHA_RANGED
 	missile_range = 5
 	projectile = /obj/item/punching_glove
 	fire_sound = 'sound/items/bikehorn.ogg'

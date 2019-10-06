@@ -16,7 +16,7 @@
 	var/icon_stun = "revenant_stun"
 	var/icon_drain = "revenant_draining"
 	var/stasis = FALSE
-	mob_biotypes = list(MOB_SPIRIT)
+	mob_biotypes = MOB_SPIRIT
 	incorporeal_move = INCORPOREAL_MOVE_JAUNT
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
@@ -225,7 +225,7 @@
 	notransform = TRUE
 	revealed = TRUE
 	invisibility = 0
-	playsound(src, 'sound/effects/screech.ogg', 100, 1)
+	playsound(src, 'sound/effects/screech.ogg', 100, TRUE)
 	visible_message("<span class='warning'>[src] lets out a waning screech as violet mist swirls around its dissolving body!</span>")
 	icon_state = "revenant_draining"
 	for(var/i = alpha, i > 0, i -= 10)

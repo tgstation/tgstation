@@ -291,7 +291,7 @@
 				if(href_list["cable"])
 					var/turf/T = get_turf(loc)
 					cable = new /obj/item/pai_cable(T)
-					T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+					T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='hear'>You hear the soft click of something light and hard falling to the ground.</span>")
 
 			if("loudness")
 				if(subscreen == 1) // Open Instrument
@@ -322,7 +322,7 @@
 		if(s == "crew manifest")
 			dat += "<a href='byond://?src=[REF(src)];software=manifest;sub=0'>Crew Manifest</a> <br>"
 		if(s == "host scan")
-			dat += "<a href='byond://?src=[REF(src)];software=hostscan;sub=0'>Host Health Scan</a>"
+			dat += "<a href='byond://?src=[REF(src)];software=hostscan;sub=0'>Host Health Scan</a> <br>"
 		if(s == "medical records")
 			dat += "<a href='byond://?src=[REF(src)];software=medicalrecord;sub=0'>Medical Records</a> <br>"
 		if(s == "security records")

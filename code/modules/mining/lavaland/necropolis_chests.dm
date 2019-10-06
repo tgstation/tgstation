@@ -41,7 +41,7 @@
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/berserker(src)
 		if(13)
 			new /obj/item/jacobs_ladder(src)
 		if(14)
@@ -116,28 +116,28 @@
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
 	desc = "A device which causes kinetic accelerators to fire AoE blasts that destroy rock and damage creatures."
 	id = "hyperaoemod"
-	materials = list(MAT_METAL = 7000, MAT_GLASS = 3000, MAT_SILVER = 3000, MAT_GOLD = 3000, MAT_DIAMOND = 4000)
+	materials = list(/datum/material/iron = 7000, /datum/material/glass = 3000, /datum/material/silver = 3000, /datum/material/gold = 3000, /datum/material/diamond = 4000)
 	build_path = /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
 
 /datum/design/unique_modkit/rapid_repeater
 	name = "Kinetic Accelerator Rapid Repeater Mod"
 	desc = "A device which greatly reduces a kinetic accelerator's cooldown on striking a living target or rock, but greatly increases its base cooldown."
 	id = "repeatermod"
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_URANIUM = 8000, MAT_BLUESPACE = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/uranium = 8000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/borg/upgrade/modkit/cooldown/repeater
 
 /datum/design/unique_modkit/resonator_blast
 	name = "Kinetic Accelerator Resonator Blast Mod"
 	desc = "A device which causes kinetic accelerators to fire shots that leave and detonate resonator blasts."
 	id = "resonatormod"
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_SILVER = 5000, MAT_URANIUM = 5000)
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/silver = 5000, /datum/material/uranium = 5000)
 	build_path = /obj/item/borg/upgrade/modkit/resonator_blasts
 
 /datum/design/unique_modkit/bounty
 	name = "Kinetic Accelerator Death Syphon Mod"
 	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
-	materials = list(MAT_METAL = 4000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_BLUESPACE = 4000)
+	materials = list(/datum/material/iron = 4000, /datum/material/silver = 4000, /datum/material/gold = 4000, /datum/material/bluespace = 4000)
 	reagents_list = list(/datum/reagent/blood = 40)
 	build_path = /obj/item/borg/upgrade/modkit/bounty
 
@@ -442,6 +442,20 @@
 	qdel(chain)
 	return ..()
 
+//just a nerfed version of the real thing for the bounty hunters.
+/obj/item/gun/magic/hook/bounty
+	name = "hook"
+	ammo_type = /obj/item/ammo_casing/magic/hook/bounty
+
+/obj/item/gun/magic/hook/bounty/shoot_with_empty_chamber(mob/living/user)
+	to_chat(user, "<span class='warning'>The [src] isn't ready to fire yet!</span>")
+
+/obj/item/ammo_casing/magic/hook/bounty
+	projectile_type = /obj/item/projectile/hook/bounty
+
+/obj/item/projectile/hook/bounty
+	damage = 0
+	paralyze = 20
 
 //Immortality Talisman
 /obj/item/immortality_talisman
@@ -595,16 +609,21 @@
 
 /datum/reagent/flightpotion/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
-		if(!ishumanbasic(M) || reac_volume < 5) // implying xenohumans are holy
+		var/mob/living/carbon/C = M
+		var/holycheck = ishumanbasic(C)
+		if(!(holycheck || islizard(C)) || reac_volume < 5) // implying xenohumans are holy //as with all things,
 			if(method == INGEST && show_message)
-				to_chat(M, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
+				to_chat(C, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
 			return ..()
 
-		to_chat(M, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
-		M.set_species(/datum/species/angel)
-		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
-		M.adjustBruteLoss(20)
-		M.emote("scream")
+		to_chat(C, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
+		C.dna.species.GiveSpeciesFlight(C)
+		if(holycheck)
+			to_chat(C, "<span class='notice'>You feel blessed!</span>")
+			ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
+		playsound(C.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
+		C.adjustBruteLoss(20)
+		C.emote("scream")
 	..()
 
 
@@ -661,6 +680,7 @@
 	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
 	var/swiping = FALSE
+	var/bleed_stacks_per_hit = 3
 
 /obj/item/melee/transforming/cleaving_saw/examine(mob/user)
 	. = ..()
@@ -701,12 +721,11 @@
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
 /obj/item/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
-	var/datum/status_effect/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	var/datum/status_effect/stacking/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
 	if(!B)
-		if(!active) //This isn't in the above if-check so that the else doesn't care about active
-			target.apply_status_effect(STATUS_EFFECT_SAWBLEED)
+		target.apply_status_effect(STATUS_EFFECT_SAWBLEED,bleed_stacks_per_hit)
 	else
-		B.add_bleed(B.bleed_buildup)
+		B.add_stacks(bleed_stacks_per_hit)
 
 /obj/item/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
@@ -786,13 +805,13 @@
 
 /obj/item/melee/ghost_sword/attack_self(mob/user)
 	if(summon_cooldown > world.time)
-		to_chat(user, "You just recently called out for aid. You don't want to annoy the spirits.")
+		to_chat(user, "<span class='warning'>You just recently called out for aid. You don't want to annoy the spirits!</span>")
 		return
-	to_chat(user, "You call out for aid, attempting to summon spirits to your side.")
+	to_chat(user, "<span class='notice'>You call out for aid, attempting to summon spirits to your side.</span>")
 
 	notify_ghosts("[user] is raising [user.p_their()] [src], calling for your help!",
 		enter_link="<a href=?src=[REF(src)];orbit=1>(Click to help)</a>",
-		source = user, action=NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPECTRAL_BLADE)
+		source = user, action=NOTIFY_ORBIT, ignore_key = POLL_IGNORE_SPECTRAL_BLADE, header = "Spectral blade")
 
 	summon_cooldown = world.time + 600
 
@@ -876,7 +895,7 @@
 			to_chat(user, "<span class='danger'>You feel like you could walk straight through lava now.</span>")
 			H.weather_immunities |= "lava"
 
-	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
+	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	qdel(src)
 
 /datum/disease/transformation/dragon
@@ -943,21 +962,21 @@
 			timer = world.time + create_delay + 1
 			if(do_after(user, create_delay, target = T))
 				var/old_name = T.name
-				if(T.TerraformTurf(turf_type))
+				if(T.TerraformTurf(turf_type, flags = CHANGETURF_INHERIT_AIR))
 					user.visible_message("<span class='danger'>[user] turns \the [old_name] into [transform_string]!</span>")
 					message_admins("[ADMIN_LOOKUPFLW(user)] fired the lava staff at [ADMIN_VERBOSEJMP(T)]")
 					log_game("[key_name(user)] fired the lava staff at [AREACOORD(T)].")
 					timer = world.time + create_cooldown
-					playsound(T,'sound/magic/fireball.ogg', 200, 1)
+					playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
 			else
 				timer = world.time
 			qdel(L)
 		else
 			var/old_name = T.name
-			if(T.TerraformTurf(reset_turf_type))
+			if(T.TerraformTurf(reset_turf_type, flags = CHANGETURF_INHERIT_AIR))
 				user.visible_message("<span class='danger'>[user] turns \the [old_name] into [reset_string]!</span>")
 				timer = world.time + reset_cooldown
-				playsound(T,'sound/magic/fireball.ogg', 200, 1)
+				playsound(T,'sound/magic/fireball.ogg', 200, TRUE)
 
 /obj/effect/temp_visual/lavastaff
 	icon_state = "lavastaff_warn"
@@ -997,7 +1016,7 @@
 		var/obj/effect/mine/pickup/bloodbath/B = new(H)
 		INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, H)
 	to_chat(user, "<span class='notice'>You shatter the bottle!</span>")
-	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
+	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!</span>")
 	log_combat(user, null, "activated a bottle of mayhem", src)
 	qdel(src)
@@ -1188,7 +1207,7 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			if(do_after(user, 50, target = user) && !beacon)
 				var/turf/T = get_turf(user)
-				playsound(T,'sound/magic/blind.ogg', 200, 1, -4)
+				playsound(T,'sound/magic/blind.ogg', 200, TRUE, -4)
 				new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 				beacon = new/obj/effect/hierophant(T)
 				user.update_action_buttons_icon()
@@ -1231,8 +1250,8 @@
 			return
 		new /obj/effect/temp_visual/hierophant/telegraph(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph(source, user)
-		playsound(T,'sound/magic/wand_teleport.ogg', 200, 1)
-		playsound(source,'sound/machines/airlockopen.ogg', 200, 1)
+		playsound(T,'sound/magic/wand_teleport.ogg', 200, TRUE)
+		playsound(source,'sound/machines/airlockopen.ogg', 200, TRUE)
 		if(!do_after(user, 3, target = user) || !user || !beacon || QDELETED(beacon)) //no walking away shitlord
 			teleporting = FALSE
 			if(user)
@@ -1303,7 +1322,7 @@
 	if(!T)
 		return
 	new /obj/effect/temp_visual/hierophant/telegraph/cardinal(T, user)
-	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
+	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
 	sleep(2)
 	var/obj/effect/temp_visual/hierophant/blast/B = new(T, user, friendly_fire_check)
 	B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
@@ -1330,7 +1349,7 @@
 	if(!T)
 		return
 	new /obj/effect/temp_visual/hierophant/telegraph(T, user)
-	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
+	playsound(T,'sound/effects/bin_close.ogg', 200, TRUE)
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
 		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)

@@ -360,7 +360,7 @@
 		if(QDELETED(L) || L.stat == DEAD)
 			return
 
-		to_chat(L, "<span class='italics'>You hear a voice in your head saying: </span><span class='abductor'>[message]</span>")
+		to_chat(L, "<span class='hear'>You hear a voice in your head saying: </span><span class='abductor'>[message]</span>")
 		to_chat(user, "<span class='notice'>You send the message to your target.</span>")
 		log_directed_talk(user, L, message, LOG_SAY, "abductor whisper")
 
@@ -384,6 +384,17 @@
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+
+/obj/item/gun/energy/shrink_ray
+	name = "shrink ray blaster"
+	desc = "This is a piece of frightening alien tech that enhances the magnetic pull of atoms in a localized space to temporarily make an object shrink. \
+			That or it's just space magic. Either way, it shrinks stuff."
+	ammo_type = list(/obj/item/ammo_casing/energy/shrink)
+	item_state = "shrink_ray"
+	icon_state = "shrink_ray"
+	fire_delay = 30
+	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
 
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
@@ -636,6 +647,40 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		return // Stops humans from disassembling abductor headsets.
 	return ..()
 
+/obj/item/abductor_machine_beacon
+	name = "machine beacon"
+	desc = "A beacon designed to instantly tele-construct abductor machinery."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "beacon"
+	w_class = WEIGHT_CLASS_TINY
+	var/obj/machinery/spawned_machine
+
+/obj/item/abductor_machine_beacon/attack_self(mob/user)
+	..()
+	user.visible_message("<span class='notice'>[user] places down [src] and activates it.</span>", "<span class='notice'>You place down [src] and activate it.</span>")
+	user.dropItemToGround(src)
+	playsound(src, 'sound/machines/terminal_alert.ogg', 50)
+	addtimer(CALLBACK(src, .proc/try_spawn_machine), 30)
+
+/obj/item/abductor_machine_beacon/proc/try_spawn_machine()
+	var/viable = FALSE
+	if(isfloorturf(loc))
+		var/turf/T = loc
+		viable = TRUE
+		for(var/obj/thing in T.contents)
+			if(thing.density || ismachinery(thing) || isstructure(thing))
+				viable = FALSE
+	if(viable)
+		playsound(src, 'sound/effects/phasein.ogg', 50, TRUE)
+		var/new_machine = new spawned_machine(loc)
+		visible_message("<span class='notice'>[new_machine] warps on top of the beacon!")
+		qdel(src)
+	else
+		playsound(src, 'sound/machines/buzz-two.ogg', 50)
+
+/obj/item/abductor_machine_beacon/chem_dispenser
+	name = "beacon - Reagent Synthesizer"
+	spawned_machine = /obj/machinery/chem_dispenser/abductor
 
 /obj/item/scalpel/alien
 	name = "alien scalpel"
@@ -794,7 +839,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/clothing/under/abductor
 	desc = "The most advanced form of jumpsuit known to reality, looks uncomfortable."
 	name = "alien jumpsuit"
-	icon_state = "abductor-suit"
+	icon = 'icons/obj/clothing/under/syndicate.dmi'
+	icon_state = "abductor"
 	item_state = "bl_suit"
+	mob_overlay_icon = 'icons/mob/clothing/under/syndicate.dmi'
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0, fire = 0, acid = 0)
 	can_adjust = 0

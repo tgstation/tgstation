@@ -98,8 +98,11 @@
 		return
 	if(href_list["fix"])
 		to_chat(usr, "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>")
-		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		active = TRUE
+		if(occupier)
+			var/mob/living/silicon/ai/A = occupier
+			A.notify_ghost_cloning("Your core files are being restored!", source = src)
 		add_fingerprint(usr)
 	updateUsrDialog()
 

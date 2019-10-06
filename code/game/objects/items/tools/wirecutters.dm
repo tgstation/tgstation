@@ -12,10 +12,12 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=80)
+	materials = list(/datum/material/iron=80)
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/wirecutter.ogg'
 	usesound = 'sound/items/wirecutter.ogg'
+	drop_sound = 'sound/items/handling/wirecutter_drop.ogg'
+	pickup_sound =  'sound/items/handling/wirecutter_pickup.ogg'
 
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
@@ -63,7 +65,7 @@
 
 /obj/item/wirecutters/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, usesound, 50, 1, -1)
+	playsound(loc, usesound, 50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/wirecutters/brass
@@ -83,35 +85,30 @@
 
 	random_color = FALSE
 
-/obj/item/wirecutters/cyborg
-	name = "wirecutters"
-	desc = "This cuts wires."
-	toolspeed = 0.5
-
 /obj/item/wirecutters/power
 	name = "jaws of life"
 	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a cutting head."
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
 
-	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
+	materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25)
 	usesound = 'sound/items/jaws_cut.ogg'
 	toolspeed = 0.7
 	random_color = FALSE
 
 /obj/item/wirecutters/power/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is wrapping \the [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!</span>")
-	playsound(loc, 'sound/items/jaws_cut.ogg', 50, 1, -1)
+	playsound(loc, 'sound/items/jaws_cut.ogg', 50, TRUE, -1)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+			playsound(loc, "desceration", 50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/wirecutters/power/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, TRUE)
 	var/obj/item/crowbar/power/pryjaws = new /obj/item/crowbar/power(drop_location())
 	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	qdel(src)
@@ -124,3 +121,12 @@
 		return
 	else
 		..()
+
+
+/obj/item/wirecutters/cyborg
+	name = "powered wirecutters"
+	desc = "Cuts wires with the power of ELECTRICITY. Faster than normal wirecutters."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "wirecutters_cyborg"
+	toolspeed = 0.5
+	random_color = FALSE

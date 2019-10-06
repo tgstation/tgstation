@@ -67,8 +67,23 @@
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
-	if(owner.getStaminaLoss())
-		owner.adjustStaminaLoss(-0.5) //reduce stamina loss by 0.5 per tick, 10 per 2 seconds
+	if(owner.maxHealth)
+		var/health_ratio = owner.health / owner.maxHealth
+		var/healing = -0.2
+		if((locate(/obj/structure/bed) in owner.loc))
+			healing -= 0.3
+		else if((locate(/obj/structure/table) in owner.loc))
+			healing -= 0.1
+		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
+			if(bedsheet.loc != owner.loc) //bedsheets in your backpack/neck don't give you comfort
+				continue
+			healing -= 0.1
+			break //Only count the first bedsheet	
+		if(health_ratio > 0.8)	
+			owner.adjustBruteLoss(healing)
+			owner.adjustFireLoss(healing)
+			owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
+		owner.adjustStaminaLoss(healing)
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))
@@ -103,6 +118,7 @@
 /datum/status_effect/incapacitating/stasis/on_creation(mob/living/new_owner, set_duration, updating_canmove)
         . = ..()
         update_time_of_death()
+        owner.reagents?.end_metabolization(owner, FALSE)
 
 /datum/status_effect/incapacitating/stasis/tick()
         update_time_of_death()
@@ -362,9 +378,9 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/twohanded/required/kinetic_crusher/hammer_synced
+	var/obj/item/twohanded/kinetic_crusher/hammer_synced
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/required/kinetic_crusher/new_hammer_synced)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/kinetic_crusher/new_hammer_synced)
 	. = ..()
 	if(.)
 		hammer_synced = new_hammer_synced
@@ -389,77 +405,28 @@
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
 
-/datum/status_effect/saw_bleed
+/datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
-	duration = -1 //removed under specific conditions
 	tick_interval = 6
-	alert_type = null
-	var/mutable_appearance/bleed_overlay
-	var/mutable_appearance/bleed_underlay
-	var/bleed_amount = 3
-	var/bleed_buildup = 3
-	var/delay_before_decay = 5
+	delay_before_decay = 5
+	stack_threshold = 10
+	max_stacks = 10
+	overlay_file = 'icons/effects/bleed.dmi'
+	underlay_file = 'icons/effects/bleed.dmi'
+	overlay_state = "bleed"
+	underlay_state = "bleed"
 	var/bleed_damage = 200
-	var/needs_to_bleed = FALSE
 
-/datum/status_effect/saw_bleed/Destroy()
-	if(owner)
-		owner.cut_overlay(bleed_overlay)
-		owner.underlays -= bleed_underlay
-	QDEL_NULL(bleed_overlay)
-	return ..()
+/datum/status_effect/stacking/saw_bleed/fadeout_effect()
+	new /obj/effect/temp_visual/bleed(get_turf(owner))
 
-/datum/status_effect/saw_bleed/on_apply()
-	if(owner.stat == DEAD)
-		return FALSE
-	bleed_overlay = mutable_appearance('icons/effects/bleed.dmi', "bleed[bleed_amount]")
-	bleed_underlay = mutable_appearance('icons/effects/bleed.dmi', "bleed[bleed_amount]")
-	var/icon/I = icon(owner.icon, owner.icon_state, owner.dir)
-	var/icon_height = I.Height()
-	bleed_overlay.pixel_x = -owner.pixel_x
-	bleed_overlay.pixel_y = FLOOR(icon_height * 0.25, 1)
-	bleed_overlay.transform = matrix() * (icon_height/world.icon_size) //scale the bleed overlay's size based on the target's icon size
-	bleed_underlay.pixel_x = -owner.pixel_x
-	bleed_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
-	bleed_underlay.alpha = 40
-	owner.add_overlay(bleed_overlay)
-	owner.underlays += bleed_underlay
-	return ..()
-
-/datum/status_effect/saw_bleed/tick()
-	if(owner.stat == DEAD)
-		qdel(src)
-	else
-		add_bleed(-1)
-
-/datum/status_effect/saw_bleed/proc/add_bleed(amount)
-	owner.cut_overlay(bleed_overlay)
-	owner.underlays -= bleed_underlay
-	bleed_amount += amount
-	if(bleed_amount)
-		if(bleed_amount >= 10)
-			needs_to_bleed = TRUE
-			qdel(src)
-		else
-			if(amount > 0)
-				tick_interval += delay_before_decay
-			bleed_overlay.icon_state = "bleed[bleed_amount]"
-			bleed_underlay.icon_state = "bleed[bleed_amount]"
-			owner.add_overlay(bleed_overlay)
-			owner.underlays += bleed_underlay
-	else
-		qdel(src)
-
-/datum/status_effect/saw_bleed/on_remove()
-	if(needs_to_bleed)
-		var/turf/T = get_turf(owner)
-		new /obj/effect/temp_visual/bleed/explode(T)
-		for(var/d in GLOB.alldirs)
-			new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
-		playsound(T, "desceration", 200, 1, -1)
-		owner.adjustBruteLoss(bleed_damage)
-	else
-		new /obj/effect/temp_visual/bleed(get_turf(owner))
+/datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
+	owner.adjustBruteLoss(bleed_damage)
+	var/turf/T = get_turf(owner)
+	new /obj/effect/temp_visual/bleed/explode(T)
+	for(var/d in GLOB.alldirs)
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
+	playsound(T, "desceration", 100, TRUE, -1)
 
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
@@ -470,6 +437,7 @@
 	else
 		C.apply_curse(set_curse)
 		C.duration += 3000 //time added by additional curses
+	return C
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
@@ -480,7 +448,7 @@
 	var/effect_last_activation = 0
 	var/effect_cooldown = 100
 	var/obj/effect/temp_visual/curse/wasting_effect = new
-	
+
 /datum/status_effect/necropolis_curse/hivemind
 	id = "hivecurse"
 	duration = 600
@@ -518,7 +486,7 @@
 		wasting_effect.transform = owner.transform //if the owner has been stunned the overlay should inherit that position
 		wasting_effect.alpha = 255
 		animate(wasting_effect, alpha = 0, time = 32)
-		playsound(owner, 'sound/effects/curse5.ogg', 20, 1, -1)
+		playsound(owner, 'sound/effects/curse5.ogg', 20, TRUE, -1)
 		owner.adjustFireLoss(0.75)
 	if(effect_last_activation <= world.time)
 		effect_last_activation = world.time + effect_cooldown
@@ -541,7 +509,7 @@
 /datum/status_effect/necropolis_curse/proc/grasp(turf/spawn_turf)
 	set waitfor = FALSE
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
-	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, 1, -1)
+	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
 	var/turf/ownerloc = get_turf(owner)
 	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
 	C.preparePixelProjectile(ownerloc, spawn_turf)
@@ -657,8 +625,7 @@
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
 	ADD_TRAIT(owner, TRAIT_MUTE, "trance")
-	if(!owner.has_quirk(/datum/quirk/monochromatic))
-		owner.add_client_colour(/datum/client_colour/monochrome)
+	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
 	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
 	return TRUE
@@ -672,8 +639,7 @@
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
 	owner.dizziness = 0
-	if(!owner.has_quirk(/datum/quirk/monochromatic))
-		owner.remove_client_colour(/datum/client_colour/monochrome)
+	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
@@ -788,3 +754,46 @@
 	name = "TO THE STARS AND BEYOND!"
 	desc = "I must go, my people need me!"
 	icon_state = "high"
+
+/datum/status_effect/fake_virus
+	id = "fake_virus"
+	duration = 1800//3 minutes
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 1
+	alert_type = null
+	var/msg_stage = 0//so you dont get the most intense messages immediately
+
+/datum/status_effect/fake_virus/tick()
+	var/fake_msg = ""
+	var/fake_emote = ""
+	switch(msg_stage)
+		if(0 to 300)
+			if(prob(1))
+				fake_msg = pick("<span class='warning'>[pick("Your head hurts.", "Your head pounds.")]</span>",
+				"<span class='warning'>[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]</span>",
+				"<span class='warning'>[pick("You feel dizzy.", "Your head spins.")]</span>",
+				"<span notice='warning'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>",
+				"<span class='warning'>[pick("Your head hurts.", "Your mind blanks for a moment.")]</span>",
+				"<span class='warning'>[pick("Your throat hurts.", "You clear your throat.")]</span>")
+		if(301 to 600)
+			if(prob(2))
+				fake_msg = pick("<span class='warning'>[pick("Your head hurts a lot.", "Your head pounds incessantly.")]</span>",
+				"<span class='warning'>[pick("Your windpipe feels like a straw.", "Your breathing becomes tremendously difficult.")]</span>",
+				"<span class='warning'>You feel very [pick("dizzy","woozy","faint")].</span>",
+				"<span class='warning'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>",
+				"<span class='warning'>You nod off for a moment.</span>")
+		else
+			if(prob(3))
+				if(prob(50))// coin flip to throw a message or an emote
+					fake_msg = pick("<span class='userdanger'>[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]</span>",
+					"<span class='userdanger'>[pick("Your lungs hurt!", "It hurts to breathe!")]</span>",
+					"<span class='warning'>[pick("You feel nauseated.", "You feel like you're going to throw up!")]</span>")
+				else
+					fake_emote = pick("cough", "sniff", "sneeze")
+
+	if(fake_emote)
+		owner.emote(fake_emote)
+	else if(fake_msg)
+		to_chat(owner, fake_msg)
+
+	msg_stage++

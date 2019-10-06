@@ -96,6 +96,7 @@
 	..()
 
 /obj/machinery/defibrillator_mount/multitool_act(mob/living/user, obj/item/multitool)
+	..()
 	if(!defib)
 		to_chat(user, "<span class='warning'>There isn't any defibrillator to clamp in!</span>")
 		return TRUE
@@ -138,7 +139,7 @@
 	desc = "A frame for a defibrillator mount. It can't be removed once it's placed."
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
-	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
 	w_class = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
 	pixel_shift = -28

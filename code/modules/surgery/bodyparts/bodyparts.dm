@@ -4,6 +4,7 @@
 	desc = "Why is it detached..."
 	force = 3
 	throwforce = 3
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = ""
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
@@ -31,6 +32,8 @@
 	var/stamina_dam = 0
 	var/max_stamina_damage = 0
 	var/max_damage = 0
+
+	var/cremation_progress = 0 //Gradually increases while burning when at full damage, destroys the limb when at 100
 
 	var/brute_reduction = 0 //Subtracted to brute damage taken
 	var/burn_reduction = 0	//Subtracted to burn damage taken
@@ -96,12 +99,12 @@
 	..()
 
 /obj/item/bodypart/attackby(obj/item/W, mob/user, params)
-	if(W.is_sharp())
+	if(W.get_sharpness())
 		add_fingerprint(user)
 		if(!contents.len)
 			to_chat(user, "<span class='warning'>There is nothing left inside [src]!</span>")
 			return
-		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
 		user.visible_message("<span class='warning'>[user] begins to cut open [src].</span>",\
 			"<span class='notice'>You begin to cut open [src]...</span>")
 		if(do_after(user, 54, target = src))
@@ -112,7 +115,7 @@
 /obj/item/bodypart/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(status != BODYPART_ROBOTIC)
-		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
+		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, TRUE, -1)
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
 
@@ -120,7 +123,7 @@
 /obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
-		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
+		playsound(T, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	for(var/obj/item/I in src)
 		I.forceMove(T)
 
@@ -208,6 +211,7 @@
 		owner.updatehealth()
 	consider_processing()
 	update_disabled()
+	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
 	return update_bodypart_damage_state()
 
 //Returns total damage.

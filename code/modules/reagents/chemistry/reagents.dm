@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/self_consuming = FALSE
 	var/reagent_weight = 1 //affects how far it travels when sprayed
 	var/metabolizing = FALSE
+	var/harmful = FALSE //is it bad for you? Currently only used for borghypo. C2s and Toxins have it TRUE by default.
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -66,6 +67,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	current_cycle++
 	holder.remove_reagent(type, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
 	return
+
+/datum/reagent/proc/on_transfer(atom/A, method=TOUCH, trans_volume) //Called after a reagent is transfered
+	return
+
 
 // Called when this reagent is first added to a mob
 /datum/reagent/proc/on_mob_add(mob/living/L)
@@ -97,6 +102,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_update(atom/A)
 	return
 
+//called on expose_temperature
+/datum/reagent/proc/on_temp_change()
+	return
 // Called when the reagent container is hit by an explosion
 /datum/reagent/proc/on_ex_act(severity)
 	return

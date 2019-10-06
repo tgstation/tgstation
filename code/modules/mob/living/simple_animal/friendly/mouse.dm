@@ -21,7 +21,7 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
@@ -70,7 +70,7 @@
 			if(C && prob(15))
 				if(C.avail())
 					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
-					playsound(src, 'sound/effects/sparks2.ogg', 100, 1)
+					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 					C.deconstruct()
 					death(toast=1)
 				else
@@ -113,14 +113,32 @@
 	foodtype = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
 
+/obj/item/reagent_containers/food/snacks/deadmouse/examine(mob/user)
+	. = ..()
+	if (reagents?.has_reagent(/datum/reagent/yuck) || reagents?.has_reagent(/datum/reagent/fuel))
+		. += "<span class='warning'>It's dripping with fuel and smells terrible.</span>"
+
 /obj/item/reagent_containers/food/snacks/deadmouse/attackby(obj/item/I, mob/user, params)
-	if(I.is_sharp() && user.a_intent == INTENT_HARM)
+	if(I.get_sharpness() && user.a_intent == INTENT_HARM)
 		if(isturf(loc))
 			new /obj/item/reagent_containers/food/snacks/meat/slab/mouse(loc)
 			to_chat(user, "<span class='notice'>You butcher [src].</span>")
 			qdel(src)
 		else
 			to_chat(user, "<span class='warning'>You need to put [src] on a surface to butcher it!</span>")
+	else
+		return ..()
+
+/obj/item/reagent_containers/food/snacks/deadmouse/afterattack(obj/target, mob/living/user, proximity_flag)
+	if(proximity_flag && reagents && target.is_open_container())
+		// is_open_container will not return truthy if target.reagents doesn't exist
+		var/datum/reagents/target_reagents = target.reagents
+		var/trans_amount = reagents.maximum_volume - reagents.total_volume * (4 / 3)
+		if(target_reagents.has_reagent(/datum/reagent/fuel) && target_reagents.trans_to(src, trans_amount))
+			to_chat(user, "<span class='notice'>You dip [src] into [target].</span>")
+			reagents.trans_to(target, reagents.total_volume)
+		else
+			to_chat(user, "<span class='warning'>That's a terrible idea.</span>")
 	else
 		return ..()
 

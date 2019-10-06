@@ -18,7 +18,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/drill/Initialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 50, 100)
+	AddComponent(/datum/component/butchering, 50, 100, null, null, TRUE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/action(atom/target)
 	if(!action_checks(target))
@@ -31,7 +31,7 @@
 			return
 	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
 					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
-					 "<span class='italics'>You hear drilling.</span>")
+					 "<span class='hear'>You hear drilling.</span>")
 
 	if(do_after_cooldown(target))
 		set_ready_state(FALSE)
@@ -44,11 +44,11 @@
 		while(do_after_mecha(target, drill_delay))
 			if(isliving(target))
 				drill_mob(target, chassis.occupant)
-				playsound(src,'sound/weapons/drill.ogg',40,1)
+				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else if(isobj(target))
 				var/obj/O = target
 				O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
-				playsound(src,'sound/weapons/drill.ogg',40,1)
+				playsound(src,'sound/weapons/drill.ogg',40,TRUE)
 			else
 				set_ready_state(TRUE)
 				return

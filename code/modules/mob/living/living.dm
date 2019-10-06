@@ -269,7 +269,7 @@
 				sound_to_play = H.dna.species.grab_sound
 			if(HAS_TRAIT(H, TRAIT_STRONG_GRABBER))
 				sound_to_play = null
-		playsound(src.loc, sound_to_play, 50, 1, -1)
+		playsound(src.loc, sound_to_play, 50, TRUE, -1)
 	update_pull_hud_icon()
 
 	if(ismob(AM))
@@ -277,7 +277,8 @@
 
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
-			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
+			M.visible_message("<span class='warning'>[src] grabs [M] passively!</span>", \
+							"<span class='warning'>[src] grabs you passively!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
@@ -299,7 +300,7 @@
 				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
 					C.grippedby(src)
-			
+
 			update_pull_movespeed()
 
 		set_pull_offsets(M, state)
@@ -436,7 +437,7 @@
 	set category = "IC"
 
 	if(IsSleeping())
-		to_chat(src, "<span class='notice'>You are already sleeping.</span>")
+		to_chat(src, "<span class='warning'>You are already sleeping!</span>")
 		return
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
@@ -455,7 +456,7 @@
 		if(do_after(src, 10, target = src))
 			set_resting(FALSE, FALSE)
 		else
-			to_chat(src, "<span class='notice'>You fail to get up.</span>")
+			to_chat(src, "<span class='warning'>You fail to get up!</span>")
 
 /mob/living/proc/set_resting(rest, silent = TRUE)
 	if(!silent)
@@ -491,15 +492,6 @@
 /mob/living/is_drawable(mob/user, allowmobs = TRUE)
 	return (allowmobs && reagents && can_inject(user))
 
-/mob/living/proc/get_organ_target()
-	var/mob/shooter = src
-	var/t = shooter.zone_selected
-	if ((t in list( BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH )))
-		t = BODY_ZONE_HEAD
-	var/def_zone = ran_zone(t)
-	return def_zone
-
-
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
 		return
@@ -510,7 +502,8 @@
 	med_hud_set_status()
 
 //proc used to ressuscitate a mob
-/mob/living/proc/revive(full_heal = 0, admin_revive = 0)
+/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
@@ -541,13 +534,20 @@
 	if(should_update_mobility)
 		update_mobility()
 
+/mob/living/Crossed(atom/movable/AM)
+	. = ..()
+	for(var/i in get_equipped_items())
+		var/obj/item/item = i
+		SEND_SIGNAL(item, COMSIG_ITEM_WEARERCROSSED, AM, src)
+
+
+
 //proc used to completely heal a mob.
 /mob/living/proc/fully_heal(admin_revive = 0)
 	restore_blood()
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)
 	setCloneLoss(0, 0)
-	setBrainLoss(0)
 	remove_CC(FALSE)
 	set_disgust(0)
 	radiation = 0
@@ -556,7 +556,7 @@
 	set_blindness(0)
 	set_blurriness(0)
 	set_dizziness(0)
-	set_eye_damage(0)
+
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
@@ -570,9 +570,6 @@
 	stuttering = 0
 	slurring = 0
 	jitteriness = 0
-	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
-	if (mood)
-		mood.remove_temp_moods(admin_revive)
 	update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 
@@ -723,9 +720,9 @@
 
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
-	if(pulledby.grab_state || resting)
+	if(pulledby.grab_state || resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
 		var/altered_grab_state = pulledby.grab_state
-		if(resting && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. wont make the grab state exceed the normal max, however
+		if((resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. wont make the grab state exceed the normal max, however
 			altered_grab_state++
 		var/resist_chance = BASE_GRAB_RESIST_CHANCE // see defines/combat.dm
 		resist_chance = max(resist_chance/altered_grab_state-sqrt((getStaminaLoss()+getBruteLoss()/2)*(3-altered_grab_state)), 0) // https://i.imgur.com/6yAT90T.png for sample output values
@@ -793,7 +790,7 @@
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
-					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
+					"<span class='userdanger'>[src] tries to remove your [what.name].</span>")
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay))
 		if(what && Adjacent(who))
@@ -832,7 +829,8 @@
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
 
-		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
+		who.visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>", \
+					"<span class='notice'>[src] tries to put [what] on you.</span>")
 		if(do_mob(src, who, what.equip_delay_other))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
@@ -888,25 +886,23 @@
 
 /mob/living/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, args) & COMPONENT_CANT_TRACK)
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(!T)
-		return 0
+		return FALSE
 	if(is_centcom_level(T.z)) //dont detect mobs on centcom
-		return 0
+		return FALSE
 	if(is_away_level(T.z))
-		return 0
+		return FALSE
 	if(user != null && src == user)
-		return 0
+		return FALSE
 	if(invisibility || alpha == 0)//cloaked
-		return 0
-	if(digitalcamo || digitalinvis)
-		return 0
-
+		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
 	if(!near_camera(src))
-		return 0
-
-	return 1
+		return FALSE
+	return TRUE
 
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection(list/target_zones)
@@ -966,7 +962,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
 	stop_pulling()
 	. = ..()
 
@@ -1306,7 +1302,9 @@
 		if("eye_blind")
 			set_blindness(var_value)
 		if("eye_damage")
-			set_eye_damage(var_value)
+			var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
+			if(E)
+				E.setOrganDamage(var_value)
 		if("eye_blurry")
 			set_blurriness(var_value)
 		if("maxHealth")
@@ -1315,3 +1313,19 @@
 			update_transform()
 		if("lighting_alpha")
 			sync_lighting_plane_alpha()
+
+/mob/living/vv_get_header()
+	. = ..()
+	var/refid = REF(src)
+	. += {"
+		<br><font size='1'>[VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[ckey || "no ckey"]", NAMEOF(src, ckey))] / [VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "[real_name || "no real name"]", NAMEOF(src, real_name))]</font>
+		<br><font size='1'>
+			BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute' id='brute'>[getBruteLoss()]</a>
+			FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire' id='fire'>[getFireLoss()]</a>
+			TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin' id='toxin'>[getToxLoss()]</a>
+			OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen' id='oxygen'>[getOxyLoss()]</a>
+			CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone' id='clone'>[getCloneLoss()]</a>
+			BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain' id='brain'>[getOrganLoss(ORGAN_SLOT_BRAIN)]</a>
+			STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina' id='stamina'>[getStaminaLoss()]</a>
+		</font>
+	"}

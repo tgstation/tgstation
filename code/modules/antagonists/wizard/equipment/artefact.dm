@@ -264,7 +264,7 @@
 
 	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
 	H.equip_to_slot_or_del(new hat(H), SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/roman(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
 	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
@@ -289,7 +289,7 @@
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
-		if(I.is_hot())
+		if(I.get_temperature())
 			to_chat(target, "<span class='userdanger'>You suddenly feel very hot</span>")
 			target.adjust_bodytemperature(50)
 			GiveHint(target)
@@ -422,7 +422,7 @@
 	on_cooldown = TRUE
 	last_user = user
 	var/turf/T = get_turf(user)
-	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
+	playsound(T,'sound/magic/warpwhistle.ogg', 200, TRUE)
 	user.mobility_flags &= ~MOBILITY_MOVE
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)

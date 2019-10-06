@@ -24,7 +24,7 @@
 		if(user.a_intent == INTENT_HARM)
 			var/R
 			M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
-							"<span class='userdanger'>[user] splashes the contents of [src] onto [M]!</span>")
+							"<span class='userdanger'>[user] splashes the contents of [src] onto you!</span>")
 			if(reagents)
 				for(var/datum/reagent/A in reagents.reagent_list)
 					R += "[A] ([num2text(A.volume)]),"
@@ -37,20 +37,19 @@
 			reagents.clear_reagents()
 		else
 			if(M != user)
-				M.visible_message("<span class='danger'>[user] attempts to feed something to [M].</span>", \
-							"<span class='userdanger'>[user] attempts to feed something to you.</span>")
+				M.visible_message("<span class='danger'>[user] attempts to feed [M] something.</span>", \
+							"<span class='userdanger'>[user] attempts to feed you something.</span>")
 				if(!do_mob(user, M))
 					return
 				if(!reagents || !reagents.total_volume)
 					return // The drink might be empty after the delay, such as by spam-feeding
-				M.visible_message("<span class='danger'>[user] feeds something to [M].</span>", "<span class='userdanger'>[user] feeds something to you.</span>")
+				M.visible_message("<span class='danger'>[user] feeds [M] something.</span>", \
+							"<span class='userdanger'>[user] feeds you something.</span>")
 				log_combat(user, M, "fed", reagents.log_list())
 			else
 				to_chat(user, "<span class='notice'>You swallow a gulp of [src].</span>")
-			var/fraction = min(5/reagents.total_volume, 1)
-			reagents.reaction(M, INGEST, fraction)
-			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5), 5)
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/trans_to, M, 5, TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
+			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
 	. = ..()
@@ -92,7 +91,7 @@
 			reagents.clear_reagents()
 
 /obj/item/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
-	var/hotness = I.is_hot()
+	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
@@ -116,7 +115,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
-	materials = list(MAT_GLASS=500)
+	materials = list(/datum/material/glass=500)
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -153,6 +152,7 @@
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
+	. = ..()
 
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
@@ -164,7 +164,7 @@
 	name = "large beaker"
 	desc = "A large beaker. Can hold up to 100 units."
 	icon_state = "beakerlarge"
-	materials = list(MAT_GLASS=2500)
+	materials = list(/datum/material/glass=2500)
 	volume = 100
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
@@ -173,7 +173,7 @@
 	name = "x-large beaker"
 	desc = "An extra-large beaker. Can hold up to 120 units."
 	icon_state = "beakerwhite"
-	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000)
+	materials = list(/datum/material/glass=2500, /datum/material/plastic=3000)
 	volume = 120
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120)
@@ -187,7 +187,7 @@
 	name = "metamaterial beaker"
 	desc = "A large beaker. Can hold up to 180 units."
 	icon_state = "beakergold"
-	materials = list(MAT_GLASS=2500, MAT_PLASTIC=3000, MAT_GOLD=1000, MAT_TITANIUM=1000)
+	materials = list(/datum/material/glass=2500, /datum/material/plastic=3000, /datum/material/gold=1000, /datum/material/titanium=1000)
 	volume = 180
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,60,120,180)
@@ -197,7 +197,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without \
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
-	materials = list(MAT_METAL=3000)
+	materials = list(/datum/material/iron=3000)
 	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
@@ -208,7 +208,7 @@
 		and Element Cuban combined with the Compound Pete. Can hold up to \
 		300 units."
 	icon_state = "beakerbluespace"
-	materials = list(MAT_GLASS = 5000, MAT_PLASMA = 3000, MAT_DIAMOND = 1000, MAT_BLUESPACE = 1000)
+	materials = list(/datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
@@ -222,24 +222,24 @@
 /obj/item/reagent_containers/glass/beaker/slime
 	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
-/obj/item/reagent_containers/glass/beaker/large/styptic
-	name = "styptic reserve tank"
-	list_reagents = list(/datum/reagent/medicine/styptic_powder = 50)
+/obj/item/reagent_containers/glass/beaker/large/libital
+	name = "libital reserve tank (diluted)"
+	list_reagents = list(/datum/reagent/medicine/C2/libital = 10,/datum/reagent/medicine/granibitaluri = 40)
 
-/obj/item/reagent_containers/glass/beaker/large/silver_sulfadiazine
-	name = "silver sulfadiazine reserve tank"
-	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 50)
+/obj/item/reagent_containers/glass/beaker/large/aiuri
+	name = "aiuri reserve tank (diluted)"
+	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 10, /datum/reagent/medicine/granibitaluri = 40)
 
-/obj/item/reagent_containers/glass/beaker/large/charcoal
-	name = "charcoal reserve tank"
-	list_reagents = list(/datum/reagent/medicine/charcoal = 50)
+/obj/item/reagent_containers/glass/beaker/large/multiver
+	name = "multiver reserve tank (diluted)"
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
-	name = "epinephrine reserve tank"
+	name = "epinephrine reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
-/obj/item/reagent_containers/glass/beaker/synthflesh
-	list_reagents = list(/datum/reagent/medicine/synthflesh = 50)
+/obj/item/reagent_containers/glass/beaker/instabitaluri
+	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"
@@ -249,7 +249,7 @@
 	item_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	materials = list(MAT_METAL=200)
+	materials = list(/datum/material/iron=200)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,70)
@@ -284,7 +284,7 @@
 		else
 			reagents.trans_to(O, 5, transfered_by = user)
 			to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
-			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
 		qdel(O)
@@ -322,7 +322,7 @@
 	icon_state = "smallbottle"
 	item_state = "bottle"
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	materials = list(MAT_GLASS=0)
+	materials = list(/datum/material/glass=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
 
@@ -332,7 +332,7 @@
 /obj/item/reagent_containers/glass/beaker/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	materials = list(MAT_GLASS=0)
+	materials = list(/datum/material/glass=0)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
@@ -369,9 +369,9 @@
 	if(istype(I,/obj/item/pestle))
 		if(grinded)
 			if(user.getStaminaLoss() > 50)
-				to_chat(user, "<span class='danger'>You are too tired to work!</span>")
+				to_chat(user, "<span class='warning'>You are too tired to work!</span>")
 				return
-			to_chat(user, "You start grinding...")
+			to_chat(user, "<span class='notice'>You start grinding...</span>")
 			if((do_after(user, 25, target = src)) && grinded)
 				user.adjustStaminaLoss(40)
 				if(grinded.reagents) //food and pills
@@ -379,26 +379,26 @@
 				if(grinded.juice_results) //prioritize juicing
 					grinded.on_juice()
 					reagents.add_reagent_list(grinded.juice_results)
-					to_chat(user, "You juice [grinded] into a fine liquid.")
+					to_chat(user, "<span class='notice'>You juice [grinded] into a fine liquid.</span>")
 					QDEL_NULL(grinded)
 					return
 				grinded.on_grind()
 				reagents.add_reagent_list(grinded.grind_results)
-				to_chat(user, "You break [grinded] into powder.")
+				to_chat(user, "<span class='notice'>You break [grinded] into powder.</span>")
 				QDEL_NULL(grinded)
 				return
 			return
 		else
-			to_chat(user, "<span class='danger'>There is nothing to grind!</span>")
+			to_chat(user, "<span class='warning'>There is nothing to grind!</span>")
 			return
 	if(grinded)
-		to_chat(user, "<span class='danger'>There is something inside already!</span>")
+		to_chat(user, "<span class='warning'>There is something inside already!</span>")
 		return
 	if(I.juice_results || I.grind_results)
 		I.forceMove(src)
 		grinded = I
 		return
-	to_chat(user, "<span class='danger'>You can't grind this!</span>")
+	to_chat(user, "<span class='warning'>You can't grind this!</span>")
 
 /obj/item/reagent_containers/glass/saline
 	name = "saline canister"

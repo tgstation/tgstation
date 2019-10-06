@@ -81,7 +81,6 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/arrows{
-	icon_state = "arrows";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/white,
@@ -108,14 +107,12 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/arrows{
-	icon_state = "arrows";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "n" = (
 /obj/structure/shuttle/engine/propulsion/left{
-	icon_state = "propulsion_l";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -127,7 +124,6 @@
 /obj/structure/window/shuttle,
 /obj/structure/grille,
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -152,7 +148,6 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/arrows{
-	icon_state = "arrows";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/white,
@@ -180,7 +175,6 @@
 	pixel_x = 28
 	},
 /obj/effect/turf_decal/arrows{
-	icon_state = "arrows";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/white,
@@ -198,7 +192,6 @@
 /area/shuttle/arrival)
 "u" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -295,9 +288,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "D" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/airlock/shuttle{
 	name = "Arrival Shuttle Airlock"
 	},
@@ -326,7 +317,6 @@
 /area/shuttle/arrival)
 "G" = (
 /obj/structure/shuttle/engine/propulsion/right{
-	icon_state = "propulsion_r";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{

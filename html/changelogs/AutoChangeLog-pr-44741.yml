@@ -1,9 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Added a new abductor gland that randomizes blood type into a random reagent periodically."
-  - rscadd: "Added a new abductor gland that links to other people, and swaps their position with the owner. Mind control on this gland will affect the linked person."
-  - rscadd: "Added a new abductor gland that grants all access to the owner."
-  - bugfix: "Abductor scientists can now properly see the true name of glands when examining them."
-  - rscadd: "Mind control on mindshock glands now \"broadcasts\" the mind control, affecting bystanders but not the abductee."
-  - tweak: "Species gland now has 7 mind control uses, instead of 5 (duration is still 30 seconds)."

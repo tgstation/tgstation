@@ -7,6 +7,7 @@
 	color = "#CF3600" // rgb: 207, 54, 0
 	taste_description = "bitterness"
 	taste_mult = 1.2
+	harmful = TRUE
 	var/toxpwr = 1.5
 	var/silent_toxin = FALSE //won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present.
 
@@ -50,6 +51,8 @@
 	C.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
+#define	LIQUID_PLASMA_BP (50+T0C)
+
 /datum/reagent/toxin/plasma
 	name = "Plasma"
 	description = "Plasma in its liquid form."
@@ -65,17 +68,27 @@
 	C.adjustPlasma(20)
 	return ..()
 
+/datum/reagent/toxin/plasma/on_temp_change()
+	if(holder.chem_temp < LIQUID_PLASMA_BP)
+		return
+	if(holder.my_atom)
+		var/atom/A = holder.my_atom
+		A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
+		holder.del_reagent(type)
+
 /datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
 	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
+	if(temp >= LIQUID_PLASMA_BP)
+		O.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 
 /datum/reagent/toxin/plasma/reaction_turf(turf/open/T, reac_volume)
-	if(istype(T))
-		var/temp = holder ? holder.chem_temp : T20C
+	if(!istype(T))
+		return
+	var/temp = holder ? holder.chem_temp : T20C
+	if(temp >= LIQUID_PLASMA_BP)
 		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
-	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
 	if(method == TOUCH || method == VAPOR)
@@ -233,7 +246,7 @@
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	..()
-	if(MOB_BUG in M.mob_biotypes)
+	if(M.mob_biotypes & MOB_BUG)
 		var/damage = min(round(0.4*reac_volume, 0.1),10)
 		M.adjustToxLoss(damage)
 
@@ -432,9 +445,11 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M)
-	M.adjustBrainLoss(3*REM, 150)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM, 150)
 	if(M.toxloss <= 60)
 		M.adjustToxLoss(1*REM, 0)
+	if(current_cycle >= 4)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle >= 18)
 		M.Sleeping(40, 0)
 	..()
@@ -477,7 +492,7 @@
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
+		M.reagents?.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
@@ -586,7 +601,7 @@
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-/datum/reagent/toxin/amanitin/on_mob_end_metabolize(mob/living/M)
+/datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
 	var/toxdamage = current_cycle*3*REM
 	M.log_message("has taken [toxdamage] toxin damage from amanitin toxin", LOG_ATTACK)
 	M.adjustToxLoss(toxdamage)
@@ -853,8 +868,6 @@
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(7.5, 0)
-	if(HAS_TRAIT(M, TRAIT_CALCIUM_HEALER))
-		M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))
 			if(1)
@@ -899,3 +912,21 @@
 				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
 				M.emote("sigh")
 	return ..()
+
+/datum/reagent/toxin/bungotoxin
+	name = "Bungotoxin"
+	description = "A horrible cardiotoxin that protects the humble bungo pit."
+	silent_toxin = TRUE
+	color = "#EBFF8E"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	toxpwr = 0
+	taste_description = "tannin"
+
+/datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 3)
+	M.confused = M.dizziness //add a tertiary effect here if this is isn't an effective poison.
+	if(current_cycle >= 12 && prob(8))
+		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
+		to_chat(M, "<span class='notice'>[tox_message]</span>")
+	. = 1
+	..()

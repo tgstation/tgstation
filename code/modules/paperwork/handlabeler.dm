@@ -55,7 +55,7 @@
 		to_chat(user, "<span class='warning'>You can't label creatures!</span>") // use a collar
 		return
 
-	user.visible_message("[user] labels [A] as [label].", \
+	user.visible_message("<span class='notice'>[user] labels [A] as [label].</span>", \
 						 "<span class='notice'>You label [A] as [label].</span>")
 	A.name = "[A.name] ([label])"
 	labels_left--
@@ -90,7 +90,9 @@
 	name = "cyborg-hand labeler"
 
 /obj/item/hand_labeler/borg/afterattack(atom/A, mob/user, proximity)
-	. = ..(A, user, proximity)
+	. = ..()
+	if(!proximity)
+		return
 	if(!iscyborg(user))
 		return
 

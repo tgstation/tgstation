@@ -95,7 +95,9 @@
 		. += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)]."
 
 	//Status effects
-	. += status_effect_examines()
+	var/list/status_examines = status_effect_examines()
+	if (length(status_examines))
+		. += status_examines
 
 	//Jitters
 	switch(jitteriness)
@@ -124,7 +126,7 @@
 
 	var/temp = getBruteLoss() //no need to calculate each of these twice
 
-	var/list/msg = list("")
+	var/list/msg = list()
 
 	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	var/list/disabled = list()
@@ -224,12 +226,12 @@
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
 	else if(bleed_rate)
-		if(reagents.has_reagent(/datum/reagent/toxin/heparin))
+		if(reagents.has_reagent(/datum/reagent/toxin/heparin, needs_metabolizing = TRUE))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
 		else
 			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
 
-	if(reagents.has_reagent(/datum/reagent/teslium))
+	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		msg += "[t_He] [t_is] emitting a gentle blue glow!\n"
 
 	if(islist(stun_absorption))
@@ -289,9 +291,6 @@
 			else if(!client)
 				msg += "[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.\n"
 
-		if(digitalcamo)
-			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
-
 	if (length(msg))
 		. += "<span class='warning'>[msg.Join("")]</span>"
 
@@ -300,50 +299,47 @@
 		. += trait_exam
 
 	var/traitstring = get_trait_string()
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/cyberimp/eyes/hud/CIH = H.getorgan(/obj/item/organ/cyberimp/eyes/hud)
-		if(istype(H.glasses, /obj/item/clothing/glasses/hud) || CIH)
-			var/perpname = get_face_name(get_id_name(""))
-			if(perpname)
-				var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.general)
+
+	var/perpname = get_face_name(get_id_name(""))
+	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)))
+		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.general)
+		if(R)
+			. += "<span class='deptradio'>Rank:</span> [R.fields["rank"]]\n<a href='?src=[REF(src)];hud=1;photo_front=1'>\[Front photo\]</a><a href='?src=[REF(src)];hud=1;photo_side=1'>\[Side photo\]</a>"
+		if(HAS_TRAIT(user, TRAIT_MEDICAL_HUD))
+			var/cyberimp_detect
+			for(var/obj/item/organ/cyberimp/CI in internal_organs)
+				if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
+					cyberimp_detect += "[name] is modified with a [CI.name]."
+			if(cyberimp_detect)
+				. += "Detected cybernetic modifications:"
+				. += cyberimp_detect
+			if(R)
+				var/health_r = R.fields["p_stat"]
+				. += "<a href='?src=[REF(src)];hud=m;p_stat=1'>\[[health_r]\]</a>"
+				health_r = R.fields["m_stat"]
+				. += "<a href='?src=[REF(src)];hud=m;m_stat=1'>\[[health_r]\]</a>"
+			R = find_record("name", perpname, GLOB.data_core.medical)
+			if(R)
+				. += "<a href='?src=[REF(src)];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
+			if(traitstring)
+				. += "<span class='info'>Detected physiological traits:\n[traitstring]"
+
+		if(HAS_TRAIT(user, TRAIT_SECURITY_HUD))
+			if(!user.stat && user != src)
+			//|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+				var/criminal = "None"
+
+				R = find_record("name", perpname, GLOB.data_core.security)
 				if(R)
-					. += "<span class='deptradio'>Rank:</span> [R.fields["rank"]]\n<a href='?src=[REF(src)];hud=1;photo_front=1'>\[Front photo\]</a><a href='?src=[REF(src)];hud=1;photo_side=1'>\[Side photo\]</a>"
-				if(istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH, /obj/item/organ/cyberimp/eyes/hud/medical))
-					var/cyberimp_detect
-					for(var/obj/item/organ/cyberimp/CI in internal_organs)
-						if(CI.status == ORGAN_ROBOTIC && !CI.syndicate_implant)
-							cyberimp_detect += "[name] is modified with a [CI.name]."
-					if(cyberimp_detect)
-						. += "Detected cybernetic modifications:"
-						. += cyberimp_detect
-					if(R)
-						var/health_r = R.fields["p_stat"]
-						. += "<a href='?src=[REF(src)];hud=m;p_stat=1'>\[[health_r]\]</a>"
-						health_r = R.fields["m_stat"]
-						. += "<a href='?src=[REF(src)];hud=m;m_stat=1'>\[[health_r]\]</a>"
-					R = find_record("name", perpname, GLOB.data_core.medical)
-					if(R)
-						. += "<a href='?src=[REF(src)];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
-					if(traitstring)
-						. += "<span class='info'>Detected physiological traits:\n[traitstring]"
+					criminal = R.fields["criminal"]
 
-				if(istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH, /obj/item/organ/cyberimp/eyes/hud/security))
-					if(!user.stat && user != src)
-					//|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
-						var/criminal = "None"
-
-						R = find_record("name", perpname, GLOB.data_core.security)
-						if(R)
-							criminal = R.fields["criminal"]
-
-						. += "<span class='deptradio'>Criminal status:</span> <a href='?src=[REF(src)];hud=s;status=1'>\[[criminal]\]</a>"
-						. += jointext(list("<span class='deptradio'>Security record:</span> <a href='?src=[REF(src)];hud=s;view=1'>\[View\]</a>",
-							"<a href='?src=[REF(src)];hud=s;add_crime=1'>\[Add crime\]</a>",
-							"<a href='?src=[REF(src)];hud=s;view_comment=1'>\[View comment log\]</a>",
-							"<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>"), "")
+				. += "<span class='deptradio'>Criminal status:</span> <a href='?src=[REF(src)];hud=s;status=1'>\[[criminal]\]</a>"
+				. += jointext(list("<span class='deptradio'>Security record:</span> <a href='?src=[REF(src)];hud=s;view=1'>\[View\]</a>",
+					"<a href='?src=[REF(src)];hud=s;add_crime=1'>\[Add crime\]</a>",
+					"<a href='?src=[REF(src)];hud=s;view_comment=1'>\[View comment log\]</a>",
+					"<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>"), "")
 	else if(isobserver(user) && traitstring)
-		. += "<span class='info'><b>Traits:</b> [traitstring]</span><br>"
+		. += "<span class='info'><b>Traits:</b> [traitstring]</span>"
 	. += "*---------*</span>"
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!

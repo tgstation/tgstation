@@ -13,7 +13,8 @@
 	var/obj/item/reagent_containers/beaker
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
-									/obj/item/reagent_containers/glass))
+									/obj/item/reagent_containers/glass,
+									/obj/item/reagent_containers/chem_pack))
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
@@ -63,7 +64,7 @@
 				if(91 to INFINITY)
 					filling_overlay.icon_state = "reagent100"
 
-			filling_overlay.color = list("#0000", "#0000", "#0000", "#000f", mix_color_from_reagents(beaker.reagents.reagent_list))
+			filling_overlay.color = mix_color_from_reagents(beaker.reagents.reagent_list)
 			add_overlay(filling_overlay)
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
@@ -133,9 +134,7 @@
 				if(istype(beaker, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 10
-				var/fraction = min(transfer_amount/beaker.reagents.total_volume, 1) //the fraction that is transfered of the total volume
-				beaker.reagents.reaction(attached, INJECT, fraction, FALSE) //make reagents reacts, but don't spam messages
-				beaker.reagents.trans_to(attached, transfer_amount)
+				beaker.reagents.trans_to(attached, transfer_amount, method = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 				update_icon()
 
 		// Take blood
@@ -145,13 +144,13 @@
 			// If the beaker is full, ping
 			if(!amount)
 				if(prob(5))
-					visible_message("[src] pings.")
+					visible_message("<span class='hear'>[src] pings.</span>")
 				return
 
 			// If the human is losing too much blood, beep.
 			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
-				visible_message("[src] beeps loudly.")
-				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, 1)
+				visible_message("<span class='hear'>[src] beeps loudly.</span>")
+				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 			attached.transfer_blood_to(beaker, amount)
 			update_icon()
 
@@ -162,7 +161,7 @@
 	if(!ishuman(user))
 		return
 	if(attached)
-		visible_message("[attached] is detached from [src]")
+		visible_message("<span class='notice'>[attached] is detached from [src].</span>")
 		attached = null
 		update_icon()
 		return

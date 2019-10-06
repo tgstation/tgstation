@@ -25,7 +25,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/item/shared_storage,
 		/obj/structure/extraction_point,
 		/obj/machinery/syndicatebomb,
-		/obj/item/hilbertshotel
+		/obj/item/hilbertshotel,
+		/obj/item/swapper,
+		/obj/docking_port
 	)))
 
 /obj/docking_port/mobile/supply
@@ -59,7 +61,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		for(var/trf in shuttle_area)
 			var/turf/T = trf
 			for(var/a in T.GetAllContents())
-				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
+				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types) && !istype(a, /obj/docking_port))
 					return FALSE
 	return TRUE
 
@@ -78,7 +80,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		sell()
 
 /obj/docking_port/mobile/supply/proc/buy()
-	var/list/miscboxes = list() //miscboxes are combo boxes that contain all small_item orders grouped
+	var/list/obj/miscboxes = list() //miscboxes are combo boxes that contain all small_item orders grouped
 	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
 	var/list/misc_contents = list() //list of lists of items that each box will contain
 	if(!SSshuttle.shoppinglist.len)

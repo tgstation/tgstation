@@ -24,7 +24,8 @@
 
 /obj/structure/reagent_dispensers/Initialize()
 	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
-	reagents.add_reagent(reagent_id, tank_volume)
+	if(reagent_id)
+		reagents.add_reagent(reagent_id, tank_volume)
 	. = ..()
 
 /obj/structure/reagent_dispensers/proc/boom()
@@ -99,7 +100,7 @@
 				return
 			reagents.trans_to(W, W.max_fuel, transfered_by = user)
 			user.visible_message("<span class='notice'>[user] refills [user.p_their()] [W.name].</span>", "<span class='notice'>You refill [W].</span>")
-			playsound(src, 'sound/effects/refill.ogg', 50, 1)
+			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			W.update_icon()
 		else
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
@@ -182,3 +183,25 @@
 	icon_state = "vat"
 	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/cooking_oil
+
+/obj/structure/reagent_dispensers/plumbed
+	name = "stationairy water tank"
+	anchored = TRUE
+	icon_state = "water_stationairy"
+	desc = "A stationairy, plumbed, water tank."
+
+/obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/I)
+	..()
+	default_unfasten_wrench(user, I)
+	return TRUE
+
+/obj/structure/reagent_dispensers/plumbed/ComponentInitialize()
+	AddComponent(/datum/component/plumbing/simple_supply)
+
+/obj/structure/reagent_dispensers/plumbed/storage
+	name = "stationairy storage tank"
+	icon_state = "tank_stationairy"
+	reagent_id = null //start empty
+
+/obj/structure/reagent_dispensers/plumbed/storage/ComponentInitialize()
+	AddComponent(/datum/component/plumbing/tank)

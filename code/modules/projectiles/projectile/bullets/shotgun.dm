@@ -29,8 +29,9 @@
 	name = "meteorslug"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "dust"
-	damage = 20
-	paralyze = 80
+	damage = 30
+	paralyze = 15
+	knockdown = 80
 	hitsound = 'sound/effects/meteorimpact.ogg'
 
 /obj/item/projectile/bullet/shotgun_meteorslug/on_hit(atom/target, blocked = FALSE)
@@ -66,6 +67,11 @@
 	name = "rubbershot pellet"
 	damage = 3
 	stamina = 11
+
+/obj/item/projectile/bullet/pellet/shotgun_incapacitate
+	name = "incapacitating pellet"
+	damage = 1
+	stamina = 6
 
 /obj/item/projectile/bullet/pellet/Range()
 	..()

@@ -14,13 +14,13 @@
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
 	if(log_amount && (!(flags_1 & NODECONSTRUCT_1)))
-		if(W.is_sharp() && W.force > 0)
+		if(W.get_sharpness() && W.force > 0)
 			if(W.hitsound)
-				playsound(get_turf(src), W.hitsound, 100, 0, 0)
-			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "You hear the sound of sawing.")
+				playsound(get_turf(src), W.hitsound, 100, FALSE, FALSE)
+			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "<span class='hear'>You hear the sound of sawing.</span>")
 			if(do_after(user, 1000/W.force, target = src)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
-				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "You hear the sound of a tree falling.")
-				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , 0, 0)
+				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "<span class='hear'>You hear the sound of a tree falling.</span>")
+				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
 				for(var/i=1 to log_amount)
 					new /obj/item/grown/log/tree(get_turf(src))
 
@@ -309,6 +309,7 @@
 	layer = ABOVE_MOB_LAYER
 	w_class = WEIGHT_CLASS_HUGE
 	force = 10
+	force_wielded = 10
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
@@ -316,6 +317,7 @@
 /obj/item/twohanded/required/kirbyplants/Initialize()
 	. = ..()
 	AddComponent(/datum/component/tactical)
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 500), 0)
 
 /obj/item/twohanded/required/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'

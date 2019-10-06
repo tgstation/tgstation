@@ -16,8 +16,8 @@
 "ag" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	set_obj_flags = "EMAGGED";
-	installation = /obj/item/gun/energy/lasercannon
+	installation = /obj/item/gun/energy/lasercannon;
+	set_obj_flags = "EMAGGED"
 	},
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Aft)
@@ -308,16 +308,12 @@
 	},
 /area/awaymission/BMPship/Fore)
 "bv" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Fore)
 "bw" = (
 /obj/machinery/light/small,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Fore)
 "bx" = (
@@ -365,32 +361,24 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bM" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bN" = (
 /obj/machinery/light/small,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bO" = (
 /obj/structure/kitchenspike,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bP" = (
 /obj/structure/closet/crate,
 /obj/item/analyzer,
 /obj/item/stack/spacecash/c10,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bQ" = (
@@ -398,9 +386,7 @@
 /obj/item/stack/spacecash/c1000,
 /obj/item/stack/spacecash/c200,
 /obj/item/stack/spacecash/c500,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bR" = (
@@ -409,9 +395,7 @@
 /obj/item/organ/appendix,
 /obj/item/reagent_containers/food/snacks/meat/slab,
 /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine,
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bU" = (
@@ -427,9 +411,7 @@
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
 	environ = 0;
-	equipment = 3;
-	pixel_y = 23;
-	req_access = null
+	pixel_y = 23
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet,
@@ -467,9 +449,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Midship)
 "ca" = (
-/obj/structure/sink{
-	dir = 2
-	},
+/obj/structure/sink,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -780,9 +760,7 @@
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
 	environ = 0;
-	equipment = 3;
-	pixel_y = 23;
-	req_access = null
+	pixel_y = 23
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -959,15 +937,14 @@
 /turf/open/floor/carpet,
 /area/awaymission/BMPship/Fore)
 "dL" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Midship)
 "dN" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	pixel_y = 23;
-	req_access = null
+	pixel_y = 23
 	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -1637,7 +1614,7 @@
 /area/awaymission/BMPship/Aft)
 "gj" = (
 /obj/structure/closet,
-/obj/item/clothing/under/overalls,
+/obj/item/clothing/under/misc/overalls,
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "gk" = (
@@ -1649,8 +1626,8 @@
 "gl" = (
 /obj/machinery/porta_turret{
 	dir = 8;
-	set_obj_flags = "EMAGGED";
-	installation = /obj/item/gun/energy/lasercannon
+	installation = /obj/item/gun/energy/lasercannon;
+	set_obj_flags = "EMAGGED"
 	},
 /turf/open/floor/engine,
 /area/awaymission/BMPship/Fore)
@@ -1777,7 +1754,7 @@
 /area/awaymission/BMPship/Aft)
 "gP" = (
 /obj/structure/closet,
-/obj/item/clothing/under/lawyer/bluesuit,
+/obj/item/clothing/under/rank/civilian/lawyer/bluesuit,
 /obj/item/clothing/suit/apron,
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
@@ -1829,17 +1806,13 @@
 /area/awaymission/BMPship/Aft)
 "hd" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/BMPship/Aft)
 "he" = (
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/BMPship/Aft)
 "hf" = (
 /obj/structure/toilet{
@@ -1848,9 +1821,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/BMPship/Aft)
 "hg" = (
 /turf/open/floor/plating/airless{
@@ -1877,12 +1848,8 @@
 /turf/open/floor/plasteel,
 /area/awaymission/BMPship/Aft)
 "hl" = (
-/obj/structure/sink{
-	dir = 2
-	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/obj/structure/sink,
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/BMPship/Aft)
 "hn" = (
 /obj/item/clothing/gloves/color/fyellow,
@@ -1934,6 +1901,9 @@
 /area/space/nearstation)
 "wh" = (
 /turf/template_noop,
+/area/awaymission/BMPship)
+"xA" = (
+/turf/closed/mineral/random/no_caves,
 /area/awaymission/BMPship)
 "ya" = (
 /obj/machinery/door/poddoor/shutters{
@@ -2027,9 +1997,9 @@ aa
 aa
 aa
 aa
-gb
-gb
-gb
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2078,9 +2048,9 @@ aa
 aa
 aa
 fS
-gb
-gb
-gb
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2129,10 +2099,10 @@ aa
 aa
 aa
 fS
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2181,8 +2151,8 @@ aa
 aa
 aa
 fS
-gb
-gb
+xA
+xA
 fS
 fS
 aa
@@ -2243,9 +2213,9 @@ aa
 aa
 aa
 aa
-gb
-gb
-gb
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2293,11 +2263,11 @@ aa
 wh
 fS
 fS
-gb
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2343,13 +2313,13 @@ aa
 fS
 fS
 fS
-gb
-gb
-gb
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2394,14 +2364,14 @@ hn
 fS
 fS
 fS
-gb
-gb
-gb
-gb
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
+xA
+xA
+xA
+xA
 aa
 aa
 aa
@@ -2447,13 +2417,13 @@ fS
 fS
 fS
 fS
-gb
-gb
-gb
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
+xA
+xA
+xA
 aa
 aa
 "}
@@ -2501,10 +2471,10 @@ fS
 fS
 fS
 fS
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
 aa
 aa
 "}
@@ -2553,8 +2523,8 @@ fS
 fS
 fS
 fS
-gb
-gb
+xA
+xA
 fS
 aa
 aa
@@ -3676,8 +3646,8 @@ gb
 fS
 fS
 fS
-gb
-gb
+xA
+xA
 aa
 aa
 "}
@@ -3727,9 +3697,9 @@ fS
 fS
 fS
 fS
-gb
-gb
-gb
+xA
+xA
+xA
 aa
 "}
 (35,1,1) = {"
@@ -3777,10 +3747,10 @@ fS
 fS
 fS
 fS
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
 aa
 "}
 (36,1,1) = {"
@@ -3828,10 +3798,10 @@ aa
 aa
 aa
 aa
-gb
-gb
-gb
-gb
+xA
+xA
+xA
+xA
 aa
 "}
 (37,1,1) = {"
@@ -3880,8 +3850,8 @@ aa
 aa
 aa
 aa
-gb
-gb
+xA
+xA
 aa
 aa
 "}

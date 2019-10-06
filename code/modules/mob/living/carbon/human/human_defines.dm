@@ -5,14 +5,14 @@
 	pressure_resistance = 25
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	//Hair colour and style
 	var/hair_color = "000"
-	var/hair_style = "Bald"
+	var/hairstyle = "Bald"
 
 	//Facial hair colour and style
 	var/facial_hair_color = "000"
-	var/facial_hair_style = "Shaved"
+	var/facial_hairstyle = "Shaved"
 
 	//Eye colour
 	var/eye_color = "000"
@@ -25,9 +25,11 @@
 	var/age = 30		//Player's age
 
 	var/underwear = "Nude"	//Which underwear the player wants
+	var/underwear_color = "000"
 	var/undershirt = "Nude" //Which undershirt the player wants
 	var/socks = "Nude" //Which socks the player wants
-	var/backbag = DBACKPACK		//Which backpack type the player has chosen.
+	var/backpack = DBACKPACK		//Which backpack type the player has chosen.
+	var/jumpsuit_style = PREF_SUIT		//suit/skirt
 
 	//Equipment slots
 	var/obj/item/clothing/wear_suit = null
@@ -37,8 +39,6 @@
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
-
-	var/hygiene = HYGIENE_LEVEL_NORMAL
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
@@ -51,7 +51,6 @@
 
 	var/list/datum/bioware = list()
 
-	var/creamed = FALSE //to use with creampie overlays
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
 	var/lastpuke = 0
 	var/last_fire_update

@@ -35,16 +35,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 */
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C)
-	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER)
+	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
 		var/booze_power = boozepwr
 		if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 			booze_power *= 0.7
 		if(HAS_TRAIT(C, TRAIT_LIGHT_DRINKER))
 			booze_power *= 2
 		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
-		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
-		if (istype(L))
-			C.applyLiverDamage((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150)
+		if(boozepwr > 0)
+			var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
+			if (istype(L))
+				L.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150))
 	return ..()
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
@@ -175,24 +176,24 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.dropItemToGround(I)
-			to_chat(M, "<span class ='notice'>Your hands jitter and you drop what you were holding!</span>")
+			to_chat(M, "<span class='notice'>Your hands jitter and you drop what you were holding!</span>")
 			M.Jitter(10)
 
 	if(prob(7))
 		to_chat(M, "<span class='notice'>[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
 
 	if(prob(5) && iscarbon(M))
+		var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 		if(HAS_TRAIT(M, TRAIT_BLIND))
-			var/obj/item/organ/eyes/eye = M.getorganslot(ORGAN_SLOT_EYES)
-			if(istype(eye))
-				eye.Remove(M)
-				eye.forceMove(get_turf(M))
+			if(istype(eyes))
+				eyes.Remove(M)
+				eyes.forceMove(get_turf(M))
 				to_chat(M, "<span class='userdanger'>You double over in pain as you feel your eyeballs liquify in your head!</span>")
 				M.emote("scream")
 				M.adjustBruteLoss(15)
 		else
 			to_chat(M, "<span class='userdanger'>You scream in terror as you go blind!</span>")
-			M.become_blind(EYE_DAMAGE)
+			eyes.applyOrganDamage(eyes.maxHealth)
 			M.emote("scream")
 
 	if(prob(3) && iscarbon(M))
@@ -1061,7 +1062,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
-		playsound(get_turf(M), 'sound/effects/explosionfar.ogg', 100, 1)
+		playsound(get_turf(M), 'sound/effects/explosionfar.ogg', 100, TRUE)
 	return ..()
 
 /datum/reagent/consumable/ethanol/erikasurprise
@@ -1287,7 +1288,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(50)
 	M.dizziness +=2
-	M.adjustBrainLoss(1*REM, 150)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 150)
 	if(prob(20))
 		M.adjustStaminaLoss(10)
 		M.drop_all_held_items()
@@ -1298,7 +1299,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			ADD_TRAIT(M, t, type)
 			M.adjustStaminaLoss(10)
 		if(current_cycle > 30)
-			M.adjustBrainLoss(2*REM)
+			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
 			if(current_cycle > 50 && prob(15))
 				if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
 					M.set_heartattack(TRUE)
@@ -2011,7 +2012,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				if(N.age > 100)
 					N.become_nearsighted(type)
 					if(N.gender == MALE)
-						N.facial_hair_style = "Beard (Very Long)"
+						N.facial_hairstyle = "Beard (Very Long)"
 						N.update_hair()
 
 				if(N.age > 969) //Best not let people get older than this or i might incur G-ds wrath
@@ -2092,3 +2093,22 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "planet_cracker"
 	glass_name = "Planet Cracker"
 	glass_desc = "Although historians believe the drink was originally created to commemorate the end of an important conflict in man's past, its origins have largely been forgotten and it is today seen more as a general symbol of human supremacy."
+
+/datum/reagent/consumable/ethanol/mauna_loa
+	name = "Mauna Loa"
+	description = "Extremely hot; not for the faint of heart!"
+	boozepwr = 40
+	color = "#fe8308" // 254, 131, 8
+	quality = DRINK_FANTASTIC
+	taste_description = "fiery, with an aftertaste of burnt flesh"
+	glass_icon_state = "mauna_loa"
+	glass_name = "Mauna Loa"
+	glass_desc = "Lavaland in a drink... mug... volcano... thing."
+
+/datum/reagent/consumable/ethanol/mauna_loa/on_mob_life(mob/living/carbon/M)
+	// Heats the user up while the reagent is in the body. Occasionally makes you burst into flames.
+	M.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT)
+	if (prob(5))
+		M.adjust_fire_stacks(1)
+		M.IgniteMob()
+	..()

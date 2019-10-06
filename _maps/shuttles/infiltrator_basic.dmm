@@ -18,7 +18,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/hallway)
 "ae" = (
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
 	name = "blast shutters"
@@ -405,7 +405,7 @@
 /area/shuttle/syndicate/eva)
 "aV" = (
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
 "aW" = (
@@ -505,9 +505,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/airlock)
 "bd" = (
-/obj/structure/sign/warning/vacuum/external{
-	layer = 4
-	},
+/obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/airlock)
 "be" = (
@@ -519,12 +517,12 @@
 /area/shuttle/syndicate/eva)
 "bg" = (
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/eva)
 "bh" = (
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/airlock)
 "bi" = (
@@ -580,14 +578,14 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = -3
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -621,12 +619,12 @@
 /area/shuttle/syndicate/medical)
 "bv" = (
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/medical)
 "bw" = (
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/armory)
 "bx" = (
@@ -947,11 +945,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8

@@ -42,7 +42,7 @@ the new instance inside the host to be updated to the template's stats.
 	var/move_delay = 1
 
 	var/next_adaptation_time = 0
-	var/adaptation_cooldown = 1200
+	var/adaptation_cooldown = 600
 
 	var/list/purchased_abilities
 	var/list/unpurchased_abilities
@@ -147,12 +147,12 @@ the new instance inside the host to be updated to the template's stats.
 			taken_names[initial(D.name)] = TRUE
 	var/set_name
 	while(!set_name)
-		var/input = stripped_input(src, "Select a name for your disease", "Select Name", "", MAX_NAME_LEN)
+		var/input = sanitize_name(stripped_input(src, "Select a name for your disease", "Select Name", "", MAX_NAME_LEN))
 		if(!input)
 			set_name = "Sentient Virus"
 			break
 		if(taken_names[input])
-			to_chat(src, "<span class='notice'>You cannot use the name of such a well-known disease!</span>")
+			to_chat(src, "<span class='warning'>You cannot use the name of such a well-known disease!</span>")
 		else
 			set_name = input
 	real_name = "[set_name] (Sentient Disease)"
@@ -167,7 +167,8 @@ the new instance inside the host to be updated to the template's stats.
 		return FALSE
 	var/list/possible_hosts = list()
 	var/list/afk_possible_hosts = list()
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		var/turf/T = get_turf(H)
 		if((H.stat != DEAD) && T && is_station_level(T.z) && H.CanContractDisease(disease_template))
 			if(H.client && !H.client.is_afk())

@@ -111,7 +111,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(prob(10))
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		audible_message("<span class='danger'>You hear a CLANG!</span>")
 
 	if(clong && prob(25))
@@ -138,7 +138,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		qdel(other)
 
 /obj/effect/immovablerod/proc/penetrate(mob/living/L)
-	L.visible_message("<span class='danger'>[L] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
+	L.visible_message("<span class='danger'>[L] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class='danger'>You hear a CLANG!</span>")
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.adjustBruteLoss(160)
@@ -149,7 +149,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.job in list("Research Director"))
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+			playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 			for(var/mob/M in urange(8, src))
 				if(!M.stat)
 					shake_camera(M, 2, 3)

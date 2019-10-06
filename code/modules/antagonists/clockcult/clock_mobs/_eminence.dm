@@ -81,7 +81,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if(client.handle_spam_prevention(message,MUTE_IC))
+		if(!(ignore_spam || forced) && client.handle_spam_prevention(message,MUTE_IC))
 			return
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)

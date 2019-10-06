@@ -20,7 +20,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
+			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
 		invocation = "<B>[usr.real_name]</B> looks as if a wall is in front of [usr.p_them()]."
 	else
@@ -49,7 +49,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
+			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
 		invocation = "<B>[usr.real_name]</B> pulls out an invisible chair and sits down."
 	else
@@ -72,7 +72,7 @@
 	summon_type = list(/obj/item/storage/box/mime)
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='notice'>You conjure up an invisible box, large enough to store a few things.</span>"
-	summon_lifespan = 250
+	summon_lifespan = 500
 	charge_max = 300
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
@@ -94,7 +94,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
+			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
 		invocation = "<B>[usr.real_name]</B> moves [usr.p_their()] hands in the shape of a cube, pressing a box out of the air."
 	else
@@ -162,7 +162,7 @@
 /obj/effect/proc_holder/spell/targeted/forcewall/mime/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
+			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
 		invocation = "<B>[usr.real_name]</B> looks as if a blockade is in front of [usr.p_them()]."
 	else
@@ -199,13 +199,23 @@
 		return
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
+			to_chat(usr, "<span class='warning'>You must dedicate yourself to silence first!</span>")
 			return
 		invocation = "<B>[usr.real_name]</B> fires [usr.p_their()] finger gun!"
 	else
 		invocation_type ="none"
 	..()
 
+/obj/effect/proc_holder/spell/aimed/finger_guns/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(caller.incapacitated())
+		to_chat(caller, "<span class='warning'>You can't properly point your fingers while incapacitated.</span>")
+		if(charge_type == "recharge")
+			var/refund_percent = current_amount/projectile_amount
+			charge_counter = charge_max * refund_percent
+			start_recharge()
+		remove_ranged_ability()
+		on_deactivation(caller)
+	..()
 
 /obj/item/book/granter/spell/mimery_blockade
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime

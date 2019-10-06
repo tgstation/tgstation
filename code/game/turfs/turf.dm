@@ -27,7 +27,7 @@
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
 
-	var/bullet_bounce_sound = 'sound/weapons/bulletremove.ogg' //sound played when a shell casing is ejected ontop of the turf.
+	var/bullet_bounce_sound = 'sound/weapons/gun/general/mag_bullet_remove.ogg' //sound played when a shell casing is ejected ontop of the turf.
 	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
 							//IE if the turf is supposed to be water, set TRUE.
 
@@ -184,8 +184,6 @@
 		return TRUE
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
-			return
 		coil.place_turf(src, user)
 		return TRUE
 	else if(can_have_cabling() && istype(C, /obj/item/stack/pipe_cleaner_coil))
@@ -404,7 +402,7 @@
 				continue
 			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.singularity_act()
-	ScrapeAway()
+	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)
 
 /turf/proc/can_have_cabling()
@@ -473,20 +471,21 @@
 	underlay_appearance.dir = adjacency_dir
 	return TRUE
 
-/turf/proc/add_blueprints(atom/movable/AM)
+/turf/proc/add_blueprints(var/atom/movable/AM)
 	var/image/I = new
 	I.appearance = AM.appearance
 	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
 	I.loc = src
 	I.setDir(AM.dir)
 	I.alpha = 128
-
 	LAZYADD(blueprint_data, I)
-
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
 	if(!SSticker.HasRoundStarted())
-		add_blueprints(AM)
+		if(AM.layer == WIRE_LAYER)	//wires connect to adjacent positions after its parent init, meaning we need to wait (in this case, until smoothing) to take its image
+			SSicon_smooth.blueprint_queue += AM
+		else
+			add_blueprints(AM)
 
 /turf/proc/is_transition_turf()
 	return
@@ -516,7 +515,7 @@
 	if(!forced)
 		return
 	if(has_gravity(src))
-		playsound(src, "bodyfall", 50, 1)
+		playsound(src, "bodyfall", 50, TRUE)
 	faller.drop_all_held_items()
 
 /turf/proc/photograph(limit=20)
@@ -536,9 +535,11 @@
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = NONE)
+/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE)
+
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
-	// If the vomit combined, apply toxicity and reagents to the old vomit
+
+	//if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(V))
 		V = locate() in src
 	if(!V)
@@ -546,10 +547,12 @@
 	// Make toxins and blazaam vomit look different
 	if(toxvomit == VOMIT_PURPLE)
 		V.icon_state = "vomitpurp_[pick(1,4)]"
-	else if(toxvomit == VOMIT_TOXIC)
+	else if (toxvomit == VOMIT_TOXIC)
 		V.icon_state = "vomittox_[pick(1,4)]"
-	if(M.reagents)
-		clear_reagents_to_vomit_pool(M,V)
+	if (iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.reagents)
+			clear_reagents_to_vomit_pool(C,V)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
 	M.reagents.trans_to(V, M.reagents.total_volume / 10, transfered_by = M)
@@ -557,12 +560,12 @@
 		if(istype(R, /datum/reagent/consumable))
 			var/datum/reagent/consumable/nutri_check = R
 			if(nutri_check.nutriment_factor >0)
-				M.reagents.remove_reagent(R.type,R.volume)
+				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
 /turf/proc/Melt()
-	return ScrapeAway()
+	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 /turf/bullet_act(obj/item/projectile/P)
 	. = ..()

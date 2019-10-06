@@ -34,7 +34,7 @@
 		light() //honk
 	return ..()
 
-/obj/item/candle/is_hot()
+/obj/item/candle/get_temperature()
 	return lit * heat
 
 /obj/item/candle/proc/light(show_message)
