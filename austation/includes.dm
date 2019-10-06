@@ -1,7 +1,6 @@
 // AuStation includes file
 #include "code\_DEFINES\antagonists.dm"
 #include "code\_DEFINES\misc.dm"
-#include "code\_DEFINES\role_preferences.dm"
 #include "code\controllers\configuration\entries\game_options.dm"
 #include "code\controllers\configuration\entries\general.dm"
 #include "code\controllers\subsystem\autotransfer.dm"

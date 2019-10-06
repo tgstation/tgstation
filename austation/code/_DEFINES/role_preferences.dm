@@ -1,1 +1,0 @@
-#define ROLE_GANG				"gangster" // hippie -- adds gang related role
