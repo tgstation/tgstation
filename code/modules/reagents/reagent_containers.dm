@@ -133,8 +133,8 @@
 
 	cut_overlays()
 
-	var/fill_name = fill_icon_state? fill_icon_state : icon_state
 	if(reagents.total_volume)
+		var/fill_name = fill_icon_state? fill_icon_state : icon_state
 		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
