@@ -382,7 +382,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box),				\
 		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box),					\
 		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets),			\
-		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes),			\
+		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes),
+		new /datum/stack_recipe("nuggetbox box", /obj/item/storage/fancy/nugget_box),			\
 		null,																					\
 
 		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot),			\

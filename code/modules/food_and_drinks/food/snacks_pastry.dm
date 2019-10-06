@@ -162,7 +162,7 @@
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/plain //use this ingame to avoid inheritance related crafting issues.
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly/berry
+/obj/item/reagent_containers/food/snacks/donut/jelly/berry
 	name = "pink jelly donut"
 	desc = "Goes great with a soy latte."
 	icon_state = "jelly_pink"
@@ -171,7 +171,7 @@
 	filling_color = "#E57d9A"
 	decorated_icon = "jelly_homer"
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly/trumpet
+/obj/item/reagent_containers/food/snacks/donut/jelly/trumpet
 	name = "spaceman's jelly donut"
 	desc = "Goes great with a cold beaker of malk."
 	icon_state = "jelly_purple"
@@ -180,7 +180,7 @@
 	is_decorated = TRUE
 	filling_color = "#8739BF"
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly/apple
+/obj/item/reagent_containers/food/snacks/donut/jelly/apple
 	name = "apple jelly donut"
 	desc = "Goes great with a shot of cinnamon schnapps."
 	icon_state = "jelly_green"
@@ -189,7 +189,7 @@
 	is_decorated = TRUE
 	filling_color = "#6ABE30"
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly/caramel
+/obj/item/reagent_containers/food/snacks/donut/jelly/caramel
 	name = "caramel jelly donut"
 	desc = "Goes great with a mug of hot coco."
 	icon_state = "jelly_beige"
@@ -198,7 +198,7 @@
 	is_decorated = TRUE
 	filling_color = "#D4AD5B"
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly/choco
+/obj/item/reagent_containers/food/snacks/donut/jelly/choco
 	name = "chocolate jelly donut"
 	desc = "Goes great with a glass of warm milk."
 	icon_state = "jelly_choc"
@@ -208,7 +208,7 @@
 	decorated_icon = "jelly_choc_sprinkles"
 	filling_color = "#4F230D"
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly/blumpkin
+/obj/item/reagent_containers/food/snacks/donut/jelly/blumpkin
 	name = "blumpkin jelly donut"
 	desc = "Goes great with a mug of soothing drunken blumpkin."
 	icon_state = "jelly_blue"
@@ -217,7 +217,7 @@
 	is_decorated = TRUE
 	filling_color = "#2788C4"
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly/bungo
+/obj/item/reagent_containers/food/snacks/donut/jelly/bungo
 	name = "bungo jelly donut"
 	desc = "Goes great with a mason jar of hippie's delight."
 	icon_state = "jelly_yellow"
@@ -226,7 +226,7 @@
 	is_decorated = TRUE
 	filling_color = "#DEC128"
 
-/obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly/matcha
+/obj/item/reagent_containers/food/snacks/donut/jelly/matcha
 	name = "matcha jelly donut"
 	desc = "Goes great with a cup of tea."
 	icon_state = "jelly_olive"

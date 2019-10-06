@@ -350,3 +350,18 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 8
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/tinychocolate))
+
+
+/obj/item/storage/fancy/nugget_box
+	name = "nugget box"
+	desc = "A cardboard box used for holding chicken nuggies."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "nuggetbox"
+	icon_type = "nugget"
+	spawn_type = /obj/item/reagent_containers/food/snacks/nugget
+
+/obj/item/storage/fancy/heart_box/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/nugget))
