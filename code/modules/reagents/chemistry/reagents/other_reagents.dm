@@ -1365,7 +1365,7 @@
 
 
 
-/datum/reagent/oil
+/datum/reagent/fuel/oil
 	name = "Oil"
 	description = "Burns in a small smoky fire, mostly used to get Ash."
 	reagent_state = LIQUID
@@ -1395,14 +1395,137 @@
 	name = "Carpet"
 	description = "For those that need a more creative way to roll out a red carpet."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#771100"
 	taste_description = "carpet" // Your tounge feels furry.
+	var/carpet_type = /turf/open/floor/carpet
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet, flags = CHANGETURF_INHERIT_AIR)
+		F.PlaceOnTop(carpet_type, flags = CHANGETURF_INHERIT_AIR)
 	..()
+
+/datum/reagent/carpet/black
+	name = "Black Carpet"
+	description = "The carpet also comes in... BLAPCK"
+	color = "#1E1E1E"
+	taste_description = "licorice"
+	carpet_type = /turf/open/floor/carpet/black
+
+/datum/reagent/carpet/black/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
+	if(method == TOUCH || method == VAPOR)
+		M.adjust_fire_stacks(reac_volume / 10)
+		return
+	..()
+
+/datum/reagent/carpet/blue
+	name = "Blue Carpet"
+	description = "For those that really need to chill for a while."
+	color = "#0000DC"
+	taste_description = "frozen carpet"
+	carpet_type = /turf/open/floor/carpet/blue
+
+/datum/reagent/carpet/blue/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+	. = 1
+
+/datum/reagent/carpet/cyan
+	name = "Cyan Carpet"
+	description = "For those that need a throwback to the years of using poison as a construction material. Smells like asbestos."
+	color = "#00B4FF"
+	taste_description = "asbestos"
+	carpet_type = /turf/open/floor/carpet/cyan
+
+/datum/reagent/carpet/cyan/on_mob_life(mob/living/carbon/M)
+	if(prob(5))
+		M.losebreath += 1
+	if(prob(8))
+		to_chat(M, "You feel something get caught in your lungs!")
+		M.Stun(10, 0)
+		M.adjustToxLoss(0.5*REM, 0)
+	return ..()
+
+/datum/reagent/carpet/green
+	name = "Green Carpet"
+	description = "For those that the perfect flourish for your green eggs and ham."
+	color = "#A8E61D"
+	taste_description = "Green" //the caps is intentional
+	carpet_type = /turf/open/floor/carpet/green
+
+/datum/reagent/carpet/green/on_mob_life(mob/living/carbon/M)
+	if(M.color != color)
+		M.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
+	return ..()
+
+/datum/reagent/carpet/green/on_mob_end_metabolize(mob/living/M)
+	M.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
+
+/datum/reagent/carpet/orange
+	name = "Orange Carpet"
+	description = "For those that prefer a healthy carpet to go along with they healthy diet."
+	color = "#E78108"
+	taste_description = "orange juice"
+	carpet_type = /turf/open/floor/carpet/orange
+
+/datum/reagent/carpet/orange/on_mob_life(mob/living/carbon/M)
+	if(M.getOxyLoss() && prob(30))
+		M.adjustOxyLoss(-1, 0)
+		. = 1
+	..()
+
+/datum/reagent/carpet/purple
+	name = "Purple Carpet"
+	description = "For those that need to waste copious amounts of healing jelly to look fancy."
+	color = "#91D865"
+	taste_description = "jelly"
+	carpet_type = /turf/open/floor/carpet/purple
+
+/datum/reagent/carpet/purple/on_mob_life(mob/living/carbon/M)
+	if(prob(50))
+		M.adjustBruteLoss(-0.5*REM, 0)
+		M.adjustFireLoss(-0.5*REM, 0)
+		M.adjustOxyLoss(-0.5*REM, 0)
+		M.adjustToxLoss(-0.5*REM, 0, TRUE) //heals TOXINLOVERs
+		. = 1
+		..()
+
+/datum/reagent/carpet/red
+	name = "Red Carpet"
+	description = "For those that needed an even redder carpet."
+	color = "#731008"
+	taste_description = "blood and gibs"
+	carpet_type = /turf/open/floor/carpet/red
+
+/datum/reagent/carpet/royal
+	name = "Royal Carpet?"
+	description = "For those that break the game and need to make an issue report."
+
+/datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/M)
+	if(M.mind && M.mind.assigned_role in list("Chief Medical Officer", "Captain", "Chief Engineer", "Research Director", "Head of Personnel"))
+		if(prob(10))
+			to_chat(M, "You feel like royalty.")
+		if(prob(5))
+			M.say(pick("Peasants..","This carpet is worth more than your contracts!","I could fire you at any time..."), forced = "royal carpet")
+	if(M.mind && M.mind.assigned_role == "Quartermaster") //not a real head
+		if(prob(15))
+			to_chat(M, "You feel like an impostor..")
+	. = 1
+	..()
+
+/datum/reagent/carpet/royal/black
+	name = "Royal Black Carpet"
+	description = "For those that feel the need to show off their timewasting skills."
+	color = "#000000"
+	taste_description = "royalty"
+	carpet_type = /turf/open/floor/carpet/royalblack
+
+/datum/reagent/carpet/royal/blue
+	name = "Royal Blue Carpet"
+	description = "For those that feel the need to show off their timewasting skills.. in BLUE."
+	color = "#5A64C8"
+	taste_description = "blueyalty"
+	carpet_type = /turf/open/floor/carpet/royalblue
 
 /datum/reagent/bromine
 	name = "Bromine"

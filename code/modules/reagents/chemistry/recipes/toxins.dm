@@ -17,7 +17,7 @@
 	name = "Cyanide"
 	id = /datum/reagent/toxin/cyanide
 	results = list(/datum/reagent/toxin/cyanide = 3)
-	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/ammonia = 1, /datum/reagent/oxygen = 1)
+	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/ammonia = 1, /datum/reagent/oxygen = 1)
 	required_temp = 380
 
 /datum/chemical_reaction/itching_powder

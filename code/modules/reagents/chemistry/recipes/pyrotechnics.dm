@@ -359,7 +359,7 @@
 	name = "Napalm"
 	id = /datum/reagent/napalm
 	results = list(/datum/reagent/napalm = 3)
-	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1 )
+	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1 )
 
 /datum/chemical_reaction/cryostylane
 	name = /datum/reagent/cryostylane
