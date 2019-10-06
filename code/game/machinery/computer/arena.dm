@@ -119,7 +119,6 @@
 	if(!M)
 		to_chat(user,"<span class='warning'>No such arena</span>")
 		return
-	clear_arena() //Clear current arena
 	var/turf/A = get_landmark_turf(ARENA_CORNER_A)
 	var/turf/B = get_landmark_turf(ARENA_CORNER_B)
 	var/wh = abs(A.x - B.x)
@@ -128,6 +127,11 @@
 		to_chat(user,"<span class='warning'>Arena template is too big for the current arena!</span>")
 		return
 	loading = TRUE
+	var/area/thunderdome = GLOB.areas_by_type[/area/tdome/arena] //snowflake code, yes. Needed so that camera mobs don't get permanently deleted
+	for(var/mob/camera/aiEye/remote/C in thunderdome)		
+		var/turf/T = locate(round((A.x + A.y)/2), max((B.y + 1),(A.y + 1)),A.z)// finds the middle x coordinate and 1 above topmost y coordinate.
+		C.setLoc(T)
+	clear_arena() //Clear current arena
 	var/bd = M.load(get_load_point())
 	if(bd)
 		current_arena_template = arena_template
