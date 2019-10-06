@@ -40,7 +40,6 @@
 			if(do_after(user, 20, target = src) && material.use(1))
 				make_new_table(material.tableVariant)
 		else
-			var/obj/item/stack/sheet/M = I
 			if(material.get_amount() < 1)
 				to_chat(user, "<span class='warning'>You need one metal sheet to do this!</span>")
 				return
