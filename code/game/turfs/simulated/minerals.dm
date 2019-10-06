@@ -541,7 +541,7 @@
 
 /turf/closed/mineral/strong/attackby(obj/item/I, mob/user, params)
 	if(!ishuman(user))
-		to_chat(usr, "<span class='warning'>Only a more advanced species could breka a rock such as this one!</span>")
+		to_chat(usr, "<span class='warning'>Only a more advanced species could break a rock such as this one!</span>")
 		return FALSE
 	var/mob/living/carbon/human/H = user
 	if(H.dna.get_skill_level(SKILL_MINING) == SKILL_LEVEL_LEGENDARY)
