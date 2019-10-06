@@ -524,7 +524,7 @@
 			else if (findtext(phrase, "ligma"))
 				to_say = "What's...ligma"
 				ligma = TRUE
-				addtimer(VARSET_CALLBACK(src, ligma, false), 20 SECONDS) //Gotta prank them fast
+				addtimer(VARSET_CALLBACK(src, ligma, FALSE), 20 SECONDS) //Gotta prank them fast
 
 
 		speech_buffer = list()
