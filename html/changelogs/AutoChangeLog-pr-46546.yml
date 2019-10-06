@@ -1,0 +1,7 @@
+author: "MacBlaze1"
+delete-after: True
+changes: 
+  - rscadd: "Added Lenturi"
+  - balance: "Adjusted healing of Lenturi to be 3, but you get 1.5 slowdown while the chem is in  your system."
+  - balance: "You get 0.5 stomach damage after the chem leaves your system each time."
+  - rscdel: "Removed itchiyuri"
