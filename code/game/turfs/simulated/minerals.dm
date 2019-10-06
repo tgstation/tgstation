@@ -76,9 +76,9 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if (mineralType && (mineralAmt > 0))
-			H.physiology.adjust_experience(SKILL_MINING, initial(mineralType.mine_experience) * mineralAmt)
+			H.physiology.adjust_experience(SKILL_MINING, initial(mineralType.mine_experience) * mineralAmt, H)
 		else
-			H.physiology.adjust_experience(SKILL_MINING, 4)
+			H.physiology.adjust_experience(SKILL_MINING, 4, H)
 
 	for(var/obj/effect/temp_visual/mining_overlay/M in src)
 		qdel(M)

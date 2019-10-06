@@ -8,7 +8,7 @@
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
-	roundstart_experience = list(SKILL_MINING = SKILL_LEVEL_JOURNEYMAN) //Miners know their shit
+	roundstart_experience = list(SKILL_MINING = SKILL_EXP_JOURNEYMAN) //Miners know their shit
 
 	outfit = /datum/outfit/job/miner
 

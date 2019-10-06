@@ -59,6 +59,17 @@
 		var/mob/M = usr
 		M.swap_hand()
 	return 1
+	
+/obj/screen/skills
+	name = "skills"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "skills"
+	screen_loc = ui_skill_menu
+
+/obj/screen/skills/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.physiology.print_levels(H)
 
 /obj/screen/craft
 	name = "crafting menu"
@@ -659,16 +670,6 @@
 	name = "sanity"
 	icon_state = "sanity3"
 	screen_loc = ui_mood
-
-/obj/screen/skills
-	name = "skills"
-	icon_state = "skills"
-	screen_loc = ui_skill_menu
-
-/obj/screen/skills/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.physiology.print_levels(H)
 
 /obj/screen/splash
 	icon = 'icons/blank_title.png'

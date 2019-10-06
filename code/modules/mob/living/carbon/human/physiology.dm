@@ -36,8 +36,9 @@
 	armor = new
 
 ///Adjust experience of a specific skill
-/datum/physiology/proc/adjust_experience(skill, amt)
+/datum/physiology/proc/adjust_experience(skill, amt, user)
 	skill_experience[skill] = max(0, skill_experience[skill] + amt) //Prevent going below 0
+	var/old_level = skills[skill]
 	switch(skill_experience[skill])
 		if(SKILL_EXP_LEGENDARY to INFINITY)
 			skills[skill] = SKILL_LEVEL_LEGENDARY
@@ -53,23 +54,29 @@
 			skills[skill] = SKILL_LEVEL_NOVICE
 		if(0 to SKILL_EXP_NOVICE)
 			skills[skill] = SKILL_LEVEL_NONE	
+	if(skills[skill] == old_level)
+		return //same level
+	if(skills[skill] >= old_level)
+		to_chat(user, "<span class='nicegreen'>I feel like I've become more proficient at [skill]!</span>")
+	else
+		to_chat(user, "<span class='warning'>I feel like I've become worse at [skill]!</span>")
 
 /datum/physiology/proc/get_skill_speed_modifier(skill)
 	switch(skills[skill])
 		if(SKILL_LEVEL_NONE)
-			return 0.7
+			return 1.3
 		if(SKILL_LEVEL_NOVICE)
-			return 0.8
+			return 1.2
 		if(SKILL_LEVEL_APPRENTICE)
-			return 0.9
+			return 1.1
 		if(SKILL_LEVEL_JOURNEYMAN)
 			return 1
 		if(SKILL_LEVEL_EXPERT)
-			return 1.10
+			return 0.9
 		if(SKILL_LEVEL_MASTER)
-			return 1.25
+			return 0.75
 		if(SKILL_LEVEL_LEGENDARY)
-			return 1.5
+			return 0.5
 			
 
 /datum/physiology/proc/get_skill_level(skill)
@@ -89,3 +96,4 @@
 	msg += "<span class='info'>*---------*\n<EM>Your skills</EM>\n"
 	for(var/i in shown_skills)
 		msg += "<span class='notice'>[i] - [level_names[skills[i]]]</span>"
+	to_chat(user, msg)
