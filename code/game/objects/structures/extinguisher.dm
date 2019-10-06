@@ -9,8 +9,16 @@
 	integrity_failure = 50
 	var/obj/item/extinguisher/stored_object
 	var/opened = FALSE
-	//set allowed item to determine what item is allowed inside.
-	var/alloweditem = /obj/item/extinguisher
+	//item sprites
+	var/spawneditem = new /obj/item/extinguisher //sets spawned item when mapped in or spawned.
+	var/alloweditem = /obj/item/extinguisher //set allowed item to determine what item is allowed inside
+	var/altitem =  /obj/item/extinguisher/mini //sets the item that will present an alt sprite when placed inside.
+	//sprite vars. Set icon state here.
+	var/emptycabinet = "extinguisher_empty"
+	var/closedcabinet = "extinguisher_closed"
+	var/cabinetfilled = "extinguisher_full"
+	var/cabinetalt =  "extinguisher_mini"
+
 //mapcode
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
@@ -19,9 +27,9 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
 		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
 		opened = TRUE
-		icon_state = "extinguisher_empty"
+		icon_state = emptycabinet
 	else
-		stored_object = new /obj/item/extinguisher(src)
+		stored_object = spawneditem
 
 /obj/structure/extinguisher_cabinet/examine(mob/user)
 	. = ..()
@@ -120,15 +128,15 @@
 //sprite stuff
 /obj/structure/extinguisher_cabinet/update_icon()
 	if(!opened)
-		icon_state = "extinguisher_closed"
+		icon_state = closedcabinet
 		return
 	if(stored_object)
-		if(istype(stored_object, /obj/item/extinguisher/mini))
-			icon_state = "extinguisher_mini"
+		if(istype(stored_object, altitem))
+			icon_state = cabinetalt
 		else
-			icon_state = "extinguisher_full"
+			icon_state = cabinetfilled
 	else
-		icon_state = "extinguisher_empty"
+		icon_state = emptycabinet
 
 /obj/structure/extinguisher_cabinet/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
@@ -163,35 +171,15 @@
 	desc = "A small wall mounted cabinet designed to hold a first aid kit."
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "medkit_closed"
+	//item variables
+	spawneditem = new /obj/item/storage/firstaid/regular //sets spawned item
+	alloweditem = /obj/item/storage/firstaid //sets allowed item for the cabinet. Setting it to main type will allow subtypes.
+	//sprite variables
+	emptycabinet = "medkit_empty"
+	closedcabinet = "medkit_closed"
+	cabinetfilled = "medkit_white"
+	cabinetalt =  null
 	var/obj/item/storage/firstaid/regular/stored_medkit
-	//sets allowed item for the cabinet. Setting it to main type will allow subtypes.
-	alloweditem = /obj/item/storage/firstaid
-
-//mapcode
-/obj/structure/extinguisher_cabinet/medkit/Initialize(mapload, ndir, building)
-	. = ..()
-	if(building)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
-		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
-		opened = TRUE
-		icon_state = "medkit_empty"
-	else
-		//set this for item spawned inside
-		stored_object = new /obj/item/storage/firstaid/regular/(src)
-
-//sprite code
-/obj/structure/extinguisher_cabinet/medkit/update_icon()
-	if(!opened)
-		icon_state = "medkit_closed"
-		return
-	if(stored_object)
-		if(istype(stored_object, /obj/item/storage/firstaid/regular)) //leave this in case someone decides to add more sprites for different kits
-			icon_state = "medkit_white"
-		else
-			icon_state = "medkit_white"
-	else
-		icon_state = "medkit_empty"
 
 //wallframe
 /obj/item/wallframe/extinguisher_cabinet/medkit
