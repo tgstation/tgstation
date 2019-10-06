@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 import { Box } from './Box';
 
 export const LabeledList = props => {
@@ -9,6 +9,8 @@ export const LabeledList = props => {
     </table>
   );
 };
+
+LabeledList.defaultHooks = pureComponentHooks;
 
 export const LabeledListItem = props => {
   const { label, color, buttons, content, children } = props;
@@ -36,6 +38,8 @@ export const LabeledListItem = props => {
   );
 };
 
+LabeledListItem.defaultHooks = pureComponentHooks;
+
 export const LabeledListDivider = props => {
   const { size = 1 } = props;
   return (
@@ -46,6 +50,8 @@ export const LabeledListDivider = props => {
     </tr>
   );
 };
+
+LabeledListDivider.defaultHooks = pureComponentHooks;
 
 LabeledList.Item = LabeledListItem;
 LabeledList.Divider = LabeledListDivider;

@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 import { Box } from './Box';
 import { Icon } from './Icon';
 
@@ -23,6 +23,8 @@ export const Button = props => {
     ...rest
   } = props;
   const hasContent = !!(content || children);
+  // NOTE: Lowercase "onclick" and unselectable is used for
+  // compatibility with IE8. Do not change it!
   return (
     <Box as="span"
       className={classes([
@@ -62,3 +64,5 @@ export const Button = props => {
     </Box>
   );
 };
+
+Button.defaultHooks = pureComponentHooks;

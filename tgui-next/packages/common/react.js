@@ -47,3 +47,31 @@ export const normalizeChildren = children => {
   }
   return [];
 };
+
+/**
+ * Shallowly checks if two objects are different.
+ * Credit: https://github.com/developit/preact-compat
+ */
+export const shallowDiffers = (a, b) => {
+  let i;
+  for (i in a) {
+    if (!(i in b)) {
+      return true;
+    }
+  }
+  for (i in b) {
+    if (a[i] !== b[i]) {
+      return true;
+    }
+  }
+  return false;
+};
+
+/**
+ * Default inferno hooks for pure components.
+ */
+export const pureComponentHooks = {
+  onComponentShouldUpdate: (lastProps, nextProps) => {
+    return shallowDiffers(lastProps, nextProps);
+  },
+};

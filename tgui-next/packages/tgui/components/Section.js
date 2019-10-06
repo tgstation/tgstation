@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 
 export const Section = props => {
   const { title, level = 1, buttons, children } = props;
@@ -25,3 +25,5 @@ export const Section = props => {
     </div>
   );
 };
+
+Section.defaultHooks = pureComponentHooks;

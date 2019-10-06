@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 
 export const ProgressBar = props => {
   const { value, content, color, children } = props;
@@ -21,3 +21,5 @@ export const ProgressBar = props => {
     </div>
   );
 };
+
+ProgressBar.defaultHooks = pureComponentHooks;

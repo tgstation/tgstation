@@ -10,16 +10,16 @@
     color: rgba(255, 255, 255, 1);
   }
 
-  &:not(.Button--disabled):hover {
+  &:hover {
     transition: color, background-color 0ms;
   }
 
-  &:not(.Button--disabled):focus {
+  &:focus {
     transition: color, background-color 100ms;
   }
 
-  &:not(.Button--disabled):hover,
-  &:not(.Button--disabled):focus {
+  &:hover,
+  &:focus {
     background-color: lighten($color, $button-lighten-hover);
     color: rgba(255, 255, 255, 1);
   }
@@ -81,7 +81,7 @@
 }
 
 .Button--disabled {
-  @include button-color($button-color-disabled);
+  background-color: $button-color-disabled !important;
 }
 
 .Button--selected {

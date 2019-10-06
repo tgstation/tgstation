@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { Component, createRef } from 'inferno';
-import { runCommand, winset } from './byond';
+import { runCommand, winset, tridentVersion } from './byond';
 import { TitleBar } from './components';
 import { BUTTON_ACTIVATION_KEYCODES } from './components/Button';
 import { Toast } from './components/Toast';
@@ -82,11 +82,19 @@ export class Layout extends Component {
             'Layout__content',
             scrollable && 'Layout__content--scrollable',
           ])}
-          onclick={() => {
+          onClick={() => {
+            // Abort this code path on IE8
+            if (tridentVersion <= 4) {
+              return;
+            }
             // Bring focus back to the window on every click
             this.contentRef.current.focus();
           }}
           onKeyPress={e => {
+            // Abort this code path on IE8
+            if (tridentVersion <= 4) {
+              return;
+            }
             // Bring focus back to the window on every keypress
             const keyCode = window.event ? e.which : e.keyCode;
             if (BUTTON_ACTIVATION_KEYCODES.includes(keyCode)) {

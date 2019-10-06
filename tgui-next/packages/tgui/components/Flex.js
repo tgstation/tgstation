@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 import { Box } from './Box';
 
 export const computeFlexProps = props => {
@@ -27,6 +27,8 @@ export const Flex = props => (
   <Box {...computeFlexProps(props)} />
 );
 
+Flex.defaultHooks = pureComponentHooks;
+
 export const computeFlexItemProps = props => {
   const {
     className,
@@ -50,5 +52,7 @@ export const computeFlexItemProps = props => {
 export const FlexItem = props => (
   <Box {...computeFlexItemProps(props)} />
 );
+
+FlexItem.defaultHooks = pureComponentHooks;
 
 Flex.Item = FlexItem;

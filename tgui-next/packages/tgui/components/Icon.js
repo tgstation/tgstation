@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 import { Box } from './Box';
 
 export const Icon = props => {
@@ -17,3 +17,5 @@ export const Icon = props => {
       {...rest} />
   );
 };
+
+Icon.defaultHooks = pureComponentHooks;

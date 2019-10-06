@@ -1,3 +1,5 @@
+import { pureComponentHooks } from 'common/react';
+
 export const Toast = props => {
   const { content, children } = props;
   return (
@@ -7,6 +9,8 @@ export const Toast = props => {
     </div>
   );
 };
+
+Toast.defaultHooks = pureComponentHooks;
 
 let toastTimeout;
 

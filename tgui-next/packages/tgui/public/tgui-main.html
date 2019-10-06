@@ -21,22 +21,21 @@
 <!-- Old TGUI container -->
 <div id="container" class="container"></div>
 
-<!-- Error container -->
-<div id="error-container"></div>
-
 <!-- Scripts -->
 <script type="text/javascript">
+// Retrieve and save ref to a global variable
+var ref = document.getElementById('data').getAttribute('data-ref');
 // Early global error handling
 window.onerror = function (msg, url, line, col, error) {
-  var logString = msg + ' (' + url + ' line ' + line + ')';
+  var logString = msg + ' (' + url + ' line ' + line + ')'
+    + '\nUser Agent: ' + navigator.userAgent;
   // Print to the page
-  document.getElementById('error-container').innerHTML = logString;
+  // NOTE: document.write() only works on IE8.
+  document.write(logString);
   // Send to the backend
-  var ref = document.getElementById('data').getAttribute('data-ref');
   location.href = 'byond://?src=' + ref
     + '&action=tgui:log&error=true'
-    + '&log=' + encodeURIComponent(logString
-      + '\nUser Agent: ' + navigator.userAgent);
+    + '&log=' + encodeURIComponent(logString);
 };
 </script>
 <script type="text/javascript" src="shim-console.js"></script>

@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 import { createVNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 
@@ -66,3 +66,5 @@ export const Box = props => {
     ChildFlags.UnknownChildren,
     computedProps);
 };
+
+Box.defaultHooks = pureComponentHooks;
