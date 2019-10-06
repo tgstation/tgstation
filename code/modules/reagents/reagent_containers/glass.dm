@@ -358,11 +358,14 @@
 /obj/item/reagent_containers/glass/waterbottle/attack(mob/M, mob/user, obj/target)
 	if(cap_on && reagents.total_volume && istype(M))
 		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+		return
 	. = ..()
 
 /obj/item/reagent_containers/glass/waterbottle/afterattack(obj/target, mob/user, proximity)
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
 		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+		return
+	
 	else if(istype(target, /obj/item/reagent_containers/glass/waterbottle))
 		var/obj/item/reagent_containers/glass/waterbottle/WB = target
 		if(WB.cap_on)
