@@ -106,6 +106,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/metal
 	grind_results = list(/datum/reagent/iron = 20)
 	point_value = 2
+	tableVariant = /obj/structure/table
 
 /obj/item/stack/sheet/metal/ratvar_act()
 	new /obj/item/stack/tile/brass(loc, amount)
@@ -168,6 +169,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/plasteel
 	grind_results = list(/datum/reagent/iron = 20, /datum/reagent/toxin/plasma = 20)
 	point_value = 23
+	tableVariant = /obj/structure/table/reinforced
 
 /obj/item/stack/sheet/plasteel/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.plasteel_recipes
@@ -593,6 +595,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	novariants = FALSE
 	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/copper = 3) //we have no "tin" reagent so this is the closest thing
 	merge_type = /obj/item/stack/tile/bronze
+	tableVariant = /obj/structure/table/bronze
 
 /obj/item/stack/tile/bronze/attack_self(mob/living/user)
 	if(is_servant_of_ratvar(user)) //still lets them build with it, just gives a message
