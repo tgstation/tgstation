@@ -31,6 +31,11 @@
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
+/obj/item/clothing/mask/gas/welding/up
+
+/obj/item/clothing/mask/gas/welding/up/Initialize()
+	..()
+	visor_toggling()
 
 // ********************************************************************
 

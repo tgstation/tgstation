@@ -35,6 +35,8 @@
 	item_state = "utility"
 	content_overlays = TRUE
 	custom_price = 50
+	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
+	pickup_sound =  'sound/items/handling/toolbelt_pickup.ogg'
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()

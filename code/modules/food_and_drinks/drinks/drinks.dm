@@ -549,6 +549,13 @@
 	list_reagents = list(/datum/reagent/consumable/grey_bull = 20)
 	foodtype = SUGAR | JUNKFOOD
 
+/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy
+	name = "Monkey Energy"
+	desc = "Unleash the ape!"
+	icon_state = "monkey_energy"
+	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
+	foodtype = SUGAR | JUNKFOOD
+
 /obj/item/reagent_containers/food/drinks/soda_cans/air
 	name = "canned air"
 	desc = "There is no air shortage. Do not drink."

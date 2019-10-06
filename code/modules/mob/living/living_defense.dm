@@ -69,22 +69,8 @@
 		var/obj/item/I = AM
 		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
-		var/volume = I.get_volume_by_throwforce_and_or_w_class()
 		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone)
 		dtype = I.damtype
-
-		if (I.throwforce > 0) //If the weapon's throwforce is greater than zero...
-			if (I.throwhitsound) //...and throwhitsound is defined...
-				playsound(loc, I.throwhitsound, volume, TRUE, -1) //...play the weapon's throwhitsound.
-			else if(I.hitsound) //Otherwise, if the weapon's hitsound is defined...
-				playsound(loc, I.hitsound, volume, TRUE, -1) //...play the weapon's hitsound.
-			else if(!I.throwhitsound) //Otherwise, if throwhitsound isn't defined...
-				playsound(loc, 'sound/weapons/genhit.ogg',volume, TRUE, -1) //...play genhit.ogg.
-
-		else if(!I.throwhitsound && I.throwforce > 0) //Otherwise, if the item doesn't have a throwhitsound and has a throwforce greater than zero...
-			playsound(loc, 'sound/weapons/genhit.ogg', volume, TRUE, -1)//...play genhit.ogg
-		if(!I.throwforce)// Otherwise, if the item's throwforce is 0...
-			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
 		if(!blocked)
 			visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
 							"<span class='userdanger'>You're hit by [I]!</span>")
@@ -95,8 +81,9 @@
 		else
 			return 1
 	else
-		playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
+		playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
 	..()
+
 
 
 /mob/living/mech_melee_attack(obj/mecha/M)
@@ -347,16 +334,16 @@
 	return 1
 
 ///As the name suggests, this should be called to apply electric shocks.
-/mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, override = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
-	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, safety, override, tesla_shock, illusion, stun)
+/mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, flags)
 	shock_damage *= siemens_coeff
-	if(tesla_shock && (flags_1 & TESLA_IGNORE_1))
+	if((flags & SHOCK_TESLA) && (flags_1 & TESLA_IGNORE_1))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
-	if(shock_damage < 1 && !override)
+	if(shock_damage < 1)
 		return FALSE
-	if(!illusion)
+	if(!(flags & SHOCK_ILLUSION))
 		adjustFireLoss(shock_damage)
 	else
 		adjustStaminaLoss(shock_damage)

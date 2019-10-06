@@ -256,7 +256,8 @@
 			var/mob/M = usr
 			var/obj/item/card/id/I = M.get_idcard(TRUE)
 			if(points)
-				if(I?.mining_points += points)
+				if(I)
+					I.mining_points += points
 					points = 0
 				else
 					to_chat(usr, "<span class='warning'>No valid ID detected.</span>")
