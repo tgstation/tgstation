@@ -250,4 +250,4 @@
 	material_type = /obj/item/stack/tile/bronze
 
 /obj/structure/door_assembly/door_assembly_bronze/seethru
-	glass_type = /obj/machinery/door/airlock/bronze/seethru
+	airlock_type = /obj/machinery/door/airlock/bronze/seethru
