@@ -885,6 +885,9 @@
 	icon_state = "clockwork_window_single"
 	glass_type = /obj/item/stack/tile/bronze
 
+/obj/structure/window/bronze/unanchored
+	anchored = FALSE
+
 /obj/structure/window/bronze/fulltile
 	icon_state = "clockwork_window"
 	smooth = SMOOTH_TRUE
@@ -894,3 +897,6 @@
 	dir = FULLTILE_WINDOW_DIR
 	max_integrity = 50
 	glass_amount = 2
+
+/obj/structure/window/bronze/fulltile/unanchored
+	anchored = FALSE
