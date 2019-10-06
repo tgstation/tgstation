@@ -36,6 +36,7 @@
 /obj/structure/table/Initialize()
 	. = ..()
 	AddComponent(/datum/component/climbable)
+	AddElement(/datum/element/tablebehaviour)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()

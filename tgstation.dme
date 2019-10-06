@@ -495,6 +495,7 @@
 #include "code\datums\elements\earhealing.dm"
 #include "code\datums\elements\firestacker.dm"
 #include "code\datums\elements\snail_crawl.dm"
+#include "code\datums\elements\table_behaviour.dm"
 #include "code\datums\helper_datums\events.dm"
 #include "code\datums\helper_datums\getrev.dm"
 #include "code\datums\helper_datums\icon_snapshot.dm"

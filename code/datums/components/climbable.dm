@@ -86,17 +86,7 @@
 		var/mob/living/carbon/C = O
 		if(C.mobility_flags & MOBILITY_MOVE)
 			climb_structure(source, user)
-			return
-	if(!table_behaviour) //From here on out, this doesn't really have a lot to do with climbing.
-		return
-	if(user.get_active_held_item() != O)
-		return
-	if(iscyborg(user))
-		return
-	if(!user.dropItemToGround(O))
-		return
-	if (O.loc != source.loc)
-		do_climb(source, O)
+
 
 ///Let's a mob pass over structures if the movement is forced and that's enabled.
 /datum/component/climbable/proc/on_bumped(atom/source, atom/movable/bumper)
