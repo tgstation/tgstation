@@ -10,6 +10,8 @@
 	var/list/networks = list("ss13")
 	var/datum/action/innate/camera_off/off_action = new
 	var/datum/action/innate/camera_jump/jump_action = new
+	var/datum/action/innate/camera_up/up_action = new
+	var/datum/action/innate/camera_down/down_action = new
 	var/list/actions = list()
 
 	light_color = LIGHT_COLOR_RED
@@ -42,7 +44,7 @@
 	return //For syndie nuke shuttle, to spy for station.
 
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
-	eyeobj = new()
+	eyeobj = new(loc)
 	eyeobj.origin = src
 
 /obj/machinery/computer/camera_advanced/proc/GrantActions(mob/living/user)
@@ -55,6 +57,14 @@
 		jump_action.target = user
 		jump_action.Grant(user)
 		actions += jump_action
+	if(up_action)
+		up_action.target = user
+		up_action.Grant(user)
+		actions += up_action
+	if(down_action)
+		down_action.target = user
+		down_action.Grant(user)
+		actions += down_action
 
 /obj/machinery/proc/remove_eye_control(mob/living/user)
 	CRASH("[type] does not implement ai eye handling")
@@ -228,6 +238,9 @@
 	else
 		sprint = initial
 
+/mob/camera/aiEye/remote/canZMove(direction, turf/target)
+	return TRUE
+
 /datum/action/innate/camera_off
 	name = "End Camera View"
 	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
@@ -280,6 +293,34 @@
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
 		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
+
+/datum/action/innate/camera_up
+	name = "Move camera up"
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
+	button_icon_state = "ai_core"
+
+/datum/action/innate/camera_up/Activate()
+	if(!target || !isliving(target))
+		return
+	var/mob/living/C = target
+	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/turf/T = get_step_multiz(remote_eye, UP)
+	if(T)
+		remote_eye.setLoc(T)
+
+/datum/action/innate/camera_down
+	name = "Move camera down"
+	icon_icon = 'icons/mob/actions/actions_AI.dmi'
+	button_icon_state = "ai_shell"
+
+/datum/action/innate/camera_down/Activate()
+	if(!target || !isliving(target))
+		return
+	var/mob/living/C = target
+	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
+	var/turf/T = get_step_multiz(remote_eye, DOWN)
+	if(T)
+		remote_eye.setLoc(T)
 
 
 //Used by servants of Ratvar! They let you beam to the station.
