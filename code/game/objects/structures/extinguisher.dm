@@ -7,12 +7,10 @@
 	density = FALSE
 	max_integrity = 200
 	integrity_failure = 50
-	var/obj/item/extinguisher/stored_extinguisher
+	var/obj/item/extinguisher/stored_object
 	var/opened = FALSE
 	//set allowed item to determine what item is allowed inside.
-	var/alloweditem
-	alloweditem = /obj/item/extinguisher
-
+	var/alloweditem = /obj/item/extinguisher
 //mapcode
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
@@ -23,31 +21,31 @@
 		opened = TRUE
 		icon_state = "extinguisher_empty"
 	else
-		stored_extinguisher = new /obj/item/extinguisher(src)
+		stored_object = new /obj/item/extinguisher(src)
 
 /obj/structure/extinguisher_cabinet/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to [opened ? "close":"open"] it.</span>"
 
 /obj/structure/extinguisher_cabinet/Destroy()
-	if(stored_extinguisher)
-		qdel(stored_extinguisher)
-		stored_extinguisher = null
+	if(stored_object)
+		qdel(stored_object)
+		stored_object = null
 	return ..()
 
 //explosion handling
 /obj/structure/extinguisher_cabinet/contents_explosion(severity, target)
-	if(stored_extinguisher)
-		stored_extinguisher.ex_act(severity, target)
+	if(stored_object)
+		stored_object.ex_act(severity, target)
 
 /obj/structure/extinguisher_cabinet/handle_atom_del(atom/A)
-	if(A == stored_extinguisher)
-		stored_extinguisher = null
+	if(A == stored_object)
+		stored_object = null
 		update_icon()
 
 //deconstruct and add item code
 /obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
+	if(I.tool_behaviour == TOOL_WRENCH && !stored_object)
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 60))
@@ -59,10 +57,10 @@
 	if(iscyborg(user) || isalien(user))
 		return
 	if(istype(I, alloweditem))
-		if(!stored_extinguisher && opened)
+		if(!stored_object && opened)
 			if(!user.transferItemToLoc(I, src))
 				return
-			stored_extinguisher = I
+			stored_object = I
 			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
 			update_icon()
 			return TRUE
@@ -80,10 +78,10 @@
 		return
 	if(iscyborg(user) || isalien(user))
 		return
-	if(stored_extinguisher)
-		user.put_in_hands(stored_extinguisher)
-		to_chat(user, "<span class='notice'>You take [stored_extinguisher] from [src].</span>")
-		stored_extinguisher = null
+	if(stored_object)
+		user.put_in_hands(stored_object)
+		to_chat(user, "<span class='notice'>You take [stored_object] from [src].</span>")
+		stored_object = null
 		if(!opened)
 			opened = 1
 			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
@@ -93,10 +91,10 @@
 
 
 /obj/structure/extinguisher_cabinet/attack_tk(mob/user)
-	if(stored_extinguisher)
-		stored_extinguisher.forceMove(loc)
-		to_chat(user, "<span class='notice'>You telekinetically remove [stored_extinguisher] from [src].</span>")
-		stored_extinguisher = null
+	if(stored_object)
+		stored_object.forceMove(loc)
+		to_chat(user, "<span class='notice'>You telekinetically remove [stored_object] from [src].</span>")
+		stored_object = null
 		opened = 1
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		update_icon()
@@ -124,8 +122,8 @@
 	if(!opened)
 		icon_state = "extinguisher_closed"
 		return
-	if(stored_extinguisher)
-		if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
+	if(stored_object)
+		if(istype(stored_object, /obj/item/extinguisher/mini))
 			icon_state = "extinguisher_mini"
 		else
 			icon_state = "extinguisher_full"
@@ -136,9 +134,9 @@
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = 1
 		opened = 1
-		if(stored_extinguisher)
-			stored_extinguisher.forceMove(loc)
-			stored_extinguisher = null
+		if(stored_object)
+			stored_object.forceMove(loc)
+			stored_object = null
 		update_icon()
 
 
@@ -148,9 +146,9 @@
 			new /obj/item/wallframe/extinguisher_cabinet(loc)
 		else
 			new /obj/item/stack/sheet/metal (loc, 2)
-		if(stored_extinguisher)
-			stored_extinguisher.forceMove(loc)
-			stored_extinguisher = null
+		if(stored_object)
+			stored_object.forceMove(loc)
+			stored_object = null
 	qdel(src)
 
 /obj/item/wallframe/extinguisher_cabinet
@@ -180,15 +178,15 @@
 		icon_state = "medkit_empty"
 	else
 		//set this for item spawned inside
-		stored_extinguisher = new /obj/item/storage/firstaid/regular/(src)
+		stored_object = new /obj/item/storage/firstaid/regular/(src)
 
 //sprite code
 /obj/structure/extinguisher_cabinet/medkit/update_icon()
 	if(!opened)
 		icon_state = "medkit_closed"
 		return
-	if(stored_extinguisher)
-		if(istype(stored_extinguisher, /obj/item/storage/firstaid/regular)) //leave this in case someone decides to add more sprites for different kits
+	if(stored_object)
+		if(istype(stored_object, /obj/item/storage/firstaid/regular)) //leave this in case someone decides to add more sprites for different kits
 			icon_state = "medkit_white"
 		else
 			icon_state = "medkit_white"
