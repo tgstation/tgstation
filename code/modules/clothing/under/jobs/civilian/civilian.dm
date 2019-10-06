@@ -218,8 +218,6 @@
 /obj/item/clothing/under/rank/civilian/lawyer/galaxy
 	mob_overlay_icon = 'icons/mob/clothing/under/lawyer_galaxy.dmi'
 	can_adjust = FALSE
-
-/obj/item/clothing/under/rank/civilian/lawyer/galaxy/blue
 	name = "blue galaxy suit"
 	icon_state = "lawyer_galaxy_blue"
 	item_state = "b_suit"
