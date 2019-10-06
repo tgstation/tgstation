@@ -10,12 +10,12 @@
 
 //A little janky with pockets
 /obj/item/fermichem/pHbooklet/attack_hand(mob/user)
+	add_fingerprint(user)
 	if(user.get_held_index_of_item(src))//Does this check pockets too..?
 		if(numberOfPages == 50)
 			icon_state = "pHbookletOpen"
 		if(numberOfPages >= 1)
 			var/obj/item/fermichem/pHpaper/P = new /obj/item/fermichem/pHpaper
-			P.add_fingerprint(user)
 			P.forceMove(user.loc)
 			user.put_in_active_hand(P)
 			to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
@@ -27,7 +27,6 @@
 			return
 		else
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
-			add_fingerprint(user)
 			return
 		. = ..()
 	if(. & COMPONENT_NO_INTERACT)
