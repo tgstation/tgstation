@@ -129,7 +129,7 @@
 	loading = TRUE
 	var/area/thunderdome = GLOB.areas_by_type[/area/tdome/arena] //snowflake code, yes. Needed so that camera mobs don't get permanently deleted
 	for(var/mob/camera/aiEye/remote/C in thunderdome)		
-		var/turf/T = locate(round((A.x + A.y)/2), max((B.y + 1),(A.y + 1)),A.z)// finds the middle x coordinate and 1 above topmost y coordinate.
+		var/turf/T = locate(round((A.x + B.x)/2), max((B.y + 1),(A.y + 1)),A.z)// finds the middle x coordinate and 1 above topmost y coordinate.
 		C.setLoc(T)
 	clear_arena() //Clear current arena
 	var/bd = M.load(get_load_point())
