@@ -207,7 +207,7 @@
 				pH = (((pH - R.pH) / total_volume) * amount) + pH
 			if(istype(my_atom, /obj/item/reagent_containers/))
 				var/obj/item/reagent_containers/RC = my_atom
-				RC.pH_check()//checks beaker resilience)
+				RC.pH_check()//checks beaker resilience
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
 			amount = CLAMP(amount, 0, R.volume)
