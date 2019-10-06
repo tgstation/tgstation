@@ -62,7 +62,7 @@
 	var/targetVol = 0 //the target volume, i.e. the total amount that can be created during a fermichem reaction.
 	var/reactedVol = 0 //how much of the reagent is reacted during a fermireaction
 	var/fermiIsReacting = FALSE //that prevents multiple reactions from occurring (i.e. add_reagent calls to process_reactions(), this stops any extra reactions.)
-	var/fermiReactID = null //ID of the chem being made during a fermireaction, kept here so it's cache isn't lost between loops/procs.
+	var/fermiReactID  //type of the chem being made during a fermireaction, kept here so it's cache isn't lost between loops/procs.
 
 
 
@@ -588,7 +588,7 @@
 							selected_reaction.on_reaction(src, my_atom, multiplier)
 							fermiIsReacting = TRUE
 							fermiReactID = selected_reaction
-							reaction_occurred = 1
+							reaction_occurred = TRUE
 
 					else //It's a little bit of a confusing nest, but esstentially we check if it's a fermireaction, then temperature, then pH. If this is true, the remainer of this handler is run.
 						return 0 //If pH is out of range
@@ -632,7 +632,7 @@
 								ME2.desc = "This extract has been used up."
 
 				selected_reaction.on_reaction(src, multiplier, special_react_result)
-				reaction_occurred = 1
+				reaction_occurred = TRUE
 				continue_reacting = TRUE
 
 	while(reaction_occurred)
