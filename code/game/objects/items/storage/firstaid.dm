@@ -34,8 +34,7 @@
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/bruise_pack = 2,
 		/obj/item/stack/medical/ointment = 2,
-		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/healthanalyzer = 1)
+		/obj/item/reagent_containers/hypospray/medipen = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/medical
@@ -107,7 +106,6 @@
 		/obj/item/stack/medical/bruise_pack = 2,
 		/obj/item/stack/medical/ointment = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/healthanalyzer = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
@@ -149,8 +147,7 @@
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/reagent_containers/spray/rhigoxane = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
-		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/healthanalyzer = 1)
+		/obj/item/reagent_containers/hypospray/medipen = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/toxin
@@ -175,8 +172,7 @@
 	    /obj/item/storage/pill_bottle/multiver/less = 1,
 		/obj/item/reagent_containers/syringe/syriniver = 3,
 		/obj/item/storage/pill_bottle/potassiodide = 1,
-		/obj/item/reagent_containers/hypospray/medipen/penacid = 1,
-		/obj/item/healthanalyzer = 1)
+		/obj/item/reagent_containers/hypospray/medipen/penacid = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/o2
@@ -201,8 +197,7 @@
 		/obj/item/reagent_containers/syringe/convermol = 3,
 		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/storage/pill_bottle/iron = 1,
-		/obj/item/healthanalyzer = 1)
+		/obj/item/storage/pill_bottle/iron = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/brute
@@ -227,8 +222,7 @@
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/trophazole = 1,
-		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
-		/obj/item/healthanalyzer = 1)
+		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/advanced
