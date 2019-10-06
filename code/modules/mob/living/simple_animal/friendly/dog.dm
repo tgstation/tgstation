@@ -584,6 +584,7 @@
 	desc = "It's the HoP's beloved corgi puppy."
 	gold_core_spawnable = NO_SPAWN
 	ian = TRUE
+	unique_pet = TRUE
 
 
 /mob/living/simple_animal/pet/dog/corgi/puppy/void		//Tribute to the corgis born in nullspace
