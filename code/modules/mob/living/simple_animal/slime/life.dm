@@ -5,6 +5,7 @@
 	var/Tempstun = 0 // temporary temperature stuns
 	var/Discipline = 0 // if a slime has been hit with a freeze gun, or wrestled/attacked off a human, they become disciplined and don't attack anymore for a while
 	var/SStun = 0 // stun variable
+	var/ligma = FALSE //did we get setup for an epic prank
 
 
 /mob/living/simple_animal/slime/Life()
@@ -515,6 +516,16 @@
 							break
 				else
 					to_say = "No... no listen"
+			else if (findtext(phrase, "ligma balls") && ligma)
+				to_say = "Nooooo...."
+				Target = who
+				ligma = FALSE
+				AIprocess() //Wake up the slime's Target AI, needed otherwise this doesn't work
+			else if (findtext(phrase, "ligma"))
+				to_say = "What's...ligma"
+				ligma = TRUE
+				addtimer(VARSET_CALLBACK(src, ligma, false), 20 SECONDS) //Gotta prank them fast
+
 
 		speech_buffer = list()
 
