@@ -38,7 +38,7 @@
 
 /obj/item/fermichem/pHbooklet/MouseDrop()
     var/mob/living/user = usr
-    if(numberOfPages >= 1)
+    if(numberOfPages)
         var/obj/item/fermichem/pHpaper/P = new /obj/item/fermichem/pHpaper
         P.add_fingerprint(user)
         P.forceMove(user)
