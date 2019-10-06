@@ -544,8 +544,8 @@
 		to_chat(usr, "<span class='warning'>Only a more advanced species could breka a rock such as this one!</span>")
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	if(H.dna.get_dna_level(SKILL_MINING) == SKILL_LEVEL_LEGENDARY)
-		..()
+	if(H.dna.get_skill_level(SKILL_MINING) == SKILL_LEVEL_LEGENDARY)
+		. = ..()
 
 /turf/closed/mineral/strong/gets_drilled(user)
 	new /obj/item/stack/sheet/mineral/mythril(src, new_amount = 10)
