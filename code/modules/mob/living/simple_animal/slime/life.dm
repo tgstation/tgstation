@@ -520,6 +520,7 @@
 				to_say = "Nooooo...."
 				Target = who
 				ligma = FALSE
+				Friends[who] = = -5 //This prank will never be forgotten
 				AIprocess() //Wake up the slime's Target AI, needed otherwise this doesn't work
 			else if (findtext(phrase, "ligma"))
 				to_say = "What's...ligma"
