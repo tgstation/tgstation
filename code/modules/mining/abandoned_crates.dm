@@ -9,6 +9,7 @@
 	var/lastattempt = null
 	var/attempts = 10
 	var/codelen = 4
+	var/qdel_on_open
 	tamperproof = 90
 
 /obj/structure/closet/crate/secure/loot/Initialize()
@@ -28,9 +29,9 @@
 			new /obj/item/reagent_containers/food/drinks/bottle/whiskey(src)
 			new /obj/item/lighter(src)
 			new /obj/item/reagent_containers/food/drinks/bottle/absinthe/premium(src)
-			new /obj/item/clothing/mask/cigarette/rollie/trippy(src)
-			new /obj/item/clothing/mask/cigarette/rollie/trippy(src)
-			new /obj/item/clothing/mask/cigarette/rollie/trippy(src)
+			new /obj/item/clothing/mask/cigarette/rollie(src)
+			new /obj/item/clothing/mask/cigarette/rollie(src)
+			new /obj/item/clothing/mask/cigarette/rollie(src)
 		if(6 to 10)
 			new /obj/item/melee/skateboard/pro(src)
 		if(11 to 15)
@@ -78,23 +79,23 @@
 			new /obj/item/clothing/suit/ianshirt(src)
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
-			new /obj/item/reagent_containers/glass/bottle/catmutation(src)
+			new /obj/item/toy/plush/awakenedplushie(src)
 		if(69 to 70)
 			new /obj/item/stack/ore/bluespace_crystal(src, 5)
 		if(71 to 72)
-			new /obj/item/reagent_containers/glass/bottle/lizardmutation(src)
+			new /obj/item/toy/plush/snakeplushie(src)
 		if(73 to 74)
-			new /obj/item/reagent_containers/glass/bottle/mothmutation(src)
+			new /mob/living/simple_animal/pet/gondola(src)
 		if(75 to 76)
 			new /obj/item/bikehorn/airhorn(src)
 		if(77 to 78)
-			new /obj/item/reagent_containers/glass/bottle/flymutation(src)
+			new /obj/item/toy/plush/lizardplushie(src)
 		if(79 to 80)
 			new /obj/item/stack/sheet/mineral/bananium(src, 10)
 		if(81 to 82)
 			new /obj/item/bikehorn/airhorn(src)
 		if(83 to 84)
-			new /obj/item/reagent_containers/glass/bottle/podmutation(src)
+			new /obj/item/toy/plush/beeplushie(src)
 		if(85 to 86)
 			new /obj/item/defibrillator/compact(src)
 		if(87) //1% chance
@@ -113,16 +114,10 @@
 		if(93)
 			new /obj/item/dnainjector/xraymut(src)
 		if(94)
-			new /obj/item/storage/backpack/clown(src)
-			new /obj/item/clothing/under/rank/civilian/clown(src)
-			new /obj/item/clothing/shoes/clown_shoes(src)
-			new /obj/item/pda/clown(src)
-			new /obj/item/clothing/mask/gas/clown_hat(src)
-			new /obj/item/bikehorn(src)
-			new /obj/item/toy/crayon/rainbow(src)
-			new /obj/item/reagent_containers/spray/waterflower(src)
+			new /mob/living/simple_animal/hostile/mimic/crate(src)
+			qdel_on_open = TRUE
 		if(95)
-			new /obj/item/reagent_containers/glass/bottle/skeletonmutation(src)
+			new /obj/item/toy/plush/nukeplushie(src)
 		if(96)
 			new /obj/item/banhammer(src)
 			new /obj/effect/mine/sound/bwoink(src)
@@ -224,6 +219,8 @@
 	if(locked)
 		boom(user)
 	else
+		if (qdel_on_open)
+			qdel(src)
 		..()
 
 /obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
