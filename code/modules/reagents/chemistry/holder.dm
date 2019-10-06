@@ -204,7 +204,6 @@
 				pH = 7
 			//In practice this is really confusing and players feel like it randomly melts their beakers, but I'm not sure how else to handle it. We'll see how it goes and I can remove this if it confuses people.
 			else if (ignore_pH == FALSE)
-				//if (((pH > R.pH) && (pH <= 7)) || ((pH < R.pH) && (pH >= 7)))
 				pH = (((pH - R.pH) / total_volume) * amount) + pH
 			if(istype(my_atom, /obj/item/reagent_containers/))
 				var/obj/item/reagent_containers/RC = my_atom
@@ -597,9 +596,8 @@
 					return 0 //If not hot enough
 
 		//Standard reaction mechanics:
-			else
-				if (C.FermiChem)//Just to make sure
-					return 0
+			else if (C.FermiChem)//Just to make sure
+				return 0
 
 				for(var/B in cached_required_reagents) //
 					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.01))
