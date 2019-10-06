@@ -230,6 +230,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	point_value = 20
 	merge_type = /obj/item/stack/sheet/mineral/silver
 	material_type = /datum/material/silver
+	tableVariant = /obj/structure/table/optable
 
 GLOBAL_LIST_INIT(silver_recipes, list ( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \

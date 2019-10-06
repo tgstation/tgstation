@@ -1,6 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a case where cleanbot would not clean anything else but trash with a \"clean trash\" option turned on."
-  - bugfix: "Fixed a case where cleanbot would never clean dead mices."
-  - bugfix: "Fixed a case where cleanbot could get infinitely stuck in one place when cleaning trash."

@@ -85,6 +85,17 @@
 	power_used = 2000
 	starting_amount = 10000
 
+// If the derelict gets lonely, make more friends.
+/obj/machinery/droneDispenser/derelict
+	name = "derelict drone shell dispenser"
+	desc = "A rusty machine that, when supplied with metal and glass, will periodically create a derelict drone shell. Does not need to be manually operated."
+	dispense_type = /obj/effect/mob_spawn/drone/derelict
+	end_create_message = "dispenses a derelict drone shell."
+	metal_cost = 10000
+	glass_cost = 5000
+	starting_amount = 0
+	cooldownTime = 600
+
 // An example of a custom drone dispenser.
 // This one requires no materials and creates basic hivebots
 /obj/machinery/droneDispenser/hivebot

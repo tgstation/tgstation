@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "CRAB-17 will no longer spawn in areas like the solar array or the engine chamber. This should decrease pink Wojak levels considerably."

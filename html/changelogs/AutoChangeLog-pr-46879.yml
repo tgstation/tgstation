@@ -1,0 +1,5 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - tweak: "Slight mapping improvement to KS13"
+  - rscadd: "KS13 now has mother drone board, a dronespeak granter and a drone printer."
