@@ -226,6 +226,8 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///Called when the obj is hit by a tesla bolt.
 /obj/proc/tesla_act(power, tesla_flags, shocked_targets)
+	if(QDELETED(src))
+		return
 	obj_flags |= BEING_SHOCKED
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced, tesla_flags, shocked_targets)

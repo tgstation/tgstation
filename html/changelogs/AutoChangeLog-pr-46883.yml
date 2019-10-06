@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - spellcheck: "fixes cards against space doing a centcomm instead of centcom"

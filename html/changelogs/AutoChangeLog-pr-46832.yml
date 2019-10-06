@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - bugfix: "fixed some issues with tgui interfaces regenerating on every click instead of on first open"

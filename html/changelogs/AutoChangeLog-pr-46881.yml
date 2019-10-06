@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - balance: "soulstones now cant absorb ungodly beings with no SOUL"

@@ -81,7 +81,7 @@
 		N.relay_signal(code, relay_code, source)
 
 /obj/item/nanite_remote/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "nanite_remote", name, 420, 800, master_ui, state)
 		ui.open()
@@ -200,7 +200,7 @@
 		N.relay_comm_signal(comm_code, relay_code, comm_message)
 
 /obj/item/nanite_remote/comm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "nanite_comm_remote", name, 420, 800, master_ui, state)
 		ui.open()
