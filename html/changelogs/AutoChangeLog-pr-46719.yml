@@ -1,0 +1,4 @@
+author: "Meyhazah"
+delete-after: True
+changes: 
+  - imageadd: "New sprite for the space dragon"
