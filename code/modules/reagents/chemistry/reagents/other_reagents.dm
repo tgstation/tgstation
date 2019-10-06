@@ -1216,7 +1216,6 @@
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
-
 /datum/reagent/colorful_reagent/powder
 	name = "Mundane Powder" //the name's a bit similar to the name of colorful reagent, but hey, they're practically the same chem anyway
 	var/colorname = "none"
@@ -1232,7 +1231,6 @@
 		description = "An invisible powder. Unfortunately, since it's invisible, it doesn't look like it'd color much of anything..."
 	else
 		description = "\An [colorname] powder, used for coloring things [colorname]."
-
 
 /datum/reagent/colorful_reagent/powder/red
 	name = "Red Powder"
@@ -1287,6 +1285,42 @@
 	colorname = "white"
 	color = "#FFFFFF" // white
 	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
+
+ /* used by crayons, can't color living things but still used for stuff like food recipes */
+
+/datum/reagent/colorful_reagent/powder/red/crayon
+	name = "Red Crayon Powder"
+	can_colour_mobs = FALSE
+
+/datum/reagent/colorful_reagent/powder/orange/crayon
+	name = "Orange Crayon Powder"
+	can_colour_mobs = FALSE
+
+/datum/reagent/colorful_reagent/powder/yellow/crayon
+	name = "Yellow Crayon Powder"
+	can_colour_mobs = FALSE
+
+/datum/reagent/colorful_reagent/powder/green/crayon
+	name = "Green Crayon Powder"
+	can_colour_mobs = FALSE
+
+/datum/reagent/colorful_reagent/powder/blue/crayon
+	name = "Blue Crayon Powder"
+	can_colour_mobs = FALSE
+
+/datum/reagent/colorful_reagent/powder/purple/crayon
+	name = "Purple Crayon Powder"
+	can_colour_mobs = FALSE
+
+//datum/reagent/colorful_reagent/powder/invisible/crayon
+
+/datum/reagent/colorful_reagent/powder/black/crayon
+	name = "Black Crayon Powder"
+	can_colour_mobs = FALSE
+
+/datum/reagent/colorful_reagent/powder/white/crayon
+	name = "White Crayon Powder"
+	can_colour_mobs = FALSE
 
 //////////////////////////////////Hydroponics stuff///////////////////////////////
 
@@ -1405,15 +1439,18 @@
 	color = "#C8A5DC"
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
 	taste_description = "rainbows"
+	var/can_colour_mobs = TRUE
 
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M)
-	M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
-	..()
+	if(can_colour_mobs)
+		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+		return ..()
 
 /datum/reagent/colorful_reagent/reaction_mob(mob/living/M, reac_volume)
-	M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
-	..()
+	if(can_colour_mobs)
+		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+		..()
 
 /datum/reagent/colorful_reagent/reaction_obj(obj/O, reac_volume)
 	if(O)
