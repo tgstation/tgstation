@@ -184,6 +184,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 // common trait sources
 #define TRAIT_GENERIC "generic"
+#define UNCONSCIOUS_BLIND "unconscious_blind"
 #define EYE_DAMAGE "eye_damage"
 #define GENETIC_MUTATION "genetic"
 #define OBESITY "obesity"
