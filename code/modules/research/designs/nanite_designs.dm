@@ -91,7 +91,8 @@
 
 /datum/design/nanites/nanite_sting
 	name = "Nanite Sting"
-	desc = "Stings a random non-host around the host with a barely-visible cluster of nanites, making them a new host. The sting might be felt."
+	desc = "Stings a random non-host around the host with a barely-visible cluster of nanites, making them a new host. The target will feel it. \
+			If the cluster finds no valid targets, it returns to the original host."
 	id = "nanite_sting_nanites"
 	program_type = /datum/nanite_program/triggered/nanite_sting
 	category = list("Utility Nanites")

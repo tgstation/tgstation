@@ -260,7 +260,8 @@
 
 /datum/nanite_program/triggered/nanite_sting
 	name = "Nanite Sting"
-	desc = "Stings a random non-host around the host with a barely-visible cluster of nanites, making them a new host. The sting might be felt."
+	desc = "Stings a random non-host around the host with a barely-visible cluster of nanites, making them a new host. The target will feel it. \
+			If the cluster finds no valid targets, it returns to the original host."
 	trigger_cost = 5
 	trigger_cooldown = 30
 	rogue_types = list(/datum/nanite_program/glitch, /datum/nanite_program/toxic)
