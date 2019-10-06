@@ -73,7 +73,7 @@
 	points = 30
 	materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
-	mine_experience = 20
+	mine_experience = 6
 
 /obj/item/stack/ore/iron
 	name = "iron ore"
@@ -83,7 +83,7 @@
 	points = 1
 	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
-	mine_experience = 2
+	mine_experience = 1
 
 /obj/item/stack/ore/glass
 	name = "sand pile"
@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "Plasma ore"
 	item_state = "Plasma ore"
 	singular_name = "plasma ore chunk"
-	points = 10
+	points = 3
 	materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 	mine_experience = 15
@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Silver ore"
 	singular_name = "silver ore chunk"
 	points = 16
-	mine_experience = 10
+	mine_experience = 3
 	materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "Gold ore"
 	singular_name = "gold ore chunk"
 	points = 18
-	mine_experience = 15
+	mine_experience = 5
 	materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	points = 50
 	materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
-	mine_experience = 20
+	mine_experience = 10
 
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	points = 60
 	materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
-	mine_experience = 40
+	mine_experience = 15
 
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
@@ -193,7 +193,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	points = 50
 	materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
-	mine_experience = 10
+	mine_experience = 3
 
 /obj/item/stack/ore/slag
 	name = "slag"
