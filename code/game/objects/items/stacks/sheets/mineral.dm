@@ -15,8 +15,8 @@ Mineral Sheets
 	Others:
 		- Adamantine
 		- Mythril
-		- Enriched Uranium
-		- Abductor
+		- Alien Alloy
+		- Coal
 */
 
 /obj/item/stack/sheet/mineral/Initialize(mapload)
@@ -231,6 +231,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	grind_results = list(/datum/reagent/silver = 20)
 	point_value = 20
 	merge_type = /obj/item/stack/sheet/mineral/silver
+	tableVariant = /obj/structure/table/optable
 
 GLOBAL_LIST_INIT(silver_recipes, list ( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
@@ -377,7 +378,7 @@ GLOBAL_LIST_INIT(adamantine_recipes, list(
  */
 
 /obj/item/stack/sheet/mineral/runite
-	name = "Runite"
+	name = "runite"
 	desc = "Rare material found in distant lands."
 	singular_name = "runite bar"
 	icon_state = "sheet-runite"
@@ -422,3 +423,36 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 /obj/item/stack/sheet/mineral/abductor/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.abductor_recipes
 	. = ..()
+
+/*
+ * Coal
+ */
+
+/obj/item/stack/sheet/mineral/coal
+	name = "coal"
+	desc = "Someone's gotten on the naughty list."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "slag"
+	singular_name = "coal lump"
+	merge_type = /obj/item/stack/sheet/mineral/coal
+	grind_results = list(/datum/reagent/carbon = 20)
+
+/obj/item/stack/sheet/mineral/coal/attackby(obj/item/W, mob/user, params)
+	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
+		var/turf/T = get_turf(src)
+		message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
+		log_game("Coal ignited by [key_name(user)] in [AREACOORD(T)]")
+		fire_act(W.get_temperature())
+		return TRUE
+	else
+		return ..()
+
+/obj/item/stack/sheet/mineral/coal/fire_act(exposed_temperature, exposed_volume)
+	atmos_spawn_air("co2=[amount*10];TEMP=[exposed_temperature]")
+	qdel(src)
+
+/obj/item/stack/sheet/mineral/coal/five
+	amount = 5
+
+/obj/item/stack/sheet/mineral/coal/ten
+	amount = 10

@@ -1,5 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - tweak: "The name of the viral DNA activator symptom has been changed to \"dormant DNA activator\", to avoid confusion with the viral self-adaptation and viral evolutionary acceleration symptoms."
-  - balance: "The dormant DNA activator symptom now activates as often as it should."

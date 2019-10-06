@@ -91,28 +91,26 @@
 
 /******BURN******/
 /*Suffix: -uri*/
-/datum/reagent/medicine/C2/ichiyuri
-	name = "Ichiyuri"
-	description = "Used to treat serious burns. Prolonged exposure can cause burns to itch."
+/datum/reagent/medicine/C2/lenturi
+	name = "Lenturi"
+	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	var/resetting_probability = 0
 	var/spammer = 0
 
-/datum/reagent/medicine/C2/ichiyuri/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM)
-	if(prob(resetting_probability) && !(M.restrained() || M.incapacitated()))
-		if(spammer < world.time)
-			to_chat(M,"<span class='warning'>You can't help but to itch the burn.</span>")
-			spammer = world.time + (10 SECONDS)
-		var/scab = rand(1,7)
-		M.adjustBruteLoss(scab*REM)
-		M.bleed(scab)
-		resetting_probability = 0
-	resetting_probability += (5*(current_cycle/10)) // 10 iterations = >51% to itch
-	..()
-	return TRUE
-
+/datum/reagent/medicine/C2/lenturi/on_mob_life(mob/living/carbon/M)
+		M.adjustFireLoss(-3 * REM)
+		M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
+		..()
+		return TRUE
+/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(mob/living/carbon/M)
+	M.add_movespeed_modifier(MOVESPEED_ID_LENTURI, update=TRUE, priority=100, multiplicative_slowdown=1.50, blacklisted_movetypes=(FLYING|FLOATING))
+	. = ..()
+/datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
+	M.remove_movespeed_modifier(MOVESPEED_ID_LENTURI)
+	
+	. = ..()
 /datum/reagent/medicine/C2/aiuri
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."
