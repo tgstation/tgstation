@@ -53,7 +53,7 @@
 			new /obj/item/toy/snappop/phoenix(src)
 			new /obj/item/toy/snappop/phoenix(src)
 		if(41 to 45)
-			new /obj/item/reagent_containers/food/snacks/burger/roburger(src)
+			new /obj/item/pda/clear(src)
 		if(46 to 50)
 			new /obj/item/storage/box/syndie_kit/chameleon/broken
 		if(51 to 52) // 2% chance
