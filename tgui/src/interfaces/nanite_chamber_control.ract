@@ -15,8 +15,8 @@
 				<ui-section label='Growth Rate'>{{data.regen_rate}}</ui-section>
 				<ui-section label='Safety Threshold'>{{data.safety_threshold}} <ui-button icon='pencil' action='set_safety'>Set</ui-button> </ui-section>
 				<ui-section label='Cloud ID'>{{data.cloud_id ? data.cloud_id : "No Cloud" }} <ui-button icon='pencil' action='set_cloud'>Set</ui-button> </ui-section>
-				<ui-section label='Cloud Sync'>{{data.cloud_active ? "Enabled" : "Disabled" }} <ui-button icon='pencil' action='toggle_cloud'>Toggle</ui-button> </ui-section>
 			</ui-section>
+      <ui-button icon='delete' style='danger' action='remove_nanites'>Destroy Nanites</ui-button>
 			<ui-display title='Programs'>
 				{{#each data.mob_programs}}
 					<ui-display title='{{name}}' button>
@@ -40,6 +40,13 @@
 								{{#each extra_settings}}
 								  <ui-section label='{{name}}'>{{value}}</ui-section>
 								{{/each}}
+                {{#if has_rules}}
+                  <ui-section label='Rules'>
+                    {{#each rules}}
+                      {{display}} <br>
+                    {{/each}}
+                  </ui-section>
+                {{/if}}
 							{{/if}}
 							{{#if data.scan_level >= 4}}
 								{{#if activation_code}}

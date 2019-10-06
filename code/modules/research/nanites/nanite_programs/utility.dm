@@ -8,7 +8,6 @@
 
 	var/sync_programs = TRUE
 	var/sync_overwrite = FALSE
-	var/overwrite_cloud = FALSE
 	var/set_cloud = 0
 
 /datum/nanite_program/viral/set_extra_setting(user, setting)
@@ -27,21 +26,16 @@
 				sync_programs = TRUE
 				sync_overwrite = TRUE
 	if(setting == "Cloud Overwrite")
-		var/overwrite_type = input("Choose what to do with the target's Cloud ID", name) as null|anything in list("Overwrite","Set to 0","Disable")
+		var/overwrite_type = input("Choose what to do with the target's Cloud ID", name) as null|anything in list("Overwrite","Set to 0 (Disable)")
 		if(!overwrite_type)
 			return
 		switch(overwrite_type)
-			if("Disable") //Don't change the cloud ID, but disable it
-				overwrite_cloud = FALSE
-				set_cloud = 0
-			if("Set to 0") //Set the cloud ID to 0
-				overwrite_cloud = TRUE
+			if("Set to 0 (Disable)") //Set the cloud ID to 0
 				set_cloud = 0
 			if("Overwrite") //Set the cloud ID to what we choose
 				var/new_cloud = input(user, "Choose the Cloud ID to set on infected nanites (1-100)", name, null) as null|num
 				if(isnull(new_cloud))
 					return
-				overwrite_cloud = TRUE
 				set_cloud = CLAMP(round(new_cloud, 1), 1, 100)
 
 /datum/nanite_program/viral/get_extra_setting(setting)
@@ -53,13 +47,9 @@
 		else
 			return "Add To"
 	if(setting == "Cloud Overwrite")
-		if(!overwrite_cloud)
-			return "Only Disable Sync"
-		else
-			return set_cloud
+		return set_cloud
 
 /datum/nanite_program/viral/copy_extra_settings_to(datum/nanite_program/viral/target)
-	target.overwrite_cloud = overwrite_cloud
 	target.set_cloud = set_cloud
 	target.sync_programs = sync_programs
 	target.sync_overwrite = sync_overwrite
@@ -69,10 +59,7 @@
 		if(prob(5))
 			if(sync_programs)
 				SEND_SIGNAL(M, COMSIG_NANITE_SYNC, nanites, sync_overwrite)
-			if(overwrite_cloud)
-				SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD, set_cloud)
-			else
-				SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD_SYNC, NANITE_CLOUD_DISABLE)
+			SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD, set_cloud)
 
 /datum/nanite_program/monitoring
 	name = "Monitoring"
@@ -141,40 +128,6 @@
 /datum/nanite_program/stealth/disable_passive_effect()
 	. = ..()
 	nanites.stealth = FALSE
-
-/datum/nanite_program/triggered/cloud_sync
-	name = "Cloud Sync"
-	desc = "The nanites can toggle cloud sync on and off."
-	trigger_cost = 0
-	trigger_cooldown = 2
-	rogue_types = list(/datum/nanite_program/toxic)
-	extra_settings = list("Activation Type")
-	var/activation_type = "Toggle"
-
-/datum/nanite_program/triggered/cloud_sync/set_extra_setting(user, setting)
-	if(setting == "Activation Type")
-		var/new_type = input("How should this program modify the cloud sync?", name) as null|anything in list("Disable","Enable","Toggle")
-		if(!new_type)
-			return
-		activation_type = new_type
-
-/datum/nanite_program/triggered/cloud_sync/get_extra_setting(setting)
-	if(setting == "Activation Type")
-		return activation_type
-
-/datum/nanite_program/triggered/cloud_sync/copy_extra_settings_to(datum/nanite_program/triggered/cloud_sync/target)
-	target.activation_type = activation_type
-
-/datum/nanite_program/triggered/cloud_sync/trigger()
-	if(!..())
-		return
-	switch(activation_type)
-		if("Toggle")
-			nanites.cloud_active = !nanites.cloud_active
-		if("Disable")
-			nanites.cloud_active = FALSE
-		if("Enable")
-			nanites.cloud_active = TRUE
 
 /datum/nanite_program/relay
 	name = "Relay"
@@ -294,14 +247,12 @@
 
 /datum/nanite_program/mitosis
 	name = "Mitosis"
-	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process, instead of drawing from a template. This rapidly speeds up the replication rate,\
-			but it causes occasional software errors due to faulty copies. However, cloud syncing disrupts the process; it will only work while turned off."
+	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process. Becomes more effective the more nanites are already in the host.\
+			The replication has also a chance to corrupt the nanite programming due to copy faults - cloud sync is highly recommended."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/mitosis/active_effect()
-	if(nanites.cloud_id && nanites.cloud_active)
-		return
 	var/rep_rate = round(nanites.nanite_volume / 50, 1) //0.5 per 50 nanite volume
 	rep_rate *= 0.5
 	nanites.adjust_nanites(null, rep_rate)
