@@ -526,7 +526,6 @@
 				ligma = TRUE
 				addtimer(VARSET_CALLBACK(src, ligma, FALSE), 20 SECONDS) //Gotta prank them fast
 
-
 		speech_buffer = list()
 
 	//Speech starts here
