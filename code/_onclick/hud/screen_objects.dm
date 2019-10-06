@@ -660,6 +660,16 @@
 	icon_state = "sanity3"
 	screen_loc = ui_mood
 
+/obj/screen/skills
+	name = "skills"
+	icon_state = "skills"
+	screen_loc = ui_skill_menu
+
+/obj/screen/skills/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.physiology.print_levels(H)
+
 /obj/screen/splash
 	icon = 'icons/blank_title.png'
 	icon_state = ""

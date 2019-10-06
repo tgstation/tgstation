@@ -16,6 +16,7 @@
 	singular_name = "ore chunk"
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
+	var/mine_experience = 5 //How much experience do you get for mining this ore?
 	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
 	var/list/stack_overlays
 
@@ -72,6 +73,7 @@
 	points = 30
 	materials = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
+	mine_experience = 20
 
 /obj/item/stack/ore/iron
 	name = "iron ore"
@@ -81,6 +83,7 @@
 	points = 1
 	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
+	mine_experience = 2
 
 /obj/item/stack/ore/glass
 	name = "sand pile"
@@ -91,6 +94,7 @@
 	materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
+	mine_experience = 0 //its sand
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50),\
@@ -124,15 +128,17 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "volcanic_sand"
 	icon_state = "volcanic_sand"
 	singular_name = "volcanic ash pile"
+	mine_experience = 0
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
 	item_state = "Plasma ore"
 	singular_name = "plasma ore chunk"
-	points = 15
+	points = 10
 	materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
+	mine_experience = 15
 
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
@@ -145,6 +151,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	item_state = "Silver ore"
 	singular_name = "silver ore chunk"
 	points = 16
+	mine_experience = 10
 	materials = list(/datum/material/silver=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
@@ -154,6 +161,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "Gold ore"
 	singular_name = "gold ore chunk"
 	points = 18
+	mine_experience = 15
 	materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
@@ -165,6 +173,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	points = 50
 	materials = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
+	mine_experience = 20
 
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
@@ -174,6 +183,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	points = 60
 	materials = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
+	mine_experience = 40
 
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
@@ -183,6 +193,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	points = 50
 	materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
+	mine_experience = 10
 
 /obj/item/stack/ore/slag
 	name = "slag"

@@ -277,6 +277,27 @@
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
+// Skills
+#define SKILL_LEVEL_NONE 0
+#define SKILL_LEVEL_NOVICE 1
+#define SKILL_LEVEL_APPRENTICE 2
+#define SKILL_LEVEL_JOURNEYMAN 3
+#define SKILL_LEVEL_EXPERT 4
+#define SKILL_LEVEL_MASTER 5
+#define SKILL_LEVEL_LEGENDARY 6
+
+#define SKILL_MINING "Mining"
+
+#define SKILL_EXP_NOVICE 100
+#define SKILL_EXP_APPRENTICE 250
+#define SKILL_EXP_JOURNEYMAN 500
+#define SKILL_EXP_EXPERT 900
+#define SKILL_EXP_MASTER 1500
+#define SKILL_EXP_LEGENDARY 2500
+
+//List of all skills, be sure to update this
+#define ALL_SKILLS list(SKILL_MINING)
+
 // Eye protection
 #define FLASH_PROTECTION_SENSITIVE -1
 #define FLASH_PROTECTION_NONE 0
