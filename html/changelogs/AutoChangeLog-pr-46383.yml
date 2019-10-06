@@ -1,0 +1,7 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - soundadd: "New sound effect for table slams and head slams"
+  - balance: "table slams knock down for 3 seconds instead of stunning for 4"
+  - balance: "table slams deal 10 brute and 40 stamina damage."
+  - rscadd: "Head slamming: neck grab someone then click a table to smash their head against it, dealing 40 brute to the head and 60 generalized stamina, as well as knocking down for 3 seconds. (stamina doesn't stack with normal damage)"
