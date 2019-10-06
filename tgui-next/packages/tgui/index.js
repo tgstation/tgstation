@@ -51,7 +51,7 @@ const setupApp = () => {
   // Determine if we can handle this route
   const route = getRoute(state);
   if (!route) {
-    logger.log('loading old tgui');
+    logger.warn('loading old tgui');
     // Load old TGUI using redirection method for IE8
     if (tridentVersion <= 4) {
       location.href = 'tgui-fallback.html?ref=' + ref;
