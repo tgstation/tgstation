@@ -22,7 +22,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
-	materials = list(/datum/material/iron=40,/datum/material/silver=40)
+	materials = list(/datum/material/iron=80)
 	flags_1 = CONDUCT_1
 	grind_results = list(/datum/reagent/iron = 3, /datum/reagent/silver = 3)
 	attack_verb = list("attacked", "stabbed", "poked")
