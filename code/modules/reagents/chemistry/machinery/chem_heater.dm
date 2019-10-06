@@ -123,9 +123,9 @@
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		data["partRating"]= 10**(M.rating-1)
 		if(M.rating == 4)
-			data["showPurity"] = 1
+			data["showPurity"] = TRUE
 		else
-			data["showPurity"] = 0
+			data["showPurity"] = FALSE
 
 	var beakerContents[0]
 	if(beaker)
