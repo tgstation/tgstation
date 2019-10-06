@@ -63,7 +63,7 @@
 		icon_state = "dominator-broken"
 
 /obj/machinery/dominator/examine(mob/user)
-	..()
+	. += ..()
 	if(!(stat & BROKEN))
 		if(gang && gang.domination_time != NOT_DOMINATING)
 			if(gang.domination_time > world.time)
