@@ -85,17 +85,17 @@
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
 		update_icon()
-		return
-	return ..()
-
 	if(beaker)
 		if(istype(I, /obj/item/reagent_containers/dropper))
 			var/obj/item/reagent_containers/dropper/D = I
 			D.afterattack(beaker, user, 1)
-
-		if(istype(I, /obj/item/reagent_containers/syringe))
+		else if(istype(I, /obj/item/reagent_containers/syringe))
 			var/obj/item/reagent_containers/syringe/S = I
 			S.afterattack(beaker, user, 1)
+		return
+	return ..()
+
+
 
 
 /obj/machinery/chem_heater/on_deconstruction()
