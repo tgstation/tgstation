@@ -273,16 +273,16 @@
 		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 			continue
 		target_hosts += L
-		if(!target_hosts.len)
-			consume_nanites(-5)
-			return
-		var/mob/living/infectee = pick(target_hosts)
-		if(prob(100 - (infectee.get_permeability_protection() * 100)))
-			//just like with Infective Exo-Locomotion, this can take over existing nanites.
-			infectee.AddComponent(/datum/component/nanites, 5)
-			SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
-			infectee.investigate_log("was infected by a nanite cluster by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
-			to_chat(infectee, "<span class='warning'>You feel a tiny prick.</span>")
+	if(!target_hosts.len)
+		consume_nanites(-5)
+		return
+	var/mob/living/infectee = pick(target_hosts)
+	if(prob(100 - (infectee.get_permeability_protection() * 100)))
+		//just like with Infective Exo-Locomotion, this can take over existing nanites.
+		infectee.AddComponent(/datum/component/nanites, 5)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		infectee.investigate_log("was infected by a nanite cluster by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
+		to_chat(infectee, "<span class='warning'>You feel a tiny prick.</span>")
 
 /datum/nanite_program/mitosis
 	name = "Mitosis"
