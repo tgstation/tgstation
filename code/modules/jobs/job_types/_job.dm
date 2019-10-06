@@ -74,7 +74,7 @@
 	if(roundstart_experience && ishuman(H))
 		var/mob/living/carbon/human/experiencer = H
 		for(var/i in roundstart_experience)
-			experiencer.physiology.adjust_experience(i, roundstart_experience[i], experiencer)
+			experiencer.dna.adjust_experience(i, roundstart_experience[i], experiencer)
 
 
 /datum/job/proc/announce(mob/living/carbon/human/H)

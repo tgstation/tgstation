@@ -76,9 +76,9 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if (mineralType && (mineralAmt > 0))
-			H.physiology.adjust_experience(SKILL_MINING, initial(mineralType.mine_experience) * mineralAmt, H)
+			H.dna.adjust_experience(SKILL_MINING, initial(mineralType.mine_experience) * mineralAmt, H)
 		else
-			H.physiology.adjust_experience(SKILL_MINING, 4, H)
+			H.dna.adjust_experience(SKILL_MINING, 4, H)
 
 	for(var/obj/effect/temp_visual/mining_overlay/M in src)
 		qdel(M)
@@ -544,7 +544,7 @@
 		to_chat(usr, "<span class='warning'>Only a more advanced species could breka a rock such as this one!</span>")
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	if(H.physiology.get_skill_level(SKILL_MINING) == SKILL_LEVEL_LEGENDARY)
+	if(H.dna.get_dna_level(SKILL_MINING) == SKILL_LEVEL_LEGENDARY)
 		..()
 
 /turf/closed/mineral/strong/gets_drilled(user)

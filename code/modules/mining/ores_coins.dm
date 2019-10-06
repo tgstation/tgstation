@@ -135,10 +135,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "Plasma ore"
 	item_state = "Plasma ore"
 	singular_name = "plasma ore chunk"
-	points = 3
+	points = 15
 	materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
-	mine_experience = 15
+	mine_experience = 5
 
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
