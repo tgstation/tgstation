@@ -30,20 +30,20 @@
 
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
-		return 0
+		return FALSE
 
 	if(M == user)
 		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src].</span>")
 		if(self_delay)
 			if(!do_mob(user, M, self_delay))
-				return 0
+				return FALSE
 		to_chat(M, "<span class='notice'>You [apply_method] [src].</span>")
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] attempts to force [M] to [apply_method] [src].</span>")
 		if(!do_mob(user, M))
-			return 0
+			return FALSE
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
@@ -56,7 +56,7 @@
 		reagents.reaction(M, apply_type)
 		reagents.trans_to(M, reagents.total_volume)
 	qdel(src)
-	return 1
+	return TRUE
 
 
 /obj/item/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
