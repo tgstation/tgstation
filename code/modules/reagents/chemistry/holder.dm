@@ -571,7 +571,7 @@
 					fermiIsReacting = FALSE
 					SSblackbox.record_feedback("tally", "fermi_chem", 1, ("[Ferm] explosion"))
 					Ferm.FermiExplode(src, my_atom, volume = total_volume, temp = chem_temp, pH = pH)
-					return 0
+					return
 
 				for(var/B in cached_required_reagents)
 					multiplier = min(multiplier, round((get_reagent_amount(B) / cached_required_reagents[B]), 0.01))
