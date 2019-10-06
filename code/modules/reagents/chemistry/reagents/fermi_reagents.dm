@@ -15,7 +15,7 @@
 	if(cached_purity == 1)
 		cached_purity = purity
 	else if(purity < 0)
-		CRASH("Purity below 0 for chem: [type], Please let Fermis Know!")
+		CRASH("Purity below 0 for chem: [type], yell at coders")
 	if(chemical_flags & REAGENT_DONOTSPLIT)
 		return
 
@@ -46,7 +46,7 @@
 		return
 	cached_purity = purity //purity SHOULD be precalculated from the add_reagent, update cache.
 	if (purity < 0)
-		CRASH("Purity below 0 for chem: [type], Please let Fermis Know!")
+		CRASH("Purity below 0 for chem: [type], yell at coders, this shit should never happen ever")
 	if(chemical_flags & REAGENT_DONOTSPLIT)
 		return
 
