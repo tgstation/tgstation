@@ -80,7 +80,7 @@
 	fail_prob = min(max(0, modded_time - (time * 2)),99)//if modded_time > time * 2, then fail_prob = modded_time - time*2. starts at 0, caps at 99
 	modded_time = min(modded_time, time * 2)//also if that, then cap modded_time at time*2
 
-	if(iscyborg(user))//any immunities to surgery slowdown should go in this check
+	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
 		modded_time = time
 
 	if(do_after(user, modded_time, target = target))
