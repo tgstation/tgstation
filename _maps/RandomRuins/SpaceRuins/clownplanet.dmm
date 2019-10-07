@@ -1,63 +1,791 @@
-"a" = (/turf/template_noop,/area/template_noop)
-"b" = (/turf/closed/mineral{color = "#de1d1d"},/area/ruin/powered/clownplanet)
-"c" = (/turf/open/floor/bronze,/area/ruin/powered/clownplanet)
-"d" = (/obj/structure/flora/rock/pile,/turf/open/floor/bronze,/area/ruin/powered/clownplanet)
-"e" = (/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"f" = (/turf/closed/wall/mineral/bananium,/area/ruin/powered/clownplanet)
-"g" = (/turf/open/floor/engine,/area/ruin/powered/clownplanet)
-"h" = (/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer,/turf/open/floor/engine,/area/ruin/powered/clownplanet)
-"i" = (/obj/structure/sign/warning,/turf/closed/wall/mineral/bananium,/area/ruin/powered/clownplanet)
-"j" = (/obj/structure/flora/ausbushes/palebush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"k" = (/obj/structure/flora/rock/pile,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"l" = (/obj/structure/sign/warning/xeno_mining,/turf/closed/wall/mineral/bananium,/area/ruin/powered/clownplanet)
-"m" = (/obj/structure/flora/ausbushes/reedbush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"n" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/banana,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"o" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"p" = (/obj/structure/flora/ausbushes/grassybush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"q" = (/obj/structure/flora/ausbushes/ppflowers,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"r" = (/obj/structure/sink/puddle,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"s" = (/obj/structure/flora/ausbushes/brflowers,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"t" = (/turf/open/floor/plasteel/bluespace,/area/ruin/powered/clownplanet)
-"u" = (/obj/structure/flora/rock,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"v" = (/turf/open/floor/mineral/bananium,/area/ruin/powered/clownplanet)
-"w" = (/obj/machinery/door/airlock/bananium,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"x" = (/obj/item/assembly/mousetrap/armed,/turf/open/floor/plasteel/bluespace,/area/ruin/powered/clownplanet)
-"y" = (/obj/structure/flora/tree/jungle,/turf/open/floor/plasteel/bluespace,/area/ruin/powered/clownplanet)
-"z" = (/obj/structure/flora/ausbushes/ywflowers,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"A" = (/obj/structure/flora/ausbushes/sunnybush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"B" = (/obj/structure/flora/ausbushes/stalkybush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"C" = (/obj/structure/flora/ausbushes/pointybush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
-"D" = (/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
-"E" = (/obj/item/assembly/mousetrap/armed,/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
-"F" = (/obj/item/shovel,/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
-"G" = (/obj/effect/mob_spawn/human/clown/corpse,/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
-"H" = (/turf/closed/mineral/bananium{color = "#de1d1d"},/area/ruin/powered/clownplanet)
-"I" = (/obj/item/pickaxe,/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
-"J" = (/obj/item/flashlight/lamp/bananalamp,/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/mineral{
+	color = "#de1d1d"
+	},
+/area/ruin/powered/clownplanet)
+"c" = (
+/turf/open/floor/bronze,
+/area/ruin/powered/clownplanet)
+"d" = (
+/obj/structure/flora/rock/pile,
+/turf/open/floor/bronze,
+/area/ruin/powered/clownplanet)
+"e" = (
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"f" = (
+/turf/closed/wall/mineral/sandstone,
+/area/ruin/powered/clownplanet)
+"g" = (
+/turf/open/floor/engine,
+/area/ruin/powered/clownplanet)
+"h" = (
+/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer,
+/turf/open/floor/engine,
+/area/ruin/powered/clownplanet)
+"i" = (
+/obj/structure/sign/warning,
+/turf/closed/wall/mineral/sandstone,
+/area/ruin/powered/clownplanet)
+"j" = (
+/obj/structure/flora/ausbushes/palebush,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"k" = (
+/obj/structure/flora/rock/pile,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"l" = (
+/obj/structure/sign/warning/xeno_mining,
+/turf/closed/wall/mineral/sandstone,
+/area/ruin/powered/clownplanet)
+"m" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"n" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/banana,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"o" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"p" = (
+/obj/structure/flora/ausbushes/grassybush,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"q" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"r" = (
+/obj/structure/sink/puddle,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"s" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"t" = (
+/turf/open/floor/plasteel/bluespace,
+/area/ruin/powered/clownplanet)
+"u" = (
+/obj/structure/flora/rock,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"v" = (
+/turf/open/floor/mineral/bananium,
+/area/ruin/powered/clownplanet)
+"w" = (
+/obj/machinery/door/airlock/bananium,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"x" = (
+/obj/item/assembly/mousetrap/armed,
+/turf/open/floor/plasteel/bluespace,
+/area/ruin/powered/clownplanet)
+"y" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/plasteel/bluespace,
+/area/ruin/powered/clownplanet)
+"z" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"A" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"B" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"C" = (
+/obj/structure/flora/ausbushes/pointybush,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"D" = (
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+"E" = (
+/obj/item/assembly/mousetrap/armed,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+"F" = (
+/obj/item/shovel,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+"G" = (
+/obj/effect/mob_spawn/human/clown/corpse,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+"H" = (
+/turf/closed/mineral/bananium{
+	color = "#de1d1d"
+	},
+/area/ruin/powered/clownplanet)
+"I" = (
+/obj/item/pickaxe,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+"J" = (
+/obj/item/flashlight/lamp/bananalamp,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/clownplanet)
+"K" = (
+/obj/structure/signpost,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"L" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"M" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"N" = (
+/obj/machinery/vending/cola/random,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"O" = (
+/obj/item/bedsheet/clown,
+/obj/structure/bed,
+/obj/effect/mob_spawn/human/clown/corpse,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
+"P" = (
+/obj/machinery/vending/snack/random,
+/turf/open/floor/grass,
+/area/ruin/powered/clownplanet)
 
 (1,1,1) = {"
-aaaaaaaaabbbbbbaaaaaaaaa
-aaaaaabbbbcccdbbbbaaaaaa
-aaaabbbefcdghccfebbbaaaa
-aaabbeeefifggfifeeebbaaa
-aabbeejeeklffleeemeebbaa
-aabnoeepeeqeeekeeeeqnbaa
-abbreneoejeeeseeopnerbba
-abneseeeeeemeeqeeeejenba
-abeeeeqeoeeeeeeeemeeeeba
-bbeeeeeetttttttteeeeoebb
-bumevtvtvvvtvttvtvtveeub
-wxttvvvtvtvtvvtvtvvtttxw
-wxttvtvtvyvtvtvvtvtvttxw
-bueevtvtvvvtvttvtvtveeub
-bbeeeeeetttttttteeeezebb
-abezeeAeeeeeeeeeeeAeeeba
-abeeeeeeeeeeeeezeeeeeBba
-abbuBebbbbbbpeCbbbbbubba
-aabbbbbDDDDbbEbbDFGHbbaa
-aabbHIGDbbDDDDDDDbbbbbaa
-aaabbHHbbbbbbDbbHbbbbaaa
-aaaabbbbbbbHJGbbbbbbaaaa
-aaaaaabbbbbbHbbbbbaaaaaa
-aaaaaaaaabbbbbbaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+w
+w
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+u
+x
+x
+u
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+n
+e
+e
+m
+t
+t
+e
+e
+L
+N
+b
+b
+b
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+b
+b
+n
+r
+e
+e
+e
+e
+t
+t
+e
+e
+z
+e
+u
+b
+b
+b
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+b
+b
+e
+o
+e
+s
+e
+e
+v
+v
+v
+v
+e
+e
+e
+B
+b
+H
+b
+b
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+b
+e
+e
+e
+n
+e
+e
+e
+t
+v
+t
+t
+e
+e
+e
+e
+b
+I
+H
+b
+a
+a
+"}
+(7,1,1) = {"
+a
+b
+b
+e
+j
+e
+e
+e
+q
+e
+v
+v
+v
+v
+e
+A
+e
+b
+b
+G
+H
+b
+b
+a
+"}
+(8,1,1) = {"
+a
+b
+e
+e
+e
+p
+o
+e
+e
+e
+t
+t
+t
+t
+e
+e
+e
+b
+D
+D
+b
+b
+b
+a
+"}
+(9,1,1) = {"
+a
+b
+f
+f
+e
+e
+e
+e
+o
+t
+v
+v
+v
+v
+t
+e
+O
+b
+D
+b
+b
+b
+b
+a
+"}
+(10,1,1) = {"
+b
+b
+c
+i
+k
+e
+j
+e
+e
+t
+v
+t
+y
+v
+t
+e
+e
+b
+D
+b
+b
+b
+b
+b
+"}
+(11,1,1) = {"
+b
+c
+d
+f
+l
+q
+e
+e
+e
+t
+v
+v
+v
+v
+t
+e
+e
+b
+D
+D
+b
+b
+b
+b
+"}
+(12,1,1) = {"
+b
+c
+g
+g
+f
+e
+e
+m
+e
+t
+t
+t
+t
+t
+t
+e
+e
+b
+b
+D
+b
+H
+b
+b
+"}
+(13,1,1) = {"
+b
+c
+h
+g
+f
+e
+e
+e
+e
+t
+v
+v
+v
+v
+t
+e
+e
+p
+b
+D
+b
+J
+H
+b
+"}
+(14,1,1) = {"
+b
+d
+c
+f
+l
+e
+s
+e
+e
+t
+t
+v
+t
+t
+t
+e
+e
+e
+E
+D
+D
+G
+b
+b
+"}
+(15,1,1) = {"
+b
+b
+c
+i
+e
+k
+e
+q
+e
+t
+t
+t
+v
+t
+t
+e
+e
+C
+b
+D
+b
+b
+b
+b
+"}
+(16,1,1) = {"
+a
+b
+f
+f
+e
+e
+e
+e
+e
+t
+v
+v
+v
+v
+t
+e
+z
+b
+b
+D
+b
+b
+b
+a
+"}
+(17,1,1) = {"
+a
+b
+e
+e
+e
+e
+o
+e
+e
+e
+t
+t
+t
+t
+e
+e
+e
+b
+D
+D
+H
+b
+b
+a
+"}
+(18,1,1) = {"
+a
+b
+b
+e
+m
+e
+p
+e
+m
+e
+v
+v
+v
+v
+e
+e
+e
+b
+F
+b
+b
+b
+b
+a
+"}
+(19,1,1) = {"
+a
+a
+b
+e
+e
+e
+n
+e
+K
+e
+t
+v
+t
+t
+e
+A
+e
+b
+G
+b
+b
+b
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+b
+b
+e
+q
+e
+j
+e
+e
+v
+t
+v
+v
+e
+e
+e
+b
+H
+b
+b
+b
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+b
+b
+n
+r
+e
+e
+o
+e
+t
+t
+e
+z
+e
+e
+u
+b
+b
+b
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+n
+e
+e
+e
+t
+t
+e
+e
+M
+P
+b
+b
+b
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+u
+x
+x
+u
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(24,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+w
+w
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}
