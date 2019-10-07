@@ -122,7 +122,7 @@ LOG_MANIFEST
 #LOG_JOB_DEBUG
 
 ## log tgui debug information
-#LOG_TGUI_DEBUG
+LOG_TGUI_DEBUG
 
 ## log all world.Topic() calls
 # LOG_WORLD_TOPIC
