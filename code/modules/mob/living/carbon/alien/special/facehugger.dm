@@ -120,7 +120,7 @@
 		Leap(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/M)
-	// valid targets: carbons except aliens and devils
+	// valid targets: carbons except aliens, devils, skeletons and plasmamen
 	// facehugger state early exit checks
 	if(stat != CONSCIOUS)
 		return FALSE
@@ -128,7 +128,7 @@
 		return FALSE
 	if(iscarbon(M))
 		// disallowed carbons
-		if(isalien(M) || istruedevil(M))
+		if(isalien(M) || istruedevil(M) || isskeleton(M) || isplasmaman(M))
 			return FALSE
 		var/mob/living/carbon/target = M
 		// gotta have a head to be implanted (no changelings or sentient plants)
