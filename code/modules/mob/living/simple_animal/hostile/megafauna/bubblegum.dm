@@ -72,13 +72,6 @@ Difficulty: Hard
 							   /datum/action/innate/megafauna_attack/blood_warp)
 	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
-	. = ..()
-	if(true_spawn)
-		for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
-			if(B != src)
-				return INITIALIZE_HINT_QDEL //There can be only one
-
 /datum/action/innate/megafauna_attack/triple_charge
 	name = "Triple Charge"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
