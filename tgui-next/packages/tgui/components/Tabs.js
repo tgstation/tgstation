@@ -1,11 +1,6 @@
-import { Component } from 'inferno';
 import { classes, normalizeChildren } from 'common/react';
-import { Box } from './Box';
-import { Icon } from './Icon';
-import { createLogger } from '../logging';
+import { Component } from 'inferno';
 import { Button } from './Button';
-
-const logger = createLogger('Tabs');
 
 export class Tabs extends Component {
   constructor(props) {

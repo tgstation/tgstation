@@ -16,6 +16,8 @@
     display: table-cell;
     // padding-right: 2px;
     border-right: 2px solid rgba(255, 255, 255, 0.1);
+    // Disable baseline alignment when doing vertical tabs
+    vertical-align: top;
   }
 
   .Tabs__tab {
