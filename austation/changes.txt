@@ -12,4 +12,5 @@ Terra:Australium reagent
 Terra:Luminol and Energized Luminol reagents
 Terra:Trekchems have returned, byebye Cobby!
 Effectism:Added Custom plaques
+Effectism:Gangs and Gangmageddon gamemodes
 Terra:OOC remains active during sandbox rounds
