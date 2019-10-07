@@ -82,7 +82,7 @@
 	if(!beehome)
 		. += "<span class='warning'>This bee is homeless!</span>"
 
-/mob/living/simple_animal/hostile/ListTargets() // Bee processing is expessive, so we override them finding targets here.
+/mob/living/simple_animal/hostile/poison/bees/ListTargets() // Bee processing is expessive, so we override them finding targets here.
 	if(!search_objects) //In case we want to have purely hostile bees
 		return ..()
 	else
