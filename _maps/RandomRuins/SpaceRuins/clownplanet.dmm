@@ -1,0 +1,63 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral{color = "#de1d1d"},/area/ruin/powered/clownplanet)
+"c" = (/turf/open/floor/bronze,/area/ruin/powered/clownplanet)
+"d" = (/obj/structure/flora/rock/pile,/turf/open/floor/bronze,/area/ruin/powered/clownplanet)
+"e" = (/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"f" = (/turf/closed/wall/mineral/bananium,/area/ruin/powered/clownplanet)
+"g" = (/turf/open/floor/engine,/area/ruin/powered/clownplanet)
+"h" = (/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer,/turf/open/floor/engine,/area/ruin/powered/clownplanet)
+"i" = (/obj/structure/sign/warning,/turf/closed/wall/mineral/bananium,/area/ruin/powered/clownplanet)
+"j" = (/obj/structure/flora/ausbushes/palebush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"k" = (/obj/structure/flora/rock/pile,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"l" = (/obj/structure/sign/warning/xeno_mining,/turf/closed/wall/mineral/bananium,/area/ruin/powered/clownplanet)
+"m" = (/obj/structure/flora/ausbushes/reedbush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"n" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/banana,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"o" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"p" = (/obj/structure/flora/ausbushes/grassybush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"q" = (/obj/structure/flora/ausbushes/ppflowers,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"r" = (/obj/structure/sink/puddle,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"s" = (/obj/structure/flora/ausbushes/brflowers,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"t" = (/turf/open/floor/plasteel/bluespace,/area/ruin/powered/clownplanet)
+"u" = (/obj/structure/flora/rock,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"v" = (/turf/open/floor/mineral/bananium,/area/ruin/powered/clownplanet)
+"w" = (/obj/machinery/door/airlock/bananium,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"x" = (/obj/item/assembly/mousetrap/armed,/turf/open/floor/plasteel/bluespace,/area/ruin/powered/clownplanet)
+"y" = (/obj/structure/flora/tree/jungle,/turf/open/floor/plasteel/bluespace,/area/ruin/powered/clownplanet)
+"z" = (/obj/structure/flora/ausbushes/ywflowers,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"A" = (/obj/structure/flora/ausbushes/sunnybush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"B" = (/obj/structure/flora/ausbushes/stalkybush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"C" = (/obj/structure/flora/ausbushes/pointybush,/turf/open/floor/grass,/area/ruin/powered/clownplanet)
+"D" = (/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
+"E" = (/obj/item/assembly/mousetrap/armed,/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
+"F" = (/obj/item/shovel,/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
+"G" = (/obj/effect/mob_spawn/human/clown/corpse,/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
+"H" = (/turf/closed/mineral/bananium{color = "#de1d1d"},/area/ruin/powered/clownplanet)
+"I" = (/obj/item/pickaxe,/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
+"J" = (/obj/item/flashlight/lamp/bananalamp,/turf/open/floor/plating/asteroid,/area/ruin/powered/clownplanet)
+
+(1,1,1) = {"
+aaaaaaaaabbbbbbaaaaaaaaa
+aaaaaabbbbcccdbbbbaaaaaa
+aaaabbbefcdghccfebbbaaaa
+aaabbeeefifggfifeeebbaaa
+aabbeejeeklffleeemeebbaa
+aabnoeepeeqeeekeeeeqnbaa
+abbreneoejeeeseeopnerbba
+abneseeeeeemeeqeeeejenba
+abeeeeqeoeeeeeeeemeeeeba
+bbeeeeeetttttttteeeeoebb
+bumevtvtvvvtvttvtvtveeub
+wxttvvvtvtvtvvtvtvvtttxw
+wxttvtvtvyvtvtvvtvtvttxw
+bueevtvtvvvtvttvtvtveeub
+bbeeeeeetttttttteeeezebb
+abezeeAeeeeeeeeeeeAeeeba
+abeeeeeeeeeeeeezeeeeeBba
+abbuBebbbbbbpeCbbbbbubba
+aabbbbbDDDDbbEbbDFGHbbaa
+aabbHIGDbbDDDDDDDbbbbbaa
+aaabbHHbbbbbbDbbHbbbbaaa
+aaaabbbbbbbHJGbbbbbbaaaa
+aaaaaabbbbbbHbbbbbaaaaaa
+aaaaaaaaabbbbbbaaaaaaaaa
+"}
