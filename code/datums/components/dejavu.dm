@@ -63,6 +63,7 @@
 
 /datum/component/dejavu/Destroy()
 	starting_turf = null
+	saved_bodyparts = null
 	return ..()
 
 /datum/component/dejavu/proc/rewind()
@@ -78,6 +79,7 @@
 		addtimer(CALLBACK(src, rewind_type), rewind_interval)
 	else
 		to_chat(parent, "<span class=notice>But the memory falls out of your reach.</span>")
+		qdel(src)
 
 /datum/component/dejavu/proc/rewind_living()
 	var/mob/living/master = parent
