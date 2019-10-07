@@ -26,5 +26,5 @@
 /datum/component/beauty/Destroy()
 	. = ..()
 	var/area/A = get_area(parent)
-	if(istype(A)) 
+	if(A)
 		exit_area(null, A)
