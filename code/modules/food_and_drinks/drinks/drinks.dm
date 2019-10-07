@@ -131,7 +131,7 @@
 	qdel(src)
 	target.Bumped(B)
 
-/obj/item/reagent_containers/food/drinks/bullet_act(obj/item/projectile/P)
+/obj/item/reagent_containers/food/drinks/bullet_act(obj/projectile/P)
 	. = ..()
 	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
 		var/atom/T = get_turf(src)
@@ -442,7 +442,7 @@
 		qdel(src)
 	..()
 
-/obj/item/reagent_containers/food/drinks/soda_cans/bullet_act(obj/item/projectile/P)
+/obj/item/reagent_containers/food/drinks/soda_cans/bullet_act(obj/projectile/P)
 	. = ..()
 	if(!(P.nodamage) && P.damage_type == BRUTE && !QDELETED(src))
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)

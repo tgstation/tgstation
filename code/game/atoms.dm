@@ -212,7 +212,7 @@
 
 	return ..()
 
-/atom/proc/handle_ricochet(obj/item/projectile/P)
+/atom/proc/handle_ricochet(obj/projectile/P)
 	return
 
 ///Can the mover object pass this atom, while heading for the target turf
@@ -413,7 +413,7 @@
   *
   * Default behaviour is to send the COMSIG_ATOM_BULLET_ACT and then call on_hit() on the projectile
   */
-/atom/proc/bullet_act(obj/item/projectile/P, def_zone)
+/atom/proc/bullet_act(obj/projectile/P, def_zone)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
 

@@ -70,7 +70,10 @@
 				if(user.grab_state < GRAB_AGGRESSIVE)
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
-				tablepush(user, pushed_mob)
+				if(user.grab_state >= GRAB_NECK)
+					tableheadsmash(user, pushed_mob)
+				else
+					tablepush(user, pushed_mob)
 			if(user.a_intent == INTENT_HELP)
 				pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
 									"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
@@ -126,14 +129,29 @@
 		pushed_mob.pass_flags &= ~PASSTABLE
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
-	pushed_mob.Paralyze(40)
-	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto [src]!</span>", \
-								"<span class='userdanger'>[user] slams you onto [src]!</span>")
+	pushed_mob.Knockdown(30)
+	pushed_mob.apply_damage(10, BRUTE)
+	pushed_mob.apply_damage(40, STAMINA)
+	if(user.mind?.martial_art?.smashes_tables)
+		deconstruct(FALSE)
+	playsound(pushed_mob, "sound/effects/tableslam.ogg", 90, TRUE)
+	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto \the [src]!</span>", \
+								"<span class='userdanger'>[user] slams you onto \the [src]!</span>")
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
-	if(!ishuman(pushed_mob))
-		return
-	var/mob/living/carbon/human/H = pushed_mob
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
+
+/obj/structure/table/proc/tableheadsmash(mob/living/user, mob/living/pushed_mob)
+	pushed_mob.Knockdown(30)
+	pushed_mob.apply_damage(40, BRUTE, BODY_ZONE_HEAD)
+	pushed_mob.apply_damage(60, STAMINA)
+	take_damage(50)
+	if(user.mind?.martial_art?.smashes_tables)
+		deconstruct(FALSE)
+	playsound(pushed_mob, "sound/effects/tableheadsmash.ogg", 90, TRUE)
+	pushed_mob.visible_message("<span class='danger'>[user] smashes [pushed_mob]'s head against \the [src]!</span>",
+								"<span class='userdanger'>[user] smashes your head against \the [src]</span>")
+	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
+	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_headsmash)
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1) && user.a_intent != INTENT_HELP)
