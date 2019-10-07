@@ -69,16 +69,17 @@
 	else
 		return attack_hand(user)
 
-/turf/closed/mineral/proc/gets_drilled(user)
+/turf/closed/mineral/proc/gets_drilled(user, give_exp = TRUE)
 	if (mineralType && (mineralAmt > 0))
 		new mineralType(src, mineralAmt)
 		SSblackbox.record_feedback("tally", "ore_mined", mineralAmt, mineralType)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if (mineralType && (mineralAmt > 0))
-			H.dna.adjust_experience(SKILL_MINING, initial(mineralType.mine_experience) * mineralAmt, H)
-		else
-			H.dna.adjust_experience(SKILL_MINING, 4, H)
+		if(give_exp)
+			if (mineralType && (mineralAmt > 0))
+				H.dna.adjust_experience(SKILL_MINING, initial(mineralType.mine_experience) * mineralAmt, H)
+			else
+				H.dna.adjust_experience(SKILL_MINING, 4, H)
 
 	for(var/obj/effect/temp_visual/mining_overlay/M in src)
 		qdel(M)
@@ -548,7 +549,7 @@
 		. = ..()
 
 /turf/closed/mineral/strong/gets_drilled(user)
-	new /obj/item/stack/sheet/mineral/mythril(src, 10)
+	new /obj/item/stack/sheet/mineral/mythril(src, 5)
 	var/flags = NONE
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE

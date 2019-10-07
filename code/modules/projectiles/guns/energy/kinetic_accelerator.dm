@@ -130,7 +130,13 @@
 		carried = 1
 
 	deltimer(recharge_timerid)
-	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried, TIMER_STOPPABLE)
+	
+	var/skill_modifier
+	if(ishuman(firer))
+		var/mob/living/carbon/human/H = firer
+		skill_modifier = H.dna.get_skill_speed_modifier(SKILL_MINING)
+
+	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried * skill_modifier, TIMER_STOPPABLE)
 
 /obj/item/gun/energy/kinetic_accelerator/emp_act(severity)
 	return

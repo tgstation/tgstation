@@ -228,6 +228,7 @@
 	id = "strong_stone"
 	description = "A stone that seems particularly powerful."
 	suffix = "lavaland_strong_rock.dmm"
+	allow_duplicates = FALSE
 	cost = 2
 
 /datum/map_template/ruin/lavaland/puzzle
