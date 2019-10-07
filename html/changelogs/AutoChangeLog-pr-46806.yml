@@ -1,4 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - bugfix: "High amounts of radiation will no longer deal extreme amounts of burn damage."

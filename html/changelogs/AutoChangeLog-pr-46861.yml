@@ -1,7 +1,0 @@
-author: "spessbro"
-delete-after: True
-changes: 
-  - rscadd: "monkey powder"
-  - rscadd: "added about section chemical reactions"
-  - tweak: "monkey cubes grind into monkey powder"
-  - tweak: "gorilla cubes grind into monkey powder and strange reagent"
