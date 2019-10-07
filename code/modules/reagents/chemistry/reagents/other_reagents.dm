@@ -1904,4 +1904,3 @@
 		to_chat(C, "<span class='notice'>You feel your vocal chords tingle as your voice comes out in a more sultry tone.</span>")
 	qdel(Vc)
 	holder.del_reagent(type)
-
