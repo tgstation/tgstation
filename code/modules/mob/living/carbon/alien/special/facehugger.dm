@@ -130,12 +130,14 @@
 		// disallowed carbons
 		if(isalien(M) || istruedevil(M))
 			return FALSE
+			
 		var/mob/living/carbon/target = M
 		// gotta have a head to be implanted (no changelings or sentient plants)
-		if(!target.get_bodypart(BODY_ZONE_HEAD))
+		// gotta have a stomach to be implanted (no skeletons)
+		if(!target.get_bodypart(BODY_ZONE_HEAD) || !target.getorgan(/obj/item/organ/stomach)
 			return FALSE
 
-		if(target.getorgan(/obj/item/organ/alien/hivenode) || target.getorgan(/obj/item/organ/body_egg/alien_embryo) || !target.getorgan(/obj/item/organ/stomach))
+		if(target.getorgan(/obj/item/organ/alien/hivenode) || target.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			return FALSE
 		// carbon, has head, has stomach, not alien or devil, has no hivenode or embryo: valid
 		return TRUE
