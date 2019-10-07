@@ -687,7 +687,7 @@
 	name = "artificial slime jelly"
 	id = /datum/reagent/toxin/slimejelly
 	results = list(/datum/reagent/toxin/slimejelly = 5)
-	required_reagents = list(/datum/reagent/oil = 3, /datum/reagent/uranium/radium = 2, /datum/reagent/consumable/tinlux =1)
+	required_reagents = list(/datum/reagent/fuel/oil = 3, /datum/reagent/uranium/radium = 2, /datum/reagent/consumable/tinlux =1)
 	required_container = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	mix_message = "The mushroom's insides bubble and pop and it becomes very limp."
 
