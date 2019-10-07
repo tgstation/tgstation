@@ -25,7 +25,7 @@
 	aggro_vision_range = 15
 	ranged = TRUE
 	ranged_cooldown_time = 10
-	projectiletype = /obj/item/projectile/seedling
+	projectiletype = /obj/projectile/seedling
 	projectilesound = 'sound/weapons/pierce.ogg'
 	robust_searching = TRUE
 	stat_attack = UNCONSCIOUS
@@ -35,7 +35,7 @@
 	var/mob/living/beam_debuff_target
 	var/solar_beam_identifier = 0
 
-/obj/item/projectile/seedling
+/obj/projectile/seedling
 	name = "solar energy"
 	icon_state = "seedling"
 	damage = 10
@@ -47,7 +47,7 @@
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	nondirectional_sprite = TRUE
 
-/obj/item/projectile/seedling/Bump(atom/A)//Stops seedlings from destroying other jungle mobs through FF
+/obj/projectile/seedling/Bump(atom/A)//Stops seedlings from destroying other jungle mobs through FF
 	if(isliving(A))
 		var/mob/living/L = A
 		if("jungle" in L.faction)
@@ -181,7 +181,7 @@
 			Shoot(target)
 			return
 		var/turf/our_turf = get_turf(src)
-		var/obj/item/projectile/seedling/readied_shot = new /obj/item/projectile/seedling(our_turf)
+		var/obj/projectile/seedling/readied_shot = new /obj/projectile/seedling(our_turf)
 		readied_shot.preparePixelProjectile(target, src, null, rand(-10, 10))
 		readied_shot.fire()
 		playsound(src, projectilesound, 100, TRUE)

@@ -88,7 +88,7 @@
 	smoke.set_up(0, src)
 	smoke.start()
 
-/obj/vehicle/ridden/atv/bullet_act(obj/item/projectile/P)
+/obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)
 	if(prob(50) && buckled_mobs)
 		for(var/mob/M in buckled_mobs)
 			M.bullet_act(P)

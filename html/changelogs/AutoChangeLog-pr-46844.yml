@@ -1,6 +1,0 @@
-author: "and Twaticus for sprites (thank you too tralezab and whoever else helped)"
-delete-after: True
-changes: 
-  - rscadd: "Adds the Grill, which can be powered by coal and wood, increases food nutritional value, taste, and adds grill marks."
-  - rscadd: "Adds a new drink, Monkey Energy, works as fuel for the grill and increases your speed if you're a monkey, also adds a new reagent, Char, which works the magic in the grill."
-  - tweak: "Coal now turns into CO2 at high temperatures and is now a stack"
