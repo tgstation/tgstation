@@ -82,6 +82,15 @@
 	if(!beehome)
 		. += "<span class='warning'>This bee is homeless!</span>"
 
+/mob/living/simple_animal/hostile/ListTargets() // Bee processing is expessive, so we override them finding targets here.
+	if(!search_objects) //In case we want to have purely hostile bees
+		return ..()
+	else
+		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line
+		for(var/obj/A in oview(vision_range, targets_from))
+			. += A
+		for(var/mob/A in oview(vision_range, targets_from))
+			. += A
 
 /mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
 	cut_overlays()
