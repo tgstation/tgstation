@@ -33,8 +33,8 @@
 	name = "taser slug"
 	desc = "A stunning taser slug."
 	icon_state = "stunshell"
-	projectile_type = /obj/item/projectile/bullet/shotgun_stunslug
-	materials = list(/datum/material/iron=250)
+	projectile_type = /obj/projectile/bullet/shotgun_stunslug
+	custom_materials = list(/datum/material/iron=250)
 
 /obj/item/ammo_casing/shotgun/meteorslug
 	name = "meteorslug shell"
@@ -86,8 +86,8 @@
 	name = "improvised shell"
 	desc = "An extremely weak shotgun shell with multiple small pellets made out of metal shards."
 	icon_state = "improvshell"
-	projectile_type = /obj/item/projectile/bullet/pellet/shotgun_improvised
-	materials = list(/datum/material/iron=250)
+	projectile_type = /obj/projectile/bullet/pellet/shotgun_improvised
+	custom_materials = list(/datum/material/iron=250)
 	pellets = 10
 	variance = 25
 
