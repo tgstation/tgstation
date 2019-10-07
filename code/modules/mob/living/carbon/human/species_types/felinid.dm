@@ -10,7 +10,7 @@
 	mutantears = /obj/item/organ/ears/cat
 	mutanttail = /obj/item/organ/tail/cat
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	var/original_felinid = TRUE
+	var/original_felinid = TRUE //set to false for felinids created by mass-purrbation
 
 /datum/species/human/felinid/qualifies_for_rank(rank, list/features)
 	return TRUE
