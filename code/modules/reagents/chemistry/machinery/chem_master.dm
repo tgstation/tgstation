@@ -1,3 +1,11 @@
+#define END_FERMI_REACTION \
+    do { \
+        if(beaker.reagents.fermiIsReacting) { \
+            beaker.reagents.fermiEnd() } \
+    } while(0)
+
+
+
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -208,13 +216,13 @@
 				var/reagent = GLOB.name2reagent[params["id"]]
 				var/amount = text2num(params["amount"])
 				if (amount > 0)
-					end_fermi_reaction()
+					END_FERMI_REACTION
 					beaker.reagents.trans_id_to(src, reagent, amount)
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
 					if (useramount > 0)
-						end_fermi_reaction()
+						END_FERMI_REACTION
 						beaker.reagents.trans_id_to(src, reagent, useramount)
 						. = TRUE
 
@@ -410,11 +418,12 @@
 		AM.pixel_x = ((.%3)*6)
 		AM.pixel_y = -8 + (round( . / 3)*8)
 
-/obj/machinery/chem_master/proc/end_fermi_reaction()//Ends any reactions upon moving.
-	if(beaker.reagents.fermiIsReacting)
-		beaker.reagents.fermiEnd()
+
 
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
+
+
+#undef END_FERMI_REACTION

@@ -620,14 +620,14 @@
 
 
 						for(var/mob/M in seen)
-							to_chat(M, "<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
+							M.visible_message("<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
 
 					if(istype(cached_my_atom, /obj/item/slime_extract))//if there's an extract and it's used up.
 						var/obj/item/slime_extract/ME2 = my_atom
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								to_chat(M, "<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
+								M.visible_message("<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
 								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
 
@@ -689,7 +689,7 @@
 	var/list/seen = viewers(5, get_turf(my_atom))
 	var/iconhtml = icon2html(my_atom, seen)
 	for(var/mob/M in seen)
-		to_chat(M, "<span class='notice'>[iconhtml] [C.mix_message]</span>")
+		M.visible_message("<span class='notice'>[iconhtml] [C.mix_message]</span>")
 
 /datum/reagents/proc/fermiReact(selected_reaction, cached_temp, cached_pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 	var/datum/chemical_reaction/fermi/C = selected_reaction
