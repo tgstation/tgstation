@@ -8,7 +8,7 @@
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/enter_area)
 	RegisterSignal(parent, COMSIG_EXIT_AREA, .proc/exit_area)
 	var/area/A = get_area(parent)
-	if(istype(A)) 
+	if(A) 
 		enter_area(null, A)
 
 /datum/component/beauty/proc/enter_area(datum/source, area/A)
