@@ -115,6 +115,7 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 /obj/item/stack/sheet/mineral/diamond/get_main_recipes()
 	. = ..()
 	. += GLOB.diamond_recipes
+
 /*
  * Uranium
  */
@@ -246,7 +247,8 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	. = ..()
 	. += GLOB.silver_recipes
 
-/* Clown
+/* 
+ * Clown
  */
 /obj/item/stack/sheet/mineral/bananium
 	name = "bananium"
@@ -270,7 +272,9 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	. = ..()
 	. += GLOB.bananium_recipes
 
-/* titanium */
+/* 
+ * Titanium 
+ */
 /obj/item/stack/sheet/mineral/titanium
 	name = "titanium"
 	icon_state = "sheet-titanium"
@@ -326,7 +330,8 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 
 
 /*
- * Snow*/
+ * Snow
+ */
  
 /obj/item/stack/sheet/mineral/snow
 	name = "snow"
