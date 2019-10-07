@@ -857,7 +857,7 @@ RLD
 	var/list/name_to_type = list() 
 	///
 	var/list/machinery_data = list("cost" = list(), "delay" = list())
-
+	
 /obj/item/construction/plumbing/attack_self(mob/user)
 	..()
 	if(!choices.len)
@@ -903,8 +903,16 @@ RLD
 	. = ..()
 	if(!prox_check(proximity))
 		return
-	create_machine(A, user)
-
+	if(istype(A, /obj/machinery/plumbing))
+		var/obj/machinery/plumbing/P = A
+		if(P.anchored)
+			to_chat(user, "<span class='warning'>The [P.name] needs to be unanchored!</span>")
+			return
+		if(do_after(user, 20, target = P))
+			P.deconstruct() //Let's not substract matter
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
+	else
+		create_machine(A, user)
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"

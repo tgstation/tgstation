@@ -352,6 +352,7 @@ All the important duct code:
 	if(istype(A, /turf/open) && use(1))
 		var/turf/open/OT = A
 		new /obj/machinery/duct(OT, FALSE, GLOB.pipe_paint_colors[duct_color], layers[duct_layer])
+		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 
 /obj/item/stack/ducts/fifty
 	amount = 50

@@ -38,23 +38,23 @@
 	. = TRUE
 	switch(action)
 		if("add")
-			var/new_chem_name = ckey(input("Enter chemical to filter:", name) as text|null)
+			var/new_chem_name = input("Enter chemical to filter:", name) as text|null
 			var/chem_id = get_chem_id(new_chem_name)
 			if(chem_id)
 				switch(params["which"])
 					if("left")
-						if(!english_left.Find(new_chem_name))
+						if(!left.Find(chem_id))
 							english_left += new_chem_name
 							left += chem_id
 					if("right")
-						if(!english_right.Find(new_chem_name))
+						if(!right.Find(chem_id))
 							english_right += new_chem_name
 							right += chem_id
 			else
 				to_chat(usr, "<span class='warning'>No such known reagent exists!</span>")
 
 		if("remove")
-			var/chem_name = params["reagent"] //ckey() isnt necessary here, since it picks from the already ckey'd english_list
+			var/chem_name = params["reagent"]
 			var/chem_id = get_chem_id(chem_name)
 			switch(params["which"])
 				if("left")
