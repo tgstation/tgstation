@@ -13,26 +13,27 @@ Object.assign(Math, require('util/math'))
 // Set up the initialize function. This is either called below if JSON is provided
 // inline, or called by the server if it was not.
 import TGUI from 'tgui.ract'
-window.initialize = dataString => {
-  // Don't run twice.
-  window.tgui = window.tgui || new TGUI({
-    el: '#container',
-    data () {
-      const initial = JSON.parse(dataString)
-      return {
-        constants: require('util/constants'),
-        text: require('util/text'),
-        config: initial.config,
-        data: initial.data,
-        adata: initial.data
-      }
-    }
-  })
-};
 
 // This thing was a part of an old index.html
-window.update = dataString => {
+window.update = window.initialize = dataString => {
   const data = JSON.parse(dataString);
+  // Initialize
+  if (!window.tgui) {
+    window.tgui = new TGUI({
+      el: '#container',
+      data () {
+        const initial = data;
+        return {
+          constants: require('util/constants'),
+          text: require('util/text'),
+          config: initial.config,
+          data: initial.data,
+          adata: initial.data,
+        };
+      },
+    });
+  }
+  // Update
   if (window.tgui) {
     window.tgui.set('config', data.config);
     if (typeof data.data !== 'undefined') {
