@@ -232,3 +232,9 @@
 	results = list(/datum/reagent/medicine/granibitaluri = 1)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/space_cleaner/sterilizine = 1) //haha guys totally not some sort of saline reference!
 	required_temp = 373
+
+/datum/chemical_reaction/AcetylCysteine
+	name = "AcetylCysteine"
+	id = /datum/reagent/medicine/AcetylCysteine
+	results = list(/datum/reagent/medicine/AcetylCysteine = 3)
+	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/phenol = 1, /datum/reagent/toxin/acid = 1)
