@@ -617,19 +617,15 @@
 					if(!ismob(cached_my_atom)) // No bubbling mobs
 						if(selected_reaction.mix_sound)
 							playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, 1)
-
-
-						for(var/mob/M in seen)
 							M.visible_message("<span class='notice'>[iconhtml] [selected_reaction.mix_message]</span>")
 
 					if(istype(cached_my_atom, /obj/item/slime_extract))//if there's an extract and it's used up.
 						var/obj/item/slime_extract/ME2 = my_atom
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
-							for(var/mob/M in seen)
-								M.visible_message("<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
-								ME2.name = "used slime extract"
-								ME2.desc = "This extract has been used up."
+							M.visible_message("<span class='notice'>[iconhtml] \The [my_atom]'s power is consumed in the reaction.</span>")
+							ME2.name = "used slime extract"
+							ME2.desc = "This extract has been used up."
 
 				selected_reaction.on_reaction(src, multiplier, special_react_result)
 				reaction_occurred = TRUE
@@ -688,8 +684,7 @@
 	playsound(get_turf(my_atom), C.mix_sound, 80, 1)
 	var/list/seen = viewers(5, get_turf(my_atom))
 	var/iconhtml = icon2html(my_atom, seen)
-	for(var/mob/M in seen)
-		M.visible_message("<span class='notice'>[iconhtml] [C.mix_message]</span>")
+	M.visible_message("<span class='notice'>[iconhtml] [C.mix_message]</span>")
 
 /datum/reagents/proc/fermiReact(selected_reaction, cached_temp, cached_pH, reactedVol, targetVol, cached_required_reagents, cached_results, multiplier)
 	var/datum/chemical_reaction/fermi/C = selected_reaction
