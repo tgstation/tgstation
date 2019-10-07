@@ -8,8 +8,8 @@ import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { backendUpdate } from './backend';
 import { act, tridentVersion } from './byond';
 import { setupDrag } from './drag';
-import { getRoute } from './layout';
 import { createLogger, setLoggerRef } from './logging';
+import { getRoute } from './routes';
 import { createStore } from './store';
 
 const logger = createLogger();
@@ -103,7 +103,7 @@ const setupApp = () => {
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    module.hot.accept(['./layout'], () => {
+    module.hot.accept(['./layout', './routes'], () => {
       renderLayout();
     });
   }

@@ -104,7 +104,6 @@ export const ChemDispenser = props => {
             <Button key={amount}
               icon="plus"
               selected={amount === data.amount}
-              disabled={recording}
               content={amount}
               onClick={() => act(ref, 'amount', {
                 target: amount,

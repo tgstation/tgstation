@@ -1,51 +1,16 @@
 import { classes } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { Component, createRef } from 'inferno';
-import { runCommand, winset, tridentVersion } from './byond';
+import { runCommand, tridentVersion, winset } from './byond';
 import { TitleBar } from './components';
 import { BUTTON_ACTIVATION_KEYCODES } from './components/Button';
 import { Toast } from './components/Toast';
 import { UI_INTERACTIVE } from './constants';
 import { dragStartHandler, resizeStartHandler } from './drag';
-import { Acclimator } from './interfaces/Acclimator';
-import { AIAirlock } from './interfaces/AIAirlock';
-import { AirAlarm } from './interfaces/AirAlarm';
-import { ChemDispenser } from './interfaces/ChemDispenser';
-import { KitchenSink } from './interfaces/KitchenSink';
 import { createLogger } from './logging';
+import { getRoute } from './routes';
 
 const logger = createLogger('Layout');
-
-const ROUTES = {
-  airalarm: {
-    component: () => AirAlarm,
-    scrollable: true,
-  },
-  acclimator: {
-    component: () => Acclimator,
-    scrollable: false,
-  },
-  ai_airlock: {
-    component: () => AIAirlock,
-    scrollable: false,
-  },
-  chem_dispenser: {
-    component: () => ChemDispenser,
-    scrollable: true,
-  },
-};
-
-export const getRoute = state => {
-  // Show a kitchen sink
-  if (state.showKitchenSink) {
-    return {
-      component: () => KitchenSink,
-      scrollable: true,
-    };
-  }
-  // Refer to the routing table
-  return ROUTES[state.config && state.config.interface];
-};
 
 export class Layout extends Component {
   constructor() {
