@@ -7,7 +7,7 @@
 	density = FALSE
 	max_integrity = 200
 	integrity_failure = 50
-	var/obj/item/extinguisher/stored_object
+	var/obj/item/stored_object
 	var/opened = FALSE
 	//item sprites
 	var/spawneditem = new /obj/item/extinguisher //sets spawned item when mapped in or spawned.
