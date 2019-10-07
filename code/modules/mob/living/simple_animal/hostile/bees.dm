@@ -87,9 +87,10 @@
 		return ..()
 	else
 		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line
-		for(var/obj/A in oview(vision_range, targets_from))
+		var/list/searched_for = oview(vision_range, targets_from)
+		for(var/obj/A in searched_for)
 			. += A
-		for(var/mob/A in oview(vision_range, targets_from))
+		for(var/mob/A in searched_for)
 			. += A
 
 /mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
