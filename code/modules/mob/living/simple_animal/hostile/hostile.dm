@@ -143,7 +143,7 @@
 		for (var/mob/A in oview(vision_range, targets_from))
 			. += A
 
-/mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
+/mob/living/simple_animal/hostile/proc/FindTarget(list/possible_targets, HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
 	. = list()
 	if(!HasTargetsList)
 		possible_targets = ListTargets()

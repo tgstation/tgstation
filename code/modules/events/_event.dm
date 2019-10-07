@@ -36,7 +36,7 @@
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
-/datum/round_event_control/proc/canSpawnEvent(var/players_amt, var/gamemode)
+/datum/round_event_control/proc/canSpawnEvent(players_amt, gamemode)
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time-SSticker.round_start_time)

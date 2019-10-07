@@ -1161,7 +1161,7 @@
 	return FALSE
 
 ///Sets the custom materials for an item.
-/atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
+/atom/proc/set_custom_materials(list/materials, multiplier = 1)
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = i
