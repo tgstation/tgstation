@@ -7,8 +7,8 @@
 	mob_biotypes = MOB_SPIRIT
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "passes through"
-	response_help2 = "pass through"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
 	a_intent = INTENT_HARM
 	healable = 0
 	speed = 0
@@ -19,8 +19,8 @@
 	melee_damage_upper = 15
 	del_on_death = 1
 	emote_see = list("weeps silently", "groans", "mumbles")
-	attacktext = "grips"
-	attacktext2 = "grip"
+	attack_verb_continuous = "grips"
+	attack_verb_simple = "grip"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	speak_emote = list("weeps")
 	deathmessage = "wails, disintegrating into a pile of ectoplasm!"

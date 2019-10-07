@@ -5,10 +5,10 @@
 	icon_state = "crate"
 	icon_living = "crate"
 
-	response_help = "touches"
-	response_help2 = "touch"
-	response_disarm = "pushes"
-	response_disarm2 = "push"
+	response_help_continuous = "touches"
+	response_help_simple = "touch"
+	response_disarm_continuous = "pushes"
+	response_disarm_simple = "push"
 	speed = 0
 	maxHealth = 250
 	health = 250
@@ -33,8 +33,8 @@
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
 /mob/living/simple_animal/hostile/mimic/crate
-	attacktext = "bites"
-	attacktext2 = "bite"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	speak_emote = list("clatters")
 	stop_automated_movement = 1
 	wander = 0

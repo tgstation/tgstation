@@ -6,10 +6,10 @@
 	icon_dead = "bat_dead"
 	icon_gib = "bat_dead"
 	turns_per_move = 1
-	response_help = "brushes aside"
-	response_help2 = "brush aside"
-	response_disarm = "flails at"
-	response_disarm2 = "flail at"
+	response_help_continuous = "brushes aside"
+	response_help_simple = "brush aside"
+	response_disarm_continuous = "flails at"
+	response_disarm_simple = "flail at"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	maxHealth = 15
@@ -19,8 +19,8 @@
 	harm_intent_damage = 6
 	melee_damage_lower = 6
 	melee_damage_upper = 5
-	attacktext = "bites"
-	attacktext2 = "bite"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
 	pass_flags = PASSTABLE
 	faction = list("hostile")

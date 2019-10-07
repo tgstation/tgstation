@@ -11,15 +11,15 @@
 	speak_chance = 1
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/rawcrab = 2)
-	response_help = "pets"
-	response_help2 = "pet"
-	response_disarm = "gently pushes aside"
-	response_disarm2 = "gently push aside"
-	response_harm = "stomps"
-	response_harm2 = "stomp"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "stomps"
+	response_harm_simple = "stomp"
 	stop_automated_movement = 1
-	friendly = "pinches"
-	friendly2 = "pinch"
+	friendly_verb_continuous = "pinches"
+	friendly_verb_simple = "pinch"
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask

@@ -8,8 +8,8 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	response_harm = "strikes"
-	response_harm2 = "strike"
+	response_harm_continuous = "strikes"
+	response_harm_simple = "strike"
 	status_flags = 0
 	a_intent = INTENT_HARM
 	var/crusher_loot

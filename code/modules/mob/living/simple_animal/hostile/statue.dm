@@ -11,10 +11,10 @@
 	a_intent = INTENT_HARM
 	mob_biotypes = MOB_HUMANOID
 
-	response_help = "touches"
-	response_help2 = "touch"
-	response_disarm = "pushes"
-	response_disarm2 = "push"
+	response_help_continuous = "touches"
+	response_help_simple = "touch"
+	response_disarm_continuous = "pushes"
+	response_disarm_simple = "push"
 
 	speed = -1
 	maxHealth = 50000
@@ -25,8 +25,8 @@
 	obj_damage = 100
 	melee_damage_lower = 68
 	melee_damage_upper = 83
-	attacktext = "claws"
-	attacktext2 = "claw"
+	attack_verb_continuous = "claws"
+	attack_verb_simple = "claw"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)

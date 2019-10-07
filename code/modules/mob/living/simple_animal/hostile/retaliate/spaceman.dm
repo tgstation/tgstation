@@ -8,10 +8,10 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	gender = MALE
 	turns_per_move = 5
-	response_disarm = "gently pushes aside"
-	response_disarm2 = "gently push aside"
-	response_harm = "punches"
-	response_harm2 = "punch"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "punches"
+	response_harm_simple = "punch"
 	a_intent = INTENT_HARM
 	maxHealth = 100
 	health = 100
@@ -19,8 +19,8 @@
 	harm_intent_damage = 8
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	attacktext = "hits"
-	attacktext2 = "hit"
+	attack_verb_continuous = "hits"
+	attack_verb_simple = "hit"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -46,8 +46,8 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	attacktext = "punches"
-	attacktext2 = "punch"
+	attack_verb_continuous = "punches"
+	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	faction = list("nanotrasenprivate")
 	a_intent = INTENT_HARM

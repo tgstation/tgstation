@@ -8,8 +8,8 @@
 	gender = MALE
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "passes through"
-	response_help2 = "pass through"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
 	emote_taunt = list("wails")
 	taunt_chance = 25
 	speed = 0
@@ -23,8 +23,8 @@
 	obj_damage = 50
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "grips"
-	attacktext2 = "grip"
+	attack_verb_continuous = "grips"
+	attack_verb_simple = "grip"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	speak_emote = list("growls")
 

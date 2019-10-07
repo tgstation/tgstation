@@ -15,20 +15,20 @@
 	health = 220
 	loot = list(/obj/effect/gibspawner/generic/animal)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/gorilla = 4)
-	response_help = "prods"
-	response_help2 = "prod"
-	response_disarm = "challenges"
-	response_disarm2 = "challenge"
-	response_harm = "thumps"
-	response_harm2 = "thump"
+	response_help_continuous = "prods"
+	response_help_simple = "prod"
+	response_disarm_continuous = "challenges"
+	response_disarm_simple = "challenge"
+	response_harm_continuous = "thumps"
+	response_harm_simple = "thump"
 	speed = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 18
 	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1.5)
 	obj_damage = 20
 	environment_smash = ENVIRONMENT_SMASH_WALLS
-	attacktext = "pummels"
-	attacktext2 = "pummel"
+	attack_verb_continuous = "pummels"
+	attack_verb_simple = "pummel"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
 	held_items = list(null, null)

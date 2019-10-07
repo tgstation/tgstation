@@ -1,12 +1,12 @@
 //Penguins
 
 /mob/living/simple_animal/pet/penguin
-	response_help = "pets"
-	response_help2 = "pet"
-	response_disarm = "bops"
-	response_disarm2 = "bop"
-	response_harm = "kicks"
-	response_harm2 = "kick"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "bops"
+	response_disarm_simple = "bop"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	speak = list("Gah Gah!", "NOOT NOOT!", "NOOT!", "Noot", "noot", "Prah!", "Grah!")
 	speak_emote = list("squawks", "gakkers")
 	emote_hear = list("squawk!", "gakkers!", "noots.","NOOTS!")
