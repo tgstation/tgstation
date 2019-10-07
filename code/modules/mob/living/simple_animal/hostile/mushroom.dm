@@ -9,15 +9,19 @@
 	maxHealth = 10
 	health = 10
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/hugemushroomslice = 1)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "whacks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "whacks"
+	response_harm_simple = "whack"
 	harm_intent_damage = 5
 	obj_damage = 0
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attack_same = 2
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("mushroom")
 	environment_smash = ENVIRONMENT_SMASH_NONE
