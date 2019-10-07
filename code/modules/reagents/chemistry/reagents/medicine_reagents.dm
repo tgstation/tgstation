@@ -1354,5 +1354,5 @@
 	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if (!liver || holder.get_reagents() != "AcetylCysteine")
 		return
-	liver.applyOrganDamage(-0.05)
+	liver.applyOrganDamage(-0.25)
 	..()
