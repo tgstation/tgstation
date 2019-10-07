@@ -1,4 +1,4 @@
-/**********************Mint**************************/ // yes that's the name of the file sweetie
+/**********************Mint**************************/
 
 
 /obj/machinery/mineral/mint
@@ -13,7 +13,6 @@
 	var/produced_coins = 0 // how many coins the machine has made in it's last cycle
 	var/processing = FALSE
 	var/chosen = /datum/material/iron //which material will be used to make coins
-	speed_process = FALSE
 
 
 /obj/machinery/mineral/mint/Initialize()
@@ -96,7 +95,7 @@
 			"amount" = amount
 		))
 
-		if (chosen == inserted_material)
+		if(chosen == inserted_material)
 			data["chosen_material"] = inserted_material.name
 
 	data["produced_coins"] = produced_coins
