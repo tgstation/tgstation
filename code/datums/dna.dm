@@ -462,7 +462,7 @@
 
 
 ///Adjust experience of a specific skill
-/datum/dna/proc/adjust_experience(skill, amt, user)
+/datum/dna/proc/adjust_experience(skill, amt, user, silent = FALSE)
 	skill_experience[skill] = max(0, skill_experience[skill] + amt) //Prevent going below 0
 	var/old_level = skills[skill]
 	switch(skill_experience[skill])
@@ -482,6 +482,8 @@
 			skills[skill] = SKILL_LEVEL_NONE	
 	if(skills[skill] == old_level)
 		return //same level
+	if(silent)
+		return
 	if(skills[skill] >= old_level)
 		to_chat(user, "<span class='nicegreen'>I feel like I've become more proficient at [skill]!</span>")
 	else
