@@ -1444,6 +1444,7 @@
 		to_chat(M, "You feel something get caught in your lungs!")
 		M.Stun(10, 0)
 		M.adjustToxLoss(0.5*REM, 0)
+		M.emote(pick("cough","gasp"))
 	return ..()
 
 /datum/reagent/carpet/green
