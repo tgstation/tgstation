@@ -126,7 +126,7 @@
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return TRUE
 	else
-		if(istype(mover, /obj/item/projectile) && density)
+		if(istype(mover, /obj/projectile) && density)
 			return prob(30)
 		else
 			return !density

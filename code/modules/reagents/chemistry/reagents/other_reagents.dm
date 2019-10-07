@@ -461,7 +461,7 @@
 			filter = MUT_MSG_EXTENDED
 		else
 			filter = MUT_MSG_ABOUT2TURN
-			
+
 		for(var/i in mutationtexts)
 			if(mutationtexts[i] == filter)
 				pick_ur_fav += i
@@ -1844,3 +1844,11 @@
 	A.reagents.add_reagent(/datum/reagent/water, trans_volume * 0.25)
 
 	return ..()
+
+//monkey powder heehoo
+/datum/reagent/monkey_powder
+	name = "Monkey Powder"
+	description = "Just add water!"
+	color = "#9C5A19"
+	taste_description = "bananas"
+	can_synth = TRUE

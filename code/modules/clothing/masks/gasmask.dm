@@ -11,6 +11,24 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
+/obj/item/clothing/mask/gas/atmos
+	name = "atmospheric gas mask"
+	desc = "Improved gas mask utilized by atmospheric technicians. Still not very good at blocking gas flow, but it's flameproof!"
+	icon_state = "gas_atmos"
+	item_state = "gas_atmos"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 20, "acid" = 10)
+	w_class = WEIGHT_CLASS_SMALL
+	gas_transfer_coefficient = 0.001 //cargo cult time, this var does nothing but just in case someone actually makes it do something
+	permeability_coefficient = 0.001
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/mask/gas/atmos/captain
+	name = "captain's gas mask"
+	desc = "Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone."
+	icon_state = "gas_cap"
+	item_state = "gas_cap"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
 // **** Welding gas mask ****
 
 /obj/item/clothing/mask/gas/welding

@@ -37,7 +37,7 @@
 		return
 	icon_state = icon_living
 
-/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
+/mob/living/simple_animal/hostile/asteroid/bullet_act(obj/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
 	if(!stat)
 		Aggro()
 	if(P.damage < 30 && P.damage_type != BRUTE)

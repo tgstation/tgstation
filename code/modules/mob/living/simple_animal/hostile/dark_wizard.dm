@@ -5,7 +5,7 @@
 	icon_state = "dark_wizard"
 	icon_living = "dark_wizard"
 	move_to_delay = 10
-	projectiletype = /obj/item/projectile/temp/earth_bolt
+	projectiletype = /obj/projectile/temp/earth_bolt
 	projectilesound = 'sound/magic/ethereal_enter.ogg'
 	ranged = TRUE
 	ranged_message = "earth bolts"
@@ -28,11 +28,11 @@
 	weather_immunities = list("lava","ash")
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)	
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	loot = list(/obj/effect/decal/remains/human)
 	del_on_death = TRUE
 
-/obj/item/projectile/temp/earth_bolt
+/obj/projectile/temp/earth_bolt
 	name = "earth bolt"
 	icon_state = "declone"
 	damage = 4

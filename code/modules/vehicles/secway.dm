@@ -46,7 +46,7 @@
 	STOP_PROCESSING(SSobj,src)
 	return ..()
 
-/obj/vehicle/ridden/secway/bullet_act(obj/item/projectile/P)
+/obj/vehicle/ridden/secway/bullet_act(obj/projectile/P)
 	if(prob(60) && buckled_mobs)
 		for(var/mob/M in buckled_mobs)
 			M.bullet_act(P)
