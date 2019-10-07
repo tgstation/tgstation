@@ -4,6 +4,8 @@
 	icon = 'icons/fulpicons/halloween_costumes/costumes_icon.dmi'
 	mob_overlay_icon = 'icons/fulpicons/halloween_costumes/costumes_worn.dmi'
 	icon_state = "sneaking_jumpsuit"
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
 
 /obj/item/clothing/head/sneaking_bandanna
 	name = "sneaking bandanna"

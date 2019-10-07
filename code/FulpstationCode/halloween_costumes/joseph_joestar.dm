@@ -5,6 +5,8 @@
 	mob_overlay_icon = 'icons/fulpicons/halloween_costumes/costumes_worn.dmi'
 	icon_state = "joseph_outfit"
 	body_parts_covered = CHEST|GROIN|LEGS
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
 
 /obj/item/clothing/head/tricksters_headband
 	name = "trickster's headband"
