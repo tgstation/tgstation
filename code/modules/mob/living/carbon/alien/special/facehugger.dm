@@ -120,7 +120,7 @@
 		Leap(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/M)
-	// valid targets: carbons except aliens, devils, skeletons and plasmamen
+	// valid targets: carbons except aliens and devils
 	// facehugger state early exit checks
 	if(stat != CONSCIOUS)
 		return FALSE
