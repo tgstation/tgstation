@@ -779,6 +779,13 @@
 /obj/item/storage/photo_album/bar,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
+"abT" = (
+/obj/structure/cable,
+/obj/machinery/grill,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
 "abV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light/small{
@@ -42923,13 +42930,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"bQA" = (
-/obj/machinery/deepfryer,
-/obj/structure/cable,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/crew_quarters/kitchen)
 "bQC" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/cable,
@@ -108379,7 +108379,7 @@ bKe
 bLI
 bNw
 bOQ
-bQA
+abT
 bRP
 bST
 bUe
