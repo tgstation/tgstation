@@ -26,11 +26,13 @@
 /obj/item/soulstone/anybody
 	usability = TRUE
 
+/obj/item/soulstone/anybody/revolver
+	old_shard = TRUE
+
 /obj/item/soulstone/anybody/purified
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "purified_soulstone"
 	purified = TRUE
-
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
@@ -57,6 +59,14 @@
 		A.death()
 	return ..()
 
+/obj/item/soulstone/proc/hot_potato(mob/living/user)
+	to_chat(user, "<span class='userdanger'>Holy magics residing in \the [src] burn your hand!</span>")
+	var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+	affecting.receive_damage( 0, 10 )	// 10 burn damage
+	user.emote("scream")
+	user.update_damage_overlays()
+	user.dropItemToGround(src)
+
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 /obj/item/soulstone/attack(mob/living/carbon/human/M, mob/living/user)
@@ -69,12 +79,15 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
+	if(!M.mind.hasSoul || isdevil(M))
+		to_chat(user, "<span class='warning'>This... thing has no soul! It's filled with evil!</span>")
+		return
 	if(iscultist(M))
 		if(iscultist(user))
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
 			return
 	if(purified && iscultist(user))
-		to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
+		hot_potato(user)
 		return
 	log_combat(user, M, "captured [M.name]'s soul", src)
 	transfer_soul("VICTIM", M, user)
@@ -89,7 +102,7 @@
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
 	if(purified && iscultist(user))
-		to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
+		hot_potato(user)
 		return
 	release_shades(user)
 
@@ -136,7 +149,7 @@
 			user.Dizzy(30)
 			return
 		if(SS.purified && iscultist(user))
-			to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
+			SS.hot_potato(user)
 			return
 		SS.transfer_soul("CONSTRUCT",src,user)
 		SS.was_used()

@@ -20,7 +20,7 @@
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	ranged_cooldown_time = 60
-	projectiletype = /obj/item/projectile/mega_arachnid
+	projectiletype = /obj/projectile/mega_arachnid
 	projectilesound = 'sound/weapons/pierce.ogg'
 	alpha = 50
 
@@ -48,13 +48,13 @@
 	..()
 	alpha = 50
 
-/obj/item/projectile/mega_arachnid
+/obj/projectile/mega_arachnid
 	name = "flesh snare"
 	nodamage = TRUE
 	damage = 0
 	icon_state = "tentacle_end"
 
-/obj/item/projectile/mega_arachnid/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/mega_arachnid/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target) && blocked < 100)
 		var/obj/item/restraints/legcuffs/beartrap/mega_arachnid/B = new /obj/item/restraints/legcuffs/beartrap/mega_arachnid(get_turf(target))
 		B.Crossed(target)

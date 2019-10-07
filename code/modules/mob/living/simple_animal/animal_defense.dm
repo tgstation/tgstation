@@ -109,7 +109,7 @@
 		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
 		return TRUE
 
-/mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/bullet_act(obj/projectile/Proj)
 	apply_damage(Proj.damage, Proj.damage_type)
 	Proj.on_hit(src)
 	return BULLET_ACT_HIT

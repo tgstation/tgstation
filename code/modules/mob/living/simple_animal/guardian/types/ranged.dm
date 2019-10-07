@@ -1,5 +1,5 @@
 //Ranged
-/obj/item/projectile/guardian
+/obj/projectile/guardian
 	name = "crystal spray"
 	icon_state = "guardian"
 	damage = 5
@@ -12,7 +12,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	damage_coeff = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, CLONE = 0.9, STAMINA = 0, OXY = 0.9)
-	projectiletype = /obj/item/projectile/guardian
+	projectiletype = /obj/projectile/guardian
 	ranged_cooldown_time = 1 //fast!
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
 	ranged = 1
@@ -54,8 +54,8 @@
 
 /mob/living/simple_animal/hostile/guardian/ranged/Shoot(atom/targeted_atom)
 	. = ..()
-	if(istype(., /obj/item/projectile))
-		var/obj/item/projectile/P = .
+	if(istype(., /obj/projectile))
+		var/obj/projectile/P = .
 		if(namedatum)
 			P.color = namedatum.colour
 
