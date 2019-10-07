@@ -6,7 +6,6 @@
 /area/ruin/powered/clownplanet
 	name = "Clown Planet"
 	icon_state = "dk_yellow"
-	dynamic_lighting = 0
 	ambientsounds = list('sound/ambience/clown.ogg')
 
 /area/ruin/unpowered/gaia
