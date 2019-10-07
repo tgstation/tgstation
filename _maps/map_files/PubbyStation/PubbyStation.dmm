@@ -63,6 +63,14 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
+"aah" = (
+/obj/machinery/light{
+	dir = 8;
+	light_color = "#e8eaff"
+	},
+/obj/machinery/grill,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -45828,14 +45836,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
-"cpq" = (
-/obj/machinery/deepfryer,
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/kitchen)
 "cpr" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -86114,7 +86114,7 @@ aRN
 aYR
 aYS
 aYS
-cpq
+aah
 cpu
 cpw
 bfp
