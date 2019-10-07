@@ -1412,23 +1412,12 @@
 	taste_description = "licorice"
 	carpet_type = /turf/open/floor/carpet/black
 
-/datum/reagent/carpet/black/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
-	if(method == TOUCH || method == VAPOR)
-		M.adjust_fire_stacks(reac_volume / 10)
-		return
-	..()
-
 /datum/reagent/carpet/blue
 	name = "Blue Carpet"
 	description = "For those that really need to chill out for a while."
 	color = "#0000DC"
 	taste_description = "frozen carpet"
 	carpet_type = /turf/open/floor/carpet/blue
-
-/datum/reagent/carpet/blue/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	..()
-	. = 1
 
 /datum/reagent/carpet/cyan
 	name = "Cyan Carpet"
@@ -1437,30 +1426,12 @@
 	taste_description = "asbestos"
 	carpet_type = /turf/open/floor/carpet/cyan
 
-/datum/reagent/carpet/cyan/on_mob_life(mob/living/carbon/M)
-	if(prob(5))
-		M.losebreath += 1
-	if(prob(8))
-		to_chat(M, "You feel something get caught in your lungs!")
-		M.Stun(10, 0)
-		M.adjustToxLoss(0.5*REM, 0)
-		M.emote(pick("cough","gasp"))
-	return ..()
-
 /datum/reagent/carpet/green
 	name = "Green Carpet"
 	description = "For those that need the perfect flourish for your green eggs and ham."
 	color = "#A8E61D"
 	taste_description = "Green" //the caps is intentional
 	carpet_type = /turf/open/floor/carpet/green
-
-/datum/reagent/carpet/green/on_mob_life(mob/living/carbon/M)
-	if(M.color != color)
-		M.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
-	return ..()
-
-/datum/reagent/carpet/green/on_mob_end_metabolize(mob/living/M)
-	M.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
 
 /datum/reagent/carpet/orange
 	name = "Orange Carpet"
@@ -1469,27 +1440,12 @@
 	taste_description = "orange juice"
 	carpet_type = /turf/open/floor/carpet/orange
 
-/datum/reagent/carpet/orange/on_mob_life(mob/living/carbon/M)
-	if(M.getOxyLoss() && prob(30))
-		M.adjustOxyLoss(-1, 0)
-		. = 1
-	..()
-
 /datum/reagent/carpet/purple
 	name = "Purple Carpet"
 	description = "For those that need to waste copious amounts of healing jelly in order to look fancy."
 	color = "#91D865"
 	taste_description = "jelly"
 	carpet_type = /turf/open/floor/carpet/purple
-
-/datum/reagent/carpet/purple/on_mob_life(mob/living/carbon/M)
-	if(prob(50))
-		M.adjustBruteLoss(-0.5*REM, 0)
-		M.adjustFireLoss(-0.5*REM, 0)
-		M.adjustOxyLoss(-0.5*REM, 0)
-		M.adjustToxLoss(-0.5*REM, 0, TRUE) //heals TOXINLOVERs
-		. = 1
-		..()
 
 /datum/reagent/carpet/red
 	name = "Red Carpet"
