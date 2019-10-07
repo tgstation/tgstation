@@ -5141,10 +5141,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"akS" = (
-/obj/machinery/grill,
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/kitchen)
 "akT" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 3";
@@ -91148,7 +91144,7 @@ aQj
 aRB
 aSL
 aTN
-akS
+cCq
 aVz
 cAg
 bak

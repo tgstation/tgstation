@@ -3344,12 +3344,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"ahY" = (
-/obj/machinery/grill,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/crew_quarters/kitchen)
 "aib" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -83775,7 +83769,7 @@ bCN
 amF
 amG
 bbL
-ahY
+anL
 anL
 aol
 apt
