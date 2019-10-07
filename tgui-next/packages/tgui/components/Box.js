@@ -8,9 +8,14 @@ const REM_PER_INTEGER = 0.5;
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
  */
-const unit = value => value
-  ? (value * REM_PX * REM_PER_INTEGER) + 'px'
-  : undefined;
+const unit = value => {
+  if (typeof value === 'string') {
+    return value;
+  }
+  if (typeof value === 'number') {
+    return (value * REM_PX * REM_PER_INTEGER) + 'px';
+  }
+};
 
 /**
  * Nullish coalesce function
