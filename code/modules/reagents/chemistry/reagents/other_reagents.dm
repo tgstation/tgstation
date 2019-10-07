@@ -1407,7 +1407,7 @@
 
 /datum/reagent/carpet/black
 	name = "Black Carpet"
-	description = "The carpet also comes in... BLAPCK"
+	description = "The carpet also comes in... BLAPCK" //yes, the typo is intentional
 	color = "#1E1E1E"
 	taste_description = "licorice"
 	carpet_type = /turf/open/floor/carpet/black
@@ -1420,7 +1420,7 @@
 
 /datum/reagent/carpet/blue
 	name = "Blue Carpet"
-	description = "For those that really need to chill for a while."
+	description = "For those that really need to chill out for a while."
 	color = "#0000DC"
 	taste_description = "frozen carpet"
 	carpet_type = /turf/open/floor/carpet/blue
@@ -1448,7 +1448,7 @@
 
 /datum/reagent/carpet/green
 	name = "Green Carpet"
-	description = "For those that the perfect flourish for your green eggs and ham."
+	description = "For those that need the perfect flourish for your green eggs and ham."
 	color = "#A8E61D"
 	taste_description = "Green" //the caps is intentional
 	carpet_type = /turf/open/floor/carpet/green
@@ -1463,7 +1463,7 @@
 
 /datum/reagent/carpet/orange
 	name = "Orange Carpet"
-	description = "For those that prefer a healthy carpet to go along with they healthy diet."
+	description = "For those that prefer a healthy carpet to go along with their healthy diet."
 	color = "#E78108"
 	taste_description = "orange juice"
 	carpet_type = /turf/open/floor/carpet/orange
@@ -1476,7 +1476,7 @@
 
 /datum/reagent/carpet/purple
 	name = "Purple Carpet"
-	description = "For those that need to waste copious amounts of healing jelly to look fancy."
+	description = "For those that need to waste copious amounts of healing jelly in order to look fancy."
 	color = "#91D865"
 	taste_description = "jelly"
 	carpet_type = /turf/open/floor/carpet/purple
@@ -1492,7 +1492,7 @@
 
 /datum/reagent/carpet/red
 	name = "Red Carpet"
-	description = "For those that needed an even redder carpet."
+	description = "For those that need an even redder carpet."
 	color = "#731008"
 	taste_description = "blood and gibs"
 	carpet_type = /turf/open/floor/carpet/red
@@ -1524,7 +1524,7 @@
 	name = "Royal Blue Carpet"
 	description = "For those that feel the need to show off their timewasting skills.. in BLUE."
 	color = "#5A64C8"
-	taste_description = "blueyalty"
+	taste_description = "blueyalty" //also intentional
 	carpet_type = /turf/open/floor/carpet/royalblue
 
 /datum/reagent/bromine
