@@ -31,3 +31,14 @@
 	uniform = /obj/item/clothing/under/costume/zero_suit
 	suit = /obj/item/clothing/suit/space/hardsuit/toy/varia
 	r_hand = /obj/item/gun/ballistic/shotgun/toy/toy_arm_cannon
+	
+/datum/outfit/halloween/phantommaid
+	name = "Phantom maid Costume"
+	uniform = /obj/item/clothing/under/costume/phantommaid_uniform
+	suit = /obj/item/clothing/suit/phantommaid_apron
+	gloves = /obj/item/clothing/gloves/phantommaid_gloves
+	shoes = /obj/item/clothing/shoes/phantommaid_shoes
+	head = /obj/item/clothing/head/phantommaid_headband
+	glasses = /obj/item/clothing/glasses/phantommaid_eyes
+	r_hand = /obj/item/toy/phantommaid_knife
+	neck = /obj/item/clothing/neck/scarf/phantommaid_scarfshoulder
