@@ -1343,16 +1343,16 @@
 	L.Dizzy(0)
 	L.Jitter(0)
 
-/datum/reagent/medicine/AcetylCysteine
-	name = "AcetylCysteine"
+/datum/reagent/medicine/acetyl_cysteine
+	name = "Acetyl-Cysteine"
 	description = "Slowly restores liver damage, as long as there are no other chemicals in the patient's system"
 	reagent_state = LIQUID
 	color = "#85E085"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
-/datum/reagent/medicine/AcetylCysteine/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/acetyl_cysteine/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
-	if (!liver || holder.get_reagents() != "AcetylCysteine")
+	if (!liver || holder.get_reagents() != "Acetyl-Cysteine")
 		return
 	liver.applyOrganDamage(-0.25)
 	..()
