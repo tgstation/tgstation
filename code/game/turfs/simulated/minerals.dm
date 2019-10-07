@@ -548,7 +548,7 @@
 		. = ..()
 
 /turf/closed/mineral/strong/gets_drilled(user)
-	new /obj/item/stack/sheet/mineral/mythril(src, new_amount = 10)
+	new /obj/item/stack/sheet/mineral/mythril(src, 10)
 	var/flags = NONE
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
