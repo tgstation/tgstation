@@ -35,7 +35,7 @@ const log = (level, ns, ...args) => {
       .join(' ')
       + '\nUser Agent: ' + navigator.userAgent;
     act(_ref, 'tgui:log', {
-      error: level >= LEVEL_ERROR,
+      error: level === LEVEL_ERROR,
       log: logEntry,
     });
   }
