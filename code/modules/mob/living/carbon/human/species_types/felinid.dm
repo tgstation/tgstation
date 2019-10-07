@@ -10,6 +10,7 @@
 	mutantears = /obj/item/organ/ears/cat
 	mutanttail = /obj/item/organ/tail/cat
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	var/original_felinid = TRUE
 
 /datum/species/human/felinid/qualifies_for_rank(rank, list/features)
 	return TRUE
@@ -133,6 +134,8 @@
 		return
 	if(ishumanbasic(H))
 		H.set_species(/datum/species/human/felinid)
+		var/datum/species/human/felinid/cat_species = H.dna.species
+		cat_species.original_felinid = FALSE
 	else
 		var/obj/item/organ/ears/cat/kitty_ears = new
 		var/obj/item/organ/tail/cat/kitty_tail = new
@@ -144,7 +147,9 @@
 
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
 	if(isfelinid(H))
-		H.set_species(/datum/species/human)
+		var/datum/species/human/felinid/cat_species = H.dna.species
+		if(!cat_species.original_felinid)
+			H.set_species(/datum/species/human)
 	else if(ishuman(H) && !ishumanbasic(H))
 		var/datum/species/target_species = H.dna.species
 		var/organs = H.internal_organs
