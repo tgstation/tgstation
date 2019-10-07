@@ -134,7 +134,7 @@
 		var/mob/living/carbon/target = M
 		// gotta have a head to be implanted (no changelings or sentient plants)
 		// gotta have a stomach to be implanted (no skeletons)
-		if(!target.get_bodypart(BODY_ZONE_HEAD) || !target.getorgan(/obj/item/organ/stomach)
+		if(!target.get_bodypart(BODY_ZONE_HEAD) || !target.getorgan(/obj/item/organ/stomach))
 			return FALSE
 
 		if(target.getorgan(/obj/item/organ/alien/hivenode) || target.getorgan(/obj/item/organ/body_egg/alien_embryo))
