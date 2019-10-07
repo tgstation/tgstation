@@ -510,6 +510,48 @@
 		new /mob/living/simple_animal/pet/dog/corgi(location)
 	..()
 
+//monkey powder heehoo
+/datum/chemical_reaction/monkey_powder
+	name = /datum/reagent/monkey_powder
+	id = /datum/reagent/monkey_powder
+	results = list(/datum/reagent/monkey_powder = 3)
+	required_reagents = list(/datum/reagent/consumable/banana = 1, /datum/reagent/consumable/nutriment=2,/datum/reagent/liquidgibs = 1)
+
+/datum/chemical_reaction/monkey
+	name = "monkey"
+	id = "monkey"
+	required_reagents = list(/datum/reagent/monkey_powder = 30, /datum/reagent/water = 1)
+
+/datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /mob/living/carbon/monkey(location)
+//water electrolysis
+/datum/chemical_reaction/electrolysis
+	name = "electrolysis"
+	id = "electrolysis"
+	results = list(/datum/reagent/oxygen = 10, /datum/reagent/hydrogen = 20)
+	required_reagents = list(/datum/reagent/consumable/liquidelectricity = 1, /datum/reagent/water = 5)
+
+//butterflium
+/datum/chemical_reaction/butterflium
+	name = "butterflium"
+	id = "butterflium"
+	required_reagents = list(/datum/reagent/colorful_reagent = 1, /datum/reagent/medicine/omnizine = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/nutriment = 1)
+/datum/chemical_reaction/butterflium/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = rand(1, created_volume), i <= created_volume, i++)
+		new /mob/living/simple_animal/butterfly(location)
+	..()
+//scream powder
+/datum/chemical_reaction/scream
+	name = "scream"
+	id = "scream"
+	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/ethanol/lizardwine = 5	)
+	required_temp = 374
+
+/datum/chemical_reaction/scream/on_reaction(datum/reagents/holder, created_volume)
+	playsound(holder.my_atom, pick(list( 'sound/voice/human/malescream_1.ogg', 'sound/voice/human/malescream_2.ogg', 'sound/voice/human/malescream_3.ogg', 'sound/voice/human/malescream_4.ogg', 'sound/voice/human/malescream_5.ogg', 'sound/voice/human/malescream_6.ogg', 'sound/voice/human/femalescream_1.ogg', 'sound/voice/human/femalescream_2.ogg', 'sound/voice/human/femalescream_3.ogg', 'sound/voice/human/femalescream_4.ogg', 'sound/voice/human/femalescream_5.ogg', 'sound/voice/human/wilhelm_scream.ogg')), created_volume*5,TRUE)
+
 /datum/chemical_reaction/hair_dye
 	name = /datum/reagent/hair_dye
 	id = /datum/reagent/hair_dye
@@ -581,3 +623,22 @@
 	results = list(/datum/reagent/yuck = 4)
 	required_reagents = list(/datum/reagent/fuel = 3)
 	required_container = /obj/item/reagent_containers/food/snacks/deadmouse
+
+
+/datum/chemical_reaction/slimejelly
+	name = "artificial slime jelly"
+	id = /datum/reagent/toxin/slimejelly
+	results = list(/datum/reagent/toxin/slimejelly = 5)
+	required_reagents = list(/datum/reagent/oil = 3, /datum/reagent/uranium/radium = 2, /datum/reagent/consumable/tinlux =1)
+	required_container = /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom
+	mix_message = "The mushroom's insides bubble and pop and it becomes very limp."
+
+/datum/chemical_reaction/slime_extractification
+	name = "slime extractification"
+	id = "slime extractification"
+	required_reagents = list(/datum/reagent/toxin/slimejelly = 30, /datum/reagent/consumable/frostoil = 5, /datum/reagent/toxin/plasma = 5)
+	mix_message = "The mixture condenses into a ball."
+
+/datum/chemical_reaction/slime_extractification/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/slime_extract/grey(location)

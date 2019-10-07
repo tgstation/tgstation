@@ -317,7 +317,7 @@
 	layer = ABOVE_OBJ_LAYER
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 100,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	///What kind of projectile the actual damaging part should be.
-	var/projectile_type = /obj/item/projectile/beam/legion
+	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot
 	var/initial_firing_time = 18
 	///How long it takes between shooting the tracer and the projectile.
@@ -355,14 +355,14 @@
 
 ///Called shot_delay after the turret shot the tracer. Shoots a projectile into the same direction.
 /obj/structure/legionturret/proc/fire_beam(angle)
-	var/obj/item/projectile/ouchie = new projectile_type(loc)
+	var/obj/projectile/ouchie = new projectile_type(loc)
 	ouchie.firer = src
 	ouchie.fire(angle)
 	playsound(src, 'sound/effects/bin_close.ogg', 100, TRUE)
 	QDEL_IN(src, 5)
 
 ///Used for the legion turret.
-/obj/item/projectile/beam/legion
+/obj/projectile/beam/legion
 	name = "blood pulse"
 	hitsound = 'sound/magic/magic_missile.ogg'
 	damage = 19
