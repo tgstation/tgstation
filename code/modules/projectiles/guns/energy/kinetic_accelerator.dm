@@ -12,13 +12,15 @@
 	flight_x_offset = 15
 	flight_y_offset = 9
 	automatic_charge_overlays = FALSE
+	can_bayonet = TRUE
+	knife_x_offset = 20
+	knife_y_offset = 12
 	var/overheat_time = 16
 	var/holds_charge = FALSE
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
+	var/mob/holder
+
 
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
@@ -91,11 +93,13 @@
 
 /obj/item/gun/energy/kinetic_accelerator/equipped(mob/user)
 	. = ..()
+	holder = user
 	if(!can_shoot())
 		attempt_reload()
 
 /obj/item/gun/energy/kinetic_accelerator/dropped()
 	. = ..()
+	holder = null
 	if(!QDELING(src) && !holds_charge)
 		// Put it on a delay because moving item from slot to hand
 		// calls dropped().
@@ -132,8 +136,8 @@
 	deltimer(recharge_timerid)
 	
 	var/skill_modifier
-	if(ishuman(firer))
-		var/mob/living/carbon/human/H = firer
+	if(ishuman(holder))
+		var/mob/living/carbon/human/H = holder
 		skill_modifier = H.dna.get_skill_speed_modifier(SKILL_MINING)
 
 	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried * skill_modifier, TIMER_STOPPABLE)
