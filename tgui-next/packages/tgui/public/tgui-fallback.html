@@ -24,6 +24,8 @@
 
 <!-- Scripts -->
 <script type="text/javascript">
+// Explicitly state to the script this is a fallback html document
+window.tguiFallback = true;
 // Retrieve and save ref to a global variable
 // Since this is a fallback html, we get the ref from the querystring
 var ref = location.search.replace('?ref=', '');
@@ -39,17 +41,6 @@ window.onerror = function (msg, url, line, col, error) {
   location.href = 'byond://?src=' + ref
     + '&action=tgui:log&error=true'
     + '&log=' + encodeURIComponent(logString);
-};
-// Subscribe to backend updates
-window.update = function (dataString) {
-  var data = JSON.parse(dataString);
-  if (window.tgui) {
-    window.tgui.set("config", data.config);
-    if (typeof data.data !== 'undefined') {
-      window.tgui.set("data", data.data);
-      window.tgui.animate("adata", data.data);
-    }
-  }
 };
 </script>
 <script defer src='tgui.js'></script>

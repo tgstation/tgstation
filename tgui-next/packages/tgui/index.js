@@ -17,14 +17,48 @@ const store = createStore();
 const reactRoot = document.getElementById('react-root');
 
 let initialRender = true;
+let handedOverToOldTgui = false;
 
 const renderLayout = () => {
+  // Short-circuit the renderer
+  if (handedOverToOldTgui) {
+    return;
+  }
   try {
     const state = store.getState();
     // Initial render setup
     if (initialRender) {
-      logger.log('initial render', state);
       initialRender = false;
+
+      // ----- Old TGUI chain-loader: begin -----
+      const route = getRoute(state);
+      // Route was not found, load old TGUI
+      if (!route) {
+        logger.warn('loading old tgui');
+        // Short-circuit the renderer
+        handedOverToOldTgui = true;
+        // Unsubscribe from updates
+        window.update = window.initialize = () => {};
+        // Load old TGUI using redirection method for IE8
+        if (tridentVersion <= 4) {
+          setTimeout(() => {
+            location.href = 'tgui-fallback.html?ref=' + ref;
+          }, 10);
+          return;
+        }
+        // Load old TGUI by injecting new scripts
+        loadCSS('tgui.css');
+        const head = document.getElementsByTagName('head')[0];
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'tgui.js';
+        head.appendChild(script);
+        // Bail
+        return;
+      }
+      // ----- Old TGUI chain-loader: end -----
+
+      logger.log('initial render', state);
       // Setup dragging
       setupDrag(state);
     }
@@ -47,37 +81,6 @@ const setupApp = () => {
 
   // Initialize logger
   setLoggerRef(ref);
-
-  // Determine if we can handle this route
-  const route = getRoute(state);
-  if (!route) {
-    logger.warn('loading old tgui');
-    // Load old TGUI using redirection method for IE8
-    if (tridentVersion <= 4) {
-      location.href = 'tgui-fallback.html?ref=' + ref;
-      return;
-    }
-    // Load old TGUI by injecting new scripts
-    loadCSS('tgui.css');
-    const head = document.getElementsByTagName('head')[0];
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = 'tgui.js';
-    head.appendChild(script);
-    // This thing was a part of an old index.html
-    window.update = dataString => {
-      const data = JSON.parse(dataString);
-      if (window.tgui) {
-        window.tgui.set('config', data.config);
-        if (typeof data.data !== 'undefined') {
-          window.tgui.set('data', data.data);
-          window.tgui.animate('adata', data.data);
-        }
-      }
-    };
-    // Bail
-    return;
-  }
 
   // Subscribe for state updates
   store.subscribe(() => {
@@ -113,12 +116,16 @@ const setupApp = () => {
   loadCSS('font-awesome.css');
 };
 
-// In case the document is already loaded
-if (document.readyState !== 'loading') {
-  setupApp();
+// Wait for DOM to properly load on IE8
+if (tridentVersion <= 4) {
+  if (document.readyState !== 'loading') {
+    setupApp();
+  }
+  else {
+    document.addEventListener('DOMContentLoaded', setupApp);
+  }
 }
-// Wait for content to load on modern browsers
-// NOTE: This call is polyfilled on IE8.
+// Load right away on all other browsers
 else {
-  document.addEventListener('DOMContentLoaded', setupApp);
+  setupApp();
 }
