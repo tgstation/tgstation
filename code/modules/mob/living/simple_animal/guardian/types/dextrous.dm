@@ -40,7 +40,7 @@
 		..() //lose items, then return
 
 //SLOT HANDLING BULLSHIT FOR INTERNAL STORAGE
-/mob/living/simple_animal/hostile/guardian/dextrous/doUnEquip(obj/item/I, force)
+/mob/living/simple_animal/hostile/guardian/dextrous/doUnEquip(obj/item/I, force, silent = FALSE)
 	if(..())
 		update_inv_hands()
 		if(I == internal_storage)

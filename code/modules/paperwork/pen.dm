@@ -181,7 +181,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg')
 
-/obj/item/pen/edagger/is_sharp()
+/obj/item/pen/edagger/get_sharpness()
 	return on * sharpness
 
 /obj/item/pen/edagger/suicide_act(mob/user)

@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message(null, \
 		"<span class='notice'>You lean on the back of [src] and start pushing the tray open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 					icon_state = "morgue4" // Cloneable
 					if(mob_occupant.stat == DEAD && beeper)
 						if(world.time > next_beep)
-							playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, FALSE) //Clone them you blind fucks
+							playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Clone them you blind fucks
 							next_beep = world.time + beep_cooldown
 					break
 
@@ -254,11 +254,11 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	var/list/conts = GetAllContents() - src - connected
 
 	if(!conts.len)
-		audible_message("<span class='italics'>You hear a hollow crackle.</span>")
+		audible_message("<span class='hear'>You hear a hollow crackle.</span>")
 		return
 
 	else
-		audible_message("<span class='italics'>You hear a roar as the crematorium activates.</span>")
+		audible_message("<span class='hear'>You hear a roar as the crematorium activates.</span>")
 
 		locked = TRUE
 		update_icon()

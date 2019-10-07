@@ -176,7 +176,7 @@
 /area/shuttle/caravan/syndicate3)
 "rU" = (
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /obj/machinery/door/poddoor{
 	id = "caravansyndicate3_bridge"
 	},
@@ -306,7 +306,7 @@
 /obj/structure/closet/syndicate{
 	anchored = 1
 	},
-/obj/item/gun/ballistic/automatic/pistol,
+/obj/item/storage/box/syndie_kit/chameleon,
 /obj/item/crowbar/red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/caravan/syndicate3)

@@ -65,7 +65,7 @@
 	SEND_SIGNAL(shield, COMSIG_MECHA_ACTION_ACTIVATE, source, signal_args)
 
 //Redirects projectiles to the shield if defense_check decides they should be blocked and returns true.
-/obj/mecha/combat/durand/proc/prehit(obj/item/projectile/source, list/signal_args)
+/obj/mecha/combat/durand/proc/prehit(obj/projectile/source, list/signal_args)
 	if(defense_check(source.loc) && shield)
 		signal_args[2] = shield
 
@@ -138,6 +138,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	pixel_y = 4
 	max_integrity = 10000
 	obj_integrity = 10000
+	anchored = TRUE
 	var/obj/mecha/combat/durand/chassis ///Our link back to the durand
 	var/switching = FALSE ///To keep track of things during the animation
 

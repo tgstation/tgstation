@@ -114,11 +114,8 @@
 
 
 /obj/machinery/shieldgen/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat && BROKEN))
-			stat |= BROKEN
-			locked = pick(0,1)
-			update_icon()
+	obj_break()
+	locked = pick(0,1)
 
 /obj/machinery/shieldgen/interact(mob/user)
 	. = ..()
@@ -134,13 +131,13 @@
 	if (active)
 		user.visible_message("<span class='notice'>[user] deactivated \the [src].</span>", \
 			"<span class='notice'>You deactivate \the [src].</span>", \
-			"<span class='italics'>You hear heavy droning fade out.</span>")
+			"<span class='hear'>You hear heavy droning fade out.</span>")
 		shields_down()
 	else
 		if(anchored)
 			user.visible_message("<span class='notice'>[user] activated \the [src].</span>", \
 				"<span class='notice'>You activate \the [src].</span>", \
-				"<span class='italics'>You hear heavy droning.</span>")
+				"<span class='hear'>You hear heavy droning.</span>")
 			shields_up()
 		else
 			to_chat(user, "<span class='warning'>The device must first be secured to the floor!</span>")
@@ -273,9 +270,10 @@
 		else
 			visible_message("<span class='danger'>The [src.name] shuts down due to lack of power!</span>", \
 				"If this message is ever seen, something is wrong.",
-				"<span class='italics'>You hear heavy droning fade out.</span>")
+				"<span class='hear'>You hear heavy droning fade out.</span>")
 			icon_state = "shield_wall_gen"
 			active = FALSE
+			log_game("[src] deactivated due to lack of power at [AREACOORD(src)]")
 			for(var/d in GLOB.cardinals)
 				cleanup_field(d)
 	else
@@ -377,13 +375,15 @@
 	if(active)
 		user.visible_message("<span class='notice'>[user] turned \the [src] off.</span>", \
 			"<span class='notice'>You turn off \the [src].</span>", \
-			"<span class='italics'>You hear heavy droning fade out.</span>")
+			"<span class='hear'>You hear heavy droning fade out.</span>")
 		active = FALSE
+		log_game("[src] was deactivated by [key_name(user)] at [AREACOORD(src)]")
 	else
 		user.visible_message("<span class='notice'>[user] turned \the [src] on.</span>", \
 			"<span class='notice'>You turn on \the [src].</span>", \
-			"<span class='italics'>You hear heavy droning.</span>")
+			"<span class='hear'>You hear heavy droning.</span>")
 		active = ACTIVE_SETUPFIELDS
+		log_game("[src] was activated by [key_name(user)] at [AREACOORD(src)]")
 	add_fingerprint(user)
 
 /obj/machinery/power/shieldwallgen/emag_act(mob/user)
@@ -456,7 +456,7 @@
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
-		if(istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/projectile))
 			return prob(10)
 		else
 			return !density

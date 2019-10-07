@@ -2195,19 +2195,6 @@
 	else if(href_list["beakerpanel"])
 		beaker_panel_act(href_list)
 
-	else if(href_list["retrieveboh"])
-		var/obj/singularity/boh_tear/tear = locate(href_list["retrieveboh"])
-		if(!tear)
-			to_chat(usr, "Either items were already retrieved or 10 minutes have passed and they were deleted.")
-			return
-		var/confirm = alert("This will teleport all items consumed to the BoH tear back to the BoH tear original location, and delete the BoH if it still exists. Are you sure?", "Confirm Damage Control", "Yes", "No")
-		if(confirm != "Yes")
-			return
-		var/turf/T = get_turf(tear.old_loc)
-		message_admins("The items consumed by the BoH tear at [ADMIN_VERBOSEJMP(T)] were retrieved by [key_name_admin(usr)].")
-		tear.investigate_log("Items consumed at [AREACOORD(T)] retrieved by [key_name(usr)].", INVESTIGATE_SINGULO)
-		tear.retrieve_consumed_items()
-
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))
 		return
