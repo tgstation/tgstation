@@ -3,6 +3,7 @@ import { AIAirlock } from './interfaces/AIAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
 import { ChemDispenser } from './interfaces/ChemDispenser';
 import { KitchenSink } from './interfaces/KitchenSink';
+import { Thermomachine } from './interfaces/Thermomachine';
 
 const ROUTES = {
   airalarm: {
@@ -20,6 +21,10 @@ const ROUTES = {
   chem_dispenser: {
     component: () => ChemDispenser,
     scrollable: true,
+  },
+  thermomachine: {
+    component: () => Thermomachine,
+    scrollable: false,
   },
 };
 
