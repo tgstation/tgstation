@@ -1,4 +1,4 @@
-/obj/item/clothing/suit/zombie_rider
+/obj/item/clothing/suit/zombie_rider //Spookz
 	name = "Zombie Rider"
 	desc = "Tired of walking? Have your friendly slave zombie waddle you around!"
 	fulp_item = TRUE //I don't know if this is necessary but WHATEVER
