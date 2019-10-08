@@ -494,8 +494,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [ADMIN_LOOKUPFLW(H)] to [dresscode].</span>")
 
 /client/proc/robust_dress_shop()
-	var/list/outfits = list("Naked","Custom","As Job...")
-	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
+	var/list/outfits = list("Naked","Custom","As Job...", "As Plasmaman...")
+	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/plasmaman)
 	for(var/path in paths)
 		var/datum/outfit/O = path //not much to initalize here but whatever
 		if(initial(O.can_be_admin_equipped))
@@ -518,6 +518,19 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in job_outfits
 		dresscode = job_outfits[dresscode]
+		if(isnull(dresscode))
+			return
+
+	if (dresscode == "As Plasmaman...")
+		var/list/plasmaman_paths = subtypesof(/datum/outfit/plasmaman)
+		var/list/plasmaman_outfits = list()
+		for(var/path in plasmaman_paths)
+			var/datum/outfit/O = path
+			if(initial(O.can_be_admin_equipped))
+				plasmaman_outfits[initial(O.name)] = path
+
+		dresscode = input("Select plasmeme equipment", "Robust quick dress shop") as null|anything in plasmaman_outfits
+		dresscode = plasmaman_outfits[dresscode]
 		if(isnull(dresscode))
 			return
 
