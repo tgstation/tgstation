@@ -44,8 +44,10 @@ $tooltip-color-background: #2D1400;
   color: $text-color-normal;
   background-color: $background-color-start;
   background-image:
-    linear-gradient(
-      to bottom,
+    linear-gradient(to bottom,
       $background-color-start 0%,
       $background-color-end 100%);
+  background-size: auto;
+  background-position: center;
+  background-repeat: no-repeat;
 }
