@@ -224,14 +224,3 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/snowcones/honey
 	subcategory = CAT_ICE
-
-/datum/crafting_recipe/food/honey_sc
-	name = "Rainbow snowcone"
-	reqs = list(
-		/obj/item/reagent_containers/food/drinks/sillycup = 1,
-		/datum/reagent/water  = 5,
-		/datum/reagent/consumable/ice = 15,
-		/datum/reagent/colorful_reagent = 1 //Harder to make
-	)
-	result = /obj/item/reagent_containers/food/snacks/snowcones/rainbow
-	subcategory = CAT_ICE
