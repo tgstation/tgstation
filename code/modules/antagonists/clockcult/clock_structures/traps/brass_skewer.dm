@@ -40,7 +40,7 @@
 		return
 	..()
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/bullet_act(obj/item/projectile/P)
+/obj/structure/destructible/clockwork/trap/brass_skewer/bullet_act(obj/projectile/P)
 	if(buckled_mobs && LAZYLEN(buckled_mobs))
 		var/mob/living/L = buckled_mobs[1]
 		return L.bullet_act(P)

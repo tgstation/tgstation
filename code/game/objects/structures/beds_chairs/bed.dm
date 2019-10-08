@@ -17,7 +17,7 @@
 	buckle_lying = 90
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
-	integrity_failure = 30
+	integrity_failure = 0.35
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
 	var/bolts = TRUE

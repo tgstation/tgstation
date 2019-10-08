@@ -9,7 +9,7 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 	max_integrity = 50
-	integrity_failure = 20
+	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
 	var/rods_broken = TRUE
@@ -126,7 +126,7 @@
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return TRUE
 	else
-		if(istype(mover, /obj/item/projectile) && density)
+		if(istype(mover, /obj/projectile) && density)
 			return prob(30)
 		else
 			return !density

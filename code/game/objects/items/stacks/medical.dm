@@ -122,7 +122,7 @@
 	stop_bleeding = 900
 
 /obj/item/stack/medical/gauze/cyborg
-	materials = list()
+	custom_materials = null
 	is_cyborg = 1
 	cost = 250
 
@@ -136,7 +136,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	var/heal_burn = 40
 	self_delay = 20
-	grind_results = list(/datum/reagent/medicine/C2/ichiyuri = 10)
+	grind_results = list(/datum/reagent/medicine/C2/lenturi = 10)
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)

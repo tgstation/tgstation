@@ -4,7 +4,7 @@
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	materials = list(/datum/material/iron=10000, /datum/material/glass=4000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=4000)
 
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
@@ -81,9 +81,11 @@
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	attacktext = "shocks"
+	attack_verb_continuous = "shocks"
+	attack_verb_simple = "shock"
 	attack_sound = 'sound/effects/empulse.ogg'
-	friendly = "pinches"
+	friendly_verb_continuous = "pinches"
+	friendly_verb_simple = "pinch"
 	speed = 0
 	faction = list("swarmer")
 	AIStatus = AI_OFF
@@ -91,7 +93,7 @@
 	mob_size = MOB_SIZE_TINY
 	ventcrawler = VENTCRAWLER_ALWAYS
 	ranged = 1
-	projectiletype = /obj/item/projectile/beam/disabler
+	projectiletype = /obj/projectile/beam/disabler
 	ranged_cooldown_time = 20
 	projectilesound = 'sound/weapons/taser2.ogg'
 	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/stack/ore/bluespace_crystal)
@@ -136,7 +138,7 @@
 		death()
 
 /mob/living/simple_animal/hostile/swarmer/CanPass(atom/movable/O)
-	if(istype(O, /obj/item/projectile/beam/disabler))//Allows for swarmers to fight as a group without wasting their shots hitting each other
+	if(istype(O, /obj/projectile/beam/disabler))//Allows for swarmers to fight as a group without wasting their shots hitting each other
 		return 1
 	if(isswarmer(O))
 		return 1
@@ -189,7 +191,7 @@
 	return 0
 
 /obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
-	if(materials[getmaterialref(/datum/material/iron)] || materials[getmaterialref(/datum/material/glass)])
+	if(custom_materials[getmaterialref(/datum/material/iron)] || custom_materials[getmaterialref(/datum/material/glass)])
 		return 1
 	return ..()
 
@@ -633,7 +635,7 @@
 /obj/structure/swarmer/blockade/CanPass(atom/movable/O)
 	if(isswarmer(O))
 		return 1
-	if(istype(O, /obj/item/projectile/beam/disabler))
+	if(istype(O, /obj/projectile/beam/disabler))
 		return 1
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateSwarmer()
