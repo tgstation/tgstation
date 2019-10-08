@@ -447,3 +447,16 @@
 
 /obj/machinery/bot_core/medbot
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_ROBOTICS)
+
+/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H) 
+	if(H.a_intent == INTENT_HELP)
+		visible_message("<span class='notice'>[H] pet [src].</span>", \
+						"<span class='notice'>[H] pets you.</span>", null, null, H)
+		to_chat(H, "<span class='notice'>You pet [src].</span>")
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+
+	else if(H.a_intent == INTENT_DISARM)
+		interact(H)
+	
+	else
+		return ..()
