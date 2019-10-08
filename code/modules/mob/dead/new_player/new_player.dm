@@ -452,12 +452,14 @@
 						continue
 					else
 						dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>]"
+						continue
 				if(job_datum.title == "Security Officer")			
 					if(!check_whitelist(src.ckey))
 						dept_dat += "<span class='nopositions'>Reserved.</span>"
 						continue
 					else
 						dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>"
+						continue
 				if(job_datum in SSjob.prioritized_jobs)
 					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([job_datum.current_positions])</span></a>"
 				else
