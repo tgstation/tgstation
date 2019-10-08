@@ -79,11 +79,10 @@
 
 /obj/item/wrench/medical/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	// TODO Make them glow with the power of the M E D I C A L W R E N C H
-	// during their ascension
-
-	// Stun stops them from wandering off
-	user.Stun(100, ignore_canstun = TRUE)
+	user.Stun(100, ignore_canstun = TRUE)// Stun stops them from wandering off
+	user.light_color = "#FAE48E"
+	user.set_light(2)
+	user.add_overlay(mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER))
 	playsound(loc, 'sound/effects/pray.ogg', 50, TRUE, -1)
 
 	// Let the sound effect finish playing
