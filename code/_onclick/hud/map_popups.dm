@@ -1,25 +1,30 @@
-/client/
-	var/list/screen_maps = list() //assoc list with all the active maps - when a screen obj is added to a map, it's put in here as well. "mapname" = list(screen objs in map)
+/client
+	var/list/screen_maps //assoc list with all the active maps - when a screen obj is added to a map, it's put in here as well. "mapname" = list(screen objs in map)
 
 /obj/screen
-	var/assigned_map = null
+	var/assigned_map
 	var/list/screen_info = list()//x,x pix, y, y pix || x,y
 
-/client/proc/clear_all_popups(var/map_to_clear = null)//not really needed most of the time, as the client's screen list gets reset on relog. any of the buttons are going to get caught by garbage collection anyway. they're effectively qdel'd.
+/client/proc/clear_map(var/map_to_clear)//not really needed most of the time, as the client's screen list gets reset on relog. any of the buttons are going to get caught by garbage collection anyway. they're effectively qdel'd.
 	if(!map_to_clear)
 		return FALSE
-	for(var/obj/screen/searched in screen)
-		if(searched.assigned_map == map_to_clear)
-			qdel(searched)
+	for(var/obj/screen/x in screen_maps[map_to_clear])
+		screen_maps[map_to_clear] -= x
+		qdel(x)
 
-/client/verb/handle_popup_close(window_id as text) //when the popup closes, it calls this.
+/client/proc/clear_all_maps()
+	for(var/x in screen_maps)
+		clear_map(x)
+
+/client/proc/close_popup(var/popup)
+	winshow(src,popup,0)
+	handle_popup_close(popup)
+
+/client/verb/handle_popup_close(window_id as text) //when the popup closes in any way (player or proc call) it calls this.
 	set hidden = 1
-	for(var/obj/screen/screenobj in screen_maps["[window_id]_map"])
-		screen -= screenobj
-		qdel(screenobj)
+	clear_map("[window_id]_map")
 
-
-/client/proc/create_popup(var/name = null, var/ratiox = 100, var/ratioy=100) //ratio is how many pixels by how many pixels. keep it simple
+/client/proc/create_popup(var/name, var/ratiox = 100, var/ratioy=100) //ratio is how many pixels by how many pixels. keep it simple
 	winclone(src,"popupwindow",name)
 	var/list/winparams = new
 	winparams["size"] = "[ratiox]x[ratioy]"
@@ -39,11 +44,10 @@
 
 	return "[name]_map"
 
-
-/client/proc/setup_popup(var/popup_name = null,var/width = 9,var/height = 9,var/tilesize = 2) //create the popup, and get it ready for generic use by giving it a background. width/height are multiplied by 64 by degfault.
+/client/proc/setup_popup(var/popup_name,var/width = 9,var/height = 9,var/tilesize = 2) //create the popup, and get it ready for generic use by giving it a background. width/height are multiplied by 64 by degfault.
 	if(!popup_name)
 		return
-	clear_all_popups(popup_name)
+	clear_map("[popup_name]_map")
 	var/x_value = world.icon_size*tilesize*width
 	var/y_value = world.icon_size*tilesize*height
 	var/newmap = create_popup(popup_name,x_value,y_value)
@@ -61,6 +65,8 @@
 	return newmap
 
 /client/proc/add_objs_to_map(var/list/to_add)
+	if(!screen_maps)
+		screen_maps = list()
 	if(!to_add.len) return
 	for(var/obj/screen/adding in to_add)
 		var/len = adding.screen_info.len
@@ -81,6 +87,7 @@
 			else
 				//error("[adding]'s screen_data has an invalid length. should be either 4,2,0 - it is [len]")
 				continue
-
+		if(!screen_maps[adding.assigned_map])
+			screen_maps[adding.assigned_map] = list()
 		screen_maps[adding.assigned_map] += adding
 		screen += adding
