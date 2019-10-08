@@ -41,6 +41,11 @@ export const computeBoxProps = props => {
     bold,
     italic,
     textAlign,
+    position,
+    top,
+    left,
+    right,
+    bottom,
     ...rest
   } = props;
   return {
@@ -66,6 +71,11 @@ export const computeBoxProps = props => {
       'font-weight': bold ? 'bold' : undefined,
       'font-style': italic ? 'italic' : undefined,
       'text-align': textAlign,
+      'position': position,
+      'top': unit(top),
+      'left': unit(left),
+      'right': unit(right),
+      'bottom': unit(bottom),
       ...rest.style,
     },
   };

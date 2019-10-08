@@ -10,3 +10,4 @@ export { Section } from './Section';
 export { Tabs } from './Tabs';
 export { TitleBar } from './TitleBar';
 export { Toast } from './Toast';
+export { Tooltip } from './Tooltip';

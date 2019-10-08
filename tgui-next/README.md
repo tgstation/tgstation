@@ -185,6 +185,14 @@ all available horizontal space.
   - `left` (default)
   - `center`
   - `right`
+- `position: string` - A direct mapping to `position` CSS property.
+  - `relative` - Relative positioning.
+  - `absolute` - Absolute positioning.
+  - `fixed` - Fixed positioning.
+- `top: number` - Vertical position of a positioned element.
+- `bottom: number` - Vertical position of a positioned element.
+- `left: number` - Horizontal position of a positioned element.
+- `right: number` - Horizontal position of a positioned element.
 
 ### `Button`
 
@@ -201,7 +209,12 @@ and slightly dim when inactive.
 - `disabled: boolean` - Disables and greys out the button.
 - `selected: boolean` - Activates the button (gives it a green color).
 - `tooltip: string` - A fancy, boxy tooltip, which appears when hovering
-over the button (not implemented).
+over the button.
+- `tooltipPosition: string` - Position of the tooltip.
+  - `top` - Show tooltip above the button.
+  - `bottom` (default) - Show tooltip below the button.
+  - `left` - Show tooltip on the left of the button.
+  - `right` - Show tooltip on the right of the button.
 - `title: string` - A native browser tooltip, which appears when hovering
 over the button.
 - `content/children: any` - Content to render inside the button.
@@ -460,6 +473,31 @@ stacked on the left side of the container.
 
 An individual tab element. Tabs function like buttons, so they inherit
 a lot of `Button` props.
+
+Props:
+
+- Inherited props: [Button](#button)
+- `key: string` - A unique identifier for the tab.
+- `label: string` - Tab label.
+- `icon: string` - Tab icon.
+- `content/children: any` - Content to render inside the tab.
+- `onClick: function` - Called when element is clicked.
+
+### `Tooltip`
+
+A boxy tooltip from tgui 1. It is very hacky in its current state, and
+requires setting `position: relative` on the container.
+
+Usage:
+
+```jsx
+<Box position="relative">
+  Sample text.
+  <Tooltip
+    position="bottom"
+    content="Tooltip for this text" />
+</Box>
+```
 
 Props:
 

@@ -13,6 +13,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+  overflow-x: hidden;
 
   // Fancy scrollbar
   scrollbar-base-color: lighten($gray, -50%);

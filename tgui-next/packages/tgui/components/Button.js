@@ -1,6 +1,7 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { Box } from './Box';
 import { Icon } from './Icon';
+import { Tooltip } from './Tooltip';
 
 export const BUTTON_ACTIVATION_KEYCODES = [
   13, // Enter
@@ -16,7 +17,7 @@ export const Button = props => {
     disabled,
     selected,
     tooltip,
-    title,
+    tooltipPosition,
     content,
     children,
     onClick,
@@ -39,8 +40,6 @@ export const Button = props => {
         className,
       ])}
       tabindex={!disabled && '0'}
-      data-tooltip={tooltip}
-      title={title}
       unselectable={true}
       onclick={e => {
         if (disabled || !onClick) {
@@ -61,6 +60,11 @@ export const Button = props => {
       )}
       {content}
       {children}
+      {tooltip && (
+        <Tooltip
+          content={tooltip}
+          position={tooltipPosition} />
+      )}
     </Box>
   );
 };

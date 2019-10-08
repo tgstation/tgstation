@@ -1,5 +1,5 @@
 import { Fragment, Component } from 'inferno';
-import { Section, Tabs, Box, Button, Flex, ProgressBar } from '../components';
+import { Section, Tabs, Box, Button, Flex, ProgressBar, Tooltip } from '../components';
 
 const COLORS_ARBITRARY = [
   'black',
@@ -43,9 +43,11 @@ export class KitchenSink extends Component {
       .map(x => 'tab_' + x);
     return (
       <Fragment>
-        <Flex m={-1}>
-          <Flex.Item m={1}>
-            <Section title="Buttons" minWidth={30}>
+        <Flex mb={1}>
+          <Flex.Item mr={1} grow={1}>
+            <Section
+              title="Buttons"
+              height="100%">
               <Box mb={1}>
                 <Button content="Simple" />
                 <Button selected content="Selected" />
@@ -71,8 +73,11 @@ export class KitchenSink extends Component {
               </Box>
             </Section>
           </Flex.Item>
-          <Flex.Item m={1}>
-            <Section title="Box" width={25}>
+          <Flex.Item>
+            <Section
+              title="Box"
+              width={25}
+              height="100%">
               <Box bold content="bold" />
               <Box italic content="italic" />
               <Box opacity={0.5} content="opacity 0.5" />
@@ -115,8 +120,8 @@ export class KitchenSink extends Component {
                   <Box>
                     <h1>Eat some more of these soft French rolls and
                       drink some tea.</h1>
-                    <Box color="green" my={2}>
-                      Tab content key: {key}
+                    <Box my={2}>
+                      Active tab: <Box inline color="green">{key}</Box>
                     </Box>
                     <Box my={1}>
                       <em>Jackdaws loves my big sphinx of quartz.</em>
@@ -125,6 +130,12 @@ export class KitchenSink extends Component {
                       <strong>The wide electrification of the southern
                         provinces will give a powerful impetus to the
                         growth of soviet agriculture.</strong>
+                    </Box>
+                    <Box inline mt={3} position="relative">
+                      Tooltip example.
+                      <Tooltip
+                        content="Tooltip text."
+                        position="right" />
                     </Box>
                   </Box>
                 )}
