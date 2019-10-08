@@ -26,7 +26,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/value_per_unit = 0
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
 	var/armor_modifiers = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 1, "acid" = 1)
-	///How beautiful is this material per unit?
+	///How beautiful is this material per unit
 	var/beauty_modifier = 0 
 
 ///This proc is called when the material is added to an object.
