@@ -124,6 +124,26 @@
 	item_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
 
+/obj/item/storage/box/holy/adept
+	name = "Divine Adept Kit"
+
+/obj/item/storage/box/holy/adept/PopulateContents()
+	new /obj/item/clothing/suit/armor/riot/chaplain/adept(src)
+	new /obj/item/clothing/head/helmet/chaplain/adept(src)
+
+/obj/item/clothing/head/helmet/chaplain/adept
+	name = "adept hood"
+	desc = "Its only heretical when others do it."
+	icon_state = "crusader"
+	item_state = "crusader"
+	flags_cover = HEADCOVERSEYES
+
+/obj/item/clothing/suit/armor/riot/chaplain/adept
+	name = "adept robes"
+	desc = "The ideal outfit for burning the unfaithful."
+	icon_state = "crusader"
+	item_state = "crusader"
+
 /obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"
 

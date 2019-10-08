@@ -103,6 +103,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_RD = /obj/item/bedsheet/rd,
 		DYE_CMO = /obj/item/bedsheet/cmo,
 		DYE_COSMIC = /obj/item/bedsheet/cosmos
+	),
+	DYE_LAWYER_SPECIAL = list(
+		DYE_COSMIC = /obj/item/clothing/under/rank/civilian/lawyer/galaxy,
+		DYE_SYNDICATE = /obj/item/clothing/under/rank/civilian/lawyer/galaxy/red
 	)
 ))
 
@@ -178,14 +182,15 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		color_source = null
 	update_icon()
 
-/obj/item/proc/dye_item(dye_color) 
+/obj/item/proc/dye_item(dye_color, dye_key_override) 
+	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
 	if(undyeable)
 		return FALSE
-	if(dying_key)
-		if(!GLOB.dye_registry[dying_key])
-			log_runtime("Item just tried to be dyed with an invalid registry key: [dying_key]")
+	if(dye_key_selector)
+		if(!GLOB.dye_registry[dye_key_selector])
+			log_runtime("Item just tried to be dyed with an invalid registry key: [dye_key_selector]")
 			return FALSE
-		var/obj/item/target_type = GLOB.dye_registry[dying_key][dye_color]
+		var/obj/item/target_type = GLOB.dye_registry[dye_key_selector][dye_color]
 		if(target_type)
 			icon = initial(target_type.icon)
 			icon_state = initial(target_type.icon_state)

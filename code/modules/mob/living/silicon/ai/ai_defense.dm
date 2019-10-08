@@ -47,7 +47,7 @@
 
 
 
-/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
+/mob/living/silicon/ai/bullet_act(obj/projectile/Proj)
 	. = ..(Proj)
 	updatehealth()
 
