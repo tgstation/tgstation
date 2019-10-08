@@ -6,8 +6,8 @@ $rule-color-normal: $dark-gray;
 $titlebar-color-background: #910101;
 $titlebar-color-text: $pale-red;
 $titlebar-color-button: $pale-red;
-$display-color-background: rgba(darken(#750000, 60%), 0.75);
-$display-color-shadow: rgba(darken(#750000, 80%), 0.75);
+$display-color-background: rgba(#000, 0.33);
+$display-color-shadow: rgba(#000, 0.5);
 $notice-color-first: #750000;
 $notice-color-second: #910101;
 $section-color-label: $white;
@@ -21,6 +21,7 @@ $button-color-caution: $yellow-orange;
 $button-color-danger: $yellow;
 $input-color-text: $white;
 $input-color-background: $dark-red;
+$rule-color-normal: rgba(#000, 0.25);
 
 // Body style
 @at-root #{selector-unify(&, body)} {

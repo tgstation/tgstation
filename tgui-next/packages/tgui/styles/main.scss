@@ -4,6 +4,7 @@
 @import './reset.scss';
 
 // Themable styles
+@import './color-map.scss';
 @import './atomic.scss';
 @import './components.scss';
 
@@ -26,6 +27,7 @@ body {
 // Syndicate theme
 .theme-syndicate {
   @import './themes/syndicate.scss';
+  @import './color-map.scss';
   @import './atomic.scss';
   @import './components.scss';
 }
@@ -33,6 +35,7 @@ body {
 // Clockwork theme
 .theme-clockwork {
   @import './themes/clockwork.scss';
+  @import './color-map.scss';
   @import './atomic.scss';
   @import './components.scss';
 }

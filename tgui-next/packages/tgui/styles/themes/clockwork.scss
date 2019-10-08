@@ -47,3 +47,10 @@ $tooltip-color-background: #2D1400;
     $background-color-start 0%,
     $background-color-end 100%);
 }
+
+.Layout__content {
+  background-image: none;
+  background-size: 70%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
