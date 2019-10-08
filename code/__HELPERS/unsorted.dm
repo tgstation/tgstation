@@ -1128,14 +1128,15 @@ B --><-- A
 /proc/get_random_station_turf()
 	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
 
-/proc/get_safe_random_station_turf()
+/proc/get_safe_random_station_turf() //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
 	for (var/i in 1 to 5)
 		var/list/L = get_area_turfs(pick(GLOB.the_station_areas))
 		var/turf/target
 		while (L.len && !target)
 			var/I = rand(1, L.len)
 			var/turf/T = L[I]
-			if(!T.density)
+			var/area/X = get_area(T)
+			if(!T.density && X.valid_territory)
 				var/clear = TRUE
 				for(var/obj/O in T)
 					if(O.density)
