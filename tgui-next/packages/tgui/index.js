@@ -46,6 +46,9 @@ const renderLayout = () => {
           }, 10);
           return;
         }
+        // Inject current state into the data holder
+        const holder = document.getElementById('data');
+        holder.textContent = JSON.stringify(state);
         // Load old TGUI by injecting new scripts
         loadCSS('tgui.css');
         const head = document.getElementsByTagName('head')[0];

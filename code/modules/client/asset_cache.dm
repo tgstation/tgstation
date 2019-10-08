@@ -385,6 +385,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"tgui.css" = 'tgui/assets/tgui.css',
 		"tgui.js" = 'tgui/assets/tgui.js',
 		// tgui-next
+		"tgui-main.html" = 'tgui-next/packages/tgui/public/tgui-main.html',
 		"tgui-fallback.html" = 'tgui-next/packages/tgui/public/tgui-fallback.html',
 		"tgui.bundle.js" = 'tgui-next/packages/tgui/public/bundles/tgui.bundle.js',
 		"tgui.bundle.css" = 'tgui-next/packages/tgui/public/bundles/tgui.bundle.css',

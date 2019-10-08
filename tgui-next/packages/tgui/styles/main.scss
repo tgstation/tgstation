@@ -3,28 +3,35 @@
 @import './variables.scss';
 @import './reset.scss';
 
-// Atomic classes
-@import './atomic/color.scss';
-@import './atomic/text.scss';
+// Themable styles
+@import './atomic.scss';
+@import './components.scss';
 
-// Components
-@import '../components/Button.scss';
-@import '../components/Flex.scss';
-@import '../components/LabeledList.scss';
-@import '../components/Layout.scss';
-@import '../components/NoticeBox.scss';
-@import '../components/ProgressBar.scss';
-@import '../components/Section.scss';
-@import '../components/Tabs.scss';
-@import '../components/TitleBar.scss';
-@import '../components/Tooltip.scss';
-
-// Misc
+// Miscellaneous bits
 body {
   color: $text-color-normal;
   background-color: $background-color-start;
-  background-image: linear-gradient(
-    to bottom,
-    $background-color-start 0%,
-    $background-color-end 100%);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.0' viewBox='0 0 425 200' opacity='.3'%3E%3Cpath d='M178 0h-71a7 6 0 00-7 6v188a7 6 0 007 6h53a7 6 0 007-6V92l72 105a7 6 0 006 3h73a7 6 0 007-6V6a7 6 0 00-7-6h-55a7 6 0 00-6 6v103L184 3a7 6 0 00-6-3zM5 22a13 13 0 018-22h67a5 5 0 015 5v80zM420 178a13 13 0 01-8 22h-67a5 5 0 01-5-5v-80z'/%3E%3C/svg%3E"),
+    linear-gradient(
+      to bottom,
+      $background-color-start 0%,
+      $background-color-end 100%);
+  background-size: 75%, auto;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+}
+
+// Syndicate theme
+.theme-syndicate {
+  @import './themes/syndicate.scss';
+  @import './atomic.scss';
+  @import './components.scss';
+}
+
+// Clockwork theme
+.theme-clockwork {
+  @import './themes/clockwork.scss';
+  @import './atomic.scss';
+  @import './components.scss';
 }

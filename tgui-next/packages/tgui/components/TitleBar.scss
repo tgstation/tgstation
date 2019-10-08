@@ -8,7 +8,7 @@
 
 .TitleBar__clickable {
   color: rgba(255, 255, 255, 0.5);
-  background-color: darken($gray, 0%);
+  background-color: darken($titlebar-color-background, 0%);
   transition: color, background-color 250ms;
 
   &:hover {

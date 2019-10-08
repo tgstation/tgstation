@@ -16,13 +16,13 @@
   overflow-x: hidden;
 
   // Fancy scrollbar
-  scrollbar-base-color: lighten($gray, -50%);
-  scrollbar-face-color: lighten($gray, 50%);
-  scrollbar-3dlight-color: lighten($gray, 100%);
-  scrollbar-highlight-color: lighten($gray, 100%);
-  scrollbar-track-color: lighten($gray, -50%);
-  scrollbar-arrow-color: lighten($gray, 150%);
-  scrollbar-shadow-color: $gray;
+  scrollbar-base-color: lighten($titlebar-color-background, -50%);
+  scrollbar-face-color: lighten($titlebar-color-background, 50%);
+  scrollbar-3dlight-color: lighten($titlebar-color-background, 100%);
+  scrollbar-highlight-color: lighten($titlebar-color-background, 100%);
+  scrollbar-track-color: lighten($titlebar-color-background, -50%);
+  scrollbar-arrow-color: lighten($titlebar-color-background, 150%);
+  scrollbar-shadow-color: $titlebar-color-background;
 }
 
 .Layout__content--scrollable {

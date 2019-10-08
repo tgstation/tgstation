@@ -2,7 +2,15 @@
   padding: 4px 6px;
   margin-bottom: 6px;
   box-shadow: none;
-  color: $text-color-inverse;
+
+  // Adapt button color to background luminance to ensure high contast
+  @if luminance($notice-color-first) > 0.3 {
+    color: rgba(0, 0, 0, 1);
+  }
+  @else {
+    color: rgba(255, 255, 255, 1);
+  }
+
   font-weight: bold;
   font-style: italic;
   background-color: $notice-color-first;
@@ -14,7 +22,13 @@
     $notice-color-second 20px);
 
   .label {
-    color: $text-color-inverse;
+    // Adapt button color to background luminance to ensure high contast
+    @if luminance($notice-color-first) > 0.3 {
+      color: rgba(0, 0, 0, 1);
+    }
+    @else {
+      color: rgba(255, 255, 255, 1);
+    }
   }
 
   .content:only-of-type {
