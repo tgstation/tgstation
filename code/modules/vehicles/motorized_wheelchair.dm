@@ -6,7 +6,7 @@
 	var/power_efficiency = 1
 	var/power_usage = 100
 	var/panel_open = FALSE
-	var/t5 = 0 //Var for what the overall rating of the parts is
+	var/t5 = 0 //FULP Var for what the overall rating of the parts is
 	var/list/required_parts = list(/obj/item/stock_parts/manipulator, 
 							/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/capacitor)
@@ -18,6 +18,7 @@
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/refresh_parts()
 	speed = 1 // Should never be under 1
+	t5 = 0 // FULP reset
 	for(var/obj/item/stock_parts/manipulator/M in contents)
 		t5 += M.rating
 		speed += M.rating
