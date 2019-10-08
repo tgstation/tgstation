@@ -98,11 +98,6 @@
 	desc = "A small bottle of synaptizine."
 	list_reagents = list(/datum/reagent/medicine/synaptizine = 30)
 
-/obj/item/reagent_containers/glass/bottle/formaldehyde
-	name = "formaldehyde bottle"
-	desc = "A small bottle of formaldehyde."
-	list_reagents = list(/datum/reagent/toxin/formaldehyde = 30)
-
 /obj/item/reagent_containers/glass/bottle/ammonia
 	name = "ammonia bottle"
 	desc = "A small bottle of ammonia."
