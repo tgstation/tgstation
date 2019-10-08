@@ -137,19 +137,31 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/gameover = FALSE
 	var/blocked = FALSE //Player cannot attack/heal while set
 	var/turtle = 0
+	var/list/weapons = list()
 
 /obj/machinery/computer/arcade/battle/Reset()
 	var/name_action
 	var/name_part1
 	var/name_part2
 
-	name_action = pick("Defeat ", "Annihilate ", "Save ", "Strike ", "Stop ", "Destroy ", "Robust ", "Romance ", "Pwn ", "Own ", "Ban ")
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		name_action = pick_list(ARCADE_FILE, "rpg_action_halloween")
+		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_halloween")
+		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_halloween")
+		weapons = strings(ARCADE_FILE, "rpg_weapon_halloween")
+	else if(SSevents.holidays && SSevents.holidays[CHRISTMAS])
+		name_action = pick_list(ARCADE_FILE, "rpg_action_xmas")
+		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
+		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
+		weapons = strings(ARCADE_FILE, "rpg_weapon_xmas")
+	else
+		name_action = pick_list(ARCADE_FILE, "rpg_action")
+		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective")
+		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy")
+		weapons = strings(ARCADE_FILE, "rpg_weapon")
 
-	name_part1 = pick("the Automatic ", "Farmer ", "Lord ", "Professor ", "the Cuban ", "the Evil ", "the Dread King ", "the Space ", "Lord ", "the Great ", "Duke ", "General ")
-	name_part2 = pick("Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid", "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn", "Bloopers")
-
-	enemy_name = replacetext((name_part1 + name_part2), "the ", "")
-	name = (name_action + name_part1 + name_part2)
+	enemy_name = ("The " + name_part1 + " " + name_part2)
+	name = (name_action + " " + enemy_name)
 
 /obj/machinery/computer/arcade/battle/ui_interact(mob/user)
 	. = ..()
@@ -180,7 +192,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if (href_list["attack"])
 			blocked = TRUE
 			var/attackamt = rand(2,6)
-			temp = "You attack for [attackamt] damage!"
+			var/weapon = pick(weapons)
+			temp = "You attack with a [weapon] for [attackamt] damage!"
 			playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			updateUsrDialog()
 			if(turtle > 0)
@@ -209,7 +222,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		else if (href_list["charge"])
 			blocked = TRUE
 			var/chargeamt = rand(4,7)
-			temp = "You regain [chargeamt] points"
+			temp = "You regain [chargeamt] points."
 			playsound(loc, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			player_mp += chargeamt
 			if(turtle > 0)

@@ -7,11 +7,11 @@
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(/datum/material/iron = 500)
+	custom_materials = list(/datum/material/iron = 500)
 	var/fire_sound = null						//What sound should play when this ammo is fired
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
-	var/obj/item/projectile/BB = null 			//The loaded bullet
+	var/obj/projectile/BB = null 			//The loaded bullet
 	var/pellets = 1								//Pellets for spreadshot
 	var/variance = 0							//Variance for inaccuracy fundamental to the casing
 	var/randomspread = 0						//Randomspread for automatics

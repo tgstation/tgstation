@@ -37,7 +37,7 @@
 /mob/living/simple_animal/hostile/clockwork/ratvar_act()
 	fully_heal(TRUE)
 
-/mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return 0 //ouch, my metal-unlikely-to-be-damaged-by-electricity-body
 
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)

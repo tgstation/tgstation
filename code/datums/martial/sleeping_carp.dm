@@ -9,6 +9,7 @@
 	id = MARTIALART_SLEEPINGCARP
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
+	smashes_tables = TRUE
 	var/old_grab_state = null
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -75,7 +76,7 @@
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		D.visible_message("<span class='danger'>[A] knees [D] in the stomach!</span>", \
 						"<span class='userdanger'>Your stomach is kneed by [A], making you gag!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
-		to_chat(A, "<span class='danger'>You knee [D] in the stomach, [D.p_them()] them gag!</span>")
+		to_chat(A, "<span class='danger'>You knee [D] in the stomach, making [D.p_them()] gag!</span>")
 		D.losebreath += 3
 		D.Stun(40)
 		playsound(get_turf(D), 'sound/weapons/punch1.ogg', 50, TRUE, -1)
@@ -151,7 +152,7 @@
 		return TRUE
 	return ..()
 
-/datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/carbon/human/A, obj/item/projectile/P, def_zone)
+/datum/martial_art/the_sleeping_carp/on_projectile_hit(mob/living/carbon/human/A, obj/projectile/P, def_zone)
 	. = ..()
 	if(A.incapacitated(FALSE, TRUE)) //NO STUN
 		return BULLET_ACT_HIT

@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "unanchoring/anchoring the grill no longer attacks it once"
