@@ -1,14 +1,25 @@
 import { classes, pureComponentHooks } from 'common/react';
+import { Box } from './Box';
 
 export const Section = props => {
-  const { title, level = 1, buttons, children } = props;
+  const {
+    className,
+    title,
+    level = 1,
+    buttons,
+    content,
+    children,
+    ...rest
+  } = props;
   const hasTitle = !!(title || buttons);
   return (
-    <div
+    <Box
       className={classes([
         'Section',
         'Section--level--' + level,
-      ])}>
+        className,
+      ])}
+      {...rest}>
       {hasTitle && (
         <div className="Section__title">
           <span className="Section__titleText">
@@ -20,9 +31,10 @@ export const Section = props => {
         </div>
       )}
       <div className="Section__content">
+        {content}
         {children}
       </div>
-    </div>
+    </Box>
   );
 };
 

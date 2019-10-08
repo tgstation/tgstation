@@ -1,4 +1,5 @@
 import { classes, pureComponentHooks } from 'common/react';
+import { clamp } from 'common/math';
 
 export const ProgressBar = props => {
   const { value, content, color, children } = props;
@@ -11,7 +12,7 @@ export const ProgressBar = props => {
           color && 'ProgressBar--color--' + color,
         ])}
         style={{
-          'width': (value * 100) + '%',
+          'width': (clamp(value, 0, 1) * 100) + '%',
         }} />
       <div className="ProgressBar__content">
         {value && !hasContent && Math.round(value * 100) + '%'}

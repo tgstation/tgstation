@@ -82,10 +82,8 @@ export const ChemDispenser = props => {
         {recipes.map(recipe => (
           <Button key={recipe.name}
             icon="tint"
-            style={{
-              'width': '130px',
-              'line-height': '21px',
-            }}
+            width="129.5px"
+            lineHeight="21px"
             content={recipe.name}
             onClick={() => act(ref, 'dispense_recipe', {
               recipe: recipe.name,
@@ -114,10 +112,8 @@ export const ChemDispenser = props => {
           {data.chemicals.map(chemical => (
             <Button key={chemical.id}
               icon="tint"
-              style={{
-                'width': '130px',
-                'line-height': '21px',
-              }}
+              width="129.5px"
+              lineHeight="21px"
               content={chemical.title}
               onClick={() => act(ref, 'dispense', {
                 reagent: chemical.id,

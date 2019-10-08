@@ -21,7 +21,12 @@
   &:hover,
   &:focus {
     background-color: lighten($color, $button-lighten-hover);
-    color: rgba(255, 255, 255, 1);
+    @if luminance($color) > 0.4 {
+      color: rgba(0, 0, 0, 1);
+    }
+    @else {
+      color: rgba(255, 255, 255, 1);
+    }
   }
 }
 
@@ -53,7 +58,7 @@
   display: block;
   margin-left: 0;
   margin-right: 0;
-  padding: 3px 6px;
+  // padding: 3px 6px;
 }
 
 @each $color-name, $color-value in $color-map {

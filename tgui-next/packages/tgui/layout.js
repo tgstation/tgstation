@@ -2,7 +2,7 @@ import { classes } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { Component, createRef } from 'inferno';
 import { runCommand, tridentVersion, winset } from './byond';
-import { TitleBar } from './components';
+import { TitleBar, Box } from './components';
 import { BUTTON_ACTIVATION_KEYCODES } from './components/Button';
 import { Toast } from './components/Toast';
 import { UI_INTERACTIVE } from './constants';
@@ -66,7 +66,9 @@ export class Layout extends Component {
               this.contentRef.current.focus();
             }
           }}>
-          <Component state={state} dispatch={dispatch} />
+          <Box m={1}>
+            <Component state={state} dispatch={dispatch} />
+          </Box>
         </div>
         {config.status !== UI_INTERACTIVE && (
           <div className="Layout__dimmer" />
