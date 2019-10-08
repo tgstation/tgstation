@@ -39,7 +39,7 @@ field_generator power level display
 	var/power_level = 0
 	var/active = FG_OFFLINE
 	var/power = 20  // Current amount of power
-	var/state = FG_UNSECURED	
+	var/state = FG_UNSECURED
 	var/warming_up = 0
 	var/list/obj/machinery/field/containment/fields
 	var/list/obj/machinery/field/generator/connected_gens
