@@ -171,7 +171,7 @@
 		H.transferItemToLoc(helmet, src, TRUE)
 		H.update_inv_wear_suit()
 		to_chat(H, "<span class='notice'>The helmet on the hardsuit disengages.</span>")
-		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+		playsound(src.loc, toggle_helmet_sound, 50, TRUE) //FULP - modified static sound file to toggle_helmet_sound var
 	else
 		helmet.forceMove(src)
 
@@ -197,6 +197,6 @@
 				to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = TRUE
 				H.update_inv_wear_suit()
-				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+				playsound(src.loc, toggle_helmet_sound, 50, TRUE) //FULP - modified static sound file to toggle_helmet_sound var
 	else
 		RemoveHelmet()
