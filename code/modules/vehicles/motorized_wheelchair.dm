@@ -147,26 +147,31 @@
 		return
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away
 	if(M.density && speed > delay_multiplier && has_buckled_mobs())
-		if(t5 < 30) // If T5 (T5 identifier) is less than 30, execute as normal
-			var/mob/living/H = buckled_mobs[1]
-			var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
-			unbuckle_mob(H)
-			H.throw_at(throw_target, 2, 3)
-			H.Knockdown(100)
-			H.adjustStaminaLoss(40)
-			if(isliving(M)) //T5 wheelchairs have fucking proper seatbelts, so no getting yeeted while crunching people!
-				var/mob/living/D = M
-				throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
-				D.throw_at(throw_target, 2, 3)
-				D.Knockdown(80)
-				D.adjustStaminaLoss(35)
-				visible_message("<span class='danger'>[src] crashes into [M], sending [H] and [D] flying!</span>")
-			else
-				visible_message("<span class='danger'>[src] crashes into [M], sending [H] flying!</span>")
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		else //If T5 is greater than 30, run that fucker over!
+		
+		if(t5 >= 30) //FULP: If T5 is greater than 30, run that fucker over! 
 			if(isliving(M))
 				RunOver(M)
+				return
+		// If T5 (T5 identifier) is less than 30, execute as normal
+		
+		var/mob/living/H = buckled_mobs[1]
+		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
+		unbuckle_mob(H)
+		H.throw_at(throw_target, 2, 3)
+		H.Knockdown(100)
+		H.adjustStaminaLoss(40)
+		if(isliving(M)) //T5 wheelchairs have fucking proper seatbelts, so no getting yeeted while crunching people!
+			var/mob/living/D = M
+			throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
+			D.throw_at(throw_target, 2, 3)
+			D.Knockdown(80)
+			D.adjustStaminaLoss(35)
+			visible_message("<span class='danger'>[src] crashes into [M], sending [H] and [D] flying!</span>")
+		else
+			visible_message("<span class='danger'>[src] crashes into [M], sending [H] flying!</span>")
+		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+	 
+			
 		
 /obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user)
 	if((obj_flags & EMAGGED) || !panel_open)
