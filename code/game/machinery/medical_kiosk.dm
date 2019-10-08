@@ -9,13 +9,14 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medical_kiosk
 	payment_department = ACCOUNT_MED
-	var/default_price = 5  //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
-	var/scan_active = FALSE  //Shows if the machine is being used. resets upon new viewer.
-	var/upgrade_scan_active = FALSE
-	var/adv_scan_active = FALSE  //Shows if the machine has upgraded functionality
+	var/default_price = 5           //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
+	var/active_price = 5            //Change by using a multitool on the board.
+	var/scan_active = FALSE         //Shows if the machine is being used. resets upon new viewer.
+	var/upgrade_scan_active = FALSE //Shows if the machine has upgraded functionality. For T2.
+	var/adv_scan_active = FALSE      //Ditto, for T3
 	var/datum/bank_account/account  //payer's account.
 	var/mob/living/carbon/human/H   //the person using the console in each instance.
-	var/obj/item/card/id/C    //the account of the person using the console.
+	var/obj/item/card/id/C          //the account of the person using the console.
 
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
   if(C.registered_account)
@@ -23,20 +24,20 @@
   else
     say("No account detected.")  //No homeless crew.
     return
-  if(!account.has_money(default_price))
+  if(!account.has_money(active_price))
     say("You do not possess the funds to purchase this.")  //No jobless crew, either.
     return
   else
-    account.adjust_money(-default_price)
+    account.adjust_money(-active_price)
     var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_MED)
     if(D)
-      D.adjust_money(default_price)
+      D.adjust_money(active_price)
     use_power(20)
   scan_active = TRUE
   icon_state = "kiosk_active"
   say("Thank you for your patronage!")
-  //upgrade_scan_active = FALSE
-  //adv_scan_active = FALSE
+  upgrade_scan_active = FALSE
+  adv_scan_active = FALSE
   RefreshParts()
   return
 
@@ -53,6 +54,10 @@
 
 /obj/machinery/medical_kiosk/RefreshParts()
   var/A
+  var/obj/item/circuitboard/machine/medical_kiosk/board = circuit
+  if(board)
+    active_price = board.custom_cost
+
   for(var/obj/item/stock_parts/scanning_module/S in component_parts)
     A += S.rating
   if(A >= 3)
@@ -80,6 +85,7 @@
     scan_active = FALSE
     icon_state = "kiosk_off"
   if(ishuman(user))
+    RefreshParts()
     H = user
     C = H.get_idcard(TRUE)
 
@@ -144,6 +150,7 @@
   else if(user.radiation >= 100)
     rad_status = "Patient has moderate radioactive signatures. Keep under showers until symptoms subside."
 
+  data["kiosk_cost"] = active_price
   data["patient_name"] = patient_name
   data["brute_health"] = brute_loss
   data["burn_health"] = fire_loss
