@@ -170,7 +170,6 @@
 		else
 			visible_message("<span class='danger'>[src] crashes into [M], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-
 /obj/vehicle/ridden/wheelchair/motorized/emag_act(mob/user)
 	if((obj_flags & EMAGGED) || !panel_open)
 		return
