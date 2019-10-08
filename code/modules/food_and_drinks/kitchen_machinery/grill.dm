@@ -96,7 +96,7 @@
 
 /obj/machinery/grill/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(default_unfasten_wrench(user, I))
+	if(default_unfasten_wrench(user, I) != CANT_UNFASTEN)
 		return TRUE
 
 /obj/machinery/grill/deconstruct(disassembled = TRUE)
