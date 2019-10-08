@@ -11,7 +11,6 @@
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
-	var/obj/screen/sanity/screen_obj_sanity
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
@@ -144,37 +143,28 @@
 			if(absmood > highest_absolute_mood)
 				highest_absolute_mood = absmood
 
+	switch(sanity_level)
+		if(1)
+			screen_obj.color = "#2eeb9a"
+		if(2)
+			screen_obj.color = "#86d656"
+		if(3)
+			screen_obj.color = "#4b96c4"
+		if(4)
+			screen_obj.color = "#dfa65b"
+		if(5)
+			screen_obj.color = "#f38943"
+		if(6)
+			screen_obj.color = "#f15d36"
+
 	if(!conflicting_moodies.len) //no special icons- go to the normal icon states
-		if(sanity < 25)
-			screen_obj.icon_state = "mood_insane"
-		else
-			screen_obj.icon_state = "mood[mood_level]"
-		screen_obj_sanity.icon_state = "sanity[sanity_level]"
+		screen_obj.icon_state = "mood[mood_level]"
 		return
 
 	for(var/i in conflicting_moodies)
 		var/datum/mood_event/event = i
 		if(abs(event.mood_change) == highest_absolute_mood)
 			screen_obj.icon_state = "[event.special_screen_obj]"
-			switch(mood_level)
-				if(1)
-					screen_obj.color = "#747690"
-				if(2)
-					screen_obj.color = "#f15d36"
-				if(3)
-					screen_obj.color = "#f38a43"
-				if(4)
-					screen_obj.color = "#dfa65b"
-				if(5)
-					screen_obj.color = "#4b96c4"
-				if(6)
-					screen_obj.color = "#a8d259"
-				if(7)
-					screen_obj.color = "#86d656"
-				if(8)
-					screen_obj.color = "#30dd26"
-				if(9)
-					screen_obj.color = "#2eeb9a"
 			break
 
 ///Called on SSmood process
@@ -297,9 +287,8 @@
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
-	screen_obj_sanity = new
+	screen_obj.color = "#4b96c4"
 	hud.infodisplay += screen_obj
-	hud.infodisplay += screen_obj_sanity
 	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
@@ -310,9 +299,7 @@
 	var/datum/hud/hud = owner.hud_used
 	if(hud && hud.infodisplay)
 		hud.infodisplay -= screen_obj
-		hud.infodisplay -= screen_obj_sanity
 	QDEL_NULL(screen_obj)
-	QDEL_NULL(screen_obj_sanity)
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
 	print_mood(user)

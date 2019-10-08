@@ -75,6 +75,14 @@
 	flags_1 = NONE
 	resistance_flags = FLAMMABLE
 
+/obj/item/cultivator/rake/Crossed(mob/living/carbon/human/H)
+	if(istype(H) && has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
+		H.confused = max(H.confused, 10)
+		H.Stun(20)
+		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
+		H.visible_message("<span class='warning'>[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!</span>", \
+						  "<span class='userdanger'>You step on [src] causing the handle to hit you right in the face!</span>")
+
 /obj/item/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."

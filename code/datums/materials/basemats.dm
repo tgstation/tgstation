@@ -18,7 +18,7 @@
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	integrity_modifier = 0.1
 	sheet_type = /obj/item/stack/sheet/glass
-	value_per_unit = 0.001
+	value_per_unit = 0.0025
 	beauty_modifier = 0.05
 	armor_modifiers = list("melee" = 0.2, "bullet" = 0.2, "laser" = 0, "energy" = 1, "bomb" = 0, "bio" = 0.2, "rad" = 0.2, "fire" = 1, "acid" = 0.2) // yeah ok retard
 
@@ -30,7 +30,7 @@
 	color = "#bdbebf"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
-	value_per_unit = 0.25
+	value_per_unit = 0.025
 	beauty_modifier = 0.075
 
 ///Slight force increase
