@@ -6,7 +6,7 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered)
 "c" = (
-/obj/item/paper/fluff/stations/lavaland/sloth/note,
+/obj/item/mushpunch,
 /turf/open/floor/sepia{
 	slowdown = 10
 	},
