@@ -75,7 +75,6 @@
 	righthand_file = 'icons/fulpicons/halloween_costumes/samus_righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
-	toy_overlay = FALSE
 
 /obj/item/projectile/bullet/reusable/foam_dart/arm_ball
 	name = "small foam ball"

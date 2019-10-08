@@ -42,3 +42,11 @@
 	glasses = /obj/item/clothing/glasses/phantommaid_eyes
 	r_hand = /obj/item/toy/phantommaid_knife
 	neck = /obj/item/clothing/neck/scarf/phantommaid_scarfshoulder
+
+/datum/outfit/halloween/cyberdemon
+	name = "Cyberdemon Costume Armor"
+	suit = /obj/item/clothing/suit/space/hardsuit/toy/cyberdemon
+
+/datum/outfit/halloween/zombie_rider
+	name = "Zombie Rider Costume"
+	suit = /obj/item/clothing/suit/zombie_rider
