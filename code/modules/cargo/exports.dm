@@ -1,6 +1,6 @@
 /* How it works:
  The shuttle arrives at CentCom dock and calls sell(), which recursively loops through all the shuttle contents that are unanchored.
- 
+
  Each object in the loop is checked for applies_to() of various export datums, except the invalid ones.
 */
 
@@ -31,7 +31,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		setupExports()
 
 	var/list/contents = AM.GetAllContents()
-	
+
 	var/datum/export_report/report = external_report
 	if(!report) //If we don't have any longer transaction going on
 		report = new
@@ -125,15 +125,23 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 	if(amount <=0 || the_cost <=0)
 		return FALSE
-	
+
 	report.total_value[src] += the_cost
-	
+
 	if(istype(O, /datum/export/material))
 		report.total_amount[src] += amount*MINERAL_MATERIAL_AMOUNT
 	else
 		report.total_amount[src] += amount
 
 	if(!dry_run)
+		if(istype(O, /obj/machinery/power/battery))
+			var/obj/machinery/power/battery/B = O
+			if(B.taxes && B.owner)
+				///after selling part of the credits gained from selling the battery is sent back to whoever set it as owner from cargo funds
+				var/texas = B.charge * B.taxes*0.01
+				var/datum/bank_account/cargo_funds = SSeconomy.get_dep_account(ACCOUNT_CAR)
+				B.owner.transfer_money(cargo_funds, texas)
+
 		if(apply_elastic)
 			cost *= NUM_E**(-1*k_elasticity*amount)		//marginal cost modifier
 		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[O.type]", "[the_cost]"))
@@ -148,7 +156,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 	var/total_value = ex.total_value[src]
 	var/total_amount = ex.total_amount[src]
-	
+
 	var/msg = "[total_value] credits: Received [total_amount] "
 	if(total_value > 0)
 		msg = "+" + msg

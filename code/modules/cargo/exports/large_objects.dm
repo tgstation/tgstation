@@ -126,6 +126,7 @@
 	cost = 10 //Base cost of canister. You get more for nice gases inside.
 	unit_name = "Gas Canister"
 	export_types = list(/obj/machinery/portable_atmospherics/canister)
+
 /datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = 10
@@ -138,4 +139,15 @@
 	worth += gases[/datum/gas/miasma][MOLES]*10
 	worth += gases[/datum/gas/tritium][MOLES]*5
 	worth += gases[/datum/gas/pluoxium][MOLES]*5
+	return worth
+
+/datum/export/large/battery
+	cost = 100
+	unit_name = "battery"
+	message = "Taxes not included"
+	export_types = list(/obj/machinery/power/battery)
+
+/datum/export/large/battery/get_cost(obj/O)
+	var/obj/machinery/power/battery/B = O
+	var/worth = B.charge
 	return worth
