@@ -29,11 +29,10 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = 1
-	custom_materials = list(/datum/material/iron = 2000)
 	max_integrity = 100
-	integrity_failure = 0.33
+	integrity_failure = 30
 	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced, /obj/structure/table/greyscale)
+	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -71,10 +70,7 @@
 				if(user.grab_state < GRAB_AGGRESSIVE)
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
-				if(user.grab_state >= GRAB_NECK)
-					tableheadsmash(user, pushed_mob)
-				else
-					tablepush(user, pushed_mob)
+				tablepush(user, pushed_mob)
 			if(user.a_intent == INTENT_HELP)
 				pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
 									"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
@@ -130,29 +126,14 @@
 		pushed_mob.pass_flags &= ~PASSTABLE
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
-	pushed_mob.Knockdown(30)
-	pushed_mob.apply_damage(10, BRUTE)
-	pushed_mob.apply_damage(40, STAMINA)
-	if(user.mind?.martial_art?.smashes_tables)
-		deconstruct(FALSE)
-	playsound(pushed_mob, "sound/effects/tableslam.ogg", 90, TRUE)
-	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto \the [src]!</span>", \
-								"<span class='userdanger'>[user] slams you onto \the [src]!</span>")
+	pushed_mob.Paralyze(40)
+	pushed_mob.visible_message("<span class='danger'>[user] slams [pushed_mob] onto [src]!</span>", \
+								"<span class='userdanger'>[user] slams you onto [src]!</span>")
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
-	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
-
-/obj/structure/table/proc/tableheadsmash(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.Knockdown(30)
-	pushed_mob.apply_damage(40, BRUTE, BODY_ZONE_HEAD)
-	pushed_mob.apply_damage(60, STAMINA)
-	take_damage(50)
-	if(user.mind?.martial_art?.smashes_tables)
-		deconstruct(FALSE)
-	playsound(pushed_mob, "sound/effects/tableheadsmash.ogg", 90, TRUE)
-	pushed_mob.visible_message("<span class='danger'>[user] smashes [pushed_mob]'s head against \the [src]!</span>",
-								"<span class='userdanger'>[user] smashes your head against \the [src]</span>")
-	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
-	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_headsmash)
+	if(!ishuman(pushed_mob))
+		return
+	var/mob/living/carbon/human/H = pushed_mob
+	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
 	if(!(flags_1 & NODECONSTRUCT_1) && user.a_intent != INTENT_HELP)
@@ -178,7 +159,7 @@
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
 	if(user.a_intent != INTENT_HARM && !(I.item_flags & ABSTRACT))
-		if(user.transferItemToLoc(I, drop_location(), silent = FALSE))
+		if(user.transferItemToLoc(I, drop_location()))
 			var/list/click_params = params2list(params)
 			//Center the icon where the user clicked.
 			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
@@ -200,10 +181,6 @@
 		else
 			new framestack(T, framestackamount)
 	qdel(src)
-
-
-/obj/structure/table/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 
 
 /*
@@ -323,16 +300,7 @@
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
-	canSmoothWith = list(/obj/structure/table/wood/fancy,
-		/obj/structure/table/wood/fancy/black,
-		/obj/structure/table/wood/fancy/blue,
-		/obj/structure/table/wood/fancy/cyan,
-		/obj/structure/table/wood/fancy/green,
-		/obj/structure/table/wood/fancy/orange,
-		/obj/structure/table/wood/fancy/purple,
-		/obj/structure/table/wood/fancy/red,
-		/obj/structure/table/wood/fancy/royalblack,
-		/obj/structure/table/wood/fancy/royalblue)
+	canSmoothWith = list(/obj/structure/table/wood/fancy, /obj/structure/table/wood/fancy/black)
 	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
 /obj/structure/table/wood/fancy/Initialize()
@@ -348,46 +316,6 @@
 	buildstack = /obj/item/stack/tile/carpet/black
 	smooth_icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 
-/obj/structure/table/wood/fancy/blue
-	icon_state = "fancy_table_blue"
-	buildstack = /obj/item/stack/tile/carpet/blue
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_blue.dmi'
-
-/obj/structure/table/wood/fancy/cyan
-	icon_state = "fancy_table_cyan"
-	buildstack = /obj/item/stack/tile/carpet/cyan
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_cyan.dmi'
-
-/obj/structure/table/wood/fancy/green
-	icon_state = "fancy_table_green"
-	buildstack = /obj/item/stack/tile/carpet/green
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_green.dmi'
-
-/obj/structure/table/wood/fancy/orange
-	icon_state = "fancy_table_orange"
-	buildstack = /obj/item/stack/tile/carpet/orange
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_orange.dmi'
-
-/obj/structure/table/wood/fancy/purple
-	icon_state = "fancy_table_purple"
-	buildstack = /obj/item/stack/tile/carpet/purple
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_purple.dmi'
-
-/obj/structure/table/wood/fancy/red
-	icon_state = "fancy_table_red"
-	buildstack = /obj/item/stack/tile/carpet/red
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_red.dmi'
-
-/obj/structure/table/wood/fancy/royalblack
-	icon_state = "fancy_table_royalblack"
-	buildstack = /obj/item/stack/tile/carpet/royalblack
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblack.dmi'
-
-/obj/structure/table/wood/fancy/royalblue
-	icon_state = "fancy_table_royalblue"
-	buildstack = /obj/item/stack/tile/carpet/royalblue
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblue.dmi'
-
 /*
  * Reinforced tables
  */
@@ -400,7 +328,7 @@
 	buildstack = /obj/item/stack/sheet/plasteel
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
 	max_integrity = 200
-	integrity_failure = 0.25
+	integrity_failure = 50
 	armor = list("melee" = 10, "bullet" = 30, "laser" = 30, "energy" = 100, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 
 /obj/structure/table/reinforced/deconstruction_hints(mob/user)
@@ -614,7 +542,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "rack_parts"
 	flags_1 = CONDUCT_1
-	custom_materials = list(/datum/material/iron=2000)
+	materials = list(/datum/material/iron=2000)
 	var/building = FALSE
 
 /obj/item/rack_parts/attackby(obj/item/W, mob/user, params)

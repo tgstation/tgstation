@@ -484,7 +484,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
 	icon_state = "atmos_engine"
-	valid_territory = FALSE
 
 /area/engine/engine_room //donut station specific
 	name = "Engine Room"
@@ -497,7 +496,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/supermatter
 	name = "Supermatter Engine"
 	icon_state = "engine_sm"
-	valid_territory = FALSE
 
 /area/engine/break_room
 	name = "Engineering Foyer"

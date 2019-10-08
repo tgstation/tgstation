@@ -65,6 +65,7 @@
 	set_drugginess(0)
 	set_disgust(0)
 	SetSleeping(0, 0)
+	blind_eyes(1)
 	reset_perspective(null)
 	reload_fullscreen()
 	update_action_buttons_icon()

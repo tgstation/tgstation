@@ -29,8 +29,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FLAMMABLE
-	drop_sound = 'sound/items/handling/cardboardbox_drop.ogg'
-	pickup_sound =  'sound/items/handling/cardboardbox_pickup.ogg'
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
 
@@ -656,8 +654,6 @@
 	item_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
-	pickup_sound =  'sound/items/handling/matchbox_pickup.ogg'
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()

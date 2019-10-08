@@ -7,6 +7,9 @@
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
+	response_help = "pokes"
+	response_disarm = "shoves"
+	response_harm = "hits"
 	speed = 0
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
@@ -16,8 +19,7 @@
 	obj_damage = 60
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attack_verb_continuous = "slashes"
-	attack_verb_simple = "slash"
+	attacktext = "slashes"
 	speak_emote = list("hisses")
 	bubble_icon = "alien"
 	a_intent = INTENT_HARM
@@ -67,7 +69,7 @@
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	projectiletype = /obj/projectile/neurotox
+	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
 
 
@@ -86,7 +88,7 @@
 	move_to_delay = 4
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
-	projectiletype = /obj/projectile/neurotox
+	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
 	status_flags = 0
 	unique_name = 0
@@ -139,7 +141,7 @@
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 
-/obj/projectile/neurotox
+/obj/item/projectile/neurotox
 	name = "neurotoxin"
 	damage = 30
 	icon_state = "toxin"
@@ -156,8 +158,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	a_intent = INTENT_HELP
-	friendly_verb_continuous = "caresses"
-	friendly_verb_simple = "caress"
+	friendly = "caresses"
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = HOSTILE_SPAWN

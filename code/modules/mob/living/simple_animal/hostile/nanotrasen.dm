@@ -9,6 +9,9 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 12
 	turns_per_move = 5
+	response_help = "pokes"
+	response_disarm = "shoves"
+	response_harm = "hits"
 	speed = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
@@ -17,8 +20,7 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	attack_verb_continuous = "punches"
-	attack_verb_simple = "punch"
+	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = INTENT_HARM
 	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)

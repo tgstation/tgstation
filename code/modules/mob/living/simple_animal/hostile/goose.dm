@@ -10,12 +10,9 @@
 	speak_chance = 0
 	turns_per_move = 5
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat = 2)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
+	response_help = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm = "kicks"
 	emote_taunt = list("hisses")
 	taunt_chance = 30
 	speed = 0
@@ -24,8 +21,7 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attack_verb_continuous = "pecks"
-	attack_verb_simple = "peck"
+	attacktext = "pecks"
 	attack_sound = "goose"
 	speak_emote = list("honks")
 	faction = list("neutral")
@@ -46,12 +42,9 @@
 	real_name = "Birdboat"
 	desc = "It's a sick-looking goose, probably ate too much maintenance trash. Best not to move it around too much."
 	gender = MALE
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
 	gold_core_spawnable = NO_SPAWN
 	random_retaliate = FALSE
 	var/vomiting = FALSE

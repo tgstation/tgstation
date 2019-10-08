@@ -39,7 +39,7 @@
 
 	for(var/ball in orbiting_balls)
 		var/obj/singularity/energy_ball/EB = ball
-		QDEL_NULL(EB)
+		qdel(EB)
 
 	. = ..()
 
@@ -253,7 +253,7 @@
 				closest_atom = A
 				closest_dist = dist
 
-		else if(closest_machine)
+		else if(closest_mob)
 			continue
 
 		else if(istype(A, /obj/structure/blob))
@@ -274,9 +274,6 @@
 				closest_structure = S
 				closest_atom = A
 				closest_dist = dist
-				
-		else if(closest_structure)
-			continue
 
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
@@ -289,15 +286,15 @@
 			. = zapdir
 
 	//per type stuff:
-	if(!QDELETED(closest_tesla_coil))
+	if(closest_tesla_coil)
 		closest_tesla_coil.tesla_act(power, tesla_flags, shocked_targets)
 
-	else if(!QDELETED(closest_grounding_rod))
+	else if(closest_grounding_rod)
 		closest_grounding_rod.tesla_act(power, tesla_flags, shocked_targets)
 
-	else if(!QDELETED(closest_mob))
+	else if(closest_mob)
 		var/shock_damage = (tesla_flags & TESLA_MOB_DAMAGE)? (min(round(power/600), 90) + rand(-5, 5)) : 0
-		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((tesla_flags & TESLA_MOB_STUN) ? NONE : SHOCK_NOSTUN))
+		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1, stun = (tesla_flags & TESLA_MOB_STUN))
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
 			if((tesla_flags & TESLA_MOB_STUN) && (tesla_flags & TESLA_MOB_DAMAGE))
@@ -306,11 +303,11 @@
 		else
 			tesla_zap(closest_mob, 5, power / 1.5, tesla_flags, shocked_targets)
 
-	else if(!QDELETED(closest_machine))
+	else if(closest_machine)
 		closest_machine.tesla_act(power, tesla_flags, shocked_targets)
 
-	else if(!QDELETED(closest_blob))
+	else if(closest_blob)
 		closest_blob.tesla_act(power, tesla_flags, shocked_targets)
 
-	else if(!QDELETED(closest_structure))
+	else if(closest_structure)
 		closest_structure.tesla_act(power, tesla_flags, shocked_targets)

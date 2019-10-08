@@ -484,7 +484,7 @@
 /atom/movable/proc/CanEnterDisposals()
 	return TRUE
 
-/obj/projectile/CanEnterDisposals()
+/obj/item/projectile/CanEnterDisposals()
 	return
 
 /obj/effect/CanEnterDisposals()

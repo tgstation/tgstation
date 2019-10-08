@@ -125,7 +125,7 @@
 	if(ismob(parent.loc) && isitem(AM))
 		var/obj/item/I = AM
 		var/mob/M = parent.loc
-		I.dropped(M, TRUE)
+		I.dropped(M)
 		I.item_flags &= ~IN_STORAGE
 	if(new_location)
 		//Reset the items values

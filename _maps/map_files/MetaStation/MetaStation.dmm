@@ -3433,8 +3433,7 @@
 	movement_type = 1;
 	name = "Sergeant Araneus";
 	real_name = "Sergeant Araneus";
-	response_help_continuous = "pets";
-	response_help_simple = "pet";
+	response_help = "pets";
 	turns_per_move = 10
 	},
 /turf/open/floor/carpet,

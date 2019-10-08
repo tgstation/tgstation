@@ -34,7 +34,7 @@ bundle
   .plugin(b.helpers)
   .transform(b.componentify)
   .transform(b.globify)
-  .transform(b.es3ify, { global: true })
+  .transform(b.es3ify)
 
 import buffer from 'vinyl-buffer'
 import gulp from 'gulp'

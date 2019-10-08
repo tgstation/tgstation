@@ -40,7 +40,6 @@
 	var/list/coins_to_dispense = list()
 	var/datum/looping_sound/jackpot/jackpot_loop
 	var/datum/asset/spritesheet/simple/assets
-	var/on = TRUE
 
 /obj/machinery/roulette/Initialize()
 	. = ..()
@@ -113,7 +112,7 @@
 	if(istype(W, /obj/item/card/id))
 		playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
 
-		if(stat & MAINT || !on || locked)
+		if(stat & MAINT || stat & NOPOWER || locked)
 			to_chat(user, "<span class='notice'>The machine appears to be disabled.</span>")
 			return FALSE
 
@@ -153,7 +152,6 @@
 				desc = "Owned by [new_card.registered_account.account_holder], draws directly from [user.p_their()] account."
 				my_card = new_card
 				to_chat(user, "<span class='notice'>You link the wheel to your account.</span>")
-				power_change()
 				return
 	return ..()
 
@@ -344,7 +342,7 @@
 			icon_state = "open"
 
 /obj/machinery/roulette/proc/shock(mob/user, prb)
-	if(!on)		// unpowered, no shock
+	if(stat & NOPOWER)		// unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE //you lucked out, no shock for you
@@ -374,7 +372,6 @@
 	new /obj/machinery/roulette(toLaunch)
 
 	new /obj/effect/DPtarget(drop_location(), toLaunch)
-	qdel(src)
 
 #undef ROULETTE_SINGLES_PAYOUT
 #undef ROULETTE_SIMPLE_PAYOUT

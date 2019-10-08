@@ -1,4 +1,4 @@
-/obj/projectile/meteor
+/obj/item/projectile/meteor
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "small1"
@@ -7,7 +7,7 @@
 	nodamage = TRUE
 	flag = "bullet"
 
-/obj/projectile/meteor/Bump(atom/A)
+/obj/item/projectile/meteor/Bump(atom/A)
 	if(A == firer)
 		forceMove(A.loc)
 		return

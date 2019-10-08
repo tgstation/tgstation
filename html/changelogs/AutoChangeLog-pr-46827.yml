@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Chameleon projectors can no longer scan invisible items, like the stealth box or mime spells."

@@ -37,7 +37,7 @@
 	if(check_mask &&(wear_mask?.flags_cover & PEPPERPROOF))
 		return wear_mask
 
-/mob/living/carbon/check_projectile_dismemberment(obj/projectile/P, def_zone)
+/mob/living/carbon/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
@@ -216,19 +216,19 @@
 		O.emp_act(severity)
 
 ///Adds to the parent by also adding functionality to propagate shocks through pulling and doing some fluff effects.
-/mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+/mob/living/carbon/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, override = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
 	. = ..()
 	if(!.)
 		return
 	//Pulling
-	if(iscarbon(pulling) && !(flags & SHOCK_ILLUSION) && source != pulling)
+	if(iscarbon(pulling) && !illusion && source != pulling)
 		var/mob/living/carbon/C = pulling
-		C.electrocute_act(shock_damage*0.75, src, flags)
-	if(iscarbon(pulledby) && !(flags & SHOCK_ILLUSION) && source != pulledby)
+		C.electrocute_act(shock_damage*0.75, src, 1, 0, override, 0, illusion, stun)
+	if(iscarbon(pulledby) && !illusion && source != pulledby)
 		var/mob/living/carbon/C = pulledby
-		C.electrocute_act(shock_damage*0.75, src, flags)
+		C.electrocute_act(shock_damage*0.75, src, 1, 0, override, 0, illusion, stun)
 	//Stun
-	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
+	var/should_stun = (!tesla_shock || siemens_coeff > 0.5) && stun
 	if(should_stun)
 		Paralyze(40)
 	//Jitter and other fluff.
@@ -236,7 +236,10 @@
 	do_jitter_animation(jitteriness)
 	stuttering += 2
 	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 20)
-	return shock_damage
+	if(override)
+		return override
+	else
+		return shock_damage
 
 ///Called slightly after electrocute act to reduce jittering and apply a secondary stun.
 /mob/living/carbon/proc/secondary_shock(should_stun)
@@ -279,6 +282,8 @@
 
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	if(NOFLASH in dna?.species?.species_traits)
+		return
 	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes) //can't flash what can't see!
 		return

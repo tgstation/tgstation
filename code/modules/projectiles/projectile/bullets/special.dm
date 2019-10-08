@@ -1,6 +1,6 @@
 // Honker
 
-/obj/projectile/bullet/honker
+/obj/item/projectile/bullet/honker
 	name = "banana"
 	damage = 0
 	movement_type = FLYING | UNSTOPPABLE
@@ -10,11 +10,11 @@
 	icon_state = "banana"
 	range = 200
 
-/obj/projectile/bullet/honker/Initialize()
+/obj/item/projectile/bullet/honker/Initialize()
 	. = ..()
 	SpinAnimation()
 
-/obj/projectile/bullet/honker/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/bullet/honker/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	var/mob/M = target
 	if(istype(M))
@@ -22,10 +22,10 @@
 
 // Mime
 
-/obj/projectile/bullet/mime
+/obj/item/projectile/bullet/mime
 	damage = 40
 
-/obj/projectile/bullet/mime/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/bullet/mime/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target

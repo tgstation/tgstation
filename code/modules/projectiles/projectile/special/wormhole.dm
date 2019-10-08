@@ -1,4 +1,4 @@
-/obj/projectile/beam/wormhole
+/obj/item/projectile/beam/wormhole
 	name = "bluespace beam"
 	icon_state = "spark"
 	hitsound = "sparks"
@@ -12,18 +12,18 @@
 	muzzle_type = /obj/effect/projectile/muzzle/wormhole
 	hitscan = TRUE
 
-/obj/projectile/beam/wormhole/orange
+/obj/item/projectile/beam/wormhole/orange
 	name = "orange bluespace beam"
 	color = "#FF6600"
 
-/obj/projectile/beam/wormhole/Initialize(mapload, obj/item/ammo_casing/energy/wormhole/casing)
+/obj/item/projectile/beam/wormhole/Initialize(mapload, obj/item/ammo_casing/energy/wormhole/casing)
 	. = ..()
 	if(casing)
 		gun = casing.gun
 
 
-/obj/projectile/beam/wormhole/on_hit(atom/target)
+/obj/item/projectile/beam/wormhole/on_hit(atom/target)
 	if(!gun)
 		qdel(src)
-		return
+		return 
 	gun.create_portal(src, get_turf(src))

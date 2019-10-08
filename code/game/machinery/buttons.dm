@@ -285,4 +285,4 @@
 	desc = "Used for building buttons."
 	icon_state = "button"
 	result_path = /obj/machinery/button
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)

@@ -12,12 +12,10 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=80)
+	materials = list(/datum/material/iron=80)
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/wirecutter.ogg'
 	usesound = 'sound/items/wirecutter.ogg'
-	drop_sound = 'sound/items/handling/wirecutter_drop.ogg'
-	pickup_sound =  'sound/items/handling/wirecutter_pickup.ogg'
 
 	tool_behaviour = TOOL_WIRECUTTER
 	toolspeed = 1
@@ -82,8 +80,8 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "cutters"
 	toolspeed = 0.1
-	random_color = FALSE
 
+	random_color = FALSE
 
 /obj/item/wirecutters/cyborg
 	name = "powered wirecutters"

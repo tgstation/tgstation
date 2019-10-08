@@ -11,9 +11,7 @@
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=50)
-	drop_sound = 'sound/items/handling/crowbar_drop.ogg'
-	pickup_sound =  'sound/items/handling/crowbar_pickup.ogg'
+	materials = list(/datum/material/iron=50)
 
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	tool_behaviour = TOOL_CROWBAR
@@ -53,7 +51,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 3
-	custom_materials = list(/datum/material/iron=70)
+	materials = list(/datum/material/iron=70)
 	icon_state = "crowbar_large"
 	item_state = "crowbar"
 	toolspeed = 0.7
@@ -65,7 +63,7 @@
 	item_state = "jawsoflife"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25)
+	materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25)
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
 	toolspeed = 0.7

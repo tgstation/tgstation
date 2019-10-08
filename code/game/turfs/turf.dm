@@ -184,6 +184,8 @@
 		return TRUE
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
+		for(var/obj/structure/cable/LC in src)
+			return
 		coil.place_turf(src, user)
 		return TRUE
 	else if(can_have_cabling() && istype(C, /obj/item/stack/pipe_cleaner_coil))
@@ -567,7 +569,7 @@
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
-/turf/bullet_act(obj/projectile/P)
+/turf/bullet_act(obj/item/projectile/P)
 	. = ..()
 	if(. != BULLET_ACT_FORCE_PIERCE)
 		. =  BULLET_ACT_TURF

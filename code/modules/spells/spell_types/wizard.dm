@@ -10,11 +10,11 @@
 	range = 7
 	cooldown_min = 60 //35 deciseconds reduction per rank
 	max_targets = 0
-	proj_type = /obj/projectile/magic/spell/magic_missile
+	proj_type = /obj/item/projectile/magic/spell/magic_missile
 	action_icon_state = "magicm"
 	sound = 'sound/magic/magic_missile.ogg'
 
-/obj/projectile/magic/spell/magic_missile
+/obj/item/projectile/magic/spell/magic_missile
 	name = "magic missile"
 	icon_state = "magicm"
 	range = 20
@@ -29,7 +29,7 @@
 	trail_lifespan = 5
 	trail_icon_state = "magicmd"
 
-/obj/projectile/magic/spell/magic_missile/on_hit(target)
+/obj/item/projectile/magic/spell/magic_missile/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
@@ -386,7 +386,7 @@
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
 			if(!M.anti_magic_check())
-				M.electrocute_act(80, src, flags = SHOCK_ILLUSION)
+				M.electrocute_act(80, src, illusion = 1)
 		qdel(src)
 
 /obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY)

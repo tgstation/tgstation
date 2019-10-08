@@ -35,8 +35,6 @@
 	item_state = "utility"
 	content_overlays = TRUE
 	custom_price = 50
-	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
-	pickup_sound =  'sound/items/handling/toolbelt_pickup.ogg'
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
@@ -327,7 +325,7 @@
 	desc = "Proves to the world that you are the strongest!"
 	icon_state = "championbelt"
 	item_state = "champion"
-	custom_materials = list(/datum/material/gold=400)
+	materials = list(/datum/material/gold=400)
 
 /obj/item/storage/belt/champion/ComponentInitialize()
 	. = ..()

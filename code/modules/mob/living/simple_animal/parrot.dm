@@ -50,18 +50,13 @@
 	melee_damage_upper = 10
 	melee_damage_lower = 5
 
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently moves aside"
-	response_disarm_simple = "gently move aside"
-	response_harm_continuous = "swats"
-	response_harm_simple = "swat"
+	response_help  = "pets"
+	response_disarm = "gently moves aside"
+	response_harm   = "swats"
 	stop_automated_movement = 1
 	a_intent = INTENT_HARM //parrots now start "aggressive" since only player parrots will nuzzle.
-	attack_verb_continuous = "chomps"
-	attack_verb_simple = "chomp"
-	friendly_verb_continuous = "grooms"
-	friendly_verb_simple = "groom"
+	attacktext = "chomps"
+	friendly = "grooms"
 	mob_size = MOB_SIZE_SMALL
 	movement_type = FLYING
 	gold_core_spawnable = FRIENDLY_SPAWN
@@ -341,7 +336,7 @@
 	return
 
 //Bullets
-/mob/living/simple_animal/parrot/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/parrot/bullet_act(obj/item/projectile/Proj)
 	. = ..()
 	if(!stat && !client)
 		if(parrot_state == PARROT_PERCH)
@@ -579,8 +574,7 @@
 					parrot_state = PARROT_WANDER
 				return
 
-			attack_verb_continuous = pick("claws at", "chomps")
-			attack_verb_simple = pick("claw at", "chomp")
+			attacktext = pick("claws at", "chomps")
 			L.attack_animal(src)//Time for the hurt to begin!
 		//Otherwise, fly towards the mob!
 		else

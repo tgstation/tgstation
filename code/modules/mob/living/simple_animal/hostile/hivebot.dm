@@ -1,4 +1,4 @@
-/obj/projectile/hivebotbullet
+/obj/item/projectile/hivebotbullet
 	damage = 10
 	damage_type = BRUTE
 
@@ -16,11 +16,10 @@
 	healable = 0
 	melee_damage_lower = 2
 	melee_damage_upper = 3
-	attack_verb_continuous = "claws"
-	attack_verb_simple = "claw"
+	attacktext = "claws"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
-	projectiletype = /obj/projectile/hivebotbullet
+	projectiletype = /obj/item/projectile/hivebotbullet
 	faction = list("hivebot")
 	check_friendly_fire = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)

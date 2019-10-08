@@ -34852,6 +34852,9 @@
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "bMw" = (
+/obj/machinery/sparker/toxmix{
+	pixel_x = 25
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -35559,6 +35562,9 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bOE" = (
+/obj/machinery/sparker/toxmix{
+	pixel_x = 25
+	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
 	dir = 4
 	},
@@ -49872,6 +49878,16 @@
 /obj/structure/dresser,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
+"hRW" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "hSc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -50643,6 +50659,16 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"nfJ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "noK" = (
 /obj/structure/girder,
 /turf/open/floor/plasteel/dark,
@@ -51414,6 +51440,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/maintenance/port)
+"rUe" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit)
 "rYJ" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/bot,
@@ -51922,10 +51958,14 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
-"uSD" = (
-/obj/machinery/igniter/incinerator_toxmix,
-/turf/open/floor/engine/vacuum,
-/area/science/mixing/chamber)
+"uTg" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "uTi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -52370,9 +52410,27 @@
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/vacant_room/commissary)
+"xvG" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "xwN" = (
 /turf/open/floor/plating,
 /area/engine/engine_smes)
+"xxB" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/airlock/external{
+	name = "Port Docking Bay 1";
+	safety_mode = 1
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "xEu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -62087,9 +62145,9 @@ apN
 apJ
 awZ
 ayl
-azy
+uTg
 auP
-cIh
+xvG
 aaa
 aaa
 aaa
@@ -62099,7 +62157,7 @@ aaa
 aaa
 hFg
 auP
-cIh
+xvG
 ayl
 aRY
 awW
@@ -63886,9 +63944,9 @@ asF
 apJ
 axh
 aIK
-azy
+uTg
 auP
-cIh
+xvG
 aaa
 aaa
 aaa
@@ -63896,9 +63954,9 @@ aaa
 aaa
 aaa
 aaa
-azy
+uTg
 auP
-cIh
+xvG
 ayl
 aRY
 awW
@@ -99915,7 +99973,7 @@ bxY
 bCg
 dGF
 bMt
-uSD
+bNt
 bNt
 dGF
 bQT
@@ -103478,13 +103536,13 @@ aaa
 aNa
 cyh
 aRW
-aTo
+rUe
 aNa
 aaa
 aaf
 aaa
 aNa
-aTo
+rUe
 aRW
 cyr
 aNa

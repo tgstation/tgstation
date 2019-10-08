@@ -139,13 +139,13 @@
 	name = "flux wave anomaly"
 	icon_state = "electricity2"
 	density = TRUE
-	var/canshock = FALSE
+	var/canshock = 0
 	var/shockdamage = 20
 	var/explosive = TRUE
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
-	canshock = TRUE
+	canshock = 1
 	for(var/mob/living/M in range(0, src))
 		mobShock(M)
 
@@ -160,8 +160,18 @@
 
 /obj/effect/anomaly/flux/proc/mobShock(mob/living/M)
 	if(canshock && istype(M))
-		canshock = FALSE
-		M.electrocute_act(shockdamage, name, flags = SHOCK_NOGLOVES)
+		canshock = 0 //Just so you don't instakill yourself if you slam into the anomaly five times in a second.
+		if(iscarbon(M))
+			if(ishuman(M))
+				M.electrocute_act(shockdamage, "[name]", safety=1)
+				return
+			M.electrocute_act(shockdamage, "[name]")
+			return
+		else
+			M.adjustFireLoss(shockdamage)
+			M.visible_message("<span class='danger'>[M] was shocked by \the [name]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
+		"<span class='hear'>You hear a heavy electrical crack.</span>")
 
 /obj/effect/anomaly/flux/detonate()
 	if(explosive)

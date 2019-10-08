@@ -35,12 +35,12 @@
 	protection += physiology.armor.getRating(d_type)
 	return protection
 
-/mob/living/carbon/human/on_hit(obj/projectile/P)
+/mob/living/carbon/human/on_hit(obj/item/projectile/P)
 	if(dna && dna.species)
 		dna.species.on_hit(P, src)
 
 
-/mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone)
+/mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
 	if(dna && dna.species)
 		var/spec_return = dna.species.bullet_act(P, src)
 		if(spec_return)
@@ -453,9 +453,9 @@
 
 
 ///Calculates the siemens coeff based on clothing and species, can also restart hearts.
-/mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+/mob/living/carbon/human/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, override = 0, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
 	//Calculates the siemens coeff based on clothing. Completely ignores the arguments
-	if(flags & SHOCK_TESLA) //I hate this entire block. This gets the siemens_coeff for tesla shocks
+	if(tesla_shock) //I hate this entire block. This gets the siemens_coeff for tesla shocks
 		if(gloves && gloves.siemens_coefficient <= 0)
 			siemens_coeff -= 0.5
 		if(wear_suit)
@@ -464,7 +464,7 @@
 			else if(wear_suit.siemens_coefficient <= 0)
 				siemens_coeff -= 0.95
 		siemens_coeff = max(siemens_coeff, 0)
-	else if(!(flags & SHOCK_NOGLOVES)) //This gets the siemens_coeff for all non tesla shocks
+	else if(!safety) //This gets the siemens_coeff for all non tesla shocks
 		if(gloves)
 			siemens_coeff *= gloves.siemens_coefficient
 	siemens_coeff *= physiology.siemens_coeff
@@ -475,7 +475,7 @@
 		return
 	//Note we both check that the user is in cardiac arrest and can actually heartattack
 	//If they can't, they're missing their heart and this would runtime
-	if(undergoing_cardiac_arrest() && can_heartattack() && !(flags & SHOCK_ILLUSION))
+	if(undergoing_cardiac_arrest() && can_heartattack() && !illusion)
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
 			var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 			if(heart.Restart() && stat == CONSCIOUS)

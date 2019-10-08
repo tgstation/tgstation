@@ -1,4 +1,4 @@
-/obj/projectile/energy
+/obj/item/projectile/energy
 	name = "energy"
 	icon_state = "spark"
 	damage = 0

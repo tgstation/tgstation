@@ -85,8 +85,7 @@
 	melee_damage_upper = 4
 	obj_damage = 20
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
-	attack_verb_continuous = "hits"
-	attack_verb_simple = "hit"
+	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	movement_type = FLYING
 	del_on_death = 1
@@ -205,8 +204,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	obj_damage = 60
-	attack_verb_continuous = "slams"
-	attack_verb_simple = "slam"
+	attacktext = "slams"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	verb_say = "gurgles"
 	verb_ask = "demands"
@@ -280,11 +278,11 @@
 	if(overmind) //if we have an overmind, we're doing chemical reactions instead of pure damage
 		melee_damage_lower = 4
 		melee_damage_upper = 4
-		attack_verb_continuous = overmind.blobstrain.blobbernaut_message
+		attacktext = overmind.blobstrain.blobbernaut_message
 	else
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
-		attack_verb_continuous = initial(attack_verb_continuous)
+		attacktext = initial(attacktext)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
 	..(gibbed)

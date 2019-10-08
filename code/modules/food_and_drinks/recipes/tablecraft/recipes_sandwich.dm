@@ -17,7 +17,7 @@
 	subcategory = CAT_SANDWICH
 
 /datum/crafting_recipe/food/grilledcheesesandwich
-	name = "Cheese sandwich"
+	name = "Grilled cheese sandwich"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/breadslice/plain = 2,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 2

@@ -10,7 +10,7 @@
 		/obj/docking_port,
 		/obj/structure/lattice,
 		/obj/structure/stone_tile,
-		/obj/projectile,
+		/obj/item/projectile,
 		/obj/effect/projectile,
 		/obj/effect/portal,
 		/obj/effect/abstract,

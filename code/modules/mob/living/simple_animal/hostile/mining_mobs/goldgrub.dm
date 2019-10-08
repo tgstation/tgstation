@@ -12,15 +12,13 @@
 	vision_range = 2
 	aggro_vision_range = 9
 	move_to_delay = 5
-	friendly_verb_continuous = "harmlessly rolls into"
-	friendly_verb_simple = "harmlessly roll into"
+	friendly = "harmlessly rolls into"
 	maxHealth = 45
 	health = 45
 	harm_intent_damage = 5
 	melee_damage_lower = 0
 	melee_damage_upper = 0
-	attack_verb_continuous = "barrels into"
-	attack_verb_simple = "barrel into"
+	attacktext = "barrels into"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = INTENT_HELP
 	speak_emote = list("screeches")
@@ -74,7 +72,7 @@
 		visible_message("<span class='danger'>The [name] buries into the ground, vanishing from sight!</span>")
 		qdel(src)
 
-/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/projectile/P)
+/mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [name]'s girth!</span>")
 	return BULLET_ACT_BLOCK
 

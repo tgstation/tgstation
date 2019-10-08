@@ -1,4 +1,4 @@
-/obj/projectile/plasma
+/obj/item/projectile/plasma
 	name = "plasma blast"
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
@@ -11,7 +11,7 @@
 	muzzle_type = /obj/effect/projectile/muzzle/plasma_cutter
 	impact_type = /obj/effect/projectile/impact/plasma_cutter
 
-/obj/projectile/plasma/on_hit(atom/target)
+/obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
@@ -22,17 +22,17 @@
 		if(range > 0)
 			return BULLET_ACT_FORCE_PIERCE
 
-/obj/projectile/plasma/adv
+/obj/item/projectile/plasma/adv
 	damage = 7
 	range = 5
 	mine_range = 5
 
-/obj/projectile/plasma/adv/mech
+/obj/item/projectile/plasma/adv/mech
 	damage = 10
 	range = 9
 	mine_range = 3
 
-/obj/projectile/plasma/turret
+/obj/item/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
 	name = "plasma beam"
 	damage = 24

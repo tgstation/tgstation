@@ -9,10 +9,9 @@
 	gender = NEUTER
 	speak_chance = 0
 	turns_per_move = 5
-	response_help_continuous = "brushes"
-	response_help_simple = "brush"
-	response_disarm_continuous = "pushes"
-	response_disarm_simple = "push"
+	response_help = "brushes"
+	response_disarm = "pushes"
+	response_harm = "hits"
 	faction = list("plants")
 	speed = 1
 	maxHealth = 250
@@ -24,8 +23,7 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 8
 	melee_damage_upper = 12
-	attack_verb_continuous = "bites"
-	attack_verb_simple = "bite"
+	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
 	speak_emote = list("pines")
 	emote_taunt = list("growls")

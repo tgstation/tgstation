@@ -42,7 +42,7 @@
 	else
 		if(istype(AM, /obj/structure/window))
 			return FALSE
-		if(istype(AM, /obj/projectile))
+		if(istype(AM, /obj/item/projectile))
 			return TRUE
 		if((locate(/obj/structure/lattice) in src))
 			return TRUE

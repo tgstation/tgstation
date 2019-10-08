@@ -13,8 +13,7 @@
 	move_to_delay = 40
 	ranged = 1
 	ranged_cooldown_time = 120
-	friendly_verb_continuous = "wails at"
-	friendly_verb_simple = "wail at"
+	friendly = "wails at"
 	speak_emote = list("bellows")
 	vision_range = 4
 	speed = 3
@@ -24,8 +23,7 @@
 	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attack_verb_continuous = "pulverizes"
-	attack_verb_simple = "pulverize"
+	attacktext = "pulverizes"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	vision_range = 5

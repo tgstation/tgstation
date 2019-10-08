@@ -96,7 +96,7 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearence]_dead"
 
-/obj/effect/mob_spawn/drone/derelict
+/obj/effect/mob_spawn/drone/dusty
 	name = "derelict drone shell"
 	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
 	icon = 'icons/mob/drone.dmi'
