@@ -32,13 +32,14 @@ field_generator power level display
 	density = TRUE
 	use_power = NO_POWER_USE
 	max_integrity = 500
+	CanAtmosPass = ATMOS_PASS_YES
 	//100% immune to lasers and energy projectiles since it absorbs their energy.
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/power_level = 0
 	var/active = FG_OFFLINE
 	var/power = 20  // Current amount of power
-	var/state = FG_UNSECURED
+	var/state = FG_UNSECURED	
 	var/warming_up = 0
 	var/list/obj/machinery/field/containment/fields
 	var/list/obj/machinery/field/generator/connected_gens
@@ -179,6 +180,8 @@ field_generator power level display
 
 /obj/machinery/field/generator/proc/turn_off()
 	active = FG_OFFLINE
+	CanAtmosPass = ATMOS_PASS_YES
+	air_update_turf(TRUE)
 	INVOKE_ASYNC(src, .proc/cleanup)
 	addtimer(CALLBACK(src, .proc/cool_down), 50)
 
@@ -255,6 +258,8 @@ field_generator power level display
 		turn_off()
 		return
 	move_resist = INFINITY
+	CanAtmosPass = ATMOS_PASS_NO
+	air_update_turf(TRUE)
 	addtimer(CALLBACK(src, .proc/setup_field, 1), 1)
 	addtimer(CALLBACK(src, .proc/setup_field, 2), 2)
 	addtimer(CALLBACK(src, .proc/setup_field, 4), 3)
