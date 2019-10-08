@@ -37,11 +37,12 @@
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+
 	if(T)
 		for(var/obj/item/stack/sheet/O in T)
-			materials.insert_stack(O, O.amount)
+			materials.insert_item(O, O.amount)
 		for(var/obj/item/stack/ore/O in T)
-			materials.insert_stack(O, O.amount)
+			materials.insert_item(O, O.amount)
 
 	if(processing)
 		var/datum/material/M = chosen
