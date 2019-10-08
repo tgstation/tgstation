@@ -41,7 +41,7 @@
 
 	light_color = LIGHT_COLOR_PINK
 
-/obj/machinery/computer/camera_advanced/xenobio/Initialize()
+/obj/machinery/computer/camera_advanced/xenobio/Initialize(mapload)
 	. = ..()
 	slime_place_action = new
 	slime_up_action = new
@@ -51,19 +51,27 @@
 	potion_action = new
 	hotkey_help = new
 	stored_slimes = list()
-	RegisterSignal(src, COMSIG_ATOM_CONTENTS_DEL, .proc/on_contents_del)
 	for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
 		if(get_area(recycler.loc) == get_area(loc))
 			connected_recycler = recycler
 			connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
-	stored_slimes = null
 	QDEL_NULL(current_potion)
-	for(var/i in contents)
-		var/mob/living/simple_animal/slime/S = i
-		if(istype(S))
-			S.forceMove(drop_location())
+	for(var/thing in stored_slimes)
+		var/mob/living/simple_animal/slime/S = thing
+		S.forceMove(drop_location())
+	stored_slimes.Cut()
+	if(connected_recycler)
+		connected_recycler.connected -= src
+	connected_recycler = null
+	return ..()
+
+/obj/machinery/computer/camera_advanced/xenobio/handle_atom_del(atom/A)
+	if(A == current_potion)
+		current_potion = null
+	if(A in stored_slimes)
+		stored_slimes -= A
 	return ..()
 
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
@@ -133,12 +141,6 @@
 	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL)
 	UnregisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)
 	..()
-
-/obj/machinery/computer/camera_advanced/xenobio/proc/on_contents_del(datum/source, atom/deleted)
-	if(current_potion == deleted)
-		current_potion = null
-	if(deleted in stored_slimes)
-		stored_slimes -= deleted
 
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
