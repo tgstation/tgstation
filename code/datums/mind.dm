@@ -66,6 +66,8 @@
 
 	var/list/learned_recipes //List of learned recipe TYPES.
 
+	var/surgery_skill = 0
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src

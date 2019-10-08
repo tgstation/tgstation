@@ -80,6 +80,14 @@
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/surgery_television
+	name = "Surgery Tape Monitor (Operating Computer)"
+	desc = "Allows for the construction of circuit boards used to build a surgery tape monitor console."
+	id = "surgery_television"
+	build_path = /obj/item/circuitboard/computer/surgery_television
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/pandemic
 	name = "Computer Design (PanD.E.M.I.C. 2200)"
 	desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
@@ -303,7 +311,7 @@
 	build_path = /obj/item/circuitboard/computer/nanite_cloud_controller
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-	
+
 /datum/design/board/advanced_camera
 	name = "Computer Design (Advanced Camera Console)"
 	desc = "Allows for the construction of circuit boards used to build advanced camera consoles."

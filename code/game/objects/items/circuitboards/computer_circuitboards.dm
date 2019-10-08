@@ -288,6 +288,11 @@
 	icon_state = "medical"
 	build_path = /obj/machinery/computer/operating
 
+/obj/item/circuitboard/computer/surgery_television
+	name = "Surgery Tape Monitor (Computer Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/computer/surgery_television
+
 /obj/item/circuitboard/computer/pandemic
 	name = "PanD.E.M.I.C. 2200 (Computer Board)"
 	icon_state = "medical"

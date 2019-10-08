@@ -60,6 +60,19 @@
 /datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	surgery.step_in_progress = TRUE
 	var/speed_mod = 1
+	switch(user.mind.surgery_skill)
+		if(0)
+			testing("Level 0")
+		if(1)
+			speed_mod *= 0.9
+			testing("Level 1")
+		if(2)
+			speed_mod *= 0.85
+			testing("Level 2")
+		if(3)
+			speed_mod *= 0.8
+			testing("Level 3")
+
 	var/advance = FALSE
 
 	if(preop(user, target, target_zone, tool, surgery) == -1)
@@ -67,7 +80,7 @@
 		return FALSE
 
 	if(tool)
-		speed_mod = tool.toolspeed
+		speed_mod *= tool.toolspeed
 
 	if(do_after(user, time * speed_mod, target = target))
 		var/prob_chance = 100

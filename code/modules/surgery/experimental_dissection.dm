@@ -72,8 +72,10 @@
 
 /datum/surgery_step/dissection/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/points_earned = check_value(target, surgery)
-	user.visible_message("<span class='notice'>[user] dissects [target], discovering [points_earned] point\s of data!</span>", "<span class='notice'>You dissect [target], and add your [points_earned] point\s worth of discoveries to the research database!</span>")
+	var/surgery_exp_earned = points_earned / BASE_HUMAN_REWARD
+	user.visible_message("<span class='notice'>[user] dissects [target], discovering [points_earned] point\s of research data and cataloging [surgery_exp_earned] point\s of surgical knowledge!</span>", "<span class='notice'>You dissect [target], and add your [points_earned] point\s of research material and and cataloging [surgery_exp_earned] point\s of surgical knowledge to the research database!</span>")
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points_earned))
+	SSresearch.surgery_exp += surgery_exp_earned
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
 	target.apply_damage(80, BRUTE, L)
 	ADD_TRAIT(target, TRAIT_DISSECTED, "[surgery.name]")

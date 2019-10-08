@@ -33,6 +33,8 @@ SUBSYSTEM_DEF(research)
 	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 54.3)
 	var/multiserver_calculation = FALSE
 	var/last_income
+	var/surgery_exp = 0
+
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
 	//Aiming for 1.5 hours to max R&D
