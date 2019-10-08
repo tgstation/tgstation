@@ -24,7 +24,8 @@
 	icon_living = "mega_legion"
 	desc = "One of many."
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	speak_emote = list("echoes")
 	armour_penetration = 50
@@ -385,4 +386,3 @@
 /obj/effect/projectile/tracer/legion
 	icon = 'icons/effects/beam.dmi'
 	icon_state = "blood"
-

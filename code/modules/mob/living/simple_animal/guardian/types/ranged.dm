@@ -8,7 +8,8 @@
 
 /mob/living/simple_animal/hostile/guardian/ranged
 	a_intent = INTENT_HELP
-	friendly = "quietly assesses"
+	friendly_verb_continuous = "quietly assesses"
+	friendly_verb_simple = "quietly assess"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	damage_coeff = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, CLONE = 0.9, STAMINA = 0, OXY = 0.9)

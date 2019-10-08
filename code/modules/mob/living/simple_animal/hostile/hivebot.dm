@@ -16,7 +16,8 @@
 	healable = 0
 	melee_damage_lower = 2
 	melee_damage_upper = 3
-	attacktext = "claws"
+	attack_verb_continuous = "claws"
+	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
 	projectiletype = /obj/projectile/hivebotbullet
