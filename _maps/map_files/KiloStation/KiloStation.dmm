@@ -7855,26 +7855,16 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
 	},
-/mob/living/simple_animal/hostile/retaliate/bat{
+/mob/living/simple_animal/hostile/carp/cayenne{
 	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as an authority figure's pet.";
-	emote_taunt = list("gnashes");
-	faction = list("carp");
-	harm_intent_damage = 3;
 	health = 200;
 	icon_dead = "magicarp_dead";
 	icon_gib = "magicarp_gib";
 	icon_living = "magicarp";
 	icon_state = "magicarp";
-	max_co2 = 5;
-	max_tox = 2;
 	maxHealth = 200;
-	melee_damage_lower = 15;
-	melee_damage_upper = 20;
-	min_oxy = 5;
 	name = "Lia";
-	real_name = "Lia";
-	response_help = "pets";
-	turns_per_move = 10
+	random_color = 0
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hos)
