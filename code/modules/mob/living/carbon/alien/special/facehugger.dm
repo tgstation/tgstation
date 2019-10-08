@@ -134,7 +134,9 @@
 		// gotta have a head to be implanted (no changelings or sentient plants)
 		if(!target.get_bodypart(BODY_ZONE_HEAD))
 			return FALSE
-
+		// gotta be able to have the xeno implanted
+		if(HAS_TRAIT(M, TRAIT_XENO_IMMUNE))
+			return FALSE
 		if(target.getorgan(/obj/item/organ/alien/hivenode) || target.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			return FALSE
 		// carbon, has head, not alien or devil, has no hivenode or embryo: valid
