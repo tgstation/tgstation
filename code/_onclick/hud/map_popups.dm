@@ -6,7 +6,7 @@
 	var/list/screen_info = list()//x,x pix, y, y pix || x,y
 
 /client/proc/clear_map(var/map_to_clear)//not really needed most of the time, as the client's screen list gets reset on relog. any of the buttons are going to get caught by garbage collection anyway. they're effectively qdel'd.
-	if(!map_to_clear)
+	if(!map_to_clear|| !(map_to_clear in screen_maps))
 		return FALSE
 	for(var/obj/screen/x in screen_maps[map_to_clear])
 		screen_maps[map_to_clear] -= x
@@ -39,7 +39,8 @@
 	params["anchor1"] = "0,0"
 	params["anchor2"] = "[ratiox],[ratioy]"
 	winset(src, "[name]_map", list2params(params))
-
+	if(!screen_maps)
+		screen_maps = list()
 	screen_maps["[name]_map"] = list()//initialized on the popup level, if we did it in setup_popup, we'd need to add code for the few situations where a background isn't desired.
 
 	return "[name]_map"
