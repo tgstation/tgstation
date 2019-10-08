@@ -4,6 +4,8 @@
 	icon = 'icons/fulpicons/halloween_costumes/costumes_icon.dmi'
 	mob_overlay_icon = 'icons/fulpicons/halloween_costumes/costumes_worn.dmi'
 	icon_state = "starship_jumpsuit"
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
 
 /obj/item/clothing/head/trooper_helmet
 	name = "starship helmet"
