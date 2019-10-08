@@ -163,6 +163,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// cooldown tracker for accent sounds,
 	var/last_accent_sound = 0
 
+	//while i'm here, i'd just like to say that reading this code gave me a headache. that's all
+	var/ate_goose = FALSE
+
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
 	uid = gl_uid++
@@ -291,10 +294,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
-		if(T)
-			var/obj/singularity/S = new(T)
-			S.energy = 800
-			S.consume(src)
+	if(T)
+		var/obj/singularity/S = null
+		if(ate_goose == TRUE)
+			S = new /obj/singularity/vomit(T)
+		else
+			S = new /obj/singularity(T)
+		S.energy = 800
+		S.consume(src)
 	else
 		investigate_log("has exploded.", INVESTIGATE_SUPERMATTER)
 		explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
@@ -685,6 +692,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/AM)
 	if(isliving(AM))
+		if(istype (AM, /mob/living/simple_animal/hostile/retaliate/goose/vomit))
+			ate_goose = TRUE
 		var/mob/living/user = AM
 		if(user.status_flags & GODMODE)
 			return
