@@ -1,9 +1,6 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Box, Button, Section } from '../components';
-import { createLogger } from '../logging';
-
-const logger = createLogger('Acclimator');
 
 export const Acclimator = props => {
   const { state } = props;

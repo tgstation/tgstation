@@ -1,20 +1,34 @@
 // Base colors
 $white: #ffffff;
+$pink: #ffc0cb;
 $pale-red: #e74242;
+$crimson: #dc143c;
 $red: #b00e0e;
 $dark-red: #9d0808;
-$yellow-orange: #be6209;
+$magenta: #ff00ff;
 $yellow: #9a9d00;
-$pale-green: #73E573;
+$bright-yellow: lighten($yellow, 50%);
+$yellow-orange: #be6209;
+$orange: #ffa500;
+$gold: #fdd700;
+$brown: #a52a2a;
+$pale-green: #73e573;
 $green: #2f943c;
 $grass-green: #537d29;
 $dark-green: #397439;
+$violet: #ee82ee;
+$purple: #800080;
+$blue: #0000ff;
+$cyan: #00ffff;
 $royal-blue: #40628a;
 $pale-blue: #8ba5c4;
 $black: #000000;
 $black-gray: #161616;
 $dark-gray: #272727;
 $gray: #363636;
+// i'm sorry these are different, grey is used for some uis like wire
+$grey: #808080;
+$silver: #c0c0c0;
 $light-gray: #999999;
 
 // Branding Colors
@@ -59,7 +73,7 @@ $notice-color-border: $dark-gray;
 
 // Section
 $section-color-label: $pale-blue;
-$section-color-candystripe: rgba(#000, 0.2);
+$section-color-candystripe: rgba(#000, 0.25);
 
 // Bar
 $bar-color-normal: $color-normal;

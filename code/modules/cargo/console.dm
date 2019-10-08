@@ -131,8 +131,6 @@
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	if(..())
 		return
-	if(action != "add" && requestonly)
-		return
 	switch(action)
 		if("send")
 			if(!SSshuttle.supply.canMove())

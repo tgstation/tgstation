@@ -13,10 +13,25 @@ export const LabeledList = props => {
 LabeledList.defaultHooks = pureComponentHooks;
 
 export const LabeledListItem = props => {
-  const { label, color, buttons, content, children } = props;
+  const {
+    className,
+    label,
+    labelColor,
+    color,
+    buttons,
+    content,
+    children,
+  } = props;
   return (
-    <tr className="LabeledList__row">
-      <td className="LabeledList__cell LabeledList__label">
+    <tr
+      className={classes([
+        'LabeledList__row',
+        className,
+      ])}>
+      <td
+        className={classes(['LabeledList__cell',
+          'LabeledList__label',
+          'color-' + (labelColor ? labelColor : 'label')])}>
         {label}:
       </td>
       <td

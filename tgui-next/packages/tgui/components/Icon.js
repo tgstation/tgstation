@@ -6,12 +6,15 @@ export const Icon = props => {
   if (size) {
     style['font-size'] = (size * 100) + '%';
   }
+  const faRegular = name.endsWith('-o');
+  const faName = name.replace(/-o$/, '');
   return (
     <Box
       as="i"
       className={classes([
         className,
-        'fa fa-' + name,
+        faRegular ? 'far' : 'fas',
+        'fa-' + faName,
       ])}
       style={style}
       {...rest} />

@@ -1,6 +1,7 @@
 import { classes, normalizeChildren } from 'common/react';
 import { Component } from 'inferno';
 import { Button } from './Button';
+import { Box } from './Box';
 
 export class Tabs extends Component {
   constructor(props) {
@@ -16,8 +17,10 @@ export class Tabs extends Component {
   render() {
     const { state, props } = this;
     const {
+      className,
       vertical,
       children,
+      ...rest
     } = props;
     const tabs = normalizeChildren(children);
     // Find the active tab
@@ -37,11 +40,13 @@ export class Tabs extends Component {
       content = content(activeTabKey);
     }
     return (
-      <div
+      <Box
         className={classes([
           'Tabs',
           vertical && 'Tabs--vertical',
-        ])}>
+          className,
+        ])}
+        {...rest}>
         <div className="Tabs__tabBox">
           {tabs.map(tab => {
             const {
@@ -50,6 +55,7 @@ export class Tabs extends Component {
               content, // ignored
               children, // ignored
               onClick,
+              highlight,
               ...rest
             } = tab.props;
             const key = tab.key || tab.props.label;
@@ -60,6 +66,7 @@ export class Tabs extends Component {
                 className={classes([
                   'Tabs__tab',
                   active && 'Tabs__tab--active',
+                  highlight && !active && 'color-bright-yellow',
                   className,
                 ])}
                 selected={active}
@@ -79,7 +86,7 @@ export class Tabs extends Component {
         <div className="Tabs__content">
           {content || null}
         </div>
-      </div>
+      </Box>
     );
   }
 }

@@ -15,7 +15,7 @@
 													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "airlock_electronics", name, 975, 420, master_ui, state)
+		ui = new(user, src, ui_key, "airlock_electronics", name, 420, 485, master_ui, state)
 		ui.open()
 
 /obj/item/electronics/airlock/ui_data()
@@ -32,6 +32,7 @@
 			access["req"] = (j in src.accesses)
 			accesses[++accesses.len] = access
 		region["name"] = get_region_accesses_name(i)
+		region["tab_number"] = i - 1
 		region["accesses"] = accesses
 		regions[++regions.len] = region
 	data["regions"] = regions
@@ -44,9 +45,12 @@
 	if(..())
 		return
 	switch(action)
-		if("clear")
+		if("clear_all")
 			accesses = list()
 			one_access = 0
+			. = TRUE
+		if("grant_all")
+			accesses = get_all_accesses()
 			. = TRUE
 		if("one_access")
 			one_access = !one_access

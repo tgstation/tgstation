@@ -4,7 +4,8 @@
   width: 100%;
   padding: 0 6px;
   border: 1px solid $bar-color-border;
-  background: $bar-color-background;
+  background-color: $bar-color-background;
+  transition: border-color 500ms;
 }
 
 .ProgressBar__fill {
@@ -12,7 +13,7 @@
   top: 0;
   left: 0;
   bottom: 0;
-  transition: background-color, width 1s;
+  transition: background-color, width 500ms;
   background-color: $bar-color-normal;
 }
 
@@ -24,13 +25,25 @@
 }
 
 .ProgressBar--color--good {
-  background-color: $bar-color-good;
+  border-color: $bar-color-good !important;
+
+  .ProgressBar__fill {
+    background-color: $bar-color-good;
+  }
 }
 
 .ProgressBar--color--average {
-  background-color: $bar-color-average;
+  border-color: $bar-color-average !important;
+
+  .ProgressBar__fill {
+    background-color: $bar-color-average;
+  }
 }
 
 .ProgressBar--color--bad {
-  background-color: $bar-color-bad;
+  border-color: $bar-color-bad !important;
+
+  .ProgressBar__fill {
+    background-color: $bar-color-bad;
+  }
 }

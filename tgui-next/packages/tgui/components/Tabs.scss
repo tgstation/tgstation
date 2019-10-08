@@ -28,14 +28,9 @@
     margin-bottom: 0;
     padding: 1px 9px 0px 6px;
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-    // color: rgba(255, 255, 255, 0.6);
 
     &:last-child {
       border-bottom: 0;
     }
-  }
-
-  .Tabs__tab--active {
-    // color: rgba(255, 255, 255, 1);
   }
 }

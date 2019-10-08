@@ -2,7 +2,8 @@
   display: table;
   border-collapse: collapse;
   border-spacing: 0;
-  margin: 0;
+  margin: -3px -6px;
+  margin-bottom: 0;
   padding: 0;
 }
 
@@ -17,8 +18,7 @@
 .LabeledList__cell {
   display: table-cell;
   margin: 0;
-  padding: 0;
-  padding-bottom: 6px;
+  padding: 3px 6px;
   border: 0;
   text-align: left;
   vertical-align: baseline;
@@ -27,14 +27,13 @@
 .LabeledList__label {
   width: 1%;
   white-space: nowrap;
-  padding-right: 12px;
   min-width: 60px;
-  color: $section-color-label;
 }
 
 .LabeledList__buttons {
   width: 0.1%;
   white-space: nowrap;
   text-align: right;
-  padding-bottom: 2px;
+  padding-top: 1px;
+  padding-bottom: 0;
 }

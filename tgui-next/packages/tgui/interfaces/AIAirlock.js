@@ -2,7 +2,7 @@ import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Button, LabeledList, Section } from '../components';
 
-export const AIAirlock = props => {
+export const AiAirlock = props => {
   const { state } = props;
   const { config, data } = state;
   const { ref } = config;
@@ -104,7 +104,7 @@ export const AIAirlock = props => {
             color="bad"
             buttons={(
               <Button
-                icon={data.id_scanner ? 'power-off' : 'close'}
+                icon={data.id_scanner ? 'power-off' : 'times'}
                 content={data.id_scanner ? 'Enabled' : 'Disabled'}
                 selected={data.id_scanner}
                 disabled={!data.wires.id_scanner}
@@ -116,7 +116,7 @@ export const AIAirlock = props => {
             label="Emergency Access"
             buttons={(
               <Button
-                icon={data.emergency ? 'power-off' : 'close'}
+                icon={data.emergency ? 'power-off' : 'times'}
                 content={data.emergency ? 'Enabled' : 'Disabled'}
                 selected={data.emergency}
                 onClick={() => act(ref, 'emergency-toggle')} />
@@ -140,7 +140,7 @@ export const AIAirlock = props => {
             color="bad"
             buttons={(
               <Button
-                icon={data.lights ? 'power-off' : 'close'}
+                icon={data.lights ? 'power-off' : 'times'}
                 content={data.lights ? 'Enabled' : 'Disabled'}
                 selected={data.lights}
                 disabled={!data.wires.lights}
@@ -153,7 +153,7 @@ export const AIAirlock = props => {
             color="bad"
             buttons={(
               <Button
-                icon={data.safe ? 'power-off' : 'close'}
+                icon={data.safe ? 'power-off' : 'times'}
                 content={data.safe ? 'Enabled' : 'Disabled'}
                 selected={data.safe}
                 disabled={!data.wires.safe}
@@ -166,7 +166,7 @@ export const AIAirlock = props => {
             color="bad"
             buttons={(
               <Button
-                icon={data.speed ? 'power-off' : 'close'}
+                icon={data.speed ? 'power-off' : 'times'}
                 content={data.speed ? 'Enabled' : 'Disabled'}
                 selected={data.speed}
                 disabled={!data.wires.timing}
@@ -180,7 +180,7 @@ export const AIAirlock = props => {
             color="bad"
             buttons={(
               <Button
-                icon={data.opened ? 'sign-out' : 'sign-in'}
+                icon={data.opened ? 'sign-out-alt' : 'sign-in-alt'}
                 content={data.opened ? 'Open' : 'Closed'}
                 selected={data.opened}
                 disabled={(data.locked || data.welded)}

@@ -50,7 +50,7 @@
 
 .Button--hasContent {
   // Add a margin to the icon to keep it separate from the text
-  .fa {
+  .fa, .fas, .far {
     margin-right: 6px;
   }
 }

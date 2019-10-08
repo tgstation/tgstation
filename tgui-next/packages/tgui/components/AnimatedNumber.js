@@ -4,13 +4,27 @@ import { Component } from 'inferno';
 const FPS = 20;
 const Q = 0.5;
 
+const isSafeNumber = value => {
+  return typeof value === 'number'
+    && Number.isFinite(value)
+    && !Number.isNaN(value);
+};
+
 export class AnimatedNumber extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.timer = null;
     this.state = {
       value: 0,
     };
+    // Use provided initial state
+    if (props.initial) {
+      this.state.value = props.initial;
+    }
+    // Set initial state with value provided in props
+    else if (isSafeNumber(props.value)) {
+      this.state.value = Number(props.value);
+    }
   }
 
   tick() {
@@ -18,7 +32,7 @@ export class AnimatedNumber extends Component {
     const currentValue = Number(state.value);
     const targetValue = Number(props.value);
     // Avoid poisoning our state with infinities and NaN
-    if (!Number.isFinite(targetValue) || Number.isNaN(targetValue)) {
+    if (!isSafeNumber(targetValue)) {
       return;
     }
     // Smooth the value using an exponential moving average
@@ -36,13 +50,16 @@ export class AnimatedNumber extends Component {
 
   render() {
     const { props, state } = this;
+    const { format } = props;
     const currentValue = state.value;
     const targetValue = props.value;
     // Directly display values which can't be animated
-    if (typeof targetValue !== 'number'
-        || !Number.isFinite(targetValue)
-        || Number.isNaN(targetValue)) {
+    if (!isSafeNumber(targetValue)) {
       return targetValue || null;
+    }
+    // Use custom formatter
+    if (format) {
+      return format(currentValue);
     }
     // Fix our animated precision at target value's precision.
     const fraction = String(targetValue).split('.')[1];

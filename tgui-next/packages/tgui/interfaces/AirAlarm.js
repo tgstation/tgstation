@@ -2,8 +2,10 @@ import { toFixed } from 'common/math';
 import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, Flex, LabeledList, NoticeBox, Section } from '../components';
+import { Box, Button, LabeledList, Section } from '../components';
+import { GAS_LABEL_MAPPING } from '../constants';
 import { createLogger } from '../logging';
+import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 const logger = createLogger('AirAlarm');
 
@@ -14,27 +16,10 @@ export const AirAlarm = props => {
   const locked = data.locked && !data.siliconUser;
   return (
     <Fragment>
-      <NoticeBox>
-        <Flex align="center">
-          <Flex.Item>
-            {data.siliconUser
-              && (data.locked
-                && 'Lock status: engaged.'
-                || 'Lock status: disengaged.')
-              || (data.locked
-                && 'Swipe an ID card to unlock this interface.'
-                || 'Swipe an ID card to lock this interface.')}
-          </Flex.Item>
-          <Flex.Item grow={1} />
-          <Flex.Item>
-            {!!data.siliconUser && (
-              <Button
-                content={data.locked ? 'Unlock' : 'Lock'}
-                onClick={() => act(ref, 'lock')} />
-            )}
-          </Flex.Item>
-        </Flex>
-      </NoticeBox>
+      <InterfaceLockNoticeBox
+        siliconUser={data.siliconUser}
+        locked={data.locked}
+        onLockStatusChange={() => act(ref, 'lock')} />
       <AirAlarmStatus state={state} />
       {!locked && (
         <AirAlarmControl state={state} />
@@ -186,7 +171,7 @@ const AirAlarmControlHome = props => {
         })} />
       <Box mt={2} />
       <Button
-        icon="sign-out"
+        icon="sign-out-alt"
         content="Vent Controls"
         onClick={() => act(ref, 'tgui:view', {
           screen: 'vents',
@@ -207,7 +192,7 @@ const AirAlarmControlHome = props => {
         })} />
       <Box mt={1} />
       <Button
-        icon="bar-chart"
+        icon="chart-bar"
         content="Alarm Thresholds"
         onClick={() => act(ref, 'tgui:view', {
           screen: 'thresholds',
@@ -255,7 +240,7 @@ const Vent = props => {
       title={decodeHtmlEntities(long_name)}
       buttons={(
         <Button
-          icon={power ? 'power-off' : 'close'}
+          icon={power ? 'power-off' : 'times'}
           selected={power}
           content={power ? 'On' : 'Off'}
           onClick={() => act(ref, 'power', {
@@ -269,7 +254,7 @@ const Vent = props => {
         </LabeledList.Item>
         <LabeledList.Item label="Pressure Regulator">
           <Button
-            icon="sign-in"
+            icon="sign-in-alt"
             content="Internal"
             selected={incheck}
             onClick={() => act(ref, 'incheck', {
@@ -277,7 +262,7 @@ const Vent = props => {
               val: checks,
             })} />
           <Button
-            icon="sign-out"
+            icon="sign-out-alt"
             content="External"
             selected={excheck}
             onClick={() => act(ref, 'excheck', {
@@ -288,13 +273,13 @@ const Vent = props => {
         {!!incheck && (
           <LabeledList.Item label="Internal Target">
             <Button
-              icon="pencil"
+              icon="pencil-alt"
               content={toFixed(internal)}
               onClick={() => act(ref, 'set_internal_pressure', {
                 id_tag,
               })} />
             <Button
-              icon="refresh"
+              icon="undo"
               disabled={intdefault}
               content="Reset"
               onClick={() => act(ref, 'reset_internal_pressure', {
@@ -305,13 +290,13 @@ const Vent = props => {
         {!!excheck && (
           <LabeledList.Item label="External Target">
             <Button
-              icon="pencil"
+              icon="pencil-alt"
               content={toFixed(external)}
               onClick={() => act(ref, 'set_external_pressure', {
                 id_tag,
               })} />
             <Button
-              icon="refresh"
+              icon="undo"
               disabled={extdefault}
               content="Reset"
               onClick={() => act(ref, 'reset_external_pressure', {
@@ -341,16 +326,6 @@ const AirAlarmControlScrubbers = props => {
   ));
 };
 
-const GAS_NOTATION_MAPPING = {
-  o2: 'O₂',
-  n2: 'N₂',
-  co2: 'CO₂',
-  water_vapor: 'H₂O',
-  n2o: 'N₂O',
-  no2: 'NO₂',
-  bz: 'BZ',
-};
-
 const Scrubber = props => {
   const {
     state,
@@ -368,7 +343,7 @@ const Scrubber = props => {
       title={decodeHtmlEntities(long_name)}
       buttons={(
         <Button
-          icon={power ? 'power-off' : 'close'}
+          icon={power ? 'power-off' : 'times'}
           content={power ? 'On' : 'Off'}
           selected={power}
           onClick={() => act(ref, 'power', {
@@ -379,7 +354,7 @@ const Scrubber = props => {
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button
-            icon={scrubbing ? 'filter' : 'sign-in'}
+            icon={scrubbing ? 'filter' : 'sign-in-alt'}
             color={scrubbing || 'danger'}
             content={scrubbing ? 'Scrubbing' : 'Siphoning'}
             onClick={() => act(ref, 'scrubbing', {
@@ -400,7 +375,7 @@ const Scrubber = props => {
             && filter_types.map(filter => (
               <Button key={filter.gas_id}
                 icon={filter.enabled ? 'check-square-o' : 'square-o'}
-                content={GAS_NOTATION_MAPPING[filter.gas_id]
+                content={GAS_LABEL_MAPPING[filter.gas_id]
                   || filter.gas_name}
                 title={filter.gas_name}
                 selected={filter.enabled}

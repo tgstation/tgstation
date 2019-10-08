@@ -50,6 +50,7 @@ const renderLayout = () => {
         const holder = document.getElementById('data');
         holder.textContent = JSON.stringify(state);
         // Load old TGUI by injecting new scripts
+        loadCSS('v4shim.css');
         loadCSS('tgui.css');
         const head = document.getElementsByTagName('head')[0];
         const script = document.createElement('script');
@@ -115,7 +116,6 @@ const setupApp = () => {
   act(ref, 'tgui:initialize');
 
   // Dynamically load font-awesome from browser's cache
-  loadCSS('v4shim.css');
   loadCSS('font-awesome.css');
 };
 
