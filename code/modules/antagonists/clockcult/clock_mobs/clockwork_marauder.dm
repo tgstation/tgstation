@@ -14,8 +14,7 @@
 	obj_damage = 40
 	melee_damage_lower = 12
 	melee_damage_upper = 12
-	attack_verb_continuous = "slashes"
-	attack_verb_simple = "slash"
+	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	weather_immunities = list("lava")
 	movement_type = FLYING
@@ -53,16 +52,14 @@
 		maxHealth = 300
 		melee_damage_upper = 25
 		melee_damage_lower = 25
-		attack_verb_continuous = "devastates"
-		attack_verb_simple = "devastate"
+		attacktext = "devastates"
 		speed = -1
 		obj_damage = 100
 		max_shield_health = INFINITY
 	else if(GLOB.ratvar_approaches) //Hefty health bonus and slight attack damage increase
 		melee_damage_upper = 15
 		melee_damage_lower = 15
-		attack_verb_continuous = "carves"
-		attack_verb_simple = "carve"
+		attacktext = "carves"
 		obj_damage = 50
 		max_shield_health = 4
 

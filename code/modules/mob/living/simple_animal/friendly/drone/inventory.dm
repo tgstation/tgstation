@@ -6,7 +6,7 @@
 //Drone hands
 
 
-/mob/living/simple_animal/drone/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
+/mob/living/simple_animal/drone/doUnEquip(obj/item/I, force, silent = FALSE)
 	if(..())
 		update_inv_hands()
 		if(I == head)
@@ -15,22 +15,22 @@
 		if(I == internal_storage)
 			internal_storage = null
 			update_inv_internal_storage()
-		return TRUE
-	return FALSE
+		return 1
+	return 0
 
 
 /mob/living/simple_animal/drone/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	switch(slot)
 		if(SLOT_HEAD)
 			if(head)
-				return FALSE
+				return 0
 			if(!((I.slot_flags & ITEM_SLOT_HEAD) || (I.slot_flags & ITEM_SLOT_MASK)))
-				return FALSE
-			return TRUE
+				return 0
+			return 1
 		if(SLOT_GENERC_DEXTROUS_STORAGE)
 			if(internal_storage)
-				return FALSE
-			return TRUE
+				return 0
+			return 1
 	..()
 
 

@@ -15,8 +15,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	melee_damage_type = BURN
-	attack_verb_continuous = "slashes"
-	attack_verb_simple = "slash"
+	attacktext = "slashes"
 	attack_sound = 'sound/effects/curseattack.ogg'
 	throw_message = "passes through the smokey body of"
 	obj_damage = 0

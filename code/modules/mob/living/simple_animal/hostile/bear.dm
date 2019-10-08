@@ -16,10 +16,9 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "hits"
 	maxHealth = 60
 	health = 60
 	spacewalk = TRUE
@@ -28,11 +27,9 @@
 	obj_damage = 60
 	melee_damage_lower = 20
 	melee_damage_upper = 30
-	attack_verb_continuous = "claws"
-	attack_verb_simple = "claw"
+	attacktext = "claws"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	friendly_verb_continuous = "bear hugs"
-	friendly_verb_simple = "bear hug"
+	friendly = "bear hugs"
 
 	//Space bears aren't affected by cold.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -113,13 +110,12 @@ mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Seve
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	armour_penetration = 0
-	response_harm_continuous = "takes a bite out of"
-	response_harm_simple = "take a bite out of"
+	response_harm = "takes a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses its false life and collapses!"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/butter = 6, /obj/item/reagent_containers/food/snacks/meat/slab = 3, /obj/item/organ/brain = 1, /obj/item/organ/heart = 1)
 	attack_sound = 'sound/weapons/slap.ogg'
-	attack_verb_continuous = "slaps"
+	attacktext = "slaps"
 
 /mob/living/simple_animal/hostile/bear/butter/Life() //Heals butter bear really fast when he takes damage.
 	if(stat)
@@ -154,3 +150,24 @@ mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some atta
 			L.Knockdown(20)
 			playsound(loc, 'sound/misc/slip.ogg', 15)
 			L.visible_message("<span class='danger'>[L] slips on butter!</span>")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

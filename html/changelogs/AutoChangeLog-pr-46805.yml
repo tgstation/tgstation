@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - tweak: "The way mood and sanity is displayed on the HUD has been changed"
-  - tweak: "Sanity level will now be displayed by color changes, while facial expression displays current mood"

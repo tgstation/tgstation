@@ -1,8 +1,7 @@
 //Healer
 /mob/living/simple_animal/hostile/guardian/healer
 	a_intent = INTENT_HARM
-	friendly_verb_continuous = "heals"
-	friendly_verb_simple = "heal"
+	friendly = "heals"
 	speed = 0
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	melee_damage_lower = 15

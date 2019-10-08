@@ -81,11 +81,9 @@
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	attack_verb_continuous = "shocks"
-	attack_verb_simple = "shock"
+	attacktext = "shocks"
 	attack_sound = 'sound/effects/empulse.ogg'
-	friendly_verb_continuous = "pinches"
-	friendly_verb_simple = "pinch"
+	friendly = "pinches"
 	speed = 0
 	faction = list("swarmer")
 	AIStatus = AI_OFF
