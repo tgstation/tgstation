@@ -160,7 +160,7 @@
 		H.throw_at(throw_target, 2, 3)
 		H.Knockdown(100)
 		H.adjustStaminaLoss(40)
-		if(isliving(M)) //T5 wheelchairs have fucking proper seatbelts, so no getting yeeted while crunching people!
+		if(isliving(M))
 			var/mob/living/D = M
 			throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
 			D.throw_at(throw_target, 2, 3)
