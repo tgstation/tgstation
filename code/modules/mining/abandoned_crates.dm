@@ -9,7 +9,7 @@
 	var/lastattempt = null
 	var/attempts = 10
 	var/codelen = 4
-	var/qdel_on_open
+	var/qdel_on_open = FALSE
 	tamperproof = 90
 
 /obj/structure/closet/crate/secure/loot/Initialize()
