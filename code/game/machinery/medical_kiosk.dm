@@ -13,7 +13,7 @@
 	var/active_price = 5            //Change by using a multitool on the board.
 	var/scan_active = FALSE         //Shows if the machine is being used. resets upon new viewer.
 	var/upgrade_scan_active = FALSE //Shows if the machine has upgraded functionality. For T2.
-	var/adv_scan_active = FALSE      //Ditto, for T3
+	var/adv_scan_active = FALSE     //Ditto, for T3
 	var/datum/bank_account/account  //payer's account.
 	var/mob/living/carbon/human/H   //the person using the console in each instance.
 	var/obj/item/card/id/C          //the account of the person using the console.
