@@ -1,5 +1,5 @@
 /datum/job/vip
-	title = "Donator"
+	title = "Vip"
 	flag = VIP
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
@@ -7,7 +7,7 @@
 	total_positions = 200
 	spawn_positions = 200
 	supervisors = "the gods"
-	selection_color = "#FFD700"
+	selection_color = "#ffd700"
 
 	outfit = /datum/outfit/job/vip
 
@@ -16,7 +16,7 @@
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_CIV
 
-	display_order = JOB_DISPLAY_ORDER_CURATOR
+	display_order = JOB_DISPLAY_ORDER_VIP
 
 /datum/outfit/job/vip
 	name = "Donator"
