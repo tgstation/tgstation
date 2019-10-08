@@ -11,7 +11,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	max_integrity = 150
-	integrity_failure = 50
+	integrity_failure = 0.33
 	ui_x = 500
 	ui_y = 400
 
@@ -265,7 +265,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 250
 	max_integrity = 200
-	integrity_failure = 100
+	integrity_failure = 0.5
 	var/icon_screen = "solar"
 	var/icon_keyboard = "power_key"
 	var/id = 0
