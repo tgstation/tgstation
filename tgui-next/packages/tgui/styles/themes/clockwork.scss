@@ -43,11 +43,7 @@ $tooltip-color-background: #2D1400;
 @at-root #{selector-unify(&, body)} {
   color: $text-color-normal;
   background-color: $background-color-start;
-  background-image:
-    linear-gradient(to bottom,
-      $background-color-start 0%,
-      $background-color-end 100%);
-  background-size: auto;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-image: linear-gradient(to bottom,
+    $background-color-start 0%,
+    $background-color-end 100%);
 }
