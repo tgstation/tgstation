@@ -1,6 +1,7 @@
 import { Acclimator } from './interfaces/Acclimator';
 import { AIAirlock } from './interfaces/AIAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
+import { Canister } from './interfaces/Canister';
 import { ChemDispenser } from './interfaces/ChemDispenser';
 import { KitchenSink } from './interfaces/KitchenSink';
 import { Thermomachine } from './interfaces/Thermomachine';
@@ -16,6 +17,10 @@ const ROUTES = {
   },
   ai_airlock: {
     component: () => AIAirlock,
+    scrollable: false,
+  },
+  canister: {
+    component: () => Canister,
     scrollable: false,
   },
   chem_dispenser: {
