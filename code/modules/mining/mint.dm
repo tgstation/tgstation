@@ -39,10 +39,8 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 
 	if(T)
-		for(var/obj/item/stack/sheet/O in T)
-			materials.insert_item(O, O.amount)
-		for(var/obj/item/stack/ore/O in T)
-			materials.insert_item(O, O.amount)
+		for(var/obj/item/stack/S in T)
+			materials.insert_item(S, S.amount)
 
 	if(processing)
 		var/datum/material/M = chosen
