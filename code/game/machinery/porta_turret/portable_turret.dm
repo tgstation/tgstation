@@ -239,6 +239,7 @@
 				if(prob(70))
 					if(stored_gun)
 						stored_gun.forceMove(loc)
+						stored_gun = null
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(prob(50))
 						new /obj/item/stack/sheet/metal(loc, rand(1,4))
