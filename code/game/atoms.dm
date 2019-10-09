@@ -300,6 +300,7 @@
 
 ///This atom has been hit by a hulkified mob in hulk mode (user)
 /atom/proc/attack_hulk(mob/living/carbon/human/user)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_HULK_ATTACK, user)
 
 /**
@@ -358,6 +359,7 @@
 	return
 
 /atom/proc/Bumped(atom/movable/AM)
+	SHOULD_CALL_PARENT(TRUE)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_ATOM_BUMPED, AM)
 
@@ -414,6 +416,7 @@
   * Default behaviour is to send the COMSIG_ATOM_BULLET_ACT and then call on_hit() on the projectile
   */
 /atom/proc/bullet_act(obj/projectile/P, def_zone)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
 
@@ -454,6 +457,7 @@
   * Produces a signal COMSIG_PARENT_EXAMINE
   */
 /atom/proc/examine(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
 	. = list("[get_examine_string(user, TRUE)].")
 
 	if(desc)
@@ -511,6 +515,7 @@
   * Default behaviour is to call contents_explosion() and send the COMSIG_ATOM_EX_ACT signal
   */
 /atom/proc/ex_act(severity, target)
+	SHOULD_CALL_PARENT(TRUE)
 	set waitfor = FALSE
 	contents_explosion(severity, target)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
@@ -521,10 +526,12 @@
   * default behaviour is to send the COMSIG_ATOM_BLOB_ACT signal
   */
 /atom/proc/blob_act(obj/structure/blob/B)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BLOB_ACT, B)
 	return
 
 /atom/proc/fire_act(exposed_temperature, exposed_volume)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 	return
 
@@ -618,6 +625,7 @@
   * Default behaviour is to send COMSIG_ATOM_SING_PULL and return
   */
 /atom/proc/singularity_pull(obj/singularity/S, current_size)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_SING_PULL, S, current_size)
 
 
@@ -627,6 +635,7 @@
   * Default behaviour is to send COMSIG_ATOM_ACID_ACT and return
   */
 /atom/proc/acid_act(acidpwr, acid_volume)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
 
 /**
@@ -635,6 +644,7 @@
   * Default behaviour is to send COMSIG_ATOM_EMAG_ACT and return
   */
 /atom/proc/emag_act(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user)
 
 /**
@@ -643,6 +653,7 @@
   * Default behaviour is to send COMSIG_ATOM_RAD_ACT and return
   */
 /atom/proc/rad_act(strength)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_RAD_ACT, strength)
 
 /**
@@ -651,6 +662,7 @@
   * Default behaviour is to send COMSIG_ATOM_NARSIE_ACT and return
   */
 /atom/proc/narsie_act()
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
 
 /**
@@ -659,6 +671,7 @@
   * Default behaviour is to send COMSIG_ATOM_RATVAR_ACT and return
   */
 /atom/proc/ratvar_act()
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_RATVAR_ACT)
 
 ///Return the values you get when an RCD eats you?
@@ -672,6 +685,7 @@
   * Default behaviour is to send COMSIG_ATOM_RCD_ACT and return FALSE
   */
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
 	return FALSE
 
@@ -723,6 +737,7 @@
   * Default behaviour is to simply send COMSIG_ATOM_CONTENTS_DEL
   */
 /atom/proc/handle_atom_del(atom/A)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_CONTENTS_DEL, A)
 
 /**
@@ -758,6 +773,7 @@
   * Not recommended to use, listen for the COMSIG_ATOM_DIR_CHANGE signal instead (sent by this proc)
   */
 /atom/proc/setDir(newdir)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
@@ -945,6 +961,7 @@
   * Default behaviour is to send the COMSIG_ATOM_ENTERED
   */
 /atom/Entered(atom/movable/AM, atom/oldLoc)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
 
 /**
@@ -956,6 +973,7 @@
   * otherwise leave value the result of the parent call
   */
 /atom/Exit(atom/movable/AM, atom/newLoc)
+	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	if(SEND_SIGNAL(src, COMSIG_ATOM_EXIT, AM, newLoc) & COMPONENT_ATOM_BLOCK_EXIT)
 		return FALSE
@@ -966,6 +984,7 @@
   * Default behaviour is to send the COMSIG_ATOM_EXITED
   */
 /atom/Exited(atom/movable/AM, atom/newLoc)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
 
 ///Return atom temperature
