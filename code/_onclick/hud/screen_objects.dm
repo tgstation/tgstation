@@ -69,7 +69,7 @@
 /obj/screen/skills/Click()
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		H.dna.print_levels(H)
+		H.mind.print_levels(H)
 
 /obj/screen/craft
 	name = "crafting menu"

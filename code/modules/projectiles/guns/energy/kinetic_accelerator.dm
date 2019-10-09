@@ -138,7 +138,7 @@
 	var/skill_modifier
 	if(ishuman(holder))
 		var/mob/living/carbon/human/H = holder
-		skill_modifier = H.dna.get_skill_speed_modifier(SKILL_MINING)
+		skill_modifier = H.mind.get_skill_speed_modifier(/datum/skill/mining)
 
 	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried * skill_modifier, TIMER_STOPPABLE)
 
