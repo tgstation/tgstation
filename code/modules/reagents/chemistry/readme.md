@@ -254,7 +254,59 @@ A new and improved way for reagents to react.
 How to code fermichem reactions:
 First off, probably read though the readme for standard reagent mechanisms, this builds on top of that.
 
-#bitflags
+# Variables
+
+For `datum/chemical_reaction`
+
+```
+	var/OptimalTempMin 		= 0 // Lower area of bell curve for determining heat based rate reactions
+	var/OptimalTempMax		= 1000 // Upper end for above
+	var/ExplodeTemp			= 9999 //Temperature at which reaction explodes
+	var/OptimalpHMin		= 1 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateau phase)
+	var/OptimalpHMax		= 14 // Higest value for above
+	var/ReactpHLim			= 0 // How far out pH wil react, giving impurity place (Exponential phase)
+	//var/CatalystFact		= 0 // How much the catalyst affects the reaction (0 = no catalyst). Currently unimplemented.
+	var/CurveSharpT 		= 1.5 // How sharp the temperature exponential curve is (to the power of value)
+	var/CurveSharppH 		= 3 // How sharp the pH exponential curve is (to the power of value)
+	var/ThermicConstant		= 0 //Temperature change per 1u produced
+	var/HIonRelease 		= 0 //pH change per 1u reaction
+	var/RateUpLim 			= 10 //Optimal/max rate possible if all conditions are perfect
+	var/FermiExplode 		= FALSE //If the chemical explodes in a special way
+	var/PurityMin			= 0.1 //The minimum purity something has to be above, otherwise it explodes.
+	var/FermiChem = FALSE // If the chemical uses the Fermichem reaction mechanics
+```
+
+For `datum/reagent`
+
+```
+//fermichem
+	var/pH = 7//potential of hydrogen = how acid/base it is
+	var/purity = 1 //Purity, affects Fermichem
+	var/turf/loc = null
+	var/ImpureChem = /datum/reagent
+	var/InverseChemVal = 0.2 //purity at which it flips
+	var/InverseChem = /datum/reagent
+	var/chemical_flags //bitflags for visibility/fermichem
+	var/cached_purity = 1
+```
+
+# Reaction Rates
+
+Reaction rates are tied to the temperature of the reaction, with the curves calculated based off the FChem reaction vars. If the reaction reaches its `ExplodeTemp`, it explodes (each explosion is customisable with the `fermiexplode()` proc.).
+
+# pHes
+
+pH is a measure of the potential hydrogen within a beaker. Each chemical has an innate pH, which, compared to reality is a mash up of literal H, isoelectric point and the pH (It’s essentially a gamified pH). Acidic compounds are easy to get, but as a general rule alkaline compounds require some kind of reaction. The pH of the beaker is the sum of the pHes in the mix, i.e. 10u pH5 liquid + 10u pH9 liquid = 20u volume at pH7. Each reaction has a pH optimal, where the purity will result in 1, as you deviate from the optimal, your purity decreases.
+
+# Purity
+
+Purity is a measure of how pure a reagent is. When you ingest the chemical, it will split the chem based off of it’s purity. I.e. you take 10u 0.8 purity oculine, upon consumption, it splits into 8u oculine, and 2u of whatever is set as the impure chem. If your purity is too low during reaction, (PurityMin) it explodes. If your purity is lower than the inverse value, **all of it is converted into the inverse chem**
+
+For example, ingesting 10u 0.8 purity chemical will give you 8u of that chemical and 2u of that chemical's ImpureChem.
+Ingesting 10u 0.2 purity chemical with a InverseChemVal of 0.2 will give you 10u InverseChem.
+
+
+# Bitflags
 for `datum/reagent/` you have the following options with `var/chemical_flags`:
 
 ```
@@ -274,6 +326,8 @@ for `datum/chemical_reaction/` under `var/clear_conversion`
 REACTION_CLEAR_IMPURE       Convert into impure/pure on reaction completion
 REACTION_CLEAR_INVERSE      Convert into inverse on reaction completion when purity is low enough
 ```
+
+
 
 # GOON CHEMS README:
 Credit goes to Cogwerks, and all the other goonstation coders for the original idea and implementation of this over at goonstation.
