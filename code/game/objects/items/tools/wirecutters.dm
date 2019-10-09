@@ -12,7 +12,7 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
-	custom_materials = list(/datum/material/iron=80)
+	materials = list(/datum/material/iron=80)
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/wirecutter.ogg'
 	usesound = 'sound/items/wirecutter.ogg'
@@ -91,7 +91,7 @@
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
 
-	custom_materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25)
+	materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25)
 	usesound = 'sound/items/jaws_cut.ogg'
 	toolspeed = 0.7
 	random_color = FALSE
