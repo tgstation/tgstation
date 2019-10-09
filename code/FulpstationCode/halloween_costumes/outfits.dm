@@ -36,3 +36,10 @@
 	glasses = /obj/item/clothing/glasses/phantommaid_eyes
 	r_hand = /obj/item/toy/phantommaid_knife
 	neck = /obj/item/clothing/neck/scarf/phantommaid_scarfshoulder
+
+/datum/outfit/halloween/nextadventure
+	name = "Next Adventure Bunny Costume"
+	uniform = /obj/item/clothing/under/costume/nextadventure_uniform
+	belt = /obj/item/storage/belt/nextadventure_belt/full
+	shoes = /obj/item/clothing/shoes/nextadventure_boots
+	head = /obj/item/clothing/head/nextadventure_ears
