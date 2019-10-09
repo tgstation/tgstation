@@ -43,3 +43,4 @@
 	belt = /obj/item/storage/belt/nextadventure_belt/full
 	shoes = /obj/item/clothing/shoes/nextadventure_boots
 	head = /obj/item/clothing/head/nextadventure_ears
+	r_hand = /obj/item/reagent_containers/spray/hairdye_purple
