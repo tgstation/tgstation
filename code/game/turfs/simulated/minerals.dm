@@ -547,6 +547,9 @@
 	var/mob/living/carbon/human/H = user
 	if(H.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_LEGENDARY)
 		. = ..()
+	else
+		to_chat(usr, "<span class='warning'>The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner.</span>")
+		
 
 /turf/closed/mineral/strong/gets_drilled(user)
 	if(prob(10))
