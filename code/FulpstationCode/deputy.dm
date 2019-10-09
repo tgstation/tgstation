@@ -39,6 +39,8 @@
 	random_sensor = FALSE
 	fulp_item = TRUE
 	mutantrace_variation = MUTANTRACE_VARIATION
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/security/mallcop/skirt
 	name = "deputy skirt"
