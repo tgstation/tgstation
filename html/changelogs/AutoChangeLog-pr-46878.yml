@@ -1,0 +1,6 @@
+author: "Urumasi"
+delete-after: True
+changes: 
+  - rscadd: "Added caps to plastic bottles that prevent spilling when screwed on."
+  - rscadd: "Added a relic water bottle to the lavaland chest pool."
+  - code_imp: "Reagent fill code has been moved to reagent_containers and made more generic"
