@@ -247,14 +247,14 @@ By default, all atom have a reagents var - but its empty. if you want to use an 
 			If this returns 1, you can use syringes and droppers
 			to draw from the contents of this object.
 ```
-
-## FERMICHEM
+# FERMICHEM
 
 A new and improved way for reagents to react.
 How to code fermichem reactions:
 First off, probably read though the readme for standard reagent mechanisms, this builds on top of that.
 
-# Variables
+
+## Variables
 
 For `datum/chemical_reaction`
 
@@ -290,15 +290,15 @@ For `datum/reagent`
 	var/cached_purity = 1
 ```
 
-# Reaction Rates
+## Reaction Rates
 
 Reaction rates are tied to the temperature of the reaction, with the curves calculated based off the FChem reaction vars. If the reaction reaches its `ExplodeTemp`, it explodes (each explosion is customisable with the `fermiexplode()` proc.).
 
-# pHes
+## pHes
 
 pH is a measure of the potential hydrogen within a beaker. Each chemical has an innate pH, which, compared to reality is a mash up of literal H, isoelectric point and the pH (It’s essentially a gamified pH). Acidic compounds are easy to get, but as a general rule alkaline compounds require some kind of reaction. The pH of the beaker is the sum of the pHes in the mix, i.e. 10u pH5 liquid + 10u pH9 liquid = 20u volume at pH7. Each reaction has a pH optimal, where the purity will result in 1, as you deviate from the optimal, your purity decreases.
 
-# Purity
+## Purity
 
 Purity is a measure of how pure a reagent is. When you ingest the chemical, it will split the chem based off of it’s purity. I.e. you take 10u 0.8 purity oculine, upon consumption, it splits into 8u oculine, and 2u of whatever is set as the impure chem. If your purity is too low during reaction, (PurityMin) it explodes. If your purity is lower than the inverse value, **all of it is converted into the inverse chem**
 
@@ -306,7 +306,7 @@ For example, ingesting 10u 0.8 purity chemical will give you 8u of that chemical
 Ingesting 10u 0.2 purity chemical with a InverseChemVal of 0.2 will give you 10u InverseChem.
 
 
-# Bitflags
+## Bitflags
 for `datum/reagent/` you have the following options with `var/chemical_flags`:
 
 ```
