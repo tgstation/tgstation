@@ -72,6 +72,8 @@
 	var/list/custom_materials
 	///Bitfield for how the atom handles materials.
 	var/material_flags = NONE
+	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
+	var/material_modifier = 1
 
 
 /**
@@ -152,14 +154,12 @@
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
-	if(custom_materials && custom_materials.len)
-		var/temp_list = list()
-		for(var/i in custom_materials)
-			temp_list[getmaterialref(i)] = custom_materials[i] //Get the proper instanced version
+	var/temp_list = list()
+	for(var/i in custom_materials)
+		temp_list[getmaterialref(i)] = custom_materials[i] //Get the proper instanced version
 
-		custom_materials = null //Null the list to prepare for applying the materials properly
-		set_custom_materials(temp_list)
-
+	custom_materials = null //Null the list to prepare for applying the materials properly
+	set_custom_materials(temp_list)
 
 	ComponentInitialize()
 
@@ -1162,15 +1162,20 @@
 
 ///Sets the custom materials for an item.
 /atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
+
+	if(!materials)
+		materials = custom_materials
+
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
-			var/datum/material/custom_material = i
+			var/datum/material/custom_material = getmaterialref(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
 
 	custom_materials = list() //Reset the list
 
 	for(var/x in materials)
-		var/datum/material/custom_material = x
+		var/datum/material/custom_material = getmaterialref(x)
 
-		custom_material.on_applied(src, materials[custom_material] * multiplier, material_flags)
+		if(!(material_flags & MATERIAL_NO_EFFECTS))
+			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
 		custom_materials[custom_material] += materials[custom_material] * multiplier

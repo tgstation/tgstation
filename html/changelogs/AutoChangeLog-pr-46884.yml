@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "A medical kiosk now exists in medbay at shift start on all maps."
+  - rscadd: "Medical kiosks now have a T2 Upgrade, showing brain traumas and radiation levels."
+  - tweak: "Players can now multitool the kiosk to change the cost to get scanned, up to ludicrous levels."
