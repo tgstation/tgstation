@@ -1,5 +1,0 @@
-author: "spessbro"
-delete-after: True
-changes: 
-  - rscdel: "Removed all reagent container outputs from biogen designs, replaced with reagent designs that feed into the container currently placed in the biogen"
-  - tweak: "all plant nutriment produce 30u instead of 50 for the same biomass price"

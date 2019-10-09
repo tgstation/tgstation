@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where players were unable to spray/paint over splotches of dark paint."
-  - rscadd: "Added an infinite spraycan for admins to spawn."

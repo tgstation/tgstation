@@ -1,5 +1,0 @@
-author: "qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "protolathe & mech fab no longer applies effects"
-  - balance: "sheets only have 1% of the radioactive power of normal radioactive material"
