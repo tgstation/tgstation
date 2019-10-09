@@ -757,7 +757,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if((rank == "Donator") && !check_donators(user.ckey))
 				HTML += "<font color=red>[rank]</font></td><td><font color=red>Reserved people who donated before the event!</font></td></tr>"
 				continue
-			if((rank == "Security Officer" && !check_whitelist(user.ckey)))
+			if(rank == "Security Officer" && !check_whitelist(user.ckey) && !check_rights(R_ADMIN))
 				HTML += "<font color=red>[rank]</font></td><td><font color=red>Only whitelisted people can be security!</font></td></tr>"
 				continue
 			if((rank in GLOB.command_positions) || (rank == "AI" || (rank == "Donator")))//Bold head jobs
