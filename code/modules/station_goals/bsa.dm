@@ -240,7 +240,6 @@
 	return data
 
 /obj/machinery/computer/bsa_control/ui_act(action, params)
-	to_chat(world, "UI button pressed: [action]")
 	if(..())
 		return
 	switch(action)

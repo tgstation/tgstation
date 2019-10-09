@@ -40,7 +40,7 @@ export const classes = (...args) => {
  */
 export const normalizeChildren = children => {
   if (Array.isArray(children)) {
-    return children;
+    return children.filter(value => value);
   }
   if (typeof children === 'object') {
     return [children];

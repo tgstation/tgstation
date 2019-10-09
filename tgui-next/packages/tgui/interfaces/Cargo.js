@@ -23,11 +23,13 @@ export const Cargo = props => {
         {' '}
         {cartTotalAmount > 0 && `(${cartTotalAmount} cr)`}
       </Box>
-      <Button
-        icon="times"
-        color="transparent"
-        content="Clear"
-        onClick={() => act(ref, 'clear')} />
+      {!data.requestonly && (
+        <Button
+          icon="times"
+          color="transparent"
+          content="Clear"
+          onClick={() => act(ref, 'clear')} />
+      )}
     </Fragment>
   );
 
@@ -100,7 +102,7 @@ export const Cargo = props => {
           {() => (
             <Section
               title="Active Requests"
-              buttons={(
+              buttons={!data.requestonly && (
                 <Button
                   icon="times"
                   content="Clear"
@@ -111,20 +113,22 @@ export const Cargo = props => {
             </Section>
           )}
         </Tabs.Tab>
-        <Tabs.Tab
-          key="cart"
-          label={`Checkout (${cart.length})`}
-          icon="shopping-cart"
-          highlight={cart.length > 0}
-          lineHeight="23px">
-          {() => (
-            <Section
-              title="Current Cart"
-              buttons={cartButtons}>
-              <Cart state={state} cart={cart} />
-            </Section>
-          )}
-        </Tabs.Tab>
+        {!data.requestonly && (
+          <Tabs.Tab
+            key="cart"
+            label={`Checkout (${cart.length})`}
+            icon="shopping-cart"
+            highlight={cart.length > 0}
+            lineHeight="23px">
+            {() => (
+              <Section
+                title="Current Cart"
+                buttons={cartButtons}>
+                <Cart state={state} cart={cart} />
+              </Section>
+            )}
+          </Tabs.Tab>
+        )}
       </Tabs>
     </Fragment>
   );

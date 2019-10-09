@@ -961,7 +961,6 @@
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	to_chat(world, "APC ui_act triggered: [action]")
 	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && !(integration_cog && (is_servant_of_ratvar(usr)))))
 		return
 	switch(action)
