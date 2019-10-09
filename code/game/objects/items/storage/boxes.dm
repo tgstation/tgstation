@@ -1127,7 +1127,7 @@
 		/obj/item/screwdriver = 1)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/box/material
+/obj/item/storage/box/material		//No uranium because radioactive
 	name = "box of materials"
 	illustration = "implant"
 
@@ -1144,7 +1144,6 @@
 		/obj/item/stack/sheet/mineral/titanium=50,\
 		/obj/item/stack/sheet/mineral/gold=50,\
 		/obj/item/stack/sheet/mineral/silver=50,\
-		/obj/item/stack/sheet/mineral/uranium=50,\
 		/obj/item/stack/sheet/mineral/plasma=50,\
 		/obj/item/stack/sheet/mineral/diamond=50,\
 		/obj/item/stack/sheet/bluespace_crystal=50,\
