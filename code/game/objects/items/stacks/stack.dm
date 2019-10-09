@@ -13,7 +13,7 @@
 /obj/item/stack
 	icon = 'icons/obj/stack_objects.dmi'
 	gender = PLURAL
-	material_modifier = 0.1
+	material_modifier = 0.01
 	var/list/datum/stack_recipe/recipes
 	var/singular_name
 	var/amount = 1
