@@ -34062,7 +34062,7 @@
 /obj/item/clothing/accessory/armband/deputy,
 /obj/item/clothing/accessory/armband/deputy,
 /obj/item/clothing/accessory/armband/deputy,
-/obj/item/reagent_containers/food/snacks/donut/jelly/choc,
+/obj/item/reagent_containers/food/snacks/donut/jelly/choco,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
