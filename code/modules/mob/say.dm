@@ -1,11 +1,6 @@
 //Speech verbs.
 
 ///Say verb
-/mob/verb/say_wrapper()
-	set hidden = TRUE
-	var/message = input("", "Say") as text
-	say_verb(message)
-
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
@@ -15,6 +10,11 @@
 	if(message)
 		say(message)
 
+/mob/verb/say_wrapper()
+	set hidden = TRUE
+	var/message = input("", "Say") as text
+	say_verb(message)
+	
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
