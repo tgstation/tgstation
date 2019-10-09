@@ -253,28 +253,27 @@ GENE SCANNER
 		var/mob/living/carbon/C = M
 		var/list/damaged = C.get_damaged_bodyparts(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
-			var/dmgreportlist = "<pre><font face='Verdana'>&#9;\
-							<font color='#0000CC'>Damage:</font>&#9;&#9;\
-							<font color='red'><b>Brute</font>&#9;\
-							<font color='orange'>Burn</font>&#9;\
-							<font color='green'>Toxin</font>&#9;\
-							<font color='purple'>Suffocation</b></font><br>\
+			var/list/dmgreport = list()
+			dmgreport += "<table style='margin-left:33px'><tr><font face='Verdana'>\
+							<td style='width: 90px;'><font color='#0000CC'>Damage:</font></td>\
+							<td style='width: 55px;'><font color='red'><b>Brute</b></font></td>\
+							<td style='width: 45px;'><font color='orange'><b>Burn</b></font></td>\
+							<td style='width: 45px;'><font color='green'><b>Toxin</b></font></td>\
+							<td style='width: 90px;'><font color='purple'><b>Suffocation</b></font></td></tr>\
 
-							&#9;&nbsp;&nbsp;&nbsp;&nbsp;\
-							<font color='#0000CC'>Overall:</font>&#9;\
-							<font color='red'>[brute_loss]</font>&#9;\
-							<font color='orange'>[fire_loss]</font>&#9;\
-							<font color='green'>[tox_loss]</font>&#9;\
-							<font color='purple'>[oxy_loss]</font><br>"
+							<tr><td><font color='#0000CC'>Overall:</font></td>\
+							<td><font color='red'>[brute_loss]</font></td>\
+							<td><font color='orange'>[fire_loss]</font></td>\
+							<td><font color='green'>[tox_loss]</font></td>\
+							<td><font color='purple'>[oxy_loss]</font></td></tr>"
 
 			for(var/o in damaged)
 				var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
-				dmgreportlist += "&#9;&nbsp;&nbsp;&nbsp;&nbsp;\
-							<font color='#0000CC'>[capitalize(org.name)]:</font>&nbsp;&nbsp;&#9;\
-							<font color='red'>[(org.brute_dam > 0) ? "[org.brute_dam]" : "0"]</font>&#9;\
-							<font color='orange'>[(org.burn_dam > 0) ? "[org.burn_dam]" : "0"]</font><br>"
-			dmgreportlist += "</pre>"
-			to_chat(user, "[dmgreportlist]")
+				dmgreport += "<tr><td><font color='#0000CC'>[capitalize(org.name)]:</font></td>\
+								<td><font color='red'>[(org.brute_dam > 0) ? "[org.brute_dam]" : "0"]</font></td>\
+								<td><font color='orange'>[(org.burn_dam > 0) ? "[org.burn_dam]" : "0"]</font></td></tr>"
+			dmgreport += "</table>"
+			to_chat(user, dmgreport.Join())
 
 
 	//Organ damages report
