@@ -195,7 +195,7 @@
 /turf/open/proc/freon_gas_act()
 	for(var/obj/I in contents)
 		if(I.resistance_flags & FREEZE_PROOF)
-			break
+			continue
 		if(!(I.obj_flags & FROZEN))
 			I.make_frozen_visual()
 	for(var/mob/living/L in contents)
