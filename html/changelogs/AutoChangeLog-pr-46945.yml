@@ -1,5 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "beauty no longer runtimes like crazy"
-  - bugfix: "glass and silver are back to normal values after accidentally changing them"

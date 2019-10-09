@@ -1,6 +1,0 @@
-author: "PKPenguin321 and jdawg1290"
-delete-after: True
-changes: 
-  - balance: "The chances of failing a surgery step have been changed. Now surgery will go slower the worse the surgery conditions are, capping at 2x the original surgery speed. Any time remaining after capping the surgery speed is converted to the odds of failing the surgery."
-  - balance: "Example: A surgery takes 10 seconds. In bad conditions, it now takes 30, but we cap it at 20. The 10 seconds lost to the cap become the chance to fail, so it also has a 10% chance of failing."
-  - tweak: "When you fail a surgery, the message you get will be a bit more informative as to your odds of succeeding if you try again."

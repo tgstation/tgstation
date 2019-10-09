@@ -1,5 +1,0 @@
-author: "cynic716"
-delete-after: True
-changes: 
-  - tweak: "abandoned crates"
-  - code_imp: "look it's just a big loot table change check the pastebin also I had to define a couple reagent bottles but the compiler didn't scream about it so it should be fine."
