@@ -56,6 +56,7 @@
 
 	return FALSE
 
+#define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
 
 /datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	surgery.step_in_progress = TRUE
@@ -77,8 +78,8 @@
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod)
 	var/modded_time = time * speed_mod
 
-	fail_prob = min(max(0, modded_time - (time * 2)),99)//if modded_time > time * 2, then fail_prob = modded_time - time*2. starts at 0, caps at 99
-	modded_time = min(modded_time, time * 2)//also if that, then cap modded_time at time*2
+	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * 2, then fail_prob = modded_time - time*2. starts at 0, caps at 99
+	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*2
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
 		modded_time = time
