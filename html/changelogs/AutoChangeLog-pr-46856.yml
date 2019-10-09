@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - tweak: "chainsaw kind of weapons and the mecha drill and the CLAMP can now be used with 100% accuracy for surgery"
+  - refactor: "surgery tools now work on defines, and advanced surgery tools now switch the tool behaviours instead of creating new items"
