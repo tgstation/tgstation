@@ -103,7 +103,7 @@
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
-	materials = list()
+	custom_materials = null
 	burst_size = 3
 	automatic = 0
 	fire_delay = 1
