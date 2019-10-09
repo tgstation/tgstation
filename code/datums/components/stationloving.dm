@@ -70,6 +70,8 @@
 	if (is_reserved_level(T.z))
 		if (is_type_in_typecache(A, allowed_shuttles))
 			return TRUE
+	if (is_away_level(T.z))
+		return FALSE
 
 	return FALSE
 
