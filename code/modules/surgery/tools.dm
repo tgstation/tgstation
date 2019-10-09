@@ -292,7 +292,7 @@
 		icon_state = "retractor_a"
 
 /obj/item/retractor/advanced/examine()
-	. += " It resembles a retractor[tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]."
+	. += " It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]."
 
 /obj/item/surgicaldrill/advanced
 	name = "searing tool"
