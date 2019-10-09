@@ -21,7 +21,7 @@
     description = "Take a screenshot."
 
 /datum/keybinding/client/screenshot/down(client/user)
-    winset(src, null, "command=.screenshot [!user.keys_held["shift"] ? "auto" : ""]")
+    winset(user, null, "command=.screenshot [!user.keys_held["shift"] ? "auto" : ""]")
     return TRUE
 
 /datum/keybinding/client/minimal_hud
