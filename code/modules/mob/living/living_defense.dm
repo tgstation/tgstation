@@ -337,6 +337,7 @@
 
 ///As the name suggests, this should be called to apply electric shocks.
 /mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, flags)
 	shock_damage *= siemens_coeff
 	if((flags & SHOCK_TESLA) && (flags_1 & TESLA_IGNORE_1))

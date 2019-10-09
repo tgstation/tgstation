@@ -507,6 +507,7 @@
 
 //proc used to ressuscitate a mob
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive)
@@ -538,6 +539,7 @@
 		update_mobility()
 
 /mob/living/Crossed(atom/movable/AM)
+	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	for(var/i in get_equipped_items())
 		var/obj/item/item = i
@@ -687,6 +689,7 @@
 	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
 
 /mob/living/verb/resist()
+	SHOULD_CALL_PARENT(TRUE)
 	set name = "Resist"
 	set category = "IC"
 
@@ -893,7 +896,8 @@
 	cameraFollow = null
 
 /mob/living/proc/can_track(mob/living/user)
-	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
+	SHOULD_CALL_PARENT(TRUE)
+	//basic fast checks go first.
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, args) & COMPONENT_CANT_TRACK)
 		return FALSE
 	var/turf/T = get_turf(src)
@@ -1024,6 +1028,7 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
+	SHOULD_CALL_PARENT(TRUE)
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
@@ -1036,6 +1041,7 @@
 	return FALSE
 
 /mob/living/proc/ExtinguishMob()
+	SHOULD_CALL_PARENT(TRUE)
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
