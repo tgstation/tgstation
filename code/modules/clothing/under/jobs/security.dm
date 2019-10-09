@@ -23,43 +23,6 @@
 	alt_covers_chest = TRUE
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
-	var/obj/machinery/camera/builtInCamera = null
-	var/camera_on = TRUE
-
-/obj/item/clothing/under/rank/security/officer/Initialize()
-	. = ..()
-	if(!builtInCamera)
-		builtInCamera = new (src)
-		builtInCamera.network = list("ss13")
-		builtInCamera.internal_light = FALSE
-
-
-/obj/item/clothing/under/rank/security/officer/equipped(mob/user, slot)
-	. = ..()
-	if(builtInCamera)
-		var/obj/item/card/id/I = user.get_idcard(TRUE)
-		if(istype(I))
-			builtInCamera.c_tag = I.registered_name
-
-/obj/item/clothing/under/rank/security/officer/verb/toggle_camera()
-	set name = "Toggle Body Camera"
-	set category = "Object"
-	set src in usr
-	var/mob/M = usr
-	if (istype(M, /mob/dead/))
-		return
-	if (!can_use(M))
-		return
-	if(!builtInCamera)
-		to_chat(usr, "There is no camera!")
-		return 0
-
-	if(camera_on)
-		camera_on = FALSE
-		builtInCamera.status = 0
-	else
-		camera_on = TRUE
-		builtInCamera.status = 1
 
 /obj/item/clothing/under/rank/security/officer/grey
 	name = "grey security jumpsuit"
