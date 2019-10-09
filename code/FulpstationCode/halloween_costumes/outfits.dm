@@ -31,7 +31,12 @@
 	uniform = /obj/item/clothing/under/costume/zero_suit
 	suit = /obj/item/clothing/suit/space/hardsuit/toy/varia
 	r_hand = /obj/item/gun/ballistic/shotgun/toy/toy_arm_cannon
-	
+
+/datum/outfit/halloween/sans
+	name = "sans."
+	uniform = /obj/item/clothing/under/costume/sans
+	head = /obj/item/clothing/head/hardhat/sans
+
 /datum/outfit/halloween/phantommaid
 	name = "Phantom maid Costume"
 	uniform = /obj/item/clothing/under/costume/phantommaid_uniform
