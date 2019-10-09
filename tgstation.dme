@@ -591,6 +591,7 @@
 #include "code\FulpstationCode\halloween_costumes\joseph_joestar.dm"
 #include "code\FulpstationCode\halloween_costumes\outfits.dm"
 #include "code\FulpstationCode\halloween_costumes\phantom_maid.dm"
+#include "code\FulpstationCode\halloween_costumes\sans.dm"
 #include "code\FulpstationCode\halloween_costumes\solid_snake.dm"
 #include "code\FulpstationCode\halloween_costumes\starship_troopers.dm"
 #include "code\FulpstationCode\halloween_costumes\zero_suit.dm"
