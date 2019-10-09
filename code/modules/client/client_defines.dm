@@ -32,6 +32,8 @@
 		/////////
 	///Player preferences datum for the client
 	var/datum/preferences/prefs = null
+	///List of keybindings
+	var/list/keybindings[0]
 	///last turn of the controlled mob, I think this is only used by mechs?
 	var/last_turn = 0
 	///Move delay of controlled mob, related to input handling

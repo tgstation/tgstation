@@ -47,24 +47,17 @@
 	// Client-level keybindings are ones anyone should be able to do at any time
 	// Things like taking screenshots, hitting tab, and adminhelps.
 
-	switch(_key)
-		if("F1")
-			if(keys_held["Ctrl"] && keys_held["Shift"]) // Is this command ever used?
-				winset(src, null, "command=.options")
-			else
-				get_adminhelp()
-			return
-		if("F2") // Screenshot. Hold shift to choose a name and location to save in
-			winset(src, null, "command=.screenshot [!keys_held["shift"] ? "auto" : ""]")
-			return
-		if("F12") // Toggles minimal HUD
-			mob.button_pressed_F12()
-			return
+	var/AltMod = keys_held["Alt"] ? "Alt-" : ""
+	var/CtrlMod = keys_held["Ctrl"] ? "Ctrl-" : ""
+	var/ShiftMod = keys_held["Shift"] ? "Shift-" : ""
+	var/full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
+	for (var/kb_name in prefs.key_bindings[full_key])
+		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
+		if(kb.down(src))
+			break
 
-	if(holder)
-		holder.key_down(_key, src)
-	if(mob.focus)
-		mob.focus.key_down(_key, src)
+	holder?.key_down(full_key, src)
+	mob.focus?.key_down(full_key, src)
 
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
@@ -79,14 +72,21 @@
 	if(!(next_move_dir_add & movement))
 		next_move_dir_sub |= movement
 
-	if(holder)
-		holder.key_up(_key, src)
-	if(mob.focus)
-		mob.focus.key_up(_key, src)
+	// Check if chat should have focus but doesn't, give it focus and pre-enter the key.
+	if(prefs.hotkeys && winget(src, null, "input.focus"))
+		winset(src, null, "input.focus=true")
+		winset(src, null, "input=[list2params(list(text = _key))]")
+		return
+	// We don't do full key for release, because for mod keys you
+	// can hold different keys and releasing any should be handled by the key binding specifically
+	for (var/kb_name in prefs.key_bindings[_key])
+		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
+		if(kb.up(src))
+			break
+	holder?.key_up(_key, src)
+	mob.focus?.key_up(_key, src)
 
 // Called every game tick
 /client/keyLoop()
-	if(holder)
-		holder.keyLoop(src)
-	if(mob?.focus)
-		mob.focus.keyLoop(src)
+	holder?.keyLoop(src)
+	mob.focus?.keyLoop(src)

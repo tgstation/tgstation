@@ -1,6 +1,11 @@
 //Speech verbs.
 
 ///Say verb
+/mob/verb/say_wrapper()
+	set hidden = TRUE
+	var/message = input("", "Say") as text
+	say_verb(message)
+
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
@@ -23,6 +28,11 @@
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
 
+/mob/verb/me_wrapper()
+	set hidden = TRUE
+	var/message = input("", "Me") as text
+	me_verb(message)
+	
 ///The me emote verb
 /mob/verb/me_verb(message as text)
 	set name = "Me"

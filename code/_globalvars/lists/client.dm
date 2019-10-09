@@ -1,0 +1,2 @@
+GLOBAL_LIST_EMPTY(keybinding_list_by_key)
+GLOBAL_LIST_EMPTY(keybindings_by_name)
