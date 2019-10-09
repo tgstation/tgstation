@@ -40,6 +40,27 @@
 	new stacktype(user.drop_location(), grassAmt)
 	qdel(src)
 
+//Fairygrass
+/obj/item/seeds/grass/fairy
+	name = "pack of fairygrass seeds"
+	desc = "These seeds grow into a more mystical grass."
+	icon_state = "seed-fairygrass"
+	species = "fairygrass"
+	plantname = "Fairygrass"
+	product = /obj/item/reagent_containers/food/snacks/grown/grass/fairy
+	icon_grow = "fairygrass-grow"
+	icon_dead = "fairygrass-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/blue)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05, /datum/reagent/drug/space_drugs = 0.15)
+
+/obj/item/reagent_containers/food/snacks/grown/grass/fairy
+	seed = /obj/item/seeds/grass/fairy
+	name = "fairygrass"
+	desc = "Blue, glowing, and smells fainly of mushrooms."
+	icon_state = "fairygrassclump"
+	filling_color = "#3399ff"
+	stacktype = /obj/item/stack/tile/fairygrass
+
 // Carpet
 /obj/item/seeds/grass/carpet
 	name = "pack of carpet seeds"
