@@ -14,6 +14,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -44,6 +48,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -56,6 +63,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	brightness = 3;
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -92,15 +103,11 @@
 	})
 "aj" = (
 /obj/structure/fluff/railing/corner,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "ak" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	layer = 3.1
@@ -109,7 +116,7 @@
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "yeet"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -119,7 +126,7 @@
 	icon_state = "railing_corner";
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -128,15 +135,11 @@
 	icon_state = "railing_corner";
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "an" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	dir = 4;
@@ -148,7 +151,7 @@
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -158,16 +161,6 @@
 	name = "Thunderdome Floor 3"
 	})
 "ap" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
 /obj/structure/fluff/railing{
 	density = 0;
 	dir = 4;
@@ -190,17 +183,11 @@
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "aq" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	dir = 8;
@@ -212,7 +199,7 @@
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -221,22 +208,16 @@
 	icon_state = "railing_corner";
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "as" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/fluff/railing{
-	icon_state = "railing";
+	density = 0;
 	dir = 5;
-	density = 0
+	icon_state = "railing";
+	layer = 3.1
 	},
 /obj/structure/window/plasma/reinforced{
 	dir = 1;
@@ -248,24 +229,16 @@
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "at" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/structure/fluff/railing{
-	icon_state = "railing";
+	density = 0;
 	dir = 9;
-	density = 0
+	icon_state = "railing";
+	layer = 3.1
 	},
 /obj/structure/window/plasma/reinforced{
 	dir = 1;
@@ -277,7 +250,7 @@
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -286,26 +259,11 @@
 	icon_state = "railing_corner";
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 3"
-	})
-"av" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "aw" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	dir = 1;
@@ -317,7 +275,7 @@
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -330,76 +288,46 @@
 	icon_state = "railing_corner";
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 3"
-	})
-"ay" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "az" = (
-/obj/structure/lattice/catwalk,
-/turf/open/openspace,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 3"
-	})
-"aA" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel/dark,
+/obj/structure/chair/wood,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "aB" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	layer = 3.1
 	},
-/obj/structure/table,
 /obj/structure/window/plasma/reinforced{
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "yeet"
 	},
-/turf/open/floor/plasteel/dark,
+/obj/machinery/computer/camera_advanced{
+	icon_state = "computer";
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "aC" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	layer = 3.1
-	},
-/obj/structure/chair/comfy/shuttle{
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	name = "stadium seat"
 	},
 /obj/structure/window/plasma/reinforced{
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "yeet"
 	},
-/turf/open/floor/plasteel/dark,
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -415,56 +343,34 @@
 	name = "Thunderdome Floor 3"
 	})
 "aE" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	dir = 4;
 	icon_state = "railing";
 	layer = 3.1
 	},
-/obj/structure/chair/comfy/shuttle{
-	name = "stadium seat";
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	icon_state = "shuttle_chair";
-	dir = 4
-	},
 /obj/structure/window/plasma/reinforced{
 	dir = 4;
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/black,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "aF" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	dir = 8;
 	icon_state = "railing";
 	layer = 3.1
 	},
-/obj/structure/chair/comfy/shuttle{
-	name = "stadium seat";
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	icon_state = "shuttle_chair";
-	dir = 8
-	},
 /obj/structure/window/plasma/reinforced{
 	dir = 8;
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/black,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -477,135 +383,83 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
-"aH" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 3"
-	})
 "aI" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	dir = 4;
 	icon_state = "railing";
 	layer = 3.1
 	},
-/obj/structure/table,
 /obj/structure/window/plasma/reinforced{
 	dir = 4;
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/obj/structure/table/wood/fancy/black,
+/obj/item/twohanded/binoculars,
+/obj/item/twohanded/binoculars{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "aJ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	dir = 8;
 	icon_state = "railing";
 	layer = 3.1
 	},
-/obj/structure/table,
 /obj/structure/window/plasma/reinforced{
 	dir = 8;
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 3"
-	})
-"aK" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
+/obj/structure/table/wood/fancy/black,
+/obj/item/twohanded/binoculars,
+/obj/item/twohanded/binoculars{
+	pixel_x = 2;
+	pixel_y = 2
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 3"
-	})
-"aL" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "aM" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	dir = 1;
 	icon_state = "railing";
 	layer = 3.1
 	},
-/obj/structure/table,
 /obj/structure/window/plasma/reinforced{
 	dir = 1;
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/obj/machinery/computer/camera_advanced,
+/turf/open/floor/carpet/black,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "aN" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/fluff/railing{
 	density = 0;
 	dir = 1;
 	icon_state = "railing";
 	layer = 3.1
 	},
-/obj/structure/chair/comfy/shuttle{
-	name = "stadium seat";
-	desc = "A comfortable, secure seat. You paid for the whole seat but you'll only be needing the EDGE.";
-	icon_state = "shuttle_chair";
-	dir = 1
-	},
 /obj/structure/window/plasma/reinforced{
 	dir = 1;
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -615,22 +469,16 @@
 	dir = 8
 	},
 /obj/structure/fluff/railing/corner,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "aP" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
 /obj/structure/fluff/railing{
-	icon_state = "railing";
+	density = 0;
 	dir = 6;
-	density = 0
+	icon_state = "railing";
+	layer = 3.1
 	},
 /obj/structure/window/plasma/reinforced{
 	icon = 'icons/obj/atmos.dmi';
@@ -641,22 +489,16 @@
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "aQ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/fluff/railing{
-	icon_state = "railing";
+	density = 0;
 	dir = 10;
-	density = 0
+	icon_state = "railing";
+	layer = 3.1
 	},
 /obj/structure/window/plasma/reinforced{
 	icon = 'icons/obj/atmos.dmi';
@@ -667,7 +509,7 @@
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -680,13 +522,17 @@
 	icon_state = "railing_corner";
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/carpet/royalblack,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
 "aS" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	brightness = 3;
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -717,6 +563,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -728,6 +577,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
+	},
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
@@ -749,13 +602,80 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
-"aX" = (
-/obj/effect/turf_decal/tile/neutral{
+"aY" = (
+/obj/structure/fluff/railing/corner,
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "vent_out";
+	name = "air vent"
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"aZ" = (
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
+	dir = 8
+	},
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "scrub_on";
+	name = "scrubber"
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ba" = (
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "scrub_on";
+	name = "scrubber"
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"bb" = (
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
 	dir = 1
 	},
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "vent_out";
+	name = "air vent"
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"bo" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/step_trigger/teleporter{
+	icon_state = "shield";
+	name = "spectator 3-2";
+	teleport_x = 142;
+	teleport_y = 161;
+	teleport_z = 3
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"bE" = (
 /obj/structure/fluff/railing{
 	density = 0;
 	dir = 1;
@@ -767,43 +687,1753 @@
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
-/obj/structure/sign/warning{
-	name = "not finished okay it hard work"
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"bP" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 1;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"bT" = (
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "scrub_on";
+	name = "scrubber"
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ci" = (
+/obj/machinery/door/window/northleft,
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"dg" = (
+/obj/structure/sign/nanotrasen,
+/turf/closed/indestructible/riveted,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"di" = (
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/carpet/royalblue,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"dC" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"dQ" = (
+/turf/open/indestructible/binary,
+/area/space)
+"ed" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ej" = (
+/obj/machinery/space_heater,
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"eT" = (
+/obj/structure/chair/pew/left{
+	icon_state = "pewend_left";
+	dir = 8
+	},
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"eV" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"fQ" = (
+/obj/machinery/food_cart,
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"fT" = (
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"fX" = (
+/obj/structure/table/reinforced,
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ge" = (
+/obj/structure/table/wood,
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"gf" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"gg" = (
+/turf/closed/indestructible/fakedoor,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"gG" = (
+/obj/effect/path_blocker/vip,
+/obj/machinery/door/firedoor,
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"gH" = (
+/turf/closed/indestructible/fakeglass,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"gY" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/chem_dispenser/drinks{
+	icon_state = "soda_dispenser";
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"hq" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/soysauce,
+/obj/item/reagent_containers/food/condiment/sugar,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"hH" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"hI" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 4;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"hR" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 4;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/chair/comfy/black,
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ig" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"it" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"iB" = (
+/obj/structure/table/wood,
+/obj/structure/bedsheetbin{
+	desc = "It looks rather cosy. The words 'towel bin' have been slapped on it with a handheld labeler.";
+	name = "linen bin (towel bin)"
+	},
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"iG" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 4;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"jb" = (
+/obj/machinery/space_heater,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"kl" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 8;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"kx" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"kJ" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"kU" = (
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "vent_out";
+	name = "air vent"
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
-"aY" = (
-/obj/structure/fluff/railing/corner,
-/turf/closed/indestructible/fakeglass,
+"lv" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet/red,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
-"aZ" = (
-/obj/structure/fluff/railing/corner{
-	icon_state = "railing_corner";
+"lW" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/light,
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"mh" = (
+/obj/machinery/deepfryer,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"mB" = (
+/obj/machinery/deepfryer,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"mP" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"mQ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"mR" = (
+/obj/machinery/light,
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"mV" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"om" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ow" = (
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"oE" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"oF" = (
+/obj/structure/chair/pew/left{
+	icon_state = "pewend_left";
+	dir = 4
+	},
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"oI" = (
+/obj/machinery/door/firedoor,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"oT" = (
+/obj/machinery/deepfryer,
+/obj/structure/window/reinforced,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ph" = (
+/obj/structure/table,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"pl" = (
+/obj/structure/reagent_dispensers/cooking_oil,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"pI" = (
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	layer = 3.1
+	},
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"pW" = (
+/obj/machinery/icecream_vat,
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ql" = (
+/obj/machinery/deepfryer,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"qT" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"rX" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 8;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/comfy/black,
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"sb" = (
+/obj/machinery/light,
+/obj/structure/fluff{
+	desc = "A small wall mounted cabinet designed to hold a fire extinguisher. An installed child lock prevents you from opening it";
+	icon = 'icons/obj/wallmounts.dmi';
+	icon_state = "extinguisher_closed";
+	name = "extinguisher cabinet";
+	pixel_y = -32
+	},
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"sg" = (
+/obj/machinery/door/airlock/public/glass{
+	desc = "It rises up.";
+	name = "Gamer Room"
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"sj" = (
+/obj/structure/sink/kitchen{
+	pixel_y = 28
+	},
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"so" = (
+/obj/machinery/door/firedoor,
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"sR" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 4;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/wood,
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"tp" = (
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "vent_out";
+	name = "air vent"
+	},
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"tE" = (
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "vent_out";
+	name = "air vent"
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ue" = (
+/obj/structure/chair/pew/right{
+	icon_state = "pewend_right";
+	dir = 8
+	},
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"uw" = (
+/obj/structure/table,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"uJ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"uV" = (
+/obj/structure/fluff{
+	desc = "Why did you have to look?";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "static";
+	name = "***********"
+	},
+/turf/open/indestructible/hierophant,
+/area/space)
+"uX" = (
+/turf/open/indestructible/hierophant,
+/area/space)
+"vi" = (
+/obj/machinery/space_heater,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"vl" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"vB" = (
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"vH" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 4;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"vQ" = (
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "scrub_on";
+	name = "scrubber"
+	},
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"wx" = (
+/obj/structure/fluff{
+	desc = "A small wall mounted cabinet designed to hold a fire extinguisher. An installed child lock prevents you from opening it";
+	icon = 'icons/obj/wallmounts.dmi';
+	icon_state = "extinguisher_closed";
+	name = "extinguisher cabinet";
+	pixel_y = -32
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"xb" = (
+/obj/structure/chair/pew/right{
+	icon_state = "pewend_right";
+	dir = 4
+	},
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"xl" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"xM" = (
+/obj/machinery/door/firedoor,
+/obj/effect/path_blocker/vip,
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"yp" = (
+/obj/structure/sign/warning{
+	desc = "You were warned not to use those binoculars over here, but yet you did it, blatantly disregarding what little sense of reality held you here. Now you've seen the world for what it truly is, a hollow theatre for those you'll never be able to comprehend's enjoyment. There is no ceiling, space man.";
+	name = "REALILTY LIMIT WARNING"
 	},
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
-"ba" = (
+"yE" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 8;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"yY" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 5;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"zO" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 1;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"AF" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 6;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"AQ" = (
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "scrub_on";
+	name = "scrubber"
+	},
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"AX" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Bz" = (
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"BO" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"BW" = (
+/obj/structure/table,
+/obj/item/book/manual/wiki/cooking_to_serve_man,
+/obj/item/kitchen/rollingpin,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Ck" = (
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "vent_out";
+	name = "air vent"
+	},
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"CE" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 4;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"CJ" = (
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "scrub_on";
+	name = "scrubber"
+	},
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Dj" = (
+/obj/machinery/door/airlock/wood{
+	name = "Sauna"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Dv" = (
+/obj/machinery/gibber,
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"DE" = (
+/obj/machinery/door/airlock/freezer{
+	name = "Cold Storage"
+	},
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"DP" = (
+/obj/structure/table,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/toy/figure/chef,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"DW" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/chem_dispenser/drinks{
+	icon_state = "soda_dispenser";
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Eq" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Fh" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Fm" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 1;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"FR" = (
+/obj/structure/kitchenspike,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"FY" = (
 /obj/structure/fluff/railing/corner{
 	icon_state = "railing_corner";
 	dir = 4
 	},
-/turf/closed/indestructible/fakeglass,
+/turf/open/indestructible/hotelwood,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
-"bb" = (
+"Ga" = (
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
+	dir = 8
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Gi" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 1;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Gn" = (
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	layer = 3.1
+	},
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"GK" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/mint,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"HB" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/obj/machinery/light,
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"HV" = (
+/obj/machinery/chem_master/condimaster,
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Jl" = (
+/obj/structure/fluff/railing/corner,
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Jx" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet/royalblue,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Jy" = (
+/turf/closed/indestructible/necropolis,
+/area/space)
+"JG" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 8;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/wood,
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Kz" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 9;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"KB" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Lg" = (
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "scrub_on";
+	name = "scrubber"
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Lt" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"LV" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 1;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 1;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Mx" = (
+/obj/structure/table/reinforced,
+/obj/machinery/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"MN" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 4;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 4;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"MZ" = (
+/obj/machinery/processor,
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"NC" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"NK" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/food/drinks/shaker{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Oc" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 8;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Ok" = (
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/floor/holofloor/beach/water,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"OE" = (
+/obj/machinery/deepfryer,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"OP" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Pt" = (
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"PG" = (
+/obj/structure/table/wood/fancy/red,
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Qp" = (
+/obj/structure/fluff{
+	desc = "A small wall mounted cabinet designed to hold a fire extinguisher. An installed child lock prevents you from opening it";
+	icon = 'icons/obj/wallmounts.dmi';
+	icon_state = "extinguisher_closed";
+	name = "extinguisher cabinet";
+	pixel_y = 32
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"QS" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"QZ" = (
 /obj/structure/fluff/railing/corner{
 	icon_state = "railing_corner";
 	dir = 1
 	},
-/turf/closed/indestructible/fakeglass,
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Rc" = (
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Rm" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Rs" = (
+/obj/structure/rack,
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Su" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"SZ" = (
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"TL" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Ui" = (
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "vent_out";
+	name = "air vent"
+	},
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Ul" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Uq" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Uw" = (
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"UM" = (
+/obj/structure/kitchenspike,
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"US" = (
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Vp" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/chem_dispenser/drinks/beer{
+	icon_state = "booze_dispenser";
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"VC" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 8;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/comfy/black{
+	icon_state = "comfychair";
+	dir = 1
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"WJ" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	dir = 10;
+	icon_state = "railing";
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/obj/structure/window/plasma/reinforced{
+	dir = 8;
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "plasmarwindow"
+	},
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"WZ" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/fluff{
+	desc = "A small wall mounted cabinet designed to hold a fire extinguisher. An installed child lock prevents you from opening it";
+	icon = 'icons/obj/wallmounts.dmi';
+	icon_state = "extinguisher_closed";
+	name = "extinguisher cabinet";
+	pixel_y = -32
+	},
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Xb" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Xp" = (
+/turf/open/floor/carpet/royalblue,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"XU" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Ye" = (
+/obj/structure/table/reinforced,
+/obj/item/kitchen/knife/butcher,
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Yl" = (
+/obj/structure/table/wood/poker,
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"YU" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/carpet/royalblue,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Zy" = (
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ZI" = (
+/obj/machinery/light,
+/turf/open/floor/carpet/black,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -25318,46 +26948,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
 aa
 aa
 aa
@@ -25575,46 +27205,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -25832,46 +27462,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uX
+uX
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uV
+uX
+dQ
+dQ
+dQ
+dQ
+uX
+uX
+uX
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -26089,46 +27719,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+uV
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uV
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uV
+uX
+uV
+uX
+dQ
+uX
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -26346,46 +27976,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uX
+uX
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -26603,46 +28233,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+yp
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+yp
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -26860,46 +28490,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -27117,46 +28747,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+uX
+uX
+Jy
 aa
 aa
 aa
@@ -27374,46 +29004,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+uX
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+uV
+uX
+Jy
 aa
 aa
 aa
@@ -27631,46 +29261,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+uX
+uX
+Jy
 aa
 aa
 aa
@@ -27888,46 +29518,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+uX
+uX
+Jy
 aa
 aa
 aa
@@ -28145,46 +29775,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+uX
+uV
+Jy
 aa
 aa
 aa
@@ -28402,46 +30032,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -28659,46 +30289,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+Kz
+kl
+rX
+yE
+VC
+rX
+yE
+VC
+kl
+WJ
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -28916,46 +30546,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+Fm
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+Fh
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -29173,46 +30803,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+uX
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+zO
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+AX
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -29430,46 +31060,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+Kz
+QZ
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+Ga
+WJ
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -29687,46 +31317,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+Fm
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+Fh
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -29944,46 +31574,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+zO
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+AX
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+uX
+dQ
+Jy
 aa
 aa
 aa
@@ -30201,46 +31831,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ab
+ab
+gH
+gH
+ab
+qT
+qT
+qT
+qT
+ab
+gH
+gH
+ab
+ab
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+uV
+dQ
+Jy
 aa
 aa
 aa
@@ -30458,46 +32088,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ab
+NK
+gY
+Vp
+dC
+Uw
+Uw
+Uw
+Uw
+dC
+Vp
+gY
+NK
+ab
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -30715,46 +32345,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ab
+PG
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+PG
+ab
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -30972,46 +32602,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+uV
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ab
+ab
+Xb
+Uw
+kJ
+Yl
+fT
+Uw
+Uw
+fT
+Yl
+kJ
+Uw
+Xb
+ab
+ab
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -31229,46 +32859,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ab
+lv
+Uw
+Uw
+kJ
+Yl
+fT
+Uw
+Uw
+fT
+Yl
+kJ
+Uw
+Uw
+mR
+ab
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -31486,46 +33116,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
 ab
 ab
+Uw
+Uw
+Uw
+kJ
+Eq
+Yl
+Uw
+Uw
+Yl
+Eq
+kJ
+Uw
+Uw
+Uw
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -31743,46 +33373,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+yp
 ab
 ab
 ab
 ab
-ai
-ai
-ai
-ai
-ai
-ai
-aG
-ai
-ai
-ai
-ai
-aG
-ai
-ai
-ai
-ai
-ai
-ai
+ab
+Bz
+Bz
+Uw
+Uw
+Uw
+kJ
+kJ
+Uw
+Uw
+kJ
+kJ
+Uw
+Uw
+Uw
+Bz
+Bz
 ab
 ab
 ab
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+yp
+gH
+uV
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -32000,46 +33630,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
 ab
 ac
 ah
 ah
-ai
-ai
-ai
-ai
-ai
-ay
-az
-aH
-ai
-ai
-ay
-az
-aH
-ai
-ai
-ai
-ai
-ai
+xM
+Bz
+Bz
+Bz
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Bz
+Bz
+Bz
+gG
 ah
 ah
 aS
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -32257,46 +33887,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+uV
+dQ
 ab
 ad
 ab
 ab
 ab
-ai
-ai
-ai
-ay
-az
-az
-az
-aL
-av
-az
-az
-az
-aH
-ai
-ai
-ai
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
 ab
 ab
 ab
 aT
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -32514,46 +34144,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
 ab
 ae
 ah
 ah
 ab
-ai
-ai
-av
+Bz
+Bz
+Bz
+Bz
 az
+SZ
+ed
+Bz
+Bz
 az
-az
-az
-aL
-av
-az
-az
-az
-az
-aL
-ai
-ai
+SZ
+ed
+Bz
+Bz
+Bz
+Bz
 ab
 ah
 ah
 aU
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dQ
+dQ
+dQ
+dQ
+uX
+dQ
+Jy
 aa
 aa
 aa
@@ -32764,20 +34394,20 @@ aa
 aa
 aa
 aa
+ab
+ab
+gg
+ab
+ab
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -32785,18 +34415,18 @@ ab
 aj
 an
 ar
-ai
-aA
-az
-az
-az
-aL
-av
-az
-az
-az
-aK
-ai
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
 aj
 an
 ar
@@ -32804,13 +34434,13 @@ ab
 ab
 ab
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
 aa
 aa
 aa
@@ -33021,56 +34651,56 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+mP
+ai
+Rm
+ab
 aa
 aa
 aa
 ab
-ai
-ai
+bT
+Bz
+Bz
+Bz
+Bz
+Bz
+ab
+Bz
+Bz
 ak
 ao
 as
 ar
-ai
-aD
-aD
-aD
-ai
-ai
-aD
-aD
-aD
-ai
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
 aj
 aP
 ao
 aw
-ai
-ai
+Bz
+wx
 ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -33278,56 +34908,56 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+mP
+ai
+Rm
+ab
 aa
 aa
 aa
 ab
-ai
-ai
+QS
+YU
+YU
+YU
+YU
+Bz
+ab
+QS
+US
 ak
 ao
 ao
 aw
 aY
 aE
-aE
+sR
 aI
-aE
-aE
+iG
+sR
 aI
-aE
+iG
 aE
 ba
 ak
 ao
 ao
 aw
-ai
-ai
+US
+ZI
 ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+vB
+vB
+vB
+vB
+vB
+ig
+ab
 aa
 aa
 aa
@@ -33535,56 +35165,56 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
+mP
 ai
-ai
-ak
-ao
-ao
-aw
-ak
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-aw
-ak
-ao
-ao
-aw
-ai
-ai
+Rm
 ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+di
+Jx
+Jx
+Jx
+Jx
+Xp
+ab
+Bz
+US
+ak
+ao
+ao
+aw
+mV
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+LV
+ak
+ao
+ao
+aw
+US
+Bz
+ab
+ab
+ab
+ab
+ab
+DE
+ab
+ab
+sj
+vB
+ig
+ab
 aa
 aa
 aa
@@ -33792,24 +35422,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+mP
+ai
+Rm
+ab
 aa
 aa
 aa
 ab
-ai
-ai
+di
+Xp
+Xp
+Xp
+Xp
+Xp
+sg
+Bz
+US
 ak
 ao
 ao
@@ -33828,20 +35458,20 @@ ak
 ao
 ao
 aw
-ai
-ai
+US
+Bz
+gH
+eV
+BW
+ph
+GK
+Rc
+pl
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+fQ
+vB
+HB
+ab
 aa
 aa
 aa
@@ -34049,24 +35679,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+mP
+ai
+Rm
+ab
 aa
 aa
 aa
 ab
-ai
-ai
+di
+Jx
+Jx
+Jx
+Jx
+Xp
+ab
+Bz
+US
 ak
 ao
 ao
@@ -34085,20 +35715,20 @@ ak
 ao
 ao
 aw
-ai
-ai
+US
+Bz
+oI
+Rc
+Rc
+Rc
+Rc
+Rc
+hq
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+HV
+vB
+vB
+ab
 aa
 aa
 aa
@@ -34306,29 +35936,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+mP
+Zy
+lW
+ab
 aa
 aa
 aa
 ab
-ai
-ai
+QS
+YU
+YU
+YU
+YU
+Bz
+ab
+Bz
+Bz
 al
 ap
 ap
 ax
-aC
+hH
 ao
 ao
 ao
@@ -34337,25 +35967,25 @@ ao
 ao
 ao
 ao
-aN
+Gi
 aO
 ap
 ap
 aR
-ai
-ai
+Bz
+Bz
+oI
+mB
+mh
+Rc
+MZ
+Rc
+hq
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+UM
+vB
+Dv
+ab
 aa
 aa
 aa
@@ -34563,56 +36193,56 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
-ai
-ai
-ak
-ao
-ao
-aw
-ak
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-aw
-ak
-ao
-ao
-aw
-ai
-ai
+mP
+Zy
+Rm
 ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+tE
+Bz
+Bz
+Bz
+Bz
+Bz
+ab
+Bz
+US
+ak
+ao
+ao
+aw
+gf
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+bE
+ak
+ao
+ao
+aw
+US
+Bz
+oI
+Rc
+oT
+Ui
+Mx
+Rc
+Rc
+ab
+vB
+vB
+fX
+ab
 aa
 aa
 aa
@@ -34820,24 +36450,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
-ai
-ai
+mP
+Zy
+Rm
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+dg
+Bz
+US
 ak
 ao
 ao
@@ -34856,20 +36486,20 @@ ak
 ao
 ao
 aw
-ai
-ai
+US
+Bz
+oI
+Rc
+om
+Rc
+Mx
+Rc
+Rc
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+UM
+vB
+Ye
+ab
 aa
 aa
 aa
@@ -35077,24 +36707,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
-ai
-ai
+mP
+Zy
+Lt
+TL
+uJ
+aD
+aD
+aD
+aD
+aD
+aD
+aD
+aD
+aD
+xl
+Bz
+US
 ak
 ao
 ao
@@ -35113,20 +36743,20 @@ ak
 ao
 ao
 aw
-ai
-ai
+US
+Bz
+oI
+Rc
+Rc
+Rc
+KB
+Rc
+Rc
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+vB
+vB
+fX
+ab
 aa
 aa
 aa
@@ -35334,56 +36964,56 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
+mP
+Zy
+Zy
+so
+kU
 ai
 ai
-ak
-ao
-ao
-aX
-aC
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-aN
+ai
+ai
+ai
+ai
+ai
+ai
+Lg
+OP
+Bz
+AQ
 ak
 ao
 ao
 aw
-ai
-ai
+hH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+Gi
+ak
+ao
+ao
+aw
+Ck
+Bz
+gH
+Rc
+Rc
+Rc
+Rc
+Rc
+sb
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+FR
+vB
+Dv
+ab
 aa
 aa
 aa
@@ -35591,29 +37221,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
-ai
-ai
+mP
+Zy
+ow
+Uq
+aG
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+mQ
+vl
+XU
+Bz
+US
 ak
 ao
 ao
 aw
-aC
+gf
 ao
 ao
 ao
@@ -35622,25 +37252,25 @@ ao
 ao
 ao
 ao
-aN
+bE
 ak
 ao
 ao
 aw
-ai
-ai
+US
+Bz
+oI
+Rc
+Rc
+Rc
+KB
+Rc
+Rc
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+vB
+vB
+fX
+ab
 aa
 aa
 aa
@@ -35848,24 +37478,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
-ai
-ai
+mP
+Zy
+Rm
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+dg
+Bz
+US
 ak
 ao
 ao
@@ -35884,20 +37514,20 @@ ak
 ao
 ao
 aw
-ai
-ai
+US
+Bz
+oI
+Rc
+om
+Rc
+Mx
+Rc
+Rc
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+UM
+vB
+fX
+ab
 aa
 aa
 aa
@@ -36105,56 +37735,56 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
-ai
-ai
-ak
-ao
-ao
-aw
-ak
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-aw
-ak
-ao
-ao
-aw
-ai
-ai
+mP
+Zy
+Rm
 ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+xb
+oF
+iB
+ge
+xb
+oF
+ab
+Bz
+US
+ak
+ao
+ao
+aw
+aC
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+aN
+ak
+ao
+ao
+aw
+US
+Bz
+oI
+Rc
+oT
+vQ
+Mx
+Rc
+Rc
+ab
+vB
+vB
+fX
+ab
 aa
 aa
 aa
@@ -36362,29 +37992,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+mP
+Zy
+lW
+ab
 aa
 aa
 aa
 ab
-ai
-ai
+Pt
+Pt
+CJ
+Pt
+Pt
+Pt
+ab
+Bz
+Bz
 al
 ap
 ap
 ax
-aC
+hH
 ao
 ao
 ao
@@ -36393,25 +38023,25 @@ ao
 ao
 ao
 ao
-aN
+Gi
 aO
 ap
 ap
 aR
-ai
-ai
+Bz
+Bz
+oI
+OE
+ql
+Rc
+MZ
+Rc
+hq
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+UM
+vB
+Dv
+ab
 aa
 aa
 aa
@@ -36619,56 +38249,56 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
-ai
-ai
-ak
-ao
-ao
-aw
-aC
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-aN
-ak
-ao
-ao
-aw
-ai
-ai
+mP
+Zy
+WZ
 ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ej
+Pt
+Pt
+Pt
+Pt
+jb
+ab
+Bz
+US
+ak
+ao
+ao
+aw
+gf
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+bE
+ak
+ao
+ao
+aw
+US
+Bz
+oI
+Rc
+Rc
+Rc
+Rc
+Rc
+hq
+ab
+HV
+vB
+vB
+ab
 aa
 aa
 aa
@@ -36876,24 +38506,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
+mP
 ai
-ai
+Lt
+ab
+ab
+ab
+ab
+ab
+Rs
+Pt
+Ok
+Ok
+Pt
+ci
+Dj
+Bz
+US
 ak
 ao
 ao
@@ -36912,20 +38542,20 @@ ak
 ao
 ao
 aw
-ai
-ai
+US
+Bz
+gH
+kx
+uw
+DP
+uw
+Rc
+pl
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+pW
+vB
+HB
+ab
 aa
 aa
 aa
@@ -37133,56 +38763,56 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
+mP
 ai
 ai
-ak
-ao
-ao
-aw
-ak
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-ao
-aw
-ak
-ao
-ao
-aw
-ai
-ai
+OP
+ah
+ah
+NC
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ej
+Pt
+Pt
+Pt
+Pt
+vi
+ab
+Bz
+US
+ak
+ao
+ao
+aw
+mV
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+LV
+ak
+ao
+ao
+aw
+US
+Bz
+ab
+ab
+ab
+ab
+ab
+DE
+ab
+ab
+sj
+vB
+ig
+ab
 aa
 aa
 aa
@@ -37390,56 +39020,56 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
+mP
 ai
-ai
+ow
+ab
+ab
+ab
+bo
+ab
+Pt
+Pt
+Pt
+tp
+Pt
+Pt
+ab
+QS
+US
 ak
 ao
 ao
 aw
 aZ
 aF
-aF
+JG
 aJ
-aF
-aF
+Oc
+JG
 aJ
-aF
+Oc
 aF
 bb
 ak
 ao
 ao
 aw
-ai
-ai
+US
+ZI
 ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+vB
+vB
+vB
+vB
+vB
+ig
+ab
 aa
 aa
 aa
@@ -37647,56 +39277,56 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
+mP
 ai
-ai
+Rm
+ab
+ah
+ah
+it
+ab
+eT
+ue
+iB
+ge
+eT
+ue
+ab
+Qp
+Bz
 ak
 ao
 at
 au
-ai
-aG
-aG
-aG
-ai
-ai
-aG
-aG
-aG
-ai
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
 am
 aQ
 ao
 aw
-ai
-ai
+Bz
+Bz
 ab
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -37904,20 +39534,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+gg
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -37925,18 +39555,18 @@ ab
 am
 aq
 au
-ai
-ay
-az
-az
-az
-aL
-av
-az
-az
-az
-aH
-ai
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
 am
 aq
 au
@@ -37944,13 +39574,13 @@ ab
 ab
 ab
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
 aa
 aa
 aa
@@ -38168,46 +39798,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
 ab
 af
 ah
 ah
 ab
-ai
-ai
-av
+Bz
+Bz
+Bz
+Bz
 az
+SZ
+ed
+Bz
+Bz
+Bz
 az
-az
-az
-aL
-av
-az
-az
-az
-az
-aL
-ai
-ai
+SZ
+ed
+Bz
+Bz
+Bz
 ab
 ah
 ah
 aV
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -38425,46 +40055,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+uV
+dQ
+dQ
+dQ
+dQ
 ab
 ag
 ab
 ab
 ab
-ai
-ai
-ai
-aA
-az
-az
-az
-aL
-av
-az
-az
-az
-aK
-ai
-ai
-ai
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
+Bz
 ab
 ab
 ab
 aW
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -38682,46 +40312,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
 ab
-ac
+BO
 ah
 ah
-ai
-ai
-ai
-ai
-ai
-aA
-az
-aK
-ai
-ai
-aA
-az
-aK
-ai
-ai
-ai
-ai
-ai
+xM
+Bz
+Bz
+Bz
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Bz
+Bz
+Bz
+gG
 ah
 ah
-aS
+Ul
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dQ
+dQ
+dQ
+uV
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -38939,46 +40569,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+uX
+uX
+uX
+gH
+yp
 ab
 ab
 ab
 ab
-ai
-ai
-ai
-ai
-ai
-ai
-aD
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
+ab
+Bz
+Bz
+Uw
+Uw
+Uw
+kJ
+kJ
+Uw
+Uw
+kJ
+kJ
+Uw
+Uw
+Uw
+Bz
+Bz
 ab
 ab
 ab
 ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+yp
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -39196,46 +40826,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+uV
+uX
+uX
+gH
+ao
+ao
+ao
+ao
+ao
 ab
 ab
+Uw
+Uw
+Uw
+kJ
+Eq
+Yl
+Uw
+Uw
+Yl
+Eq
+kJ
+Uw
+Uw
+Uw
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -39453,46 +41083,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ab
+lv
+Uw
+Uw
+kJ
+Yl
+fT
+Uw
+Uw
+fT
+Yl
+kJ
+Uw
+Uw
+mR
+ab
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -39710,46 +41340,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ab
+ab
+Xb
+Uw
+kJ
+Yl
+fT
+Uw
+Uw
+fT
+Yl
+kJ
+Uw
+Xb
+ab
+ab
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -39967,46 +41597,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+uV
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ab
+PG
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+Uw
+PG
+ab
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -40224,46 +41854,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ab
+NK
+DW
+oE
+Su
+Uw
+Uw
+Uw
+Uw
+Su
+oE
+DW
+NK
+ab
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -40481,46 +42111,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ab
+ab
+gH
+gH
+ab
+qT
+qT
+qT
+qT
+ab
+gH
+gH
+ab
+ab
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -40738,46 +42368,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+bP
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+Gn
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -40995,46 +42625,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+uX
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+Fm
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+pI
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+uX
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -41252,46 +42882,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+yY
+FY
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+Jl
+AF
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+uV
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -41509,46 +43139,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+bP
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+Gn
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+uX
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -41766,46 +43396,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+Fm
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+fT
+pI
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -42023,46 +43653,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+yY
+CE
+hR
+MN
+vH
+hR
+MN
+vH
+hI
+AF
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -42280,46 +43910,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -42537,46 +44167,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -42794,46 +44424,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -43051,46 +44681,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+uX
+dQ
+Jy
 aa
 aa
 aa
@@ -43308,46 +44938,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -43565,46 +45195,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+uV
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -43822,46 +45452,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+ao
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -44079,46 +45709,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+gH
+yp
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+yp
+gH
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -44336,46 +45966,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uX
+uX
+Jy
 aa
 aa
 aa
@@ -44593,46 +46223,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uX
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uX
+uX
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uX
+uX
+Jy
 aa
 aa
 aa
@@ -44850,46 +46480,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+uX
+uX
+uV
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uV
+uX
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uX
+uV
+uV
+uX
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -45107,46 +46737,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+dQ
+dQ
+dQ
+dQ
+uV
+uX
+uX
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+uX
+dQ
+uX
+uV
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+dQ
+Jy
 aa
 aa
 aa
@@ -45364,46 +46994,46 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
 aa
 aa
 aa
