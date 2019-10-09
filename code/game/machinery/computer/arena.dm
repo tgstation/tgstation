@@ -121,9 +121,9 @@
 		return
 	var/turf/A = get_landmark_turf(ARENA_CORNER_A)
 	var/turf/B = get_landmark_turf(ARENA_CORNER_B)
-	var/wh = abs(A.x - B.x)
-	var/hz = abs(A.y - B.y)
-	if(M.width > (wh + 1) || M.height > (hz + 1)) // shouldn't include the point of origin
+	var/wh = abs(A.x - B.x) + 1
+	var/hz = abs(A.y - B.y) + 1
+	if(M.width > wh || M.height > hz)
 		to_chat(user,"<span class='warning'>Arena template is too big for the current arena!</span>")
 		return
 	loading = TRUE
@@ -276,7 +276,8 @@
 			D.open()
 
 /obj/machinery/computer/arena/Topic(href, href_list)
-	. = ..()
+	if(..())
+		return
 	var/mob/user = usr
 
 	if(!user.client.holder) // Should it require specific perm ?

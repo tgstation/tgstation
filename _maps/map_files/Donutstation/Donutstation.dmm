@@ -48250,10 +48250,10 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "sXg" = (
-/obj/structure/chair,
 /obj/item/radio/intercom{
 	pixel_y = 24
 	},
+/obj/machinery/medical_kiosk,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "sXl" = (
