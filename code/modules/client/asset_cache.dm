@@ -325,6 +325,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/size_id = sprite[SPR_SIZE]
 	return {"<span class="[name][size_id] [sprite_name]"></span>"}
 
+/datum/asset/spritesheet/proc/icon_class_name(sprite_name)
+	var/sprite = sprites[sprite_name]
+	if (!sprite)
+		return null
+	var/size_id = sprite[SPR_SIZE]
+	return {"[name][size_id] [sprite_name]"}
+
 #undef SPR_SIZE
 #undef SPR_IDX
 #undef SPRSZ_COUNT
