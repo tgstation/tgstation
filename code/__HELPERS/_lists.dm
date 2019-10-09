@@ -219,7 +219,7 @@
 	else
 		result = first ^ second
 	return result
-	
+
 //Picks a random element from a list based on a weighting system:
 //1. Adds up the total of weights for each element
 //2. Gets a number between 1 and that total
