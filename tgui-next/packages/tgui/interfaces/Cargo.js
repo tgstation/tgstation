@@ -14,7 +14,7 @@ export const Cargo = props => {
   const cartTotalAmount = cart
     .reduce((total, entry) => total + entry.cost, 0);
 
-  const cartButtons = (
+  const cartButtons = !data.requestonly && (
     <Fragment>
       <Box inline mx={1}>
         {cart.length === 0 && 'Cart is empty'}
@@ -23,13 +23,11 @@ export const Cargo = props => {
         {' '}
         {cartTotalAmount > 0 && `(${cartTotalAmount} cr)`}
       </Box>
-      {!data.requestonly && (
-        <Button
-          icon="times"
-          color="transparent"
-          content="Clear"
-          onClick={() => act(ref, 'clear')} />
-      )}
+      <Button
+        icon="times"
+        color="transparent"
+        content="Clear"
+        onClick={() => act(ref, 'clear')} />
     </Fragment>
   );
 
