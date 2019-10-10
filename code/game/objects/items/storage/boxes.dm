@@ -1127,11 +1127,11 @@
 		/obj/item/screwdriver = 1)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/box/material		//No uranium because radioactive
+/obj/item/storage/box/material
 	name = "box of materials"
 	illustration = "implant"
 
-/obj/item/storage/box/material/PopulateContents()
+/obj/item/storage/box/material/PopulateContents() 	//less uranium because radioactive
 	var/static/items_inside = list(
 		/obj/item/stack/sheet/metal/fifty=1,\
 		/obj/item/stack/sheet/glass/fifty=1,\
@@ -1145,6 +1145,7 @@
 		/obj/item/stack/sheet/mineral/gold=50,\
 		/obj/item/stack/sheet/mineral/silver=50,\
 		/obj/item/stack/sheet/mineral/plasma=50,\
+		/obj/item/stack/sheet/mineral/uranium=20,\
 		/obj/item/stack/sheet/mineral/diamond=50,\
 		/obj/item/stack/sheet/bluespace_crystal=50,\
 		/obj/item/stack/sheet/mineral/bananium=50,\
@@ -1161,6 +1162,7 @@
 /obj/item/storage/box/debugtools/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/flashlight/emp/debug=1,\
+		/obj/item/geiger_counter=1,\
 		/obj/item/pipe_dispenser=1,\
 		/obj/item/card/emag=1,\
 		/obj/item/card/id/syndicate/nuke_leader=1,\
