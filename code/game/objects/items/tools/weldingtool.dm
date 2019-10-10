@@ -102,15 +102,6 @@
 	qdel(src)
 
 /obj/item/weldingtool/attack(mob/living/carbon/human/H, mob/user)
-	if(isOn())
-		handle_fuel_and_temps(1, user)
-		
-		if(isliving(H))
-			var/mob/living/L = H
-			if(L.IgniteMob())
-				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
-				log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
-
 	if(!istype(H))
 		return ..()
 
@@ -127,20 +118,18 @@
 	else
 		return ..()
 
-/obj/item/weldingtool/attack_obj(obj/O, mob/living/user)
-	. = ..()
-	if(isOn())
-		handle_fuel_and_temps(1, user)
-
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
 	. = ..()
-	if(!proximity)
-		return
+	handle_mob_ignite(O, user, proximity)
 
 	if(!status && O.is_refillable())
 		reagents.trans_to(O, reagents.total_volume, transfered_by = user)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
 		update_icon()
+
+/obj/item/weldingtool/attack_qdeleted(atom/O, mob/user, proximity)
+	. = ..()
+	handle_mob_ignite(O, user, proximity)
 
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
@@ -151,6 +140,19 @@
 		set_light(light_intensity)
 
 	update_icon()
+
+/obj/item/weldingtool/proc/handle_mob_ignite(atom/O, mob/user, proximity)
+	if(!proximity)
+		return
+	
+	if(isOn())
+		handle_fuel_and_temps(1, user)
+		
+		if(!QDELETED(O) && isliving(O)) // can't ignite something that doesn't exist
+			var/mob/living/L = O
+			if(L.IgniteMob())
+				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
+				log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
 
 // Ah fuck, I can't believe you've done this
 /obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)
