@@ -156,6 +156,7 @@
 
 	var/location = get_step(src,(dir))
 	var/obj/item/I = new D.build_path(location)
+	I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
 	I.set_custom_materials(res_coef)
 	say("\The [I] is complete.")
 	being_built = null
@@ -249,7 +250,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, datum/material/resource, roundto = 1)
+/obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, var/datum/material/resource, roundto = 1)
 	return round(D.materials[resource]*component_coeff, roundto)
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
