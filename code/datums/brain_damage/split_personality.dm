@@ -56,7 +56,6 @@
 		switch_personalities()
 	QDEL_NULL(stranger_backseat)
 	QDEL_NULL(owner_backseat)
-	owner.RemoveSpell(/obj/effect/proc_holder/spell/targeted/personality_commune)
 	..()
 
 /datum/brain_trauma/severe/split_personality/proc/switch_personalities()
