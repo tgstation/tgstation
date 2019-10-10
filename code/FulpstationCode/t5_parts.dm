@@ -4,7 +4,7 @@
 	desc = "A capacitor engineered with a mix of bluespace and quantum technologies."
 	id = "quantumcap"
 	build_type = PROTOLATHE
-	custom_materials = list(/datum/material/iron =225, /datum/material/glass =180, /datum/material/gold =135, /datum/material/diamond = 90)
+	materials = list(/datum/material/iron =225, /datum/material/glass =180, /datum/material/gold =135, /datum/material/diamond = 90)
 	build_path = /obj/item/stock_parts/capacitor/quantumcap
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -15,7 +15,7 @@
 	desc = "A special scanning module using a mix of bluespace and quantum tech to scan even sub-atomic materials."
 	id = "quantumscan"
 	build_type = PROTOLATHE
-	custom_materials = list(/datum/material/iron= 225, /datum/material/glass = 180, /datum/material/diamond = 54, /datum/material/bluespace = 54)
+	materials = list(/datum/material/iron= 225, /datum/material/glass = 180, /datum/material/diamond = 54, /datum/material/bluespace = 54)
 	build_path = /obj/item/stock_parts/scanning_module/quantumscan
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -26,7 +26,7 @@
 	desc = "A strange, almost intangible manipulator that uses bluespace tech to manipulate and fold quantum states."
 	id = "quantummanip"
 	build_type = PROTOLATHE
-	custom_materials = list(/datum/material/iron= 180, /datum/material/diamond = 27, /datum/material/titanium = 27, /datum/material/uranium = 27)
+	materials = list(/datum/material/iron= 180, /datum/material/diamond = 27, /datum/material/titanium = 27, /datum/material/uranium = 27)
 	build_path = /obj/item/stock_parts/manipulator/quantummanip
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -37,7 +37,7 @@
 	desc = "A modified quadultra micro-laser designed to make use of newly discovered quantum tech."
 	id = "quantumlaser"
 	build_type = PROTOLATHE
-	custom_materials = list(/datum/material/iron= 180, /datum/material/glass = 180, /datum/material/uranium = 90, /datum/material/diamond = 90)
+	materials = list(/datum/material/iron= 180, /datum/material/glass = 180, /datum/material/uranium = 90, /datum/material/diamond = 90)
 	build_path = /obj/item/stock_parts/micro_laser/quantumlaser
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -48,7 +48,7 @@
 	desc = "A bluespace matter bin that makes use of entangled particles to store states of materials as energy."
 	id = "quantumbin"
 	build_type = PROTOLATHE
-	custom_materials = list(/datum/material/iron= 225, /datum/material/diamond = 90, /datum/material/bluespace = 135)
+	materials = list(/datum/material/iron= 225, /datum/material/diamond = 90, /datum/material/bluespace = 135)
 	build_path = /obj/item/stock_parts/matter_bin/quantumbin
 	category = list("Stock Parts")
 	lathe_time_factor = 0.2
@@ -59,7 +59,7 @@
 	desc = "A rechargeable, entangled power cell."
 	id = "quantumcell"
 	build_type = PROTOLATHE
-	custom_materials = list(/datum/material/iron = 1000, /datum/material/glass = 5500, /datum/material/plasma = 3500, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 5500, /datum/material/plasma = 3500, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/stock_parts/cell/quantum/empty
 	category = list("Power Designs")
 	lathe_time_factor = 0.2
@@ -70,7 +70,7 @@
 	desc = "A quantum entangled beaker, capable of holding a massive 400 units of any reagent."
 	id = "quantumbeaker"
 	build_type = PROTOLATHE
-	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1500, /datum/material/bluespace = 1500)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1500, /datum/material/bluespace = 1500)
 	build_path = /obj/item/reagent_containers/glass/beaker/quantum
 	category = list("Medical Designs")
 	lathe_time_factor = 0.2

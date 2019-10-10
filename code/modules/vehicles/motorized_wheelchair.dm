@@ -149,10 +149,10 @@
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away
 	if(M.density && speed > delay_multiplier && has_buckled_mobs())
 
-		//if(t5 >= 30) //FULP: If T5 is greater than 30, run that fucker over!
-		//	if(isliving(M))
-		//		RunOver(M)
-		//		return
+		if(t5 >= 30) //FULP: If T5 is greater than 30, run that fucker over!
+			if(isliving(M))
+				RunOver(M)
+				return
 		// If T5 (T5 identifier) is less than 30, execute as normal
 
 		var/mob/living/H = buckled_mobs[1]
