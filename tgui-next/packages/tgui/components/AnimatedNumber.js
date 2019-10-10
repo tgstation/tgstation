@@ -18,7 +18,7 @@ export class AnimatedNumber extends Component {
       value: 0,
     };
     // Use provided initial state
-    if (props.initial) {
+    if (isSafeNumber(props.initial)) {
       this.state.value = props.initial;
     }
     // Set initial state with value provided in props

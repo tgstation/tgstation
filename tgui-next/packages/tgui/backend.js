@@ -1,4 +1,5 @@
 import { UI_DISABLED, UI_INTERACTIVE } from './constants';
+import { tridentVersion } from './byond';
 
 /**
  * This file provides a clear separation layer between backend updates
@@ -27,6 +28,10 @@ export const backendReducer = (state, action) => {
     // Calculate our own fields
     const visible = payload.config.status !== UI_DISABLED;
     const interactive = payload.config.status === UI_INTERACTIVE;
+    // Override fancy setting for IE8
+    if (tridentVersion <= 4) {
+      payload.config.fancy = 0;
+    }
     // Merge new payload
     return {
       ...state,

@@ -36,6 +36,7 @@
   left: 0;
   right: 0;
   background-color: rgba(lighten($gray, 30%), 0.25);
+  pointer-events: none;
 }
 
 .Layout__toast {
