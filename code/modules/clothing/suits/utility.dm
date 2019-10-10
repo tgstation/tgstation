@@ -147,3 +147,14 @@
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
 	rad_flags = RAD_PROTECT_CONTENTS
+
+/obj/item/clothing/suit/radiation/noslow
+    slowdown = 0
+
+/obj/item/clothing/gloves/justyellowgloves
+    desc = "Just some yellow gloves."
+    name = "yellow gloves"
+    icon_state = "yellow"
+    item_state = "ygloves"
+    siemens_coefficient = 1         // just like having no gloves at all
+    permeability_coefficient = 1    // just like having no gloves at all
