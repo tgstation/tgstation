@@ -15,7 +15,7 @@
 //an incision but with greater bleed, and a 90% base success chance
 /datum/surgery_step/incise_heart
 	name = "incise heart"
-	implements = list(/obj/item/scalpel = 90, /obj/item/melee/transforming/energy/sword = 45, /obj/item/kitchen/knife = 45,
+	implements = list(TOOL_SCALPEL = 90, /obj/item/melee/transforming/energy/sword = 45, /obj/item/kitchen/knife = 45,
 		/obj/item/shard = 25)
 	time = 16
 

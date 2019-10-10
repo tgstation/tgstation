@@ -22,7 +22,7 @@ RLD
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(/datum/material/iron=100000)
+	custom_materials = list(/datum/material/iron=100000)
 	req_access_txt = "11"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
@@ -642,11 +642,11 @@ RLD
 	w_class = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(/datum/material/iron=12000, /datum/material/glass=8000)
+	custom_materials = list(/datum/material/iron=12000, /datum/material/glass=8000)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
-	materials = list(/datum/material/iron=48000, /datum/material/glass=32000)
+	custom_materials = list(/datum/material/iron=48000, /datum/material/glass=32000)
 	ammoamt = 160
 
 

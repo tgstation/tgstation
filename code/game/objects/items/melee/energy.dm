@@ -140,6 +140,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = IS_SHARP
 	light_color = "#40ceff"
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.7 //faster as a saw
 
 /obj/item/melee/transforming/energy/sword/cyborg/saw/cyborg_unequip(mob/user)
 	if(!active)

@@ -11,10 +11,10 @@
 	. = ..()
 	if(!ismovableatom(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/impact)
+	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/impact, override = TRUE)
 	if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/item_attack)
-		RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/item_attack_self)
+		RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/item_attack, override = TRUE)
+		RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/item_attack_self, override = TRUE)
 
 	if(amount) // If amount is not given we default to 1 and don't need to save it here
 		amount_by_owner[target] = amount
