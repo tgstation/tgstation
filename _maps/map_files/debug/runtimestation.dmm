@@ -307,11 +307,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 4;
-	network = list("Arena Main")
-	},
+/obj/machinery/arena_spawn/green,
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 1"
@@ -361,6 +357,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/arena_spawn/red,
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 1"
