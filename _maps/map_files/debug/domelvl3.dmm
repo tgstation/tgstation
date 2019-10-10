@@ -1332,6 +1332,16 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"qP" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "qT" = (
 /obj/machinery/door/firedoor,
 /turf/open/floor/carpet/red,
@@ -2383,6 +2393,12 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"Ro" = (
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "Rs" = (
 /obj/structure/rack,
 /obj/structure/fluff{
@@ -2605,6 +2621,12 @@
 	})
 "Xp" = (
 /turf/open/floor/carpet/royalblue,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Xv" = (
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/carpet/black,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -33413,7 +33435,7 @@ ao
 ao
 ab
 ab
-Uw
+Ro
 Uw
 Uw
 kJ
@@ -33669,7 +33691,7 @@ ab
 ab
 ab
 ab
-Bz
+Xv
 Bz
 Uw
 Uw
@@ -34191,7 +34213,7 @@ Bz
 Bz
 Bz
 Bz
-Bz
+Xv
 Bz
 Bz
 Bz
@@ -34971,7 +34993,7 @@ aj
 aP
 ao
 aw
-Bz
+Xv
 wx
 ab
 aa
@@ -36236,7 +36258,7 @@ YU
 YU
 Bz
 ab
-Bz
+Xv
 Bz
 al
 ap
@@ -37516,7 +37538,7 @@ mQ
 mQ
 mQ
 mQ
-mQ
+qP
 mQ
 mQ
 vl
@@ -38035,7 +38057,7 @@ ge
 xb
 oF
 ab
-Bz
+Xv
 US
 ak
 ao
@@ -39597,7 +39619,7 @@ am
 aQ
 ao
 aw
-Bz
+Xv
 Bz
 ab
 aa
@@ -40359,7 +40381,7 @@ Bz
 Bz
 Bz
 Bz
-Bz
+Xv
 Bz
 Bz
 Bz
@@ -40865,7 +40887,7 @@ ab
 ab
 ab
 ab
-Bz
+Xv
 Bz
 Uw
 Uw
@@ -41123,7 +41145,7 @@ ao
 ao
 ab
 ab
-Uw
+Ro
 Uw
 Uw
 kJ
