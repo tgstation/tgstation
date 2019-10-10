@@ -2594,6 +2594,7 @@
 #include "code\modules\projectiles\projectile\special\rocket.dm"
 #include "code\modules\projectiles\projectile\special\temperature.dm"
 #include "code\modules\projectiles\projectile\special\wormhole.dm"
+#include "code\modules\jobs\arenaoutfits.dm"
 #include "code\modules\reagents\chem_splash.dm"
 #include "code\modules\reagents\reagent_containers.dm"
 #include "code\modules\reagents\reagent_dispenser.dm"
