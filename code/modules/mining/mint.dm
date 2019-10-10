@@ -39,7 +39,9 @@
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/obj/item/stack/sheet/O in T)
-		materials.insert_item(O)
+		var/inserted = materials.insert_item(O)
+		if(inserted)
+			qdel(O)
 
 /obj/machinery/mineral/mint/attack_hand(mob/user)
 	. = ..()
