@@ -14,7 +14,8 @@
 	obj_damage = 40
 	melee_damage_lower = 12
 	melee_damage_upper = 12
-	attacktext = "slashes"
+	attack_verb_continuous = "slashes"
+	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	weather_immunities = list("lava")
 	movement_type = FLYING
@@ -52,14 +53,16 @@
 		maxHealth = 300
 		melee_damage_upper = 25
 		melee_damage_lower = 25
-		attacktext = "devastates"
+		attack_verb_continuous = "devastates"
+		attack_verb_simple = "devastate"
 		speed = -1
 		obj_damage = 100
 		max_shield_health = INFINITY
 	else if(GLOB.ratvar_approaches) //Hefty health bonus and slight attack damage increase
 		melee_damage_upper = 15
 		melee_damage_lower = 15
-		attacktext = "carves"
+		attack_verb_continuous = "carves"
+		attack_verb_simple = "carve"
 		obj_damage = 50
 		max_shield_health = 4
 
@@ -80,15 +83,15 @@
 				break
 	. = ..()
 
-/mob/living/simple_animal/hostile/clockwork/marauder/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hostile/clockwork/marauder/bullet_act(obj/projectile/P)
 	if(deflect_projectile(P))
 		return BULLET_ACT_BLOCK
 	return ..()
 
-/mob/living/simple_animal/hostile/clockwork/marauder/proc/deflect_projectile(obj/item/projectile/P)
+/mob/living/simple_animal/hostile/clockwork/marauder/proc/deflect_projectile(obj/projectile/P)
 	if(!shield_health)
 		return
-	var/energy_projectile = istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam)
+	var/energy_projectile = istype(P, /obj/projectile/energy) || istype(P, /obj/projectile/beam)
 	visible_message("<span class='danger'>[src] deflects [P] with [p_their()] shield!</span>", \
 	"<span class='danger'>You block [P] with your shield! <i>Blocks left:</i> <b>[shield_health - 1]</b></span>")
 	if(energy_projectile)

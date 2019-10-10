@@ -156,7 +156,8 @@
 
 	var/location = get_step(src,(dir))
 	var/obj/item/I = new D.build_path(location)
-	I.materials = res_coef
+	I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
+	I.set_custom_materials(res_coef)
 	say("\The [I] is complete.")
 	being_built = null
 
@@ -401,7 +402,7 @@
 	materials.retrieve_all()
 	..()
 
-/obj/machinery/mecha_part_fabricator/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
+/obj/machinery/mecha_part_fabricator/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
 	var/datum/material/M = id_inserted
 	add_overlay("fab-load-[M.name]")
 	addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[M.name]"), 10)
