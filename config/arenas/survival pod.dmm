@@ -1,0 +1,295 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/black,
+/turf/open/floor/pod,
+/area/tdome/arena)
+"b" = (
+/turf/open/floor/pod/light,
+/area/tdome/arena)
+"c" = (
+/obj/structure/displaycase{
+	alert = 0;
+	desc = "A display case containing an expensive forgery, probably.";
+	pixel_y = 0;
+	req_access_txt = "48";
+	start_showpiece_type = /obj/item/fakeartefact
+	},
+/turf/open/floor/pod/light,
+/area/tdome/arena)
+"d" = (
+/turf/closed/wall/mineral/titanium/survival/pod{
+	opacity = 0
+	},
+/area/tdome/arena)
+"e" = (
+/obj/structure/sign/mining/survival{
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium/survival/pod{
+	opacity = 0
+	},
+/area/tdome/arena)
+"f" = (
+/turf/open/floor/carpet/black,
+/area/tdome/arena)
+"g" = (
+/turf/open/floor/pod,
+/area/tdome/arena)
+"h" = (
+/obj/structure/fans,
+/turf/open/floor/pod,
+/area/tdome/arena)
+"i" = (
+/obj/machinery/smartfridge/survival_pod,
+/turf/open/floor/pod,
+/area/tdome/arena)
+"j" = (
+/obj/item/gps/computer,
+/turf/open/floor/pod,
+/area/tdome/arena)
+"k" = (
+/turf/open/floor/pod/dark,
+/area/tdome/arena)
+"l" = (
+/obj/structure/sign/mining/survival{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium/survival/pod{
+	opacity = 0
+	},
+/area/tdome/arena)
+"m" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/turf/open/floor/carpet/black,
+/area/tdome/arena)
+"n" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/black,
+/obj/item/cardboard_cutout{
+	desc = "A cardboard cutout of a xenomorph maid.";
+	icon_state = "cutout_lusty";
+	name = "lusty xenomorph maid"
+	},
+/turf/open/floor/pod,
+/area/tdome/arena)
+"o" = (
+/obj/structure/sign/mining/survival{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/survival/pod{
+	opacity = 0
+	},
+/area/tdome/arena)
+"p" = (
+/obj/structure/table/survival_pod,
+/turf/open/floor/pod,
+/area/tdome/arena)
+"q" = (
+/obj/structure/tubes,
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/pod,
+/area/tdome/arena)
+"r" = (
+/obj/structure/sign/mining/survival,
+/turf/closed/wall/mineral/titanium/survival/pod{
+	opacity = 0
+	},
+/area/tdome/arena)
+"s" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/survival_pod/glass,
+/turf/open/floor/pod,
+/area/tdome/arena)
+"t" = (
+/obj/structure/sign/mining,
+/turf/closed/wall/mineral/titanium/survival/pod{
+	opacity = 0
+	},
+/area/tdome/arena)
+"u" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/pod,
+/area/tdome/arena)
+"v" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/effect/spawner/lootdrop/three_course_meal,
+/turf/open/floor/carpet/black,
+/area/tdome/arena)
+"w" = (
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/turf/open/floor/pod,
+/area/tdome/arena)
+"x" = (
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/pod/light,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+f
+f
+f
+f
+f
+f
+a
+"}
+(2,1,1) = {"
+b
+b
+f
+f
+f
+f
+b
+b
+"}
+(3,1,1) = {"
+b
+g
+g
+g
+g
+g
+g
+b
+"}
+(4,1,1) = {"
+b
+g
+k
+k
+k
+k
+g
+b
+"}
+(5,1,1) = {"
+c
+g
+k
+g
+g
+k
+g
+b
+"}
+(6,1,1) = {"
+d
+d
+l
+d
+d
+k
+u
+b
+"}
+(7,1,1) = {"
+d
+h
+m
+p
+r
+f
+v
+x
+"}
+(8,1,1) = {"
+e
+i
+g
+g
+s
+f
+f
+f
+"}
+(9,1,1) = {"
+d
+j
+n
+q
+t
+f
+v
+x
+"}
+(10,1,1) = {"
+d
+d
+o
+d
+d
+k
+w
+b
+"}
+(11,1,1) = {"
+c
+g
+k
+g
+g
+k
+g
+b
+"}
+(12,1,1) = {"
+b
+g
+k
+k
+k
+k
+g
+b
+"}
+(13,1,1) = {"
+b
+g
+g
+g
+g
+g
+g
+b
+"}
+(14,1,1) = {"
+b
+b
+f
+f
+f
+f
+b
+b
+"}
+(15,1,1) = {"
+a
+f
+f
+f
+f
+f
+f
+a
+"}

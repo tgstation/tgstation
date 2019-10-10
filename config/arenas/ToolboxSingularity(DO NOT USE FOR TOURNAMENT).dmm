@@ -1,0 +1,805 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/closed/indestructible/riveted,
+/area/ruin/powered/beach)
+"ab" = (
+/turf/closed/indestructible/fakeglass,
+/area/ruin/powered/beach)
+"ac" = (
+/obj/singularity/academy,
+/turf/open/space,
+/area/ruin/powered/beach)
+"ad" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"ae" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"af" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"ag" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"ah" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"ai" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aj" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"ak" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"al" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"am" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/anim,
+/area/ruin/powered/beach)
+"an" = (
+/obj/machinery/door/poddoor/ert,
+/turf/open/floor/plating,
+/area/ruin/powered/beach)
+"ao" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"ap" = (
+/obj/effect/turf_decal/box/corners,
+/obj/structure/fans/tiny,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"aq" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"ar" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"as" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"at" = (
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/anim,
+/area/ruin/powered/beach)
+"au" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"av" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aw" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"ax" = (
+/turf/open/floor/circuit/red/anim,
+/area/ruin/powered/beach)
+"ay" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"az" = (
+/obj/effect/turf_decal/box/corners{
+	icon_state = "box_corners";
+	dir = 8
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/circuit/red/anim,
+/area/ruin/powered/beach)
+"aA" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/anim,
+/area/ruin/powered/beach)
+"aB" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aC" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aD" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aE" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aF" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aG" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aH" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aI" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aJ" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aK" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aL" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aM" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aN" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aO" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aP" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aQ" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aR" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aS" = (
+/obj/effect/turf_decal/box/corners{
+	icon_state = "box_corners";
+	dir = 1
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"aT" = (
+/obj/effect/turf_decal/box/corners{
+	icon_state = "box_corners";
+	dir = 4
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"aU" = (
+/obj/effect/turf_decal/box/corners{
+	icon_state = "box_corners";
+	dir = 8
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"aV" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aW" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aX" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aY" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"aZ" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"ba" = (
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"bb" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"bc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"bd" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	icon_state = "trimline_fill";
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"be" = (
+/obj/effect/turf_decal/loading_area,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/anim,
+/area/ruin/powered/beach)
+"bf" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"bg" = (
+/obj/effect/turf_decal/box/corners{
+	icon_state = "box_corners";
+	dir = 4
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/circuit/red/anim,
+/area/ruin/powered/beach)
+"bh" = (
+/obj/effect/turf_decal/loading_area,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"bi" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/anim,
+/area/ruin/powered/beach)
+"bj" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"bk" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+"bl" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"bm" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"bn" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plasteel/dark,
+/area/ruin/powered/beach)
+"bo" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/circuit/red/off,
+/area/ruin/powered/beach)
+
+(1,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+aa
+aa
+"}
+(2,1,1) = {"
+ab
+ac
+ao
+au
+aE
+aE
+aN
+be
+ac
+ab
+"}
+(3,1,1) = {"
+ab
+ad
+ap
+av
+aF
+aF
+aO
+bg
+bi
+ab
+"}
+(4,1,1) = {"
+ab
+ae
+aq
+aw
+aF
+aF
+aP
+aq
+aY
+ab
+"}
+(5,1,1) = {"
+ab
+af
+as
+aB
+aG
+aG
+aX
+as
+bj
+ab
+"}
+(6,1,1) = {"
+ab
+ag
+ac
+at
+ax
+ax
+at
+ac
+bk
+ab
+"}
+(7,1,1) = {"
+ab
+ah
+at
+aI
+aH
+aH
+aZ
+at
+bl
+ab
+"}
+(8,1,1) = {"
+ab
+ai
+ax
+aJ
+aS
+aU
+ba
+ax
+bc
+ab
+"}
+(9,1,1) = {"
+ab
+ai
+ax
+aJ
+ac
+ac
+ba
+ax
+bc
+ab
+"}
+(10,1,1) = {"
+ab
+ai
+ax
+aJ
+aT
+ap
+ba
+ax
+bc
+ab
+"}
+(11,1,1) = {"
+ab
+aj
+at
+aQ
+aK
+aK
+bb
+at
+bm
+ab
+"}
+(12,1,1) = {"
+ab
+ag
+ac
+at
+ax
+ax
+at
+ac
+bk
+ab
+"}
+(13,1,1) = {"
+ab
+ak
+ay
+aR
+aL
+aL
+bd
+ay
+bn
+ab
+"}
+(14,1,1) = {"
+ab
+al
+ar
+aC
+aF
+aF
+aV
+ar
+bf
+ab
+"}
+(15,1,1) = {"
+ab
+am
+az
+av
+aF
+aF
+aO
+aS
+bo
+ab
+"}
+(16,1,1) = {"
+ab
+ac
+aA
+aD
+aM
+aM
+aW
+bh
+ac
+ab
+"}
+(17,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+aa
+aa
+"}

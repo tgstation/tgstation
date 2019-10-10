@@ -228,11 +228,6 @@
 	dir = 1
 	},
 /area/tdome/arena)
-"L" = (
-/turf/open/floor/plasteel/yellowsiding{
-	dir = 1
-	},
-/area/tdome/arena)
 "M" = (
 /obj/structure/table,
 /obj/item/trash/can/food,
@@ -250,8 +245,37 @@
 	dir = 1
 	},
 /area/tdome/arena)
-"O" = (
-/turf/open/floor/plasteel/yellowsiding,
+"Q" = (
+/obj/effect/turf_decal/stripes/red/line,
+/obj/item/reagent_containers/food/snacks/deadmouse,
+/turf/open/floor/plasteel/telecomms,
+/area/tdome/arena)
+"T" = (
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 1
+	},
+/obj/item/reagent_containers/food/snacks/deadmouse,
+/turf/open/floor/plasteel/telecomms,
+/area/tdome/arena)
+"V" = (
+/obj/item/reagent_containers/food/snacks/deadmouse,
+/turf/open/floor/plasteel/telecomms,
+/area/tdome/arena)
+"W" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/burger/human,
+/turf/open/floor/plasteel/yellowsiding{
+	dir = 1
+	},
+/area/tdome/arena)
+"Y" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/telecomms,
+/area/tdome/arena)
+"Z" = (
+/obj/item/reagent_containers/food/snacks/burger/human,
+/turf/open/floor/plasteel/telecomms,
 /area/tdome/arena)
 
 (1,1,1) = {"
@@ -267,7 +291,7 @@ G
 (2,1,1) = {"
 b
 l
-r
+x
 r
 x
 x
@@ -277,7 +301,7 @@ H
 (3,1,1) = {"
 c
 m
-s
+Z
 s
 y
 s
@@ -285,16 +309,6 @@ D
 I
 "}
 (4,1,1) = {"
-O
-n
-s
-s
-s
-s
-D
-L
-"}
-(5,1,1) = {"
 d
 n
 s
@@ -304,7 +318,7 @@ s
 D
 J
 "}
-(6,1,1) = {"
+(5,1,1) = {"
 e
 m
 s
@@ -312,39 +326,59 @@ s
 s
 s
 E
-K
+M
 "}
-(7,1,1) = {"
+(6,1,1) = {"
 f
 m
-s
 t
 s
+Z
 s
 D
 I
 "}
-(8,1,1) = {"
+(7,1,1) = {"
 g
 m
-s
 u
-z
-s
-D
-L
-"}
-(9,1,1) = {"
-f
-m
-s
-t
+B
 s
 s
 D
 J
 "}
+(8,1,1) = {"
+e
+m
+Y
+s
+z
+s
+D
+K
+"}
+(9,1,1) = {"
+f
+T
+Y
+s
+s
+s
+Q
+I
+"}
 (10,1,1) = {"
+f
+m
+t
+s
+s
+B
+D
+J
+"}
+(11,1,1) = {"
 h
 m
 s
@@ -354,30 +388,20 @@ s
 D
 M
 "}
-(11,1,1) = {"
+(12,1,1) = {"
 c
 o
+B
 s
-s
-s
+V
 s
 D
 I
 "}
-(12,1,1) = {"
-O
-n
-s
-s
-s
-s
-D
-L
-"}
 (13,1,1) = {"
 d
 m
-B
+s
 s
 y
 B
@@ -392,7 +416,7 @@ v
 A
 A
 F
-K
+W
 "}
 (15,1,1) = {"
 j
@@ -400,7 +424,7 @@ q
 w
 w
 w
-w
+q
 w
 N
 "}

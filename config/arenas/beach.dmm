@@ -1,0 +1,339 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"b" = (
+/mob/living/simple_animal/crab{
+	desc = "FUCK YEAH AMERICA";
+	name = "american crab"
+	},
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"c" = (
+/obj/item/reagent_containers/glass/beaker/instabitaluri{
+	list_reagents = list(/datum/reagent/consumable/cooking_oil = 50)
+	},
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"d" = (
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"e" = (
+/obj/structure/mineral_door/wood{
+	name = "bar";
+	opacity = 0
+	},
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"f" = (
+/turf/open/floor/wood,
+/area/tdome/arena)
+"g" = (
+/obj/structure/chair/wood,
+/mob/living/simple_animal/parrot,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"h" = (
+/obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"i" = (
+/obj/structure/chair/stool,
+/mob/living/simple_animal/crab{
+	desc = "He just wants to grill for God's sake!";
+	name = "boomer crab"
+	},
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"j" = (
+/obj/machinery/grill,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"k" = (
+/obj/item/reagent_containers/food/snacks/meat/crab,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"l" = (
+/obj/item/reagent_containers/food/snacks/burger/crab,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"m" = (
+/turf/closed/wall/mineral/sandstone{
+	opacity = 0
+	},
+/area/tdome/arena)
+"n" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"o" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"p" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/tequila,
+/turf/open/floor/wood,
+/area/tdome/arena)
+"q" = (
+/obj/item/reagent_containers/food/snacks/crab_rangoon,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"r" = (
+/obj/effect/overlay/coconut,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"s" = (
+/obj/structure/flora/tree/palm,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"t" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"u" = (
+/obj/structure/flora/tree/palm,
+/obj/effect/overlay/coconut,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"v" = (
+/obj/item/clothing/mask/gas/tiki_mask,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"w" = (
+/obj/structure/bonfire,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"x" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"y" = (
+/obj/item/clothing/head/collectable/paper,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"z" = (
+/obj/item/toy/seashell,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"A" = (
+/turf/open/floor/plating/beach/coastline_t,
+/area/tdome/arena)
+"B" = (
+/turf/open/floor/plating/beach/coastline_t/sandwater_inner{
+	dir = 8
+	},
+/area/tdome/arena)
+"C" = (
+/obj/structure/fluff/beach_umbrella,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"D" = (
+/obj/structure/chair/comfy/shuttle,
+/mob/living/simple_animal/crab,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"E" = (
+/obj/item/toy/beach_ball,
+/turf/open/floor/plating/beach/sand,
+/area/tdome/arena)
+"F" = (
+/turf/open/floor/plating/beach/coastline_t/sandwater_inner,
+/area/tdome/arena)
+"G" = (
+/turf/open/floor/plating/beach/coastline_b{
+	dir = 5
+	},
+/area/tdome/arena)
+"H" = (
+/turf/open/floor/plating/beach/coastline_t{
+	dir = 10
+	},
+/area/tdome/arena)
+"I" = (
+/turf/open/floor/plating/beach/coastline_t{
+	dir = 6
+	},
+/area/tdome/arena)
+"J" = (
+/turf/open/floor/plating/beach/coastline_b{
+	dir = 9
+	},
+/area/tdome/arena)
+"K" = (
+/turf/open/floor/plating/beach/water{
+	desc = "What's the difference?";
+	name = "coastline water"
+	},
+/area/tdome/arena)
+"L" = (
+/turf/open/floor/holofloor/beach/coast_b,
+/area/tdome/arena)
+"M" = (
+/obj/structure/flora/rock{
+	desc = "A volcanic rock.";
+	name = "coastal rock"
+	},
+/obj/structure/flora/ausbushes/stalkybush{
+	desc = "It can't be smoked.";
+	name = "sea weed"
+	},
+/turf/open/floor/plating/beach/water,
+/area/tdome/arena)
+"N" = (
+/turf/open/floor/plating/beach/water,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+k
+d
+d
+A
+G
+K
+M
+"}
+(2,1,1) = {"
+b
+l
+d
+d
+B
+H
+L
+N
+"}
+(3,1,1) = {"
+c
+d
+r
+d
+d
+A
+L
+N
+"}
+(4,1,1) = {"
+d
+d
+s
+d
+C
+A
+L
+N
+"}
+(5,1,1) = {"
+d
+d
+d
+d
+D
+A
+L
+N
+"}
+(6,1,1) = {"
+e
+m
+d
+d
+E
+A
+L
+N
+"}
+(7,1,1) = {"
+f
+n
+t
+v
+d
+A
+L
+N
+"}
+(8,1,1) = {"
+g
+o
+t
+w
+d
+A
+L
+N
+"}
+(9,1,1) = {"
+f
+p
+t
+x
+d
+A
+L
+N
+"}
+(10,1,1) = {"
+e
+m
+d
+d
+z
+A
+L
+N
+"}
+(11,1,1) = {"
+d
+d
+d
+d
+d
+A
+L
+N
+"}
+(12,1,1) = {"
+d
+d
+d
+y
+d
+A
+L
+N
+"}
+(13,1,1) = {"
+h
+d
+u
+d
+z
+A
+L
+N
+"}
+(14,1,1) = {"
+i
+q
+d
+d
+F
+I
+L
+N
+"}
+(15,1,1) = {"
+j
+k
+d
+z
+A
+J
+K
+M
+"}

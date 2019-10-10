@@ -8,14 +8,14 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "b" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "c" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -23,7 +23,7 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "d" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -35,7 +35,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "e" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -44,7 +44,7 @@
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks,
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "f" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -52,7 +52,7 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "g" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -67,7 +67,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "h" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -79,7 +79,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "i" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -88,7 +88,7 @@
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks/beer,
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "j" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -96,7 +96,7 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "k" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -107,7 +107,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "l" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -118,7 +118,7 @@
 	icon_state = "warningline"
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "m" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -127,7 +127,7 @@
 /obj/structure/table/reinforced,
 /obj/item/lighter,
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "n" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -135,7 +135,7 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "o" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -143,7 +143,7 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/structure/chair,
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "p" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -157,7 +157,7 @@
 	pixel_x = -3
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "q" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -167,7 +167,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "r" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -177,7 +177,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "s" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -187,7 +187,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "t" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -197,7 +197,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 "u" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -207,7 +207,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/tdome/arena)
+/area/space)
 
 (1,1,1) = {"
 a

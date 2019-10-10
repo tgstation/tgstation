@@ -1,0 +1,242 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/fakespace,
+/area/tdome/arena)
+"b" = (
+/obj/structure/lattice{
+	layer = 2.9
+	},
+/turf/open/floor/fakespace,
+/area/tdome/arena)
+"c" = (
+/obj/machinery/power/tracker,
+/obj/structure/cable,
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/tdome/arena)
+"d" = (
+/obj/item/stack/rods,
+/turf/open/floor/fakespace,
+/area/tdome/arena)
+"e" = (
+/obj/machinery/power/solar{
+	id = "portsolar";
+	name = "Port Solar Array"
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/airless/solarpanel,
+/area/tdome/arena)
+"f" = (
+/obj/structure/lattice/catwalk{
+	layer = 2.9
+	},
+/obj/structure/cable{
+	layer = 3;
+	level = 2
+	},
+/obj/item/screwdriver,
+/turf/open/floor/fakespace,
+/area/tdome/arena)
+"g" = (
+/obj/structure/lattice/catwalk{
+	layer = 2.9
+	},
+/obj/structure/cable{
+	layer = 3;
+	level = 2
+	},
+/turf/open/floor/fakespace,
+/area/tdome/arena)
+"h" = (
+/obj/structure/lattice/catwalk{
+	layer = 2.9
+	},
+/obj/structure/cable{
+	layer = 3;
+	level = 2
+	},
+/obj/item/clothing/suit/space/fragile{
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/item/clothing/head/helmet/space/fragile{
+	pixel_y = 10
+	},
+/turf/open/floor/fakespace,
+/area/tdome/arena)
+"i" = (
+/obj/structure/lattice/catwalk{
+	layer = 2.9
+	},
+/obj/structure/cable{
+	layer = 3;
+	level = 2
+	},
+/obj/item/stack/cable_coil,
+/turf/open/floor/fakespace,
+/area/tdome/arena)
+"j" = (
+/obj/item/crowbar,
+/turf/open/floor/fakespace,
+/area/tdome/arena)
+"k" = (
+/obj/structure/lattice/catwalk{
+	layer = 2.9
+	},
+/obj/structure/cable{
+	layer = 3;
+	level = 2
+	},
+/obj/item/wrench,
+/turf/open/floor/fakespace,
+/area/tdome/arena)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+d
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+b
+a
+a
+a
+b
+a
+"}
+(4,1,1) = {"
+a
+e
+g
+e
+a
+e
+g
+e
+"}
+(5,1,1) = {"
+a
+e
+g
+e
+a
+e
+g
+e
+"}
+(6,1,1) = {"
+a
+e
+g
+e
+a
+e
+g
+e
+"}
+(7,1,1) = {"
+b
+a
+g
+a
+d
+a
+k
+a
+"}
+(8,1,1) = {"
+c
+f
+h
+g
+i
+g
+g
+g
+"}
+(9,1,1) = {"
+b
+a
+g
+a
+a
+j
+g
+a
+"}
+(10,1,1) = {"
+a
+e
+g
+e
+a
+e
+g
+e
+"}
+(11,1,1) = {"
+a
+e
+g
+e
+a
+e
+g
+e
+"}
+(12,1,1) = {"
+a
+e
+g
+e
+a
+e
+g
+e
+"}
+(13,1,1) = {"
+a
+d
+b
+a
+a
+a
+b
+d
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}

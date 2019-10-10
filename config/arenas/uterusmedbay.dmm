@@ -1,0 +1,259 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"b" = (
+/obj/item/reagent_containers/glass/bottle,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"c" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"d" = (
+/obj/structure/table,
+/obj/item/reagent_containers/glass/beaker,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"e" = (
+/obj/structure/table,
+/obj/item/clipboard,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"f" = (
+/obj/structure/table,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"g" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/emergency/old,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"h" = (
+/obj/structure/table,
+/obj/item/assembly/health,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"i" = (
+/obj/structure/table,
+/obj/item/reagent_containers/syringe,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"j" = (
+/obj/item/circuitboard/machine/thermomachine/heater,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"k" = (
+/obj/item/circuitboard/machine/cryo_tube,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"l" = (
+/obj/structure/window{
+	dir = 4
+	},
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"m" = (
+/obj/structure/chair/old{
+	dir = 1
+	},
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"n" = (
+/obj/structure/showcase/machinery/oldpod/used{
+	dir = 4;
+	step_y = 0
+	},
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"o" = (
+/obj/structure/chair/old{
+	dir = 8
+	},
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"p" = (
+/obj/item/storage/toolbox/emergency/old,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"q" = (
+/obj/structure/window{
+	dir = 4
+	},
+/obj/structure/window{
+	dir = 8
+	},
+/obj/structure/window,
+/obj/structure/window{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/retaliate/spaceman,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"r" = (
+/obj/machinery/portable_atmospherics/canister{
+	anchored = 1
+	},
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"s" = (
+/obj/structure/showcase/machinery/oldpod/used{
+	dir = 4
+	},
+/turf/open/floor/oldshuttle,
+/area/tdome)
+"t" = (
+/obj/structure/bed,
+/turf/open/floor/oldshuttle,
+/area/tdome)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+n
+a
+a
+n
+a
+s
+"}
+(3,1,1) = {"
+b
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+b
+j
+a
+a
+p
+a
+a
+a
+"}
+(5,1,1) = {"
+b
+k
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+c
+l
+c
+a
+a
+l
+l
+c
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+q
+t
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+t
+"}
+(9,1,1) = {"
+d
+a
+a
+a
+a
+a
+a
+t
+"}
+(10,1,1) = {"
+e
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+f
+a
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+g
+m
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+h
+a
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+f
+a
+a
+a
+a
+p
+a
+a
+"}
+(15,1,1) = {"
+i
+a
+o
+o
+o
+a
+r
+a
+"}

@@ -3,7 +3,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/tdome/arena)
 "b" = (
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/plastitanium,
 /turf/open/floor/mineral/plastitanium/red,
 /area/tdome/arena)
 "c" = (
@@ -18,17 +18,12 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/tdome/arena)
 "f" = (
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/plastitanium,
 /turf/open/floor/mineral/titanium/blue,
 /area/tdome/arena)
 "g" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/mineral/plastitanium,
-/area/tdome/arena)
-"h" = (
-/obj/structure/window/plasma/reinforced/plastitanium,
-/obj/machinery/power/apc,
-/turf/open/floor/mineral/titanium/blue,
 /area/tdome/arena)
 "i" = (
 /obj/item/crowbar,
@@ -36,6 +31,14 @@
 /area/tdome/arena)
 "j" = (
 /obj/structure/closet/lasertag/blue,
+/turf/open/floor/mineral/titanium/blue,
+/area/tdome/arena)
+"o" = (
+/obj/item/banner/security,
+/turf/open/floor/mineral/plastitanium/red,
+/area/tdome/arena)
+"x" = (
+/obj/item/banner/command,
 /turf/open/floor/mineral/titanium/blue,
 /area/tdome/arena)
 
@@ -47,7 +50,7 @@ a
 a
 a
 a
-a
+i
 "}
 (2,1,1) = {"
 a
@@ -57,7 +60,7 @@ a
 a
 a
 a
-i
+a
 "}
 (3,1,1) = {"
 a
@@ -70,14 +73,14 @@ a
 a
 "}
 (4,1,1) = {"
+x
 a
 a
 a
 a
 a
 a
-a
-a
+x
 "}
 (5,1,1) = {"
 a
@@ -116,12 +119,12 @@ f
 b
 g
 b
-h
+f
 b
 "}
 (9,1,1) = {"
-d
 c
+d
 d
 d
 d
@@ -150,14 +153,14 @@ d
 d
 "}
 (12,1,1) = {"
+o
 d
 d
 d
 d
 d
 d
-d
-d
+o
 "}
 (13,1,1) = {"
 d
@@ -171,7 +174,7 @@ d
 "}
 (14,1,1) = {"
 d
-e
+d
 d
 d
 d
@@ -180,7 +183,7 @@ d
 d
 "}
 (15,1,1) = {"
-d
+e
 d
 d
 d
