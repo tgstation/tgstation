@@ -502,7 +502,7 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return (mobility_flags & MOBILITY_USE)
 
-/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
+/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, penetrate_thick = 0)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_selected
@@ -835,7 +835,7 @@
 	if(href_list[VV_HK_MOD_MUTATIONS])
 		if(!check_rights(R_SPAWN))
 			return
-		
+
 		var/list/options = list("Clear"="Clear")
 		for(var/x in subtypesof(/datum/mutation/human))
 			var/datum/mutation/human/mut = x
@@ -1159,7 +1159,7 @@
 
 /mob/living/carbon/human/species/golem/durathread
 	race = /datum/species/golem/durathread
-	
+
 /mob/living/carbon/human/species/golem/snow
 	race = /datum/species/golem/snow
 
