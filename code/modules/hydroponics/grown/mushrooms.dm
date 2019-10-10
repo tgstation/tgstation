@@ -30,6 +30,30 @@
 	icon_state = "reishi"
 	filling_color = "#FF4500"
 
+<<<<<<< HEAD
+=======
+// Hikarishi
+/obj/item/seeds/reishi/hikarishi //its an incredibly clever japanese pun
+	name = "pack of hikarishi mycelium"
+	desc = "This mycelium grows into something medicinal and luminescent."
+	icon_state = "mycelium-hikarishi"
+	species = "hikarishi"
+	plantname = "Hikarishi"
+	product = /obj/item/reagent_containers/food/snacks/grown/mushroom/reishi/hikarishi
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	icon_grow = "reishi-grow"
+	icon_dead = "reishi-dead"
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/glow/orange)
+
+/obj/item/reagent_containers/food/snacks/grown/mushroom/reishi/hikarishi
+	seed = /obj/item/seeds/reishi/hikarishi
+	name = "hikarishi"
+	desc = "<I>Ganoderma luminescum</I>: A special fungus known for its medicinal and stress relieving properties, enhanced to provide a calming light."
+	icon_state = "hikarishi"
+	filling_color = "#FF9900"
+
+
+>>>>>>> bioluminescence
 
 // Fly Amanita
 /obj/item/seeds/amanita

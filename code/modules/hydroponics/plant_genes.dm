@@ -310,6 +310,14 @@
 	name = "Red Bioluminescence"
 	glow_color = "#FF3333"
 
+<<<<<<< HEAD
+=======
+/datum/plant_gene/trait/glow/orange
+	//These could maybe be a single gene that inherits the hex code, but tbh im not good at coding
+	name = "Orange Bioluminescence"
+	glow_color = "#FFA64D"
+
+>>>>>>> bioluminescence
 /datum/plant_gene/trait/glow/yellow
 	//not the disgusting glowshroom yellow hopefully
 	name = "Yellow Bioluminescence"
@@ -333,7 +341,11 @@
 /datum/plant_gene/trait/glow/pink
 	//gay tide station pride
 	name = "Pink Bioluminescence"
+<<<<<<< HEAD
 	glow_color = "#FFB3DA"
+=======
+	glow_color = "#FF80FF"
+>>>>>>> bioluminescence
 
 
 
