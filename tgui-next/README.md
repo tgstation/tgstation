@@ -52,18 +52,23 @@ either `Open command window here` or `Open PowerShell window here`.
 
 Run `npm install`, then:
 
-- `npm run build` - build the project in production mode (this is what
-you must do before committing your code).
+- `npm run build` - build the project in production mode.
 - `npm run watch` - launch a development server.
 - `npm run lint` - show and fix potential problems with the code.
 - `npm run analyze` - run a bundle analyzer.
 
-For MSys2 or Linux/Mac users:
+For MSys2, WSL, Linux or macOS users:
 
-- `./build.sh` - build the project in production mode.
-- `./build.sh --dev` - launch a development server.
-- `./build.sh --lint` - show and fix potential problems the with code.
-- `./build.sh --analyze` - run a bundle analyzer.
+- `bin/tgui` - build the project in production mode.
+- `bin/tgui --dev` - launch a development server.
+- `bin/tgui --lint` - show and fix potential problems the with code.
+- `bin/tgui --analyze` - run a bundle analyzer.
+- `bin/tgui --clean` - clean up project repo.
+
+For absolute brainlets, we also got a batch file in store. Double click
+it to build the project:
+
+- `bin/tgui-build.bat` - build the project in production mode.
 
 Remember to always run a full build before submitting a PR. It creates
 a compressed javascript bundle which is then referenced from DM code.
@@ -118,6 +123,20 @@ please note, that most of these components inherit from other basic
 components, such as `Box`. This component in particular provides a lot
 of styling options for all components, e.g. `color` and `opacity`, thus
 it is used a lot in this framework.
+
+### `AnimatedNumber`
+
+This component provides animations for numeric values.
+
+Props:
+
+- `value: number` - Value to animate.
+- `initial: number` (optional) - Initial value to use in animation when
+element first appears. If you set initial to `0` for example, number
+will always animate starting from `0`, and if omitted, it will not play an
+initial animation.
+- `format: function` (optional) - Output formatter.
+  - Example: `value => Math.round(value)`.
 
 ### `Box`
 
@@ -487,6 +506,9 @@ Props:
 
 A boxy tooltip from tgui 1. It is very hacky in its current state, and
 requires setting `position: relative` on the container.
+
+Please note, that [Button](#button) component has a `tooltip` prop, and
+we recommended to use that prop instead.
 
 Usage:
 

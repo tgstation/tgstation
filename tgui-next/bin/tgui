@@ -1,7 +1,7 @@
 #!/bin/bash
 ## Script for building tgui. Requires MSYS2 to run.
 set -e
-cd "$(dirname "${0}")"
+cd "$(dirname "${0}")/.."
 base_dir="$(pwd)"
 
 ## Add locally installed node programs to path
