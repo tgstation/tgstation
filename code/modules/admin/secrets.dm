@@ -648,8 +648,7 @@
 				return
 			if(alert("Are you sure you want to reset movement keys to default?","Confirm","Yes","Cancel") == "Cancel")
 				return
-			SSinput.movement_keys = list("W" = NORTH, "A" = WEST, "S" = SOUTH, "D" = EAST,// WASD
-		"North" = NORTH, "West" = WEST, "South" = SOUTH, "East" = EAST)	// Arrow keys & Numpad
+			SSinput.setup_default_movement_keys()
 			message_admins("[key_name_admin(usr)] has reset all movement keys.")
 			log_admin("[key_name(usr)] has reset all movement keys.")
 

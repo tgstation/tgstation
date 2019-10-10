@@ -10,11 +10,9 @@ SUBSYSTEM_DEF(input)
 	var/list/movement_keys
 
 /datum/controller/subsystem/input/Initialize()
-	macro_set = list("Any" = "\"KeyDown \[\[*\]\]\"", "Any+UP" = "\"KeyUp \[\[*\]\]\"", "Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
-		"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"", "Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",)
+	setup_default_macro_sets()
 
-	movement_keys = list("W" = NORTH, "A" = WEST, "S" = SOUTH, "D" = EAST,// WASD
-		"North" = NORTH, "West" = WEST, "South" = SOUTH, "East" = EAST)	// Arrow keys & Numpad
+	setup_default_movement_keys()
 
 	initialized = TRUE
 
@@ -22,6 +20,18 @@ SUBSYSTEM_DEF(input)
 
 	return ..()
 
+// This is for when macro sets are eventualy datumized
+/datum/controller/subsystem/input/proc/setup_default_macro_sets()
+	macro_set = list("Any" = "\"KeyDown \[\[*\]\]\"",
+	 "Any+UP" = "\"KeyUp \[\[*\]\]\"",
+	  "Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+		"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"", 
+		"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"")
+
+/datum/controller/subsystem/input/proc/setup_default_movement_keys()
+	movement_keys = list("W" = NORTH, "A" = WEST, "S" = SOUTH, "D" = EAST,// WASD
+		"North" = NORTH, "West" = WEST, "South" = SOUTH, "East" = EAST)	// Arrow keys & Numpad
+		
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()
 	var/list/clients = GLOB.clients

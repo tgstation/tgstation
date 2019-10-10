@@ -12,7 +12,7 @@
 	return default
 
 /proc/sanitize_islist(value, default)
-	if(length(value))
+	if(islist(value) && length(value))
 		return value
 	if(default)
 		return default
