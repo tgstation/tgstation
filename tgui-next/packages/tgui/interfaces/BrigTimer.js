@@ -1,5 +1,4 @@
 import { Fragment } from 'inferno';
-import { padStart } from 'lodash';
 import { act } from '../byond';
 import { Button, Section } from '../components';
 import { createLogger } from '../logging';
@@ -35,7 +34,8 @@ export const BrigTimer = props => {
           icon="backward"
           onClick={() => act(ref, 'time', { adjust: -100 })} />
         {' '}
-        {padStart(data.minutes, 2, '0')}:{padStart(data.seconds, 2, '0')}
+        {String(data.minutes).padStart(2, '0')}:
+        {String(data.seconds).padStart(2, '0')}
         {' '}
         <Button
           icon="forward"

@@ -5,7 +5,7 @@ const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = (env = {}, argv) => {
   const config = {
-    mode: 'none',
+    mode: argv.mode === 'production' ? 'production' : 'development',
     context: __dirname,
     entry: {
       tgui: [
@@ -15,7 +15,6 @@ module.exports = (env = {}, argv) => {
     },
     output: {
       path: path.resolve(__dirname, './public/bundles'),
-      // publicPath: './',
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
     },
@@ -47,7 +46,6 @@ module.exports = (env = {}, argv) => {
                 plugins: [
                   '@babel/plugin-transform-jscript',
                   'babel-plugin-inferno',
-                  'babel-plugin-lodash',
                 ],
               },
             },
@@ -127,10 +125,15 @@ module.exports = (env = {}, argv) => {
       //   },
       // },
     },
+    performance: {
+      hints: false,
+    },
+    // Unfortunately, source maps don't work with BYOND's IE.
+    devtool: false,
     plugins: [
       new webpack.EnvironmentPlugin({
         NODE_ENV: env.NODE_ENV || argv.mode || 'development',
-        WEBPACK_HMR_ENABLED: argv.hot || false,
+        WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
       }),
       new ExtractCssChunks({
         filename: '[name].bundle.css',
@@ -153,11 +156,6 @@ module.exports = (env = {}, argv) => {
   if (argv.mode === 'production') {
     const TerserPlugin = require('terser-webpack-plugin');
     const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-    config.mode = 'production';
-    config.devtool = false;
-    config.performance = {
-      hints: false,
-    };
     config.optimization.minimizer = [
       new TerserPlugin({
         extractComments: false,
@@ -188,9 +186,9 @@ module.exports = (env = {}, argv) => {
       }),
     ];
   }
+
   // Development specific options
-  else {
-    config.mode = 'development';
+  if (argv.mode !== 'production') {
     config.plugins = [
       ...config.plugins,
       new BuildNotifierPlugin(),
@@ -198,8 +196,6 @@ module.exports = (env = {}, argv) => {
     if (argv.hot) {
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
-    // config.devtool = 'cheap-module-source-map';
-    config.devtool = false;
     config.devServer = {
       // Informational flags
       progress: false,

@@ -1,5 +1,5 @@
+import { map } from 'common/fp';
 import { Fragment } from 'inferno';
-import { map, toArray } from 'lodash';
 import { act } from '../byond';
 import { AnimatedNumber, Box, Button, LabeledList, Section, Tabs } from '../components';
 
@@ -174,14 +174,14 @@ const Catalog = props => {
   };
   return (
     <Tabs vertical>
-      {map(supplies, supply => {
+      {map(supply => {
         const name = supply.name;
         return (
           <Tabs.Tab key={name} label={name}>
             {renderTab}
           </Tabs.Tab>
         );
-      })}
+      })(supplies)}
     </Tabs>
   );
 };

@@ -1,6 +1,6 @@
-import { toFixed, round } from 'common/math';
+import { map } from 'common/fp';
+import { round, toFixed } from 'common/math';
 import { Fragment } from 'inferno';
-import { map } from 'lodash';
 import { act } from '../byond';
 import { Button, LabeledList, Section } from '../components';
 
@@ -28,13 +28,13 @@ export const AtmosControlConsole = props => {
                     {toFixed(sensor.temperature, 2)} K
                   </LabeledList.Item>
                 )}
-                {map(gases, (gasPercent, gasID) => {
+                {map((gasPercent, gasID) => {
                   return (
                     <LabeledList.Item label={gasID}>
                       {toFixed(gasPercent, 2)}%
                     </LabeledList.Item>
                   );
-                })}
+                })(gases)}
               </LabeledList>
             </Section>
           );

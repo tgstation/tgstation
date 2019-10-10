@@ -6,8 +6,8 @@
 
 /**
  * Creates a function that returns the result of invoking the given
- * functions with the this binding of the created function, where each
- * successive invocation is supplied the return value of the previous.
+ * functions, where each successive invocation is supplied the return
+ * value of the previous.
  */
 export const flow = (...funcs) => (input, ...rest) => {
   let output = input;
@@ -44,4 +44,32 @@ export const compose = (...funcs) => {
   }
   return funcs.reduce((a, b) => (value, ...rest) =>
     a(b(value, ...rest), ...rest));
+};
+
+/**
+ * Creates an array of values by running each element in collection
+ * thru an iteratee function. The iteratee is invoked with three
+ * arguments: (value, index|key, collection).
+ *
+ * If collection is 'null' or 'undefined', it will be returned "as is"
+ * without emitting any errors (which can be useful in some cases).
+ */
+export const map = iteratorFn => collection => {
+  if (collection === null && collection === undefined) {
+    return collection;
+  }
+  if (Array.isArray(collection)) {
+    return collection.map(iteratorFn);
+  }
+  if (typeof collection === 'object') {
+    const hasOwnProperty = Object.prototype.hasOwnProperty;
+    const result = [];
+    for (let i in collection) {
+      if (hasOwnProperty.call(collection, i)) {
+        result.push(iteratorFn(collection[i], i, collection));
+      }
+    }
+    return result;
+  }
+  throw new Error(`map() can't iterate on type ${typeof collection}`);
 };
