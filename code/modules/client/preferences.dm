@@ -1521,10 +1521,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 					// This is a mapping from JS keys to Byond - ref: https://keycode.info/
 					var/static/list/_kbMap = list(
-						"UP" = "North", "RIGHT" = "East", "DOWN" = "South", "LEFT" = "West",
-						"INSERT" = "Insert", "HOME" = "Northwest", "PAGEUP" = "Northeast",
-						"DEL" = "Delete", "END" = "Southwest",  "PAGEDOWN" = "Southeast",
-						"SPACEBAR" = "Space", "ALT" = "Alt", "SHIFT" = "Shift", "CONTROL" = "Ctrl"
+						"UP" = "North",
+						"RIGHT" = "East",
+						"DOWN" = "South",
+						"LEFT" = "West",
+						"INSERT" = "Insert",
+						"HOME" = "Northwest",
+						"PAGEUP" = "Northeast",
+						"DEL" = "Delete",
+						"END" = "Southwest",
+						"PAGEDOWN" = "Southeast",
+						"SPACEBAR" = "Space",
+						"ALT" = "Alt",
+						"SHIFT" = "Shift",
+						"CONTROL" = "Ctrl"
 					)
 					new_key = _kbMap[new_key] ? _kbMap[new_key] : new_key
 
