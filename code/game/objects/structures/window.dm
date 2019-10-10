@@ -494,9 +494,10 @@
 	reinf = TRUE
 	heat_resistance = 50000
 	armor = list("melee" = 80, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
-	max_integrity = 500
+	max_integrity = 50000
 	damage_deflection = 21
 	explosion_block = 2
+	mouse_opacity = 0
 	glass_type = /obj/item/stack/sheet/plasmarglass
 
 //entirely copypasted code

@@ -18,6 +18,11 @@
 	brightness = 3;
 	dir = 8
 	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 5;
+	network = list("Arena Main")
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -68,6 +73,11 @@
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
+	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 5;
+	network = list("Arena Main")
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
@@ -354,6 +364,11 @@
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
 	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 5;
+	network = list("Arena Main")
+	},
 /turf/open/floor/carpet/black,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -369,6 +384,11 @@
 	dir = 8;
 	icon = 'icons/obj/atmos.dmi';
 	icon_state = "plasmarwindow"
+	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 9;
+	network = list("Arena Main")
 	},
 /turf/open/floor/carpet/black,
 /area/awaymission/vr/murderdome{
@@ -440,6 +460,11 @@
 	icon_state = "plasmarwindow"
 	},
 /obj/machinery/computer/camera_advanced,
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 10;
+	network = list("Arena Main")
+	},
 /turf/open/floor/carpet/black,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -535,6 +560,11 @@
 	brightness = 3;
 	dir = 8
 	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 5;
+	network = list("Arena Main")
+	},
 /turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -581,6 +611,11 @@
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
+	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 5;
+	network = list("Arena Main")
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/vr/murderdome{
@@ -667,11 +702,24 @@
 /obj/effect/step_trigger/teleporter{
 	icon_state = "shield";
 	name = "spectator 3-2";
-	teleport_x = 142;
+	teleport_x = 144;
 	teleport_y = 161;
 	teleport_z = 3
 	},
 /turf/open/floor/plasteel,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"bu" = (
+/obj/structure/table,
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 9;
+	network = list("Arena Main")
+	},
+/turf/open/indestructible{
+	icon_state = "cafeteria"
+	},
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -1076,6 +1124,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 4;
+	network = list("Arena Main")
+	},
 /turf/open/floor/carpet/red,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -1139,6 +1192,11 @@
 	})
 "mR" = (
 /obj/machinery/light,
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 4;
+	network = list("Arena Main")
+	},
 /turf/open/floor/carpet/red,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -1387,6 +1445,16 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"ud" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 9;
+	network = list("Arena Main")
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "ue" = (
 /obj/structure/chair/pew/right{
 	icon_state = "pewend_right";
@@ -1401,6 +1469,17 @@
 	name = "steam"
 	},
 /turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ut" = (
+/obj/machinery/light,
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 8;
+	network = list("Arena Main")
+	},
+/turf/open/floor/carpet/red,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -1438,6 +1517,19 @@
 "uX" = (
 /turf/open/indestructible/hierophant,
 /area/space)
+"vg" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 4;
+	network = list("Arena Main")
+	},
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "vi" = (
 /obj/machinery/space_heater,
 /obj/structure/window/reinforced{
@@ -1494,6 +1586,22 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"vL" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/camera/autoname{
+	network = list("Arena Main")
+	},
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "vQ" = (
 /obj/structure/fluff{
 	desc = "Has a valve and pump attached to it.";
@@ -1516,6 +1624,16 @@
 	pixel_y = -32
 	},
 /turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"wP" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 4;
+	network = list("Arena Main")
+	},
+/turf/open/indestructible/hotelwood,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -1602,6 +1720,16 @@
 	dir = 8
 	},
 /turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"zh" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 10;
+	network = list("Arena Main")
+	},
+/turf/open/floor/carpet/black,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -1697,6 +1825,11 @@
 /obj/structure/table,
 /obj/item/book/manual/wiki/cooking_to_serve_man,
 /obj/item/kitchen/rollingpin,
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 4;
+	network = list("Arena Main")
+	},
 /turf/open/indestructible{
 	icon_state = "cafeteria"
 	},
@@ -1934,6 +2067,24 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"Ig" = (
+/obj/structure/fluff/railing{
+	density = 0;
+	layer = 3.1
+	},
+/obj/structure/window/plasma/reinforced{
+	icon = 'icons/obj/atmos.dmi';
+	icon_state = "yeet"
+	},
+/obj/machinery/computer/camera_advanced{
+	icon_state = "computer";
+	dir = 1
+	},
+/obj/machinery/camera/autoname,
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "Jl" = (
 /obj/structure/fluff/railing/corner,
 /turf/open/indestructible/hotelwood,
@@ -2065,6 +2216,16 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"MS" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 5;
+	network = list("Arena Main")
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "MZ" = (
 /obj/machinery/processor,
 /turf/open/indestructible{
@@ -2143,6 +2304,16 @@
 "OP" = (
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Pc" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 9;
+	network = list("Arena Main")
+	},
+/turf/open/floor/carpet/black,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -2237,6 +2408,33 @@
 "SZ" = (
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Tc" = (
+/obj/structure/fluff{
+	desc = "I hate steam... pipes.";
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "smoke";
+	layer = 4.1;
+	mouse_opacity = 0;
+	name = "steam"
+	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 6;
+	network = list("Arena Main")
+	},
+/turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Tl" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/camera/autoname,
+/turf/open/floor/carpet/red,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -2340,6 +2538,24 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"Wc" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 4;
+	network = list("Arena Main")
+	},
+/turf/open/indestructible{
+	icon_state = "darkfull"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "WJ" = (
 /obj/structure/fluff/railing{
 	density = 0;
@@ -2402,6 +2618,16 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"XY" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 6;
+	network = list("Arena Main")
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "Ye" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/knife/butcher,
@@ -2415,6 +2641,35 @@
 "Yl" = (
 /obj/structure/table/wood/poker,
 /turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"Yx" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 4;
+	network = list("Arena Main")
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"YS" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 9;
+	network = list("Arena Main")
+	},
+/turf/open/indestructible{
+	icon_state = "freezerfloor";
+	name = "cold room floor"
+	},
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -2434,6 +2689,35 @@
 "ZI" = (
 /obj/machinery/light,
 /turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ZS" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 6;
+	network = list("Arena Main")
+	},
+/turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ZT" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 5;
+	network = list("Arena Main")
+	},
+/turf/open/floor/plasteel/dark,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -31591,12 +31875,12 @@ ao
 zO
 fT
 fT
+ud
 fT
 fT
 fT
 fT
-fT
-fT
+ud
 fT
 fT
 AX
@@ -34652,7 +34936,7 @@ aa
 aa
 aa
 ab
-mP
+Wc
 ai
 Rm
 ab
@@ -34663,7 +34947,7 @@ ab
 bT
 Bz
 Bz
-Bz
+MS
 Bz
 Bz
 ab
@@ -34924,7 +35208,7 @@ YU
 YU
 Bz
 ab
-QS
+ZS
 US
 ak
 ao
@@ -34953,7 +35237,7 @@ aa
 ab
 vB
 vB
-vB
+vg
 vB
 vB
 ig
@@ -35202,7 +35486,7 @@ ao
 ao
 aw
 US
-Bz
+zh
 ab
 ab
 ab
@@ -35444,7 +35728,7 @@ ak
 ao
 ao
 aw
-aB
+Ig
 ao
 ao
 ao
@@ -36204,12 +36488,12 @@ aa
 ab
 tE
 Bz
-Bz
+Pc
 Bz
 Bz
 Bz
 ab
-Bz
+XY
 US
 ak
 ao
@@ -36715,10 +36999,10 @@ TL
 uJ
 aD
 aD
+ZT
 aD
 aD
-aD
-aD
+Yx
 aD
 aD
 aD
@@ -36965,7 +37249,7 @@ aa
 aa
 aa
 ab
-mP
+vL
 Zy
 Zy
 so
@@ -37001,7 +37285,7 @@ ao
 ao
 aw
 Ck
-Bz
+zh
 gH
 Rc
 Rc
@@ -38008,7 +38292,7 @@ Pt
 Pt
 Pt
 ab
-Bz
+XY
 Bz
 al
 ap
@@ -38528,7 +38812,7 @@ ak
 ao
 ao
 aw
-aB
+Ig
 ao
 ao
 ao
@@ -38546,7 +38830,7 @@ US
 Bz
 gH
 kx
-uw
+bu
 DP
 uw
 Rc
@@ -38779,7 +39063,7 @@ Pt
 Pt
 vi
 ab
-Bz
+XY
 US
 ak
 ao
@@ -38800,7 +39084,7 @@ ao
 ao
 aw
 US
-Bz
+zh
 ab
 ab
 ab
@@ -39021,7 +39305,7 @@ aa
 aa
 aa
 ab
-mP
+vL
 ai
 ow
 ab
@@ -39029,7 +39313,7 @@ ab
 ab
 bo
 ab
-Pt
+Tc
 Pt
 Pt
 tp
@@ -39066,7 +39350,7 @@ ab
 vB
 vB
 vB
-vB
+YS
 vB
 ig
 ab
@@ -41096,7 +41380,7 @@ ao
 ao
 ao
 ab
-lv
+Tl
 Uw
 Uw
 kJ
@@ -41109,7 +41393,7 @@ Yl
 kJ
 Uw
 Uw
-mR
+ut
 ab
 ao
 ao
@@ -42385,12 +42669,12 @@ ao
 bP
 fT
 fT
+wP
 fT
 fT
 fT
 fT
-fT
-fT
+wP
 fT
 fT
 Gn
