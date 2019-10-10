@@ -84,15 +84,6 @@
 		M = user
 	return eyestab(M,user)
 
-/obj/item/screwdriver/brass
-	name = "brass screwdriver"
-	desc = "A screwdriver made of brass. The handle feels freezing cold."
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "screwdriver_brass"
-	item_state = "screwdriver_brass"
-	toolspeed = 0.5
-	random_color = FALSE
-
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
 	desc = "An ultrasonic screwdriver."

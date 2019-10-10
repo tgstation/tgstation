@@ -22,11 +22,9 @@
 	/turf/closed/wall,
 	/turf/closed/wall/r_wall,
 	/obj/structure/falsewall,
-	/obj/structure/falsewall/brass,
 	/obj/structure/falsewall/reinforced,
 	/turf/closed/wall/rust,
-	/turf/closed/wall/r_wall/rust,
-	/turf/closed/wall/clockwork)
+	/turf/closed/wall/r_wall/rust)
 	smooth = SMOOTH_TRUE
 
 	var/list/dent_decals
@@ -242,11 +240,6 @@
 	. = ..()
 	if(.)
 		ChangeTurf(/turf/closed/wall/mineral/cult)
-
-/turf/closed/wall/ratvar_act(force, ignore_mobs)
-	. = ..()
-	if(.)
-		ChangeTurf(/turf/closed/wall/clockwork)
 
 /turf/closed/wall/get_dumping_location(obj/item/storage/source, mob/user)
 	return null

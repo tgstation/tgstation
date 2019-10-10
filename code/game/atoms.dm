@@ -653,13 +653,6 @@
 /atom/proc/narsie_act()
 	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
 
-/**
-  * Respond to ratvar eating our atom
-  *
-  * Default behaviour is to send COMSIG_ATOM_RATVAR_ACT and return
-  */
-/atom/proc/ratvar_act()
-	SEND_SIGNAL(src, COMSIG_ATOM_RATVAR_ACT)
 
 ///Return the values you get when an RCD eats you?
 /atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

@@ -283,15 +283,6 @@
 		A = new /obj/machinery/door/airlock/cult/weak(T)
 	qdel(src)
 
-/obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
-	var/obj/machinery/door/airlock/clockwork/A
-	if(glass)
-		A = new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
-	else
-		A = new/obj/machinery/door/airlock/clockwork(get_turf(src))
-	A.name = name
-	qdel(src)
-
 /obj/machinery/door/airlock/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
