@@ -48,7 +48,7 @@
 	else
 		limb_regen = user.regenerate_limb(BODY_ZONE_L_ARM, 1)
 	if(limb_regen)
-		user.visible_message("<span class='warning'>[user]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		user.visible_message("<span class='warning'>[user]'s missing arm reforms, making a loud, grotesque sound!</span>", "<span class='userdanger'>Your arm regrows, making a loud, crunchy sound and giving you great pain!</span>", "<span class='hear'>You hear organic matter ripping and tearing!</span>")
 		user.emote("scream")
 	var/obj/item/W = new weapon_type(user, silent)
 	user.put_in_hands(W)
@@ -90,7 +90,7 @@
 		return 1
 	var/mob/living/carbon/human/H = user
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
-		H.visible_message("<span class='warning'>[H] casts off [H.p_their()] [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple].</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>")
+		H.visible_message("<span class='warning'>[H] casts off [H.p_their()] [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple].</span>", "<span class='hear'>You hear the organic matter ripping and tearing!</span>")
 		H.temporarilyRemoveItemFromInventory(H.head, TRUE) //The qdel on dropped() takes care of it
 		H.temporarilyRemoveItemFromInventory(H.wear_suit, TRUE)
 		H.update_inv_wear_suit()
@@ -169,7 +169,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc) && !silent)
-		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='hear'>You hear organic matter ripping and tearing!</span>")
 	if(synthetic)
 		can_drop = TRUE
 	AddComponent(/datum/component/butchering, 60, 80)
@@ -197,13 +197,13 @@
 
 		if(A.hasPower())
 			user.visible_message("<span class='warning'>[user] jams [src] into the airlock and starts prying it open!</span>", "<span class='warning'>We start forcing the [A] open.</span>", \
-			"<span class='italics'>You hear a metal screeching sound.</span>")
+			"<span class='hear'>You hear a metal screeching sound.</span>")
 			playsound(A, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
 			if(!do_after(user, 100, target = A))
 				return
 		//user.say("Heeeeeeeeeerrre's Johnny!")
 		user.visible_message("<span class='warning'>[user] forces the airlock to open with [user.p_their()] [src]!</span>", "<span class='warning'>We force the [A] to open.</span>", \
-		"<span class='italics'>You hear a metal screeching sound.</span>")
+		"<span class='hear'>You hear a metal screeching sound.</span>")
 		A.open(2)
 
 /obj/item/melee/arm_blade/dropped(mob/user)
@@ -255,7 +255,7 @@
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
 		if(!silent)
-			loc.visible_message("<span class='warning'>[loc.name]\'s arm starts stretching inhumanly!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a tentacle.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+			loc.visible_message("<span class='warning'>[loc.name]\'s arm starts stretching inhumanly!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a tentacle.</span>", "<span class='hear'>You hear organic matter ripping and tearing!</span>")
 		else
 			to_chat(loc, "<span class='notice'>You prepare to extend a tentacle.</span>")
 
@@ -276,7 +276,7 @@
 /obj/item/ammo_casing/magic/tentacle
 	name = "tentacle"
 	desc = "A tentacle."
-	projectile_type = /obj/item/projectile/tentacle
+	projectile_type = /obj/projectile/tentacle
 	caliber = "tentacle"
 	icon_state = "tentacle_end"
 	firing_effect_type = null
@@ -290,7 +290,7 @@
 	gun = null
 	return ..()
 
-/obj/item/projectile/tentacle
+/obj/projectile/tentacle
 	name = "tentacle"
 	icon_state = "tentacle_end"
 	pass_flags = PASSTABLE
@@ -301,20 +301,20 @@
 	var/chain
 	var/obj/item/ammo_casing/magic/tentacle/source //the item that shot it
 
-/obj/item/projectile/tentacle/Initialize()
+/obj/projectile/tentacle/Initialize()
 	source = loc
 	. = ..()
 
-/obj/item/projectile/tentacle/fire(setAngle)
+/obj/projectile/tentacle/fire(setAngle)
 	if(firer)
 		chain = firer.Beam(src, icon_state = "tentacle", time = INFINITY, maxdistance = INFINITY, beam_sleep_time = 1)
 	..()
 
-/obj/item/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)
+/obj/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)
 	if(H.in_throw_mode)
 		H.throw_mode_off() //Don't annoy the changeling if he doesn't catch the item
 
-/obj/item/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
+/obj/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
 	if(H.Adjacent(C))
 		if(H.get_active_held_item() && !H.get_inactive_held_item())
 			H.swap_hand()
@@ -323,10 +323,10 @@
 		C.grabbedby(H)
 		C.grippedby(H, instant = TRUE) //instant aggro grab
 
-/obj/item/projectile/tentacle/proc/tentacle_stab(mob/living/carbon/human/H, mob/living/carbon/C)
+/obj/projectile/tentacle/proc/tentacle_stab(mob/living/carbon/human/H, mob/living/carbon/C)
 	if(H.Adjacent(C))
 		for(var/obj/item/I in H.held_items)
-			if(I.is_sharp())
+			if(I.get_sharpness())
 				C.visible_message("<span class='danger'>[H] impales [C] with [H.p_their()] [I.name]!</span>", "<span class='userdanger'>[H] impales you with [H.p_their()] [I.name]!</span>")
 				C.apply_damage(I.force, BRUTE, BODY_ZONE_CHEST)
 				H.do_item_attack_animation(C, used_item = I)
@@ -334,7 +334,7 @@
 				playsound(get_turf(H),I.hitsound,75,TRUE)
 				return
 
-/obj/item/projectile/tentacle/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/tentacle/on_hit(atom/target, blocked = FALSE)
 	var/mob/living/carbon/human/H = firer
 	if(blocked >= 100)
 		return BULLET_ACT_BLOCK
@@ -389,7 +389,7 @@
 				L.throw_at(get_step_towards(H,L), 8, 2)
 				. = BULLET_ACT_HIT
 
-/obj/item/projectile/tentacle/Destroy()
+/obj/projectile/tentacle/Destroy()
 	qdel(chain)
 	source = null
 	return ..()
@@ -435,7 +435,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
-		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='hear'>You hear organic matter ripping and tearing!</span>")
 
 /obj/item/shield/changeling/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(remaining_uses < 1)
@@ -481,7 +481,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
-		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around [loc.p_their()] body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around [loc.p_their()] body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='hear'>You hear organic matter ripping and tearing!</span>")
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/changeling/process()
@@ -535,7 +535,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 	if(ismob(loc))
-		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='hear'>You hear organic matter ripping and tearing!</span>")
 
 /obj/item/clothing/head/helmet/changeling
 	name = "chitinous mass"

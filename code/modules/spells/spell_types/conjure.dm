@@ -50,11 +50,10 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/summonEdSwarm //test purposes - Also a lot of fun
 	name = "Dispense Wizard Justice"
 	desc = "This spell dispenses wizard justice."
-
-	summon_type = list(/mob/living/simple_animal/bot/ed209)
+	summon_type = list(/mob/living/simple_animal/bot/secbot/ed209)
 	summon_amt = 10
 	range = 3
-	newVars = list("emagged" = 2, "remote_disabled" = 1,"shoot_sound" = 'sound/weapons/laser.ogg',"projectile" = /obj/item/projectile/beam/laser, "declare_arrests" = 0,"name" = "Wizard's Justicebot")
+	newVars = list("emagged" = 2, "remote_disabled" = 1,"shoot_sound" = 'sound/weapons/laser.ogg',"projectile" = /obj/projectile/beam/laser, "declare_arrests" = 0,"name" = "Wizard's Justicebot")
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/linkWorlds
 	name = "Link Worlds"

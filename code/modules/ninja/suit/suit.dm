@@ -148,7 +148,7 @@ Contents:
 
 
 /obj/item/clothing/suit/space/space_ninja/examine(mob/user)
-	. = .()
+	. = ..()
 	if(s_initialized)
 		if(user == affecting)
 			. += "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.\n"+\

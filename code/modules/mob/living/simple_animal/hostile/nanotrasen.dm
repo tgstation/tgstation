@@ -9,9 +9,6 @@
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 12
 	turns_per_move = 5
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "hits"
 	speed = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
@@ -20,7 +17,8 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	attacktext = "punches"
+	attack_verb_continuous = "punches"
+	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = INTENT_HARM
 	loot = list(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
@@ -47,7 +45,7 @@
 	retreat_distance = 3
 	minimum_distance = 5
 	casingtype = /obj/item/ammo_casing/c45
-	projectilesound = 'sound/weapons/gunshot.ogg'
+	projectilesound = 'sound/weapons/gun/pistol/shot_alt.ogg'
 	loot = list(/obj/item/gun/ballistic/automatic/pistol/m1911,
 				/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
 
@@ -57,6 +55,6 @@
 	icon_living = "nanotrasenrangedsmg"
 	rapid = 3
 	casingtype = /obj/item/ammo_casing/c46x30mm
-	projectilesound = 'sound/weapons/gunshot_smg.ogg'
+	projectilesound = 'sound/weapons/gun/smg/shot.ogg'
 	loot = list(/obj/item/gun/ballistic/automatic/wt550,
 				/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)

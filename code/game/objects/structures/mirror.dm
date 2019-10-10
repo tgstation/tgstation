@@ -7,7 +7,7 @@
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 200
-	integrity_failure = 100
+	integrity_failure = 0.5
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()

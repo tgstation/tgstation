@@ -9,7 +9,7 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 	max_integrity = 50
-	integrity_failure = 20
+	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
 	var/rods_broken = TRUE
@@ -87,6 +87,8 @@
 
 /obj/structure/grille/attack_animal(mob/user)
 	. = ..()
+	if(!.)
+		return
 	if(!shock(user, 70))
 		take_damage(rand(5,10), BRUTE, "melee", 1)
 
@@ -124,7 +126,7 @@
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return TRUE
 	else
-		if(istype(mover, /obj/item/projectile) && density)
+		if(istype(mover, /obj/projectile) && density)
 			return prob(30)
 		else
 			return !density
@@ -189,7 +191,7 @@
 				else if(istype(W, /obj/item/stack/sheet/titaniumglass))
 					WD = new/obj/structure/window/shuttle(drop_location())
 				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
-					WD = new/obj/structure/window/plastitanium(drop_location())
+					WD = new/obj/structure/window/plasma/reinforced/plastitanium(drop_location())
 				else
 					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
 				WD.setDir(dir_to_set)

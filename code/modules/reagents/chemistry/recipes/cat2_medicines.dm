@@ -2,10 +2,10 @@
 
 /*****BRUTE*****/
 
-/datum/chemical_reaction/sanguibital
-	name = "Sanguibital"
-	id = /datum/reagent/medicine/C2/sanguibital
-	results = list(/datum/reagent/medicine/C2/sanguibital = 3)
+/datum/chemical_reaction/helbital
+	name = "helbital"
+	id = /datum/reagent/medicine/C2/helbital
+	results = list(/datum/reagent/medicine/C2/helbital = 3)
 	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/fluorine = 1, /datum/reagent/carbon = 1)
 	mix_message = "The mixture turns into a thick, yellow powder."
 
@@ -17,10 +17,10 @@
 
 /*****BURN*****/
 
-/datum/chemical_reaction/ichiyuri
-	name = "Ichiyuri"
-	id = /datum/reagent/medicine/C2/ichiyuri
-	results = list(/datum/reagent/medicine/C2/ichiyuri = 5)
+/datum/chemical_reaction/lenturi
+	name = "Lenturi"
+	id = /datum/reagent/medicine/C2/lenturi
+	results = list(/datum/reagent/medicine/C2/lenturi = 5)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/silver = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
 
 /datum/chemical_reaction/aiuri

@@ -356,6 +356,19 @@
 	result = /obj/item/reagent_containers/food/snacks/salad/ricepudding
 	subcategory = CAT_MISCFOOD
 
+/datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!
+	name = "Living bear/butter hybrid"
+	reqs = list(
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/heart = 1,
+		/obj/item/reagent_containers/food/snacks/butter = 10,
+		/obj/item/reagent_containers/food/snacks/meat/slab = 5,
+		/datum/reagent/blood = 50,
+		/datum/reagent/teslium = 1 //To shock the whole thing into life
+	)
+	result = /mob/living/simple_animal/hostile/bear/butter
+	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/crab_rangoon
 	name = "Crab Rangoon"
 	reqs = list(

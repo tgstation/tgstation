@@ -99,7 +99,7 @@
 			if(door_check)
 				user.visible_message("<span class='notice'>[user] secures the airlock assembly to the floor.</span>", \
 									 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
-									 "<span class='italics'>You hear wrenching.</span>")
+									 "<span class='hear'>You hear wrenching.</span>")
 
 				if(W.use_tool(src, user, 40, volume=100))
 					if(anchored)
@@ -113,7 +113,7 @@
 		else
 			user.visible_message("<span class='notice'>[user] unsecures the airlock assembly from the floor.</span>", \
 								 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
-								 "<span class='italics'>You hear wrenching.</span>")
+								 "<span class='hear'>You hear wrenching.</span>")
 			if(W.use_tool(src, user, 40, volume=100))
 				if(!anchored)
 					return

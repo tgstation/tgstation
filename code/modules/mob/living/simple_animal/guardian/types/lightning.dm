@@ -6,7 +6,8 @@
 /mob/living/simple_animal/hostile/guardian/beam
 	melee_damage_lower = 7
 	melee_damage_upper = 7
-	attacktext = "shocks"
+	attack_verb_continuous = "shocks"
+	attack_verb_simple = "shock"
 	melee_damage_type = BURN
 	attack_sound = 'sound/machines/defib_zap.ogg'
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
@@ -115,7 +116,7 @@
 					L.visible_message(
 						"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
-						"<span class='italics'>You hear a heavy electrical crack.</span>" \
+						"<span class='hear'>You hear a heavy electrical crack.</span>" \
 					)
 				L.adjustFireLoss(1.2) //adds up very rapidly
 				. = 1
