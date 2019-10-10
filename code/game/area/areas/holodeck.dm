@@ -38,7 +38,7 @@
 	ASSERT(!istype(A, /area/holodeck))
 	return A.addStaticPower(value,powerchannel)
 
-/area/holodeck/use_power(var/amount, var/chan)
+/area/holodeck/use_power(amount, chan)
 	if(!linked)
 		return 0
 	var/area/A = get_area(linked)

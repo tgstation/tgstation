@@ -31023,7 +31023,7 @@
 /obj/item/trash/cheesie,
 /obj/item/trash/raisins,
 /obj/item/trash/candy,
-/obj/item/trash/coal,
+/obj/item/stack/sheet/mineral/coal,
 /obj/item/trash/can,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -39942,7 +39942,7 @@
 	},
 /obj/structure/closet/crate/trashcart,
 /obj/item/storage/bag/trash,
-/obj/item/trash/coal,
+/obj/item/stack/sheet/mineral/coal,
 /obj/item/trash/can,
 /obj/item/trash/can,
 /obj/item/trash/can,
@@ -41529,7 +41529,7 @@
 /obj/item/storage/bag/trash,
 /obj/item/trash/can,
 /obj/item/trash/chips,
-/obj/item/trash/coal,
+/obj/item/stack/sheet/mineral/coal,
 /obj/item/trash/raisins,
 /obj/item/trash/syndi_cakes,
 /obj/structure/cable,
@@ -48250,10 +48250,10 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "sXg" = (
-/obj/structure/chair,
 /obj/item/radio/intercom{
 	pixel_y = 24
 	},
+/obj/machinery/medical_kiosk,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "sXl" = (
