@@ -30,7 +30,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/hotkeys = FALSE
 
 	// Custom Keybindings
-	var/list/key_bindings
+	var/list/key_bindings = list()
 
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
@@ -128,6 +128,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
+	key_bindings = deepCopyList(GLOB.keybinding_list_by_key) // give them default keybinds too
 	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()

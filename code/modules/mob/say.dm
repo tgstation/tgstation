@@ -27,11 +27,6 @@
 ///whisper a message
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
-
-/mob/verb/me_wrapper()
-	set hidden = TRUE
-	var/message = input("", "Me") as text
-	me_verb(message)
 	
 ///The me emote verb
 /mob/verb/me_verb(message as text)

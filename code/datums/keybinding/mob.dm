@@ -115,7 +115,7 @@
 
 /datum/keybinding/mob/me/down(client/user)
 	var/mob/M = user.mob
-	M.me_wrapper()
+	M.me_verb()
 	return TRUE
 
 /datum/keybinding/mob/activate_inhand
@@ -136,6 +136,8 @@
 	description = ""
 
 /datum/keybinding/mob/drop_item/down(client/user)
+	if(iscyborg(user.mob)) //cyborgs can't drop items
+		return FALSE
 	var/mob/M = user.mob
 	var/obj/item/I = M.get_active_held_item()
 	if(!I)

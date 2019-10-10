@@ -35,6 +35,13 @@
 		message_admins("Client [ckey] just attempted to send an invalid keypress. Keymessage was over [MAX_KEYPRESS_COMMANDLENGTH] characters, autokicking due to likely abuse.")
 		QDEL_IN(src, 1)
 		return
+
+	// Check if chat should have focus but doesn't, give it focus and pre-enter the key.
+	if(!prefs.hotkeys && winget(src, null, "input.focus"))
+		winset(src, null, "input.focus=true")
+		winset(src, null, "input=[list2params(list(text = _key))]")
+		return
+
 	//offset by 1 because the buffer address is 0 indexed because the math was simpler
 	keys_held[current_key_address + 1] = _key
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
@@ -51,9 +58,11 @@
 	var/CtrlMod = keys_held["Ctrl"] ? "Ctrl-" : ""
 	var/ShiftMod = keys_held["Shift"] ? "Shift-" : ""
 	var/full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
-	for (var/kb_name in prefs.key_bindings[full_key])
+	var/keycount = 0
+	for(var/kb_name in prefs.key_bindings[full_key])
+		keycount++
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
-		if(kb.down(src))
+		if(kb.down(src) && keycount >= MAX_COMMANDS_PER_KEY)
 			break
 
 	holder?.key_down(full_key, src)
@@ -72,11 +81,6 @@
 	if(!(next_move_dir_add & movement))
 		next_move_dir_sub |= movement
 
-	// Check if chat should have focus but doesn't, give it focus and pre-enter the key.
-	if(prefs.hotkeys && winget(src, null, "input.focus"))
-		winset(src, null, "input.focus=true")
-		winset(src, null, "input=[list2params(list(text = _key))]")
-		return
 	// We don't do full key for release, because for mod keys you
 	// can hold different keys and releasing any should be handled by the key binding specifically
 	for (var/kb_name in prefs.key_bindings[_key])
