@@ -188,7 +188,7 @@
 
 ///10/3/19 Update BELOW///
 
-///T5 Motorized wheelchair code/// 
+///T5 Motorized wheelchair code///
 
 /obj/vehicle/ridden/wheelchair/motorized/proc/RunOver(var/mob/living/carbon/human/H)
 	var/bloodiness = 0

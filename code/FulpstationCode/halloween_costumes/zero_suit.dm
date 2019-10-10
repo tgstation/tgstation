@@ -30,7 +30,7 @@
 	mob_overlay_icon = 'icons/fulpicons/halloween_costumes/samus_worn.dmi'
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/gun/ballistic/shotgun/toy/toy_arm_cannon)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/toy/varia
-	
+
 
 /obj/item/clothing/head/helmet/space/hardsuit/toy
 	name = "toy hardsuit helmet"
@@ -56,7 +56,7 @@
 	name = "small foam ball"
 	desc = "Eat this, space pirates!"
 	icon = 'icons/fulpicons/halloween_costumes/samus_icon.dmi'
-	projectile_type = /obj/item/projectile/bullet/reusable/foam_dart/arm_ball
+	projectile_type = /obj/projectile/bullet/reusable/foam_dart/arm_ball
 	icon_state = "ball"
 	caliber = "arm_ball"
 
@@ -76,7 +76,7 @@
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 
-/obj/item/projectile/bullet/reusable/foam_dart/arm_ball
+/obj/projectile/bullet/reusable/foam_dart/arm_ball
 	name = "small foam ball"
 	desc = "Eat this, space pirates!"
 	icon = 'icons/fulpicons/halloween_costumes/samus_icon.dmi'

@@ -7,7 +7,7 @@
 	var/power_usage = 100
 	var/panel_open = FALSE
 	var/t5 = 0 //FULP Var for what the overall rating of the parts is
-	var/list/required_parts = list(/obj/item/stock_parts/manipulator, 
+	var/list/required_parts = list(/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/capacitor)
 	var/obj/item/stock_parts/cell/power_cell
@@ -46,7 +46,7 @@
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
 			return FALSE
-		if(power_cell.charge < power_usage / max(power_efficiency, 1))			
+		if(power_cell.charge < power_usage / max(power_efficiency, 1))
 			to_chat(user, "<span class='warning'>The display on [src] blinks 'Out of Power'.</span>")
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
@@ -78,7 +78,7 @@
 		to_chat(user, "<span class='notice'>You remove the power cell from [src].</span>")
 		return
 	return ..()
-	
+
 /obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		I.play_tool_sound(src)
@@ -148,13 +148,13 @@
 		return
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away
 	if(M.density && speed > delay_multiplier && has_buckled_mobs())
-		
-		if(t5 >= 30) //FULP: If T5 is greater than 30, run that fucker over! 
-			if(isliving(M))
-				RunOver(M)
-				return
+
+		//if(t5 >= 30) //FULP: If T5 is greater than 30, run that fucker over!
+		//	if(isliving(M))
+		//		RunOver(M)
+		//		return
 		// If T5 (T5 identifier) is less than 30, execute as normal
-		
+
 		var/mob/living/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
