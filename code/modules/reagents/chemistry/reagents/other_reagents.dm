@@ -1459,7 +1459,7 @@
 	description = "For those that break the game and need to make an issue report."
 
 /datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/M)
-	if(M.mind && M.mind.assigned_role in list("Chief Medical Officer", "Captain", "Chief Engineer", "Research Director", "Head of Personnel"))
+	if(M.mind?.assigned_role in list("Chief Medical Officer", "Captain", "Chief Engineer", "Research Director", "Head of Personnel"))
 		if(prob(10))
 			to_chat(M, "You feel like royalty.")
 		if(prob(5))
