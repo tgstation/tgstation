@@ -172,7 +172,7 @@
 
 /turf/IsObscured()
 	for(var/atom/movable/AM in src)
-		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density)
+		if(AM.flags_1 & PREVENT_CLICK_UNDER_1)
 			return TRUE
 	return FALSE
 
