@@ -1466,7 +1466,7 @@
 			M.say(pick("Peasants..","This carpet is worth more than your contracts!","I could fire you at any time..."), forced = "royal carpet")
 	if(M.mind && M.mind.assigned_role == "Quartermaster") //not a real head
 		if(prob(15))
-			to_chat(M, "You feel like an impostor..")
+			to_chat(M, "You feel like an impostor...")
 	. = 1
 	..()
 
