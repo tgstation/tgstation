@@ -204,6 +204,7 @@ field_generator power level display
 	update_icon()
 	if(warming_up >= 3)
 		start_fields()
+		shield_floor(TRUE)
 	else
 		addtimer(CALLBACK(src, .proc/warm_up), 50)
 
@@ -264,7 +265,7 @@ field_generator power level display
 	addtimer(CALLBACK(src, .proc/setup_field, 2), 2)
 	addtimer(CALLBACK(src, .proc/setup_field, 4), 3)
 	addtimer(CALLBACK(src, .proc/setup_field, 8), 4)
-	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 5)
+	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 5)	
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
 	var/turf/T = loc
@@ -322,6 +323,8 @@ field_generator power level display
 	for (var/F in fields)
 		qdel(F)
 
+	shield_floor(FALSE)
+
 	for(var/CG in connected_gens)
 		var/obj/machinery/field/generator/FG = CG
 		FG.connected_gens -= src
@@ -337,6 +340,45 @@ field_generator power level display
 	INVOKE_ASYNC(src, .proc/notify_admins)
 
 	move_resist = initial(move_resist)
+
+/obj/machinery/field/generator/proc/shield_floor(create)
+	if(connected_gens.len < 2)
+		return
+	var/CGcounter
+	for(CGcounter = 1; CGcounter < connected_gens.len, CGcounter++)		
+		 
+		var/list/CGList = ((connected_gens[CGcounter].connected_gens & connected_gens[CGcounter+1].connected_gens)^src)
+		if(!CGList.len)
+			return
+		var/obj/machinery/field/generator/CG = CGList[1]
+		
+		var/x_step
+		var/y_step
+		if(CG.x > x && CG.y > y)
+			for(x_step=x; x_step <= CG.x; x_step++)
+				for(y_step=y; y_step <= CG.y; y_step++)
+					place_floor(locate(x_step,y_step,z),create)
+		else if(CG.x > x && CG.y < y)
+			for(x_step=x; x_step <= CG.x; x_step++)
+				for(y_step=y; y_step >= CG.y; y_step--)
+					place_floor(locate(x_step,y_step,z),create)
+		else if(CG.x < x && CG.y > y)
+			for(x_step=x; x_step >= CG.x; x_step--)
+				for(y_step=y; y_step <= CG.y; y_step++)
+					place_floor(locate(x_step,y_step,z),create)
+		else
+			for(x_step=x; x_step >= CG.x; x_step--)
+				for(y_step=y; y_step >= CG.y; y_step--)
+					place_floor(locate(x_step,y_step,z),create)
+					
+
+/obj/machinery/field/generator/proc/place_floor(Location,create)
+	if(create && !locate(/obj/effect/shield) in Location)
+		new/obj/effect/shield(Location)
+	else		
+		var/obj/effect/shield/S=locate(/obj/effect/shield) in Location
+		if(S)			
+			qdel(S)
 
 /obj/machinery/field/generator/proc/notify_admins()
 	var/temp = TRUE //stops spam
