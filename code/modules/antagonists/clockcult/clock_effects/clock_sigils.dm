@@ -333,7 +333,7 @@
 					else
 						if(ghost)
 							ghost.reenter_corpse()
-						L.revive(1, 1)
+						L.revive(TRUE, TRUE)
 						var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 						animate(V, alpha = 0, transform = matrix()*2, time = 8)
 						playsound(L, 'sound/magic/staff_healing.ogg', 50, TRUE)

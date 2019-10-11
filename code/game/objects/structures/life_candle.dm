@@ -85,7 +85,7 @@
 		mind.transfer_to(body)
 	else
 		body.forceMove(T)
-		body.revive(1,1)
+		body.revive(TRUE, TRUE)
 	mind.grab_ghost(TRUE)
 	body.flash_act()
 

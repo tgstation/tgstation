@@ -99,7 +99,7 @@
 	if(user.anti_magic_check())
 		user.visible_message("<span class='warning'>[src] has no effect on [user]!</span>")
 		return
-	user.revive(full_heal = 1)
+	user.revive(TRUE)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.regenerate_limbs()

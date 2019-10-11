@@ -520,7 +520,7 @@
 		update_sight()
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
-		. = 1
+		. = TRUE
 		if(mind)
 			for(var/S in mind.spell_list)
 				var/obj/effect/proc_holder/spell/spell = S
@@ -546,7 +546,7 @@
 
 
 //proc used to completely heal a mob.
-/mob/living/proc/fully_heal(admin_revive = 0)
+/mob/living/proc/fully_heal(admin_revive = FALSE)
 	restore_blood()
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)
@@ -577,9 +577,9 @@
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
-	. = 1
+	. = TRUE
 	if(health <= HEALTH_THRESHOLD_DEAD)
-		return 0
+		return FALSE
 
 /mob/living/proc/update_damage_overlays()
 	return
@@ -589,7 +589,7 @@
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
-			return 0
+			return FALSE
 
 	var/old_direction = dir
 	var/turf/T = loc
