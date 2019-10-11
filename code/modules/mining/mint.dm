@@ -30,17 +30,18 @@
 		/datum/material/mythril,
 		/datum/material/plastic,
 		/datum/material/runite
-	), MINERAL_MATERIAL_AMOUNT * 50, FALSE, /obj/item/stack)
+	), MINERAL_MATERIAL_AMOUNT * 75, FALSE, /obj/item/stack)
 	chosen = getmaterialref(chosen)
 
 
 /obj/machinery/mineral/mint/process()
 	var/turf/T = get_step(src, input_dir)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-
-	if(T)
-		for(var/obj/item/stack/S in T)
-			materials.insert_item(S, S.amount)
+	
+	for(var/obj/item/stack/O in T)
+		var/inserted = materials.insert_item(O)
+		if(inserted)
+			qdel(O)
 
 	if(processing)
 		var/datum/material/M = chosen

@@ -556,7 +556,7 @@
     var/mob/living/carbon/C = M
     for(var/s in C.surgeries)
       var/datum/surgery/S = s
-      S.success_multiplier = max(0.6, S.success_multiplier) // +60% success probability on each step, compared to bacchus' blessing's ~46%
+      S.speed_modifier = max(0.6, S.speed_modifier)
   ..()
 
 /datum/reagent/consumable/mayonnaise

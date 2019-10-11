@@ -248,7 +248,7 @@
 	popup.open()
 
 
-/obj/machinery/plantgenes/Topic(var/href, var/list/href_list)
+/obj/machinery/plantgenes/Topic(href, list/href_list)
 	if(..())
 		return
 	usr.set_machine(src)

@@ -19,11 +19,8 @@
 
 	var/amount = I.custom_materials[getmaterialref(material_id)]
 
-	if(istype(I, /obj/item/stack))
-		var/obj/item/stack/S = I
-		amount *= S.amount
-		if(istype(I, /obj/item/stack/ore))
-			amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
+	if(istype(I, /obj/item/stack/ore))
+		amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
 
 	return round(amount/MINERAL_MATERIAL_AMOUNT)
 

@@ -156,6 +156,7 @@
 
 	var/location = get_step(src,(dir))
 	var/obj/item/I = new D.build_path(location)
+	I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
 	I.set_custom_materials(res_coef)
 	say("\The [I] is complete.")
 	being_built = null
