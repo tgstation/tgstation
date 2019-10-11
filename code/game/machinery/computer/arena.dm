@@ -261,9 +261,9 @@
 		if(D.id != arena_id)
 			continue
 		if(closed)
-			D.close()
+			INVOKE_ASYNC(D, /obj/machinery/door/poddoor.proc/close)
 		else
-			D.open()
+			INVOKE_ASYNC(D, /obj/machinery/door/poddoor.proc/open)
 
 /obj/machinery/computer/arena/Topic(href, href_list)
 	if(..())
