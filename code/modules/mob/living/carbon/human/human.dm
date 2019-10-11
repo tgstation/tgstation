@@ -774,7 +774,7 @@
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
-/mob/living/carbon/human/fully_heal()
+/mob/living/carbon/human/fully_heal(admin_revive = FALSE)
 	dna?.species.spec_fully_heal(src)
 	if(admin_revive)
 		regenerate_limbs()

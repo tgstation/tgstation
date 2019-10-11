@@ -960,7 +960,7 @@
 	diag_hud_set_aishell()
 	update_health_hud()
 
-/mob/living/silicon/robot/revive()
+/mob/living/silicon/robot/revive(admin_revive = FALSE)
 	if(..()) //successfully ressuscitated from death
 		if(!QDELETED(builtInCamera) && !wires.is_cut(WIRE_CAMERA))
 			builtInCamera.toggle_cam(src,0)
