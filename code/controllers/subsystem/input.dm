@@ -30,8 +30,12 @@ SUBSYSTEM_DEF(input)
 	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"")
 
 /datum/controller/subsystem/input/proc/setup_default_movement_keys()
-	movement_keys = list("W" = NORTH, "A" = WEST, "S" = SOUTH, "D" = EAST,// WASD
-		"North" = NORTH, "West" = WEST, "South" = SOUTH, "East" = EAST)	// Arrow keys & Numpad
+	var/static/list/default_movement_keys = list(
+		"W" = NORTH, "A" = WEST, "S" = SOUTH, "D" = EAST,				// WASD
+		"North" = NORTH, "West" = WEST, "South" = SOUTH, "East" = EAST,	// Arrow keys & Numpad
+		)
+
+	movement_keys = default_movement_keys.Copy()
 
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()
