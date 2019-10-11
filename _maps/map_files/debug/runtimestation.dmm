@@ -2842,6 +2842,15 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 1"
 	})
+"gG" = (
+/obj/machinery/button/door{
+	id = "thunderdomegen";
+	name = "Thunderdome Arena Storage Access"
+	},
+/turf/open/indestructible,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 1"
+	})
 "gH" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -3961,6 +3970,12 @@
 	dir = 4
 	},
 /turf/open/indestructible,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 1"
+	})
+"qj" = (
+/obj/machinery/computer/arena,
+/turf/open/floor/carpet/red,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 1"
 	})
@@ -37369,7 +37384,7 @@ fh
 Ay
 EG
 yZ
-cJ
+gG
 yZ
 iY
 iY
@@ -38911,7 +38926,7 @@ cj
 Ay
 CR
 yZ
-cJ
+Ay
 yZ
 ak
 aB
@@ -43537,7 +43552,7 @@ Jh
 Ay
 DT
 yZ
-cJ
+qj
 yZ
 at
 aE
@@ -45079,7 +45094,7 @@ fh
 Ay
 VX
 yZ
-cJ
+gG
 yZ
 jL
 jL
