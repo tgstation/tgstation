@@ -407,6 +407,25 @@ Props:
 - `buttons: any` - Buttons to render aside the content.
 - `content/children: any` - Content of this labeled item.
 
+### `LabeledList.Divider`
+
+Adds some empty space between LabeledList items.
+
+Example:
+
+```jsx
+<LabeledList>
+  <LabeledList.Item label="Foo">
+    Content
+  </LabeledList.Item>
+  <LabeledList.Divider size={1} />
+</LabeledList>
+```
+
+Props:
+
+- `size: number` - Size of the divider.
+
 ### `ProgressBar`
 
 Progress indicators inform users about the status of ongoing processes.

@@ -1,5 +1,5 @@
 import { classes, pureComponentHooks } from 'common/react';
-import { Box } from './Box';
+import { unit } from './Box';
 
 export const LabeledList = props => {
   const { children } = props;
@@ -59,9 +59,9 @@ export const LabeledListDivider = props => {
   const { size = 1 } = props;
   return (
     <tr className="LabeledList__row">
-      <td>
-        <Box mt={size} />
-      </td>
+      <td style={{
+        'margin-bottom': unit(size),
+      }} />
     </tr>
   );
 };

@@ -8,7 +8,7 @@ const REM_PER_INTEGER = 0.5;
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
  */
-const unit = value => {
+export const unit = value => {
   if (typeof value === 'string') {
     return value;
   }
