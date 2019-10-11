@@ -68,16 +68,15 @@
 /obj/item/clothing/under/rank/security/proc/camera_toggle()
 	var/message = "<span class='notice'>There's no camera!</span>"
 
-	if(!builtInCamera)
-
-	else if(camera_on)
-		camera_on = FALSE
-		builtInCamera.status = 0
-		message = "<span class='notice'>You toggle the body camera off.</span>"
-	else
-		camera_on = TRUE
-		builtInCamera.status = 1
-		message = "<span class='notice'>You toggle the body camera on.</span>"
+	if(builtInCamera)
+		if(camera_on)
+			camera_on = FALSE
+			builtInCamera.status = 0
+			message = "<span class='notice'>You toggle the body camera off.</span>"
+		else
+			camera_on = TRUE
+			builtInCamera.status = 1
+			message = "<span class='notice'>You toggle the body camera on.</span>"
 
 	if(ismob(loc))
 		var/mob/user = loc
