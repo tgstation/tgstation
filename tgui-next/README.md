@@ -19,8 +19,8 @@ The server-side code (DM) is similar and derived from NanoUI, while the
 clientside is a wholly new project with no code in common.
 
 To get a clearer picture how to create a completely new interface from scratch,
-please refer to this [backend tutorial document](docs/tutorial-and-examples.md).
-If you don't know how backend works, or have very little knowledge about
+please refer to this [tutorial document](docs/tutorial-and-examples.md).
+If you don't know how tgui backend works, or have very little knowledge about
 both frontend and backend, or simply want a step by step instruction,
 we recommend you first read the document linked above.
 
@@ -34,15 +34,17 @@ highlights differences with React.
 
 ## Pre-requisites
 
-You will need these programs to start developing in frontend:
+You will need these programs to start developing in tgui:
 
 - [Node 12.x](https://nodejs.org)
 - [MSys2](https://www.msys2.org/) (optional)
 
-> MSys2 closely replicates a unix-like environment which might be useful
-> for some users. It comes with a robust "mintty" terminal emulator, which
-> is better than any standard Windows shell, and you can install "git"
-> and a text editor as well, for a full boomer experience.
+> MSys2 closely replicates a unix-like environment which is necessary for
+> the `bin/tgui` script to run. It comes with a robust "mintty" terminal
+> emulator which is better than any standard Windows shell, it supports
+> "git" out of the box (almost like Git for Windows, but better), has
+> a "pacman" package manager, and you can install a text editor like "vim"
+> for a full boomer experience.
 
 ## Workflow
 
@@ -61,9 +63,11 @@ For MSys2, WSL, Linux or macOS users:
 
 - `bin/tgui` - build the project in production mode.
 - `bin/tgui --dev` - launch a development server.
-- `bin/tgui --lint` - show and fix potential problems the with code.
+- `bin/tgui --lint` - show and fix potential problems with the code.
 - `bin/tgui --analyze` - run a bundle analyzer.
 - `bin/tgui --clean` - clean up project repo.
+- `bin/tgui [webpack options]` - build the project with custom webpack
+options.
 
 For absolute brainlets, we also got a batch file in store. Double click
 it to build the project:
@@ -83,34 +87,23 @@ It works just like packages in Java.
 - `/packages/tgui/index.js` - Application entry point.
 - `/packages/tgui/components` - Basic UI building blocks.
 - `/packages/tgui/interfaces` - Actual in-game interfaces.
-Take JSON data via the `state` prop and output an html-like stucture,
-which you can build using already existing UI components, such as buttons,
-boxes, labeled lists, etc.
+Interface takes data via the `state` prop and outputs an html-like stucture,
+which you can build using existing UI components.
 - `/packages/tgui/routes.js` - This is where you want to register new
 interfaces, otherwise they simply won't load.
 - `/packages/tgui/layout.js` - A root-level component, holding the
 window elements, like the titlebar, buttons, resize handlers. Calls
 `routes.js` to decide which component to render.
-- `/packages/tgui/styles/atomic` - Folder with atomic CSS classes.
+- `/packages/tgui/styles/main.scss` - CSS entry point.
+- `/packages/tgui/styles/atomic.scss` - Atomic CSS classes.
 These are very simple, tiny, reusable CSS classes which you can use and
-combine to change appearance of your elements.
-
-## Introduction to the component system
-
-This component framework is inspired by:
-
-- [Semantic UI](https://react.semantic-ui.com/), which felt great because it
-has a very terse syntax and human readable naming system. Some things
-like `as`, `content` props, and shorthand binary props, all are inspired
-straight from this framework.
-- [Material UI](https://material-ui.com/components/box/), which has a very
-good API, mainly for it's Box and Grid components, and has a lot very good
-abstractions in general. It uses a special unit system for margins, which we
-tried to loosely replicate.
-
-While our framework is none of those, we tried to cherry pick the most useful
-abstractions to use in our code, and hopefully it makes UI development very
-fun and productive.
+combine to change appearance of your elements. Keep them small.
+- `/packages/tgui/styles/components.scss` - CSS classes which are used
+in UI components, and most of the stylesheets referenced here are located
+in `/packages/tgui/components`. These stylesheets closely follow the
+[BEM](https://en.bem.info/methodology/) methodology.
+- `/packages/tgui/styles/functions.scss` - Useful SASS functions.
+Stuff like `lighten`, `darken`, `luminance` are defined here.
 
 ## Component reference
 
@@ -124,6 +117,20 @@ components, such as `Box`. This component in particular provides a lot
 of styling options for all components, e.g. `color` and `opacity`, thus
 it is used a lot in this framework.
 
+There are a few important semantics you need to know about:
+
+- `content` prop is a synonym to a `children` prop.
+  - `content` is better used when your element is a self-closing tag
+  (like `<Button content="Hello" />`), and when content is small and simple
+  enough to fit in a prop. Keep in mind, that this prop is **not** native
+  to React, and is a feature of this component system.
+  - `children` is better used when your element is a full tag (like
+  `<Button>Hello</Button>`), and when content is long and complex. This is
+  a native React prop (unline `content`), and contains all elements you
+  defined between the opening and the closing tag of an element.
+  - You should never use both on a same element.
+  - You should never use `children` explicitly as a prop on an element.
+
 ### `AnimatedNumber`
 
 This component provides animations for numeric values.
@@ -131,11 +138,11 @@ This component provides animations for numeric values.
 Props:
 
 - `value: number` - Value to animate.
-- `initial: number` (optional) - Initial value to use in animation when
-element first appears. If you set initial to `0` for example, number
-will always animate starting from `0`, and if omitted, it will not play an
-initial animation.
-- `format: function` (optional) - Output formatter.
+- `initial: number` - Initial value to use in animation when element
+first appears. If you set initial to `0` for example, number will always
+animate starting from `0`, and if omitted, it will not play an initial
+animation.
+- `format: function` - Output formatter.
   - Example: `value => Math.round(value)`.
 
 ### `Box`
@@ -170,7 +177,7 @@ This way, `Button` can pull out the `className` generated by the `Box`.
 - By plain numbers (1 unit equals `0.5em`);
 - In absolute measures, by providing a full unit string (e.g. `100px`).
 
-Units which are used in `Box` are `0.5em`, which is half font-size.
+Units which are used in `Box` are `0.5em`, which are half font-size.
 Default font size is `12px`, so each unit is effectively `6px` in size.
 If you need more precision, you can always use fractional numbers.
 
@@ -178,7 +185,7 @@ Props:
 
 - `as: string` - The component used for the root node.
 - `color: string` - Applies an atomic `color-<name>` class to the element.
-  - See `styles/atomic/color.scss` for color names.
+  - See `styles/atomic/color.scss`.
 - `width: number` - Box width.
 - `minWidth: number` - Box minimum width.
 - `maxWidth: number` - Box maximum width.
@@ -219,12 +226,12 @@ Buttons allow users to take actions, and make choices, with a single click.
 
 Props:
 
-- Inherited props: [Box](#box)
+- See inherited props: [Box](#box)
 - `fluid: boolean` - Tells the button to fill all available horizontal space.
 - `icon: string` - Adds an icon to the button.
-- `color: string` - Button color, see `styles/atomic/color.scss`.
-There is also a special color `transparent` - makes the button transparent
-and slightly dim when inactive.
+- `color: string` - Button color, as defined in `variables.scss`.
+  - There is also a special color `transparent` - makes the button
+  transparent and slightly dim when inactive.
 - `disabled: boolean` - Disables and greys out the button.
 - `selected: boolean` - Activates the button (gives it a green color).
 - `tooltip: string` - A fancy, boxy tooltip, which appears when hovering
@@ -269,7 +276,7 @@ two flex items as far as possible from each other.
 
 Props:
 
-- Inherited props: [Box](#box)
+- See inherited props: [Box](#box)
 - `direction: string` - This establishes the main-axis, thus defining the
 direction flex items are placed in the flex container.
   - `row` (default) - left to right.
@@ -306,26 +313,11 @@ when they overflow the line.
   items (and the space to the edges) is equal.
   - TBD (not all properties are supported in IE11).
 
-### `Icon`
-
-Renders one of the FontAwesome icons of your choice.
-
-```jsx
-<Icon name="plus" />
-```
-
-Props:
-
-- Inherited props: [Box](#box)
-- `name: string` - Icon name.
-- `size: number` - Icon size. `1` is normal size, `2` is two times bigger.
-Fractional numbers are supported.
-
 ### `Flex.Item`
 
 Props:
 
-- Inherited props: [Box](#box)
+- See inherited props: [Box](#box)
 - `order: number` - By default, flex items are laid out in the source order.
 However, the order property controls the order in which they appear in the
 flex container.
@@ -340,6 +332,26 @@ if necessary. Inverse of `grow`.
 remaining space is distributed. It can be a length (e.g. `20%`, `5rem`, etc.),
 an `auto` or `content` keyword.
 - `align: string` - This allows the default alignment (or the one specified by align-items) to be overridden for individual flex items. See: [Flex](#flex).
+
+### `Icon`
+
+Renders one of the FontAwesome icons of your choice.
+
+```jsx
+<Icon name="plus" />
+```
+
+To smoothen the transition from v4 to v5, we have added a v4 semantic to
+transform names with `-o` suffixes to FA Regular icons. For example:
+- `square` will get transformed to `fas square`
+- `square-o` will get transformed to `far square`
+
+Props:
+
+- See inherited props: [Box](#box)
+- `name: string` - Icon name.
+- `size: number` - Icon size. `1` is normal size, `2` is two times bigger.
+Fractional numbers are supported.
 
 ### `LabeledList`
 
@@ -425,7 +437,7 @@ If you want to have a button on the right side of an section title
 </Section>
 ```
 
-- Inherited props: [Box](#box)
+- See inherited props: [Box](#box)
 - `title: string` - Title of the section.
 - `level: number` - Section level in hierarchy. Default is 1, higher number
 means deeper level of nesting. Must be an integer number.
@@ -495,7 +507,7 @@ a lot of `Button` props.
 
 Props:
 
-- Inherited props: [Button](#button)
+- See inherited props: [Button](#button)
 - `key: string` - A unique identifier for the tab.
 - `label: string` - Tab label.
 - `icon: string` - Tab icon.
@@ -508,7 +520,7 @@ A boxy tooltip from tgui 1. It is very hacky in its current state, and
 requires setting `position: relative` on the container.
 
 Please note, that [Button](#button) component has a `tooltip` prop, and
-we recommended to use that prop instead.
+it is recommended to use that prop instead.
 
 Usage:
 
@@ -517,15 +529,12 @@ Usage:
   Sample text.
   <Tooltip
     position="bottom"
-    content="Tooltip for this text" />
+    content="Box tooltip" />
 </Box>
 ```
 
 Props:
 
-- Inherited props: [Button](#button)
-- `key: string` - A unique identifier for the tab.
-- `label: string` - Tab label.
-- `icon: string` - Tab icon.
-- `content/children: any` - Content to render inside the tab.
-- `onClick: function` - Called when element is clicked.
+- `position: string` - Tooltip position.
+- `content/children: string` - Content of the tooltip. Must be a plain string.
+Fragments or other elements are **not** supported.
