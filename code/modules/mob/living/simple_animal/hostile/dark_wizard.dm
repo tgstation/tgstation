@@ -22,7 +22,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	aggro_vision_range = 9
 	turns_per_move = 5
-	gold_core_spawnable = HOSTILE_SPAWN
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	faction = list(ROLE_WIZARD)
 	do_footstep = TRUE
 	weather_immunities = list("lava","ash")
