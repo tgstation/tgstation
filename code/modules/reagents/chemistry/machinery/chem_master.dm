@@ -353,7 +353,7 @@
 					P.name = trim("[name] medipen")	//FULP
 					adjust_item_drop_location(P)	//FULP
 					reagents.trans_to(P, 10, transfered_by = usr)	//FULP
-					reagents.remove_reagent(reagents.get_master_reagent_id(), 10)	
+					reagents.remove_reagent(reagents.get_master_reagent_id(), 10)	//FULP
 			else	//FULP
 				to_chat(usr, "<span class='notice'> This reagent {[reagents.get_master_reagent_name()]} is not Federation-Approved. </span>")	//FULP
 				return	//FULP

@@ -26,8 +26,9 @@ Borg Hypospray
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
 	var/bypass_protection = 0 //If the hypospray can go through armor or thick material
 
+	//+ SalChems addition of synth_TrekChems that are weaker than standard
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list(/datum/reagent/medicine/C2/convermol, /datum/reagent/medicine/C2/libital, /datum/reagent/medicine/C2/multiver, /datum/reagent/medicine/C2/aiuri, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution)
+	var/list/reagent_ids = list(/datum/reagent/medicine/C2/convermol, /datum/reagent/medicine/C2/libital, /datum/reagent/medicine/C2/multiver, /datum/reagent/medicine/C2/aiuri, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/CF/synth_bicaridine, /datum/reagent/medicine/CF/synth_kelotane, /datum/reagent/medicine/CF/synth_antitoxin, /datum/reagent/medicine/CF/synth_tricordrazine, /datum/reagent/medicine/salglu_solution)	//FULP
 	var/accepts_reagent_upgrades = TRUE //If upgrades can increase number of reagents dispensed.
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.

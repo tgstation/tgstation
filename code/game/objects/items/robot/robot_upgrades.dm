@@ -393,14 +393,13 @@
 				for(var/re in additional_reagents)
 					H.del_reagent(re)
 
-//+ SalChems addition of synth_TrekChems that are weaker than standard
 /obj/item/borg/upgrade/hypospray/expanded
 	name = "medical cyborg expanded hypospray"
 	desc = "An upgrade to the Medical module's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
 	additional_reagents = list(/datum/reagent/medicine/mannitol, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate,
 		/datum/reagent/medicine/mutadone, /datum/reagent/medicine/haloperidol, /datum/reagent/medicine/oxandrolone, /datum/reagent/medicine/sal_acid,
-		/datum/reagent/medicine/rezadone, /datum/reagent/medicine/CF/synth_bicaridine, /datum/reagent/medicine/CF/synth_kelotane, /datum/reagent/medicine/CF/synth_antitoxin, /datum/reagent/medicine/CF/synth_tricordrazine, /datum/reagent/medicine/pen_acid)	//FULP
+		/datum/reagent/medicine/rezadone, /datum/reagent/medicine/pen_acid)
 
 /obj/item/borg/upgrade/piercing_hypospray
 	name = "cyborg piercing hypospray"
