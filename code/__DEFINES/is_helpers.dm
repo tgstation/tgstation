@@ -155,6 +155,7 @@ GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
 	)))
 
 GLOBAL_LIST_INIT(clawfootmob, typecacheof(list(
+	/mob/living/carbon/alien/humanoid,
 	/mob/living/simple_animal/hostile/alien,
 	/mob/living/simple_animal/pet/cat,
 	/mob/living/simple_animal/pet/dog,
@@ -173,7 +174,8 @@ GLOBAL_LIST_INIT(barefootmob, typecacheof(list(
 
 GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 	/mob/living/simple_animal/hostile/megafauna,
-	/mob/living/simple_animal/hostile/jungle/leaper
+	/mob/living/simple_animal/hostile/jungle/leaper,
+	/mob/living/simple_animal/hostile/asteroid/goliath
 	)))
 
 //Misc mobs

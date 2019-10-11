@@ -136,7 +136,7 @@
 
 	///I don't want to confuse this with client registered_z.
 	var/my_z
-
+	///If the mob should receive the footstep component. Careful. You have to make sure that the mob ACTUALLY has footsteps otherwise this will runtime.
 	var/do_footstep = FALSE
 
 /mob/living/simple_animal/Initialize()

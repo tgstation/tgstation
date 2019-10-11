@@ -15,8 +15,13 @@
 	if(isbarefoot(parent))
 		sound_proc = .proc/play_barefoot
 	else if(isclawfoot(parent))
+		if(isalienadult(parent))
+			volume *= 0.5
+			e_range -= 5
 		sound_proc = .proc/play_clawfoot
 	else if(isheavyfoot(parent))
+		if(istype(parent, /mob/living/simple_animal/hostile/asteroid/goliath))
+			volume *= 0.5
 		sound_proc = .proc/play_heavyfoot
 	else if(isslime(parent))
 		sound_proc = .proc/play_slimefoot
@@ -24,8 +29,6 @@
 		sound_proc = .proc/play_shoefoot
 	else if(ishuman(parent))
 		sound_proc = .proc/play_humanfoot
-	else if(isalienadult(parent))
-		sound_proc = .proc/play_xenofoot
 	footstep_callback = CALLBACK(src, sound_proc)
 
 /datum/component/footstep/Destroy()
@@ -72,9 +75,6 @@
 		GLOB.barefootstep[T.barefootstep][2] * v,
 		TRUE,
 		GLOB.barefootstep[T.barefootstep][3] + e)
-
-/datum/component/footstep/proc/play_xenofoot(turf/open/T, v, e)
-	play_clawfoot(T, v / 2, e - 5)
 
 ///for xenomorphs, dogs, and other clawed mobs
 /datum/component/footstep/proc/play_clawfoot(turf/open/T, v, e)
