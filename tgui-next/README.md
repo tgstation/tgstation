@@ -77,12 +77,11 @@ it to build the project:
 Remember to always run a full build before submitting a PR. It creates
 a compressed javascript bundle which is then referenced from DM code.
 We prefer to keep it version controlled, so that people could build the
-game only with Dream Maker.
+game just by using Dream Maker.
 
 ## Project structure
 
 - `/packages` - Each folder here represents a self-contained Node module.
-It works just like packages in Java.
 - `/packages/common` - Helper functions
 - `/packages/tgui/index.js` - Application entry point.
 - `/packages/tgui/components` - Basic UI building blocks.
@@ -126,7 +125,7 @@ There are a few important semantics you need to know about:
   to React, and is a feature of this component system.
   - `children` is better used when your element is a full tag (like
   `<Button>Hello</Button>`), and when content is long and complex. This is
-  a native React prop (unline `content`), and contains all elements you
+  a native React prop (unlike `content`), and contains all elements you
   defined between the opening and the closing tag of an element.
   - You should never use both on a same element.
   - You should never use `children` explicitly as a prop on an element.
