@@ -95,6 +95,18 @@
 		var/indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 		return (threat_level >= requirements[indice_pop])
 
+// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the amount of scaled steps.
+/datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
+	var/scaled_up	// The amount of times it has scaled up
+	var/base_prob = 50
+	for(var/i in 1 to 5)
+		if(remaining_threat_level >= scaling_step)
+			var/new_prob = base_prob - (steps_scaled * scale_cost) - (extra_rulesets * 10) + remaining_threat_level
+			if (prob(base_prob - (steps_scaled * 15) + remaining_threat_level )
+
+			else
+				return scaled_up
+
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()
 	return
