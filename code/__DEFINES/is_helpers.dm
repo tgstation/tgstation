@@ -138,7 +138,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
 GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
-	/mob/living/carbon/human/,
 	/mob/living/simple_animal/cow,
 	/mob/living/simple_animal/hostile/cat_butcherer,
 	/mob/living/simple_animal/hostile/faithless,
@@ -152,11 +151,10 @@ GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
 	/mob/living/simple_animal/hostile/retaliate/spaceman,
 	/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace,
 	/mob/living/simple_animal/hostile/retaliate/goat,
-	/mob/living/carbon/true_devil,
+	/mob/living/carbon/true_devil
 	)))
 
 GLOBAL_LIST_INIT(clawfootmob, typecacheof(list(
-	/mob/living/carbon/alien/humanoid,
 	/mob/living/simple_animal/hostile/alien,
 	/mob/living/simple_animal/pet/cat,
 	/mob/living/simple_animal/pet/dog,
