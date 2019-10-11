@@ -99,10 +99,11 @@
 /datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
 	var/scaled_up	// The amount of times it has scaled up
 	var/base_prob = 50
-	for(var/i in 1 to 5)
-		if(remaining_threat_level >= scaling_step)
-			var/new_prob = base_prob - (steps_scaled * scale_cost) - (extra_rulesets * 10) + remaining_threat_level
-			if (prob(base_prob - (steps_scaled * 15) + remaining_threat_level )
+	for(var/i in 1 to 3)
+		remaining_threat_level -= scaled_up * scale_cost
+		if(remaining_threat_level >= scale_cost)
+			var/new_prob = base_prob - (scaled_up * scale_cost) - (extra_rulesets * 15) + remaining_threat_level
+			if (prob(new_prob)
 
 			else
 				return scaled_up
