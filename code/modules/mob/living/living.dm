@@ -505,7 +505,7 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-//proc used to ressuscitate a mob
+//Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
@@ -546,6 +546,7 @@
 
 
 //proc used to completely heal a mob.
+//admin_revive = TRUE is used in other procs, for example mob/living/carbon/fully_heal()
 /mob/living/proc/fully_heal(admin_revive = FALSE)
 	restore_blood()
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
