@@ -29,11 +29,11 @@
 			return COMPONENT_ITEM_NO_ATTACK
 	if(user.a_intent == INTENT_HARM && ishuman(M) && source.get_sharpness())
 		var/mob/living/carbon/human/H = M
-		if(H.has_status_effect(/datum/status_effect/neck_slice))
-			user.show_message("<span class='danger'>[H]'s neck has already been already cut, you can't make the bleeding any worse!", MSG_VISUAL, \
-							"<span class='danger'>Their neck has already been already cut, you can't make the bleeding any worse!")
-			return COMPONENT_ITEM_NO_ATTACK
 		if((H.health <= H.crit_threshold || (user.pulling == H && user.grab_state >= GRAB_NECK) || H.IsSleeping()) && user.zone_selected == BODY_ZONE_HEAD) // Only sleeping, neck grabbed, or crit, can be sliced.
+			if(H.has_status_effect(/datum/status_effect/neck_slice))
+				user.show_message("<span class='danger'>[H]'s neck has already been already cut, you can't make the bleeding any worse!", MSG_VISUAL, \
+								"<span class='danger'>Their neck has already been already cut, you can't make the bleeding any worse!")
+				return COMPONENT_ITEM_NO_ATTACK
 			INVOKE_ASYNC(src, .proc/startNeckSlice, source, H, user)
 			return COMPONENT_ITEM_NO_ATTACK
 

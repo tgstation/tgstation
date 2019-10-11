@@ -237,7 +237,7 @@
 	desc = "Delicious [cone_name] cone, but no ice cream."
 
 
-/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(var/flavour_name, var/datum/reagents/R = null)
+/obj/item/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour_name, datum/reagents/R = null)
 	name = "[flavour_name] icecream"
 	switch (flavour_name) // adding the actual reagents advertised in the ingredient list
 		if ("vanilla")

@@ -140,7 +140,7 @@
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
 ///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
-/obj/item/organ/proc/applyOrganDamage(var/d, var/maximum = maxHealth)	//use for damaging effects
+/obj/item/organ/proc/applyOrganDamage(d, maximum = maxHealth)	//use for damaging effects
 	if(!d) //Micro-optimization.
 		return
 	if(maximum < damage)
@@ -152,7 +152,7 @@
 		to_chat(owner, mess)
 
 ///SETS an organ's damage to the amount "d", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
-/obj/item/organ/proc/setOrganDamage(var/d)	//use mostly for admin heals
+/obj/item/organ/proc/setOrganDamage(d)	//use mostly for admin heals
 	applyOrganDamage(d - damage)
 
 /** check_damage_thresholds
@@ -161,7 +161,7 @@
   * description: By checking our current damage against our previous damage, we can decide whether we've passed an organ threshold.
   *				 If we have, send the corresponding threshold message to the owner, if such a message exists.
   */
-/obj/item/organ/proc/check_damage_thresholds(var/M)
+/obj/item/organ/proc/check_damage_thresholds(M)
 	if(damage == prev_damage)
 		return
 	var/delta = damage - prev_damage

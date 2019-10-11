@@ -41,7 +41,7 @@
 	else if(dx<0)
 		.+=360
 
-/proc/Get_Pixel_Angle(var/y, var/x)//for getting the angle when animating something's pixel_x and pixel_y
+/proc/Get_Pixel_Angle(y, x)//for getting the angle when animating something's pixel_x and pixel_y
 	if(!y)
 		return (x>=0)?90:270
 	.=arctan(x/y)
@@ -798,7 +798,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	/obj/structure/light_construct, /obj/machinery/light)))
 
 
-/proc/gotwallitem(loc, dir, var/check_external = 0)
+/proc/gotwallitem(loc, dir, check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
 		if(is_type_in_typecache(O, GLOB.WALLITEMS) && check_external != 2)
@@ -1283,7 +1283,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 //Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
-/proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
+/proc/dview(range = world.view, center, invis_flags = 0)
 	if(!center)
 		return
 
