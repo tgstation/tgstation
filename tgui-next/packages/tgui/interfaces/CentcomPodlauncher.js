@@ -149,9 +149,9 @@ export const CentcomPodlauncher = props => {
               onClick={() => act(ref, 'effectBurst')} />
             <Button
               content="Specific Target"
-              selected={data.effectBluespace}
-              tooltip="Gives the supplypod an advanced Bluespace Recyling Device. After opening, the supplypod will be warped directly to the surface of a nearby NT-designated trash planet (/r/ss13)."
-              onClick={() => act(ref, 'effectBluespace')} />
+              selected={data.effectTarget}
+              tooltip="This will make the supplypod target a specific atom, instead of the mouses position. Smiting does this automatically!"
+              onClick={() => act(ref, 'effectTarget')} />
           </LabeledList.Item>
           <LabeledList.Item label="Name/Desc">
             <Button
