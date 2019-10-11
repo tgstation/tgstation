@@ -108,6 +108,7 @@
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
 	var/temporary_unstoppable_movement = FALSE
+	var/lagshot = FALSE //used for buckshotlikes so dell computers dont crash
 
 /obj/projectile/Initialize()
 	. = ..()
@@ -191,8 +192,9 @@
 			if(hitsound)
 				var/volume = vol_by_damage()
 				playsound(loc, hitsound, volume, TRUE, -1)
-			L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
-					"<span class='userdanger'>You're hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
+			if(lagshot == FALSE)
+				L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
+						"<span class='userdanger'>You're hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
 		L.on_hit(src)
 
 	var/reagent_note

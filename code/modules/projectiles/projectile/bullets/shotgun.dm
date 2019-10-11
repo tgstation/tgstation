@@ -58,6 +58,7 @@
 /obj/projectile/bullet/pellet
 	var/tile_dropoff = 0.75
 	var/tile_dropoff_s = 0.5
+	lagshot = TRUE
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
