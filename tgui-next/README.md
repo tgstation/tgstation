@@ -130,6 +130,18 @@ There are a few important semantics you need to know about:
   defined between the opening and the closing tag of an element.
   - You should never use both on a same element.
   - You should never use `children` explicitly as a prop on an element.
+- Inferno supports both camelcase (`onClick`) and lowercase (`onclick`)
+event names.
+  - Camel case names are what's called "synthetic" events, and are the
+  *preferred way* of handling events in React, for efficiency and
+  performance reasons. Please read
+  [Inferno Event Handling](https://infernojs.org/docs/guides/event-handling)
+  to understand what this is about.
+  - Lower case names are native browser events and should be used sparingly,
+  for example when you need an explicit IE8 support. **DO NOT** use
+  lowercase event handlers unless you really know what you are doing.
+  - [Button](#button) component straight up does not support lowercase event
+  handlers. Use the camel case `onClick` instead.
 
 ### `AnimatedNumber`
 
