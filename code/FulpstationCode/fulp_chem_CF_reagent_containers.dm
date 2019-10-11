@@ -1,4 +1,8 @@
-//Reagent Container (PILL) for Charcoal in Saliferous' Chem Patch/Rework
+//Fulp SalChems (T5 Trekkie Chems and Comebacks Rework)
+//@Author: Saliferous
+
+//Pills
+
 /obj/item/reagent_containers/pill/charcoal	//FULP [Saliferous]
 	name = "charcoal pill"	//FULP
 	desc = "Purges chemicals and toxins"	//FULP
@@ -11,16 +15,29 @@
 /obj/item/reagent_containers/pill/patch/stypticpowder
 	name = "Styptic Powder Patch"
 	desc = "Heals bruises"
-	list_reagents = list(/datum/reagent/medicine/CF/styptic = 10)
+	list_reagents = list(/datum/reagent/medicine/CF/styptic = 15)
 	icon_state = "bandaid_brute"
 
 /obj/item/reagent_containers/pill/patch/silversulfadiazine
 	name = "Silver Sulfadiazine Patch"
 	desc = "Heals burns"
-	list_reagents = list(/datum/reagent/medicine/CF/silver_sulfadiazine = 10)
+	list_reagents = list(/datum/reagent/medicine/CF/silver_sulfadiazine = 15)
 	icon_state = "bandaid_burn"
 
+/obj/item/reagent_containers/pill/patch/synthflesh
+	name = "Synthflesh"
+	desc = "Heals Bruises and Burns"
+	list_reagents = list(/datum/reagent/medicine/CF/synthflesh = 15)
+
+//Bottles
+
+/obj/item/reagent_containers/glass/bottle/charcoal
+	name = "Charcoal bottle"
+	desc = "A small bottle of charcoal, which removes toxins and other chemicals from the bloodstream."
+	list_reagents = list(/datum/reagent/medicine/CF/charcoal = 30)
+
 //Medigel
+
 /obj/item/reagent_containers/medigel/stypticpowder
 	name = "medical gel (styptic)"
 	desc = "Heals bruises"
@@ -32,6 +49,12 @@
 	desc = "Heals burns"
 	list_reagents = list(/datum/reagent/medicine/CF/silver_sulfadiazine = 60)
 	icon_state = "burngel"
+
+/obj/item/reagent_containers/medigel/synthflesh
+	name = "Synthflesh"
+	desc = "Heals Bruises and Burns"
+	list_reagents = list(/datum/reagent/medicine/CF/synthflesh = 60)
+	icon_state = "synthgel"
 
 //Syringes
 
@@ -55,24 +78,24 @@
 	desc = "Advanced All-round Healing"
 	list_reagents = list(/datum/reagent/medicine/CF/tricordrazine = 15)
 
-//Hypospray
+//Hypospray - Medipen
 
 /obj/item/reagent_containers/hypospray/medipen/bicaridine
 	name = "Bicaridine medipen"
 	desc = "Advanced Brute Healing"
-	list_reagents = list(/datum/reagent/medicine/CF/bicaridine = 20)
+	list_reagents = list(/datum/reagent/medicine/CF/bicaridine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/kelotane
 	name = "Kelotane medipen"
 	desc = "Advanced Burn Healing"
-	list_reagents = list(/datum/reagent/medicine/CF/kelotane = 20)
+	list_reagents = list(/datum/reagent/medicine/CF/kelotane = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/antitoxin
 	name = "AntiToxin medipen"
 	desc = "Advanced Toxin Healing"
-	list_reagents = list(/datum/reagent/medicine/CF/antitoxin = 20)
+	list_reagents = list(/datum/reagent/medicine/CF/antitoxin = 10)
 
-/obj/item/reagent_containers/hypospray/tricordrazine
-	name = "Tricordrazine Hypospray"
+/obj/item/reagent_containers/hypospray/medipen/tricordrazine
+	name = "Tricordrazine medipen"
 	desc = "Advanced All-round Healing"
-	list_reagents = list(/datum/reagent/medicine/CF/tricordrazine = 20)
+	list_reagents = list(/datum/reagent/medicine/CF/tricordrazine = 10)
