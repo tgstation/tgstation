@@ -49,9 +49,7 @@
 	var/miming = 0 // Mime's vow of silence
 	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
-	var/team_antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
-	var/datum/atom_hud/antag/antag_hud = null //this mind's global antag HUD
-	var/datum/atom_hud/antag/team_antag_hud = null //this mind's antag HUD
+	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 	var/hasSoul = TRUE // If false, renders the character unable to sell their soul.
@@ -68,7 +66,7 @@
 
 	var/list/learned_recipes //List of learned recipe TYPES.
 
-/datum/mind/New(var/key)
+/datum/mind/New(key)
 	src.key = key
 	soulOwner = src
 	martial_art = default_martial_art
@@ -86,7 +84,7 @@
 
 	return language_holder
 
-/datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
+/datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		UnregisterSignal(current, COMSIG_MOB_DEATH)
@@ -105,8 +103,7 @@
 	if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
-	var/datum/atom_hud/antag/global_hud_to_transfer = antag_hud //we need these because leave_hud() will clear this list
-	var/datum/atom_hud/antag/team_hud_to_transfer = team_antag_hud
+	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
 	var/mob/living/old_current = current
 	if(current)
 		current.transfer_observers_to(new_character)	//transfer anyone observing the old character to the new one
@@ -118,7 +115,7 @@
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
-	transfer_antag_huds(global_hud_to_transfer, team_hud_to_transfer)				//inherit the antag HUD
+	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
 	transfer_martial_arts(new_character)
 	RegisterSignal(new_character, COMSIG_MOB_DEATH, .proc/set_death_time)
@@ -692,7 +689,7 @@
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
-/datum/mind/proc/has_martialart(var/string)
+/datum/mind/proc/has_martialart(string)
 	if(martial_art && martial_art.id == string)
 		return martial_art
 	return FALSE

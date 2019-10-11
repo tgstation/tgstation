@@ -11,7 +11,7 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	max_integrity = 250
-	integrity_failure = 50
+	integrity_failure = 0.2
 
 	var/id = 0
 	var/sun_angle = 0		// sun angle as set by sun datum
@@ -69,9 +69,9 @@
 	return TRUE
 
 /obj/machinery/power/tracker/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+	. = ..()
+	if(.)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
-		stat |= BROKEN
 		unset_control()
 
 /obj/machinery/power/solar/deconstruct(disassembled = TRUE)

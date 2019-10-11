@@ -28,7 +28,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //This proc sends the asset to the client, but only if it needs it.
 //This proc blocks(sleeps) unless verify is set to false
-/proc/send_asset(var/client/client, var/asset_name, var/verify = TRUE)
+/proc/send_asset(client/client, asset_name, verify = TRUE)
 	if(!istype(client))
 		if(ismob(client))
 			var/mob/M = client
@@ -73,7 +73,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	return 1
 
 //This proc blocks(sleeps) unless verify is set to false
-/proc/send_asset_list(var/client/client, var/list/asset_list, var/verify = TRUE)
+/proc/send_asset_list(client/client, list/asset_list, verify = TRUE)
 	if(!istype(client))
 		if(ismob(client))
 			var/mob/M = client
@@ -124,7 +124,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //This proc will download the files without clogging up the browse() queue, used for passively sending files on connection start.
 //The proc calls procs that sleep for long times.
-/proc/getFilesSlow(var/client/client, var/list/files, var/register_asset = TRUE)
+/proc/getFilesSlow(client/client, list/files, register_asset = TRUE)
 	var/concurrent_tracker = 1
 	for(var/file in files)
 		if (!client)
@@ -142,13 +142,13 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
-/proc/register_asset(var/asset_name, var/asset)
+/proc/register_asset(asset_name, asset)
 	SSassets.cache[asset_name] = asset
 
 //Generated names do not include file extention.
 //Used mainly for code that deals with assets in a generic way
 //The same asset will always lead to the same asset name
-/proc/generate_asset_name(var/file)
+/proc/generate_asset_name(file)
 	return "asset.[md5(fcopy_rsc(file))]"
 
 
@@ -158,7 +158,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 GLOBAL_LIST_EMPTY(asset_datums)
 
 //get an assetdatum or make a new one
-/proc/get_asset_datum(var/type)
+/proc/get_asset_datum(type)
 	return GLOB.asset_datums[type] || new type()
 
 /datum/asset
@@ -595,6 +595,22 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"pill21" = 'icons/UI_Icons/Pills/pill21.png',
 		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
+
+
+/datum/asset/spritesheet/simple/roulette
+	name = "roulette"
+	assets = list(
+		"black" = 'icons/UI_Icons/Roulette/black.png',
+		"red" = 'icons/UI_Icons/Roulette/red.png',
+		"odd" = 'icons/UI_Icons/Roulette/odd.png',
+		"even" = 'icons/UI_Icons/Roulette/even.png',
+		"low" = 'icons/UI_Icons/Roulette/1-18.png',
+		"high" = 'icons/UI_Icons/Roulette/19-36.png',
+		"nano" = 'icons/UI_Icons/Roulette/nano.png',
+		"zero" = 'icons/UI_Icons/Roulette/0.png'
+
+	)
+
 
 //this exists purely to avoid meta by pre-loading all language icons.
 /datum/asset/language/register()

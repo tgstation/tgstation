@@ -205,11 +205,10 @@
 		owner.death()
 		brain_death = TRUE
 
-/obj/item/organ/brain/process()	//needs to run in life AND death
-	..()
+/obj/item/organ/brain/check_damage_thresholds(mob/M)
+	. = ..()
 	//if we're not more injured than before, return without gambling for a trauma
 	if(damage <= prev_damage)
-		prev_damage = damage
 		return
 	damage_delta = damage - prev_damage
 	if(damage > BRAIN_DAMAGE_MILD)
@@ -224,15 +223,18 @@
 
 	if (owner)
 		if(owner.stat < UNCONSCIOUS) //conscious or soft-crit
+			var/brain_message
 			if(prev_damage < BRAIN_DAMAGE_MILD && damage >= BRAIN_DAMAGE_MILD)
-				to_chat(owner, "<span class='warning'>You feel lightheaded.</span>")
+				brain_message = "<span class='warning'>You feel lightheaded.</span>"
 			else if(prev_damage < BRAIN_DAMAGE_SEVERE && damage >= BRAIN_DAMAGE_SEVERE)
-				to_chat(owner, "<span class='warning'>You feel less in control of your thoughts.</span>")
+				brain_message = "<span class='warning'>You feel less in control of your thoughts.</span>"
 			else if(prev_damage < (BRAIN_DAMAGE_DEATH - 20) && damage >= (BRAIN_DAMAGE_DEATH - 20))
-				to_chat(owner, "<span class='warning'>You can feel your mind flickering on and off...</span>")
-	//update our previous damage holder after we've checked our boundaries
-	prev_damage = damage
-	return
+				brain_message = "<span class='warning'>You can feel your mind flickering on and off...</span>"
+
+			if(.)
+				. += "\n[brain_message]"
+			else
+				return brain_message
 
 /obj/item/organ/brain/alien
 	name = "alien brain"

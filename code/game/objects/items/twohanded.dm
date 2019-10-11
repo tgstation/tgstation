@@ -129,6 +129,7 @@
 	return ..()
 
 /obj/item/twohanded/offhand/dropped(mob/living/user, show_message = TRUE) //Only utilized by dismemberment since you can't normally switch to the offhand to drop it.
+	SHOULD_CALL_PARENT(FALSE)
 	var/obj/I = user.get_active_held_item()
 	if(I && istype(I, /obj/item/twohanded))
 		var/obj/item/twohanded/thw = I
@@ -459,7 +460,7 @@
 	throw_speed = 4
 	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 10
-	materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
+	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	sharpness = IS_SHARP
@@ -492,15 +493,6 @@
 		icon_prefix = "spearplasma"
 	update_icon()
 	qdel(tip)
-	var/obj/item/grenade/G = locate() in parts_list
-	if(G)
-		var/obj/item/twohanded/spear/explosive/lance = new /obj/item/twohanded/spear/explosive(src.loc, G)
-		lance.force_wielded = force_wielded
-		lance.force_unwielded = force_unwielded
-		lance.throwforce = throwforce
-		lance.icon_prefix = icon_prefix
-		parts_list -= G
-		qdel(src)
 	..()
 
 
@@ -516,6 +508,21 @@
 	explosive = G
 	desc = "A makeshift spear with [G] attached to it"
 	update_icon()
+
+
+/obj/item/twohanded/spear/explosive/CheckParts(list/parts_list)
+	var/obj/item/grenade/G = locate() in parts_list
+	if(G)
+		var/obj/item/twohanded/spear/lancePart = locate() in parts_list
+		force_wielded = lancePart.force_wielded
+		force_unwielded = lancePart.force_unwielded
+		throwforce = lancePart.throwforce
+		icon_prefix = lancePart.icon_prefix
+		parts_list -= G
+		parts_list -= lancePart
+		Initialize(src.loc, G)
+		qdel(lancePart)
+	..()
 
 /obj/item/twohanded/spear/explosive/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -565,11 +572,13 @@
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
-	materials = list(/datum/material/iron=13000)
+	custom_materials = list(/datum/material/iron=13000)
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.5
 	var/on = FALSE
 
 /obj/item/twohanded/required/chainsaw/Initialize()
@@ -627,13 +636,10 @@
 
 //GREY TIDE
 /obj/item/twohanded/spear/grey_tide
-	icon_state = "spearglass0"
 	name = "\improper Grey Tide"
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
 	force_unwielded = 15
 	force_wielded = 25
-	throwforce = 20
-	throw_speed = 4
 	attack_verb = list("gored")
 
 /obj/item/twohanded/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
@@ -701,6 +707,7 @@
 	return (BRUTELOSS)
 
 /obj/item/twohanded/pitchfork/demonic/pickup(mob/living/user)
+	. = ..()
 	if(isliving(user) && user.mind && user.owns_soul() && !is_devil(user))
 		var/mob/living/U = user
 		U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
@@ -785,26 +792,17 @@
 /*
  * Bone Spear
  */
-/obj/item/twohanded/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+/obj/item/twohanded/spear/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
 	icon_state = "bone_spear0"
-	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
-	force = 11
-	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
-	force_unwielded = 11
-	force_wielded = 20					//I have no idea how to balance
+	force = 12
+	force_unwielded = 12
+	force_wielded = 20
 	throwforce = 22
-	throw_speed = 4
-	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 15				//Enhanced armor piercing
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
-	sharpness = IS_SHARP
 
-/obj/item/twohanded/bonespear/update_icon()
+/obj/item/twohanded/spear/bonespear/update_icon()
 	icon_state = "bone_spear[wielded]"
 
 /obj/item/twohanded/binoculars

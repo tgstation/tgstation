@@ -14,7 +14,7 @@
 //extract brain
 /datum/surgery_step/extract_core
 	name = "extract core"
-	implements = list(/obj/item/hemostat = 100, TOOL_CROWBAR = 100)
+	implements = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 100)
 	time = 16
 
 /datum/surgery_step/extract_core/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

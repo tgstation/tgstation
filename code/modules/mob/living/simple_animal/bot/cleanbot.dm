@@ -133,6 +133,9 @@
 	if(!target && trash) //Then for trash.
 		target = scan(/obj/item/trash)
 
+	if(!target && trash) //Search for dead mices.
+		target = scan(/obj/item/reagent_containers/food/snacks/deadmouse)
+
 	if(!target && auto_patrol) //Search for cleanables it can see.
 		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
 			start_patrol()
@@ -200,10 +203,8 @@
 		target_types += /obj/effect/decal/cleanable/crayon
 
 	if(trash)
-		target_types = list(
-		/obj/item/trash,
-		/obj/item/reagent_containers/food/snacks/deadmouse
-		)
+		target_types += /obj/item/trash
+		target_types += /obj/item/reagent_containers/food/snacks/deadmouse
 
 	target_types = typecacheof(target_types)
 
@@ -228,6 +229,7 @@
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		A.acid_act(75, 10)
+		target = null
 	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
 		if(!M.stat)
@@ -278,7 +280,6 @@
 
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
-
 
 /mob/living/simple_animal/bot/cleanbot/get_controls(mob/user)
 	var/dat

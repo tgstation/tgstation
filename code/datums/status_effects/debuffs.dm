@@ -69,17 +69,21 @@
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
-		if(health_ratio > 0.8)
-			var/healing = -0.2
-			if((locate(/obj/structure/bed) in owner.loc))
-				healing -= 0.3
-			else
-				if((locate(/obj/structure/table) in owner.loc))
-					healing -= 0.1
+		var/healing = -0.2
+		if((locate(/obj/structure/bed) in owner.loc))
+			healing -= 0.3
+		else if((locate(/obj/structure/table) in owner.loc))
+			healing -= 0.1
+		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
+			if(bedsheet.loc != owner.loc) //bedsheets in your backpack/neck don't give you comfort
+				continue
+			healing -= 0.1
+			break //Only count the first bedsheet	
+		if(health_ratio > 0.8)	
 			owner.adjustBruteLoss(healing)
 			owner.adjustFireLoss(healing)
 			owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
-			owner.adjustStaminaLoss(healing)
+		owner.adjustStaminaLoss(healing)
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))
@@ -424,6 +428,19 @@
 		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
 	playsound(T, "desceration", 100, TRUE, -1)
 
+/datum/status_effect/neck_slice
+	id = "neck_slice"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	duration = -1
+
+/datum/status_effect/neck_slice/tick()
+	var/mob/living/carbon/human/H = owner
+	if(H.stat == DEAD || H.bleed_rate <= 8)
+		H.remove_status_effect(/datum/status_effect/neck_slice)
+	if(prob(10))
+		H.emote(pick("gasp", "gag", "choke"))
+
 /mob/living/proc/apply_necropolis_curse(set_curse)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
 	if(!set_curse)
@@ -433,6 +450,7 @@
 	else
 		C.apply_curse(set_curse)
 		C.duration += 3000 //time added by additional curses
+	return C
 
 /datum/status_effect/necropolis_curse
 	id = "necrocurse"
@@ -506,7 +524,7 @@
 	new/obj/effect/temp_visual/dir_setting/curse/grasp_portal(spawn_turf, owner.dir)
 	playsound(spawn_turf, 'sound/effects/curse2.ogg', 80, TRUE, -1)
 	var/turf/ownerloc = get_turf(owner)
-	var/obj/item/projectile/curse_hand/C = new (spawn_turf)
+	var/obj/projectile/curse_hand/C = new (spawn_turf)
 	C.preparePixelProjectile(ownerloc, spawn_turf)
 	C.fire()
 
