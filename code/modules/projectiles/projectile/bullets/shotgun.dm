@@ -14,6 +14,7 @@
 /obj/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"
 	damage = 5
+	lagshot = FALSE //why is this not a pellet subtype....
 
 /obj/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
