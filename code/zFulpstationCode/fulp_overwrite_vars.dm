@@ -54,3 +54,15 @@
 //** -Adds security levels to the security record computer.
 //** -Adds arrest logging for security bots.
 //*************************************************************************
+/obj/item/clothing/under/rank/security
+	var/obj/machinery/camera/builtInCamera = null
+	var/camera_on = TRUE
+	var/sound_time_stamp
+	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
+
+/obj/machinery/computer/security
+	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
+
+//******************************************************
+//SEC BODY CAMS by Surrealistik Oct 2019 ENDS
+//******************************************************
