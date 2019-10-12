@@ -9,8 +9,6 @@
 	action_background_icon_state = "bg_spell"
 	var/datum/brain_trauma/severe/split_personality/trauma
 	var/flufftext = "You hear an echoing voice in the back of your head..."
-	var/boldnotice = "boldnotice"
-	var/notice = "notice"
 
 /obj/effect/proc_holder/spell/targeted/personality_commune/New(datum/brain_trauma/severe/split_personality/T)
 	. = ..()
@@ -25,11 +23,10 @@
 	if(!msg)
 		charge_counter = charge_max
 		return
-	to_chat(user, "<span class='[boldnotice]'>You concentrate and send thoughts to your other self:</span> <span class='[notice]'>[msg]</span>")
-	to_chat(trauma.owner, "<span class='[boldnotice]'>[flufftext]</span> <span class='[notice]'>[msg]</span>")
+	to_chat(user, "<span class='boldnotice'>You concentrate and send thoughts to your other self:</span> <span class='notice'>[msg]</span>")
+	to_chat(trauma.owner, "<span class='boldnotice'>[flufftext]</span> <span class='notice'>[msg]</span>")
 	log_directed_talk(user, trauma.owner, msg, LOG_SAY ,"[name]")
 	for(var/ded in GLOB.dead_mob_list)
 		if(!isobserver(ded))
 			continue
-		var/follow = FOLLOW_LINK(ded, user)
-		to_chat(ded, "[follow] <span class='[boldnotice]'>[user] [name]:</span> <span class='[notice]'>\"[msg]\" to</span><span class='name'>[trauma]</span>")
+		to_chat(ded, "[FOLLOW_LINK(ded, user)] <span class='[boldnotice]'>[user] [name]:</span> <span class='[notice]'>\"[msg]\" to</span><span class='name'>[trauma]</span>")
