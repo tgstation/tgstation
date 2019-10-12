@@ -8,7 +8,7 @@
 	var/last_parallax_shift //world.time of last update
 	var/parallax_throttle = 0 //ds between updates
 	var/parallax_movedir = 0
-	var/parallax_layers_max = 3
+	var/parallax_layers_max = 4
 	var/parallax_animate_timer
 
 /datum/hud/proc/create_parallax(mob/viewmob)
@@ -22,6 +22,8 @@
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view)
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view)
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/planet(null, C.view)
+		if(SSparallax.random_layer)
+			C.parallax_layers_cached += new SSparallax.random_layer
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_3(null, C.view)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
@@ -64,24 +66,25 @@
 		switch(C.prefs.parallax)
 			if (PARALLAX_INSANE)
 				C.parallax_throttle = FALSE
-				C.parallax_layers_max = 4
+				C.parallax_layers_max = 5
 				return TRUE
 
 			if (PARALLAX_MED)
 				C.parallax_throttle = PARALLAX_DELAY_MED
-				C.parallax_layers_max = 2
+				C.parallax_layers_max = 3
 				return TRUE
 
 			if (PARALLAX_LOW)
 				C.parallax_throttle = PARALLAX_DELAY_LOW
-				C.parallax_layers_max = 1
+				C.parallax_layers_max = 2
 				return TRUE
 
 			if (PARALLAX_DISABLE)
 				return FALSE
 
+	//This is high parallax.
 	C.parallax_throttle = PARALLAX_DELAY_DEFAULT
-	C.parallax_layers_max = 3
+	C.parallax_layers_max = 4
 	return TRUE
 
 /datum/hud/proc/update_parallax_pref(mob/viewmob)
@@ -295,6 +298,17 @@
 	icon_state = "layer3"
 	speed = 1.4
 	layer = 3
+
+/obj/screen/parallax_layer/random
+	blend_mode = BLEND_OVERLAY
+	speed = 3
+	layer = 3
+
+/obj/screen/parallax_layer/random/random_layer1
+	icon_state = "random_layer1"
+
+/obj/screen/parallax_layer/random/random_layer2
+	icon_state = "random_layer2"
 
 /obj/screen/parallax_layer/planet
 	icon_state = "planet"
