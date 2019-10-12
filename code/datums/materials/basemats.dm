@@ -48,11 +48,11 @@
 
 /datum/material/gold/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/decal/gold)
+	source.AddComponent(/datum/component/decal/shimmer)
 
 /datum/material/gold/on_removed(atom/source, material_flags)
 	. = ..()
-	qdel(source.GetComponent(/datum/component/decal/gold))
+	qdel(source.GetComponent(/datum/component/decal/shimmer))
 
 ///Has no special properties
 /datum/material/diamond

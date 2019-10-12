@@ -81,6 +81,10 @@
 
 
 /obj/item/stack/update_icon()
+	var/datum/component/decal/overlay = src.GetComponent(/datum/component/decal)
+	var/datum/component/decal/blood/B = src.GetComponent(/datum/component/decal/blood)
+	var/datum/component/decal/shimmer/S = src.GetComponent(/datum/component/decal/shimmer)
+
 	if(novariants)
 		return ..()
 	if(amount <= (max_amount * (1/3)))
@@ -89,6 +93,14 @@
 		icon_state = "[initial(icon_state)]_2"
 	else
 		icon_state = "[initial(icon_state)]_3"
+
+	if(GetComponent(overlay))
+		if(src.GetComponent(/datum/component/decal/shimmer))
+			S.TakeComponent(src)
+			src.AddComponent(/datum/component/decal/shimmer)
+		if(src.GetComponent(/datum/component/decal/blood))
+			B.TakeComponent(src)
+			src.AddComponent(/datum/component/decal/blood)
 	..()
 
 
@@ -224,7 +236,7 @@
 		if(O)
 			O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
-	
+
 		if(R.applies_mats && custom_materials && custom_materials.len)
 			var/list/used_materials = list()
 			for(var/i in custom_materials)
@@ -365,6 +377,7 @@
 	S.copy_evidences(src)
 	use(transfer, TRUE)
 	S.add(transfer)
+	S.update_icon()
 	return transfer
 
 /obj/item/stack/Crossed(obj/o)
@@ -419,6 +432,7 @@
 			F.forceMove(user.drop_location())
 		add_fingerprint(user)
 		F.add_fingerprint(user)
+	F.update_icon()
 	zero_amount()
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
