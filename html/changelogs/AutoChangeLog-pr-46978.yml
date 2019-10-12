@@ -1,0 +1,4 @@
+author: "willox"
+delete-after: True
+changes: 
+  - code_imp: "removed many duplicate member variables"
