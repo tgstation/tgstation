@@ -10,9 +10,9 @@
 /datum/component/decal/blood/generate_appearance(_icon, _icon_state, _dir, _layer, _color)
 	var/obj/item/I = parent
 	if(!_icon)
-		_icon = 'icons/effects/materials.dmi'
+		_icon = 'icons/effects/blood.dmi'
 	if(!_icon_state)
-		_icon_state = "shimmer"
+		_icon_state = "itemblood"
 	var/icon = initial(I.icon)
 	var/icon_state = initial(I.icon_state)
 	if(!icon || !icon_state)

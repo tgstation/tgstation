@@ -48,13 +48,11 @@
 
 /datum/material/gold/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	. = AddComponent(/datum/component/decal/gold)
+	source.AddComponent(/datum/component/decal/gold)
 
-/datum/material/plasma/on_removed(atom/source, material_flags)
+/datum/material/gold/on_removed(atom/source, material_flags)
 	. = ..()
-	var/mutable_appearance/golden_overlay
-	golden_overlay = mutable_appearance('icons/effects/materials.dmi', "shimmer")
-	source.cut_overlay(golden_overlay)
+	qdel(source.GetComponent(/datum/component/decal/gold))
 
 ///Has no special properties
 /datum/material/diamond
