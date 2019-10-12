@@ -6,6 +6,7 @@
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
+	AddComponent(/datum/component/footstep, 1, 2)
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -18,9 +19,6 @@
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
-
-/mob/living/carbon/initialize_footstep()
-	AddComponent(/datum/component/footstep, 1, 2)
 
 /mob/living/carbon/swap_hand(held_index)
 	if(!held_index)

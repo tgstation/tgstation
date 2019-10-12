@@ -151,6 +151,8 @@
 	update_simplemob_varspeed()
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
+	if(do_footstep)
+		AddComponent(/datum/component/footstep)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -171,10 +173,6 @@
 	. = ..()
 	if(stat == DEAD)
 		. += "<span class='deadsay'>Upon closer examination, [p_they()] appear[p_s()] to be dead.</span>"
-
-/mob/living/simple_animal/initialize_footstep()
-	if(do_footstep)
-		..()
 
 /mob/living/simple_animal/updatehealth()
 	..()
