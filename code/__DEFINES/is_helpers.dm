@@ -152,7 +152,8 @@ GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
 	/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace,
 	/mob/living/simple_animal/hostile/retaliate/goat,
 	/mob/living/carbon/true_devil,
-	/mob/living/simple_animal/hostile/dark_wizard
+	/mob/living/simple_animal/hostile/dark_wizard,
+	/mob/living/simple_animal/hostile/boss/paper_wizard
 	)))
 
 GLOBAL_LIST_INIT(clawfootmob, typecacheof(list(
