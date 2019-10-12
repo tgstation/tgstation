@@ -336,7 +336,7 @@ That prevents a few funky behaviors.
 		AI.battery = circuit.battery
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
-		to_chat(user, "There is no AI loaded on this terminal!")
+		to_chat(user, "<span class='alert'>There is no AI loaded on this terminal.</span>")
 
 /obj/item/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent

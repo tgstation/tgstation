@@ -242,9 +242,9 @@
 				food.LAssailant = C
 				X.monkeys--
 				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
-				to_chat(owner, "[X] now has [X.monkeys] monkeys stored.")
+				to_chat(owner, "<span class='notice'>[X] now has [X.monkeys] monkeys stored.</span>")
 		else
-			to_chat(owner, "[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.")
+			to_chat(owner, "<span class='warning'>[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.</span>")
 	else
 		to_chat(owner, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 
@@ -263,7 +263,7 @@
 	var/obj/machinery/monkey_recycler/recycler = X.connected_recycler
 
 	if(!recycler)
-		to_chat(owner, "<span class='notice'>There is no connected monkey recycler.  Use a multitool to link one.</span>")
+		to_chat(owner, "<span class='warning'>There is no connected monkey recycler. Use a multitool to link one.</span>")
 		return
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
@@ -273,7 +273,7 @@
 				X.monkeys += recycler.cube_production
 				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
 				qdel(M)
-				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
+				to_chat(owner, "<span class='notice'>[X] now has [X.monkeys] monkeys available.</span>")
 	else
 		to_chat(owner, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 
@@ -444,9 +444,9 @@
 				food.LAssailant = C
 				X.monkeys--
 				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
-				to_chat(C, "[X] now has [X.monkeys] monkeys stored.")
+				to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkeys stored.</span>")
 		else
-			to_chat(C, "[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.")
+			to_chat(C, "<span class='warning'>[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.</span>")
 
 //Pick up monkey
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/monkey/M)
@@ -458,7 +458,7 @@
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
 	var/area/mobarea = get_area(M.loc)
 	if(!X.connected_recycler)
-		to_chat(C, "<span class='notice'>There is no connected monkey recycler.  Use a multitool to link one.</span>")
+		to_chat(C, "<span class='warning'>There is no connected monkey recycler. Use a multitool to link one.</span>")
 		return
 	if(mobarea.name == E.allowed_area || mobarea.xenobiology_compatible)
 		if(!M.stat)
@@ -468,4 +468,4 @@
 		X.monkeys += connected_recycler.cube_production
 		X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
 		qdel(M)
-		to_chat(C, "[X] now has [X.monkeys] monkeys available.")
+		to_chat(C, "<span class='notice'>[X] now has [X.monkeys] monkeys available.</span>")

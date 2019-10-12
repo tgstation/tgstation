@@ -153,7 +153,7 @@
 
 	else if(exposed)
 		if(!hiddenitem)
-			to_chat(user, "<span class='notice'>There is nothing in the drain holder.</span>")
+			to_chat(user, "<span class='warning'>There is nothing in the drain holder!</span>")
 		else
 			if(ishuman(user))
 				user.put_in_hands(hiddenitem)
@@ -167,7 +167,7 @@
 /obj/structure/urinal/attackby(obj/item/I, mob/living/user, params)
 	if(exposed)
 		if (hiddenitem)
-			to_chat(user, "<span class='warning'>There is already something in the drain enclosure.</span>")
+			to_chat(user, "<span class='warning'>There is already something in the drain enclosure!</span>")
 			return
 		if(I.w_class > 1)
 			to_chat(user, "<span class='warning'>[I] is too large for the drain enclosure.</span>")
