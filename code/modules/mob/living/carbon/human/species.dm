@@ -343,8 +343,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		fly.Remove(C)
 		QDEL_NULL(fly)
 		if(C.movement_type & FLYING)
-			C.setMovetype(C.movement_type & ~FLYING)
-		ToggleFlight(C,0)
+			ToggleFlight(C)
 	if(C.dna && C.dna.species && (C.dna.features["wings"] == wings_icon))
 		if("wings" in C.dna.species.mutant_bodyparts)
 			C.dna.species.mutant_bodyparts -= "wings"
@@ -1025,12 +1024,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(H, TRAIT_FAT, OBESITY)
+			H.remove_movespeed_modifier(MOVESPEED_ID_FAT)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
 		if(H.overeatduration >= 100)
 			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
 			ADD_TRAIT(H, TRAIT_FAT, OBESITY)
+			H.add_movespeed_modifier(MOVESPEED_ID_FAT, multiplicative_slowdown = 1.5)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 
@@ -1079,6 +1080,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(H.metabolism_efficiency == 1.25)
 			to_chat(H, "<span class='notice'>You no longer feel vigorous.</span>")
 		H.metabolism_efficiency = 1
+
+	//Hunger slowdown for if mood isn't enabled
+	if(CONFIG_GET(flag/disable_human_mood))
+		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
+			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
+			if(hungry >= 70)
+				H.add_movespeed_modifier(MOVESPEED_ID_HUNGRY, override = TRUE, multiplicative_slowdown = (hungry / 50))
+			else if(isethereal(H))
+				var/datum/species/ethereal/E = H.dna.species
+				if(E.get_charge(H) <= ETHEREAL_CHARGE_NORMAL)
+					H.add_movespeed_modifier(MOVESPEED_ID_HUNGRY, override = TRUE, multiplicative_slowdown = (1.5 * (1 - E.get_charge(H) / 100)))
+			else
+				H.remove_movespeed_modifier(MOVESPEED_ID_HUNGRY)
 
 	switch(H.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
@@ -1135,11 +1149,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0	//We start at 0.
-	var/flight = 0	//Check for flight and flying items
 	var/gravity = 0
-	if(H.movement_type & FLYING)
-		flight = 1
-
 	gravity = H.has_gravity()
 
 	if(!HAS_TRAIT(H, TRAIT_IGNORESLOWDOWN) && gravity)
@@ -1152,33 +1162,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/obj/item/I in H.held_items)
 			if(I.item_flags & SLOWS_WHILE_IN_HAND)
 				. += I.slowdown
-		if(!HAS_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN))
-			var/health_deficiency = max(H.maxHealth - H.health, H.staminaloss)
-			if(health_deficiency >= 40)
-				if(flight)
-					. += (health_deficiency / 75)
-				else
-					. += (health_deficiency / 25)
-		if(CONFIG_GET(flag/disable_human_mood))
-			if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
-				var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
-				if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
-					. += hungry / 50
-			else if(isethereal(H))
-				var/datum/species/ethereal/E = H.dna.species
-				var/charge = E.get_charge(H)
-				if(charge <= ETHEREAL_CHARGE_NORMAL)
-					. += 1.5 * (1 - charge / 100)
 
 		//Moving in high gravity is very slow (Flying too)
 		if(gravity > STANDARD_GRAVITY)
 			var/grav_force = min(gravity - STANDARD_GRAVITY,3)
 			. += 1 + grav_force
 
-		if(HAS_TRAIT(H, TRAIT_FAT))
-			. += (1.5 - flight)
-		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
-			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 	return .
 
 //////////////////
@@ -1210,22 +1199,25 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/grab(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
-		target.visible_message("<span class='warning'>[target] blocks [user]'s grab attempt!</span>", \
-							"<span class='userdanger'>You block [user]'s grab attempt!</span>")
+		target.visible_message("<span class='warning'>[target] blocks [user]'s grab!</span>", \
+						"<span class='userdanger'>You block [user]'s grab!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your grab at [target] was blocked!</span>")
 		return FALSE
 	if(attacker_style && attacker_style.grab_act(user,target))
 		return TRUE
 	else
 		//Steal them shoes
 		if(!(target.mobility_flags & MOBILITY_STAND) && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && user.a_intent == INTENT_GRAB && target.shoes)
-			user.visible_message("<span class='warning'>[user] starts stealing [target]'s shoes!</span>",
-								"<span class='warning'>You start stealing [target]'s shoes!</span>")
 			var/obj/item/I = target.shoes
+			user.visible_message("<span class='warning'>[user] starts stealing [target]'s [I.name]!</span>",
+							"<span class='danger'>You start stealing [target]'s [I.name]...</span>", null, null, target)
+			to_chat(target, "<span class='userdanger'>[user] starts stealing your [I.name]!</span>")
 			if(do_after(user, I.strip_delay, TRUE, target, TRUE))
 				target.dropItemToGround(I, TRUE)
 				user.put_in_hands(I)
-				user.visible_message("<span class='warning'>[user] stole your [I]!</span>",
-									"<span class='warning'>You steal [target]'s [I]!</span>")
+				user.visible_message("<span class='warning'>[user] stole [target]'s [I.name]!</span>",
+								"<span class='notice'>You stole [target]'s [I.name]!</span>", null, null, target)
+				to_chat(target, "<span class='userdanger'>[user] stole your [I.name]!</span>")
 		target.grabbedby(user)
 		return TRUE
 
@@ -1236,7 +1228,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>", \
-							"<span class='userdanger'>You block [user]'s attack!</span>")
+						"<span class='userdanger'>You block [user]'s attack!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your attack at [target] was blocked!</span>")
 		return FALSE
 	if(attacker_style && attacker_style.harm_act(user,target))
 		return TRUE
@@ -1269,8 +1262,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 			playsound(target.loc, user.dna.species.miss_sound, 25, TRUE, -1)
-			target.visible_message("<span class='danger'>[user]'s [atk_verb] misses [target]!</span>",\
-			"<span class='userdanger'>[user]'s [atk_verb] misses you!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.visible_message("<span class='danger'>[user]'s [atk_verb] misses [target]!</span>", \
+							"<span class='danger'>You avoid [user]'s [atk_verb]!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, "<span class='warning'>Your [atk_verb] misses [target]!</span>")
 			log_combat(user, target, "attempted to punch")
 			return FALSE
 
@@ -1279,7 +1273,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		playsound(target.loc, user.dna.species.attack_sound, 25, TRUE, -1)
 
 		target.visible_message("<span class='danger'>[user] [atk_verb]ed [target]!</span>", \
-					"<span class='userdanger'>[user] [atk_verb]ed you!</span>", null, COMBAT_MESSAGE_RANGE)
+						"<span class='userdanger'>You're [atk_verb]ed by [user]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='danger'>You [atk_verb] [target]!</span>")
 
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
@@ -1297,8 +1292,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			log_combat(user, target, "punched")
 
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
-			target.visible_message("<span class='danger'>[user] knocked [target] down!</span>", \
-							"<span class='userdanger'>[user] knocked you down!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.visible_message("<span class='danger'>[user] knocks [target] down!</span>", \
+							"<span class='userdanger'>You're knocked down by [user]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, "<span class='danger'>You knock [target] down!</span>")
 			var/knockdown_duration = 40 + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
 			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
 			target.forcesay(GLOB.hit_appends)
@@ -1311,8 +1307,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())
-		target.visible_message("<span class='warning'>[target] blocks [user]'s shoving attempt!</span>", \
-							"<span class='userdanger'>You block [user]'s shoving attempt!</span>")
+		target.visible_message("<span class='warning'>[user]'s shove is blocked by [target]!</span>", \
+						"<span class='danger'>You block [user]'s shove!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, "<span class='warning'>Your shove at [target] was blocked!</span>")
 		return FALSE
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return TRUE
@@ -1352,7 +1349,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(target.IsKnockdown() && !target.IsParalyzed())
 			target.Paralyze(SHOVE_CHAIN_PARALYZE)
 			target.visible_message("<span class='danger'>[user.name] kicks [target.name] onto their side!</span>",
-				"<span class='danger'>[user.name] kicks you onto your side!</span>", null, COMBAT_MESSAGE_RANGE)
+							"<span class='userdanger'>You're kicked onto your side by [user.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, "<span class='danger'>You kick [target.name] onto their side!</span>")
 			addtimer(CALLBACK(target, /mob/living/proc/SetKnockdown, 0), SHOVE_CHAIN_PARALYZE)
 			log_combat(user, target, "kicks", "onto their side (paralyzing)")
 
@@ -1371,30 +1369,35 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							break
 			if((!target_table && !target_collateral_human) || directional_blocked)
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
-					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
+				target.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
+								"<span class='userdanger'>You're knocked down from a shove by [user.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, "<span class='danger'>You shove [target.name], knocking them down!</span>")
 				log_combat(user, target, "shoved", "knocking them down")
 			else if(target_table)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
-					"<span class='danger'>You shove [target.name] onto \the [target_table]!</span>", null, COMBAT_MESSAGE_RANGE)
+				target.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
+								"<span class='userdanger'>You're shoved onto \the [target_table] by [user.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, "<span class='danger'>You shove [target.name] onto \the [target_table]!</span>")
 				target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
 				log_combat(user, target, "shoved", "onto [target_table] (table)")
 			else if(target_collateral_human)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 				target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
-					"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
+				target.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
+					"<span class='userdanger'>You're shoved into [target_collateral_human.name] by [user.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, "<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>")
 				log_combat(user, target, "shoved", "into [target_collateral_human.name]")
 			else if(target_disposal_bin)
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 				target.forceMove(target_disposal_bin)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [target_disposal_bin]!</span>",
-					"<span class='danger'>You shove [target.name] into \the [target_disposal_bin]!</span>", null, COMBAT_MESSAGE_RANGE)
+				target.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [target_disposal_bin]!</span>",
+								"<span class='userdanger'>You're shoved into \the [target_disposal_bin] by [target.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+				to_chat(user, "<span class='danger'>You shove [target.name] into \the [target_disposal_bin]!</span>")
 				log_combat(user, target, "shoved", "into [target_disposal_bin] (disposal bin)")
 		else
-			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
-				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
+							"<span class='userdanger'>You're shoved by [user.name]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, "<span class='danger'>You shove [target.name]!</span>")
 			var/target_held_item = target.get_active_held_item()
 			var/knocked_item = FALSE
 			if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
@@ -1403,13 +1406,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				target.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
 				if(target_held_item)
 					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
-						"<span class='danger'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
+						"<span class='warning'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
 				addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
 			else if(target_held_item)
 				target.dropItemToGround(target_held_item)
 				knocked_item = TRUE
-				target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
-					"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
+				target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!</span>",
+					"<span class='warning'>You drop \the [target_held_item]!</span>", null, COMBAT_MESSAGE_RANGE)
 			var/append_message = ""
 			if(target_held_item)
 				if(knocked_item)
@@ -1434,7 +1437,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if((M != H) && M.a_intent != INTENT_HELP && H.check_shields(M, 0, M.name, attack_type = UNARMED_ATTACK))
 		log_combat(M, H, "attempted to touch")
 		H.visible_message("<span class='warning'>[M] attempts to touch [H]!</span>", \
-						"<span class='userdanger'>[M] attempts to touch you!</span>")
+						"<span class='danger'>[M] attempts to touch you!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
+		to_chat(M, "<span class='warning'>You attempt to touch [H]!</span>")
 		return 0
 	SEND_SIGNAL(M, COMSIG_MOB_ATTACK_HAND, M, H, attacker_style)
 	switch(M.a_intent)
@@ -1500,7 +1504,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		switch(hit_area)
 			if(BODY_ZONE_HEAD)
-				if(!I.is_sharp() && armor_block < 50)
+				if(!I.get_sharpness() && armor_block < 50)
 					if(prob(I.force))
 						H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 						if(H.stat == CONSCIOUS)
@@ -1530,7 +1534,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						H.update_inv_glasses()
 
 			if(BODY_ZONE_CHEST)
-				if(H.stat == CONSCIOUS && !I.is_sharp() && armor_block < 50)
+				if(H.stat == CONSCIOUS && !I.get_sharpness() && armor_block < 50)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] is knocked down!</span>", \
 									"<span class='userdanger'>You're knocked down!</span>")
@@ -1604,15 +1608,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 	return 1
 
-/datum/species/proc/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
+/datum/species/proc/on_hit(obj/projectile/P, mob/living/carbon/human/H)
 	// called when hit by a projectile
 	switch(P.type)
-		if(/obj/item/projectile/energy/floramut) // overwritten by plants/pods
+		if(/obj/projectile/energy/floramut) // overwritten by plants/pods
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
-		if(/obj/item/projectile/energy/florayield)
+		if(/obj/projectile/energy/florayield)
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 
-/datum/species/proc/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
+/datum/species/proc/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	// called before a projectile hit
 	return 0
 
@@ -1664,6 +1668,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
 
+		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
+
 		var/burn_damage
 		var/firemodifier = H.fire_stacks / 50
 		if (H.on_fire)
@@ -1687,6 +1693,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !HAS_TRAIT(H, TRAIT_RESISTCOLD))
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
+		//Sorry for the nasty oneline but I don't want to assign a variable on something run pretty frequently
+		H.add_movespeed_modifier(MOVESPEED_ID_COLD, override = TRUE, multiplicative_slowdown = ((BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR), blacklisted_movetypes = FLOATING)
 		switch(H.bodytemperature)
 			if(200 to BODYTEMP_COLD_DAMAGE_LIMIT)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)
@@ -1700,6 +1708,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	else
 		H.clear_alert("temp")
+		H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "hot")
 
@@ -1806,7 +1815,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
 	if(flying_species && H.movement_type & FLYING)
-		ToggleFlight(H,0)
+		ToggleFlight(H)
 		flyslip(H)
 	. = stunmod * H.physiology.stun_mod * amount
 
@@ -1857,7 +1866,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
 		if(!CanFly(H))
-			ToggleFlight(H,0)
+			ToggleFlight(H)
 			return FALSE
 		return TRUE
 	else
@@ -1909,7 +1918,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		speedmod -= 0.35
 		H.setMovetype(H.movement_type | FLYING)
 		override_float = TRUE
-		H.pass_flags |= PASSTABLE
+		passtable_on(H, SPECIES_TRAIT)
 		H.OpenWings()
 		H.update_mobility()
 	else
@@ -1917,7 +1926,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		speedmod += 0.35
 		H.setMovetype(H.movement_type & ~FLYING)
 		override_float = FALSE
-		H.pass_flags &= ~PASSTABLE
+		passtable_off(H, SPECIES_TRAIT)
 		H.CloseWings()
 
 /datum/action/innate/flight

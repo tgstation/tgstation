@@ -10,7 +10,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(/datum/material/iron=50, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	var/on = FALSE
 	var/brightness_on = 4 //range of light when on
@@ -218,7 +218,7 @@
 	brightness_on = 5
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
-	materials = list()
+	custom_materials = null
 	on = TRUE
 
 
@@ -317,7 +317,7 @@
 		damtype = "fire"
 		START_PROCESSING(SSobj, src)
 
-/obj/item/flashlight/flare/is_hot()
+/obj/item/flashlight/flare/get_temperature()
 	return on * heat
 
 /obj/item/flashlight/flare/torch
@@ -363,7 +363,7 @@
 	item_state = "slime"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	materials = list()
+	custom_materials = null
 	brightness_on = 6 //luminosity when on
 
 /obj/item/flashlight/emp

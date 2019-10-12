@@ -29,16 +29,20 @@
 
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	response_help   = "passes through"
-	response_disarm = "swings through"
-	response_harm   = "punches through"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
+	response_disarm_continuous = "swings through"
+	response_disarm_simple = "swing through"
+	response_harm_continuous = "punches through"
+	response_harm_simple = "punch through"
 	unsuitable_atmos_damage = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	harm_intent_damage = 0
-	friendly = "touches"
+	friendly_verb_continuous = "touches"
+	friendly_verb_simple = "touch"
 	status_flags = 0
 	wander = FALSE
 	density = FALSE
@@ -150,7 +154,7 @@
 /mob/living/simple_animal/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/simple_animal/revenant/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(!message)
 		return
 	src.log_talk(message, LOG_SAY)

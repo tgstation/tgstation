@@ -35,13 +35,15 @@ Difficulty: Medium
 	desc = "Guardians of the necropolis."
 	health = 2500
 	maxHealth = 2500
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
-	friendly = "stares down"
+	friendly_verb_continuous = "stares down"
+	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -137,7 +139,7 @@ Difficulty: Medium
 		if(prob(11))
 			new /obj/effect/temp_visual/target(turf)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_pools(var/amount, var/delay = 0.8)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_pools(amount, delay = 0.8)
 	if(!target)
 		return
 	target.visible_message("<span class='boldwarning'>Lava starts to pool up around you!</span>")
@@ -149,7 +151,7 @@ Difficulty: Medium
 		amount--
 		SLEEP_CHECK_DEATH(delay)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(var/amount = 30)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(amount = 30)
 	if(health < maxHealth * 0.5)
 		return swoop_attack(lava_arena = TRUE, swoop_cooldown = 60)
 	INVOKE_ASYNC(src, .proc/lava_pools, amount)
@@ -163,7 +165,7 @@ Difficulty: Medium
 		fire_cone()
 	SetRecoveryTime(40)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/mass_fire(var/spiral_count = 12, var/range = 15, var/times = 3)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/mass_fire(spiral_count = 12, range = 15, times = 3)
 	SLEEP_CHECK_DEATH(0)
 	for(var/i = 1 to times)
 		SetRecoveryTime(50)
@@ -234,7 +236,7 @@ Difficulty: Medium
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	light_range = initial(light_range)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(var/atom/at = target, var/meteors = TRUE)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(atom/at = target, meteors = TRUE)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 	SLEEP_CHECK_DEATH(0)
 	if(prob(50) && meteors)
@@ -248,7 +250,7 @@ Difficulty: Medium
 	turfs = line_target(40, range, at)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/line_target(var/offset, var/range, var/atom/at = target)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/line_target(offset, range, atom/at = target)
 	if(!at)
 		return
 	var/angle = ATAN2(at.x - src.x, at.y - src.y) + offset
@@ -265,7 +267,7 @@ Difficulty: Medium
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
-/proc/dragon_fire_line(var/source, var/list/turfs)
+/proc/dragon_fire_line(source, list/turfs)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
@@ -287,7 +289,7 @@ Difficulty: Medium
 			M.take_damage(45, BRUTE, "melee", 1)
 		sleep(1.5)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_arena = FALSE, atom/movable/manual_target, var/swoop_cooldown = 30)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_arena = FALSE, atom/movable/manual_target, swoop_cooldown = 30)
 	if(stat || swooping)
 		return
 	if(manual_target)
@@ -390,7 +392,7 @@ Difficulty: Medium
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/visible_message()
+/mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
 	if(swooping & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
 		return
 	return ..()
@@ -420,7 +422,7 @@ Difficulty: Medium
 /obj/effect/temp_visual/lava_warning/ex_act()
 	return
 
-/obj/effect/temp_visual/lava_warning/Initialize(mapload, var/reset_time = 10)
+/obj/effect/temp_visual/lava_warning/Initialize(mapload, reset_time = 10)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/fall, reset_time)
 	src.alpha = 63.75
@@ -447,8 +449,7 @@ Difficulty: Medium
 		var/lava_turf = /turf/open/lava/smooth
 		var/reset_turf = T.type
 		T.ChangeTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
-		sleep(reset_time)
-		T.ChangeTurf(reset_turf, flags = CHANGETURF_INHERIT_AIR)
+		addtimer(CALLBACK(T, /turf.proc/ChangeTurf, reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE)
 
 /obj/effect/temp_visual/drakewall
 	desc = "An ash drakes true flame."

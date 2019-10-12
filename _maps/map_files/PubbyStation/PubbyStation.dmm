@@ -33066,16 +33066,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
-"bFg" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
 "bFh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -34252,11 +34242,6 @@
 /area/science/mixing)
 "bHA" = (
 /obj/machinery/atmospherics/components/binary/valve,
-/obj/machinery/button/ignition{
-	id = "toxigniter";
-	pixel_x = -6;
-	pixel_y = -24
-	},
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix{
 	pixel_x = 6;
 	pixel_y = -26
@@ -34281,6 +34266,10 @@
 	pixel_x = 24
 	},
 /obj/structure/cable,
+/obj/machinery/button/ignition/incinerator/toxmix{
+	pixel_x = -6;
+	pixel_y = -24
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
 "bHC" = (
@@ -36296,13 +36285,7 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bMm" = (
-/obj/machinery/igniter{
-	id = "toxigniter";
-	luminosity = 2
-	},
-/obj/machinery/air_sensor/atmos/toxins_mixing_tank{
-	pixel_y = -32
-	},
+/obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bMn" = (
@@ -49127,6 +49110,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
+"dxo" = (
+/obj/machinery/igniter/incinerator_toxmix,
+/turf/open/floor/engine/vacuum,
+/area/science/mixing/chamber)
 "dye" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/structure/sign/departments/science{
@@ -50139,16 +50126,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/mixing)
-"glR" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
 "gmp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -54994,16 +54971,6 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
-"sbw" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
 "sbY" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/wood,
@@ -55599,6 +55566,13 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/department/science)
+"tzM" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/medical_kiosk,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "tAK" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -56148,16 +56122,6 @@
 "uRk" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
-"uRx" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock";
-	safety_mode = 1
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/exit/departure_lounge)
 "uTI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -74577,15 +74541,15 @@ aaa
 aaa
 aaa
 aHA
-bFg
+aKy
 xee
-bFg
+aKy
 aHA
 aaa
 aaa
 aaa
 aHA
-bFg
+aKy
 xee
 qIC
 aHA
@@ -75605,15 +75569,15 @@ aiu
 aiu
 aHz
 xee
-sbw
+aKB
 nYn
-sbw
+aKB
 xee
 aHA
 aHA
 aHA
 xee
-sbw
+aKB
 nYn
 fTY
 xee
@@ -87196,7 +87160,7 @@ bik
 bjd
 bkd
 bkh
-cqa
+tzM
 bnD
 boJ
 bpS
@@ -100067,7 +100031,7 @@ bIL
 bJR
 bLf
 bMm
-bNp
+dxo
 bOt
 mZE
 aaa

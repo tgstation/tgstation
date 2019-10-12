@@ -134,8 +134,8 @@
 		return 1
 
 /obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /obj/item/projectile/beam))
-		var/obj/item/projectile/beam/B = mover
+	if(istype(mover, /obj/projectile/beam))
+		var/obj/projectile/beam/B = mover
 		B.damage = (B.damage/2)
 	return 1
 

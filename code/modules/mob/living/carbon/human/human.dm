@@ -502,7 +502,7 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return (mobility_flags & MOBILITY_USE)
 
-/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
+/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, penetrate_thick = 0)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_selected
@@ -678,12 +678,6 @@
 			bloody_hands = 0
 			update_inv_gloves()
 
-/mob/living/carbon/human/wash_cream()
-	if(creamed) //clean both to prevent a rare bug
-		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_lizard"))
-		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_human"))
-		creamed = FALSE
-
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
@@ -841,7 +835,7 @@
 	if(href_list[VV_HK_MOD_MUTATIONS])
 		if(!check_rights(R_SPAWN))
 			return
-		
+
 		var/list/options = list("Clear"="Clear")
 		for(var/x in subtypesof(/datum/mutation/human))
 			var/datum/mutation/human/mut = x
@@ -952,10 +946,20 @@
 	return (ishuman(target) && !(target.mobility_flags & MOBILITY_STAND))
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
-	if(can_be_firemanned(target))
-		visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
-			"<span class='notice'>You start lifting [target] onto your back...</span>")
-		if(do_after(src, 50, TRUE, target))
+	var/carrydelay = 50 //if you have latex you are faster at grabbing
+	var/skills_space = "" //cobby told me to do this
+	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
+		carrydelay = 30
+		skills_space = "expertly"
+	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
+		carrydelay = 40
+		skills_space = "quickly"
+	if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
+		visible_message("<span class='notice'>[src] starts [skills_space] lifting [target] onto their back..</span>",
+		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
+		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space] start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
+		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
+		if(do_after(src, carrydelay, TRUE, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
 				buckle_mob(target, TRUE, TRUE, 90, 1, 0)
@@ -1033,6 +1037,18 @@
 /mob/living/carbon/human/updatehealth()
 	. = ..()
 	dna?.species.spec_updatehealth(src)
+	if(HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
+		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING)
+		return
+	var/health_deficiency = max((maxHealth - health), staminaloss)
+	if(health_deficiency >= 40)
+		add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, override = TRUE, multiplicative_slowdown = (health_deficiency / 75), blacklisted_movetypes = FLOATING|FLYING)
+		add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING, override = TRUE, multiplicative_slowdown = (health_deficiency / 25), movetypes = FLOATING)
+	else
+		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING)
+
 
 /mob/living/carbon/human/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
@@ -1143,7 +1159,7 @@
 
 /mob/living/carbon/human/species/golem/durathread
 	race = /datum/species/golem/durathread
-	
+
 /mob/living/carbon/human/species/golem/snow
 	race = /datum/species/golem/snow
 

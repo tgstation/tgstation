@@ -13,7 +13,7 @@
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 10
 	var/cooldown = 0
-	var/projectile_type = /obj/item/projectile/bullet/manned_turret
+	var/projectile_type = /obj/projectile/bullet/manned_turret
 	var/rate_of_fire = 1
 	var/number_of_shots = 40
 	var/cooldown_duration = 90
@@ -151,11 +151,11 @@
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
 		target = target_turf
-	var/obj/item/projectile/P = new projectile_type(targets_from)
+	var/obj/projectile/P = new projectile_type(targets_from)
 	P.starting = targets_from
 	P.firer = user
 	P.original = target
-	playsound(src, 'sound/weapons/gunshot_smg.ogg', 75, TRUE)
+	playsound(src, 'sound/weapons/gun/smg/shot.ogg', 75, TRUE)
 	P.xo = target.x - targets_from.x
 	P.yo = target.y - targets_from.y
 	P.Angle = calculated_projectile_vars[1] + rand(-9, 9)
@@ -166,7 +166,7 @@
 /obj/machinery/manned_turret/ultimate  // Admin-only proof of concept for autoclicker automatics
 	name = "Infinity Gun"
 	view_range = 12
-	projectile_type = /obj/item/projectile/bullet/manned_turret
+	projectile_type = /obj/projectile/bullet/manned_turret
 
 /obj/machinery/manned_turret/ultimate/checkfire(atom/targeted_atom, mob/user)
 	target = targeted_atom

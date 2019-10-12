@@ -223,9 +223,9 @@
 
 /datum/design/searingtool
 	name = "Searing Tool"
-	desc = "Used to mend tissue togheter."
+	desc = "Used to mend tissue together. Or drill tissue away."
 	id = "searingtool"
-	build_path = /obj/item/cautery/advanced
+	build_path = /obj/item/surgicaldrill/advanced
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
 	category = list("Tool Designs")
@@ -656,7 +656,7 @@
 
 /datum/design/surgery/healing/burn_upgrade_2
 	name = "Tend Wounds (Burn) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded/femto
+	surgery = /datum/surgery/healing/burn/upgraded/femto
 	id = "surgery_heal_burn_upgrade_femto"
 
 /datum/design/surgery/healing/combo

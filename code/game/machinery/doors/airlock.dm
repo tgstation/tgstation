@@ -43,7 +43,7 @@
 	icon_state = "closed"
 	max_integrity = 300
 	var/normal_integrity = AIRLOCK_INTEGRITY_N
-	integrity_failure = 70
+	integrity_failure = 0.25
 	damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
 	autoclose = TRUE
 	secondsElectrified = MACHINE_NOT_ELECTRIFIED //How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
@@ -466,7 +466,7 @@
 					panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
-			if(obj_integrity <integrity_failure)
+			if(obj_integrity < integrity_failure * max_integrity)
 				damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
 			else if(obj_integrity < (0.75 * max_integrity))
 				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
@@ -491,7 +491,7 @@
 					panel_overlay = get_airlock_overlay("panel_closed_protected", overlays_file)
 				else
 					panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
-			if(obj_integrity <integrity_failure)
+			if(obj_integrity < integrity_failure * max_integrity)
 				damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
 			else if(obj_integrity < (0.75 * max_integrity))
 				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
@@ -513,7 +513,7 @@
 					panel_overlay = get_airlock_overlay("panel_closed_protected", overlays_file)
 				else
 					panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
-			if(obj_integrity <integrity_failure)
+			if(obj_integrity < integrity_failure * max_integrity)
 				damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
 			else if(obj_integrity < (0.75 * max_integrity))
 				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
@@ -779,7 +779,7 @@
 		set_electrified(MACHINE_ELECTRIFIED_PERMANENT)
 	updateDialog()
 
-/obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
+/obj/machinery/door/airlock/Topic(href, href_list, nowindow = 0)
 	// If you add an if(..()) check you must first remove the var/nowindow parameter.
 	// Otherwise it will runtime with this kind of error: null.Topic()
 	if(!nowindow)
@@ -989,7 +989,7 @@
 /obj/machinery/door/airlock/proc/weld_checks(obj/item/weldingtool/W, mob/user)
 	return !operating && density
 
-/obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user)
+/obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user, forced = FALSE)
 	if(I)
 		var/beingcrowbarred = (I.tool_behaviour == TOOL_CROWBAR)
 		if(!security_level && (beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked))))
@@ -998,46 +998,41 @@
 			if(I.use_tool(src, user, 40, volume=100))
 				deconstruct(TRUE, user)
 				return
-	if(hasPower())
-		to_chat(user, "<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
-		return
 	if(locked)
 		to_chat(user, "<span class='warning'>The airlock's bolts prevent it from being forced!</span>")
 		return
-	if( !welded && !operating)
+	if(welded)
+		to_chat(user, "<span class='warning'>It's welded, it won't budge!</span>")
+		return
+	if(hasPower())
+		if(forced)
+			if(isElectrified())
+				shock(user,100)//it's like sticking a forck in a power socket
+				return
+
+			if(!density)//already open
+				return
+
+			if(!prying_so_hard)
+				var/time_to_open = 50
+				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
+				prying_so_hard = TRUE
+				if(do_after(user, time_to_open, TRUE, src))
+					open(2)
+					if(density && !open(2))
+						to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
+				prying_so_hard = FALSE
+				return
+		to_chat(user, "<span class='warning'>The airlock's motors resist your efforts to force it!</span>")
+		return
+
+	if(!operating)
 		if(istype(I, /obj/item/twohanded/fireaxe)) //being fireaxe'd
 			var/obj/item/twohanded/fireaxe/F = I
 			if(!F.wielded)
 				to_chat(user, "<span class='warning'>You need to be wielding the fire axe to do that!</span>")
 				return
 		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
-
-	if(istype(I, /obj/item/crowbar/power))
-		if(isElectrified())
-			shock(user,100)//it's like sticking a forck in a power socket
-			return
-
-		if(!density)//already open
-			return
-
-		if(locked)
-			to_chat(user, "<span class='warning'>The bolts are down, it won't budge!</span>")
-			return
-
-		if(welded)
-			to_chat(user, "<span class='warning'>It's welded, it won't budge!</span>")
-			return
-
-		var/time_to_open = 5
-		if(hasPower() && !prying_so_hard)
-			time_to_open = 50
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
-			prying_so_hard = TRUE
-			if(do_after(user, time_to_open, TRUE, src))
-				open(2)
-				if(density && !open(2))
-					to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
-			prying_so_hard = FALSE
 
 
 /obj/machinery/door/airlock/open(forced=0)
@@ -1377,7 +1372,7 @@
 
 /obj/machinery/door/airlock/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "ai_airlock", name, 550, 456, master_ui, state)
 		ui.open()

@@ -39,6 +39,13 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/datum/looping_sound/grill
+	mid_length = 2
+	mid_sounds = list('sound/machines/fryer/deep_fryer_1.ogg' = 1, 'sound/machines/fryer/deep_fryer_2.ogg' = 1)
+	volume = 30
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/looping_sound/microwave
 	start_sound = 'sound/machines/microwave/microwave-start.ogg'
 	start_length = 10
@@ -46,3 +53,11 @@
 	mid_length = 10
 	end_sound = 'sound/machines/microwave/microwave-end.ogg'
 	volume = 90
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/jackpot
+	mid_length = 11
+	mid_sounds = list('sound/machines/roulettejackpot.ogg')
+	volume = 85
+	vary = TRUE

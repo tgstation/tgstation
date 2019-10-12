@@ -180,7 +180,7 @@
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20
-	projectile_type = /obj/item/projectile/bullet/mime
+	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3
 	sound = null
 	active_msg = "You draw your fingers!"
