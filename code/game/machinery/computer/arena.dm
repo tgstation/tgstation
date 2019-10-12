@@ -189,7 +189,7 @@
 
 /obj/machinery/computer/arena/proc/spawn_member(obj/machinery/arena_spawn/spawnpoint,ckey,team)
 	var/mob/oldbody = get_mob_by_key(ckey)
-	if(!isobserver(oldbody))
+	if(!oldbody.client)
 		return
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
 	oldbody.client.prefs.copy_to(M)
@@ -205,6 +205,7 @@
 		M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
 	M.faction += team //In case anyone wants to add team based stuff to arena special effects
 	M.key = ckey
+	qdel(oldbody)
 	
 	var/datum/atom_hud/antag/team_hud = team_huds[team]
 	team_hud.join_hud(M)
