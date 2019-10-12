@@ -54,8 +54,9 @@
 	bullet_sizzle = TRUE
 
 /turf/open/floor/holofloor/asteroid
-	name = "asteroid"
-	icon_state = "asteroid0"
+	gender = PLURAL
+	name = "asteroid sand"
+	icon_state = "asteroid"
 	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/asteroid/Initialize()
@@ -136,10 +137,3 @@
 
 /turf/open/floor/holofloor/snow/cold
 	initial_gas_mix = "nob=7500;TEMP=2.7"
-
-/turf/open/floor/holofloor/asteroid
-	gender = PLURAL
-	name = "asteroid sand"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "asteroid"
-	tiled_dirt = FALSE

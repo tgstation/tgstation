@@ -29,10 +29,9 @@
 	desc = "A pair of rather plain wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
-	strip_delay = 50
+	strip_delay = 5
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
-	strip_delay = 5
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."

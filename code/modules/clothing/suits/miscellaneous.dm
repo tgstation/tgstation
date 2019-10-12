@@ -478,7 +478,7 @@
 	name = "pharoah tunic"
 	desc = "Lavish space tomb not included."
 	icon_state = "pharoah"
-	icon_state = "pharoah"
+	item_state = "pharoah"
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/caution
