@@ -180,7 +180,7 @@
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, water_particles), 2)
 
 //Particle movement loop
-/obj/item/extinguisher/proc/move_particles(var/list/particles, var/repetition=0)
+/obj/item/extinguisher/proc/move_particles(list/particles, repetition=0)
 	//Check if there's anything in here first
 	if(!particles || particles.len == 0)
 		return
@@ -202,7 +202,7 @@
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, particles, repetition), 2)
 
 //Chair movement loop
-/obj/item/extinguisher/proc/move_chair(var/obj/B, var/movementdirection, var/repetition=0)
+/obj/item/extinguisher/proc/move_chair(obj/B, movementdirection, repetition=0)
 	step(B, movementdirection)
 
 	var/timer_seconds
