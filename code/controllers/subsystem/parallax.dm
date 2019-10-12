@@ -12,9 +12,9 @@ SUBSYSTEM_DEF(parallax)
 
 /datum/controller/subsystem/parallax/Initialize(timeofday)
 	. = ..()
-	if(prob(100))	//70% chance to pick a special extra layer
+	if(prob(70))	//70% chance to pick a special extra layer
 		random_layer = pick(/obj/screen/parallax_layer/random/random_layer1)
-		random_parallax_color = pick(COLOR_BLUE, COLOR_TEAL, COLOR_GREEN, COLOR_SILVER, COLOR_YELLOW, COLOR_CYAN, COLOR_ORANGE)//Special color for random_layer1. Has to be done here so everyone sees the same color.
+		random_parallax_color = pick(COLOR_TEAL, COLOR_GREEN, COLOR_SILVER, COLOR_YELLOW, COLOR_CYAN, COLOR_ORANGE, COLOR_PURPLE)//Special color for random_layer1. Has to be done here so everyone sees the same color.
 	planet_y_offset = rand(100, 160)
 	planet_x_offset = rand(100, 160)
 
