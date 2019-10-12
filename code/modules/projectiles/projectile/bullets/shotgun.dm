@@ -1,11 +1,11 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
-	damage = 60
+	damage = 45
 
 /obj/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
 	damage = 5
-	stamina = 55
+	stamina = 40
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
@@ -48,7 +48,7 @@
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
 	damage = 25
-	paralyze = 50
+	knockdown = 50
 
 /obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
@@ -61,12 +61,12 @@
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
-	damage = 12.5
+	damage = 10 //60
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubbershot pellet"
 	damage = 3
-	stamina = 11
+	stamina = 10
 
 /obj/projectile/bullet/pellet/shotgun_incapacitate
 	name = "incapacitating pellet"
