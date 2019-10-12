@@ -24,6 +24,7 @@
 	bolt_wording = "pump"
 	cartridge_wording = "shell"
 	tac_reloads = FALSE
+	weapon_weight = WEAPON_HEAVY
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
