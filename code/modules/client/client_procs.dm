@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		player_details = GLOB.player_details[ckey]
 		player_details.byond_version = full_version
 	else
-		player_details = new
+		player_details = new(ckey)
 		player_details.byond_version = full_version
 		GLOB.player_details[ckey] = player_details
 
