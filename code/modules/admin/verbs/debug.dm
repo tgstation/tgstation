@@ -527,8 +527,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/datum/outfit/O = path
 			if(initial(O.can_be_admin_equipped))
 				arena_outfits[initial(O.name)] = path
-		dresscode = input("Select arena team outfits", "Robust quick dress shop") as null|anything in arena_paths
-		dresscode = arena_paths[dresscode]
+		dresscode = input("Select arena team outfits", "Robust quick dress shop") as null|anything in arena_outfits
+		dresscode = arena_outfits[dresscode]
 		if(isnull(dresscode))
 			return
 

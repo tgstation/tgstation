@@ -1,8 +1,8 @@
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
-	icon_state = "toolbox_default"
-	item_state = "toolbox_default"
+	icon_state = "blue"
+	item_state = "toolbox_blue"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -17,7 +17,7 @@
 	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
 	pickup_sound =  'sound/items/handling/toolbox_pickup.ogg'
 	custom_materials = list(/datum/material/iron = 500) //Toolboxes by default use iron as their core, custom material.
-	material_flags = MATERIAL_COLOR
+	material_flags = NONE
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 
@@ -101,32 +101,9 @@
 	icon_state = "oldtoolboxclean"
 	item_state = "toolbox_blue"
 	has_latches = FALSE
-	force = 19
-	throwforce = 22
-
-/obj/item/storage/toolbox/mechanical/old/clean/proc/calc_damage()
-	var/power = 0
-	for (var/obj/item/stack/telecrystal/TC in GetAllContents())
-		power += TC.amount
-	force = 19 + power
-	throwforce = 22 + power
-
-/obj/item/storage/toolbox/mechanical/old/clean/attack(mob/target, mob/living/user)
-	calc_damage()
-	..()
-
-/obj/item/storage/toolbox/mechanical/old/clean/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	calc_damage()
-	..()
 
 /obj/item/storage/toolbox/mechanical/old/clean/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench(src)
-	new /obj/item/weldingtool(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/wirecutters(src)
-	new /obj/item/multitool(src)
-	new /obj/item/clothing/gloves/color/yellow(src)
+	return
 
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"

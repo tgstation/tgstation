@@ -47,7 +47,7 @@
 	/// List of outfit datums/types indexed by team id, can be empty
 	var/list/outfits = list()
 	/// Default team outfit if outfits[team] is empty
-	var/default_outfit = /datum/outfit/job/assistant
+	var/default_outfit = /datum/outfit/arena
 
 	/// Is the arena template loading in
 	var/loading = FALSE
@@ -250,6 +250,7 @@
 		var/obj/effect/countdown/arena/A = new(team_spawn)
 		A.start()
 		countdowns += A
+	priority_announce("The next match will start in 30 seconds.", null, 'sound/ai/commandreport.ogg')
 
 /obj/machinery/computer/arena/proc/begin()
 	ready_to_spawn = FALSE
