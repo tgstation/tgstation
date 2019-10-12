@@ -13,3 +13,11 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+
+
+/obj/item/clothing/shoes/tournament_ninja
+	name = "ninja shoes"
+	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
+	icon_state = "s-ninja"
+	item_state = "secshoes"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)

@@ -79,3 +79,15 @@
     name = "Rockski"
     uniform = /obj/item/clothing/under/costume/lobster
     suit = /obj/item/clothing/suit/apron/chef
+
+datum/outfit/arena/uh_wuh
+    name = "Uh Wuh"
+    uniform = /obj/item/clothing/under/rank/civilian/clown/sexy
+
+datum/outfit/arena/duck_egg
+    name = "duck egg"
+    uniform = /obj/item/clothing/under/color/black
+    suit = /obj/item/clothing/suit/tournament_ninja
+    head = /obj/item/clothing/head/helmet/tournament_ninja
+    shoes = /obj/item/clothing/shoes/tournament_ninja
+    gloves =  /obj/item/clothing/gloves/tournament_ninja

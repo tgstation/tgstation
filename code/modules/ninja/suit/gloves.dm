@@ -79,3 +79,9 @@
 	. = ..()
 	if(HAS_TRAIT_FROM(src, TRAIT_NODROP, NINJA_SUIT_TRAIT))
 		. += "The energy drain mechanism is <B>[candrain?"active":"inactive"]</B>."
+
+/obj/item/clothing/gloves/tournament_ninja
+	desc = "These nano-enhanced gloves insulate from electricity and provide fire resistance."
+	name = "ninja gloves"
+	icon_state = "s-ninja"
+	item_state = "s-ninja"

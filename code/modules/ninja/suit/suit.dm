@@ -188,3 +188,11 @@ Contents:
 		n_gloves.toggledrain()
 		return TRUE
 	return FALSE
+
+/obj/item/clothing/suit/tournament_ninja
+	name = "ninja suit"
+	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
+	icon_state = "s-ninja"
+	item_state = "s-ninja_suit"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
