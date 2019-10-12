@@ -194,7 +194,12 @@
 /obj/structure/table/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = get_turf(src)
-		new buildstack(T, buildstackamount)
+		if(buildstack)
+			new buildstack(T, buildstackamount)
+		else
+			for(var/i in custom_materials)
+				var/datum/material/M = i
+				new M.sheet_type(T, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 		if(!wrench_disassembly)
 			new frame(T)
 		else
@@ -204,6 +209,7 @@
 
 /obj/structure/table/greyscale
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	buildstack = null //No buildstack, so generate from mat datums
 
 
 /*
