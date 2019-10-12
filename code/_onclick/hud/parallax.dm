@@ -307,6 +307,9 @@
 /obj/screen/parallax_layer/random/random_layer1
 	icon_state = "random_layer1"
 
+/obj/screen/parallax_layer/random/random_layer1/Initialize(mapload, view)
+	src.add_atom_colour(SSparallax.random_parallax_color, ADMIN_COLOUR_PRIORITY)
+
 /obj/screen/parallax_layer/random/random_layer2
 	icon_state = "random_layer2"
 
