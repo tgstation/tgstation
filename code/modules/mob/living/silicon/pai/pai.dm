@@ -294,4 +294,4 @@
 		else if(istype(W, /obj/item/encryptionkey))
 			pai.radio.attackby(W, user, params)
 	else
-		to_chat(user, "Encryption Key ports not configured.")
+		to_chat(user, "<span class='alert'>Encryption Key ports not configured.</span>")

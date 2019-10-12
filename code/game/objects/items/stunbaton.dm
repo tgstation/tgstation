@@ -78,7 +78,7 @@
 	if(istype(W, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/C = W
 		if(cell)
-			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
+			to_chat(user, "<span class='warning'>[src] already has a cell!</span>")
 		else
 			if(C.maxcharge < hitcost)
 				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
@@ -138,7 +138,7 @@
 				if(baton_effect(M, user))
 					user.do_attack_animation(M)
 					return
-			else 
+			else
 				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \

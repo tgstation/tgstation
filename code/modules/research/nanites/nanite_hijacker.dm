@@ -26,7 +26,7 @@
 		if(disk)
 			eject()
 		if(user.transferItemToLoc(N, src))
-			to_chat(user, "<span class='notice'>You insert [N] into [src]</span>")
+			to_chat(user, "<span class='notice'>You insert [N] into [src].</span>")
 			disk = N
 			program = N.program
 	else

@@ -935,21 +935,21 @@
 					if(BP)
 						BP.drop_limb()
 					else
-						to_chat(usr, "[src] doesn't have such bodypart.")
+						to_chat(usr, "<span class='boldwarning'>[src] doesn't have such bodypart.</span>")
 				if("add")
 					if(BP)
-						to_chat(usr, "[src] already has such bodypart.")
+						to_chat(usr, "<span class='boldwarning'>[src] already has such bodypart.</span>")
 					else
 						if(!regenerate_limb(result))
-							to_chat(usr, "[src] cannot have such bodypart.")
+							to_chat(usr, "<span class='boldwarning'>[src] cannot have such bodypart.</span>")
 				if("augment")
 					if(ishuman(src))
 						if(BP)
 							BP.change_bodypart_status(BODYPART_ROBOTIC, TRUE, TRUE)
 						else
-							to_chat(usr, "[src] doesn't have such bodypart.")
+							to_chat(usr, "<span class='boldwarning'>[src] doesn't have such bodypart.</span>")
 					else
-						to_chat(usr, "Only humans can be augmented.")
+						to_chat(usr, "<span class='boldwarning'>Only humans can be augmented.</span>")
 		admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src]")
 	if(href_list[VV_HK_MAKE_AI])
 		if(!check_rights(R_SPAWN))
@@ -973,7 +973,7 @@
 		if(!usr)
 			return
 		if(QDELETED(src))
-			to_chat(usr, "Mob doesn't exist anymore")
+			to_chat(usr, "<span class='boldwarning'>Mob doesn't exist anymore.</span>")
 			return
 		if(result)
 			var/chosenart = artnames[result]

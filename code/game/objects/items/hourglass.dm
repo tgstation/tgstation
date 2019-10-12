@@ -22,7 +22,7 @@
 
 /obj/item/hourglass/proc/toggle(mob/user)
 	if(!timing_id)
-		to_chat(user,"<span class='notice'>You flip the [src]</span>")
+		to_chat(user,"<span class='notice'>You flip the [src].</span>")
 		start()
 		flick("hourglass_flip",src)
 	else

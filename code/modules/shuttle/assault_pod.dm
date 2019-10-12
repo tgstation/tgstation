@@ -58,6 +58,6 @@
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 
-	to_chat(user, "Landing zone set.")
+	to_chat(user, "<span class='notice'>Landing zone set.</span>")
 
 	qdel(src)

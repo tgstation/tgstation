@@ -53,7 +53,7 @@
 			sb.link_console(src, user)
 			return TRUE
 		else
-			to_chat(user, "<span class='notice'>[src] is already linked to [sb].</span>")
+			to_chat(user, "<span class='alert'>[src] is already linked to [sb].</span>")
 	..()
 
 /obj/machinery/computer/cargo/express/emag_act(mob/living/user)

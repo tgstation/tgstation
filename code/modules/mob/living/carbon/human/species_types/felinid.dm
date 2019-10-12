@@ -90,7 +90,7 @@
 			NT.Insert(H, drop_if_replaced = FALSE)
 		else
 			tail.Remove(H)
-			
+
 /datum/species/human/felinid/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/M)
 	.=..()
 	if(chem.type == /datum/reagent/consumable/coco || chem.type == /datum/reagent/consumable/hot_coco || chem.type ==/datum/reagent/consumable/milk/chocolate_milk)
@@ -142,7 +142,7 @@
 		kitty_ears.Insert(H, TRUE, FALSE) //Gives nonhumans cat tail and ears
 		kitty_tail.Insert(H, TRUE, FALSE)
 	if(!silent)
-		to_chat(H, "Something is nya~t right.")
+		to_chat(H, "<span class='boldnotice'>Something is nya~t right.</span>")
 		playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, TRUE, -1)
 
 /proc/purrbation_remove(mob/living/carbon/human/H, silent = FALSE)
@@ -163,4 +163,4 @@
 				var/obj/item/organ/new_ears = new target_species.mutantears
 				new_ears.Insert(H, TRUE, FALSE)
 	if(!silent)
-		to_chat(H, "You are no longer a cat.")
+		to_chat(H, "<span class='boldnotice'>You are no longer a cat.</span>")

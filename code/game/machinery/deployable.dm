@@ -165,7 +165,7 @@
 		if(HORIZONTAL)
 			mode = SINGLE
 
-	to_chat(user, "[src] is now in [mode] mode.")
+	to_chat(user, "<span class='notice'>[src] is now in [mode] mode.</span>")
 
 /obj/item/grenade/barrier/prime()
 	new /obj/structure/barricade/security(get_turf(src.loc))

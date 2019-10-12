@@ -218,7 +218,7 @@
 
 /obj/item/card/mining_point_card/examine(mob/user)
 	..()
-	to_chat(user, "There's [points] point\s on the card.")
+	to_chat(user, "<span class='info'>There's [points] point\s on the card.</span>")
 
 ///Conscript kit
 /obj/item/card/mining_access_card
@@ -235,7 +235,7 @@
 		I.access |= ACCESS_MECH_MINING
 		I.access |= ACCESS_MINERAL_STOREROOM
 		I.access |= ACCESS_CARGO
-		to_chat(user, "You upgrade [I] with mining access.")
+		to_chat(user, "<span class='notice'>You upgrade [I] with mining access.</span>")
 		qdel(src)
 
 /obj/item/storage/backpack/duffelbag/mining_conscript

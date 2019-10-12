@@ -68,21 +68,21 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	if(!user.canUseTopic(parent, BE_CLOSE))
 		return //user not valid to use gps
 	if(emped)
-		to_chat(user, "It's busted!")
+		to_chat(user, "<span class='warning'>It's busted!</span>")
 		return
 	var/atom/A = parent
 	if(tracking)
 		A.cut_overlay("working")
-		to_chat(user, "[parent] is no longer tracking, or visible to other GPS devices.")
+		to_chat(user, "<span class='notice'>[parent] is no longer tracking, or visible to other GPS devices.</span>")
 		tracking = FALSE
 	else
 		A.add_overlay("working")
-		to_chat(user, "[parent] is now tracking, and visible to other GPS devices.")
+		to_chat(user, "<span class='notice'>[parent] is now tracking, and visible to other GPS devices.</span>")
 		tracking = TRUE
 
 /datum/component/gps/item/ui_interact(mob/user, ui_key = "gps", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
 	if(emped)
-		to_chat(user, "[parent] fizzles weakly.")
+		to_chat(user, "<span class='hear'>[parent] fizzles weakly.</span>")
 		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -138,7 +138,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		if("rename")
 			var/atom/parentasatom = parent
 			var/a = input("Please enter desired tag.", parentasatom.name, gpstag) as text|null
-			
+
 			if (!a)
 				return
 

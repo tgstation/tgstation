@@ -306,7 +306,7 @@
 		to_chat(user, "<span class='warning'>[src] is out of fuel!</span>")
 		return
 	if(on)
-		to_chat(user, "<span class='notice'>[src] is already on.</span>")
+		to_chat(user, "<span class='warning'>[src] is already on!</span>")
 		return
 
 	. = ..()
@@ -407,7 +407,7 @@
 								"<span class='userdanger'>[user] blinks \the [src] at you.</span>")
 		else
 			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].</span>")
-		to_chat(user, "\The [src] now has [emp_cur_charges] charge\s.</span>")
+		to_chat(user, "<span class='notice'>\The [src] now has [emp_cur_charges] charge\s.</span>")
 		A.emp_act(EMP_HEAVY)
 	else
 		to_chat(user, "<span class='warning'>\The [src] needs time to recharge!</span>")
@@ -474,7 +474,7 @@
 		to_chat(user, "<span class='notice'>[src] is spent.</span>")
 		return
 	if(on)
-		to_chat(user, "<span class='notice'>[src] is already lit.</span>")
+		to_chat(user, "<span class='warning'>[src] is already lit!</span>")
 		return
 
 	. = ..()

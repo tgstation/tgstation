@@ -73,7 +73,7 @@ Consuming extracts:
 		var/mob/living/carbon/human/H = M
 
 		if(!istype(H) || !HAS_TRAIT(H, TRAIT_AGEUSIA))
-			to_chat(M, "Tastes like [taste].")
+			to_chat(M, "<span class='notice'>Tastes like [taste].</span>")
 		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, TRUE)
 		if(nutrition)
 			M.reagents.add_reagent(/datum/reagent/consumable/nutriment,nutrition)

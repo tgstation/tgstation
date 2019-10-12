@@ -445,9 +445,9 @@
 				if(src == H.glasses)
 					H.client.prefs.uses_glasses_colour = !H.client.prefs.uses_glasses_colour
 					if(H.client.prefs.uses_glasses_colour)
-						to_chat(H, "You will now see glasses colors.")
+						to_chat(H, "<span class='notice'>You will now see glasses colors.</span>")
 					else
-						to_chat(H, "You will no longer see glasses colors.")
+						to_chat(H, "<span class='notice'>You will no longer see glasses colors.</span>")
 					H.update_glasses_color(src, 1)
 	else
 		return ..()

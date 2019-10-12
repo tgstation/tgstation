@@ -91,7 +91,7 @@
 	return TRUE
 
 /mob/living/proc/bloodcrawl_consume(mob/living/victim)
-	to_chat(src, "<span class='danger'>You begin to feast on [victim]. You can not move while you are doing this.</span>")
+	to_chat(src, "<span class='danger'>You begin to feast on [victim]... You can not move while you are doing this.</span>")
 
 	var/sound
 	if(istype(src, /mob/living/simple_animal/slaughter))

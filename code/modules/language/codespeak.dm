@@ -42,7 +42,7 @@
 		return
 
 	if(user.has_language(/datum/language/codespeak))
-		to_chat(user, "<span class='boldannounce'>You start skimming through [src], but you already know Codespeak.</span>")
+		to_chat(user, "<span class='boldwarning'>You start skimming through [src], but you already know Codespeak.</span>")
 		return
 
 	to_chat(user, "<span class='boldannounce'>You start skimming through [src], and suddenly your mind is filled with codewords and responses.</span>")

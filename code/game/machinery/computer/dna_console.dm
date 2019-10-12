@@ -75,7 +75,7 @@
 		if(LAZYLEN(stored_chromosomes) < max_chromosomes)
 			I.forceMove(src)
 			stored_chromosomes += I
-			to_chat(user, "<span class='notice'>You insert [I]</span>")
+			to_chat(user, "<span class='notice'>You insert [I].</span>")
 		else
 			to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
 		return
@@ -848,7 +848,7 @@
 					var/datum/mutation/human/HM = new A.type()
 					HM.copy_mutation(A)
 					stored_mutations += HM
-					to_chat(usr,"<span class='notice'>Successfully wrote [A.name] to storage.")
+					to_chat(usr,"<span class='notice'>Successfully wrote [A.name] to storage.</span>")
 		if("combine")
 			if(num && (LAZYLEN(stored_mutations) >= num))
 				if(LAZYLEN(stored_mutations) < max_storage)

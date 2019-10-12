@@ -134,10 +134,10 @@
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 			if(oldname == input)
-				to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
+				to_chat(user, "<span class='notice'>You changed \the [O.name] to... well... \the [O.name].</span>")
 			else
 				O.name = input
-				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
+				to_chat(user, "<span class='notice'>\The [oldname] has been successfully been renamed to \the [input].</span>")
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Change description")
@@ -145,7 +145,7 @@
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 			O.desc = input
-			to_chat(user, "You have successfully changed \the [O.name]'s description.")
+			to_chat(user, "<span class='notice'>You have successfully changed \the [O.name]'s description.</span>")
 
 /*
  * Sleepypens

@@ -576,7 +576,7 @@
 	new_mob.a_intent = INTENT_HARM
 
 
-	to_chat(new_mob, "You suddenly feel more... animalistic.")
+	to_chat(new_mob, "<span class='boldnotice'>You suddenly feel more... animalistic.</span>")
 	. = new_mob
 	qdel(src)
 
@@ -593,7 +593,7 @@
 
 	new_mob.key = key
 	new_mob.a_intent = INTENT_HARM
-	to_chat(new_mob, "You feel more... animalistic")
+	to_chat(new_mob, "<span class='boldnotice'>You feel more... animalistic.</span>")
 
 	. = new_mob
 	qdel(src)

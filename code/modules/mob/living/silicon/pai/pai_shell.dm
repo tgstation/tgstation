@@ -75,7 +75,7 @@
 		return FALSE
 	chassis = choice
 	update_resting()
-	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
+	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis].</span>")
 
 /mob/living/silicon/pai/update_resting()
 	. = ..()

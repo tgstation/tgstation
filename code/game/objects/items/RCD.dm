@@ -134,7 +134,7 @@ RLD
 	else
 		if(silo_mats.on_hold())
 			if(user)
-				to_chat(user, "Mineral access is on hold, please contact the quartermaster.")
+				to_chat(user, "<span class='alert'>Mineral access is on hold, please contact the Quartermaster.</span>")
 			return FALSE
 		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount))
 			if(user)
@@ -151,7 +151,7 @@ RLD
 	else
 		if(silo_mats.on_hold())
 			if(user)
-				to_chat(user, "Mineral access is on hold, please contact the quartermaster.")
+				to_chat(user, "<span class='alert'>Mineral access is on hold, please contact the Quartermaster.</span>")
 			return FALSE
 		. = silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount)
 	if(!. && user)

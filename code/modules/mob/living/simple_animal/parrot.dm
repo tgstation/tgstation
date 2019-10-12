@@ -863,7 +863,7 @@
 	else
 		melee_damage_upper = parrot_damage_upper
 		a_intent = INTENT_HARM
-	to_chat(src, "You will now [a_intent] others.")
+	to_chat(src, "<span class='notice'>You will now [a_intent] others.</span>")
 	return
 
 /*

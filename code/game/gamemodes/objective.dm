@@ -815,7 +815,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in possible_targets
 		target = new_target.mind
 	else
-		to_chat(admin, "No active AIs with minds")
+		to_chat(admin, "<span class='boldwarning'>No active AIs with minds.</span>")
 	update_explanation_text()
 
 /datum/objective/destroy/internal

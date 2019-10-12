@@ -35,7 +35,7 @@
 
 /obj/structure/guillotine/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/sheet/plasteel))
-		to_chat(user, "<span class='notice'>You start repairing the guillotine with the plasteel.</span>")
+		to_chat(user, "<span class='notice'>You start repairing the guillotine with the plasteel...</span>")
 		if(blade_sharpness<10)
 			if(do_after(user,100,target=user))
 				blade_sharpness = min(10,blade_sharpness+3)
@@ -44,7 +44,7 @@
 			else
 				to_chat(user, "<span class='notice'>You stop repairing the guillotine with the plasteel.</span>")
 		else
-			to_chat(user, "<span class='notice'>The guillotine is already fully repaired!</span>")
+			to_chat(user, "<span class='warning'>The guillotine is already fully repaired!</span>")
 
 /obj/structure/guillotine/examine(mob/user)
 	. = ..()

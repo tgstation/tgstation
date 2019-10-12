@@ -336,8 +336,8 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 	if(istype(W, /obj/item/barcodescanner))
 		var/obj/item/barcodescanner/scanner = W
 		scanner.computer = src
-		to_chat(user, "[scanner]'s associated machine has been set to [src].")
-		audible_message("[src] lets out a low, short blip.")
+		to_chat(user, "<span class='notice'>[scanner]'s associated machine has been set to [src].</span>")
+		audible_message("<span class='hear'>[src] lets out a low, short blip.</span>")
 	else
 		return ..()
 

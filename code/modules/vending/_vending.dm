@@ -482,7 +482,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	else
 		display_parts(user)
 	if(moved)
-		to_chat(user, "[moved] items restocked.")
+		to_chat(user, "<span class='notice'>[moved] items restocked.</span>")
 		W.play_rped_sound()
 	return TRUE
 

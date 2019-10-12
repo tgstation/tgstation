@@ -72,14 +72,14 @@
 	if(awaygate)
 		user.forceMove(awaygate.loc)
 	else
-		to_chat(user, "[src] has no destination.")
+		to_chat(user, "<span class='boldwarning'>[src] has no destination.</span>")
 	return ..()
 
 /obj/machinery/gateway/centeraway/attack_ghost(mob/user)
 	if(stationgate)
 		user.forceMove(stationgate.loc)
 	else
-		to_chat(user, "[src] has no destination.")
+		to_chat(user, "<span class='boldwarning'>[src] has no destination.</span>")
 	return ..()
 
 /obj/machinery/teleport/hub/attack_ghost(mob/user)

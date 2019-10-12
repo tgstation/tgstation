@@ -251,10 +251,10 @@
 					return
 				if(construction_state == MECHA_LOCKED)
 					construction_state = MECHA_SECURE_BOLTS
-					to_chat(usr, "The securing bolts are now exposed.")
+					to_chat(usr, "<span class='notice'>The securing bolts are now exposed.</span>")
 				else if(construction_state == MECHA_SECURE_BOLTS)
 					construction_state = MECHA_LOCKED
-					to_chat(usr, "The securing bolts are now hidden.")
+					to_chat(usr, "<span class='notice'>The securing bolts are now hidden.</span>")
 				output_maintenance_dialog(id_card,usr)
 				return
 			if(href_list["drop_cell"])
