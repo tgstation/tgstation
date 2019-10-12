@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/singularity_act()
 	return
 
-/obj/effect/hallucination/simple/Initialize(mapload, var/mob/living/carbon/T)
+/obj/effect/hallucination/simple/Initialize(mapload, mob/living/carbon/T)
 	. = ..()
 	target = T
 	current_image = GetImage()

@@ -136,7 +136,6 @@
 	name = "quickstep"
 
 	charge_max = 100
-	clothes_req = FALSE
 	clothes_req = TRUE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
@@ -279,7 +278,7 @@
 
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 40)
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, stun_amt = 40)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
