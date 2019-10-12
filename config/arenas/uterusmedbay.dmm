@@ -1,81 +1,81 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "b" = (
 /obj/item/reagent_containers/glass/bottle,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "c" = (
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "d" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "e" = (
 /obj/structure/table,
 /obj/item/clipboard,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "f" = (
 /obj/structure/table,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "g" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/emergency/old,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "h" = (
 /obj/structure/table,
 /obj/item/assembly/health,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "i" = (
 /obj/structure/table,
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "j" = (
 /obj/item/circuitboard/machine/thermomachine/heater,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "k" = (
 /obj/item/circuitboard/machine/cryo_tube,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "l" = (
 /obj/structure/window{
 	dir = 4
 	},
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "m" = (
 /obj/structure/chair/old{
 	dir = 1
 	},
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "n" = (
 /obj/structure/showcase/machinery/oldpod/used{
 	dir = 4;
 	step_y = 0
 	},
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "o" = (
 /obj/structure/chair/old{
 	dir = 8
 	},
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "p" = (
 /obj/item/storage/toolbox/emergency/old,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "q" = (
 /obj/structure/window{
 	dir = 4
@@ -89,23 +89,23 @@
 	},
 /mob/living/simple_animal/hostile/retaliate/spaceman,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "r" = (
 /obj/machinery/portable_atmospherics/canister{
 	anchored = 1
 	},
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "s" = (
 /obj/structure/showcase/machinery/oldpod/used{
 	dir = 4
 	},
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 "t" = (
 /obj/structure/bed,
 /turf/open/floor/oldshuttle,
-/area/tdome)
+/area/tdome/arena)
 
 (1,1,1) = {"
 a

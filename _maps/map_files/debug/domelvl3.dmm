@@ -798,6 +798,16 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"du" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 10;
+	network = list("Arena Main")
+	},
+/turf/open/floor/engine,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "dC" = (
 /obj/machinery/light{
 	dir = 8
@@ -818,7 +828,9 @@
 	name = "Thunderdome Floor 3"
 	})
 "ej" = (
-/obj/machinery/space_heater,
+/obj/machinery/space_heater{
+	anchored = 1
+	},
 /obj/structure/fluff{
 	desc = "I hate steam... pipes.";
 	icon = 'icons/effects/effects.dmi';
@@ -828,6 +840,15 @@
 	name = "steam"
 	},
 /turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"eN" = (
+/obj/structure/sign/poster/official/walk{
+	pixel_x = 0;
+	pixel_y = -32
+	},
+/turf/open/floor/engine,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -1060,7 +1081,9 @@
 	name = "Thunderdome Floor 3"
 	})
 "jb" = (
-/obj/machinery/space_heater,
+/obj/machinery/space_heater{
+	anchored = 1
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -1129,6 +1152,7 @@
 	dir = 4;
 	network = list("Arena Main")
 	},
+/obj/machinery/vending/clothing,
 /turf/open/floor/carpet/red,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -1197,6 +1221,7 @@
 	dir = 4;
 	network = list("Arena Main")
 	},
+/obj/machinery/vending/clothing,
 /turf/open/floor/carpet/red,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -1273,6 +1298,13 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"oX" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Vault Access"
+	},
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "ph" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets,
@@ -1332,19 +1364,17 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
-"qP" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/vending/autodrobe/all_access,
-/turf/open/floor/plasteel/dark,
-/area/awaymission/vr/murderdome{
-	name = "Thunderdome Floor 3"
-	})
 "qT" = (
 /obj/machinery/door/firedoor,
 /turf/open/floor/carpet/red,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"ra" = (
+/obj/structure/sign/plaques/golden{
+	pixel_y = 32
+	},
+/turf/open/floor/engine,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -1489,6 +1519,7 @@
 	dir = 8;
 	network = list("Arena Main")
 	},
+/obj/machinery/vending/clothing,
 /turf/open/floor/carpet/red,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -1541,7 +1572,9 @@
 	name = "Thunderdome Floor 3"
 	})
 "vi" = (
-/obj/machinery/space_heater,
+/obj/machinery/space_heater{
+	anchored = 1
+	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -1625,6 +1658,13 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"wh" = (
+/obj/structure/rack,
+/obj/item/storage/bag/money,
+/turf/open/floor/engine,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "wx" = (
 /obj/structure/fluff{
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher. An installed child lock prevents you from opening it";
@@ -1634,6 +1674,14 @@
 	pixel_y = -32
 	},
 /turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"wO" = (
+/obj/structure/sign/poster/official/safety_report{
+	pixel_y = 32
+	},
+/turf/open/floor/engine,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -1692,6 +1740,18 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"yy" = (
+/obj/machinery/camera/autoname{
+	network = list("Arena Main")
+	},
+/obj/structure/table/reinforced,
+/obj/item/greentext{
+	anchored = 1
+	},
+/turf/open/floor/engine,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "yE" = (
 /obj/structure/fluff/railing{
 	density = 0;
@@ -1743,6 +1803,11 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"zk" = (
+/turf/open/floor/engine,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "zO" = (
 /obj/structure/fluff/railing{
 	density = 0;
@@ -1759,6 +1824,14 @@
 	dir = 8
 	},
 /turf/open/indestructible/hotelwood,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"zZ" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/turf/open/floor/engine,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -1986,6 +2059,34 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"Fq" = (
+/obj/structure/safe{
+	desc = "The divine protector of the wealth and prosperity voluntarily given by those with altruistic hearts.";
+	max_integrity = 75000;
+	name = "Treasury of The Charitable"
+	},
+/obj/item/storage/secure/briefcase/syndie,
+/obj/item/storage/secure/briefcase/syndie,
+/obj/item/storage/secure/briefcase/syndie,
+/obj/item/storage/secure/briefcase/syndie,
+/obj/item/storage/secure/briefcase/syndie,
+/obj/item/clothing/neck/necklace/dope,
+/turf/open/floor/engine,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"FQ" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 10;
+	network = list("Arena Main")
+	},
+/obj/structure/table/reinforced,
+/obj/item/stack/telecrystal,
+/turf/open/floor/engine,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "FR" = (
 /obj/structure/kitchenspike,
 /obj/machinery/light{
@@ -2160,6 +2261,15 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"KK" = (
+/obj/machinery/door/airlock/vault{
+	name = "Donation Vault"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/carpet/royalblack,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "Lg" = (
 /obj/structure/fluff{
 	desc = "Has a valve and pump attached to it.";
@@ -2197,6 +2307,13 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"Mt" = (
+/obj/structure/fluff/big_chain{
+	desc = "A towering link of chains leading up to the ceili- AHAHAHAHAHAHA!!!";
+	name = "chains of reality"
+	},
+/turf/open/indestructible/hierophant,
+/area/space)
 "Mx" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave{
@@ -2300,6 +2417,20 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"Oo" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 10;
+	network = list("Arena Main")
+	},
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/capitalisium{
+	anchored = 1
+	},
+/turf/open/floor/engine,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "OE" = (
 /obj/machinery/deepfryer,
 /obj/structure/window/reinforced{
@@ -2358,11 +2489,31 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
+"Qw" = (
+/obj/machinery/camera/autoname{
+	network = list("Arena Main")
+	},
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 35
+	},
+/turf/open/floor/engine,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
 "QS" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
+/area/awaymission/vr/murderdome{
+	name = "Thunderdome Floor 3"
+	})
+"QW" = (
+/obj/machinery/camera/autoname{
+	network = list("Arena Main")
+	},
+/turf/open/floor/engine,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -2450,6 +2601,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/autoname,
+/obj/machinery/vending/clothing,
 /turf/open/floor/carpet/red,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
@@ -2619,14 +2771,20 @@
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
-"Xp" = (
-/turf/open/floor/carpet/royalblue,
+"Xc" = (
+/obj/structure/rack,
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 8;
+	network = list("Arena Main")
+	},
+/obj/item/storage/bag/money,
+/turf/open/floor/engine,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
-"Xv" = (
-/obj/machinery/vending/autodrobe/all_access,
-/turf/open/floor/carpet/black,
+"Xp" = (
+/turf/open/floor/carpet/royalblue,
 /area/awaymission/vr/murderdome{
 	name = "Thunderdome Floor 3"
 	})
@@ -27776,7 +27934,7 @@ dQ
 dQ
 dQ
 dQ
-uX
+Mt
 uX
 dQ
 dQ
@@ -27796,7 +27954,7 @@ dQ
 dQ
 dQ
 uX
-uX
+Mt
 uX
 dQ
 dQ
@@ -29861,7 +30019,7 @@ ao
 gH
 dQ
 dQ
-uX
+Mt
 uX
 Jy
 aa
@@ -31111,7 +31269,7 @@ aa
 aa
 Jy
 dQ
-uX
+Mt
 dQ
 dQ
 gH
@@ -33448,7 +33606,7 @@ Eq
 kJ
 Uw
 Uw
-Uw
+Ro
 ab
 ab
 ao
@@ -33691,7 +33849,7 @@ ab
 ab
 ab
 ab
-Xv
+Bz
 Bz
 Uw
 Uw
@@ -34213,7 +34371,7 @@ Bz
 Bz
 Bz
 Bz
-Xv
+Bz
 Bz
 Bz
 Bz
@@ -34487,7 +34645,7 @@ dQ
 dQ
 dQ
 dQ
-uX
+Mt
 dQ
 Jy
 aa
@@ -34993,7 +35151,7 @@ aj
 aP
 ao
 aw
-Xv
+Bz
 wx
 ab
 aa
@@ -36258,7 +36416,7 @@ YU
 YU
 Bz
 ab
-Xv
+Bz
 Bz
 al
 ap
@@ -37538,7 +37696,7 @@ mQ
 mQ
 mQ
 mQ
-qP
+mQ
 mQ
 mQ
 vl
@@ -38057,7 +38215,7 @@ ge
 xb
 oF
 ab
-Xv
+Bz
 US
 ak
 ao
@@ -39619,7 +39777,7 @@ am
 aQ
 ao
 aw
-Xv
+Bz
 Bz
 ab
 aa
@@ -39842,7 +40000,7 @@ aa
 aa
 ab
 ab
-gg
+KK
 ab
 ab
 ab
@@ -40097,11 +40255,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+ab
+zk
+US
+eN
+ab
 aa
 aa
 Jy
@@ -40125,10 +40283,10 @@ SZ
 ed
 Bz
 Bz
-Bz
 az
 SZ
 ed
+Bz
 Bz
 Bz
 Bz
@@ -40354,11 +40512,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+ab
+QW
+US
+du
+ab
 aa
 aa
 Jy
@@ -40381,7 +40539,7 @@ Bz
 Bz
 Bz
 Bz
-Xv
+Bz
 Bz
 Bz
 Bz
@@ -40611,11 +40769,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+ab
+wO
+US
+zk
+ab
 aa
 aa
 Jy
@@ -40866,20 +41024,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
+ab
+KK
+ab
+ab
+ab
+ab
 Jy
 dQ
 uX
 uX
-uX
+Mt
 gH
 yp
 ab
@@ -40887,7 +41045,7 @@ ab
 ab
 ab
 ab
-Xv
+Bz
 Bz
 Uw
 Uw
@@ -41123,15 +41281,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+yy
+oX
+zk
+US
+zk
+oX
+FQ
+ab
 Jy
 dQ
 uV
@@ -41158,7 +41316,7 @@ Eq
 kJ
 Uw
 Uw
-Uw
+Ro
 ab
 ab
 ao
@@ -41380,15 +41538,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
+ra
+US
+zZ
+ab
+ab
+ab
 Jy
 dQ
 dQ
@@ -41637,15 +41795,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+Qw
+oX
+zk
+US
+zk
+oX
+Oo
+ab
 Jy
 dQ
 dQ
@@ -41894,15 +42052,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
+gH
+oX
+gH
+ab
+ab
+ab
 Jy
 dQ
 dQ
@@ -42153,11 +42311,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+ab
+wh
+zk
+wh
+ab
 aa
 aa
 Jy
@@ -42410,11 +42568,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+ab
+Xc
+zk
+Xc
+ab
 aa
 aa
 Jy
@@ -42667,11 +42825,11 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+Fq
+ab
+ab
 aa
 aa
 Jy
@@ -42925,15 +43083,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+ab
+ab
+ab
 aa
 aa
 aa
 Jy
 dQ
-uX
+Mt
 dQ
 dQ
 gH
@@ -45024,7 +45182,7 @@ ao
 gH
 dQ
 dQ
-uX
+Mt
 dQ
 Jy
 aa
@@ -47050,7 +47208,7 @@ dQ
 dQ
 uV
 uX
-uX
+Mt
 dQ
 dQ
 dQ
@@ -47061,7 +47219,7 @@ dQ
 dQ
 uX
 dQ
-uX
+Mt
 uV
 dQ
 dQ

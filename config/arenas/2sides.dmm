@@ -3,7 +3,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/tdome/arena)
 "b" = (
-/obj/effect/spawner/structure/window/plastitanium,
+/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/mineral/plastitanium/red,
 /area/tdome/arena)
 "c" = (
@@ -18,7 +18,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/tdome/arena)
 "f" = (
-/obj/effect/spawner/structure/window/plastitanium,
+/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/mineral/titanium/blue,
 /area/tdome/arena)
 "g" = (
