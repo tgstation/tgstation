@@ -17,7 +17,9 @@ export const CellularEmporium = props => {
               <Button
                 icon="undo"
                 content="Readapt"
-                disabled={!data.can_readapt} />
+                disabled={!data.can_readapt}
+                onClick={() => act(ref, 'readapt')}
+              />
             )}>
             {data.genetic_points_remaining}
           </LabeledList.Item>
