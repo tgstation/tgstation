@@ -136,7 +136,6 @@
 	name = "quickstep"
 
 	charge_max = 100
-	clothes_req = FALSE
 	clothes_req = TRUE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport

@@ -985,9 +985,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 // Vacant Rooms
 /area/vacant_room
 	name = "Vacant Room"
-	icon_state = "yellow"
-	ambientsounds = MAINTENANCE
 	icon_state = "vacant_room"
+	ambientsounds = MAINTENANCE
 
 /area/vacant_room/office
 	name = "Vacant Office"
