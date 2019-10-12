@@ -132,7 +132,7 @@
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "G" = (
-/obj/item/stack/tile/bronze/fifty,
+/obj/item/stack/tile/bronze/thirty,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 
