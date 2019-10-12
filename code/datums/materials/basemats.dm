@@ -46,6 +46,16 @@
 	beauty_modifier = 0.15
 	armor_modifiers = list("melee" = 1.1, "bullet" = 1.1, "laser" = 1.15, "energy" = 1.15, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 0.7, "acid" = 1.1)
 
+/datum/material/gold/on_applied(atom/source, amount, material_flags)
+	. = ..()
+	. = AddComponent(/datum/component/decal/gold)
+
+/datum/material/plasma/on_removed(atom/source, material_flags)
+	. = ..()
+	var/mutable_appearance/golden_overlay
+	golden_overlay = mutable_appearance('icons/effects/materials.dmi', "shimmer")
+	source.cut_overlay(golden_overlay)
+
 ///Has no special properties
 /datum/material/diamond
 	name = "diamond"
