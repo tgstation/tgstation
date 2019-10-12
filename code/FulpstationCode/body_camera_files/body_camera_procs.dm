@@ -1,4 +1,5 @@
 #define SEC_BODY_CAM_SOUND list('sound/machines/beep.ogg')
+#define SEC_BODY_CAM_REG_DELAY 0.5 SECONDS
 
 /obj/item/clothing/under/rank/security/Initialize()
 	. = ..()
@@ -8,8 +9,9 @@
 
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/auto_register_bodycam)
 
+	addtimer(CALLBACK(src, /obj/item/clothing/under/rank/security.proc/auto_register_bodycam, null, SLOT_W_UNIFORM), SEC_BODY_CAM_REG_DELAY)
 
-/obj/item/clothing/under/rank/security/proc/auto_register_bodycam(datum/source, mob/user, slot)
+/obj/item/clothing/under/rank/security/proc/auto_register_bodycam(mob/user, slot)
 	if(!builtInCamera)
 		return
 	if(slot != SLOT_W_UNIFORM)
@@ -24,7 +26,7 @@
 		return
 	if(check_access(I))
 		var/id_name = I.registered_name
-		builtInCamera.c_tag = "*Body Camera: [I.assignment] [id_name]"
+		builtInCamera.c_tag = "-Body Camera: [id_name] ([I.assignment])"
 		camera_sound()
 		to_chat(user, "<span class='notice'>Security uniform body camera automatically registered to [id_name]</span>")
 
