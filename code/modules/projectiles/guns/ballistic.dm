@@ -461,6 +461,10 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		item_state = "gun"
 		slot_flags &= ~ITEM_SLOT_BACK	//you can't sling it on your back
 		slot_flags |= ITEM_SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+		if(weapon_weight == WEAPON_HEAVY)
+			weapon_weight = WEAPON_MEDIUM
+		else if(weapon_weight == WEAPON_MEDIUM)
+			weapon_weight = WEAPON_LIGHT
 		recoil = SAWN_OFF_RECOIL
 		sawn_off = TRUE
 		update_icon()
