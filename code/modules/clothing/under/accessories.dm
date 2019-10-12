@@ -162,6 +162,10 @@
 	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
 	icon_state = "bronze_heart"
 
+/obj/item/clothing/accessory/medal/bronze_heart/donator
+	name = "Donator medal"
+	desc = "A medal for those who gave back to help a good cause."
+
 /obj/item/clothing/accessory/medal/ribbon
 	name = "ribbon"
 	desc = "A ribbon"
