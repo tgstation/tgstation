@@ -303,7 +303,7 @@
 
 
 	var/temp = "rune"
-	var/ascii = (length(drawing) == 1) ? TRUE : FALSE
+	var/ascii = (length(drawing) == 1)
 	if(ascii && is_alpha(drawing))
 		temp = "letter"
 	else if(ascii && is_digit(drawing))
