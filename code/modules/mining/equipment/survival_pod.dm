@@ -6,6 +6,7 @@
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	valid_territory = FALSE
+	blob_allowed = FALSE
 
 //Survival Capsule
 /obj/item/survivalcapsule

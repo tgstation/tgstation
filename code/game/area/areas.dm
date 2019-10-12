@@ -17,7 +17,7 @@
 	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
 	var/valid_territory = TRUE // If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
-	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
+	var/blob_allowed = TRUE // If blobs can spawn there and if it counts towards their score. Also, if cultists can draw runes here.
 	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
 	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
 
