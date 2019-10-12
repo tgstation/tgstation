@@ -482,7 +482,6 @@
 		flashlight_overlay.pixel_x = flight_x_offset
 		flashlight_overlay.pixel_y = flight_y_offset
 		add_overlay(flashlight_overlay, TRUE)
-		if(bayonet)
 		add_overlay(knife_overlay, TRUE)
 	else
 		set_light(0)
