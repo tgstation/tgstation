@@ -192,7 +192,7 @@
 			if(hitsound)
 				var/volume = vol_by_damage()
 				playsound(loc, hitsound, volume, TRUE, -1)
-			if(lagshot == FALSE)
+			if(!lagshot)
 				L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
 						"<span class='userdanger'>You're hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
 		L.on_hit(src)
