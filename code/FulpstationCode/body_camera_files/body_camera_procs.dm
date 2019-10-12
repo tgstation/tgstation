@@ -47,7 +47,7 @@
 
 	if(check_access(I))
 		var/id_name = I.registered_name
-		builtInCamera.c_tag = "*Body Camera: [I.assignment] [id_name]"
+		builtInCamera.c_tag = "-Body Camera: [id_name] ([I.assignment])"
 		camera_sound()
 		to_chat(user, "<span class='notice'>Security uniform body camera manually registered with ID to [id_name]</span>")
 	else
