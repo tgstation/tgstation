@@ -20,6 +20,7 @@
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the ammo is fired.
 	var/heavy_metal = TRUE
 	var/harmful = TRUE //pacifism check for boolet, set to FALSE if bullet is non-lethal
+	var/lagshot = FALSE //overrides to_chat for things like buckshot so Dell computers don't crash
 
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"

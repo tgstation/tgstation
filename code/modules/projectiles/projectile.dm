@@ -108,7 +108,7 @@
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
 	var/temporary_unstoppable_movement = FALSE
-	var/lagshot = FALSE //used for buckshotlikes so dell computers dont crash
+	var/lagshot = FALSE //used for buckshotlikes so dell computers dont crash, blocks to_chat
 
 /obj/projectile/Initialize()
 	. = ..()
