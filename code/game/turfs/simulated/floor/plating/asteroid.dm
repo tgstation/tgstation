@@ -122,8 +122,6 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 
-
-
 /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = AIRLESS_ATMOS
 	baseturfs = /turf/open/floor/plating/asteroid/airless
@@ -165,6 +163,34 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data //subtype for producing a tunnel with given data
+	has_data = TRUE
+
+/turf/open/floor/plating/asteroid/airless/cave/snow
+	gender = PLURAL
+	name = "snow"
+	desc = "Looks cold."
+	icon = 'icons/turf/snow.dmi'
+	baseturfs = /turf/open/floor/plating/asteroid/snow
+	icon_state = "snow"
+	icon_plating = "snow"
+	initial_gas_mix = FROZEN_ATMOS
+	slowdown = 2
+	environment_type = "snow"
+	flags_1 = NONE
+	planetary_atmos = TRUE
+	burnt_states = list("snow_dug")
+	bullet_sizzle = TRUE
+	bullet_bounce_sound = null
+	digResult = /obj/item/stack/sheet/mineral/snow
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /obj/structure/spawner/lavaland/goliath = 3, \
+		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40, /obj/structure/spawner/lavaland = 2, \
+		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30, /obj/structure/spawner/lavaland/legion = 3, \
+		SPAWN_MEGAFAUNA = 6, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10, )
+
+	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/snow/has_data
+	turf_type = /turf/open/floor/plating/asteroid/snow
+
+/turf/open/floor/plating/asteroid/airless/cave/snow/has_data //subtype for producing a tunnel with given data
 	has_data = TRUE
 
 /turf/open/floor/plating/asteroid/airless/cave/Initialize()
@@ -335,6 +361,11 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		icon_state = "snow_dug"
 		return TRUE
 	return FALSE
+
+/turf/open/lava/plasma/ice_moon
+	initial_gas_mix = FROZEN_ATMOS
+	baseturfs = /turf/open/lava/plasma/ice_moon
+	planetary_atmos = TRUE
 
 /turf/open/floor/plating/asteroid/snow/ice
 	name = "icy snow"
