@@ -29,6 +29,9 @@
 		sound_proc = .proc/play_shoefoot
 	else if(ishuman(parent))
 		sound_proc = .proc/play_humanfoot
+	if(!sound_proc)
+		sound_proc = .proc/play_barefoot //catches mobs that don't have footstep assigned
+		stack_trace("Warning: [src] was added to [parent] but it couldn't get any footstep sounds applied to it.")
 	footstep_callback = CALLBACK(src, sound_proc)
 
 /datum/component/footstep/Destroy()
