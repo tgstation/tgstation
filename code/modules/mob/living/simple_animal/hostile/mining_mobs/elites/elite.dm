@@ -12,19 +12,18 @@
 	ranged_ignores_vision = TRUE
 	ranged = 1
 	obj_damage = 5
-	var/chosen_attack = 1
 	vision_range = 6
 	aggro_vision_range = 18
-	var/list/attack_action_types = list()
 	environment_smash = ENVIRONMENT_SMASH_NONE  //This is to prevent elites smashing up the mining station, we'll make sure they can smash minerals fine below.
 	harm_intent_damage = 0 //Punching elites gets you nowhere
-	var/obj/structure/elite_tumor/myparent = null
-	var/can_talk = 0
-	var/obj/loot_drop = null
 	stat_attack = UNCONSCIOUS
 	layer = LARGE_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
 	hud_type = /datum/hud/lavaland_elite
+	var/chosen_attack = 1
+	var/list/attack_action_types = list()
+	var/can_talk = FALSE
+	var/obj/loot_drop = null
 	
 		
 //Gives player-controlled variants the ability to swap attacks
@@ -72,16 +71,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /datum/action/innate/elite_attack/Activate()
 	M.chosen_attack = chosen_attack_num
 	to_chat(M, chosen_message)
-	
-/mob/living/simple_animal/hostile/asteroid/elite/Life()
-	. = ..()
-	if(isturf(loc))
-		for(var/obj/structure/elite_tumor/tumor in loc)
-			if(tumor == myparent && myparent.activity == TUMOR_PASSIVE)
-				adjustHealth(-maxHealth*0.05)
-				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(src))
-				H.color = "#FF0000"
-	update_health_hud()
 		
 /mob/living/simple_animal/hostile/asteroid/elite/update_health_hud()
 	if(hud_used)
@@ -141,9 +130,9 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	density = FALSE
 	
 /obj/structure/elite_tumor/attack_hand(mob/user)
-	switch(activity)
-		if(TUMOR_INACTIVE)
-			if(istype(user, /mob/living/carbon/human))
+	if(istype(user, /mob/living/carbon/human))
+		switch(activity)
+			if(TUMOR_INACTIVE)
 				activity = TUMOR_ACTIVE
 				var/mob/dead/observer/elitemind = null
 				visible_message("<span class='boldwarning'>The tumor begins to convulse.  Your instincts tell you to step back.</span>")
@@ -166,8 +155,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				else
 					addtimer(CALLBACK(src, .proc/spawn_elite), 30)
 				return
-		if(TUMOR_PASSIVE)
-			if(istype(user, /mob/living/carbon/human))
+			if(TUMOR_PASSIVE)
 				activity = TUMOR_ACTIVE
 				visible_message("<span class='boldwarning'>The tumor convulses as your arm enters its radius.  Your instincts tell you to step back.</span>")
 				activator = user
@@ -182,7 +170,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
 	var/selectedspawn = pick(potentialspawns)
 	mychild = new selectedspawn(loc)
-	mychild.myparent = src
 	visible_message("<span class='boldwarning'>[mychild] emerges from the tumor!</span>")
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(boosted)
@@ -204,6 +191,21 @@ obj/structure/elite_tumor/proc/return_elite()
 /obj/structure/elite_tumor/Initialize()
 	. = ..()
 	AddComponent(/datum/component/gps, "Menacing Signal")
+	START_PROCESSING(SSobj, src)
+	
+/obj/structure/elite_tumor/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	mychild = null
+	return ..()
+	
+/obj/structure/elite_tumor/process()
+	if(isturf(loc))
+		for(var/mob/living/simple_animal/hostile/asteroid/elite/elitehere in loc)
+			if(elitehere == mychild && activity == TUMOR_PASSIVE)
+				mychild.adjustHealth(-mychild.maxHealth*0.05)
+				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
+				H.color = "#FF0000"
+				mychild.update_health_hud()
 		
 /obj/structure/elite_tumor/attackby(obj/item/W, mob/user, params)
 	. = ..()
@@ -231,10 +233,9 @@ obj/structure/elite_tumor/proc/return_elite()
 		return
 
 /obj/structure/elite_tumor/proc/arena_checks()
-	if(src) //Checking to see if we still exist
-		INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
-		INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
-		INVOKE_ASYNC(src, .proc/fighters_check)  //Checks to see if our fighters died.
+	INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
+	INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
+	INVOKE_ASYNC(src, .proc/fighters_check)  //Checks to see if our fighters died.
 	return
 		
 /obj/effect/temp_visual/elite_tumor_wall
@@ -288,16 +289,15 @@ obj/structure/elite_tumor/proc/return_elite()
 obj/structure/elite_tumor/proc/onEliteLoss()
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
 	visible_message("<span class='boldwarning'>The tumor begins to convulse violently before beginning to dissipate.</span>")
-	mychild.myparent = null
 	if(activity == TUMOR_ACTIVE)
 		visible_message("<span class='boldwarning'>As the tumor closes, something is forced up from down below.</span>")
 		var/obj/structure/closet/crate/necropolis/tendril/lootbox = new /obj/structure/closet/crate/necropolis/tendril(loc)
 		if(boosted)
 			var/lootpick = rand(1, 2)
 			if(lootpick == 1 && mychild.loot_drop != null)
-				lootbox.contents += new mychild.loot_drop(lootbox.loc)
+				new mychild.loot_drop(lootbox)
 			else
-				lootbox.contents += new /obj/item/tumor_shard(lootbox.loc)
+				new /obj/item/tumor_shard(lootbox)
 	qdel(src)
 	
 obj/structure/elite_tumor/proc/onEliteWon()
