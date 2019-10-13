@@ -577,6 +577,8 @@
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.5
 	var/on = FALSE
 
 /obj/item/twohanded/required/chainsaw/Initialize()

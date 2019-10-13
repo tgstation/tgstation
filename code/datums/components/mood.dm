@@ -339,7 +339,7 @@
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
 
-/datum/component/mood/proc/check_area_mood(datum/source, var/area/A)
+/datum/component/mood/proc/check_area_mood(datum/source, area/A)
 	update_beauty(A)
 	if(A.mood_bonus)
 		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)

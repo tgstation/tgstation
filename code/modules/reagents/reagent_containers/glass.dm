@@ -118,6 +118,7 @@
 	custom_materials = list(/datum/material/glass=500)
 	beaker_weakness_bitflag = PH_WEAK
 	container_HP = 2
+	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
 
 /obj/item/reagent_containers/glass/beaker/Initialize()
 	. = ..()
@@ -125,6 +126,7 @@
 
 /obj/item/reagent_containers/glass/beaker/get_part_rating()
 	return reagents.maximum_volume
+
 
 /obj/item/reagent_containers/glass/beaker/on_reagent_change(changetype)
 	update_icon()
@@ -157,6 +159,7 @@
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
 	. = ..()
+
 
 /obj/item/reagent_containers/glass/beaker/jar
 	name = "honey jar"
@@ -341,7 +344,7 @@
 		return
 	return ..()
 
-/obj/item/reagent_containers/glass/beaker/waterbottle
+/obj/item/reagent_containers/glass/waterbottle
 	name = "bottle of water"
 	desc = "A bottle of water filled at an old Earth bottling facility."
 	icon = 'icons/obj/drinks.dmi'
@@ -352,20 +355,113 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	container_HP = 1
+	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/empty
+	// The 2 bottles have separate cap overlay icons because if the bottle falls over while bottle flipping the cap stays fucked on the moved overlay
+	var/cap_icon_state = "bottle_cap_small"
+	var/cap_on = TRUE
+	var/cap_lost = FALSE
+	var/mutable_appearance/cap_overlay
+	var/flip_chance = 10
+
+/obj/item/reagent_containers/glass/waterbottle/Initialize()
+	. = ..()
+	cap_overlay = mutable_appearance(icon, cap_icon_state)
+	if(cap_on)
+		spillable = FALSE
+		add_overlay(cap_overlay, TRUE)
+
+/obj/item/reagent_containers/glass/waterbottle/examine(mob/user)
+	. = ..()
+	if(cap_lost)
+		. += "<span class='notice'>The cap seems to be missing.</span>"
+	else if(cap_on)
+		. += "<span class='notice'>The cap is firmly on to prevent spilling. Alt-click to remove the cap.</span>"
+	else
+		. += "<span class='notice'>The cap has been taken off. Alt-click to put a cap on.</span>"
+
+/obj/item/reagent_containers/glass/waterbottle/AltClick(mob/user)
+	. = ..()
+	if(cap_lost)
+		to_chat(user, "<span class='warning'>The cap seems to be missing! Where did it go?</span>")
+		return
+	
+	var/fumbled = HAS_TRAIT(user, TRAIT_CLUMSY) && prob(5)
+	if(cap_on || fumbled)
+		cap_on = FALSE
+		spillable = TRUE
+		cut_overlay(cap_overlay, TRUE)
+		animate(src, transform = null, time = 2, loop = 0)
+		if(fumbled)
+			to_chat(user, "<span class='warning'>You fumble with [src]'s cap! The cap falls onto the ground and simply vanishes. Where the hell did it go?</span>")
+			cap_lost = TRUE
+		else
+			to_chat(user, "<span class='notice'>You remove the cap from [src].</span>")
+	else
+		cap_on = TRUE
+		spillable = FALSE
+		add_overlay(cap_overlay, TRUE)
+		to_chat(user, "<span class='notice'>You put the cap on [src].</span>")
+	update_icon()
+
+/obj/item/reagent_containers/glass/waterbottle/is_refillable()
+	if(cap_on)
+		return FALSE
+	. = ..()
+
+/obj/item/reagent_containers/glass/waterbottle/is_drainable()
+	if(cap_on)
+		return FALSE
+	. = ..()
+
+/obj/item/reagent_containers/glass/waterbottle/attack(mob/M, mob/user, obj/target)
+	if(cap_on && reagents.total_volume && istype(M))
+		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+		return
+	. = ..()
+
+/obj/item/reagent_containers/glass/waterbottle/afterattack(obj/target, mob/user, proximity)
+	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
+		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+		return
+	
+	else if(istype(target, /obj/item/reagent_containers/glass/waterbottle))
+		var/obj/item/reagent_containers/glass/waterbottle/WB = target
+		if(WB.cap_on)
+			to_chat(user, "<span class='warning'>[WB] has a cap firmly twisted on!</span>")
+	. = ..()
+
+// heehoo bottle flipping
+/obj/item/reagent_containers/glass/waterbottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(cap_on && reagents.total_volume)
+		if(prob(flip_chance)) // landed upright
+			src.visible_message("<span class='notice'>[src] lands upright!</span>")
+			SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
+		else // landed on it's side
+			animate(src, transform = matrix(prob(50)? 90 : -90, MATRIX_ROTATE), time = 3, loop = 0)
+
+/obj/item/reagent_containers/glass/waterbottle/pickup(mob/user)
+	. = ..()
+	animate(src, transform = null, time = 1, loop = 0)
+  
+ 
+/obj/item/reagent_containers/glass/waterbottle/empty
 	list_reagents = list()
+	cap_on = FALSE
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/large
+/obj/item/reagent_containers/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
 	custom_materials = list(/datum/material/glass=0)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
+	cap_icon_state = "bottle_cap"
 
-/obj/item/reagent_containers/glass/beaker/waterbottle/large/empty
+/obj/item/reagent_containers/glass/waterbottle/large/empty
 	list_reagents = list()
+	cap_on = FALSE
 
 /obj/item/pestle
 	name = "pestle"

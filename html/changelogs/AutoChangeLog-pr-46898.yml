@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Added a new condiment, BBQ sauce."
+  - rscadd: "Added a new recipe to make BBQ Ribs."

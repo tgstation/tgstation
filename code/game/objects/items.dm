@@ -568,7 +568,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					playsound(hit_atom, 'sound/weapons/genhit.ogg',volume, TRUE, -1)
 			else
 				playsound(hit_atom, 'sound/weapons/throwtap.ogg', 1, volume, -1)
-			
+
 		else
 			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
@@ -837,7 +837,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			dropped(M, FALSE)
 	return ..()
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()
