@@ -57,8 +57,9 @@ Difficulty: Medium
 	var/swooping = NONE
 	var/player_cooldown = 0
 	gps_name = "Fiery Signal"
-	medal_type = BOSS_MEDAL_DRAKE
-	score_type = DRAKE_SCORE
+	achievement_type = /datum/achievement/drake_kill
+	crusher_achievement_type = /datum/achievement/drake_crusher
+	score_achievement_type = /datum/achievement/drake_score
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	do_footstep = TRUE
