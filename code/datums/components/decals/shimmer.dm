@@ -2,8 +2,6 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
 /datum/component/decal/shimmer/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_STRENGTH_FIBERS, _color, _layer=ABOVE_OBJ_LAYER)
-	if(!isitem(parent))
-		return COMPONENT_INCOMPATIBLE
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_GET_EXAMINE_NAME, .proc/get_examine_name)
 

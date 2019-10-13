@@ -13,7 +13,7 @@
 	first_dir = _dir
 	description = _description
 	cleanable = _cleanable
-
+	RegisterSignal(parent, COMSIG_OBJ_UPDATE_ICON, .proc/reapply_overlay)
 	apply()
 
 /datum/component/decal/RegisterWithParent()
@@ -73,3 +73,15 @@
 
 /datum/component/decal/proc/examine(datum/source, mob/user, list/examine_list)
 	examine_list += description
+
+/datum/component/decal/proc/reapply_overlay(datum/source, mob/user, list/examine_list)
+	//var/datum/component/decal/blood/B = src.GetComponent(/datum/component/decal/blood)
+	//var/datum/component/decal/shimmer/S = src.GetComponent(/datum/component/decal/shimmer)
+
+	if(GetComponent(/datum/component/decal))
+		if(GetComponent(/datum/component/decal/shimmer))
+			src.Destroy()
+			src.AddComponent(/datum/component/decal/shimmer)
+		if(GetComponent(/datum/component/decal/blood))
+			src.Destroy()
+			src.AddComponent(/datum/component/decal/blood)
