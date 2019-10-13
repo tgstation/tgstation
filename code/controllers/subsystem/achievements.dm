@@ -3,6 +3,9 @@ SUBSYSTEM_DEF(achievements)
 	flags = SS_NO_FIRE
 	var/hub_enabled = FALSE
 
+	///List of non-score achievements
+	var/list/normal_achievements
+
 /datum/controller/subsystem/achievements/Initialize(timeofday)
 	if(CONFIG_GET(string/medal_hub_address) && CONFIG_GET(string/medal_hub_password))
 		hub_enabled = TRUE
@@ -10,6 +13,11 @@ SUBSYSTEM_DEF(achievements)
 	GLOB.achievement_cache = list()
 	for(var/T in subtypesof(/datum/achievement))
 		GLOB.achievement_cache[T] = new T
+
+	for(var/T in GLOB.achievement_cache)
+		var/datum/achievement/A = T
+		if(A.achievement_type == ACHIEVEMENT_DEFAULT)
+			normal_achievements += A
 
 	return ..()
 
