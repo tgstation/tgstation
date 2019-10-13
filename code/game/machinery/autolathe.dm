@@ -248,7 +248,7 @@
 			if(length(picked_materials))
 				new_item.set_custom_materials(picked_materials, 1 / multiplier) //Ensure we get the non multiplied amount
 				for(var/i in picked_materials)
-					var/datum/material/M = getmaterialref(i
+					var/datum/material/M = i
 					if(!istype(M, /datum/material/glass) && !istype(M, /datum/material/metal))
 						user.UNLOCK_ACHIEVEMENT(/datum/achievement/getting_an_upgrade)
 
