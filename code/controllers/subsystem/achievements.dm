@@ -32,10 +32,3 @@ SUBSYSTEM_DEF(achievements)
 	for(var/i in GLOB.clients)
 		var/client/C = i
 		C.player_details.achievements.save()
-
-/mob/verb/test_values()
-	client.player_details.achievements.get_data(/datum/achievement/meme)
-	to_chat(world,"Testval : [client.player_details.achievements.data[/datum/achievement/meme]]")
-
-/mob/verb/unlock_meme()
-	client.player_details.achievements.unlock(/datum/achievement/meme)
