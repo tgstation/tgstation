@@ -81,10 +81,6 @@
 
 
 /obj/item/stack/update_icon()
-	//var/datum/component/decal/overlay = src.GetComponent(/datum/component/decal)
-	//var/datum/component/decal/blood/B = src.GetComponent(/datum/component/decal/blood)
-	//var/datum/component/decal/shimmer/S = src.GetComponent(/datum/component/decal/shimmer)
-
 	if(novariants)
 		return ..()
 	if(amount <= (max_amount * (1/3)))
@@ -93,14 +89,6 @@
 		icon_state = "[initial(icon_state)]_2"
 	else
 		icon_state = "[initial(icon_state)]_3"
-	SEND_SIGNAL(src,COMSIG_OBJ_UPDATE_ICON)
-	/*if(GetComponent(overlay))
-		if(src.GetComponent(/datum/component/decal/shimmer))
-			S.TakeComponent(src)
-			src.AddComponent(/datum/component/decal/shimmer)
-		if(src.GetComponent(/datum/component/decal/blood))
-			B.TakeComponent(src)
-			src.AddComponent(/datum/component/decal/blood)*/
 	..()
 
 
