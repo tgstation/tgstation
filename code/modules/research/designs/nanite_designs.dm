@@ -39,6 +39,13 @@
 	program_type = /datum/nanite_program/triggered/self_scan
 	category = list("Utility Nanites")
 
+/datum/design/nanites/dermal_button
+	name = "Dermal Button"
+	desc = "Displays a button on the host's skin, which can be used to send a signal to the nanites."
+	id = "dermal_button_nanites"
+	program_type = /datum/nanite_program/dermal_button
+	category = list("Utility Nanites")
+
 /datum/design/nanites/stealth
 	name = "Stealth"
 	desc = "The nanites hide their activity and programming from superficial scans."
