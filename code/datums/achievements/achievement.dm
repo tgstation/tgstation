@@ -56,16 +56,3 @@
 
 /datum/achievement/proc/on_unlock(mob/user)
 	to_chat(user, "<span class='greenannounce'><B>Achievement unlocked: [name]!</B></span>")
-
-/datum/achievement/meme
-	name = "Meme achivement"
-	desc = "WOW"
-
-	hub_id = "meme"
-
-/datum/achievement/scoretest
-	name = "Dumbass Score"
-	desc = "WEW"
-
-	achievement_type = ACHIEVEMENT_SCORE
-	hub_id = "scoretest"
