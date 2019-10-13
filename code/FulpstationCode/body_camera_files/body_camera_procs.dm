@@ -1,10 +1,9 @@
 #define SEC_BODY_CAM_SOUND list('sound/machines/beep.ogg')
-#define SEC_BODY_CAM_REG_DELAY 0.5 SECONDS
+#define SEC_BODY_CAM_REG_DELAY 1 SECONDS
 
 /obj/item/clothing/under/rank/security/Initialize()
 	. = ..()
 	builtInCamera = new (src)
-	builtInCamera.network = list("sec_bodycameras")
 	builtInCamera.internal_light = FALSE
 
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/auto_register_bodycam)
@@ -25,17 +24,10 @@
 	if(!istype(I))
 		return
 	if(check_access(I))
-		var/id_name = I.registered_name
-		builtInCamera.c_tag = "-Body Camera: [id_name] ([I.assignment])"
-		camera_sound()
-		to_chat(user, "<span class='notice'>Security uniform body camera automatically registered to [id_name]</span>")
+		register_body_camera(I, user)
 
 /obj/item/clothing/under/rank/security/attackby(obj/item/W, mob/user, params)
 	. = ..()
-	if(!builtInCamera)
-		to_chat(user, "<span class='warning'>No body camera detected.</span>")
-		return
-
 	var/obj/item/card/id/I
 	if (istype(W, /obj/item/card/id))
 		I = W
@@ -47,13 +39,51 @@
 		to_chat(user, "<span class='warning'>No ID detected for body camera registration.</span>")
 		return
 
+	if(!builtInCamera)
+		to_chat(user, "<span class='warning'>No body camera detected for registration.</span>")
+		return
+
 	if(check_access(I))
-		var/id_name = I.registered_name
-		builtInCamera.c_tag = "-Body Camera: [id_name] ([I.assignment])"
-		camera_sound()
-		to_chat(user, "<span class='notice'>Security uniform body camera manually registered with ID to [id_name]</span>")
+		register_body_camera(I, user)
 	else
 		to_chat(user, "<span class='warning'>ID is not authorized for registration with this uniform's body camera.</span>")
+
+
+/obj/item/clothing/under/rank/security/proc/register_body_camera(obj/item/card/id/I, mob/user)
+	if(!I) //Sanity check
+		return
+	var/id_name = I.registered_name
+	if(id_name == registrant) //If already registered to the same person swiping the ID, we will 'toggle off' registration and unregister the body camera.
+		unregister_body_camera(I, user)
+		return
+
+	registrant = id_name
+	builtInCamera.network = list("sec_bodycameras")
+	var/cam_name = "-Body Camera: [id_name] ([I.assignment])"
+	for(var/obj/machinery/camera/matching_camera in GLOB.cameranet.cameras)
+		if(cam_name == matching_camera.c_tag)
+			to_chat(user, "<span class='notice'>Matching registration found. Unregistering previously registered body camera.</span>")
+			var/obj/item/clothing/under/rank/security/S = matching_camera.loc
+			if(S)
+				S.unregister_body_camera(I, user, FALSE)
+			break
+
+	builtInCamera.c_tag = "[cam_name]"
+
+	camera_sound()
+	if(user)
+		to_chat(user, "<span class='notice'>Security uniform body camera successfully registered to [id_name]</span>")
+
+
+/obj/item/clothing/under/rank/security/proc/unregister_body_camera(obj/item/card/id/I, mob/user, message=TRUE)
+	builtInCamera.network = list()
+	builtInCamera.c_tag = null
+	registrant = null
+	if(user && message)
+		camera_sound()
+		to_chat(user, "<span class='notice'>Security uniform body camera successfully unregistered from [I.registered_name]</span>")
+
+
 
 /obj/item/clothing/under/rank/security/verb/toggle_camera()
 	set name = "Toggle Body Camera"
@@ -95,8 +125,20 @@
 	. = ..()
 	camera_toggle()
 
+
+/obj/item/clothing/under/rank/security/examine(mob/user)
+	. = ..()
+	if(builtInCamera)
+		if(camera_on)
+			. += "Its body camera appears to be <b>active</b>."
+		else
+			. += "Its body camera appears to be <b>inactive</b>."
+		if(registrant)
+			. += "The body camera is registered to <b>[registrant]</b>."
+
 /obj/machinery/computer/security/proc/check_bodycamera_unlock(user)
 	if(allowed(user))
 		network += "sec_bodycameras" //We can tap into the body camera network with appropriate access
 	else
 		network -= "sec_bodycameras"
+

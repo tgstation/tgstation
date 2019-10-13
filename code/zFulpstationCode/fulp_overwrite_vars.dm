@@ -56,6 +56,7 @@
 //*************************************************************************
 /obj/item/clothing/under/rank/security
 	var/obj/machinery/camera/builtInCamera = null
+	var/registrant
 	var/camera_on = TRUE
 	var/sound_time_stamp
 	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
