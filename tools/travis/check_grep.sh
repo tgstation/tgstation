@@ -41,9 +41,6 @@ if pcregrep --buffer-size=100K -LMr '\n$' code/**/*.dm; then
     echo "ERROR: No newline at end of file detected"
     st=1
 fi;
-if grep -P '(?(?=^  .)(^  [^*\s])|(^ +\S))' code/**/*.dm; then
-    echo "WARNING: Space indentation detected"
-fi;
 if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
     echo "WARNING: changed files contains proc argument starting with 'var'"
 fi;
