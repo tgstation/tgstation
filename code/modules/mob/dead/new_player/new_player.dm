@@ -122,7 +122,7 @@
 		new_player_panel()
 
 	if(href_list["late_join"])
-		if(!SSticker || !SSticker.IsRoundInProgress())
+		if(!SSticker?.IsRoundInProgress())
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
 
@@ -148,6 +148,9 @@
 		ViewManifest()
 
 	if(href_list["SelectedJob"])
+		if(!SSticker?.IsRoundInProgress())
+			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
+			return
 
 		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
