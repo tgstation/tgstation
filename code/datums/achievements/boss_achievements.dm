@@ -29,8 +29,8 @@
 	hub_id = BOSS_MEDAL_COLOSSUS
 
 /datum/achievement/drake_kill
-	name = "Blood-drunk Miner Killer"
-	desc = "I guess he couldn't handle his drink that well."
+	name = "Drake Killer"
+	desc = "Now I can wear Rune Platebodies!"
 	achievement_type = ACHIEVEMENT_DEFAULT
 	hub_id = BOSS_MEDAL_DRAKE
 
@@ -71,8 +71,8 @@
 	hub_id = BOSS_MEDAL_COLOSSUS_CRUSHER
 
 /datum/achievement/drake_crusher
-	name = "Blood-drunk Miner Crusher"
-	desc = "I guess he couldn't handle his drink that well."
+	name = "Drake Crusher"
+	desc = "Now I can wear Rune Platebodies!"
 	achievement_type = ACHIEVEMENT_DEFAULT
 	hub_id = BOSS_MEDAL_DRAKE_CRUSHER
 
