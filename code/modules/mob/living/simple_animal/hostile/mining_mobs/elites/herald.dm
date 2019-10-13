@@ -23,7 +23,8 @@
 	health = 800
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	attacktext = "preaches to"
+	attack_verb_continuous = "preaches to"
+	attack_verb_simple = "preach to"
 	attack_sound = 'sound/magic/clockwork/ratvar_attack.ogg'
 	throw_message = "doesn't affect the purity of"
 	speed = 4
@@ -118,7 +119,7 @@
 		if(4)
 			herald_mirror()
 				
-/obj/projectile/herald
+/obj/item/projectile/herald
 	name ="death bolt"
 	icon_state= "chronobolt"
 	damage = 15
@@ -129,12 +130,12 @@
 	pass_flags = PASSTABLE
 	var/mob/living/simple_animal/hostile/hostileshooter = null
 	
-/obj/projectile/herald/teleshot
+/obj/item/projectile/herald/teleshot
 	name ="golden bolt"
 	damage = 0
 	color = rgb(255,255,102)
 
-/obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/herald/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
 		if(hostileshooter && hostileshooter.faction_check_mob(L))
@@ -144,17 +145,17 @@
 		var/turf/closed/mineral/M = target
 		M.gets_drilled()
 		
-/obj/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	firer.forceMove(get_turf(src))
 		
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/shoot_projectile(turf/marker, set_angle, var/is_teleshot)
 	var/turf/startloc = get_turf(src)
-	var/obj/projectile/herald/H = null
+	var/obj/item/projectile/herald/H = null
 	if(!is_teleshot)
-		H = new /obj/projectile/herald(startloc)
+		H = new /obj/item/projectile/herald(startloc)
 	else
-		H = new /obj/projectile/herald/teleshot(startloc)
+		H = new /obj/item/projectile/herald/teleshot(startloc)
 	H.preparePixelProjectile(marker, startloc)
 	H.firer = src
 	H.hostileshooter = src
