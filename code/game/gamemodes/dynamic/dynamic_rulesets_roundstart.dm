@@ -28,6 +28,7 @@
 		assigned += M.mind
 		M.mind.special_role = ROLE_TRAITOR
 		M.mind.restricted_roles = restricted_roles
+		GLOB.pre_setup_antags += M.mind
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/traitor/rule_process()
@@ -77,6 +78,7 @@
 			team.add_member(bro.mind)
 			bro.mind.special_role = "brother"
 			bro.mind.restricted_roles = restricted_roles
+			GLOB.pre_setup_antags += bro.mind
 		pre_brother_teams += team
 	return TRUE
 
@@ -86,6 +88,7 @@
 		team.forge_brother_objectives()
 		for(var/datum/mind/M in team.members)
 			M.add_antag_datum(/datum/antagonist/brother, team)
+			GLOB.pre_setup_antags -= M
 		team.update_name()
 	mode.brother_teams += pre_brother_teams
 	return TRUE
@@ -116,6 +119,7 @@
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
 		M.mind.special_role = ROLE_CHANGELING
+		GLOB.pre_setup_antags += M.mind
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/changeling/execute()
@@ -135,6 +139,7 @@
 		var/datum/antagonist/changeling/new_antag = new antag_datum()
 		new_antag.team_mode = team_mode
 		changeling.add_antag_datum(new_antag)
+		GLOB.pre_setup_antags -= changeling
 	return TRUE
 
 //////////////////////////////////////////////
@@ -173,7 +178,7 @@
 		assigned += M.mind
 		M.mind.assigned_role = ROLE_WIZARD
 		M.mind.special_role = ROLE_WIZARD
-	
+
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/wizard/execute()
@@ -218,6 +223,7 @@
 		assigned += M.mind
 		M.mind.special_role = ROLE_CULTIST
 		M.mind.restricted_roles = restricted_roles
+		GLOB.pre_setup_antags += M.mind
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/bloodcult/execute()
@@ -227,6 +233,7 @@
 		new_cultist.cult_team = main_cult
 		new_cultist.give_equipment = TRUE
 		M.add_antag_datum(new_cultist)	
+		GLOB.pre_setup_antags -= M
 	main_cult.setup_objectives()
 	return TRUE
 
@@ -361,6 +368,7 @@
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
 		M.mind.special_role = antag_flag
+		GLOB.pre_setup_antags += M.mind
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/revs/execute()
@@ -371,6 +379,7 @@
 		new_head.give_hud = TRUE
 		new_head.remove_clumsy = TRUE
 		M.add_antag_datum(new_head,revolution)
+		GLOB.pre_setup_antags -= M
 	revolution.update_objectives()
 	revolution.update_heads()
 	SSshuttle.registerHostileEnvironment(src)
@@ -480,6 +489,7 @@
 		assigned += servant.mind
 		servant.mind.assigned_role = ROLE_SERVANT_OF_RATVAR
 		servant.mind.special_role = ROLE_SERVANT_OF_RATVAR
+		GLOB.pre_setup_antags += servant.mind
 	ark_time = 30 + round((number_players / 5))
 	ark_time = min(ark_time, 35)
 	return TRUE
@@ -496,6 +506,7 @@
 		greet_servant(S)
 		equip_servant(S)
 		add_servant_of_ratvar(S, TRUE)
+		GLOB.pre_setup_antags -= S.mind
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar //that's a mouthful
 	G.final_countdown(ark_time)
 	return TRUE
@@ -601,6 +612,7 @@
 		assigned += devil.mind
 		devil.mind.special_role = ROLE_DEVIL
 		devil.mind.restricted_roles = restricted_roles
+		GLOB.pre_setup_antags += devil.mind
 
 		log_game("[key_name(devil)] has been selected as a devil")
 	return TRUE
@@ -608,6 +620,7 @@
 /datum/dynamic_ruleset/roundstart/devil/execute()
 	for(var/datum/mind/devil in assigned)
 		add_devil(devil.current, ascendable = TRUE)
+		GLOB.pre_setup_antags -= devil
 		add_devil_objectives(devil,2)
 	return TRUE
 
