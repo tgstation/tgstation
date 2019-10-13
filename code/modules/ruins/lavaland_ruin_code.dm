@@ -1,9 +1,5 @@
 //If you're looking for spawners like ash walker eggs, check ghost_role_spawners.dm
 
-/obj/structure/fans/tiny/invisible //For blocking air in ruin doorways
-	invisibility = INVISIBILITY_ABSTRACT
-
-
 ///Wizard tower item
 /obj/item/disk/design_disk/adv/knight_gear
 	name = "Magic Disk of Smithing"
