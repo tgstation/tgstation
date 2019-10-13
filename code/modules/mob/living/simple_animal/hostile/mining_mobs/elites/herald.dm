@@ -119,7 +119,7 @@
 		if(4)
 			herald_mirror()
 				
-/obj/item/projectile/herald
+/obj/projectile/herald
 	name ="death bolt"
 	icon_state= "chronobolt"
 	damage = 15
@@ -130,12 +130,12 @@
 	pass_flags = PASSTABLE
 	var/mob/living/simple_animal/hostile/hostileshooter = null
 	
-/obj/item/projectile/herald/teleshot
+/obj/projectile/herald/teleshot
 	name ="golden bolt"
 	damage = 0
 	color = rgb(255,255,102)
 
-/obj/item/projectile/herald/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
 		if(hostileshooter && hostileshooter.faction_check_mob(L))
@@ -145,17 +145,17 @@
 		var/turf/closed/mineral/M = target
 		M.gets_drilled()
 		
-/obj/item/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	firer.forceMove(get_turf(src))
 		
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/shoot_projectile(turf/marker, set_angle, var/is_teleshot)
 	var/turf/startloc = get_turf(src)
-	var/obj/item/projectile/herald/H = null
+	var/obj/projectile/herald/H = null
 	if(!is_teleshot)
-		H = new /obj/item/projectile/herald(startloc)
+		H = new /obj/projectile/herald(startloc)
 	else
-		H = new /obj/item/projectile/herald/teleshot(startloc)
+		H = new /obj/projectile/herald/teleshot(startloc)
 	H.preparePixelProjectile(marker, startloc)
 	H.firer = src
 	H.hostileshooter = src
