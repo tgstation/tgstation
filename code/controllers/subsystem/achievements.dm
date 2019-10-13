@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(achievements)
 	name = "Achievements"
-	flags = SS_NO_FIRE
+	wait = 5 MINUTES
 	var/hub_enabled = FALSE
 
 	///List of non-score achievements
@@ -20,6 +20,10 @@ SUBSYSTEM_DEF(achievements)
 			normal_achievements += A
 
 	return ..()
+
+/datum/controller/subsystem/achievements/fire(resumed)
+	. = ..()
+	save_achievements_to_hub()
 
 /datum/controller/subsystem/achievements/Shutdown()
 	save_achievements_to_hub()
