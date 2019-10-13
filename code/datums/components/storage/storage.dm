@@ -614,8 +614,8 @@
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[I] is too big for [host]!</span>")
 		return FALSE
-	if(real_location.loc.GetComponent(/datum/component/storage))//return false if we are inside of another container,
-		var/datum/component/storage/biggerfish = real_location.loc.GetComponent(/datum/component/storage)
+	var/datum/component/storage/biggerfish = real_location.loc.GetComponent(/datum/component/storage)
+	if(biggerfish)//return false if we are inside of another container,
 		if(biggerfish.max_w_class < max_w_class)//and that container has a smaller max_w_class than us (like if we're a bag in a box)
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[I] can't fit in [host] while [real_location.loc] is in the way!</span>")
