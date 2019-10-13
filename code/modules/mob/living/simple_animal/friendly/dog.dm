@@ -21,6 +21,60 @@
 
 	do_footstep = TRUE
 
+/mob/living/simple_animal/pet/dog/Life()
+	..()
+
+	//Feeding, chasing food, FOOOOODDDD
+	if(!stat && !resting && !buckled)
+		turns_since_scan++
+		if(turns_since_scan > 5)
+			turns_since_scan = 0
+			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
+				movement_target = null
+				stop_automated_movement = 0
+			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
+				movement_target = null
+				stop_automated_movement = 0
+				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
+					if(isturf(S.loc) || ishuman(S.loc))
+						movement_target = S
+						break
+			if(movement_target)
+				stop_automated_movement = 1
+				step_to(src,movement_target,1)
+				sleep(3)
+				step_to(src,movement_target,1)
+				sleep(3)
+				step_to(src,movement_target,1)
+
+				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
+					if (movement_target.loc.x < src.x)
+						setDir(WEST)
+					else if (movement_target.loc.x > src.x)
+						setDir(EAST)
+					else if (movement_target.loc.y < src.y)
+						setDir(SOUTH)
+					else if (movement_target.loc.y > src.y)
+						setDir(NORTH)
+					else
+						setDir(SOUTH)
+
+					if(!Adjacent(movement_target)) //can't reach food through windows.
+						return
+
+					if(isturf(movement_target.loc) )
+						movement_target.attack_animal(src)
+					else if(ishuman(movement_target.loc) )
+						if(prob(20))
+							emote("me", 1, "stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
+
+		if(prob(1))
+			emote("me", 1, pick("dances around.","chases its tail!"))
+			spawn(0)
+				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
+					setDir(i)
+					sleep(1)
+
 //Corgis and pugs are now under one dog subtype
 
 /mob/living/simple_animal/pet/dog/corgi
@@ -422,60 +476,6 @@
 		file_data["saved_head"] = null
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
-
-/mob/living/simple_animal/pet/dog/Life()
-	..()
-
-	//Feeding, chasing food, FOOOOODDDD
-	if(!stat && !resting && !buckled)
-		turns_since_scan++
-		if(turns_since_scan > 5)
-			turns_since_scan = 0
-			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
-				movement_target = null
-				stop_automated_movement = 0
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
-				movement_target = null
-				stop_automated_movement = 0
-				for(var/obj/item/reagent_containers/food/snacks/S in oview(src,3))
-					if(isturf(S.loc) || ishuman(S.loc))
-						movement_target = S
-						break
-			if(movement_target)
-				stop_automated_movement = 1
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
-				sleep(3)
-				step_to(src,movement_target,1)
-
-				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					if (movement_target.loc.x < src.x)
-						setDir(WEST)
-					else if (movement_target.loc.x > src.x)
-						setDir(EAST)
-					else if (movement_target.loc.y < src.y)
-						setDir(SOUTH)
-					else if (movement_target.loc.y > src.y)
-						setDir(NORTH)
-					else
-						setDir(SOUTH)
-
-					if(!Adjacent(movement_target)) //can't reach food through windows.
-						return
-
-					if(isturf(movement_target.loc) )
-						movement_target.attack_animal(src)
-					else if(ishuman(movement_target.loc) )
-						if(prob(20))
-							emote("me", 1, "stares at [movement_target.loc]'s [movement_target] with a sad puppy-face")
-
-		if(prob(1))
-			emote("me", 1, pick("dances around.","chases its tail!"))
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					setDir(i)
-					sleep(1)
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/narsie_act()
 	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
