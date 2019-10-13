@@ -274,6 +274,21 @@
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "venus"
 
+/obj/structure/statue/sandstone/asstue
+	name = "giant stone ass"
+	desc = "On Saturday, October 13th, 2019 the toolbox was held high by proud station crew. \
+            Over a hundred space men and women got together to prove their honour and worth \
+            and ultimately their efforts would go towards a charity for sick children. \
+            Their generous hearts managed to raise over four thousand dollars in a display \
+            uncharacteristically altruistic of your average nanotrasen employee. \
+            During the grand slam, teams from all over space threw down with ceremonies \
+            overseen by a bomber of boats and galaxies worst quartermaster five years running. \
+            Many might have said it was a spectacle truly warming of hearts a lifting of souls.  \
+            And then every team lost to a creepy greaseball wearing cat ears. \
+            To mark the absolute ASSES everyone made of themselves this giant stone butt \
+            has been erected as a reminder of their humiliation."
+	icon_state = "asstue"
+
 /////////////////////snow/////////////////////////////////////////
 
 /obj/structure/statue/snow
