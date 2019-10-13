@@ -83,6 +83,8 @@
 		log_game("[key_name(cultist)] has been selected as a cultist")
 
 	if(cultists_to_cult.len>=required_enemies)
+		for(var/antag in cultists_to_cult)
+			GLOB.pre_setup_antags += antag
 		return TRUE
 	else
 		setup_error = "Not enough cultist candidates"
@@ -94,6 +96,7 @@
 
 	for(var/datum/mind/cult_mind in cultists_to_cult)
 		add_cultist(cult_mind, 0, equip=TRUE, cult_team = main_cult)
+		GLOB.pre_setup_antags -= cult_mind
 
 	main_cult.setup_objectives() //Wait until all cultists are assigned to make sure none will be chosen as sacrifice.
 
