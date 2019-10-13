@@ -1999,7 +1999,6 @@
 #include "code\modules\mining\satchel_ore_boxdm.dm"
 #include "code\modules\mining\shelters.dm"
 #include "code\modules\mining\equipment\explorer_gear.dm"
-#include "code\modules\mining\equipment\goliath_hide.dm"
 #include "code\modules\mining\equipment\kinetic_crusher.dm"
 #include "code\modules\mining\equipment\lazarus_injector.dm"
 #include "code\modules\mining\equipment\marker_beacons.dm"
