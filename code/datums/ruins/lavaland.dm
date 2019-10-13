@@ -235,6 +235,6 @@
 	id = "tumor"
 	description = "A strange tumor which houses a powerful beast..."
 	suffix = "lavaland_surface_elite_tumor.dmm"
-	cost = 0
+	cost = 5
 	always_place = TRUE
 	allow_duplicates = TRUE
