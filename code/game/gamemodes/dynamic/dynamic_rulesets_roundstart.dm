@@ -16,13 +16,19 @@
 	required_candidates = 1
 	weight = 5
 	cost = 10
+	scale_cost = 15
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
+	antag_cap = list(1,1,1,2,2,2,2,3,3,3)
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute()
-	var/traitor_scaling_coeff = 10 - max(0,round(mode.threat_level/10)-5) // Above 50 threat level, coeff goes down by 1 for every 10 levels
-	var/num_traitors = min(round(mode.candidates.len / traitor_scaling_coeff) + 1, candidates.len)
+	var/num_traitors
+	if(scaling_cost)
+		num_traitors = min(3, round((indice_pop/5), 1) + 1) * (scaled_times + 1) // Each scale step spawns 1 traitor at <20 pop, 2 between 20 and 
+	else
+		var/traitor_scaling_coeff = 10 - max(0,round(mode.threat_level/10)-5) // Above 50 threat level, coeff goes down by 1 for every 10 levels
+		num_traitors = min(round(mode.candidates.len / traitor_scaling_coeff) + 1, candidates.len)
 	for (var/i = 1 to num_traitors)
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
@@ -54,13 +60,17 @@
 	required_candidates = 2
 	weight = 4
 	cost = 10
+	scale_cost = 15
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
 	high_population_requirement = 15
+	antag_cap = list(1,1,1,2,2,2,2,3,3,3) // Amount of teams
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/team_amount = 2 // Hard limit on brother teams if scaling is turned off
 	var/const/min_team_size = 2
 
 /datum/dynamic_ruleset/roundstart/traitorbro/pre_execute()
+	if(scale_cost)
+
 	var/num_teams = team_amount
 	var/bsc = CONFIG_GET(number/brother_scaling_coeff)
 	if(bsc)
@@ -204,12 +214,10 @@
 	var/datum/team/cult/main_cult
 
 /datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = FALSE)
-	var/indice_pop = min(cultist_cap.len, round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	required_candidates = cultist_cap[indice_pop]
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/bloodcult/pre_execute()
-	var/indice_pop = min(cultist_cap.len, round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	var/cultists = cultist_cap[indice_pop]
 	for(var/cultists_number = 1 to cultists)
 		if(candidates.len <= 0)
@@ -262,14 +270,13 @@
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
-	var/indice_pop = min(operative_cap.len,round(mode.roundstart_pop_ready/pop_per_requirement)+1)
 	required_candidates = operative_cap[indice_pop]
 	. = ..()
 
 /datum/dynamic_ruleset/roundstart/nuclear/pre_execute()
 	// If ready() did its job, candidates should have 5 or more members in it
 
-	var/indice_pop = min(operative_cap.len, round(mode.roundstart_pop_ready/5)+1)
+	indice_pop = min(operative_cap.len, round(mode.roundstart_pop_ready/5)+1)
 	var/operatives = operative_cap[indice_pop]
 	for(var/operatives_number = 1 to operatives)
 		if(candidates.len <= 0)

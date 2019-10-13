@@ -394,12 +394,12 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					extra_rulesets_amount++
 
 	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
-		if (extra_rulesets_amount > 0) // We've got enough population and threat for a second rulestart rule
+		if (extra_rulesets_amount > 0) // We've got enough population and threat for a second roundstart rule
 			for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
 				if (rule.cost > threat)
 					drafted_rules -= rule
 			if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
-				if (extra_rulesets_amount > 1) // We've got enough population and threat for a third rulestart rule
+				if (extra_rulesets_amount > 1) // We've got enough population and threat for a third roundstart rule
 					for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
 						if (rule.cost > threat)
 							drafted_rules -= rule
@@ -444,8 +444,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	drafted_rules -= starting_rule
 
 	starting_rule.trim_candidates()
+
 	if (starting_rule.pre_execute())
-		spend_threat(starting_rule.cost)
+		added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
+		spend_threat(starting_rule.cost + added_threat)
 		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
 		if(starting_rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE

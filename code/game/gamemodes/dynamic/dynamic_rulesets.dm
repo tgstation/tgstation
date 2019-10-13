@@ -1,3 +1,5 @@
+#define EXTRA_RULESET_PENALTY = 15	// Changes how likely a gamemode is to scale based on how many other roundstart rulesets are waiting to be rolled.
+
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
 	var/name = ""
@@ -34,7 +36,11 @@
 	/// 1 -> 9, probability for this rule to be picked against other rules
 	var/weight = 5 
 	/// Threat cost for this rule, this is decreased from the mode's threat when the rule is executed.
-	var/cost = 0 
+	var/cost = 0
+	/// Cost per level the rule scales up. A scaling_cost of 0 turns scale_up off, and uses the normal scaling instead.
+	var/scaling_cost = 0
+	/// How many times a rule has scaled up upon getting picked.
+	var/scaled_times = 0
 	/// A flag that determines how the ruleset is handled
 	/// HIGHLANDER_RULESET are rulesets can end the round.
 	/// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
@@ -57,6 +63,11 @@
 	/// The maximum amount of players required for the rule to be considered.
 	/// Anything below zero or exactly zero is ignored. 
 	var/maximum_players = 0
+	/// Calculated during acceptable(), used in scaling and team sizes.
+	var/indice_pop = 0
+	/// Population scaling. Used by team antags and scaling for solo antags.
+	var/list/antag_cap = list()
+
 
 
 /datum/dynamic_ruleset/New()
@@ -92,21 +103,20 @@
 		return (threat_level >= high_population_requirement)
 	else
 		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-		var/indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 		return (threat_level >= requirements[indice_pop])
 
-// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the amount of scaled steps.
+/// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the amount of scaled steps.
 /datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
-	var/scaled_up	// The amount of times it has scaled up
-	var/base_prob = 50
-	for(var/i in 1 to 3)
-		remaining_threat_level -= scaled_up * scale_cost
+	var/base_prob = 40
+	for(var/i in 1 to 3) //Can scale a max of 3 times
 		if(remaining_threat_level >= scale_cost)
-			var/new_prob = base_prob - (scaled_up * scale_cost) - (extra_rulesets * 15) + remaining_threat_level
-			if (prob(new_prob)
-
-			else
-				return scaled_up
+			var/new_prob = base_prob - (scaled_times * scale_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) + remaining_threat_level
+			if (!prob(new_prob)
+				break
+			remaining_threat_level -= scale_cost
+			scaled_times++
+	return scaled_times * scale_cost
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()
