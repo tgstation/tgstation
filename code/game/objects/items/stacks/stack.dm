@@ -228,7 +228,7 @@
 		if(R.applies_mats && custom_materials && custom_materials.len)
 			var/list/used_materials = list()
 			for(var/i in custom_materials)
-				used_materials[getmaterialref(i)] = R.req_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
+				used_materials[getmaterialref(i)] = R.req_amount / res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
 			O.set_custom_materials(used_materials)
 
 		//START: oh fuck i'm so sorry
