@@ -1,6 +1,0 @@
-author: "TheChosenEvilOne"
-delete-after: True
-changes: 
-  - bugfix: "Throwing objects to openspace works correctly."
-  - bugfix: "Non-living objects can now go up stairs."
-  - bugfix: "You can no longer deepfry openspace."
