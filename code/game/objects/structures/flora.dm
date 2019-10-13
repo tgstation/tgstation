@@ -317,6 +317,7 @@
 /obj/item/twohanded/required/kirbyplants/Initialize()
 	. = ..()
 	AddComponent(/datum/component/tactical)
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 500), 0)
 
 /obj/item/twohanded/required/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'
@@ -392,9 +393,8 @@
 //Jungle rocks
 
 /obj/structure/flora/rock/jungle
-	icon_state = "pile of rocks"
-	desc = "A pile of rocks."
 	icon_state = "rock"
+	desc = "A pile of rocks."
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
 

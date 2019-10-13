@@ -22,7 +22,7 @@
 	foodtype = GRAIN
 
 /obj/item/reagent_containers/food/snacks/grilledcheese
-	name = "grilled cheese sandwich"
+	name = "cheese sandwich"
 	desc = "Goes great with Tomato soup!"
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "toastedsandwich"

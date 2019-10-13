@@ -40,7 +40,7 @@
 			if (prob(50))
 				qdel(src)
 
-/obj/item/latexballon/bullet_act(obj/item/projectile/P)
+/obj/item/latexballon/bullet_act(obj/projectile/P)
 	if(!P.nodamage)
 		burst()
 	return ..()

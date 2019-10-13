@@ -10,11 +10,11 @@
 	range = 7
 	cooldown_min = 60 //35 deciseconds reduction per rank
 	max_targets = 0
-	proj_type = /obj/item/projectile/magic/spell/magic_missile
+	proj_type = /obj/projectile/magic/spell/magic_missile
 	action_icon_state = "magicm"
 	sound = 'sound/magic/magic_missile.ogg'
 
-/obj/item/projectile/magic/spell/magic_missile
+/obj/projectile/magic/spell/magic_missile
 	name = "magic missile"
 	icon_state = "magicm"
 	range = 20
@@ -29,7 +29,7 @@
 	trail_lifespan = 5
 	trail_icon_state = "magicmd"
 
-/obj/item/projectile/magic/spell/magic_missile/on_hit(target)
+/obj/projectile/magic/spell/magic_missile/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
@@ -136,7 +136,6 @@
 	name = "quickstep"
 
 	charge_max = 100
-	clothes_req = FALSE
 	clothes_req = TRUE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
@@ -279,7 +278,7 @@
 
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 40)
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, stun_amt = 40)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
