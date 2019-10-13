@@ -54,14 +54,14 @@
 		icon_state = "sword[saber_color]"
 		w_class = WEIGHT_CLASS_BULKY
 		hitsound = 'sound/weapons/blade1.ogg'
-		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 20, TRUE)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	else
 		force = 3
 		icon_state = "sword0"
 		w_class = WEIGHT_CLASS_SMALL
 		hitsound = "swing_hit"
-		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 20, TRUE)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
 	return
 
@@ -85,7 +85,7 @@
 	..()
 	if((ishuman(hit_atom)))
 		var/mob/living/carbon/M = hit_atom
-		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
+		playsound(src, 'sound/items/dodgeball.ogg', 50, TRUE)
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
 			M.Paralyze(60)
@@ -125,7 +125,7 @@
 		..()
 
 /obj/structure/holohoop/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if (isitem(AM) && !istype(AM,/obj/item/projectile))
+	if (isitem(AM) && !istype(AM,/obj/projectile))
 		if(prob(50))
 			AM.forceMove(get_turf(src))
 			visible_message("<span class='warning'>Swish! [AM] lands in [src].</span>")

@@ -170,7 +170,7 @@
 		return
 
 	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
-	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, 1, 1)
+	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
 	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
 	var/list/factions = usr.faction
 	M.faction = factions
@@ -219,8 +219,10 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "electricity2"
 
-/obj/item/wizard_armour_charge/afterattack(obj/item/clothing/suit/space/hardsuit/shielded/wizard/W, mob/user)
+/obj/item/wizard_armour_charge/afterattack(obj/item/clothing/suit/space/hardsuit/shielded/wizard/W, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	if(!istype(W))
 		to_chat(user, "<span class='warning'>The rune can only be used on battlemage armour!</span>")
 		return

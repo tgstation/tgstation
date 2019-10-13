@@ -8,6 +8,8 @@
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
 	energy_drain = 10
+	tool_behaviour = TOOL_RETRACTOR
+	toolspeed = 0.8
 	var/dam_force = 20
 	var/obj/mecha/working/ripley/cargo_holder
 	harmful = TRUE
@@ -84,7 +86,7 @@
 			M.updatehealth()
 			target.visible_message("<span class='danger'>[chassis] squeezes [target]!</span>", \
 								"<span class='userdanger'>[chassis] squeezes you!</span>",\
-								"<span class='italics'>You hear something crack.</span>")
+								"<span class='hear'>You hear something crack.</span>")
 			log_combat(chassis.occupant, M, "attacked", "[name]", "(INTENT: [uppertext(chassis.occupant.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 		else
 			step_away(M,chassis)
@@ -201,10 +203,10 @@
 		var/obj/structure/reagent_dispensers/watertank/WT = target
 		WT.reagents.trans_to(src, 1000)
 		occupant_message("<span class='notice'>Extinguisher refilled.</span>")
-		playsound(chassis, 'sound/effects/refill.ogg', 50, 1, -6)
+		playsound(chassis, 'sound/effects/refill.ogg', 50, TRUE, -6)
 	else
 		if(reagents.total_volume > 0)
-			playsound(chassis, 'sound/effects/extinguish.ogg', 75, 1, -3)
+			playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 			var/direction = get_dir(chassis,target)
 			var/turf/T = get_turf(target)
 			var/turf/T1 = get_step(T,turn(direction, 90))
@@ -273,7 +275,7 @@
 		target = get_turf(target)
 	if(!action_checks(target) || get_dist(chassis, target)>3)
 		return
-	playsound(chassis, 'sound/machines/click.ogg', 50, 1)
+	playsound(chassis, 'sound/machines/click.ogg', 50, TRUE)
 
 	switch(mode)
 		if(0)
@@ -283,34 +285,34 @@
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
 					W.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-					playsound(W, 'sound/items/deconstruct.ogg', 50, 1)
+					playsound(W, 'sound/items/deconstruct.ogg', 50, TRUE)
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("<span class='notice'>Deconstructing [F]...</span>")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
 					F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-					playsound(F, 'sound/items/deconstruct.ogg', 50, 1)
+					playsound(F, 'sound/items/deconstruct.ogg', 50, TRUE)
 			else if (istype(target, /obj/machinery/door/airlock))
 				occupant_message("<span class='notice'>Deconstructing [target]...</span>")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
 					qdel(target)
-					playsound(target, 'sound/items/deconstruct.ogg', 50, 1)
+					playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)
 		if(1)
 			if(isspaceturf(target))
 				var/turf/open/space/S = target
 				occupant_message("<span class='notice'>Building Floor...</span>")
 				if(do_after_cooldown(S))
 					S.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-					playsound(S, 'sound/items/deconstruct.ogg', 50, 1)
+					playsound(S, 'sound/items/deconstruct.ogg', 50, TRUE)
 					chassis.spark_system.start()
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("<span class='notice'>Building Wall...</span>")
 				if(do_after_cooldown(F))
 					F.PlaceOnTop(/turf/closed/wall)
-					playsound(F, 'sound/items/deconstruct.ogg', 50, 1)
+					playsound(F, 'sound/items/deconstruct.ogg', 50, TRUE)
 					chassis.spark_system.start()
 		if(2)
 			if(isfloorturf(target))
@@ -319,8 +321,8 @@
 					chassis.spark_system.start()
 					var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock(target)
 					T.autoclose = TRUE
-					playsound(target, 'sound/items/deconstruct.ogg', 50, 1)
-					playsound(target, 'sound/effects/sparks2.ogg', 50, 1)
+					playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)
+					playsound(target, 'sound/effects/sparks2.ogg', 50, TRUE)
 
 
 
@@ -365,6 +367,9 @@
 	if(M.occupant) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
 		to_chat(loc, "<span class='warning'>[M] must be unoccupied before this conversion kit can be applied.</span>")
 		return FALSE
+	if(!M.cell) //Turns out things break if the cell is missing
+		to_chat(loc, "<span class='warning'>The conversion process requires a cell installed.</span>")
+		return FALSE
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/mecha/M)
@@ -376,8 +381,17 @@
 		N.cell = M.cell
 		M.cell.forceMove(N)
 		M.cell = null
-	N.step_energy_drain = M.step_energy_drain //For the scanning module
-	N.armor = N.armor.setRating(energy = M.armor["energy"]) //for the capacitor
+	QDEL_NULL(N.scanmod)
+	if (M.scanmod)
+		N.scanmod = M.scanmod
+		M.scanmod.forceMove(N)
+		M.scanmod = null
+	QDEL_NULL(N.capacitor)
+	if (M.capacitor)
+		N.capacitor = M.capacitor
+		M.capacitor.forceMove(N)
+		M.capacitor = null
+	N.update_part_values()
 	for(var/obj/item/mecha_parts/E in M.contents)
 		if(istype(E, /obj/item/mecha_parts/concealed_weapon_bay)) //why is the bay not just a variable change who did this
 			E.forceMove(N)
@@ -393,5 +407,5 @@
 		N.name = M.name
 	M.wreckage = 0
 	qdel(M)
-	playsound(get_turf(N),'sound/items/ratchet.ogg',50,1)
+	playsound(get_turf(N),'sound/items/ratchet.ogg',50,TRUE)
 	return

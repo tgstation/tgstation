@@ -4,7 +4,6 @@
 	icon_state = "helmet"
 	item_state = "helmet"
 	armor = list("melee" = 35, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	flags_inv = HIDEEARS
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -24,10 +23,6 @@
 	. = ..()
 	if(attached_light)
 		alight = new(src)
-
-/obj/item/clothing/head/helmet/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/examine(mob/user)
 	. = ..()
@@ -104,8 +99,8 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEFACE
 	toggle_cooldown = 0
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)
@@ -271,6 +266,14 @@
 /obj/item/clothing/head/helmet/knight/red
 	icon_state = "knight_red"
 	item_state = "knight_red"
+
+/obj/item/clothing/head/helmet/knight/greyscale
+	name = "knight helmet"
+	desc = "A classic medieval helmet, if you hold it upside down you could see that it's actually a bucket."
+	icon_state = "knight_greyscale"
+	item_state = "knight_greyscale"
+	armor = list("melee" = 35, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR//Can change color and add prefix
 
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"

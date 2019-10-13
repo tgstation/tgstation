@@ -57,7 +57,7 @@
 					break dir_loop
 
 	if(!terminal)
-		stat |= BROKEN
+		obj_break()
 		return
 	terminal.master = src
 	update_icon()
@@ -129,7 +129,7 @@
 			return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 		if(do_after(user, 20, target = src))
 			if(C.get_amount() < 10 || !C)
@@ -202,7 +202,7 @@
 	if(terminal)
 		terminal.master = null
 		terminal = null
-		stat |= BROKEN
+		obj_break()
 
 
 /obj/machinery/power/smes/update_icon()

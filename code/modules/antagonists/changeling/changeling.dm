@@ -150,6 +150,15 @@
 		if(istype(S) && S.needs_button)
 			S.Grant(owner.current)
 
+///Handles stinging without verbs.
+/datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
+	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
+		return
+	if(!chosen_sting.try_to_sting(ling, A))
+		return
+	ling.changeNext_move(CLICK_CD_MELEE)
+	return COMSIG_MOB_CANCEL_CLICKON
+
 /datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
 	for(var/P in purchasedpowers)
 		var/datum/action/changeling/otherpower = P
@@ -232,7 +241,7 @@
 			return TRUE
 	return FALSE
 
-/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, var/verbose=1)
+/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose=1)
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
@@ -295,6 +304,7 @@
 			prof.appearance_list[slot] = I.appearance
 			prof.flags_cover_list[slot] = I.flags_cover
 			prof.item_state_list[slot] = I.item_state
+			prof.mob_overlay_icon_list[slot] = I.mob_overlay_icon
 			prof.exists_list[slot] = 1
 		else
 			continue
@@ -351,12 +361,12 @@
 		if(B)
 			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
+		RegisterSignal(C, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/stingAtom)
 	update_changeling_icons_added()
-	return
 
 /datum/antagonist/changeling/remove_innate_effects()
 	update_changeling_icons_removed()
-	return
+	UnregisterSignal(owner.current, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 
 
 /datum/antagonist/changeling/greet()
@@ -510,6 +520,7 @@
 	var/list/flags_cover_list = list()
 	var/list/exists_list = list()
 	var/list/item_state_list = list()
+	var/list/mob_overlay_icon_list = list()
 
 	var/underwear
 	var/undershirt
@@ -532,6 +543,7 @@
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
 	newprofile.socks = socks
+	newprofile.mob_overlay_icon_list = mob_overlay_icon_list.Copy()
 
 
 /datum/antagonist/changeling/xenobio

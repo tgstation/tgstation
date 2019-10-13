@@ -21,7 +21,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	materials = list(/datum/material/iron=10)
+	custom_materials = list(/datum/material/iron=10)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "black"	//what colour the ink is!
@@ -79,7 +79,7 @@
 	throwforce = 5
 	throw_speed = 4
 	colour = "crimson"
-	materials = list(/datum/material/gold = 750)
+	custom_materials = list(/datum/material/gold = 750)
 	sharpness = IS_SHARP
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
@@ -181,7 +181,7 @@
 	. = ..()
 	AddComponent(/datum/component/butchering, 60, 100, 0, 'sound/weapons/blade1.ogg')
 
-/obj/item/pen/edagger/is_sharp()
+/obj/item/pen/edagger/get_sharpness()
 	return on * sharpness
 
 /obj/item/pen/edagger/suicide_act(mob/user)
@@ -202,7 +202,7 @@
 		hitsound = initial(hitsound)
 		embedding = embedding.setRating(embed_chance = EMBED_CHANCE)
 		throwforce = initial(throwforce)
-		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
 	else
 		on = TRUE
@@ -213,7 +213,7 @@
 		hitsound = 'sound/weapons/blade1.ogg'
 		embedding = embedding.setRating(embed_chance = 100) //rule of cool
 		throwforce = 35
-		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	update_icon()
 

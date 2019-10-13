@@ -14,7 +14,7 @@
 	icon_state = "mulebot0"
 	density = TRUE
 	move_resist = MOVE_FORCE_STRONG
-	animate_movement = 1
+	animate_movement = FORWARD_STEPS
 	health = 50
 	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
@@ -125,7 +125,7 @@
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
-	playsound(src, "sparks", 100, 0)
+	playsound(src, "sparks", 100, FALSE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon()
 	if(open)
@@ -152,7 +152,7 @@
 			wires.cut_random()
 	return
 
-/mob/living/simple_animal/bot/mulebot/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/Proj)
 	. = ..()
 	if(.)
 		if(prob(50) && !isnull(load))
@@ -319,14 +319,14 @@
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
 		if(SIGH)
-			audible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			audible_message("[src] makes a sighing buzz.", "<span class='hear'>You hear an electronic buzzing sound.</span>")
+			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		if(ANNOYED)
-			audible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+			audible_message("[src] makes an annoyed buzzing sound.", "<span class='hear'>You hear an electronic buzzing sound.</span>")
+			playsound(loc, 'sound/machines/buzz-two.ogg', 50, FALSE)
 		if(DELIGHT)
-			audible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
-			playsound(loc, 'sound/machines/ping.ogg', 50, 0)
+			audible_message("[src] makes a delighted ping!", "<span class='hear'>You hear a ping.</span>")
+			playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
 
 
 // mousedrop a crate to load the bot
@@ -593,15 +593,15 @@
 /mob/living/simple_animal/bot/mulebot/proc/at_target()
 	if(!reached_target)
 		radio_channel = RADIO_CHANNEL_SUPPLY //Supply channel
-		audible_message("[src] makes a chiming sound!", "<span class='italics'>You hear a chime.</span>")
-		playsound(loc, 'sound/machines/chime.ogg', 50, 0)
+		audible_message("[src] makes a chiming sound!", "<span class='hear'>You hear a chime.</span>")
+		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE)
 		reached_target = 1
 
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
 				to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [src] wirelessly plays a chiming sound!</span>")
-				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
+				playsound(calling_ai, 'sound/machines/chime.ogg',40, FALSE)
 				calling_ai = null
 				radio_channel = RADIO_CHANNEL_AI_PRIVATE //Report on AI Private instead if the AI is controlling us.
 
@@ -655,7 +655,7 @@
 	log_combat(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!</span>")
-	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
 
 	var/damage = rand(5,15)
 	H.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, "melee"))

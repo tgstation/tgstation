@@ -87,7 +87,7 @@
 
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = TRUE
-	playsound(src, openSound, 100, 1)
+	playsound(src, openSound, 100, TRUE)
 	set_opacity(FALSE)
 	flick("[initial(icon_state)]opening",src)
 	sleep(10)
@@ -108,7 +108,7 @@
 	for(var/mob/living/L in T)
 		return
 	isSwitchingStates = TRUE
-	playsound(src, closeSound, 100, 1)
+	playsound(src, closeSound, 100, TRUE)
 	flick("[initial(icon_state)]closing",src)
 	sleep(10)
 	density = TRUE
@@ -250,7 +250,7 @@
 	return
 
 /obj/structure/mineral_door/transparent/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.is_hot())
+	if(W.get_temperature())
 		var/turf/T = get_turf(src)
 		message_admins("Plasma mineral door ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		log_game("Plasma mineral door ignited by [key_name(user)] in [AREACOORD(T)]")
@@ -293,8 +293,8 @@
 	return crowbar_door(user, I)
 
 /obj/structure/mineral_door/wood/attackby(obj/item/I, mob/living/user)
-	if(I.is_hot())
-		fire_act(I.is_hot())
+	if(I.get_temperature())
+		fire_act(I.get_temperature())
 		return
 
 	return ..()
@@ -328,8 +328,8 @@
 	return crowbar_door(user, I)
 
 /obj/structure/mineral_door/paperframe/attackby(obj/item/I, mob/living/user)
-	if(I.is_hot()) //BURN IT ALL DOWN JIM
-		fire_act(I.is_hot())
+	if(I.get_temperature()) //BURN IT ALL DOWN JIM
+		fire_act(I.get_temperature())
 		return
 
 	if((user.a_intent != INTENT_HARM) && istype(I, /obj/item/paper) && (obj_integrity < max_integrity))

@@ -17,10 +17,12 @@
 	var/stasis_can_toggle = 0
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
+	var/obj/machinery/computer/operating/op_computer
 
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.</span>"
+	. += "<span class='notice'>[src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to an operating computer.</span>"
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
@@ -78,13 +80,12 @@
 
 /obj/machinery/stasis/obj_break(damage_flag)
 	. = ..()
-	play_power_sound()
-	update_icon()
+	if(.)
+		play_power_sound()
 
 /obj/machinery/stasis/power_change()
 	. = ..()
 	play_power_sound()
-	update_icon()
 
 /obj/machinery/stasis/proc/chill_out(mob/living/target)
 	if(target != occupant)

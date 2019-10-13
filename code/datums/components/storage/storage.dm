@@ -486,7 +486,7 @@
 			to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 			return FALSE
 		if(dump_destination.storage_contents_dump_act(src, M))
-			playsound(A, "rustle", 50, 1, -5)
+			playsound(A, "rustle", 50, TRUE, -5)
 			return TRUE
 	return FALSE
 
@@ -554,7 +554,7 @@
 		return
 	if(A.loc != M)
 		return
-	playsound(A, "rustle", 50, 1, -5)
+	playsound(A, "rustle", 50, TRUE, -5)
 	if(istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(A, H.held_index)
@@ -658,14 +658,14 @@
 	if(silent && !override)
 		return
 	if(rustle_sound)
-		playsound(parent, "rustle", 50, 1, -5)
+		playsound(parent, "rustle", 50, TRUE, -5)
 	for(var/mob/viewing in viewers(user, null))
 		if(M == viewing)
 			to_chat(usr, "<span class='notice'>You put [I] [insert_preposition]to [parent].</span>")
 		else if(in_range(M, viewing)) //If someone is standing close enough, they can tell what it is...
-			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", 1)
+			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", MSG_VISUAL)
 		else if(I && I.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
-			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", 1)
+			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", MSG_VISUAL)
 
 /datum/component/storage/proc/update_icon()
 	if(isobj(parent))
@@ -733,7 +733,7 @@
 		return
 
 	if(rustle_sound)
-		playsound(A, "rustle", 50, 1, -5)
+		playsound(A, "rustle", 50, TRUE, -5)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -784,7 +784,7 @@
 	if(!quickdraw)
 		A.add_fingerprint(user)
 		user_show_to_mob(user)
-		playsound(A, "rustle", 50, 1, -5)
+		playsound(A, "rustle", 50, TRUE, -5)
 		return
 
 	if(!user.incapacitated())

@@ -119,14 +119,6 @@
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
 
-
-/obj/item/clothing/head/flatcap
-	name = "flat cap"
-	desc = "A working man's cap."
-	icon_state = "flat_cap"
-	item_state = "detective"
-
-
 /obj/item/clothing/head/pirate
 	name = "pirate hat"
 	desc = "Yarr."
@@ -138,6 +130,7 @@
 	var/datum/language/piratespeak/L = new
 
 /obj/item/clothing/head/pirate/equipped(mob/user, slot)
+	. = ..()
 	if(!ishuman(user))
 		return
 	if(slot == SLOT_HEAD)
@@ -145,6 +138,7 @@
 		to_chat(user, "You suddenly know how to speak like a pirate!")
 
 /obj/item/clothing/head/pirate/dropped(mob/user)
+	. = ..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
@@ -206,6 +200,7 @@
 	desc = "A helmet made out of chitinous alien hide."
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/head/fedora
 	name = "fedora"
@@ -221,7 +216,7 @@
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to be nice to girls.</span>")
 	user.say("M'lady.", forced = "fedora suicide")
 	sleep(10)
-	H.facial_hair_style = "Neckbeard"
+	H.facial_hairstyle = "Neckbeard"
 	return(BRUTELOSS)
 
 /obj/item/clothing/head/sombrero
@@ -353,7 +348,7 @@
 	name = "pharaoh hat"
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
-	icon_state = "pharoah_hat"
+	item_state = "pharoah_hat"
 
 /obj/item/clothing/head/jester/alt
 	name = "jester hat"

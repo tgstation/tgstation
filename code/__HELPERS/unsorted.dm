@@ -41,7 +41,7 @@
 	else if(dx<0)
 		.+=360
 
-/proc/Get_Pixel_Angle(var/y, var/x)//for getting the angle when animating something's pixel_x and pixel_y
+/proc/Get_Pixel_Angle(y, x)//for getting the angle when animating something's pixel_x and pixel_y
 	if(!y)
 		return (x>=0)?90:270
 	.=arctan(x/y)
@@ -767,7 +767,7 @@ GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
 	/obj/item/pipe)))
 
 /proc/can_embed(obj/item/W)
-	if(W.is_sharp())
+	if(W.get_sharpness())
 		return 1
 	if(is_pointed(W))
 		return 1
@@ -798,7 +798,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	/obj/structure/light_construct, /obj/machinery/light)))
 
 
-/proc/gotwallitem(loc, dir, var/check_external = 0)
+/proc/gotwallitem(loc, dir, check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
 		if(is_type_in_typecache(O, GLOB.WALLITEMS) && check_external != 2)
@@ -1128,14 +1128,15 @@ B --><-- A
 /proc/get_random_station_turf()
 	return safepick(get_area_turfs(pick(GLOB.the_station_areas)))
 
-/proc/get_safe_random_station_turf()
+/proc/get_safe_random_station_turf() //excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
 	for (var/i in 1 to 5)
 		var/list/L = get_area_turfs(pick(GLOB.the_station_areas))
 		var/turf/target
 		while (L.len && !target)
 			var/I = rand(1, L.len)
 			var/turf/T = L[I]
-			if(!T.density)
+			var/area/X = get_area(T)
+			if(!T.density && X.valid_territory)
 				var/clear = TRUE
 				for(var/obj/O in T)
 					if(O.density)
@@ -1282,7 +1283,7 @@ GLOBAL_REAL_VAR(list/stack_trace_storage)
 GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 //Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
-/proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
+/proc/dview(range = world.view, center, invis_flags = 0)
 	if(!center)
 		return
 
@@ -1473,6 +1474,37 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
 	else
 		D.vars[var_name] = var_value
+
+#define	TRAIT_CALLBACK_ADD(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitAdd, ##target, ##trait, ##source)
+#define	TRAIT_CALLBACK_REMOVE(target, trait, source) CALLBACK(GLOBAL_PROC, /proc/___TraitRemove, ##target, ##trait, ##source)
+
+///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
+/proc/___TraitAdd(target,trait,source)
+	if(!target || !trait || !source)
+		return
+	if(islist(target))
+		for(var/i in target)
+			if(!isatom(i))
+				continue
+			var/atom/the_atom = i
+			ADD_TRAIT(the_atom,trait,source)
+	else if(isatom(target))
+		var/atom/the_atom2 = target
+		ADD_TRAIT(the_atom2,trait,source)
+
+///DO NOT USE ___TraitAdd OR ___TraitRemove as a replacement for ADD_TRAIT / REMOVE_TRAIT defines. To be used explicitly for callback.
+/proc/___TraitRemove(target,trait,source)
+	if(!target || !trait || !source)
+		return
+	if(islist(target))
+		for(var/i in target)
+			if(!isatom(i))
+				continue
+			var/atom/the_atom = i
+			REMOVE_TRAIT(the_atom,trait,source)
+	else if(isatom(target))
+		var/atom/the_atom2 = target
+		REMOVE_TRAIT(the_atom2,trait,source)
 
 /proc/get_random_food()
 	var/list/blocked = list(/obj/item/reagent_containers/food/snacks/store/bread,

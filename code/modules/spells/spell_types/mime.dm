@@ -72,7 +72,7 @@
 	summon_type = list(/obj/item/storage/box/mime)
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='notice'>You conjure up an invisible box, large enough to store a few things.</span>"
-	summon_lifespan = 250
+	summon_lifespan = 500
 	charge_max = 300
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
@@ -180,7 +180,7 @@
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20
-	projectile_type = /obj/item/projectile/bullet/mime
+	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3
 	sound = null
 	active_msg = "You draw your fingers!"

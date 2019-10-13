@@ -63,7 +63,7 @@
 /datum/component/thermite/proc/thermite_melt(mob/user)
 	var/turf/master = parent
 	master.cut_overlay(overlay)
-	playsound(master, 'sound/items/welder.ogg', 100, 1)
+	playsound(master, 'sound/items/welder.ogg', 100, TRUE)
 	var/obj/effect/overlay/thermite/fakefire = new(master)
 	addtimer(CALLBACK(src, .proc/burn_parent, fakefire, user), min(amount * 0.35 SECONDS, 20 SECONDS))
 	UnregisterFromParent()
@@ -88,5 +88,5 @@
 		thermite_melt()
 
 /datum/component/thermite/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)
-	if(thing.is_hot())
+	if(thing.get_temperature())
 		thermite_melt(user)

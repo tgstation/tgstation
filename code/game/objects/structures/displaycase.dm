@@ -8,7 +8,7 @@
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 30, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	var/obj/item/showpiece = null
 	var/alert = TRUE
 	var/open = FALSE
@@ -55,9 +55,9 @@
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
+			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -72,7 +72,7 @@
 		density = FALSE
 		broken = 1
 		new /obj/item/shard( src.loc )
-		playsound(src, "shatter", 70, 1)
+		playsound(src, "shatter", 70, TRUE)
 		update_icon()
 		trigger_alarm()
 
@@ -81,7 +81,7 @@
 	if(alert)
 		var/area/alarmed = get_area(src)
 		alarmed.burglaralert(src)
-		playsound(src, 'sound/effects/alert.ogg', 50, 1)
+		playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
 
 /obj/structure/displaycase/update_icon()
 	var/icon/I
@@ -195,7 +195,7 @@
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
 			qdel(src)
 

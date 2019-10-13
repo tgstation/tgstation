@@ -310,7 +310,7 @@
 	syringes -= mechsyringe
 	mechsyringe.icon = 'icons/obj/chemical.dmi'
 	mechsyringe.icon_state = "syringeproj"
-	playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
+	playsound(chassis, 'sound/items/syringeproj.ogg', 50, TRUE)
 	log_message("Launched [mechsyringe] from [src], targeting [target].", LOG_MECHA)
 	var/mob/originaloccupant = chassis.occupant
 	spawn(0)
@@ -527,7 +527,8 @@
 	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 0
 	var/obj/item/gun/medbeam/mech/medigun
-	materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
+	custom_materials = list(/datum/material/iron = 15000, /datum/material/glass = 8000, /datum/material/plasma = 3000, /datum/material/gold = 8000, /datum/material/diamond = 2000)
+	material_flags = MATERIAL_NO_EFFECTS
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/Initialize()
 	. = ..()

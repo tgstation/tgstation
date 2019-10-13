@@ -12,7 +12,7 @@
 
 /datum/status_effect/shadow_mend/on_apply()
 	owner.visible_message("<span class='notice'>Violet light wraps around [owner]'s body!</span>", "<span class='notice'>Violet light wraps around your body!</span>")
-	playsound(owner, 'sound/magic/teleport_app.ogg', 50, 1)
+	playsound(owner, 'sound/magic/teleport_app.ogg', 50, TRUE)
 	return ..()
 
 /datum/status_effect/shadow_mend/tick()
@@ -21,7 +21,7 @@
 
 /datum/status_effect/shadow_mend/on_remove()
 	owner.visible_message("<span class='warning'>The violet light around [owner] glows black!</span>", "<span class='warning'>The tendrils around you cinch tightly and reap their toll...</span>")
-	playsound(owner, 'sound/magic/teleport_diss.ogg', 50, 1)
+	playsound(owner, 'sound/magic/teleport_diss.ogg', 50, TRUE)
 	owner.apply_status_effect(STATUS_EFFECT_VOID_PRICE)
 
 
@@ -131,14 +131,14 @@
 	owner.status_flags |= GODMODE
 	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), 150)
-	playsound(owner, 'sound/magic/ethereal_enter.ogg', 50, 1)
+	playsound(owner, 'sound/magic/ethereal_enter.ogg', 50, TRUE)
 	return ..()
 
 /datum/status_effect/inathneqs_endowment/on_remove()
 	owner.log_message("lost Inath-neq's invulnerability", LOG_ATTACK)
 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
 	owner.status_flags &= ~GODMODE
-	playsound(owner, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	playsound(owner, 'sound/magic/ethereal_exit.ogg', 50, TRUE)
 
 
 /datum/status_effect/cyborg_power_regen
@@ -162,7 +162,7 @@
 	if(!istype(cyborg) || !cyborg.cell)
 		qdel(src)
 		return
-	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, 1)
+	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, TRUE)
 	cyborg.cell.give(power_to_give)
 
 /datum/status_effect/his_grace
@@ -285,6 +285,7 @@
 /datum/status_effect/blooddrunk/on_apply()
 	. = ..()
 	if(.)
+		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk")
 		owner.maxHealth *= 10
 		owner.bruteloss *= 10
 		owner.fireloss *= 10
@@ -309,7 +310,6 @@
 		last_staminaloss = owner.getStaminaLoss()
 		owner.log_message("gained blood-drunk stun immunity", LOG_ATTACK)
 		owner.add_stun_absorption("blooddrunk", INFINITY, 4)
-		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
 		owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
 
 /datum/status_effect/blooddrunk/tick() //multiply the effect of healing by 10
@@ -405,12 +405,12 @@
 	owner.spin(duration,1)
 	animate(owner, color = oldcolor, time = duration, easing = EASE_IN)
 	addtimer(CALLBACK(owner, /atom/proc/update_atom_colour), duration)
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	return ..()
 
 
 /datum/status_effect/sword_spin/tick()
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	var/obj/item/slashy
 	slashy = owner.get_active_held_item()
 	for(var/mob/living/M in orange(1,owner))
@@ -554,16 +554,16 @@
 	status_type = STATUS_EFFECT_REFRESH
 
 /datum/status_effect/good_music/tick()
-	owner.dizziness = max(0, owner.dizziness - 2)
-	owner.jitteriness = max(0, owner.jitteriness - 2)
-	owner.confused = max(0, owner.confused - 1)
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
+	if(owner.can_hear())
+		owner.dizziness = max(0, owner.dizziness - 2)
+		owner.jitteriness = max(0, owner.jitteriness - 2)
+		owner.confused = max(0, owner.confused - 1)
+		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 
 /obj/screen/alert/status_effect/regenerative_core
-	name = "Reinforcing Tendrils"
+	name = "Regenerative Core Tendrils"
 	desc = "You can move faster than your broken body could normally handle!"
 	icon_state = "regenerative_core"
-	name = "Regenerative Core Tendrils"
 
 /datum/status_effect/regenerative_core
 	id = "Regenerative Core"
@@ -591,7 +591,7 @@
 	owner.visible_message("<span class='notice'>[owner] is coated with a dull aura!</span>")
 	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	//glowing wings overlay
-	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, 0)
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
 	return ..()
 
 /datum/status_effect/antimagic/on_remove()

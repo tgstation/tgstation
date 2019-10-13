@@ -22,7 +22,7 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/margherita
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
-	foodtype = GRAIN | VEGETABLES
+	foodtype = GRAIN | VEGETABLES | DAIRY
 
 /obj/item/reagent_containers/food/snacks/pizza/margherita/robo/Initialize()
 	bonus_reagents += list(/datum/reagent/nanomachines = 70)
@@ -34,7 +34,7 @@
 	icon_state = "pizzamargheritaslice"
 	filling_color = "#FFA500"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
-	foodtype = GRAIN | VEGETABLES
+	foodtype = GRAIN | VEGETABLES | DAIRY
 
 /obj/item/reagent_containers/food/snacks/pizza/meat
 	name = "meatpizza"
@@ -116,7 +116,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/doctor_delight = 5, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
-	foodtype = GRAIN | VEGETABLES | FRUIT | DAIRY
+	foodtype = GRAIN | VEGETABLES | DAIRY
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/dank
 	name = "dank pizza slice"
@@ -124,7 +124,7 @@
 	icon_state = "dankpizzaslice"
 	filling_color = "#2E8B57"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
-	foodtype = GRAIN | VEGETABLES | FRUIT | DAIRY
+	foodtype = GRAIN | VEGETABLES | DAIRY
 
 /obj/item/reagent_containers/food/snacks/pizza/sassysage
 	name = "sassysage pizza"
@@ -177,7 +177,7 @@
 			l_arm.dismember()
 		else
 			r_arm.dismember()
-		playsound(user,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, TRUE, -1)
+		playsound(user, "desceration" ,50, TRUE, -1)
 
 /obj/item/reagent_containers/food/snacks/proc/i_kill_you(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/pineappleslice))

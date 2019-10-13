@@ -125,7 +125,7 @@
 			log_combat(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
 			L.visible_message("<span class='warning'>A blue light washes over [L], causing [L.p_them()] to briefly glow!</span>", \
 			"<span class='heavy_brass'>You feel Inath-neq's power purging the darkness within you!</span>")
-		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
+		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, TRUE)
 
 		if(has_holy_water)
 			L.reagents.remove_reagent(/datum/reagent/water/holywater, 1000)
@@ -155,7 +155,7 @@
 		clockwork_say(ranged_ability_user, text2ratvar("Purge all untruths and honor Engine!"))
 		log_combat(ranged_ability_user, U, "fired at with Kindle")
 		playsound(ranged_ability_user, 'sound/magic/blink.ogg', 50, TRUE, frequency = 0.5)
-		var/obj/item/projectile/kindle/A = new(T)
+		var/obj/projectile/kindle/A = new(T)
 		A.preparePixelProjectile(target, caller, params)
 		A.fire()
 
@@ -163,7 +163,7 @@
 
 	return TRUE
 
-/obj/item/projectile/kindle
+/obj/projectile/kindle
 	name = "kindled flame"
 	icon_state = "pulse0"
 	nodamage = TRUE
@@ -173,11 +173,11 @@
 	range = 3
 	log_override = TRUE
 
-/obj/item/projectile/kindle/Destroy()
+/obj/projectile/kindle/Destroy()
 	visible_message("<span class='warning'>[src] flickers out!</span>")
 	. = ..()
 
-/obj/item/projectile/kindle/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/kindle/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
 		if(is_servant_of_ratvar(L) || L.stat || L.has_status_effect(STATUS_EFFECT_KINDLE))

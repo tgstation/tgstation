@@ -11,7 +11,7 @@
 	density = TRUE
 
 	max_integrity = 250
-	integrity_failure = 80
+	integrity_failure = 0.33
 
 	// These allow for different icons when creating custom dispensers
 	var/icon_off = "off"
@@ -85,6 +85,17 @@
 	power_used = 2000
 	starting_amount = 10000
 
+// If the derelict gets lonely, make more friends.
+/obj/machinery/droneDispenser/derelict
+	name = "derelict drone shell dispenser"
+	desc = "A rusty machine that, when supplied with metal and glass, will periodically create a derelict drone shell. Does not need to be manually operated."
+	dispense_type = /obj/effect/mob_spawn/drone/derelict
+	end_create_message = "dispenses a derelict drone shell."
+	metal_cost = 10000
+	glass_cost = 5000
+	starting_amount = 0
+	cooldownTime = 600
+
 // An example of a custom drone dispenser.
 // This one requires no materials and creates basic hivebots
 /obj/machinery/droneDispenser/hivebot
@@ -133,14 +144,6 @@
 	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
 		. += "<span class='warning'>[recharging_text]</span>"
 
-/obj/machinery/droneDispenser/power_change()
-	..()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
-	update_icon()
-
 /obj/machinery/droneDispenser/process()
 	..()
 	if((stat & (NOPOWER|BROKEN)) || !anchored)
@@ -162,7 +165,7 @@
 			if(begin_create_message)
 				visible_message("<span class='notice'>[src] [begin_create_message]</span>")
 			if(work_sound)
-				playsound(src, work_sound, 50, 1)
+				playsound(src, work_sound, 50, TRUE)
 			mode = DRONE_PRODUCTION
 			timer = world.time + production_time
 			update_icon()
@@ -176,7 +179,7 @@
 			A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 
 			if(create_sound)
-				playsound(src, create_sound, 50, 1)
+				playsound(src, create_sound, 50, TRUE)
 			if(end_create_message)
 				visible_message("<span class='notice'>[src] [end_create_message]</span>")
 
@@ -186,7 +189,7 @@
 
 		if(DRONE_RECHARGING)
 			if(recharge_sound)
-				playsound(src, recharge_sound, 50, 1)
+				playsound(src, recharge_sound, 50, TRUE)
 			if(recharge_message)
 				visible_message("<span class='notice'>[src] [recharge_message]</span>")
 
@@ -242,14 +245,13 @@
 		return ..()
 
 /obj/machinery/droneDispenser/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
-			if(break_message)
-				audible_message("<span class='warning'>[src] [break_message]</span>")
-			if(break_sound)
-				playsound(src, break_sound, 50, 1)
-			stat |= BROKEN
-			update_icon()
+	. = ..()
+	if(!.)
+		return
+	if(break_message)
+		audible_message("<span class='warning'>[src] [break_message]</span>")
+	if(break_sound)
+		playsound(src, break_sound, 50, TRUE)
 
 /obj/machinery/droneDispenser/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

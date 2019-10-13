@@ -1070,7 +1070,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/carpet{
@@ -1126,7 +1126,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /obj/machinery/button/door{
@@ -2742,7 +2742,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -3064,7 +3064,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gn" = (
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
@@ -6407,7 +6407,7 @@
 /obj/machinery/airalarm/all_access{
 	pixel_y = 23
 	},
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/carpet{
@@ -6721,7 +6721,7 @@
 	pixel_y = -25;
 	specialfunctions = 4
 	},
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/carpet{
@@ -8652,7 +8652,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "qs" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -9024,7 +9024,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "qZ" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/carpet{
@@ -11857,7 +11857,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/carpet{
@@ -12262,7 +12262,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wM" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},

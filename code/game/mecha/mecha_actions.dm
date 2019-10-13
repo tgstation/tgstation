@@ -207,9 +207,8 @@
 	if(chassis.smoke_ready && chassis.smoke>0)
 		chassis.smoke_system.start()
 		chassis.smoke--
-		chassis.smoke_ready = 0
-		spawn(chassis.smoke_cooldown)
-			chassis.smoke_ready = 1
+		chassis.smoke_ready = FALSE
+		addtimer(VARSET_CALLBACK(chassis, smoke_ready, TRUE), chassis.smoke_cooldown)
 
 
 /datum/action/innate/mecha/mech_zoom
@@ -251,7 +250,7 @@
 			chassis.occupant_message("<span class='notice'>A bone-chillingly thick plasteel needle protracts from the exosuit's palm.</span>")
 	chassis.damtype = new_damtype
 	button_icon_state = "mech_damtype_[new_damtype]"
-	playsound(src, 'sound/mecha/mechmove01.ogg', 50, 1)
+	playsound(src, 'sound/mecha/mechmove01.ogg', 50, TRUE)
 	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_toggle_phasing

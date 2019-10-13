@@ -76,7 +76,7 @@
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 80))
 			user.visible_message("<span class='notice'>[user] unsecures [src]!</span>", "<span class='notice'>You detach [src] from the wall.</span>")
-			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			new/obj/item/wallframe/intercom(get_turf(src))
 			qdel(src)
 		return
@@ -153,4 +153,4 @@
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 29
 	inverse = TRUE
-	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	custom_materials = list(/datum/material/iron = 75, /datum/material/glass = 25)

@@ -359,11 +359,11 @@
 /area/janitor)
 "aaW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -28
 	},
 /obj/structure/closet/radiation,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aaX" = (
@@ -2067,9 +2067,8 @@
 /area/crew_quarters/fitness/recreation)
 "aeD" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/radiation,
 /obj/effect/turf_decal/delivery,
-/obj/structure/window/reinforced,
-/obj/structure/closet/secure_closet/atmospherics,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "aeE" = (
@@ -3434,7 +3433,8 @@
 	movement_type = 1;
 	name = "Sergeant Araneus";
 	real_name = "Sergeant Araneus";
-	response_help = "pets";
+	response_help_continuous = "pets";
+	response_help_simple = "pet";
 	turns_per_move = 10
 	},
 /turf/open/floor/carpet,
@@ -6464,13 +6464,14 @@
 	},
 /area/maintenance/port)
 "amV" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/item/extinguisher,
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom{
 	pixel_y = -29
+	},
+/obj/machinery/computer/atmos_control/incinerator{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
@@ -7011,7 +7012,7 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aoj" = (
@@ -7872,9 +7873,9 @@
 /area/security/main)
 "apX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/fueltank,
-/obj/item/storage/toolbox/emergency,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/closet/secure_closet/atmospherics,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
 "apY" = (
@@ -9471,7 +9472,8 @@
 "atw" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Incinerator Output Pump"
+	name = "Incinerator Output Pump";
+	target_pressure = 4500
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -9601,9 +9603,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "atJ" = (
-/obj/machinery/sparker/toxmix{
-	pixel_x = 25
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -9727,7 +9726,7 @@
 	},
 /area/maintenance/fore)
 "aud" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -9910,7 +9909,6 @@
 "auz" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/sunglasses,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -15643,7 +15641,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aHT" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -28868,7 +28866,7 @@
 /area/crew_quarters/heads/hop)
 "bkA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bkB" = (
@@ -41431,8 +41429,8 @@
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bNd" = (
-/obj/item/tank/internals/air,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/machinery/light/small{
@@ -47158,13 +47156,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cak" = (
-/obj/structure/chair,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
+/obj/machinery/medical_kiosk,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cal" = (
@@ -47952,8 +47944,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cbH" = (
-/obj/item/tank/internals/air,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/structure/disposalpipe/segment{
@@ -54513,7 +54505,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "cpN" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -57713,7 +57705,6 @@
 /area/maintenance/port/aft)
 "cwn" = (
 /obj/structure/rack,
-/obj/item/clothing/glasses/sunglasses,
 /obj/item/flashlight/pen,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -58154,7 +58145,7 @@
 /area/solar/port/aft)
 "cxb" = (
 /obj/structure/rack,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
 /obj/item/wrench,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
@@ -58818,18 +58809,13 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/structure/closet/l3closet/scientist{
-	pixel_x = -2
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/bombcloset,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyA" = (
-/obj/structure/closet/wardrobe/science_white,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/bombcloset,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyB" = (
@@ -58853,9 +58839,6 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cyD" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -60497,10 +60480,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cCt" = (
-/obj/structure/closet/bombcloset,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/closet/wardrobe/science_white,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cCu" = (
@@ -60576,10 +60559,10 @@
 /obj/item/radio/intercom{
 	pixel_y = -28
 	},
-/obj/structure/tank_dispenser,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/tank_dispenser,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cCy" = (
@@ -62333,9 +62316,6 @@
 	},
 /area/science/research)
 "cGj" = (
-/obj/machinery/sparker/toxmix{
-	pixel_x = 25
-	},
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
 	dir = 4
 	},
@@ -66646,7 +66626,6 @@
 "cOA" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/sunglasses,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/light/small{
 	dir = 4
@@ -67609,11 +67588,11 @@
 	},
 /area/chapel/main)
 "cQY" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
 	name = "Departure Lounge Airlock"
 	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cQZ" = (
@@ -69719,6 +69698,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dcd" = (
@@ -72126,8 +72106,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "diL" = (
-/obj/item/tank/internals/air,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /obj/machinery/space_heater,
@@ -72278,13 +72258,13 @@
 	c_tag = "Chapel - Funeral Parlour";
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "djk" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/closed/wall,
 /area/chapel/main)
 "djq" = (
@@ -72322,7 +72302,8 @@
 "djz" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/external{
-	name = "Arrival Airlock"
+	name = "Arrival Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -72339,7 +72320,8 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/external{
-	name = "Arrival Airlock"
+	name = "Arrival Airlock";
+	safety_mode = 1
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -73561,6 +73543,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"eCT" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Departure Lounge Airlock"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "eFN" = (
 /obj/structure/bodycontainer/crematorium{
 	dir = 1;
@@ -74445,6 +74437,18 @@
 "ojg" = (
 /turf/closed/wall,
 /area/science/misc_lab/range)
+"onu" = (
+/obj/item/radio/intercom{
+	pixel_y = -28
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/computer/atmos_control/toxinsmix{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "oub" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
@@ -75092,6 +75096,10 @@
 	dir = 8
 	},
 /area/engine/storage_shared)
+"vIO" = (
+/obj/machinery/igniter/incinerator_toxmix,
+/turf/open/floor/engine/vacuum,
+/area/science/mixing/chamber)
 "vKx" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -96596,7 +96604,7 @@ cLa
 cPF
 cQb
 djj
-djr
+cQb
 cRq
 cPA
 aaa
@@ -100967,7 +100975,7 @@ cQo
 cQL
 cQY
 cQK
-kzn
+eCT
 aaa
 aaa
 aaa
@@ -102509,7 +102517,7 @@ cQp
 cQN
 cQY
 cQK
-kzn
+eCT
 cYJ
 aaa
 aaa
@@ -103023,7 +103031,7 @@ cQq
 cQP
 cQY
 cRt
-kzn
+eCT
 aaa
 aaa
 aaa
@@ -107112,8 +107120,8 @@ crQ
 cyA
 czt
 cAy
-cBs
-cCt
+cBt
+cCu
 wQA
 cEr
 cEr
@@ -107369,11 +107377,11 @@ crQ
 cyB
 fIp
 cAz
-cBt
-cCu
+cBu
+cCv
 wQA
 cEs
-cFn
+vIO
 cFn
 cHe
 cIc
@@ -107626,8 +107634,8 @@ crQ
 cyC
 ffD
 dDA
-cBu
-cCv
+cBv
+cCw
 wQA
 atJ
 tXK
@@ -107883,8 +107891,8 @@ crQ
 cyD
 mom
 cAz
-cBv
-cCw
+cBs
+onu
 wQA
 cEu
 cFo

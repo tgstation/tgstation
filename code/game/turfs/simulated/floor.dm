@@ -269,7 +269,7 @@
 			A.autoclose = TRUE
 			return TRUE
 		if(RCD_DECONSTRUCT)
-			if(ScrapeAway(flags = CHANGETURF_INHERIT_AIR) == src)
+			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
 				return FALSE
 			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
 			return TRUE

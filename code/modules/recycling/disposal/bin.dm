@@ -187,7 +187,7 @@
 	flushAnimation()
 	sleep(10)
 	if(last_sound < world.time + 1)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, FALSE)
 		last_sound = world.time
 	sleep(5)
 	if(QDELETED(src))
@@ -208,18 +208,13 @@
 /obj/machinery/disposal/proc/flushAnimation()
 	flick("[icon_state]-flush", src)
 
-// called when area power changes
-/obj/machinery/disposal/power_change()
-	..()	// do default setting/reset of stat NOPOWER bit
-	update_icon()	// update icon
-
 // called when holder is expelled from a disposal
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
 	H.active = FALSE
 
 	var/turf/T = get_turf(src)
 	var/turf/target
-	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+	playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
 
 	for(var/A in H)
 		var/atom/movable/AM = A
@@ -489,7 +484,7 @@
 /atom/movable/proc/CanEnterDisposals()
 	return TRUE
 
-/obj/item/projectile/CanEnterDisposals()
+/obj/projectile/CanEnterDisposals()
 	return
 
 /obj/effect/CanEnterDisposals()

@@ -7,7 +7,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/unpowered)
 "ad" = (
 /turf/closed/wall/r_wall,
@@ -3204,9 +3204,7 @@
 /area/ruin/space/has_grav/ancientstation/engi)
 "ie" = (
 /obj/structure/table,
-/obj/item/stack/cable_coil{
-	amount = 30
-	},
+/obj/item/stack/cable_coil,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/fluff/ruins/oldstation/generator_manual,
 /obj/item/clothing/gloves/color/yellow,
@@ -4354,7 +4352,7 @@
 	id_tag = "oldstation_air_out";
 	name = "air output"
 	},
-/turf/open/floor/engine/airless,
+/turf/open/floor/engine/n2,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "kB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -4568,9 +4566,7 @@
 /obj/item/electronics/airalarm,
 /obj/structure/closet/crate/engineering/electrical,
 /obj/item/electronics/tracker,
-/obj/item/stack/cable_coil{
-	amount = 30
-	},
+/obj/item/stack/cable_coil,
 /obj/item/clothing/gloves/color/fyellow/old,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
@@ -4834,9 +4830,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/rnd)
-"lN" = (
-/turf/open/floor/plating,
-/area/space/nearstation)
 "lO" = (
 /obj/machinery/door/poddoor{
 	id = "proto"
@@ -4889,7 +4882,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "lU" = (
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "lV" = (
 /obj/structure/grille/broken,
@@ -4934,7 +4927,7 @@
 /area/ruin/space/has_grav/ancientstation)
 "md" = (
 /obj/structure/girder,
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "me" = (
 /turf/open/floor/plating/airless,
@@ -4945,7 +4938,7 @@
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "mg" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "mh" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5370,7 +5363,7 @@
 /area/ruin/space/has_grav/ancientstation/betanorth)
 "ni" = (
 /obj/structure/lattice,
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/unpowered)
 "nj" = (
 /obj/structure/lattice,
@@ -9161,7 +9154,7 @@ bf
 dF
 dF
 dF
-lN
+bf
 dF
 dF
 dF
@@ -9171,7 +9164,7 @@ dF
 dF
 dF
 dF
-lN
+bf
 aa
 aa
 ac

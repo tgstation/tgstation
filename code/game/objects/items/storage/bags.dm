@@ -52,7 +52,7 @@
 
 /obj/item/storage/bag/trash/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!</span>")
-	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
+	playsound(loc, 'sound/items/eatfood.ogg', 50, TRUE, -1)
 	return (TOXLOSS)
 
 /obj/item/storage/bag/trash/update_icon()
@@ -108,6 +108,7 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
+	AddComponent(/datum/component/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(/obj/item/stack/ore))
@@ -283,7 +284,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
-	materials = list(/datum/material/iron=3000)
+	custom_materials = list(/datum/material/iron=3000)
 
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
@@ -300,9 +301,9 @@
 		INVOKE_ASYNC(src, .proc/do_scatter, I)
 
 	if(prob(50))
-		playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
+		playsound(M, 'sound/items/trayhit1.ogg', 50, TRUE)
 	else
-		playsound(M, 'sound/items/trayhit2.ogg', 50, 1)
+		playsound(M, 'sound/items/trayhit2.ogg', 50, TRUE)
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))

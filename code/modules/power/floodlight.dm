@@ -43,7 +43,7 @@
 	icon_state = "floodlight"
 	density = TRUE
 	max_integrity = 100
-	integrity_failure = 80
+	integrity_failure = 0.8
 	idle_power_usage = 100
 	active_power_usage = 1000
 	var/list/light_setting_list = list(0, 5, 10, 15)
@@ -106,12 +106,14 @@
 	..()
 
 /obj/machinery/power/floodlight/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
-		var/obj/structure/floodlight_frame/F = new(loc)
-		F.state = FLOODLIGHT_NEEDS_LIGHTS
-		new /obj/item/light/tube/broken(loc)
-		qdel(src)
+	. = ..()
+	if(!.)
+		return
+	playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+	var/obj/structure/floodlight_frame/F = new(loc)
+	F.state = FLOODLIGHT_NEEDS_LIGHTS
+	new /obj/item/light/tube/broken(loc)
+	qdel(src)
 
 /obj/machinery/power/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/effects/glasshit.ogg', 75, 1)
+	playsound(src, 'sound/effects/glasshit.ogg', 75, TRUE)

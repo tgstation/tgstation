@@ -122,7 +122,7 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "rupee"
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(/datum/material/glass = 500)
+	custom_materials = list(/datum/material/glass = 500)
 
 /obj/item/rupee/Initialize()
 	. = ..()
@@ -139,7 +139,7 @@
 	..()
 
 /obj/item/rupee/equipped(mob/user, slot)
-	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, 1, -1)
+	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, TRUE, -1)
 	..()
 
 /obj/effect/landmark/error

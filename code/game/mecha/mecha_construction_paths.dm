@@ -10,6 +10,8 @@
 	// Remove default mech power cell, as we replace it with a new one.
 	var/obj/mecha/M = new result(drop_location())
 	QDEL_NULL(M.cell)
+	QDEL_NULL(M.scanmod)
+	QDEL_NULL(M.capacitor)
 
 	var/obj/item/mecha_parts/chassis/parent_chassis = parent
 	M.CheckParts(parent_chassis.contents)
@@ -998,7 +1000,7 @@
 		return FALSE
 
 	if(istype(I, /obj/item/bikehorn))
-		playsound(parent, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(parent, 'sound/items/bikehorn.ogg', 50, TRUE)
 		user.visible_message("<span class='danger'>HONK!</span>")
 
 	//TODO: better messages.

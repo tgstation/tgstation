@@ -138,7 +138,7 @@
 		var/obj/item/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this,1)
-			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
+			playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
 			user.visible_message("<span class='notice'>[user] has cleaned \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
 			update_icon()
@@ -237,7 +237,7 @@
 
 	if(wire_disabled)
 		audible_message("[src] buzzes.")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
@@ -253,7 +253,7 @@
 	start()
 
 /obj/machinery/microwave/proc/turn_on()
-	visible_message("<span class='notice'>\The [src] turns on.</span>", null, "<span class='italics'>You hear a microwave humming.</span>")
+	visible_message("<span class='notice'>\The [src] turns on.</span>", null, "<span class='hear'>You hear a microwave humming.</span>")
 	operating = TRUE
 
 	set_light(1.5)
@@ -280,7 +280,7 @@
 
 /obj/machinery/microwave/proc/muck()
 	turn_on()
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	dirty_anim_playing = TRUE
 	update_icon()
 	loop(MICROWAVE_MUCK, 4)
@@ -309,8 +309,9 @@
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
-		if(O.materials[/datum/material/iron])
-			metal += O.materials[/datum/material/iron]
+		if(O.custom_materials || O.custom_materials.len)
+			if(O.custom_materials[getmaterialref(/datum/material/iron)])
+				metal += O.custom_materials[getmaterialref(/datum/material/iron)]
 
 	if(metal)
 		spark()

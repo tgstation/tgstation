@@ -24,7 +24,8 @@
 	icon_living = "mega_legion"
 	desc = "One of many."
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	speak_emote = list("echoes")
 	armour_penetration = 50
@@ -282,7 +283,7 @@
 				return
 			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
 			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
-			playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
+			playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
 			A.wind_down()
 			log_game("[user] ([key_name(user)]) has dispelled a storm at [AREACOORD(user_turf)]")
 			return
@@ -298,7 +299,7 @@
 
 	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
 	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
-	playsound(user, 'sound/magic/staff_change.ogg', 200, 0)
+	playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
 	A.telegraph()
 	storm_cooldown = world.time + 200
 
@@ -317,7 +318,7 @@
 	layer = ABOVE_OBJ_LAYER
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 100,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	///What kind of projectile the actual damaging part should be.
-	var/projectile_type = /obj/item/projectile/beam/legion
+	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot
 	var/initial_firing_time = 18
 	///How long it takes between shooting the tracer and the projectile.
@@ -355,14 +356,14 @@
 
 ///Called shot_delay after the turret shot the tracer. Shoots a projectile into the same direction.
 /obj/structure/legionturret/proc/fire_beam(angle)
-	var/obj/item/projectile/ouchie = new projectile_type(loc)
+	var/obj/projectile/ouchie = new projectile_type(loc)
 	ouchie.firer = src
 	ouchie.fire(angle)
 	playsound(src, 'sound/effects/bin_close.ogg', 100, TRUE)
 	QDEL_IN(src, 5)
 
 ///Used for the legion turret.
-/obj/item/projectile/beam/legion
+/obj/projectile/beam/legion
 	name = "blood pulse"
 	hitsound = 'sound/magic/magic_missile.ogg'
 	damage = 19
@@ -385,4 +386,3 @@
 /obj/effect/projectile/tracer/legion
 	icon = 'icons/effects/beam.dmi'
 	icon_state = "blood"
-

@@ -59,7 +59,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
+	playsound(loc, 'sound/weapons/tap.ogg', 40, TRUE, -1)
 	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens.</span>", null, null, COMBAT_MESSAGE_RANGE)
 	log_message("Attack by hand/paw. Attacker - [user].", LOG_MECHA, color="red")
 
@@ -68,19 +68,19 @@
 
 /obj/mecha/attack_alien(mob/living/user)
 	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
 	attack_generic(user, 15, BRUTE, "melee", 0)
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
-		user.emote("custom", message = "[user.friendly] [src].")
+		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
 		return 0
 	else
 		var/play_soundeffect = 1
 		if(user.environment_smash)
 			play_soundeffect = 0
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
+			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		var/animal_damage = rand(user.melee_damage_lower,user.melee_damage_upper)
 		if(user.obj_damage)
 			animal_damage = user.obj_damage
@@ -110,7 +110,7 @@
 	log_message("Hit by [AM].", LOG_MECHA, color="red")
 	. = ..()
 
-/obj/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
+/obj/mecha/bullet_act(obj/projectile/Proj) //wrapper
 	if (!enclosed && occupant && !silicon_pilot && !Proj.force_hit && (Proj.def_zone == BODY_ZONE_HEAD || Proj.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit the pilot of open-canopy mechs
 		occupant.bullet_act(Proj) //If the sides are open, the occupant can be hit
 		return BULLET_ACT_HIT
@@ -193,16 +193,45 @@
 		return
 
 	if(istype(W, /obj/item/stock_parts/cell))
-		if(construction_state == MECHA_UNSECURE_CELL)
+		if(construction_state == MECHA_OPEN_HATCH)
 			if(!cell)
-				if(!user.transferItemToLoc(W, src))
+				if(!user.transferItemToLoc(W, src, silent = FALSE))
 					return
 				var/obj/item/stock_parts/cell/C = W
-				to_chat(user, "<span class='notice'>You install the powercell.</span>")
+				to_chat(user, "<span class='notice'>You install the power cell.</span>")
+				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
 				cell = C
 				log_message("Powercell installed", LOG_MECHA)
 			else
-				to_chat(user, "<span class='notice'>There's already a powercell installed.</span>")
+				to_chat(user, "<span class='notice'>There's already a power cell installed.</span>")
+		return
+
+	if(istype(W, /obj/item/stock_parts/scanning_module))
+		if(construction_state == MECHA_OPEN_HATCH)
+			if(!scanmod)
+				if(!user.transferItemToLoc(W, src))
+					return
+				to_chat(user, "<span class='notice'>You install the scanning module.</span>")
+				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
+				scanmod = W
+				log_message("[W] installed", LOG_MECHA)
+				update_part_values()
+			else
+				to_chat(user, "<span class='notice'>There's already a scanning module installed.</span>")
+		return
+
+	if(istype(W, /obj/item/stock_parts/capacitor))
+		if(construction_state == MECHA_OPEN_HATCH)
+			if(!capacitor)
+				if(!user.transferItemToLoc(W, src))
+					return
+				to_chat(user, "<span class='notice'>You install the capacitor.</span>")
+				playsound(src, 'sound/items/screwdriver2.ogg', 50, FALSE)
+				capacitor = W
+				log_message("[W] installed", LOG_MECHA)
+				update_part_values()
+			else
+				to_chat(user, "<span class='notice'>There's already a capacitor installed.</span>")
 		return
 
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -251,19 +280,6 @@
 		clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 		to_chat(user, "<span class='notice'>You repair the damaged temperature controller.</span>")
 		return
-	if(!cell)
-		to_chat(user, "<span class='notice'>There is no cell in [src].</span>")
-		return
-	if(construction_state == MECHA_OPEN_HATCH)
-		cell.forceMove(loc)
-		cell = null
-		construction_state = MECHA_UNSECURE_CELL
-		to_chat(user, "<span class='notice'>You unscrew and pry out the powercell.</span>")
-		log_message("Powercell removed", LOG_MECHA)
-		return
-	if(construction_state == MECHA_UNSECURE_CELL)
-		construction_state = MECHA_OPEN_HATCH
-		to_chat(user, "<span class='notice'>You screw the cell in place.</span>")
 
 /obj/mecha/welder_act(mob/living/user, obj/item/W)
 	. = ..()
@@ -287,7 +303,7 @@
 	to_chat(user, "<span class='warning'>The [name] is at full integrity!</span>")
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
-	playsound(src, 'sound/effects/spray2.ogg', 50, 1)
+	playsound(src, 'sound/effects/spray2.ogg', 50, TRUE)
 	if(target.reagents)
 		if(target.reagents.get_reagent_amount(/datum/reagent/cryptobiolin) + force < force*2)
 			target.reagents.add_reagent(/datum/reagent/cryptobiolin, force/2)
@@ -342,3 +358,29 @@
 			else if(damtype == TOX)
 				visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
 	..()
+
+/obj/mecha/obj_destruction()
+	if(wreckage)
+		var/mob/living/silicon/ai/AI
+		if(isAI(occupant))
+			AI = occupant
+			occupant = null
+		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
+		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+			if(E.salvageable && prob(30))
+				WR.crowbar_salvage += E
+				E.detach(WR) //detaches from src into WR
+				E.equip_ready = 1
+			else
+				E.detach(loc)
+				qdel(E)
+		if(cell)
+			WR.crowbar_salvage += cell
+			cell.forceMove(WR)
+			cell.charge = rand(0, cell.charge)
+			cell = null
+		if(internal_tank)
+			WR.crowbar_salvage += internal_tank
+			internal_tank.forceMove(WR)
+			cell = null
+	. = ..()
