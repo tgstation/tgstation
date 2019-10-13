@@ -40,3 +40,8 @@
 	achievement_type = ACHIEVEMENT_DEFAULT
 	hub_id = MEDAL_HELBITALJANKEN
 	
+/datum/achievement/getting_an_upgrade
+	name = "Getting an upgrade"
+	desc = "Make your first unique material item!"
+	achievement_type = ACHIEVEMENT_DEFAULT
+	hub_id = MEDAL_MATERIALCRAFT
