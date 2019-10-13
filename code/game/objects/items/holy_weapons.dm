@@ -703,3 +703,19 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("stabbed", "poked", "slashed", "clocked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/nullrod/gohei
+	name = "gohei"
+	desc = "A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by people with a thing for armpits."
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BELT
+	force = 10
+	block_chance = 60
+	sharpness = IS_BLUNT
+	hitsound = "swing_hit"
+	attack_verb = list("whacked", "thwacked", "walloped", "socked")
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "gohei"
+	item_state = "gohei"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
