@@ -32,7 +32,7 @@
 			return
 		cart.telecrystals += amount
 		use(amount)
-		to_chat(user, "<span class='notice'>You slot [src] into [cart].  The next time it's used, it will also give telecrystals.</span>")
+		to_chat(user, "<span class='notice'>You slot [src] into [cart]. The next time it's used, it will also give telecrystals.</span>")
 
 /obj/item/stack/telecrystal/five
 	amount = 5

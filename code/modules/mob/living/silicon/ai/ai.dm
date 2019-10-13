@@ -809,7 +809,7 @@
 			return
 		disconnect_shell() //If the AI is controlling a borg, force the player back to core!
 		if(!mind)
-			to_chat(user, "<span class='warning'>No intelligence patterns detected.</span>"    )
+			to_chat(user, "<span class='warning'>No intelligence patterns detected.</span>")
 			return
 		ShutOffDoomsdayDevice()
 		var/obj/structure/AIcore/new_core = new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.

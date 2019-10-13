@@ -99,11 +99,11 @@
 		if(istype(I))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"]) in prize_list
 			if (!prize || !(prize in prize_list))
-				to_chat(usr, "<span class='warning'>Error: Invalid choice!</span>")
+				to_chat(usr, "<span class='alert'>Error: Invalid choice!</span>")
 				flick(icon_deny, src)
 				return
 			if(prize.cost > I.mining_points)
-				to_chat(usr, "<span class='warning'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
+				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
 				flick(icon_deny, src)
 			else
 				if (I.mining_points -= prize.cost)
@@ -111,10 +111,10 @@
 					new prize.equipment_path(src.loc)
 					SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
 				else
-					to_chat(usr, "<span class='warning'>Error: Transaction failure, please try again later!</span>")
+					to_chat(usr, "<span class='alert'>Error: Transaction failure, please try again later!</span>")
 					flick(icon_deny, src)
 		else
-			to_chat(usr, "<span class='warning'>Error: An ID is required!</span>")
+			to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
 			flick(icon_deny, src)
 	updateUsrDialog()
 	return
@@ -213,12 +213,12 @@
 			to_chat(user, "<span class='info'>You transfer [points] points to [C].</span>")
 			points = 0
 		else
-			to_chat(user, "<span class='info'>There's no points left on [src].</span>")
+			to_chat(user, "<span class='alert'>There's no points left on [src].</span>")
 	..()
 
 /obj/item/card/mining_point_card/examine(mob/user)
 	..()
-	to_chat(user, "<span class='info'>There's [points] point\s on the card.</span>")
+	to_chat(user, "<span class='alert'>There's [points] point\s on the card.</span>")
 
 ///Conscript kit
 /obj/item/card/mining_access_card

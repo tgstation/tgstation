@@ -48,7 +48,7 @@
 				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
 			else
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
-			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
+			to_chat(user, "<span class='notice'>[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src].</span>")
 			log_combat(user, M, "injected", src, "([contained])")
 		return TRUE
 	return FALSE

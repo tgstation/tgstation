@@ -16,11 +16,11 @@
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R, user = usr)
 	if(R.stat == DEAD)
-		to_chat(user, "<span class='notice'>[src] will not function on a deceased cyborg.</span>")
+		to_chat(user, "<span class='warning'>[src] will not function on a deceased cyborg!</span>")
 		return FALSE
 	if(module_type && !is_type_in_list(R.module, module_type))
-		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
-		to_chat(user, "There's no mounting point for the module!")
+		to_chat(R, "<span class='alert'>Upgrade mounting error! No suitable hardpoint detected.</span>")
+		to_chat(user, "<span class='warning'>There's no mounting point for the module!</span>")
 		return FALSE
 	return TRUE
 
@@ -282,7 +282,7 @@
 	if(.)
 		var/obj/item/borg/upgrade/selfrepair/U = locate() in R
 		if(U)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a self-repair module.</span>")
+			to_chat(user, "<span class='warning'>This unit is already equipped with a self-repair module!</span>")
 			return FALSE
 
 		icon_state = "selfrepair_off"
@@ -333,12 +333,12 @@
 
 	if(istype(cyborg) && (cyborg.stat != DEAD) && on)
 		if(!cyborg.cell)
-			to_chat(cyborg, "<span class='warning'>Self-repair module deactivated. Please, insert the power cell.</span>")
+			to_chat(cyborg, "<span class='alert'>Self-repair module deactivated. Please insert power cell.</span>")
 			deactivate_sr()
 			return
 
 		if(cyborg.cell.charge < powercost * 2)
-			to_chat(cyborg, "<span class='warning'>Self-repair module deactivated. Please recharge.</span>")
+			to_chat(cyborg, "<span class='alert'>Self-repair module deactivated. Please recharge.</span>")
 			deactivate_sr()
 			return
 
@@ -545,7 +545,7 @@
 
 		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
 		if(RPED)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a RPED module.</span>")
+			to_chat(user, "<span class='warning'>This unit is already equipped with a RPED module!</span>")
 			return FALSE
 
 		RPED = new(R.module)
@@ -574,7 +574,7 @@
 
 		var/obj/item/pinpointer/crew/PP = locate() in R.module
 		if(PP)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a pinpointer module.</span>")
+			to_chat(user, "<span class='warning'>This unit is already equipped with a pinpointer module!</span>")
 			return FALSE
 
 		PP = new(R.module)
@@ -630,7 +630,7 @@
 	if(.)
 		var/obj/item/borg/apparatus/circuit/C = locate() in R.module.modules
 		if(C)
-			to_chat(user, "<span class='warning'>This unit is already equipped with a circuit apparatus.</span>")
+			to_chat(user, "<span class='warning'>This unit is already equipped with a circuit apparatus!</span>")
 			return FALSE
 
 		C = new(R.module)
@@ -656,7 +656,7 @@
 	if(.)
 		var/obj/item/borg/apparatus/beaker/extra/E = locate() in R.module.modules
 		if(E)
-			to_chat(user, "<span class='warning'>This unit has no room for additional beaker storage.</span>")
+			to_chat(user, "<span class='warning'>This unit has no room for additional beaker storage!</span>")
 			return FALSE
 
 		E = new(R.module)

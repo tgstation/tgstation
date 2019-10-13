@@ -128,7 +128,7 @@
 		if("crossserver")
 			if(authenticated==2)
 				if(!checkCCcooldown())
-					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
+					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to allied stations.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
@@ -275,7 +275,7 @@
 		if("MessageCentCom")
 			if(authenticated)
 				if(!checkCCcooldown())
-					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
+					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to CentCom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to CentCom.", "")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
@@ -291,7 +291,7 @@
 		if("MessageSyndicate")
 			if((authenticated) && (obj_flags & EMAGGED))
 				if(!checkCCcooldown())
-					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
+					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
