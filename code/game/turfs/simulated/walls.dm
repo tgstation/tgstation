@@ -41,7 +41,7 @@
 /turf/closed/wall/attack_tk()
 	return
 
-/turf/closed/wall/handle_ricochet(obj/item/projectile/P)			//A huge pile of shitcode!
+/turf/closed/wall/handle_ricochet(obj/projectile/P)			//A huge pile of shitcode!
 	var/turf/p_turf = get_turf(P)
 	var/face_direction = get_dir(src, p_turf)
 	var/face_angle = dir2angle(face_direction)

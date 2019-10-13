@@ -43,16 +43,6 @@
 	result = /obj/item/reagent_containers/food/snacks/jellysandwich/cherry
 	subcategory = CAT_SANDWICH
 
-/datum/crafting_recipe/food/icecreamsandwich
-	name = "Icecream sandwich"
-	reqs = list(
-		/datum/reagent/consumable/cream = 5,
-		/datum/reagent/consumable/ice = 5,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/icecreamsandwich
-	subcategory = CAT_SANDWICH
-
 /datum/crafting_recipe/food/notasandwich
 	name = "Not a sandwich"
 	reqs = list(
