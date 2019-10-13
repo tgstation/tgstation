@@ -600,6 +600,7 @@
 #include "code\FulpstationCode\fulp_world.dm"
 #include "code\FulpstationCode\t5_parts.dm"
 #include "code\FulpstationCode\wintercoats.dm"
+#include "code\FulpstationCode\halloween_costumes\centaur.dm"
 #include "code\FulpstationCode\halloween_costumes\cyberdemon.dm"
 #include "code\FulpstationCode\halloween_costumes\joseph_joestar.dm"
 #include "code\FulpstationCode\halloween_costumes\next_adventure.dm"
