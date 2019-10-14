@@ -275,7 +275,7 @@
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return prob(girderpasschance)
 	else
-		if(istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/projectile))
 			return prob(girderpasschance)
 		else
 			return 0

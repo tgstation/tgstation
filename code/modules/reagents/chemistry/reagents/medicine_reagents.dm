@@ -303,8 +303,7 @@
 			var/mob/living/carbon/C = M
 			for(var/s in C.surgeries)
 				var/datum/surgery/S = s
-				S.success_multiplier = max(0.1, S.success_multiplier)
-				// +10% success propability on each step, useful while operating in less-than-perfect conditions
+				S.speed_modifier = max(0.1, S.speed_modifier)
 
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your wounds fade away to nothing!</span>" )
@@ -1212,7 +1211,7 @@
 
 /datum/reagent/medicine/rhigoxane
 	name = "Rhigoxane"
-	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. It's high halogen content helps extiguish fires."
+	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
 	reagent_state = LIQUID
 	color = "#B6D2F2"
 	overdose_threshold = 25
@@ -1239,6 +1238,13 @@
 	M.adjustFireLoss(3*REM, 0.)
 	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	..()
+
+/datum/reagent/medicine/silibinin
+	name = "Silibinin"
+	description = "A thistle derrived hepatoprotective flavolignan mixture that help reverse damage to the liver."
+	reagent_state = SOLID
+	color = "#FFFFD0"
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)//Add a chance to cure liver trauma once implemented.

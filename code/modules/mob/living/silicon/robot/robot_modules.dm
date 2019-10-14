@@ -88,8 +88,9 @@
 		var/obj/item/stack/S = I
 
 		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
-			if(S.materials[/datum/material/iron])
-				S.cost = S.materials[/datum/material/iron] * 0.25
+			if(S.custom_materials && custom_materials.len)
+				if(S.custom_materials[getmaterialref(/datum/material/iron)])
+					S.cost = S.custom_materials[getmaterialref(/datum/material/iron)] * 0.25
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
 
 		else if(istype(S, /obj/item/stack/sheet/glass))
@@ -118,7 +119,7 @@
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/pipe_cleaner)
 
 		if(S && S.source)
-			S.materials = list()
+			S.custom_materials = null
 			S.is_cyborg = 1
 
 	if(I.loc != src)

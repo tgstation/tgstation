@@ -2,6 +2,15 @@
 ////////////Medical Tools////////////////
 /////////////////////////////////////////
 
+/datum/design/healthanalyzer
+	name = "Health Analyzer"
+	id = "healthanalyzer"
+	build_type =  PROTOLATHE
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
+	build_path = /obj/item/healthanalyzer
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
@@ -223,9 +232,9 @@
 
 /datum/design/searingtool
 	name = "Searing Tool"
-	desc = "Used to mend tissue togheter."
+	desc = "Used to mend tissue together. Or drill tissue away."
 	id = "searingtool"
-	build_path = /obj/item/cautery/advanced
+	build_path = /obj/item/surgicaldrill/advanced
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
 	category = list("Tool Designs")
@@ -656,7 +665,7 @@
 
 /datum/design/surgery/healing/burn_upgrade_2
 	name = "Tend Wounds (Burn) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded/femto
+	surgery = /datum/surgery/healing/burn/upgraded/femto
 	id = "surgery_heal_burn_upgrade_femto"
 
 /datum/design/surgery/healing/combo
