@@ -62,7 +62,7 @@ export const AtmosControlConsole = props => {
                 <Button
                   icon="pencil-alt"
                   content={round(data.inputRate) + ' L/s'}
-                  onClick={() => act(ref, 'input')} />
+                  onClick={() => act(ref, 'rate')} />
               </LabeledList.Item>
               <LabeledList.Item label="Output Regulator">
                 <Button
