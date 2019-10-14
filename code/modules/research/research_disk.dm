@@ -23,7 +23,7 @@
 
 /obj/item/research_notes
 	name = "research notes"
-	desc = "Valuable scientific data."
+	desc = "Valuable scientific data. Use it in a research console to scan it."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	item_state = "paper"
@@ -36,7 +36,7 @@
 
 /obj/item/research_notes/examine(mob/user)
 	. = ..()
-	. += "It is worth [value] research points."
+	. += "<span class='notice'>It is worth [value] research points.</span>"
 
 /// proc that changes name and icon depending on value
 /obj/item/research_notes/proc/change_vol()
