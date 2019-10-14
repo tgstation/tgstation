@@ -206,7 +206,7 @@
 	max_amount = 15
 	repeating = TRUE
 	var/heal_burn = 10
-	var/is_open = FALSE
+	var/is_open = FALSE ///This var determines if the sterile packaging of the mesh has been opened.
 
 /obj/item/stack/medical/mesh/update_icon()
 	if(!is_open)
@@ -239,6 +239,6 @@
 	they heal a little at a time, have reduced healing density and does not allow for rapid healing while in combat.
 	However they provice graunular control of where the healing is directed, this makes them better for curing work-related cuts and scrapes.
 
-	The interesting limb targeting mechanic is retained and i still believe they will be a strong choice, especially when healing others in the field.
+	The interesting limb targeting mechanic is retained and i still believe they will be a viable choice, especially when healing others in the field.
 	 */
 
