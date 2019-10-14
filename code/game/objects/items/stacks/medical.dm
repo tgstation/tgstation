@@ -19,7 +19,7 @@
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 	. = ..()
 	try_heal(M, user)
-	
+
 
 /obj/item/stack/medical/proc/try_heal(mob/living/M, mob/user, silent = FALSE)
 	if(!M.can_inject(user, TRUE))
@@ -31,7 +31,7 @@
 			return
 	else if(other_delay)
 		if(!silent)
-			user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [M].</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
+			user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [M].</span>", "<span class='notice'>You begin applying \the [src] on [M]...</span>")
 		if(!do_mob(user, M, other_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
 			return
 
@@ -176,6 +176,14 @@
 	max_amount = 15
 	repeating = TRUE
 	var/heal_brute = 10
+	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
+
+/obj/item/stack/medical/suture/medicated
+	name = "medicated suture"
+	icon_state = "suture_purp"
+	desc = "A suture infused with drugs that speed up wound healing of the treated laceration."
+	heal_brute = 15
+	grind_results = list(/datum/reagent/medicine/polypyr = 2)
 
 /obj/item/stack/medical/suture/heal(mob/living/M, mob/user)
 	. = ..()
@@ -186,7 +194,7 @@
 		return heal_carbon(M, user, heal_brute, 0)
 	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
 
-/obj/item/stack/medical/mesh //figure how on how to make them autorepeat if there are stacks left and the limb is damaged.
+/obj/item/stack/medical/mesh
 	name = "regenerative mesh"
 	desc = "A bacteriostatic mesh used to dress burns."
 	gender = PLURAL
@@ -198,15 +206,33 @@
 	max_amount = 15
 	repeating = TRUE
 	var/heal_burn = 10
+	var/is_open = FALSE
+
+/obj/item/stack/medical/mesh/update_icon()
+	if(!is_open)
+		icon_state = "regen_mesh_closed"
+		return
+	. = ..()
 
 /obj/item/stack/medical/mesh/heal(mob/living/M, mob/user)
 	. = ..()
+	if(!is_open)
+		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
+		return
 	if(M.stat == DEAD)
 		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
 		return
 	if(iscarbon(M))
 		return heal_carbon(M, user, 0, heal_burn)
 	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+
+/obj/item/stack/medical/mesh/attack_self(mob/user)
+	if(!is_open)
+		is_open = TRUE
+		to_chat(user, "<span class='notice'>You open the sterile mesh package.</span>")
+		update_icon()
+		playsound(src, 'sound/items/poster_ripped.ogg', 20, TRUE)
+	. = ..()
 
 	/*
 	The idea is for these medical devices to work like a hybrid of the old brute packs and tend wounds,

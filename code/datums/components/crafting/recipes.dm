@@ -723,3 +723,10 @@
 	reqs = list(/obj/item/tank/internals/oxygen = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = MAXCOIL)
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/medsuture
+	name = "Medicated Suture"
+	result = /obj/item/stack/medical/suture/medicated
+	time = 50
+	reqs = list(/obj/item/stack/sheet/cloth = 1, /datum/reagent/toxin/formaldehyde = 30, /datum/reagent/medicine/polypyr = 30) //We have no thread item, so cloth will have to do.
+	category = CAT_MISC
