@@ -69,7 +69,7 @@
 	///Assoc list of skills - level
 	var/list/known_skills = list()
 	///Assoc list of skills - exp
-	var/list/skill_experience = list().
+	var/list/skill_experience = list()
 
 /datum/mind/New(key)
 	src.key = key
