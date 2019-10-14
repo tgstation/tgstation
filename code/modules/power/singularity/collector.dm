@@ -27,7 +27,8 @@
 
 	var/bitcoinproduction_drain = 0.15
 	var/bitcoinmining = FALSE
-
+	///research points stored
+	var/stored_research = 0
 
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
@@ -75,7 +76,7 @@
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
 			if(D)
 				D.adjust_money(bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
-			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
+			stored_research += bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE
 			stored_energy-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/interact(mob/user)
@@ -110,6 +111,14 @@
 			disconnect_from_network()
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/analyzer) && stored_research >= 1)
+		var/turf/T = get_turf(user)
+		var/obj/item/research_notes/R = new(T)
+		R.value = stored_research
+		R.typee = "engineering"
+		R.change_vol()
+		stored_research = 0
+		return
 	if(istype(W, /obj/item/tank/internals/plasma))
 		if(!anchored)
 			to_chat(user, "<span class='warning'>[src] needs to be secured to the floor first!</span>")
@@ -193,7 +202,7 @@
 			var/joules = stored_energy * SSmachines.wait * 0.1
 			. += "<span class='notice'>[src]'s display states that it has stored <b>[DisplayJoules(joules)]</b>, and is processing <b>[DisplayPower(RAD_COLLECTOR_OUTPUT)]</b>.</span>"
 		else
-			. += "<span class='notice'>[src]'s display states that it has stored a total of <b>[stored_energy*RAD_COLLECTOR_MINING_CONVERSION_RATE]</b>, and is producing [RAD_COLLECTOR_OUTPUT*RAD_COLLECTOR_MINING_CONVERSION_RATE] research points per minute.</span>"
+			. += "<span class='notice'>[src]'s display states that it has made  a total of <b>[stored_research]</b>, and is producing [RAD_COLLECTOR_OUTPUT*RAD_COLLECTOR_MINING_CONVERSION_RATE] research points per minute.</span>"
 	else
 		if(!bitcoinmining)
 			. += "<span class='notice'><b>[src]'s display displays the words:</b> \"Power production mode. Please insert <b>Plasma</b>. Use a multitool to change production modes.\"</span>"
