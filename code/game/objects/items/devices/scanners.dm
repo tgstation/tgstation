@@ -255,17 +255,17 @@ GENE SCANNER
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
 			var/list/dmgreport = list()
 			dmgreport += "<table style='margin-left:33px'><tr><font face='Verdana'>\
-							<td style='width: 90px;'><font color='#0000CC'>Damage:</font></td>\
+							<td style='width: 90px;'><font color='#5454B7'>Damage:</font></td>\
 							<td style='width: 55px;'><font color='red'><b>Brute</b></font></td>\
 							<td style='width: 45px;'><font color='orange'><b>Burn</b></font></td>\
 							<td style='width: 45px;'><font color='green'><b>Toxin</b></font></td>\
-							<td style='width: 90px;'><font color='purple'><b>Suffocation</b></font></td></tr>\
+							<td style='width: 90px;'><font color='blue'><b>Suffocation</b></font></td></tr>\
 
-							<tr><td><font color='#0000CC'>Overall:</font></td>\
+							<tr><td><font color='#5454B7'>Overall:</font></td>\
 							<td><font color='red'>[brute_loss]</font></td>\
 							<td><font color='orange'>[fire_loss]</font></td>\
 							<td><font color='green'>[tox_loss]</font></td>\
-							<td><font color='purple'>[oxy_loss]</font></td></tr>"
+							<td><font color='blue'>[oxy_loss]</font></td></tr>"
 
 			for(var/o in damaged)
 				var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
