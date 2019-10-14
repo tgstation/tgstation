@@ -1,4 +1,5 @@
 #define EXTRA_RULESET_PENALTY 15	// Changes how likely a gamemode is to scale based on how many other roundstart rulesets are waiting to be rolled.
+#define POP_SCALING_PENALTY 50		// Discourages scaling up rulesets depending on ratio between crew and antags.
 
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
@@ -71,7 +72,6 @@
 	var/list/antag_cap = list()
 
 
-
 /datum/dynamic_ruleset/New()
 	..()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -110,14 +110,20 @@
 
 /// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the amount of scaled steps.
 /datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
-	var/base_prob = 40
+	log_game("DYNAMIC: [name] roundstart ruleset attempting to scale up with [extra_rulesets] rulesets waiting and [remaining_threat_level] threat remaining.")
+	var/base_prob = 50
+	var/new_prob
+	var/pop_to_antags = (mode.antags_rolled + antag_cap[indice_pop]) / mode.roundstart_pop_ready
 	for(var/i in 1 to 3) //Can scale a max of 3 times
-		if(remaining_threat_level >= scaling_cost) //Should check for enough pop before merge. 100% antags is no fun.
-			var/new_prob = base_prob - (scaled_times * scaling_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) + remaining_threat_level
+		if(remaining_threat_level >= scaling_cost && pop_to_antags < 0.5)
+			new_prob = base_prob + remaining_threat_level - (scaled_times * scaling_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) - (pop_to_antags * POP_SCALING_PENALTY)
 			if (!prob(new_prob))
 				break
 			remaining_threat_level -= scaling_cost
 			scaled_times++
+			pop_to_antags = (mode.antags_rolled + antag_cap[indice_pop] * scaled_times) / mode.roundstart_pop_ready
+	log_game("DYNAMIC: [name] roundstart ruleset failed scaling up at [new_prob]% chance after [scaled_times]/3 successful scaleups. [remaining_threat_level] threat remaining.")
+	mode.antags_rolled += (1 + scaled_times) * antag_cap[indice_pop]
 	return scaled_times * scaling_cost
 
 /// This is called if persistent variable is true everytime SSTicker ticks.

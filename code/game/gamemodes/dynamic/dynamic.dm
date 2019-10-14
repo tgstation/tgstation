@@ -111,6 +111,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/only_ruleset_executed = FALSE
 	/// Dynamic configuration, loaded on pre_setup
 	var/list/configuration = null
+	/// Antags rolled by rules so far, to keep track of and discourage scaling past a certain ratio of crew/antags especially on lowpop.
+	var/antags_rolled = 0
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
@@ -360,7 +362,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
-		rule.acceptable(roundstart_pop_ready, threat_level)	//updates some vars in the modes, running it here for consistency
+		rule.acceptable(roundstart_pop_ready, threat_level)	// Assigns some vars in the modes, running it here for consistency
 		rule.candidates = candidates.Copy()
 		rule.trim_candidates()
 		if (rule.ready(TRUE))
@@ -448,8 +450,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	starting_rule.trim_candidates()
 
+	var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
 	if (starting_rule.pre_execute())
-		var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
 		spend_threat(starting_rule.cost + added_threat)
 		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
 		if(starting_rule.flags & HIGHLANDER_RULESET)

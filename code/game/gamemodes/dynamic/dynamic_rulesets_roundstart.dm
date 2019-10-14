@@ -54,11 +54,11 @@
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 2
 	weight = 4
-	cost = 10
+	cost = 15
 	scaling_cost = 15
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
 	high_population_requirement = 15
-	antag_cap = list(1,1,1,2,2,2,3,3,3,3)
+	antag_cap = list(1,1,1,1,1,1,1,1,1,1)
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/min_team_size = 2
 
@@ -167,7 +167,7 @@
 /datum/dynamic_ruleset/roundstart/wizard/pre_execute()
 	if(GLOB.wizardstart.len == 0)
 		return FALSE
-	
+	mode.antags_rolled += 1
 	var/mob/M = pick_n_take(candidates)
 	if (M)
 		assigned += M.mind
@@ -209,6 +209,7 @@
 
 /datum/dynamic_ruleset/roundstart/bloodcult/pre_execute()
 	var/cultists = antag_cap[indice_pop]
+	mode.antags_rolled += cultists
 	for(var/cultists_number = 1 to cultists)
 		if(candidates.len <= 0)
 			break
@@ -267,6 +268,7 @@
 /datum/dynamic_ruleset/roundstart/nuclear/pre_execute()
 	// If ready() did its job, candidates should have 5 or more members in it
 	var/operatives = antag_cap[indice_pop]
+	mode.antags_rolled += operatives
 	for(var/operatives_number = 1 to operatives)
 		if(candidates.len <= 0)
 			break
@@ -349,8 +351,9 @@
 	var/finished = 0
 
 /datum/dynamic_ruleset/roundstart/revs/pre_execute()
-	var/max_canditates = 3
-	for(var/i = 1 to max_canditates)
+	var/max_candidates = 3
+	mode.antags_rolled += max_candidates
+	for(var/i = 1 to max_candidates)
 		if(candidates.len <= 0)
 			break
 		var/mob/M = pick_n_take(candidates)
@@ -583,6 +586,7 @@
 
 /datum/dynamic_ruleset/roundstart/devil/pre_execute()
 	var/num_devils = antag_cap[indice_pop]
+	mode.antags_rolled += num_devils
 
 	for(var/j = 0, j < num_devils, j++)
 		if (!candidates.len)
@@ -637,6 +641,7 @@
 
 /datum/dynamic_ruleset/roundstart/monkey/pre_execute()
 	var/carriers_to_make = max(round(mode.roundstart_pop_ready / players_per_carrier, 1), 1)
+	mode.antags_rolled += carriers_to_make
 
 	for(var/j = 0, j < carriers_to_make, j++)
 		if (!candidates.len)
