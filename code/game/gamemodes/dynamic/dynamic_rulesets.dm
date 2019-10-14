@@ -1,4 +1,4 @@
-#define EXTRA_RULESET_PENALTY = 15	// Changes how likely a gamemode is to scale based on how many other roundstart rulesets are waiting to be rolled.
+#define EXTRA_RULESET_PENALTY 15	// Changes how likely a gamemode is to scale based on how many other roundstart rulesets are waiting to be rolled.
 
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
@@ -37,10 +37,12 @@
 	var/weight = 5 
 	/// Threat cost for this rule, this is decreased from the mode's threat when the rule is executed.
 	var/cost = 0
-	/// Cost per level the rule scales up. A scaling_cost of 0 turns scale_up off, and uses the normal scaling instead.
+	/// Cost per level the rule scales up.
 	var/scaling_cost = 0
 	/// How many times a rule has scaled up upon getting picked.
 	var/scaled_times = 0
+	/// Used for the roundend report
+	var/total_cost = 0
 	/// A flag that determines how the ruleset is handled
 	/// HIGHLANDER_RULESET are rulesets can end the round.
 	/// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
@@ -110,13 +112,13 @@
 /datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
 	var/base_prob = 40
 	for(var/i in 1 to 3) //Can scale a max of 3 times
-		if(remaining_threat_level >= scale_cost)
-			var/new_prob = base_prob - (scaled_times * scale_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) + remaining_threat_level
-			if (!prob(new_prob)
+		if(remaining_threat_level >= scaling_cost) //Should check for enough pop before merge. 100% antags is no fun.
+			var/new_prob = base_prob - (scaled_times * scaling_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) + remaining_threat_level
+			if (!prob(new_prob))
 				break
-			remaining_threat_level -= scale_cost
+			remaining_threat_level -= scaling_cost
 			scaled_times++
-	return scaled_times * scale_cost
+	return scaled_times * scaling_cost
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()

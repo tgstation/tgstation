@@ -81,6 +81,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/high_pop_second_rule_req = 40
 	/// Threat requirement for a third ruleset when high pop override is in effect.
 	var/high_pop_third_rule_req = 60
+	/// The amount of additional rulesets waiting to be picked.
+	var/extra_rulesets_amount
 	/// Number of players who were ready on roundstart.
 	var/roundstart_pop_ready = 0
 	/// List of candidates used on roundstart rulesets.
@@ -376,7 +378,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				drafted_rules[rule] = rule.weight
 
 	var/indice_pop = min(10,round(roundstart_pop_ready/pop_per_requirement)+1)
-	var/extra_rulesets_amount = 0
+	extra_rulesets_amount = 0
 	if (GLOB.dynamic_classic_secret)
 		extra_rulesets_amount = 0
 	else
@@ -446,7 +448,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	starting_rule.trim_candidates()
 
 	if (starting_rule.pre_execute())
-		added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
+		var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
 		spend_threat(starting_rule.cost + added_threat)
 		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
 		if(starting_rule.flags & HIGHLANDER_RULESET)

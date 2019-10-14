@@ -16,19 +16,16 @@
 	required_candidates = 1
 	weight = 5
 	cost = 10
-	scale_cost = 15
+	scaling_cost = 10
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
-	antag_cap = list(1,1,1,2,2,2,2,3,3,3)
+	antag_cap = list(1,1,1,2,2,2,3,3,3,3)
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute()
-	var/num_traitors
-	if(scaling_cost)
-		num_traitors = min(3, round((indice_pop/5), 1) + 1) * (scaled_times + 1) // Each scale step spawns 1 traitor at <20 pop, 2 between 20 and 
-	else
-		var/traitor_scaling_coeff = 10 - max(0,round(mode.threat_level/10)-5) // Above 50 threat level, coeff goes down by 1 for every 10 levels
-		num_traitors = min(round(mode.candidates.len / traitor_scaling_coeff) + 1, candidates.len)
+	if(!indice_pop) // Usually found during acceptable(), but not if forced mode.
+		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+	var/num_traitors = antag_cap[indice_pop] * (scaled_times + 1)
 	for (var/i = 1 to num_traitors)
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
@@ -60,22 +57,16 @@
 	required_candidates = 2
 	weight = 4
 	cost = 10
-	scale_cost = 15
+	scaling_cost = 10
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
 	high_population_requirement = 15
-	antag_cap = list(1,1,1,2,2,2,2,3,3,3) // Amount of teams
 	var/list/datum/team/brother_team/pre_brother_teams = list()
-	var/const/team_amount = 2 // Hard limit on brother teams if scaling is turned off
 	var/const/min_team_size = 2
 
 /datum/dynamic_ruleset/roundstart/traitorbro/pre_execute()
-	if(scale_cost)
-
-	var/num_teams = team_amount
-	var/bsc = CONFIG_GET(number/brother_scaling_coeff)
-	if(bsc)
-		num_teams = max(1, round(mode.roundstart_pop_ready / bsc))
-
+	if(!indice_pop) // Usually found during acceptable(), but not if forced mode.
+		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+	var/num_teams = antag_cap[indice_pop] * (scaled_times + 1) // 1 team per scaling
 	for(var/j = 1 to num_teams)
 		if(candidates.len < min_team_size || candidates.len < required_candidates)
 			break
@@ -114,13 +105,17 @@
 	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
 	weight = 3
-	cost = 30
-	requirements = list(80,70,60,50,40,20,20,10,10,10)
+	cost = 15
+	scaling_cost = 15
+	requirements = list(70,70,60,50,40,20,20,10,10,10)
 	high_population_requirement = 10
+	antag_cap = list(1,1,1,2,2,2,3,3,3,3)
 	var/team_mode_probability = 30
 
 /datum/dynamic_ruleset/roundstart/changeling/pre_execute()
-	var/num_changelings = min(round(mode.candidates.len / 10) + 1, candidates.len)
+	if(!indice_pop) // Usually found during acceptable(), but not if forced mode.
+		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+	var/num_changelings = antag_cap[indice_pop] * (scaled_times + 1)
 	for (var/i = 1 to num_changelings)
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
@@ -214,6 +209,8 @@
 	var/datum/team/cult/main_cult
 
 /datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = FALSE)
+	if(!indice_pop) // Usually found during acceptable(), but not if forced mode.
+		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 	required_candidates = cultist_cap[indice_pop]
 	. = ..()
 
@@ -270,6 +267,8 @@
 	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nuclear/ready(forced = FALSE)
+	if(!indice_pop) // Usually found during acceptable(), but not if forced mode.
+		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 	required_candidates = operative_cap[indice_pop]
 	. = ..()
 
