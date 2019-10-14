@@ -1,3 +1,8 @@
+#define TENTACLE_PATCH 1
+#define SPAWN_CHILDREN 2
+#define RAGE 3
+#define CALL_CHILDREN 4
+
 /**
   * # Goliath Broodmother
   *
@@ -47,48 +52,48 @@
 	name = "Tentacle Patch"
 	button_icon_state = "tentacle_patch"
 	chosen_message = "<span class='boldwarning'>You are now attacking with a patch of tentacles.</span>"
-	chosen_attack_num = 1
+	chosen_attack_num = TENTACLE_PATCH
 	
 /datum/action/innate/elite_attack/spawn_children
 	name = "Spawn Children"
 	button_icon_state = "spawn_children"
 	chosen_message = "<span class='boldwarning'>You will spawn two children at your location to assist you in combat.  You can have up to 8.</span>"
-	chosen_attack_num = 2
+	chosen_attack_num = SPAWN_CHILDREN
 	
 /datum/action/innate/elite_attack/rage
 	name = "Rage"
 	button_icon_state = "rage"
 	chosen_message = "<span class='boldwarning'>You will temporarily increase your movement speed.</span>"
-	chosen_attack_num = 3
+	chosen_attack_num = RAGE
 	
 /datum/action/innate/elite_attack/call_children
 	name = "Call Children"
 	button_icon_state = "call_children"
 	chosen_message = "<span class='boldwarning'>You will summon your children to your location.</span>"
-	chosen_attack_num = 4
+	chosen_attack_num = CALL_CHILDREN
 	
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/OpenFire()
 	if(client)
 		switch(chosen_attack)
-			if(1)
+			if(TENTACLE_PATCH)
 				tentacle_patch(target)
-			if(2)
+			if(SPAWN_CHILDREN)
 				spawn_children()
-			if(3)
+			if(RAGE)
 				rage()
-			if(4)
+			if(CALL_CHILDREN)
 				call_children()
 		return
 	
 	var/aiattack = rand(1,4)
 	switch(aiattack)
-		if(1)
+		if(TENTACLE_PATCH)
 			tentacle_patch(target)
-		if(2)
+		if(SPAWN_CHILDREN)
 			spawn_children()
-		if(3)
+		if(RAGE)
 			rage()
-		if(4)
+		if(CALL_CHILDREN)
 			call_children()
 		
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/Life()
@@ -195,21 +200,20 @@
 			visible_message("<span class='boldwarning'>[newchild] appears below [src]!</span>")
 			newchild.mother = src
 			children_list += newchild
-	return
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/rage()
 	ranged_cooldown = world.time + 70
 	playsound(src,'sound/spookoween/insane_low_laugh.ogg', 200, 1)
 	visible_message("<span class='warning'>[src] starts picking up speed!</span>")
 	color = rgb(150,0,0)
-	src.set_varspeed(0)
-	src.move_to_delay = 3
+	set_varspeed(0)
+	move_to_delay = 3
 	addtimer(CALLBACK(src, .proc/reset_rage), 65)
 	
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/reset_rage()
 	color = rgb(255, 255, 255)
-	src.set_varspeed(2)
-	src.move_to_delay = 5
+	set_varspeed(2)
+	move_to_delay = 5
 	
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/call_children()
 	ranged_cooldown = world.time + 60

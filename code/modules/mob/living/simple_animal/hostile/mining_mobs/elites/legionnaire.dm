@@ -1,3 +1,8 @@
+#define LEGIONNAIRE_CHARGE 1
+#define HEAD_DETACH 2
+#define BONFIRE_TELEPORT 3
+#define SPEW_SMOKE 4
+
 /**
   * # Legionnaire
   *
@@ -47,47 +52,47 @@
 	name = "Legionnaire Charge"
 	button_icon_state = "legionnaire_charge"
 	chosen_message = "<span class='boldwarning'>You will attempt to grab your opponent and throw them.</span>"
-	chosen_attack_num = 1
+	chosen_attack_num = LEGIONNAIRE_CHARGE
 	
 /datum/action/innate/elite_attack/head_detach
 	name = "Release Head"
 	button_icon_state = "head_detach"
 	chosen_message = "<span class='boldwarning'>You will now detach your head or kill it if it is already released.</span>"
-	chosen_attack_num = 2
+	chosen_attack_num = HEAD_DETACH
 	
 /datum/action/innate/elite_attack/bonfire_teleport
 	name = "Bonfire Teleport"
 	button_icon_state = "bonfire_teleport"
 	chosen_message = "<span class='boldwarning'>You will leave a bonfire.  Second use will let you swap positions with it indefintiely.  Using this move on the same tile as your active bonfire removes it.</span>"
-	chosen_attack_num = 3
+	chosen_attack_num = BONFIRE_TELEPORT
 	
 /datum/action/innate/elite_attack/spew_smoke
 	name = "Spew Smoke"
 	button_icon_state = "spew_smoke"
 	chosen_message = "<span class='boldwarning'>Your head will spew smoke in an area, wherever it may be.</span>"
-	chosen_attack_num = 4
+	chosen_attack_num = SPEW_SMOKE
 	
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/OpenFire()
 	if(client)
 		switch(chosen_attack)
-			if(1)
+			if(LEGIONNAIRE_CHARGE)
 				legionnaire_charge(target)
-			if(2)
+			if(HEAD_DETACH)
 				head_detach(target)
-			if(3)
+			if(BONFIRE_TELEPORT)
 				bonfire_teleport()
-			if(4)
+			if(SPEW_SMOKE)
 				spew_smoke()
 		return
 	var/aiattack = rand(1,4)
 	switch(aiattack)
-		if(1)
+		if(LEGIONNAIRE_CHARGE)
 			legionnaire_charge(target)
-		if(2)
+		if(HEAD_DETACH)
 			head_detach(target)
-		if(3)
+		if(BONFIRE_TELEPORT)
 			bonfire_teleport()
-		if(4)
+		if(SPEW_SMOKE)
 			spew_smoke()
 		
 /obj/effect/temp_visual/dragon_swoop/legionnaire
@@ -96,7 +101,7 @@
 
 /obj/effect/temp_visual/dragon_swoop/legionnaire/Initialize()
 	. = ..()
-	src.transform *= 0.33
+	transform *= 0.33
 	
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge(target)
 	ranged_cooldown = world.time + 50
@@ -108,7 +113,6 @@
 	playsound(src,'sound/magic/demon_attack1.ogg', 200, 1)
 	visible_message("<span class='boldwarning'>[src] prepares to charge!</span>")
 	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, dir_to_target, 0), 5)
-	return
 	
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge_2(var/move_dir, var/times_ran)
 	if(times_ran < 4)
@@ -123,7 +127,7 @@
 				return
 			forceMove(T)
 			playsound(src,'sound/effects/bang.ogg', 200, 1)
-			var/list/hit_things
+			var/list/hit_things = list()
 			var/throwtarget = get_edge_target_turf(src, move_dir)
 			for(var/mob/living/L in T.contents - hit_things - src)
 				if(!faction_check_mob(L))
@@ -134,8 +138,6 @@
 					L.Paralyze(20)
 					L.adjustBruteLoss(50)
 			addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 2)
-	else
-		return
 		
 /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead
 	name = "legionnaire head"
@@ -165,7 +167,6 @@
 	. = ..()
 	if(body)
 		body.onHeadDeath()
-	return
 		
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/head_detach(target)
 	ranged_cooldown = world.time + 5
@@ -190,12 +191,10 @@
 		return
 	else if(!has_head && myhead != null)
 		myhead.adjustBruteLoss(600)
-		return
 		
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/onHeadDeath()
 	myhead = null
 	addtimer(CALLBACK(src, .proc/regain_head), 50)
-	return
 	
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/regain_head()
 	has_head = TRUE
@@ -205,7 +204,6 @@
 	icon_living = "legionnaire"
 	icon_aggro = "legionnaire"
 	visible_message("<span class='boldwarning'>The top of [src]'s spine leaks a black liquid, forming into a skull!</span>")
-	return
 	
 /obj/structure/legionnaire_bonfire
 	name = "bone pile"
@@ -221,7 +219,7 @@
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/myowner = null
 	
 	
-/obj/structure/legionnaire_bonfire/CanPass(atom/movable/mover, turf/target)
+/obj/structure/legionnaire_bonfire/Entered(atom/movable/mover, turf/target)
 	if(isliving(mover))
 		var/mob/living/L = mover
 		L.adjust_fire_stacks(3)
@@ -255,7 +253,6 @@
 		forceMove(pileturf)
 		visible_message("<span class='boldwarning'>[src] forms from the bonfire!</span>")
 		mypile.forceMove(legionturf)
-		return
 		
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/spew_smoke()
 	ranged_cooldown = world.time + 60

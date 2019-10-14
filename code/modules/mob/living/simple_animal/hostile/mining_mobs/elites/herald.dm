@@ -1,3 +1,8 @@
+#define HERALD_TRISHOT 1
+#define HERALD_DIRECTIONALSHOT 2
+#define HERALD_TELESHOT 3
+#define HERALD_MIRROR 4
+
 /**
   * # Herald
   *
@@ -53,7 +58,6 @@
 	
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/become_ghost()
 	icon_state = "herald_ghost"
-	return
 	
 /mob/living/simple_animal/hostile/asteroid/elite/herald/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	. = ..()
@@ -63,60 +67,60 @@
 	name = "Triple Shot"
 	button_icon_state = "herald_trishot"
 	chosen_message = "<span class='boldwarning'>You are now firing three shots in your chosen direction.</span>"
-	chosen_attack_num = 1
+	chosen_attack_num = HERALD_TRISHOT
 	
 /datum/action/innate/elite_attack/herald_directionalshot
 	name = "Circular Shot"
 	button_icon_state = "herald_directionalshot"
 	chosen_message = "<span class='boldwarning'>You are firing projectiles in all directions.</span>"
-	chosen_attack_num = 2
+	chosen_attack_num = HERALD_DIRECTIONALSHOT
 	
 /datum/action/innate/elite_attack/herald_teleshot
 	name = "Teleport Shot"
 	button_icon_state = "herald_teleshot"
 	chosen_message = "<span class='boldwarning'>You will now fire a shot which teleports you where it lands.</span>"
-	chosen_attack_num = 3
+	chosen_attack_num = HERALD_TELESHOT
 	
 /datum/action/innate/elite_attack/herald_mirror
 	name = "Summon Mirror"
 	button_icon_state = "herald_mirror"
 	chosen_message = "<span class='boldwarning'>You will spawn a mirror which duplicates your attacks.</span>"
-	chosen_attack_num = 4
+	chosen_attack_num = HERALD_MIRROR
 	
 /mob/living/simple_animal/hostile/asteroid/elite/herald/OpenFire()
 	if(client)
 		switch(chosen_attack)
-			if(1)
+			if(HERALD_TRISHOT)
 				herald_trishot(target)
 				if(my_mirror != null)
 					my_mirror.herald_trishot(target)
-			if(2)
+			if(HERALD_DIRECTIONALSHOT)
 				herald_directionalshot()
 				if(my_mirror != null)
 					my_mirror.herald_directionalshot()
-			if(3)
+			if(HERALD_TELESHOT)
 				herald_teleshot(target)
 				if(my_mirror != null)
 					my_mirror.herald_teleshot(target)
-			if(4)
+			if(HERALD_MIRROR)
 				herald_mirror()
 		return
 		
 	var/aiattack = rand(1,4)
 	switch(aiattack)
-		if(1)
+		if(HERALD_TRISHOT)
 			herald_trishot(target)
 			if(my_mirror != null)
 				my_mirror.herald_trishot(target)
-		if(2)
-			herald_directionalshot(target)
+		if(HERALD_DIRECTIONALSHOT)
+			herald_directionalshot()
 			if(my_mirror != null)
-				my_mirror.herald_directionalshot(target)
-		if(3)
+				my_mirror.herald_directionalshot()
+		if(HERALD_TELESHOT)
 			herald_teleshot(target)
 			if(my_mirror != null)
 				my_mirror.herald_teleshot(target)
-		if(4)
+		if(HERALD_MIRROR)
 			herald_mirror()
 				
 /obj/projectile/herald
@@ -128,7 +132,6 @@
 	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
-	var/mob/living/simple_animal/hostile/hostileshooter = null
 	
 /obj/projectile/herald/teleshot
 	name ="golden bolt"
@@ -138,7 +141,7 @@
 /obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
-		if(hostileshooter && hostileshooter.faction_check_mob(L))
+		if(firer && firer.faction_check_mob(L))
 			L.heal_overall_damage(damage)
 	. = ..()
 	if(ismineralturf(target))
@@ -158,7 +161,6 @@
 		H = new /obj/projectile/herald/teleshot(startloc)
 	H.preparePixelProjectile(marker, startloc)
 	H.firer = src
-	H.hostileshooter = src
 	if(target)
 		H.original = target
 	H.fire(set_angle)
@@ -176,7 +178,6 @@
 		addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE), 10)
 		addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE), 12)
 		addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE), 14)
-	return
 	
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_circleshot()
 	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
@@ -187,7 +188,6 @@
 	if(stat == DEAD || is_mirror)
 		return
 	icon_state = "herald"
-	return
 	
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_directionalshot()
 	ranged_cooldown = world.time + 50
@@ -199,7 +199,6 @@
 		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 		addtimer(CALLBACK(src, .proc/herald_circleshot), 15)
 	addtimer(CALLBACK(src, .proc/unenrage), 20)
-	return
 	
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_teleshot(target)
 	ranged_cooldown = world.time + 30
@@ -207,7 +206,6 @@
 	var/target_turf = get_turf(target)
 	var/angle_to_target = Get_Angle(src, target_turf)
 	shoot_projectile(target_turf, angle_to_target, TRUE)
-	return
 	
 /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror
 	name = "herald's mirror"
@@ -241,7 +239,6 @@
 	my_mirror = new_mirror
 	my_mirror.my_master = src
 	my_mirror.faction = faction.Copy()
-	return
 	
 //Herald's loot: Cloak of the Prophet
 
@@ -250,6 +247,5 @@
 	desc = "A cloak which protects you from the heresy of the world."
 	icon = 'icons/obj/lavaland/elite_trophies.dmi'
 	icon_state = "herald_cloak"
-	item_state = ""
 	armor = list("melee" = 10, "bullet" = 25, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	body_parts_covered = CHEST|GROIN|ARMS

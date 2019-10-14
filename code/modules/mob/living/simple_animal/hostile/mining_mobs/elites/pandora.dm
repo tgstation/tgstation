@@ -1,3 +1,8 @@
+#define SINGULAR_SHOT 1
+#define MAGIC_BOX 2
+#define PANDORA_TELEPORT 3
+#define AOE_SQUARES 4
+
 /**
   * # Pandora
   *
@@ -46,48 +51,48 @@
 	name = "Singular Shot"
 	button_icon_state = "singular_shot"
 	chosen_message = "<span class='boldwarning'>You are now creating a single linear magic square.</span>"
-	chosen_attack_num = 1
+	chosen_attack_num = SINGULAR_SHOT
 	
 /datum/action/innate/elite_attack/magic_box
 	name = "Magic Box"
 	button_icon_state = "magic_box"
 	chosen_message = "<span class='boldwarning'>You are now attacking with a box of magic squares.</span>"
-	chosen_attack_num = 2
+	chosen_attack_num = MAGIC_BOX
 	
 /datum/action/innate/elite_attack/pandora_teleport
 	name = "Line Teleport"
 	button_icon_state = "pandora_teleport"
 	chosen_message = "<span class='boldwarning'>You will now teleport to your target.</span>"
-	chosen_attack_num = 3
+	chosen_attack_num = PANDORA_TELEPORT
 	
 /datum/action/innate/elite_attack/aoe_squares
 	name = "AOE Blast"
 	button_icon_state = "aoe_squares"
 	chosen_message = "<span class='boldwarning'>Your attacks will spawn an AOE blast at your target location.</span>"
-	chosen_attack_num = 4
+	chosen_attack_num = AOE_SQUARES
 	
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/OpenFire()
 	if(client)
 		switch(chosen_attack)
-			if(1)
+			if(SINGULAR_SHOT)
 				singular_shot(target)
-			if(2)
+			if(MAGIC_BOX)
 				magic_box(target)
-			if(3)
+			if(PANDORA_TELEPORT)
 				pandora_teleport(target)
-			if(4)
+			if(AOE_SQUARES)
 				aoe_squares(target)
 		return
 		
 	var/aiattack = rand(1,4)
 	switch(aiattack)
-		if(1)
+		if(SINGULAR_SHOT)
 			singular_shot(target)
-		if(2)
+		if(MAGIC_BOX)
 			magic_box(target)
-		if(3)
+		if(PANDORA_TELEPORT)
 			pandora_teleport(target)
-		if(4)
+		if(AOE_SQUARES)
 			aoe_squares(target)
 				
 /obj/effect/temp_visual/hierophant/blast/pandora
@@ -106,8 +111,6 @@
 		T = get_step(T, angleused)
 		procsleft = procsleft - 1
 		addtimer(CALLBACK(src, .proc/singular_shot_line, procsleft, angleused, T), 2)
-	else
-		return
 		
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/magic_box(target)
 	ranged_cooldown = world.time + cooldown_time
@@ -167,7 +170,6 @@
 		return
 	else
 		cooldown_time = 10
-		return
 		
 //Pandora's loot: Hope
 
