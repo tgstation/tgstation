@@ -71,7 +71,6 @@
 	///Assoc list of skills - exp
 	var/list/skill_experience = list()
 
-
 /datum/mind/New(key)
 	src.key = key
 	soulOwner = src
@@ -684,14 +683,6 @@
 	if(G)
 		G.reenter_corpse()
 
-
-/datum/mind/proc/has_objective(objective_type)
-	for(var/datum/antagonist/A in antag_datums)
-		for(var/O in A.objectives)
-			if(istype(O,objective_type))
-				return TRUE
-
-
 ///Adjust experience of a specific skill
 /datum/mind/proc/adjust_experience(skill, amt, silent = FALSE)
 	var/datum/skill/S = GetSkillRef(skill)
@@ -746,6 +737,13 @@
 		var/datum/skill/S
 		msg += "<span class='notice'>[i] - [SSskills.level_names[known_skills[S.name]]]</span>"
 	to_chat(user, msg)
+
+
+/datum/mind/proc/has_objective(objective_type)
+	for(var/datum/antagonist/A in antag_datums)
+		for(var/O in A.objectives)
+			if(istype(O,objective_type))
+				return TRUE
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
