@@ -708,12 +708,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/gohei
 	name = "gohei"
-	desc = "A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by people with a thing for armpits."
-	w_class = WEIGHT_CLASS_NORMAL
+	desc = "A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by the station's valued weeaboos."
 	force = 5
 	throwforce = 5
-	sharpness = IS_BLUNT
-	hitsound = "swing_hit"
 	attack_verb = list("whacked", "thwacked", "walloped", "socked")
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "gohei"
