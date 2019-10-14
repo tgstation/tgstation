@@ -17,7 +17,7 @@
 	infodisplay += alien_queen_finder
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = 'icons/mob/screen_alien.dmi'
-	pull_icon.update_icon(mymob)
+	pull_icon.update_icon()
 	pull_icon.screen_loc = ui_above_movement
 	hotkeybuttons += pull_icon
 
@@ -26,5 +26,5 @@
 	static_inventory += using
 
 	zone_select = new /obj/screen/zone_sel/alien()
-	zone_select.update_icon(mymob)
+	zone_select.update_icon()
 	static_inventory += zone_select

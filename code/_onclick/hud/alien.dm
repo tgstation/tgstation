@@ -83,7 +83,7 @@
 
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
-	pull_icon.update_icon(mymob)
+	pull_icon.update_icon()
 	pull_icon.screen_loc = ui_above_movement
 	static_inventory += pull_icon
 
@@ -100,7 +100,7 @@
 		infodisplay += alien_queen_finder
 
 	zone_select = new /obj/screen/zone_sel/alien()
-	zone_select.update_icon(mymob)
+	zone_select.update_icon()
 	static_inventory += zone_select
 
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
