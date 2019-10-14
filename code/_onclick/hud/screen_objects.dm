@@ -194,19 +194,22 @@
 /obj/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
+	var/mob/user = hud?.mymob
+	if(usr != user)
 		return TRUE
-	if(usr.incapacitated() || isobserver(usr))
+	if(world.time <= user.next_move)
 		return TRUE
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
+	if(user.incapacitated())
+		return TRUE
+	if (ismecha(user.loc)) // stops inventory actions in a mech
 		return TRUE
 
-	if(hud?.mymob?.active_hand_index == held_index)
-		var/obj/item/I = hud.mymob.get_active_held_item()
+	if(user.active_hand_index == held_index)
+		var/obj/item/I = user.get_active_held_item()
 		if(I)
 			I.Click(location, control, params)
 	else
-		hud.mymob.swap_hand(held_index)
+		user.swap_hand(held_index)
 	return TRUE
 
 /obj/screen/close
@@ -532,7 +535,7 @@
 				return BODY_ZONE_HEAD
 
 /obj/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
-	if(user != hud.mymob)
+	if(user != hud?.mymob)
 		return
 
 	if(choice != selecting)
