@@ -314,7 +314,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				continue
 			var/rule_conf = configuration[ruleset.ruletype][ruleset.name]
 			for(var/variable in rule_conf)
-				if(!ruleset.vars[variable])
+				if(isnull(ruleset.vars[variable]))
 					stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name]")
 				ruleset.vars[variable] = rule_conf[variable]
 
@@ -360,6 +360,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
+		rule.acceptable(roundstart_pop_ready, threat_level)	//updates some vars in the modes, running it here for consistency
 		rule.candidates = candidates.Copy()
 		rule.trim_candidates()
 		if (rule.ready(TRUE))
