@@ -37,6 +37,10 @@
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
+/mob/living/simple_animal/hostile/retaliate/goat/Initialize()
+	udder = new()
+	. = ..()
+
 /mob/living/simple_animal/hostile/retaliate/goat/Destroy()
 	qdel(udder)
 	udder = null
