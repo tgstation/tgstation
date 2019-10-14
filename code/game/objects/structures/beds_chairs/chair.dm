@@ -54,8 +54,13 @@
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(buildstacktype && (!(flags_1 & NODECONSTRUCT_1)))
-		new buildstacktype(loc,buildstackamount)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
+		else
+			for(var/i in custom_materials)
+				var/datum/material/M = i
+				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 	..()
 
 /obj/structure/chair/attack_paw(mob/user)
@@ -126,7 +131,7 @@
 /obj/structure/chair/greyscale
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	item_chair = /obj/item/chair/greyscale
-	
+	buildstacktype = null //Custom mats handle this
 
 /obj/structure/chair/wood
 	icon_state = "wooden_chair"

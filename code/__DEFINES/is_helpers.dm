@@ -17,7 +17,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/space,
 	/turf/open/chasm,
 	/turf/open/lava,
-	/turf/open/water
+	/turf/open/water,
+	/turf/open/openspace
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
@@ -120,6 +121,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isdrone(A) (istype(A, /mob/living/simple_animal/drone))
 
 #define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
+
+#define isdog(A) (istype(A, /mob/living/simple_animal/pet/dog))
 
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
