@@ -132,6 +132,7 @@
 	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
+	var/mob/shooter = null
 	
 /obj/projectile/herald/teleshot
 	name ="golden bolt"
@@ -141,7 +142,7 @@
 /obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
-		if(firer && firer.faction_check_mob(L))
+		if(shooter && shooter.faction_check_mob(L))
 			L.heal_overall_damage(damage)
 	. = ..()
 	if(ismineralturf(target))
@@ -161,6 +162,7 @@
 		H = new /obj/projectile/herald/teleshot(startloc)
 	H.preparePixelProjectile(marker, startloc)
 	H.firer = src
+	H.shooter = src
 	if(target)
 		H.original = target
 	H.fire(set_angle)
