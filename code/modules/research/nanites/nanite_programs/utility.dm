@@ -208,13 +208,76 @@
 	host_mob.adjust_nutrition(-0.5)
 
 /datum/nanite_program/research
-	name = "Parallel Computing"
+	name = "Distributed Computing"
 	desc = "The nanites aid the research servers by performing a portion of its calculations, increasing research point generation."
 	use_rate = 0.2
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/research/active_effect()
-	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = 1))
+	if(!iscarbon(host_mob))
+		return
+	var/points = 1
+	if(!host_mob.client) //less brainpower
+		points *= 0.25
+	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points))
+	
+/datum/nanite_program/bitcoin
+	name = "Cryptocurrency Processing"
+	desc = "The nanites automatically mine cryptocurrency, automatically transferring the resulting credits to the station's account."
+	use_rate = 0.3
+	rogue_types = list(/datum/nanite_program/toxic)
+
+/datum/nanite_program/bitcoin/active_effect()
+	if(!iscarbon(host_mob))
+		return
+	var/points = 4 // 240/min
+	if(!host_mob.client)
+		points *= 0.25
+	SSshuttle.points += points
+	
+/datum/nanite_program/triggered/researchplus
+	name = "Neural Network"
+	desc = "The nanites link the host's brains together forming a neural research network, that becomes more efficient with the amount of total hosts. \
+			Can be overclocked (by triggering) to increase research output at the cost of increased nanite consumption and rapid brain decay from the host."
+	use_rate = 0.4
+	rogue_types = list(/datum/nanite_program/brain_decay)
+	var/overclock = FALSE
+
+/datum/nanite_program/triggered/researchplus/enable_passive_effect()
+	. = ..()
+	if(!iscarbon(host_mob))
+		return
+	SSnanites.neural_network_count++
+
+/datum/nanite_program/triggered/researchplus/disable_passive_effect()
+	. = ..()
+	if(!iscarbon(host_mob))
+		return
+	SSnanites.neural_network_count--
+	
+/datum/nanite_program/triggered/researchplus/active_effect()
+	if(!iscarbon(host_mob))
+		return
+	var/mob/living/carbon/C = host_mob
+	var/points = round(SSnanites.neural_network_count / 15, 0.1)
+	if(overclock)
+		if(prob(50))
+			C.adjustBrainLoss(1, TRUE)
+		points *= 2.5
+	if(!C.client) //less brainpower
+		points *= 0.25
+	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points))
+	
+/datum/nanite_program/triggered/researchplus/trigger()
+	if(!..())
+		return
+	overclock = !overclock
+	if(overclock)
+		use_rate = 1.25
+		to_chat(host_mob, "<span class='warning'>You feel like your brain is starting to overheat...</span>")
+	else
+		use_rate = initial(use_rate)
+		to_chat(host_mob, "<span class='warning'>The feeling of overheating in your brain rapidly fades away.</span>")
 
 /datum/nanite_program/triggered/access
 	name = "Subdermal ID"

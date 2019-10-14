@@ -26,10 +26,24 @@
 	category = list("Utility Nanites")
 
 /datum/design/nanites/research
-	name = "Parallel Computing"
+	name = "Distributed Computing"
 	desc = "The nanites aid the research servers by performing a portion of its calculations, increasing research point generation."
 	id = "research_nanites"
 	program_type = /datum/nanite_program/research
+	category = list("Utility Nanites")
+	
+/datum/design/nanites/researchplus
+	name = "Neural Network"
+	desc = "The nanites link the host's brains together forming a neural research network, that becomes more efficient with the amount of total hosts. Can be overloaded to increase research output."
+	id = "researchplus_nanites"
+	program_type = /datum/nanite_program/triggered/researchplus
+	category = list("Utility Nanites")
+	
+/datum/design/nanites/bitcoin
+	name = "Cryptocurrency Processing"
+	desc = "The nanites automatically mine cryptocurrency, automatically transferring the resulting credits to the station's account."
+	id = "cash_nanites"
+	program_type = /datum/nanite_program/bitcoin
 	category = list("Utility Nanites")
 
 /datum/design/nanites/monitoring
