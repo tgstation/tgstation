@@ -120,7 +120,7 @@
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "A" = (
-/obj/item/stack/sheet/mineral/iron,
+/obj/item/stack/sheet/metal,
 /turf/open/floor/bronze{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -142,7 +142,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "E" = (
-/obj/item/stack/sheet/mineral/iron,
+/obj/item/stack/sheet/metal,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "F" = (
