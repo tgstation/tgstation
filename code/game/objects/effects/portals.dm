@@ -20,6 +20,7 @@
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
 	var/hardlinked = TRUE			//Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
 	var/creator
 	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
 	var/atmos_link = FALSE			//Link source/destination atmos.
@@ -33,7 +34,9 @@
 	name = "wormhole"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
+	layer = RIPPLE_LAYER
 	mech_sized = TRUE
+	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 
 /obj/effect/portal/Move(newloc)
 	for(var/T in newloc)
@@ -46,7 +49,9 @@
 		user.forceMove(get_turf(src))
 		return TRUE
 
-/obj/effect/portal/Crossed(atom/movable/AM, oldloc)
+/obj/effect/portal/Crossed(atom/movable/AM, oldloc, force_stop = 0)
+	if(force_stop)
+		return ..()
 	if(isobserver(AM))
 		return ..()
 	if(linked && (get_turf(oldloc) == get_turf(linked)))
@@ -151,7 +156,7 @@
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
 		return FALSE
-	if(!force && (!ismecha(M) && !istype(M, /obj/item/projectile) && M.anchored && !allow_anchored))
+	if(!force && (!ismecha(M) && !istype(M, /obj/projectile) && M.anchored && !allow_anchored))
 		return
 	if(ismegafauna(M))
 		message_admins("[M] has used a portal at [ADMIN_VERBOSEJMP(src)] made by [usr].")
@@ -160,9 +165,9 @@
 		no_effect = TRUE
 	else
 		last_effect = world.time
-	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect))
-		if(istype(M, /obj/item/projectile))
-			var/obj/item/projectile/P = M
+	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel))
+		if(istype(M, /obj/projectile))
+			var/obj/projectile/P = M
 			P.ignore_source_check = TRUE
 		return TRUE
 	return FALSE
@@ -181,3 +186,58 @@
 	else
 		real_target = get_turf(linked)
 	return real_target
+
+/obj/effect/portal/permanent
+	name = "permanent portal"
+	desc = "An unwavering portal that will never fade."
+	var/id // var edit or set id in map editor
+	hardlinked = FALSE // dont qdel my portal nerd
+
+/obj/effect/portal/permanent/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
+	. = ..()
+	set_linked()
+
+/obj/effect/portal/permanent/proc/get_linked()
+	if(!id)
+		return
+	var/list/possible = list()
+	for(var/obj/effect/portal/permanent/P in GLOB.portals - src)
+		if(P.id && P.id == id) // gets portals with the same id, there should only be two permanent portals with the same id
+			possible += P
+	return possible
+
+/obj/effect/portal/permanent/proc/set_linked()
+	var/list/possible = get_linked()
+	if(!possible || !possible.len)
+		return
+	for(var/obj/effect/portal/permanent/other in possible)
+		other.linked = src
+	linked = pick(possible)
+
+/obj/effect/portal/permanent/teleport(atom/movable/M, force = FALSE)
+	// try to search for a new one if something was var edited etc
+	set_linked()
+	. = ..()
+
+/obj/effect/portal/permanent/one_way // doesn't have a return portal
+	name = "one-way portal"
+	desc = "You get the feeling that this might not be the safest thing you've ever done."
+	var/list/possible_exits = list()
+	var/keep // if this is a portal that should be kept
+
+/obj/effect/portal/permanent/one_way/set_linked()
+	if(!keep) // wait for a keep portal to set
+		return
+	var/list/possible_temp = get_linked()
+	if(possible_temp && possible_temp.len)
+		for(var/obj/effect/portal/permanent/other in possible_temp)
+			possible_exits += get_turf(other)
+			qdel(other)
+	if(possible_exits && possible_exits.len)
+		hard_target = pick(possible_exits)
+
+/obj/effect/portal/permanent/one_way/keep // because its nice to be able to tell which is which on the map
+	keep = TRUE
+
+/obj/effect/portal/permanent/one_way/destroy
+	keep = FALSE

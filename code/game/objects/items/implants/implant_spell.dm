@@ -15,7 +15,7 @@
 				<b>Function:</b> [spell ? "Allows a non-wizard to cast [spell] as if they were a wizard." : "None"]"}
 	return dat
 
-/obj/item/implant/spell/implant(mob/living/target, mob/user, silent = FALSE)
+/obj/item/implant/spell/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
 	if (.)
 		if (!spell)

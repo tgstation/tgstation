@@ -156,9 +156,6 @@
 	return TRUE
 
 
-/obj/machinery/power/generator/power_change()
-	..()
-	update_icon()
 
 /obj/machinery/power/generator/proc/find_circs()
 	kill_circs()
@@ -193,6 +190,7 @@
 				C.generator = src
 
 /obj/machinery/power/generator/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!panel_open)
 		return
 	anchored = !anchored
@@ -204,6 +202,7 @@
 	return TRUE
 
 /obj/machinery/power/generator/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!anchored)
 		return
 	find_circs()
@@ -211,6 +210,8 @@
 	return TRUE
 
 /obj/machinery/power/generator/screwdriver_act(mob/user, obj/item/I)
+	if(..())
+		return TRUE
 	panel_open = !panel_open
 	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] the panel on [src].</span>")

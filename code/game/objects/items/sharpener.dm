@@ -18,7 +18,7 @@
 	if(I.force >= max || I.throwforce >= max)//no esword sharpening
 		to_chat(user, "<span class='warning'>[I] is much too powerful to sharpen further!</span>")
 		return
-	if(requires_sharpness && !I.sharpness)
+	if(requires_sharpness && !I.get_sharpness())
 		to_chat(user, "<span class='warning'>You can only sharpen items that are already sharp, such as knives!</span>")
 		return
 	if(istype(I, /obj/item/melee/transforming/energy))
@@ -40,6 +40,7 @@
 		to_chat(user, "<span class='warning'>[I] has already been refined before. It cannot be sharpened further!</span>")
 		return
 	user.visible_message("<span class='notice'>[user] sharpens [I] with [src]!</span>", "<span class='notice'>You sharpen [I], making it much more deadly than before.</span>")
+	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
 	I.sharpness = IS_SHARP_ACCURATE
 	I.force = CLAMP(I.force + increment, 0, max)
 	I.throwforce = CLAMP(I.throwforce + increment, 0, max)

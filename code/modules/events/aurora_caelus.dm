@@ -2,7 +2,7 @@
 	name = "Aurora Caelus"
 	typepath = /datum/round_event/aurora_caelus
 	max_occurrences = 1
-	weight = 4
+	weight = 1
 	earliest_start = 5 MINUTES
 
 /datum/round_event_control/aurora_caelus/canSpawnEvent(players, gamemode)

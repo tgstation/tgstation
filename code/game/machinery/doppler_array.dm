@@ -6,30 +6,56 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
+	var/cooldown = 10
+	var/next_announce = 0
 	var/integrated = FALSE
 	var/max_dist = 150
 	verb_say = "states coldly"
+	var/list/message_log = list()
 
 /obj/machinery/doppler_array/Initialize()
 	. = ..()
 	GLOB.doppler_arrays += src
 
 /obj/machinery/doppler_array/ComponentInitialize()
+	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE,null,null,CALLBACK(src,.proc/rot_message))
 
 /obj/machinery/doppler_array/Destroy()
 	GLOB.doppler_arrays -= src
 	return ..()
 
-/obj/machinery/doppler_array/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its dish is facing to the [dir2text(dir)].</span>")
 
-/obj/machinery/doppler_array/process()
-	return PROCESS_KILL
+/obj/machinery/doppler_array/ui_interact(mob/user)
+	. = ..()
+	if(stat)
+		return FALSE
+
+	var/list/dat = list()
+	for(var/i in 1 to message_log.len)
+		dat += "Log recording #[i]: [message_log[i]]<br/><br>"
+	dat += "<A href='?src=[REF(src)];delete_log=1'>Delete logs</A><br>"
+	dat += "<hr>"
+	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><br>"
+	dat += "</body></html>"
+	var/datum/browser/popup = new(user, "computer", name, 400, 500)
+	popup.set_content(dat.Join(" "))
+	popup.open()
+	return
+
+/obj/machinery/doppler_array/Topic(href, href_list)
+	if(..())
+		return
+	if(href_list["delete_log"])
+		message_log.Cut()
+	if(href_list["refresh"])
+		updateUsrDialog()
+
+	updateUsrDialog()
+	return
 
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		if(!anchored && !isinspace())
 			anchored = TRUE
 			power_change()
@@ -39,21 +65,24 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 			power_change()
 			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
 		I.play_tool_sound(src)
-	else
-		return ..()
+		return
+	return ..()
 
 /obj/machinery/doppler_array/proc/rot_message(mob/user)
 	to_chat(user, "<span class='notice'>You adjust [src]'s dish to face to the [dir2text(dir)].</span>")
-	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
+	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 
 /obj/machinery/doppler_array/proc/sense_explosion(turf/epicenter,devastation_range,heavy_impact_range,light_impact_range,
 												  took,orig_dev_range,orig_heavy_range,orig_light_range)
 	if(stat & NOPOWER)
 		return FALSE
 	var/turf/zone = get_turf(src)
-
 	if(zone.z != epicenter.z)
 		return FALSE
+
+	if(next_announce > world.time)
+		return
+	next_announce = world.time + cooldown
 
 	var/distance = get_dist(epicenter, zone)
 	var/direct = get_dir(zone, epicenter)
@@ -80,18 +109,21 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	else
 		for(var/message in messages)
 			say(message)
+	LAZYADD(message_log, messages.Join(" "))
 	return TRUE
 
-/obj/machinery/doppler_array/power_change()
+/obj/machinery/doppler_array/powered()
+	if(!anchored)
+		return FALSE
+	return ..()
+
+/obj/machinery/doppler_array/update_icon()
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
+	else if(powered())
+		icon_state = initial(icon_state)
 	else
-		if(powered() && anchored)
-			icon_state = initial(icon_state)
-			stat &= ~NOPOWER
-		else
-			icon_state = "[initial(icon_state)]-off"
-			stat |= NOPOWER
+		icon_state = "[initial(icon_state)]-off"
 
 //Portable version, built into EOD equipment. It simply provides an explosion's three damage levels.
 /obj/machinery/doppler_array/integrated
@@ -111,22 +143,41 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		return FALSE
 	if(!istype(linked_techweb))
 		say("Warning: No linked research system!")
-		return 
-	var/adjusted = orig_light - 10
-	if(adjusted <= 0)
+		return
+
+	var/point_gain = 0
+
+	/*****The Point Calculator*****/
+
+	if(orig_light < 10)
 		say("Explosion not large enough for research calculations.")
 		return
-	var/point_gain = techweb_scale_bomb(adjusted) - techweb_scale_bomb(linked_techweb.max_bomb_value)
-	if(point_gain <= 0)
-		say("Explosion not large enough for research calculations.")
+	else if(orig_light < 4500)
+		point_gain = (83300 * orig_light) / (orig_light + 3000)
+	else
+		point_gain = TECHWEB_BOMB_POINTCAP
+
+	/*****The Point Capper*****/
+	if(point_gain > linked_techweb.largest_bomb_value)
+		if(point_gain <= TECHWEB_BOMB_POINTCAP || linked_techweb.largest_bomb_value < TECHWEB_BOMB_POINTCAP)
+			var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
+			linked_techweb.largest_bomb_value = point_gain
+			point_gain -= old_tech_largest_bomb_value
+			point_gain = min(point_gain,TECHWEB_BOMB_POINTCAP)
+		else
+			linked_techweb.largest_bomb_value = TECHWEB_BOMB_POINTCAP
+			point_gain = 1000
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
+		if(D)
+			D.adjust_money(point_gain)
+			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
+			say("Explosion details and mixture analyzed and sold to the highest bidder for $[point_gain], with a reward of [point_gain] points.")
+
+	else //you've made smaller bombs
+		say("Data already captured. Aborting.")
 		return
-	linked_techweb.max_bomb_value = adjusted
-	linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
-	say("Gained [point_gain] points from explosion dataset.")
+
 
 /obj/machinery/doppler_array/research/science/Initialize()
 	. = ..()
 	linked_techweb = SSresearch.science_tech
-
-/proc/techweb_scale_bomb(lightradius)
-	return (lightradius ** 0.5) * 3000

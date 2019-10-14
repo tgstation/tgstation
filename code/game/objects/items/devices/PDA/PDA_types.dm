@@ -7,7 +7,7 @@
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
 
-/obj/item/pda/clown/Initialize()
+/obj/item/pda/clown/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip))
 
@@ -22,18 +22,19 @@
 	icon = null
 	ttone = "data"
 	fon = FALSE
-	detonatable = FALSE
 
 /obj/item/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
-		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
+		playsound(loc, 'sound/items/bikehorn.ogg', 30, TRUE)
 	return
 
 /obj/item/pda/ai/pai
 	ttone = "assist"
 
-
+/obj/item/pda/ai/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
 /obj/item/pda/medical
 	name = "medical PDA"
@@ -120,7 +121,10 @@
 	default_cartridge = /obj/item/cartridge/captain
 	inserted_item = /obj/item/pen/fountain/captain
 	icon_state = "pda-captain"
-	detonatable = FALSE
+
+/obj/item/pda/captain/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
 /obj/item/pda/cargo
 	name = "cargo technician PDA"

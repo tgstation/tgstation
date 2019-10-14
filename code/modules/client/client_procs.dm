@@ -37,16 +37,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 
 	// asset_cache
+	var/asset_cache_job
 	if(href_list["asset_cache_confirm_arrival"])
-		var/job = text2num(href_list["asset_cache_confirm_arrival"])
+		asset_cache_job = round(text2num(href_list["asset_cache_confirm_arrival"]))
 		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us
 		//	into letting append to a list without limit.
-		if (job && job <= last_asset_job && !(job in completed_asset_jobs))
-			completed_asset_jobs += job
+		if (asset_cache_job > 0 && asset_cache_job <= last_asset_job && !(asset_cache_job in completed_asset_jobs))
+			completed_asset_jobs += asset_cache_job
 			return
-		else if (job in completed_asset_jobs) //byond bug ID:2256651
-			to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
-			src << browse("...", "window=asset_cache_browser")
 
 	var/mtl = CONFIG_GET(number/minute_topic_limit)
 	if (!holder && mtl)
@@ -83,6 +81,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
 		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
+	
+	//byond bug ID:2256651
+	if (asset_cache_job && asset_cache_job in completed_asset_jobs)
+		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
+		src << browse("...", "window=asset_cache_browser")
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -121,8 +124,43 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href=\"https://secure.byond.com/membership\">Click Here to find out more</a>.")
 		return 0
 	return 1
-
+/*
+ * Call back proc that should be checked in all paths where a client can send messages
+ *
+ * Handles checking for duplicate messages and people sending messages too fast
+ *
+ * The first checks are if you're sending too fast, this is defined as sending
+ * SPAM_TRIGGER_AUTOMUTE messages in 
+ * 5 seconds, this will start supressing your messages,
+ * if you send 2* that limit, you also get muted
+ *
+ * The second checks for the same duplicate message too many times and mutes
+ * you for it
+ */
 /client/proc/handle_spam_prevention(message, mute_type)
+
+	//Increment message count
+	total_message_count += 1
+
+	//store the total to act on even after a reset
+	var/cache = total_message_count
+
+	if(total_count_reset <= world.time)
+		total_message_count = 0
+		total_count_reset = world.time + (5 SECONDS)
+
+	//If they're really going crazy, mute them
+	if(cache >= SPAM_TRIGGER_AUTOMUTE * 2)
+		total_message_count = 0
+		total_count_reset = 0
+		cmd_admin_mute(src, mute_type, 1)	
+		return 1
+
+	//Otherwise just supress the message
+	else if(cache >= SPAM_TRIGGER_AUTOMUTE)
+		return 1
+
+
 	if(CONFIG_GET(flag/automute_on) && !holder && last_message == message)
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
@@ -224,10 +262,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 					alert_mob_dupe_login = TRUE
 				if(matches)
 					if(C)
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)].</font>")
+						message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)].</span>")
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)].")
 					else
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </font>")
+						message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </span>")
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
 
 	if(GLOB.player_details[ckey])
@@ -240,6 +278,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 
 	. = ..()	//calls mob.Login()
+	if (length(GLOB.stickybanadminexemptions))
+		GLOB.stickybanadminexemptions -= ckey
+		if (!length(GLOB.stickybanadminexemptions))
+			restore_stickybans()
 
 	if (byond_version >= 512)
 		if (!byond_build || byond_build < 1386)
@@ -273,12 +315,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	connection_timeofday = world.timeofday
 	winset(src, null, "command=\".configure graphics-hwmode on\"")
 	var/cev = CONFIG_GET(number/client_error_version)
+	var/ceb = CONFIG_GET(number/client_error_build)
 	var/cwv = CONFIG_GET(number/client_warn_version)
-	if (byond_version < cev)		//Out of date client.
+	if (byond_version < cev || byond_build < ceb)		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of BYOND is too old:</b></span>")
 		to_chat(src, CONFIG_GET(string/client_error_message))
-		to_chat(src, "Your version: [byond_version]")
-		to_chat(src, "Required version: [cev] or later")
+		to_chat(src, "Your version: [byond_version].[byond_build]")
+		to_chat(src, "Required version: [cev].[ceb] or later")
 		to_chat(src, "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.")
 		if (connecting_admin)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
@@ -381,7 +424,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		for (var/child in entries)
 			winset(src, "[child]", "[entries[child]]")
 			if (!ispath(child, /datum/verbs/menu))
-				var/atom/verb/verbpath = child
+				var/procpath/verbpath = child
 				if (copytext(verbpath.name,1,2) != "@")
 					new child(src)
 
@@ -425,6 +468,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
 	GLOB.clients -= src
+	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
@@ -432,6 +476,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	return ..()
 
 /client/Destroy()
+	. = ..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db(connectiontopic)
@@ -441,7 +486,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return
 	var/sql_ckey = sanitizeSQL(src.ckey)
 	var/datum/DBQuery/query_get_related_ip = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
-	query_get_related_ip.Execute()
+	if(!query_get_related_ip.Execute())
+		qdel(query_get_related_ip)
+		return
 	related_accounts_ip = ""
 	while(query_get_related_ip.NextRow())
 		related_accounts_ip += "[query_get_related_ip.item[1]], "
@@ -472,7 +519,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if (CONFIG_GET(flag/panic_bunker) && !holder && !GLOB.deadmins[ckey])
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
-			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
+			to_chat(src, CONFIG_GET(string/panic_bunker_message))
 			var/list/connectiontopic_a = params2list(connectiontopic)
 			var/list/panic_addr = CONFIG_GET(string/panic_server_address)
 			if(panic_addr && !connectiontopic_a["redirect"])
@@ -664,7 +711,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/sql_system_ckey = sanitizeSQL(system_ckey)
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
-	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND expire_timestamp > NOW()")
+	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)")
 	if(!query_get_notes.Execute())
 		qdel(query_get_notes)
 		return
@@ -673,7 +720,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return
 	qdel(query_get_notes)
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
-	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 AND expire_timestamp > NOW() ORDER BY timestamp DESC LIMIT 1")
+	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL) ORDER BY timestamp DESC LIMIT 1")
 	if(!query_get_notes.Execute())
 		qdel(query_get_notes)
 		return
@@ -696,8 +743,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/Click(atom/object, atom/location, control, params)
 	var/ab = FALSE
 	var/list/L = params2list(params)
+
+	var/dragged = L["drag"]
+	if(dragged && !L[dragged])
+		return
+
 	if (object && object == middragatom && L["left"])
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
+
 	var/mcl = CONFIG_GET(number/minute_click_limit)
 	if (!holder && mcl)
 		var/minute = round(world.time, 600)
@@ -717,7 +770,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 					log_game("[key_name(src)] is using the middle click aimbot exploit")
 					message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
 					add_system_note("aimbot", "Is using the middle click aimbot exploit")
-
 				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
@@ -817,6 +869,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
 
+	if(prefs && !prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
+		new_size = CONFIG_GET(string/default_view_square)
+
 	view = new_size
 	apply_clickcatcher()
 	mob.reload_fullscreen()
@@ -824,7 +879,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		var/mob/living/M = mob
 		M.update_damage_hud()
 	if (prefs.auto_fit_viewport)
-		fit_viewport()
+		addtimer(CALLBACK(src,.verb/fit_viewport,10)) //Delayed to avoid wingets from Login calls.
 
 /client/proc/generate_clickcatcher()
 	if(!void)
@@ -839,3 +894,23 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)
 		to_chat(src, announcement)
+
+/client/proc/show_character_previews(mutable_appearance/MA)
+	var/pos = 0
+	for(var/D in GLOB.cardinals)
+		pos++
+		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")
+		if(!O)
+			O = new
+			LAZYSET(char_render_holders, "[D]", O)
+			screen |= O
+		O.appearance = MA
+		O.dir = D
+		O.screen_loc = "character_preview_map:0,[pos]"
+
+/client/proc/clear_character_previews()
+	for(var/index in char_render_holders)
+		var/obj/screen/S = char_render_holders[index]
+		screen -= S
+		qdel(S)
+	char_render_holders = null

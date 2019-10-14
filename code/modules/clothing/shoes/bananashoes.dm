@@ -10,16 +10,16 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_BANANIUM), 200000, TRUE, /obj/item/stack)
+	AddComponent(/datum/component/material_container, list(/datum/material/bananium), 200000, TRUE, /obj/item/stack)
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
 	if(always_noslip)
 		clothing_flags |= NOSLIP
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	. = ..()
-	GET_COMPONENT(bananium, /datum/component/material_container)
+	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	if(on)
-		if(bananium.amount(MAT_BANANIUM) < 100)
+		if(bananium.get_material_amount(/datum/material/bananium) < 100)
 			on = !on
 			if(!always_noslip)
 				clothing_flags &= ~NOSLIP
@@ -27,23 +27,23 @@
 			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
 		else
 			new /obj/item/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180))) //honk
-			bananium.use_amount_type(100, MAT_BANANIUM)
+			bananium.use_amount_mat(100, /datum/material/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
-	GET_COMPONENT(bananium, /datum/component/material_container)
+	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
 	var/sheet_amount = bananium.retrieve_all()
 	if(sheet_amount)
 		to_chat(user, "<span class='notice'>You retrieve [sheet_amount] sheets of bananium from the prototype shoes.</span>")
 	else
-		to_chat(user, "<span class='notice'>You cannot retrieve any bananium from the prototype shoes.</span>")
+		to_chat(user, "<span class='warning'>You cannot retrieve any bananium from the prototype shoes!</span>")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>")
+	. = ..()
+	. += "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
-	GET_COMPONENT(bananium, /datum/component/material_container)
-	if(bananium.amount(MAT_BANANIUM))
+	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
+	if(bananium.get_material_amount(/datum/material/bananium))
 		on = !on
 		update_icon()
 		to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>")

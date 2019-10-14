@@ -1,7 +1,0 @@
-author: "CitrusGender"
-delete-after: True
-changes: 
-  - admin: "Added note severity to [most] bans and the notes associated with them"
-  - admin: "Banning panel now has a severity option
-UI: Changed the UI of the note panel
-UI: Changed the UI again, added some icons, removed brackets in urls, fading out notes cannot be selected to expand the browser anymore"

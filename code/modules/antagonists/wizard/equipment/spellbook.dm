@@ -5,7 +5,7 @@
 	var/desc = ""
 	var/category = "Offensive"
 	var/cost = 2
-	var/refundable = 1
+	var/refundable = TRUE
 	var/surplus = -1 // -1 for infinite, not used by anything atm
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
 	var/buy_word = "Learn"
@@ -17,25 +17,25 @@
 	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
-	return 1
+	return TRUE
 
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/spellbook/book) // Specific circumstances
 	if(book.uses<cost || limit == 0)
-		return 0
+		return FALSE
 	for(var/spell in user.mind.spell_list)
 		if(is_type_in_typecache(spell, no_coexistance_typecache))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
-/datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return 1 on success
+/datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return TRUE on success
 	if(!S || QDELETED(S))
 		S = new spell_type()
 	//Check if we got the spell already
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
 			if(aspell.spell_level >= aspell.level_max)
-				to_chat(user,  "<span class='warning'>This spell cannot be improved further.</span>")
-				return 0
+				to_chat(user,  "<span class='warning'>This spell cannot be improved further!</span>")
+				return FALSE
 			else
 				aspell.name = initial(aspell.name)
 				aspell.spell_level++
@@ -56,29 +56,29 @@
 						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Instant [aspell.name].</span>")
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
-					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
+					to_chat(user, "<span class='warning'>This spell cannot be strengthened any further!</span>")
 				SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[aspell.spell_level]"))
-				return 1
+				return TRUE
 	//No same spell found - just learn it
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	user.mind.AddSpell(S)
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
-	return 1
+	return TRUE
 
 /datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user,obj/item/spellbook/book)
 	if(!refundable)
-		return 0
+		return FALSE
 	if(!S)
 		S = new spell_type()
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/spellbook/book) //return point value or -1 for failure
-	var/area/wizard_station/A = locate() in GLOB.sortedAreas
+	var/area/wizard_station/A = GLOB.areas_by_type[/area/wizard_station]
 	if(!(user in A.contents))
-		to_chat(user, "<span class='warning'>You can only refund spells at the wizard lair</span>")
+		to_chat(user, "<span class='warning'>You can only refund spells at the wizard lair!</span>")
 		return -1
 	if(!S)
 		S = new spell_type()
@@ -99,7 +99,7 @@
 		dat += " Cooldown:[S.charge_max/10]"
 	dat += " Cost:[cost]<br>"
 	dat += "<i>[S.desc][desc]</i><br>"
-	dat += "[S.clothes_req?"Needs wizard garb":"Can be cast without wizard garb"]<br>"
+	dat += "[S.clothes_req?"Requires wizard garb.":"Can be cast without wizard garb."]<br>"
 	return dat
 
 /datum/spellbook_entry/fireball
@@ -120,7 +120,7 @@
 	category = "Defensive"
 
 /datum/spellbook_entry/disintegrate
-	name = "Disintegrate"
+	name = "Smite"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 
 /datum/spellbook_entry/disabletech
@@ -141,7 +141,7 @@
 
 /datum/spellbook_entry/timestop
 	name = "Time Stop"
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/timestop
 	category = "Defensive"
 
 /datum/spellbook_entry/smoke
@@ -215,9 +215,13 @@
 	spell_type = /obj/effect/proc_holder/spell/aimed/lightningbolt
 	cost = 3
 
-/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return 1 on success
+/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return TRUE on success
 	. = ..()
 	user.flags_1 |= TESLA_IGNORE_1
+
+/datum/spellbook_entry/lightningbolt/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
+	. = ..()
+	user.flags_1 &= ~TESLA_IGNORE_1
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
@@ -247,6 +251,12 @@
 	category = "Assistance"
 	cost = 1
 
+/datum/spellbook_entry/tap
+	name = "Soul Tap"
+	spell_type = /obj/effect/proc_holder/spell/self/tap
+	category = "Assistance"
+	cost = 1
+
 /datum/spellbook_entry/spacetime_dist
 	name = "Spacetime Distortion"
 	spell_type = /obj/effect/proc_holder/spell/spacetime_dist
@@ -262,7 +272,7 @@
 
 /datum/spellbook_entry/item
 	name = "Buy Item"
-	refundable = 0
+	refundable = FALSE
 	buy_word = "Summon"
 	var/item_path= null
 
@@ -270,7 +280,7 @@
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	new item_path(get_turf(user))
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
-	return 1
+	return TRUE
 
 /datum/spellbook_entry/item/GetInfo()
 	var/dat =""
@@ -304,7 +314,7 @@
 
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
-	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
+	desc = "A particular staff that can mold solid walls into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
 	item_path = /obj/item/gun/magic/staff/door
 	cost = 1
 	category = "Mobility"
@@ -316,9 +326,15 @@
 	cost = 1
 	category = "Defensive"
 
+/datum/spellbook_entry/item/lockerstaff
+	name = "Staff of the Locker"
+	desc = "A staff that shoots lockers. It eats anyone it hits on its way, leaving a welded locker with your victims behind."
+	item_path = /obj/item/gun/magic/staff/locker
+	category = "Defensive"
+
 /datum/spellbook_entry/item/scryingorb
 	name = "Scrying Orb"
-	desc = "An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you X-ray vision."
+	desc = "An incandescent orb of crackling energy. Using it will allow you to release your ghost while alive, allowing you to spy upon the station and talk to the deceased. In addition, buying it will permanently grant you X-ray vision."
 	item_path = /obj/item/scrying
 	category = "Defensive"
 
@@ -342,7 +358,7 @@
 
 /datum/spellbook_entry/item/wands
 	name = "Wand Assortment"
-	desc = "A collection of wands that allow for a wide variety of utility. Wands have a limited number of charges, so be conservative in use. Comes in a handy belt."
+	desc = "A collection of wands that allow for a wide variety of utility. Wands have a limited number of charges, so be conservative with their use. Comes in a handy belt."
 	item_path = /obj/item/storage/belt/wands/full
 	category = "Defensive"
 
@@ -431,9 +447,9 @@
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
 	category = "Rituals"
-	refundable = 0
+	refundable = FALSE
 	buy_word = "Cast"
-	var/active = 0
+	var/active = FALSE
 
 /datum/spellbook_entry/summon/CanBuy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	return ..() && !active
@@ -466,25 +482,25 @@
 	new /datum/round_event/wizard/ghost()
 	active = TRUE
 	to_chat(user, "<span class='notice'>You have cast summon ghosts!</span>")
-	playsound(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/effects/ghost2.ogg', 50, TRUE)
 	return TRUE
 
 /datum/spellbook_entry/summon/guns
 	name = "Summon Guns"
-	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. Just be careful not to stand still too long!"
+	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. There is a good chance that they will shoot each other first."
 
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
-		return 0
+		return FALSE
 	return !CONFIG_GET(flag/no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
-	rightandwrong(SUMMON_GUNS, user, 25)
-	active = 1
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
+	rightandwrong(SUMMON_GUNS, user, 10)
+	active = TRUE
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
 	to_chat(user, "<span class='notice'>You have cast summon guns!</span>")
-	return 1
+	return TRUE
 
 /datum/spellbook_entry/summon/magic
 	name = "Summon Magic"
@@ -492,16 +508,16 @@
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
-		return 0
+		return FALSE
 	return !CONFIG_GET(flag/no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
-	rightandwrong(SUMMON_MAGIC, user, 25)
-	active = 1
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
+	rightandwrong(SUMMON_MAGIC, user, 10)
+	active = TRUE
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
 	to_chat(user, "<span class='notice'>You have cast summon magic!</span>")
-	return 1
+	return TRUE
 
 /datum/spellbook_entry/summon/events
 	name = "Summon Events"
@@ -510,22 +526,38 @@
 
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
-		return 0
+		return FALSE
 	return !CONFIG_GET(flag/no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	summonevents()
 	times++
-	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, 1)
+	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
 	to_chat(user, "<span class='notice'>You have cast summon events.</span>")
-	return 1
+	return TRUE
 
 /datum/spellbook_entry/summon/events/GetInfo()
 	. = ..()
 	if(times>0)
 		. += "You cast it [times] times.<br>"
 	return .
+
+/datum/spellbook_entry/summon/curse_of_madness
+	name = "Curse of Madness"
+	desc = "Curses the station, warping the minds of everyone inside, causing lasting traumas. Warning: this spell can affect you if not cast from a safe distance."
+	cost = 4
+
+/datum/spellbook_entry/summon/curse_of_madness/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
+	active = TRUE
+	var/message = stripped_input(user, "Whisper a secret truth to drive your victims to madness.", "Whispers of Madness")
+	if(!message)
+		return FALSE
+	curse_of_madness(user, message)
+	to_chat(user, "<span class='notice'>You have cast the curse of insanity!</span>")
+	playsound(user, 'sound/magic/mandswap.ogg', 50, TRUE)
+	return TRUE
 
 /obj/item/spellbook
 	name = "spell book"
@@ -543,11 +575,11 @@
 	var/list/categories = list()
 
 /obj/item/spellbook/examine(mob/user)
-	..()
+	. = ..()
 	if(owner)
-		to_chat(user, "There is a small signature on the front cover: \"[owner]\".")
+		. += {"There is a small signature on the front cover: "[owner]"."}
 	else
-		to_chat(user, "It appears to have no author.")
+		. += "It appears to have no author."
 
 /obj/item/spellbook/Initialize()
 	. = ..()
@@ -571,17 +603,23 @@
 			to_chat(user, "<span class='warning'>The contract has been used, you can't get your points back now!</span>")
 		else
 			to_chat(user, "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>")
-			uses++
+			uses += 2
 			for(var/datum/spellbook_entry/item/contract/CT in entries)
 				if(!isnull(CT.limit))
 					CT.limit++
 			qdel(O)
 	else if(istype(O, /obj/item/antag_spawner/slaughter_demon))
 		to_chat(user, "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>")
-		uses++
-		for(var/datum/spellbook_entry/item/bloodbottle/BB in entries)
-			if(!isnull(BB.limit))
-				BB.limit++
+		if(istype(O, /obj/item/antag_spawner/slaughter_demon/laughter))
+			uses += 1
+			for(var/datum/spellbook_entry/item/hugbottle/HB in entries)
+				if(!isnull(HB.limit))
+					HB.limit++
+		else
+			uses += 2
+			for(var/datum/spellbook_entry/item/bloodbottle/BB in entries)
+				if(!isnull(BB.limit))
+					BB.limit++
 		qdel(O)
 
 /obj/item/spellbook/proc/GetCategoryHeader(category)
@@ -686,7 +724,7 @@
 	if(H.stat || H.restrained())
 		return
 	if(!ishuman(H))
-		return 1
+		return TRUE
 
 	if(H.mind.special_role == "apprentice")
 		temp = "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."

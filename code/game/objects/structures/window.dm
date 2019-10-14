@@ -8,6 +8,12 @@
 	anchored = TRUE //initially is 0 for tile smoothing
 	flags_1 = ON_BORDER_1
 	max_integrity = 25
+	can_be_unanchored = TRUE
+	resistance_flags = ACID_PROOF
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	CanAtmosPass = ATMOS_PASS_PROC
+	rad_insulation = RAD_VERY_LIGHT_INSULATION
+	rad_flags = RAD_PROTECT_CONTENTS
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
@@ -18,60 +24,40 @@
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
 	var/mutable_appearance/crack_overlay
-	var/list/debris = list()
-	can_be_unanchored = TRUE
-	resistance_flags = ACID_PROOF
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
-	CanAtmosPass = ATMOS_PASS_PROC
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/breaksound = "shatter"
 	var/hitsound = 'sound/effects/Glasshit.ogg'
-	var/rad_insulation = RAD_VERY_LIGHT_INSULATION
-	var/spawn_cleanable_shards = TRUE
+
 
 /obj/structure/window/examine(mob/user)
-	..()
+	. = ..()
 	if(reinf)
 		if(anchored && state == WINDOW_SCREWED_TO_FRAME)
-			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the frame.</span>")
+			. += "<span class='notice'>The window is <b>screwed</b> to the frame.</span>"
 		else if(anchored && state == WINDOW_IN_FRAME)
-			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> but <b>pried</b> into the frame.</span>")
+			. += "<span class='notice'>The window is <i>unscrewed</i> but <b>pried</b> into the frame.</span>"
 		else if(anchored && state == WINDOW_OUT_OF_FRAME)
-			to_chat(user, "<span class='notice'>The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to the floor.</span>")
+			. += "<span class='notice'>The window is out of the frame, but could be <i>pried</i> in. It is <b>screwed</b> to the floor.</span>"
 		else if(!anchored)
-			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
+			. += "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>"
 	else
 		if(anchored)
-			to_chat(user, "<span class='notice'>The window is <b>screwed</b> to the floor.</span>")
+			. += "<span class='notice'>The window is <b>screwed</b> to the floor.</span>"
 		else
-			to_chat(user, "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>")
+			. += "<span class='notice'>The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.</span>"
 
 /obj/structure/window/Initialize(mapload, direct)
 	. = ..()
 	if(direct)
 		setDir(direct)
 	if(reinf && anchored)
-		state = WINDOW_SCREWED_TO_FRAME
+		state = RWINDOW_SECURE
 
 	ini_dir = dir
 	air_update_turf(1)
 
-	// Precreate our own debris
-
-	var/shards = 1
 	if(fulltile)
-		shards++
 		setDir()
-	var/rods = 0
-	if(reinf)
-		rods++
-		if(fulltile)
-			rods++
-
-	for(var/i in 1 to shards)
-		debris += new /obj/item/shard(src)
-	if(rods)
-		debris += new /obj/item/stack/rods(src, rods)
 
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
@@ -79,7 +65,6 @@
 
 /obj/structure/window/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, rad_insulation, TRUE, FALSE)
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -88,7 +73,7 @@
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 	return FALSE
 
-/obj/structure/window/rcd_act(mob/user, var/obj/item/construction/rcd/the_rcd)
+/obj/structure/window/rcd_act(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_DECONSTRUCT)
 			to_chat(user, "<span class='notice'>You deconstruct the window.</span>")
@@ -98,8 +83,6 @@
 
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
-	for(var/obj/item/shard/shard in debris)
-		shard.add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/window/ratvar_act()
 	if(!fulltile)
@@ -149,11 +132,11 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
 	add_fingerprint(user)
-	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
+	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
 
 /obj/structure/window/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(!can_be_reached(user))
-		return 1
+		return
 	. = ..()
 
 /obj/structure/window/attack_hand(mob/user)
@@ -163,9 +146,10 @@
 	if(!can_be_reached(user))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("[user] knocks on [src].")
+	user.visible_message("<span class='notice'>[user] knocks on [src].</span>", \
+		"<span class='notice'>You knock on [src].</span>")
 	add_fingerprint(user)
-	playsound(src, 'sound/effects/Glassknock.ogg', 50, 1)
+	playsound(src, 'sound/effects/Glassknock.ogg', 50, TRUE)
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
@@ -181,7 +165,7 @@
 
 	add_fingerprint(user)
 
-	if(istype(I, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
+	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -195,46 +179,29 @@
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
 
-	if(!(flags_1&NODECONSTRUCT_1))
-		if(istype(I, /obj/item/screwdriver))
-			I.play_tool_sound(src, 75)
-			if(reinf)
-				if(state == WINDOW_SCREWED_TO_FRAME || state == WINDOW_IN_FRAME)
-					to_chat(user, "<span class='notice'>You begin to [state == WINDOW_SCREWED_TO_FRAME ? "unscrew the window from":"screw the window to"] the frame...</span>")
-					if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
-						state = (state == WINDOW_IN_FRAME ? WINDOW_SCREWED_TO_FRAME : WINDOW_IN_FRAME)
-						to_chat(user, "<span class='notice'>You [state == WINDOW_IN_FRAME ? "unfasten the window from":"fasten the window to"] the frame.</span>")
-				else if(state == WINDOW_OUT_OF_FRAME)
-					to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the frame from":"screw the frame to"] the floor...</span>")
-					if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
-						setAnchored(!anchored)
-						to_chat(user, "<span class='notice'>You [anchored ? "fasten the frame to":"unfasten the frame from"] the floor.</span>")
-			else //if we're not reinforced, we don't need to check or update state
-				to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
-				if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
-					setAnchored(!anchored)
-					to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
+	if(!(flags_1&NODECONSTRUCT_1) && !(reinf && state >= RWINDOW_FRAME_BOLTED))
+		if(I.tool_behaviour == TOOL_SCREWDRIVER)
+			to_chat(user, "<span class='notice'>You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor...</span>")
+			if(I.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
+				setAnchored(!anchored)
+				to_chat(user, "<span class='notice'>You [anchored ? "fasten the window to":"unfasten the window from"] the floor.</span>")
 			return
-
-
-		else if (istype(I, /obj/item/crowbar) && reinf && (state == WINDOW_OUT_OF_FRAME || state == WINDOW_IN_FRAME))
-			to_chat(user, "<span class='notice'>You begin to lever the window [state == WINDOW_OUT_OF_FRAME ? "into":"out of"] the frame...</span>")
-			I.play_tool_sound(src, 75)
-			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
-				state = (state == WINDOW_OUT_OF_FRAME ? WINDOW_IN_FRAME : WINDOW_OUT_OF_FRAME)
-				to_chat(user, "<span class='notice'>You pry the window [state == WINDOW_IN_FRAME ? "into":"out of"] the frame.</span>")
-			return
-
-		else if(istype(I, /obj/item/wrench) && !anchored)
-			I.play_tool_sound(src, 75)
-			to_chat(user, "<span class='notice'> You begin to disassemble [src]...</span>")
-			if(I.use_tool(src, user, decon_speed, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+		else if(I.tool_behaviour == TOOL_WRENCH && !anchored)
+			to_chat(user, "<span class='notice'>You begin to disassemble [src]...</span>")
+			if(I.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				G.add_fingerprint(user)
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 				to_chat(user, "<span class='notice'>You successfully disassemble [src].</span>")
 				qdel(src)
 			return
+		else if(I.tool_behaviour == TOOL_CROWBAR && reinf && (state == WINDOW_OUT_OF_FRAME) && anchored)
+			to_chat(user, "<span class='notice'>You begin to lever the window into the frame...</span>")
+			if(I.use_tool(src, user, 100, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				state = RWINDOW_SECURE
+				to_chat(user, "<span class='notice'>You pry the window into the frame.</span>")
+			return
+
 	return ..()
 
 /obj/structure/window/setAnchored(anchorvalue)
@@ -275,29 +242,32 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, hitsound, 75, 1)
+				playsound(src, hitsound, 75, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, TRUE)
 
 
 /obj/structure/window/deconstruct(disassembled = TRUE)
 	if(QDELETED(src))
 		return
 	if(!disassembled)
-		playsound(src, breaksound, 70, 1)
+		playsound(src, breaksound, 70, TRUE)
 		if(!(flags_1 & NODECONSTRUCT_1))
-			if(spawn_cleanable_shards)
-				new /obj/effect/decal/cleanable/glass(get_turf(src))
-			for(var/i in debris)
-				var/obj/item/I = i
-				I.forceMove(drop_location())
-				transfer_fingerprints_to(I)
-				debris -= I
+			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
+				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	qdel(src)
 	update_nearby_icons()
 
+/obj/structure/window/proc/spawnDebris(location)
+	. = list()
+	. += new /obj/item/shard(location)
+	. += new /obj/effect/decal/cleanable/glass(location)
+	if (reinf)
+		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
+	if (fulltile)
+		. += new /obj/item/shard(location)
 
 /obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)
@@ -396,11 +366,80 @@
 	icon_state = "rwindow"
 	reinf = TRUE
 	heat_resistance = 1600
-	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
-	max_integrity = 50
+	armor = list("melee" = 80, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 25, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
+	max_integrity = 75
 	explosion_block = 1
+	damage_deflection = 11
+	state = RWINDOW_SECURE
 	glass_type = /obj/item/stack/sheet/rglass
 	rad_insulation = RAD_HEAVY_INSULATION
+
+//this is shitcode but all of construction is shitcode and needs a refactor, it works for now
+//If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this
+/obj/structure/window/reinforced/attackby(obj/item/I, mob/living/user, params)
+	switch(state)
+		if(RWINDOW_SECURE)
+			if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HARM)
+				user.visible_message("<span class='notice'>[user] holds \the [I] to the security screws on \the [src]...</span>",
+										"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
+				if(I.use_tool(src, user, 150, volume = 100))
+					to_chat(user, "<span class='notice'>The security bolts are glowing white hot and look ready to be removed.</span>")
+					state = RWINDOW_BOLTS_HEATED
+					addtimer(CALLBACK(src, .proc/cool_bolts), 300)
+				return
+		if(RWINDOW_BOLTS_HEATED)
+			if(I.tool_behaviour == TOOL_SCREWDRIVER)
+				user.visible_message("<span class='notice'>[user] digs into the heated security screws and starts removing them...</span>",
+										"<span class='notice'>You dig into the heated screws hard and they start turning...</span>")
+				if(I.use_tool(src, user, 50, volume = 50))
+					state = RWINDOW_BOLTS_OUT
+					to_chat(user, "<span class='notice'>The screws come out, and a gap forms around the edge of the pane.</span>")
+				return
+		if(RWINDOW_BOLTS_OUT)
+			if(I.tool_behaviour == TOOL_CROWBAR)
+				user.visible_message("<span class='notice'>[user] wedges \the [I] into the gap in the frame and starts prying...</span>",
+										"<span class='notice'>You wedge \the [I] into the gap in the frame and start prying...</span>")
+				if(I.use_tool(src, user, 40, volume = 50))
+					state = RWINDOW_POPPED
+					to_chat(user, "<span class='notice'>The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut.</span>")
+				return
+		if(RWINDOW_POPPED)
+			if(I.tool_behaviour == TOOL_WIRECUTTER)
+				user.visible_message("<span class='notice'>[user] starts cutting the exposed bars on \the [src]...</span>",
+										"<span class='notice'>You start cutting the exposed bars on \the [src]</span>")
+				if(I.use_tool(src, user, 20, volume = 50))
+					state = RWINDOW_BARS_CUT
+					to_chat(user, "<span class='notice'>The panels falls out of the way exposing the frame bolts.</span>")
+				return
+		if(RWINDOW_BARS_CUT)
+			if(I.tool_behaviour == TOOL_WRENCH)
+				user.visible_message("<span class='notice'>[user] starts unfastening \the [src] from the frame...</span>",
+					"<span class='notice'>You start unfastening the bolts from the frame...</span>")
+				if(I.use_tool(src, user, 40, volume = 50))
+					to_chat(user, "<span class='notice'>You unscrew the bolts from the frame and the window pops loose.</span>")
+					state = WINDOW_OUT_OF_FRAME
+					setAnchored(FALSE)
+				return
+	return ..()
+
+/obj/structure/window/proc/cool_bolts()
+	if(state == RWINDOW_BOLTS_HEATED)
+		state = RWINDOW_SECURE
+		visible_message("<span class='notice'>The bolts on \the [src] look like they've cooled off...</span>")
+
+/obj/structure/window/reinforced/examine(mob/user)
+	. = ..()
+	switch(state)
+		if(RWINDOW_SECURE)
+			. += "<span class='notice'>It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out.</span>"
+		if(RWINDOW_BOLTS_HEATED)
+			. += "<span class='notice'>The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now.</span>"
+		if(RWINDOW_BOLTS_OUT)
+			. += "<span class='notice'>The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in.</span>"
+		if(RWINDOW_POPPED)
+			. += "<span class='notice'>The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>.</span>"
+		if(RWINDOW_BARS_CUT)
+			. += "<span class='notice'>The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in.</span>"
 
 /obj/structure/window/reinforced/spawner/east
 	dir = EAST
@@ -413,6 +452,7 @@
 
 /obj/structure/window/reinforced/unanchored
 	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/plasma
 	name = "plasma window"
@@ -420,12 +460,20 @@
 	icon_state = "plasmawindow"
 	reinf = FALSE
 	heat_resistance = 25000
-	armor = list("melee" = 75, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
-	max_integrity = 150
+	armor = list("melee" = 80, "bullet" = 5, "laser" = 0, "energy" = 0, "bomb" = 45, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
+	max_integrity = 200
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	rad_insulation = RAD_NO_INSULATION
-	spawn_cleanable_shards = FALSE
+
+/obj/structure/window/plasma/spawnDebris(location)
+	. = list()
+	. += new /obj/item/shard/plasma(location)
+	. += new /obj/effect/decal/cleanable/glass/plasma(location)
+	if (reinf)
+		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
+	if (fulltile)
+		. += new /obj/item/shard/plasma(location)
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST
@@ -445,10 +493,73 @@
 	icon_state = "plasmarwindow"
 	reinf = TRUE
 	heat_resistance = 50000
-	armor = list("melee" = 85, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
+	armor = list("melee" = 80, "bullet" = 20, "laser" = 0, "energy" = 0, "bomb" = 60, "bio" = 100, "rad" = 100, "fire" = 99, "acid" = 100)
 	max_integrity = 500
+	damage_deflection = 21
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/plasmarglass
+
+//entirely copypasted code
+//take this out when construction is made a component or otherwise modularized in some way
+/obj/structure/window/plasma/reinforced/attackby(obj/item/I, mob/living/user, params)
+	switch(state)
+		if(RWINDOW_SECURE)
+			if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HARM)
+				user.visible_message("<span class='notice'>[user] holds \the [I] to the security screws on \the [src]...</span>",
+										"<span class='notice'>You begin heating the security screws on \the [src]...</span>")
+				if(I.use_tool(src, user, 180, volume = 100))
+					to_chat(user, "<span class='notice'>The security screws are glowing white hot and look ready to be removed.</span>")
+					state = RWINDOW_BOLTS_HEATED
+					addtimer(CALLBACK(src, .proc/cool_bolts), 300)
+				return
+		if(RWINDOW_BOLTS_HEATED)
+			if(I.tool_behaviour == TOOL_SCREWDRIVER)
+				user.visible_message("<span class='notice'>[user] digs into the heated security screws and starts removing them...</span>",
+										"<span class='notice'>You dig into the heated screws hard and they start turning...</span>")
+				if(I.use_tool(src, user, 80, volume = 50))
+					state = RWINDOW_BOLTS_OUT
+					to_chat(user, "<span class='notice'>The screws come out, and a gap forms around the edge of the pane.</span>")
+				return
+		if(RWINDOW_BOLTS_OUT)
+			if(I.tool_behaviour == TOOL_CROWBAR)
+				user.visible_message("<span class='notice'>[user] wedges \the [I] into the gap in the frame and starts prying...</span>",
+										"<span class='notice'>You wedge \the [I] into the gap in the frame and start prying...</span>")
+				if(I.use_tool(src, user, 50, volume = 50))
+					state = RWINDOW_POPPED
+					to_chat(user, "<span class='notice'>The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut.</span>")
+				return
+		if(RWINDOW_POPPED)
+			if(I.tool_behaviour == TOOL_WIRECUTTER)
+				user.visible_message("<span class='notice'>[user] starts cutting the exposed bars on \the [src]...</span>",
+										"<span class='notice'>You start cutting the exposed bars on \the [src]</span>")
+				if(I.use_tool(src, user, 30, volume = 50))
+					state = RWINDOW_BARS_CUT
+					to_chat(user, "<span class='notice'>The panels falls out of the way exposing the frame bolts.</span>")
+				return
+		if(RWINDOW_BARS_CUT)
+			if(I.tool_behaviour == TOOL_WRENCH)
+				user.visible_message("<span class='notice'>[user] starts unfastening \the [src] from the frame...</span>",
+					"<span class='notice'>You start unfastening the bolts from the frame...</span>")
+				if(I.use_tool(src, user, 50, volume = 50))
+					to_chat(user, "<span class='notice'>You unfasten the bolts from the frame and the window pops loose.</span>")
+					state = WINDOW_OUT_OF_FRAME
+					setAnchored(FALSE)
+				return
+	return ..()
+
+/obj/structure/window/plasma/reinforced/examine(mob/user)
+	. = ..()
+	switch(state)
+		if(RWINDOW_SECURE)
+			. += "<span class='notice'>It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out.</span>"
+		if(RWINDOW_BOLTS_HEATED)
+			. += "<span class='notice'>The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now.</span>"
+		if(RWINDOW_BOLTS_OUT)
+			. += "<span class='notice'>The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in.</span>"
+		if(RWINDOW_POPPED)
+			. += "<span class='notice'>The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>.</span>"
+		if(RWINDOW_BARS_CUT)
+			. += "<span class='notice'>The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in.</span>"
 
 /obj/structure/window/plasma/reinforced/spawner/east
 	dir = EAST
@@ -461,6 +572,7 @@
 
 /obj/structure/window/plasma/reinforced/unanchored
 	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -504,6 +616,7 @@
 	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
 	icon_state = "rplasmawindow"
 	dir = FULLTILE_WINDOW_DIR
+	state = RWINDOW_SECURE
 	max_integrity = 1000
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
@@ -512,22 +625,24 @@
 
 /obj/structure/window/plasma/reinforced/fulltile/unanchored
 	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 100
+	max_integrity = 150
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smooth = SMOOTH_TRUE
-
+	state = RWINDOW_SECURE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	level = 3
 	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/unanchored
 	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/tinted/fulltile
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
@@ -554,13 +669,13 @@
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "shuttle_window"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 100
+	max_integrity = 150
 	wtype = "shuttle"
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	reinf = TRUE
 	heat_resistance = 1600
-	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
+	armor = list("melee" = 90, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 3
@@ -577,28 +692,30 @@
 /obj/structure/window/shuttle/unanchored
 	anchored = FALSE
 
-/obj/structure/window/plastitanium
+/obj/structure/window/plasma/reinforced/plastitanium
 	name = "plastitanium window"
-	desc = "An evil looking window of plasma and titanium."
+	desc = "A durable looking window made of an alloy of of plasma and titanium."
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 	icon_state = "plastitanium_window"
 	dir = FULLTILE_WINDOW_DIR
-	max_integrity = 100
+	max_integrity = 200
 	wtype = "shuttle"
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
-	reinf = TRUE
 	heat_resistance = 1600
-	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
+	armor = list("melee" = 95, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 100)
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 3
+	damage_deflection = 11 //The same as normal reinforced windows.
 	level = 3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
+	rad_insulation = RAD_HEAVY_INSULATION
 
-/obj/structure/window/plastitanium/unanchored
+/obj/structure/window/plasma/reinforced/plastitanium/unanchored
 	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/clockwork
 	name = "brass window"
@@ -616,17 +733,14 @@
 	var/made_glow = FALSE
 
 /obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
-	if(fulltile)
-		made_glow = TRUE
 	. = ..()
-	QDEL_LIST(debris)
-	var/amount_of_gears = 2
-	if(fulltile)
-		new /obj/effect/temp_visual/ratvar/window(get_turf(src))
-		amount_of_gears = 4
-	for(var/i in 1 to amount_of_gears)
-		debris += new /obj/item/clockwork/alloy_shards/medium/gear_bit()
 	change_construction_value(fulltile ? 2 : 1)
+
+/obj/structure/window/reinforced/clockwork/spawnDebris(location)
+	. = list()
+	var/gearcount = fulltile ? 4 : 2
+	for(var/i in 1 to gearcount)
+		. += new /obj/item/clockwork/alloy_shards/medium/gear_bit(location)
 
 /obj/structure/window/reinforced/clockwork/setDir(direct)
 	if(!made_glow)
@@ -646,7 +760,7 @@
 
 /obj/structure/window/reinforced/clockwork/narsie_act()
 	take_damage(rand(25, 75), BRUTE)
-	if(src)
+	if(!QDELETED(src))
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
@@ -665,6 +779,17 @@
 	max_integrity = 120
 	level = 3
 	glass_amount = 2
+
+/obj/structure/window/reinforced/clockwork/spawnDebris(location)
+	. = list()
+	for(var/i in 1 to 4)
+		. += new /obj/item/clockwork/alloy_shards/medium/gear_bit(location)
+
+/obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
+	made_glow = TRUE
+	new /obj/effect/temp_visual/ratvar/window(get_turf(src))
+	return ..()
+
 
 /obj/structure/window/reinforced/clockwork/fulltile/unanchored
 	anchored = FALSE
@@ -687,7 +812,6 @@
 	decon_speed = 10
 	CanAtmosPass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
-	spawn_cleanable_shards = FALSE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	breaksound = 'sound/items/poster_ripped.ogg'
 	hitsound = 'sound/weapons/slashmiss.ogg'
@@ -696,12 +820,17 @@
 
 /obj/structure/window/paperframe/Initialize()
 	. = ..()
-	QDEL_LIST(debris)
-	var/papers = rand(1,4)
-	debris += new /obj/item/stack/sheet/mineral/wood()
-	for(var/i in 1 to papers)
-		debris += new /obj/item/paper/natural()
 	update_icon()
+
+/obj/structure/window/paperframe/examine(mob/user)
+	. = ..()
+	if(obj_integrity < max_integrity)
+		. += "<span class='info'>It looks a bit damaged, you may be able to fix it with some <b>paper</b>.</span>"
+
+/obj/structure/window/paperframe/spawnDebris(location)
+	. = list(new /obj/item/stack/sheet/mineral/wood(location))
+	for (var/i in 1 to rand(1,4))
+		. += new /obj/item/paper/natural(location)
 
 /obj/structure/window/paperframe/attack_hand(mob/user)
 	. = ..()
@@ -710,11 +839,11 @@
 	add_fingerprint(user)
 	if(user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
-		user.visible_message("[user] knocks on [src].")
-		playsound(src, "pageturn", 50, 1)
+		user.visible_message("<span class='notice'>[user] knocks on [src].</span>")
+		playsound(src, "pageturn", 50, TRUE)
 	else
 		take_damage(4,BRUTE,"melee", 0)
-		playsound(src, hitsound, 50, 1)
+		playsound(src, hitsound, 50, TRUE)
 		if(!QDELETED(src))
 			user.visible_message("<span class='danger'>[user] tears a hole in [src].</span>")
 			update_icon()
@@ -732,17 +861,17 @@
 
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/user)
-	if(W.is_hot())
-		fire_act(W.is_hot())
+	if(W.get_temperature())
+		fire_act(W.get_temperature())
 		return
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 	if(istype(W, /obj/item/paper) && obj_integrity < max_integrity)
-		user.visible_message("[user] starts to patch the holes in \the [src].")
+		user.visible_message("<span class='notice'>[user] starts to patch the holes in \the [src].</span>")
 		if(do_after(user, 20, target = src))
 			obj_integrity = min(obj_integrity+4,max_integrity)
 			qdel(W)
-			user.visible_message("[user] patches some of the holes in \the [src].")
+			user.visible_message("<span class='notice'>[user] patches some of the holes in \the [src].</span>")
 			if(obj_integrity == max_integrity)
 				update_icon()
 			return

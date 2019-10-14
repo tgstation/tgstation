@@ -23,6 +23,16 @@
 	result = /obj/item/reagent_containers/food/snacks/donut
 	subcategory = CAT_PASTRY
 
+datum/crafting_recipe/food/donut/meat
+	time = 15
+	name = "Meat donut"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/slab = 1,
+		/obj/item/reagent_containers/food/snacks/pastrybase = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/donut/meat
+	subcategory = CAT_PASTRY
+
 /datum/crafting_recipe/food/jellydonut
 	name = "Jelly donut"
 	reqs = list(
@@ -84,7 +94,7 @@
 /datum/crafting_recipe/food/rofflewaffles
 	name = "Roffle waffles"
 	reqs = list(
-		/datum/reagent/mushroomhallucinogen = 5,
+		/datum/reagent/drug/mushroomhallucinogen = 5,
 		/obj/item/reagent_containers/food/snacks/pastrybase = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/rofflewaffles

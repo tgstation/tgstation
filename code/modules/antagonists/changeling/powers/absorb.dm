@@ -1,11 +1,12 @@
-/obj/effect/proc_holder/changeling/absorbDNA
+/datum/action/changeling/absorbDNA
 	name = "Absorb DNA"
-	desc = "Absorb the DNA of our victim."
+	desc = "Absorb the DNA of our victim. Requires us to strangle them."
+	button_icon_state = "absorb_dna"
 	chemical_cost = 0
 	dna_cost = 0
 	req_human = 1
 
-/obj/effect/proc_holder/changeling/absorbDNA/can_sting(mob/living/carbon/user)
+/datum/action/changeling/absorbDNA/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 
@@ -26,7 +27,7 @@
 
 
 
-/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
+/datum/action/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/mob/living/carbon/human/target = user.pulling
 	changeling.isabsorbing = 1
@@ -56,19 +57,48 @@
 		changeling.trueabsorbs++
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
-		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
+		user.set_nutrition(min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED))
 
-	if(target.mind)//if the victim has got a mind
+	if(target.mind && user.mind)//if the victim and user have minds
 		// Absorb a lizard, speak Draconic.
 		user.copy_known_languages_from(target)
 
-		target.mind.show_memory(user, 0) //I can read your mind, kekeke. Output all their notes.
+		var/datum/mind/suckedbrain = target.mind
+		user.mind.memory += "<BR><b>We've absorbed [target]'s memories into our own...</b><BR>[suckedbrain.memory]<BR>"
+		for(var/A in suckedbrain.antag_datums)
+			var/datum/antagonist/antag_types = A
+			var/list/all_objectives = antag_types.objectives.Copy()
+			if(antag_types.antag_memory)
+				user.mind.memory += "[antag_types.antag_memory]<BR>"
+			if(LAZYLEN(all_objectives))
+				user.mind.memory += "<B>Objectives:</B>"
+				var/obj_count = 1
+				for(var/O in all_objectives)
+					var/datum/objective/objective = O
+					user.mind.memory += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
+					var/list/datum/mind/other_owners = objective.get_owners() - suckedbrain
+					if(other_owners.len)
+						user.mind.memory += "<ul>"
+						for(var/mind in other_owners)
+							var/datum/mind/M = mind
+							user.mind.memory += "<li>Conspirator: [M.name]</li>"
+						user.mind.memory += "</ul>"
+		user.mind.memory += "<b>That's all [target] had.</b><BR>"
+		user.memory() //I can read your mind, kekeke. Output all their notes.
 
 		//Some of target's recent speech, so the changeling can attempt to imitate them better.
 		//Recent as opposed to all because rounds tend to have a LOT of text.
-		var/list/recent_speech = list()
 
-		var/list/say_log = target.logging[LOG_SAY]
+		var/list/recent_speech = list()
+		var/list/say_log = list()
+		var/log_source = target.logging
+		for(var/log_type in log_source)
+			var/nlog_type = text2num(log_type)
+			if(nlog_type & LOG_SAY)
+				var/list/reversed = log_source[log_type]
+				if(islist(reversed))
+					say_log = reverseRange(reversed.Copy())
+					break
 
 		if(LAZYLEN(say_log) > LING_ABSORB_RECENT_SPEECH)
 			recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
@@ -102,6 +132,7 @@
 			changeling.absorbedcount += (target_ling.absorbedcount)
 			target_ling.stored_profiles.len = 1
 			target_ling.absorbedcount = 0
+			target_ling.was_absorbed = TRUE
 
 
 	changeling.chem_charges=min(changeling.chem_charges+10, changeling.chem_storage)

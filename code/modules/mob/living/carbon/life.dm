@@ -8,31 +8,36 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
+	if(!IS_IN_STASIS(src))
+
+		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_organs()
 
-	. = ..()
+		. = ..()
 
-	if (QDELETED(src))
-		return
+		if (QDELETED(src))
+			return
 
-	if(.) //not dead
-		handle_blood()
+		if(.) //not dead
+			handle_blood()
 
-	if(stat != DEAD)
-		var/bprv = handle_bodyparts()
-		if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
-			updatehealth()
-			update_stamina()
+		if(stat != DEAD)
+			var/bprv = handle_bodyparts()
+			if(bprv & BODYPART_LIFE_UPDATE_HEALTH)
+				update_stamina() //needs to go before updatehealth to remove stamcrit
+				updatehealth()
 
-	if(stat != DEAD)
-		handle_brain_damage()
+		if(stat != DEAD)
+			handle_brain_damage()
 
-	if(stat != DEAD)
-		handle_liver()
+	else
+		. = ..()
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
+		LoadComponent(/datum/component/rot/corpse)
+
+	check_cremation()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -46,8 +51,22 @@
 
 //Start of a breath chain, calls breathe()
 /mob/living/carbon/handle_breathing(times_fired)
-	if((times_fired % 4) == 2 || failed_last_breath)
-		breathe() //Breathe per 4 ticks, unless suffocating
+	var/next_breath = 4
+	var/obj/item/organ/lungs/L = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/heart/H = getorganslot(ORGAN_SLOT_HEART)
+	if(L)
+		if(L.damage > L.high_threshold)
+			next_breath--
+	if(H)
+		if(H.damage > H.high_threshold)
+			next_breath--
+
+	if((times_fired % next_breath) == 0 || failed_last_breath)
+		breathe() //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
+		if(failed_last_breath)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
+		else
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 	else
 		if(istype(loc, /obj/))
 			var/obj/location_as_object = loc
@@ -55,7 +74,8 @@
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe()
-	if(reagents.has_reagent("lexorin"))
+	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
@@ -67,7 +87,7 @@
 	var/datum/gas_mixture/breath
 
 	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL))
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL) || HAS_TRAIT(src, TRAIT_MAGIC_CHOKE) || (lungs && lungs.organ_flags & ORGAN_FAILING))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
 
 		else if(health <= crit_threshold)
@@ -109,23 +129,25 @@
 		air_update_turf()
 
 /mob/living/carbon/proc/has_smoke_protection()
-	if(has_trait(TRAIT_NOBREATH))
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return TRUE
 	return FALSE
 
 
 //Third link in a breath chain, calls handle_breath_temperature()
 /mob/living/carbon/proc/check_breath(datum/gas_mixture/breath)
-	if((status_flags & GODMODE))
+	if(status_flags & GODMODE)
+		return
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return
 
-	var/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		adjustOxyLoss(2)
 
 	//CRIT
 	if(!breath || (breath.total_moles() == 0) || !lungs)
-		if(reagents.has_reagent("epinephrine") && lungs)
+		if(reagents.has_reagent(/datum/reagent/medicine/epinephrine, needs_metabolizing = TRUE) && lungs)
 			return
 		adjustOxyLoss(1)
 
@@ -161,7 +183,6 @@
 			adjustOxyLoss(3)
 			failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
 
 	else //Enough oxygen
 		failed_last_breath = 0
@@ -169,7 +190,6 @@
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
 		clear_alert("not_enough_oxy")
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
 	breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
@@ -207,6 +227,9 @@
 		else if(SA_partialpressure > 0.01)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+	else
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 
 	//BZ (Facepunch port of their Agent B)
 	if(breath_gases[/datum/gas/bz])
@@ -215,14 +238,58 @@
 			hallucination += 10
 		else if(bz_partialpressure > 0.01)
 			hallucination += 5
+
 	//TRITIUM
 	if(breath_gases[/datum/gas/tritium])
 		var/tritium_partialpressure = (breath_gases[/datum/gas/tritium][MOLES]/breath.total_moles())*breath_pressure
 		radiation += tritium_partialpressure/10
+
 	//NITRYL
-	if (breath_gases[/datum/gas/nitryl])
+	if(breath_gases[/datum/gas/nitryl])
 		var/nitryl_partialpressure = (breath_gases[/datum/gas/nitryl][MOLES]/breath.total_moles())*breath_pressure
 		adjustFireLoss(nitryl_partialpressure/4)
+
+	//MIASMA
+	if(breath_gases[/datum/gas/miasma])
+		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
+
+		if(prob(1 * miasma_partialpressure))
+			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
+			miasma_disease.name = "Unknown"
+			ForceContractDisease(miasma_disease, TRUE, TRUE)
+
+		//Miasma side effects
+		switch(miasma_partialpressure)
+			if(0.25 to 5)
+				// At lower pp, give out a little warning
+				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+				if(prob(5))
+					to_chat(src, "<span class='notice'>There is an unpleasant smell in the air.</span>")
+			if(5 to 20)
+				//At somewhat higher pp, warning becomes more obvious
+				if(prob(15))
+					to_chat(src, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
+			if(15 to 30)
+				//Small chance to vomit. By now, people have internals on anyway
+				if(prob(5))
+					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+					vomit()
+			if(30 to INFINITY)
+				//Higher chance to vomit. Let the horror start
+				if(prob(25))
+					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
+					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+					vomit()
+			else
+				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+
+
+	//Clear all moods if no miasma at all
+	else
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+
 
 
 
@@ -255,15 +322,25 @@
 	return
 
 /mob/living/carbon/proc/handle_bodyparts()
+	var/stam_regen = FALSE
+	if(stam_regen_start_time <= world.time)
+		stam_regen = TRUE
+		if(stam_paralyzed)
+			. |= BODYPART_LIFE_UPDATE_HEALTH //make sure we remove the stamcrit
 	for(var/I in bodyparts)
 		var/obj/item/bodypart/BP = I
 		if(BP.needs_processing)
-			. |= BP.on_life()
+			. |= BP.on_life(stam_regen)
 
 /mob/living/carbon/proc/handle_organs()
-	for(var/V in internal_organs)
-		var/obj/item/organ/O = V
-		O.on_life()
+	if(stat != DEAD)
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
+			O.on_life()
+	else
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
+			O.on_death() //Needed so organs decay while inside the body.
 
 /mob/living/carbon/handle_diseases()
 	for(var/thing in diseases)
@@ -288,7 +365,6 @@
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)
-		var/datum/mutation/human/HM
 		for(var/mut in dna.temporary_mutations)
 			if(dna.temporary_mutations[mut] < world.time)
 				if(mut == UI_CHANGED)
@@ -311,30 +387,13 @@
 						dna.previous.Remove("blood_type")
 					dna.temporary_mutations.Remove(mut)
 					continue
-				HM = GLOB.mutations_list[mut]
-				HM.force_lose(src)
-				dna.temporary_mutations.Remove(mut)
+		for(var/datum/mutation/human/HM in dna.mutations)
+			if(HM && HM.timed)
+				dna.remove_mutation(HM.type)
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
 	if(radiation > RAD_MOB_SAFE)
 		adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
-
-/mob/living/carbon/handle_stomach()
-	set waitfor = 0
-	for(var/mob/living/M in stomach_contents)
-		if(M.loc != src)
-			stomach_contents.Remove(M)
-			continue
-		if(iscarbon(M) && stat != DEAD)
-			if(M.stat == DEAD)
-				M.death(1)
-				stomach_contents.Remove(M)
-				qdel(M)
-				continue
-			if(SSmobs.times_fired%3==1)
-				if(!(M.status_flags & GODMODE))
-					M.adjustBruteLoss(5)
-				nutrition += 10
 
 
 /*
@@ -364,7 +423,10 @@ GLOBAL_LIST_INIT(ballmer_good_msg, list("Hey guys, what if we rolled out a blues
 GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put a webserver that's automatically turned on with default admin passwords into every PDA?",
 												"So like, you know how we separate our codebase from the master copy that runs on our consumer boxes? What if we merged the two and undid the separation between codebase and server?",
 												"Dude, radical idea: H.O.N.K mechs but with no bananium required.",
-												"Best idea ever: Disposal pipes instead of hallways."))
+												"Best idea ever: Disposal pipes instead of hallways.",
+												"We should store bank records in a webscale datastore, like /dev/null.",
+												"You ever wonder if /dev/null supports sharding?",
+												"What if we use a language that was written on a napkin and created over 1 weekend for all of our servers?"))
 
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
@@ -417,6 +479,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "jittery", /datum/mood_event/jittery)
+	else
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
 
 	if(stuttering)
 		stuttering = max(stuttering-1, 0)
@@ -437,15 +502,14 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		handle_hallucinations()
 
 	if(drunkenness)
-		drunkenness = max(drunkenness - (drunkenness * 0.04), 0)
+		drunkenness = max(drunkenness - (drunkenness * 0.04) - 0.01, 0)
 		if(drunkenness >= 6)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 			if(prob(25))
 				slurring += 2
 			jitteriness = max(jitteriness - 3, 0)
-			if(has_trait(TRAIT_DRUNK_HEALING))
-				adjustBruteLoss(-0.12, FALSE)
-				adjustFireLoss(-0.06, FALSE)
+		else
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
 
 		if(drunkenness >= 11 && slurring < 5)
 			slurring += 1.2
@@ -460,44 +524,39 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					else
 						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
 					if(prob(5))
-						say(pick(GLOB.ballmer_good_msg))
+						say(pick(GLOB.ballmer_good_msg), forced = "ballmer")
 					SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS * ballmer_percent))
 				if(drunkenness > 26) // by this point you're into windows ME territory
 					if(prob(5))
 						SSresearch.science_tech.remove_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS))
-						say(pick(GLOB.ballmer_windows_me_msg))
+						say(pick(GLOB.ballmer_windows_me_msg), forced = "ballmer")
 
 		if(drunkenness >= 41)
 			if(prob(25))
 				confused += 2
 			Dizzy(10)
-			if(has_trait(TRAIT_DRUNK_HEALING)) // effects stack with lower tiers
-				adjustBruteLoss(-0.3, FALSE)
-				adjustFireLoss(-0.15, FALSE)
 
 		if(drunkenness >= 51)
-			if(prob(5))
-				confused += 10
-				vomit()
+			if(prob(3))
+				confused += 15
+				vomit() // vomiting clears toxloss, consider this a blessing
 			Dizzy(25)
 
 		if(drunkenness >= 61)
 			if(prob(50))
 				blur_eyes(5)
-			if(has_trait(TRAIT_DRUNK_HEALING))
-				adjustBruteLoss(-0.4, FALSE)
-				adjustFireLoss(-0.2, FALSE)
 
 		if(drunkenness >= 71)
 			blur_eyes(5)
 
 		if(drunkenness >= 81)
-			adjustToxLoss(0.2)
+			adjustToxLoss(1)
 			if(prob(5) && !stat)
 				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 
 		if(drunkenness >= 91)
-			adjustBrainLoss(0.4, 60)
+			adjustToxLoss(1)
+			adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.4)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && is_station_level(z)) //QoL mainly
 					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
@@ -506,7 +565,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					Sleeping(900)
 
 		if(drunkenness >= 101)
-			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
+			adjustToxLoss(2) //Let's be honest you shouldn't be alive by now
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
@@ -520,44 +579,90 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+
 /////////
 //LIVER//
 /////////
 
+///Decides if the liver is failing or not.
 /mob/living/carbon/proc/handle_liver()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if((!dna && !liver) || (NOLIVER in dna.species.species_traits))
+	if(!dna)
 		return
+	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
-		if(liver.damage >= liver.maxHealth)
-			liver.failing = TRUE
-			liver_failure()
-	else
-		liver_failure()
+		if(liver.damage < liver.maxHealth)
+			return
+		liver.organ_flags |= ORGAN_FAILING
+	liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver && liver.failing)
+	if(liver && (liver.organ_flags & ORGAN_FAILING))
 		return TRUE
 
-/mob/living/carbon/proc/return_liver_damage()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		return liver.damage
-
-/mob/living/carbon/proc/applyLiverDamage(var/d)
-	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
-	if(L)
-		L.damage += d
-
 /mob/living/carbon/proc/liver_failure()
+	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
 	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
-	if(has_trait(TRAIT_STABLEHEART))
+	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
 		return
-	adjustToxLoss(8, TRUE,  TRUE)
+	adjustToxLoss(4, TRUE,  TRUE)
 	if(prob(30))
-		to_chat(src, "<span class='notice'>You feel confused and nauseated...</span>")//actual symptoms of liver failure
+		to_chat(src, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 
+/////////////
+//CREMATION//
+/////////////
+/mob/living/carbon/proc/check_cremation()
+	//Only cremate while actively on fire
+	if(!on_fire)
+		return
+
+	//Only starts when the chest has taken full damage
+	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
+	if(!(chest.get_damage() >= chest.max_damage))
+		return
+
+	//Burn off limbs one by one
+	var/obj/item/bodypart/limb
+	var/list/limb_list = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	var/still_has_limbs = FALSE
+	for(var/zone in limb_list)
+		limb = get_bodypart(zone)
+		if(limb)
+			still_has_limbs = TRUE
+			if(limb.get_damage() >= limb.max_damage)
+				limb.cremation_progress += rand(2,5)
+				if(limb.cremation_progress >= 100)
+					if(limb.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+						limb.drop_limb()
+						limb.visible_message("<span class='warning'>[src]'s [limb.name] crumbles into ash!</span>")
+						qdel(limb)
+					else
+						limb.drop_limb()
+						limb.visible_message("<span class='warning'>[src]'s [limb.name] detaches from [p_their()] body!</span>")
+	if(still_has_limbs)
+		return
+
+	//Burn the head last
+	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
+	if(head)
+		if(head.get_damage() >= head.max_damage)
+			head.cremation_progress += rand(2,5)
+			if(head.cremation_progress >= 100)
+				if(head.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+					head.drop_limb()
+					head.visible_message("<span class='warning'>[src]'s head crumbles into ash!</span>")
+					qdel(head)
+				else
+					head.drop_limb()
+					head.visible_message("<span class='warning'>[src]'s head detaches from [p_their()] body!</span>")
+		return
+
+	//Nothing left: dust the body, drop the items (if they're flammable they'll burn on their own)
+	chest.cremation_progress += rand(2,5)
+	if(chest.cremation_progress >= 100)
+		visible_message("<span class='warning'>[src]'s body crumbles into a pile of ash!</span>")
+		dust(TRUE, TRUE)
 
 ////////////////
 //BRAIN DAMAGE//
@@ -568,13 +673,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		var/datum/brain_trauma/BT = T
 		BT.on_life()
 
-	if(getBrainLoss() >= BRAIN_DAMAGE_DEATH) //rip
-		to_chat(src, "<span class='userdanger'>The last spark of life in your brain fizzles out...<span>")
-		death()
-		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
-		if(B)
-			B.damaged_brain = TRUE
-
 /////////////////////////////////////
 //MONKEYS WITH TOO MUCH CHOLOESTROL//
 /////////////////////////////////////
@@ -583,17 +681,24 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(!needs_heart())
 		return FALSE
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-	if(!heart || heart.synthetic)
+	if(!heart || (heart.organ_flags & ORGAN_SYNTHETIC))
 		return FALSE
 	return TRUE
 
 /mob/living/carbon/proc/needs_heart()
-	if(has_trait(TRAIT_STABLEHEART))
+	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
 		return FALSE
 	if(dna && dna.species && (NOBLOOD in dna.species.species_traits)) //not all carbons have species!
 		return FALSE
 	return TRUE
 
+/*
+ * The mob is having a heart attack
+ *
+ * NOTE: this is true if the mob has no heart and needs one, which can be suprising,
+ * you are meant to use it in combination with can_heartattack for heart attack
+ * related situations (i.e not just cardiac arrest)
+ */
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
 	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)

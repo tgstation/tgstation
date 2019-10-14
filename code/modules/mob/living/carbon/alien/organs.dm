@@ -9,6 +9,10 @@
 			alien_powers -= A
 			alien_powers += new A(src)
 
+/obj/item/organ/alien/Destroy()
+	QDEL_LIST(alien_powers)
+	return ..()
+
 /obj/item/organ/alien/Insert(mob/living/carbon/M, special = 0)
 	..()
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
@@ -22,7 +26,7 @@
 
 /obj/item/organ/alien/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("sacid", 10)
+	S.reagents.add_reagent(/datum/reagent/toxin/acid, 10)
 	return S
 
 
@@ -41,7 +45,7 @@
 
 /obj/item/organ/alien/plasmavessel/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("plasma", storedPlasma/10)
+	S.reagents.add_reagent(/datum/reagent/toxin/plasma, storedPlasma/10)
 	return S
 
 /obj/item/organ/alien/plasmavessel/large
@@ -131,7 +135,7 @@
 	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
 		to_chat(owner, "<span class='danger'>You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!</span>")
 		owner.emote("scream")
-		owner.Knockdown(100)
+		owner.Paralyze(100)
 
 	owner.jitteriness += 30
 	owner.confused += 30

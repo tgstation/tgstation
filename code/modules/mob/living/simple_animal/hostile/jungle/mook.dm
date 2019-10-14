@@ -13,7 +13,7 @@
 	icon_state = "mook"
 	icon_living = "mook"
 	icon_dead = "mook_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	pixel_x = -16
 	maxHealth = 45
 	health = 45
@@ -26,7 +26,7 @@
 	robust_searching = TRUE
 	stat_attack = UNCONSCIOUS
 	attack_sound = 'sound/weapons/rapierhit.ogg'
-	death_sound = 'sound/voice/mook_death.ogg'
+	deathsound = 'sound/voice/mook_death.ogg'
 	aggro_vision_range = 15 //A little more aggressive once in combat to balance out their really low HP
 	var/attack_state = MOOK_ATTACK_NEUTRAL
 	var/struck_target_leap = FALSE
@@ -100,7 +100,7 @@
 			return
 		var/swing_turf = get_step(src,mob_direction)
 		new /obj/effect/temp_visual/kinetic_blast(swing_turf)
-		playsound(src, 'sound/weapons/slashmiss.ogg', 50, 1)
+		playsound(src, 'sound/weapons/slashmiss.ogg', 50, TRUE)
 
 /mob/living/simple_animal/hostile/jungle/mook/proc/LeapAttack()
 	if(target && !stat && attack_state == MOOK_ATTACK_WARMUP)
@@ -110,8 +110,8 @@
 		melee_damage_upper = 30
 		update_icons()
 		new /obj/effect/temp_visual/mook_dust(get_turf(src))
-		playsound(src, 'sound/weapons/thudswoosh.ogg', 25, 1)
-		playsound(src, 'sound/voice/mook_leap_yell.ogg', 100, 1)
+		playsound(src, 'sound/weapons/thudswoosh.ogg', 25, TRUE)
+		playsound(src, 'sound/voice/mook_leap_yell.ogg', 100, TRUE)
 		var/target_turf = get_turf(target)
 		throw_at(target_turf, 7, 1, src, FALSE, callback = CALLBACK(src, .proc/AttackRecovery))
 		return
@@ -147,7 +147,7 @@
 			update_icons()
 			Goto(target, move_to_delay, minimum_distance)
 
-/mob/living/simple_animal/hostile/jungle/mook/throw_impact(atom/hit_atom, throwingdatum)
+/mob/living/simple_animal/hostile/jungle/mook/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(isliving(hit_atom) && attack_state == MOOK_ATTACK_ACTIVE)
 		var/mob/living/L = hit_atom

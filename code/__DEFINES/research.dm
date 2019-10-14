@@ -71,3 +71,5 @@
 #define TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES list(\
 	TECHWEB_POINT_TYPE_GENERIC = "General Research"\
 	)
+
+#define TECHWEB_BOMB_POINTCAP		50000 //Adjust as needed; Stops toxins from nullifying RND progression mechanics. Current Value Cap Radius: 100

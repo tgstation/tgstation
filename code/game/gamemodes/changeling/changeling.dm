@@ -8,6 +8,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"
+	report_type = "changeling"
 	antag_flag = ROLE_CHANGELING
 	false_report_weight = 10
 	restricted_jobs = list("AI", "Cyborg")
@@ -50,10 +51,11 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			changelings += changeling
 			changeling.special_role = ROLE_CHANGELING
 			changeling.restricted_roles = restricted_jobs
-		return 1
+			GLOB.pre_setup_antags += changeling
+		return TRUE
 	else
 		setup_error = "Not enough changeling candidates"
-		return 0
+		return FALSE
 
 /datum/game_mode/changeling/post_setup()
 	//Decide if it's ok for the lings to have a team objective
@@ -74,6 +76,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		var/datum/antagonist/changeling/new_antag = new()
 		new_antag.team_mode = TRUE
 		changeling.add_antag_datum(new_antag)
+		GLOB.pre_setup_antags -= changeling
 	..()
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
@@ -83,7 +86,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		return
 	if(changelings.len <= (changelingcap - 2) || prob(100 - (csc * 2)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
-			if(!jobban_isbanned(character, ROLE_CHANGELING) && !QDELETED(character) && !jobban_isbanned(character, ROLE_SYNDICATE) && !QDELETED(character))
+			if(!is_banned_from(character.ckey, list(ROLE_CHANGELING, ROLE_SYNDICATE)) && !QDELETED(character))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changeling()
@@ -129,8 +132,8 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		C.appearance = chosen_prof.appearance_list[slot]
 		C.name = chosen_prof.name_list[slot]
 		C.flags_cover = chosen_prof.flags_cover_list[slot]
-		C.item_color = chosen_prof.item_color_list[slot]
 		C.item_state = chosen_prof.item_state_list[slot]
+		C.mob_overlay_icon = chosen_prof.mob_overlay_icon_list[slot]
 		if(equip)
 			user.equip_to_slot_or_del(C, GLOB.slot2slot[slot])
 

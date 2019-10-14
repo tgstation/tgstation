@@ -30,14 +30,14 @@
 	name = "\improper [machine_name] restocking unit"
 
 /obj/item/vending_refill/examine(mob/user)
-	..()
+	. = ..()
 	var/num = get_part_rating()
 	if (num == INFINITY)
-		to_chat(user, "It's sealed tight, completely full of supplies.")
+		. += "It's sealed tight, completely full of supplies."
 	else if (num == 0)
-		to_chat(user, "It's empty!")
+		. += "It's empty!"
 	else
-		to_chat(user, "It can restock [num] item\s.")
+		. += "It can restock [num] item\s."
 
 /obj/item/vending_refill/get_part_rating()
 	if (!products || !contraband || !premium)

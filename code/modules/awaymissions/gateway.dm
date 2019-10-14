@@ -73,7 +73,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 /obj/machinery/gateway/proc/toggleon(mob/user)
 	return FALSE
 
-/obj/machinery/gateway/safe_throw_at()
+/obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
 	return
 
 /obj/machinery/gateway/centerstation/Initialize()
@@ -158,15 +158,13 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 			use_power(5000)
 		return
 
-/obj/machinery/gateway/centeraway/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/multitool))
-		if(calibrated)
-			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
-			return
-		else
-			to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
-			calibrated = TRUE
-			return
+/obj/machinery/gateway/centeraway/multitool_act(mob/living/user, obj/item/I)
+	if(calibrated)
+		to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
+	else
+		to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
+		calibrated = TRUE
+	return TRUE
 
 /////////////////////////////////////Away////////////////////////
 
@@ -251,5 +249,5 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 
 
 /obj/item/paper/fluff/gateway
-	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Blue Space Research"
+	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Bluespace Research"
 	name = "Confidential Correspondence, Pg 1"

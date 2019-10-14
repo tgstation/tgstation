@@ -28,7 +28,7 @@ Bonus
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/regenerate_blood = FALSE
-	threshold_desc = "<b>Resistance 8:</b>Additionally regenerates lost blood.<br>"
+	threshold_desc = "<b>Resistance 8:</b> Additionally regenerates lost blood.<br>"
 
 /datum/symptom/oxygen/Start(datum/disease/advance/A)
 	if(!..())
@@ -50,3 +50,18 @@ Bonus
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='notice'>[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]</span>")
 	return
+
+/datum/symptom/oxygen/on_stage_change(datum/disease/advance/A)
+	if(!..())
+		return FALSE
+	var/mob/living/carbon/M = A.affected_mob
+	if(A.stage >= 4)
+		ADD_TRAIT(M, TRAIT_NOBREATH, DISEASE_TRAIT)
+	else
+		REMOVE_TRAIT(M, TRAIT_NOBREATH, DISEASE_TRAIT)
+	return TRUE
+
+/datum/symptom/oxygen/End(datum/disease/advance/A)
+	if(!..())
+		return
+	REMOVE_TRAIT(A.affected_mob, TRAIT_NOBREATH, DISEASE_TRAIT)

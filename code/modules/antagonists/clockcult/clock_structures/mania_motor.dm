@@ -17,16 +17,16 @@
 	var/mania_cost = 150
 
 /obj/structure/destructible/clockwork/powered/mania_motor/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='sevtug_small'>It requires <b>[DisplayPower(mania_cost)]</b> to run.</span>")
+		. += "<span class='sevtug_small'>It requires <b>[DisplayPower(mania_cost)]</b> to run.</span>"
 
 /obj/structure/destructible/clockwork/powered/mania_motor/forced_disable(bad_effects)
 	if(active)
 		if(bad_effects)
 			try_use_power(MIN_CLOCKCULT_POWER*4)
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
-		playsound(src, 'sound/effects/screech.ogg', 40, 1)
+		playsound(src, 'sound/effects/screech.ogg', 40, TRUE)
 		toggle()
 		return TRUE
 

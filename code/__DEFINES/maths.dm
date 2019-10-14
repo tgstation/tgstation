@@ -74,7 +74,7 @@
 #define ISINRANGE(val, min, max) (min <= val && val <= max)
 
 // Same as above, exclusive.
-#define ISINRANGE_EX(val, min, max) (min < val && val > max)
+#define ISINRANGE_EX(val, min, max) (min < val && val < max)
 
 #define ISINTEGER(x) (round(x) == x)
 
@@ -201,4 +201,10 @@
 
 	return list(region_x1 & region_x2, region_y1 & region_y2)
 
+#define EXP_DISTRIBUTION(desired_mean) ( -(1/(1/desired_mean)) * log(rand(1, 1000) * 0.001) )
+
+#define LORENTZ_DISTRIBUTION(x, s) ( s*TAN(TODEGREES(PI*(rand()-0.5))) + x )
+#define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-y)/s)) + 1/2 )
+
+#define RULE_OF_THREE(a, b, x) ((a*x)/b)
 // )

@@ -19,6 +19,7 @@
 	active_power_usage = 300
 
 	var/icon_state_on = "emitter_+a"
+	var/icon_state_underpowered = "emitter_+u"
 	var/active = FALSE
 	var/powered = FALSE
 	var/fire_delay = 100
@@ -30,7 +31,7 @@
 	var/locked = FALSE
 	var/allow_switch_interact = TRUE
 
-	var/projectile_type = /obj/item/projectile/beam/emitter
+	var/projectile_type = /obj/projectile/beam/emitter
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 	var/datum/effect_system/spark_spread/sparks
 
@@ -88,15 +89,25 @@
 		power_usage -= 50 * M.rating
 	active_power_usage = power_usage
 
+/obj/machinery/power/emitter/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Emitting one beam each <b>[fire_delay*0.1]</b> seconds.<br>Power consumption at <b>[active_power_usage]W</b>.</span>"
+
 /obj/machinery/power/emitter/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_FLIP ,null,CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 
 /obj/machinery/power/emitter/proc/can_be_rotated(mob/user,rotation_type)
 	if (anchored)
 		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
 		return FALSE
 	return TRUE
+
+/obj/machinery/power/emitter/should_have_node()
+	if(state == EMITTER_WELDED)
+		return TRUE
+	return FALSE
 
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker.IsRoundInProgress())
@@ -108,11 +119,10 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && powernet && avail(active_power_usage))
-		icon_state = icon_state_on
+	if(active && powernet)
+		icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
 	else
 		icon_state = initial(icon_state)
-
 
 /obj/machinery/power/emitter/interact(mob/user)
 	add_fingerprint(user)
@@ -160,7 +170,7 @@
 		update_icon()
 		return
 	if(active == TRUE)
-		if(!active_power_usage || avail(active_power_usage))
+		if(!active_power_usage || surplus() >= active_power_usage)
 			add_load(active_power_usage)
 			if(!powered)
 				powered = TRUE
@@ -189,16 +199,17 @@
 		return FALSE
 	if(state != EMITTER_WELDED)
 		return FALSE
-	if(avail(active_power_usage))
+	if(surplus() >= active_power_usage)
 		add_load(active_power_usage)
 		fire_beam()
 
 /obj/machinery/power/emitter/proc/fire_beam(mob/user)
-	var/obj/item/projectile/P = new projectile_type(get_turf(src))
+	var/obj/projectile/P = new projectile_type(get_turf(src))
 	playsound(get_turf(src), projectile_sound, 50, TRUE)
 	if(prob(35))
 		sparks.start()
 	P.firer = user ? user : src
+	P.fired_from = src
 	if(last_projectile_params)
 		P.p_x = last_projectile_params[2]
 		P.p_y = last_projectile_params[3]
@@ -237,10 +248,12 @@
 			state = EMITTER_UNWRENCHED
 
 /obj/machinery/power/emitter/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
 
 /obj/machinery/power/emitter/welder_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(active)
 		to_chat(user, "Turn \the [src] off first.")
 		return TRUE
@@ -251,23 +264,25 @@
 		if(EMITTER_WRENCHED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
-			user.visible_message("[user.name] starts to weld the [name] to the floor.", \
+			user.visible_message("<span class='notice'>[user.name] starts to weld the [name] to the floor.</span>", \
 				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-				"<span class='italics'>You hear welding.</span>")
-			if(I.use_tool(src, user, 20, volume=50))
+				"<span class='hear'>You hear welding.</span>")
+			if(I.use_tool(src, user, 20, volume=50) && state == EMITTER_WRENCHED)
 				state = EMITTER_WELDED
 				to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
 				connect_to_network()
+				update_cable_icons_on_turf(get_turf(src))
 		if(EMITTER_WELDED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
-			user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+			user.visible_message("<span class='notice'>[user.name] starts to cut the [name] free from the floor.</span>", \
 				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-				"<span class='italics'>You hear welding.</span>")
-			if(I.use_tool(src, user, 20, volume=50))
+				"<span class='hear'>You hear welding.</span>")
+			if(I.use_tool(src, user, 20, volume=50) && state == EMITTER_WELDED)
 				state = EMITTER_WRENCHED
 				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 				disconnect_from_network()
+				update_cable_icons_on_turf(get_turf(src))
 
 	return TRUE
 
@@ -278,6 +293,8 @@
 	return TRUE
 
 /obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	default_deconstruction_screwdriver(user, "emitter_open", "emitter", I)
 	return TRUE
 
@@ -319,7 +336,7 @@
 		return
 	user.put_in_hands(gun)
 	gun = null
-	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	gun_properties = list()
 	set_projectile()
 	return TRUE
@@ -342,7 +359,7 @@
 	locked = FALSE
 	obj_flags |= EMAGGED
 	if(user)
-		user.visible_message("[user.name] emags [src].","<span class='notice'>You short out the lock.</span>")
+		user.visible_message("<span class='warning'>[user.name] emags [src].</span>", "<span class='notice'>You short out the lock.</span>")
 
 
 /obj/machinery/power/emitter/prototype
@@ -350,6 +367,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "protoemitter"
 	icon_state_on = "protoemitter_+a"
+	icon_state_underpowered = "protoemitter_+u"
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	var/view_range = 12
@@ -438,9 +456,13 @@
 	name = "turret controls"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	item_flags = ABSTRACT | NODROP | NOBLUDGEON
+	item_flags = ABSTRACT | NOBLUDGEON
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/delay = 0
+
+/obj/item/turret_control/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/turret_control/afterattack(atom/targeted_atom, mob/user, proxflag, clickparams)
 	. = ..()

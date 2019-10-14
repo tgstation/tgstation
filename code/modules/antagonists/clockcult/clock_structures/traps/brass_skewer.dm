@@ -22,7 +22,7 @@
 	if(buckled_mobs && LAZYLEN(buckled_mobs))
 		var/mob/living/L = buckled_mobs[1]
 		if(iscarbon(L))
-			L.Knockdown(100)
+			L.Paralyze(100)
 			L.visible_message("<span class='warning'>[L] is maimed as the skewer shatters while still in [L.p_their()] body!</span>")
 			L.adjustBruteLoss(15)
 		unbuckle_mob(L)
@@ -40,7 +40,7 @@
 		return
 	..()
 
-/obj/structure/destructible/clockwork/trap/brass_skewer/bullet_act(obj/item/projectile/P)
+/obj/structure/destructible/clockwork/trap/brass_skewer/bullet_act(obj/projectile/P)
 	if(buckled_mobs && LAZYLEN(buckled_mobs))
 		var/mob/living/L = buckled_mobs[1]
 		return L.bullet_act(P)
@@ -110,6 +110,6 @@
 			return
 	skewee.visible_message("<span class='danger'>[skewee] comes free of [src] with a squelching pop!</span>", \
 	"<span class='boldannounce'>You come free of [src]!</span>")
-	skewee.Knockdown(30)
+	skewee.Paralyze(30)
 	playsound(skewee, 'sound/misc/desceration-03.ogg', 50, TRUE)
 	unbuckle_mob(skewee)

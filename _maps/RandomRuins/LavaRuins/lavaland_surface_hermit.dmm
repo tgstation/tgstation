@@ -8,11 +8,6 @@
 "c" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/powered)
-"d" = (
-/obj/item/clothing/head/helmet/space/orange,
-/obj/item/clothing/mask/breath,
-/turf/open/floor/plating/asteroid/basalt,
-/area/ruin/powered)
 "e" = (
 /obj/item/clothing/suit/space/orange,
 /turf/open/floor/plating/asteroid/basalt,
@@ -61,6 +56,7 @@
 /obj/item/seeds/plump,
 /obj/item/seeds/plump,
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
+/obj/item/seeds/tower,
 /turf/open/floor/plating/asteroid/basalt,
 /area/ruin/powered)
 "n" = (
@@ -137,7 +133,6 @@
 /area/ruin/powered)
 "D" = (
 /obj/effect/decal/cleanable/blood/footprints{
-	icon_state = "blood1";
 	dir = 1
 	},
 /obj/machinery/door/airlock/survival_pod/glass,
@@ -171,52 +166,70 @@
 "J" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/ruin/powered)
+"L" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/cultivator,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"M" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating/asteroid/basalt,
+/area/ruin/powered)
+"P" = (
+/turf/template_noop,
+/area/template_noop)
+"S" = (
+/obj/item/clothing/head/helmet/space/orange,
+/turf/open/floor/plating/asteroid{
+	name = "dirt"
 	},
 /area/ruin/powered)
 
 (1,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-s
-s
-s
-s
-s
-s
-s
-s
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
 "}
 (2,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
 s
 s
 s
-s
-s
-s
+P
+P
 "}
 (3,1,1) = {"
-a
-a
-a
-a
-a
+P
+P
+P
+P
+P
 a
 a
 a
@@ -227,12 +240,12 @@ s
 s
 s
 s
-s
+P
 "}
 (4,1,1) = {"
-a
-a
-a
+P
+P
+P
 a
 a
 a
@@ -245,11 +258,11 @@ s
 s
 s
 s
-s
+P
 "}
 (5,1,1) = {"
-a
-a
+P
+P
 a
 a
 a
@@ -266,13 +279,13 @@ s
 s
 "}
 (6,1,1) = {"
-a
+P
 a
 a
 a
 b
 b
-n
+L
 n
 t
 v
@@ -287,7 +300,7 @@ s
 a
 a
 a
-b
+a
 b
 m
 o
@@ -320,7 +333,7 @@ s
 s
 "}
 (9,1,1) = {"
-b
+a
 b
 f
 i
@@ -338,9 +351,9 @@ s
 s
 "}
 (10,1,1) = {"
+a
 b
-d
-g
+S
 j
 g
 g
@@ -350,16 +363,16 @@ u
 o
 A
 b
-a
+P
 s
 s
 s
 "}
 (11,1,1) = {"
+a
 c
 e
 h
-g
 l
 c
 p
@@ -368,43 +381,43 @@ c
 c
 c
 b
-a
-a
+P
+P
 s
 s
 "}
 (12,1,1) = {"
+a
 b
 b
-f
 k
-f
+M
 b
 b
 b
 b
 a
 a
-a
-a
+P
+P
 E
 H
 E
 "}
 (13,1,1) = {"
 a
+a
 b
 b
 b
 b
-b
 a
 a
 a
 a
-a
-a
-a
+P
+P
+P
 F
 I
 F
@@ -419,47 +432,47 @@ a
 a
 a
 a
-a
-a
-a
-a
+P
+P
+P
+P
 F
 I
 F
 "}
 (15,1,1) = {"
+P
+P
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+P
+P
+P
+P
+P
+P
+P
+P
+P
 G
 J
 G
 "}
 (16,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
 "}

@@ -4,11 +4,11 @@ GLOBAL_VAR_INIT(servants_active, FALSE) //This var controls whether or not a lot
 
 CLOCKWORK CULT: Based off of the failed pull requests from /vg/
 
-While Nar-Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
-Ratvar, the Clockwork Justiciar, a homage to Nar-Sie granted sentience by its own power, is one such other force.
+While Nar'Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
+Ratvar, the Clockwork Justiciar, a homage to Nar'Sie granted sentience by its own power, is one such other force.
 Imprisoned within a massive construct known as the Celestial Derelict - or Reebe - an intense hatred of the Blood God festers.
 Ratvar, unable to act in the mortal plane, seeks to return and forms covenants with mortals in order to bolster his influence.
-Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar-Sie, who can only influence natural life.
+Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar'Sie, who can only influence natural life.
 
 This is a team-based gamemode, and the team's objective is shared by all cultists. Their goal is to defend an object called the Ark on a separate z-level.
 
@@ -63,7 +63,7 @@ Credit where due:
 		return FALSE
 	if(isliving(M))
 		var/mob/living/L = M
-		if(L.has_trait(TRAIT_MINDSHIELD))
+		if(HAS_TRAIT(L, TRAIT_MINDSHIELD))
 			return FALSE
 	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab) || istype(M, /mob/camera/eminence))
 		return TRUE
@@ -128,6 +128,7 @@ Credit where due:
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
+	report_type = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
 	required_players = 24
@@ -173,35 +174,39 @@ Credit where due:
 		servant.assigned_role = ROLE_SERVANT_OF_RATVAR
 		servant.special_role = ROLE_SERVANT_OF_RATVAR
 		starter_servants--
+		GLOB.pre_setup_antags += servant
 	ark_time = 30 + round((roundstart_player_count / 5)) //In minutes, how long the Ark will wait before activation
 	ark_time = min(ark_time, 35) //35 minute maximum for the activation timer
-	return 1
+	return TRUE
 
 /datum/game_mode/clockwork_cult/post_setup()
+	var/list/spread_out_spawns = GLOB.servant_spawns.Copy()
 	for(var/S in servants_to_serve)
+		if(!spread_out_spawns.len) //cycle through the list again if we've used all the inital spawnpoints.
+			spread_out_spawns = GLOB.servant_spawns.Copy()
 		var/datum/mind/servant = S
 		log_game("[key_name(servant)] was made an initial servant of Ratvar")
 		var/mob/living/L = servant.current
-		var/turf/T = pick(GLOB.servant_spawns)
+		var/turf/T = pick_n_take(spread_out_spawns)
 		L.forceMove(T)
-		GLOB.servant_spawns -= T
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
+		GLOB.pre_setup_antags -= S
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar //that's a mouthful
 	G.final_countdown(ark_time)
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
 	if(!M)
-		return 0
+		return FALSE
 	to_chat(M, "<span class='bold large_brass'>You are a servant of Ratvar, the Clockwork Justiciar!</span>")
 	to_chat(M, "<span class='brass'>You have approximately <b>[ark_time]</b> minutes until the Ark activates.</span>")
 	to_chat(M, "<span class='brass'>Unlock <b>Script</b> scripture by converting a new servant.</span>")
 	to_chat(M, "<span class='brass'><b>Application</b> scripture will be unlocked halfway until the Ark's activation.</span>")
 	M.playsound_local(get_turf(M), 'sound/ambience/antag/clockcultalr.ogg', 100, FALSE, pressure_affected = FALSE)
-	return 1
+	return TRUE
 
 /datum/game_mode/proc/equip_servant(mob/living/M) //Grants a clockwork slab to the mob, with one of each component
 	if(!M || !ishuman(M))
@@ -348,6 +353,6 @@ Credit where due:
 	info = replacetext(info, "CLOCKCULTCHANGELOG", changelog_contents)
 
 /obj/item/paper/servant_primer/examine(mob/user)
+	. = ..()
 	if(!is_servant_of_ratvar(user) && !isobserver(user))
-		to_chat(user, "<span class='danger'>You can't understand any of the words on [src].</span>")
-	..()
+		. += "<span class='danger'>You can't understand any of the words on [src].</span>"

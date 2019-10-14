@@ -103,23 +103,20 @@
 			var/output = "<div align='center'><B>Player poll</B><hr>"
 			output += "<b>Question: [pollquestion]</b><br>"
 			output += "<font size='2'>Feedback gathering runs from <b>[pollstarttime]</b> until <b>[pollendtime]</b></font><p>"
-			if(!vote_text)
-				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
-				output += "<input type='hidden' name='src' value='[REF(src)]'>"
-				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-				output += "<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>"
-				output += "<font size='2'>Please provide feedback below. You can use any letters of the English alphabet, numbers and the symbols: . , ! ? : ; -</font><br>"
-				output += "<textarea name='replytext' cols='50' rows='14'></textarea>"
-				output += "<p><input type='submit' value='Submit'></form>"
-				output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
-				output += "<input type='hidden' name='src' value='[REF(src)]'>"
-				output += "<input type='hidden' name='votepollid' value='[pollid]'>"
-				output += "<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>"
-				output += "<input type='hidden' name='replytext' value='ABSTAIN'>"
-				output += "<input type='submit' value='Abstain'></form>"
-			else
-				vote_text = replacetext(vote_text, "\n", "<br>")
-				output += "[vote_text]"
+			output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
+			output += "<input type='hidden' name='src' value='[REF(src)]'>"
+			output += "<input type='hidden' name='votepollid' value='[pollid]'>"
+			output += "<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>"
+			output += "<font size='2'>Please provide feedback below. You can use any letters of the English alphabet, numbers and the symbols: . , ! ? : ; -</font><br>"
+			output += "<textarea name='replytext' cols='50' rows='14'>[vote_text]</textarea>"
+			output += "<p><input type='submit' value='Submit'></form>"
+			output += "<form name='cardcomp' action='?src=[REF(src)]' method='get'>"
+			output += "<input type='hidden' name='src' value='[REF(src)]'>"
+			output += "<input type='hidden' name='votepollid' value='[pollid]'>"
+			output += "<input type='hidden' name='votetype' value=[POLLTYPE_TEXT]>"
+			output += "<input type='hidden' name='replytext' value='ABSTAIN'>"
+			output += "<input type='submit' value='Abstain'></form>"
+
 			src << browse(null ,"window=playerpolllist")
 			src << browse(output,"window=playerpoll;size=500x500")
 		if(POLLTYPE_RATING)
@@ -348,7 +345,8 @@
 			src << browse(output,"window=playerpoll;size=500x500")
 	return
 
-/mob/dead/new_player/proc/poll_check_voted(pollid, text = FALSE)
+//Returns null on failure, TRUE if already voted, FALSE if not voted yet.
+/mob/dead/new_player/proc/poll_check_voted(pollid, text = FALSE, silent = FALSE)
 	var/table = "poll_vote"
 	if (text)
 		table = "poll_textreply"
@@ -361,13 +359,17 @@
 		return
 	if(query_hasvoted.NextRow())
 		qdel(query_hasvoted)
-		to_chat(usr, "<span class='danger'>You've already replied to this poll.</span>")
-		return
+		if(!silent)
+			to_chat(usr, "<span class='danger'>You've already replied to this poll.</span>")
+		return TRUE
 	qdel(query_hasvoted)
+	return FALSE
+
+//Returns adminrank for use in polls.
+/mob/dead/new_player/proc/poll_rank()
 	. = "Player"
 	if(client.holder)
 		. = client.holder.rank.name
-	return .
 
 
 /mob/dead/new_player/proc/vote_rig_check()
@@ -487,7 +489,10 @@
 	//validate the poll
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_OPTION))
 		return 0
-	var/adminrank = sanitizeSQL(poll_check_voted(pollid))
+	var/voted = poll_check_voted(pollid)
+	if(isnull(voted) || voted) //Failed or already voted.
+		return
+	var/adminrank = sanitizeSQL(poll_rank())
 	if(!adminrank)
 		return
 	var/datum/DBQuery/query_option_vote = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_vote")] (datetime, pollid, optionid, ckey, ip, adminrank) VALUES (Now(), [pollid], [optionid], '[ckey]', INET_ATON('[client.address]'), '[adminrank]')")
@@ -513,14 +518,21 @@
 	if(!replytext)
 		to_chat(usr, "The text you entered was blank. Please correct the text and submit again.")
 		return
-	var/adminrank = sanitizeSQL(poll_check_voted(pollid, TRUE))
+	var/voted = poll_check_voted(pollid, text = TRUE, silent = TRUE)
+	if(isnull(voted))
+		return
+	var/adminrank = sanitizeSQL(poll_rank())
 	if(!adminrank)
 		return
 	replytext = sanitizeSQL(replytext)
 	if(!(length(replytext) > 0) || !(length(replytext) <= 8000))
 		to_chat(usr, "The text you entered was invalid or too long. Please correct the text and submit again.")
 		return
-	var/datum/DBQuery/query_text_vote = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (Now(), [pollid], '[ckey]', INET_ATON('[client.address]'), '[replytext]', '[adminrank]')")
+	var/datum/DBQuery/query_text_vote
+	if(!voted)
+		query_text_vote  = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (Now(), [pollid], '[ckey]', INET_ATON('[client.address]'), '[replytext]', '[adminrank]')")
+	else
+		query_text_vote  = SSdbcore.NewQuery("UPDATE [format_table_name("poll_textreply")] SET datetime = Now(), ip = INET_ATON('[client.address]'), replytext = '[replytext]' WHERE pollid = '[pollid]' AND ckey = '[ckey]'")
 	if(!query_text_vote.warn_execute())
 		qdel(query_text_vote)
 		return

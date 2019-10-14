@@ -10,6 +10,10 @@
 //Comment this out once you've filled in the below
 #error TGS API unconfigured
 
+//Uncomment this if you wish to allow the game to interact with TGS 3
+//This will raise the minimum required security level of your game to TGS_SECURITY_TRUSTED due to it utilizing call()()
+//#define TGS_V3_API
+
 //Required interfaces (fill in with your codebase equivalent):
 
 //create a global variable named `Name` and set it to `Value`
@@ -44,22 +48,52 @@
 
 //EVENT CODES
 
-//TODO
+#define TGS_EVENT_PORT_SWAP -2	//before a port change is about to happen, extra parameter is new port
+#define TGS_EVENT_REBOOT_MODE_CHANGE -1	//before a reboot mode change, extras parameters are the current and new reboot mode enums
+
+//See the descriptions for these codes here: https://github.com/tgstation/tgstation-server/blob/master/src/Tgstation.Server.Host/Components/EventType.cs
+#define TGS_EVENT_REPO_RESET_ORIGIN 0
+#define TGS_EVENT_REPO_CHECKOUT 1
+#define TGS_EVENT_REPO_FETCH 2
+#define TGS_EVENT_REPO_MERGE_PULL_REQUEST 3
+#define TGS_EVENT_REPO_PRE_SYNCHRONIZE 4
+#define TGS_EVENT_BYOND_INSTALL_START 5
+#define TGS_EVENT_BYOND_INSTALL_FAIL 6
+#define TGS_EVENT_BYOND_ACTIVE_VERSION_CHANGE 7
+#define TGS_EVENT_COMPILE_START 8
+#define TGS_EVENT_COMPILE_CANCELLED 9
+#define TGS_EVENT_COMPILE_FAILURE 10
+#define TGS_EVENT_COMPILE_COMPLETE 11
+#define TGS_EVENT_INSTANCE_AUTO_UPDATE_START 12
+#define TGS_EVENT_REPO_MERGE_CONFLICT 13
+
+//OTHER ENUMS
+
+#define TGS_REBOOT_MODE_NORMAL 0
+#define TGS_REBOOT_MODE_SHUTDOWN 1
+#define TGS_REBOOT_MODE_RESTART 2
+
+#define TGS_SECURITY_TRUSTED 0
+#define TGS_SECURITY_SAFE 1
+#define TGS_SECURITY_ULTRASAFE 2
 
 //REQUIRED HOOKS
 
 //Call this somewhere in /world/New() that is always run
 //event_handler: optional user defined event handler. The default behaviour is to broadcast the event in english to all connected admin channels
-/world/proc/TgsNew(datum/tgs_event_handler/event_handler)
+//minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated
+/world/proc/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
 	return
 
 //Call this when your initializations are complete and your game is ready to play before any player interactions happen
 //This may use world.sleep_offline to make this happen so ensure no changes are made to it while this call is running
+//Most importantly, before this point, note that any static files or directories may be in use by another server. Your code should account for this
+//This function should not be called before ..() in /world/New()
 /world/proc/TgsInitializationComplete()
 	return
 
-//Put this somewhere in /world/Topic(T, Addr, Master, Keys) that is always run before T is modified
-#define TGS_TOPIC var/tgs_topic_return = TgsTopic(T); if(tgs_topic_return) return tgs_topic_return
+//Put this at the start of /world/Topic()
+#define TGS_TOPIC var/tgs_topic_return = TgsTopic(args[1]); if(tgs_topic_return) return tgs_topic_return
 
 //Call this at the beginning of world/Reboot(reason)
 /world/proc/TgsReboot()
@@ -72,6 +106,22 @@
 /datum/tgs_revision_information
 	var/commit			//full sha of compiled commit
 	var/origin_commit	//full sha of last known remote commit. This may be null if the TGS repository is not currently tracking a remote branch
+
+//represents a version of tgstation-server
+/datum/tgs_version
+	var/suite			//The suite version, can be >=3
+
+	//this group of variables can be null to represent a wild card
+	var/major					//The major version
+	var/minor					//The minor version
+	var/patch					//The patch version
+
+	var/raw_parameter			//The unparsed parameter
+	var/deprefixed_parameter	//The version only bit of raw_parameter
+
+//if the tgs_version is a wildcard version
+/datum/tgs_version/proc/Wildcard()
+	return
 
 //represents a merge of a GitHub pull request
 /datum/tgs_revision_information/test_merge
@@ -88,20 +138,22 @@
 /datum/tgs_chat_channel
 	var/id					//internal channel representation
 	var/friendly_name		//user friendly channel name
-	var/server_name			//server name the channel resides on
-	var/provider_name		//chat provider for the channel
+	var/connection_name		//the name of the configured chat connection
 	var/is_admin_channel	//if the server operator has marked this channel for game admins only
 	var/is_private_channel	//if this is a private chat channel
+	var/custom_tag					//user defined string associated with channel
 
 //represents a chat user
 /datum/tgs_chat_user
-	var/id							//Internal user representation
+	var/id							//Internal user representation, requires channel to be unique
 	var/friendly_name				//The user's public name
 	var/mention						//The text to use to ping this user in a message
 	var/datum/tgs_chat_channel/channel	//The /datum/tgs_chat_channel this user was from
 
 //user definable callback for handling events
-/datum/tgs_event_handler/proc/HandleEvent(event_code)
+//extra parameters may be specified depending on the event
+/datum/tgs_event_handler/proc/HandleEvent(event_code, ...)
+	set waitfor = FALSE
 	return
 
 //user definable chat command
@@ -119,15 +171,11 @@
 
 //FUNCTIONS
 
-//Returns the respective string version of the API
+//Returns the respective supported /datum/tgs_version of the API
 /world/proc/TgsMaximumAPIVersion()
 	return
 
 /world/proc/TgsMinimumAPIVersion()
-	return
-
-//Gets the current version of the server tools running the server
-/world/proc/TgsVersion()
 	return
 
 //Returns TRUE if the world was launched under the server tools and the API matches, FALSE otherwise
@@ -135,11 +183,19 @@
 /world/proc/TgsAvailable()
 	return
 
+//Gets the current /datum/tgs_version of the server tools running the server
+/world/proc/TgsVersion()
+	return
+
 /world/proc/TgsInstanceName()
 	return
 
 //Get the current `/datum/tgs_revision_information`
 /world/proc/TgsRevision()
+	return
+
+//Get the current BYOND security level
+/world/proc/TgsSecurityLevel()
 	return
 
 //Gets a list of active `/datum/tgs_revision_information/test_merge`s

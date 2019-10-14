@@ -8,7 +8,8 @@
 
 /datum/round_event/spooky/start()
 	..()
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		var/obj/item/storage/backpack/b = locate() in H.contents
 		if(b)
 			new /obj/item/storage/spooky(b)
@@ -43,9 +44,9 @@
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "treatbag"
 
-/obj/item/storage/spooky/New()
-	..()
-	for(var/distrobuteinbag=0 to 5)
+/obj/item/storage/spooky/Initialize()
+	. = ..()
+	for(var/distrobuteinbag in 0 to 5)
 		var/type = pick(/obj/item/reagent_containers/food/snacks/sugarcookie/spookyskull,
 		/obj/item/reagent_containers/food/snacks/sugarcookie/spookycoffin,
 		/obj/item/reagent_containers/food/snacks/candy_corn,

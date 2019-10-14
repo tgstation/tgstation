@@ -39,11 +39,11 @@ GLOBAL_PROTECT(href_token)
 		return
 	if(!ckey)
 		QDEL_IN(src, 0)
-		throw EXCEPTION("Admin datum created without a ckey")
+		CRASH("Admin datum created without a ckey")
 		return
 	if(!istype(R))
 		QDEL_IN(src, 0)
-		throw EXCEPTION("Admin datum created without a rank")
+		CRASH("Admin datum created without a rank")
 		return
 	target = ckey
 	name = "[ckey]'s admin datum ([R])"
@@ -55,7 +55,7 @@ GLOBAL_PROTECT(href_token)
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src
-	if (force_active || (R.rights & R_AUTOLOGIN))
+	if (force_active || (R.rights & R_AUTOADMIN))
 		activate()
 	else
 		deactivate()

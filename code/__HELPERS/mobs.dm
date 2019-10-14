@@ -47,6 +47,9 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
 	return pick(GLOB.socks_list)
 
+/proc/random_backpack()
+	return pick(GLOB.backpacklist)
+
 /proc/random_features()
 	if(!GLOB.tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
@@ -70,27 +73,28 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
 	if(!GLOB.moth_wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
-
+	if(!GLOB.moth_markings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list)))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)], "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list), "moth_markings" = pick(GLOB.moth_markings_list)))
 
-/proc/random_hair_style(gender)
+/proc/random_hairstyle(gender)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.hair_styles_male_list)
+			return pick(GLOB.hairstyles_male_list)
 		if(FEMALE)
-			return pick(GLOB.hair_styles_female_list)
+			return pick(GLOB.hairstyles_female_list)
 		else
-			return pick(GLOB.hair_styles_list)
+			return pick(GLOB.hairstyles_list)
 
-/proc/random_facial_hair_style(gender)
+/proc/random_facial_hairstyle(gender)
 	switch(gender)
 		if(MALE)
-			return pick(GLOB.facial_hair_styles_male_list)
+			return pick(GLOB.facial_hairstyles_male_list)
 		if(FEMALE)
-			return pick(GLOB.facial_hair_styles_female_list)
+			return pick(GLOB.facial_hairstyles_female_list)
 		else
-			return pick(GLOB.facial_hair_styles_list)
+			return pick(GLOB.facial_hairstyles_list)
 
 /proc/random_unique_name(gender, attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
@@ -112,6 +116,13 @@
 /proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(plasmaman_name())
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_ethereal_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(ethereal_name())
 
 		if(!findname(.))
 			break
@@ -199,7 +210,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			drifting = 0
 			user_loc = user.loc
 
-		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
+		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 	if (progress)
@@ -257,9 +268,15 @@ GLOBAL_LIST_EMPTY(species_list)
 			drifting = 0
 			Uloc = user.loc
 
-		if(QDELETED(user) || user.stat || user.IsKnockdown() || user.IsStun() || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(QDELETED(user) || user.stat || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
+
+		if(isliving(user))
+			var/mob/living/L = user
+			if(L.IsStun() || L.IsParalyzed())
+				. = 0
+				break
 
 		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
@@ -283,7 +300,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	. = 1
 	return
 
-/proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks)
+/proc/do_after_mob(mob/user, list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks, required_mobility_flags = MOBILITY_STAND)
 	if(!user || !targets)
 		return 0
 	if(!islist(targets))
@@ -305,6 +322,9 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/endtime = world.time + time
 	var/starttime = world.time
+	var/mob/living/L
+	if(isliving(user))
+		L = user
 	. = 1
 	mainloop:
 		while(world.time < endtime)
@@ -321,8 +341,12 @@ GLOBAL_LIST_EMPTY(species_list)
 				drifting = 0
 				user_loc = user.loc
 
+			if(L && !CHECK_MULTIPLE_BITFIELDS(L.mobility_flags, required_mobility_flags))
+				. = 0
+				break
+
 			for(var/atom/target in targets)
-				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
+				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
 					. = 0
 					break mainloop
 	if(progbar)
@@ -343,11 +367,12 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/new_args = list(T)
 	if(extra_args)
 		new_args += extra_args
-
+	var/atom/X
 	for(var/j in 1 to amount)
-		var/atom/X = new spawn_type(arglist(new_args))
+		X = new spawn_type(arglist(new_args))
 		if (admin_spawn)
 			X.flags_1 |= ADMIN_SPAWNED_1
+	return X //return the last mob spawned
 
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
@@ -355,10 +380,21 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!T)
 		CRASH("attempt to spawn atom type: [spawn_type] in nullspace")
 
+	var/list/spawned_mobs = new(amount)
+
 	for(var/j in 1 to amount)
-		var/atom/movable/X = new spawn_type(T)
+		var/atom/movable/X
+
+		if (istype(spawn_type, /list))
+			var/mob_type = pick(spawn_type)
+			X = new mob_type(T)
+		else
+			X = new spawn_type(T)
+
 		if (admin_spawn)
 			X.flags_1 |= ADMIN_SPAWNED_1
+
+		spawned_mobs[j] = X
 
 		if(always_max_walk || prob(walk_chance))
 			if(always_max_walk)
@@ -369,21 +405,27 @@ GLOBAL_LIST_EMPTY(species_list)
 			for(var/i in 1 to step_count)
 				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
-/proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
-	message = "<span class='linkify'>[message]</span>"
+	return spawned_mobs
+
+// Displays a message in deadchat, sent by source. Source is not linkified, message is, to avoid stuff like character names to be linkified.
+// Automatically gives the class deadsay to the whole message (message + source)
+/proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	message = "<span class='deadsay'>[source]<span class='linkify'>[message]</span></span>"
 	for(var/mob/M in GLOB.player_list)
 		var/datum/preferences/prefs
-		if(M.client && M.client.prefs)
+		if(M.client.prefs)
 			prefs = M.client.prefs
 		else
 			prefs = new
 
-		var/adminoverride = 0
-		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
-			adminoverride = 1
-		if(isnewplayer(M) && !adminoverride)
+		var/override = FALSE
+		if(M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
+			override = TRUE
+		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE))
+			override = TRUE
+		if(isnewplayer(M) && !override)
 			continue
-		if(M.stat != DEAD && !adminoverride)
+		if(M.stat != DEAD && !override)
 			continue
 		if(speaker_key && speaker_key in prefs.ignoring)
 			continue
@@ -435,3 +477,16 @@ GLOBAL_LIST_EMPTY(species_list)
 		chosen = pick(mob_spawn_meancritters)
 	var/mob/living/simple_animal/C = new chosen(spawn_location)
 	return C
+
+/proc/passtable_on(target, source)
+	var/mob/living/L = target
+	if (!HAS_TRAIT(L, TRAIT_PASSTABLE) && L.pass_flags & PASSTABLE)
+		ADD_TRAIT(L, TRAIT_PASSTABLE, INNATE_TRAIT)
+	ADD_TRAIT(L, TRAIT_PASSTABLE, source)
+	L.pass_flags |= PASSTABLE
+
+/proc/passtable_off(target, source)
+	var/mob/living/L = target
+	REMOVE_TRAIT(L, TRAIT_PASSTABLE, source)
+	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
+		L.pass_flags &= ~PASSTABLE

@@ -4,6 +4,7 @@
 	circuit = /obj/item/circuitboard/machine/nanite_chamber
 	icon = 'icons/obj/machines/nanite_chamber.dmi'
 	icon_state = "nanite_chamber"
+	layer = ABOVE_WINDOW_LAYER
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
@@ -27,6 +28,11 @@
 	scan_level = 0
 	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
+
+/obj/machinery/nanite_chamber/examine(mob/user)
+	. = ..()
+	if(in_range(user, src) || isobserver(user))
+		. += "<span class='notice'>The status display reads: Scanning module has been upgraded to level <b>[scan_level]</b>.</span>"
 
 /obj/machinery/nanite_chamber/proc/set_busy(status, message, working_icon)
 	busy = status
@@ -147,10 +153,6 @@
 	//running
 	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
 
-/obj/machinery/nanite_chamber/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/nanite_chamber/proc/toggle_open(mob/user)
 	if(panel_open)
 		to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
@@ -176,7 +178,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked || busy)
 			return
@@ -225,6 +227,8 @@
 	toggle_open(user)
 
 /obj/machinery/nanite_chamber/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !Adjacent(target) || !user.Adjacent(target) || !iscarbon(target))
 		return
-	close_machine(target)
+	if(close_machine(target))
+		log_combat(user, target, "inserted", null, "into [src].")
+	add_fingerprint(user)

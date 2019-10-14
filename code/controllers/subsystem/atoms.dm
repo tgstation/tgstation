@@ -10,13 +10,13 @@ SUBSYSTEM_DEF(atoms)
 
 	var/old_initialized
 
-	var/list/late_loaders
+	var/list/late_loaders = list()
 
 	var/list/BadInitializeCalls = list()
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	GLOB.fire_overlay.appearance_flags = RESET_COLOR
-	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
+	setupGenetics() //to set the mutations' sequence
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
 	return ..()
@@ -26,8 +26,6 @@ SUBSYSTEM_DEF(atoms)
 		return
 
 	initialized = INITIALIZATION_INNEW_MAPLOAD
-
-	LAZYINITLIST(late_loaders)
 
 	var/count
 	var/list/mapload_arg = list(TRUE)
@@ -108,16 +106,20 @@ SUBSYSTEM_DEF(atoms)
 	BadInitializeCalls = SSatoms.BadInitializeCalls
 
 /datum/controller/subsystem/atoms/proc/setupGenetics()
-	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
-	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
-		avnums[i] = i
-		CHECK_TICK
-
-	for(var/A in subtypesof(/datum/mutation/human))
-		var/datum/mutation/human/B = new A()
-		if(B.dna_block == NON_SCANNABLE)
+	var/list/mutations = subtypesof(/datum/mutation/human)
+	shuffle_inplace(mutations)
+	for(var/A in subtypesof(/datum/generecipe))
+		var/datum/generecipe/GR = A
+		GLOB.mutation_recipes[initial(GR.required)] = initial(GR.result)
+	for(var/i in 1 to LAZYLEN(mutations))
+		var/path = mutations[i] //byond gets pissy when we do it in one line
+		var/datum/mutation/human/B = new path ()
+		B.alias = "Mutation [i]"
+		GLOB.all_mutations[B.type] = B
+		GLOB.full_sequences[B.type] = generate_gene_sequence(B.blocks)
+		GLOB.alias_mutations[B.alias] = B.type
+		if(B.locked)
 			continue
-		B.dna_block = pick_n_take(avnums)
 		if(B.quality == POSITIVE)
 			GLOB.good_mutations |= B
 		else if(B.quality == NEGATIVE)

@@ -12,7 +12,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=500)
+	custom_materials = list(/datum/material/iron=500)
 	resistance_flags = FIRE_PROOF
 	var/status = FALSE
 	var/lit = FALSE	//on or off
@@ -80,7 +80,7 @@
 			flame_turf(turflist)
 
 /obj/item/flamethrower/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !status)//Taking this apart
+	if(W.tool_behaviour == TOOL_WRENCH && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
 			weldtool.forceMove(T)
@@ -95,7 +95,7 @@
 		qdel(src)
 		return
 
-	else if(istype(W, /obj/item/screwdriver) && igniter && !lit)
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER && igniter && !lit)
 		status = !status
 		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
 		update_icon()
@@ -129,10 +129,11 @@
 	else
 		return ..()
 
-/obj/item/flamethrower/analyzer_act(mob/living/user, obj/item/I)
+/obj/item/flamethrower/return_analyzable_air()
 	if(ptank)
-		ptank.analyzer_act(user, I)
-
+		return ptank.return_analyzable_air()
+	else
+		return null
 
 /obj/item/flamethrower/attack_self(mob/user)
 	toggle_igniter(user)
@@ -145,9 +146,9 @@
 		update_icon()
 
 /obj/item/flamethrower/examine(mob/user)
-	..()
+	. = ..()
 	if(ptank)
-		to_chat(user, "<span class='notice'>\The [src] has \a [ptank] attached. Alt-click to remove it.</span>")
+		. += "<span class='notice'>\The [src] has \a [ptank] attached. Alt-click to remove it.</span>"
 
 /obj/item/flamethrower/proc/toggle_igniter(mob/user)
 	if(!ptank)
@@ -234,10 +235,11 @@
 	create_with_tank = TRUE
 
 /obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/item/projectile/P = hitby
+	var/obj/projectile/P = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>\The [attack_text] hits the fueltank on [owner]'s [name], rupturing it! What a shot!</span>")
-		var/target_turf = get_turf(owner)
+		var/turf/target_turf = get_turf(owner)
+		log_game("A projectile ([hitby]) detonated a flamethrower tank held by [key_name(owner)] at [COORD(target_turf)]")
 		igniter.ignite_turf(src,target_turf, release_amount = 100)
 		qdel(ptank)
 		return 1 //It hit the flamethrower, not them
@@ -245,9 +247,6 @@
 
 /obj/item/assembly/igniter/proc/flamethrower_process(turf/open/location)
 	location.hotspot_expose(700,2)
-
-/obj/item/assembly/igniter/cold/flamethrower_process(turf/open/location)
-	return
 
 /obj/item/assembly/igniter/proc/ignite_turf(obj/item/flamethrower/F,turf/open/location,release_amount = 0.05)
 	F.default_ignite(location,release_amount)

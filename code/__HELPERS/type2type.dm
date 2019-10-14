@@ -121,7 +121,6 @@
 
 //Converts an angle (degrees) into an ss13 direction
 /proc/angle2dir(degree)
-
 	degree = SIMPLIFY_DEGREES(degree)
 	switch(degree)
 		if(0 to 22.5) //north requires two angle ranges
@@ -143,8 +142,9 @@
 		if(337.5 to 360)
 			return NORTH
 
-/proc/angle2dir_cardinal(angle)
-	switch(round(angle, 0.1))
+/proc/angle2dir_cardinal(degree)
+	degree = SIMPLIFY_DEGREES(degree)
+	switch(round(degree, 0.1))
 		if(315.5 to 360, 0 to 45.5)
 			return NORTH
 		if(45.6 to 135.5)
@@ -195,7 +195,7 @@
 //Converts a rights bitfield into a string
 /proc/rights2text(rights, seperator="", prefix = "+")
 	seperator += prefix
-	if(rights & R_BUILDMODE)
+	if(rights & R_BUILD)
 		. += "[seperator]BUILDMODE"
 	if(rights & R_ADMIN)
 		. += "[seperator]ADMIN"
@@ -217,11 +217,11 @@
 		. += "[seperator]POLL"
 	if(rights & R_VAREDIT)
 		. += "[seperator]VAREDIT"
-	if(rights & R_SOUNDS)
+	if(rights & R_SOUND)
 		. += "[seperator]SOUND"
 	if(rights & R_SPAWN)
 		. += "[seperator]SPAWN"
-	if(rights & R_AUTOLOGIN)
+	if(rights & R_AUTOADMIN)
 		. += "[seperator]AUTOLOGIN"
 	if(rights & R_DBRANKS)
 		. += "[seperator]DBRANKS"
@@ -448,16 +448,6 @@
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
-/proc/fusionpower2text(power) //used when displaying fusion power on analyzers
-	switch(power)
-		if(0 to 5)
-			return "low"
-		if(5 to 20)
-			return "mid"
-		if(20 to 50)
-			return "high"
-		if(50 to INFINITY)
-			return "super"
 
 /proc/color2hex(color)	//web colors
 	if(!color)
@@ -513,7 +503,7 @@
 //The string is well, obviously the string being checked
 //The datum is used as a source for var names, to check validity
 //Otherwise every single word could technically be a variable!
-/proc/string2listofvars(var/t_string, var/datum/var_source)
+/proc/string2listofvars(t_string, datum/var_source)
 	if(!t_string || !var_source)
 		return list()
 

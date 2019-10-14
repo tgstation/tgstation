@@ -57,7 +57,7 @@
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
 
-//Sigil of Transgression: Stuns the first non-servant to walk on it and flashes all nearby non_servants. Nar-Sian cultists are damaged and knocked down for a longer time
+//Sigil of Transgression: Stuns the first non-servant to walk on it and flashes all nearby non_servants. Nar'Sian cultists are damaged and knocked down for a longer time
 /obj/effect/clockwork/sigil/transgression
 	name = "dull sigil"
 	desc = "A dull, barely-visible golden sigil. It's as though light was carved into the ground."
@@ -80,7 +80,7 @@
 	if(iscultist(L))
 		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
 		L.adjustBruteLoss(10)
-		L.Knockdown(80, FALSE)
+		L.Paralyze(80, FALSE)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
 	L.Stun(40)
@@ -147,7 +147,7 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/M = L
 			M.uncuff()
-	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
+	L.Paralyze(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
@@ -191,15 +191,15 @@
 		..()
 
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/structure_number = 0
 		for(var/obj/structure/destructible/clockwork/powered/P in range(SIGIL_ACCESS_RANGE, src))
 			structure_number++
-		to_chat(user, "<span class='[get_clockwork_power() ? "brass":"alloy"]'>It is storing <b>[DisplayPower(get_clockwork_power())]</b> of shared power, \
-		and <b>[structure_number]</b> clockwork structure[structure_number == 1 ? " is":"s are"] in range.</span>")
+		. += {"<span class='[get_clockwork_power() ? "brass":"alloy"]'>It is storing <b>[DisplayPower(get_clockwork_power())]</b> of shared power, 
+		and <b>[structure_number]</b> clockwork structure[structure_number == 1 ? " is":"s are"] in range.</span>"}
 		if(iscyborg(user))
-			to_chat(user, "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>")
+			. += "<span class='brass'>You can recharge from the [sigil_name] by crossing it.</span>"
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(is_servant_of_ratvar(L))
@@ -274,13 +274,13 @@
 	var/static/list/damage_heal_order = list(CLONE, TOX, BURN, BRUTE, OXY) //we heal damage in this order
 
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		to_chat(user, "<span class='[GLOB.clockwork_vitality ? "inathneq_small":"alloy"]'>It has access to <b>[GLOB.ratvar_awakens ? "INFINITE":GLOB.clockwork_vitality]</b> units of vitality.</span>")
+		. += "<span class='[GLOB.clockwork_vitality ? "inathneq_small":"alloy"]'>It has access to <b>[GLOB.ratvar_awakens ? "INFINITE":GLOB.clockwork_vitality]</b> units of vitality.</span>"
 		if(GLOB.ratvar_awakens)
-			to_chat(user, "<span class='inathneq_small'>It can revive Servants at no cost!</span>")
+			. += "<span class='inathneq_small'>It can revive Servants at no cost!</span>"
 		else
-			to_chat(user, "<span class='inathneq_small'>It can revive Servants at a cost of <b>[revive_cost]</b> vitality.</span>")
+			. += "<span class='inathneq_small'>It can revive Servants at a cost of <b>[revive_cost]</b> vitality.</span>"
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
@@ -302,7 +302,7 @@
 				vitality_drained = L.maxHealth
 				var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
-				playsound(L, 'sound/magic/wandodeath.ogg', 50, 1)
+				playsound(L, 'sound/magic/wandodeath.ogg', 50, TRUE)
 				L.visible_message("<span class='warning'>[L] collapses in on [L.p_them()]self as [src] flares bright blue!</span>")
 				to_chat(L, "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>")
 				for(var/obj/item/W in L)
@@ -336,7 +336,7 @@
 						L.revive(1, 1)
 						var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 						animate(V, alpha = 0, transform = matrix()*2, time = 8)
-						playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
+						playsound(L, 'sound/magic/staff_healing.ogg', 50, TRUE)
 						to_chat(L, "<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 						L.apply_status_effect(STATUS_EFFECT_ICHORIAL_STAIN)
 						GLOB.clockwork_vitality -= revival_cost
@@ -352,7 +352,7 @@
 					L.key = C.key
 					var/obj/effect/temp_visual/ratvar/sigil/vitality/V = new /obj/effect/temp_visual/ratvar/sigil/vitality(get_turf(src))
 					animate(V, alpha = 0, transform = matrix()*2, time = 8)
-					playsound(L, 'sound/magic/staff_healing.ogg', 50, 1)
+					playsound(L, 'sound/magic/staff_healing.ogg', 50, TRUE)
 					L.visible_message("<span class='warning'>[L]'s eyes suddenly open wide, gleaming with renewed vigor for the cause!</span>", "<span class='inathneq'>\"[text2ratvar("Awaken!")]\"</span>")
 					break
 			var/vitality_for_cycle = 3

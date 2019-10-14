@@ -45,7 +45,7 @@ Bonus
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
-	if(istype(eyes))
+	if(eyes)
 		switch(A.stage)
 			if(1, 2)
 				if(prob(base_message_chance) && !suppress_warning)
@@ -53,19 +53,19 @@ Bonus
 			if(3, 4)
 				to_chat(M, "<span class='warning'><b>Your eyes burn!</b></span>")
 				M.blur_eyes(10)
-				M.adjust_eye_damage(1)
+				eyes.applyOrganDamage(1)
 			else
 				M.blur_eyes(20)
-				M.adjust_eye_damage(5)
-				if(eyes.eye_damage >= 10)
+				eyes.applyOrganDamage(5)
+				if(eyes.damage >= 10)
 					M.become_nearsighted(EYE_DAMAGE)
-				if(prob(eyes.eye_damage - 10 + 1))
+				if(prob(eyes.damage - 10 + 1))
 					if(!remove_eyes)
-						if(!M.has_trait(TRAIT_BLIND))
+						if(!HAS_TRAIT(M, TRAIT_BLIND))
 							to_chat(M, "<span class='userdanger'>You go blind!</span>")
-						M.become_blind(EYE_DAMAGE)
+							eyes.applyOrganDamage(eyes.maxHealth)
 					else
-						M.visible_message("<span class='warning'>[M]'s eyes fall off their sockets!</span>", "<span class='userdanger'>Your eyes fall off their sockets!</span>")
+						M.visible_message("<span class='warning'>[M]'s eyes fall out of their sockets!</span>", "<span class='userdanger'>Your eyes fall out of their sockets!</span>")
 						eyes.Remove(M)
 						eyes.forceMove(get_turf(M))
 				else

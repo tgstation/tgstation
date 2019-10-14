@@ -6,7 +6,7 @@
 	icon_state = "judicial_visor_0"
 	item_state = "sunglasses"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 	var/active = FALSE //If the visor is online
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/effect/proc_holder/judicial_visor/blaster
@@ -151,7 +151,7 @@
 	desc = "You get the feeling that you shouldn't be standing here."
 	clockwork_desc = "A sigil that will soon erupt and smite any unenlightened nearby."
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = ""
+	icon_state = "transparent"
 	pixel_x = -32
 	pixel_y = -32
 	layer = BELOW_MOB_LAYER
@@ -170,13 +170,13 @@
 	return
 
 /obj/effect/clockwork/judicial_marker/proc/judicialblast()
-	playsound(src, 'sound/magic/magic_missile.ogg', 50, 1, 1, 1)
+	playsound(src, 'sound/magic/magic_missile.ogg', 50, TRUE, TRUE, TRUE)
 	flick("judicial_marker", src)
 	for(var/mob/living/carbon/C in range(1, src))
 		var/datum/status_effect/belligerent/B = C.apply_status_effect(STATUS_EFFECT_BELLIGERENT)
 		if(!QDELETED(B))
 			B.duration = world.time + 30
-			C.Knockdown(5) //knocks down for half a second if affected
+			C.Paralyze(5) //knocks down for half a second if affected
 	sleep(!GLOB.ratvar_approaches ? 16 : 10)
 	name = "judicial blast"
 	layer = ABOVE_ALL_MOB_LAYER
@@ -185,18 +185,18 @@
 	sleep(13)
 	name = "judicial explosion"
 	var/targetsjudged = 0
-	playsound(src, 'sound/effects/explosion_distant.ogg', 100, 1, 1, 1)
+	playsound(src, 'sound/effects/explosion_distant.ogg', 100, TRUE, TRUE, TRUE)
 	set_light(0)
 	for(var/mob/living/L in range(1, src))
 		if(is_servant_of_ratvar(L))
 			continue
-		if(L.anti_magic_check())
-			var/atom/I = L.anti_magic_check()
+		var/atom/I = L.anti_magic_check()
+		if(I)
 			if(isitem(I))
 				L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
 				"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
 			continue
-		L.Knockdown(15) //knocks down briefly when exploding
+		L.Paralyze(15) //knocks down briefly when exploding
 		if(!iscultist(L))
 			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")

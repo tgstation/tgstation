@@ -29,6 +29,37 @@
 /area/centcom/holding
 	name = "Holding Facility"
 
+/area/centcom/supplypod/flyMeToTheMoon
+	name = "Supplypod Shipping lane"
+	icon_state = "supplypod_flight"
+
+/area/centcom/supplypod
+	name = "Supplypod Facility"
+	icon_state = "supplypod"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
+/area/centcom/supplypod/podStorage
+	name = "Supplypod Storage"
+	icon_state = "supplypod_holding"
+
+/area/centcom/supplypod/loading
+	name = "Supplypod Loading Facility"
+	icon_state = "supplypod_loading"
+
+/area/centcom/supplypod/loading/one
+	name = "Bay #1"
+
+/area/centcom/supplypod/loading/two
+	name = "Bay #2"
+
+/area/centcom/supplypod/loading/three
+	name = "Bay #3"
+
+/area/centcom/supplypod/loading/four
+	name = "Bay #4"
+
+/area/centcom/supplypod/loading/ert
+	name = "ERT Bay"
 //THUNDERDOME
 
 /area/tdome
@@ -106,13 +137,6 @@
 /area/syndicate_mothership/elite_squad
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
-
-/area/fabric_of_reality
-	name = "Tear in the Fabric of Reality"
-	requires_power = FALSE
-	has_gravity = TRUE
-	noteleport = TRUE
-	blob_allowed = FALSE
 
 //CAPTURE THE FLAG
 

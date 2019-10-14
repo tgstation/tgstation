@@ -22,11 +22,12 @@
 	var/aisync = 1
 	var/panel_locked = TRUE
 
-/obj/item/robot_suit/New()
-	..()
-	updateicon()
+/obj/item/robot_suit/Initialize()
+	. = ..()
+	update_icon()
 
-/obj/item/robot_suit/prebuilt/New()
+/obj/item/robot_suit/prebuilt/Initialize()
+	. = ..()
 	l_arm = new(src)
 	r_arm = new(src)
 	l_leg = new(src)
@@ -37,9 +38,9 @@
 	chest = new(src)
 	chest.wired = TRUE
 	chest.cell = new /obj/item/stock_parts/cell/high/plus(chest)
-	..()
+	update_icon()
 
-/obj/item/robot_suit/proc/updateicon()
+/obj/item/robot_suit/update_icon()
 	cut_overlays()
 	if(l_arm)
 		add_overlay("[l_arm.icon_state]+o")
@@ -63,6 +64,7 @@
 	return 0
 
 /obj/item/robot_suit/wrench_act(mob/living/user, obj/item/I) //Deconstucts empty borg shell. Flashes remain unbroken because they haven't been used yet
+	. = ..()
 	var/turf/T = get_turf(src)
 	if(l_leg || r_leg || chest || l_arm || r_arm || head)
 		if(I.use_tool(src, user, 5, volume=50))
@@ -96,7 +98,7 @@
 			to_chat(user, "<span class='notice'>You disassemble the cyborg shell.</span>")
 	else
 		to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
-	updateicon()
+	update_icon()
 
 /obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
 	if(!user.put_in_hands(I))
@@ -105,6 +107,10 @@
 	return TRUE
 
 /obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Swaps the power cell if you're holding a new one in your other hand.
+	. = ..()
+	if(.)
+		return TRUE
+
 	if(!chest) //can't remove a cell if there's no chest to remove it from.
 		to_chat(user, "<span class='notice'>[src] has no attached torso.</span>")
 		return
@@ -149,14 +155,14 @@
 				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
 				return
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
-		if(src.l_leg)
+		if(l_leg)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
-		src.l_leg = W
-		src.updateicon()
+		l_leg = W
+		update_icon()
 
 	else if(istype(W, /obj/item/bodypart/r_leg/robot))
 		if(src.r_leg)
@@ -165,40 +171,40 @@
 			return
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
-		src.r_leg = W
-		src.updateicon()
+		r_leg = W
+		update_icon()
 
 	else if(istype(W, /obj/item/bodypart/l_arm/robot))
-		if(src.l_arm)
+		if(l_arm)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
-		src.l_arm = W
-		src.updateicon()
+		l_arm = W
+		update_icon()
 
 	else if(istype(W, /obj/item/bodypart/r_arm/robot))
-		if(src.r_arm)
+		if(r_arm)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		W.icon_state = initial(W.icon_state)//in case it is a dismembered robotic limb
 		W.cut_overlays()
-		src.r_arm = W
-		src.updateicon()
+		r_arm = W
+		update_icon()
 
 	else if(istype(W, /obj/item/bodypart/chest/robot))
 		var/obj/item/bodypart/chest/robot/CH = W
-		if(src.chest)
+		if(chest)
 			return
 		if(CH.wired && CH.cell)
 			if(!user.transferItemToLoc(CH, src))
 				return
 			CH.icon_state = initial(CH.icon_state) //in case it is a dismembered robotic limb
 			CH.cut_overlays()
-			src.chest = CH
-			src.updateicon()
+			chest = CH
+			update_icon()
 		else if(!CH.wired)
 			to_chat(user, "<span class='warning'>You need to attach wires to it first!</span>")
 		else
@@ -210,19 +216,19 @@
 			if(istype(X, /obj/item/organ))
 				to_chat(user, "<span class='warning'>There are organs inside [HD]!</span>")
 				return
-		if(src.head)
+		if(head)
 			return
 		if(HD.flash2 && HD.flash1)
 			if(!user.transferItemToLoc(HD, src))
 				return
 			HD.icon_state = initial(HD.icon_state)//in case it is a dismembered robotic limb
 			HD.cut_overlays()
-			src.head = HD
-			src.updateicon()
+			head = HD
+			update_icon()
 		else
 			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 
-	else if (istype(W, /obj/item/multitool))
+	else if (W.tool_behaviour == TOOL_MULTITOOL)
 		if(check_completion())
 			Interact(user)
 		else
@@ -250,11 +256,15 @@
 				to_chat(user, "<span class='warning'>The MMI indicates that their mind is currently inactive; it might change!</span>")
 				return
 
-			if(BM.stat == DEAD || (M.brain && M.brain.damaged_brain))
+			if(BM.stat == DEAD || BM.suiciding || (M.brain && (M.brain.brain_death || M.brain.suicided)))
 				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
 				return
 
-			if(jobban_isbanned(BM, "Cyborg") || QDELETED(src) || QDELETED(BM) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
+			if(M.brain?.organ_flags & ORGAN_FAILING)
+				to_chat(user, "<span class='warning'>The MMI indicates that the brain is damaged!</span>")
+				return
+
+			if(is_banned_from(BM.ckey, "Cyborg") || QDELETED(src) || QDELETED(BM) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
 				if(!QDELETED(M))
 					to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 				return
@@ -262,7 +272,7 @@
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/nocell(get_turf(loc))
 			if(!O)
 				return
 
@@ -291,12 +301,6 @@
 			SSticker.mode.remove_antag_for_borging(BM.mind)
 			if(!istype(M.laws, /datum/ai_laws/ratvar))
 				remove_servant_of_ratvar(BM, TRUE)
-			BM.mind.transfer_to(O)
-
-			if(O.mind && O.mind.special_role)
-				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
-				to_chat(O, "<span class='userdanger'>You have been robotized!</span>")
-				to_chat(O, "<span class='danger'>You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.</span>")
 
 			O.job = "Cyborg"
 
@@ -307,14 +311,25 @@
 			if(O.mmi) //we delete the mmi created by robot/New()
 				qdel(O.mmi)
 			O.mmi = W //and give the real mmi to the borg.
-			O.updatename()
+
+			O.updatename(BM.client)
+
+			BM.mind.transfer_to(O)
+
+			if(O.mind && O.mind.special_role)
+				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
+				to_chat(O, "<span class='userdanger'>You have been robotized!</span>")
+				to_chat(O, "<span class='danger'>You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.</span>")
+
 			SSblackbox.record_feedback("amount", "cyborg_birth", 1)
 			forceMove(O)
 			O.robot_suit = src
 
+			log_game("[key_name(user)] has put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell at [AREACOORD(src)]")
+
 			if(!locomotion)
-				O.lockcharge = 1
-				O.update_canmove()
+				O.lockcharge = TRUE
+				O.update_mobility()
 				to_chat(O, "<span class='warning'>Error: Servo motors unresponsive.</span>")
 
 		else
@@ -353,7 +368,7 @@
 			O.robot_suit = src
 			if(!locomotion)
 				O.lockcharge = TRUE
-				O.update_canmove()
+				O.update_mobility()
 
 	else if(istype(W, /obj/item/pen))
 		to_chat(user, "<span class='warning'>You need to use a multitool to name [src]!</span>")
@@ -378,7 +393,7 @@
 
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_held_item()
-	if(!istype(item_in_hand, /obj/item/multitool))
+	if(!item_in_hand || item_in_hand.tool_behaviour != TOOL_MULTITOOL)
 		to_chat(living_user, "<span class='warning'>You need a multitool!</span>")
 		return
 

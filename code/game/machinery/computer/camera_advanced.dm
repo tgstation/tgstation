@@ -29,8 +29,17 @@
 		if(lock_override & CAMERA_LOCK_REEBE)
 			z_lock |= SSmapping.levels_by_trait(ZTRAIT_REEBE)
 
+/obj/machinery/computer/camera_advanced/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	for(var/i in networks)
+		networks -= i
+		networks += "[idnum][i]"
+
 /obj/machinery/computer/camera_advanced/syndie
 	icon_keyboard = "syndie_key"
+	circuit = /obj/item/circuitboard/computer/advanced_camera
+
+/obj/machinery/computer/camera_advanced/syndie/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	return //For syndie nuke shuttle, to spy for station.
 
 /obj/machinery/computer/camera_advanced/proc/CreateEye()
 	eyeobj = new()
@@ -47,7 +56,10 @@
 		jump_action.Grant(user)
 		actions += jump_action
 
-/obj/machinery/computer/camera_advanced/proc/remove_eye_control(mob/living/user)
+/obj/machinery/proc/remove_eye_control(mob/living/user)
+	CRASH("[type] does not implement ai eye handling")
+
+/obj/machinery/computer/camera_advanced/remove_eye_control(mob/living/user)
 	if(!user)
 		return
 	for(var/V in actions)
@@ -66,7 +78,7 @@
 
 	current_user = null
 	user.unset_machine()
-	playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
+	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
 	if( (stat & (NOPOWER|BROKEN)) || (!Adjacent(user) && !user.has_unlimited_silicon_privilege) || user.eye_blind || user.incapacitated() )
@@ -96,8 +108,10 @@
 	. = ..()
 	if(.)
 		return
+	if(!is_operational()) //you cant use broken machine you chumbis
+		return
 	if(current_user)
-		to_chat(user, "The console is already in use!")
+		to_chat(user, "<span class='warning'>The console is already in use!</span>")
 		return
 	var/mob/living/L = user
 
@@ -157,7 +171,7 @@
 	var/cooldown = 0
 	var/acceleration = 1
 	var/mob/living/eye_user = null
-	var/obj/machinery/computer/camera_advanced/origin
+	var/obj/machinery/origin
 	var/eye_initialized = 0
 	var/visible_icon = 0
 	var/image/user_image = null
@@ -170,7 +184,7 @@
 
 /mob/camera/aiEye/remote/Destroy()
 	if(origin && eye_user)
-		origin.remove_eye_control(eye_user)
+		origin.remove_eye_control(eye_user,src)
 	origin = null
 	. = ..()
 	eye_user = null
@@ -255,17 +269,17 @@
 		if (tempnetwork.len)
 			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 
-	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, 0)
+	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	var/camera = input("Choose which camera you want to view", "Cameras") as null|anything in T
 	var/obj/machinery/camera/final = T[camera]
-	playsound(src, "terminal_type", 25, 0)
+	playsound(src, "terminal_type", 25, FALSE)
 	if(final)
-		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
+		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		remote_eye.setLoc(get_turf(final))
 		C.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
-		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, 0)
+		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 
 
 //Used by servants of Ratvar! They let you beam to the station.
@@ -287,9 +301,9 @@
 
 /obj/machinery/computer/camera_advanced/ratvar/CreateEye()
 	..()
-	eyeobj.visible_icon = 1
-	eyeobj.icon = 'icons/obj/abductor.dmi' //in case you still had any doubts
-	eyeobj.icon_state = "camera_target"
+	eyeobj.visible_icon = TRUE
+	eyeobj.icon = 'icons/mob/cameramob.dmi' //in case you still had any doubts
+	eyeobj.icon_state = "generic_camera"
 
 /obj/machinery/computer/camera_advanced/ratvar/GrantActions(mob/living/carbon/user)
 	..()

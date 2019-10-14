@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(medals)
 /datum/controller/subsystem/medals/Initialize(timeofday)
 	if(CONFIG_GET(string/medal_hub_address) && CONFIG_GET(string/medal_hub_password))
 		hub_enabled = TRUE
-	..()
+	return ..()
 
 /datum/controller/subsystem/medals/proc/UnlockMedal(medal, client/player)
 	set waitfor = FALSE

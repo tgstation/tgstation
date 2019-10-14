@@ -13,9 +13,9 @@
 
 /obj/item/clothing/gloves/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
 
-/obj/item/clothing/gloves/proc/clean_blood(strength)
+/obj/item/clothing/gloves/proc/clean_blood(datum/source, strength)
 	if(strength < CLEAN_STRENGTH_BLOOD)
 		return
 	transfer_blood = 0
@@ -29,7 +29,7 @@
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
-		IF_HAS_BLOOD_DNA(src)
+		if(HAS_BLOOD_DNA(src))
 			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaging = TRUE)

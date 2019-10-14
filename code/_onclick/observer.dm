@@ -1,5 +1,5 @@
-/mob/dead/observer/DblClickOn(var/atom/A, var/params)
-	if(check_click_intercept(params,A))
+/mob/dead/observer/DblClickOn(atom/A, params)
+	if(check_click_intercept(params, A))
 		return
 
 	if(can_reenter_corpse && mind && mind.current)
@@ -16,7 +16,7 @@
 		forceMove(get_turf(A))
 		update_parallax_contents()
 
-/mob/dead/observer/ClickOn(var/atom/A, var/params)
+/mob/dead/observer/ClickOn(atom/A, params)
 	if(check_click_intercept(params,A))
 		return
 
@@ -34,7 +34,7 @@
 		ShiftClickOn(A)
 		return
 	if(modifiers["alt"])
-		AltClickOn(A)
+		AltClickNoInteract(src, A)
 		return
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
@@ -51,7 +51,9 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_GHOST, user) & COMPONENT_NO_ATTACK_HAND)
 		return TRUE
 	if(user.client)
-		if(IsAdminGhost(user))
+		if(user.gas_scan && atmosanalyzer_scan(user, src))
+			return TRUE
+		else if(IsAdminGhost(user))
 			attack_ai(user)
 		else if(user.client.prefs.inquisitive_ghost)
 			user.examinate(src)

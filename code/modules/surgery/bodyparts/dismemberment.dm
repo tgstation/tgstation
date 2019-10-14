@@ -12,7 +12,7 @@
 		return FALSE
 	if(C.status_flags & GODMODE)
 		return FALSE
-	if(C.has_trait(TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
@@ -49,13 +49,13 @@
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
 		return FALSE
-	if(C.has_trait(TRAIT_NODISMEMBER))
+	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 	. = list()
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
 	C.add_splatter_floor(T)
-	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, 1)
+	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, TRUE)
 	for(var/X in C.internal_organs)
 		var/obj/item/organ/O = X
 		var/org_zone = check_zone(O.zone)
@@ -110,7 +110,7 @@
 			for(var/X in C.dna.mutations) //some mutations require having specific limbs to be kept.
 				var/datum/mutation/human/MT = X
 				if(MT.limb_req && MT.limb_req == body_zone)
-					MT.force_lose(C)
+					C.dna.force_lose(MT)
 
 		for(var/X in C.internal_organs) //internal organs inside the dismembered limb are dropped.
 			var/obj/item/organ/O = X
@@ -123,7 +123,7 @@
 	C.update_health_hud() //update the healthdoll
 	C.update_body()
 	C.update_hair()
-	C.update_canmove()
+	C.update_mobility()
 
 	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)
@@ -151,11 +151,18 @@
 		LB.brainmob = brainmob
 		brainmob = null
 		LB.brainmob.forceMove(LB)
-		LB.brainmob.container = LB
 		LB.brainmob.stat = DEAD
 
 /obj/item/organ/eyes/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
 	LB.eyes = src
+	..()
+
+/obj/item/organ/ears/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
+	LB.ears = src
+	..()
+
+/obj/item/organ/tongue/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
+	LB.tongue = src
 	..()
 
 /obj/item/bodypart/chest/drop_limb(special)
@@ -227,7 +234,7 @@
 			var/obj/item/I = X
 			owner.dropItemToGround(I, TRUE)
 
-	owner.wash_cream() //clean creampie overlay
+	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay
 
 	//Handle dental implants
 	for(var/datum/action/item_action/hands_free/activate_pill/AP in owner.actions)
@@ -298,7 +305,7 @@
 	C.update_body()
 	C.update_hair()
 	C.update_damage_overlays()
-	C.update_canmove()
+	C.update_mobility()
 
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
@@ -312,12 +319,19 @@
 		brain.Insert(C) //Now insert the brain proper
 		brain = null //No more brain in the head
 
+	if(tongue)
+		tongue = null
+	if(ears)
+		ears = null
+	if(eyes)
+		eyes = null
+
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		H.hair_color = hair_color
-		H.hair_style = hair_style
+		H.hairstyle = hairstyle
 		H.facial_hair_color = facial_hair_color
-		H.facial_hair_style = facial_hair_style
+		H.facial_hairstyle = facial_hairstyle
 		H.lip_style = lip_style
 		H.lip_color = lip_color
 	if(real_name)

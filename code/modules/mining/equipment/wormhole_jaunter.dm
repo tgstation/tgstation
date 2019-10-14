@@ -1,7 +1,7 @@
 /**********************Jaunter**********************/
 /obj/item/wormhole_jaunter
 	name = "wormhole jaunter"
-	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least.\nThanks to modifications provided by the Free Golems, this jaunter can be worn on the belt to provide protection from chasms."
+	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to bluespace for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least.\nThanks to modifications provided by the Free Golems, this jaunter can be worn on the belt to provide protection from chasms."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	item_state = "electronic"
@@ -47,7 +47,7 @@
 	var/obj/effect/portal/jaunt_tunnel/J = new (get_turf(src), src, 100, null, FALSE, get_turf(chosen_beacon))
 	if(adjacent)
 		try_move_adjacent(J)
-	playsound(src,'sound/effects/sparks4.ogg',50,1)
+	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	qdel(src)
 
 /obj/item/wormhole_jaunter/emp_act(power)
@@ -90,10 +90,10 @@
 	. = ..()
 	if(.)
 		// KERPLUNK
-		playsound(M,'sound/weapons/resonator_blast.ogg',50,1)
+		playsound(M,'sound/weapons/resonator_blast.ogg',50,TRUE)
 		if(iscarbon(M))
 			var/mob/living/carbon/L = M
-			L.Knockdown(60)
+			L.Paralyze(60)
 			if(ishuman(L))
 				shake_camera(L, 20, 1)
 				addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)

@@ -76,12 +76,12 @@
 		E = new V
 		E.Grant(src)
 
-/mob/camera/eminence/say(message)
+/mob/camera/eminence/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if(client.handle_spam_prevention(message,MUTE_IC))
+		if(!(ignore_spam || forced) && client.handle_spam_prevention(message,MUTE_IC))
 			return
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)
@@ -208,10 +208,10 @@
 	wall.turn_up_the_heat()
 	if(wall.heated)
 		superheated_walls++
-		to_chat(src, "<span class='neovgre_small'>You superheat [wall]. <b>Superheated walls:</b> [superheated_walls]/[SUPERHEATED_CLOCKWORK_WALL_LIMIT]")
+		to_chat(src, "<span class='neovgre_small'>You superheat [wall]. <b>Superheated walls:</b> [superheated_walls]/[SUPERHEATED_CLOCKWORK_WALL_LIMIT]</span>")
 	else
 		superheated_walls--
-		to_chat(src, "<span class='neovgre_small'>You cool [wall]. <b>Superheated walls:</b> [superheated_walls]/[SUPERHEATED_CLOCKWORK_WALL_LIMIT]")
+		to_chat(src, "<span class='neovgre_small'>You cool [wall]. <b>Superheated walls:</b> [superheated_walls]/[SUPERHEATED_CLOCKWORK_WALL_LIMIT]</span>")
 
 /mob/camera/eminence/proc/eminence_help()
 	to_chat(src, "<span class='bold alloy'>You can make use of certain shortcuts to perform different actions:</span>")

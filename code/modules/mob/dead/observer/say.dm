@@ -1,23 +1,21 @@
-/mob/dead/observer/say(message)
+/mob/dead/observer/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if (!message)
 		return
 
 	var/message_mode = get_message_mode(message)
-	if(client && (message_mode == "admin" || message_mode == "deadmin"))
+	if(client && (message_mode == MODE_ADMIN || message_mode == MODE_DEADMIN))
 		message = copytext(message, 3)
 		if(findtext(message, " ", 1, 2))
 			message = copytext(message, 2)
 
-		if(message_mode == "admin")
+		if(message_mode == MODE_ADMIN)
 			client.cmd_admin_say(message)
-		else if(message_mode == "deadmin")
+		else if(message_mode == MODE_DEADMIN)
 			client.dsay(message)
 		return
 
-	src.log_talk(message, LOG_SAY, tag="ghost")
-
-	if(check_emote(message))
+	if(check_emote(message, forced))
 		return
 
 	. = say_dead(message)

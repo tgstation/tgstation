@@ -12,8 +12,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	block_chance = 50
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	sharpness = IS_SHARP
 	max_integrity = 200
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -38,15 +37,15 @@
 		jaunt.Teleport(user, target)
 	if(proximity_flag && (isobj(target) || issilicon(target)))
 		spark_system.start()
-		playsound(user, "sparks", 50, 1)
-		playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
+		playsound(user, "sparks", 50, TRUE)
+		playsound(user, 'sound/weapons/blade1.ogg', 50, TRUE)
 		target.emag_act(user)
 
 /obj/item/energy_katana/pickup(mob/living/user)
 	. = ..()
 	jaunt.Grant(user, src)
 	user.update_icons()
-	playsound(src, 'sound/items/unsheath.ogg', 25, 1)
+	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
 
 /obj/item/energy_katana/dropped(mob/user)
 	. = ..()
@@ -56,7 +55,7 @@
 //If we hit the Ninja who owns this Katana, they catch it.
 //Works for if the Ninja throws it or it throws itself or someone tries
 //To throw it at the ninja
-/obj/item/energy_katana/throw_impact(atom/hit_atom)
+/obj/item/energy_katana/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(ishuman(hit_atom))
 		var/mob/living/carbon/human/H = hit_atom
 		if(istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
@@ -74,7 +73,7 @@
 
 	if(doSpark)
 		spark_system.start()
-		playsound(get_turf(src), "sparks", 50, 1)
+		playsound(get_turf(src), "sparks", 50, TRUE)
 
 	var/msg = ""
 

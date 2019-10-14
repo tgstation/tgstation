@@ -11,12 +11,11 @@
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=75, MAT_GLASS=25)
+	custom_materials = list(/datum/material/iron=75, /datum/material/glass=25)
 	obj_flags = USES_TGUI
 
 	var/on = TRUE
 	var/frequency = FREQ_COMMON
-	var/traitor_frequency = 0  // If tuned to this frequency, uplink will be unlocked.
 	var/canhear_range = 3  // The range around the radio in which mobs can hear what it receives.
 	var/emped = 0  // Tracks the number of EMPs currently stacked.
 
@@ -131,7 +130,7 @@
 	data["useCommand"] = use_command
 	data["subspace"] = subspace_transmission
 	data["subspaceSwitchable"] = subspace_switchable
-	data["headset"] = istype(src, /obj/item/radio/headset)
+	data["headset"] = FALSE
 
 	return data
 
@@ -190,7 +189,7 @@
 
 /obj/item/radio/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
 	if(!spans)
-		spans = M.get_spans()
+		spans = list(M.speech_span)
 	if(!language)
 		language = M.get_default_language()
 	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
@@ -222,7 +221,7 @@
 	// From the channel, determine the frequency and get a reference to it.
 	var/freq
 	if(channel && channels && channels.len > 0)
-		if(channel == "department")
+		if(channel == MODE_DEPARTMENT)
 			channel = channels[1]
 		freq = secure_radio_connections[channel]
 		if (!channels[channel]) // if the channel is turned off, don't broadcast
@@ -231,13 +230,12 @@
 		freq = frequency
 		channel = null
 
-	// Nearby active jammers severely gibberish the message
+	// Nearby active jammers prevent the message from transmitting
 	var/turf/position = get_turf(src)
 	for(var/obj/item/jammer/jammer in GLOB.active_jammers)
 		var/turf/jammer_turf = get_turf(jammer)
-		if(position.z == jammer_turf.z && (get_dist(position, jammer_turf) < jammer.range))
-			message = Gibberish(message,100)
-			break
+		if(position.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range))
+			return
 
 	// Determine the identity information which will be attached to the signal.
 	var/atom/movable/virtualspeaker/speaker = new(null, M, src)
@@ -320,15 +318,17 @@
 
 
 /obj/item/radio/examine(mob/user)
-	..()
+	. = ..()
+	if (frequency && in_range(src, user))
+		. += "<span class='notice'>It is set to broadcast over the [frequency/10] frequency.</span>"
 	if (unscrewed)
-		to_chat(user, "<span class='notice'>It can be attached and modified.</span>")
+		. += "<span class='notice'>It can be attached and modified.</span>"
 	else
-		to_chat(user, "<span class='notice'>It cannot be modified or attached.</span>")
+		. += "<span class='notice'>It cannot be modified or attached.</span>"
 
 /obj/item/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		unscrewed = !unscrewed
 		if(unscrewed)
 			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
@@ -350,11 +350,14 @@
 	for (var/ch_name in channels)
 		channels[ch_name] = 0
 	on = FALSE
-	spawn(200)
-		if(emped == curremp) //Don't fix it if it's been EMP'd again
-			emped = 0
-			if (!istype(src, /obj/item/radio/intercom)) // intercoms will turn back on on their own
-				on = TRUE
+	addtimer(CALLBACK(src, .proc/end_emp_effect, curremp), 200)
+
+/obj/item/radio/proc/end_emp_effect(curremp)
+	if(emped != curremp) //Don't fix it if it's been EMP'd again
+		return FALSE
+	emped = FALSE
+	on = TRUE
+	return TRUE
 
 ///////////////////////////////
 //////////Borg Radios//////////
@@ -379,7 +382,7 @@
 
 /obj/item/radio/borg/attackby(obj/item/W, mob/user, params)
 
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(keyslot)
 			for(var/ch_name in channels)
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])

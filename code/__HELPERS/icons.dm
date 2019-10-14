@@ -706,14 +706,30 @@ world
 		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48),
 		((hi4 >= 65 ? hi4-55 : hi4-48)<<4) | (lo4 >= 65 ? lo4-55 : lo4-48))
 
-// Creates a single icon from a given /atom or /image.  Only the first argument is required.
+/// Create a single [/icon] from a given [/atom] or [/image].
+///
+/// Very low-performance. Should usually only be used for HTML, where BYOND's
+/// appearance system (overlays/underlays, etc.) is not available.
+///
+/// Only the first argument is required.
 /proc/getFlatIcon(image/A, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
 	//Define... defines.
 	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
 
 	#define BLANK icon(flat_template)
-	#define SET_SELF(SETVAR) var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null);if(A.alpha<255)SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);if(A.color)SELF_ICON.Blend(A.color,ICON_MULTIPLY);;##SETVAR=SELF_ICON;
-
+	#define SET_SELF(SETVAR) do { \
+		var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null); \
+		if(A.alpha<255) { \
+			SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);\
+		} \
+		if(A.color) { \
+			if(islist(A.color)){ \
+				SELF_ICON.MapColors(arglist(A.color))} \
+			else{ \
+				SELF_ICON.Blend(A.color,ICON_MULTIPLY)} \
+		} \
+		##SETVAR=SELF_ICON;\
+		} while (0)
 	#define INDEX_X_LOW 1
 	#define INDEX_X_HIGH 2
 	#define INDEX_Y_LOW 3
@@ -860,7 +876,11 @@ world
 			flat.Blend(add, blendMode2iconMode(curblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
 
 		if(A.color)
-			flat.Blend(A.color, ICON_MULTIPLY)
+			if(islist(A.color))
+				flat.MapColors(arglist(A.color))
+			else
+				flat.Blend(A.color, ICON_MULTIPLY)
+
 		if(A.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 

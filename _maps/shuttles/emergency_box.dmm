@@ -109,7 +109,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "az" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aA" = (
@@ -269,9 +269,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bd" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "be" = (
@@ -306,6 +304,10 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bj" = (
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	use_power = 0
+	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bk" = (

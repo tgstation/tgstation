@@ -2,11 +2,9 @@
 	layer = CLOSED_TURF_LAYER
 	opacity = 1
 	density = TRUE
-	blocks_air = 1
-
-/turf/closed/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
+	blocks_air = TRUE
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_MEDIUM_INSULATION
 
 /turf/closed/AfterChange()
 	. = ..()
@@ -25,7 +23,7 @@
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
 
-/turf/closed/indestructible/TerraformTurf(path, defer_change = FALSE, ignore_air = FALSE)
+/turf/closed/indestructible/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)
 	return
 
 /turf/closed/indestructible/acid_act(acidpwr, acid_volume, acid_id)
@@ -79,6 +77,11 @@
 	icon_state = "riveted"
 	smooth = SMOOTH_TRUE
 
+/turf/closed/indestructible/syndicate
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle"
+	smooth = SMOOTH_MORE
+
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
@@ -101,6 +104,19 @@
 	icon_state = null //set the icon state to null, so our base state isn't visible
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
+
+/turf/closed/indestructible/opsglass
+	name = "window"
+	icon_state = "plastitanium_window"
+	opacity = 0
+	smooth = SMOOTH_TRUE
+	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
+
+/turf/closed/indestructible/opsglass/Initialize()
+	. = ..()
+	icon_state = null
+	underlays += mutable_appearance('icons/obj/structures.dmi', "grille")
+	underlays += mutable_appearance('icons/turf/floors.dmi', "plating")
 
 /turf/closed/indestructible/fakedoor
 	name = "CentCom Access"

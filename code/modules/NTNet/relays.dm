@@ -9,6 +9,9 @@
 	icon_state = "bus"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ntnet_relay
+	ui_x = 500
+	ui_y = 300
+
 	var/datum/ntnet/NTNet = null // This is mostly for backwards reference and to allow varedit modifications from ingame.
 	var/enabled = 1				// Set to 0 if the relay was turned off
 	var/dos_failure = 0			// Set to 1 if the relay failed due to (D)DoS attack
@@ -66,7 +69,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "ntnet_relay", "NTNet Quantum Relay", 500, 300, master_ui, state)
+		ui = new(user, src, ui_key, "ntnet_relay", "NTNet Quantum Relay", ui_x, ui_y, master_ui, state)
 		ui.open()
 
 

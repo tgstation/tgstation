@@ -6,6 +6,7 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 	density = FALSE
+	move_resist = INFINITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	use_power = NO_POWER_USE
 	interaction_flags_atom = NONE
@@ -35,9 +36,9 @@
 /obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 
 /obj/machinery/field/containment/blob_act(obj/structure/blob/B)
 	return FALSE
@@ -107,7 +108,7 @@
 	var/shock_damage = min(rand(30,40),rand(30,40))
 
 	if(iscarbon(user))
-		user.Knockdown(300)
+		user.Paralyze(300)
 		user.electrocute_act(shock_damage, src, 1)
 
 	else if(issilicon(user))
@@ -116,7 +117,7 @@
 		user.take_overall_damage(0, shock_damage)
 		user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
 		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
-		"<span class='italics'>You hear an electrical crack.</span>")
+		"<span class='hear'>You hear an electrical crack.</span>")
 
 	user.updatehealth()
 	bump_field(user)

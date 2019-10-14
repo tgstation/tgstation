@@ -27,6 +27,11 @@
 		board.moved = TRUE
 	..()
 
+/obj/machinery/computer/shuttle/syndicate/allowed(mob/M)
+	if(issilicon(M) && !(ROLE_SYNDICATE in M.faction))
+		return FALSE
+	return ..()
+
 /obj/machinery/computer/shuttle/syndicate/drop_pod
 	name = "syndicate assault pod control"
 	desc = "Controls the drop pod's launch system."
@@ -53,7 +58,6 @@
 	shuttleId = "syndicate"
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "syndicate_custom"
-	shuttlePortName = "custom location"
 	jumpto_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1)
 	view_range = 13
 	x_offset = -7

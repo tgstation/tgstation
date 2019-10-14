@@ -58,6 +58,23 @@ class DMM:
 
         raise RuntimeError("ran out of keys, this shouldn't happen")
 
+    def overwrite_key(self, key, fixed, bad_keys):
+        try:
+            self.dictionary[key] = fixed
+            return None
+        except bidict.DuplicationError:
+            old_key = self.dictionary.inv[fixed]
+            bad_keys[key] = old_key
+            print(f"Merging '{num_to_key(key, self.key_length)}' into '{num_to_key(old_key, self.key_length)}'")
+            return old_key
+
+    def reassign_bad_keys(self, bad_keys):
+        if not bad_keys:
+            return
+        for k, v in self.grid.items():
+            # reassign the grid entries which used the old key
+            self.grid[k] = bad_keys.get(v, v)
+
     def _presave_checks(self):
         # last-second handling of bogus keys to help prevent and fix broken maps
         self._ensure_free_keys(0)
@@ -77,18 +94,9 @@ class DMM:
             value = self.dictionary[key]
             if is_bad_atom_ordering(num_to_key(key, self.key_length, True), value):
                 fixed = tuple(fix_atom_ordering(value))
-                try:
-                    self.dictionary[key] = fixed
-                except bidict.DuplicationError:
-                    bad = self.dictionary.inv[fixed]
-                    print(f"During autofixing, merging '{num_to_key(bad, self.key_length)}' into '{num_to_key(key, self.key_length)}'")
-                    bad_keys[bad] = key
-                    self.dictionary.forceput(key, fixed)
-                    keys.remove(bad)
+                self.overwrite_key(key, fixed, bad_keys)
 
-        for k, v in self.grid.items():
-            # reassign the grid entries which used the old key
-            self.grid[k] = bad_keys.get(v, v)
+        self.reassign_bad_keys(bad_keys)
 
     def _ensure_free_keys(self, desired):
         # ensure that free keys exist by increasing the key length if necessary
@@ -335,7 +343,7 @@ def _parse(map_raw_text):
     in_map_block = False
     in_coord_block = False
     in_map_string = False
-    iter_x = 0
+    base_x = 0
     adjust_y = True
 
     curr_num = ""
@@ -362,7 +370,7 @@ def _parse(map_raw_text):
             continue
         elif in_comment_line:
             continue
-        elif char == "\t":
+        elif char in "\r\t":
             continue
 
         if char == "/" and not in_quote_block:
@@ -470,13 +478,16 @@ def _parse(map_raw_text):
 
     # grid block
     for char in it:
+        if char == "\r":
+            continue
+
         if in_coord_block:
             if char == ",":
                 if reading_coord == "x":
                     curr_x = int(curr_num)
                     if curr_x > maxx:
                         maxx = curr_x
-                    iter_x = 0
+                    base_x = curr_x
                     curr_num = ""
                     reading_coord = "y"
                 elif reading_coord == "y":
@@ -510,21 +521,15 @@ def _parse(map_raw_text):
                     adjust_y = False
                 else:
                     curr_y += 1
-                if curr_x > maxx:
-                    maxx = curr_x
-                if iter_x > 1:
-                    curr_x = 1
-                iter_x = 0
-
+                curr_x = base_x
             else:
                 curr_key = BASE * curr_key + base52_r[char]
                 curr_key_len += 1
                 if curr_key_len == key_length:
-                    iter_x += 1
-                    if iter_x > 1:
-                        curr_x += 1
-
                     grid[curr_x, curr_y, curr_z] = duplicate_keys.get(curr_key, curr_key)
+                    if curr_x > maxx:
+                        maxx = curr_x
+                    curr_x += 1
                     curr_key = 0
                     curr_key_len = 0
 

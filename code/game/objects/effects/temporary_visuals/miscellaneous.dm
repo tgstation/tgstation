@@ -141,7 +141,24 @@
 	. = ..()
 	update_icon()
 
-/obj/item/projectile/curse_hand/update_icon()
+/obj/effect/temp_visual/bsa_splash
+	name = "\improper Bluespace energy wave"
+	desc = "A massive, rippling wave of bluepace energy, all rapidly exhausting itself the moment it leaves the concentrated beam of light."
+	icon = 'icons/effects/beam_splash.dmi'
+	icon_state = "beam_splash_l"
+	layer = ABOVE_ALL_MOB_LAYER
+	pixel_y = -16
+	duration = 50
+
+/obj/effect/temp_visual/bsa_splash/Initialize(mapload, dir)
+	. = ..()
+	switch(dir)
+		if(WEST)
+			icon_state = "beam_splash_w"
+		if(EAST)
+			icon_state = "beam_splash_e"
+
+/obj/projectile/curse_hand/update_icon()
 	icon_state = "[icon_state][handedness]"
 
 /obj/effect/temp_visual/wizard
@@ -313,6 +330,11 @@
 	randomdir = 0
 	duration = 6
 
+/obj/effect/temp_visual/desynchronizer
+	name = "desynchronizer field"
+	icon_state = "chronofield"
+	duration = 3
+
 /obj/effect/temp_visual/impact_effect
 	icon_state = "impact_bullet"
 	duration = 5
@@ -341,6 +363,10 @@
 /obj/effect/temp_visual/impact_effect/purple_laser
 	icon_state = "impact_laser_purple"
 	duration = 4
+
+/obj/effect/temp_visual/impact_effect/shrink
+	icon_state = "m_shield"
+	duration = 10
 
 /obj/effect/temp_visual/impact_effect/ion
 	icon_state = "shieldsparkles"
@@ -435,3 +461,4 @@
 			animate(src, alpha = 0, transform = skew, time = duration)
 	else
 		return INITIALIZE_HINT_QDEL
+

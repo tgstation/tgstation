@@ -11,7 +11,7 @@
 	growthstages = 5
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/nettle/death)
-	reagents_add = list("sacid" = 0.5)
+	reagents_add = list(/datum/reagent/toxin/acid = 0.5)
 
 /obj/item/seeds/nettle/death
 	name = "pack of death-nettle seeds"
@@ -25,7 +25,7 @@
 	yield = 2
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging)
 	mutatelist = list()
-	reagents_add = list("facid" = 0.5, "sacid" = 0.5)
+	reagents_add = list(/datum/reagent/toxin/acid/fluacid = 0.5, /datum/reagent/toxin/acid = 0.5)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/nettle // "snack"
@@ -56,7 +56,7 @@
 	var/mob/living/carbon/C = user
 	if(C.gloves)
 		return FALSE
-	if(C.has_trait(TRAIT_PIERCEIMMUNE))
+	if(HAS_TRAIT(C, TRAIT_PIERCEIMMUNE))
 		return FALSE
 	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
 	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
@@ -98,7 +98,7 @@
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/pickup(mob/living/carbon/user)
 	if(..())
 		if(prob(50))
-			user.Knockdown(100)
+			user.Paralyze(100)
 			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle as you try picking it up!</span>")
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
@@ -111,5 +111,5 @@
 		M.adjust_blurriness(force/7)
 		if(prob(20))
 			M.Unconscious(force / 0.3)
-			M.Knockdown(force / 0.75)
+			M.Paralyze(force / 0.75)
 		M.drop_all_held_items()

@@ -3,6 +3,11 @@
 
 //#define DATUMVAR_DEBUGGING_MODE	//Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
 
+// Comment this out if you are debugging problems that might be obscured by custom error handling in world/Error
+#ifdef DEBUG
+#define USE_CUSTOM_ERROR_HANDLER
+#endif
+
 #ifdef TESTING
 #define DATUMVAR_DEBUGGING_MODE
 

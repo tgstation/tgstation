@@ -6,7 +6,7 @@
 	return
 
 /datum/proc/ntnet_send(datum/netdata/data, netid)
-	GET_COMPONENT(NIC, /datum/component/ntnet_interface)
+	var/datum/component/ntnet_interface/NIC = GetComponent(/datum/component/ntnet_interface)
 	if(!NIC)
 		return FALSE
 	return NIC.__network_send(data, netid)
@@ -39,8 +39,6 @@
 		parent.ntnet_receive(data)
 
 /datum/component/ntnet_interface/proc/__network_send(datum/netdata/data, netid)			//Do not directly proccall!
-	// Process data before sending it
-	data.pre_send(src)
 
 	if(netid)
 		if(networks_connected_by_id[netid])

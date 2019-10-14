@@ -23,7 +23,7 @@
 /obj/item/latexballon/proc/burst()
 	if (!air_contents || icon_state != "latexballon_blow")
 		return
-	playsound(src, 'sound/weapons/gunshot.ogg', 100, 1)
+	playsound(src, 'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
 	icon_state = "latexballon_bursted"
 	item_state = "lgloves"
 	if(isliving(loc))
@@ -40,8 +40,10 @@
 			if (prob(50))
 				qdel(src)
 
-/obj/item/latexballon/bullet_act()
-	burst()
+/obj/item/latexballon/bullet_act(obj/projectile/P)
+	if(!P.nodamage)
+		burst()
+	return ..()
 
 /obj/item/latexballon/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+100)
@@ -52,5 +54,5 @@
 		var/obj/item/tank/T = W
 		blow(T, user)
 		return
-	if (W.is_sharp() || W.is_hot() || is_pointed(W))
+	if (W.get_sharpness() || W.get_temperature() || is_pointed(W))
 		burst()

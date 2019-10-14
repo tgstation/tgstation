@@ -47,7 +47,7 @@
 				atoms += A
 			CHECK_TICK
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	var/icon/res = icon('icons/effects/96x96.dmi', "transparent")
 	res.Scale(psize_x, psize_y)
 
 	var/list/sorted = list()
@@ -73,14 +73,15 @@
 			xo += AM.step_x
 			yo += AM.step_y
 		var/icon/img = getFlatIcon(A)
-		res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
+		if(img)
+			res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
 		CHECK_TICK
 
 	if(!silent)
 		if(istype(custom_sound))				//This is where the camera actually finishes its exposure.
-			playsound(loc, custom_sound, 75, 1, -3)
+			playsound(loc, custom_sound, 75, TRUE, -3)
 		else
-			playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
+			playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE, -3)
 
 	if(wipe_atoms)
 		QDEL_LIST(atoms)

@@ -49,23 +49,19 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "al" = (
-/obj/effect/decal/cleanable/salt,
+/obj/effect/decal/cleanable/food/salt,
 /obj/item/reagent_containers/food/condiment/saltshaker,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "am" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
+/obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},
 /area/ruin/unpowered/no_grav)
 "an" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
+/obj/structure/fluff/bus/passable/seat,
 /obj/item/reagent_containers/food/snacks/faggot,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
@@ -79,7 +75,6 @@
 /area/ruin/unpowered/no_grav)
 "ap" = (
 /obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat";
 	pixel_y = 15
 	},
 /turf/open/floor/plasteel/airless/dark{
@@ -87,9 +82,7 @@
 	},
 /area/ruin/unpowered/no_grav)
 "aq" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
+/obj/structure/fluff/bus/passable/seat,
 /obj/item/reagent_containers/food/snacks/faggot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/dark{
@@ -97,21 +90,16 @@
 	},
 /area/ruin/unpowered/no_grav)
 "ar" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
-/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
+/obj/structure/fluff/bus/passable/seat,
+/obj/item/reagent_containers/food/snacks/grown/cherry_bomb,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},
 /area/ruin/unpowered/no_grav)
 "as" = (
-/obj/structure/fluff/bus/passable/seat/driver{
-	icon_state = "driverseat";
-	pixel_y = 17
-	},
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb,
+/obj/structure/fluff/bus/passable/seat/driver,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/grown/citrus/orange,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},
@@ -203,9 +191,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "aG" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
+/obj/structure/fluff/bus/passable/seat,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "aH" = (
@@ -278,9 +264,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "aU" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
+/obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/food/snacks/faggot,
 /turf/open/floor/plasteel/airless/dark{
@@ -288,19 +272,14 @@
 	},
 /area/ruin/unpowered/no_grav)
 "aV" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
+/obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/remains/human,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
 	},
 /area/ruin/unpowered/no_grav)
 "aW" = (
-/obj/structure/fluff/bus/passable/seat/driver{
-	icon_state = "driverseat";
-	pixel_y = 17
-	},
+/obj/structure/fluff/bus/passable/seat/driver,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/dark{
 	icon_state = "bus"
@@ -335,9 +314,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "XA" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
+/obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toy/plush/awakenedplushie,
 /turf/open/floor/plasteel/airless/dark{

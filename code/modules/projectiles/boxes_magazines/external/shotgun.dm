@@ -8,7 +8,7 @@
 
 /obj/item/ammo_box/magazine/m12g/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[CEILING(ammo_count(0)/8, 1)*8]"
+	icon_state = "[initial(icon_state)]-[CEILING(ammo_count(FALSE)/8, 1)*8]"
 
 /obj/item/ammo_box/magazine/m12g/stun
 	name = "shotgun magazine (12g taser slugs)"

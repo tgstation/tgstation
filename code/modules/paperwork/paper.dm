@@ -21,6 +21,11 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	dog_fashion = /datum/dog_fashion/head
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
+
+
+	var/extra_headers //For additional styling or other js features.
 
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
@@ -63,21 +68,19 @@
 
 
 /obj/item/paper/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to fold it.</span>")
-
+	. = ..()
 	var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
 	assets.send(user)
 
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(user, "[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=paper[md5(name)]")
+			onclose(user, "paper[md5(name)]")
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(user, "[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=paper[md5(name)]")
+			onclose(user, "paper[md5(name)]")
 	else
-		to_chat(user, "<span class='warning'>You're too far away to read it!</span>")
+		. += "<span class='warning'>You're too far away to read it!</span>"
 
 
 /obj/item/paper/verb/rename()
@@ -89,7 +92,7 @@
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		if(H.has_trait(TRAIT_CLUMSY) && prob(25))
+		if(HAS_TRAIT(H, TRAIT_CLUMSY) && prob(25))
 			to_chat(H, "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>")
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
@@ -112,7 +115,7 @@
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
 		if(!spam_flag)
 			spam_flag = TRUE
-			playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
+			playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 			addtimer(CALLBACK(src, .proc/reset_spamflag), 20)
 
 
@@ -134,7 +137,7 @@
 	var/locid = 0
 	var/laststart = 1
 	var/textindex = 1
-	while(1)	//I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
+	while(locid < 15)	//hey whoever decided a while(1) was a good idea here, i hate you
 		var/istart = 0
 		if(links)
 			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
@@ -198,7 +201,7 @@
 
 	// Count the fields
 	var/laststart = 1
-	while(1)
+	while(fields < 15)
 		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
 		if(i == 0)
 			break
@@ -210,7 +213,7 @@
 /obj/item/paper/proc/reload_fields() // Useful if you made the paper programicly and want to include fields. Also runs updateinfolinks() for you.
 	fields = 0
 	var/laststart = 1
-	while(1)
+	while(fields < 15)
 		var/i = findtext(info, "<span class=\"paper_field\">", laststart)
 		if(i == 0)
 			break
@@ -266,6 +269,7 @@
 		if(!in_range(src, usr) && loc != usr && !istype(loc, /obj/item/clipboard) && loc.loc != usr && usr.get_active_held_item() != i)	//Some check to see if he's allowed to write
 			return
 
+		log_paper("[key_name(usr)] writing to paper [t]")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
 		if(t != null)	//No input from the user means nothing needs to be added
@@ -292,7 +296,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=[REF(src)];help=1'>\[?\]</A></div></HTML>", "window=[name]")
 			return
 		else
-			to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
+			to_chat(user, "<span class='warning'>You don't know how to read or write!</span>")
 			return
 
 	else if(istype(P, /obj/item/stamp))
@@ -313,8 +317,8 @@
 
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
-	if(P.is_hot())
-		if(user.has_trait(TRAIT_CLUMSY) && prob(10))
+	if(P.get_temperature())
+		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)

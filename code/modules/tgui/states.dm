@@ -60,9 +60,14 @@
 		return UI_CLOSE
 	else if(stat) // Disable UIs if unconcious.
 		return UI_DISABLED
-	else if(incapacitated() || lying) // Update UIs if incapicitated but concious.
+	else if(incapacitated()) // Update UIs if incapicitated but concious.
 		return UI_UPDATE
 	return UI_INTERACTIVE
+
+/mob/living/shared_ui_interaction(src_object)
+	. = ..()
+	if(!(mobility_flags & MOBILITY_UI) && . == UI_INTERACTIVE)
+		return UI_UPDATE
 
 /mob/living/silicon/ai/shared_ui_interaction(src_object)
 	if(lacks_power()) // Disable UIs if the AI is unpowered.

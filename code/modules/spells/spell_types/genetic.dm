@@ -4,7 +4,7 @@
 
 	var/list/active_on = list()
 	var/list/traits = list() //disabilities
-	var/list/mutations = list() //mutation strings
+	var/list/mutations = list() //mutation defines
 	var/duration = 100 //deciseconds
 	/*
 		Disabilities
@@ -26,9 +26,10 @@
 		for(var/A in mutations)
 			target.dna.add_mutation(A)
 		for(var/A in traits)
-			target.add_trait(A, GENETICS_SPELL)
+			ADD_TRAIT(target, A, GENETICS_SPELL)
 		active_on += target
-		addtimer(CALLBACK(src, .proc/remove, target), duration)
+		if(duration < charge_max)
+			addtimer(CALLBACK(src, .proc/remove, target), duration, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/effect/proc_holder/spell/targeted/genetic/Destroy()
 	. = ..()
@@ -41,4 +42,4 @@
 		for(var/A in mutations)
 			target.dna.remove_mutation(A)
 		for(var/A in traits)
-			target.remove_trait(A, GENETICS_SPELL)
+			REMOVE_TRAIT(target, A, GENETICS_SPELL)

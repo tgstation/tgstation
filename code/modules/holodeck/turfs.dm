@@ -21,7 +21,7 @@
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
-	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
+	initial_gas_mix = BURNMIX_ATMOS
 
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
@@ -54,8 +54,9 @@
 	bullet_sizzle = TRUE
 
 /turf/open/floor/holofloor/asteroid
-	name = "asteroid"
-	icon_state = "asteroid0"
+	gender = PLURAL
+	name = "asteroid sand"
+	icon_state = "asteroid"
 	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/asteroid/Initialize()
@@ -119,6 +120,10 @@
 	if(intact)
 		queue_smooth(src)
 
+/turf/open/floor/holofloor/wood
+	icon_state = "wood"
+	tiled_dirt = FALSE
+
 /turf/open/floor/holofloor/snow
 	gender = PLURAL
 	name = "snow"
@@ -132,10 +137,3 @@
 
 /turf/open/floor/holofloor/snow/cold
 	initial_gas_mix = "nob=7500;TEMP=2.7"
-
-/turf/open/floor/holofloor/asteroid
-	gender = PLURAL
-	name = "asteroid sand"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "asteroid"
-	tiled_dirt = FALSE

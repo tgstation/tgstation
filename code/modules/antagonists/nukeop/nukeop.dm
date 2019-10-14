@@ -23,10 +23,12 @@
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_synd_icons_added(M)
+	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_synd_icons_removed(M)
+	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
@@ -42,7 +44,6 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
 	to_chat(owner, "<span class='notice'>You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!</span>")
 	owner.announce_objectives()
-	return
 
 /datum/antagonist/nukeop/on_gain()
 	give_alias()
@@ -52,6 +53,13 @@
 	memorize_code()
 	if(send_to_spawnpoint)
 		move_to_spawnpoint()
+		// grant extra TC for the people who start in the nukie base ie. not the lone op
+		var/extra_tc = CEILING(GLOB.joined_player_list.len/5, 5)
+		var/datum/component/uplink/U = owner.find_syndicate_uplink()
+		if (U)
+			U.telecrystals += extra_tc
+
+
 
 /datum/antagonist/nukeop/get_team()
 	return nuke_team
@@ -74,9 +82,16 @@
 
 /datum/antagonist/nukeop/proc/give_alias()
 	if(nuke_team && nuke_team.syndicate_name)
-		var/number = 1
-		number = nuke_team.members.Find(owner)
-		owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
+		var/mob/living/carbon/human/H = owner.current
+		if(istype(H)) // Reinforcements get a real name
+			var/chosen_name = H.dna.species.random_name(H.gender,0,nuke_team.syndicate_name)
+			H.fully_replace_character_name(H.real_name,chosen_name)
+		else
+			var/number = 1
+			number = nuke_team.members.Find(owner)
+			owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
+
+
 
 /datum/antagonist/nukeop/proc/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
@@ -87,7 +102,7 @@
 
 /datum/antagonist/nukeop/proc/forge_objectives()
 	if(nuke_team)
-		owner.objectives |= nuke_team.objectives
+		objectives |= nuke_team.objectives
 
 /datum/antagonist/nukeop/proc/move_to_spawnpoint()
 	var/team_number = 1
@@ -118,8 +133,8 @@
 /datum/antagonist/nukeop/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.assigned_role = ROLE_SYNDICATE
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has nuke op'ed [new_owner.current].")
-	log_admin("[key_name(admin)] has nuke op'ed [new_owner.current].")
+	message_admins("[key_name_admin(admin)] has nuke op'ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has nuke op'ed [key_name(new_owner)].")
 
 /datum/antagonist/nukeop/get_admin_commands()
 	. = ..()
@@ -233,6 +248,7 @@
 	var/obj/machinery/nuclearbomb/tracked_nuke
 	var/core_objective = /datum/objective/nuclear
 	var/memorized_code
+	var/list/team_discounts
 
 /datum/team/nuclear/New()
 	..()
@@ -281,9 +297,9 @@
 
 	if(nuke_off_station == NUKE_SYNDICATE_BASE)
 		return NUKE_RESULT_FLUKE
-	else if(!disk_rescued && station_was_nuked && !syndies_didnt_escape)
+	else if(station_was_nuked && !syndies_didnt_escape)
 		return NUKE_RESULT_NUKE_WIN
-	else if (!disk_rescued &&  station_was_nuked && syndies_didnt_escape)
+	else if (station_was_nuked && syndies_didnt_escape)
 		return NUKE_RESULT_NOSURVIVORS
 	else if (!disk_rescued && !station_was_nuked && nuke_off_station && !syndies_didnt_escape)
 		return NUKE_RESULT_WRONG_STATION

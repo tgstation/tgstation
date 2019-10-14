@@ -1,6 +1,8 @@
 /datum/picture
 	var/picture_name = "picture"
 	var/picture_desc = "This is a picture."
+	var/list/mobs_seen = list()
+	var/list/dead_seen = list()
 	var/caption
 	var/icon/picture_image
 	var/icon/picture_icon
@@ -10,11 +12,15 @@
 	var/logpath						//If the picture has been logged this is the path.
 	var/id							//this var is NOT protected because the worst you can do with this that you couldn't do otherwise is overwrite photos, and photos aren't going to be used as attack logs/investigations anytime soon.
 
-/datum/picture/New(name, desc, image, icon, size_x, size_y, bp, caption_, autogenerate_icon)
+/datum/picture/New(name, desc, mobs_spotted, dead_spotted, image, icon, size_x, size_y, bp, caption_, autogenerate_icon)
 	if(!isnull(name))
 		picture_name = name
 	if(!isnull(desc))
 		picture_desc = desc
+	if(!isnull(mobs_spotted))
+		mobs_seen = mobs_spotted
+	if(!isnull(dead_spotted))
+		dead_seen = dead_spotted
 	if(!isnull(image))
 		picture_image = image
 	if(!isnull(icon))
@@ -30,16 +36,16 @@
 	if(autogenerate_icon && !picture_icon && picture_image)
 		regenerate_small_icon()
 
-/datum/picture/proc/get_small_icon()
+/datum/picture/proc/get_small_icon(iconstate)
 	if(!picture_icon)
-		regenerate_small_icon()
+		regenerate_small_icon(iconstate)
 	return picture_icon
 
-/datum/picture/proc/regenerate_small_icon()
+/datum/picture/proc/regenerate_small_icon(iconstate)
 	if(!picture_image)
 		return
 	var/icon/small_img = icon(picture_image)
-	var/icon/ic = icon('icons/obj/items_and_weapons.dmi', "photo")
+	var/icon/ic = icon('icons/obj/items_and_weapons.dmi', iconstate ? iconstate :"photo")
 	small_img.Scale(8, 8)
 	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	picture_icon = ic
@@ -76,7 +82,7 @@
 /proc/load_photo_from_disk(id, location)
 	var/datum/picture/P = load_picture_from_disk(id)
 	if(istype(P))
-		var/obj/item/photo/p = new(location, P)
+		var/obj/item/photo/old/p = new(location, P)
 		return p
 
 /proc/load_picture_from_disk(id)

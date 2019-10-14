@@ -23,7 +23,7 @@
 		if(!parts.len)
 			return
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(1/parts.len, 1/parts.len))
+			if(L.heal_damage(1/parts.len, 1/parts.len, null, BODYPART_ORGANIC))
 				host_mob.update_damage_overlays()
 	else
 		host_mob.adjustBruteLoss(-1, TRUE)
@@ -61,7 +61,7 @@
 /datum/nanite_program/purging/active_effect()
 	host_mob.adjustToxLoss(-1)
 	for(var/datum/reagent/R in host_mob.reagents.reagent_list)
-		host_mob.reagents.remove_reagent(R.id,1)
+		host_mob.reagents.remove_reagent(R.type,1)
 
 /datum/nanite_program/brain_heal
 	name = "Neural Regeneration"
@@ -70,12 +70,17 @@
 	rogue_types = list(/datum/nanite_program/brain_decay)
 
 /datum/nanite_program/brain_heal/check_conditions()
-	if(!host_mob.getBrainLoss())
-		return FALSE
-	return ..()
+	var/problems = FALSE
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		if(length(C.get_traumas()))
+			problems = TRUE
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
+		problems = TRUE
+	return problems ? ..() : FALSE
 
 /datum/nanite_program/brain_heal/active_effect()
-	host_mob.adjustBrainLoss(-1, TRUE)
+	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
@@ -116,7 +121,7 @@
 		if(!parts.len)
 			return FALSE
 	else
-		if(!(MOB_ROBOTIC in host_mob.mob_biotypes))
+		if(!(host_mob.mob_biotypes & MOB_ROBOTIC))
 			return FALSE
 	return ..()
 
@@ -128,7 +133,7 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(1/parts.len, 1/parts.len))
+			if(L.heal_damage(1/parts.len, 1/parts.len, null, BODYPART_ROBOTIC))
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()
@@ -155,7 +160,7 @@
 /datum/nanite_program/purging_advanced/active_effect()
 	host_mob.adjustToxLoss(-1)
 	for(var/datum/reagent/toxin/R in host_mob.reagents.reagent_list)
-		host_mob.reagents.remove_reagent(R.id,1)
+		host_mob.reagents.remove_reagent(R.type,1)
 
 /datum/nanite_program/regenerative_advanced
 	name = "Bio-Reconstruction"
@@ -172,7 +177,7 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(3/parts.len, 3/parts.len))
+			if(L.heal_damage(3/parts.len, 3/parts.len, null, BODYPART_ORGANIC))
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()
@@ -187,12 +192,17 @@
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
 /datum/nanite_program/brain_heal_advanced/check_conditions()
-	if(!host_mob.getBrainLoss())
-		return FALSE
-	return ..()
+	var/problems = FALSE
+	if(iscarbon(host_mob))
+		var/mob/living/carbon/C = host_mob
+		if(length(C.get_traumas()))
+			problems = TRUE
+	if(host_mob.getOrganLoss(ORGAN_SLOT_BRAIN) > 0)
+		problems = TRUE
+	return problems ? ..() : FALSE
 
 /datum/nanite_program/brain_heal_advanced/active_effect()
-	host_mob.adjustBrainLoss(-2, TRUE)
+	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2)
 	if(iscarbon(host_mob) && prob(10))
 		var/mob/living/carbon/C = host_mob
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
@@ -208,43 +218,41 @@
 	if(!..())
 		return
 
-	playsound(host_mob, 'sound/machines/defib_zap.ogg', 75, 1, -1)
-	if(check_revivable())
-		host_mob.notify_ghost_cloning("Your heart is being defibrillated. Re-enter your corpse if you want to be revived!", source = src)
-	addtimer(CALLBACK(src, .proc/zap), 30)
+	host_mob.notify_ghost_cloning("Your heart is being defibrillated by nanites. Re-enter your corpse if you want to be revived!")
+	addtimer(CALLBACK(src, .proc/zap), 50)
 
 /datum/nanite_program/triggered/defib/proc/check_revivable()
 	if(!iscarbon(host_mob)) //nonstandard biology
 		return FALSE
 	var/mob/living/carbon/C = host_mob
-	if(C.suiciding || C.has_trait(TRAIT_NOCLONE) || C.hellbound) //can't revive
+	if(C.suiciding || C.hellbound || HAS_TRAIT(C, TRAIT_HUSK)) //can't revive
 		return FALSE
-	if((world.time - C.timeofdeath) < 1800) //too late
+	if((world.time - C.timeofdeath) > 1800) //too late
 		return FALSE
-	if((C.getBruteLoss() > 180) || (C.getFireLoss() > 180)) //too damaged
+	if((C.getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (C.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE) || !C.can_be_revived()) //too damaged
 		return FALSE
 	if(!C.getorgan(/obj/item/organ/heart)) //what are we even shocking
 		return FALSE
 	var/obj/item/organ/brain/BR = C.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.damaged_brain)
+	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || BR.suicided)
 		return FALSE
-	if(!C.get_ghost())
+	if(C.get_ghost())
 		return FALSE
 	return TRUE
 
 /datum/nanite_program/triggered/defib/proc/zap()
+	var/mob/living/carbon/C = host_mob
+	playsound(C, 'sound/machines/defib_charge.ogg', 50, FALSE)
+	sleep(30)
+	playsound(C, 'sound/machines/defib_zap.ogg', 50, FALSE)
 	if(check_revivable())
-		var/mob/living/carbon/C = host_mob
-		playsound(C, 'sound/machines/defib_success.ogg', 50, 0)
+		playsound(C, 'sound/machines/defib_success.ogg', 50, FALSE)
 		C.set_heartattack(FALSE)
 		C.revive()
 		C.emote("gasp")
 		C.Jitter(100)
 		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)
-		var/tplus = world.time - C.timeofdeath
-		if(tplus > 600)
-			C.adjustBrainLoss( max(0, ((1800 - tplus) / 1800 * 150)), 150)
 		log_game("[C] has been successfully defibrillated by nanites.")
 	else
-		playsound(src, 'sound/machines/defib_failed.ogg', 50, 0)
+		playsound(C, 'sound/machines/defib_failed.ogg', 50, FALSE)
 

@@ -3,11 +3,11 @@
 	verb_say = "chimpers"
 	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
-	icon_state = ""
+	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_NUDE
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
@@ -61,9 +61,9 @@
 	. = ..()
 	remove_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE)
 	var/amount
-	if(reagents.has_reagent("morphine"))
+	if(reagents.has_reagent(/datum/reagent/medicine/morphine))
 		amount = -1
-	if(reagents.has_reagent("nuka_cola"))
+	if(reagents.has_reagent(/datum/reagent/consumable/nuka_cola))
 		amount = -1
 	if(amount)
 		add_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
@@ -71,17 +71,18 @@
 /mob/living/carbon/monkey/updatehealth()
 	. = ..()
 	var/slow = 0
-	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45)
-		slow += (health_deficiency / 25)
+	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
+		var/health_deficiency = (maxHealth - health)
+		if(health_deficiency >= 45)
+			slow += (health_deficiency / 25)
 	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
 
 /mob/living/carbon/monkey/adjust_bodytemperature(amount)
 	. = ..()
 	var/slow = 0
 	if (bodytemperature < 283.222)
-		slow += (283.222 - bodytemperature) / 10 * 1.75
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
+		slow += ((283.222 - bodytemperature) / 10) * 1.75
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
 
 /mob/living/carbon/monkey/Stat()
 	..()
@@ -145,19 +146,10 @@
 			threatcount += 4 //trigger look_for_perp() since they're nonhuman and very likely hostile
 
 	//mindshield implants imply trustworthyness
-	if(has_trait(TRAIT_MINDSHIELD))
+	if(HAS_TRAIT(src, TRAIT_MINDSHIELD))
 		threatcount -= 1
 
 	return threatcount
-
-/mob/living/carbon/monkey/get_permeability_protection()
-	var/protection = 0
-	if(head)
-		protection = 1 - head.permeability_coefficient
-	if(wear_mask)
-		protection = max(1 - wear_mask.permeability_coefficient, protection)
-	protection = protection/7 //the rest of the body isn't covered.
-	return protection
 
 /mob/living/carbon/monkey/IsVocal()
 	if(!getorganslot(ORGAN_SLOT_LUNGS))

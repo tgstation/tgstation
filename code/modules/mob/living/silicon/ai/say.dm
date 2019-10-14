@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/say(message, language)
+/mob/living/silicon/ai/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
 		parent.say(message, language)
 		return
@@ -49,7 +49,7 @@
 		else
 			padloc = "(UNKNOWN)"
 		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		send_speech(message, 7, T, "robot", get_spans(), language)
+		send_speech(message, 7, T, "robot", message_language = language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
 		to_chat(src, "No holopad connected.")
@@ -96,12 +96,12 @@
 		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
 
-	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
-
-	last_announcement = message
+	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text|null
 
 	if(!message || announcing_vox > world.time)
 		return
+
+	last_announcement = message
 
 	if(incapacitated())
 		return
@@ -150,7 +150,7 @@
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in GLOB.player_list)
-				if(M.client && M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
+				if(M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
 						SEND_SOUND(M, voice)

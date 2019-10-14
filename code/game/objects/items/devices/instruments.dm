@@ -16,9 +16,8 @@
 	song = new(instrumentId, src, instrumentExt)
 
 /obj/item/instrument/Destroy()
-	qdel(song)
-	song = null
-	return ..()
+	QDEL_NULL(song)
+	. = ..()
 
 /obj/item/instrument/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -38,11 +37,8 @@
 /obj/item/instrument/interact(mob/user)
 	ui_interact(user)
 
-/obj/item/instrument/ui_interact(mob/user)
-	if(!user)
-		return
-
-	if(!isliving(user) || user.stat || user.restrained() || user.lying)
+/obj/item/instrument/ui_interact(mob/living/user)
+	if(!isliving(user) || user.stat || user.restrained() || !(user.mobility_flags & MOBILITY_STAND))
 		return
 
 	user.set_machine(src)
@@ -76,6 +72,12 @@
 /obj/item/instrument/piano_synth/proc/changeInstrument(name = "piano")
 	song.instrumentDir = name
 	song.instrumentExt = insTypes[name]
+
+/obj/item/instrument/piano_synth/proc/selectInstrument() // Moved here so it can be used by the action and PAI software panel without copypasta
+	var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", song.instrumentDir) as null|anything in insTypes
+	if(!insTypes[chosen])
+		return
+	return changeInstrument(chosen)
 
 /obj/item/instrument/guitar
 	name = "guitar"
@@ -203,11 +205,18 @@
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
 
-/obj/item/instrument/harmonica/speechModification(message)
+/obj/item/instrument/harmonica/proc/handle_speech(datum/source, list/speech_args)
 	if(song.playing && ismob(loc))
 		to_chat(loc, "<span class='warning'>You stop playing the harmonica to talk...</span>")
 		song.playing = FALSE
-	return message
+
+/obj/item/instrument/harmonica/equipped(mob/M, slot)
+	. = ..()
+	RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech, override = TRUE)
+
+/obj/item/instrument/harmonica/dropped(mob/M)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_SAY)
 
 /obj/item/instrument/bikehorn
 	name = "gilded bike horn"
@@ -224,3 +233,31 @@
 	throw_speed = 3
 	throw_range = 15
 	hitsound = 'sound/items/bikehorn.ogg'
+
+///
+
+/obj/item/choice_beacon/music
+	name = "instrument delivery beacon"
+	desc = "Summon your tool of art."
+	icon_state = "gangtool-red"
+
+/obj/item/choice_beacon/music/generate_display_names()
+	var/static/list/instruments
+	if(!instruments)
+		instruments = list()
+		var/list/templist = list(/obj/item/instrument/violin,
+							/obj/item/instrument/piano_synth,
+							/obj/item/instrument/guitar,
+							/obj/item/instrument/eguitar,
+							/obj/item/instrument/glockenspiel,
+							/obj/item/instrument/accordion,
+							/obj/item/instrument/trumpet,
+							/obj/item/instrument/saxophone,
+							/obj/item/instrument/trombone,
+							/obj/item/instrument/recorder,
+							/obj/item/instrument/harmonica
+							)
+		for(var/V in templist)
+			var/atom/A = V
+			instruments[initial(A.name)] = A
+	return instruments

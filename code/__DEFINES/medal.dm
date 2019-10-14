@@ -27,3 +27,7 @@
 #define MEDAL_METEOR 	"Your Life Before Your Eyes"
 #define MEDAL_PULSE 	"Jackpot"
 #define MEDAL_TIMEWASTE "Overextended The Joke"
+#define MEDAL_RODSUPLEX "Feat of Strength"
+#define MEDAL_CLOWNCARKING "Round and Full"
+#define MEDAL_THANKSALOT "The Best Driver"
+#define MEDAL_HELBITALJANKEN "Hel-bent on Winning"

@@ -78,7 +78,8 @@
 		)
 
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-/mob/living/carbon/human/equip_to_slot(obj/item/I, slot)
+// Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+/mob/living/carbon/human/equip_to_slot(obj/item/I, slot, initial = FALSE)
 	if(!..()) //a check failed or the item has already found its slot
 		return
 
@@ -139,11 +140,11 @@
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
-		I.equipped(src, slot)
+		I.equipped(src, slot, initial)
 
 	return not_handled //For future deeper overrides
 
-/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE)
+/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	var/index = get_held_index_of_item(I)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
 	if(!. || !I)
@@ -187,9 +188,8 @@
 		if(G.tint)
 			update_tint()
 		if(G.vision_correction)
-			if(has_trait(TRAIT_NEARSIGHT))
+			if(HAS_TRAIT(src, TRAIT_NEARSIGHT))
 				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-			adjust_eye_damage(0)
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 			update_sight()
 		if(!QDELETED(src))
@@ -224,13 +224,13 @@
 		if(!QDELETED(src))
 			update_inv_s_store()
 
-/mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
-	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
+/mob/living/carbon/human/wear_mask_update(obj/item/I, toggle_off = 1)
+	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_hair()
 	if(toggle_off && internal && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 		update_internals_hud_icon(0)
 		internal = null
-	if(C.flags_inv & HIDEEYES)
+	if(I.flags_inv & HIDEEYES)
 		update_inv_glasses()
 	sec_hud_set_security_status()
 	..()

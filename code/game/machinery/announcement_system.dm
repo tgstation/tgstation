@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /obj/machinery/announcement_system/Initialize()
 	. = ..()
 	GLOB.announcement_systems += src
-	radio = new /obj/item/radio/headset/ai(src)
+	radio = new /obj/item/radio/headset/silicon/ai(src)
 	update_icon()
 
 /obj/machinery/announcement_system/update_icon()
@@ -54,19 +54,15 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	GLOB.announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
 
-/obj/machinery/announcement_system/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/screwdriver))
+	if(P.tool_behaviour == TOOL_SCREWDRIVER)
 		P.play_tool_sound(src)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")
 		update_icon()
 	else if(default_deconstruction_crowbar(P))
 		return
-	else if(istype(P, /obj/item/multitool) && panel_open && (stat & BROKEN))
+	else if(P.tool_behaviour == TOOL_MULTITOOL && panel_open && (stat & BROKEN))
 		to_chat(user, "<span class='notice'>You reset [src]'s firmware.</span>")
 		stat &= ~BROKEN
 		update_icon()
@@ -92,10 +88,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
 	if(channels.len == 0)
-		radio.talk_into(src, message, null, list(SPAN_ROBOT), get_default_language())
+		radio.talk_into(src, message, null)
 	else
 		for(var/channel in channels)
-			radio.talk_into(src, message, channel, list(SPAN_ROBOT), get_default_language())
+			radio.talk_into(src, message, channel)
 
 //config stuff
 
@@ -104,8 +100,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	if(stat & BROKEN)
-		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
+		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='hear'>You hear a faint buzz.</span>")
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
 		return
 
 
@@ -122,8 +118,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if(!usr.canUseTopic(src, !issilicon(usr)))
 		return
 	if(stat & BROKEN)
-		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
+		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='hear'>You hear a faint buzz.</span>")
+		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
 		return
 
 	if(href_list["ArrivalTopic"])
@@ -161,8 +157,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	interact(user)
 
 /obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
-	stat |= BROKEN
-	update_icon()
+	if(!obj_break()) // if badmins flag this unbreakable or its already broken
+		return
 
 	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")
 	newhead = pick("OV#RL()D: \[UNKNOWN??\] DET*#CT)D!", "ER)#R - B*@ TEXT F*O(ND!", "AAS.exe is not responding. NanoOS is searching for a solution to the problem.")

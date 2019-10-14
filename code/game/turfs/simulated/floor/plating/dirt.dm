@@ -5,10 +5,13 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "dirt"
 	baseturfs = /turf/open/chasm/jungle
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	planetary_atmos = TRUE
 	attachment_holes = FALSE
 	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
 /turf/open/floor/plating/dirt/dark

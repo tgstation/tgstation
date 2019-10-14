@@ -10,6 +10,10 @@
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	obj_flags = CAN_BE_HIT | USES_TGUI
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	ui_x = 300
+	ui_y = 200
+
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/full_pressure = FALSE
 	var/pressure_charging = TRUE
@@ -41,10 +45,6 @@
 	update_icon()
 
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
-
-/obj/machinery/disposal/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/machinery/disposal/proc/trunk_check()
 	trunk = locate() in loc
@@ -80,12 +80,12 @@
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
-		if(istype(I, /obj/item/screwdriver))
+		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			panel_open = !panel_open
 			I.play_tool_sound(src)
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
-		else if(istype(I, /obj/item/weldingtool) && panel_open)
+		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
 			if(!I.tool_start_check(user, amount=0))
 				return
 
@@ -106,7 +106,7 @@
 
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
 	I.forceMove(src)
-	user.visible_message("[user.name] places \the [I] into \the [src].", "<span class='notice'>You place \the [I] into \the [src].</span>")
+	user.visible_message("<span class='notice'>[user.name] places \the [I] into \the [src].</span>", "<span class='notice'>You place \the [I] into \the [src].</span>")
 
 //mouse drop another mob or self
 /obj/machinery/disposal/MouseDrop_T(mob/living/target, mob/living/user)
@@ -115,7 +115,12 @@
 
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
-		return
+		if (iscyborg(user))
+			var/mob/living/silicon/robot/borg = user
+			if (!borg.module || !borg.module.canDispose)
+				return
+		else
+			return
 	if(!isturf(user.loc)) //No magically doing it from inside closets
 		return
 	if(target.buckled || target.has_buckled_mobs())
@@ -125,7 +130,7 @@
 		return
 	add_fingerprint(user)
 	if(user == target)
-		user.visible_message("[user] starts climbing into [src].", "<span class='notice'>You start climbing into [src]...</span>")
+		user.visible_message("<span class='warning'>[user] starts climbing into [src].</span>", "<span class='notice'>You start climbing into [src]...</span>")
 	else
 		target.visible_message("<span class='danger'>[user] starts putting [target] into [src].</span>", "<span class='userdanger'>[user] starts putting you into [src]!</span>")
 	if(do_mob(user, target, 20))
@@ -133,9 +138,9 @@
 			return
 		target.forceMove(src)
 		if(user == target)
-			user.visible_message("[user] climbs into [src].", "<span class='notice'>You climb into [src].</span>")
+			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", "<span class='notice'>You climb into [src].</span>")
 		else
-			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed [target] in [src].</span>")
+			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed you in [src].</span>")
 			log_combat(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
 		update_icon()
@@ -182,7 +187,7 @@
 	flushAnimation()
 	sleep(10)
 	if(last_sound < world.time + 1)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, FALSE)
 		last_sound = world.time
 	sleep(5)
 	if(QDELETED(src))
@@ -203,18 +208,13 @@
 /obj/machinery/disposal/proc/flushAnimation()
 	flick("[icon_state]-flush", src)
 
-// called when area power changes
-/obj/machinery/disposal/power_change()
-	..()	// do default setting/reset of stat NOPOWER bit
-	update_icon()	// update icon
-
 // called when holder is expelled from a disposal
 /obj/machinery/disposal/proc/expel(obj/structure/disposalholder/H)
 	H.active = FALSE
 
 	var/turf/T = get_turf(src)
 	var/turf/target
-	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+	playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, FALSE)
 
 	for(var/A in H)
 		var/atom/movable/AM = A
@@ -272,7 +272,7 @@
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash))	//Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
-		GET_COMPONENT_FROM(STR, /datum/component/storage, T)
+		var/datum/component/storage/STR = T.GetComponent(/datum/component/storage)
 		to_chat(user, "<span class='warning'>You empty the bag.</span>")
 		for(var/obj/item/O in T.contents)
 			STR.remove_from_storage(O,src)
@@ -289,7 +289,7 @@
 		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "disposal_unit", name, 300, 200, master_ui, state)
+		ui = new(user, src, ui_key, "disposal_unit", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/disposal/bin/ui_data(mob/user)
@@ -332,7 +332,7 @@
 			. = TRUE
 
 
-/obj/machinery/disposal/bin/hitby(atom/movable/AM)
+/obj/machinery/disposal/bin/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isitem(AM) && AM.CanEnterDisposals())
 		if(prob(75))
 			AM.forceMove(src)
@@ -454,7 +454,7 @@
 		flush()
 
 /obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
-	if(!AM.CanEnterDisposals())
+	if(QDELETED(AM) || !AM.CanEnterDisposals())
 		return
 	switch(dir)
 		if(NORTH)
@@ -484,7 +484,7 @@
 /atom/movable/proc/CanEnterDisposals()
 	return TRUE
 
-/obj/item/projectile/CanEnterDisposals()
+/obj/projectile/CanEnterDisposals()
 	return
 
 /obj/effect/CanEnterDisposals()
@@ -492,6 +492,9 @@
 
 /obj/mecha/CanEnterDisposals()
 	return
+
+/obj/machinery/disposal/bin/newHolderDestination(obj/structure/disposalholder/H)
+	H.destinationTag = 1
 
 /obj/machinery/disposal/deliveryChute/newHolderDestination(obj/structure/disposalholder/H)
 	H.destinationTag = 1

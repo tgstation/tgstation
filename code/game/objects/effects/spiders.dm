@@ -11,7 +11,7 @@
 
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
-		playsound(loc, 'sound/items/welder.ogg', 100, 1)
+		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
 
 /obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
@@ -44,7 +44,7 @@
 		if(prob(50))
 			to_chat(mover, "<span class='danger'>You get stuck in \the [src] for a moment.</span>")
 			return FALSE
-	else if(istype(mover, /obj/item/projectile))
+	else if(istype(mover, /obj/projectile))
 		return prob(30)
 	return TRUE
 
@@ -55,7 +55,7 @@
 	var/amount_grown = 0
 	var/player_spiders = 0
 	var/directive = "" //Message from the mother
-	var/poison_type = "toxin"
+	var/poison_type = /datum/reagent/toxin
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
@@ -71,8 +71,6 @@
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
-			S.poison_type = poison_type
-			S.poison_per_bite = poison_per_bite
 			S.faction = faction.Copy()
 			S.directive = directive
 			if(player_spiders)
@@ -92,8 +90,6 @@
 	var/travelling_in_vent = 0
 	var/player_spiders = 0
 	var/directive = "" //Message from the mother
-	var/poison_type = "toxin"
-	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
 /obj/structure/spider/spiderling/Destroy()
@@ -145,7 +141,7 @@
 			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
 			if(prob(50))
 				visible_message("<B>[src] scrambles into the ventilation ducts!</B>", \
-								"<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
+								"<span class='hear'>You hear something scampering through the ventilation ducts.</span>")
 
 			spawn(rand(20,60))
 				forceMove(exit_vent)
@@ -158,7 +154,7 @@
 						return
 
 					if(prob(50))
-						audible_message("<span class='italics'>You hear something scampering through the ventilation ducts.</span>")
+						audible_message("<span class='hear'>You hear something scampering through the ventilation ducts.</span>")
 					sleep(travel_time)
 
 					if(!exit_vent || exit_vent.welded)
@@ -195,8 +191,6 @@
 				else
 					grow_as = pick(/mob/living/simple_animal/hostile/poison/giant_spider, /mob/living/simple_animal/hostile/poison/giant_spider/hunter, /mob/living/simple_animal/hostile/poison/giant_spider/nurse)
 			var/mob/living/simple_animal/hostile/poison/giant_spider/S = new grow_as(src.loc)
-			S.poison_per_bite = poison_per_bite
-			S.poison_type = poison_type
 			S.faction = faction.Copy()
 			S.directive = directive
 			if(player_spiders)
@@ -221,7 +215,7 @@
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, "<span class='notice'>You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)</span>")
-	visible_message("You see something struggling and writhing in \the [src]!")
+	visible_message("<span class='notice'>You see something struggling and writhing in \the [src]!</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src)
 			return

@@ -2,7 +2,6 @@
 	name = "circuit imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
-	container_type = OPENCONTAINER
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 	categories = list(
 								"AI Modules",

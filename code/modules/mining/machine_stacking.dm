@@ -38,11 +38,12 @@
 	user << browse(dat, "window=console_stacking_machine")
 
 /obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/I)
-	if(istype(I, /obj/item/multitool))
-		var/obj/item/multitool/M = I
-		M.buffer = src
-		to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
-		return TRUE
+	if(!multitool_check_buffer(user, I))
+		return
+	var/obj/item/multitool/M = I
+	M.buffer = src
+	to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
+	return TRUE
 
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	if(..())
@@ -107,9 +108,9 @@
 	qdel(inp)
 
 	if(materials.silo && !materials.on_hold()) //Dump the sheets to the silo
-		var/matlist = storage.materials & materials.mat_container.materials
+		var/matlist = storage.custom_materials & materials.mat_container.materials
 		if (length(matlist))
-			var/inserted = materials.mat_container.insert_stack(storage)
+			var/inserted = materials.mat_container.insert_item(storage)
 			materials.silo_log(src, "collected", inserted, "sheets", matlist)
 			if (QDELETED(storage))
 				stack_list -= key

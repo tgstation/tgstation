@@ -181,6 +181,15 @@
 		return
 	SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, code, source)
 
+/datum/nanite_program/relay/proc/relay_comm_signal(comm_code, relay_code, comm_message)
+	if(!activated)
+		return
+	if(!host_mob)
+		return
+	if(relay_code != relay_channel)
+		return
+	SEND_SIGNAL(host_mob, COMSIG_NANITE_COMM_SIGNAL, comm_code, comm_message)
+
 /datum/nanite_program/metabolic_synthesis
 	name = "Metabolic Synthesis"
 	desc = "The nanites use the metabolic cycle of the host to speed up their replication rate, using their extra nutrition as fuel."
@@ -196,7 +205,7 @@
 	return ..()
 
 /datum/nanite_program/metabolic_synthesis/active_effect()
-	host_mob.nutrition -= 0.5
+	host_mob.adjust_nutrition(-0.5)
 
 /datum/nanite_program/research
 	name = "Parallel Computing"
@@ -246,13 +255,17 @@
 	if(prob(10))
 		var/list/mob/living/target_hosts = list()
 		for(var/mob/living/L in oview(5, host_mob))
+			if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+				continue
 			target_hosts += L
+		if(!target_hosts.len)
+			return
 		var/mob/living/infectee = pick(target_hosts)
 		if(prob(100 - (infectee.get_permeability_protection() * 100)))
 			//this will potentially take over existing nanites!
 			infectee.AddComponent(/datum/component/nanites, 10)
 			SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
-			infectee.investigate_log("[key_name(infectee)] was infected by spreading nanites by [key_name(host_mob)]", INVESTIGATE_NANITES)
+			infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/mitosis
 	name = "Mitosis"
@@ -266,7 +279,7 @@
 		return
 	var/rep_rate = round(nanites.nanite_volume / 50, 1) //0.5 per 50 nanite volume
 	rep_rate *= 0.5
-	nanites.adjust_nanites(rep_rate)
+	nanites.adjust_nanites(null, rep_rate)
 	if(prob(rep_rate))
 		var/datum/nanite_program/fault = pick(nanites.programs)
 		if(fault == src)

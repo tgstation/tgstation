@@ -7,36 +7,35 @@
 	anchored = TRUE
 	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall"
-	layer = CLOSED_TURF_LAYER
+	layer = LOW_OBJ_LAYER
 	density = TRUE
 	opacity = 1
 	max_integrity = 100
 
 	canSmoothWith = list(
-	/turf/closed/wall,
-	/turf/closed/wall/r_wall,
-	/obj/structure/falsewall,
-	/obj/structure/falsewall/brass,
-	/obj/structure/falsewall/reinforced,
-	/turf/closed/wall/rust,
-	/turf/closed/wall/r_wall/rust,
-	/turf/closed/wall/clockwork)
+		/turf/closed/wall,
+		/turf/closed/wall/r_wall,
+		/obj/structure/falsewall,
+		/obj/structure/falsewall/brass,
+		/obj/structure/falsewall/reinforced,
+		/turf/closed/wall/rust,
+		/turf/closed/wall/r_wall/rust,
+		/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_MEDIUM_INSULATION
 	var/mineral = /obj/item/stack/sheet/metal
 	var/mineral_amount = 2
 	var/walltype = /turf/closed/wall
 	var/girder_type = /obj/structure/girder/displaced
 	var/opening = FALSE
 
+
 /obj/structure/falsewall/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
-
-/obj/structure/falsewall/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_MEDIUM_INSULATION)
 
 /obj/structure/falsewall/ratvar_act()
 	new /obj/structure/falsewall/brass(loc)
@@ -94,7 +93,7 @@
 		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving!</span>")
 		return
 
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(density)
 			var/turf/T = get_turf(src)
 			if(T.density)
@@ -108,21 +107,18 @@
 		else
 			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
 
-	else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+	else if(W.tool_behaviour == TOOL_WELDER)
 		if(W.use_tool(src, user, 0, volume=50))
 			dismantle(user, TRUE)
-	else if(istype(W, /obj/item/pickaxe/drill/jackhammer))
-		W.play_tool_sound(src)
-		dismantle(user, TRUE)
 	else
 		return ..()
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
-	user.visible_message("[user] dismantles the false wall.", "<span class='notice'>You dismantle the false wall.</span>")
+	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
 	if(tool)
 		tool.play_tool_sound(src, 100)
 	else
-		playsound(src, 'sound/items/welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/deconstruct(disassembled = TRUE)
@@ -159,7 +155,7 @@
 
 /obj/structure/falsewall/reinforced/attackby(obj/item/tool, mob/user)
 	..()
-	if(istype(tool, /obj/item/wirecutters))
+	if(tool.tool_behaviour == TOOL_WIRECUTTER)
 		dismantle(user, TRUE, tool)
 
 /*
@@ -238,7 +234,7 @@
 	canSmoothWith = list(/obj/structure/falsewall/plasma, /turf/closed/wall/mineral/plasma)
 
 /obj/structure/falsewall/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.is_hot() > 300)
+	if(W.get_temperature() > 300)
 		var/turf/T = get_turf(src)
 		message_admins("Plasma falsewall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		log_game("Plasma falsewall ignited by [key_name(user)] in [AREACOORD(T)]")
@@ -247,7 +243,7 @@
 		return ..()
 
 /obj/structure/falsewall/plasma/proc/burnbabyburn(user)
-	playsound(src, 'sound/items/welder.ogg', 100, 1)
+	playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 	atmos_spawn_air("plasma=400;TEMP=1000")
 	new /obj/structure/girder/displaced(loc)
 	qdel(src)

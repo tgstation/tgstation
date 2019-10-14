@@ -2,7 +2,7 @@
 	name = "infrared emitter"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
-	materials = list(MAT_METAL=1000, MAT_GLASS=500)
+	custom_materials = list(/datum/material/iron=1000, /datum/material/glass=500)
 	is_position_sensitive = TRUE
 
 	var/on = FALSE
@@ -10,7 +10,7 @@
 	var/maxlength = 8
 	var/list/obj/effect/beam/i_beam/beams
 	var/olddir = 0
-	var/datum/component/redirect/listener
+	var/turf/listeningTo
 	var/hearing_range = 3
 
 /obj/item/assembly/infra/Initialize()
@@ -33,13 +33,13 @@
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(listener)
+	listeningTo = null
 	QDEL_LIST(beams)
 	. = ..()
 
 /obj/item/assembly/infra/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>")
+	. = ..()
+	. += "<span class='notice'>The infrared trigger is [on?"on":"off"].</span>"
 
 /obj/item/assembly/infra/activate()
 	if(!..())
@@ -138,11 +138,11 @@
 	. = ..()
 	setDir(t)
 
-/obj/item/assembly/infra/throw_at()
+/obj/item/assembly/infra/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
 	. = ..()
 	olddir = dir
 
-/obj/item/assembly/infra/throw_impact()
+/obj/item/assembly/infra/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!olddir)
 		return
@@ -163,10 +163,14 @@
 	next_activate =  world.time + 30
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)
-	QDEL_NULL(listener)
-	listener = newloc.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_EXITED = CALLBACK(src, .proc/check_exit)))
+	if(listeningTo == newloc)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_ATOM_EXITED)
+	RegisterSignal(newloc, COMSIG_ATOM_EXITED, .proc/check_exit)
+	listeningTo = newloc
 
-/obj/item/assembly/infra/proc/check_exit(atom/movable/offender)
+/obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
 	if(QDELETED(src))
 		return
 	if(offender == src || istype(offender,/obj/effect/beam/i_beam))
@@ -192,10 +196,11 @@
 
 /obj/item/assembly/infra/Topic(href, href_list)
 	..()
-	if(usr.incapacitated() || !in_range(loc, usr))
+	if(!usr.canUseTopic(src, BE_CLOSE))
 		usr << browse(null, "window=infra")
 		onclose(usr, "infra")
 		return
+
 	if(href_list["state"])
 		on = !(on)
 		update_icon()

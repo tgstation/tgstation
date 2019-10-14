@@ -15,6 +15,11 @@
 	if(disk)
 		eject()
 
+/obj/item/nanite_hijacker/examine(mob/user)
+	. = ..()
+	if(disk)
+		. += "<span class='notice'>Alt-click [src] to eject the disk.</span>"
+
 /obj/item/nanite_hijacker/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
@@ -50,7 +55,7 @@
 
 //Same UI as the nanite programmer, as it pretty much does the same
 /obj/item/nanite_hijacker/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "nanite_programmer", "Internal Nanite Programmer", 420, 800, master_ui, state)
 		ui.open()

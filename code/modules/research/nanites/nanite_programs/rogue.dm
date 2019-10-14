@@ -59,7 +59,7 @@
 /datum/nanite_program/brain_decay/active_effect()
 	if(prob(4))
 		host_mob.hallucination = min(15, host_mob.hallucination)
-	host_mob.adjustBrainLoss(1)
+	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
 
 //Generic brain-affecting programs can also decay into this
 /datum/nanite_program/brain_misfire
@@ -116,4 +116,4 @@
 		host_mob.drop_all_held_items()
 	else if(prob(4))
 		to_chat(host_mob, "<span class='warning'>You can't feel your legs!</span>")
-		host_mob.Knockdown(30)
+		host_mob.Paralyze(30)

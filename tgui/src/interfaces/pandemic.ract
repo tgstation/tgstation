@@ -1,10 +1,10 @@
 {{#if data.mode == 1}}
 	<ui-display title='Beaker' button>
 		{{#partial button}}
-			<ui-button icon='remove' state='{{data.has_beaker ? null : "disabled"}}' action='empty_eject_beaker'>
-				Empty and eject
+			<ui-button icon='remove' state='{{data.has_beaker && !data.beaker_empty ? null : "disabled"}}' action='empty_eject_beaker'>
+				Empty and Eject
 			</ui-button>
-			<ui-button icon='trash' state='{{data.has_beaker ? null : "disabled"}}' action='empty_beaker'>
+			<ui-button icon='trash' state='{{data.has_beaker && !data.beaker_empty ? null : "disabled"}}' action='empty_beaker'>
 				Empty
 			</ui-button>
 			<ui-button icon='eject' state='{{data.has_beaker ? null : "disabled"}}' action='eject_beaker'>

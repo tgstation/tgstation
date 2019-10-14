@@ -13,14 +13,14 @@
 	if(.)
 		return
 	flick("[icon_state]2", src)
-	playsound(loc, pick(hit_sounds), 25, 1, -1)
+	playsound(loc, pick(hit_sounds), 25, TRUE, -1)
 	if(isliving(user))
 		var/mob/living/L = user
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "exercise", /datum/mood_event/exercise)
 		L.apply_status_effect(STATUS_EFFECT_EXERCISED)
 
 /obj/structure/weightmachine
-	name = "Weight Machine"
+	name = "weight machine"
 	desc = "Just looking at this thing makes you feel tired."
 	density = TRUE
 	anchored = TRUE
@@ -34,7 +34,7 @@
 	if(.)
 		return
 	if(obj_flags & IN_USE)
-		to_chat(user, "It's already in use - wait a bit.")
+		to_chat(user, "<span class='warning'>It's already in use - wait a bit!</span>")
 		return
 	else
 		obj_flags |= IN_USE
@@ -46,7 +46,7 @@
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
 		AnimateMachine(user)
 
-		playsound(user, 'sound/machines/click.ogg', 60, 1)
+		playsound(user, 'sound/machines/click.ogg', 60, TRUE)
 		obj_flags &= ~IN_USE
 		user.pixel_y = 0
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
@@ -70,7 +70,7 @@
 		sleep(3)
 		animate(user, pixel_y = -4, time = 3)
 		sleep(3)
-		playsound(user, 'goon/sound/effects/spring.ogg', 60, 1)
+		playsound(user, 'goon/sound/effects/spring.ogg', 60, TRUE)
 
 /obj/structure/weightmachine/weightlifter
 	icon = 'goon/icons/obj/fitness.dmi'
@@ -88,7 +88,7 @@
 		for (var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
 			sleep(3)
 			animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
-		playsound(user, 'goon/sound/effects/spring.ogg', 60, 1)
+		playsound(user, 'goon/sound/effects/spring.ogg', 60, TRUE)
 	sleep(3)
 	animate(user, pixel_y = 2, time = 3)
 	sleep(3)

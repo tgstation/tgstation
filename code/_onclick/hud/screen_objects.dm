@@ -9,8 +9,8 @@
 /obj/screen
 	name = ""
 	icon = 'icons/mob/screen_gen.dmi'
-	layer = ABOVE_HUD_LAYER
-	plane = ABOVE_HUD_PLANE
+	layer = HUD_LAYER
+	plane = HUD_PLANE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/screen/examine(mob/user)
-	return
+	return list()
 
 /obj/screen/orbit()
 	return
@@ -65,12 +65,6 @@
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
-
-/obj/screen/craft/Click()
-	var/mob/living/M = usr
-	if(isobserver(usr))
-		return
-	M.OpenCraftingMenu()
 
 /obj/screen/area_creator
 	name = "create new area"
@@ -157,7 +151,7 @@
 		var/image/item_overlay = image(holding)
 		item_overlay.alpha = 92
 
-		if(!user.can_equip(holding, slot_id, disable_warning = TRUE))
+		if(!user.can_equip(holding, slot_id, TRUE))
 			item_overlay.color = "#FF0000"
 		else
 			item_overlay.color = "#00ff00"
@@ -428,7 +422,7 @@
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()
 		if(I)
-			master.attackby(I, usr, params)
+			master.attackby(null, I, usr, params)
 	return TRUE
 
 /obj/screen/throw_catch
@@ -641,9 +635,20 @@
 	screen_loc = ui_construct_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/obj/screen/healths/slime
+	icon = 'icons/mob/screen_slime.dmi'
+	icon_state = "slime_health0"
+	screen_loc = ui_slime_health
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /obj/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
+
+/obj/screen/healthdoll/Click()
+	if (ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.check_self_for_injuries()
 
 /obj/screen/mood
 	name = "mood"

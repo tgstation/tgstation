@@ -5,7 +5,7 @@
 /mob/living/carbon/alien/get_ear_protection()
 	return 2 //no ears
 
-/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush)
+/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..(AM, skipcatch = TRUE, hitpush = FALSE)
 
 
@@ -21,9 +21,11 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 
 		if ("help")
-			resting = 0
+			set_resting(FALSE)
 			AdjustStun(-60)
 			AdjustKnockdown(-60)
+			AdjustImmobilized(-60)
+			AdjustParalyzed(-60)
 			AdjustUnconscious(-60)
 			AdjustSleeping(-100)
 			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
@@ -34,9 +36,10 @@ In all, this is a lot like the monkey code. /N
 		else
 			if(health > 0)
 				M.do_attack_animation(src, ATTACK_EFFECT_BITE)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+								"<span class='userdanger'>[M.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, M)
+				to_chat(M, "<span class='danger'>You bite [src]!</span>")
 				adjustBruteLoss(1)
 				log_combat(M, src, "attacked")
 				updatehealth()
@@ -105,15 +108,15 @@ In all, this is a lot like the monkey code. /N
 		return
 	..()
 	switch (severity)
-		if (1)
+		if (EXPLODE_DEVASTATE)
 			gib()
 			return
 
-		if (2)
+		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
 			adjustEarDamage(30,120)
 
-		if(3)
+		if(EXPLODE_LIGHT)
 			take_overall_damage(30,0)
 			if(prob(50))
 				Unconscious(20)

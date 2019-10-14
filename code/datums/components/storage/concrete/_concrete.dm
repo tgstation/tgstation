@@ -4,6 +4,7 @@
 // /mob/living/Move() in /modules/mob/living/living.dm - hiding storage boxes on mob movement
 
 /datum/component/storage/concrete
+	can_transfer = TRUE
 	var/drop_all_on_deconstruct = TRUE
 	var/drop_all_on_destroy = FALSE
 	var/transfer_contents_on_component_transfer = FALSE
@@ -72,7 +73,7 @@
 		var/datum/component/storage/slave = i
 		slave.refresh_mob_views()
 
-/datum/component/storage/concrete/emp_act(severity)
+/datum/component/storage/concrete/emp_act(datum/source, severity)
 	if(emp_shielded)
 		return
 	var/atom/real_location = real_location()
@@ -90,13 +91,13 @@
 	slaves -= S
 	return FALSE
 
-/datum/component/storage/concrete/proc/on_contents_del(atom/A)
+/datum/component/storage/concrete/proc/on_contents_del(datum/source, atom/A)
 	var/atom/real_location = parent
 	if(A in real_location)
 		usr = null
 		remove_from_storage(A, null)
 
-/datum/component/storage/concrete/proc/on_deconstruct(disassembled)
+/datum/component/storage/concrete/proc/on_deconstruct(datum/source, disassembled)
 	if(drop_all_on_deconstruct)
 		do_quick_empty()
 
@@ -124,7 +125,8 @@
 	if(ismob(parent.loc) && isitem(AM))
 		var/obj/item/I = AM
 		var/mob/M = parent.loc
-		I.dropped(M)
+		I.dropped(M, TRUE)
+		I.item_flags &= ~IN_STORAGE
 	if(new_location)
 		//Reset the items values
 		_removal_reset(AM)
@@ -172,6 +174,7 @@
 				I.forceMove(parent.drop_location())
 		return FALSE
 	I.on_enter_storage(master)
+	I.item_flags |= IN_STORAGE
 	refresh_mob_views()
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	if(M)

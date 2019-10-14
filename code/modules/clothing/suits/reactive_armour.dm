@@ -77,7 +77,7 @@
 			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
 			return
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
-		playsound(get_turf(owner),'sound/magic/blink.ogg', 100, 1)
+		playsound(get_turf(owner),'sound/magic/blink.ogg', 100, TRUE)
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)
@@ -112,7 +112,7 @@
 			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its flame jets!</span>")
 			return
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out jets of flame!</span>")
-		playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, 1)
+		playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
 		for(var/mob/living/carbon/C in range(6, owner))
 			if(C != owner)
 				C.fire_stacks += 8
@@ -141,8 +141,7 @@
 		E.Goto(owner, E.move_to_delay, E.minimum_distance)
 		owner.alpha = 0
 		owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
-		spawn(40)
-			owner.alpha = initial(owner.alpha)
+		addtimer(VARSET_CALLBACK(owner, alpha, initial(owner.alpha)), 4 SECONDS)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
 
@@ -186,6 +185,7 @@
 /obj/item/clothing/suit/armor/reactive/repulse
 	name = "reactive repulse armor"
 	desc = "An experimental suit of armor that violently throws back attackers."
+	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
 /obj/item/clothing/suit/armor/reactive/repulse/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!active)
@@ -194,7 +194,7 @@
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The repulse generator is still recharging!</span>")
 			return 0
-		playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, 1)
+		playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)
 		owner.visible_message("<span class='danger'>[src] blocks [attack_text], converting the attack into a wave of force!</span>")
 		var/turf/T = get_turf(owner)
 		var/list/thrown_items = list()
@@ -202,7 +202,7 @@
 			if(A == owner || A.anchored || thrown_items[A])
 				continue
 			var/throwtarget = get_edge_target_turf(T, get_dir(T, get_step_away(A, T)))
-			A.throw_at(throwtarget,10,1)
+			A.safe_throw_at(throwtarget, 10, 1, force = repulse_force)
 			thrown_items[A] = A
 
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
@@ -223,7 +223,7 @@
 			return
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams [H.p_them()] into a fabricated table!</span>")
 		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
-		owner.Knockdown(40)
+		owner.Paralyze(40)
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
 			if(T.density)

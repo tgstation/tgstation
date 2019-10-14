@@ -1,5 +1,4 @@
-FROM tgstation/byond:512.1441 as base
-#above version must be the same as the one in dependencies.sh
+FROM tgstation/byond:512.1478 as base
 
 FROM base as build_base
 
@@ -14,9 +13,10 @@ WORKDIR /rust_g
 
 RUN apt-get install -y --no-install-recommends \
     libssl-dev \
-    rustc \
-    cargo \
     pkg-config \
+    curl \
+    gcc-multilib \
+    && curl https://sh.rustup.rs -sSf | sh -s -- -y --default-host i686-unknown-linux-gnu \
     && git init \
     && git remote add origin https://github.com/tgstation/rust-g
 
@@ -25,7 +25,7 @@ COPY dependencies.sh .
 RUN /bin/bash -c "source dependencies.sh \
     && git fetch --depth 1 origin \$RUST_G_VERSION" \
     && git checkout FETCH_HEAD \
-    && cargo build --release
+    && ~/.cargo/bin/cargo build --release
 
 FROM build_base as bsql
 
@@ -72,7 +72,13 @@ FROM dm_base
 EXPOSE 1337
 
 RUN apt-get update \
+    && apt-get install -y --no-install-recommends software-properties-common \
+    && add-apt-repository ppa:ubuntu-toolchain-r/test \
+    && apt-get update \
+    && apt-get upgrade -y \
+    && apt-get dist-upgrade -y \
     && apt-get install -y --no-install-recommends \
+    libmariadb2 \
     mariadb-client \
     libssl1.0.0 \
     && rm -rf /var/lib/apt/lists/* \

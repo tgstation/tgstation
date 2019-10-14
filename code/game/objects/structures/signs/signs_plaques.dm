@@ -41,3 +41,8 @@
 /obj/structure/sign/plaques/kiddie/perfect_drone
 	name = "\improper 'Perfect Drone' sign"
 	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today."
+
+/obj/structure/sign/plaques/deempisi
+	name = "Mr. Deempisi portrait"
+	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'"
+	icon_state = "monkey_painting"

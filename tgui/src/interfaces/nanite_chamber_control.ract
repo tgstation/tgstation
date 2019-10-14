@@ -49,7 +49,7 @@
 			<ui-section><ui-button icon='syringe' action='nanite_injection'>Implant Nanites</ui-button></ui-section>
 	{{else}}
 		<ui-display title='Nanites'>
-			{{#if data.has_disk}}
+			{{#if data.has_program}}
 				<ui-button icon='download' action='add_program'>Install Program From Disk</ui-button><br>
 				<br>
 			{{/if}}

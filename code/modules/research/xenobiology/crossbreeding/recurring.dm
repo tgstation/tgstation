@@ -14,7 +14,7 @@ Recurring extracts:
 	var/max_cooldown = 5 //In sets of 2 seconds.
 
 /obj/item/slimecross/recurring/Initialize()
-	..()
+	. = ..()
 	extract = new extract_type(src.loc)
 	visible_message("<span class='notice'>[src] wraps a layer of goo around itself!</span>")
 	extract.name = name
@@ -39,7 +39,7 @@ Recurring extracts:
 		qdel(src)
 
 /obj/item/slimecross/recurring/Destroy()
-	..()
+	. = ..()
 	STOP_PROCESSING(SSobj,src)
 
 /obj/item/slimecross/recurring/grey

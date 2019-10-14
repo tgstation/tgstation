@@ -7,7 +7,7 @@
 	name = "voice analyzer"
 	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
 	icon_state = "voice"
-	materials = list(MAT_METAL=500, MAT_GLASS=50)
+	custom_materials = list(/datum/material/iron=500, /datum/material/glass=50)
 	flags_1 = HEAR_1
 	attachable = TRUE
 	verb_say = "beeps"
@@ -22,8 +22,8 @@
 								 "voice sensor")
 
 /obj/item/assembly/voice/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Use a multitool to swap between \"inclusive\", \"exclusive\", \"recognizer\", and \"voice sensor\" mode.</span>")
+	. = ..()
+	. += "<span class='notice'>Use a multitool to swap between \"inclusive\", \"exclusive\", \"recognizer\", and \"voice sensor\" mode.</span>"
 
 /obj/item/assembly/voice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	. = ..()
@@ -71,6 +71,7 @@
 				. = TRUE
 
 /obj/item/assembly/voice/multitool_act(mob/living/user, obj/item/I)
+	..()
 	mode %= modes.len
 	mode++
 	to_chat(user, "<span class='notice'>You set [src] into [modes[mode]] mode.</span>")

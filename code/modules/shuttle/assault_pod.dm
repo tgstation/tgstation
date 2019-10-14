@@ -13,7 +13,7 @@
 /obj/docking_port/mobile/assault_pod/initiate_docking(obj/docking_port/stationary/S1)
 	. = ..()
 	if(!istype(S1, /obj/docking_port/stationary/transit))
-		playsound(get_turf(src.loc), 'sound/effects/explosion1.ogg',50,1)
+		playsound(get_turf(src.loc), 'sound/effects/explosion1.ogg',50,TRUE)
 
 
 
@@ -35,7 +35,9 @@
 
 /obj/item/assault_pod/attack_self(mob/living/user)
 	var/target_area
-	target_area = input("Area to land", "Select a Landing Zone", target_area) in GLOB.teleportlocs
+	target_area = input("Area to land", "Select a Landing Zone", target_area) as null|anything in GLOB.teleportlocs
+	if(!target_area)
+		return
 	var/area/picked_area = GLOB.teleportlocs[target_area]
 	if(!src || QDELETED(src))
 		return

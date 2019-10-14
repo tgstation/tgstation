@@ -44,14 +44,14 @@
 
 	if(A.stage >= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)
-		if(M.reagents.has_reagent("mindbreaker"))
-			M.reagents.remove_reagent("mindbreaker", 5)
-		if(M.reagents.has_reagent("histamine"))
-			M.reagents.remove_reagent("histamine", 5)
+		if(M.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
+			M.reagents.remove_reagent(/datum/reagent/toxin/mindbreaker, 5)
+		if(M.reagents.has_reagent(/datum/reagent/toxin/histamine))
+			M.reagents.remove_reagent(/datum/reagent/toxin/histamine, 5)
 		M.hallucination = max(0, M.hallucination - 10)
 
 	if(A.stage >= 5)
-		M.adjustBrainLoss(-3)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3)
 		if(trauma_heal_mild && iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(prob(10))
@@ -85,14 +85,14 @@
 		if(4, 5)
 			M.restoreEars()
 
-			if(M.has_trait(TRAIT_BLIND, EYE_DAMAGE))
+			if(HAS_TRAIT_FROM(M, TRAIT_BLIND, EYE_DAMAGE))
 				if(prob(20))
 					to_chat(M, "<span class='notice'>Your vision slowly returns...</span>")
 					M.cure_blind(EYE_DAMAGE)
 					M.cure_nearsighted(EYE_DAMAGE)
 					M.blur_eyes(35)
 
-				else if(M.has_trait(TRAIT_NEARSIGHT, EYE_DAMAGE))
+				else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
 					to_chat(M, "<span class='notice'>You can finally focus your eyes on distant objects.</span>")
 					M.cure_nearsighted(EYE_DAMAGE)
 					M.blur_eyes(10)
@@ -100,8 +100,8 @@
 				else if(M.eye_blind || M.eye_blurry)
 					M.set_blindness(0)
 					M.set_blurriness(0)
-				else if(eyes.eye_damage > 0)
-					M.adjust_eye_damage(-1)
+				else if(eyes.damage > 0)
+					eyes.applyOrganDamage(-1)
 		else
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='notice'>[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your healing feels more acute.")]</span>")

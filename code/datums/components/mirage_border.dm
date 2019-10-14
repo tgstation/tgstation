@@ -1,4 +1,5 @@
 /datum/component/mirage_border
+	can_transfer = TRUE
 	var/obj/effect/abstract/mirage_holder/holder
 
 /datum/component/mirage_border/Initialize(turf/target, direction, range=world.view)

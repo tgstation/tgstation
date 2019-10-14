@@ -22,10 +22,10 @@ AI MODULES
 	throw_range = 7
 	var/list/laws = list()
 	var/bypass_law_amt_check = 0
-	materials = list(MAT_GOLD=50)
+	custom_materials = list(/datum/material/gold = 50)
 
 /obj/item/aiModule/examine(var/mob/user as mob)
-	..()
+	. = ..()
 	if(Adjacent(user))
 		show_laws(user)
 
@@ -209,7 +209,7 @@ AI MODULES
 
 /obj/item/aiModule/supplied/quarantine
 	name = "'Quarantine' AI Module"
-	laws = list("The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving.")
+	laws = list("The station is under a quarantine. Allowing anyone to leave the station causes human harm. Anyone actively attempting to leave the station is to be stopped by any means necessary. It is impossible to harm a human while preventing them from leaving the station.")
 	lawpos = 8
 
 
@@ -238,8 +238,11 @@ AI MODULES
 			return
 		newpos = 15
 	lawpos = min(newpos, 50)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
+		return
+	if(CHAT_FILTER_CHECK(targName))
+		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>") // AI LAW 2 SAY U W U WITHOUT THE SPACES
 		return
 	laws[1] = targName
 	..()
@@ -323,6 +326,7 @@ AI MODULES
 		law_datum.clear_inherent_laws()
 		law_datum.clear_zeroth_law(0)
 
+
 /******************* Full Core Boards *******************/
 /obj/item/aiModule/core
 	desc = "An AI Module for programming core laws to an AI."
@@ -330,8 +334,8 @@ AI MODULES
 /obj/item/aiModule/core/full
 	var/law_id // if non-null, loads the laws from the ai_laws datums
 
-/obj/item/aiModule/core/full/New()
-	..()
+/obj/item/aiModule/core/full/Initialize()
+	. = ..()
 	if(!law_id)
 		return
 	var/datum/ai_laws/D = new
@@ -359,7 +363,7 @@ AI MODULES
 	var/subject = "human being"
 
 /obj/item/aiModule/core/full/asimov/attack_self(var/mob/user as mob)
-	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject)
+	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject, MAX_NAME_LEN)
 	if(!targName)
 		return
 	subject = targName
@@ -441,8 +445,11 @@ AI MODULES
 	laws = list("")
 
 /obj/item/aiModule/core/freeformcore/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
+		return
+	if(CHAT_FILTER_CHECK(targName))
+		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>")
 		return
 	laws[1] = targName
 	..()
@@ -460,8 +467,11 @@ AI MODULES
 	laws = list("")
 
 /obj/item/aiModule/syndicate/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
 	if(!targName)
+		return
+	if(CHAT_FILTER_CHECK(targName)) // not even the syndicate can uwu
+		to_chat(user, "<span class='warning'>Error: Law contains invalid text.</span>")
 		return
 	laws[1] = targName
 	..()
@@ -508,7 +518,7 @@ AI MODULES
 /obj/item/aiModule/toyAI/attack_self(mob/user)
 	laws[1] = generate_ion_law()
 	to_chat(user, "<span class='notice'>You press the button on [src].</span>")
-	playsound(user, 'sound/machines/click.ogg', 20, 1)
+	playsound(user, 'sound/machines/click.ogg', 20, TRUE)
 	src.loc.visible_message("<span class='warning'>[icon2html(src, viewers(loc))] [laws[1]]</span>")
 
 /******************** Mother Drone  ******************/
@@ -574,3 +584,10 @@ AI MODULES
 /obj/item/aiModule/core/full/hulkamania
 	name = "'H.O.G.A.N.' Core AI Module"
 	law_id = "hulkamania"
+
+
+/******************Overlord***************/
+
+/obj/item/aiModule/core/full/overlord
+	name = "'Overlord' Core AI Module"
+	law_id = "overlord"

@@ -8,7 +8,7 @@
 		/obj/effect,
 		/obj/docking_port,
 		/atom/movable/lighting_object,
-		/obj/item/projectile,
+		/obj/projectile,
 		))
 	var/list/processing_list = list(location)
 	. = list()
@@ -18,7 +18,7 @@
 		if(ignored_things[thing.type])
 			continue
 		. += thing
-		if(SEND_SIGNAL(thing, COMSIG_ATOM_RAD_PROBE) & COMPONENT_BLOCK_RADIATION)
+		if((thing.rad_flags & RAD_PROTECT_CONTENTS) || (SEND_SIGNAL(thing, COMSIG_ATOM_RAD_PROBE) & COMPONENT_BLOCK_RADIATION))
 			continue
 		processing_list += thing.contents
 

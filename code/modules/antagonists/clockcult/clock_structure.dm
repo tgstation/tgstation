@@ -43,10 +43,10 @@
 	var/can_see_clockwork = is_servant_of_ratvar(user) || isobserver(user)
 	if(can_see_clockwork && clockwork_desc)
 		desc = clockwork_desc
-	..()
+	. = ..()
 	desc = initial(desc)
 	if(unanchored_icon)
-		to_chat(user, "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>")
+		. += "<span class='notice'>[src] is [anchored ? "":"not "]secured to the floor.</span>"
 
 /obj/structure/destructible/clockwork/examine_status(mob/user)
 	if(is_servant_of_ratvar(user) || isobserver(user))
@@ -59,7 +59,7 @@
 		return "<span class='[heavily_damaged ? "alloy":"brass"]'>[t_It] [t_is] at <b>[obj_integrity]/[max_integrity]</b> integrity[heavily_damaged ? "!":"."]</span>"
 	return ..()
 
-/obj/structure/destructible/clockwork/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
+/obj/structure/destructible/clockwork/attack_hulk(mob/living/carbon/human/user)
 	if(is_servant_of_ratvar(user) && immune_to_servant_attacks)
 		return FALSE
 	return ..()
@@ -95,7 +95,7 @@
 		return ..()
 
 /obj/structure/destructible/clockwork/attackby(obj/item/I, mob/user, params)
-	if(is_servant_of_ratvar(user) && istype(I, /obj/item/wrench) && unanchored_icon)
+	if(is_servant_of_ratvar(user) && I.tool_behaviour == TOOL_WRENCH && unanchored_icon)
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
 			update_anchored(user)
 		return 1
@@ -112,7 +112,7 @@
 	else
 		icon_state = unanchored_icon
 		if(do_damage)
-			playsound(src, break_sound, 10 * (40 * (1 - get_efficiency_mod())), 1)
+			playsound(src, break_sound, 10 * (40 * (1 - get_efficiency_mod())), TRUE)
 			take_damage(round(max_integrity * 0.25, 1), BRUTE)
 			to_chat(user, "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>")
 
@@ -155,12 +155,12 @@
 	var/inactive_icon = null //icon_state while process() isn't being called
 
 /obj/structure/destructible/clockwork/powered/examine(mob/user)
-	..()
+	. = ..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		if(!can_access_clockwork_power(src))
-			to_chat(user, "<span class='alloy'>It has no access to the power network! Create a sigil of transmission nearby.</span>")
+			. += "<span class='alloy'>It has no access to the power network! Create a sigil of transmission nearby.</span>"
 		else
-			to_chat(user, "<span class='brass'>It has access to <b>[DisplayPower(get_clockwork_power())]</b> of power.</span>")
+			. += "<span class='brass'>It has access to <b>[DisplayPower(get_clockwork_power())]</b> of power.</span>"
 
 /obj/structure/destructible/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src

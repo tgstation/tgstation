@@ -22,6 +22,13 @@
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT // when the mob goes from "normal" to crit
 
+	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
+
+	var/resting = FALSE
+
+	var/lying = 0			//number of degrees. DO NOT USE THIS IN CHECKS. CHECK FOR MOBILITY FLAGS INSTEAD!!
+	var/lying_prev = 0		//last value of lying on update_mobility
+
 	var/confused = 0	//Makes the mob move in random directions.
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
@@ -32,8 +39,6 @@
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	var/incorporeal_move = FALSE //FALSE is off, INCORPOREAL_MOVE_BASIC is normal, INCORPOREAL_MOVE_SHADOW is for ninjas
 								 //and INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
-
-	var/list/status_traits = list()
 
 	var/list/roundstart_quirks = list()
 
@@ -54,7 +59,7 @@
 	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
 	var/mob_size = MOB_SIZE_HUMAN
-	var/list/mob_biotypes = list(MOB_ORGANIC)
+	var/mob_biotypes = MOB_ORGANIC
 	var/metabolism_efficiency = 1 //more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/has_limbs = 0 //does the mob have distinct limbs?(arms,legs, chest,head)
 
@@ -102,7 +107,6 @@
 
 	var/list/obj/effect/proc_holder/abilities = list()
 
-	var/registered_z
 	var/can_be_held = FALSE	//whether this can be picked up and held.
 
 	var/radiation = 0 //If the mob is irradiated.
@@ -112,3 +116,5 @@
 	//List of active diseases
 	var/list/diseases = list() // list of all diseases in a mob
 	var/list/disease_resistances = list()
+
+	var/slowed_by_drag = TRUE //Whether the mob is slowed down when dragging another prone mob

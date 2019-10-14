@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(disease)
 	for(var/common_disease_type in all_common_diseases)
 		var/datum/disease/prototype = new common_disease_type()
 		archive_diseases[prototype.GetDiseaseID()] = prototype
-	..()
+	return ..()
 
 /datum/controller/subsystem/disease/stat_entry(msg)
 	..("P:[active_diseases.len]")

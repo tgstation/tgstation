@@ -5,17 +5,19 @@
 	icon_state = "bloodpack"
 	volume = 200
 	var/blood_type = null
+	var/unique_blood = null
 	var/labelled = 0
+	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 
 /obj/item/reagent_containers/blood/Initialize()
 	. = ..()
 	if(blood_type != null)
-		reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
+		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_icon()
 
 /obj/item/reagent_containers/blood/on_reagent_change(changetype)
 	if(reagents)
-		var/datum/reagent/blood/B = reagents.has_reagent("blood")
+		var/datum/reagent/blood/B = reagents.has_reagent(/datum/reagent/blood)
 		if(B && B.data && B.data["blood_type"])
 			blood_type = B.data["blood_type"]
 		else
@@ -29,16 +31,6 @@
 			name = "blood pack - [blood_type]"
 		else
 			name = "blood pack"
-
-/obj/item/reagent_containers/blood/update_icon()
-	cut_overlays()
-
-	var/v = min(round(reagents.total_volume / volume * 10), 10)
-	if(v > 0)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "bloodpack1")
-		filling.icon_state = "bloodpack[v]"
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
 
 /obj/item/reagent_containers/blood/random
 	icon_state = "random_bloodpack"
@@ -68,6 +60,10 @@
 
 /obj/item/reagent_containers/blood/lizard
 	blood_type = "L"
+
+/obj/item/reagent_containers/blood/ethereal
+	blood_type = "LE"
+	unique_blood = /datum/reagent/consumable/liquidelectricity
 
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"

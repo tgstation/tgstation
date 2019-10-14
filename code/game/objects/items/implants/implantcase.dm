@@ -9,14 +9,14 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_GLASS=500)
+	custom_materials = list(/datum/material/glass=500)
 	var/obj/item/implant/imp = null
 	var/imp_type
 
 
 /obj/item/implantcase/update_icon()
 	if(imp)
-		icon_state = "implantcase-[imp.item_color]"
+		icon_state = "implantcase-[imp.implant_color]"
 		reagents = imp.reagents
 	else
 		icon_state = "implantcase-0"

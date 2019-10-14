@@ -1,9 +1,14 @@
 TGS_DEFINE_AND_SET_GLOBAL(tgs, null)
 
 /datum/tgs_api
+	var/datum/tgs_version/version
+
+/datum/tgs_api/New(datum/tgs_version/version)
+	. = ..()
+	src.version = version
 
 /datum/tgs_api/latest
-	parent_type = /datum/tgs_api/v3210
+	parent_type = /datum/tgs_api/v4
 
 TGS_PROTECT_DATUM(/datum/tgs_api)
 
@@ -44,6 +49,9 @@ TGS_PROTECT_DATUM(/datum/tgs_api)
 	return TGS_UNIMPLEMENTED
 
 /datum/tgs_api/proc/ChatPrivateMessage(message, admin_only)
+	return TGS_UNIMPLEMENTED
+
+/datum/tgs_api/proc/SecurityLevel()
 	return TGS_UNIMPLEMENTED
 
 /*

@@ -50,7 +50,7 @@
 			oxygentanks++
 		else
 			full = TRUE
-	else if(istype(I, /obj/item/wrench))
+	else if(I.tool_behaviour == TOOL_WRENCH)
 		default_unfasten_wrench(user, I, time = 20)
 		return
 	else if(user.a_intent != INTENT_HARM)

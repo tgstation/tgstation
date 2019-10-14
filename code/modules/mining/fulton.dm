@@ -11,10 +11,11 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/uses_left = 3
 	var/can_use_indoors
 	var/safe_for_living_creatures = 1
+	var/max_force_fulton = MOVE_FORCE_STRONG
 
 /obj/item/extraction_pack/examine()
 	. = ..()
-	usr.show_message("It has [uses_left] use\s remaining.", 1)
+	. += "It has [uses_left] use\s remaining."
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
@@ -40,12 +41,16 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
 	. = ..()
 	if(!beacon)
-		to_chat(user, "[src] is not linked to a beacon, and cannot be used.")
+		to_chat(user, "<span class='warning'>[src] is not linked to a beacon, and cannot be used!</span>")
+		return
+	if(!(beacon in GLOB.total_extraction_beacons))
+		beacon = null
+		to_chat(user, "<span class='warning'>The connected beacon has been destroyed!</span>")
 		return
 	if(!can_use_indoors)
 		var/area/area = get_area(A)
 		if(!area.outdoors)
-			to_chat(user, "[src] can only be used on things that are outdoors!")
+			to_chat(user, "<span class='warning'>[src] can only be used on things that are outdoors!</span>")
 			return
 	if(!flag)
 		return
@@ -53,11 +58,11 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		return
 	else
 		if(!safe_for_living_creatures && check_for_living_mobs(A))
-			to_chat(user, "[src] is not safe for use with living creatures, they wouldn't survive the trip back!")
+			to_chat(user, "<span class='warning'>[src] is not safe for use with living creatures, they wouldn't survive the trip back!</span>")
 			return
 		if(!isturf(A.loc)) // no extracting stuff inside other stuff
 			return
-		if(A.anchored)
+		if(A.anchored || (A.move_resist > max_force_fulton))
 			return
 		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(do_after(user,50,target=A))
@@ -73,7 +78,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			var/mutable_appearance/balloon3
 			if(isliving(A))
 				var/mob/living/M = A
-				M.Knockdown(320) // Keep them from moving during the duration of the extraction
+				M.Paralyze(320) // Keep them from moving during the duration of the extraction
 				M.buckled = 0 // Unbuckle them to prevent anchoring problems
 			else
 				A.anchored = TRUE
@@ -91,7 +96,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			balloon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			holder_obj.cut_overlay(balloon2)
 			holder_obj.add_overlay(balloon)
-			playsound(holder_obj.loc, 'sound/items/fulext_deploy.wav', 50, 1, -3)
+			playsound(holder_obj.loc, 'sound/items/fultext_deploy.ogg', 50, TRUE, -3)
 			animate(holder_obj, pixel_z = 10, time = 20)
 			sleep(20)
 			animate(holder_obj, pixel_z = 15, time = 10)
@@ -102,7 +107,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			sleep(10)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			sleep(10)
-			playsound(holder_obj.loc, 'sound/items/fultext_launch.wav', 50, 1, -3)
+			playsound(holder_obj.loc, 'sound/items/fultext_launch.ogg', 50, TRUE, -3)
 			animate(holder_obj, pixel_z = 1000, time = 30)
 			if(ishuman(A))
 				var/mob/living/carbon/human/L = A

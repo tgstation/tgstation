@@ -56,13 +56,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/last_everyone //No text for everyone spamming
 	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
-	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
 	var/notehtml = ""
 	var/notescanned = FALSE // True if what is in the notekeeper was from a paper.
-	var/detonatable = TRUE // Can the PDA be blown up?
 	var/hidden = FALSE // Is the PDA hidden from the PDA list?
 	var/emped = FALSE
 	var/equipped = FALSE  //used here to determine if this is the first time its been picked up
@@ -89,15 +87,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return BRUTELOSS
 
 /obj/item/pda/examine(mob/user)
-	..()
+	. = ..()
 	if(!id && !inserted_item)
 		return
 
 	if(id)
-		to_chat(user, "<span class='notice'>Alt-click to remove the id.</span>")
+		. += "<span class='notice'>Alt-click to remove the id.</span>"
 
 	if(inserted_item && (!isturf(loc)))
-		to_chat(user, "<span class='notice'>Ctrl-click to remove [inserted_item].</span>")
+		. += "<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
 
 /obj/item/pda/Initialize()
 	. = ..()
@@ -169,11 +167,15 @@ GLOBAL_LIST_EMPTY(PDAs)
 			overlay.icon_state = "pai_off_overlay"
 			add_overlay(new /mutable_appearance(overlay))
 
-/obj/item/pda/MouseDrop(obj/over_object, src_location, over_location)
+/obj/item/pda/MouseDrop(mob/over, src_location, over_location)
 	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
+	if((M == over) && usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return attack_self(M)
 	return ..()
+
+/obj/item/pda/attack_self_tk(mob/user)
+	to_chat(user, "<span class='warning'>The PDA's capacitive touch screen doesn't seem to respond!</span>")
+	return
 
 /obj/item/pda/interact(mob/user)
 	if(!user.IsAdvancedToolUser())
@@ -380,7 +382,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
-	if(usr.canUseTopic(src) && !href_list["close"])
+	if(usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !href_list["close"])
 		add_fingerprint(U)
 		U.set_machine(src)
 
@@ -470,11 +472,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 					scanmode = PDA_SCANNER_HALOGEN
 			if("Honk")
 				if ( !(last_noise && world.time < last_noise + 20) )
-					playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+					playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 					last_noise = world.time
 			if("Trombone")
 				if ( !(last_noise && world.time < last_noise + 20) )
-					playsound(src, 'sound/misc/sadtrombone.ogg', 50, 1)
+					playsound(src, 'sound/misc/sadtrombone.ogg', 50, TRUE)
 					last_noise = world.time
 			if("Gas Scan")
 				if(scanmode == PDA_SCANNER_GAS)
@@ -512,7 +514,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = input(U, "Please enter new ringtone", name, ttone) as text
+				var/t = input(U, "Please enter new ringtone", name, ttone) as text|null
 				if(in_range(src, U) && loc == U && t)
 					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")
@@ -523,7 +525,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					U << browse(null, "window=pda")
 					return
 			if("Message")
-				create_message(U, locate(href_list["target"]))
+				create_message(U, locate(href_list["target"]) in GLOB.PDAs)
 
 			if("MessageAll")
 				send_to_all(U)
@@ -552,9 +554,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if("1")		// Configure pAI device
 						pai.attack_self(U)
 					if("2")		// Eject pAI device
-						var/turf/T = get_turf(loc)
-						if(T)
-							pai.forceMove(T)
+						usr.put_in_hands(pai)
+						to_chat(usr, "<span class='notice'>You remove the pAI from the [name].</span>")
 
 //LINK FUNCTIONS===================================
 
@@ -573,7 +574,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
-		playsound(src, 'sound/items/bikehorn.ogg', 30, 1)
+		playsound(src, 'sound/items/bikehorn.ogg', 30, TRUE)
 
 	if(U.machine == src && href_list["skiprefresh"]!="1")//Final safety.
 		attack_self(U)//It auto-closes the menu prior if the user is not in range and so on.
@@ -584,7 +585,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/proc/remove_id()
 
-	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE))
+	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	if (id)
@@ -592,6 +593,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		id = null
 		update_icon()
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.wear_id == src)
+				H.sec_hud_set_ID()
 
 /obj/item/pda/proc/msg_input(mob/living/U = usr)
 	var/t = stripped_input(U, "Please enter message", name)
@@ -600,7 +605,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(!U.canUseTopic(src, BE_CLOSE))
 		return
 	if(emped)
-		t = Gibberish(t, 100)
+		t = Gibberish(t, TRUE)
 	return t
 
 /obj/item/pda/proc/send_message(mob/living/user, list/obj/item/pda/targets, everyone)
@@ -625,7 +630,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if (!string_targets.len)
 		return
 
-	var/datum/signal/subspace/pda/signal = new(src, list(
+	var/datum/signal/subspace/messaging/pda/signal = new(src, list(
 		"name" = "[owner]",
 		"job" = "[ownjob]",
 		"message" = message,
@@ -646,7 +651,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// Show it to ghosts
 	var/ghost_message = "<span class='name'>[owner] </span><span class='game say'>PDA Message</span> --> <span class='name'>[target_text]</span>: <span class='message'>[signal.format_message()]</span>"
 	for(var/mob/M in GLOB.player_list)
-		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
+		if(isobserver(M) && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text]")
@@ -657,11 +662,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if (everyone)
 		last_everyone = world.time
 
-/obj/item/pda/proc/receive_message(datum/signal/subspace/pda/signal)
+/obj/item/pda/proc/receive_message(datum/signal/subspace/messaging/pda/signal)
 	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=Message;target=[REF(signal.source)]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
 
 	if (!silent)
-		playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 		audible_message("[icon2html(src, hearers(src))] *[ttone]*", null, 3)
 	//Search for holder of the PDA.
 	var/mob/living/L = null
@@ -672,20 +677,24 @@ GLOBAL_LIST_EMPTY(PDAs)
 		L = get(src, /mob/living/silicon)
 
 	if(L && L.stat != UNCONSCIOUS)
+		var/reply = "(<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)"
 		var/hrefstart
 		var/hrefend
 		if (isAI(L))
 			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
 			hrefend = "</a>"
 
-		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message()] (<a href='byond://?src=[REF(src)];choice=Message;skiprefresh=1;target=[REF(signal.source)]'>Reply</a>)")
+		if(signal.data["automated"])
+			reply = "\[Automated Message\]"
+
+		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message()] [reply]")
 
 	update_icon()
 	add_overlay(icon_alert)
 
 /obj/item/pda/proc/send_to_all(mob/living/U)
 	if (last_everyone && world.time < last_everyone + PDA_SPAM_DELAY)
-		to_chat(U,"<span class='warning'>Send To All function is still on cooldown.")
+		to_chat(U,"<span class='warning'>Send To All function is still on cooldown.</span>")
 		return
 	send_message(U,get_viewable_pdas(), TRUE)
 
@@ -732,6 +741,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	remove_pen()
 
 /obj/item/pda/proc/toggle_light()
+	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE))
+		return
 	if(fon)
 		fon = FALSE
 		set_light(0)
@@ -742,7 +753,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/proc/remove_pen()
 
-	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE))
+	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	if(inserted_item)
@@ -769,6 +780,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 			return FALSE
 		var/obj/old_id = id
 		id = I
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.wear_id == src)
+				H.sec_hud_set_ID()
 		if(old_id)
 			user.put_in_hands(old_id)
 		update_icon()
@@ -795,12 +810,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 			update_label()
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
-			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
-			if(((src in user.contents) || (isturf(loc) && in_range(src, user))) && (C in user.contents))
-				if(!id_check(user, idcard))
-					return
-				to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
-				updateSelfDialog()//Update self dialog on success.
+			if(!id_check(user, idcard))
+				return
+			to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
+			updateSelfDialog()//Update self dialog on success.
+
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/paicard) && !pai)
@@ -880,13 +894,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 
 /obj/item/pda/proc/explode() //This needs tuning.
-	if(!detonatable)
-		return
 	var/turf/T = get_turf(src)
 
 	if (ismob(loc))
 		var/mob/M = loc
-		M.show_message("<span class='userdanger'>Your [src] explodes!</span>", 1)
+		M.show_message("<span class='userdanger'>Your [src] explodes!</span>", MSG_VISUAL, "<span class='warning'>You hear a loud *pop*!</span>", MSG_AUDIBLE)
 	else
 		visible_message("<span class='danger'>[src] explodes!</span>", "<span class='warning'>You hear a loud *pop*!</span>")
 
@@ -913,7 +925,34 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 //AI verb and proc for sending PDA messages.
 
-/mob/living/silicon/ai/proc/cmd_send_pdamesg(mob/user)
+/obj/item/pda/ai/verb/cmd_toggle_pda_receiver()
+	set category = "AI Commands"
+	set name = "PDA - Toggle Sender/Receiver"
+
+	if(usr.stat == DEAD)
+		return //won't work if dead
+	var/mob/living/silicon/S = usr
+	if(istype(S) && !isnull(S.aiPDA))
+		S.aiPDA.toff = !S.aiPDA.toff
+		to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(S.aiPDA.toff ? "Off" : "On")]!</span>")
+	else
+		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
+
+/obj/item/pda/ai/verb/cmd_toggle_pda_silent()
+	set category = "AI Commands"
+	set name = "PDA - Toggle Ringer"
+
+	if(usr.stat == DEAD)
+		return //won't work if dead
+	var/mob/living/silicon/S = usr
+	if(istype(S) && !isnull(S.aiPDA))
+		//0
+		S.aiPDA.silent = !S.aiPDA.silent
+		to_chat(usr, "<span class='notice'>PDA ringer toggled [(S.aiPDA.silent ? "Off" : "On")]!</span>")
+	else
+		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
+
+/mob/living/silicon/proc/cmd_send_pdamesg(mob/user)
 	var/list/plist = list()
 	var/list/namecounts = list()
 
@@ -947,31 +986,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	aiPDA.create_message(src, selected)
 
-
-/mob/living/silicon/ai/verb/cmd_toggle_pda_receiver()
-	set category = "AI Commands"
-	set name = "PDA - Toggle Sender/Receiver"
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	if(!isnull(aiPDA))
-		aiPDA.toff = !aiPDA.toff
-		to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(aiPDA.toff ? "Off" : "On")]!</span>")
-	else
-		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
-
-/mob/living/silicon/ai/verb/cmd_toggle_pda_silent()
-	set category = "AI Commands"
-	set name = "PDA - Toggle Ringer"
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	if(!isnull(aiPDA))
-		//0
-		aiPDA.silent = !aiPDA.silent
-		to_chat(usr, "<span class='notice'>PDA ringer toggled [(aiPDA.silent ? "Off" : "On")]!</span>")
-	else
-		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
-
-/mob/living/silicon/ai/proc/cmd_show_message_log(mob/user)
+/mob/living/silicon/proc/cmd_show_message_log(mob/user)
 	if(incapacitated())
 		return
 	if(!isnull(aiPDA))
@@ -979,7 +994,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	else
 		to_chat(user, "You do not have a PDA. You should make an issue report about this.")
-
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/pda/emp_act(severity)
@@ -999,6 +1013,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(!P.owner || P.toff || P.hidden)
 			continue
 		. += P
+
+/obj/item/pda/proc/pda_no_detonate()
+	return COMPONENT_PDA_NO_DETONATE
 
 #undef PDA_SCANNER_NONE
 #undef PDA_SCANNER_MEDICAL

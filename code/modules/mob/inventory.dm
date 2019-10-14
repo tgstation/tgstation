@@ -51,46 +51,24 @@
 //Finds the first available (null) index OR all available (null) indexes in held_items based on a side.
 //Lefts: 1, 3, 5, 7...
 //Rights:2, 4, 6, 8...
-/mob/proc/get_empty_held_index_for_side(side = "left", all = FALSE)
-	var/start = 0
-	var/static/list/lefts = list("l" = TRUE,"L" = TRUE,"LEFT" = TRUE,"left" = TRUE)
-	var/static/list/rights = list("r" = TRUE,"R" = TRUE,"RIGHT" = TRUE,"right" = TRUE) //"to remain silent"
-	if(lefts[side])
-		start = 1
-	else if(rights[side])
-		start = 2
-	if(!start)
-		return FALSE
-	var/list/empty_indexes
-	for(var/i in start to held_items.len step 2)
+/mob/proc/get_empty_held_index_for_side(side = LEFT_HANDS, all = FALSE)
+	var/list/empty_indexes = all ? list() : null
+	for(var/i in (side == LEFT_HANDS) ? 1 : 2 to held_items.len step 2)
 		if(!held_items[i])
 			if(!all)
 				return i
-			if(!empty_indexes)
-				empty_indexes = list()
 			empty_indexes += i
 	return empty_indexes
 
 
 //Same as the above, but returns the first or ALL held *ITEMS* for the side
-/mob/proc/get_held_items_for_side(side = "left", all = FALSE)
-	var/start = 0
-	var/static/list/lefts = list("l" = TRUE,"L" = TRUE,"LEFT" = TRUE,"left" = TRUE)
-	var/static/list/rights = list("r" = TRUE,"R" = TRUE,"RIGHT" = TRUE,"right" = TRUE) //"to remain silent"
-	if(lefts[side])
-		start = 1
-	else if(rights[side])
-		start = 2
-	if(!start)
-		return FALSE
-	var/list/holding_items
-	for(var/i in start to held_items.len step 2)
+/mob/proc/get_held_items_for_side(side = LEFT_HANDS, all = FALSE)
+	var/list/holding_items = all ? list() : null
+	for(var/i in (side == LEFT_HANDS) ? 1 : 2 to held_items.len step 2)
 		var/obj/item/I = held_items[i]
 		if(I)
 			if(!all)
 				return I
-			if(!holding_items)
-				holding_items = list()
 			holding_items += I
 	return holding_items
 
@@ -158,7 +136,7 @@
 
 //Returns if a certain item can be equipped to a certain slot.
 // Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
-/mob/proc/can_equip(obj/item/I, slot, disable_warning = 0)
+/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	return FALSE
 
 /mob/proc/can_put_in_hand(I, hand_index)
@@ -193,21 +171,19 @@
 
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/I)
-	return put_in_hand(I, get_empty_held_index_for_side("l"))
-
+	return put_in_hand(I, get_empty_held_index_for_side(LEFT_HANDS))
 
 //Puts the item into the first available right hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(obj/item/I)
-	return put_in_hand(I, get_empty_held_index_for_side("r"))
-
+	return put_in_hand(I, get_empty_held_index_for_side(RIGHT_HANDS))
 
 /mob/proc/put_in_hand_check(obj/item/I)
-	if(lying && !(I.item_flags & ABSTRACT))
-		return FALSE
-	if(!istype(I))
-		return FALSE
-	return TRUE
+	return FALSE					//nonliving mobs don't have hands
 
+/mob/living/put_in_hand_check(obj/item/I)
+	if(istype(I) && ((mobility_flags & MOBILITY_PICKUP) || (I.item_flags & ABSTRACT)))
+		return TRUE
+	return FALSE
 
 //Puts the item into our active hand if possible. returns TRUE on success.
 /mob/proc/put_in_active_hand(obj/item/I, forced = FALSE, ignore_animation = TRUE)
@@ -249,9 +225,9 @@
 	if(put_in_active_hand(I, forced))
 		return TRUE
 
-	var/hand = get_empty_held_index_for_side("l")
+	var/hand = get_empty_held_index_for_side(LEFT_HANDS)
 	if(!hand)
-		hand =  get_empty_held_index_for_side("r")
+		hand =  get_empty_held_index_for_side(RIGHT_HANDS)
 	if(hand)
 		if(put_in_hand(I, hand, forced))
 			return TRUE
@@ -274,7 +250,7 @@
 /mob/proc/canUnEquip(obj/item/I, force)
 	if(!I)
 		return TRUE
-	if((I.item_flags & NODROP) && !force)
+	if(HAS_TRAIT(I, TRAIT_NODROP) && !force)
 		return FALSE
 	return TRUE
 
@@ -291,30 +267,37 @@
 
 //The following functions are the same save for one small difference
 
-//for when you want the item to end up on the ground
-//will force move the item to the ground and call the turf's Entered
-/mob/proc/dropItemToGround(obj/item/I, force = FALSE)
-	return doUnEquip(I, force, drop_location(), FALSE)
+/**
+  * Used to drop an item (if it exists) to the ground.
+  * * Will pass as TRUE is successfully dropped, or if there is no item to drop.
+  * * Will pass FALSE if the item can not be dropped due to TRAIT_NODROP via doUnEquip()
+  * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
+*/
+/mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE)
+	. = doUnEquip(I, force, drop_location(), FALSE, silent = silent)
+	if(. && I) //ensure the item exists and that it was dropped properly.
+		I.pixel_x = rand(-6,6)
+		I.pixel_y = rand(-6,6)
 
 //for when the item will be immediately placed in a loc other than the ground
-/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE)
-	return doUnEquip(I, force, newloc, FALSE)
+/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE)
+	return doUnEquip(I, force, newloc, FALSE, silent = silent)
 
 //visibly unequips I but it is NOT MOVED AND REMAINS IN SRC
 //item MUST BE FORCEMOVE'D OR QDEL'D
 /mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE, idrop = TRUE)
-	return doUnEquip(I, force, null, TRUE, idrop)
+	return doUnEquip(I, force, null, TRUE, idrop, silent = TRUE)
 
 //DO NOT CALL THIS PROC
 //use one of the above 3 helper procs
 //you may override it, but do not modify the args
-/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE) //Force overrides NODROP_1 for things like wizarditis and admin undress.
+/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE) //Force overrides TRAIT_NODROP for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
 													//Invdrop is used to prevent stuff in pockets dropping. only set to false if it's going to immediately be replaced
-	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP_1.
+	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for TRAIT_NODROP.
 		return TRUE
 
-	if((I.item_flags & NODROP) && !force)
+	if(HAS_TRAIT(I, TRAIT_NODROP) && !force)
 		return FALSE
 
 	var/hand_index = get_held_index_of_item(I)
@@ -332,7 +315,7 @@
 				I.moveToNullspace()
 			else
 				I.forceMove(newloc)
-		I.dropped(src)
+		I.dropped(src, silent)
 	return TRUE
 
 //Outdated but still in use apparently. This should at least be a human proc.
@@ -385,6 +368,36 @@
 	for(var/I in items)
 		dropItemToGround(I)
 	drop_all_held_items()
+
+
+/mob/living/carbon/proc/check_obscured_slots(transparent_protection)
+	var/list/obscured = list()
+	var/hidden_slots = NONE
+
+	for(var/obj/item/I in get_equipped_items())
+		hidden_slots |= I.flags_inv
+		if(transparent_protection)
+			hidden_slots |= I.transparent_protection
+
+	if(hidden_slots & HIDENECK)
+		obscured |= SLOT_NECK
+	if(hidden_slots & HIDEMASK)
+		obscured |= SLOT_WEAR_MASK
+	if(hidden_slots & HIDEEYES)
+		obscured |= SLOT_GLASSES
+	if(hidden_slots & HIDEEARS)
+		obscured |= SLOT_EARS
+	if(hidden_slots & HIDEGLOVES)
+		obscured |= SLOT_GLOVES
+	if(hidden_slots & HIDEJUMPSUIT)
+		obscured |= SLOT_W_UNIFORM
+	if(hidden_slots & HIDESHOES)
+		obscured |= SLOT_SHOES
+	if(hidden_slots & HIDESUITSTORAGE)
+		obscured |= SLOT_S_STORE
+
+	return obscured
+
 
 /obj/item/proc/equip_to_best_slot(mob/M)
 	if(src != M.get_active_held_item())

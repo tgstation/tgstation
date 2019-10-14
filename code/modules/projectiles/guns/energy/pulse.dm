@@ -21,12 +21,11 @@
 	. = ..()
 	GLOB.poi_list += src
 	var/turf/T = get_turf(src)
-	var/msg = "A pulse rifle prize has been created at [ADMIN_VERBOSEJMP(T)]"
 
-	message_admins(msg)
-	log_game(msg)
+	message_admins("A pulse rifle prize has been created at [ADMIN_VERBOSEJMP(T)]")
+	log_game("A pulse rifle prize has been created at [AREACOORD(T)]")
 
-	notify_ghosts("Someone won a pulse rifle as a prize!", source = src, action = NOTIFY_ORBIT)
+	notify_ghosts("Someone won a pulse rifle as a prize!", source = src, action = NOTIFY_ORBIT, header = "Pulse rifle prize")
 
 /obj/item/gun/energy/pulse/prize/Destroy()
 	GLOB.poi_list -= src
@@ -43,7 +42,7 @@
 	icon_state = "pulse_carbine"
 	item_state = null
 	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
-	can_flashlight = 1
+	can_flashlight = TRUE
 	flight_x_offset = 18
 	flight_y_offset = 12
 

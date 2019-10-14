@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/singularity_act()
 	return
 
-/obj/effect/hallucination/simple/Initialize(mapload, var/mob/living/carbon/T)
+/obj/effect/hallucination/simple/Initialize(mapload, mob/living/carbon/T)
 	. = ..()
 	target = T
 	current_image = GetImage()
@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/turf/center
 	var/list/flood_images = list()
 	var/list/turf/flood_turfs = list()
-	var/image_icon = 'icons/effects/tile_effects.dmi'
+	var/image_icon = 'icons/effects/atmospherics.dmi'
 	var/image_state = "plasma"
 	var/radius = 0
 	var/next_expand = 0
@@ -166,7 +166,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		qdel(src)
 		return
 	feedback_details += "Vent Coords: [center.x],[center.y],[center.z]"
-	flood_images += image(image_icon,center,image_state,MOB_LAYER)
+	var/image/plasma_image = image(image_icon,center,image_state,FLY_LAYER)
+	plasma_image.alpha = 50
+	plasma_image.plane = GAME_PLANE
+	flood_images += plasma_image
 	flood_turfs += center
 	if(target.client)
 		target.client.images |= flood_images
@@ -185,12 +188,17 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 
 /datum/hallucination/fake_flood/proc/Expand()
+	for(var/image/I in flood_images)
+		I.alpha = min(I.alpha + 50, 255)
 	for(var/turf/FT in flood_turfs)
 		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(FT, dir)
 			if((T in flood_turfs) || !FT.CanAtmosPass(T))
 				continue
-			flood_images += image(image_icon,T,image_state,MOB_LAYER)
+			var/image/new_plasma = image(image_icon,T,image_state,FLY_LAYER)
+			new_plasma.alpha = 50
+			new_plasma.plane = GAME_PLANE
+			flood_images += new_plasma
 			flood_turfs += T
 	if(target.client)
 		target.client.images |= flood_images
@@ -213,11 +221,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	. = ..()
 	name = "alien hunter ([rand(1, 1000)])"
 
-/obj/effect/hallucination/simple/xeno/throw_impact(A)
+/obj/effect/hallucination/simple/xeno/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	update_icon("alienh_pounce")
-	if(A == target && target.stat!=DEAD)
-		target.Knockdown(100)
-		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
+	if(hit_atom == target && target.stat!=DEAD)
+		target.Paralyze(100)
+		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class='userdanger'>[name] pounces on you!</span>")
 
 /datum/hallucination/xeno_attack
 	//Xeno crawls from nearby vent,jumps at you, and goes back in
@@ -303,7 +311,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		shake_camera(target, 2, 1)
 		if(bubblegum.Adjacent(target) && !charged)
 			charged = TRUE
-			target.Knockdown(80)
+			target.Paralyze(80)
 			target.adjustStaminaLoss(40)
 			step_away(target, bubblegum)
 			shake_camera(target, 4, 3)
@@ -368,7 +376,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if("gun")
 			var/hits = 0
 			for(var/i in 1 to rand(3, 6))
-				target.playsound_local(source, get_sfx("gunshot"), 25)
+				target.playsound_local(source, "sound/weapons/gunshot.ogg", 25, TRUE)
 				if(prob(60))
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, 'sound/weapons/pierce.ogg', 25, 1), rand(5,10))
 					hits++
@@ -421,11 +429,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/mob/living/carbon/human/H = pick(mob_pool)
 	feedback_details += " Mob: [H.real_name]"
 
-	var/free_hand = H.get_empty_held_index_for_side(side = "left")
+	var/free_hand = H.get_empty_held_index_for_side(LEFT_HANDS)
 	if(free_hand)
 		side = "left"
 	else
-		free_hand = H.get_empty_held_index_for_side(side = "right")
+		free_hand = H.get_empty_held_index_for_side(RIGHT_HANDS)
 		if(free_hand)
 			side = "right"
 
@@ -524,7 +532,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				A = image('icons/mob/monkey.dmi',H,"monkey1")
 				A.name = "Monkey ([rand(1,999)])"
 			if("carp")//Carp
-				A = image('icons/mob/animal.dmi',H,"carp")
+				A = image('icons/mob/carp.dmi',H,"carp")
 				A.name = "Space Carp"
 			if("corgi")//Corgi
 				A = image('icons/mob/pets.dmi',H,"corgi")
@@ -584,7 +592,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	A.override = 1
 	if(target.client)
 		if(wabbajack)
-			to_chat(target, "<span class='italics'>...wabbajack...wabbajack...</span>")
+			to_chat(target, "<span class='hear'>...wabbajack...wabbajack...</span>")
 			target.playsound_local(target,'sound/magic/staff_change.ogg', 50, 1)
 		delusion = A
 		target.client.images |= A
@@ -671,8 +679,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		"[pick("C","Ai, c","Someone c","Rec")]all the shuttle!",\
 		"AI [pick("rogue", "is dead")]!!")
 
-	var/list/mob/living/carbon/people = list()
-	var/list/mob/living/carbon/person = null
+	var/mob/living/carbon/person = null
 	var/datum/language/understood_language = target.get_random_understood_language()
 	for(var/mob/living/carbon/H in view(target))
 		if(H == target)
@@ -682,14 +689,13 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		else
 			if(get_dist(target,H)<get_dist(target,person))
 				person = H
-		people += H
 	if(person && !force_radio) //Basic talk
 		var/chosen = specific_message
 		if(!chosen)
 			chosen = capitalize(pick(speak_messages))
 		chosen = replacetext(chosen, "%TARGETNAME%", target_name)
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
-		var/message = target.compose_message(person,understood_language,chosen,null,person.get_spans(),face_name = TRUE)
+		var/message = target.compose_message(person,understood_language,chosen,null,list(person.speech_span),face_name = TRUE)
 		feedback_details += "Type: Talk, Source: [person.real_name], Message: [message]"
 		to_chat(target, message)
 		if(target.client)
@@ -705,7 +711,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 			humans += H
 		person = pick(humans)
-		var/message = target.compose_message(person,understood_language,chosen,"[FREQ_COMMON]",person.get_spans(),face_name = TRUE)
+		var/message = target.compose_message(person,understood_language,chosen,"[FREQ_COMMON]",list(person.speech_span),face_name = TRUE)
 		feedback_details += "Type: Radio, Source: [person.real_name], Message: [message]"
 		to_chat(target, message)
 	qdel(src)
@@ -1009,7 +1015,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					if(prob(25))
 						target.halitem.icon_state = "plasticx40"
 				if(3) //sword
-					target.halitem.icon = 'icons/obj/items_and_weapons.dmi'
+					target.halitem.icon = 'icons/obj/transforming_energy.dmi'
 					target.halitem.icon_state = "sword0"
 					target.halitem.name = "Energy Sword"
 				if(4) //stun baton
@@ -1096,8 +1102,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /obj/effect/hallucination/danger/chasm/Crossed(atom/movable/AM)
 	if(AM == target)
+		if(istype(target, /obj/effect/dummy/phased_mob))
+			return
 		to_chat(target, "<span class='userdanger'>You fall into the chasm!</span>")
-		target.Knockdown(40)
+		target.Paralyze(40)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, target, "<span class='notice'>It's surprisingly shallow.</span>"), 15)
 		QDEL_IN(src, 30)
 
@@ -1131,7 +1139,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	..()
 	target.set_screwyhud(SCREWYHUD_DEAD)
-	target.Knockdown(300)
+	target.Paralyze(300)
 	target.silent += 10
 	to_chat(target, "<span class='deadsay'><b>[target.real_name]</b> has died at <b>[get_area_name(target)]</b>.</span>")
 	if(prob(50))
@@ -1149,7 +1157,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "this round","this","myself","admins","you")]")]\"</span>")
 	sleep(rand(70,90))
 	target.set_screwyhud(SCREWYHUD_NONE)
-	target.SetKnockdown(0)
+	target.SetParalyzed(0)
 	target.silent = FALSE
 	qdel(src)
 
@@ -1236,7 +1244,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /datum/hallucination/shock/proc/shock_drop()
 	target.jitteriness = max(target.jitteriness - 990, 10) //Still jittery, but vastly less
-	target.Knockdown(60)
+	target.Paralyze(60)
 
 /datum/hallucination/husks
 
@@ -1278,10 +1286,13 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/list/turf/startlocs = list()
 	for(var/turf/open/T in view(world.view+1,target)-view(world.view,target))
 		startlocs += T
+	if(!startlocs.len)
+		qdel(src)
+		return
 	var/turf/start = pick(startlocs)
-	var/proj_type = pick(subtypesof(/obj/item/projectile/hallucination))
+	var/proj_type = pick(subtypesof(/obj/projectile/hallucination))
 	feedback_details += "Type: [proj_type]"
-	var/obj/item/projectile/hallucination/H = new proj_type(start)
+	var/obj/projectile/hallucination/H = new proj_type(start)
 	target.playsound_local(start, H.hal_fire_sound, 60, 1)
 	H.hal_target = target
 	H.preparePixelProjectile(target, start)

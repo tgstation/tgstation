@@ -57,6 +57,7 @@
 			deactivate()
 		if(passive_enabled)
 			disable_passive_effect()
+		on_mob_remove()
 	if(nanites)
 		nanites.programs -= src
 	return ..()
@@ -86,7 +87,8 @@
 	target.deactivation_code = deactivation_code
 	target.kill_code = kill_code
 	target.trigger_code = trigger_code
-	copy_extra_settings_to(target)
+	if(istype(target,src))
+		copy_extra_settings_to(target)
 
 /datum/nanite_program/proc/set_extra_setting(user, setting)
 	return
@@ -107,6 +109,9 @@
 	if(activated) //apply activation effects if it starts active
 		activate()
 
+/datum/nanite_program/proc/on_mob_remove()
+	return
+
 /datum/nanite_program/proc/toggle()
 	if(!activated)
 		activate()
@@ -115,6 +120,7 @@
 
 /datum/nanite_program/proc/activate()
 	activated = TRUE
+	timer_counter = activation_delay
 
 /datum/nanite_program/proc/deactivate()
 	if(passive_enabled)
@@ -135,8 +141,10 @@
 	if(timer && timer_counter > timer)
 		if(timer_type == NANITE_TIMER_DEACTIVATE)
 			deactivate()
+			return
 		else if(timer_type == NANITE_TIMER_SELFDELETE)
 			qdel(src)
+			return
 		else if(can_trigger && timer_type == NANITE_TIMER_TRIGGER)
 			trigger()
 			timer_counter = activation_delay
@@ -201,9 +209,6 @@
 /datum/nanite_program/proc/on_death()
 	return
 
-/datum/nanite_program/proc/on_hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	return
-
 /datum/nanite_program/proc/software_error(type)
 	if(!type)
 		type = rand(1,5)
@@ -224,21 +229,21 @@
 		if(5) //Program is scrambled and does something different
 			var/rogue_type = pick(rogue_types)
 			var/datum/nanite_program/rogue = new rogue_type
-			nanites.add_program(rogue, src)
+			nanites.add_program(null, rogue, src)
 			qdel(src)
 
 /datum/nanite_program/proc/receive_signal(code, source)
 	if(activation_code && code == activation_code && !activated)
 		activate()
-		host_mob.investigate_log("[host_mob]'s [name] nanite program was activated by [source] with code [code].", INVESTIGATE_NANITES)
+		host_mob.investigate_log("'s [name] nanite program was activated by [source] with code [code].", INVESTIGATE_NANITES)
 	else if(deactivation_code && code == deactivation_code && activated)
 		deactivate()
-		host_mob.investigate_log("[host_mob]'s [name] nanite program was deactivated by [source] with code [code].", INVESTIGATE_NANITES)
+		host_mob.investigate_log("'s [name] nanite program was deactivated by [source] with code [code].", INVESTIGATE_NANITES)
 	if(can_trigger && trigger_code && code == trigger_code)
 		trigger()
-		host_mob.investigate_log("[host_mob]'s [name] nanite program was triggered by [source] with code [code].", INVESTIGATE_NANITES)
+		host_mob.investigate_log("'s [name] nanite program was triggered by [source] with code [code].", INVESTIGATE_NANITES)
 	if(kill_code && code == kill_code)
-		host_mob.investigate_log("[host_mob]'s [name] nanite program was deleted by [source] with code [code].", INVESTIGATE_NANITES)
+		host_mob.investigate_log("'s [name] nanite program was deleted by [source] with code [code].", INVESTIGATE_NANITES)
 		qdel(src)
 
 /datum/nanite_program/proc/get_timer_type_text()
@@ -251,4 +256,3 @@
 			return "Trigger"
 		if(NANITE_TIMER_RESET)
 			return "Reset Activation Timer"
-

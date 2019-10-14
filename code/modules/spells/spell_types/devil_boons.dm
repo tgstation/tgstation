@@ -2,9 +2,9 @@
 	name = "Summon wealth"
 	desc = "The reward for selling your soul."
 	invocation_type = "none"
-	include_user = 1
+	include_user = TRUE
 	range = -1
-	clothes_req = 0
+	clothes_req = FALSE
 	school = "conjuration"
 	charge_max = 100
 	cooldown_min = 10
@@ -16,23 +16,23 @@
 	for(var/mob/living/carbon/C in targets)
 		if(user.dropItemToGround(user.get_active_held_item()))
 			var/obj/item = pick(
-					new /obj/item/coin/gold(user.loc),
-					new /obj/item/coin/diamond(user.loc),
-					new /obj/item/coin/silver(user.loc),
-					new /obj/item/clothing/accessory/medal/gold(user.loc),
-					new /obj/item/stack/sheet/mineral/gold(user.loc),
-					new /obj/item/stack/sheet/mineral/silver(user.loc),
-					new /obj/item/stack/sheet/mineral/diamond(user.loc),
-					new /obj/item/stack/spacecash/c1000(user.loc))
+					new /obj/item/coin/gold(user.drop_location()),
+					new /obj/item/coin/diamond(user.drop_location()),
+					new /obj/item/coin/silver(user.drop_location()),
+					new /obj/item/clothing/accessory/medal/gold(user.drop_location()),
+					new /obj/item/stack/sheet/mineral/gold(user.drop_location()),
+					new /obj/item/stack/sheet/mineral/silver(user.drop_location()),
+					new /obj/item/stack/sheet/mineral/diamond(user.drop_location()),
+					new /obj/item/holochip(user.drop_location(), 1000))
 			C.put_in_hands(item)
 
 /obj/effect/proc_holder/spell/targeted/view_range
 	name = "Distant vision"
 	desc = "The reward for selling your soul."
 	invocation_type = "none"
-	include_user = 1
+	include_user = TRUE
 	range = -1
-	clothes_req = 0
+	clothes_req = FALSE
 	charge_max = 50
 	cooldown_min = 10
 	action_icon = 'icons/mob/actions/actions_silicon.dmi'
@@ -49,9 +49,9 @@
 	name = "Summon Friend"
 	desc = "The reward for selling your soul."
 	invocation_type = "none"
-	include_user = 1
+	include_user = TRUE
 	range = -1
-	clothes_req = 0
+	clothes_req = FALSE
 	charge_max = 50
 	cooldown_min = 10
 	action_icon = 'icons/mob/actions/actions_spells.dmi'

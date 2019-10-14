@@ -16,32 +16,89 @@
 
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/obj/item/organ/brain/brain = null //The brain organ
+	var/obj/item/organ/eyes/eyes
+	var/obj/item/organ/ears/ears
+	var/obj/item/organ/tongue/tongue
 
 	//Limb appearance info:
 	var/real_name = "" //Replacement name
 	//Hair colour and style
 	var/hair_color = "000"
-	var/hair_style = "Bald"
+	var/hairstyle = "Bald"
 	var/hair_alpha = 255
 	//Facial hair colour and style
 	var/facial_hair_color = "000"
-	var/facial_hair_style = "Shaved"
+	var/facial_hairstyle = "Shaved"
 	//Eye Colouring
-
-	var/obj/item/organ/eyes/eyes = null
 
 	var/lip_style = null
 	var/lip_color = "white"
+
+
+/obj/item/bodypart/head/Destroy()
+	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
+	QDEL_NULL(brain)
+	QDEL_NULL(eyes)
+	QDEL_NULL(ears)
+	QDEL_NULL(tongue)
+	return ..()
+
+/obj/item/bodypart/head/handle_atom_del(atom/A)
+	if(A == brain)
+		brain = null
+		update_icon_dropped()
+		if(!QDELETED(brainmob)) //this shouldn't happen without badminnery.
+			message_admins("Brainmob: ([ADMIN_LOOKUPFLW(brainmob)]) was left stranded in [src] at [ADMIN_VERBOSEJMP(src)] without a brain!")
+			log_game("Brainmob: ([key_name(brainmob)]) was left stranded in [src] at [AREACOORD(src)] without a brain!")
+	if(A == brainmob)
+		brainmob = null
+	if(A == eyes)
+		eyes = null
+		update_icon_dropped()
+	if(A == ears)
+		ears = null
+	if(A == tongue)
+		tongue = null
+	return ..()
+
+/obj/item/bodypart/head/examine(mob/user)
+	. = ..()
+	if(status == BODYPART_ORGANIC)
+		if(!brain)
+			. += "<span class='info'>The brain has been removed from [src].</span>"
+		else if(brain.suicided || brainmob?.suiciding)
+			. += "<span class='info'>There's a pretty dumb expression on [real_name]'s face; they must have really hated life. There is no hope of recovery.</span>"
+		else if(brain.brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD)
+			. += "<span class='info'>It seems to be leaking some kind of... clear fluid? The brain inside must be in pretty bad shape... There is no coming back from that.</span>"
+		else if(brainmob)
+			if(brainmob.get_ghost(FALSE, TRUE))
+				. += "<span class='info'>Its muscles are still twitching slightly... It still seems to have a bit of life left to it.</span>"
+			else
+				. += "<span class='info'>It seems seems particularly lifeless. Perhaps there'll be a chance for them later.</span>"
+		else if(brain?.decoy_override)
+			. += "<span class='info'>It seems particularly lifeless. Perhaps there'll be a chance for them later.</span>"
+		else
+			. += "<span class='info'>It seems completely devoid of life.</span>"
+
+		if(!eyes)
+			. += "<span class='info'>[real_name]'s eyes appear to have been removed.</span>"
+
+		if(!ears)
+			. += "<span class='info'>[real_name]'s ears appear to have been removed.</span>"
+
+		if(!tongue)
+			. += "<span class='info'>[real_name]'s tongue appears to have been removed.</span>"
+
 
 /obj/item/bodypart/head/can_dismember(obj/item/I)
 	if(!((owner.stat == DEAD) || owner.InFullCritical()))
 		return FALSE
 	return ..()
 
-/obj/item/bodypart/head/drop_organs(mob/user)
+/obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
-		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
+		playsound(T, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	for(var/obj/item/I in src)
 		if(I == brain)
 			if(user)
@@ -51,6 +108,9 @@
 				brainmob.forceMove(brain)
 				brain.brainmob = brainmob
 				brainmob = null
+			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
+				to_chat(user, "<span class='warning'>[brain] was damaged in the process!</span>")
+				brain.setOrganDamage(brain.maxHealth)
 			brain.forceMove(T)
 			brain = null
 			update_icon_dropped()
@@ -59,6 +119,9 @@
 				for(var/datum/action/item_action/hands_free/activate_pill/AP in I.actions)
 					qdel(AP)
 			I.forceMove(T)
+	eyes = null
+	ears = null
+	tongue = null
 
 /obj/item/bodypart/head/update_limb(dropping_limb, mob/living/carbon/source)
 	var/mob/living/carbon/C
@@ -68,10 +131,10 @@
 		C = owner
 
 	real_name = C.real_name
-	if(C.has_trait(TRAIT_HUSK))
+	if(HAS_TRAIT(C, TRAIT_HUSK))
 		real_name = "Unknown"
-		hair_style = "Bald"
-		facial_hair_style = "Shaved"
+		hairstyle = "Bald"
+		facial_hairstyle = "Shaved"
 		lip_style = null
 
 	else if(!animal_origin)
@@ -79,8 +142,8 @@
 		var/datum/species/S = H.dna.species
 
 		//Facial hair
-		if(H.facial_hair_style && (FACEHAIR in S.species_traits))
-			facial_hair_style = H.facial_hair_style
+		if(H.facial_hairstyle && (FACEHAIR in S.species_traits))
+			facial_hairstyle = H.facial_hairstyle
 			if(S.hair_color)
 				if(S.hair_color == "mutcolor")
 					facial_hair_color = H.dna.features["mcolor"]
@@ -90,12 +153,12 @@
 				facial_hair_color = H.facial_hair_color
 			hair_alpha = S.hair_alpha
 		else
-			facial_hair_style = "Shaved"
+			facial_hairstyle = "Shaved"
 			facial_hair_color = "000"
 			hair_alpha = 255
 		//Hair
-		if(H.hair_style && (HAIR in S.species_traits))
-			hair_style = H.hair_style
+		if(H.hairstyle && (HAIR in S.species_traits))
+			hairstyle = H.hairstyle
 			if(S.hair_color)
 				if(S.hair_color == "mutcolor")
 					hair_color = H.dna.features["mcolor"]
@@ -105,7 +168,7 @@
 				hair_color = H.hair_color
 			hair_alpha = S.hair_alpha
 		else
-			hair_style = "Bald"
+			hairstyle = "Bald"
 			hair_color = "000"
 			hair_alpha = initial(hair_alpha)
 		// lipstick
@@ -134,8 +197,8 @@
 
 		if(status != BODYPART_ROBOTIC) //having a robotic head hides certain features.
 			//facial hair
-			if(facial_hair_style)
-				var/datum/sprite_accessory/S = GLOB.facial_hair_styles_list[facial_hair_style]
+			if(facial_hairstyle)
+				var/datum/sprite_accessory/S = GLOB.facial_hairstyles_list[facial_hairstyle]
 				if(S)
 					var/image/facial_overlay = image(S.icon, "[S.icon_state]", -HAIR_LAYER, SOUTH)
 					facial_overlay.color = "#" + facial_hair_color
@@ -156,7 +219,7 @@
 					debrain_overlay.icon_state = "debrained"
 				. += debrain_overlay
 			else
-				var/datum/sprite_accessory/S2 = GLOB.hair_styles_list[hair_style]
+				var/datum/sprite_accessory/S2 = GLOB.hairstyles_list[hairstyle]
 				if(S2)
 					var/image/hair_overlay = image(S2.icon, "[S2.icon_state]", -HAIR_LAYER, SOUTH)
 					hair_overlay.color = "#" + hair_color
@@ -171,13 +234,13 @@
 			. += lips_overlay
 
 		// eyes
-		var/image/eyes_overlay = image('icons/mob/human_face.dmi', "eyes", -BODY_LAYER, SOUTH)
+		var/image/eyes_overlay = image('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 		. += eyes_overlay
-		if(!eyes)
-			eyes_overlay.icon_state = "eyes_missing"
+		if(eyes)
+			eyes_overlay.icon_state = eyes.eye_icon_state
 
-		else if(eyes.eye_color)
-			eyes_overlay.color = "#" + eyes.eye_color
+			if(eyes.eye_color)
+				eyes_overlay.color = "#" + eyes.eye_color
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'

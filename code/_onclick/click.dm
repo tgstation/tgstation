@@ -75,6 +75,9 @@
 	if(notransform)
 		return
 
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
+		return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
 		ShiftMiddleClickOn(A)
@@ -268,6 +271,7 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(atom/A, params)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params)
 /*
 	Restrained ClickOn
 
@@ -277,30 +281,15 @@
 /mob/proc/RestrainedClickOn(atom/A)
 	return
 
-/*
-	Middle click
-	Only used for swapping hands
-*/
+/**
+  *Middle click
+  *Mainly used for swapping hands
+  */
 /mob/proc/MiddleClickOn(atom/A)
-	return
-
-/mob/living/carbon/MiddleClickOn(atom/A)
-	if(!stat && mind && iscarbon(A) && A != src)
-		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)
-			next_click = world.time + 5
-			return
+	. = SEND_SIGNAL(src, COMSIG_MOB_MIDDLECLICKON, A)
+	if(. & COMSIG_MOB_CANCEL_CLICKON)
+		return
 	swap_hand()
-
-/mob/living/simple_animal/drone/MiddleClickOn(atom/A)
-	swap_hand()
-
-// In case of use break glass
-/*
-/atom/proc/MiddleClick(mob/M as mob)
-	return
-*/
 
 /*
 	Shift click
@@ -345,27 +334,24 @@
 	Unused except for AI
 */
 /mob/proc/AltClickOn(atom/A)
+	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
+	if(. & COMSIG_MOB_CANCEL_CLICKON)
+		return
 	A.AltClick(src)
-	return
-
-/mob/living/carbon/AltClickOn(atom/A)
-	if(!stat && mind && iscarbon(A) && A != src)
-		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)
-			next_click = world.time + 5
-			return
-	..()
 
 /atom/proc/AltClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
-		if(user.listed_turf == T)
-			user.listed_turf = null
-		else
-			user.listed_turf = T
-			user.client.statpanel = T.name
+		user.listed_turf = T
+		user.client.statpanel = T.name
+
+// Use this instead of /mob/proc/AltClickOn(atom/A) where you only want turf content listing without additional atom alt-click interaction
+/atom/proc/AltClickNoInteract(mob/user, atom/A)
+	var/turf/T = get_turf(A)
+	if(T && user.TurfAdjacent(T))
+		user.listed_turf = T
+		user.client.statpanel = T.name
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)
@@ -388,25 +374,8 @@
 
 /*
 	Misc helpers
-
-	Laser Eyes: as the name implies, handles this since nothing else does currently
 	face_atom: turns the mob towards what you clicked on
 */
-/mob/proc/LaserEyes(atom/A, params)
-	return
-
-/mob/living/LaserEyes(atom/A, params)
-	changeNext_move(CLICK_CD_RANGE)
-
-	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
-	LE.icon = 'icons/effects/genetics.dmi'
-	LE.icon_state = "eyelasers"
-	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
-
-	LE.firer = src
-	LE.def_zone = get_organ_target()
-	LE.preparePixelProjectile(A, src, params)
-	LE.fire()
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A)

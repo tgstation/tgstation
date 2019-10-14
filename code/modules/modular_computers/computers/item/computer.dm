@@ -29,7 +29,7 @@
 	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
-	integrity_failure = 50
+	integrity_failure = 0.5
 	max_integrity = 100
 	armor = list("melee" = 0, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
 
@@ -97,7 +97,7 @@
 	if(issilicon(usr))
 		return
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(usr.canUseTopic(src))
+	if(usr.canUseTopic(src, BE_CLOSE))
 		card_slot.try_eject(null, usr)
 
 // Eject ID card from computer, if it has ID slot with card inside.
@@ -108,7 +108,7 @@
 	if(issilicon(usr))
 		return
 	var/obj/item/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
-	if(usr.canUseTopic(src))
+	if(usr.canUseTopic(src, BE_CLOSE))
 		ai_slot.try_eject(null, usr,1)
 
 
@@ -120,7 +120,7 @@
 	if(issilicon(usr))
 		return
 
-	if(usr.canUseTopic(src))
+	if(usr.canUseTopic(src, BE_CLOSE))
 		var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
 		if(uninstall_component(portable_drive, usr))
 			portable_drive.verb_pickup()
@@ -130,7 +130,7 @@
 	if(issilicon(user))
 		return
 
-	if(user.canUseTopic(src))
+	if(user.canUseTopic(src, BE_CLOSE))
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 		var/obj/item/computer_hardware/ai_slot/ai_slot = all_components[MC_AI]
 		var/obj/item/computer_hardware/hard_drive/portable/portable_drive = all_components[MC_SDD]
@@ -159,7 +159,7 @@
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src))
+	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src, BE_CLOSE))
 		return attack_self(M)
 	return ..()
 
@@ -187,11 +187,13 @@
 		return 1
 
 /obj/item/modular_computer/examine(mob/user)
-	..()
-	if(obj_integrity <= integrity_failure)
-		to_chat(user, "<span class='danger'>It is heavily damaged!</span>")
+	. = ..()
+	if(obj_integrity <= integrity_failure * max_integrity)
+		. += "<span class='danger'>It is heavily damaged!</span>"
 	else if(obj_integrity < max_integrity)
-		to_chat(user, "<span class='warning'>It is damaged.</span>")
+		. += "<span class='warning'>It is damaged.</span>"
+
+	. += get_modular_computer_parts_examine(user)
 
 /obj/item/modular_computer/update_icon()
 	cut_overlays()
@@ -204,7 +206,7 @@
 		else
 			add_overlay(icon_state_menu)
 
-	if(obj_integrity <= integrity_failure)
+	if(obj_integrity <= integrity_failure * max_integrity)
 		add_overlay("bsod")
 		add_overlay("broken")
 
@@ -218,7 +220,7 @@
 
 /obj/item/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
-	if(obj_integrity <= integrity_failure)
+	if(obj_integrity <= integrity_failure * max_integrity)
 		if(issynth)
 			to_chat(user, "<span class='warning'>You send an activation signal to \the [src], but it responds with an error code. It must be damaged.</span>")
 		else
@@ -250,7 +252,7 @@
 		last_power_usage = 0
 		return 0
 
-	if(obj_integrity <= integrity_failure)
+	if(obj_integrity <= integrity_failure * max_integrity)
 		shutdown_computer()
 		return 0
 
@@ -385,17 +387,17 @@
 		if(install_component(W, user))
 			return
 
-	if(istype(W, /obj/item/wrench))
+	if(W.tool_behaviour == TOOL_WRENCH)
 		if(all_components.len)
 			to_chat(user, "<span class='warning'>Remove all components from \the [src] before disassembling it.</span>")
 			return
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), steel_sheet_cost )
-		physical.visible_message("\The [src] has been disassembled by [user].")
+		physical.visible_message("<span class='notice'>\The [src] has been disassembled by [user].</span>")
 		relay_qdel()
 		qdel(src)
 		return
 
-	if(istype(W, /obj/item/weldingtool))
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(obj_integrity == max_integrity)
 			to_chat(user, "<span class='warning'>\The [src] does not require repairs.</span>")
 			return
@@ -409,7 +411,7 @@
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 		return
 
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!all_components.len)
 			to_chat(user, "<span class='warning'>This device doesn't have any components installed.</span>")
 			return

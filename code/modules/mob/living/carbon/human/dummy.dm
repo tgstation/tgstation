@@ -2,6 +2,7 @@
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
+	mouse_drag_pointer = MOUSE_INACTIVE_POINTER
 	var/in_use = FALSE
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
@@ -17,6 +18,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	delete_equipment()
 	cut_overlays(TRUE)
 
+/mob/living/carbon/human/dummy/setup_human_dna()
+	create_dna(src)
+	randomize_human(src)
+	dna.initialize_dna(skip_index = TRUE) //Skip stuff that requires full round init.
+
 //Inefficient pooling/caching way.
 GLOBAL_LIST_EMPTY(human_dummy_list)
 GLOBAL_LIST_EMPTY(dummy_mob_list)
@@ -27,8 +33,6 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotkey]
 	if(istype(D))
 		UNTIL(!D.in_use)
-	else
-		pass()
 	if(QDELETED(D))
 		D = new
 		GLOB.human_dummy_list[slotkey] = D

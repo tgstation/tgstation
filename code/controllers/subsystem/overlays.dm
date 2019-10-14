@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(overlays)
 /datum/controller/subsystem/overlays/Initialize()
 	initialized = TRUE
 	fire(mc_check = FALSE)
-	..()
+	return ..()
 
 
 /datum/controller/subsystem/overlays/stat_entry()

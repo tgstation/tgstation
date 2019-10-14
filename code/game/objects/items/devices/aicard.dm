@@ -17,6 +17,11 @@
 	desc = "A stylish upgrade (?) to the intelliCard."
 	icon_state = "aitater"
 
+/obj/item/aicard/aispook
+	name = "intelliLantern"
+	desc = "A spoOoOoky upgrade to the intelliCard."
+	icon_state = "aispook"
+
 /obj/item/aicard/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to upload [user.p_them()]self into [src]! That's not going to work out well!</span>")
 	return BRUTELOSS
@@ -26,16 +31,18 @@
 	if(!proximity || !target)
 		return
 	if(AI) //AI is on the card, implies user wants to upload it.
+		log_combat(user, AI, "uploaded", src, "to [target].")
 		target.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
-		log_combat(user, AI, "carded", src)
 	else //No AI on the card, therefore the user wants to download one.
 		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
+		if(AI)
+			log_combat(user, AI, "carded", src)
 	update_icon() //Whatever happened, update the card's state (icon, name) to match.
 
 /obj/item/aicard/update_icon()
 	cut_overlays()
 	if(AI)
-		name = "[initial(name)]- [AI.name]"
+		name = "[initial(name)] - [AI.name]"
 		if(AI.stat == DEAD)
 			icon_state = "[initial(icon_state)]-404"
 		else

@@ -5,7 +5,7 @@
 	var/list/checkers //list of /obj/effect/abstract/proximity_checkers
 	var/current_range
 	var/ignore_if_not_on_turf	//don't check turfs in range if the host's loc isn't a turf
-	var/datum/component/movement_tracker
+	var/wire = FALSE
 
 /datum/proximity_monitor/New(atom/_host, range, _ignore_if_not_on_turf = TRUE)
 	checkers = list()
@@ -15,15 +15,17 @@
 	SetHost(_host)
 
 /datum/proximity_monitor/proc/SetHost(atom/H,atom/R)
+	if(H == host)
+		return
+	if(host)
+		UnregisterSignal(host, COMSIG_MOVABLE_MOVED)
 	if(R)
 		hasprox_receiver = R
 	else if(hasprox_receiver == host) //Default case
 		hasprox_receiver = H
 	host = H
+	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/HandleMove)
 	last_host_loc = host.loc
-	if(movement_tracker)
-		QDEL_NULL(movement_tracker)
-	movement_tracker = host.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/HandleMove)))
 	SetRange(current_range,TRUE)
 
 /datum/proximity_monitor/Destroy()
@@ -31,7 +33,6 @@
 	last_host_loc = null
 	hasprox_receiver = null
 	QDEL_LIST(checkers)
-	QDEL_NULL(movement_tracker)
 	return ..()
 
 /datum/proximity_monitor/proc/HandleMove()
@@ -58,6 +59,8 @@
 	var/atom/_host = host
 
 	var/atom/loc_to_use = ignore_if_not_on_turf ? _host.loc : get_turf(_host)
+	if(wire && !isturf(loc_to_use)) //it makes assemblies attached on wires work
+		loc_to_use = get_turf(loc_to_use)
 	if(!isturf(loc_to_use))	//only check the host's loc
 		if(range)
 			var/obj/effect/abstract/proximity_checker/pc

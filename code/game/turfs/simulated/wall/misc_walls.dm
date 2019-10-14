@@ -24,7 +24,7 @@
 		if(stored_pulling)
 			stored_pulling.setDir(get_dir(stored_pulling.loc, newloc))
 			stored_pulling.forceMove(src)
-			H.start_pulling(stored_pulling, TRUE)
+			H.start_pulling(stored_pulling, supress_message = TRUE)
 
 /turf/closed/wall/mineral/cult/ratvar_act()
 	. = ..()
@@ -95,7 +95,7 @@
 		devastate_wall()
 		ScrapeAway()
 	else
-		playsound(src, 'sound/items/welder.ogg', 100, 1)
+		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we want a gear!
 			transfer_fingerprints_to(newgirder)
@@ -116,12 +116,13 @@
 	for(var/i in 1 to 3)
 		new/obj/item/clockwork/alloy_shards/small(src)
 
-/turf/closed/wall/clockwork/attack_hulk(mob/living/user, does_attack_animation = 0)
-	..()
-	if(heated)
-		to_chat(user, "<span class='userdanger'>The wall is searing hot to the touch!</span>")
-		user.adjustFireLoss(5)
-		playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 50, TRUE)
+/turf/closed/wall/clockwork/attack_hulk(mob/living/user)
+	. = ..()
+	if(!heated)
+		return
+	to_chat(user, "<span class='userdanger'>The wall is searing hot to the touch!</span>")
+	user.adjustFireLoss(5)
+	playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 50, TRUE)
 
 /turf/closed/wall/clockwork/mech_melee_attack(obj/mecha/M)
 	..()
