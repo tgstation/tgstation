@@ -56,7 +56,9 @@
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
 "ap" = (
-/obj/machinery/wish_granter_dark,
+/obj/item/paper/crumpled{
+	info = "Get dunked on!"
+	},
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
 "aq" = (
