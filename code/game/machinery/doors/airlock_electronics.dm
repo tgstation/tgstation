@@ -32,7 +32,6 @@
 			access["req"] = (j in src.accesses)
 			accesses[++accesses.len] = access
 		region["name"] = get_region_accesses_name(i)
-		region["tab_number"] = i - 1
 		region["accesses"] = accesses
 		regions[++regions.len] = region
 	data["regions"] = regions
