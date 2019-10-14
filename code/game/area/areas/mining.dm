@@ -146,7 +146,7 @@
 	requires_power = TRUE
 	ambientsounds = MINING
 
-/area/icemoon/underground
+/area/icemoon/underground // megafauna spawn here
 	name = "Icemoon Caves"
 	icon_state = "unexplored"
 	always_unpowered = TRUE
@@ -156,6 +156,9 @@
 	power_equip = FALSE
 	power_light = FALSE
 	ambientsounds = MINING
+	tunnel_allowed = TRUE
+	mob_spawn_allowed = TRUE
+	megafauna_spawn_allowed = TRUE
 
 /area/icemoon/surface/outdoors
 	name = "Icemoon Wastes"
@@ -166,9 +169,8 @@
 	tunnel_allowed = TRUE
 	mob_spawn_allowed = TRUE
 
-/area/icemoon/surface/outdoors/unexplored/danger //megafauna will also spawn here
+/area/icemoon/surface/outdoors/unexplored/danger
 	icon_state = "danger"
-	megafauna_spawn_allowed = TRUE
 
 /area/icemoon/surface/outdoors/explored
 	name = "Icemoon Labor Camp"

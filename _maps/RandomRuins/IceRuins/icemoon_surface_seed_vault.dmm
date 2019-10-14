@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/closed/mineral/snowmountain,
+/area/icemoon/surface/outdoors)
 "b" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/open/floor/plating/asteroid/snow,
+/area/icemoon/surface/outdoors)
 "d" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
@@ -53,8 +53,8 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/open/floor/plating/asteroid/snow,
+/area/icemoon/surface/outdoors)
 "k" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/seed_vault,
@@ -215,14 +215,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/open/floor/plating/asteroid/snow,
+/area/icemoon/surface/outdoors)
 "M" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/open/floor/plating/asteroid/snow,
+/area/icemoon/surface/outdoors)
 "N" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/disks_plantgene,

@@ -81,6 +81,14 @@ require only minor tweaks.
     ZTRAIT_SNOWSTORM = TRUE, \
     ZTRAIT_ICE_RUINS = TRUE, \
     ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
+    ZTRAIT_DOWN = -1, \
+    ZTRAIT_BASETURF = /turf/open/floor/plating/asteroid/snow/ice)
+#define ZTRAITS_ICEMOON_UNDERGROUND list(\
+    ZTRAIT_MINING = TRUE, \
+    ZTRAIT_ROCKFALL = TRUE, \
+    ZTRAIT_ICE_RUINS = TRUE, \
+    ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
+    ZTRAIT_UP = 1, \
     ZTRAIT_BASETURF = /turf/open/lava/plasma/ice_moon)
 #define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)
 

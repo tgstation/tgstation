@@ -90,13 +90,13 @@
 
 // Chasms for Ice moon, with planetary atmos and glow
 /turf/open/chasm/icemoon
+	icon = 'icons/turf/floors/icechasms.dmi'
 	initial_gas_mix = FROZEN_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/chasm/icemoon
 	light_range = 1.9
 	light_power = 0.65
-	light_color = LIGHT_COLOR_BLUE
-
+	light_color = LIGHT_COLOR_PURPLE
 
 // Chasms for the jungle, with planetary atmos and a different icon
 /turf/open/chasm/jungle
