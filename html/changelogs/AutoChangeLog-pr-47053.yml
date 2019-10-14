@@ -1,4 +1,0 @@
-author: "Kaffe-work"
-delete-after: True
-changes: 
-  - bugfix: "fixed sprites on guns with both bayonet and toggle-able lights removing the bayonet when toggled."
