@@ -55,12 +55,6 @@
 "ao" = (
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
-"ap" = (
-/obj/item/paper/crumpled{
-	info = "Get dunked on!"
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
 "aq" = (
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/circuit/green/off,
@@ -115,10 +109,6 @@
 /obj/machinery/gateway{
 	dir = 6
 	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"aA" = (
-/obj/effect/meatgrinder,
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
 "aB" = (
@@ -49208,7 +49198,7 @@ aa
 ab
 ab
 ao
-aA
+ao
 ao
 ab
 ab
@@ -51003,7 +50993,7 @@ aa
 aa
 aa
 ab
-ap
+ao
 ao
 aq
 ab
