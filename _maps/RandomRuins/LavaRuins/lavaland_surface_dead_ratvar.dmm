@@ -6,6 +6,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "c" = (
+/obj/item/stack/ore/iron,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "d" = (
@@ -22,6 +23,7 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "g" = (
+/obj/item/stack/ore/gold,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "h" = (
@@ -30,12 +32,14 @@
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "i" = (
+/obj/structure/grille/broken,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "j" = (
 /turf/closed/wall/mineral/bronze,
 /area/lavaland/surface/outdoors/unexplored)
 "k" = (
+/obj/item/stack/ore/iron,
 /turf/open/floor/bronze{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -44,26 +48,33 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "m" = (
+/obj/item/stack/ore/uranium,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "n" = (
+/obj/item/stack/ore/plasma,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "o" = (
+/obj/item/stack/sheet/mineral/gold,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "p" = (
+/obj/item/stack/ore/gold,
 /turf/open/floor/bronze{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "q" = (
+/obj/structure/lattice/catwalk,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "r" = (
+/obj/structure/lattice,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "s" = (
+/obj/item/stack/sheet/mineral/gold,
 /turf/open/floor/bronze{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -73,14 +84,18 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "u" = (
+/obj/structure/grille,
 /turf/open/floor/bronze{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "v" = (
+/obj/item/stack/ore/uranium,
+/obj/structure/lattice,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "w" = (
+/obj/structure/grille/broken,
 /turf/open/floor/bronze{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -93,6 +108,7 @@
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "y" = (
+/obj/item/stack/ore/titanium,
 /turf/open/floor/bronze{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -104,6 +120,7 @@
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "A" = (
+/obj/item/stack/sheet/mineral/iron,
 /turf/open/floor/bronze{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -115,14 +132,17 @@
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "C" = (
+/obj/item/stack/rods,
 /turf/open/floor/bronze{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/unexplored)
 "D" = (
+/obj/structure/grille,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "E" = (
+/obj/item/stack/sheet/mineral/iron,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/unexplored)
 "F" = (
