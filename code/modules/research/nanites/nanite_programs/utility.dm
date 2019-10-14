@@ -344,6 +344,8 @@
 
 /datum/nanite_program/dermal_button/proc/press()
 	if(activated)
+		host_mob.visible_message("<span class='notice'>[host_mob] presses a button on [host_mob.p_their()] forearm.</span>",
+								"<span class='notice'>You press the nanite button on your forearm.</span>", null, 2)
 		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, sent_code, "a [name] program")
 
 /datum/action/innate/nanite_button
