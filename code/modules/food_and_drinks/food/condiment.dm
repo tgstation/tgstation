@@ -30,10 +30,11 @@
 	 /datum/reagent/consumable/capsaicin = list("icon_state" = "hotsauce", "item_state" = "", "icon_empty" = "", "name" = "hotsauce bottle", "desc" = "You can almost TASTE the stomach ulcers!"),
 	 /datum/reagent/consumable/frostoil = list("icon_state" = "coldsauce", "item_state" = "", "icon_empty" = "", "name" = "coldsauce bottle", "desc" = "Leaves the tongue numb from its passage."),
 	 /datum/reagent/consumable/cornoil = list("icon_state" = "oliveoil", "item_state" = "", "icon_empty" = "", "name" = "corn oil bottle", "desc" = "A delicious oil used in cooking. Made from corn."),
-
+	 /datum/reagent/consumable/bbqsauce = list("icon_state" = "bbqsauce", "item_state" = "", "icon_empty" = "", "name" = "bbq sauce bottle", "desc" = "Hand wipes not included."),
 	 )
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 	var/icon_empty = ""
+	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
 
 /obj/item/reagent_containers/food/condiment/Initialize()
 	. = ..()
@@ -52,32 +53,16 @@
 			icon_empty = possible_states[main_reagent]["icon_empty"]
 			name = possible_states[main_reagent]["name"]
 			desc = possible_states[main_reagent]["desc"]
+			return ..(TRUE) // Don't fill normally
 		else
 			name = "condiment bottle"
 			desc = "Just your average condiment bottle."
 			icon_state = "emptycondiment"
-			var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state]-10")
-
-			var/percent = round((reagents.total_volume / volume) * 100)
-			switch(percent)
-				if(0 to 24)
-					filling.icon_state = "[icon_state]-10"
-				if(25 to 49)
-					filling.icon_state = "[icon_state]25"
-				if(50 to 74)
-					filling.icon_state = "[icon_state]50"
-				if(75 to 99)
-					filling.icon_state = "[icon_state]75"
-				if(100 to INFINITY)
-					filling.icon_state = "[icon_state]100"
-
-			filling.color = mix_color_from_reagents(reagents.reagent_list)
-			add_overlay(filling)
 
 	else if(icon_empty)
 		icon_state = icon_empty
 
-	..()
+	. = ..()
 
 /obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!</span>")
@@ -263,6 +248,7 @@
 		/datum/reagent/consumable/cornoil = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"),
 		/datum/reagent/consumable/sugar = list("condi_sugar", "Sugar", "Tasty spacey sugar!"),
 		/datum/reagent/consumable/astrotame = list("condi_astrotame", "Astrotame", "The sweetness of a thousand sugars but none of the calories."),
+		/datum/reagent/consumable/bbqsauce = list("condi_bbq", "BBQ sauce", "Hand wipes not included."),
 		)
 
 /obj/item/reagent_containers/food/condiment/pack/update_icon()
@@ -321,3 +307,8 @@
 	name = "astrotame pack"
 	originalname = "astrotame"
 	list_reagents = list(/datum/reagent/consumable/astrotame = 5)
+
+/obj/item/reagent_containers/food/condiment/pack/bbqsauce
+	name = "bbq sauce pack"
+	originalname = "bbq sauce"
+	list_reagents = list(/datum/reagent/consumable/bbqsauce = 10)

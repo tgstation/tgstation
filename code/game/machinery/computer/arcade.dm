@@ -78,7 +78,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
+		visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
 		SSmedals.UnlockMedal(MEDAL_PULSE, user.client)
+		return
 
 	if(!contents.len)
 		var/prizeselect
@@ -135,19 +137,31 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/gameover = FALSE
 	var/blocked = FALSE //Player cannot attack/heal while set
 	var/turtle = 0
+	var/list/weapons = list()
 
 /obj/machinery/computer/arcade/battle/Reset()
 	var/name_action
 	var/name_part1
 	var/name_part2
 
-	name_action = pick("Defeat ", "Annihilate ", "Save ", "Strike ", "Stop ", "Destroy ", "Robust ", "Romance ", "Pwn ", "Own ", "Ban ")
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		name_action = pick_list(ARCADE_FILE, "rpg_action_halloween")
+		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_halloween")
+		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_halloween")
+		weapons = strings(ARCADE_FILE, "rpg_weapon_halloween")
+	else if(SSevents.holidays && SSevents.holidays[CHRISTMAS])
+		name_action = pick_list(ARCADE_FILE, "rpg_action_xmas")
+		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
+		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
+		weapons = strings(ARCADE_FILE, "rpg_weapon_xmas")
+	else
+		name_action = pick_list(ARCADE_FILE, "rpg_action")
+		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective")
+		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy")
+		weapons = strings(ARCADE_FILE, "rpg_weapon")
 
-	name_part1 = pick("the Automatic ", "Farmer ", "Lord ", "Professor ", "the Cuban ", "the Evil ", "the Dread King ", "the Space ", "Lord ", "the Great ", "Duke ", "General ")
-	name_part2 = pick("Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid", "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn", "Bloopers")
-
-	enemy_name = replacetext((name_part1 + name_part2), "the ", "")
-	name = (name_action + name_part1 + name_part2)
+	enemy_name = ("The " + name_part1 + " " + name_part2)
+	name = (name_action + " " + enemy_name)
 
 /obj/machinery/computer/arcade/battle/ui_interact(mob/user)
 	. = ..()
@@ -178,7 +192,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if (href_list["attack"])
 			blocked = TRUE
 			var/attackamt = rand(2,6)
-			temp = "You attack for [attackamt] damage!"
+			var/weapon = pick(weapons)
+			temp = "You attack with a [weapon] for [attackamt] damage!"
 			playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			updateUsrDialog()
 			if(turtle > 0)
@@ -207,7 +222,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		else if (href_list["charge"])
 			blocked = TRUE
 			var/chargeamt = rand(4,7)
-			temp = "You regain [chargeamt] points"
+			temp = "You regain [chargeamt] points."
 			playsound(loc, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			player_mp += chargeamt
 			if(turtle > 0)
@@ -661,7 +676,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	else if(href_list["killcrew"]) //shoot a crewmember
 		if(gameStatus == ORION_STATUS_NORMAL || event == ORION_TRAIL_LING)
 			var/sheriff = remove_crewmember() //I shot the sheriff
-			playsound(loc,'sound/weapons/gunshot.ogg', 100, TRUE)
+			playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
 
 			if(settlers.len == 0 || alive == 0)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
@@ -1068,7 +1083,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 
 //Remove Random/Specific crewmember
-/obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(var/specific = "", var/dont_remove = "")
+/obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(specific = "", dont_remove = "")
 	var/list/safe2remove = settlers
 	var/removed = ""
 	if(dont_remove)

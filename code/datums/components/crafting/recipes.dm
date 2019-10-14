@@ -36,7 +36,7 @@
 
 /datum/crafting_recipe/lance
 	name = "Explosive Lance (Grenade)"
-	result = /obj/item/twohanded/spear
+	result = /obj/item/twohanded/spear/explosive
 	reqs = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
 	blacklist = list(/obj/item/twohanded/spear/explosive, /obj/item/twohanded/spear/bonespear)

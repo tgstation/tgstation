@@ -701,7 +701,7 @@
 	to_chat(src, "[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled."]")
 	update_headlamp()
 
-/mob/living/silicon/robot/proc/update_headlamp(var/turn_off = 0, var/cooldown = 100)
+/mob/living/silicon/robot/proc/update_headlamp(turn_off = 0, cooldown = 100)
 	set_light(0)
 
 	if(lamp_intensity && (turn_off || stat || low_power_mode))
@@ -946,13 +946,13 @@
 		if(IsUnconscious() || IsStun() || IsKnockdown() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
-				blind_eyes(1)
+				become_blind(UNCONSCIOUS_BLIND)
 				update_mobility()
 				update_headlamp()
 		else
 			if(stat == UNCONSCIOUS)
 				stat = CONSCIOUS
-				adjust_blindness(-1)
+				cure_blind(UNCONSCIOUS_BLIND)
 				update_mobility()
 				update_headlamp()
 	diag_hud_set_status()
@@ -1131,10 +1131,10 @@
 	shell = TRUE
 	cell = null
 
-/mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
-	. = ..()
-	if(!(M in buckled_mobs) && isliving(M) && ((user!=src)||(src.a_intent != INTENT_HARM)))
-		buckle_mob(M)
+/mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
+	if(can_buckle && istype(M) && !(M in buckled_mobs) && ((user!=src)||(a_intent != INTENT_HARM)))
+		if(buckle_mob(M))
+			return TRUE
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))

@@ -16,7 +16,7 @@
 
 	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
-	var/valid_territory = TRUE // If it's a valid territory for gangs to claim
+	var/valid_territory = TRUE // If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
 	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
 	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
 	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
@@ -26,6 +26,10 @@
 	var/atmosalm = FALSE
 	var/poweralm = TRUE
 	var/lightswitch = TRUE
+
+	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
+	var/beauty = 0 // Beauty average per open turf in the area
+	var/beauty_threshold = 150 //If a room is too big it doesn't have beauty.
 
 	var/requires_power = TRUE
 	var/always_unpowered = FALSE	// This gets overridden to 1 for space in area/Initialize().
@@ -167,6 +171,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   */
 /area/LateInitialize()
 	power_change()		// all machines set to current power level, also updates icon
+	update_beauty()
 
 /**
   * Register this area as belonging to a z level
@@ -595,6 +600,17 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
 			L.client.played = TRUE
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
+
+///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
+/area/proc/update_beauty()
+	if(!areasize)
+		beauty = 0
+		return FALSE
+	if(areasize >= beauty_threshold)
+		beauty = 0
+		return FALSE //Too big
+	beauty = totalbeauty / areasize
+
 
 /**
   * Called when an atom exits an area
