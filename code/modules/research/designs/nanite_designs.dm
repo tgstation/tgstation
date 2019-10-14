@@ -36,14 +36,7 @@
 	name = "Neural Network"
 	desc = "The nanites link the host's brains together forming a neural research network, that becomes more efficient with the amount of total hosts. Can be overloaded to increase research output."
 	id = "researchplus_nanites"
-	program_type = /datum/nanite_program/triggered/researchplus
-	category = list("Utility Nanites")
-	
-/datum/design/nanites/bitcoin
-	name = "Cryptocurrency Processing"
-	desc = "The nanites automatically mine cryptocurrency, automatically transferring the resulting credits to the station's account."
-	id = "cash_nanites"
-	program_type = /datum/nanite_program/bitcoin
+	program_type = /datum/nanite_program/researchplus
 	category = list("Utility Nanites")
 
 /datum/design/nanites/monitoring
