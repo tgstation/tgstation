@@ -41,7 +41,8 @@
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels)
-	ZImpactDamage(T, levels)
+	if(!isgroundlessturf(T))
+		ZImpactDamage(T, levels)
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)

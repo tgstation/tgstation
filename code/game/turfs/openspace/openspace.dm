@@ -57,6 +57,11 @@
 	return TRUE
 
 /turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination)
+	if(A.anchored)
+		return FALSE
+	for(var/obj/O in contents)
+		if(O.obj_flags & BLOCK_Z_FALL)
+			return FALSE
 	return TRUE
 
 /turf/open/openspace/proc/CanCoverUp()
