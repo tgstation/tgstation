@@ -174,7 +174,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 	mineralSpawnChanceList = list(
 		/turf/closed/mineral/uranium/volcanic = 35, /turf/closed/mineral/diamond/volcanic = 30, /turf/closed/mineral/gold/volcanic = 45, /turf/closed/mineral/titanium/volcanic = 45,
 		/turf/closed/mineral/silver/volcanic = 50, /turf/closed/mineral/plasma/volcanic = 50, /turf/closed/mineral/bscrystal/volcanic = 20)
@@ -192,8 +192,8 @@
 	baseturfs = /turf/open/floor/plating/asteroid/snow
 	initial_gas_mix = FROZEN_ATMOS
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium = 35, /turf/closed/mineral/diamond = 30, /turf/closed/mineral/gold = 45, /turf/closed/mineral/titanium = 45,
-		/turf/closed/mineral/silver = 50, /turf/closed/mineral/plasma = 50, /turf/closed/mineral/bscrystal = 20)
+		/turf/closed/mineral/uranium/ice = 35, /turf/closed/mineral/diamond/ice = 30, /turf/closed/mineral/gold/ice = 45, /turf/closed/mineral/titanium/ice = 45,
+		/turf/closed/mineral/silver/ice = 50, /turf/closed/mineral/plasma/ice = 50, /turf/closed/mineral/bscrystal/ice = 20)
 
 
 
@@ -211,7 +211,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 	mineralChance = 10
 	mineralSpawnChanceList = list(
@@ -234,9 +234,9 @@
 
 	mineralChance = 10
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium = 5, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 10, /turf/closed/mineral/titanium = 11,
-		/turf/closed/mineral/silver = 12, /turf/closed/mineral/plasma = 20, /turf/closed/mineral/iron = 40,
-		/turf/closed/mineral/gibtonite = 4, /turf/open/floor/plating/asteroid/airless/cave/snow = 1, /turf/closed/mineral/bscrystal = 1)
+		/turf/closed/mineral/uranium/ice = 5, /turf/closed/mineral/diamond/ice = 1, /turf/closed/mineral/gold/ice = 10, /turf/closed/mineral/titanium/ice = 11,
+		/turf/closed/mineral/silver/ice = 12, /turf/closed/mineral/plasma/ice = 20, /turf/closed/mineral/iron/ice = 40,
+		/turf/closed/mineral/gibtonite/ice = 4, /turf/open/floor/plating/asteroid/airless/cave/snow = 1, /turf/closed/mineral/bscrystal/ice = 1)
 
 /turf/closed/mineral/random/labormineral
 	mineralSpawnChanceList = list(
@@ -251,11 +251,30 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 	mineralSpawnChanceList = list(
 		/turf/closed/mineral/uranium/volcanic = 3, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 8, /turf/closed/mineral/titanium/volcanic = 8,
 		/turf/closed/mineral/silver/volcanic = 20, /turf/closed/mineral/plasma/volcanic = 30, /turf/closed/mineral/bscrystal/volcanic = 1, /turf/closed/mineral/gibtonite/volcanic = 2,
 		/turf/closed/mineral/iron/volcanic = 95)
+
+/turf/closed/mineral/random/labormineral/ice
+	name = "snowy mountainside"
+	icon = 'icons/turf/mining.dmi'
+	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
+	icon_state = "mountainrock"
+	smooth = SMOOTH_MORE|SMOOTH_BORDER
+	canSmoothWith = list (/turf/closed)
+	defer_change = TRUE
+	environment_type = "snow"
+	turf_type = /turf/open/floor/plating/asteroid/snow
+	baseturfs = /turf/open/floor/plating/asteroid/snow
+	initial_gas_mix = FROZEN_ATMOS
+
+	defer_change = TRUE
+	mineralSpawnChanceList = list(
+		/turf/closed/mineral/uranium/ice = 3, /turf/closed/mineral/diamond/ice = 1, /turf/closed/mineral/gold/ice = 8, /turf/closed/mineral/titanium/ice = 8,
+		/turf/closed/mineral/silver/ice = 20, /turf/closed/mineral/plasma/ice = 30, /turf/closed/mineral/bscrystal/ice = 1, /turf/closed/mineral/gibtonite/ice = 2,
+		/turf/closed/mineral/iron/ice = 95)
 
 
 
@@ -293,11 +312,11 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 /turf/closed/mineral/uranium/ice
 	environment_type = "snow_cavern"
-	icon_state = "icerock_"
+	icon_state = "icerock_Uranium"
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
@@ -316,7 +335,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 /turf/closed/mineral/diamond/ice
 	environment_type = "snow_cavern"
@@ -339,8 +358,16 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
+/turf/closed/mineral/gold/ice
+	environment_type = "snow_cavern"
+	icon_state = "icerock_gold"
+	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = FROZEN_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/silver
 	mineralType = /obj/item/stack/ore/silver
@@ -353,8 +380,16 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
+/turf/closed/mineral/silver/ice
+	environment_type = "snow_cavern"
+	icon_state = "icerock_silver"
+	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = FROZEN_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/titanium
 	mineralType = /obj/item/stack/ore/titanium
@@ -367,8 +402,16 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
+/turf/closed/mineral/titanium/ice
+	environment_type = "snow_cavern"
+	icon_state = "icerock_titanium"
+	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = FROZEN_ATMOS
+	defer_change = TRUE
 
 /turf/closed/mineral/plasma
 	mineralType = /obj/item/stack/ore/plasma
@@ -381,7 +424,7 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
 
 /turf/closed/mineral/plasma/ice
 	environment_type = "snow_cavern"
@@ -401,6 +444,15 @@
 	spread = 0
 	scan_state = "rock_Bananium"
 
+/turf/closed/mineral/bananium/ice
+	environment_type = "snow_cavern"
+	icon_state = "icerock_Bananium"
+	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = FROZEN_ATMOS
+	defer_change = TRUE
+
 
 /turf/closed/mineral/bscrystal
 	mineralType = /obj/item/stack/ore/bluespace_crystal
@@ -414,7 +466,16 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
+
+/turf/closed/mineral/bscrystal/ice
+	environment_type = "snow_cavern"
+	icon_state = "icerock_BScrystal"
+	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = FROZEN_ATMOS
+	defer_change = TRUE
 
 
 /turf/closed/mineral/volcanic
@@ -427,7 +488,7 @@
 	environment_type = "basalt"
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
-	defer_change = 1
+	defer_change = TRUE
 
 /turf/closed/mineral/ash_rock //wall piece
 	name = "rock"
@@ -440,7 +501,7 @@
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	environment_type = "waste"
 	turf_type = /turf/open/floor/plating/ashplanet/rocky
-	defer_change = 1
+	defer_change = TRUE
 
 /turf/closed/mineral/snowmountain
 	name = "snowy mountainside"
@@ -563,4 +624,13 @@
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
+	defer_change = TRUE
+
+/turf/closed/mineral/gibtonite/ice
+	environment_type = "snow_cavern"
+	icon_state = "icerock_Gibtonite"
+	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
+	initial_gas_mix = FROZEN_ATMOS
+	defer_change = TRUE

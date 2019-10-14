@@ -3,6 +3,9 @@
 //defaults to box
 //  -Cyberboss
 
+GLOBAL_LIST_INIT(mining_maps, list("lavaland" = 1, "icemoon" = 0, "random" = 0))
+GLOBAL_VAR_INIT(next_mining_map, "random")
+
 /datum/map_config
 	// Metadata
 	var/config_filename = "_maps/boxstation.json"
@@ -22,7 +25,7 @@
 	var/space_ruin_levels = 7
 	var/space_empty_levels = 1
 
-	var/minetype = "lavaland"
+	var/minetype = "random"
 
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
@@ -126,6 +129,9 @@
 	if ("minetype" in json)
 		minetype = json["minetype"]
 
+	if (minetype == "random")
+		minetype = pickweightAllowZero(GLOB.mining_maps)
+
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
 	defaulted = FALSE
@@ -140,4 +146,13 @@
 		. += "_maps/[map_path]/[file]"
 
 /datum/map_config/proc/MakeNextMap()
-	return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")
+	var/success = config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")
+	var/json = file("data/next_map.json")
+	json = file2text(json)
+	json = json_decode(json)
+	json["minetype"] = GLOB.next_mining_map
+	json = json_encode(json)
+	fdel("data/next_map.json")
+	json = text2file(json, "data/next_map.json")
+	return success
+

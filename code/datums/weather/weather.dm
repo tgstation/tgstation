@@ -23,6 +23,7 @@
 	var/end_overlay
 
 	var/area_type = /area/space //Types of area to affect
+	var/protect_indoors = FALSE // set to TRUE to protect indoor areas
 	var/list/impacted_areas = list() //Areas to be affected by the weather, calculated when the weather begins
 	var/list/protected_areas = list()//Areas that are protected and excluded from the affected areas.
 	var/impacted_z_levels // The list of z-levels that this weather is actively affecting
@@ -56,6 +57,8 @@
 		affectareas -= get_areas(V)
 	for(var/V in affectareas)
 		var/area/A = V
+		if(protect_indoors && !A.outdoors)
+			continue
 		if(A.z in impacted_z_levels)
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
