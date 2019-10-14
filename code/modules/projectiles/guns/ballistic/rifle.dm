@@ -53,6 +53,7 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	desc = "This piece of junk looks like something that could have been used 700 years ago. It feels slightly moist."
 	sawn_desc = "An extremely sawn-off Mosin Nagant, popularly known as an \"obrez\". There was probably a reason it wasn't manufactured this short to begin with."
 	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
 	icon_state = "moistnugget"
 	item_state = "moistnugget"
 	slot_flags = 0 //no ITEM_SLOT_BACK sprite, alas
