@@ -705,3 +705,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, "<span class='warning'>[M] is too close to use [src] on.</span>")
 		return
 	M.attack_hand(user)
+
+/obj/item/gohei
+	name = "gohei"
+	desc = "A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by people with a thing for armpits."
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 5
+	throwforce = 5
+	sharpness = IS_BLUNT
+	hitsound = "swing_hit"
+	attack_verb = list("whacked", "thwacked", "walloped", "socked")
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "gohei"
+	item_state = "gohei"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
