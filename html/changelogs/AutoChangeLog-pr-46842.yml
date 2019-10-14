@@ -1,4 +1,0 @@
-author: "MCterra10"
-delete-after: True
-changes: 
-  - bugfix: "Welders now consume fuel when they destroy an object"

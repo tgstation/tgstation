@@ -1,4 +1,0 @@
-author: "Fox McCloud"
-delete-after: True
-changes: 
-  - bugfix: "Fixes AI swarmers just sitting in their base doing nothing"

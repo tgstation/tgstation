@@ -1,5 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - bugfix: "blindness spell now only blinds you temporarily"
-  - bugfix: "drinking carrot juice no longer permanently blinds you"

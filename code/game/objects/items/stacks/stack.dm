@@ -24,6 +24,7 @@
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 	var/full_w_class = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
+	var/mats_per_stack = 0
 	///Datum material type that this stack is made of
 	var/material_type
 	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
@@ -49,7 +50,7 @@
 		merge_type = type
 	if(custom_materials && custom_materials.len)
 		for(var/i in custom_materials)
-			custom_materials[getmaterialref(i)] = MINERAL_MATERIAL_AMOUNT * amount
+			custom_materials[getmaterialref(i)] = mats_per_stack * amount
 	. = ..()
 	if(merge)
 		for(var/obj/item/stack/S in loc)
@@ -228,7 +229,7 @@
 		if(R.applies_mats && custom_materials && custom_materials.len)
 			var/list/used_materials = list()
 			for(var/i in custom_materials)
-				used_materials[getmaterialref(i)] = R.req_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
+				used_materials[getmaterialref(i)] = R.req_amount / R.res_amount * (MINERAL_MATERIAL_AMOUNT / custom_materials.len)
 			O.set_custom_materials(used_materials)
 
 		//START: oh fuck i'm so sorry
