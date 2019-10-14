@@ -136,8 +136,8 @@
 
 	///I don't want to confuse this with client registered_z.
 	var/my_z
-	///If the mob should receive the footstep component. Careful. You have to make sure that the mob ACTUALLY has footsteps otherwise this will runtime.
-	var/do_footstep = FALSE
+	///What kind of footstep this mob should have. Null if it shouldn't have any.
+	var/footstep_type
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
@@ -151,8 +151,6 @@
 	update_simplemob_varspeed()
 	if(dextrous)
 		AddComponent(/datum/component/personal_crafting)
-	if(do_footstep)
-		AddComponent(/datum/component/footstep)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -187,7 +185,8 @@
 		else
 			stat = CONSCIOUS
 	med_hud_set_status()
-
+	if(footstep_type)
+		AddComponent(/datum/component/footstep, footstep_type)
 
 /mob/living/simple_animal/handle_status_effects()
 	..()

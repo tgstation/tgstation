@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
-GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
+/*GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
 	/mob/living/simple_animal/cow,
 	/mob/living/simple_animal/hostile/cat_butcherer,
 	/mob/living/simple_animal/hostile/faithless,
@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 	/mob/living/simple_animal/hostile/megafauna,
 	/mob/living/simple_animal/hostile/jungle/leaper,
 	/mob/living/simple_animal/hostile/asteroid/goliath
-	)))
+	)))*/
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -195,15 +195,6 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 #define isaicamera(A) (istype(A, /mob/camera/aiEye))
 
 #define iseminence(A) (istype(A, /mob/camera/eminence))
-
-//Footstep helpers
-#define isshoefoot(A) (is_type_in_typecache(A, GLOB.shoefootmob))
-
-#define isclawfoot(A) (is_type_in_typecache(A, GLOB.clawfootmob))
-
-#define isbarefoot(A) (is_type_in_typecache(A, GLOB.barefootmob))
-
-#define isheavyfoot(A) (is_type_in_typecache(A, GLOB.heavyfootmob))
 
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs

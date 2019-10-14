@@ -46,8 +46,7 @@
 	del_on_death = 1
 	dodging = TRUE
 	rapid_melee = 2
-
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 
 ///////////////Melee////////////
 

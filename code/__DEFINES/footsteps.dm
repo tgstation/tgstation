@@ -15,6 +15,14 @@
 //misc footstep sounds
 #define FOOTSTEP_GENERIC_HEAVY "heavy"
 
+//footstep mob defines
+#define FOOTSTEP_MOB_CLAW 1
+#define FOOTSTEP_MOB_BAREFOOT 2
+#define FOOTSTEP_MOB_HEAVY 3
+#define FOOTSTEP_MOB_SHOE 4
+#define FOOTSTEP_MOB_HUMAN 5 //Warning: Only works on /mob/living/carbon/human
+#define FOOTSTEP_MOB_SLIME 6
+
 /*
 
 id = list(

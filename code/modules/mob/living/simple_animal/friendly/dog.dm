@@ -17,7 +17,7 @@
 	speak_chance = 1
 	turns_per_move = 10
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 //Corgis and pugs are now under one dog subtype
 
