@@ -57,7 +57,7 @@ All the important duct code:
 		if(D == src)
 			continue
 		if(D.duct_layer & duct_layer)
-			qdel(src) //replace with dropping or something
+			disconnect_duct()
 	if(active)
 		attempt_connect()
 ///start looking around us for stuff to connect to
@@ -141,6 +141,10 @@ All the important duct code:
 	lose_neighbours()
 	reset_connects(0)
 	update_icon()
+	if(ispath(drop_on_wrench))
+		new drop_on_wrench(drop_location())
+		qdel(src)
+
 ///create a new duct datum
 /obj/machinery/duct/proc/create_duct()
 	duct = new()
@@ -216,9 +220,6 @@ All the important duct code:
 		"<span class='notice'>You unfasten \the [src].</span>", \
 		"<span class='hear'>You hear ratcheting.</span>")
 		disconnect_duct()
-		if(ispath(drop_on_wrench))
-			new drop_on_wrench(drop_location())
-			qdel(src)
 	else if(can_anchor())
 		anchored = TRUE
 		active = TRUE
@@ -262,6 +263,8 @@ All the important duct code:
 	var/direction = get_dir(src, D)
 	if(!(direction in GLOB.cardinals))
 		return
+
+	add_connects(direction) //the connect of the other duct is handled in connect_network, but do this here for the parent duct because it's not necessary in normal cases
 	connect_network(D, direction, TRUE)
 	add_connects(direction)
 	update_icon()

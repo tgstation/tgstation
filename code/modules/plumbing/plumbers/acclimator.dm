@@ -14,7 +14,7 @@
 	///towards wich temperature do we build?
 	var/target_temperature = 300
 	///I cant find a good name for this. Basically if target is 300, and this is 10, it will still target 300 but will start emptying itself at 290 and 310.
-	var/allowed_temperature_difference = 0
+	var/allowed_temperature_difference = 1
 	///cool/heat power
 	var/heater_coefficient = 0.1
 	///Are we turned on or off? this is from the on and off button
