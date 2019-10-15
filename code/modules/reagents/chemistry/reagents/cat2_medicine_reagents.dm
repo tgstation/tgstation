@@ -109,7 +109,7 @@
 	. = ..()
 /datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
 	M.remove_movespeed_modifier(MOVESPEED_ID_LENTURI)
-	
+
 	. = ..()
 /datum/reagent/medicine/C2/aiuri
 	name = "Aiuri"
@@ -206,7 +206,7 @@
 		if(chemtemp < radbonustemp*0.1) //if you're super chilly, it takes off 25% of your current rads
 			M.radiation = round(M.radiation * 0.75)
 		else if(chemtemp < radbonustemp)//else if you're under the chill-zone, it takes off 10% of your current rads
-			M.radiation = round(M.radiation * 0.25)
+			M.radiation = round(M.radiation * 0.9)
 		M.radiation -= radcalc
 		healypoints += (radcalc/5)
 
