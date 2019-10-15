@@ -76,7 +76,7 @@
 
 	var/obj/item/research_notes/R = new(user.loc)
 	R.value = points_earned
-	R.typee = "biology"
+	R.origin_type = "biology"
 	R.change_vol()
 
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)

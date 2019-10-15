@@ -30,7 +30,7 @@
 	///research points it holds
 	var/value = 69
 	///origin of the research
-	var/typee = "debug"
+	var/origin_type = "debug"
 	///if it ws merged with different origins to apply a bonus
 	var/mixed = FALSE
 
@@ -41,28 +41,29 @@
 /// proc that changes name and icon depending on value
 /obj/item/research_notes/proc/change_vol()
 	if(value >= 10000)
-		name = "revolutionary discovery in the field of [typee]"
+		name = "revolutionary discovery in the field of [origin_type]"
 		icon_state = "docs_verified"
 		return
 	else if(value >= 2500)
-		name = "essay about [typee]"
+		name = "essay about [origin_type]"
 		icon_state = "paper_words"
 		return
 	else if(value >= 100)
-		name = "notes of [typee]"
+		name = "notes of [origin_type]"
 		icon_state = "paperslip_words"
 		return
 	else
-		name = "fragmentary data of [typee]"
+		name = "fragmentary data of [origin_type]"
 		icon_state = "scrap"
 		return
 
 ///proc when you slap research notes into another one, it applies a bonus if they are of different origin (only applied once)
 /obj/item/research_notes/proc/merge(obj/item/research_notes/new_paper)
+	var/bonus = min(value , new_paper.value)
 	value = value + new_paper.value
-	if(typee != new_paper.typee && !mixed)
-		value = value * 1.3
-		typee = "[typee] and [new_paper.typee]"
+	if(origin_type != new_paper.origin_type && !mixed)
+		value += bonus * 0.3
+		origin_type = "[origin_type] and [new_paper.origin_type]"
 		mixed = TRUE
 	change_vol()
 	qdel(new_paper)
@@ -73,4 +74,4 @@
 	if(istype(I, /obj/item/research_notes))
 		var/obj/item/research_notes/R = I
 		merge(R)
-		return
+		return TRUE

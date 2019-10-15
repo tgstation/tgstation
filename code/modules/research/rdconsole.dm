@@ -118,7 +118,7 @@ Nothing else in the console has ID requirements.
 		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = R.value))
 		playsound(src,'sound/machines/copier.ogg', 100, TRUE)
 		qdel(R)
-		return
+		return TRUE
 	//Loading a disk into it.
 	if(istype(D, /obj/item/disk))
 		if(istype(D, /obj/item/disk/tech_disk))
