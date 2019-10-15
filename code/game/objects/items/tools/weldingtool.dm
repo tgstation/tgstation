@@ -381,14 +381,6 @@
 	toolspeed = 0.5
 	var/nextrefueltick = 0
 
-/obj/item/weldingtool/experimental/brass
-	name = "brass welding tool"
-	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "brasswelder"
-	item_state = "brasswelder"
-
-
 /obj/item/weldingtool/experimental/process()
 	..()
 	if(get_fuel() < max_fuel && nextrefueltick < world.time)

@@ -52,11 +52,6 @@
 	qdel(src)
 	new /obj/structure/table/wood(A)
 
-/obj/structure/table/ratvar_act()
-	var/atom/A = loc
-	qdel(src)
-	new /obj/structure/table/reinforced/brass(A)
-
 /obj/structure/table/attack_paw(mob/user)
 	return attack_hand(user)
 
@@ -433,42 +428,6 @@
 	else
 		. = ..()
 
-/obj/structure/table/reinforced/brass
-	name = "brass table"
-	desc = "A solid, slightly beveled brass table."
-	icon = 'icons/obj/smooth_structures/brass_table.dmi'
-	icon_state = "brass_table"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	frame = /obj/structure/table_frame/brass
-	framestack = /obj/item/stack/tile/brass
-	buildstack = /obj/item/stack/tile/brass
-	framestackamount = 1
-	buildstackamount = 1
-	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
-
-/obj/structure/table/reinforced/brass/Initialize()
-	. = ..()
-	change_construction_value(2)
-
-/obj/structure/table/reinforced/brass/Destroy()
-	change_construction_value(-2)
-	return ..()
-
-/obj/structure/table/reinforced/brass/tablepush(mob/living/user, mob/living/pushed_mob)
-	.= ..()
-	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
-
-/obj/structure/table/reinforced/brass/narsie_act()
-	take_damage(rand(15, 45), BRUTE)
-	if(src) //do we still exist?
-		var/previouscolor = color
-		color = "#960000"
-		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-
-/obj/structure/table/reinforced/brass/ratvar_act()
-	obj_integrity = max_integrity
-
 /obj/structure/table/bronze
 	name = "bronze table"
 	desc = "A solid table made out of bronze."
@@ -476,7 +435,7 @@
 	icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	buildstack = /obj/item/stack/tile/bronze
-	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
+	canSmoothWith = list(/obj/structure/table/bronze)
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
