@@ -42385,7 +42385,6 @@
 "bkt" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/silvercrate,
-/obj/item/wrench/power,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -42398,6 +42397,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/screwdriver/power,
 /turf/open/floor/plasteel/dark,
 /area/security/nuke_storage)
 "bku" = (
