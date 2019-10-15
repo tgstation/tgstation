@@ -260,8 +260,7 @@
 
 /datum/nanite_program/triggered/nanite_sting
 	name = "Nanite Sting"
-	desc = "Stings a random non-host around the host with a barely-visible cluster of nanites, making them a new host. The target will feel it. \
-			If the cluster finds no valid targets, it returns to the original host."
+	desc = "When triggered, projects a nearly invisible spike of nanites that attempts to infect a nearby non-host with a copy of the host's nanites cluster."
 	trigger_cost = 5
 	trigger_cooldown = 100
 	rogue_types = list(/datum/nanite_program/glitch, /datum/nanite_program/toxic)
@@ -271,7 +270,7 @@
 		return
 	var/list/mob/living/target_hosts = list()
 	for(var/mob/living/L in oview(1, host_mob))
-		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD) & !SEND_SIGNAL(L, COMSIG_HAS_NANITES)))
+		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)) || SEND_SIGNAL(L, COMSIG_HAS_NANITES) || !L.Adjacent(host_mob))
 			continue
 		target_hosts += L
 	if(!target_hosts.len)
