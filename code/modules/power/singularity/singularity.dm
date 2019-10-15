@@ -464,7 +464,7 @@
 	/// The mode how the deadchat movement functions, possible modes are Democracy and Anarchy.
 	var/deadchat_mode = "Democracy"
 	/// How long it takes until a move can be done by a single person in Anarchy mode.
-	var/input_cooldown = 20 SECONDS
+	var/anarchy_cooldown = 20 SECONDS
 	/// How long it takes until a new voting cycle beings in Democracy mode.
 	var/democracy_cooldown = 12 SECONDS
 	/// List of ckeys that have voted already and/or are on cooldown.
@@ -510,7 +510,7 @@
 			forceMove(get_step(src,direction))
 			eat()
 			ckey_to_cooldown[ckey] = TRUE
-			addtimer(VARSET_LIST_CALLBACK(ckey_to_cooldown, ckey, FALSE), input_cooldown)
+			addtimer(VARSET_LIST_CALLBACK(ckey_to_cooldown, ckey, FALSE), anarchy_cooldown)
 	else if(deadchat_mode == "Democracy")
 		var/vote = ckey_to_cooldown[ckey]
 		if(!vote)
