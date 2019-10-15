@@ -75,9 +75,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/pop_per_requirement = 6
 	/// The requirement used for checking if a second rule should be selected.
 	var/list/second_rule_req = list(100, 100, 80, 70, 60, 50, 30, 20, 10, 0)
+	/// The probability for a second ruleset with index being every ten threat.
+	var/list/second_rule_prob = list(0,0,20,30,40,60,80,90,100)
 	/// The requirement used for checking if a third rule should be selected.
 	var/list/third_rule_req = list(100, 100, 100, 90, 80, 70, 60, 50, 40, 30)
-	/// Threat requirement for a second ruleset when high pop override is in effect.
+	/// The probability for a third ruleset with index being every ten threat.
+	var/list/third_rule_prob = list(0,0,0,0,20,40,60,80,100)
+	/// Threat requirement for a second ruleset when high pop override is in effect. 
 	var/high_pop_second_rule_req = 40
 	/// Threat requirement for a third ruleset when high pop override is in effect.
 	var/high_pop_third_rule_req = 60
@@ -296,6 +300,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		var/json_file = file("[global.config.directory]/dynamic.json")
 		if(fexists(json_file))
 			configuration = json_decode(file2text(json_file))
+			if(configuration["Dynamic"])
+				for(var/variable in configuration["Dynamic"]) 
+					if(!vars[variable])
+						stack_trace("Invalid dynamic configuration variable [variable] in game mode variable changes.")
+						continue
+					vars[variable] = configuration["dynamic"][variable]
+
 	for (var/rule in subtypesof(/datum/dynamic_ruleset))
 		var/datum/dynamic_ruleset/ruleset = new rule()
 		// Simple check if the ruleset should be added to the lists.
@@ -317,9 +328,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			var/rule_conf = configuration[ruleset.ruletype][ruleset.name]
 			for(var/variable in rule_conf)
 				if(isnull(ruleset.vars[variable]))
-					stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name]")
+					stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
+					continue
 				ruleset.vars[variable] = rule_conf[variable]
-
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -393,9 +404,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (threat_level > high_pop_third_rule_req)
 					extra_rulesets_amount++
 		else
-			if (threat_level >= second_rule_req[indice_pop])
+			if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[min(10, threat_level ? 0 : threat_level/10)]))
 				extra_rulesets_amount++
-				if (threat_level >= third_rule_req[indice_pop])
+				if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[min(10, threat_level ? 0 : threat_level/10)]))
 					extra_rulesets_amount++
 
 	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
@@ -430,7 +441,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			starting_rule = pickweight(drafted_rules)
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
 		else if(starting_rule.flags & HIGHLANDER_RULESET)
-			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					drafted_rules -= starting_rule
 					if(drafted_rules.len <= 0)
@@ -487,7 +498,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			rule = pickweight(drafted_rules)
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
 		else if(rule.flags & HIGHLANDER_RULESET)
-			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					drafted_rules -= rule
 					if(drafted_rules.len <= 0)
@@ -542,7 +553,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return FALSE
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
 		else if(new_rule.flags & HIGHLANDER_RULESET)
-			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					return FALSE
 
@@ -699,8 +710,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				// Classic secret : only autotraitor/minor roles
 				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 					continue
-				// No stacking : only one round-enter, unless > stacking_limit threat.
-				if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+				// No stacking : only one round-ender, unless threat level > stacking_limit.
+				if (threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 					if(rule.flags & HIGHLANDER_RULESET && highlander_executed)
 						continue
 

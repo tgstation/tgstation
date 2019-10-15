@@ -387,16 +387,14 @@
 /datum/dynamic_ruleset/roundstart/revs/rule_process()
 	if(check_rev_victory())
 		finished = 1
-	else if(check_heads_victory())
+		return RULESET_STOP_PROCESSING
+	else if (check_heads_victory())
 		finished = 2
-	return
+		SSshuttle.clearHostileEnvironment(src)
+		return RULESET_STOP_PROCESSING
 
 /datum/dynamic_ruleset/roundstart/revs/check_finished()
-	if(CONFIG_GET(keyed_list/continuous)["revolution"])
-		if(finished)
-			SSshuttle.clearHostileEnvironment(src)
-		return ..()
-	if(finished != 0)
+	if(finished == 1)
 		return TRUE
 	else
 		return ..()

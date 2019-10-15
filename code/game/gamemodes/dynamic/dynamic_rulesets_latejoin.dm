@@ -77,6 +77,7 @@
 
 /datum/dynamic_ruleset/latejoin/provocateur
 	name = "Provocateur"
+	persistent = TRUE
 	antag_datum = /datum/antagonist/rev/head
 	antag_flag = ROLE_REV_HEAD
 	antag_flag_override = ROLE_REV
@@ -89,27 +90,70 @@
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
-	var/required_heads = 3
+	var/required_heads_of_staff = 3
+	// 1 for revolution win and 2 for heads of staff win.
+	var/finished = 0
+	var/datum/team/revolution/revolution
 
 /datum/dynamic_ruleset/latejoin/provocateur/ready(forced=FALSE)
 	if (forced)
-		required_heads = 1
+		required_heads_of_staff = 1
 	if(!..())
 		return FALSE
 	var/head_check = 0
 	for(var/mob/player in mode.current_players[CURRENT_LIVING_PLAYERS])
 		if (player.mind.assigned_role in GLOB.command_positions)
 			head_check++
-	return (head_check >= required_heads)
+	return (head_check >= required_heads_of_staff)
 
 /datum/dynamic_ruleset/latejoin/provocateur/execute()
 	var/mob/M = pick(candidates)
 	assigned += M.mind
 	M.mind.special_role = antag_flag
+	revolution = new()
 	var/datum/antagonist/rev/head/new_head = new()
 	new_head.give_flash = TRUE
 	new_head.give_hud = TRUE
 	new_head.remove_clumsy = TRUE
-	new_head = M.mind.add_antag_datum(new_head)
-	new_head.rev_team.max_headrevs = 1 // Only one revhead if it is latejoin.
+	new_head = M.mind.add_antag_datum(new_head, revolution)
+	revolution.update_objectives()
+	revolution.update_heads()
+	SSshuttle.registerHostileEnvironment(src)
 	return TRUE
+
+/datum/dynamic_ruleset/latejoin/provocateur/rule_process()
+	if(check_rev_victory())
+		finished = 1
+		return RULESET_STOP_PROCESSING
+	else if (check_heads_victory())
+		finished = 2
+		SSshuttle.clearHostileEnvironment(src)
+		return RULESET_STOP_PROCESSING
+	
+/datum/dynamic_ruleset/latejoin/provocateur/check_finished()
+	if(finished == 1)
+		return TRUE
+	else
+		return ..()
+
+/datum/dynamic_ruleset/latejoin/provocateur/proc/check_rev_victory()
+	for(var/datum/objective/mutiny/objective in revolution.objectives)
+		if(!(objective.check_completion()))
+			return FALSE
+	return TRUE
+
+/datum/dynamic_ruleset/latejoin/provocateur/proc/check_heads_victory()
+	for(var/datum/mind/rev_mind in revolution.head_revolutionaries())
+		var/turf/T = get_turf(rev_mind.current)
+		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(T.z))
+			if(ishuman(rev_mind.current) || ismonkey(rev_mind.current))
+				return FALSE
+	return TRUE
+
+/datum/dynamic_ruleset/latejoin/provocateur/round_result()
+	if(finished == 1)
+		SSticker.mode_result = "win - heads killed"
+		SSticker.news_report = REVS_WIN
+	else if(finished == 2)
+		SSticker.mode_result = "loss - rev heads killed"
+		SSticker.news_report = REVS_LOSE
