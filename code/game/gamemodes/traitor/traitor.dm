@@ -65,7 +65,6 @@
 	else
 		for(var/antag in pre_traitors)
 			GLOB.pre_setup_antags += antag
-			to_chat(world, "Added [antag] to pre-antag list")
 		return TRUE
 
 

@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - balance: "Removed health analyzers from medkits. Removed the ability to print health analyzers from autolathes."

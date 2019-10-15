@@ -45,14 +45,14 @@
 				return
 			to_chat(user, "<span class='notice'>You start adding [material] to [src]...</span>")
 			if(do_after(user, 20, target = src) && material.use(1))
-				var/list/material_list
+				var/list/material_list = list()
 				if(material.material_type)
-					material_list = list(material.material_type = MINERAL_MATERIAL_AMOUNT)
+					material_list[material.material_type] = MINERAL_MATERIAL_AMOUNT
 				make_new_table(/obj/structure/table/greyscale, material_list)
 	else
 		return ..()
 
-/obj/structure/table_frame/proc/make_new_table(table_type, list/custom_materials) //makes sure the new table made retains what we had as a frame
+/obj/structure/table_frame/proc/make_new_table(table_type, custom_materials) //makes sure the new table made retains what we had as a frame
 	var/obj/structure/table/T = new table_type(loc)
 	T.frame = type
 	T.framestack = framestack
