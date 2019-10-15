@@ -1,0 +1,5 @@
+author: "spessbandit"
+delete-after: True
+changes: 
+  - refactor: "Event announcement code has been slightly refactored."
+  - admin: "Forcing an ion storm should announce 100% of the time now, instead of 33%."
