@@ -1,6 +1,6 @@
 /**
-  * # area 
-  * 
+  * # area
+  *
   * A grouping of tiles into a logical space, mostly used by map editors
   */
 /area
@@ -18,8 +18,6 @@
 
 	var/valid_territory = TRUE // If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
 	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
-	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
-	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
 
 	var/fire = null
 	var/atmos = TRUE
@@ -55,7 +53,7 @@
 
 	var/has_gravity = 0
 	///Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-	var/noteleport = FALSE			
+	var/noteleport = FALSE
 	///Hides area from player Teleport function.
 	var/hidden = FALSE
 	///Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
@@ -177,7 +175,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Register this area as belonging to a z level
   *
   * Ensures the item is added to the SSmapping.areas_in_z list for this z
-  * 
+  *
   * It also goes through every item in this areas contents and sets the area level z to it
   * breaking the exat first time it does this, this seems crazy but what would I know, maybe
   * areas don't have a valid z themself or something
@@ -202,7 +200,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /**
   * Destroy an area and clean it up
-  * 
+  *
   * Removes the area from GLOB.areas_by_type and also stops it processing on SSobj
   *
   * This is despite the fact that no code appears to put it on SSobj, but
@@ -315,7 +313,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Generate an firealarm alert for this area
   *
   * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
-  * 
+  *
   * Also starts the area processing on SSobj
   */
 /area/proc/firealert(obj/source)
@@ -349,7 +347,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   *
   * resets the alert sent to all ai players, alert consoles, drones and alarm monitor programs
   * in the world
-  * 
+  *
   * Also cycles the icons of all firealarms and deregisters the area from processing on SSOBJ
   */
 /area/proc/firereset(obj/source)
@@ -469,7 +467,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /**
   * Returns int 1 or 0 if the area has power for the given channel
-  * 
+  *
   * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
   * per channel power_equip, power_light, power_environ
   */
@@ -569,7 +567,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /**
   * Call back when an atom enters an area
-  * 
+  *
   * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to the atom)
   *
   * If the area has ambience, then it plays some ambience music to the ambience channel

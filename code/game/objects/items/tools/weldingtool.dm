@@ -120,28 +120,38 @@
 	else
 		return ..()
 
-
 /obj/item/weldingtool/afterattack(atom/O, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	if(!status && O.is_refillable())
-		reagents.trans_to(O, reagents.total_volume, transfered_by = user)
-		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
-		update_icon()
+	
 	if(isOn())
-		use(1)
-		var/turf/location = get_turf(user)
-		location.hotspot_expose(700, 50, 1)
-		if(get_fuel() <= 0)
-			set_light(0)
-
-		if(isliving(O))
+		handle_fuel_and_temps(1, user)
+		
+		if(!QDELETED(O) && isliving(O)) // can't ignite something that doesn't exist
 			var/mob/living/L = O
 			if(L.IgniteMob())
 				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
 				log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
 
+	if(!status && O.is_refillable())
+		reagents.trans_to(O, reagents.total_volume, transfered_by = user)
+		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
+		update_icon()
+
+/obj/item/weldingtool/attack_qdeleted(atom/O, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	
+	if(isOn())
+		handle_fuel_and_temps(1, user)
+		
+		if(!QDELETED(O) && isliving(O)) // can't ignite something that doesn't exist
+			var/mob/living/L = O
+			if(L.IgniteMob())
+				message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(L)] on fire with [src] at [AREACOORD(user)]")
+				log_game("[key_name(user)] set [key_name(L)] on fire with [src] at [AREACOORD(user)]")
 
 /obj/item/weldingtool/attack_self(mob/user)
 	if(src.reagents.has_reagent(/datum/reagent/toxin/plasma))
@@ -153,6 +163,11 @@
 
 	update_icon()
 
+// Ah fuck, I can't believe you've done this
+/obj/item/weldingtool/proc/handle_fuel_and_temps(used = 0, mob/living/user)
+	use(used)
+	var/turf/location = get_turf(user)
+	location.hotspot_expose(700, 50, 1)
 
 // Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
@@ -177,6 +192,7 @@
 //Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weldingtool/proc/check_fuel(mob/user)
 	if(get_fuel() <= 0 && welding)
+		set_light(0)
 		switched_on(user)
 		update_icon()
 		//mob icon update
@@ -364,14 +380,6 @@
 	light_intensity = 1
 	toolspeed = 0.5
 	var/nextrefueltick = 0
-
-/obj/item/weldingtool/experimental/brass
-	name = "brass welding tool"
-	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "brasswelder"
-	item_state = "brasswelder"
-
 
 /obj/item/weldingtool/experimental/process()
 	..()
