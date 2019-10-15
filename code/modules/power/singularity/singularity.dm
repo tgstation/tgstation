@@ -545,28 +545,37 @@
 	addtimer(CALLBACK(src, .proc/democracy_loop), democracy_cooldown)
 			
 /obj/singularity/deadchat_controlled/proc/count_democracy_votes()
-	var/list/votes = list(0,0,0,0)
+	var/list/votes = list("up"=0,"down"=0,"left"=0,"right"=0)
 	var/found_vote = FALSE
 	for(var/vote in ckey_to_cooldown)
 		switch(ckey_to_cooldown[vote])
 			if("up")
-				votes[1]++
+				votes["up"]++
 			if("down")
-				votes[2]++
+				votes["down"]++
 			if("left")
-				votes[3]++
+				votes["left"]++
 			if("right")
-				votes[4]++
+				votes["right"]++
 		if(ckey_to_cooldown[vote] != NONE)
 			found_vote = TRUE
 		ckey_to_cooldown[vote] = NONE
 	if(!found_vote)
 		return NONE
-	if(votes[1] >= votes[2] && votes[1] >= votes[3] && votes[1] >= votes[4])
+	
+	// Solve which had most votes.
+	var/prev_value = 0
+	var/result
+	for(var/vote in votes)
+		if(votes[vote] > prev_value)
+			prev_value = votes[vote]
+			result = vote
+	
+	if(result == "up")
 		return NORTH
-	else if(votes[2] >= votes[3] && votes[2] >= votes[4])
+	else if(result == "down")
 		return SOUTH
-	else if(votes[3] >= votes[4])
+	else if(result == "left")
 		return WEST
 	else
 		return EAST
