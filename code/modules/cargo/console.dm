@@ -3,8 +3,8 @@
 	desc = "Used to order supplies, approve requests, and control the shuttle."
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
-	ui_x = 750
-	ui_y = 850
+	ui_x = 780
+	ui_y = 750
 
 	var/requestonly = FALSE
 	var/contraband = FALSE
@@ -130,8 +130,6 @@
 
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	if(..())
-		return
-	if(action != "add" && requestonly)
 		return
 	switch(action)
 		if("send")

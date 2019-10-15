@@ -106,13 +106,6 @@ h1.alert, h2.alert		{color: #000000;}
 
 .deconversion_message	{color: #5000A0;	font-size: 3;	font-style: italic;}
 
-.brass					{color: #BE8700;}
-.heavy_brass			{color: #BE8700;	font-weight: bold;	font-style: italic;}
-.large_brass			{color: #BE8700;	font-size: 3;}
-.big_brass				{color: #BE8700;	font-size: 3;	font-weight: bold;	font-style: italic;}
-.ratvar					{color: #BE8700;	font-size: 6;	font-weight: bold;	font-style: italic;}
-.alloy					{color: #42474D;}
-.heavy_alloy			{color: #42474D;	font-weight: bold;	font-style: italic;}
 .nezbere_large			{color: #42474D;	font-size: 3;	font-weight: bold;	font-style: italic;}
 .nezbere				{color: #42474D;	font-weight: bold;	font-style: italic;}
 .nezbere_small			{color: #42474D;}

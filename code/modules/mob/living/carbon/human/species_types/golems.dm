@@ -629,60 +629,6 @@
 		H.adjustFireLoss(-4)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 
-
-/datum/species/golem/clockwork
-	name = "Clockwork Golem"
-	id = "clockwork golem"
-	say_mod = "clicks"
-	limbs_id = "clockgolem"
-	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>Clockwork Golem</span><span class='bold alloy'>, you are faster than other types of golems. On death, you will break down into scrap.</span>"
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES)
-	inherent_traits = list(TRAIT_NOFLASH,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
-	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
-	armor = 20 //Reinforced, but much less so to allow for fast movement
-	attack_verb = "smash"
-	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
-	sexes = FALSE
-	speedmod = 0
-	changesource_flags = MIRROR_BADMIN | WABBAJACK
-	damage_overlay_type = "synth"
-	prefix = "Clockwork"
-	special_names = list("Remnant", "Relic", "Scrap", "Vestige") //RIP Ratvar
-	inherent_factions = list("ratvar")
-	var/has_corpse
-
-/datum/species/golem/clockwork/on_species_gain(mob/living/carbon/human/H)
-	. = ..()
-	RegisterSignal(H, COMSIG_MOB_SAY, .proc/handle_speech)
-
-/datum/species/golem/clockwork/on_species_loss(mob/living/carbon/human/H)
-	UnregisterSignal(H, COMSIG_MOB_SAY)
-	. = ..()
-
-/datum/species/golem/clockwork/proc/handle_speech(datum/source, list/speech_args)
-	speech_args[SPEECH_SPANS] |= SPAN_ROBOT //beep
-
-/datum/species/golem/clockwork/spec_death(gibbed, mob/living/carbon/human/H)
-	gibbed = !has_corpse ? FALSE : gibbed
-	. = ..()
-	if(!has_corpse)
-		var/turf/T = get_turf(H)
-		H.visible_message("<span class='warning'>[H]'s exoskeleton shatters, collapsing into a heap of scrap!</span>")
-		playsound(H, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE)
-		for(var/i in 1 to rand(3, 5))
-			new/obj/item/clockwork/alloy_shards/small(T)
-		new/obj/item/clockwork/alloy_shards/clockgolem_remains(T)
-		qdel(H)
-
-/datum/species/golem/clockwork/no_scrap //These golems are created through the herald's beacon and leave normal corpses on death.
-	id = "clockwork golem servant"
-	armor = 15 //Balance reasons make this armor weak
-	no_equip = list()
-	nojumpsuit = FALSE
-	has_corpse = TRUE
-	random_eligible = FALSE
-	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>Clockwork Golem Servant</span><span class='bold alloy'>, you are faster than other types of golems.</span>" //warcult golems leave a corpse
-
 /datum/species/golem/cloth
 	name = "Cloth Golem"
 	id = "cloth golem"

@@ -22,11 +22,11 @@
 	///COOLING, HEATING or NEUTRAL. We track this for change, so we dont needlessly update our icon
 	var/acclimate_state
 	/**We can't take anything in, at least till we're emptied. Down side of the round robin chem transfer, otherwise while emptying 5u of an unreacted chem gets added,
-	and you get nasty leftovers 
+	and you get nasty leftovers
 	*/
 	var/emptying = FALSE
 
-	ui_x = 300
+	ui_x = 320
 	ui_y = 260
 
 /obj/machinery/plumbing/acclimator/Initialize(mapload, bolt)
@@ -108,7 +108,6 @@
 			reagents.maximum_volume = CLAMP(round(target), 1, buffer)
 		if("reset_volume")
 			reagents.maximum_volume = buffer
-
 
 #undef COOLING
 #undef HEATING

@@ -162,7 +162,6 @@
 	icon_state = "television"
 	icon_keyboard = null
 	icon_screen = "detective_tv"
-	clockwork = TRUE //it'd look weird
 	pass_flags = PASSTABLE
 
 /obj/machinery/computer/security/mining
@@ -208,7 +207,6 @@
 	network = list("thunder")
 	density = FALSE
 	circuit = null
-	clockwork = TRUE //it'd look very weird
 	light_power = 0
 
 /obj/machinery/computer/security/telescreen/update_icon()

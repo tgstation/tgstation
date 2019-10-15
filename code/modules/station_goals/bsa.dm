@@ -215,7 +215,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
 	ui_x = 400
-	ui_y = 305
+	ui_y = 220
 
 	var/obj/machinery/bsa/full/cannon
 	var/notice
@@ -255,6 +255,8 @@
 	update_icon()
 
 /obj/machinery/computer/bsa_control/proc/calibrate(mob/user)
+	if(!GLOB.bsa_unlock)
+		return
 	var/list/gps_locators = list()
 	for(var/datum/component/gps/G in GLOB.GPS_list) //nulls on the list somehow
 		if(G.tracking)

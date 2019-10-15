@@ -15,7 +15,7 @@
 	pipe_state = "filter"
 
 	ui_x = 475
-	ui_y = 195
+	ui_y = 185
 
 /obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))

@@ -119,14 +119,6 @@
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
 
-
-/obj/item/clothing/head/flatcap
-	name = "flat cap"
-	desc = "A working man's cap."
-	icon_state = "flat_cap"
-	item_state = "detective"
-
-
 /obj/item/clothing/head/pirate
 	name = "pirate hat"
 	desc = "Yarr."
@@ -356,7 +348,7 @@
 	name = "pharaoh hat"
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
-	icon_state = "pharoah_hat"
+	item_state = "pharoah_hat"
 
 /obj/item/clothing/head/jester/alt
 	name = "jester hat"
