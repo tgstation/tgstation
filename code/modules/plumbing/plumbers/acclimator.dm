@@ -27,7 +27,7 @@
 	var/emptying = FALSE
 
 	ui_x = 320
-	ui_y = 260
+	ui_y = 300
 
 /obj/machinery/plumbing/acclimator/Initialize(mapload, bolt)
 	. = ..()
@@ -94,10 +94,8 @@
 		if("set_allowed_temperature_difference")
 			var/target = input("New acceptable difference:", name, allowed_temperature_difference) as num|null
 			allowed_temperature_difference = CLAMP(target, 0, 1000)
-		if("turn_on")
-			enabled = TRUE
-		if("turn_off")
-			enabled = FALSE
+		if("toggle_power")
+			enabled = !enabled
 		if("change_volume")
 			var/target = input("New maximum volume between 1 and [buffer]):", name, reagents.maximum_volume) as num|null
 			if(!target)
@@ -106,8 +104,6 @@
 				to_chat(usr, "<span class='warning'>You can't set the maximum volume lower than the current total reagent volume! Empty it first!</span>")
 				return
 			reagents.maximum_volume = CLAMP(round(target), 1, buffer)
-		if("reset_volume")
-			reagents.maximum_volume = buffer
 
 #undef COOLING
 #undef HEATING
