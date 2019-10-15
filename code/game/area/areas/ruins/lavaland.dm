@@ -38,6 +38,13 @@
 	icon_state = "dk_yellow"
 	ambientsounds = HIGHSEC
 
+/area/ruin/unpowered/cultaltar
+	name = "Cult Altar"
+	blob_allowed = TRUE //lets cultists draw runes here
+	ambientsounds = SPOOKY
+
+//Syndicate lavaland base
+
 /area/ruin/unpowered/syndicate_lava_base/engineering
 	name = "Syndicate Lavaland Engineering"
 
