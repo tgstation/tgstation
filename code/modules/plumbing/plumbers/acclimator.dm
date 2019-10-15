@@ -22,7 +22,7 @@
 	///COOLING, HEATING or NEUTRAL. We track this for change, so we dont needlessly update our icon
 	var/acclimate_state
 
-	ui_x = 300
+	ui_x = 320
 	ui_y = 260
 
 /obj/machinery/plumbing/acclimator/Initialize()
@@ -86,10 +86,8 @@
 		if("set_allowed_temperature_difference")
 			var/target = input("New acceptable difference:", name, allowed_temperature_difference) as num|null
 			allowed_temperature_difference = CLAMP(target, 0, 1000)
-		if("turn_on")
-			enabled = TRUE
-		if("turn_off")
-			enabled = FALSE
+		if("toggle_power")
+			enabled = !enabled
 #undef COOLING
 #undef HEATING
 #undef NEUTRAL
