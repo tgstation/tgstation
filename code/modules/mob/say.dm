@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(deadchat_listeners)
+
 //Speech verbs.
 
 ///Say verb
@@ -35,6 +37,14 @@
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	usr.emote("me",1,message,TRUE)
+
+/// This datum is used for listening to deadchat messages.
+/datum/deadchat_listener
+	var/name = "default"
+
+/// Called on a deadchat message.
+/datum/deadchat_listener/proc/message_event(ckey, message)
+	return
 
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(var/message)
@@ -77,6 +87,9 @@
 	var/spanned = say_quote(message)
 	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
 	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
+	for(var/datum/deadchat_listener/listener in GLOB.deadchat_listeners)
+		listener.message_event(src.client.ckey, message)
+	
 	log_talk(message, LOG_SAY, tag="DEAD")
 	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = key)
 
