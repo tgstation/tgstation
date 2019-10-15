@@ -46,7 +46,7 @@
 #define COMSIG_GLOB_MOB_DEATH "!mob_death"
 /// global living say plug - use sparingly: (mob/speaker , message)
 #define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"
-/// global dead say plug
+/// global dead say plug : (mob , message)
 #define COMSIG_GLOB_DEAD_SAY "!say_deadchat"
 
 //////////////////////////////////////////////////////////////////
