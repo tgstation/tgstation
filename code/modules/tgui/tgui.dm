@@ -290,10 +290,7 @@
 				ui_screen = params["screen"]
 			SStgui.update_uis(src_object)
 		if("tgui:log")
-			if(params["error"])
-				log_error(params["log"])
-			else if(CONFIG_GET(flag/log_tgui_debug)) // Possible premature optimization; prevent the calls from happening if tgui logging isn't enabled
-				log_debug(params["log"])
+			log_message(params["log"])
 		if("tgui:link")
 			user << link(params["url"])
 		if("tgui:fancy")
@@ -391,10 +388,5 @@
 /datum/tgui/proc/set_titlebar(value)
 	titlebar = value
 
-/datum/tgui/proc/log_error(message)
-	var/out_message = {"ERROR: [user] ([user.ckey]) using "[title]":\n[message]\n"}
-	log_tgui_error(out_message)
-
-/datum/tgui/proc/log_debug(message)
-	var/out_message = {"DEBUG: [user] ([user.ckey]) using "[title]":\n[message]\n"}
-	log_tgui_debug(out_message)
+/datum/tgui/proc/log_message(message)
+	log_tgui("[user] ([user.ckey]) using \"[title]\":\n[message]")

@@ -121,9 +121,6 @@ LOG_MANIFEST
 ## log job divide debugging information
 #LOG_JOB_DEBUG
 
-## log tgui debug information
-LOG_TGUI_DEBUG
-
 ## log all world.Topic() calls
 # LOG_WORLD_TOPIC
 

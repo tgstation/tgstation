@@ -189,12 +189,8 @@
 
 /* ui logging */ 
  
-/proc/log_tgui_error(text) 
-	WRITE_LOG(GLOB.tgui_error_log, text) 
- 
-/proc/log_tgui_debug(text) 
-	if(CONFIG_GET(flag/log_tgui_debug)) 
-		WRITE_LOG(GLOB.tgui_debug_log, text) 
+/proc/log_tgui(text)
+	WRITE_LOG(GLOB.tgui_log, text)
 
 /* For logging round startup. */
 /proc/start_log(log)
