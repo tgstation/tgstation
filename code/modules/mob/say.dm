@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(deadchat_listeners)
-
 //Speech verbs.
 
 ///Say verb
