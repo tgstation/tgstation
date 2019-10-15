@@ -34,7 +34,7 @@ const renderLayout = () => {
       const route = getRoute(state);
       // Route was not found, load old TGUI
       if (!route) {
-        logger.warn('loading old tgui');
+        logger.info('loading old tgui');
         // Short-circuit the renderer
         handedOverToOldTgui = true;
         // Unsubscribe from updates
