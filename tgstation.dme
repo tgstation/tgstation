@@ -14,6 +14,13 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\boxstation.dm"
+#include "_maps\deltastation.dm"
+#include "_maps\donutstation.dm"
+#include "_maps\metastation.dm"
+#include "_maps\multiz_debug.dm"
+#include "_maps\pubbystation.dm"
+#include "_maps\runtimestation.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -593,7 +600,6 @@
 #include "code\FulpstationCode\halloween_costumes\bob_ross.dm"
 #include "code\FulpstationCode\halloween_costumes\cat.dm"
 #include "code\FulpstationCode\halloween_costumes\censorship.dm"
-#include "code\FulpstationCode\halloween_costumes\cornman.dm"
 #include "code\FulpstationCode\halloween_costumes\devil.dm"
 #include "code\FulpstationCode\halloween_costumes\garfield.dm"
 #include "code\FulpstationCode\halloween_costumes\hades.dm"
