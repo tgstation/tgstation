@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(maintenance_loot, list(
 	/obj/item/airlock_painter = 1,
 	/obj/item/stack/cable_coil = 4,
 	/obj/item/stack/cable_coil/five = 6,
-	/obj/item/stack/medical/bruise_pack = 1,
+	/obj/item/stack/medical/suture = 1,
 	/obj/item/stack/rods/ten = 9,
 	/obj/item/stack/rods/twentyfive = 1,
 	/obj/item/stack/rods/fifty = 1,
