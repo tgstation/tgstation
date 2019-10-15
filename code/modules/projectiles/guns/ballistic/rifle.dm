@@ -2,7 +2,7 @@
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
 	icon_state = "moistnugget"
-	icon_state = "moistnugget"
+	item_state = "moistnugget"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_STANDARD

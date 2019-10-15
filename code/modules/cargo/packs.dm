@@ -1896,8 +1896,6 @@
 	. = ..()
 	for(var/i in 1 to 4)
 		new /mob/living/simple_animal/parrot(.)
-	if(prob(1))
-		new /mob/living/simple_animal/parrot/clock_hawk(.)
 
 /datum/supply_pack/critter/butterfly
 	name = "Butterflies Crate"

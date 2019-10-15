@@ -238,7 +238,7 @@
 				if (!isnull(chosen_colour))
 					paint_color = chosen_colour
 					. = TRUE
-				else 
+				else
 					. = FALSE
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",
@@ -303,9 +303,10 @@
 
 
 	var/temp = "rune"
-	if(is_alpha(drawing))
+	var/ascii = (length(drawing) == 1)
+	if(ascii && is_alpha(drawing))
 		temp = "letter"
-	else if(is_digit(drawing))
+	else if(ascii && is_digit(drawing))
 		temp = "number"
 	else if(drawing in punctuation)
 		temp = "punctuation mark"
@@ -669,7 +670,7 @@
 			if(color_hex2num(paint_color) < 350 && !istype(target, /obj/structure/window) && !istype(target, /obj/effect/decal/cleanable/crayon)) //Colors too dark are rejected
 				to_chat(usr, "<span class='warning'>A color that dark on an object like this? Surely not...</span>")
 				return FALSE
-				
+
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
 
 			if(istype(target, /obj/structure/window))

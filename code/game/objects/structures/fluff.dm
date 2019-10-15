@@ -224,3 +224,39 @@
 /obj/structure/fluff/beach_umbrella/syndi
 	icon_state = "syndi_brella"
 
+/obj/structure/fluff/clockwork
+	name = "Clockwork Fluff"
+	icon = 'icons/obj/clockwork_objects.dmi'
+	deconstructible = FALSE
+
+/obj/structure/fluff/clockwork/alloy_shards
+	name = "replicant alloy shards"
+	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
+	icon_state = "alloy_shards"
+
+/obj/structure/fluff/clockwork/alloy_shards/small
+	icon_state = "shard_small1"
+
+/obj/structure/fluff/clockwork/alloy_shards/medium
+	icon_state = "shard_medium1"
+
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit
+	icon_state = "gear_bit1"
+
+/obj/structure/fluff/clockwork/alloy_shards/large
+	icon_state = "shard_large1"
+
+/obj/structure/fluff/clockwork/blind_eye
+	name = "blind eye"
+	desc = "A heavy brass eye, its red iris fallen dark."
+	icon_state = "blind_eye"
+
+/obj/structure/fluff/clockwork/fallen_armor
+	name = "fallen armor"
+	desc = "Lifeless chunks of armor. They're designed in a strange way and won't fit on you."
+	icon_state = "fallen_armor"
+
+/obj/structure/fluff/clockwork/clockgolem_remains
+	name = "clockwork golem scrap"
+	desc = "A pile of scrap metal. It seems damaged beyond repair."
+	icon_state = "clockgolem_dead"
