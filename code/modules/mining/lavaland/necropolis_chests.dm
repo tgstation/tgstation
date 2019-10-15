@@ -252,10 +252,7 @@
 	if(!MM.active_owner)
 		if(ishuman(owner))
 			MM.memento(owner)
-	else
-		to_chat(owner, "<span class='warning'>You try to free your lifeforce from the pendant...</span>")
-		if(do_after(owner, 40, target = owner))
-			MM.mori()
+			Remove(MM.active_owner) //Remove the action button, since there's no real use in having it now.
 
 //Wisp Lantern
 /obj/item/wisp_lantern
