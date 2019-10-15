@@ -68,7 +68,7 @@
 	var/turf/open/T = prepare_step()
 	if(!T)
 		return
-	if(isfile(footstep_sounds))
+	if(isfile(footstep_sounds) || istext(footstep_sounds))
 		playsound(T, footstep_sounds, volume)
 		return
 	var/turf_footstep
