@@ -18,7 +18,6 @@
 
 	var/valid_territory = TRUE // If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
 	var/blob_allowed = TRUE // If blobs can spawn there and if it counts towards their score. Also, if cultists can draw runes here.
-	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
 
 	var/fire = null
 	var/atmos = TRUE
