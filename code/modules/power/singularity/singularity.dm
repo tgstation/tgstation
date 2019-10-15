@@ -548,15 +548,7 @@
 	var/list/votes = list("up"=0,"down"=0,"left"=0,"right"=0)
 	var/found_vote = FALSE
 	for(var/vote in ckey_to_cooldown)
-		switch(ckey_to_cooldown[vote])
-			if("up")
-				votes["up"]++
-			if("down")
-				votes["down"]++
-			if("left")
-				votes["left"]++
-			if("right")
-				votes["right"]++
+		votes[ckey_to_cooldown[vote]]++
 		if(ckey_to_cooldown[vote] != NONE)
 			found_vote = TRUE
 		ckey_to_cooldown[vote] = NONE
