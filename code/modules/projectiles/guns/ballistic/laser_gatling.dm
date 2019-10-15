@@ -127,7 +127,7 @@
 	return
 
 /obj/item/gun/ballistic/minigun/dropped(mob/user)
-	SHOULD_CALL_PARENT(FALSE)
+	SHOULD_CALL_PARENT(0)
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else
