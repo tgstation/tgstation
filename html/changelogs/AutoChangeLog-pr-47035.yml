@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - tweak: "The Memento Mori now removes its action button after activation, rather than leaving the button behind as a delayed gatcha suicide ability."
