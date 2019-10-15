@@ -3894,7 +3894,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/computer/atmos_control/tank/nitrogen_tank{
+/obj/machinery/computer/atmos_control/tank/nitrogen_tank/offstation{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -4468,7 +4468,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/computer/atmos_control/tank/oxygen_tank{
+/obj/machinery/computer/atmos_control/tank/oxygen_tank/offstation{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -4862,7 +4862,7 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/atmos_control/tank/toxin_tank{
+/obj/machinery/computer/atmos_control/tank/toxin_tank/offstation{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -5981,7 +5981,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "Ed" = (
-/obj/machinery/computer/atmos_control/tank/carbon_tank{
+/obj/machinery/computer/atmos_control/tank/carbon_tank/offstation{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
