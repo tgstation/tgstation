@@ -104,6 +104,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/metal
 	grind_results = list(/datum/reagent/iron = 20)
 	point_value = 2
+	tableVariant = /obj/structure/table
 	material_type = /datum/material/iron
 
 /obj/item/stack/sheet/metal/narsie_act()
