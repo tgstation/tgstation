@@ -415,48 +415,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	animate(src, transform = final, time = 5, loop = 0)
 
 
-
-// CLOCKCULT
-/obj/screen/alert/clockwork
-	alerttooltipstyle = "clockcult"
-
-/obj/screen/alert/clockwork/infodump
-	name = "Global Records"
-	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
-	icon_state = "clockinfo"
-
-/obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
-	if(GLOB.ratvar_awakens)
-		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
-	else
-		var/servants = 0
-		var/list/textlist = list()
-		for(var/mob/living/L in GLOB.alive_mob_list)
-			if(is_servant_of_ratvar(L))
-				servants++
-		var/datum/antagonist/clockcult/C = mob_viewer.mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
-		if(C && C.clock_team)
-			textlist += "[C.clock_team.eminence ? "There is an Eminence." : "<b>There is no Eminence! Get one ASAP!</b>"]<br>"
-		textlist += "There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>"
-		for(var/i in GLOB.scripture_states)
-			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
-				textlist += "[i] Scripture: <b>[GLOB.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
-		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-		if(G)
-			var/time_info = G.get_arrival_time(FALSE)
-			var/time_name
-			if(G.seconds_until_activation)
-				time_name = "until the Ark activates"
-			else if(G.grace_period)
-				time_name = "of grace period remaining"
-			else if(G.progress_in_seconds)
-				time_name = "until the Ark finishes summoning"
-			if(time_info)
-				textlist += "<b>[time_info / 60] minutes</b> [time_name].<br>"
-		textlist += "<b>[DisplayPower(get_clockwork_power())] / [DisplayPower(MAX_CLOCKWORK_POWER)]</b> power available for use."
-		desc = textlist.Join()
-	..()
-
 //GUARDIANS
 
 /obj/screen/alert/cancharge

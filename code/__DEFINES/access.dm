@@ -128,8 +128,6 @@
 
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT 250
-#define ACCESS_CLOCKCULT 251
-
 
 	// Mech Access, allows maintanenace of internal components and altering keycard requirements.
 #define ACCESS_MECH_MINING 300

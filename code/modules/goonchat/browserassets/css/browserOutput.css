@@ -352,13 +352,6 @@ h1.alert, h2.alert		{color: #000000;}
 
 .deconversion_message	{color: #a947ff;	font-size: 185%;	font-style: italic;}
 
-.brass					{color: #BE8700;}
-.heavy_brass			{color: #BE8700;	font-weight: bold;	font-style: italic;}
-.large_brass			{color: #BE8700;	font-size: 185%;}
-.big_brass				{color: #BE8700;	font-size: 185%;	font-weight: bold;	font-style: italic;}
-.ratvar					{color: #BE8700;	font-size: 370%;	font-weight: bold;	font-style: italic;}
-.alloy					{color: #42474D;}
-.heavy_alloy			{color: #42474D;	font-weight: bold;	font-style: italic;}
 .nezbere_large			{color: #42474D;	font-size: 185%;	font-weight: bold;	font-style: italic;}
 .nezbere				{color: #42474D;	font-weight: bold;	font-style: italic;}
 .nezbere_small			{color: #42474D;}
