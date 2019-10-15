@@ -111,10 +111,8 @@
 	name = "\improper DEATH-RIPLEY"
 	icon_state = "deathripley"
 	fast_pressure_step_in = 2 //step_in while in low pressure conditions
-	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
+	slow_pressure_step_in = 3 //step_in while in normal pressure conditions
 	step_in = 4
-	slow_pressure_step_in = 3
-	opacity=0
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
