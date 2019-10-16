@@ -174,7 +174,7 @@
 		if(!T)
 			T = get_turf(src)
 		M.forceMove(T)
-		if(M.revive(TRUE, TRUE))
+		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
 			M.grab_ghost(force = TRUE)
 			playsound(T, feast_sound, 50, TRUE, -1)
 			to_chat(M, "<span class='clown'>You leave [src]'s warm embrace,	and feel ready to take on the world.</span>")
