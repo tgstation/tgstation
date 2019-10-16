@@ -206,25 +206,47 @@
 	max_amount = 15
 	repeating = TRUE
 	var/heal_burn = 10
-	var/is_open = FALSE ///This var determines if the sterile packaging of the mesh has been opened.
+	var/is_open = TRUE ///This var determines if the sterile packaging of the mesh has been opened.
+
+/obj/item/stack/medical/mesh/Initialize()
+	..()
+	if(amount == max_amount)	 //only seal full mesh packs
+		is_open = FALSE
+		icon_state = "regen_mesh_closed"
+
 
 /obj/item/stack/medical/mesh/update_icon()
 	if(!is_open)
-		icon_state = "regen_mesh_closed"
 		return
 	. = ..()
 
 /obj/item/stack/medical/mesh/heal(mob/living/M, mob/user)
 	. = ..()
-	if(!is_open)
-		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
-		return
 	if(M.stat == DEAD)
 		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
 		return
 	if(iscarbon(M))
 		return heal_carbon(M, user, 0, heal_burn)
 	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+
+
+/obj/item/stack/medical/mesh/try_heal(mob/living/M, mob/user, silent = FALSE)
+	if(!is_open)
+		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
+		return
+	. = ..()
+
+/obj/item/stack/medical/mesh/AltClick(mob/living/user)
+	if(!is_open)
+		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
+		return
+	. = ..()
+
+/obj/item/stack/medical/mesh/attack_hand(mob/user)
+	if(!is_open & user.get_inactive_held_item() == src)
+		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
+		return
+	. = ..()
 
 /obj/item/stack/medical/mesh/attack_self(mob/user)
 	if(!is_open)
