@@ -111,7 +111,7 @@
 	for(var/mob/M in GLOB.mob_list)
 		if(M.mind)
 			minds |= M.mind
-	var/datum/mind/value = input("Select new member:", "New team member", null) as null|anything in sortList(minds)
+	var/datum/mind/value = input("Select new member:", "New team member", null) as null|anything in sortNames(minds)
 	if (!value)
 		return
 

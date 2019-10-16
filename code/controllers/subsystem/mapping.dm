@@ -413,7 +413,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/away_name
 	var/datum/space_level/away_level
 
-	var/answer = input("What kind ? ","Away") as null|anything in sortList(possible_options)
+	var/answer = input("What kind ? ","Away") as null|anything in possible_options
 	switch(answer)
 		if("Custom")
 			var/mapfile = input("Pick file:", "File") as null|file

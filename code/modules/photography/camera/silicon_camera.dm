@@ -33,7 +33,7 @@
 		var/datum/picture/p = i
 		nametemp += p.picture_name
 		temp[p.picture_name] = p
-	find = input(user, "Select image") in sortList(nametemp)|null
+	find = input(user, "Select image") in nametemp|null
 	if(!find)
 		return
 	return temp[find]

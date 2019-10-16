@@ -79,7 +79,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		if(1)
 			pick = csa[1]
 		else
-			pick = input(src, "Pick a server to jump to", "Server Hop") as null|anything in sortList(csa)
+			pick = input(src, "Pick a server to jump to", "Server Hop") as null|anything in csa
 
 	if(!pick)
 		return

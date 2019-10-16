@@ -72,7 +72,7 @@
 		for(var/i in 1 to GLOB.blob_nodes.len)
 			var/obj/structure/blob/node/B = GLOB.blob_nodes[i]
 			nodes["Blob Node #[i] ([get_area_name(B)])"] = B
-		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in sortList(nodes)
+		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
 			forceMove(chosen_node.loc)
@@ -354,7 +354,7 @@
 		var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains))
 		choices[initial(bs.name)] = bs
 
-	var/choice = input(usr, "Please choose a new strain","Strain") as anything in sortList(choices)
+	var/choice = input(usr, "Please choose a new strain","Strain") as anything in sortNames(choices)
 	if (choice && choices[choice] && !QDELETED(src))
 		var/datum/blobstrain/bs = choices[choice]
 		set_strain(bs)

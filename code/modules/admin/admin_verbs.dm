@@ -594,7 +594,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!istype(T))
 		to_chat(src, "<span class='notice'>You can only give a disease to a mob of type /mob/living.</span>")
 		return
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in sortList(SSdisease.diseases)
+	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in sortNames(SSdisease.diseases)
 	if(!D)
 		return
 	T.ForceContractDisease(new D, FALSE, TRUE)
