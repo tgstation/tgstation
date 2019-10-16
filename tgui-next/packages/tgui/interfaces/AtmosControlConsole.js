@@ -44,14 +44,12 @@ export const AtmosControlConsole = props => {
         <Fragment>
           <Section
             title="Controls"
-            buttons={(
-              data.can_reconnect ? (
+            buttons={Boolean(data.can_reconnect) && (
               <Button
                 icon="undo"
                 content="Reconnect"
                 onClick={() => act(ref, 'reconnect')} />
-            ) : (null)
-            )}>
+          )}>
             <LabeledList>
               <LabeledList.Item label="Input Injector">
                 <Button
