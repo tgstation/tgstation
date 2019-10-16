@@ -1,7 +1,4 @@
-/datum/chemical_reaction/
-	mix_sound = 'sound/effects/bubbles.ogg'
-
-	//use fermicalc.py to calculate how the curves look(i think)
+//use fermicalc.py to calculate how the curves look(i think)
 //Called for every reaction step
 /datum/chemical_reaction/fermi/proc/FermiCreate(holder)
 	return
@@ -31,6 +28,8 @@
 /datum/chemical_reaction/fermi/proc/FermiExplode(datum/reagents, var/atom/my_atom, volume, temp, pH, Exploding = FALSE)
 	if (Exploding)
 		return
+	if(isnull(ExplodeTemp))
+    	return
 
 	if(!pH)//Dunno how things got here without a pH, but just in case
 		pH = 7
