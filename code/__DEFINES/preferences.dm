@@ -85,10 +85,14 @@
 
 //randomised elements
 #define RANDOM_NAME "random_name"
+#define RANDOM_NAME_ANTAG "random_name_antag"
 #define RANDOM_BODY "random_body"
+#define RANDOM_BODY_ANTAG "random_body_antag"
 #define RANDOM_SPECIES "random_species"
 #define RANDOM_GENDER "random_gender"
+#define RANDOM_GENDER_ANTAG "random_gender_antag"
 #define RANDOM_AGE "random_age"
+#define RANDOM_AGE_ANTAG "random_age_antag"
 #define RANDOM_UNDERWEAR "random_underwear"
 #define RANDOM_UNDERWEAR_COLOR "random_underwear_color"
 #define RANDOM_UNDERSHIRT "random_undershirt"

@@ -443,3 +443,10 @@
 		H.spill_organs()
 		H.spread_bodyparts()
 	return (BRUTELOSS)
+
+/obj/item/book/manual/wiki/plumbing
+	name = "Chemical Factories Without Narcotics"
+	icon_state ="plumbingbook"
+	author = "Nanotrasen"
+	title = "Chemical Factories Without Narcotics"
+	page_link = "Guide_to_plumbing"

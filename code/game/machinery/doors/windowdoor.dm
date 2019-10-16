@@ -197,11 +197,6 @@
 /obj/machinery/door/window/narsie_act()
 	add_atom_colour("#7D1919", FIXED_COLOUR_PRIORITY)
 
-/obj/machinery/door/window/ratvar_act()
-	var/obj/machinery/door/window/clockwork/C = new(loc, dir)
-	C.name = name
-	qdel(src)
-
 /obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
 		take_damage(round(exposed_volume / 200), BURN, 0, 0)
@@ -355,57 +350,6 @@
 /obj/machinery/door/window/brigdoor/security/holding
 	name = "holding cell door"
 	req_one_access = list(ACCESS_SEC_DOORS, ACCESS_LAWYER) //love for the lawyer
-
-/obj/machinery/door/window/clockwork
-	name = "brass windoor"
-	desc = "A thin door with translucent brass paneling."
-	icon_state = "clockwork"
-	base_state = "clockwork"
-	shards = 0
-	rods = 0
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/made_glow = FALSE
-
-/obj/machinery/door/window/clockwork/Initialize(mapload, set_dir)
-	. = ..()
-	for(var/i in 1 to 2)
-		debris += new/obj/item/clockwork/alloy_shards/medium/gear_bit/large(src)
-	change_construction_value(2)
-
-/obj/machinery/door/window/clockwork/setDir(direct)
-	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/temp_visual/ratvar/door/window(get_turf(src))
-		E.setDir(direct)
-		made_glow = TRUE
-	..()
-
-/obj/machinery/door/window/clockwork/Destroy()
-	change_construction_value(-2)
-	return ..()
-
-/obj/machinery/door/window/clockwork/emp_act(severity)
-	if(prob(80/severity))
-		open()
-
-/obj/machinery/door/window/clockwork/ratvar_act()
-	if(GLOB.ratvar_awakens)
-		obj_integrity = max_integrity
-
-/obj/machinery/door/window/clockwork/hasPower()
-	return TRUE //yup that's power all right
-
-/obj/machinery/door/window/clockwork/narsie_act()
-	take_damage(rand(30, 60), BRUTE)
-	if(src)
-		var/previouscolor = color
-		color = "#960000"
-		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-
-/obj/machinery/door/window/clockwork/allowed(mob/M)
-	if(is_servant_of_ratvar(M))
-		return 1
-	return 0
 
 /obj/machinery/door/window/northleft
 	dir = NORTH

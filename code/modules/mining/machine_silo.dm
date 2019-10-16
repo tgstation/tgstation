@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	if(!istype(I) || (I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION))
 		to_chat(user, "<span class='warning'>[M] won't accept [I]!</span>")
 		return
-	var/item_mats = I.materials & materials.materials
+	var/item_mats = I.custom_materials & materials.materials
 	if(!length(item_mats))
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [M].</span>")
 		return

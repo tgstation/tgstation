@@ -77,6 +77,7 @@
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
+	flags_inv = HIDEHAIR //bald
 	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "cage"
 	item_state = "cage"
@@ -123,6 +124,7 @@
 	icon_state = "witchhunterhat"
 	item_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEEYES|HIDEHAIR
 
 /obj/item/storage/box/holy/adept
 	name = "Divine Adept Kit"
@@ -137,6 +139,7 @@
 	icon_state = "crusader"
 	item_state = "crusader"
 	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
 /obj/item/clothing/suit/armor/riot/chaplain/adept
 	name = "adept robes"
@@ -187,7 +190,7 @@
 
 /obj/item/nullrod
 	name = "null rod"
-	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar'Sie and Ratvar's followers."
+	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar'Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -320,6 +323,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	tool_behaviour = TOOL_SAW
+	toolspeed = 1.5 //slower than a real saw
 
 /obj/item/nullrod/claymore/glowing
 	icon_state = "swordon"
@@ -473,6 +478,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.5 //faster than normal saw
 
 /obj/item/nullrod/hammmer
 	icon_state = "hammeron"
@@ -497,6 +504,8 @@
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	tool_behaviour = TOOL_SAW
+	toolspeed = 2 //slower than a real saw
 
 /obj/item/nullrod/chainsaw/Initialize()
 	. = ..()

@@ -53,7 +53,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_state = "arcade"
 	icon_keyboard = null
 	icon_screen = "invaders"
-	clockwork = TRUE //it'd look weird
 	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
 
@@ -1083,7 +1082,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 
 //Remove Random/Specific crewmember
-/obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(var/specific = "", var/dont_remove = "")
+/obj/machinery/computer/arcade/orion_trail/proc/remove_crewmember(specific = "", dont_remove = "")
 	var/list/safe2remove = settlers
 	var/removed = ""
 	if(dont_remove)

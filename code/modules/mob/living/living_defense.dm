@@ -88,6 +88,9 @@
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == INTENT_HARM)
+		if(HAS_TRAIT(M.occupant, TRAIT_PACIFISM))
+			to_chat(M.occupant, "<span class='warning'>You don't want to harm other living beings!</span>")
+			return
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
@@ -225,8 +228,9 @@
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
 	if(M.melee_damage_upper == 0)
-		visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>", \
-						"<span class='notice'>\The [M] [M.friendly] you!</span>", null, COMBAT_MESSAGE_RANGE)
+		visible_message("<span class='notice'>\The [M] [M.friendly_verb_continuous] [src]!</span>", \
+						"<span class='notice'>\The [M] [M.friendly_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
+		to_chat(M, "<span class='notice'>You [M.friendly_verb_simple] [src]!</span>")
 		return FALSE
 	if(HAS_TRAIT(M, TRAIT_PACIFISM))
 		to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
@@ -235,8 +239,9 @@
 	if(M.attack_sound)
 		playsound(loc, M.attack_sound, 50, TRUE, TRUE)
 	M.do_attack_animation(src)
-	visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
-					"<span class='userdanger'>\The [M] [M.attacktext] you!</span>", null, COMBAT_MESSAGE_RANGE)
+	visible_message("<span class='danger'>\The [M] [M.attack_verb_continuous] [src]!</span>", \
+					"<span class='userdanger'>\The [M] [M.attack_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
+	to_chat(M, "<span class='danger'>You [M.attack_verb_simple] [src]!</span>")
 	log_combat(M, src, "attacked")
 	return TRUE
 
@@ -371,12 +376,6 @@
 	if(status_flags & GODMODE || QDELETED(src))
 		return
 
-	if(is_servant_of_ratvar(src) && !stat)
-		to_chat(src, "<span class='userdanger'>You resist Nar'Sie's influence... but not all of it. <i>Run!</i></span>")
-		adjustBruteLoss(35)
-		if(src && reagents)
-			reagents.add_reagent(/datum/reagent/toxin/heparin, 5)
-		return FALSE
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
 		GLOB.cult_narsie.souls_needed -= src
 		GLOB.cult_narsie.souls += 1
@@ -398,17 +397,6 @@
 	spawn_dust()
 	gib()
 	return TRUE
-
-
-/mob/living/ratvar_act()
-	if(status_flags & GODMODE)
-		return
-	if(stat != DEAD && !is_servant_of_ratvar(src))
-		to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
-		adjust_fire_stacks(20)
-		IgniteMob()
-		return FALSE
-
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)

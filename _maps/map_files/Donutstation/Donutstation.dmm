@@ -19263,7 +19263,7 @@
 /area/security/main)
 "baM" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12;1"
+	req_access_txt = "63"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -21300,7 +21300,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12;63"
+	req_access_txt = "63"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -48250,10 +48250,10 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "sXg" = (
-/obj/structure/chair,
 /obj/item/radio/intercom{
 	pixel_y = 24
 	},
+/obj/machinery/medical_kiosk,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "sXl" = (

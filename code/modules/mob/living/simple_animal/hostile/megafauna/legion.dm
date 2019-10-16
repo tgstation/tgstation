@@ -24,7 +24,8 @@
 	icon_living = "mega_legion"
 	desc = "One of many."
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	speak_emote = list("echoes")
 	armour_penetration = 50
@@ -256,7 +257,7 @@
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
-	var/static/list/excluded_areas = list(/area/reebe/city_of_cogs)
+	var/static/list/excluded_areas = list()
 
 /obj/item/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
@@ -385,4 +386,3 @@
 /obj/effect/projectile/tracer/legion
 	icon = 'icons/effects/beam.dmi'
 	icon_state = "blood"
-

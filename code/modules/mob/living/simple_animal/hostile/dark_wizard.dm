@@ -16,7 +16,7 @@
 	obj_damage = 20
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "staves"
+	attack_verb_continuous = "staves"
 	a_intent = INTENT_HARM
 	speak_emote = list("chants")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -24,7 +24,7 @@
 	turns_per_move = 5
 	gold_core_spawnable = HOSTILE_SPAWN
 	faction = list(ROLE_WIZARD)
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 	weather_immunities = list("lava","ash")
 	minbodytemp = 0
 	maxbodytemp = INFINITY
