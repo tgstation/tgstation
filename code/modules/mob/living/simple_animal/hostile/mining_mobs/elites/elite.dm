@@ -40,7 +40,7 @@
 		if(faction_check_mob(M))
 			return FALSE
 	. = ..()
-	if(ismineralturf(target))
+	if(. && ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled()
 		
@@ -130,7 +130,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	density = FALSE
 	
 /obj/structure/elite_tumor/attack_hand(mob/user)
-	if(istype(user, /mob/living/carbon/human))
+	. = ..()
+	if(ishuman(user)
 		switch(activity)
 			if(TUMOR_INACTIVE)
 				activity = TUMOR_ACTIVE
@@ -146,15 +147,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 						SEND_SOUND(elitemind, sound('sound/effects/magic.ogg'))
 						to_chat(elitemind, "<b>You have been chosen to play as a Lavaland Elite.\nIn a few seconds, you will be summoned on Lavaland as a monster to fight your activator, in a fight to the death.\nYour attacks can be switched using the buttons on the top left of the HUD, and used by clicking on targets or tiles similar to a gun.\nWhile the opponent might have an upper hand with  powerful mining equipment and tools, you have great power normally limited by AI mobs.\nIf you want to win, you'll have to use your powers in creative ways to ensure the kill.  It's suggested you try using them all as soon as possible.\nShould you win, you'll receive extra information regarding what to do after.  Good luck!</b>")
 						addtimer(CALLBACK(src, .proc/spawn_elite, elitemind), 100)
-						return
 					else
 						visible_message("<span class='boldwarning'>The stirring stops, and nothing emerges.  Perhaps try again later.</span>")
 						activity = TUMOR_INACTIVE
 						activator = null
-						return
 				else
 					addtimer(CALLBACK(src, .proc/spawn_elite), 30)
-				return
 			if(TUMOR_PASSIVE)
 				activity = TUMOR_ACTIVE
 				visible_message("<span class='boldwarning'>The tumor convulses as your arm enters its radius.  Your instincts tell you to step back.</span>")
@@ -164,7 +162,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 					SEND_SOUND(mychild, sound('sound/effects/magic.ogg'))
 					to_chat(mychild, "<b>Someone has activated your tumor.  You will be returned to fight shortly, get ready!</b>")
 				addtimer(CALLBACK(src, .proc/return_elite), 30)
-				return
 
 				
 obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
@@ -176,7 +173,6 @@ obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
 		mychild.key = elitemind.key
 		mychild.sentience_act()
 	INVOKE_ASYNC(src, .proc/arena_trap)
-	return
 
 obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
@@ -186,9 +182,8 @@ obj/structure/elite_tumor/proc/return_elite()
 	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 2
 		mychild.health = mychild.maxHealth
-	return
 		
-/obj/structure/elite_tumor/Initialize()
+/obj/structure/elite_tumor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Menacing Signal")
 	START_PROCESSING(SSobj, src)
@@ -196,6 +191,7 @@ obj/structure/elite_tumor/proc/return_elite()
 /obj/structure/elite_tumor/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	mychild = null
+	activator = null
 	return ..()
 	
 /obj/structure/elite_tumor/process()
@@ -207,10 +203,10 @@ obj/structure/elite_tumor/proc/return_elite()
 				H.color = "#FF0000"
 				mychild.update_health_hud()
 		
-/obj/structure/elite_tumor/attackby(obj/item/W, mob/user, params)
+/obj/structure/elite_tumor/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	if(istype(W, /obj/item/organ/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
-		var/obj/item/organ/regenerative_core/core = W
+	if(istype(I, /obj/item/organ/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
+		var/obj/item/organ/regenerative_core/core = I
 		if(core.preserved)
 			visible_message("<span class='boldwarning'>As [user] drops the core into the tumor, the tumor appears to swell.</span>")
 			icon_state = "advanced_tumor"
@@ -219,6 +215,11 @@ obj/structure/elite_tumor/proc/return_elite()
 			desc = "[desc]  This one seems to glow with a strong intensity."
 			qdel(core)
 			return TRUE
+			
+/obj/structure/elite_tumor/proc/arena_checks()
+	INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
+	INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
+	INVOKE_ASYNC(src, .proc/fighters_check)  //Checks to see if our fighters died.
 			
 /obj/structure/elite_tumor/proc/arena_trap()
 	var/turf/T = get_turf(src)
@@ -230,42 +231,6 @@ obj/structure/elite_tumor/proc/return_elite()
 				newwall.activator = src.activator
 				newwall.ourelite = src.mychild
 		addtimer(CALLBACK(src, .proc/arena_checks), 50)
-		return
-
-/obj/structure/elite_tumor/proc/arena_checks()
-	INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
-	INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
-	INVOKE_ASYNC(src, .proc/fighters_check)  //Checks to see if our fighters died.
-	return
-		
-/obj/effect/temp_visual/elite_tumor_wall
-	name = "magic wall"
-	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
-	icon_state = "wall"
-
-	duration = 50
-	smooth = SMOOTH_TRUE
-	layer = BELOW_MOB_LAYER
-	var/mob/living/carbon/human/activator = null
-	var/mob/living/simple_animal/hostile/asteroid/elite/ourelite = null
-	color = rgb(255,0,0)
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
-	light_color = LIGHT_COLOR_RED
-	
-/obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
-	. = ..()
-	queue_smooth_neighbors(src)
-	queue_smooth(src)
-
-/obj/effect/temp_visual/elite_tumor_wall/Destroy()
-	queue_smooth_neighbors(src)
-	return ..()
-
-/obj/effect/temp_visual/elite_tumor_wall/CanPass(atom/movable/mover, turf/target)
-	if(mover == ourelite || mover == activator)
-		return FALSE
-	else
-		return TRUE
 		
 /obj/structure/elite_tumor/proc/border_check()
 	if(activity == TUMOR_ACTIVE)
@@ -298,6 +263,8 @@ obj/structure/elite_tumor/proc/onEliteLoss()
 				new mychild.loot_drop(lootbox)
 			else
 				new /obj/item/tumor_shard(lootbox)
+	mychild = null
+	activator = null
 	qdel(src)
 	
 obj/structure/elite_tumor/proc/onEliteWon()
@@ -342,13 +309,40 @@ obj/structure/elite_tumor/proc/onEliteWon()
 				E.desc = "[E.desc]  However, this one appears appears less wild in nature, and calmer around people."
 				E.sentience_type = SENTIENCE_ORGANIC
 				qdel(src)
-				return
 			else
 				user.visible_message("<span class='notice'>It appears [E] is unable to be revived right now.  Perhaps try again later.</span>")
-				return
 		else
 			to_chat(user, "<span class='info'>[src] only works on a dead, sentient lavaland elite.  If this one's been revived before, perhaps try a lazarus injection.</span>")
-			return
 	else
 		to_chat(user, "<span class='info'>[src] only works on a sentient lavaland elite.</span>")
-		return
+		
+/obj/effect/temp_visual/elite_tumor_wall
+	name = "magic wall"
+	icon = 'icons/turf/walls/hierophant_wall_temp.dmi'
+	icon_state = "wall"
+
+	duration = 50
+	smooth = SMOOTH_TRUE
+	layer = BELOW_MOB_LAYER
+	var/mob/living/carbon/human/activator = null
+	var/mob/living/simple_animal/hostile/asteroid/elite/ourelite = null
+	color = rgb(255,0,0)
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_color = LIGHT_COLOR_RED
+	
+/obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
+	. = ..()
+	queue_smooth_neighbors(src)
+	queue_smooth(src)
+
+/obj/effect/temp_visual/elite_tumor_wall/Destroy()
+	queue_smooth_neighbors(src)
+	activator = null
+	ourelite = null
+	return ..()
+
+/obj/effect/temp_visual/elite_tumor_wall/CanPass(atom/movable/mover, turf/target)
+	if(mover == ourelite || mover == activator)
+		return FALSE
+	else
+		return TRUE
