@@ -29,8 +29,7 @@
 	if (Exploding)
 		return
 	if(isnull(ExplodeTemp))
-    	return
-
+		return
 	if(!pH)//Dunno how things got here without a pH, but just in case
 		pH = 7
 	var/ImpureTot = 0
@@ -106,7 +105,6 @@
 	//FermiChem vars:
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
-	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
 	OptimalpHMin 	= 2
 	OptimalpHMax 	= 6
 	ReactpHLim 		= 0
@@ -134,7 +132,6 @@
 	//FermiChem vars:x
 	OptimalTempMin 	= 250
 	OptimalTempMax 	= 500
-	ExplodeTemp 	= 9999 //check to see overflow doesn't happen!
 	OptimalpHMin 	= 5
 	OptimalpHMax 	= 12
 	ReactpHLim 		= 0
@@ -159,11 +156,10 @@
 	required_reagents = list(/datum/reagent/colorful_reagent = 0.5, /datum/reagent/drug/happiness = 0.5, /datum/reagent/potassium = 0.25, /datum/reagent/toxin/mindbreaker = 1)
 	OptimalTempMin 	= 770
 	OptimalTempMax 	= 850
-	ExplodeTemp 	= 920 //check to see overflow doesn't happen!
+	ExplodeTemp 	= 920 
 	OptimalpHMin 	= 9
 	OptimalpHMax 	= 11
 	ReactpHLim 		= 1
-	//CatalystFact 	= 0 //To do 1
 	CurveSharpT 	= 4
 	CurveSharppH 	= 4
 	ThermicConstant = 25
