@@ -15,9 +15,12 @@
 
 /obj/effect/shield/Destroy()
 	location = get_turf(src)	
-	location.heat_capacity=old_heat_capacity
+	location.heat_capacity=max(old_heat_capacity, location.heat_capacity)
 	..()
 
 /obj/effect/shield/singularity_act()
 	return
-	
+
+/obj/effect/shield/singularity_pull(S, current_size)
+	return
+		
