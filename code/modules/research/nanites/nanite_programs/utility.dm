@@ -130,7 +130,7 @@
 
 /datum/nanite_program/stealth
 	name = "Stealth"
-	desc = "The nanites hide their activity and programming from superficial scans."
+	desc = "The nanites mask their activity from superficial scans, becoming undetectable by HUDs and non-specialized scanners."
 	rogue_types = list(/datum/nanite_program/toxic)
 	use_rate = 0.2
 
@@ -141,6 +141,21 @@
 /datum/nanite_program/stealth/disable_passive_effect()
 	. = ..()
 	nanites.stealth = FALSE
+
+/datum/nanite_program/reduced_diagnostics
+	name = "Reduced Diagnostics"
+	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners. \
+	Doing so saves some power, slightly increasing their replication speed."
+	rogue_types = list(/datum/nanite_program/toxic)
+	use_rate = -0.1
+
+/datum/nanite_program/reduced_diagnostics/enable_passive_effect()
+	. = ..()
+	nanites.diagnostics = FALSE
+
+/datum/nanite_program/reduced_diagnostics/disable_passive_effect()
+	. = ..()
+	nanites.diagnostics = TRUE
 
 /datum/nanite_program/relay
 	name = "Relay"

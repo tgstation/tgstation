@@ -46,6 +46,14 @@
 	program_type = /datum/nanite_program/stealth
 	category = list("Utility Nanites")
 
+/datum/design/nanites/reduced_diagnostics
+	name = "Reduced Diagnostics"
+	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners. \
+	Doing so saves some power, slightly increasing their replication speed."
+	id = "red_diag_nanites"
+	program_type = /datum/nanite_program/reduced_diagnostics
+	category = list("Utility Nanites")
+
 /datum/design/nanites/access
 	name = "Subdermal ID"
 	desc = "The nanites store the host's ID access rights in a subdermal magnetic strip. Updates when triggered, copying the host's current access."
