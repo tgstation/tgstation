@@ -260,8 +260,8 @@ This prevents nesting levels from getting deeper then they need to be.
 ### User Interfaces
 * All new user interfaces must use TGUI next; raw HTML and TGUI based interfaces are deprecated.
 * Documentation for TGUI next can be found at: 
-	* https://github.com/tgstation/tgstation/master/tgui-next/README.md
-	* https://github.com/tgstation/tgstation/master/tgui-next/docs/tutorial-and-examples.md
+	* https://github.com/tgstation/tgstation/tgui-next/README.md
+	* https://github.com/tgstation/tgstation/tgui-next/docs/tutorial-and-examples.md
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
