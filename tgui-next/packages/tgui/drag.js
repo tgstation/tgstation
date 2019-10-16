@@ -27,7 +27,7 @@ export const setupDrag = async state => {
     x: realPosition.x - window.screenX,
     y: realPosition.y - window.screenY,
   };
-  logger.log('current dragState', dragState);
+  logger.debug('current dragState', dragState);
 };
 
 export const dragStartHandler = event => {

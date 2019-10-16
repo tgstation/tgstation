@@ -2,19 +2,19 @@ import { Acclimator } from './interfaces/Acclimator';
 import { AiAirlock } from './interfaces/AiAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
 import { AirlockElectronics } from './interfaces/AirlockElectronics';
-import { APC } from './interfaces/APC';
+import { Apc } from './interfaces/Apc';
 import { AtmosAlertConsole } from './interfaces/AtmosAlertConsole';
 import { AtmosControlConsole } from './interfaces/AtmosControlConsole';
 import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
+import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
-import { BSA } from './interfaces/BSA';
 import { Canister } from './interfaces/Canister';
 import { Cargo } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
-import { CentcomPodlauncher } from './interfaces/CentcomPodlauncher';
+import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemDispenser } from './interfaces/ChemDispenser';
 import { Crayon } from './interfaces/Crayon';
 import { DisposalUnit } from './interfaces/DisposalUnit';
@@ -25,10 +25,6 @@ import { Mint } from './interfaces/Mint';
 import { VaultController} from './interfaces/VaultController';
 
 const ROUTES = {
-  airalarm: {
-    component: () => AirAlarm,
-    scrollable: true,
-  },
   acclimator: {
     component: () => Acclimator,
     scrollable: false,
@@ -37,16 +33,16 @@ const ROUTES = {
     component: () => AiAirlock,
     scrollable: false,
   },
-  canister: {
-    component: () => Canister,
-    scrollable: false,
+  airalarm: {
+    component: () => AirAlarm,
+    scrollable: true,
   },
   airlock_electronics: {
     component: () => AirlockElectronics,
     scrollable: false,
   },
   apc: {
-    component: () => APC,
+    component: () => Apc,
     scrollable: false,
   },
   atmos_alert: {
@@ -78,7 +74,11 @@ const ROUTES = {
     scrollable: false,
   },
   bsa: {
-    component: () => BSA,
+    component: () => BluespaceArtillery,
+    scrollable: false,
+  },
+  canister: {
+    component: () => Canister,
     scrollable: false,
   },
   cargo: {
@@ -90,16 +90,12 @@ const ROUTES = {
     scrollable: true,
   },
   centcom_podlauncher: {
-    component: () => CentcomPodlauncher,
+    component: () => CentcomPodLauncher,
     scrollable: false,
   },
   chem_dispenser: {
     component: () => ChemDispenser,
     scrollable: true,
-  },
-  thermomachine: {
-    component: () => ThermoMachine,
-    scrollable: false,
   },
   crayon: {
     component: () => Crayon,
@@ -107,6 +103,10 @@ const ROUTES = {
   },
   disposal_unit: {
     component: () => DisposalUnit,
+    scrollable: false,
+  },
+  thermomachine: {
+    component: () => ThermoMachine,
     scrollable: false,
   },
   wires: {

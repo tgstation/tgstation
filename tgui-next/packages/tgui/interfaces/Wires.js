@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, Section, Box } from '../components';
 import { createLogger } from '../logging';
 
 const logger = createLogger('AirAlarm');
@@ -17,6 +17,7 @@ export const Wires = props => {
         <LabeledList>
           {wires.map(wire => (
             <LabeledList.Item
+              key={wire.color}
               className="candystripe"
               label={wire.color}
               labelColor={wire.color}
@@ -45,10 +46,9 @@ export const Wires = props => {
       {!!statuses.length && (
         <Section>
           {statuses.map(status => (
-            <Fragment>
+            <Box key={status}>
               {status}
-              <br/>
-            </Fragment>
+            </Box>
           ))}
         </Section>
       )}

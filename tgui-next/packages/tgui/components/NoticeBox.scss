@@ -1,18 +1,16 @@
 .NoticeBox {
+  // Adapt text color to background luminance to ensure high contast
+  $luminance: luminance($notice-color-first);
+  $text-color: if($luminance > 0.35,
+    rgba(0, 0, 0, 1),
+    rgba(255, 255, 255, 1));
+
   padding: 4px 6px;
   margin-bottom: 6px;
   box-shadow: none;
-
-  // Adapt button color to background luminance to ensure high contast
-  @if luminance($notice-color-first) > 0.3 {
-    color: rgba(0, 0, 0, 1);
-  }
-  @else {
-    color: rgba(255, 255, 255, 1);
-  }
-
   font-weight: bold;
   font-style: italic;
+  color: $text-color;
   background-color: $notice-color-first;
   background-image: repeating-linear-gradient(
     -45deg,
@@ -22,13 +20,7 @@
     $notice-color-second 20px);
 
   .label {
-    // Adapt button color to background luminance to ensure high contast
-    @if luminance($notice-color-first) > 0.3 {
-      color: rgba(0, 0, 0, 1);
-    }
-    @else {
-      color: rgba(255, 255, 255, 1);
-    }
+    color: $text-color;
   }
 
   .content:only-of-type {

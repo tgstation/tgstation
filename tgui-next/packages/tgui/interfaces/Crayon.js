@@ -31,9 +31,12 @@ export const Crayon = props => {
           {drawables.map(drawable => {
             const items = drawable.items || [];
             return (
-              <LabeledList.Item label={drawable.name}>
+              <LabeledList.Item
+                key={drawable.name}
+                label={drawable.name}>
                 {items.map(item => (
                   <Button
+                    key={item.item}
                     content={item.item}
                     selected={item.item === data.selected_stencil}
                     onClick={() => act(ref, 'select_stencil', {
