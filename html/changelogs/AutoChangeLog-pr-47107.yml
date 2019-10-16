@@ -1,0 +1,4 @@
+author: "Bumtickley00"
+delete-after: True
+changes: 
+  - bugfix: "Fixed seiver removing much more radiation than intended"
