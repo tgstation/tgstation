@@ -37,7 +37,7 @@
 //I just want the light feature of the hardsuit helmet
 /obj/item/clothing/head/helmet/space/plasmaman
 	name = "plasma envirosuit helmet"
-	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, and may be worn in tandem with other EVA gear."
+	desc = "A special containment helmet that allows plasma-based lifeforms to exist safely in an oxygenated environment. It is space-worthy, radiation protecting, and may be worn in tandem with other EVA gear."
 	icon_state = "plasmaman-helm"
 	item_state = "plasmaman-helm"
 	strip_delay = 80
@@ -198,14 +198,14 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/engineering
 	name = "engineering plasma envirosuit helmet"
-	desc = "A space-worthy helmet specially designed for engineer plasmamen, the usual purple stripes being replaced by engineering's orange."
+	desc = "A space-worthy radiation protecting helmet specially designed for engineer plasmamen, the usual purple stripes being replaced by engineering's orange."
 	icon_state = "engineer_envirohelm"
 	item_state = "engineer_envirohelm"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 75)
 
 /obj/item/clothing/head/helmet/space/plasmaman/atmospherics
 	name = "atmospherics plasma envirosuit helmet"
-	desc = "A space-worthy helmet specially designed for atmos technician plasmamen, the usual purple stripes being replaced by engineering's blue."
+	desc = "A space-worthy radiation protecting helmet specially designed for atmos technician plasmamen, the usual purple stripes being replaced by engineering's blue."
 	icon_state = "atmos_envirohelm"
 	item_state = "atmos_envirohelm"
 
