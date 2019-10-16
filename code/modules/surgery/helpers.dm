@@ -44,7 +44,7 @@
 		if(!available_surgeries.len)
 			return
 
-		var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
+		var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in sortList(available_surgeries)
 		if(P && user && user.Adjacent(M) && (I in user))
 			var/datum/surgery/S = available_surgeries[P]
 

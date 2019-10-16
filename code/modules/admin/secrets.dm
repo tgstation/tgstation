@@ -297,7 +297,7 @@
 		if("allspecies")
 			if(!check_rights(R_FUN))
 				return
-			var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
+			var/result = input(usr, "Please choose a new species","Species") as null|anything in sortList(GLOB.species_list)
 			if(result)
 				SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Species Change", "[result]"))
 				log_admin("[key_name(usr)] turned all humans into [result]", 1)
@@ -446,7 +446,7 @@
 				if("Random")
 					E = new /datum/round_event/disease_outbreak()
 				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in typesof(/datum/disease)
+					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease))
 					E = new /datum/round_event/disease_outbreak{}()
 					var/datum/round_event/disease_outbreak/DO = E
 					DO.virus_type = virus

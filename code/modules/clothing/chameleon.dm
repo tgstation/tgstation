@@ -94,7 +94,7 @@
 /datum/action/chameleon_outfit/proc/select_outfit(mob/user)
 	if(!user || !IsAvailable())
 		return FALSE
-	var/selected = input("Select outfit to change into", "Chameleon Outfit") as null|anything in outfit_options
+	var/selected = input("Select outfit to change into", "Chameleon Outfit") as null|anything in sortList(outfit_options)
 	if(!IsAvailable() || QDELETED(src) || QDELETED(user))
 		return FALSE
 	var/outfit_type = outfit_options[selected]
@@ -182,7 +182,7 @@
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/obj/item/picked_item
 	var/picked_name
-	picked_name = input("Select [chameleon_name] to change into", "Chameleon [chameleon_name]", picked_name) as null|anything in chameleon_list
+	picked_name = input("Select [chameleon_name] to change into", "Chameleon [chameleon_name]", picked_name) as null|anything in sortList(chameleon_list)
 	if(!picked_name)
 		return
 	picked_item = chameleon_list[picked_name]

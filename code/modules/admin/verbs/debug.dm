@@ -96,7 +96,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/mob/C in GLOB.mob_list)
 		if(C.key)
 			available.Add(C)
-	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
+	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in sortKey(available)
 	if(!choice)
 		return 0
 	if(!isobserver(choice))
@@ -162,7 +162,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	if(matches.len==0)
 		return
-	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:") as null|anything in matches
+	var/hsbitem = input(usr, "Choose an object to delete.", "Delete:") as null|anything in sortList(matches)
 	if(hsbitem)
 		hsbitem = matches[hsbitem]
 		var/counter = 0
@@ -495,11 +495,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 /client/proc/robust_dress_shop()
 	var/list/outfits = list("Naked","Custom","As Job...")
+	var/list/tempoutfits = list()
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
 	for(var/path in paths)
 		var/datum/outfit/O = path //not much to initalize here but whatever
 		if(initial(O.can_be_admin_equipped))
-			outfits[initial(O.name)] = path
+			tempoutfits[initial(O.name)] = path
+		sortList(tempoutfits)
+		outfits += tempoutfits
 
 	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in outfits
 	if (isnull(dresscode))
@@ -525,7 +528,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/list/custom_names = list()
 		for(var/datum/outfit/D in GLOB.custom_outfits)
 			custom_names[D.name] = D
-		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in custom_names
+		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in sortList(custom_names)
 		dresscode = custom_names[selected_name]
 		if(isnull(dresscode))
 			return
@@ -684,7 +687,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		names[name] = ruin_landmark
 
-	var/ruinname = input("Select ruin", "Jump to Ruin") as null|anything in names
+	var/ruinname = input("Select ruin", "Jump to Ruin") as null|anything in sortList(names)
 
 
 	var/obj/effect/landmark/ruin/landmark = names[ruinname]
@@ -715,7 +718,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/name in SSmapping.lava_ruins_templates)
 		names[name] = list(SSmapping.lava_ruins_templates[name], ZTRAIT_LAVA_RUINS, /area/lavaland/surface/outdoors/unexplored)
 
-	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in names
+	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in sortList(names)
 	var/data = names[ruinname]
 	if (!data)
 		return

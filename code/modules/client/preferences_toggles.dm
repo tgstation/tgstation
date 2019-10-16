@@ -256,7 +256,7 @@ GLOBAL_LIST_INIT(ghost_forms, list("ghost","ghostking","ghostian2","skeleghost",
 	if(!is_content_unlocked())
 		alert("This setting is for accounts with BYOND premium only.")
 		return
-	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_forms
+	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in sortList(GLOB.ghost_forms)
 	if(new_form)
 		prefs.ghost_form = new_form
 		prefs.save_preferences()

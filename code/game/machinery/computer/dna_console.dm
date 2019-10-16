@@ -883,7 +883,7 @@
 					if(CM.can_apply(HM))
 						chromosomes += CM
 				if(chromosomes.len)
-					var/obj/item/chromosome/CM = input("Select a chromosome to apply", "Apply Chromosome") as null|anything in chromosomes
+					var/obj/item/chromosome/CM = input("Select a chromosome to apply", "Apply Chromosome") as null|anything in sortList(chromosomes)
 					if(CM)
 						to_chat(usr, "<span class='notice'>You apply [CM] to [HM.name].</span>")
 						stored_chromosomes -= CM
@@ -892,7 +892,7 @@
 			var/mutation = text2path(href_list["path"])
 			var/datum/mutation/human/HM = get_valid_mutation(mutation)
 			if(HM && LAZYLEN(injector_selection))
-				var/which_injector = input(usr, "Select Adv. Injector", "Advanced Injectors") as null|anything in injector_selection
+				var/which_injector = input(usr, "Select Adv. Injector", "Advanced Injectors") as null|anything in sortList(injector_selection)
 				if(injector_selection.Find(which_injector))
 					var/list/true_selection = injector_selection[which_injector]
 					var/total_instability

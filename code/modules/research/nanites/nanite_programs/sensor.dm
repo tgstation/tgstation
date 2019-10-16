@@ -280,7 +280,7 @@
 		damage = CLAMP(round(new_damage, 1), 0, 500)
 	if(setting == "Damage Type")
 		var/list/damage_types = list("Brute","Burn","Toxin","Oxygen","Cellular")
-		var/new_damage_type = input("Choose the damage type", name) as null|anything in damage_types
+		var/new_damage_type = input("Choose the damage type", name) as null|anything in sortList(damage_types)
 		if(!new_damage_type)
 			return
 		damage_type = new_damage_type

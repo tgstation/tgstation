@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 		to_chat(user, "<span class='notice'>The airwaves already have all of our DNA.</span>")
 		return
 
-	var/chosen_name = input("Select a DNA to channel: ", "Channel DNA", null) as null|anything in names
+	var/chosen_name = input("Select a DNA to channel: ", "Channel DNA", null) as null|anything in sortList(names)
 	if(!chosen_name)
 		return
 

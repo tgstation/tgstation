@@ -43,7 +43,7 @@
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
 		var/obj/structure/sign/sign_type
-		switch(input(user, "Select a sign type.", "Sign Customization") as null|anything in sign_types)
+		switch(input(user, "Select a sign type.", "Sign Customization") as null|anything in sortList(sign_types))
 			if("Blank")
 				sign_type = /obj/structure/sign/basic
 			if("Secure Area")

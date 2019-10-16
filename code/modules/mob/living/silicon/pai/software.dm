@@ -156,7 +156,7 @@
 				radio.attack_self(src)
 
 			if("image") // Set pAI card display face
-				var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses")
+				var/newImage = input("Select your new display image.", "Display Image", "Happy") in sortList(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses"))
 				var/pID = 1
 
 				switch(newImage)

@@ -12,7 +12,7 @@
 				var/dat = replacetext("[path]", "/obj/item/organ/", ":")
 				organs[dat] = path
 
-			var/obj/item/organ/organ = input("Select organ type:", "Organ Manipulation", null) as null|anything in organs
+			var/obj/item/organ/organ = input("Select organ type:", "Organ Manipulation", null) as null|anything in sortList(organs)
 			if(!organ)
 				return
 			organ = organs[organ]
@@ -26,7 +26,7 @@
 				var/dat = replacetext("[path]", "/obj/item/implant/", ":")
 				organs[dat] = path
 
-			var/obj/item/implant/organ = input("Select implant type:", "Organ Manipulation", null) as null|anything in organs
+			var/obj/item/implant/organ = input("Select implant type:", "Organ Manipulation", null) as null|anything in sortList(organs)
 			if(!organ)
 				return
 			organ = organs[organ]
@@ -44,7 +44,7 @@
 				var/obj/item/implant/I = X
 				organs["[I.name] ([I.type])"] = I
 
-			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) as null|anything in organs
+			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) as null|anything in sortList(organs)
 			if(!organ)
 				return
 			organ = organs[organ]

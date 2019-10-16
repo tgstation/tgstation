@@ -36,7 +36,7 @@
 			for(var/path in possible_shapes)
 				var/mob/living/simple_animal/A = path
 				animal_list[initial(A.name)] = path
-			var/new_shapeshift_type = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as null|anything in animal_list
+			var/new_shapeshift_type = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as null|anything in sortList(animal_list)
 			if(shapeshift_type)
 				return
 			shapeshift_type = new_shapeshift_type

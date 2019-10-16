@@ -389,7 +389,7 @@
 		A.admin_remove(usr)
 
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
+		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in sortList(get_all_jobs())
 		if (!new_role)
 			return
 		assigned_role = new_role
@@ -429,7 +429,7 @@
 					if(1)
 						target_antag = antag_datums[1]
 					else
-						var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(new custom antag)") as null|anything in antag_datums + "(new custom antag)"
+						var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(new custom antag)") as null|anything in sortList(antag_datums) + "(new custom antag)"
 						if (QDELETED(target))
 							return
 						else if(target == "(new custom antag)")
@@ -444,7 +444,7 @@
 			if(old_objective.name in GLOB.admin_objective_list)
 				def_value = old_objective.name
 
-		var/selected_type = input("Select objective type:", "Objective type", def_value) as null|anything in GLOB.admin_objective_list
+		var/selected_type = input("Select objective type:", "Objective type", def_value) as null|anything in sortList(GLOB.admin_objective_list)
 		selected_type = GLOB.admin_objective_list[selected_type]
 		if (!selected_type)
 			return

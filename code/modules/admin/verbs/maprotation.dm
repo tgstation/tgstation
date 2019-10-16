@@ -33,7 +33,7 @@
 			mapname += "\]"
 
 		maprotatechoices[mapname] = VM
-	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in maprotatechoices
+	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in sortList(maprotatechoices)
 	if (!chosenmap)
 		return
 	SSticker.maprotatechecked = 1

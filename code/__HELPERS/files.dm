@@ -11,7 +11,7 @@
 		if(path != root)
 			choices.Insert(1,"/")
 
-		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in choices
+		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sortList(choices)
 		switch(choice)
 			if(null)
 				return

@@ -38,7 +38,7 @@
 	var/list/display_names = generate_display_names()
 	if(!display_names.len)
 		return
-	var/choice = input(M,"Which item would you like to order?","Select an Item") as null|anything in display_names
+	var/choice = input(M,"Which item would you like to order?","Select an Item") as null|anything in sortList(display_names)
 	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 

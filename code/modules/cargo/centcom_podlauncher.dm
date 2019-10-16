@@ -269,7 +269,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 				specificTarget = null
 				return
 			var/list/mobs = getpois()//code stolen from observer.dm
-			var/inputTarget = input("Select a mob! (Smiting does this automatically)", "Target", null, null) as null|anything in mobs
+			var/inputTarget = input("Select a mob! (Smiting does this automatically)", "Target", null, null) as null|anything in sortList(mobs)
 			if (isnull(inputTarget))
 				return
 			var/mob/target = mobs[inputTarget]
