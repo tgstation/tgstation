@@ -34,7 +34,9 @@
 	deathsound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
-	do_footstep = TRUE
+/mob/living/simple_animal/hostile/alien/Initialize()
+	. = ..()
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW)
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"

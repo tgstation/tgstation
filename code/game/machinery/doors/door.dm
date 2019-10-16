@@ -283,6 +283,7 @@
 	set_opacity(0)
 	sleep(5)
 	density = FALSE
+	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	sleep(5)
 	layer = initial(layer)
 	update_icon()
@@ -312,6 +313,7 @@
 	layer = closingLayer
 	sleep(5)
 	density = TRUE
+	flags_1 |= PREVENT_CLICK_UNDER_1
 	sleep(5)
 	update_icon()
 	if(visible && !glass)

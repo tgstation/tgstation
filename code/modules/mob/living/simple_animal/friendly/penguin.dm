@@ -19,7 +19,7 @@
 	icon = 'icons/mob/penguins.dmi'
 	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/reagent_containers/food/snacks/meat/slab/penguin = 3)
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
 /mob/living/simple_animal/pet/penguin/Initialize()
 	. = ..()
@@ -32,7 +32,6 @@
 	icon_state = "penguin"
 	icon_living = "penguin"
 	icon_dead = "penguin_dead"
-	butcher_results = list()
 	gold_core_spawnable = FRIENDLY_SPAWN
 	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/reagent_containers/food/snacks/meat/slab/penguin = 3)
 

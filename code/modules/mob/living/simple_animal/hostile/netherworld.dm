@@ -12,12 +12,11 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	faction = list("creature")
+	faction = list("nether")
 	speak_emote = list("screams")
 	gold_core_spawnable = HOSTILE_SPAWN
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	faction = list("nether")
 
 /mob/living/simple_animal/hostile/netherworld/migo
 	name = "mi-go"

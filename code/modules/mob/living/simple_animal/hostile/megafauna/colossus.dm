@@ -660,7 +660,6 @@ Difficulty: Very Hard
 	faction = list("neutral")
 	del_on_death = TRUE
 	unsuitable_atmos_damage = 0
-	movement_type = FLYING
 	minbodytemp = 0
 	maxbodytemp = 1500
 	obj_damage = 0

@@ -87,6 +87,7 @@
 	turf_type = /turf/open/floor/mineral/plastitanium
 	mineralType = "plastitanium"
 	custom_materials = list(/datum/material/titanium=250, /datum/material/plasma=250)
+	material_flags = MATERIAL_NO_EFFECTS
 
 /obj/item/stack/tile/mineral/snow
 	name = "snow tile"

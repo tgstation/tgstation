@@ -19,9 +19,6 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/initialize_footstep()
-	AddComponent(/datum/component/footstep, 1, 2)
-
 /mob/living/carbon/swap_hand(held_index)
 	if(!held_index)
 		held_index = (active_hand_index % held_items.len)+1
@@ -140,6 +137,7 @@
 				stop_pulling()
 				if(HAS_TRAIT(src, TRAIT_PACIFISM))
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
+					return
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
 				if(start_T && end_T)

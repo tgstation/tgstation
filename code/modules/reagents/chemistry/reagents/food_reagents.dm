@@ -749,3 +749,12 @@
 	if(prob(10))
 		M.say(pick("I hate my wife.", "I just want to grill for God's sake.", "I wish I could just go on my lawnmower and cut the grass.", "Yep, Quake. That was a good game...", "Yeah, my PDA has wi-fi. A wife I hate."), forced = /datum/reagent/consumable/char)
 	..()
+
+
+/datum/reagent/consumable/bbqsauce
+	name = "BBQ Sauce"
+	description = "Sweet, Smokey, Savory, and gets everywhere. Perfect for Grilling."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#78280A" // rgb: 120 40, 10
+	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
+	taste_description = "smokey sweetness"
