@@ -194,3 +194,5 @@
 	var/registered_z = null
 
 	var/memory_throttle_time = 0
+	//this kills tactical buckshot lagging
+	var/list/message_timeouts = null

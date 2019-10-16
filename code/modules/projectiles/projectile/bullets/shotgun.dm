@@ -15,6 +15,7 @@
 	name = "dragonsbreath pellet"
 	damage = 5
 	lagshot = FALSE //why is this not a pellet subtype....
+	chat_timeout = 5 SECONDS
 
 /obj/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
@@ -60,6 +61,7 @@
 	var/tile_dropoff = 0.75
 	var/tile_dropoff_s = 0.5
 	lagshot = TRUE
+	chat_timeout = 5 SECONDS
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"

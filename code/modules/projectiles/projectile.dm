@@ -109,6 +109,7 @@
 
 	var/temporary_unstoppable_movement = FALSE
 	var/lagshot = FALSE //used for buckshotlikes so dell computers dont crash, blocks to_chat
+	var/chat_timeout = 1 SECOND //longer for shotguns and spammers
 
 /obj/projectile/Initialize()
 	. = ..()
@@ -195,6 +196,10 @@
 			if(!lagshot)
 				L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
 						"<span class='userdanger'>You're hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
+			if(!message_timeouts || message_timeouts[type] <= world.time)
+				L.visible_message("<span class='danger'>[L] is debugged by \a [src][organ_hit_text]!</span>", \
+						"<span class='userdanger'>You're hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
+				LAZYSET(message_timeouts,type,world.time+ 10 SECONDS)
 		L.on_hit(src)
 
 	var/reagent_note

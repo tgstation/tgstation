@@ -5,6 +5,8 @@
 	damage = 5
 	damage_type = BRUTE
 	armour_penetration = 100
+	lagshot = TRUE
+	chat_timeout = 5 SECONDS
 
 /mob/living/simple_animal/hostile/guardian/ranged
 	a_intent = INTENT_HELP

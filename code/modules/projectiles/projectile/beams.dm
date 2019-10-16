@@ -51,6 +51,8 @@
 	name = "laser pellet"
 	icon_state = "scatterlaser"
 	damage = 5
+	lagshot = TRUE
+	chat_timeout = 5 SECONDS
 
 /obj/projectile/beam/xray
 	name = "\improper X-ray beam"
