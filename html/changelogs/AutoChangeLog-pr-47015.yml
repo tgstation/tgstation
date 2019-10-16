@@ -1,4 +1,0 @@
-author: "Jdawg1290"
-delete-after: True
-changes: 
-  - tweak: "Non-dense atoms can now obscure (prevent interaction with) turfs."

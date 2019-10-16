@@ -1,8 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - rscadd: "Plumbing equipment is now available through the medical protolathe. It's under medical machinery boards"
-  - rscadd: "Add's a new chemistry area on metastation for chemical factories. It's located left of main surgery."
-  - tweak: "Chemistry has been turned into the Apothecary. It's basically normal chemistry, but Medical Doctors have acces aswell."
-  - tweak: "The smoke machine is now plumbing compatible. Put this knowledge to good use.
-sprite: Thanks to @CRITAWAKETS for the plumbing RCD sprite!"

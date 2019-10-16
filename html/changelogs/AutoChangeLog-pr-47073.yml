@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - tweak: "The fusion reaction is now soft capped to a temperature of 1e8."
