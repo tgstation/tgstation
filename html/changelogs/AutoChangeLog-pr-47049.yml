@@ -1,8 +1,0 @@
-author: "Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "You now get the correct material from deconning tables and chairs"
-  - bugfix: "Objects now get the correct amount of materials"
-  - bugfix: "Plasma mat doesn't send warnings on equip"
-  - bugfix: "Plasma alloys dont explode anymore"
-  - bugfix: "no more mat duping for now hopefully"

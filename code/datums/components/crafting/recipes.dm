@@ -731,3 +731,10 @@
 	reqs = list(/obj/item/stack/sheet/cloth = 1, /datum/reagent/toxin/formaldehyde = 30, /datum/reagent/medicine/polypyr = 30) //We have no thread item, so cloth will have to do.
 	category = CAT_MISC
 
+/datum/crafting_recipe/multiduct
+	name = "Multi-layer duct"
+	result = /obj/machinery/duct/multilayered
+	time = 5
+	reqs = list(/obj/item/stack/ducts = 5)
+	category = CAT_MISC
+	tools = list(TOOL_WELDER)

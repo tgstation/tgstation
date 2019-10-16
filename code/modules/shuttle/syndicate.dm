@@ -41,7 +41,6 @@
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "steel_rain"
 	possible_destinations = null
-	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/shuttle/syndicate/drop_pod/Topic(href, href_list)
 	if(href_list["move"])

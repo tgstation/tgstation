@@ -132,8 +132,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
-#define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
-
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
 
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
@@ -193,8 +191,6 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 #define iscameramob(A) (istype(A, /mob/camera))
 
 #define isaicamera(A) (istype(A, /mob/camera/aiEye))
-
-#define iseminence(A) (istype(A, /mob/camera/eminence))
 
 //Footstep helpers
 #define isshoefoot(A) (is_type_in_typecache(A, GLOB.shoefootmob))

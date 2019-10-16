@@ -71,11 +71,6 @@
 	W.setDir(dir)
 	qdel(src)
 
-/obj/structure/chair/ratvar_act()
-	var/obj/structure/chair/brass/B = new(get_turf(src))
-	B.setDir(dir)
-	qdel(src)
-
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		W.play_tool_sound(src)
@@ -132,6 +127,7 @@
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	item_chair = /obj/item/chair/greyscale
 	buildstacktype = null //Custom mats handle this
+
 
 /obj/structure/chair/wood
 	icon_state = "wooden_chair"
@@ -387,43 +383,6 @@
 	icon_state = "chairold"
 	item_chair = null
 
-/obj/structure/chair/brass
-	name = "brass chair"
-	desc = "A spinny chair made of brass. It looks uncomfortable."
-	icon_state = "brass_chair"
-	max_integrity = 150
-	buildstacktype = /obj/item/stack/tile/brass
-	buildstackamount = 1
-	item_chair = null
-	var/turns = 0
-
-/obj/structure/chair/brass/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	. = ..()
-
-/obj/structure/chair/brass/process()
-	setDir(turn(dir,-90))
-	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)
-	turns++
-	if(turns >= 8)
-		STOP_PROCESSING(SSfastprocess, src)
-
-/obj/structure/chair/brass/ratvar_act()
-	return
-
-/obj/structure/chair/brass/AltClick(mob/living/user)
-	turns = 0
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	if(!(datum_flags & DF_ISPROCESSING))
-		user.visible_message("<span class='notice'>[user] spins [src] around, and Ratvarian technology keeps it spinning FOREVER.</span>", \
-		"<span class='notice'>Automated spinny chairs. The pinnacle of Ratvarian technology.</span>")
-		START_PROCESSING(SSfastprocess, src)
-	else
-		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
-		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
-		STOP_PROCESSING(SSfastprocess, src)
-
 /obj/structure/chair/bronze
 	name = "brass chair"
 	desc = "A spinny chair made of bronze. It has little cogs for wheels!"
@@ -432,11 +391,36 @@
 	buildstacktype = /obj/item/stack/tile/bronze
 	buildstackamount = 1
 	item_chair = null
+	var/turns = 0
+
+/obj/structure/chair/bronze/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	. = ..()
+
+/obj/structure/chair/bronze/process()
+	setDir(turn(dir,-90))
+	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)
+	turns++
+	if(turns >= 8)
+		STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/chair/bronze/Moved()
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
+
+/obj/structure/chair/bronze/AltClick(mob/living/user)
+	turns = 0
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	if(!(datum_flags & DF_ISPROCESSING))
+		user.visible_message("<span class='notice'>[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER.</span>", \
+		"<span class='notice'>Automated spinny chairs. The pinnacle of ancient Ratvarian technology.</span>")
+		START_PROCESSING(SSfastprocess, src)
+	else
+		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
+		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
+		STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/chair/mime
 	name = "invisible chair"

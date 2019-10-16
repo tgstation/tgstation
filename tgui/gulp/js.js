@@ -45,7 +45,13 @@ export function js () {
     .pipe(buffer())
     .pipe(g.if(f.debug, g.sourcemaps.init({loadMaps: true})))
     .pipe(g.bytediff.start())
-    .pipe(g.if(f.min, g.uglify({mangle: true, compress: {unsafe: true}})))
+    .pipe(g.if(f.min, g.uglify({
+      mangle: true,
+      compress: {
+        unsafe: false,
+      },
+      ie8: true,
+    })))
     .pipe(g.if(f.debug, g.sourcemaps.write()))
     .pipe(g.bytediff.stop())
     .pipe(gulp.dest(f.dest))
