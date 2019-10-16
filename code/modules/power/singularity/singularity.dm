@@ -446,11 +446,3 @@
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)
-
-/obj/singularity/deadchat_controlled
-	desc = "A gravitational singularity, but it seems odd..."
-	move_self = FALSE
-
-/obj/singularity/Initialize(mapload, starting_energy)
-	. = ..()
-	AddComponent(/datum/component/deadchat_control, "democracy")

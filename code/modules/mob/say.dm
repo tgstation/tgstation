@@ -77,8 +77,9 @@
 	var/spanned = say_quote(message)
 	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
 	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_DEAD_SAY, src, message)
 	log_talk(message, LOG_SAY, tag="DEAD")
+	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_DEAD_SAY, src, message) & SIGNAL_INTERCEPT)
+		return
 	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = key)
 
 ///Check if this message is an emote
