@@ -131,7 +131,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	
 /obj/structure/elite_tumor/attack_hand(mob/user)
 	. = ..()
-	if(ishuman(user)
+	if(ishuman(user))
 		switch(activity)
 			if(TUMOR_INACTIVE)
 				activity = TUMOR_ACTIVE
