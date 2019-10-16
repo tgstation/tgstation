@@ -717,7 +717,7 @@
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	..()
 
-/obj/structure/cloth_pile/proc/revive()
+/obj/structure/cloth_pile/proc/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(QDELETED(src) || QDELETED(cloth_golem)) //QDELETED also checks for null, so if no cloth golem is set this won't runtime
 		return
 	if(cloth_golem.suiciding || cloth_golem.hellbound)
@@ -726,7 +726,7 @@
 
 	invisibility = INVISIBILITY_MAXIMUM //disappear before the animation
 	new /obj/effect/temp_visual/mummy_animation(get_turf(src))
-	if(cloth_golem.revive(TRUE, TRUE))
+	if(cloth_golem.revive(full_heal = TRUE, admin_revive = TRUE))
 		cloth_golem.grab_ghost() //won't pull if it's a suicide
 	sleep(20)
 	cloth_golem.forceMove(get_turf(src))
@@ -1054,7 +1054,7 @@
 	. = ..()
 	C.equip_to_slot_or_del(new /obj/item/clothing/head/that (), SLOT_HEAD)
 	C.equip_to_slot_or_del(new /obj/item/clothing/glasses/monocle (), SLOT_GLASSES)
-	C.revive(TRUE)
+	C.revive(full_heal = TRUE, admin_revive = FALSE)
 
 	SEND_SOUND(C, sound('sound/misc/capitialism.ogg'))
 	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
@@ -1096,7 +1096,7 @@
 /datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka (), SLOT_HEAD)
-	C.revive(TRUE)
+	C.revive(full_heal = TRUE, admin_revive = FALSE)
 
 	SEND_SOUND(C, sound('sound/misc/Russian_Anthem_chorus.ogg'))
 	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())

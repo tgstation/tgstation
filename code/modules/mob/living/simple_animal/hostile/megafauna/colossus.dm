@@ -588,7 +588,7 @@ Difficulty: Very Hard
 					H.set_species(/datum/species/shadow, 1)
 					H.regenerate_limbs()
 					H.regenerate_organs()
-					H.revive(TRUE)
+					H.revive(full_heal = TRUE, admin_revive = FALSE)
 					ADD_TRAIT(H, TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
 					H.grab_ghost(force = TRUE)
 

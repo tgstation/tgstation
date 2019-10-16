@@ -405,7 +405,7 @@
 /mob/living/simple_animal/ExtinguishMob()
 	return
 
-/mob/living/simple_animal/revive()
+/mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(..()) //successfully ressuscitated from death
 		icon = initial(icon)
 		icon_state = icon_living

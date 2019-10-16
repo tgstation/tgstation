@@ -27,7 +27,7 @@
 				return
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
-				M.revive(TRUE, TRUE)
+				M.revive(full_heal = TRUE, admin_revive = TRUE)
 				if(ishostile(target))
 					var/mob/living/simple_animal/hostile/H = M
 					if(malfunctioning)

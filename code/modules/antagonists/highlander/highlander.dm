@@ -46,7 +46,7 @@
 		if(!H.dropItemToGround(I))
 			qdel(I)
 	H.regenerate_icons()
-	H.revive(TRUE, TRUE)
+	H.revive(full_heal = TRUE, admin_revive = TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), SLOT_HEAD)
