@@ -1923,7 +1923,7 @@
 /area/awaymission/research/interior/security)
 "eq" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/hooded/ablative,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
