@@ -36,35 +36,34 @@
 	var/ImpureTot = 0
 	var/turf/T = get_turf(my_atom)
 
-	if(temp>500)//if hot, start a fire
-		switch(temp)
-			if (500 to 750)
-				for(var/turf/turf in range(1,T))
-					new /obj/effect/hotspot(turf)
+	switch(temp)
+		if (500 to 750)
+			for(var/turf/turf in range(1,T))
+				new /obj/effect/hotspot(turf)
 
-			if (751 to 1100)
-				for(var/turf/turf in range(2,T))
-					new /obj/effect/hotspot(turf)
+		if (751 to 1100)
+			for(var/turf/turf in range(2,T))
+				new /obj/effect/hotspot(turf)
 
-			if (1101 to 1500) //If you're crafty
-				for(var/turf/turf in range(3,T))
-					new /obj/effect/hotspot(turf)
+		if (1101 to 1500) //If you're crafty
+			for(var/turf/turf in range(3,T))
+				new /obj/effect/hotspot(turf)
 
-			if (1501 to 2500) //requested
-				for(var/turf/turf in range(4,T))
-					new /obj/effect/hotspot(turf)
+		if (1501 to 2500) //requested
+			for(var/turf/turf in range(4,T))
+				new /obj/effect/hotspot(turf)
 
-			if (2501 to 5000)
-				for(var/turf/turf in range(5,T))
-					new /obj/effect/hotspot(turf)
+		if (2501 to 5000)
+			for(var/turf/turf in range(5,T))
+				new /obj/effect/hotspot(turf)
 
-			if (5001 to INFINITY)
-				for(var/turf/turf in range(6,T))
-					new /obj/effect/hotspot(turf)
+		if (5001 to INFINITY)
+			for(var/turf/turf in range(6,T))
+				new /obj/effect/hotspot(turf)
 
 
-	message_admins("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
-	log_game("Fermi explosion at [T], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
+	message_admins("Fermi explosion at [AREACOORD(T)], [ADMIN_VERBOSEJMP(T)], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
+	log_game("Fermi explosion at [AREACOORD(T)], with a temperature of [temp], pH of [pH], Impurity tot of [ImpureTot].")
 	var/datum/reagents/R = new/datum/reagents(3000)//Hey, just in case.
 	var/datum/effect_system/smoke_spread/chem/s = new()
 	R.my_atom = my_atom //Give the gas a fingerprint
