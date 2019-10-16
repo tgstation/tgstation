@@ -19,7 +19,10 @@
 	suffix = "icemoon_surface_ufo_crash.dmm"
 	cost = 5
 
-/datum/map_template/ruin/icemoon/survivalcapsule
+/datum/map_template/ruin/icemoon/underground
+	name = "underground ruin"
+
+/datum/map_template/ruin/icemoon/underground/survivalcapsule
 	name = "Survival Capsule Ruins"
 	id = "survivalcapsule"
 	description = "What was once sanctuary to the common miner, is now their tomb."
