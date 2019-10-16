@@ -446,3 +446,14 @@
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)
+
+/obj/singularity/deadchat_controlled
+	move_self = FALSE
+
+/obj/singularity/deadchat_controlled/Initialize(mapload, starting_energy)
+	. = ..()
+	AddComponent(/datum/component/deadchat_control, DEMOCRACY_MODE, list(
+	 "up" = CALLBACK(src, /atom/movable.proc/forceMove, src, NORTH),
+	 "down" = CALLBACK(src, /atom/movable.proc/forceMove, src, SOUTH),
+	 "left" = CALLBACK(src, /atom/movable.proc/forceMove, src, WEST),
+	 "right" = CALLBACK(src, /atom/movable.proc/forceMove, src, EAST)))
