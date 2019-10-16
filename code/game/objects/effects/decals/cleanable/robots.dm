@@ -54,7 +54,7 @@
 
 /obj/effect/decal/cleanable/oil/Initialize()
 	. = ..()
-	reagents.add_reagent(/datum/reagent/oil, 30)
+	reagents.add_reagent(/datum/reagent/fuel/oil, 30)
 
 /obj/effect/decal/cleanable/oil/attackby(obj/item/I, mob/living/user)
 	var/attacked_by_hot_thing = I.get_temperature()

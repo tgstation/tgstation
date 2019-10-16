@@ -40,7 +40,7 @@
 	name = "Miner's Salve"
 	id = /datum/reagent/medicine/mine_salve
 	results = list(/datum/reagent/medicine/mine_salve = 3)
-	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/water = 1, /datum/reagent/iron = 1)
+	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/water = 1, /datum/reagent/iron = 1)
 
 /datum/chemical_reaction/mine_salve2
 	name = "Miner's Salve"
@@ -95,14 +95,14 @@
 	name = "Ephedrine"
 	id = /datum/reagent/medicine/ephedrine
 	results = list(/datum/reagent/medicine/ephedrine = 4)
-	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/oil = 1, /datum/reagent/hydrogen = 1, /datum/reagent/diethylamine = 1)
+	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/fuel/oil = 1, /datum/reagent/hydrogen = 1, /datum/reagent/diethylamine = 1)
 	mix_message = "The solution fizzes and gives off toxic fumes."
 
 /datum/chemical_reaction/diphenhydramine
 	name = "Diphenhydramine"
 	id = /datum/reagent/medicine/diphenhydramine
 	results = list(/datum/reagent/medicine/diphenhydramine = 4)
-	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/carbon = 1, /datum/reagent/bromine = 1, /datum/reagent/diethylamine = 1, /datum/reagent/consumable/ethanol = 1)
+	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/carbon = 1, /datum/reagent/bromine = 1, /datum/reagent/diethylamine = 1, /datum/reagent/consumable/ethanol = 1)
 	mix_message = "The mixture dries into a pale blue powder."
 
 /datum/chemical_reaction/oculine
@@ -178,7 +178,7 @@
 	name = "Haloperidol"
 	id = /datum/reagent/medicine/haloperidol
 	results = list(/datum/reagent/medicine/haloperidol = 5)
-	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/medicine/potass_iodide = 1, /datum/reagent/oil = 1)
+	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/medicine/potass_iodide = 1, /datum/reagent/fuel/oil = 1)
 
 /datum/chemical_reaction/regen_jelly
 	name = "Regenerative Jelly"
