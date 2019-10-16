@@ -49,7 +49,7 @@
 /*****TOX*****/
 
 /datum/chemical_reaction/seiver
-	name = "Fiziver"
+	name = "Seiver"
 	id = /datum/reagent/medicine/C2/seiver
 	results = list(/datum/reagent/medicine/C2/seiver = 3)
 	required_reagents = list(/datum/reagent/nitrogen = 1, /datum/reagent/potassium = 1, /datum/reagent/aluminium = 1)
