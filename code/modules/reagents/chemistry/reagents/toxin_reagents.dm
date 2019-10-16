@@ -189,7 +189,7 @@
 			M.slurring += 3
 		if(5 to 8)
 			M.adjustStaminaLoss(60, 0)
-		if(8 to INFINITY)
+		if(9 to INFINITY)
 			fakedeath_active = TRUE
 			M.fakedeath(type)
 
