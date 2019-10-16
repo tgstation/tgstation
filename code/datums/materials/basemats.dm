@@ -196,7 +196,7 @@
 	beauty_modifier = 0.4
 	armor_modifiers = list("melee" = 1.5, "bullet" = 1.5, "laser" = 1.3, "energy" = 1.3, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 2.5, "acid" = 1)
 
-///RPG Magic. (Admin only)
+///RPG Magic.
 /datum/material/mythril
 	name = "mythril"
 	id = "mythril"
@@ -205,8 +205,9 @@
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 	value_per_unit = 0.75
+	strength_modifier = 1.2
+	armor_modifiers = list("melee" = 1.5, "bullet" = 1.5, "laser" = 1.5, "energy" = 1.5, "bomb" = 1.5, "bio" = 1.5, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
 	beauty_modifier = 0.5
-	armor_modifiers = list("melee" = 2, "bullet" = 2, "laser" = 2, "energy" = 2, "bomb" = 2, "bio" = 2, "rad" = 2, "fire" = 2, "acid" = 2)
 
 /datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()

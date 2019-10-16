@@ -758,7 +758,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!delay && !tool_start_check(user, amount))
 		return
 
-	delay *= toolspeed
+	var/skill_modifier = 1
+
+	if(tool_behaviour == TOOL_MINING && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		skill_modifier = H.mind.get_skill_speed_modifier(/datum/skill/mining)
+
+	delay *= toolspeed * skill_modifier	
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)

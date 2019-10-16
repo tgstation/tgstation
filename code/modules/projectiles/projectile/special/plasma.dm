@@ -15,7 +15,7 @@
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
-		M.gets_drilled(firer)
+		M.gets_drilled(firer, FALSE)
 		if(mine_range)
 			mine_range--
 			range++
