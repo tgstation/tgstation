@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "you can now mend cavity surgery with an advanced cautery"
+  - spellcheck: "changing mode on power drill now gives you the correct message"
