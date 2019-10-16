@@ -15,7 +15,6 @@
 	light_range = 15
 	light_color = rgb(255, 0, 0)
 	gender = FEMALE
-	var/clashing = FALSE //If Nar'Sie is fighting Ratvar
 
 /obj/singularity/narsie/large
 	name = "Nar'Sie"
@@ -101,21 +100,12 @@
 	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, cultoverride = TRUE, loc_override = src.loc)
 
 /obj/singularity/narsie/process()
-	if(clashing)
-		return
 	eat()
 	if(!target || prob(5))
 		pickcultist()
-	if(istype(target, /obj/structure/destructible/clockwork/massive/ratvar))
-		move(get_dir(src, target)) //Oh, it's you again.
-	else
-		move()
+	move()
 	if(prob(25))
 		mezzer()
-
-
-/obj/singularity/narsie/Process_Spacemove()
-	return clashing
 
 
 /obj/singularity/narsie/Bump(atom/A)
@@ -145,11 +135,6 @@
 /obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 	var/list/cultists = list()
 	var/list/noncultists = list()
-	for(var/obj/structure/destructible/clockwork/massive/ratvar/enemy in GLOB.poi_list) //Prioritize killing Ratvar
-		if(enemy.z != z)
-			continue
-		acquire(enemy)
-		return
 
 	for(var/mob/living/carbon/food in GLOB.alive_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
@@ -171,8 +156,6 @@
 
 	//no living humans, follow a ghost instead.
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
-		if(!ghost.client)
-			continue
 		var/turf/pos = get_turf(ghost)
 		if(!pos || (pos.z != z))
 			continue

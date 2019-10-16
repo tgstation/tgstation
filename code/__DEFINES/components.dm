@@ -1,21 +1,33 @@
+/// Used to trigger signals and call procs registered for that signal
+/// The datum hosting the signal is automaticaly added as the first argument
+/// Returns a bitfield gathered from all registered procs
+/// Arguments given here are packaged in a list and given to _SendSignal
 #define SEND_SIGNAL(target, sigtype, arguments...) ( !target.comp_lookup || !target.comp_lookup[sigtype] ? NONE : target._SendSignal(sigtype, list(target, ##arguments)) )
 
 #define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSdcs, sigtype, ##arguments) )
 
+/// Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
+/// `parent` must not be modified if this is to be returned.
+/// This will be noted in the runtime logs
 #define COMPONENT_INCOMPATIBLE 1
+/// Returned in PostTransfer to prevent transfer, similar to `COMPONENT_INCOMPATIBLE`
 #define COMPONENT_NOTRANSFER 2
 
-#define ELEMENT_INCOMPATIBLE 1 // Return value to cancel attaching
+/// Return value to cancel attaching
+#define ELEMENT_INCOMPATIBLE 1
 
-// /datum/element flags
+/// /datum/element flags
 #define ELEMENT_DETACH		(1 << 0)
 
 // How multiple components of the exact same type are handled in the same datum
-
-#define COMPONENT_DUPE_HIGHLANDER		0		//old component is deleted (default)
-#define COMPONENT_DUPE_ALLOWED			1	//duplicates allowed
-#define COMPONENT_DUPE_UNIQUE			2	//new component is deleted
-#define COMPONENT_DUPE_UNIQUE_PASSARGS	4	//old component is given the initialization args of the new
+/// old component is deleted (default)
+#define COMPONENT_DUPE_HIGHLANDER		0
+/// duplicates allowed
+#define COMPONENT_DUPE_ALLOWED			1
+/// new component is deleted
+#define COMPONENT_DUPE_UNIQUE			2
+/// old component is given the initialization args of the new
+#define COMPONENT_DUPE_UNIQUE_PASSARGS	4
 
 // All signals. Format:
 // When the signal is called: (signal arguments)
@@ -24,20 +36,30 @@
 // global signals
 // These are signals which can be listened to by any component on any parent
 // start global signals with "!", this used to be necessary but now it's just a formatting choice
-#define COMSIG_GLOB_NEW_Z "!new_z"								//from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
-#define COMSIG_GLOB_VAR_EDIT "!var_edit"						//called after a successful var edit somewhere in the world: (list/args)
-#define COMSIG_GLOB_MOB_CREATED "!mob_created"					//mob was created somewhere : (mob)
-#define COMSIG_GLOB_MOB_DEATH "!mob_death"						//mob died somewhere : (mob , gibbed)
-#define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"			//global living say plug - use sparingly: (mob/speaker , message)
+/// from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
+#define COMSIG_GLOB_NEW_Z "!new_z"
+/// called after a successful var edit somewhere in the world: (list/args)
+#define COMSIG_GLOB_VAR_EDIT "!var_edit"
+/// mob was created somewhere : (mob)
+#define COMSIG_GLOB_MOB_CREATED "!mob_created"
+/// mob died somewhere : (mob , gibbed)
+#define COMSIG_GLOB_MOB_DEATH "!mob_death"
+/// global living say plug - use sparingly: (mob/speaker , message)
+#define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"
 
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
-#define COMSIG_COMPONENT_ADDED "component_added"				//when a component is added to a datum: (/datum/component)
-#define COMSIG_COMPONENT_REMOVING "component_removing"			//before a component is removed from a datum because of RemoveComponent: (/datum/component)
-#define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"			//before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
-#define COMSIG_PARENT_QDELETING "parent_qdeleting"				//just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
-#define COMSIG_TOPIC "handle_topic"                             //generic topic handler (usr, href_list)
+/// when a component is added to a datum: (/datum/component)
+#define COMSIG_COMPONENT_ADDED "component_added"
+/// before a component is removed from a datum because of RemoveComponent: (/datum/component)
+#define COMSIG_COMPONENT_REMOVING "component_removing"
+/// before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
+#define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"
+/// just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
+#define COMSIG_PARENT_QDELETING "parent_qdeleting"
+/// generic topic handler (usr, href_list)
+#define COMSIG_TOPIC "handle_topic"
 
 // /atom signals
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
@@ -54,16 +76,16 @@
 #define COMSIG_ATOM_EXIT "atom_exit"							//from base of atom/Exit(): (/atom/movable/exiting, /atom/newloc)
 	#define COMPONENT_ATOM_BLOCK_EXIT 1
 #define COMSIG_ATOM_EXITED "atom_exited"						//from base of atom/Exited(): (atom/movable/exiting, atom/newloc)
+#define COMSIG_ATOM_BUMPED "atom_bumped"						//from base of atom/Bumped(): (/atom/movable)
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"						//from base of atom/ex_act(): (severity, target)
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"						//from base of atom/emp_act(): (severity)
 #define COMSIG_ATOM_FIRE_ACT "atom_fire_act"					//from base of atom/fire_act(): (exposed_temperature, exposed_volume)
-#define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"				//from base of atom/bullet_act(): (/obj/item/projectile, def_zone)
+#define COMSIG_ATOM_BULLET_ACT "atom_bullet_act"				//from base of atom/bullet_act(): (/obj/projectile, def_zone)
 #define COMSIG_ATOM_BLOB_ACT "atom_blob_act"					//from base of atom/blob_act(): (/obj/structure/blob)
 #define COMSIG_ATOM_ACID_ACT "atom_acid_act"					//from base of atom/acid_act(): (acidpwr, acid_volume)
-#define COMSIG_ATOM_EMAG_ACT "atom_emag_act"					//from base of atom/emag_act(): ()
+#define COMSIG_ATOM_EMAG_ACT "atom_emag_act"					//from base of atom/emag_act(): (/mob/user)
 #define COMSIG_ATOM_RAD_ACT "atom_rad_act"						//from base of atom/rad_act(intensity)
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"				//from base of atom/narsie_act(): ()
-#define COMSIG_ATOM_RATVAR_ACT "atom_ratvar_act"				//from base of atom/ratvar_act(): ()
 #define COMSIG_ATOM_RCD_ACT "atom_rcd_act"						//from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
 #define COMSIG_ATOM_SING_PULL "atom_sing_pull"					//from base of atom/singularity_pull(): (S, current_size)
 #define COMSIG_ATOM_SET_LIGHT "atom_set_light"					//from base of atom/set_light(): (l_range, l_power, l_color)
@@ -79,6 +101,13 @@
 #define COMSIG_ATOM_CANREACH "atom_can_reach"					//from internal loop in atom/movable/proc/CanReach(): (list/next)
 	#define COMPONENT_BLOCK_REACH 1
 #define COMSIG_ATOM_SCREWDRIVER_ACT "atom_screwdriver_act"		//from base of atom/screwdriver_act(): (mob/living/user, obj/item/I)
+#define COMSIG_ATOM_WRENCH_ACT "atom_wrench_act"				//from base of atom/wrench_act(): (mob/living/user, obj/item/I)
+#define COMSIG_ATOM_MULTITOOL_ACT "atom_multitool_act"			//from base of atom/multitool_act(): (mob/living/user, obj/item/I)
+#define COMSIG_ATOM_WELDER_ACT "atom_welder_act"				//from base of atom/welder_act(): (mob/living/user, obj/item/I)
+#define COMSIG_ATOM_WIRECUTTER_ACT "atom_wirecutter_act"		//from base of atom/wirecutter_act(): (mob/living/user, obj/item/I)
+#define COMSIG_ATOM_CROWBAR_ACT "atom_crowbar_act"				//from base of atom/crowbar_act(): (mob/living/user, obj/item/I)
+#define COMSIG_ATOM_ANALYSER_ACT "atom_analyser_act"			//from base of atom/analyser_act(): (mob/living/user, obj/item/I)
+	#define COMPONENT_BLOCK_TOOL_ATTACK 1
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"		//called when teleporting into a protected turf: (channel, turf/origin)
 	#define COMPONENT_BLOCK_TELEPORT 1
 /////////////////
@@ -141,15 +170,22 @@
 
 // /mob signals
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
+
 #define COMSIG_MOB_CLICKON "mob_clickon"						//from base of mob/clickon(): (atom/A, params)
+#define COMSIG_MOB_MIDDLECLICKON "mob_middleclickon"			//from base of mob/MiddleClickOn(): (atom/A)
+#define COMSIG_MOB_ALTCLICKON "mob_altclickon"				//from base of mob/AltClickOn(): (atom/A)
 	#define COMSIG_MOB_CANCEL_CLICKON 1
+
 #define COMSIG_MOB_ALLOWED "mob_allowed"						//from base of obj/allowed(mob/M): (/obj) returns bool, if TRUE the mob has id access to the obj
 #define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"			//from base of mob/anti_magic_check(): (mob/user, magic, holy, tinfoil, chargecost, self, protection_sources)
 	#define COMPONENT_BLOCK_MAGIC 1
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"				//from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"				//from base of
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"				//from base of /obj/item/attack(): (mob/M, mob/user)
+	#define COMPONENT_ITEM_NO_ATTACK 1
+#define COMSIG_MOB_APPLY_DAMGE	"mob_apply_damage"				//from base of /mob/living/proc/apply_damage(): (damage, damagetype, def_zone)
 #define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"		//from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
+#define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"	//from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proxiumity_flag, click_parameters)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"			//from base of mob/RangedAttack(): (atom/A, params)
 #define COMSIG_MOB_THROW "mob_throw"							//from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"					//from base of /mob/verb/examinate(): (atom/target)
@@ -169,10 +205,12 @@
 #define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_IGNITED "living_ignite"					//from base of mob/living/IgniteMob() (/mob/living)
 #define COMSIG_LIVING_EXTINGUISHED "living_extinguished"		//from base of mob/living/ExtinguishMob() (/mob/living)
-#define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"		//from base of mob/living/electrocute_act(): (shock_damage)
+#define COMSIG_LIVING_ELECTROCUTE_ACT "living_electrocute_act"		//from base of mob/living/electrocute_act(): (shock_damage, source, siemens_coeff, flags)
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
+#define COMSIG_LIVING_REVIVE "living_revive"					//from base of mob/living/revive() (full_heal, admin_revive)
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"		//sent from borg recharge stations: (amount, repairs)
 #define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"		//sent when a mob/login() finishes: (client)
+#define COMSIG_BORG_SAFE_DECONSTRUCT "borg_safe_decon"			//sent from borg mobs to itself, for tools to catch an upcoming destroy() due to safe decon (rather than detonation)
 
 //ALL OF THESE DO NOT TAKE INTO ACCOUNT WHETHER AMOUNT IS 0 OR LOWER AND ARE SENT REGARDLESS!
 #define COMSIG_LIVING_STATUS_STUN "living_stun"					//from base of mob/living/Stun() (amount, update, ignore)
@@ -182,6 +220,8 @@
 #define COMSIG_LIVING_STATUS_UNCONSCIOUS "living_unconscious"	//from base of mob/living/Unconscious() (amount, update, ignore)
 #define COMSIG_LIVING_STATUS_SLEEP "living_sleeping"			//from base of mob/living/Sleeping() (amount, update, ignore)
 	#define COMPONENT_NO_STUN 1			//For all of them
+#define COMSIG_LIVING_CAN_TRACK "mob_cantrack"					//from base of /mob/living/can_track(): (mob/user)
+	#define COMPONENT_CANT_TRACK 1
 
 // /mob/living/carbon signals
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
@@ -193,6 +233,13 @@
 // /obj signals
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"				//from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_SETANCHORED "obj_setanchored"				//called in /obj/structure/setAnchored(): (value)
+#define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"	//from base of code/game/machinery
+#define COMSIG_OBJ_UPDATE_ICON	"obj_update_icon"				//Called by obj to itself whenever update_icon is run. Useful for containers that want to detect this change
+
+// /obj/machinery signals
+#define COMSIG_MACHINERY_BROKEN "machinery_broken"				//from /obj/machinery/obj_break(damage_flag): (damage_flag)
+#define COMSIG_MACHINERY_POWER_LOST "machinery_power_lost"			//from base power_change() when power is lost
+#define COMSIG_MACHINERY_POWER_RESTORED "machinery_power_restored"	//from base power_change() when power is restored
 
 // /obj/item signals
 #define COMSIG_ITEM_ATTACK "item_attack"						//from base of obj/item/attack(): (/mob/living/target, /mob/living/user)
@@ -203,6 +250,7 @@
 #define COMSIG_ITEM_PRE_ATTACK "item_pre_attack"				//from base of obj/item/pre_attack(): (atom/target, mob/user, params)
 	#define COMPONENT_NO_ATTACK 1
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"				//from base of obj/item/afterattack(): (atom/target, mob/user, params)
+#define COMSIG_ITEM_ATTACK_QDELETED "item_attack_qdeleted"		//from base of obj/item/attack_qdeleted(): (atom/target, mob/user, params)
 #define COMSIG_ITEM_EQUIPPED "item_equip"						//from base of obj/item/equipped(): (/mob/equipper, slot)
 #define COMSIG_ITEM_DROPPED "item_drop"							//from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_PICKUP "item_pickup"						//from base of obj/item/pickup(): (/mob/taker)
@@ -211,6 +259,7 @@
 #define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"			//called before marking an object for retrieval, checked in /obj/effect/proc_holder/spell/targeted/summonitem/cast() : (mob/user)
 	#define COMPONENT_BLOCK_MARK_RETRIEVAL 1
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"					//from base of obj/item/hit_reaction(): (list/args)
+#define COMSIG_ITEM_WEARERCROSSED "wearer_crossed"                //called on item when crossed by something (): (/atom/movable, mob/living/crossed)
 
 // /obj/item/clothing signals
 #define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()
@@ -238,15 +287,20 @@
 // /obj/item/pen signals
 #define COMSIG_PEN_ROTATED "pen_rotated"						//called after rotation in /obj/item/pen/attack_self(): (rotation, mob/living/carbon/user)
 
-// /obj/item/projectile signals (sent to the firer)
-#define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/item/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
-#define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire" 			// from base of /obj/item/projectile/proc/fire(): (obj/item/projectile, atom/original_target)
+// /obj/projectile signals (sent to the firer)
+#define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
+#define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire" 			// from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
+#define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"				// sent to targets during the process_hit proc of projectiles
 
+// /obj/mecha signals
+#define COMSIG_MECHA_ACTION_ACTIVATE "mecha_action_activate"	//sent from mecha action buttons to the mecha they're linked to
 
 // /mob/living/carbon/human signals
-#define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)
+#define COMSIG_HUMAN_EARLY_UNARMED_ATTACK "human_early_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
+#define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target, proximity)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
+#define COMSIG_JOB_RECEIVED "job_received"										//Whenever EquipRanked is called, called after job is set
 
 // /datum/species signals
 #define COMSIG_SPECIES_GAIN "species_gain"						//from datum/species/on_species_gain(): (datum/species/new_species, datum/species/old_species)
@@ -258,6 +312,9 @@
 #define COMSIG_TURF_MAKE_DRY "make_turf_try"						//(max_strength, immediate, duration_decrease = INFINITY): Returns bool.
 #define COMSIG_COMPONENT_CLEAN_ACT "clean_act"					//called on an object to clean it of cleanables. Usualy with soap: (num/strength)
 
+//Creamed
+#define COMSIG_COMPONENT_CLEAN_FACE_ACT "clean_face_act"		//called when you wash your face at a sink: (num/strength)
+
 //Food
 #define COMSIG_FOOD_EATEN "food_eaten"		//from base of obj/item/reagent_containers/food/snacks/attack(): (mob/living/eater, mob/feeder)
 
@@ -266,6 +323,7 @@
 
 //Mood
 #define COMSIG_ADD_MOOD_EVENT "add_mood" //Called when you send a mood event from anywhere in the code.
+#define COMSIG_ADD_MOOD_EVENT_RND "RND_add_mood" //Mood event that only RnD members listen for
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood" //Called when you clear a mood event from anywhere in the code.
 
 //NTnet
@@ -274,6 +332,7 @@
 //Nanites
 #define COMSIG_HAS_NANITES "has_nanites"						//() returns TRUE if nanites are found
 #define COMSIG_NANITE_GET_PROGRAMS	"nanite_get_programs"		//(list/nanite_programs) - makes the input list a copy the nanites' program list
+#define COMSIG_NANITE_GET_VOLUME "nanite_get_volume"			//(amount) Returns nanite amount
 #define COMSIG_NANITE_SET_VOLUME "nanite_set_volume"			//(amount) Sets current nanite volume to the given amount
 #define COMSIG_NANITE_ADJUST_VOLUME "nanite_adjust"				//(amount) Adjusts nanite volume by the given amount
 #define COMSIG_NANITE_SET_MAX_VOLUME "nanite_set_max_volume"	//(amount) Sets maximum nanite volume to the given amount

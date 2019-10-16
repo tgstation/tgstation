@@ -19,8 +19,8 @@
 	H.mind.assigned_role = "Santa"
 	H.mind.special_role = "Santa"
 
-	H.hair_style = "Long Hair 3"
-	H.facial_hair_style = "Beard (Full)"
+	H.hairstyle = "Long Hair 3"
+	H.facial_hairstyle = "Beard (Full)"
 	H.hair_color = "FFF"
 	H.facial_hair_color = "FFF"
 	H.update_hair()

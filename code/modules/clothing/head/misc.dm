@@ -65,6 +65,7 @@
 	icon_state = "syndicate-helm-black-red"
 	item_state = "syndicate-helm-black-red"
 	desc = "A plastic replica of a Syndicate agent's space helmet. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/cueball
@@ -72,6 +73,7 @@
 	desc = "A large, featureless white orb meant to be worn on your head. How do you even see out of this thing?"
 	icon_state = "cueball"
 	item_state="cueball"
+	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
@@ -80,6 +82,7 @@
 	desc = "A ball of white styrofoam. So festive."
 	icon_state = "snowman_h"
 	item_state = "snowman_h"
+	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
@@ -88,6 +91,7 @@
 	desc = "Fight for what's righteous!"
 	icon_state = "justicered"
 	item_state = "justicered"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	flags_cover = HEADCOVERSEYES
 
@@ -115,14 +119,6 @@
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
 
-
-/obj/item/clothing/head/flatcap
-	name = "flat cap"
-	desc = "A working man's cap."
-	icon_state = "flat_cap"
-	item_state = "detective"
-
-
 /obj/item/clothing/head/pirate
 	name = "pirate hat"
 	desc = "Yarr."
@@ -134,6 +130,7 @@
 	var/datum/language/piratespeak/L = new
 
 /obj/item/clothing/head/pirate/equipped(mob/user, slot)
+	. = ..()
 	if(!ishuman(user))
 		return
 	if(slot == SLOT_HEAD)
@@ -141,6 +138,7 @@
 		to_chat(user, "You suddenly know how to speak like a pirate!")
 
 /obj/item/clothing/head/pirate/dropped(mob/user)
+	. = ..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
@@ -178,6 +176,7 @@
 	desc = "Bkaw!"
 	icon_state = "chickenhead"
 	item_state = "chickensuit"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/griffin
@@ -185,6 +184,7 @@
 	desc = "Why not 'eagle head'? Who knows."
 	icon_state = "griffinhat"
 	item_state = "griffinhat"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/bearpelt
@@ -198,7 +198,9 @@
 	icon_state = "xenos"
 	item_state = "xenos_helm"
 	desc = "A helmet made out of chitinous alien hide."
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/head/fedora
 	name = "fedora"
@@ -214,7 +216,7 @@
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to be nice to girls.</span>")
 	user.say("M'lady.", forced = "fedora suicide")
 	sleep(10)
-	H.facial_hair_style = "Neckbeard"
+	H.facial_hairstyle = "Neckbeard"
 	return(BRUTELOSS)
 
 /obj/item/clothing/head/sombrero
@@ -244,6 +246,20 @@
 /obj/item/clothing/head/sombrero/shamebrero/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, SHAMEBRERO_TRAIT)
+
+/obj/item/clothing/head/flatcap
+	name = "flat cap"
+	desc = "A working man's cap."
+	icon_state = "flat_cap"
+	item_state = "detective"
+
+/obj/item/clothing/head/hunter
+	name = "bounty hunting hat"
+	desc = "Ain't nobody gonna cheat the hangman in my town."
+	icon_state = "hunter"
+	item_state = "hunter"
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
@@ -319,6 +335,7 @@
 	name = "foam lobster head"
 	desc = "When everything's going to crab, protecting your head is the best choice."
 	icon_state = "lobster_hat"
+	clothing_flags = SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/drfreezehat
@@ -331,7 +348,7 @@
 	name = "pharaoh hat"
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
-	icon_state = "pharoah_hat"
+	item_state = "pharoah_hat"
 
 /obj/item/clothing/head/jester/alt
 	name = "jester hat"
@@ -343,7 +360,11 @@
 	name = "headdress of Nemes"
 	desc = "Lavish space tomb not included."
 	icon_state = "nemes_headdress"
-	icon_state = "nemes_headdress"
+
+/obj/item/clothing/head/delinquent
+	name = "delinquent hat"
+	desc = "Good grief."
+	icon_state = "delinquent"
 
 /obj/item/clothing/head/frenchberet
 	name = "french beret"
@@ -407,3 +428,14 @@
 	desc = "An extra-mustahabb way of showing your devotion to Allah."
 	icon_state = "taqiyahred"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
+
+/obj/item/clothing/head/shrine_wig
+	name = "shrine maiden's wig"
+	desc = "Purify in style!"
+	flags_inv = HIDEHAIR //bald
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "shrine_wig"
+	item_state = "shrine_wig"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	dynamic_hair_suffix = ""

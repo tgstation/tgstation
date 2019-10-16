@@ -1,8 +1,8 @@
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
-	icon_state = "red"
-	item_state = "toolbox_red"
+	icon_state = "toolbox_default"
+	item_state = "toolbox_default"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -11,9 +11,12 @@
 	throw_speed = 2
 	throw_range = 7
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_METAL = 500)
+	custom_materials = list(/datum/material/iron = 500)
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
+	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
+	pickup_sound =  'sound/items/handling/toolbox_pickup.ogg'
+	material_flags = MATERIAL_COLOR
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 
@@ -41,6 +44,7 @@
 	name = "emergency toolbox"
 	icon_state = "red"
 	item_state = "toolbox_red"
+	material_flags = NONE
 
 /obj/item/storage/toolbox/emergency/PopulateContents()
 	new /obj/item/crowbar/red(src)
@@ -59,11 +63,13 @@
 	name = "rusty red toolbox"
 	icon_state = "toolbox_red_old"
 	has_latches = FALSE
+	material_flags = NONE
 
 /obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
+	material_flags = NONE
 
 /obj/item/storage/toolbox/mechanical/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -77,6 +83,7 @@
 	name = "rusty blue toolbox"
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
+	material_flags = NONE
 
 /obj/item/storage/toolbox/mechanical/old/heirloom
 	name = "toolbox" //this will be named "X family toolbox"
@@ -124,6 +131,7 @@
 	name = "electrical toolbox"
 	icon_state = "yellow"
 	item_state = "toolbox_yellow"
+	material_flags = NONE
 
 /obj/item/storage/toolbox/electrical/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -144,6 +152,7 @@
 	item_state = "toolbox_syndi"
 	force = 15
 	throwforce = 18
+	material_flags = NONE
 
 /obj/item/storage/toolbox/syndicate/ComponentInitialize()
 	. = ..()
@@ -163,6 +172,7 @@
 	name = "mechanical toolbox"
 	icon_state = "blue"
 	item_state = "toolbox_blue"
+	material_flags = NONE
 
 /obj/item/storage/toolbox/drone/PopulateContents()
 	var/pickedcolor = pick("red","yellow","green","blue","pink","orange","cyan","white")
@@ -174,54 +184,13 @@
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
 
-/obj/item/storage/toolbox/brass
-	name = "brass box"
-	desc = "A huge brass box with several indentations in its surface."
-	icon_state = "brassbox"
-	item_state = null
-	has_latches = FALSE
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	w_class = WEIGHT_CLASS_HUGE
-	attack_verb = list("robusted", "crushed", "smashed")
-	var/fabricator_type = /obj/item/clockwork/replica_fabricator/scarab
-
-/obj/item/storage/toolbox/brass/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 28
-	STR.max_items = 28
-
-/obj/item/storage/toolbox/brass/prefilled/PopulateContents()
-	new fabricator_type(src)
-	new /obj/item/screwdriver/brass(src)
-	new /obj/item/wirecutters/brass(src)
-	new /obj/item/wrench/brass(src)
-	new /obj/item/crowbar/brass(src)
-	new /obj/item/weldingtool/experimental/brass(src)
-
-/obj/item/storage/toolbox/brass/prefilled/servant
-	slot_flags = ITEM_SLOT_BELT
-	fabricator_type = null
-
-/obj/item/storage/toolbox/brass/prefilled/ratvar
-	var/slab_type = /obj/item/clockwork/slab
-
-/obj/item/storage/toolbox/brass/prefilled/ratvar/PopulateContents()
-	..()
-	new slab_type(src)
-
-/obj/item/storage/toolbox/brass/prefilled/ratvar/admin
-	slab_type = /obj/item/clockwork/slab/debug
-	fabricator_type = /obj/item/clockwork/replica_fabricator/scarab/debug
-
-
 /obj/item/storage/toolbox/artistic
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
 	icon_state = "green"
 	item_state = "artistic_toolbox"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
+	material_flags = NONE
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
 	. = ..()
@@ -246,6 +215,8 @@
 	desc = "It contains a few clips."
 	icon_state = "ammobox"
 	item_state = "ammobox"
+	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
+	pickup_sound =  'sound/items/handling/ammobox_pickup.ogg'
 
 /obj/item/storage/toolbox/ammo/PopulateContents()
 	new /obj/item/ammo_box/a762(src)

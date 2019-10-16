@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(tgui)
 	var/basehtml // The HTML base used for all UIs.
 
 /datum/controller/subsystem/tgui/PreInit()
-	basehtml = file2text('tgui/tgui.html')
+	basehtml = file2text('tgui-next/packages/tgui/public/tgui-main.html')
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()
@@ -34,4 +34,3 @@ SUBSYSTEM_DEF(tgui)
 			processing_uis.Remove(ui)
 		if (MC_TICK_CHECK)
 			return
-

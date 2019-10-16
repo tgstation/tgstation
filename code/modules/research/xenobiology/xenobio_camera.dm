@@ -170,6 +170,7 @@
 	..()
 
 /obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/I)
+	. = ..()
 	if (istype(I) && istype(I.buffer,/obj/machinery/monkey_recycler))
 		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
 		connected_recycler = I.buffer
@@ -191,7 +192,7 @@
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
 			S.forceMove(remote_eye.loc)
-			S.visible_message("[S] warps in!")
+			S.visible_message("<span class='notice'>[S] warps in!</span>")
 			X.stored_slimes -= S
 	else
 		to_chat(owner, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
@@ -215,7 +216,7 @@
 			if(!S.ckey)
 				if(S.buckled)
 					S.Feedstop(silent = TRUE)
-				S.visible_message("[S] vanishes in a flash of light!")
+				S.visible_message("<span class='notice'>[S] vanishes in a flash of light!</span>")
 				S.forceMove(X)
 				X.stored_slimes += S
 	else
@@ -267,7 +268,7 @@
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
 			if(M.stat)
-				M.visible_message("[M] vanishes as [M.p_theyre()] reclaimed for recycling!")
+				M.visible_message("<span class='notice'>[M] vanishes as [M.p_theyre()] reclaimed for recycling!</span>")
 				recycler.use_power(500)
 				X.monkeys += recycler.cube_production
 				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
@@ -408,7 +409,7 @@
 			return
 		if(S.buckled)
 			S.Feedstop(silent = TRUE)
-		S.visible_message("[S] vanishes in a flash of light!")
+		S.visible_message("<span class='notice'>[S] vanishes in a flash of light!</span>")
 		S.forceMove(X)
 		X.stored_slimes += S
 
@@ -424,7 +425,7 @@
 	if(turfarea.name == E.allowed_area || turfarea.xenobiology_compatible)
 		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
 			S.forceMove(T)
-			S.visible_message("[S] warps in!")
+			S.visible_message("<span class='notice'>[S] warps in!</span>")
 			X.stored_slimes -= S
 
 //Place monkey
@@ -462,7 +463,7 @@
 	if(mobarea.name == E.allowed_area || mobarea.xenobiology_compatible)
 		if(!M.stat)
 			return
-		M.visible_message("[M] vanishes as [p_theyre()] reclaimed for recycling!")
+		M.visible_message("<span class='notice'>[M] vanishes as [p_theyre()] reclaimed for recycling!</span>")
 		X.connected_recycler.use_power(500)
 		X.monkeys += connected_recycler.cube_production
 		X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors

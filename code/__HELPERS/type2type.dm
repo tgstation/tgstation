@@ -121,7 +121,6 @@
 
 //Converts an angle (degrees) into an ss13 direction
 /proc/angle2dir(degree)
-
 	degree = SIMPLIFY_DEGREES(degree)
 	switch(degree)
 		if(0 to 22.5) //north requires two angle ranges
@@ -143,8 +142,9 @@
 		if(337.5 to 360)
 			return NORTH
 
-/proc/angle2dir_cardinal(angle)
-	switch(round(angle, 0.1))
+/proc/angle2dir_cardinal(degree)
+	degree = SIMPLIFY_DEGREES(degree)
+	switch(round(degree, 0.1))
 		if(315.5 to 360, 0 to 45.5)
 			return NORTH
 		if(45.6 to 135.5)
@@ -503,7 +503,7 @@
 //The string is well, obviously the string being checked
 //The datum is used as a source for var names, to check validity
 //Otherwise every single word could technically be a variable!
-/proc/string2listofvars(var/t_string, var/datum/var_source)
+/proc/string2listofvars(t_string, datum/var_source)
 	if(!t_string || !var_source)
 		return list()
 

@@ -99,13 +99,13 @@
 			L[DNA_GENDER_BLOCK] = construct_block(G_PLURAL, 3)
 	if(ishuman(holder))
 		var/mob/living/carbon/human/H = holder
-		if(!GLOB.hair_styles_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/hair,GLOB.hair_styles_list, GLOB.hair_styles_male_list, GLOB.hair_styles_female_list)
-		L[DNA_HAIR_STYLE_BLOCK] = construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len)
+		if(!GLOB.hairstyles_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/hair,GLOB.hairstyles_list, GLOB.hairstyles_male_list, GLOB.hairstyles_female_list)
+		L[DNA_HAIRSTYLE_BLOCK] = construct_block(GLOB.hairstyles_list.Find(H.hairstyle), GLOB.hairstyles_list.len)
 		L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color)
-		if(!GLOB.facial_hair_styles_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, GLOB.facial_hair_styles_list, GLOB.facial_hair_styles_male_list, GLOB.facial_hair_styles_female_list)
-		L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len)
+		if(!GLOB.facial_hairstyles_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, GLOB.facial_hairstyles_list, GLOB.facial_hairstyles_male_list, GLOB.facial_hairstyles_female_list)
+		L[DNA_FACIAL_HAIRSTYLE_BLOCK] = construct_block(GLOB.facial_hairstyles_list.Find(H.facial_hairstyle), GLOB.facial_hairstyles_list.len)
 		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
@@ -191,10 +191,10 @@
 					setblock(uni_identity, blocknumber, construct_block(G_FEMALE, 3))
 				else
 					setblock(uni_identity, blocknumber, construct_block(G_PLURAL, 3))
-		if(DNA_FACIAL_HAIR_STYLE_BLOCK)
-			setblock(uni_identity, blocknumber, construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len))
-		if(DNA_HAIR_STYLE_BLOCK)
-			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
+		if(DNA_FACIAL_HAIRSTYLE_BLOCK)
+			setblock(uni_identity, blocknumber, construct_block(GLOB.facial_hairstyles_list.Find(H.facial_hairstyle), GLOB.facial_hairstyles_list.len))
+		if(DNA_HAIRSTYLE_BLOCK)
+			setblock(uni_identity, blocknumber, construct_block(GLOB.hairstyles_list.Find(H.hairstyle), GLOB.hairstyles_list.len))
 
 //Please use add_mutation or activate_mutation instead
 /datum/dna/proc/force_give(datum/mutation/human/HM)
@@ -385,8 +385,8 @@
 	facial_hair_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
 	skin_tone = GLOB.skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), GLOB.skin_tones.len)]
 	eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
-	facial_hair_style = GLOB.facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), GLOB.facial_hair_styles_list.len)]
-	hair_style = GLOB.hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), GLOB.hair_styles_list.len)]
+	facial_hairstyle = GLOB.facial_hairstyles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIRSTYLE_BLOCK), GLOB.facial_hairstyles_list.len)]
+	hairstyle = GLOB.hairstyles_list[deconstruct_block(getblock(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
 	if(icon_update)
 		update_body()
 		update_hair()
@@ -487,7 +487,7 @@
 	var/mutation = pick(candidates)
 	. = dna.add_mutation(mutation)
 
-/mob/living/carbon/proc/easy_randmut(quality = POSITIVE + NEGATIVE + MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, exclude_monkey = TRUE)
+/mob/living/carbon/proc/easy_randmut(quality = POSITIVE + NEGATIVE + MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, exclude_monkey = TRUE, resilient = NONE)
 	if(!has_dna())
 		return
 	var/list/mutations = list()
@@ -510,6 +510,8 @@
 			var/datum/mutation/human/HM = dna.get_mutation(mutation)
 			if(HM)
 				HM.scrambled = TRUE
+				if(HM.quality & resilient) 
+					HM.mutadone_proof = TRUE
 		return TRUE
 
 /mob/living/carbon/proc/randmuti()
@@ -649,4 +651,4 @@
 		eyes.Remove(src)
 		qdel(eyes)
 		visible_message("<span class='notice'>[src] looks up and their eyes melt away!</span>", "<span class>='userdanger'>I understand now.</span>")
-		addtimer(CALLBACK(src, .proc/adjustBrainLoss, 200), 20)
+		addtimer(CALLBACK(src, .proc/adjustOrganLoss, ORGAN_SLOT_BRAIN, 200), 20)

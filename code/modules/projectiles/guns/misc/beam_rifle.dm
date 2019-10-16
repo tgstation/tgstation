@@ -19,7 +19,7 @@
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	force = 15
-	materials = list()
+	custom_materials = null
 	recoil = 4
 	ammo_x_offset = 3
 	ammo_y_offset = 3
@@ -194,7 +194,7 @@
 	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
 		return
 	aiming_lastangle = lastangle
-	var/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
+	var/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
 	P.gun = src
 	P.wall_pierce_amount = wall_pierce_amount
 	P.structure_pierce_amount = structure_piercing
@@ -370,7 +370,7 @@
 
 /obj/item/ammo_casing/energy/beam_rifle/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	. = ..()
-	var/obj/item/projectile/beam/beam_rifle/hitscan/HS_BB = BB
+	var/obj/projectile/beam/beam_rifle/hitscan/HS_BB = BB
 	if(!istype(HS_BB))
 		return
 	HS_BB.impact_direct_damage = projectile_damage
@@ -409,12 +409,12 @@
 	return TRUE
 
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
-	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
+	projectile_type = /obj/projectile/beam/beam_rifle/hitscan
 	select_name = "beam"
 	e_cost = 10000
 	fire_sound = 'sound/weapons/beam_sniper.ogg'
 
-/obj/item/projectile/beam/beam_rifle
+/obj/projectile/beam/beam_rifle
 	name = "particle beam"
 	icon = null
 	hitsound = 'sound/effects/explosion3.ogg'
@@ -442,7 +442,7 @@
 	var/turf/cached
 	var/list/pierced = list()
 
-/obj/item/projectile/beam/beam_rifle/proc/AOE(turf/epicenter)
+/obj/projectile/beam/beam_rifle/proc/AOE(turf/epicenter)
 	set waitfor = FALSE
 	if(!epicenter)
 		return
@@ -459,7 +459,7 @@
 				continue
 			O.take_damage(aoe_structure_damage * get_damage_coeff(O), BURN, "laser", FALSE)
 
-/obj/item/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
+/obj/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
 	if(!do_pierce)
 		return FALSE
 	if(pierced[target])		//we already pierced them go away
@@ -485,14 +485,14 @@
 				return TRUE
 	return FALSE
 
-/obj/item/projectile/beam/beam_rifle/proc/get_damage_coeff(atom/target)
+/obj/projectile/beam/beam_rifle/proc/get_damage_coeff(atom/target)
 	if(istype(target, /obj/machinery/door))
 		return 0.4
 	if(istype(target, /obj/structure/window))
 		return 0.5
 	return 1
 
-/obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
+/obj/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
 	if(isobj(target))
 		var/obj/O = target
 		O.take_damage(impact_structure_damage * get_damage_coeff(target), BURN, "laser", FALSE)
@@ -501,18 +501,18 @@
 		L.adjustFireLoss(impact_direct_damage)
 		L.emote("scream")
 
-/obj/item/projectile/beam/beam_rifle/proc/handle_hit(atom/target)
+/obj/projectile/beam/beam_rifle/proc/handle_hit(atom/target)
 	set waitfor = FALSE
 	if(!cached && !QDELETED(target))
 		cached = get_turf(target)
 	if(nodamage)
 		return FALSE
-	playsound(cached, 'sound/effects/explosion3.ogg', 100, 1)
+	playsound(cached, 'sound/effects/explosion3.ogg', 100, TRUE)
 	AOE(cached)
 	if(!QDELETED(target))
 		handle_impact(target)
 
-/obj/item/projectile/beam/beam_rifle/Bump(atom/target)
+/obj/projectile/beam/beam_rifle/Bump(atom/target)
 	if(check_pierce(target))
 		permutated += target
 		trajectory_ignore_forcemove = TRUE
@@ -523,19 +523,19 @@
 		cached = get_turf(target)
 	return ..()
 
-/obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE)
 	if(!QDELETED(target))
 		cached = get_turf(target)
 	handle_hit(target)
 	return ..()
 
-/obj/item/projectile/beam/beam_rifle/hitscan
+/obj/projectile/beam/beam_rifle/hitscan
 	icon_state = ""
 	hitscan = TRUE
 	tracer_type = /obj/effect/projectile/tracer/tracer/beam_rifle
 	var/constant_tracer = FALSE
 
-/obj/item/projectile/beam/beam_rifle/hitscan/generate_hitscan_tracers(cleanup = TRUE, duration = 5, impacting = TRUE, highlander)
+/obj/projectile/beam/beam_rifle/hitscan/generate_hitscan_tracers(cleanup = TRUE, duration = 5, impacting = TRUE, highlander)
 	set waitfor = FALSE
 	if(isnull(highlander))
 		highlander = constant_tracer
@@ -551,7 +551,7 @@
 		beam_segments = null
 		QDEL_NULL(beam_index)
 
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam
+/obj/projectile/beam/beam_rifle/hitscan/aiming_beam
 	tracer_type = /obj/effect/projectile/tracer/tracer/aiming
 	name = "aiming beam"
 	hitsound = null
@@ -564,10 +564,10 @@
 	hitscan_light_color_override = "#99ff99"
 	reflectable = REFLECT_FAKEPROJECTILE
 
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
+/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
 	qdel(src)
 	return FALSE
 
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
+/obj/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
 	qdel(src)
 	return BULLET_ACT_HIT

@@ -10,6 +10,12 @@
 	var/list/gravito_targets = list()
 	var/gravity_power_range = 10 //how close the stand must stay to the target to keep the heavy gravity
 
+///Removes gravity from affected mobs upon guardian death to prevent permanent effects
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/death()
+	. = ..()
+	for(var/datum/component/C in gravito_targets)
+		remove_gravity(C)
+
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/AttackingTarget()
 	. = ..()
 	if(isliving(target) && target != src)
@@ -45,7 +51,7 @@
     var/datum/component/C = A.AddComponent(/datum/component/forced_gravity,new_gravity)
     RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/__distance_check)
     gravito_targets.Add(C)
-    playsound(src, 'sound/effects/gravhit.ogg', 100, 1)
+    playsound(src, 'sound/effects/gravhit.ogg', 100, TRUE)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/remove_gravity(datum/component/C)
 	UnregisterSignal(C.parent, COMSIG_MOVABLE_MOVED)

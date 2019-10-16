@@ -247,15 +247,16 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 	to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		if(!welded)
-			user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
+			user.visible_message("<span class='notice'>[user] welds the vent shut.</span>", "<span class='notice'>You weld the vent shut.</span>", "<span class='hear'>You hear welding.</span>")
 			welded = TRUE
 		else
-			user.visible_message("[user] unwelded the vent.", "<span class='notice'>You unweld the vent.</span>", "<span class='italics'>You hear welding.</span>")
+			user.visible_message("<span class='notice'>[user] unwelded the vent.</span>", "<span class='notice'>You unweld the vent.</span>", "<span class='hear'>You hear welding.</span>")
 			welded = FALSE
 		update_icon()
 		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
@@ -276,7 +277,7 @@
 		. += "It seems welded shut."
 
 /obj/machinery/atmospherics/components/unary/vent_pump/power_change()
-	..()
+	. = ..()
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
@@ -285,12 +286,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/attack_alien(mob/user)
 	if(!welded || !(do_after(user, 20, target = src)))
 		return
-	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the vent", "You hear loud scraping noises.")
+	user.visible_message("<span class='warning'>[user] furiously claws at [src]!</span>", "<span class='notice'>You manage to clear away the stuff blocking the vent.</span>", "<span class='hear'>You hear loud scraping noises.</span>")
 	welded = FALSE
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 	pipe_vision_img.plane = ABOVE_HUD_PLANE
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"

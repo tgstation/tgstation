@@ -414,20 +414,6 @@
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/reagent_containers/glass/beaker = 2)
 
-/obj/item/circuitboard/machine/protolathe
-	name = "Protolathe (Machine Board)"
-	icon_state = "generic"
-	build_path = /obj/machinery/rnd/production/protolathe
-	req_components = list(
-		/obj/item/stock_parts/matter_bin = 2,
-		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/reagent_containers/glass/beaker = 2)
-
-/obj/item/circuitboard/machine/protolathe/department
-	name = "Departmental Protolathe (Machine Board)"
-	icon_state = "generic"
-	build_path = /obj/machinery/rnd/production/protolathe/department
-
 /obj/item/circuitboard/machine/protolathe/department
 	name = "Departmental Protolathe (Machine Board)"
 	icon_state = "generic"
@@ -449,6 +435,7 @@
 		/obj/machinery/smartfridge/food = "food",
 		/obj/machinery/smartfridge/drinks = "drinks",
 		/obj/machinery/smartfridge/extract = "slimes",
+		/obj/machinery/smartfridge/organ = "organs",
 		/obj/machinery/smartfridge/chemistry = "chems",
 		/obj/machinery/smartfridge/chemistry/virology = "viruses",
 		/obj/machinery/smartfridge/disks = "disks")
@@ -469,8 +456,8 @@
 		return ..()
 
 /obj/item/circuitboard/machine/smartfridge/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.</span>")
+	. = ..()
+	. += "<span class='info'>[src] is set to [fridges_name_paths[build_path]]. You can use a screwdriver to reconfigure it.</span>"
 
 
 /obj/item/circuitboard/machine/space_heater
@@ -497,10 +484,11 @@
 	build_path = /obj/machinery/rnd/production/techfab/department
 
 /obj/item/circuitboard/machine/vendor
-	name = "Booze-O-Mat Vendor (Machine Board)"
+	name = "Custom Vendor (Machine Board)"
 	desc = "You can turn the \"brand selection\" dial using a screwdriver."
-	build_path = /obj/machinery/vending/boozeomat
-	req_components = list(/obj/item/vending_refill/boozeomat = 1)
+	custom_premium_price = 30
+	build_path = /obj/machinery/vending/custom
+	req_components = list(/obj/item/vending_refill/custom = 1)
 
 	var/static/list/vending_names_paths = list(
 		/obj/machinery/vending/boozeomat = "Booze-O-Mat",
@@ -541,7 +529,8 @@
 		/obj/machinery/vending/engineering = "Robco Tool Maker",
 		/obj/machinery/vending/sovietsoda = "BODA",
 		/obj/machinery/vending/security = "SecTech",
-		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections")
+		/obj/machinery/vending/modularpc = "Deluxe Silicate Selections",
+		/obj/machinery/vending/custom = "Custom Vendor")
 
 /obj/item/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
@@ -684,6 +673,26 @@
 	icon_state = "medical"
 	build_path = /obj/machinery/harvester
 	req_components = list(/obj/item/stock_parts/micro_laser = 4)
+
+/obj/item/circuitboard/machine/medical_kiosk
+	name = "Medical Kiosk (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/medical_kiosk
+	var/custom_cost = 5
+	req_components = list(
+		/obj/item/healthanalyzer = 1,
+		/obj/item/stock_parts/scanning_module = 1)
+
+/obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
+	. = ..()
+	var/new_cost = input("Set a new cost for using this medical kiosk.","New cost", custom_cost) as num|null
+	if(new_cost == null)
+		return
+	custom_cost = CLAMP(round(new_cost, 1), 1, 1000)
+
+/obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)
+	. = ..()
+	. += "The cost to use this kiosk is set to [custom_cost]."
 
 /obj/item/circuitboard/machine/limbgrower
 	name = "Limb Grower (Machine Board)"
@@ -843,6 +852,7 @@
 		/obj/item/stock_parts/manipulator = 1)
 
 /obj/item/circuitboard/machine/public_nanite_chamber/multitool_act(mob/living/user)
+	. = ..()
 	var/new_cloud = input("Set the public nanite chamber's Cloud ID (1-100).", "Cloud ID", cloud_id) as num|null
 	if(new_cloud == null)
 		return
@@ -850,7 +860,7 @@
 
 /obj/item/circuitboard/machine/public_nanite_chamber/examine(mob/user)
 	. = ..()
-	to_chat(user, "Cloud ID is currently set to [cloud_id].")
+	. += "Cloud ID is currently set to [cloud_id]."
 
 /obj/item/circuitboard/machine/quantumpad
 	name = "Quantum Pad (Machine Board)"
@@ -962,9 +972,9 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/dish_drive/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.</span>")
-	to_chat(user, "<span class='notice'>Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.</span>")
+	. = ..()
+	. += "<span class='notice'>Its suction function is [suction ? "enabled" : "disabled"]. Use it in-hand to switch.</span>"
+	. += "<span class='notice'>Its disposal auto-transmit function is [transmit ? "enabled" : "disabled"]. Alt-click it to switch.</span>"
 
 /obj/item/circuitboard/machine/dish_drive/attack_self(mob/living/user)
 	suction = !suction
@@ -1124,6 +1134,15 @@
 	icon_state = "supply"
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
 
+/obj/item/circuitboard/machine/pump
+	name = "Portable Liquid Pump (Machine Board)"
+	icon_state = "supply"
+	build_path = /obj/machinery/power/liquid_pump
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/matter_bin = 2)
+
 //Misc
 
 
@@ -1142,10 +1161,6 @@
 		/obj/item/stock_parts/capacitor = /obj/item/stock_parts/capacitor/quadratic,
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra)
 
-/obj/item/circuitboard/machine/clockwork
-	name = "clockwork board (Report This)"
-	icon_state = "clock_mod"
-
 /obj/item/circuitboard/machine/plantgenes/vault
 	name = "alien board (Plant DNA Manipulator)"
 	icon_state = "abductor_mod"
@@ -1154,3 +1169,5 @@
 		/obj/item/stock_parts/manipulator = /obj/item/stock_parts/manipulator/femto,
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra,
 		/obj/item/stock_parts/scanning_module = /obj/item/stock_parts/scanning_module/triphasic)
+
+

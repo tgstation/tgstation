@@ -8,14 +8,14 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	move_to_delay = 40
 	ranged = 1
 	ranged_cooldown_time = 120
-	friendly = "wails at"
+	friendly_verb_continuous = "wails at"
+	friendly_verb_simple = "wail at"
 	speak_emote = list("bellows")
-	vision_range = 4
 	speed = 3
 	maxHealth = 300
 	health = 300
@@ -23,7 +23,8 @@
 	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attacktext = "pulverizes"
+	attack_verb_continuous = "pulverizes"
+	attack_verb_simple = "pulverize"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
 	vision_range = 5

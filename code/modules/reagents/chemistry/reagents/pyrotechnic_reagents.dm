@@ -47,7 +47,7 @@
 	if(isplatingturf(T))
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
-			F.ScrapeAway()
+			F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	if(isfloorturf(T))
 		var/turf/open/floor/F = T
 		if(prob(reac_volume))
@@ -94,8 +94,12 @@
 	taste_description = "salt"
 
 /datum/reagent/blackpowder/on_mob_life(mob/living/carbon/M)
+	. = TRUE
 	..()
-	if(isplasmaman(M))
+	if(!isplasmaman(M))
+		return
+	M.set_drugginess(15)
+	if(M.hallucination < volume)
 		M.hallucination += 5
 
 /datum/reagent/blackpowder/on_ex_act()
@@ -213,9 +217,21 @@
 	shock_timer++
 	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
-		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
-		playsound(M, "sparks", 50, 1)
+		M.electrocute_act(rand(5,20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
+		playsound(M, "sparks", 50, TRUE)
 	..()
+
+/datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/human/L)
+	. = ..()
+	if(!istype(L))
+		return
+	L.physiology.siemens_coeff *= 2
+
+/datum/reagent/teslium/on_mob_end_metabolize(mob/living/carbon/human/L)
+	. = ..()
+	if(!istype(L))
+		return
+	L.physiology.siemens_coeff *= 0.5
 
 /datum/reagent/teslium/energized_jelly
 	name = "Energized Jelly"

@@ -41,18 +41,12 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
 "j" = (
-/obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "k" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/hunter)
-"l" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plating,
 /area/shuttle/hunter)
 "m" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -187,7 +181,7 @@
 /area/shuttle/hunter)
 "I" = (
 /obj/effect/turf_decal/bot,
-/obj/mecha/working/ripley,
+/obj/structure/mecha_wreckage/ripley,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "J" = (
@@ -221,6 +215,21 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/shuttle/hunter)
+"N" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/obj/effect/turf_decal/stripes/line{
+	dir = 2
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/hunter)
+"Q" = (
+/obj/item/book/manual/ripley_build_and_repair,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"Y" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter)
 
 (1,1,1) = {"
@@ -336,13 +345,13 @@ b
 f
 g
 b
-l
+x
 k
-u
-u
-q
-u
-k
+Y
+Y
+Y
+Y
+Q
 I
 b
 g
@@ -379,7 +388,7 @@ y
 y
 b
 k
-q
+N
 b
 b
 b

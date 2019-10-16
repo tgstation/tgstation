@@ -48,7 +48,7 @@ field_generator power level display
 	cut_overlays()
 	if(warming_up)
 		add_overlay("+a[warming_up]")
-	if(fields.len)
+	if(LAZYLEN(fields))
 		add_overlay("+on")
 	if(power_level)
 		add_overlay("+p[power_level]")
@@ -74,9 +74,9 @@ field_generator power level display
 				to_chat(user, "<span class='warning'>You are unable to turn off [src] once it is online!</span>")
 				return 1
 			else
-				user.visible_message("[user] turns on [src].", \
+				user.visible_message("<span class='notice'>[user] turns on [src].</span>", \
 					"<span class='notice'>You turn on [src].</span>", \
-					"<span class='italics'>You hear heavy droning.</span>")
+					"<span class='hear'>You hear heavy droning.</span>")
 				turn_on()
 				investigate_log("<font color='green'>activated</font> by [key_name(user)].", INVESTIGATE_SINGULO)
 
@@ -106,10 +106,12 @@ field_generator power level display
 			state = FG_UNSECURED
 
 /obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
 
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(active)
 		to_chat(user, "<span class='warning'>[src] needs to be off!</span>")
 		return TRUE
@@ -121,9 +123,9 @@ field_generator power level display
 		if(FG_SECURED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
-			user.visible_message("[user] starts to weld [src] to the floor.", \
+			user.visible_message("<span class='notice'>[user] starts to weld [src] to the floor.</span>", \
 				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-				"<span class='italics'>You hear welding.</span>")
+				"<span class='hear'>You hear welding.</span>")
 			if(I.use_tool(src, user, 20, volume=50) && state == FG_SECURED)
 				state = FG_WELDED
 				to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
@@ -131,9 +133,9 @@ field_generator power level display
 		if(FG_WELDED)
 			if(!I.tool_start_check(user, amount=0))
 				return TRUE
-			user.visible_message("[user] starts to cut [src] free from the floor.", \
+			user.visible_message("<span class='notice'>[user] starts to cut [src] free from the floor.</span>", \
 				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-				"<span class='italics'>You hear welding.</span>")
+				"<span class='hear'>You hear welding.</span>")
 			if(I.use_tool(src, user, 20, volume=50) && state == FG_WELDED)
 				state = FG_SECURED
 				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
@@ -157,7 +159,7 @@ field_generator power level display
 	else
 		..()
 
-/obj/machinery/field/generator/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/field/generator/bullet_act(obj/projectile/Proj)
 	if(Proj.flag != "bullet")
 		power = min(power + Proj.damage, field_generator_max_power)
 		check_power_level()
@@ -177,23 +179,30 @@ field_generator power level display
 
 /obj/machinery/field/generator/proc/turn_off()
 	active = FG_OFFLINE
-	spawn(1)
-		cleanup()
-		while (warming_up>0 && !active)
-			sleep(50)
-			warming_up--
-			update_icon()
+	INVOKE_ASYNC(src, .proc/cleanup)
+	addtimer(CALLBACK(src, .proc/cool_down), 50)
+
+/obj/machinery/field/generator/proc/cool_down()
+	if(active || warming_up <= 0)
+		return
+	warming_up--
+	update_icon()
+	if(warming_up > 0)
+		addtimer(CALLBACK(src, .proc/cool_down), 50)
 
 /obj/machinery/field/generator/proc/turn_on()
 	active = FG_CHARGING
-	spawn(1)
-		while (warming_up<3 && active)
-			sleep(50)
-			warming_up++
-			update_icon()
-			if(warming_up >= 3)
-				start_fields()
+	addtimer(CALLBACK(src, .proc/warm_up), 50)
 
+/obj/machinery/field/generator/proc/warm_up()
+	if(!active)
+		return
+	warming_up++
+	update_icon()
+	if(warming_up >= 3)
+		start_fields()
+	else
+		addtimer(CALLBACK(src, .proc/warm_up), 50)
 
 /obj/machinery/field/generator/proc/calc_power(set_power_draw)
 	var/power_draw = 2 + fields.len
@@ -204,7 +213,7 @@ field_generator power level display
 		check_power_level()
 		return 1
 	else
-		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='italics'>You hear something shutting down.</span>")
+		visible_message("<span class='danger'>The [name] shuts down!</span>", "<span class='hear'>You hear something shutting down.</span>")
 		turn_off()
 		investigate_log("ran out of power and <font color='red'>deactivated</font>", INVESTIGATE_SINGULO)
 		power = 0
@@ -246,17 +255,11 @@ field_generator power level display
 		turn_off()
 		return
 	move_resist = INFINITY
-	spawn(1)
-		setup_field(1)
-	spawn(2)
-		setup_field(2)
-	spawn(3)
-		setup_field(4)
-	spawn(4)
-		setup_field(8)
-	spawn(5)
-		active = FG_ONLINE
-
+	addtimer(CALLBACK(src, .proc/setup_field, 1), 1)
+	addtimer(CALLBACK(src, .proc/setup_field, 2), 2)
+	addtimer(CALLBACK(src, .proc/setup_field, 4), 3)
+	addtimer(CALLBACK(src, .proc/setup_field, 8), 4)
+	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 5)
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
 	var/turf/T = loc
@@ -326,18 +329,21 @@ field_generator power level display
 	//This is here to help fight the "hurr durr, release singulo cos nobody will notice before the
 	//singulo eats the evidence". It's not fool-proof but better than nothing.
 	//I want to avoid using global variables.
-	spawn(1)
-		var/temp = 1 //stops spam
-		for(var/obj/singularity/O in GLOB.singularities)
-			if(O.last_warning && temp)
-				if((world.time - O.last_warning) > 50) //to stop message-spam
-					temp = 0
-					var/turf/T = get_turf(src)
-					message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
-					investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
-			O.last_warning = world.time
+	INVOKE_ASYNC(src, .proc/notify_admins)
 
 	move_resist = initial(move_resist)
+
+/obj/machinery/field/generator/proc/notify_admins()
+	var/temp = TRUE //stops spam
+	for(var/obj/singularity/O in GLOB.singularities)
+		if(O.last_warning && temp)
+			if((world.time - O.last_warning) > 50) //to stop message-spam
+				temp = FALSE
+				var/turf/T = get_turf(src)
+				message_admins("A singulo exists and a containment field has failed at [ADMIN_VERBOSEJMP(T)].")
+				investigate_log("has <font color='red'>failed</font> whilst a singulo exists at [AREACOORD(T)].", INVESTIGATE_SINGULO)
+				notify_ghosts("IT'S LOOSE", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/warning-buzzer.ogg', header = "IT'S LOOSE", notify_volume = 75)
+		O.last_warning = world.time
 
 /obj/machinery/field/generator/shock(mob/living/user)
 	if(fields.len)

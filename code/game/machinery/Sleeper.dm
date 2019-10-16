@@ -12,21 +12,25 @@
 	density = FALSE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
+	ui_x = 375
+	ui_y = 550
+
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
-		list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/morphine, /datum/reagent/medicine/perfluorodecalin, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/kelotane),
+		list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/morphine, /datum/reagent/medicine/C2/convermol, /datum/reagent/medicine/C2/libital, /datum/reagent/medicine/C2/aiuri),
 		list(/datum/reagent/medicine/oculine,/datum/reagent/medicine/inacusiate),
-		list(/datum/reagent/medicine/antitoxin, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/pen_acid),
+		list(/datum/reagent/medicine/C2/multiver, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/pen_acid),
 		list(/datum/reagent/medicine/omnizine)
 	)
-	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
+	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: mutadone -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 	payment_department = ACCOUNT_MED
 	fair_market_price = 5
+
 /obj/machinery/sleeper/Initialize(mapload)
 	. = ..()
 	if(mapload)
@@ -114,10 +118,12 @@
 	return FALSE
 
 /obj/machinery/sleeper/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(default_change_direction_wrench(user, I))
 		return TRUE
 
 /obj/machinery/sleeper/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(default_pry_open(I))
 		return TRUE
 	if(default_deconstruction_crowbar(I))
@@ -138,7 +144,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "sleeper", name, 375, 550, master_ui, state)
+		ui = new(user, src, ui_key, "sleeper", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/sleeper/AltClick(mob/user)
@@ -195,7 +201,7 @@
 		data["occupant"]["toxLoss"] = mob_occupant.getToxLoss()
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
-		data["occupant"]["brainLoss"] = mob_occupant.getBrainLoss()
+		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
@@ -270,22 +276,6 @@
 	component_parts += new /obj/item/stack/sheet/glass(null)
 	component_parts += new /obj/item/stack/cable_coil(null)
 	RefreshParts()
-
-/obj/machinery/sleeper/clockwork
-	name = "soothing sleeper"
-	desc = "A large cryogenics unit built from brass. Its surface is pleasantly cool the touch."
-	icon_state = "sleeper_clockwork"
-	enter_message = "<span class='bold inathneq_small'>You hear the gentle hum and click of machinery, and are lulled into a sense of peace.</span>"
-	possible_chems = list(list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/bicaridine, /datum/reagent/medicine/kelotane, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate, /datum/reagent/medicine/mannitol))
-
-/obj/machinery/sleeper/clockwork/process()
-	if(occupant && isliving(occupant))
-		var/mob/living/L = occupant
-		if(GLOB.clockwork_vitality) //If there's Vitality, the sleeper has passive healing
-			GLOB.clockwork_vitality = max(0, GLOB.clockwork_vitality - 1)
-			L.adjustBruteLoss(-1)
-			L.adjustFireLoss(-1)
-			L.adjustOxyLoss(-5)
 
 /obj/machinery/sleeper/old
 	icon_state = "oldpod"

@@ -78,16 +78,12 @@
 	else
 		icon_state = "slots1"
 
-/obj/machinery/computer/slot_machine/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/coin))
 		var/obj/item/coin/C = I
 		if(paymode == COIN)
 			if(prob(2))
-				if(!user.transferItemToLoc(C, drop_location()))
+				if(!user.transferItemToLoc(C, drop_location(), silent = FALSE))
 					return
 				C.throw_at(user, 3, 10)
 				if(prob(10))
@@ -97,7 +93,7 @@
 			else
 				if(!user.temporarilyRemoveItemFromInventory(C))
 					return
-				to_chat(user, "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>")
+				to_chat(user, "<span class='notice'>You insert [C] into [src]'s slot!</span>")
 				balance += C.value
 				qdel(C)
 		else
@@ -132,7 +128,7 @@
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(4, 0, src.loc)
 	spark_system.start()
-	playsound(src, "sparks", 50, 1)
+	playsound(src, "sparks", 50, TRUE)
 
 /obj/machinery/computer/slot_machine/ui_interact(mob/living/user)
 	. = ..()
@@ -207,24 +203,28 @@
 	balance -= SPIN_PRICE
 	money += SPIN_PRICE
 	plays += 1
-	working = 1
+	working = TRUE
 
 	toggle_reel_spin(1)
 	update_icon()
 	updateDialog()
 
-	spawn(0)
-		while(working)
-			randomize_reels()
-			updateDialog()
-			sleep(2)
+	var/spin_loop = addtimer(CALLBACK(src, .proc/do_spin), 2, TIMER_LOOP|TIMER_STOPPABLE)
 
-	spawn(SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len)) //WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
-		toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)
-		working = 0
-		give_prizes(the_name, user)
-		update_icon()
-		updateDialog()
+	addtimer(CALLBACK(src, .proc/finish_spinning, spin_loop, user, the_name), SPIN_TIME - (REEL_DEACTIVATE_DELAY * reels.len))
+	//WARNING: no sanity checking for user since it's not needed and would complicate things (machine should still spin even if user is gone), be wary of this if you're changing this code.
+
+/obj/machinery/computer/slot_machine/proc/do_spin()
+	randomize_reels()
+	updateDialog()
+
+/obj/machinery/computer/slot_machine/proc/finish_spinning(spin_loop, mob/user, the_name)
+	toggle_reel_spin(0, REEL_DEACTIVATE_DELAY)
+	working = FALSE
+	deltimer(spin_loop)
+	give_prizes(the_name, user)
+	update_icon()
+	updateDialog()
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
 	if(stat & NOPOWER)

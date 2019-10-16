@@ -4,7 +4,7 @@
 	var/catchphrase = "High Five!"
 	var/on_use_sound = null
 	var/obj/effect/proc_holder/spell/targeted/touch/attached_spell
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/balloons.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	icon_state = "syndballoon"
@@ -31,8 +31,10 @@
 
 /obj/item/melee/touch_attack/afterattack(atom/target, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	user.say(catchphrase, forced = "spell")
-	playsound(get_turf(user), on_use_sound,50,1)
+	playsound(get_turf(user), on_use_sound,50,TRUE)
 	charges--
 	if(charges <= 0)
 		qdel(src)
@@ -43,7 +45,7 @@
 	return ..()
 
 /obj/item/melee/touch_attack/disintegrate
-	name = "\improper disintegrating touch"
+	name = "\improper smiting touch"
 	desc = "This hand of mine glows with an awesome power!"
 	catchphrase = "EI NATH!!"
 	on_use_sound = 'sound/magic/disintegrate.ogg'

@@ -72,7 +72,7 @@
 	summon_type = list(/obj/item/storage/box/mime)
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='notice'>You conjure up an invisible box, large enough to store a few things.</span>"
-	summon_lifespan = 250
+	summon_lifespan = 500
 	charge_max = 300
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
@@ -180,7 +180,7 @@
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20
-	projectile_type = /obj/item/projectile/bullet/mime
+	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3
 	sound = null
 	active_msg = "You draw your fingers!"
@@ -206,6 +206,16 @@
 		invocation_type ="none"
 	..()
 
+/obj/effect/proc_holder/spell/aimed/finger_guns/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(caller.incapacitated())
+		to_chat(caller, "<span class='warning'>You can't properly point your fingers while incapacitated.</span>")
+		if(charge_type == "recharge")
+			var/refund_percent = current_amount/projectile_amount
+			charge_counter = charge_max * refund_percent
+			start_recharge()
+		remove_ranged_ability()
+		on_deactivation(caller)
+	..()
 
 /obj/item/book/granter/spell/mimery_blockade
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime

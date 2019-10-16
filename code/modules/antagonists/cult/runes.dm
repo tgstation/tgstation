@@ -49,9 +49,9 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 /obj/effect/rune/examine(mob/user)
 	. = ..()
 	if(iscultist(user) || user.stat == DEAD) //If they're a cultist or a ghost, tell them the effects
-		. += {"<b>Name:</b> [cultist_name]\n
-		<b>Effects:</b> [capitalize(cultist_desc)]\n
-		<b>Required Acolytes:</b> [req_cultists_text ? "[req_cultists_text]":"[req_cultists]"]"}
+		. += "<b>Name:</b> [cultist_name]\n"+\
+		"<b>Effects:</b> [capitalize(cultist_desc)]\n"+\
+		"<b>Required Acolytes:</b> [req_cultists_text ? "[req_cultists_text]":"[req_cultists]"]"
 		if(req_keyword && keyword)
 			. += "<b>Keyword:</b> [keyword]"
 
@@ -206,21 +206,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/oldcolor = color
 	color = RUNE_COLOR_DARKRED
 	var/mob/living/L = pick(myriad_targets)
-	var/is_clock = is_servant_of_ratvar(L)
 
 	var/mob/living/F = invokers[1]
 	var/datum/antagonist/cult/C = F.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	var/datum/team/cult/Cult_team = C.cult_team
 	var/is_convertable = is_convertable_to_cult(L,C.cult_team)
-	if(L.stat != DEAD && (is_clock || is_convertable))
+	if(L.stat != DEAD && is_convertable)
 		invocation = "Mah'weyh pleggh at e'ntrath!"
 		..()
-		if(is_clock)
-			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
-			"<span class='cultlarge'>\"Stop resisting. You <i>will</i> be mi-\"</span>\n\
-			<span class='large_brass'>\"Give up and you will feel pain unlike anything you've ever felt!\"</span>")
-			L.Paralyze(80)
-		else if(is_convertable)
+		if(is_convertable)
 			do_convert(L, invokers)
 	else
 		invocation = "Barhah hra zar'garis!"
@@ -307,10 +301,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(sacrificial)
 		if(iscyborg(sacrificial))
-			playsound(sacrificial, 'sound/magic/disable_tech.ogg', 100, 1)
+			playsound(sacrificial, 'sound/magic/disable_tech.ogg', 100, TRUE)
 			sacrificial.dust() //To prevent the MMI from remaining
 		else
-			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, 1)
+			playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
 			sacrificial.gib()
 	return TRUE
 
@@ -775,8 +769,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 					to_chat(L, "<span class='userdanger'>[I] suddenly burns hotly before returning to normal!</span>")
 				continue
 			to_chat(L, "<span class='cultlarge'>Your blood boils in your veins!</span>")
-			if(is_servant_of_ratvar(L))
-				to_chat(L, "<span class='userdanger'>You feel an unholy darkness dimming the Justiciar's light!</span>")
 	animate(src, color = "#FCB56D", time = 4)
 	sleep(4)
 	if(QDELETED(src))
@@ -802,8 +794,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(L.anti_magic_check(chargecost = 0))
 				continue
 			L.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
-			if(is_servant_of_ratvar(L))
-				L.adjustStaminaLoss(tick_damage*multiplier*1.5)
 
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
 /obj/effect/rune/manifest
@@ -850,7 +840,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			fail_invoke()
 			log_game("Manifest rune failed - too many summoned ghosts")
 			return list()
-		notify_ghosts("Manifest rune invoked in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
+		notify_ghosts("Manifest rune invoked in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src, header = "Manifest rune")
 		var/list/ghosts_on_rune = list()
 		for(var/mob/dead/observer/O in T)
 			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !QDELETED(O))
@@ -868,7 +858,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.apply_status_effect(STATUS_EFFECT_SUMMONEDGHOST) //ghosts can't summon more ghosts
 		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
 		ghosts++
-		playsound(src, 'sound/magic/exit_blood.ogg', 50, 1)
+		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
 		visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man.</span>")
 		to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
 		var/obj/structure/emergency_shield/invoker/N = new(T)
@@ -969,7 +959,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			intensity++
 	intensity = max(60, 360 - (360*(intensity/GLOB.player_list.len + 0.3)**2)) //significantly lower intensity for "winning" cults
 	var/duration = intensity*10
-	playsound(T, 'sound/magic/enter_blood.ogg', 100, 1)
+	playsound(T, 'sound/magic/enter_blood.ogg', 100, TRUE)
 	visible_message("<span class='warning'>A colossal shockwave of energy bursts from the rune, disintegrating it in the process!</span>")
 	for(var/mob/living/L in range(src, 3))
 		L.Paralyze(30)

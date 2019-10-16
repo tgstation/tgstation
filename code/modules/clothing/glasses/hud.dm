@@ -3,18 +3,29 @@
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	var/hud_type = null
+	///Used for topic calls. Just because you have a HUD display doesn't mean you should be able to interact with stuff.
+	var/hud_trait = null
+	
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(hud_type && slot == SLOT_GLASSES)
+	if(slot != SLOT_GLASSES)
+		return
+	if(hud_type)
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
+	if(hud_trait)
+		ADD_TRAIT(user, hud_trait, GLASSES_TRAIT)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
 	..()
-	if(hud_type && istype(user) && user.glasses == src)
+	if(!istype(user) || user.glasses != src)
+		return
+	if(hud_type)
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.remove_hud_from(user)
+	if(hud_trait)
+		REMOVE_TRAIT(user, hud_trait, GLASSES_TRAIT)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
 	. = ..()
@@ -32,9 +43,10 @@
 
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
+	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status."
 	icon_state = "healthhud"
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
+	hud_trait = TRAIT_MEDICAL_HUD
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
 /obj/item/clothing/glasses/hud/health/night
@@ -43,7 +55,7 @@
 	icon_state = "healthhudnight"
 	item_state = "glasses"
 	darkness_view = 8
-	flash_protect = -1
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -52,7 +64,7 @@
 	desc = "Sunglasses with a medical HUD."
 	icon_state = "sunhudmed"
 	darkness_view = 1
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
 
@@ -69,7 +81,7 @@
 	icon_state = "diagnostichudnight"
 	item_state = "glasses"
 	darkness_view = 8
-	flash_protect = -1
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -78,20 +90,21 @@
 	desc = "Sunglasses with a diagnostic HUD."
 	icon_state = "sunhuddiag"
 	item_state = "glasses"
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
+	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
+	hud_trait = TRAIT_SECURITY_HUD
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
 /obj/item/clothing/glasses/hud/security/chameleon
 	name = "chameleon security HUD"
 	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Provides flash protection."
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 
 	// Yes this code is the same as normal chameleon glasses, but we don't
 	// have multiple inheritance, okay?
@@ -122,16 +135,16 @@
 	desc = "Sunglasses with a security HUD."
 	icon_state = "sunhudsec"
 	darkness_view = 1
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
 
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"
-	desc = "An advanced heads-up display which provides id data and vision in complete darkness."
+	desc = "An advanced heads-up display that provides ID data and vision in complete darkness."
 	icon_state = "securityhudnight"
 	darkness_view = 8
-	flash_protect = -1
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 

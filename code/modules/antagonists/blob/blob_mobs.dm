@@ -85,7 +85,8 @@
 	melee_damage_upper = 4
 	obj_damage = 20
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
-	attacktext = "hits"
+	attack_verb_continuous = "hits"
+	attack_verb_simple = "hit"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	movement_type = FLYING
 	del_on_death = 1
@@ -95,7 +96,7 @@
 	var/is_zombie = 0
 	gold_core_spawnable = HOSTILE_SPAWN
 
-/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, var/obj/structure/blob/factory/linked_node)
+/mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
@@ -120,14 +121,14 @@
 	health = maxHealth
 	name = "blob zombie"
 	desc = "A shambling corpse animated by the blob."
-	mob_biotypes += MOB_HUMANOID
+	mob_biotypes |= MOB_HUMANOID
 	melee_damage_lower += 8
 	melee_damage_upper += 11
 	movement_type = GROUND
 	death_cloud_size = 0
 	icon = H.icon
 	icon_state = "zombie"
-	H.hair_style = null
+	H.hairstyle = null
 	H.update_hair()
 	H.forceMove(src)
 	oldguy = H
@@ -204,7 +205,8 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	obj_damage = 60
-	attacktext = "slams"
+	attack_verb_continuous = "slams"
+	attack_verb_simple = "slam"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	verb_say = "gurgles"
 	verb_ask = "demands"
@@ -278,11 +280,11 @@
 	if(overmind) //if we have an overmind, we're doing chemical reactions instead of pure damage
 		melee_damage_lower = 4
 		melee_damage_upper = 4
-		attacktext = overmind.blobstrain.blobbernaut_message
+		attack_verb_continuous = overmind.blobstrain.blobbernaut_message
 	else
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
-		attacktext = initial(attacktext)
+		attack_verb_continuous = initial(attack_verb_continuous)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
 	..(gibbed)

@@ -66,7 +66,7 @@
 
 	var/list/learned_recipes //List of learned recipe TYPES.
 
-/datum/mind/New(var/key)
+/datum/mind/New(key)
 	src.key = key
 	soulOwner = src
 	martial_art = default_martial_art
@@ -84,7 +84,7 @@
 
 	return language_holder
 
-/datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
+/datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		UnregisterSignal(current, COMSIG_MOB_DEATH)
@@ -126,6 +126,9 @@
 	last_death = world.time
 
 /datum/mind/proc/store_memory(new_text)
+	var/newlength = length(memory) + length(new_text)
+	if (newlength > MAX_MESSAGE_LEN * 100)
+		memory = copytext(memory, -newlength-MAX_MESSAGE_LEN * 100)
 	memory += "[new_text]<BR>"
 
 /datum/mind/proc/wipe_memory()
@@ -323,9 +326,6 @@
 	else if(is_revolutionary(creator))
 		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
 		converter.add_revolutionary(src,FALSE)
-
-	else if(is_servant_of_ratvar(creator))
-		add_servant_of_ratvar(current)
 
 	else if(is_nuclear_operative(creator))
 		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
@@ -579,6 +579,10 @@
 	if(!(has_antag_datum(/datum/antagonist/traitor)))
 		add_antag_datum(/datum/antagonist/traitor)
 
+/datum/mind/proc/make_Contractor_Support()
+	if(!(has_antag_datum(/datum/antagonist/traitor/contractor_support)))
+		add_antag_datum(/datum/antagonist/traitor/contractor_support)
+
 /datum/mind/proc/make_Changeling()
 	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 	if(!C)
@@ -682,7 +686,7 @@
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
-/datum/mind/proc/has_martialart(var/string)
+/datum/mind/proc/has_martialart(string)
 	if(martial_art && martial_art.id == string)
 		return martial_art
 	return FALSE

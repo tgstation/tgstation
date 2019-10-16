@@ -18,11 +18,11 @@
 	..()
 	SSair.atmos_machinery += src
 
+/obj/machinery/portable_atmospherics/Initialize()
+	. = ..()
 	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
-
-	return 1
 
 /obj/machinery/portable_atmospherics/Destroy()
 	SSair.atmos_machinery -= src
@@ -134,7 +134,7 @@
 				user.visible_message( \
 					"[user] disconnects [src].", \
 					"<span class='notice'>You unfasten [src] from the port.</span>", \
-					"<span class='italics'>You hear a ratchet.</span>")
+					"<span class='hear'>You hear a ratchet.</span>")
 				update_icon()
 				return
 			else
@@ -149,7 +149,7 @@
 				user.visible_message( \
 					"[user] connects [src].", \
 					"<span class='notice'>You fasten [src] to the port.</span>", \
-					"<span class='italics'>You hear a ratchet.</span>")
+					"<span class='hear'>You hear a ratchet.</span>")
 				update_icon()
 	else
 		return ..()

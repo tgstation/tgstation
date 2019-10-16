@@ -3,7 +3,7 @@
 	icon = 'icons/mob/aibots.dmi'
 	layer = MOB_LAYER
 	gender = NEUTER
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	light_range = 3
 	stop_automated_movement = 1
 	wander = 0
@@ -285,7 +285,7 @@
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if(istype(W, /obj/item/paicard))
 		insertpai(user, W)
-	else if(istype(W, /obj/item/hemostat) && paicard)
+	else if(W.tool_behaviour == TOOL_HEMOSTAT && paicard)
 		if(open)
 			to_chat(user, "<span class='warning'>Close the access panel before manipulating the personality slot!</span>")
 		else
@@ -306,13 +306,13 @@
 
 			if(W.use_tool(src, user, 0, volume=40))
 				adjustHealth(-10)
-				user.visible_message("[user] repairs [src]!","<span class='notice'>You repair [src].</span>")
+				user.visible_message("<span class='notice'>[user] repairs [src]!</span>","<span class='notice'>You repair [src].</span>")
 		else
 			if(W.force) //if force is non-zero
 				do_sparks(5, TRUE, src)
 			..()
 
-/mob/living/simple_animal/bot/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		if(prob(75) && Proj.damage > 0)
 			do_sparks(5, TRUE, src)
@@ -327,7 +327,7 @@
 	new /obj/effect/temp_visual/emp(loc)
 	if(paicard)
 		paicard.emp_act(severity)
-		src.visible_message("[paicard] is flies out of [bot_name]!","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
+		src.visible_message("<span class='notice'>[paicard] is flies out of [bot_name]!</span>","<span class='warning'>You are forcefully ejected from [bot_name]!</span>")
 		ejectpai(0)
 	if(on)
 		turn_off()
@@ -478,8 +478,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	if(step_count >= 1 && tries < BOT_STEP_MAX_RETRIES)
 		for(var/step_number = 0, step_number < step_count,step_number++)
-			spawn(BOT_STEP_DELAY*step_number)
-				bot_step(dest)
+			addtimer(CALLBACK(src, .proc/bot_step, dest), BOT_STEP_DELAY*step_number)
 	else
 		return FALSE
 	return TRUE
@@ -589,19 +588,20 @@ Pass a positive integer as an argument to override a bot's default speed.
 		mode = BOT_IDLE
 		return
 
-	if(patrol_target)		// has patrol target
-		spawn(0)
-			calc_path()		// Find a route to it
-			if(path.len == 0)
-				patrol_target = null
-				return
-			mode = BOT_PATROL
+	if(patrol_target) // has patrol target
+		INVOKE_ASYNC(src, .proc/target_patrol)
 	else					// no patrol target, so need a new one
 		speak("Engaging patrol mode.")
 		find_patrol_target()
 		tries++
 	return
 
+/mob/living/simple_animal/bot/proc/target_patrol()
+	calc_path()		// Find a route to it
+	if(!path.len)
+		patrol_target = null
+		return
+	mode = BOT_PATROL
 // perform a single patrol step
 
 /mob/living/simple_animal/bot/proc/patrol_step()
@@ -816,6 +816,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 				hacked = TRUE
 				locked = TRUE
 				to_chat(usr, "<span class='warning'>[text_hack]</span>")
+				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
+				log_game("Safety lock of [src] was disabled by [key_name(usr)] in [AREACOORD(src)]")
 				bot_reset()
 			else if(!hacked)
 				to_chat(usr, "<span class='boldannounce'>[text_dehack_fail]</span>")
@@ -823,6 +825,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				emagged = FALSE
 				hacked = FALSE
 				to_chat(usr, "<span class='notice'>[text_dehack]</span>")
+				log_game("Safety lock of [src] was re-enabled by [key_name(usr)] in [AREACOORD(src)]")
 				bot_reset()
 		if("ejectpai")
 			if(paicard && (!locked || issilicon(usr) || IsAdminGhost(usr)))
@@ -892,7 +895,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				if(!user.transferItemToLoc(card, src))
 					return
 				paicard = card
-				user.visible_message("[user] inserts [card] into [src]!","<span class='notice'>You insert [card] into [src].</span>")
+				user.visible_message("<span class='notice'>[user] inserts [card] into [src]!</span>", "<span class='notice'>You insert [card] into [src].</span>")
 				paicard.pai.mind.transfer_to(src)
 				to_chat(src, "<span class='notice'>You sense your form change as you are uploaded into [src].</span>")
 				bot_name = name

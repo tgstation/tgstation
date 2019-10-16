@@ -14,7 +14,7 @@
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
-	mutatelist = list(/obj/item/seeds/starthistle/corpse_flower)
+	mutatelist = list(/obj/item/seeds/starthistle/corpse_flower, /obj/item/seeds/galaxythistle)
 
 /obj/item/seeds/starthistle/harvest(mob/user)
 	var/obj/machinery/hydroponics/parent = loc
@@ -61,6 +61,41 @@
 	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
 	T.assume_air(stank)
 	T.air_update_turf()
+
+//Galaxy Thistle
+/obj/item/seeds/galaxythistle
+	name = "pack of galaxythistle seeds"
+	desc = "An impressive species of weed that is thought to have evolved from the simple milk thistle. Contains flavolignans that can help repair a damaged liver."
+	icon_state = "seed-galaxythistle"
+	species = "galaxythistle"
+	plantname = "Galaxythistle"
+	product = /obj/item/reagent_containers/food/snacks/grown/galaxythistle
+	lifespan = 70
+	endurance = 40
+	maturation = 3
+	production = 2
+	yield = 2
+	potency = 25
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/invasive)
+	mutatelist = list()
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/silibinin = 0.1)
+
+/obj/item/seeds/galaxythistle/Initialize()
+	..()
+	unset_mutability(/datum/plant_gene/trait/invasive, PLANT_GENE_REMOVABLE)
+
+/obj/item/reagent_containers/food/snacks/grown/galaxythistle
+	seed = /obj/item/seeds/galaxythistle
+	name = "galaxythistle flower head"
+	desc = "This spiny cluster of florets reminds you of the highlands."
+	icon_state = "galaxythistle"
+	filling_color = "#1E7549"
+	bitesize_mod = 3
+	foodtype = VEGETABLES
+	wine_power = 35
+	tastes = list("thistle" = 2, "artichoke" = 1)
 
 // Cabbage
 /obj/item/seeds/cabbage
@@ -188,6 +223,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
 	icon_state = "cherry_bomb_lit"
-	playsound(src, 'sound/effects/fuse.ogg', seed.potency, 0)
+	playsound(src, 'sound/effects/fuse.ogg', seed.potency, FALSE)
 	reagents.chem_temp = 1000 //Sets off the black powder
 	reagents.handle_reactions()
+

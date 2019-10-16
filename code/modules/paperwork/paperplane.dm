@@ -46,7 +46,7 @@
 			qdel(src)
 
 /obj/item/paperplane/Destroy()
-	QDEL_NULL(internalPaper)
+	internalPaper = null
 	return ..()
 
 /obj/item/paperplane/suicide_act(mob/living/user)
@@ -84,7 +84,7 @@
 		internalPaper.attackby(P, user) //spoofed attack to update internal paper.
 		update_icon()
 
-	else if(P.is_hot())
+	else if(P.get_temperature())
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 				"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
@@ -120,9 +120,9 @@
 	if(prob(hit_probability))
 		if(H.is_eyes_covered())
 			return
-		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
+		visible_message("<span class='danger'>\The [src] hits [H] in the eye[eyes ? "" : " socket"]!</span>")
 		H.adjust_blurriness(6)
-		eyes.applyOrganDamage(rand(6,8))
+		eyes?.applyOrganDamage(rand(6,8))
 		H.Paralyze(40)
 		H.emote("scream")
 

@@ -16,7 +16,7 @@
 	owner.cure_nearsighted(GENETIC_MUTATION)
 
 
-//Blind makes you blind. Who knew?
+///Blind makes you blind. Who knew?
 /datum/mutation/human/blind
 	name = "Blindness"
 	desc = "Renders the subject completely blind."
@@ -33,7 +33,7 @@
 		return
 	owner.cure_blind(GENETIC_MUTATION)
 
-
+///Thermal Vision lets you see mobs through walls
 /datum/mutation/human/thermal
 	name = "Thermal Vision"
 	desc = "The user of this genome can visually percieve the unique human thermal signature."
@@ -57,7 +57,7 @@
 	REMOVE_TRAIT(owner, visionflag, GENETIC_MUTATION)
 	owner.update_sight()
 
-//X-ray Vision lets you see through walls.
+///X-ray Vision lets you see through walls.
 /datum/mutation/human/thermal/x_ray
 	name = "X Ray Vision"
 	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, wich might be fun for later //hmb
@@ -66,7 +66,7 @@
 	locked = TRUE
 	visionflag = TRAIT_XRAY_VISION
 
-//Laser Eyes lets you shoot lasers from your eyes!
+///Laser Eyes lets you shoot lasers from your eyes!
 /datum/mutation/human/laser_eyes
 	name = "Laser Eyes"
 	desc = "Reflects concentrated light back from the eyes."
@@ -82,9 +82,36 @@
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER))
 
+/datum/mutation/human/laser_eyes/on_acquiring(mob/living/carbon/human/H)
+	. = ..()
+	if(.)
+		return
+	RegisterSignal(H, COMSIG_MOB_ATTACK_RANGED, .proc/on_ranged_attack)
+
+/datum/mutation/human/laser_eyes/on_losing(mob/living/carbon/human/H)
+	. = ..()
+	if(.)
+		return
+	UnregisterSignal(H, COMSIG_MOB_ATTACK_RANGED)
+
 /datum/mutation/human/laser_eyes/get_visual_indicator()
 	return visual_indicators[type][1]
 
-/datum/mutation/human/laser_eyes/on_ranged_attack(atom/target, mouseparams)
-	if(owner.a_intent == INTENT_HARM)
-		owner.LaserEyes(target, mouseparams)
+///Triggers on COMSIG_MOB_ATTACK_RANGED. Does the projectile shooting.
+/datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, mouseparams)
+	if(source.a_intent != INTENT_HARM)
+		return
+	to_chat(source, "<span class='warning'>You shoot with your laser eyes!</span>")
+	source.changeNext_move(CLICK_CD_RANGE)
+	var/obj/projectile/beam/laser_eyes/LE = new(source.loc)
+	LE.firer = source
+	LE.def_zone = ran_zone(source.zone_selected)
+	LE.preparePixelProjectile(target, source, mouseparams)
+	LE.fire()
+	playsound(source, 'sound/weapons/taser2.ogg', 75, TRUE)
+
+///Projectile type used by laser eyes
+/obj/projectile/beam/laser_eyes
+	name = "beam"
+	icon = 'icons/effects/genetics.dmi'
+	icon_state = "eyelasers"

@@ -35,7 +35,7 @@
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = (CANPUSH | CANSTUN | CANKNOCKDOWN)
 	gender = NEUTER
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	speak_emote = list("chirps")
 	speech_span = SPAN_ROBOT
 	bubble_icon = "machine"
@@ -153,23 +153,6 @@
 /mob/living/simple_animal/drone/gib()
 	dust()
 
-/mob/living/simple_animal/drone/ratvar_act()
-	if(status_flags & GODMODE)
-		return
-
-	if(internal_storage)
-		dropItemToGround(internal_storage)
-	if(head)
-		dropItemToGround(head)
-	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new /mob/living/simple_animal/drone/cogscarab/ratvar(loc)
-	R.setDir(dir)
-	if(mind)
-		mind.transfer_to(R, 1)
-	else
-		R.key = key
-	qdel(src)
-
-
 /mob/living/simple_animal/drone/examine(mob/user)
 	. = list("<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!")
 
@@ -277,5 +260,5 @@
 	// Why would bees pay attention to drones?
 	return 1
 
-/mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, source, siemens_coeff, flags = NONE)
 	return 0 //So they don't die trying to fix wiring

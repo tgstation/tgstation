@@ -13,13 +13,23 @@
 	var/mob/living/split_personality/owner_backseat
 
 /datum/brain_trauma/severe/split_personality/on_gain()
+	var/mob/living/M = owner
+	if(M.stat == DEAD)	//No use assigning people to a corpse
+		qdel(src)
+		return
 	..()
 	make_backseats()
 	get_ghost()
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)
+	var/obj/effect/proc_holder/spell/targeted/personality_commune/stranger_spell = new(src)
+	stranger_backseat.AddSpell(stranger_spell)
+
 	owner_backseat = new(owner, src)
+	var/obj/effect/proc_holder/spell/targeted/personality_commune/owner_spell = new(src)
+	owner_backseat.AddSpell(owner_spell)
+
 
 /datum/brain_trauma/severe/split_personality/proc/get_ghost()
 	set waitfor = FALSE
@@ -138,7 +148,7 @@
 	to_chat(src, "<span class='notice'>As a split personality, you cannot do anything but observe. However, you will eventually gain control of your body, switching places with the current personality.</span>")
 	to_chat(src, "<span class='warning'><b>Do not commit suicide or put the body in a deadly position. Behave like you care about it as much as the owner.</b></span>")
 
-/mob/living/split_personality/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/split_personality/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	to_chat(src, "<span class='warning'>You cannot speak, your other self is controlling your body!</span>")
 	return FALSE
 

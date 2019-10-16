@@ -9,20 +9,30 @@
 	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25
 	instability = 40
-	locked = TRUE
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	ADD_TRAIT(owner, TRAIT_STUNIMMUNE, TRAIT_HULK)
 	ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, TRAIT_HULK)
+	ADD_TRAIT(owner, TRAIT_CHUNKYFINGERS, TRAIT_HULK)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_HULK)
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
+	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
 	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
-/datum/mutation/human/hulk/on_attack_hand(atom/target, proximity)
-	if(proximity) //no telekinetic hulk attack
-		return target.attack_hulk(owner)
+/datum/mutation/human/hulk/proc/on_attack_hand(mob/living/source, atom/target, proximity)
+	if(!proximity)
+		return
+	if(source.a_intent != INTENT_HARM)
+		return
+	if(target.attack_hulk(owner))
+		source.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced="hulk")
+		log_combat(source, target, "punched", "hulk powers")
+		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
+		source.changeNext_move(CLICK_CD_MELEE)
+		return COMPONENT_NO_ATTACK_HAND
 
 /datum/mutation/human/hulk/on_life()
 	if(owner.health < 0)
@@ -34,8 +44,12 @@
 		return
 	REMOVE_TRAIT(owner, TRAIT_STUNIMMUNE, TRAIT_HULK)
 	REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, TRAIT_HULK)
+	REMOVE_TRAIT(owner, TRAIT_CHUNKYFINGERS, TRAIT_HULK)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_HULK)
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "hulk")
+	UnregisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
 /datum/mutation/human/hulk/proc/handle_speech(original_message, wrapped_message)
 	var/message = wrapped_message[1]

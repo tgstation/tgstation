@@ -103,19 +103,6 @@
 		var/completion = round(C.get_completion())
 		return completion
 
-/obj/effect/countdown/clockworkgate
-	name = "gateway countdown"
-	text_size = 1
-	color = "#BE8700"
-	layer = POINT_LAYER
-
-/obj/effect/countdown/clockworkgate/get_value()
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = attached_to
-	if(!istype(G))
-		return
-	else if(G.obj_integrity && !G.purpose_fulfilled)
-		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[G.get_arrival_time(FALSE)]</div>"
-
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
 	text_size = 1
@@ -169,4 +156,17 @@
 		return
 	else
 		var/time_left = max(0, (H.finish_time - world.time) / 10)
+		return round(time_left)
+
+/obj/effect/countdown/arena
+	invisibility = 0
+	name = "arena countdown"
+
+/obj/effect/countdown/arena/get_value()
+	var/obj/machinery/arena_spawn/A = attached_to
+	if(!istype(A))
+		return
+	else
+		var/obj/machinery/computer/arena/C = A.get_controller()
+		var/time_left = max(0, (C.start_time - world.time) / 10)
 		return round(time_left)

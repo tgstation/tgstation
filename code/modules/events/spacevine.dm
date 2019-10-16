@@ -251,7 +251,7 @@
 	holder.obj_integrity = holder.max_integrity
 
 /datum/spacevine_mutation/woodening/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(I.is_sharp())
+	if(I.get_sharpness())
 		. = expected_damage * 0.5
 	else
 		. = expected_damage
@@ -331,7 +331,7 @@
 
 /obj/structure/spacevine/attacked_by(obj/item/I, mob/living/user)
 	var/damage_dealt = I.force
-	if(I.is_sharp())
+	if(I.get_sharpness())
 		damage_dealt *= 4
 	if(I.damtype == BURN)
 		damage_dealt *= 4
@@ -344,11 +344,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/weapons/slash.ogg', 50, 1)
+				playsound(src, 'sound/weapons/slash.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/spacevine/Crossed(mob/crosser)
 	if(isliving(crosser))
@@ -378,7 +378,7 @@
 	var/list/vine_mutations_list
 	var/mutativeness = 1
 
-/datum/spacevine_controller/New(turf/location, list/muts, potency, production, var/datum/round_event/event = null)
+/datum/spacevine_controller/New(turf/location, list/muts, potency, production, datum/round_event/event = null)
 	vines = list()
 	growth_queue = list()
 	var/obj/structure/spacevine/SV = spawn_spacevine_piece(location, null, muts)
@@ -395,17 +395,13 @@
 
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
-	. += "---"
-	.["Delete Vines"] = "?_src_=[REF(src)];[HrefToken()];purge_vines=1"
+	VV_DROPDOWN_OPTION(VV_HK_SPACEVINE_PURGE, "Delete Vines")
 
-/datum/spacevine_controller/Topic(href, href_list)
-	if(..() || !check_rights(R_ADMIN, FALSE) || !usr.client.holder.CheckAdminHref(href, href_list))
-		return
-
-	if(href_list["purge_vines"])
-		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") != "Yes")
-			return
-		DeleteVines()
+/datum/spacevine_controller/vv_do_topic(href_list)
+	. = ..()
+	if(href_list[VV_HK_SPACEVINE_PURGE])
+		if(alert(usr, "Are you sure you want to delete this spacevine cluster?", "Delete Vines", "Yes", "No") == "Yes")
+			DeleteVines()
 
 /datum/spacevine_controller/proc/DeleteVines()	//this is kill
 	QDEL_LIST(vines)	//this will also qdel us

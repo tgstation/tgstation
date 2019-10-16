@@ -93,7 +93,7 @@
 			Paralyze(20)
 			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>",\
 				"<span class='userdanger'>You violently crash into [victim]!</span>")
-		playsound(src,'sound/weapons/punch1.ogg',50,1)
+		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
 
 
 //Throwing stuff
@@ -140,6 +140,7 @@
 				stop_pulling()
 				if(HAS_TRAIT(src, TRAIT_PACIFISM))
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
+					return
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
 				if(start_T && end_T)
@@ -147,14 +148,15 @@
 
 	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !HAS_TRAIT(I, TRAIT_NODROP))
 		thrown_thing = I
-		dropItemToGround(I)
+		dropItemToGround(I, silent = TRUE)
 
 		if(HAS_TRAIT(src, TRAIT_PACIFISM) && I.throwforce)
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
 	if(thrown_thing)
-		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
+		visible_message("<span class='danger'>[src] throws [thrown_thing].</span>", \
+						"<span class='danger'>You throw [thrown_thing].</span>")
 		log_message("has thrown [thrown_thing]", LOG_ATTACK)
 		newtonian_move(get_dir(target, src))
 		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src, null, null, null, move_force)
@@ -215,7 +217,8 @@
 		var/obj/item/ITEM = get_item_by_slot(slot)
 		if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.clothing_flags & MASKINTERNALS))
 			visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
-							"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
+							"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on your [ITEM.name].</span>", null, null, usr)
+			to_chat(usr, "<span class='notice'>You try to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name]...</span>")
 			if(do_mob(usr, src, POCKET_STRIP_DELAY))
 				if(internal)
 					internal = null
@@ -226,7 +229,8 @@
 						update_internals_hud_icon(1)
 
 				visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>", \
-								"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name].</span>")
+								"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on your [ITEM.name].</span>", null, null, usr)
+				to_chat(usr, "<span class='notice'>You [internal ? "open" : "close"] the valve on [src]'s [ITEM.name].</span>")
 
 /mob/living/carbon/fall(forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
@@ -351,14 +355,16 @@
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
-		return
+		return FALSE
+	if(I != handcuffed && I != legcuffed)
+		return FALSE
 	visible_message("<span class='danger'>[src] manages to [cuff_break ? "break" : "remove"] [I]!</span>")
 	to_chat(src, "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>")
 
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)
-		return
+		return TRUE
 
 	else
 		if(I == handcuffed)
@@ -368,17 +374,13 @@
 			if(buckled && buckled.buckle_requires_restraints)
 				buckled.unbuckle_mob(src)
 			update_handcuffed()
-			return
+			return TRUE
 		if(I == legcuffed)
 			legcuffed.forceMove(drop_location())
 			legcuffed.dropped()
 			legcuffed = null
 			update_inv_legcuffed()
-			return
-		else
-			dropItemToGround(I)
-			return
-		return TRUE
+			return TRUE
 
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
 	if(lying)
@@ -430,9 +432,9 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
-	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
-		return 1
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE, harm = TRUE, force = FALSE)
+	if((HAS_TRAIT(src, TRAIT_NOHUNGER) || HAS_TRAIT(src, TRAIT_TOXINLOVER)) && !force)
+		return TRUE
 
 	if(nutrition < 100 && !blood)
 		if(message)
@@ -440,7 +442,7 @@
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
 			Paralyze(200)
-		return 1
+		return TRUE
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
 		if(message)
@@ -457,7 +459,7 @@
 	if(stun)
 		Paralyze(80)
 
-	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
 	var/turf/T = get_turf(src)
 	if(!blood)
 		adjust_nutrition(-lost_nutrition)
@@ -466,7 +468,7 @@
 		if(blood)
 			if(T)
 				add_splatter_floor(T)
-			if(stun)
+			if(harm)
 				adjustBruteLoss(3)
 		else if(src.reagents.has_reagent(/datum/reagent/consumable/ethanol/blazaam, needs_metabolizing = TRUE))
 			if(T)
@@ -477,7 +479,7 @@
 		T = get_step(T, dir)
 		if (is_blocked_turf(T))
 			break
-	return 1
+	return TRUE
 
 /mob/living/carbon/proc/spew_organ(power = 5, amt = 1)
 	for(var/i in 1 to amt)
@@ -759,10 +761,11 @@
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
+			cure_blind(UNCONSCIOUS_BLIND)
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
-			blind_eyes(1)
+			become_blind(UNCONSCIOUS_BLIND)
 			if(CONFIG_GET(flag/near_death_experience) && health <= HEALTH_THRESHOLD_NEARDEATH && !HAS_TRAIT(src, TRAIT_NODEATH))
 				ADD_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
 			else
@@ -772,7 +775,7 @@
 				stat = SOFT_CRIT
 			else
 				stat = CONSCIOUS
-			adjust_blindness(-1)
+			cure_blind(UNCONSCIOUS_BLIND)
 			REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
 		update_mobility()
 	update_damage_hud()
@@ -797,18 +800,20 @@
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
 		reagents.clear_reagents()
+		for(var/addi in reagents.addiction_list)
+			reagents.remove_addiction(addi)
 	for(var/O in internal_organs)
 		var/obj/item/organ/organ = O
 		organ.setOrganDamage(0)
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.brain_death = FALSE
-		B.damaged_brain = FALSE
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.severity != DISEASE_SEVERITY_POSITIVE)
 			D.cure(FALSE)
 	if(admin_revive)
+		suiciding = FALSE
 		regenerate_limbs()
 		regenerate_organs()
 		handcuffed = initial(handcuffed)
@@ -896,14 +901,121 @@
 
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
-	. += "---"
-	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=[REF(src)]"
-	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=[REF(src)]"
-	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=[REF(src)]"
-	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=[REF(src)]"
-	.["Give martial arts"] = "?_src_=vars;[HrefToken()];givemartialart=[REF(src)]"
-	.["Give brain trauma"] = "?_src_=vars;[HrefToken()];givetrauma=[REF(src)]"
-	.["Cure brain traumas"] = "?_src_=vars;[HrefToken()];curetraumas=[REF(src)]"
+	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION(VV_HK_MAKE_AI, "Make AI")
+	VV_DROPDOWN_OPTION(VV_HK_MODIFY_BODYPART, "Modify bodypart")
+	VV_DROPDOWN_OPTION(VV_HK_MODIFY_ORGANS, "Modify organs")
+	VV_DROPDOWN_OPTION(VV_HK_HALLUCINATION, "Hallucinate")
+	VV_DROPDOWN_OPTION(VV_HK_MARTIAL_ART, "Give Martial Arts")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_TRAUMA, "Give Brain Trauma")
+	VV_DROPDOWN_OPTION(VV_HK_CURE_TRAUMA, "Cure Brain Traumas")
+
+/mob/living/carbon/vv_do_topic(list/href_list)
+	. = ..()
+	if(href_list[VV_HK_MODIFY_BODYPART])
+		if(!check_rights(R_SPAWN))
+			return
+		var/edit_action = input(usr, "What would you like to do?","Modify Body Part") as null|anything in list("add","remove", "augment")
+		if(!edit_action)
+			return
+		var/list/limb_list = list()
+		if(edit_action == "remove" || edit_action == "augment")
+			for(var/obj/item/bodypart/B in bodyparts)
+				limb_list += B.body_zone
+			if(edit_action == "remove")
+				limb_list -= BODY_ZONE_CHEST
+		else
+			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+			for(var/obj/item/bodypart/B in bodyparts)
+				limb_list -= B.body_zone
+		var/result = input(usr, "Please choose which body part to [edit_action]","[capitalize(edit_action)] Body Part") as null|anything in limb_list
+		if(result)
+			var/obj/item/bodypart/BP = get_bodypart(result)
+			switch(edit_action)
+				if("remove")
+					if(BP)
+						BP.drop_limb()
+					else
+						to_chat(usr, "[src] doesn't have such bodypart.")
+				if("add")
+					if(BP)
+						to_chat(usr, "[src] already has such bodypart.")
+					else
+						if(!regenerate_limb(result))
+							to_chat(usr, "[src] cannot have such bodypart.")
+				if("augment")
+					if(ishuman(src))
+						if(BP)
+							BP.change_bodypart_status(BODYPART_ROBOTIC, TRUE, TRUE)
+						else
+							to_chat(usr, "[src] doesn't have such bodypart.")
+					else
+						to_chat(usr, "Only humans can be augmented.")
+		admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [src]")
+	if(href_list[VV_HK_MAKE_AI])
+		if(!check_rights(R_SPAWN))
+			return
+		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+			return
+		usr.client.holder.Topic("vv_override", list("makeai"=href_list[VV_HK_TARGET]))
+	if(href_list[VV_HK_MODIFY_ORGANS])
+		if(!check_rights(NONE))
+			return
+		usr.client.manipulate_organs(src)
+	if(href_list[VV_HK_MARTIAL_ART])
+		if(!check_rights(NONE))
+			return
+		var/list/artpaths = subtypesof(/datum/martial_art)
+		var/list/artnames = list()
+		for(var/i in artpaths)
+			var/datum/martial_art/M = i
+			artnames[initial(M.name)] = M
+		var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in artnames
+		if(!usr)
+			return
+		if(QDELETED(src))
+			to_chat(usr, "Mob doesn't exist anymore")
+			return
+		if(result)
+			var/chosenart = artnames[result]
+			var/datum/martial_art/MA = new chosenart
+			MA.teach(src)
+			log_admin("[key_name(usr)] has taught [MA] to [key_name(src)].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] has taught [MA] to [key_name_admin(src)].</span>")
+	if(href_list[VV_HK_GIVE_TRAUMA])
+		if(!check_rights(NONE))
+			return
+		var/list/traumas = subtypesof(/datum/brain_trauma)
+		var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in traumas
+		if(!usr)
+			return
+		if(QDELETED(src))
+			to_chat(usr, "Mob doesn't exist anymore")
+			return
+		if(!result)
+			return
+		var/datum/brain_trauma/BT = gain_trauma(result)
+		if(BT)
+			log_admin("[key_name(usr)] has traumatized [key_name(src)] with [BT.name]")
+			message_admins("<span class='notice'>[key_name_admin(usr)] has traumatized [key_name_admin(src)] with [BT.name].</span>")
+	if(href_list[VV_HK_CURE_TRAUMA])
+		if(!check_rights(NONE))
+			return
+		cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
+		log_admin("[key_name(usr)] has cured all traumas from [key_name(src)].")
+		message_admins("<span class='notice'>[key_name_admin(usr)] has cured all traumas from [key_name_admin(src)].</span>")
+	if(href_list[VV_HK_HALLUCINATION])
+		if(!check_rights(NONE))
+			return
+		var/list/hallucinations = subtypesof(/datum/hallucination)
+		var/result = input(usr, "Choose the hallucination to apply","Send Hallucination") as null|anything in hallucinations
+		if(!usr)
+			return
+		if(QDELETED(src))
+			to_chat(usr, "Mob doesn't exist anymore")
+			return
+		if(result)
+			new result(src, TRUE)
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()

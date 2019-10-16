@@ -9,7 +9,7 @@
 	item_state = "gun"
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 5
 	throw_speed = 3
@@ -18,14 +18,14 @@
 	item_flags = NEEDS_PERMIT
 	attack_verb = list("struck", "hit", "bashed")
 
-	var/fire_sound = "gunshot"
+	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
-	var/dry_fire_sound = 'sound/weapons/gun_dry_fire.ogg'
+	var/dry_fire_sound = 'sound/weapons/gun/general/dry_fire.ogg'
 	var/suppressed = null					//whether or not a message is displayed when fired
 	var/can_suppress = FALSE
-	var/suppressed_sound = 'sound/weapons/gunshot_silenced.ogg'
-	var/suppressed_volume = 10
+	var/suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	var/suppressed_volume = 60
 	var/can_unsuppress = TRUE
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = TRUE
@@ -108,7 +108,7 @@
 	if(G)
 		G.forceMove(loc)
 		QDEL_NULL(G.pin)
-		visible_message("[G] can now fit a new pin, but the old one was destroyed in the process.", null, null, 3)
+		visible_message("<span class='notice'>[G] can now fit a new pin, but the old one was destroyed in the process.</span>", null, null, 3)
 		qdel(src)
 
 /obj/item/gun/examine(mob/user)
@@ -156,14 +156,19 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(suppressed)
-		playsound(user, suppressed_sound, suppressed_volume, vary_fire_sound)
+		playsound(user, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE)
 	else
 		playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(message)
 			if(pointblank)
-				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", \
+								"<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", \
+								"<span class='hear'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE, pbtarget)
+				to_chat(pbtarget, "<span class='userdanger'>[user] fires [src] point blank at you!</span>")
 			else
-				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+				user.visible_message("<span class='danger'>[user] fires [src]!</span>", \
+								"<span class='danger'>You fire [src]!</span>", \
+								"<span class='hear'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE)
 
 /obj/item/gun/emp_act(severity)
 	. = ..()
@@ -226,7 +231,7 @@
 				loop_counter++
 				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
 
-	process_fire(target, user, TRUE, params, null, bonus_spread)
+	return process_fire(target, user, TRUE, params, null, bonus_spread)
 
 
 
@@ -260,7 +265,7 @@
 	if(chambered && chambered.BB)
 		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
-				to_chat(user, "<span class='warning'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+				to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
 				return
 		if(randomspread)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
@@ -309,7 +314,7 @@
 		if(chambered)
 			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 				if(chambered.harmful) // Is the bullet chambered harmful?
-					to_chat(user, "<span class='warning'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+					to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
 					return
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 			before_firing(target,user)
@@ -477,6 +482,7 @@
 		flashlight_overlay.pixel_x = flight_x_offset
 		flashlight_overlay.pixel_y = flight_y_offset
 		add_overlay(flashlight_overlay, TRUE)
+		add_overlay(knife_overlay, TRUE)
 	else
 		set_light(0)
 		cut_overlays(flashlight_overlay, TRUE)
@@ -530,7 +536,7 @@
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
 
-	process_fire(target, user, TRUE, params)
+	process_fire(target, user, TRUE, params, BODY_ZONE_HEAD)
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)

@@ -89,7 +89,7 @@
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
@@ -112,7 +112,7 @@
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=4000)
+	custom_materials = list(/datum/material/iron=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
@@ -212,6 +212,7 @@
 /obj/item/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
+	item_state = "adv_plasmacutter"
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
@@ -235,7 +236,7 @@
 		var/obj/item/ammo_casing/energy/wormhole/W = ammo_type[i]
 		if(istype(W))
 			W.gun = src
-			var/obj/item/projectile/beam/wormhole/WH = W.BB
+			var/obj/projectile/beam/wormhole/WH = W.BB
 			if(istype(WH))
 				WH.gun = src
 
@@ -271,9 +272,9 @@
 	p_orange.link_portal(p_blue)
 	p_blue.link_portal(p_orange)
 
-/obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
+/obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/projectile/beam/wormhole/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null, atmos_link)
-	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
+	if(istype(W, /obj/projectile/beam/wormhole/orange))
 		qdel(p_orange)
 		p_orange = P
 		P.icon_state = "portal1"

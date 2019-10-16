@@ -74,7 +74,7 @@
 /datum/outfit/ashwalker
 	name ="Ashwalker"
 	head = /obj/item/clothing/head/helmet/gladiator
-	uniform = /obj/item/clothing/under/gladiator/ash_walker
+	uniform = /obj/item/clothing/under/costume/gladiator/ash_walker
 
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
@@ -174,16 +174,19 @@
 	if(.)
 		return
 	if(isgolem(user) && can_transfer)
+		var/mob/living/carbon/human/H = user
 		var/transfer_choice = alert("Transfer your soul to [src]? (Warning, your old body will die!)",,"Yes","No")
 		if(transfer_choice != "Yes")
 			return
 		if(QDELETED(src) || uses <= 0)
 			return
-		log_game("[key_name(user)] golem-swapped into [src]")
-		user.visible_message("<span class='notice'>A faint light leaves [user], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
+		log_game("[key_name(H)] golem-swapped into [src]")
+		H.visible_message("<span class='notice'>A faint light leaves [H], moving to [src] and animating it!</span>","<span class='notice'>You leave your old body behind, and transfer into [src]!</span>")
 		show_flavour = FALSE
-		create(ckey = user.ckey,name = user.real_name)
-		user.death()
+		var/mob/living/carbon/human/newgolem = create(newname = H.real_name)
+		H.transfer_trait_datums(newgolem)
+		H.mind.transfer_to(newgolem)
+		H.death()
 		return
 
 /obj/effect/mob_spawn/human/golem/servant
@@ -224,7 +227,7 @@
 			flavour_text += "you were a [pick("arms dealer", "shipwright", "docking manager")]'s assistant on a small trading station several sectors from here. Raiders attacked, and there was \
 			only one pod left when you got to the escape bay. You took it and launched it alone, and the crowd of terrified faces crowding at the airlock door as your pod's engines burst to \
 			life and sent you to this hell are forever branded into your memory.</b>"
-			outfit.uniform = /obj/item/clothing/under/assistantformal
+			outfit.uniform = /obj/item/clothing/under/misc/assistantformal
 		if(2)
 			flavour_text += "you're an exile from the Tiger Cooperative. Their technological fanaticism drove you to question the power and beliefs of the Exolitics, and they saw you as a \
 			heretic and subjected you to hours of horrible torture. You were hours away from execution when a high-ranking friend of yours in the Cooperative managed to secure you a pod, \
@@ -234,7 +237,7 @@
 		if(3)
 			flavour_text += "you were a doctor on one of Nanotrasen's space stations, but you left behind that damn corporation's tyranny and everything it stood for. From a metaphorical hell \
 			to a literal one, you find yourself nonetheless missing the recycled air and warm floors of what you left behind... but you'd still rather be here than there.</b>"
-			outfit.uniform = /obj/item/clothing/under/rank/medical
+			outfit.uniform = /obj/item/clothing/under/rank/medical/doctor
 			outfit.suit = /obj/item/clothing/suit/toggle/labcoat
 			outfit.back = /obj/item/storage/backpack/medic
 		if(4)
@@ -254,21 +257,6 @@
 	mask = /obj/item/clothing/mask/breath
 	l_pocket = /obj/item/tank/internals/emergency_oxygen
 	r_pocket = /obj/item/flashlight/glowstick
-
-//Broken rejuvenation pod: Spawns in animal hospitals in lavaland. Ghosts become disoriented interns and are advised to search for help.
-/obj/effect/mob_spawn/human/doctor/alive/lavaland
-	name = "broken rejuvenation pod"
-	desc = "A small sleeper typically used to instantly restore minor wounds. This one seems broken, and its occupant is comatose."
-	mob_name = "a translocated vet"
-	flavour_text = "<span class='big bold'>What...?</span><b> Where are you? Where are the others? This is still the animal hospital - you should know, you've been an intern here for weeks - but \
-	everyone's gone. One of the cats scratched you just a few minutes ago. That's why you were in the pod - to heal the scratch. The scabs are still fresh; you see them right now. So where is \
-	everyone? Where did they go? What happened to the hospital? And is that <i>smoke</i> you smell? You need to find someone else. Maybe they can tell you what happened.</b>"
-	assignedrole = "Translocated Vet"
-
-/obj/effect/mob_spawn/human/doctor/alive/lavaland/Destroy()
-	var/obj/structure/fluff/empty_sleeper/S = new(drop_location())
-	S.setDir(dir)
-	return ..()
 
 //Prisoner containment sleeper: Spawns in crashed prison ships in lavaland. Ghosts become escaped prisoners and are advised to find a way out of the mess they've gotten themselves into.
 /obj/effect/mob_spawn/human/prisoner_transport
@@ -324,7 +312,7 @@
 
 /datum/outfit/hotelstaff
 	name = "Hotel Staff"
-	uniform = /obj/item/clothing/under/assistantformal
+	uniform = /obj/item/clothing/under/misc/assistantformal
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
@@ -340,7 +328,7 @@
 
 /datum/outfit/hotelstaff/security
 	name = "Hotel Security"
-	uniform = /obj/item/clothing/under/rank/security/blueshirt
+	uniform = /obj/item/clothing/under/rank/security/officer/blueshirt
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	head = /obj/item/clothing/head/helmet/blueshirt
@@ -396,7 +384,7 @@
 
 /datum/outfit/demonic_friend
 	name = "Demonic Friend"
-	uniform = /obj/item/clothing/under/assistantformal
+	uniform = /obj/item/clothing/under/misc/assistantformal
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/radio/off
 	back = /obj/item/storage/backpack
@@ -490,7 +478,7 @@
 	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod. \
 	Work as a team with your fellow survivors and do not abandon them.</b>"
-	uniform = /obj/item/clothing/under/rank/security
+	uniform = /obj/item/clothing/under/rank/security/officer
 	shoes = /obj/item/clothing/shoes/jackboots
 	id = /obj/item/card/id/away/old/sec
 	r_pocket = /obj/item/restraints/handcuffs
@@ -515,7 +503,7 @@
 	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod. \
 	Work as a team with your fellow survivors and do not abandon them.</b>"
-	uniform = /obj/item/clothing/under/rank/engineer
+	uniform = /obj/item/clothing/under/rank/engineering/engineer
 	shoes = /obj/item/clothing/shoes/workboots
 	id = /obj/item/card/id/away/old/eng
 	gloves = /obj/item/clothing/gloves/color/fyellow/old
@@ -540,7 +528,7 @@
 	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod. \
 	Work as a team with your fellow survivors and do not abandon them.</b>"
-	uniform = /obj/item/clothing/under/rank/scientist
+	uniform = /obj/item/clothing/under/rank/rnd/scientist
 	shoes = /obj/item/clothing/shoes/laceup
 	id = /obj/item/card/id/away/old/sci
 	l_pocket = /obj/item/stack/medical/bruise_pack

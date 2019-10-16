@@ -190,6 +190,8 @@
 	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
 	resistance_flags = FLAMMABLE
+	drop_sound = 'sound/items/handling/book_drop.ogg'
+	pickup_sound =  'sound/items/handling/book_pickup.ogg'
 	var/dat				//Actual page content
 	var/due_date = 0	//Game time in 1/10th seconds
 	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -203,7 +205,7 @@
 		return
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
-		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
+		user.visible_message("<span class='notice'>[user] opens a book titled \"[title]\" and begins reading intently.</span>")
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
 		onclose(user, "book")
 	else
@@ -213,7 +215,7 @@
 /obj/item/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen))
 		if(is_blind(user))
-			to_chat(user, "<span class='warning'> As you are trying to write on the book, you suddenly feel very stupid!</span>")
+			to_chat(user, "<span class='warning'>As you are trying to write on the book, you suddenly feel very stupid!</span>")
 			return
 		if(unique)
 			to_chat(user, "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>")

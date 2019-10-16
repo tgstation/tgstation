@@ -130,7 +130,7 @@ Doesn't work on other aliens/AI.*/
 	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
 	if(!M)
 		return 0
-	var/amount = input("Amount:", "Transfer Plasma to [M]") as num
+	var/amount = input("Amount:", "Transfer Plasma to [M]") as num|null
 	if (amount)
 		amount = min(abs(round(amount)), user.getPlasma())
 		if (get_dist(user,M) <= 1)
@@ -228,7 +228,7 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
-	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
+	var/obj/projectile/bullet/neurotoxin/A = new /obj/projectile/bullet/neurotoxin(user.loc)
 	A.preparePixelProjectile(target, user, params)
 	A.fire()
 	user.newtonian_move(get_dir(U, T))

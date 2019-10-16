@@ -2,12 +2,16 @@
 	name = "shotgun"
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	item_state = "shotgun"
-	fire_sound = "sound/weapons/shotgunshot.ogg"
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	vary_fire_sound = FALSE
 	fire_sound_volume = 90
-	rack_sound = "sound/weapons/shotgunpump.ogg"
-	load_sound = "sound/weapons/shotguninsert.ogg"
+	rack_sound = "sound/weapons/gun/shotgun/rack.ogg"
+	load_sound = "sound/weapons/gun/shotgun/insert_shell.ogg"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags_1 =  CONDUCT_1
@@ -20,6 +24,7 @@
 	bolt_wording = "pump"
 	cartridge_wording = "shell"
 	tac_reloads = FALSE
+	weapon_weight = WEAPON_HEAVY
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
@@ -36,6 +41,7 @@
 	name = "riot shotgun"
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
+	item_state = "shotgun"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off  = TRUE
@@ -50,6 +56,7 @@
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
+	item_state = "shotgun_combat"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 
@@ -110,6 +117,10 @@
 	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines."
 	icon_state = "bulldog"
 	item_state = "bulldog"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
 	mag_type = /obj/item/ammo_box/magazine/m12g
@@ -117,6 +128,7 @@
 	burst_size = 1
 	fire_delay = 0
 	pin = /obj/item/firing_pin/implant/pindicate
+	fire_sound = 'sound/weapons/gun/shotgun/shot_alt.ogg'
 	actions_types = list()
 	mag_display = TRUE
 	empty_indicator = TRUE
@@ -137,7 +149,7 @@
 	name = "double-barreled shotgun"
 	desc = "A true classic."
 	icon_state = "dshotgun"
-	item_state = "shotgun"
+	item_state = "shotgun_db"
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
 	force = 10
@@ -163,13 +175,18 @@
 	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
 		reskin_obj(user)
 
+/obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
+	. = ..()
+	if(.)
+		weapon_weight = WEAPON_MEDIUM
+
 // IMPROVISED SHOTGUN //
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised
 	name = "improvised shotgun"
 	desc = "Essentially a tube that aims shotgun shells."
 	icon_state = "ishotgun"
-	item_state = "shotgun"
+	item_state = "ishotgun"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	slot_flags = null
@@ -193,7 +210,8 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_icon()
 	..()
 	if(slung)
-		add_overlay("improvised_sling")
+		add_overlay("ishotgunsling")
+		item_state = "ishotgunsling"
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()
@@ -205,8 +223,53 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
 	desc = "A single-shot shotgun. Better not miss."
-	icon_state = "ishotgun"
-	item_state = "gun"
+	icon_state = "ishotgun_sawn"
+	item_state = "ishotgun_sawn"
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE
 	slot_flags = ITEM_SLOT_BELT
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/hook
+	name = "hook modified sawn-off shotgun"
+	desc = "Range isn't an issue when you can bring your victim to you."
+	icon_state = "hookshotgun"
+	item_state = "shotgun"
+	load_sound = "sound/weapons/shotguninsert.ogg"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/bounty
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_MEDIUM
+	can_be_sawn_off = FALSE
+	force = 16 //it has a hook on it
+	attack_verb = list("slashed", "hooked", "stabbed")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	//our hook gun!
+	var/obj/item/gun/magic/hook/bounty/hook
+	var/toggled = FALSE
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/hook/Initialize()
+	. = ..()
+	hook = new /obj/item/gun/magic/hook/bounty(src)
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/hook/AltClick(mob/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	if(toggled)
+		to_chat(user,"<span class='notice'>You switch to the shotgun.</span>")
+		fire_sound = initial(fire_sound)
+	else
+		to_chat(user,"<span class='notice'>You switch to the hook.</span>")
+		fire_sound = 'sound/weapons/batonextend.ogg'
+	toggled = !toggled
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/hook/examine(mob/user)
+	. = ..()
+	if(toggled)
+		. += "<span class='notice'>Alt-click to switch to the shotgun.</span>"
+	else
+		. += "<span class='notice'>Alt-click to switch to the hook.</span>"
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/hook/afterattack(atom/target, mob/living/user, flag, params)
+	if(toggled)
+		hook.afterattack(target, user, flag, params)
+	else
+		return ..()

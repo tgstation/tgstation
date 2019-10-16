@@ -11,7 +11,7 @@
 
 /obj/item/twohanded/ctf
 	name = "banner"
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/banner.dmi'
 	icon_state = "banner"
 	item_state = "banner"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
@@ -325,7 +325,7 @@
 
 	dead_barricades.Cut()
 
-	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
+	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK, header = "CTF has been activated")
 
 	if(!arena_reset)
 		reset_the_arena()
@@ -389,12 +389,12 @@
 	ammo_type = /obj/item/ammo_casing/a50/ctf
 
 /obj/item/ammo_casing/a50/ctf
-	projectile_type = /obj/item/projectile/bullet/ctf
+	projectile_type = /obj/projectile/bullet/ctf
 
-/obj/item/projectile/bullet/ctf
+/obj/projectile/bullet/ctf
 	damage = 0
 
-/obj/item/projectile/bullet/ctf/prehit(atom/target)
+/obj/projectile/bullet/ctf/prehit(atom/target)
 	if(is_ctf_target(target))
 		damage = 60
 	. = ..()
@@ -424,13 +424,13 @@
 		qdel(src)
 
 /obj/item/ammo_casing/caseless/laser/ctf
-	projectile_type = /obj/item/projectile/beam/ctf
+	projectile_type = /obj/projectile/beam/ctf
 
-/obj/item/projectile/beam/ctf
+/obj/projectile/beam/ctf
 	damage = 0
 	icon_state = "omnilaser"
 
-/obj/item/projectile/beam/ctf/prehit(atom/target)
+/obj/projectile/beam/ctf/prehit(atom/target)
 	if(is_ctf_target(target))
 		damage = 150
 	. = ..()
@@ -453,9 +453,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/red
 
 /obj/item/ammo_casing/caseless/laser/ctf/red
-	projectile_type = /obj/item/projectile/beam/ctf/red
+	projectile_type = /obj/projectile/beam/ctf/red
 
-/obj/item/projectile/beam/ctf/red
+/obj/projectile/beam/ctf/red
 	icon_state = "laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
@@ -468,9 +468,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/blue
 
 /obj/item/ammo_casing/caseless/laser/ctf/blue
-	projectile_type = /obj/item/projectile/beam/ctf/blue
+	projectile_type = /obj/projectile/beam/ctf/blue
 
-/obj/item/projectile/beam/ctf/blue
+/obj/projectile/beam/ctf/blue
 	icon_state = "bluelaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
@@ -482,7 +482,7 @@
 	toggle_helmet = FALSE // see the whites of their eyes
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/away
 	belt = /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
@@ -495,7 +495,7 @@
 	var/obj/item/card/id/W = H.wear_id
 	no_drops += W
 	W.registered_name = H.real_name
-	W.update_label(W.registered_name, W.assignment)
+	W.update_label()
 
 	no_drops += H.get_item_by_slot(SLOT_WEAR_SUIT)
 	no_drops += H.get_item_by_slot(SLOT_GLOVES)
@@ -515,6 +515,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/red
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
+	id = /obj/item/card/id/syndicate_command //it's red
 
 /datum/outfit/ctf/red/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/red
@@ -525,6 +526,7 @@
 	r_hand = /obj/item/gun/ballistic/automatic/laser/ctf/blue
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
+	id = /obj/item/card/id/centcom //it's blue
 
 /datum/outfit/ctf/blue/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill/blue
@@ -626,7 +628,7 @@
 				qdel(G)
 			O.equip(M)
 			to_chat(M, "<span class='notice'>Ammunition reloaded!</span>")
-			playsound(get_turf(M), 'sound/weapons/shotgunpump.ogg', 50, 1, -1)
+			playsound(get_turf(M), 'sound/weapons/gun/shotgun/rack.ogg', 50, TRUE, -1)
 			qdel(src)
 			break
 

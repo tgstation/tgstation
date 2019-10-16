@@ -1,8 +1,3 @@
-
-#define BAD_ART 12.5
-#define GOOD_ART 25
-#define GREAT_ART 50
-
 /obj/structure/statue
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
@@ -15,10 +10,12 @@
 	var/material_drop_type = /obj/item/stack/sheet/metal
 	var/impressiveness = 15
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	var/art_type = /datum/component/art
 
 /obj/structure/statue/Initialize()
 	. = ..()
-	AddComponent(/datum/component/art, impressiveness)
+	AddComponent(art_type, impressiveness)
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, impressiveness *  75), 0)
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -29,10 +26,10 @@
 			if(!W.tool_start_check(user, amount=0))
 				return FALSE
 
-			user.visible_message("[user] is slicing apart the [name].", \
+			user.visible_message("<span class='notice'>[user] is slicing apart the [name].</span>", \
 								"<span class='notice'>You are slicing apart the [name]...</span>")
 			if(W.use_tool(src, user, 40, volume=50))
-				user.visible_message("[user] slices apart the [name].", \
+				user.visible_message("<span class='notice'>[user] slices apart the [name].</span>", \
 									"<span class='notice'>You slice apart the [name]!</span>")
 				deconstruct(TRUE)
 			return
@@ -113,7 +110,7 @@
 		PlasmaBurn(exposed_temperature)
 
 
-/obj/structure/statue/plasma/bullet_act(obj/item/projectile/Proj)
+/obj/structure/statue/plasma/bullet_act(obj/projectile/Proj)
 	var/burn = FALSE
 	if(!(Proj.nodamage) && Proj.damage_type == BURN && !QDELETED(src))
 		burn = TRUE
@@ -129,11 +126,11 @@
 	. = ..()
 
 /obj/structure/statue/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.is_hot() > 300 && !QDELETED(src))//If the temperature of the object is over 300, then ignite
+	if(W.get_temperature() > 300 && !QDELETED(src))//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
 		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
 		log_game("Plasma statue ignited by [key_name(user)] in [AREACOORD(T)]")
-		ignite(W.is_hot())
+		ignite(W.get_temperature())
 	else
 		return ..()
 
@@ -254,10 +251,9 @@
 
 /obj/structure/statue/bananium/proc/honk()
 	if(!spam_flag)
-		spam_flag = 1
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-		spawn(20)
-			spam_flag = 0
+		spam_flag = TRUE
+		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
+		addtimer(VARSET_CALLBACK(src, spam_flag, FALSE), 2 SECONDS)
 
 /////////////////////sandstone/////////////////////////////////////////
 
@@ -288,3 +284,19 @@
 	name = "snowman"
 	desc = "Several lumps of snow put together to form a snowman."
 	icon_state = "snowman"
+
+/obj/structure/statue/snow/snowlegion
+    name = "snowlegion"
+    desc = "Looks like that weird kid with the tiger plushie has been round here again."
+    icon_state = "snowlegion"
+
+///////////////////////////////bronze///////////////////////////////////
+
+/obj/structure/statue/bronze
+	material_drop_type = /obj/item/stack/tile/bronze
+
+/obj/structure/statue/bronze/marx
+	name = "\improper Karl Marx bust"
+	desc = "A bust depicting a certain 19th century economist. You get the feeling a specter is haunting the station."
+	icon_state = "marx"
+	art_type = /datum/component/art/rev

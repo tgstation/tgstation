@@ -10,23 +10,32 @@
 	range = 7
 	cooldown_min = 60 //35 deciseconds reduction per rank
 	max_targets = 0
-	proj_type = /obj/item/projectile/magic/spell/magic_missile
+	proj_type = /obj/projectile/magic/spell/magic_missile
 	action_icon_state = "magicm"
 	sound = 'sound/magic/magic_missile.ogg'
 
-/obj/item/projectile/magic/spell/magic_missile
-	name = "a magic missile"
+/obj/projectile/magic/spell/magic_missile
+	name = "magic missile"
 	icon_state = "magicm"
 	range = 20
 	speed = 5
 	trigger_range = 0
 	linger = TRUE
+	nodamage = FALSE
 	paralyze = 60
 	hitsound = 'sound/magic/mm_hit.ogg'
 
 	trail = TRUE
 	trail_lifespan = 5
 	trail_icon_state = "magicmd"
+
+/obj/projectile/magic/spell/magic_missile/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
@@ -127,7 +136,6 @@
 	name = "quickstep"
 
 	charge_max = 100
-	clothes_req = FALSE
 	clothes_req = TRUE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
@@ -142,6 +150,7 @@
 	range = -1
 	include_user = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
+	action_icon_state = "teleport"
 
 	smoke_spread = 1
 	smoke_amt = 2
@@ -155,19 +164,21 @@
 	clothes_req = FALSE
 	say_destination = FALSE // Santa moves in mysterious ways
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+/obj/effect/proc_holder/spell/aoe_turf/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
 	charge_max = 500
 	clothes_req = TRUE
-	invocation = "TOKI WO TOMARE"
+	invocation = "TOKI YO TOMARE"
 	invocation_type = "shout"
 	range = 0
 	cooldown_min = 100
-	summon_amt = 1
 	action_icon_state = "time"
+	var/timestop_range = 2
+	var/timestop_duration = 100
 
-	summon_type = list(/obj/effect/timestop/wizard)
+/obj/effect/proc_holder/spell/aoe_turf/timestop/cast(list/targets, mob/user = usr)
+	new /obj/effect/timestop/magic(get_turf(user), timestop_range, timestop_duration, list(user))
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
@@ -248,7 +259,9 @@
 /obj/effect/proc_holder/spell/targeted/genetic/blind
 	mutations = list(BLINDMUT)
 	duration = 300
+	charge_max = 400 // needs to be higher than the duration or it'll be permanent
 	sound = 'sound/magic/blind.ogg'
+
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
@@ -267,7 +280,7 @@
 
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 40)
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, stun_amt = 40)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
@@ -280,7 +293,7 @@
 		var/atom/movable/AM = am
 		if(AM == user || AM.anchored)
 			continue
-		
+
 		if(ismob(AM))
 			var/mob/M = AM
 			if(M.anti_magic_check(anti_magic_check, FALSE))
@@ -321,7 +334,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
+		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, TRUE, TRUE)
 		C.spin(6,1)
 	..(targets, user, 60)
 
@@ -355,6 +368,7 @@
 	clothes_req = TRUE
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
+	action_icon_state = "thrownlightning"
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/cast(list/targets, mob/user = usr)
 	..()
@@ -373,7 +387,7 @@
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
 			if(!M.anti_magic_check())
-				M.electrocute_act(80, src, illusion = 1)
+				M.electrocute_act(80, src, flags = SHOCK_ILLUSION)
 		qdel(src)
 
 /obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY)

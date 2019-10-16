@@ -28,7 +28,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //This proc sends the asset to the client, but only if it needs it.
 //This proc blocks(sleeps) unless verify is set to false
-/proc/send_asset(var/client/client, var/asset_name, var/verify = TRUE)
+/proc/send_asset(client/client, asset_name, verify = TRUE)
 	if(!istype(client))
 		if(ismob(client))
 			var/mob/M = client
@@ -73,7 +73,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	return 1
 
 //This proc blocks(sleeps) unless verify is set to false
-/proc/send_asset_list(var/client/client, var/list/asset_list, var/verify = TRUE)
+/proc/send_asset_list(client/client, list/asset_list, verify = TRUE)
 	if(!istype(client))
 		if(ismob(client))
 			var/mob/M = client
@@ -124,7 +124,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //This proc will download the files without clogging up the browse() queue, used for passively sending files on connection start.
 //The proc calls procs that sleep for long times.
-/proc/getFilesSlow(var/client/client, var/list/files, var/register_asset = TRUE)
+/proc/getFilesSlow(client/client, list/files, register_asset = TRUE)
 	var/concurrent_tracker = 1
 	for(var/file in files)
 		if (!client)
@@ -142,13 +142,13 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //if it's an icon or something be careful, you'll have to copy it before further use.
-/proc/register_asset(var/asset_name, var/asset)
+/proc/register_asset(asset_name, asset)
 	SSassets.cache[asset_name] = asset
 
 //Generated names do not include file extention.
 //Used mainly for code that deals with assets in a generic way
 //The same asset will always lead to the same asset name
-/proc/generate_asset_name(var/file)
+/proc/generate_asset_name(file)
 	return "asset.[md5(fcopy_rsc(file))]"
 
 
@@ -158,7 +158,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 GLOBAL_LIST_EMPTY(asset_datums)
 
 //get an assetdatum or make a new one
-/proc/get_asset_datum(var/type)
+/proc/get_asset_datum(type)
 	return GLOB.asset_datums[type] || new type()
 
 /datum/asset
@@ -325,6 +325,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/size_id = sprite[SPR_SIZE]
 	return {"<span class="[name][size_id] [sprite_name]"></span>"}
 
+/datum/asset/spritesheet/proc/icon_class_name(sprite_name)
+	var/sprite = sprites[sprite_name]
+	if (!sprite)
+		return null
+	var/size_id = sprite[SPR_SIZE]
+	return {"[name][size_id] [sprite_name]"}
+
 #undef SPR_SIZE
 #undef SPR_IDX
 #undef SPRSZ_COUNT
@@ -381,8 +388,19 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/simple/tgui
 	assets = list(
-		"tgui.css"	= 'tgui/assets/tgui.css',
-		"tgui.js"	= 'tgui/assets/tgui.js',
+		// tgui
+		"tgui.css" = 'tgui/assets/tgui.css',
+		"tgui.js" = 'tgui/assets/tgui.js',
+		// tgui-next
+		"tgui-main.html" = 'tgui-next/packages/tgui/public/tgui-main.html',
+		"tgui-fallback.html" = 'tgui-next/packages/tgui/public/tgui-fallback.html',
+		"tgui.bundle.js" = 'tgui-next/packages/tgui/public/bundles/tgui.bundle.js',
+		"tgui.bundle.css" = 'tgui-next/packages/tgui/public/bundles/tgui.bundle.css',
+		"shim-console.js" = 'tgui-next/packages/tgui/public/shim-console.js',
+		"shim-html5shiv.js" = 'tgui-next/packages/tgui/public/shim-html5shiv.js',
+		"shim-ie8.js" = 'tgui-next/packages/tgui/public/shim-ie8.js',
+		"shim-dom4.js" = 'tgui-next/packages/tgui/public/shim-dom4.js',
+		"shim-css-om.js" = 'tgui-next/packages/tgui/public/shim-css-om.js',
 	)
 
 /datum/asset/group/tgui
@@ -596,6 +614,22 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
 
+
+/datum/asset/spritesheet/simple/roulette
+	name = "roulette"
+	assets = list(
+		"black" = 'icons/UI_Icons/Roulette/black.png',
+		"red" = 'icons/UI_Icons/Roulette/red.png',
+		"odd" = 'icons/UI_Icons/Roulette/odd.png',
+		"even" = 'icons/UI_Icons/Roulette/even.png',
+		"low" = 'icons/UI_Icons/Roulette/1-18.png',
+		"high" = 'icons/UI_Icons/Roulette/19-36.png',
+		"nano" = 'icons/UI_Icons/Roulette/nano.png',
+		"zero" = 'icons/UI_Icons/Roulette/0.png'
+
+	)
+
+
 //this exists purely to avoid meta by pre-loading all language icons.
 /datum/asset/language/register()
 	for(var/path in typesof(/datum/language))
@@ -676,28 +710,28 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/spritesheet/vending/register()
 	for (var/k in GLOB.vending_products)
 		var/atom/item = k
-
-
-		var/icon_file
-		var/icon_state
-		var/icon/I
-
-
 		if (!ispath(item, /atom))
 			continue
 
-		icon_file = initial(item.icon)
-		icon_state = initial(item.icon_state)
+		var/icon_file = initial(item.icon)
+		var/icon_state = initial(item.icon_state)
+		var/icon/I
 
-		if(icon_state in icon_states(icon_file))
+		var/icon_states_list = icon_states(icon_file)
+		if(icon_state in icon_states_list)
 			I = icon(icon_file, icon_state, SOUTH)
 			var/c = initial(item.color)
 			if (!isnull(c) && c != "#FFFFFF")
-				I.Blend(initial(c), ICON_MULTIPLY)
+				I.Blend(c, ICON_MULTIPLY)
 		else
-			item = new item()
-			I = icon(item.icon, item.icon_state, SOUTH)
-			qdel(item)
+			var/icon_states_string
+			for (var/an_icon_state in icon_states_list)
+				if (!icon_states_string)
+					icon_states_string = "[json_encode(an_icon_state)](\ref[an_icon_state])"
+				else
+					icon_states_string += ", [json_encode(an_icon_state)](\ref[an_icon_state])"
+			stack_trace("[item] does not have a valid icon state, icon=[icon_file], icon_state=[json_encode(icon_state)](\ref[icon_state]), icon_states=[icon_states_string]")
+			I = icon('icons/turf/floors.dmi', "", SOUTH)
 
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
 
@@ -706,7 +740,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/simple/genetics
 	assets = list(
-		"dna_discovered.png"	= 'html/dna_discovered.png',
-		"dna_undiscovered.png"	= 'html/dna_undiscovered.png',
-		"dna_extra.png" 		= 'html/dna_extra.png'
-)
+		"dna_discovered.gif"	= 'html/dna_discovered.gif',
+		"dna_undiscovered.gif"	= 'html/dna_undiscovered.gif',
+		"dna_extra.gif" 		= 'html/dna_extra.gif'
+	)

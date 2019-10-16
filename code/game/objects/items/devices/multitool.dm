@@ -24,7 +24,9 @@
 	throwforce = 0
 	throw_range = 7
 	throw_speed = 3
-	materials = list(MAT_METAL=50, MAT_GLASS=20)
+	drop_sound = 'sound/items/handling/multitool_drop.ogg'
+	pickup_sound =  'sound/items/handling/multitool_pickup.ogg'
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
@@ -158,14 +160,16 @@
 		M.toggle_hud(owner)
 	return 1
 
-/obj/item/multitool/cyborg
-	name = "multitool"
-	desc = "Optimised and stripped-down version of a regular multitool."
-	toolspeed = 0.5
-
 /obj/item/multitool/abductor
 	name = "alien multitool"
 	desc = "An omni-technological interface."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
 	toolspeed = 0.1
+
+/obj/item/multitool/cyborg
+	name = "electronic multitool"
+	desc = "Optimised version of a regular multitool. Streamlines processes handled by its internal microchip."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "multitool_cyborg"
+	toolspeed = 0.5

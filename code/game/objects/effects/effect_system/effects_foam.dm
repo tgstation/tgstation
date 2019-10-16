@@ -14,7 +14,7 @@
 	layer = EDGED_TURF_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
-	animate_movement = 0
+	animate_movement = NO_STEPS
 	var/metal = 0
 	var/lifetime = 40
 	var/reagent_divisor = 7
@@ -92,7 +92,7 @@
 	. = ..()
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
-	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
+	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 
 /obj/effect/particle_effect/foam/ComponentInitialize()
 	. = ..()
@@ -121,7 +121,7 @@
 	if(metal)
 		var/turf/T = get_turf(src)
 		if(isspaceturf(T)) //Block up any exposed space
-			T.PlaceOnTop(/turf/open/floor/plating/foam)
+			T.PlaceOnTop(/turf/open/floor/plating/foam, flags = CHANGETURF_INHERIT_AIR)
 		for(var/direction in GLOB.cardinals)
 			var/turf/cardinal_turf = get_step(T, direction)
 			if(get_area(cardinal_turf) != get_area(T)) //We're at an area boundary, so let's block off this turf!
@@ -230,7 +230,7 @@
 	chemholder = null
 	return ..()
 
-/datum/effect_system/foam_spread/set_up(amt=5, loca, datum/reagents/carry = null)
+/datum/effect_system/foam_spread/set_up(amt=5, loca, datum/reagents/carry = null, metaltype = 0)
 	if(isturf(loca))
 		location = loca
 	else
@@ -238,10 +238,8 @@
 
 	amount = round(sqrt(amt / 2), 1)
 	carry.copy_to(chemholder, carry.total_volume)
-
-/datum/effect_system/foam_spread/metal/set_up(amt=5, loca, datum/reagents/carry = null, metaltype)
-	..()
-	metal = metaltype
+	if(metaltype != 0)
+		metal = metaltype
 
 /datum/effect_system/foam_spread/start()
 	var/obj/effect/particle_effect/foam/F = new effect_type(location)
@@ -281,7 +279,7 @@
 	return attack_hand(user)
 
 /obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/attack_hand(mob/user)
 	. = ..()
@@ -290,7 +288,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	to_chat(user, "<span class='warning'>You hit [src] but bounce off it!</span>")
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target)
 	return !density

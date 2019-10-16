@@ -58,3 +58,18 @@
 	. = ..()
 	whitelisted_turfs = typecacheof(/turf/closed/mineral)
 	banned_objects = typecacheof(/obj/structure/stone_tile)
+
+/datum/map_template/shelter/charlie
+	name = "Shelter Charlie"
+	shelter_id = "shelter_charlie"
+	description = "A luxury elite bar which holds an entire bar \
+		along with two vending machines, tables, and a restroom that \
+		also has a sink. This isn't a survival capsule and so you can \
+		expect that this won't save you if you're bleeding out to \
+		death."
+	mappath = "_maps/templates/shelter_3.dmm"
+
+/datum/map_template/shelter/charlie/New()
+	. = ..()
+	whitelisted_turfs = typecacheof(/turf/closed/mineral)
+	banned_objects = typecacheof(/obj/structure/stone_tile)

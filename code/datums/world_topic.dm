@@ -104,8 +104,7 @@
 	var/expected_key = input[keyword]
 	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(O.key == expected_key)
-			if(O.client)
-				new /obj/screen/splash(O.client, TRUE)
+			new /obj/screen/splash(O.client, TRUE)
 			break
 
 /datum/world_topic/adminmsg

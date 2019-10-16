@@ -268,8 +268,7 @@
 
 	else if(href_list["play"])
 		playing = TRUE
-		spawn()
-			playsong(usr)
+		INVOKE_ASYNC(src, .proc/playsong, usr)
 
 	else if(href_list["newline"])
 		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
@@ -382,5 +381,6 @@
 	song.interact(user)
 
 /obj/structure/piano/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I, 40)
 	return TRUE

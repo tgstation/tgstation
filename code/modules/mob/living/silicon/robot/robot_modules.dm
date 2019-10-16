@@ -10,7 +10,6 @@
 
 	var/list/basic_modules = list() //a list of paths, converted to a list of instances on New()
 	var/list/emag_modules = list() //ditto
-	var/list/ratvar_modules = list() //ditto ditto
 	var/list/modules = list() //holds all the usable modules
 	var/list/added_modules = list() //modules not inherient to the robot module, are kept when the module changes
 	var/list/storages = list()
@@ -44,15 +43,10 @@
 		var/obj/item/I = new i(src)
 		emag_modules += I
 		emag_modules -= i
-	for(var/i in ratvar_modules)
-		var/obj/item/I = new i(src)
-		ratvar_modules += I
-		ratvar_modules -= i
 
 /obj/item/robot_module/Destroy()
 	basic_modules.Cut()
 	emag_modules.Cut()
-	ratvar_modules.Cut()
 	modules.Cut()
 	added_modules.Cut()
 	storages.Cut()
@@ -88,8 +82,9 @@
 		var/obj/item/stack/S = I
 
 		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
-			if(S.materials[MAT_METAL])
-				S.cost = S.materials[MAT_METAL] * 0.25
+			if(S.custom_materials && custom_materials.len)
+				if(S.custom_materials[getmaterialref(/datum/material/iron)])
+					S.cost = S.custom_materials[getmaterialref(/datum/material/iron)] * 0.25
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
 
 		else if(istype(S, /obj/item/stack/sheet/glass))
@@ -118,7 +113,7 @@
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/pipe_cleaner)
 
 		if(S && S.source)
-			S.materials = list()
+			S.custom_materials = null
 			S.is_cyborg = 1
 
 	if(I.loc != src)
@@ -136,7 +131,6 @@
 	basic_modules -= I
 	modules -= I
 	emag_modules -= I
-	ratvar_modules -= I
 	added_modules -= I
 	rebuild_modules()
 	if(delete_after)
@@ -172,9 +166,6 @@
 		add_module(I, FALSE, FALSE)
 	if(R.emagged)
 		for(var/obj/item/I in emag_modules)
-			add_module(I, FALSE, FALSE)
-	if(is_servant_of_ratvar(R))
-		for(var/obj/item/I in ratvar_modules)
 			add_module(I, FALSE, FALSE)
 	for(var/obj/item/I in added_modules)
 		add_module(I, FALSE, FALSE)
@@ -223,7 +214,7 @@
 	R.anchored = TRUE
 	sleep(1)
 	for(var/i in 1 to 4)
-		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
+		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 		sleep(7)
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
@@ -255,10 +246,6 @@
 		/obj/item/soap/nanotrasen,
 		/obj/item/borg/cyborghug)
 	emag_modules = list(/obj/item/melee/transforming/energy/sword/cyborg)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg,
-		/obj/item/clockwork/weapon/ratvarian_spear,
-		/obj/item/clockwork/replica_fabricator/cyborg)
 	moduleselect_icon = "standard"
 	hat_offset = -3
 
@@ -268,7 +255,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/borghypo,
-		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/surgical_drapes,
@@ -285,9 +272,6 @@
 		/obj/item/organ_storage,
 		/obj/item/borg/lollipop)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
 	can_be_pushed = FALSE
@@ -320,9 +304,6 @@
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/stack/cable_coil/cyborg)
 	emag_modules = list(/obj/item/borg/stun)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/engineer,
-		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
 	magpulsing = TRUE
@@ -335,10 +316,9 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/melee/baton/loaded,
 		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/clothing/mask/gas/sechailer/cyborg)
+		/obj/item/clothing/mask/gas/sechailer/cyborg,
+		/obj/item/extinguisher/mini)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
 	can_be_pushed = FALSE
@@ -372,9 +352,6 @@
 		/obj/item/extinguisher,
 		/obj/item/borg/projectile_dampen)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/peacekeeper,
-		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "peace"
 	moduleselect_icon = "standard"
 	can_be_pushed = FALSE
@@ -403,9 +380,6 @@
 		/obj/item/holosign_creator/janibarrier,
 		/obj/item/reagent_containers/spray/cyborg_drying)
 	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/janitor,
-		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
 	hat_offset = -5
@@ -458,10 +432,6 @@
 	emag_modules = list(
 		/obj/item/reagent_containers/borghypo/clown/hacked,
 		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg,
-		/obj/item/clockwork/weapon/ratvarian_spear,
-		/obj/item/clockwork/replica_fabricator/cyborg)
 	moduleselect_icon = "service"
 	cyborg_base_icon = "clown"
 	hat_offset = -2
@@ -487,8 +457,6 @@
 		/obj/item/borg/lollipop,
 		/obj/item/stack/pipe_cleaner_coil/cyborg)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/service,
-		/obj/item/borg/sight/xray/truesight_lens)
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
@@ -537,10 +505,6 @@
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
 	emag_modules = list(/obj/item/borg/stun)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/miner,
-		/obj/item/clockwork/weapon/ratvarian_spear,
-		/obj/item/borg/sight/xray/truesight_lens)
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
 	hat_offset = 0
@@ -564,11 +528,9 @@
 		/obj/item/gun/ballistic/revolver/grenadelauncher/cyborg,
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
+		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg)
 
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
@@ -589,7 +551,7 @@
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
-		/obj/item/twohanded/shockpaddles/syndicate,
+		/obj/item/twohanded/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer,
 		/obj/item/surgical_drapes,
 		/obj/item/retractor,
@@ -606,9 +568,7 @@
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/gun/medbeam,
 		/obj/item/organ_storage)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/weapon/ratvarian_spear)
+
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
@@ -621,6 +581,7 @@
 		/obj/item/borg/sight/thermal,
 		/obj/item/construction/rcd/borg/syndicate,
 		/obj/item/pipe_dispenser,
+		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/screwdriver/nuke,
@@ -638,9 +599,7 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
 		)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/engineer,
-		/obj/item/clockwork/replica_fabricator/cyborg)
+
 	cyborg_base_icon = "synd_engi"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE

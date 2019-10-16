@@ -5,15 +5,15 @@
 	sexes = 0
 	species_traits = list(NOTRANSSTING) //all of these + whatever we inherit from the real species
 	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
-	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
+	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
-	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
+	var/disguise_fail_health = 75 //When their health gets to this level their instabitaluri partially falls off
 	var/datum/species/fake_species //a species to do most of our work for us, unless we're damaged
 	var/list/initial_species_traits //for getting these values back for assume_disguise()
 	var/list/initial_inherent_traits
-	changesource_flags = MIRROR_BADMIN | WABBAJACK
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 
 /datum/species/synth/New()
 	initial_species_traits = species_traits.Copy()
@@ -28,6 +28,7 @@
 	punchdamagehigh = 19
 	punchstunthreshold = 14 //about 50% chance to stun
 	disguise_fail_health = 50
+	changesource_flags = MIRROR_BADMIN | WABBAJACK
 
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
@@ -39,7 +40,7 @@
 	UnregisterSignal(H, COMSIG_MOB_SAY)
 
 /datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.type == /datum/reagent/medicine/synthflesh)
+	if(chem.type == /datum/reagent/medicine/C2/instabitaluri)
 		chem.reaction_mob(H, TOUCH, 2 ,0) //heal a little
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return 1
@@ -124,8 +125,6 @@
 	if (isliving(source)) // yeah it's gonna be living but just to be clean
 		var/mob/living/L = source
 		if(fake_species && L.health > disguise_fail_health)
-			switch (fake_species.type)
+			switch(fake_species.type)
 				if (/datum/species/golem/bananium)
 					speech_args[SPEECH_SPANS] |= SPAN_CLOWN
-				if (/datum/species/golem/clockwork)
-					speech_args[SPEECH_SPANS] |= SPAN_ROBOT

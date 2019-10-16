@@ -34,7 +34,7 @@
 		if(prob(33))
 			var/obj/item/shard/S = new(drop_location())
 			target.Bumped(S)
-		playsound(src, "shatter", 70, 1)
+		playsound(src, "shatter", 70, TRUE)
 	else
 		B.force = 0
 		B.throwforce = 0
@@ -100,11 +100,11 @@
 
 	//Display an attack message.
 	if(target != user)
-		target.visible_message("<span class='danger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>", \
-				"<span class='userdanger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>")
+		target.visible_message("<span class='danger'>[user] hits [target][head_attack_message] with a bottle of [src.name]!</span>", \
+				"<span class='userdanger'>[user] hits you [head_attack_message] with a bottle of [src.name]!</span>")
 	else
-		user.visible_message("<span class='danger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", \
-				"<span class='userdanger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>")
+		target.visible_message("<span class='danger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", \
+				"<span class='userdanger'>You hit yourself with a bottle of [src.name][head_attack_message]!</span>")
 
 	//Attack logs
 	log_combat(user, target, "attacked", src)
@@ -462,7 +462,7 @@
 	..()
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
-	if(I.is_hot() && !active)
+	if(I.get_temperature() && !active)
 		active = TRUE
 		log_bomber(user, "has primed a", src, "for detonation")
 

@@ -406,12 +406,14 @@
 /mob/living/proc/cure_blind(source)
 	REMOVE_TRAIT(src, TRAIT_BLIND, source)
 	if(!HAS_TRAIT(src, TRAIT_BLIND))
-		adjust_blindness(-1)
+		update_blindness()
 
 /mob/living/proc/become_blind(source)
-	if(!HAS_TRAIT(src, TRAIT_BLIND))
-		blind_eyes(1)
-	ADD_TRAIT(src, TRAIT_BLIND, source)
+	if(!HAS_TRAIT(src, TRAIT_BLIND)) // not blind already, add trait then overlay
+		ADD_TRAIT(src, TRAIT_BLIND, source)
+		update_blindness()
+	else
+		ADD_TRAIT(src, TRAIT_BLIND, source)
 
 /mob/living/proc/cure_nearsighted(source)
 	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, source)
@@ -432,11 +434,12 @@
 
 /mob/living/proc/become_husk(source)
 	if(!HAS_TRAIT(src, TRAIT_HUSK))
+		ADD_TRAIT(src, TRAIT_HUSK, source)
 		ADD_TRAIT(src, TRAIT_DISFIGURED, "husk")
 		update_body()
-		. = TRUE
-	ADD_TRAIT(src, TRAIT_HUSK, source)
-
+	else
+		ADD_TRAIT(src, TRAIT_HUSK, source)
+	
 /mob/living/proc/cure_fakedeath(source)
 	REMOVE_TRAIT(src, TRAIT_FAKEDEATH, source)
 	REMOVE_TRAIT(src, TRAIT_DEATHCOMA, source)

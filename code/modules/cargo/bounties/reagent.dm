@@ -131,7 +131,7 @@
 		/datum/reagent/medicine/leporazine,\
 		/datum/reagent/medicine/clonexadone,\
 		/datum/reagent/medicine/mine_salve,\
-		/datum/reagent/medicine/perfluorodecalin,\
+		/datum/reagent/medicine/C2/convermol,\
 		/datum/reagent/medicine/ephedrine,\
 		/datum/reagent/medicine/diphenhydramine,\
 		/datum/reagent/drug/space_drugs,\
@@ -175,7 +175,6 @@
 		/datum/reagent/consumable/frostoil,\
 		/datum/reagent/toxin/slimejelly,\
 		/datum/reagent/teslium/energized_jelly,\
-		/datum/reagent/toxin/skewium,\
 		/datum/reagent/toxin/mimesbane,\
 		/datum/reagent/medicine/strange_reagent,\
 		/datum/reagent/nitroglycerin,\

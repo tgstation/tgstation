@@ -1,7 +1,15 @@
 //If you're looking for spawners like ash walker eggs, check ghost_role_spawners.dm
 
-/obj/structure/fans/tiny/invisible //For blocking air in ruin doorways
-	invisibility = INVISIBILITY_ABSTRACT
+///Wizard tower item
+/obj/item/disk/design_disk/adv/knight_gear
+	name = "Magic Disk of Smithing"
+
+/obj/item/disk/design_disk/adv/knight_gear/Initialize()
+	. = ..()
+	var/datum/design/knight_armour/A = new
+	var/datum/design/knight_helmet/H = new
+	blueprints[1] = A
+	blueprints[2] = H
 
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
@@ -34,7 +42,7 @@
 	desc = "Allows for the construction of a Golem Shell."
 	id = "golem"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 40000)
+	materials = list(/datum/material/iron = 40000)
 	build_path = /obj/item/golem_shell
 	category = list("Imported")
 
@@ -70,13 +78,13 @@
 		/obj/item/stack/sheet/cloth	                = /datum/species/golem/cloth,
 		/obj/item/stack/sheet/mineral/adamantine	= /datum/species/golem/adamantine,
 		/obj/item/stack/sheet/plastic	            = /datum/species/golem/plastic,
-		/obj/item/stack/tile/brass					= /datum/species/golem/clockwork,
 		/obj/item/stack/tile/bronze					= /datum/species/golem/bronze,
 		/obj/item/stack/sheet/cardboard				= /datum/species/golem/cardboard,
 		/obj/item/stack/sheet/leather				= /datum/species/golem/leather,
 		/obj/item/stack/sheet/bone					= /datum/species/golem/bone,
-		/obj/item/stack/sheet/cloth/durathread		= /datum/species/golem/durathread,
+		/obj/item/stack/sheet/durathread			= /datum/species/golem/durathread,
 		/obj/item/stack/sheet/cotton/durathread		= /datum/species/golem/durathread,
+		/obj/item/stack/sheet/mineral/snow			= /datum/species/golem/snow,
 		/obj/item/stack/sheet/capitalisium			= /datum/species/golem/capitalist,
 		/obj/item/stack/sheet/stalinium				= /datum/species/golem/soviet)
 
@@ -104,6 +112,7 @@
 	name = "Syndicate Bioweapon Scientist"
 	roundstart = FALSE
 	death = FALSE
+	random = TRUE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	flavour_text = "<span class='big bold'>You are a syndicate agent,</span><b> employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. The base is rigged with explosives, <font size=6>DO NOT</font> abandon it or let it fall into enemy hands!</b>"
@@ -151,7 +160,4 @@
 
 /obj/item/clothing/mask/chameleon/gps/Initialize()
 	. = ..()
-	new /obj/item/gps/internal/lavaland_syndicate_base(src)
-
-/obj/item/gps/internal/lavaland_syndicate_base
-	gpstag = "Encrypted Signal"
+	AddComponent(/datum/component/gps, "Encrypted Signal")

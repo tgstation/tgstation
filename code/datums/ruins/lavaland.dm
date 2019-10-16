@@ -65,17 +65,17 @@
 	name = "Free Golem Ship"
 	id = "golem-ship"
 	description = "Lumbering humanoids, made out of precious metals, move inside this ship. They frequently leave to mine more minerals, which they somehow turn into more of them. \
-	Seem very intent on research and individual liberty, and also geology based naming?"
+	Seem very intent on research and individual liberty, and also geology-based naming?"
 	cost = 20
 	suffix = "lavaland_surface_golem_ship.dmm"
 	allow_duplicates = FALSE
 
-/datum/map_template/ruin/lavaland/animal_hospital
-	name = "Animal Hospital"
-	id = "animal-hospital"
-	description = "Rats with cancer do not live very long. And the ones that wake up from cryostasis seem to commit suicide out of boredom."
+/datum/map_template/ruin/lavaland/gaia
+	name = "Patch of Eden"
+	id = "gaia"
+	description = "Who would have thought that such a peaceful place could be on such a horrific planet?"
 	cost = 5
-	suffix = "lavaland_surface_animal_hospital.dmm"
+	suffix = "lavaland_surface_gaia.dmm"
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/sin
@@ -157,7 +157,7 @@
 /datum/map_template/ruin/lavaland/xeno_nest
 	name = "Xenomorph Nest"
 	id = "xeno-nest"
-	description = "These xenomorphs got bored of horrifically slaughtering people on space stations, and have settled down on a nice lava filled hellscape to focus on what's really important in life. \
+	description = "These xenomorphs got bored of horrifically slaughtering people on space stations, and have settled down on a nice lava-filled hellscape to focus on what's really important in life. \
 	Quality memes."
 	suffix = "lavaland_surface_xeno_nest.dmm"
 	cost = 20
@@ -214,6 +214,13 @@
 	description = "A heavily-damaged mining ripley, property of a very unfortunate miner. You might have to do a bit of work to fix this thing up."
 	suffix = "lavaland_surface_random_ripley.dmm"
 	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/dark_wizards
+	name = "Dark Wizard Altar"
+	id = "dark_wizards"
+	description = "A ruin with dark wizards. What secret do they guard?"
+	suffix = "lavaland_surface_wizard.dmm"
 	cost = 5
 
 /datum/map_template/ruin/lavaland/puzzle

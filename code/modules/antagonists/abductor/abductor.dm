@@ -26,7 +26,7 @@
 	sub_role = "Scientist"
 	outfit = /datum/outfit/abductor/scientist
 	landmark_type = /obj/effect/landmark/abductor/scientist
-	greet_text = "Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve."
+	greet_text = "Use your experimental console and surgical equipment to monitor your agent and experiment upon abducted humans."
 	show_in_antagpanel = TRUE
 
 /datum/antagonist/abductor/create_team(datum/team/abductor_team/new_team)
@@ -40,8 +40,8 @@
 	return team
 
 /datum/antagonist/abductor/on_gain()
-	owner.special_role = "[name] [sub_role]"
-	owner.assigned_role = "[name] [sub_role]"
+	owner.special_role = "[name]"
+	owner.assigned_role = "[name]"
 	objectives += team.objectives
 	finalize_abductor()
 	ADD_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)

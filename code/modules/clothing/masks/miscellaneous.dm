@@ -71,7 +71,7 @@
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"
-	desc = "A rubber pig mask with a builtin voice modulator."
+	desc = "A rubber pig mask with a built-in voice modulator."
 	icon_state = "pig"
 	item_state = "pig"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
@@ -85,14 +85,14 @@
 
 /obj/item/clothing/mask/pig/cursed
 	name = "pig face"
-	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
+	desc = "It looks like a mask, but closer inspection reveals it's melded onto this person's face!"
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
 /obj/item/clothing/mask/pig/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, TRUE)
 
 ///frog mask - reeee!!
 /obj/item/clothing/mask/frog
@@ -127,7 +127,6 @@
 
 /obj/item/clothing/mask/cowmask
 	name = "cow mask"
-	icon = 'icons/mob/mask.dmi'
 	icon_state = "cowmask"
 	item_state = "cowmask"
 	clothing_flags = VOICEBOX_TOGGLABLE
@@ -141,14 +140,14 @@
 
 /obj/item/clothing/mask/cowmask/cursed
 	name = "cow face"
-	desc = "It looks like a cow mask, but closer inspection reveals it's melded onto this persons face!"
+	desc = "It looks like a cow mask, but closer inspection reveals it's melded onto this person's face!"
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
 /obj/item/clothing/mask/cowmask/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, TRUE)
 
 /obj/item/clothing/mask/horsehead
 	name = "horse head mask"
@@ -172,7 +171,7 @@
 /obj/item/clothing/mask/horsehead/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, TRUE)
 
 /obj/item/clothing/mask/rat
 	name = "rat mask"
@@ -231,7 +230,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
-	visor_flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	slot_flags = ITEM_SLOT_MASK
 	adjusted_flags = ITEM_SLOT_HEAD
 	icon_state = "bandbotany"

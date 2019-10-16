@@ -17,7 +17,7 @@
 	var/datum/action/strike/strike = new/datum/action/strike()
 	var/datum/action/drop/drop = new/datum/action/drop()
 
-/datum/martial_art/wrestling/proc/check_streak(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/wrestling/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	switch(streak)
 		if("drop")
 			streak = ""
@@ -135,7 +135,9 @@
 	D.setDir(get_dir(D, A))
 
 	D.Stun(80)
-	A.visible_message("<span class='danger'><B>[A] starts spinning around with [D]!</B></span>")
+	D.visible_message("<span class='danger'>[A] starts spinning around with [D]!</span>", \
+					"<span class='userdanger'>You're spun around by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, A)
+	to_chat(A, "<span class='danger'>You start spinning around with [D]!</span>")
 	A.emote("scream")
 
 	for (var/i = 0, i < 20, i++)
@@ -186,8 +188,10 @@
 
 		D.forceMove(A.loc) // Maybe this will help with the wallthrowing bug.
 
-		A.visible_message("<span class='danger'><B>[A] throws [D]!</B></span>")
-		playsound(A.loc, "swing_hit", 50, 1)
+		D.visible_message("<span class='danger'>[A] throws [D]!</span>", \
+						"<span class='userdanger'>You're thrown by [A]!</span>", "<span class='hear'>You hear aggressive shuffling and a loud thud!</span>", null, A)
+		to_chat(A, "<span class='danger'>You throw [D]!</span>")
+		playsound(A.loc, "swing_hit", 50, TRUE)
 		var/turf/T = get_edge_target_turf(A, A.dir)
 		if (T && isturf(T))
 			if (!D.stat)
@@ -214,7 +218,9 @@
 	A.setDir(get_dir(A, D))
 	D.setDir(get_dir(D, A))
 
-	A.visible_message("<span class='danger'><B>[A] lifts [D] up!</B></span>")
+	D.visible_message("<span class='danger'>[A] lifts [D] up!</span>", \
+					"<span class='userdanger'>You're lifted up by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, A)
+	to_chat(A, "<span class='danger'>You lift [D] up!</span>")
 
 	FlipAnimation()
 
@@ -284,8 +290,10 @@
 			if (3)
 				fluff = "atomic [fluff]"
 
-		A.visible_message("<span class='danger'><B>[A] [fluff] [D]!</B></span>")
-		playsound(A.loc, "swing_hit", 50, 1)
+		D.visible_message("<span class='danger'>[A] [fluff] [D]!</span>", \
+						"<span class='userdanger'>You're [fluff]ed by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
+		to_chat(A, "<span class='danger'>You [fluff] [D]!</span>")
+		playsound(A.loc, "swing_hit", 50, TRUE)
 		if (!D.stat)
 			D.emote("scream")
 			D.Paralyze(40)
@@ -327,9 +335,11 @@
 		A.forceMove(D.loc)
 		addtimer(CALLBACK(src, .proc/CheckStrikeTurf, A, T), 4)
 
-		A.visible_message("<span class='danger'><b>[A] headbutts [D]!</b></span>")
+		D.visible_message("<span class='danger'>[A] headbutts [D]!</span>", \
+						"<span class='userdanger'>You're headbutted by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
+		to_chat(A, "<span class='danger'>You headbutt [D]!</span>")
 		D.adjustBruteLoss(rand(10,20))
-		playsound(A.loc, "swing_hit", 50, 1)
+		playsound(A.loc, "swing_hit", 50, TRUE)
 		D.Unconscious(20)
 	log_combat(A, D, "headbutted")
 
@@ -340,8 +350,10 @@
 	A.emote("flip")
 	A.setDir(turn(A.dir, 90))
 
-	A.visible_message("<span class='danger'><B>[A] roundhouse-kicks [D]!</B></span>")
-	playsound(A.loc, "swing_hit", 50, 1)
+	D.visible_message("<span class='danger'>[A] roundhouse-kicks [D]!</span>", \
+					"<span class='userdanger'>You're roundhouse-kicked by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
+	to_chat(A, "<span class='danger'>You roundhouse-kick [D]!</span>")
+	playsound(A.loc, "swing_hit", 50, TRUE)
 	D.adjustBruteLoss(rand(10,20))
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
@@ -372,7 +384,8 @@
 
 	if (surface && (ST && isturf(ST)))
 		A.forceMove(ST)
-		A.visible_message("<span class='danger'><B>[A] climbs onto [surface]!</b></span>")
+		A.visible_message("<span class='danger'>[A] climbs onto [surface]!</span>", \
+						"<span class='danger'>You climb onto [surface]!</span>")
 		A.pixel_y = 10
 		falling = 1
 		sleep(10)
@@ -383,7 +396,8 @@
 		if ((falling == 0 && get_dist(A, D) > 1) || (falling == 1 && get_dist(A, D) > 2)) // We climbed onto stuff.
 			A.pixel_y = 0
 			if (falling == 1)
-				A.visible_message("<span class='danger'><B>...and dives head-first into the ground, ouch!</b></span>")
+				A.visible_message("<span class='danger'>...and dives head-first into the ground, ouch!</span>", \
+								"<span class='userdanger'>...and dive head-first into the ground, ouch!</span>")
 				A.adjustBruteLoss(rand(10,20))
 				A.Paralyze(60)
 			to_chat(A, "<span class='warning'>[D] is too far away!</span>")
@@ -402,8 +416,10 @@
 
 		A.forceMove(D.loc)
 
-		A.visible_message("<span class='danger'><B>[A] leg-drops [D]!</B></span>")
-		playsound(A.loc, "swing_hit", 50, 1)
+		D.visible_message("<span class='danger'>[A] leg-drops [D]!</span>", \
+						"<span class='userdanger'>You're leg-dropped by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
+		to_chat(A, "<span class='danger'>You leg-drop [D]!</span>")
+		playsound(A.loc, "swing_hit", 50, TRUE)
 		A.emote("scream")
 
 		if (falling == 1)
@@ -437,7 +453,8 @@
 		return 1
 	A.start_pulling(D)
 	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
-								"<span class='userdanger'>[A] gets [D] in a cinch!</span>")
+					"<span class='userdanger'>You're put into a cinch by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, A)
+	to_chat(A, "<span class='danger'>You get [D] in a cinch!</span>")
 	D.Stun(rand(60,100))
 	log_combat(A, D, "cinched")
 	return 1
@@ -447,6 +464,7 @@
 	var/datum/martial_art/wrestling/style = new
 
 /obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
+	. = ..()
 	if(!ishuman(user))
 		return
 	if(slot == SLOT_BELT)
@@ -455,6 +473,7 @@
 	return
 
 /obj/item/storage/belt/champion/wrestling/dropped(mob/user)
+	. = ..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user

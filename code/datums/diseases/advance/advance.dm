@@ -33,7 +33,7 @@
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
 	var/oldres	//To prevent setting new cures unless resistance changes.
 
-	// The order goes from easy to cure to hard to cure.
+	// The order goes from easy to cure to hard to cure. Keep in mind that sentient diseases pick two cures from tier 6 and up, ensure they wont react away in bodies.
 	var/static/list/advance_cures = 	list(
 									list(	// level 1
 										/datum/reagent/copper, /datum/reagent/silver, /datum/reagent/iodine, /datum/reagent/iron, /datum/reagent/carbon
@@ -45,7 +45,7 @@
 										/datum/reagent/consumable/sodiumchloride, /datum/reagent/consumable/sugar, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/milk
 									),
 									list(	//level 4
-										/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/charcoal
+										/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/C2/multiver
 									),
 									list(	//level 5
 										/datum/reagent/oil, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/mannitol, /datum/reagent/drug/space_drugs, /datum/reagent/cryptobiolin
@@ -110,11 +110,12 @@
 		return
 
 	if(symptoms && symptoms.len)
-
 		if(!processing)
 			processing = TRUE
 			for(var/datum/symptom/S in symptoms)
-				S.Start(src)
+				if(S.Start(src)) //this will return FALSE if the symptom is neutered
+					S.next_activation = world.time + rand(S.symptom_delay_min * 10, S.symptom_delay_max * 10)
+				S.on_stage_change(src)
 
 		for(var/datum/symptom/S in symptoms)
 			S.Activate(src)
@@ -123,7 +124,7 @@
 /datum/disease/advance/update_stage(new_stage)
 	..()
 	for(var/datum/symptom/S in symptoms)
-		S.on_stage_change(new_stage, src)
+		S.on_stage_change(src)
 
 // Compares type then ID.
 /datum/disease/advance/IsSame(datum/disease/advance/D)
@@ -205,6 +206,10 @@
 /datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
 	AssignProperties()
+	if(processing && symptoms && symptoms.len)
+		for(var/datum/symptom/S in symptoms)
+			S.Start(src)
+			S.on_stage_change(src)
 	id = null
 
 	var/the_id = GetDiseaseID()
@@ -235,8 +240,15 @@
 		else
 			visibility_flags &= ~HIDDEN_SCANNER
 
-		SetSpread(CLAMP(2 ** (properties["transmittable"] - symptoms.len), DISEASE_SPREAD_BLOOD, DISEASE_SPREAD_AIRBORNE))
-
+		if(properties["transmittable"]>=11)
+			SetSpread(DISEASE_SPREAD_AIRBORNE)
+		else if(properties["transmittable"]>=7)
+			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
+		else if(properties["transmittable"]>=3)
+			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
+		else
+			SetSpread(DISEASE_SPREAD_BLOOD)
+		
 		permeability_mod = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
@@ -352,28 +364,28 @@
 	return id
 
 
-// Add a symptom, if it is over the limit (with a small chance to be able to go over)
-// we take a random symptom away and add the new one.
+// Add a symptom, if it is over the limit we take a random symptom away and add the new one.
 /datum/disease/advance/proc/AddSymptom(datum/symptom/S)
 
 	if(HasSymptom(S))
 		return
 
-	if(symptoms.len < (VIRUS_SYMPTOM_LIMIT - 1) + rand(-1, 1))
-		symptoms += S
-	else
+	if(!(symptoms.len < (VIRUS_SYMPTOM_LIMIT - 1) + rand(-1, 1)))
 		RemoveSymptom(pick(symptoms))
-		symptoms += S
+	symptoms += S
+	S.OnAdd(src)
 
 // Simply removes the symptom.
 /datum/disease/advance/proc/RemoveSymptom(datum/symptom/S)
 	symptoms -= S
+	S.OnRemove(src)
 
 // Neuter a symptom, so it will only affect stats
 /datum/disease/advance/proc/NeuterSymptom(datum/symptom/S)
 	if(!S.neutered)
 		S.neutered = TRUE
 		S.name += " (neutered)"
+		S.OnRemove(src)
 
 /*
 

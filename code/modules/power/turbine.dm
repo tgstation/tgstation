@@ -31,6 +31,9 @@
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	circuit = /obj/item/circuitboard/machine/power_compressor
+	ui_x = 350
+	ui_y = 280
+
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/inturf
@@ -86,7 +89,7 @@
 	inturf = get_step(src, dir)
 	locate_machinery()
 	if(!turbine)
-		stat |= BROKEN
+		obj_break()
 
 
 #define COMPFRICTION 5e5
@@ -123,7 +126,7 @@
 			stat &= ~BROKEN
 		else
 			to_chat(user, "<span class='alert'>Turbine not connected.</span>")
-			stat |= BROKEN
+			obj_break()
 		return
 
 	default_deconstruction_crowbar(I)
@@ -184,7 +187,7 @@
 	outturf = get_step(src, dir)
 	locate_machinery()
 	if(!compressor)
-		stat |= BROKEN
+		obj_break()
 	connect_to_network()
 
 /obj/machinery/power/turbine/RefreshParts()
@@ -257,7 +260,7 @@
 			stat &= ~BROKEN
 		else
 			to_chat(user, "<span class='alert'>Compressor not connected.</span>")
-			stat |= BROKEN
+			obj_break()
 		return
 
 	default_deconstruction_crowbar(I)
@@ -332,7 +335,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "turbine_computer", name, 350, 280, master_ui, state)
+		ui = new(user, src, ui_key, "turbine_computer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/turbine_computer/ui_data(mob/user)
