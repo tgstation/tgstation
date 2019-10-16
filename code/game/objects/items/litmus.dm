@@ -28,7 +28,6 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			return
-		. = ..()
 	if(. & COMPONENT_NO_INTERACT)
 		return
 	var/I = user.get_active_held_item()
@@ -53,7 +52,7 @@
         to_chat(user, "<span class='warning'>[src] is empty!</span>")
         add_fingerprint(user)
         return
-    ..()
+    
 
 /obj/item/fermichem/pHpaper
     name = "pH indicator strip"
