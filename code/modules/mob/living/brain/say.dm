@@ -25,10 +25,3 @@
 /mob/living/brain/treat_message(message)
 	message = capitalize(message)
 	return message
-
-/mob/living/brain/could_speak_in_language(datum/language/dt)
-	if(istype(container, /obj/item/mmi/posibrain/soul_vessel))
-		// soul vessels can only speak ratvarian.
-		. = ispath(dt, /datum/language/ratvar)
-	else
-		. = ..()

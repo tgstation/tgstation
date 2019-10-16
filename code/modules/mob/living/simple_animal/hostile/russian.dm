@@ -27,7 +27,7 @@
 	status_flags = CANPUSH
 	del_on_death = 1
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 
 
 /mob/living/simple_animal/hostile/russian/ranged
