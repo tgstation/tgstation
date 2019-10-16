@@ -126,7 +126,7 @@
 	owner.visible_message("<span class='warning'>[owner] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>")
 	var/oldcolor = owner.color
 	owner.color = "#1E8CE1"
-	owner.fully_heal()
+	owner.fully_heal(admin_revive = FALSE)
 	owner.add_stun_absorption("inathneq", 150, 2, "'s flickering blue aura momentarily intensifies!", "Inath-neq's power absorbs the stun!", " glowing with a flickering blue light!")
 	owner.status_flags |= GODMODE
 	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
