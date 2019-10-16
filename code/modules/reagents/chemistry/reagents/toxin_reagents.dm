@@ -162,7 +162,7 @@
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
 	taste_description = "death"
-	var/ingested = FALSE
+	var/fakedeath_active = FALSE
 
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
@@ -175,18 +175,22 @@
 /datum/reagent/toxin/zombiepowder/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	L.adjustOxyLoss(0.5*REM, 0)
 	if(method == INGEST)
-		ingested = TRUE //Created Var for ZP
+		fakedeath_active = TRUE
 		L.fakedeath(type)
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M)
 	..()
-	if(ingested)
+	if(fakedeath_active)
 		return TRUE
 	switch(current_cycle)
 		if(1 to 5)
 			M.confused += 1
 			M.drowsyness += 1
-		if(5 to INFINITY)
+			M.slurring += 3
+		if(5 to 8)
+			M.adjustStaminaLoss(60, 0)
+		if(8 to INFINITY)
+			fakedeath_active = TRUE
 			M.fakedeath(type)
 
 /datum/reagent/toxin/ghoulpowder
