@@ -106,3 +106,13 @@
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
+
+/turf/open/openspace/icemoon
+	name = "ice chasm"
+	baseturfs = /turf/open/openspace/icemoon
+	can_cover_up = FALSE
+	can_build_on = FALSE
+	initial_gas_mix = FROZEN_ATMOS
+
+/turf/open/openspace/icemoon/can_zFall(atom/movable/A, levels = 1, turf/target)
+	return TRUE
