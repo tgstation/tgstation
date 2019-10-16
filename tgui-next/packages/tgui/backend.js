@@ -32,8 +32,8 @@ export const backendReducer = (state, action) => {
     };
     const data = {
       ...state.data,
-      ...payload.data,
       ...payload.static_data,
+      ...payload.data,
     };
     // Calculate our own fields
     const visible = config.status !== UI_DISABLED;
