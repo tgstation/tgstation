@@ -730,3 +730,4 @@
 	time = 50
 	reqs = list(/obj/item/stack/sheet/cloth = 1, /datum/reagent/toxin/formaldehyde = 30, /datum/reagent/medicine/polypyr = 30) //We have no thread item, so cloth will have to do.
 	category = CAT_MISC
+
