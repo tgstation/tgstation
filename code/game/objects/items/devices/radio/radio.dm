@@ -71,6 +71,8 @@
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
+	channels = sortList(channels)
+
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
 	keyslot = new /obj/item/encryptionkey/syndicate
@@ -94,6 +96,8 @@
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+
+	channels = sortList(channels)
 
 /obj/item/radio/ComponentInitialize()
 	. = ..()

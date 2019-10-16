@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
 
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
 
-GLOBAL_LIST_INIT(ai_core_display_screens, list(
+GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 	":thinking:",
 	"Alien",
 	"Angel",
@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Too Deep",
 	"Triumvirate",
 	"Triumvirate-M",
-	"Weird"))
+	"Weird")))
 
 /proc/resolve_ai_icon(input)
 	if(!input || !(input in GLOB.ai_core_display_screens))
@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 			input = pick(GLOB.ai_core_display_screens - "Random")
 		return "ai-[lowertext(input)]"
 
-GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
+GLOBAL_LIST_INIT(security_depts_prefs, sortList(list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)))
 
 	//Backpacks
 #define GBACKPACK "Grey Backpack"

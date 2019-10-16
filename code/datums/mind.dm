@@ -444,7 +444,7 @@
 			if(old_objective.name in GLOB.admin_objective_list)
 				def_value = old_objective.name
 
-		var/selected_type = input("Select objective type:", "Objective type", def_value) as null|anything in sortList(GLOB.admin_objective_list)
+		var/selected_type = input("Select objective type:", "Objective type", def_value) as null|anything in GLOB.admin_objective_list
 		selected_type = GLOB.admin_objective_list[selected_type]
 		if (!selected_type)
 			return

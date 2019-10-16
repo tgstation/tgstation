@@ -44,7 +44,7 @@
 			else
 				male += D.name
 				female += D.name
-	return L
+	return sortList(L)
 
 /datum/sprite_accessory
 	var/icon			//the icon file the accessory is located in

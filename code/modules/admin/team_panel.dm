@@ -66,7 +66,7 @@
 	if(!GLOB.admin_objective_list)
 		generate_admin_objective_list()
 
-	var/selected_type = input("Select objective type:", "Objective type") as null|anything in sortList(GLOB.admin_objective_list)
+	var/selected_type = input("Select objective type:", "Objective type") as null|anything in GLOB.admin_objective_list
 	selected_type = GLOB.admin_objective_list[selected_type]
 	if (!selected_type)
 		return

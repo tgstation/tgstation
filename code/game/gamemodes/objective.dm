@@ -1055,7 +1055,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /proc/generate_admin_objective_list()
 	GLOB.admin_objective_list = list()
 
-	var/list/allowed_types = list(
+	var/list/allowed_types = sortList(list(
 		/datum/objective/assassinate,
 		/datum/objective/maroon,
 		/datum/objective/debrain,
@@ -1071,7 +1071,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		/datum/objective/capture,
 		/datum/objective/absorb,
 		/datum/objective/custom
-	)
+	))
 
 	for(var/T in allowed_types)
 		var/datum/objective/X = T

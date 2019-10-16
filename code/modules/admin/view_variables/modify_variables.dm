@@ -64,6 +64,8 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 		.["[D]([shorttype])[REF(D)]#[i]"] = D
 
+	. = sortList(.)
+
 /client/proc/mod_list_add_ass(atom/O) //hehe
 
 	var/list/L = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
@@ -131,7 +133,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 			value = "null"
 		names["#[i] [key] = [value]"] = i
 	if (!index)
-		var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)" + "(CLEAR NULLS)" + "(CLEAR DUPES)" + "(SHUFFLE)"
+		var/variable = input("Which var?","Var") as null|anything in sortList(names) + "(ADD VAR)" + "(CLEAR NULLS)" + "(CLEAR DUPES)" + "(SHUFFLE)"
 
 		if(variable == null)
 			return

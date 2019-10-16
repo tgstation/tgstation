@@ -262,9 +262,9 @@
 		if(G.tracking)
 			gps_locators[G.gpstag] = G
 
-	var/list/options = gps_locators
+	var/list/options = sortList(gps_locators)
 	if(area_aim)
-		options += sortList(GLOB.teleportlocs)
+		options += GLOB.teleportlocs
 	var/V = input(user,"Select target", "Select target",null) in options|null
 	target = options[V]
 

@@ -106,6 +106,7 @@
 			var/datum/species/S = speciestype
 			if(initial(S.changesource_flags) & MIRROR_MAGIC)
 				choosable_races += initial(S.id)
+		choosable_races = sortList(choosable_races)
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
@@ -160,7 +161,7 @@
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
-				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in sortList(GLOB.skin_tones)
+				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 

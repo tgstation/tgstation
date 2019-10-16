@@ -23,7 +23,7 @@
 		user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 
 /obj/item/pipe_painter/attack_self(mob/user)
-	paint_color = input("Which colour do you want to use?","Pipe painter") in sortList(GLOB.pipe_paint_colors)
+	paint_color = input("Which colour do you want to use?","Pipe painter") in GLOB.pipe_paint_colors
 
 /obj/item/pipe_painter/examine(mob/user)
 	. = ..()

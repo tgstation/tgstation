@@ -179,7 +179,7 @@
 			.["value"] = things[value]
 
 		if(VV_CLIENT)
-			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in GLOB.clients
+			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in sortList(GLOB.clients)
 			if(.["value"] == null)
 				.["class"] = null
 				return

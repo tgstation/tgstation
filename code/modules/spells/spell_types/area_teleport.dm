@@ -25,7 +25,7 @@
 	var/A = null
 
 	if(!randomise_selection)
-		A = input("Area to teleport to", "Teleport", A) as null|anything in sortList(GLOB.teleportlocs)
+		A = input("Area to teleport to", "Teleport", A) as null|anything in GLOB.teleportlocs
 	else
 		A = pick(GLOB.teleportlocs)
 	if(!A)

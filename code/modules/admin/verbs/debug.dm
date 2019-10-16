@@ -501,8 +501,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/datum/outfit/O = path //not much to initalize here but whatever
 		if(initial(O.can_be_admin_equipped))
 			tempoutfits[initial(O.name)] = path
-		sortList(tempoutfits)
-		outfits += tempoutfits
+		outfits += sortList(tempoutfits)
 
 	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in outfits
 	if (isnull(dresscode))
