@@ -211,7 +211,7 @@
 	addtimer(CALLBACK(src, .proc/reset_rage), 65)
 	
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/reset_rage()
-	H.color = "#FFFFFF"
+	color = "#FFFFFF"
 	set_varspeed(2)
 	move_to_delay = 5
 	
