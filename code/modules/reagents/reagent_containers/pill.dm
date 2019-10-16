@@ -1,5 +1,4 @@
 /obj/item/reagent_containers/pill
-/obj/item/reagent_containers/pill
 	name = "pill"
 	desc = "A tablet or capsule."
 	icon = 'icons/obj/chemical.dmi'
