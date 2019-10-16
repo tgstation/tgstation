@@ -1,15 +1,16 @@
+///Footstep component. Plays footsteps at parents location when it is appropriate.
 /datum/component/footstep
+	///How many steps the parent has taken since the last time a footstep was played.
 	var/steps = 0
+	///volume determines the extra volume of the footstep. This is multiplied by the base volume, should there be one.
 	var/volume
+	///e_range stands for extra range - aka how far the sound can be heard. This is added to the base value and ignored if there isn't a base value.
 	var/e_range
+	///footstep_type is a define which determines what kind of sounds should get chosen.
 	var/footstep_type
 	///This can be a list OR a soundfile OR null. Determines whatever sound gets played.
 	var/footstep_sounds
 
-///Explanation of the args.
-///volume determines the extra volume of the footstep. This is multiplied by the base volume, should there be one.
-///e_range stands for extra range - aka how far the sound can be heard. This is added to the base value and ignored if there isn't one.
-///footstep_type is a define which determines what kind of sounds should get chosen.
 /datum/component/footstep/Initialize(footstep_type_ = FOOTSTEP_MOB_BAREFOOT, volume_ = 0.5, e_range_ = -1)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
