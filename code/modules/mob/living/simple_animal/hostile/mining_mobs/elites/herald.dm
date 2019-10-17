@@ -141,8 +141,8 @@
 /obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/mob/living/L = target
-		var/mob/living/simple_animal/hostile/asteroid/elite/E = firer
-		if(E != null && E.faction_check_mob(L))
+		var/mob/living/F = firer
+		if(F != null && istype(F, /mob/living/simple_animal/hostile/asteroid/elite) && F.faction_check_mob(L))
 			L.heal_overall_damage(damage)
 	. = ..()
 	if(ismineralturf(target))
@@ -244,9 +244,30 @@
 //Herald's loot: Cloak of the Prophet
 
 /obj/item/clothing/neck/cloak/herald_cloak
-	name = "Cloak of the Prophet"
+	name = "cloak of the prophet"
 	desc = "A cloak which protects you from the heresy of the world."
 	icon = 'icons/obj/lavaland/elite_trophies.dmi'
 	icon_state = "herald_cloak"
-	armor = list("melee" = 10, "bullet" = 25, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	body_parts_covered = CHEST|GROIN|ARMS
+	hit_reaction_chance = 10
+	
+/obj/item/clothing/neck/cloak/herald_cloak/proc/reactionshot(mob/living/carbon/owner)
+	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
+	for(var/i in directional_shot_angles)
+		shoot_projectile(get_turf(owner), i, owner)
+	
+/obj/item/clothing/neck/cloak/herald_cloak/proc/shoot_projectile(turf/marker, set_angle, mob/living/carbon/owner)
+	var/turf/startloc = get_turf(owner)
+	var/obj/projectile/herald/H = null
+	H = new /obj/projectile/herald(startloc)
+	H.preparePixelProjectile(marker, startloc)
+	H.firer = owner
+	H.fire(set_angle)
+	
+/obj/item/clothing/neck/cloak/herald_cloak/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	. = ..()
+	if(rand(1,100) <= hit_reaction_chance)
+		owner.visible_message("<span class='danger'>[owner]'s [src] emits a loud noise as [owner] is struck!</span>")
+		var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
+		playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+		addtimer(CALLBACK(src, .proc/reactionshot, owner), 10)

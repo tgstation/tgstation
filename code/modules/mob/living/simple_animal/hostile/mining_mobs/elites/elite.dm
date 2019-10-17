@@ -40,7 +40,7 @@
 		if(faction_check_mob(M))
 			return FALSE
 	. = ..()
-	if(. && ismineralturf(target))
+	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled()
 		

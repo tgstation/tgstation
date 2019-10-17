@@ -179,4 +179,13 @@
 	icon = 'icons/obj/lavaland/elite_trophies.dmi'
 	icon_state = "hope"
 	resistance_flags = FIRE_PROOF
-	armor = list("melee" = 5, "bullet" = 5, "energy" = 5)
+	
+/obj/item/clothing/accessory/pandora_hope/on_uniform_equip(obj/item/clothing/under/U, user)
+	var/mob/living/L = user
+	if(L && L.mind)
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "hope_lavaland", /datum/mood_event/hope_lavaland)
+
+/obj/item/clothing/accessory/pandora_hope/on_uniform_dropped(obj/item/clothing/under/U, user)
+	var/mob/living/L = user
+	if(L && L.mind)
+		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "hope_lavaland")
