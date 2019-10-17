@@ -50,14 +50,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	"<span class='suicide'>You try to impale yourself with [src], but it's USELESS...</span>")
 	return SHAME
 
-/obj/item/claymore/joe's_sword
-	name = "joe's sword"
-	desc = "DON'T ASK WHO JOE IS"
-	icon_state = "claymore"
-	item_state = "claymore"
-	force = 200
-	throwforce = 200
-
 /obj/item/claymore
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
