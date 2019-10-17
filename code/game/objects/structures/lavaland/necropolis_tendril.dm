@@ -52,8 +52,8 @@ GLOBAL_LIST_INIT(tendrils, list())
 			for(var/mob/living/L in view(7,src))
 				if(L.stat || !L.client)
 					continue
-				L.UNLOCK_ACHIEVEMENT(/datum/achievement/tendril_exterminator, L)
-				L.UNLOCK_ACHIEVEMENT(/datum/achievement/tendril_score, L) //Progresses score by one
+				L.client.give_award(/datum/award/achievement/tendril_exterminator, L)
+				L.client.give_award(/datum/award/score/tendril_score, L) //Progresses score by one
 	GLOB.tendrils -= src
 	QDEL_NULL(emitted_light)
 	QDEL_NULL(gps)

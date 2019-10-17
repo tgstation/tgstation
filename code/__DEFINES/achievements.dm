@@ -1,5 +1,3 @@
-#define UNLOCK_ACHIEVEMENT(A, B) client.player_details.achievements.unlock(A, B)
-
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
 

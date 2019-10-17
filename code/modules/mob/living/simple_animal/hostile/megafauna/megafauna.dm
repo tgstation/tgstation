@@ -148,12 +148,12 @@
 	for(var/mob/living/L in grant_achievement)
 		if(L.stat || !L.client)
 			continue
-		L.UNLOCK_ACHIEVEMENT(/datum/achievement/boss_killer, L)
-		L.UNLOCK_ACHIEVEMENT(achievement_type, L)
+		L.client.give_award(/datum/award/achievement/boss_killer, L)
+		L.client.give_award(achievement_type, L)
 		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/kinetic_crusher))
-			L.UNLOCK_ACHIEVEMENT(crusher_achievement_type, L)
-		L.UNLOCK_ACHIEVEMENT(/datum/achievement/boss_score, L) //Score progression for bosses killed in general
-		L.UNLOCK_ACHIEVEMENT(score_achievement_type, L) //Score progression for specific boss killed
+			L.client.give_award(crusher_achievement_type, L)
+		L.client.give_award(/datum/award/score/boss_score, L) //Score progression for bosses killed in general
+		L.client.give_award(score_achievement_type, L) //Score progression for specific boss killed
 	return TRUE
 
 /datum/action/innate/megafauna_attack

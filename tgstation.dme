@@ -336,7 +336,7 @@
 #include "code\datums\weakrefs.dm"
 #include "code\datums\world_topic.dm"
 #include "code\datums\achievements\_achievement_data.dm"
-#include "code\datums\achievements\achievement.dm"
+#include "code\datums\achievements\_awards.dm"
 #include "code\datums\achievements\boss_achievements.dm"
 #include "code\datums\achievements\boss_scores.dm"
 #include "code\datums\achievements\misc_achievements.dm"

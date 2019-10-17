@@ -38,9 +38,9 @@
 	minimum_distance = 5
 	ranged_cooldown_time = 20
 	gps_name = "Echoing Signal"
-	achievement_type = /datum/achievement/legion_kill
-	crusher_achievement_type = /datum/achievement/legion_crusher
-	score_achievement_type = /datum/achievement/legion_score
+	achievement_type = /datum/award/achievement/legion_kill
+	crusher_achievement_type = /datum/award/achievement/legion_crusher
+	score_achievement_type = /datum/award/score/legion_score
 	pixel_y = -16
 	pixel_x = -32
 	loot = list(/obj/item/stack/sheet/bone = 3)

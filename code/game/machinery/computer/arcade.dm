@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
 		visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
-		user.UNLOCK_ACHIEVEMENT(/datum/achievement/pulse, user)
+		user.client.give_award(/datum/award/achievement/pulse, user)
 		return
 
 	if(!contents.len)

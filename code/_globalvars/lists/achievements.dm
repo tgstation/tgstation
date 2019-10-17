@@ -1,3 +1,1 @@
 GLOBAL_LIST_EMPTY(commendations)
-
-GLOBAL_LIST_EMPTY(achievement_cache)
