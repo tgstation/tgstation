@@ -24,7 +24,7 @@
 	turns_per_move = 5
 	gold_core_spawnable = HOSTILE_SPAWN
 	faction = list(ROLE_WIZARD)
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 	weather_immunities = list("lava","ash")
 	minbodytemp = 0
 	maxbodytemp = INFINITY

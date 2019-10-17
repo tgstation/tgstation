@@ -731,7 +731,7 @@
 
 // called when area power state changes
 /obj/machinery/light/power_change()
-	SHOULD_CALL_PARENT(FALSE)
+	SHOULD_CALL_PARENT(0)
 	var/area/A = get_area(src)
 	seton(A.lightswitch && A.power_light)
 
