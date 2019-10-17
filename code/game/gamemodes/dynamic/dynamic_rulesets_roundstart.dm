@@ -15,11 +15,11 @@
 	restricted_roles = list("Cyborg")
 	required_candidates = 1
 	weight = 5
-	cost = 10
+	cost = 10	// Avoid raising traitor threat above 10, as it is the default low cost ruleset.
 	scaling_cost = 10
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
-	antag_cap = list(1,1,1,2,2,2,3,3,3,3)
+	antag_cap = list(1,1,1,2,2,2,3,3,3,4)
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute()
@@ -109,7 +109,7 @@
 	scaling_cost = 15
 	requirements = list(70,70,60,50,40,20,20,10,10,10)
 	high_population_requirement = 10
-	antag_cap = list(1,1,1,2,2,2,3,3,3,3)
+	antag_cap = list(1,1,1,2,2,2,2,2,3,3)
 	var/team_mode_probability = 30
 
 /datum/dynamic_ruleset/roundstart/changeling/pre_execute()
@@ -201,7 +201,7 @@
 	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
 	required_candidates = 2
 	weight = 3
-	cost = 30
+	cost = 35
 	requirements = list(100,90,80,60,40,30,10,10,10,10)
 	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET

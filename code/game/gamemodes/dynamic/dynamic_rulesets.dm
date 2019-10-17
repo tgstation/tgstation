@@ -70,6 +70,8 @@
 	var/indice_pop = 0
 	/// Population scaling. Used by team antags and scaling for solo antags.
 	var/list/antag_cap = list()
+	/// Base probability used in scaling. The higher it is, the more likely to scale. Kept as a var to allow for config editing._SendSignal(sigtype, list/arguments)
+	var/base_prob = 60
 
 
 /datum/dynamic_ruleset/New()
@@ -112,7 +114,6 @@
 /datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
 	if(scaling_cost) // Only attempts to scale the modes with a scaling cost explicitly set. 
 		log_game("DYNAMIC: [name] roundstart ruleset attempting to scale up with [extra_rulesets] rulesets waiting and [remaining_threat_level] threat remaining.")
-		var/base_prob = 60
 		var/new_prob
 		var/pop_to_antags = (mode.antags_rolled + antag_cap[indice_pop]) / mode.roundstart_pop_ready
 		for(var/i in 1 to 3) //Can scale a max of 3 times

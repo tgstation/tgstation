@@ -76,11 +76,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// The requirement used for checking if a second rule should be selected.
 	var/list/second_rule_req = list(100, 100, 80, 70, 60, 50, 30, 20, 10, 0)
 	/// The probability for a second ruleset with index being every ten threat.
-	var/list/second_rule_prob = list(0,0,20,30,40,60,80,90,100)
+	var/list/second_rule_prob = list(0,0,60,80,80,80,100,100,100,100)
 	/// The requirement used for checking if a third rule should be selected.
 	var/list/third_rule_req = list(100, 100, 100, 90, 80, 70, 60, 50, 40, 30)
 	/// The probability for a third ruleset with index being every ten threat.
-	var/list/third_rule_prob = list(0,0,0,0,20,40,60,80,100)
+	var/list/third_rule_prob = list(0,0,0,0,60,60,80,90,100,100)
 	/// Threat requirement for a second ruleset when high pop override is in effect. 
 	var/high_pop_second_rule_req = 40
 	/// Threat requirement for a third ruleset when high pop override is in effect.
@@ -404,9 +404,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (threat_level > high_pop_third_rule_req)
 					extra_rulesets_amount++
 		else
-			if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[min(10, threat_level ? 0 : threat_level/10)]))
+			if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[min(10, round(threat_level ? 0 : threat_level/10))]))
 				extra_rulesets_amount++
-				if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[min(10, threat_level ? 0 : threat_level/10)]))
+				if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[min(10, round(threat_level ? 0 : threat_level/10))]))
 					extra_rulesets_amount++
 
 	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
@@ -421,6 +421,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 							drafted_rules -= rule
 					picking_roundstart_rule(drafted_rules)
 	else
+		if(threat >= 10)
+			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this.")
+		log_game("DYNAMIC: Picking first roundstart ruleset failed. drafted_rules.len = [drafted_rules.len] and threat = [threat]/[threat_level]")
 		return FALSE
 	return TRUE
 
@@ -428,29 +431,34 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/picking_roundstart_rule(list/drafted_rules = list(), forced = FALSE)
 	var/datum/dynamic_ruleset/roundstart/starting_rule = pickweight(drafted_rules)
 	if(!starting_rule)
+		log_game("DYNAMIC: Couldn't pick a starting ruleset. No rulesets available")
 		return FALSE
 
 	if(!forced)
 		if(only_ruleset_executed)
+			log_game("DYNAMIC: Picking [starting_rule.name] failed due to only_ruleset_executed.")
 			return FALSE
 		// Check if a blocking ruleset has been executed.
-		else if(check_blocking(starting_rule.blocking_rules, executed_rules))
+		else if(check_blocking(starting_rule.blocking_rules, executed_rules))	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
 			drafted_rules -= starting_rule
 			if(drafted_rules.len <= 0)
+				log_game("DYNAMIC: Picking [starting_rule.name] failed due to blocking_rules and no more rulesets available. Report this.")
 				return FALSE
 			starting_rule = pickweight(drafted_rules)
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
-		else if(starting_rule.flags & HIGHLANDER_RULESET)
+		else if(starting_rule.flags & HIGHLANDER_RULESET)	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
 			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					drafted_rules -= starting_rule
 					if(drafted_rules.len <= 0)
+						log_game("DYNAMIC: Picking [starting_rule.name] failed due to no highlander stacking and no more rulesets available. Report this.")
 						return FALSE
 					starting_rule = pickweight(drafted_rules)
 		// With low pop and high threat there might be rulesets that get executed with no valid candidates.
-		else if(starting_rule.ready())
+		else if(!starting_rule.ready())	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
 			drafted_rules -= starting_rule
 			if(drafted_rules.len <= 0)
+				log_game("DYNAMIC: Picking [starting_rule.name] failed because there were not enough candidates and no more rulesets available. Report this.")
 				return FALSE
 			starting_rule = pickweight(drafted_rules)
 
@@ -462,7 +470,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	starting_rule.trim_candidates()
 
 	var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
-	if (starting_rule.pre_execute())
+	if(starting_rule.pre_execute())
 		spend_threat(starting_rule.cost + added_threat)
 		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
 		if(starting_rule.flags & HIGHLANDER_RULESET)
@@ -470,11 +478,16 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		else if(starting_rule.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
 		executed_rules += starting_rule
-		if (starting_rule.persistent)
+		if(starting_rule.persistent)
 			current_rules += starting_rule
-		for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
-			if (!rule.ready())
-				drafted_rules -= rule // And removing rules that are no longer elligible
+		for(var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
+			if(check_blocking(rule.blocking_rules, executed_rules))
+				drafted_rules -= rule
+			if(highlander_executed && rule.flags & HIGHLANDER_RULESET)
+				drafted_rules -= rule
+			if(!rule.ready())
+				drafted_rules -= rule // And removing rules that are no longer eligible
+
 		return TRUE
 	else
 		stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
