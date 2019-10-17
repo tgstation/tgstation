@@ -72,7 +72,7 @@
 	return FALSE
 
 /*
-/mob/living/carbon/human/RestrainedClickOn(var/atom/A) ---carbons will handle this
+/mob/living/carbon/human/RestrainedClickOn(atom/A) ---carbons will handle this
 	return
 */
 
@@ -138,7 +138,8 @@
 		if(prob(75))
 			ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
 			ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
-							"<span class='userdanger'>[name] bites you!</span>", null, COMBAT_MESSAGE_RANGE)
+							"<span class='userdanger'>[name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, name)
+			to_chat(name, "<span class='danger'>You bite [ML]!</span>")
 			if(armor >= 2)
 				return
 			for(var/thing in diseases)
@@ -146,7 +147,8 @@
 				ML.ForceContractDisease(D)
 		else
 			ML.visible_message("<span class='danger'>[src]'s bite misses [ML]!</span>", \
-							"<span class='danger'>[src]'s bite misses you!</span>", null, COMBAT_MESSAGE_RANGE)
+							"<span class='danger'>You avoid [src]'s bite!</span>", "<span class='hear'>You hear jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, "<span class='danger'>Your bite misses [ML]!</span>")
 
 /*
 	Aliens

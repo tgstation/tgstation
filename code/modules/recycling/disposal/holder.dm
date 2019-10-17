@@ -117,7 +117,7 @@
 	if(user.incapacitated())
 		return
 	for(var/mob/M in range(5, get_turf(src)))
-		M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", 2)
+		M.show_message("<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>", MSG_AUDIBLE)
 	playsound(src.loc, 'sound/effects/clang.ogg', 50, FALSE, FALSE)
 
 // called to vent all gas in holder to a location

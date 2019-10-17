@@ -225,7 +225,7 @@
 	result = /obj/item/reagent_containers/food/snacks/snowcones/honey
 	subcategory = CAT_ICE
 
-/datum/crafting_recipe/food/honey_sc
+/datum/crafting_recipe/food/rainbow_sc
 	name = "Rainbow snowcone"
 	reqs = list(
 		/obj/item/reagent_containers/food/drinks/sillycup = 1,

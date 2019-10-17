@@ -237,7 +237,9 @@
 					/obj/item/circuitboard/machine/dish_drive = 1,
 					/obj/item/clothing/glasses/sunglasses/reagent = 1,
 					/obj/item/clothing/neck/petcollar = 1,
-					/obj/item/storage/belt/bandolier = 1)
+					/obj/item/storage/belt/bandolier = 1,
+					/obj/item/storage/pill_bottle/dice/hazard = 1,
+					/obj/item/storage/bag/money = 2)
 	premium = list(/obj/item/storage/box/dishdrive = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 	payment_department = ACCOUNT_SRV

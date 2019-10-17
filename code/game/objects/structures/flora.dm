@@ -14,7 +14,7 @@
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
 	if(log_amount && (!(flags_1 & NODECONSTRUCT_1)))
-		if(W.is_sharp() && W.force > 0)
+		if(W.get_sharpness() && W.force > 0)
 			if(W.hitsound)
 				playsound(get_turf(src), W.hitsound, 100, FALSE, FALSE)
 			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "<span class='hear'>You hear the sound of sawing.</span>")
@@ -317,6 +317,7 @@
 /obj/item/twohanded/required/kirbyplants/Initialize()
 	. = ..()
 	AddComponent(/datum/component/tactical)
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 500), 0)
 
 /obj/item/twohanded/required/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'
@@ -392,9 +393,8 @@
 //Jungle rocks
 
 /obj/structure/flora/rock/jungle
-	icon_state = "pile of rocks"
-	desc = "A pile of rocks."
 	icon_state = "rock"
+	desc = "A pile of rocks."
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
 

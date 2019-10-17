@@ -178,11 +178,6 @@
 
 	addtimer(CALLBACK(src, .proc/update_icon), 15)
 
-/obj/machinery/button/power_change()
-	..()
-	update_icon()
-
-
 /obj/machinery/button/door
 	name = "door button"
 	desc = "A door remote control switch."
@@ -290,4 +285,4 @@
 	desc = "Used for building buttons."
 	icon_state = "button"
 	result_path = /obj/machinery/button
-	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)

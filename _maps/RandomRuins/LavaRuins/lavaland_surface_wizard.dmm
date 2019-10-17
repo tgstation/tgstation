@@ -23,7 +23,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "f" = (
 /obj/structure/stone_tile/block,
@@ -33,7 +33,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "g" = (
 /obj/structure/stone_tile/block,
@@ -44,7 +44,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "h" = (
 /obj/structure/stone_tile/block,
@@ -54,7 +54,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "i" = (
 /obj/structure/stone_tile,
@@ -67,7 +67,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "j" = (
 /obj/structure/stone_tile/block/cracked{
@@ -79,7 +79,7 @@
 /obj/structure/stone_tile{
 	dir = 8
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "k" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
@@ -115,7 +115,7 @@
 	dir = 1
 	},
 /obj/structure/stone_tile,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "o" = (
 /obj/structure/stone_tile/block{
@@ -128,7 +128,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "p" = (
 /obj/structure/stone_tile/block/cracked{
@@ -163,7 +163,7 @@
 /obj/structure/stone_tile{
 	dir = 1
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "t" = (
 /obj/structure/stone_tile/block{
@@ -175,7 +175,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "u" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
@@ -215,7 +215,7 @@
 	dir = 1
 	},
 /obj/structure/stone_tile,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "y" = (
 /obj/structure/stone_tile,
@@ -228,7 +228,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "z" = (
 /obj/structure/stone_tile/block{
@@ -238,11 +238,11 @@
 /obj/structure/stone_tile{
 	dir = 8
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "A" = (
 /obj/structure/stone_tile/slab/cracked,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "B" = (
 /obj/structure/stone_tile/block/cracked{
@@ -253,7 +253,7 @@
 	},
 /obj/structure/stone_tile,
 /obj/effect/decal/cleanable/blood,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "C" = (
 /obj/structure/stone_tile,
@@ -266,7 +266,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "D" = (
 /turf/closed/indestructible/riveted/boss,
@@ -278,7 +278,7 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 8
 	},
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "F" = (
 /obj/structure/stone_tile/slab,
@@ -298,7 +298,7 @@
 	},
 /obj/structure/fans/tiny/invisible,
 /obj/effect/decal/cleanable/blood,
-/turf/open/indestructible/boss/air,
+/turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "I" = (
 /obj/structure/stone_tile/slab/cracked,

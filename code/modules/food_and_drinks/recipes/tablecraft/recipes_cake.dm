@@ -77,6 +77,16 @@
 	result = /obj/item/reagent_containers/food/snacks/store/cake/birthday
 	subcategory = CAT_CAKE
 
+/datum/crafting_recipe/food/energycake
+	name = "Energy cake"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/birthday = 1,
+		/obj/item/melee/transforming/energy/sword = 1,
+	)
+	blacklist = list(/obj/item/reagent_containers/food/snacks/store/cake/birthday/energy)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/birthday/energy
+	subcategory = CAT_CAKE
+
 /datum/crafting_recipe/food/braincake
 	name = "Brain cake"
 	reqs = list(

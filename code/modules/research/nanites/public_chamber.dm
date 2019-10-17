@@ -87,10 +87,6 @@
 	//running
 	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
 
-/obj/machinery/public_nanite_chamber/power_change()
-	. = ..()
-	update_icon()
-
 /obj/machinery/public_nanite_chamber/proc/toggle_open(mob/user)
 	if(panel_open)
 		to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")

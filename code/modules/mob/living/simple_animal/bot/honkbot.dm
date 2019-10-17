@@ -135,8 +135,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
 		update_icon()
 
-/mob/living/simple_animal/bot/honkbot/bullet_act(obj/item/projectile/Proj)
-	if((istype(Proj,/obj/item/projectile/beam)) || (istype(Proj,/obj/item/projectile/bullet) && (Proj.damage_type == BURN))||(Proj.damage_type == BRUTE) && (!Proj.nodamage && Proj.damage < health && ishuman(Proj.firer)))
+/mob/living/simple_animal/bot/honkbot/bullet_act(obj/projectile/Proj)
+	if((istype(Proj,/obj/projectile/beam)) || (istype(Proj,/obj/projectile/bullet) && (Proj.damage_type == BURN))||(Proj.damage_type == BRUTE) && (!Proj.nodamage && Proj.damage < health && ishuman(Proj.firer)))
 		retaliate(Proj.firer)
 	return ..()
 

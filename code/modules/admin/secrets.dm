@@ -350,7 +350,7 @@
 			for(var/mob/living/H in GLOB.player_list)
 				if(!(ishuman(H)||istype(H, /mob/living/silicon/)))
 					continue
-				if(H.stat == DEAD || !H.client || !H.mind || ispAI(H))
+				if(H.stat == DEAD || !H.mind || ispAI(H))
 					continue
 				if(is_special_character(H))
 					continue
@@ -727,7 +727,7 @@
 		E.processing = FALSE
 		if(E.announceWhen>0)
 			if(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
-				E.announceWhen = -1
+				E.announceChance = 0
 		E.processing = TRUE
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")

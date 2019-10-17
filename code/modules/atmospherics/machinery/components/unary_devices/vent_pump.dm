@@ -277,7 +277,7 @@
 		. += "It seems welded shut."
 
 /obj/machinery/atmospherics/components/unary/vent_pump/power_change()
-	..()
+	. = ..()
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()

@@ -129,7 +129,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6)
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "cheese" = 1)
-	foodtype = VEGETABLES | GRAIN
+	foodtype = VEGETABLES | GRAIN | DAIRY
 	dunkable = TRUE
 
 /obj/item/reagent_containers/food/snacks/badrecipe
@@ -382,7 +382,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/honey = 5)
 	filling_color = "#F2CE91"
 	tastes = list("oats" = 3, "nuts" = 2, "honey" = 1)
-	foodtype = FRUIT | SUGAR
+	foodtype = GRAIN | SUGAR
 
 /obj/item/reagent_containers/food/snacks/stuffedlegion
 	name = "stuffed legion"

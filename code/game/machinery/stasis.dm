@@ -80,13 +80,12 @@
 
 /obj/machinery/stasis/obj_break(damage_flag)
 	. = ..()
-	play_power_sound()
-	update_icon()
+	if(.)
+		play_power_sound()
 
 /obj/machinery/stasis/power_change()
 	. = ..()
 	play_power_sound()
-	update_icon()
 
 /obj/machinery/stasis/proc/chill_out(mob/living/target)
 	if(target != occupant)

@@ -299,9 +299,6 @@
 					O.make_laws()
 
 			SSticker.mode.remove_antag_for_borging(BM.mind)
-			if(!istype(M.laws, /datum/ai_laws/ratvar))
-				remove_servant_of_ratvar(BM, TRUE)
-
 			O.job = "Cyborg"
 
 			O.cell = chest.cell
@@ -324,6 +321,8 @@
 			SSblackbox.record_feedback("amount", "cyborg_birth", 1)
 			forceMove(O)
 			O.robot_suit = src
+
+			log_game("[key_name(user)] has put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell at [AREACOORD(src)]")
 
 			if(!locomotion)
 				O.lockcharge = TRUE

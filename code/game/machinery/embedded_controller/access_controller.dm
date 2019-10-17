@@ -91,10 +91,6 @@
 		else
 			icon_state = "access_button_standby"
 
-/obj/machinery/doorButtons/access_button/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/doorButtons/access_button/removeMe(obj/O)
 	if(O == door)
 		door = null
@@ -233,13 +229,12 @@
 		cycleOpen(interiorAirlock)
 
 /obj/machinery/doorButtons/airlock_controller/power_change()
-	..()
+	. = ..()
 	if(stat & NOPOWER)
 		lostPower = TRUE
 	else
 		if(!busy)
 			lostPower = FALSE
-	update_icon()
 
 /obj/machinery/doorButtons/airlock_controller/findObjsByTag()
 	for(var/obj/machinery/door/airlock/A in GLOB.machines)

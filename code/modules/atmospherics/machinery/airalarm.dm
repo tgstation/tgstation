@@ -68,7 +68,7 @@
 	power_channel = ENVIRON
 	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
-	integrity_failure = 80
+	integrity_failure = 0.33
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 30)
 	resistance_flags = FIRE_PROOF
 	ui_x = 440
@@ -824,20 +824,12 @@
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 	return
 
-/obj/machinery/airalarm/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/airalarm/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	visible_message("<span class='warning'>Sparks fly out of [src]!</span>", "<span class='notice'>You emag [src], disabling its safeties.</span>")
 	playsound(src, "sparks", 50, TRUE)
-
-/obj/machinery/airalarm/obj_break(damage_flag)
-	..()
-	update_icon()
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

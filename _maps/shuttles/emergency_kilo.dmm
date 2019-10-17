@@ -685,7 +685,7 @@
 /obj/item/tank/internals/emergency_oxygen{
 	pixel_x = -4
 	},
-/obj/item/tank/internals/air{
+/obj/item/tank/internals/oxygen{
 	pixel_x = 4
 	},
 /obj/item/clothing/mask/breath{

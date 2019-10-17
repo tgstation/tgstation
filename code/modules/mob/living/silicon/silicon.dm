@@ -45,7 +45,7 @@
 
 	var/hack_software = FALSE //Will be able to use hacking actions
 	var/interaction_range = 7			//wireless control range
-	var/obj/item/pda/aiPDA
+	var/obj/item/pda/ai/aiPDA
 
 /mob/living/silicon/Initialize()
 	. = ..()
@@ -65,9 +65,10 @@
 	return //we use a different hud
 
 /mob/living/silicon/Destroy()
-	radio = null
-	aicamera = null
+	QDEL_NULL(radio)
+	QDEL_NULL(aicamera)
 	QDEL_NULL(builtInCamera)
+	QDEL_NULL(aiPDA)
 	GLOB.silicon_mobs -= src
 	return ..()
 

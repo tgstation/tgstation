@@ -157,7 +157,7 @@
 	description = "<span class='nicegreen'>The bottle landing like that was satisfying.</span>\n"
 	mood_change = 2
 	timeout = 3 MINUTES
-	
+
 /datum/mood_event/hope_lavaland
 	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
 	mood_change = 5

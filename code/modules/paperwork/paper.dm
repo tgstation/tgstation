@@ -21,6 +21,8 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	dog_fashion = /datum/dog_fashion/head
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
 
 
 	var/extra_headers //For additional styling or other js features.
@@ -72,11 +74,11 @@
 
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(user, "[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[info]<HR>[stamps]</BODY></HTML>", "window=paper[md5(name)]")
+			onclose(user, "paper[md5(name)]")
 		else
-			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
-			onclose(user, "[name]")
+			user << browse("<HTML><HEAD><TITLE>[name]</TITLE>[extra_headers]</HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=paper[md5(name)]")
+			onclose(user, "paper[md5(name)]")
 	else
 		. += "<span class='warning'>You're too far away to read it!</span>"
 
@@ -315,7 +317,7 @@
 
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
-	if(P.is_hot())
+	if(P.get_temperature())
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")

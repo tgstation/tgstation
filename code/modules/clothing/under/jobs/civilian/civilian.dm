@@ -132,6 +132,12 @@
 	name = "Lawyer suit"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/rank/civilian/lawyer/dye_item(dye_color, dye_key_override)
+	if(dye_color == DYE_COSMIC || dye_color == DYE_SYNDICATE)
+		..(dye_color, DYE_LAWYER_SPECIAL)
+	else
+		..()
+
 /obj/item/clothing/under/rank/civilian/lawyer/black
 	name = "lawyer black suit"
 	icon_state = "lawyer_black"
@@ -208,3 +214,15 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
+
+/obj/item/clothing/under/rank/civilian/lawyer/galaxy
+	mob_overlay_icon = 'icons/mob/clothing/under/lawyer_galaxy.dmi'
+	can_adjust = FALSE
+	name = "blue galaxy suit"
+	icon_state = "lawyer_galaxy_blue"
+	item_state = "b_suit"
+
+/obj/item/clothing/under/rank/civilian/lawyer/galaxy/red
+	name = "red galaxy suit"
+	icon_state = "lawyer_galaxy_red"
+	item_state = "r_suit"

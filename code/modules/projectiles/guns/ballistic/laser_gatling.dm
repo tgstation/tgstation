@@ -53,6 +53,7 @@
 		..()
 
 /obj/item/minigunpack/dropped(mob/user)
+	. = ..()
 	if(armed)
 		user.dropItemToGround(gun, TRUE)
 
@@ -102,7 +103,7 @@
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
-	materials = list()
+	custom_materials = null
 	burst_size = 3
 	automatic = 0
 	fire_delay = 1
@@ -126,6 +127,7 @@
 	return
 
 /obj/item/gun/ballistic/minigun/dropped(mob/user)
+	SHOULD_CALL_PARENT(0)
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else
@@ -143,6 +145,3 @@
 	if(!ammo_pack || ammo_pack.loc != user)
 		to_chat(user, "<span class='warning'>You need the backpack power source to fire the gun!</span>")
 	. = ..()
-
-/obj/item/gun/ballistic/minigun/dropped(mob/living/user)
-	ammo_pack.attach_gun(user)

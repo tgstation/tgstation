@@ -4,6 +4,8 @@
 	desc = "A chemical splitter for smart chemical factorization. Waits till a set of conditions is met and then stops all input and splits the buffer evenly or other in two ducts."
 	icon_state = "splitter"
 	buffer = 100
+	density = FALSE
+
 	///constantly switches between TRUE and FALSE. TRUE means the batch tick goes straight, FALSE means the next batch goes in the side duct.
 	var/turn_straight = TRUE
 	///how much we must transfer straight. note input can be as high as 10 reagents per process, usually
@@ -12,14 +14,11 @@
 	var/transfer_side = 5
 	//the maximum you can set the transfer to
 	var/max_transfer = 9
+	
 
-/obj/machinery/plumbing/splitter/Initialize()
+/obj/machinery/plumbing/splitter/Initialize(mapload, bolt)
 	. = ..()
-	AddComponent(/datum/component/plumbing/splitter)
-
-/obj/machinery/plumbing/splitter/wrench_act(mob/living/user, obj/item/I)
-	default_unfasten_wrench(user, I)
-	return TRUE
+	AddComponent(/datum/component/plumbing/splitter, bolt)
 
 /obj/machinery/plumbing/splitter/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

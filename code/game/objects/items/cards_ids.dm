@@ -115,6 +115,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/id_type_name = "identification card"
+	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
@@ -277,6 +278,8 @@
 
 /obj/item/card/id/examine(mob/user)
 	. = ..()
+	if(mining_points)
+		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(registered_account)
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance]."
 		if(registered_account.account_job)
@@ -623,12 +626,6 @@ update_label()
 /obj/item/card/id/mining
 	name = "mining ID"
 	access = list(ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MECH_MINING, ACCESS_MAILSORTING, ACCESS_MINERAL_STOREROOM)
-
-/obj/item/card/id/mining/Initialize()
-	. = ..()
-	var/static/datum/bank_account/remote/golem_account = new("Liberator")
-	golem_account.bank_cards += src
-	registered_account = golem_account
 
 /obj/item/card/id/away
 	name = "a perfectly generic identification card"

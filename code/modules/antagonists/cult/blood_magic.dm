@@ -447,8 +447,6 @@
 				C.stuttering += 15
 				C.cultslurring += 15
 				C.Jitter(15)
-			if(is_servant_of_ratvar(L))
-				L.adjustBruteLoss(15)
 		uses--
 	..()
 

@@ -7,11 +7,13 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
-	materials = list(/datum/material/glass=500)
+	custom_materials = list(/datum/material/glass=500)
 	max_integrity = 20
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 	obj_flags = UNIQUE_RENAME
+	drop_sound = 'sound/items/handling/drinkglass_drop.ogg'
+	pickup_sound =  'sound/items/handling/drinkglass_pickup.ogg'
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(changetype)
 	cut_overlays()
@@ -47,7 +49,7 @@
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list()
 	volume = 15
-	materials = list(/datum/material/glass=100)
+	custom_materials = list(/datum/material/glass=100)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(changetype)
 	cut_overlays()

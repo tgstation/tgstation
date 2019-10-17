@@ -61,7 +61,7 @@
 	var/playerC = 0
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
-		if((player.client)&&(player.ready == PLAYER_READY_TO_PLAY))
+		if(player.ready == PLAYER_READY_TO_PLAY)
 			playerC++
 	if(!GLOB.Debug2)
 		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
@@ -363,7 +363,7 @@
 	// Ultimate randomizing code right here
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
-		if(player.client && player.ready == PLAYER_READY_TO_PLAY && player.check_preferences())
+		if(player.ready == PLAYER_READY_TO_PLAY && player.check_preferences())
 			players += player
 
 	// Shuffling, the players list is now ping-independent!!!
@@ -418,7 +418,7 @@
 	. = 0
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/P = i
-		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
+		if(P.ready == PLAYER_READY_TO_PLAY)
 			. ++
 
 /proc/reopen_roundstart_suicide_roles()

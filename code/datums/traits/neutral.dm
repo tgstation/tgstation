@@ -33,6 +33,15 @@
 		if(!initial(species.disliked_food) & MEAT)
 			species.disliked_food &= ~MEAT
 
+/datum/quirk/snob
+	name = "Snob"
+	desc = "You care about the finer things, if a room doesn't look nice its just not really worth it, is it?"
+	value = 0
+	gain_text = "<span class='notice'>You feel like you understand what things should look like.</span>"
+	lose_text = "<span class='notice'>Well who cares about deco anyways?</span>"
+	medical_record_text = "Patient seems to be rather stuck up."
+	mob_trait = TRAIT_SNOB
+
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
 	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
@@ -110,3 +119,18 @@
 /datum/quirk/monochromatic/remove()
 	if(quirk_holder)
 		quirk_holder.remove_client_colour(/datum/client_colour/monochrome)
+
+/datum/quirk/phobia
+	name = "Phobia"
+	desc = "You are irrationally afraid of something."
+	value = 0
+	medical_record_text = "Patient has an irrational fear of something."
+
+/datum/quirk/phobia/post_add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(new /datum/brain_trauma/mild/phobia(H.client.prefs.phobia), TRAUMA_RESILIENCE_ABSOLUTE)
+	
+/datum/quirk/phobia/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H)
+		H.cure_trauma_type(/datum/brain_trauma/mild/phobia, TRAUMA_RESILIENCE_ABSOLUTE)

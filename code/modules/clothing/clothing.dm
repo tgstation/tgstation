@@ -2,9 +2,10 @@
 	name = "clothing"
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
-	integrity_failure = 80
+	integrity_failure = 0.4
 	var/damaged_clothes = 0 //similar to machine's BROKEN stat and structure's broken var
-	var/flash_protect = 0		//What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
+	///What level of bright light protection item has.
+	var/flash_protect = FLASH_PROTECTION_NONE
 	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//but separated to allow items to protect but not impair vision, like space helmets
 	var/visor_flags = 0			//flags that are added/removed when an item is adjusted up/down

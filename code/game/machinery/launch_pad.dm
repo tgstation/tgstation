@@ -167,6 +167,8 @@
 					on_chair = " (on a chair)"
 				else
 					continue
+			else
+				continue
 		if(!first)
 			log_msg += ", "
 		if(ismob(ROI))
