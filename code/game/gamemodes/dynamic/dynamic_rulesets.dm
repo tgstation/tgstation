@@ -110,6 +110,7 @@
 /datum/dynamic_ruleset/proc/execute()
 	for(var/datum/mind/M in assigned)
 		M.add_antag_datum(antag_datum)
+		GLOB.pre_setup_antags -= M
 	return TRUE
 
 /// Here you can perform any additional checks you want. (such as checking the map etc)

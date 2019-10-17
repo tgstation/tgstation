@@ -327,9 +327,6 @@
 		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
 		converter.add_revolutionary(src,FALSE)
 
-	else if(is_servant_of_ratvar(creator))
-		add_servant_of_ratvar(current)
-
 	else if(is_nuclear_operative(creator))
 		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 		var/datum/antagonist/nukeop/N = new()

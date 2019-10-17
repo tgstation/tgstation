@@ -9,10 +9,6 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
-	initialize_footstep()
-
-/mob/living/proc/initialize_footstep()
-	AddComponent(/datum/component/footstep)
 
 /mob/living/prepare_huds()
 	..()
@@ -41,7 +37,8 @@
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels)
-	ZImpactDamage(T, levels)
+	if(!isgroundlessturf(T))
+		ZImpactDamage(T, levels)
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)

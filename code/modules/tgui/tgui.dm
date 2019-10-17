@@ -289,6 +289,8 @@
 			if(params["screen"])
 				ui_screen = params["screen"]
 			SStgui.update_uis(src_object)
+		if("tgui:log")
+			log_message(params["log"])
 		if("tgui:link")
 			user << link(params["url"])
 		if("tgui:fancy")
@@ -385,3 +387,6 @@
 
 /datum/tgui/proc/set_titlebar(value)
 	titlebar = value
+
+/datum/tgui/proc/log_message(message)
+	log_tgui("[user] ([user.ckey]) using \"[title]\":\n[message]")
