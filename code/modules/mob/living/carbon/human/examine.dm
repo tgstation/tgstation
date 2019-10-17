@@ -277,6 +277,12 @@
 			if(HAS_TRAIT(user, TRAIT_SPIRITUAL) && mind?.isholy)
 				msg += "[t_He] [t_has] a holy aura about [t_him].\n"
 				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "religious_comfort", /datum/mood_event/religiously_comforted)
+			if(HAS_TRAIT(user, TRAIT_FAN_CLOWN) && mind?.isclowny)
+				msg += "[t_He] [t_has] a comical aura about [t_him].\n"
+				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "comical_comfort", /datum/mood_event/comically_comforted)
+			if(HAS_TRAIT(user, TRAIT_FAN_MIME) && mind?.ismimey)
+				msg += "[t_He] [t_has] a silent aura about [t_him].\n"
+				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "silent_comfort", /datum/mood_event/silently_comforted)
 
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"

@@ -59,6 +59,24 @@
 	lose_text = "<span class='danger'>You feel isolated from others.</span>"
 	medical_record_text = "Patient is highly perceptive of and sensitive to social cues, or may possibly have ESP. Further testing needed."
 
+datum/quirk/fan_clown
+	name = "Clown Fan"
+	desc = "You enjoy the clown's antics and get a mood boost when you see them."
+	value = 2
+	mob_trait = TRAIT_FAN_CLOWN
+	gain_text = "<span class='notice'>You are a big fan of the Clown.</span>"
+	lose_text = "<span class='danger'>The clown doesn't seem so great.</span>"
+	medical_record_text = "Patient reports being a big fan of the Clown."
+
+datum/quirk/fan_mime
+	name = "Mime Fan"
+	desc = "You enjoy the Mime's antics and get a mood boost when you see them."
+	value = 2
+	mob_trait = TRAIT_FAN_MIME
+	gain_text = "<span class='notice'>You are a big fan of the Mime.</span>"
+	lose_text = "<span class='danger'>The mime doesn't seem so great.</span>"
+	medical_record_text = "Patient reports being a big fan of the Mime."
+
 /datum/quirk/freerunning
 	name = "Freerunning"
 	desc = "You're great at quick moves! You can climb tables more quickly."

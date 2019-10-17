@@ -124,6 +124,16 @@
 	mood_change = 3
 	timeout = 5 MINUTES
 
+/datum/mood_event/comically_comforted
+	description = "<span class='nicegreen'>You are comforted by the presence of a comical person.</span>\n"
+	mood_change = 3
+	timeout = 5 MINUTES
+
+/datum/mood_event/silently_comforted
+	description = "<span class='nicegreen'>You are comforted by the presence of a silent person.</span>\n"
+	mood_change = 3
+	timeout = 5 MINUTES
+
 /datum/mood_event/clownshoes
 	description = "<span class='nicegreen'>The shoes are a clown's legacy, I never want to take them off!</span>\n"
 	mood_change = 5
