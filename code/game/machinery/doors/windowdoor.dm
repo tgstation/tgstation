@@ -24,6 +24,7 @@
 
 /obj/machinery/door/window/Initialize(mapload, set_dir)
 	. = ..()
+	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	if(set_dir)
 		setDir(set_dir)
 	if(req_access && req_access.len)
@@ -148,7 +149,6 @@
 	icon_state ="[base_state]open"
 	sleep(10)
 	density = FALSE
-	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(1)
 	update_freelook_sight()
 
@@ -171,7 +171,6 @@
 	icon_state = base_state
 
 	density = TRUE
-	flags_1 |= PREVENT_CLICK_UNDER_1
 	air_update_turf(1)
 	update_freelook_sight()
 	sleep(10)
