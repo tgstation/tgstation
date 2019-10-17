@@ -585,6 +585,14 @@
 	return
 
 /mob/living/Move(atom/newloc, direct)
+	if(lying && direct & EAST)
+		lying = 90
+		update_transform()
+		lying_prev = lying
+	else if(lying && direct & WEST)
+		lying = 270
+		update_transform()
+		lying_prev = lying
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
