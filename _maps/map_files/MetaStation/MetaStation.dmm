@@ -47798,10 +47798,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cbq" = (
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -73428,10 +73428,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"dOU" = (
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/maintenance/port)
 "dQV" = (
 /obj/structure/grille/broken,
 /turf/open/space/basic,
@@ -74132,6 +74128,11 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
+"jdp" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "jeV" = (
 /obj/machinery/conveyor/inverted{
 	dir = 10;
@@ -74788,6 +74789,13 @@
 /area/medical/patients_rooms/room_a{
 	name = "Surgery B"
 	})
+"nPC" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "nWX" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -75785,6 +75793,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
+"uOc" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "uRM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -75929,6 +75942,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"wen" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "wgP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
@@ -90266,7 +90283,7 @@ aqO
 bPF
 aGN
 bbL
-dOU
+alC
 aob
 aob
 bXy
@@ -92071,10 +92088,10 @@ bVV
 bXz
 bYE
 bYE
-cbp
-cbp
-cbp
-cbp
+uOc
+uOc
+uOc
+uOc
 cbp
 dux
 rfi
@@ -92332,7 +92349,7 @@ bXE
 dux
 dux
 dux
-cbp
+nPC
 dux
 nnV
 fwL
@@ -92587,9 +92604,9 @@ diy
 dux
 bXE
 bXE
-bXE
-bXE
-cbp
+cbs
+wen
+jdp
 qit
 nnV
 jUk
