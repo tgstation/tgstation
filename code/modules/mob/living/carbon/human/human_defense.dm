@@ -111,7 +111,7 @@
 	if(w_uniform)
 		var/final_block_chance = w_uniform.block_chance - (CLAMP((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
-      		return TRUE
+			return TRUE
   if(wear_neck)
 		var/final_block_chance = wear_neck.block_chance - (CLAMP((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
