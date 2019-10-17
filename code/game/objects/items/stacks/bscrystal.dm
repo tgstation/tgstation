@@ -8,6 +8,7 @@
 	dye_color = DYE_COSMIC
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/bluespace=MINERAL_MATERIAL_AMOUNT)
+	mats_per_stack = MINERAL_MATERIAL_AMOUNT
 	points = 50
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
