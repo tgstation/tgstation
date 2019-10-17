@@ -192,7 +192,8 @@
 		return
 	if(iscarbon(M))
 		return heal_carbon(M, user, heal_brute, 0)
-	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+	
+to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
 
 /obj/item/stack/medical/mesh
 	name = "regenerative mesh"
@@ -227,6 +228,18 @@
 		return
 	if(iscarbon(M))
 		return heal_carbon(M, user, 0, heal_burn)
+	if(isanimal(M))
+		var/mob/living/simple_animal/critter = M
+		if (!(critter.healable))
+			to_chat(user, "<span class='warning'>You cannot use \the [src] on [M]!</span>")
+			return FALSE
+		else if (critter.health == critter.maxHealth)
+			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
+			return FALSE
+		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
+		M.heal_bodypart_damage(heal_brute)
+		return TRUE
+
 	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
 
 
