@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "tgui-next",
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "watch": "cd packages/tgui-dev-server && node --experimental-modules index.js",
+    "build": "cd packages/tgui && npx webpack --mode=production",
+    "analyze": "cd packages/tgui && npx webpack --mode=production --env.analyze=1",
+    "lint": "eslint packages",
+    "postinstall": "lerna bootstrap --hoist --no-ci && npx symlink-dir packages/common node_modules/common && npx symlink-dir packages/tgui node_modules/tgui && npx symlink-dir packages/tgui-dev-server node_modules/tgui-dev-server"
+  },
+  "dependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.4.0",
+    "lerna": "^3.16.4",
+    "symlink-dir": "^3.1.1"
+  }
+}

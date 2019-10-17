@@ -30,7 +30,6 @@
 	icon_state = "laptop"
 	icon_screen = "seclaptop"
 	icon_keyboard = "laptop_key"
-	clockwork = TRUE //it'd look weird
 	pass_flags = PASSTABLE
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.

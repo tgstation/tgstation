@@ -161,10 +161,3 @@
 
 #undef VOX_DELAY
 #endif
-
-/mob/living/silicon/ai/could_speak_in_language(datum/language/dt)
-	if(is_servant_of_ratvar(src))
-		// Ratvarian AIs can only speak Ratvarian
-		. = ispath(dt, /datum/language/ratvar)
-	else
-		. = ..()

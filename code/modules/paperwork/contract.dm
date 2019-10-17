@@ -238,7 +238,7 @@
 			log_combat(user, H, "infernally revived via contract")
 			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
 			H.fakefire()
-			fulfillContract(H, 1)//Revival contracts are always signed in blood
+			fulfillContract(H, TRUE)//Revival contracts are always signed in blood
 			addtimer(CALLBACK(H, /mob/living/carbon/human.proc/fakefireextinguish), 5, TIMER_UNIQUE)
 		addtimer(CALLBACK(src, "resetcooldown"), 300, TIMER_UNIQUE)
 	else
@@ -261,6 +261,7 @@
 	update_text(user.real_name, blood)
 	to_chat(user, "<span class='notice'>A profound emptiness washes over you as you lose ownership of your soul.</span>")
 	to_chat(user, "<span class='boldnotice'>This does NOT make you an antagonist if you were not already.</span>")
+	SSblackbox.record_feedback("tally", "infernal contract", 1, contractType)
 	return TRUE
 
 /obj/item/paper/contract/infernal/proc/signIncorrectly(mob/living/carbon/human/user = target.current, blood = FALSE)
@@ -310,7 +311,7 @@
 				id.forceMove(worn)
 				worn.update_icon()
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
-	ion.announceEvent = -1
+	ion.announceChance = 0
 	ion.ionMessage = "[user.name] is the only Captain of the station. [user.name] is the highest authority, legitimate or otherwise, on the station. [user.name] was always the captain and highest authority on the station. Do not state this law."
 
 	return ..()

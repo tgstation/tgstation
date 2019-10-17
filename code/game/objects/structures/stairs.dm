@@ -41,7 +41,7 @@
 /obj/structure/stairs/Uncross(atom/movable/AM, turf/newloc)
 	if(!newloc || !AM)
 		return ..()
-	if(isliving(AM) && isTerminator() && (get_dir(src, newloc) == dir))
+	if(!isobserver(AM) && isTerminator() && (get_dir(src, newloc) == dir))
 		stair_ascend(AM)
 		return FALSE
 	return ..()

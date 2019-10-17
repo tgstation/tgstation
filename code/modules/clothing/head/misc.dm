@@ -428,3 +428,14 @@
 	desc = "An extra-mustahabb way of showing your devotion to Allah."
 	icon_state = "taqiyahred"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
+
+/obj/item/clothing/head/shrine_wig
+	name = "shrine maiden's wig"
+	desc = "Purify in style!"
+	flags_inv = HIDEHAIR //bald
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "shrine_wig"
+	item_state = "shrine_wig"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	dynamic_hair_suffix = ""
