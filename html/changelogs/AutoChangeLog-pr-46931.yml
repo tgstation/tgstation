@@ -1,0 +1,4 @@
+author: "Shadowflame909"
+delete-after: True
+changes: 
+  - balance: "Zombie-Powder is now instant upon ingest. Delayed upon touch and injection."
