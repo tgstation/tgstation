@@ -147,8 +147,8 @@
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	icon_state ="[base_state]open"
 	sleep(10)
-
 	density = FALSE
+	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(1)
 	update_freelook_sight()
 
@@ -171,6 +171,7 @@
 	icon_state = base_state
 
 	density = TRUE
+	flags_1 |= PREVENT_CLICK_UNDER_1
 	air_update_turf(1)
 	update_freelook_sight()
 	sleep(10)
