@@ -27,12 +27,21 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
 	item_state = "paper"
+	w_class = WEIGHT_CLASS_SMALL
 	///research points it holds
 	var/value = 69
 	///origin of the research
 	var/origin_type = "debug"
 	///if it ws merged with different origins to apply a bonus
 	var/mixed = FALSE
+
+/obj/item/research_notes/Initialize(mapload, _value, _origin_type)
+	if(_value)
+		value = _value
+	if(_origin_type)
+		origin_type = _origin_type
+	change_vol()
+	. = ..()
 
 /obj/item/research_notes/examine(mob/user)
 	. = ..()

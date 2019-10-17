@@ -137,6 +137,12 @@
 			return TRUE
 	else
 		return ..()
+/obj/machinery/power/rad_collector/analyzer_act(mob/living/user, obj/item/I)
+	if(stored_research >= 1)
+		new /obj/item/research_notes(user.loc, stored_research, "engineering")
+		stored_research = 0
+		return TRUE
+	return ..()
 
 /obj/machinery/power/rad_collector/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -179,12 +185,6 @@
 	return TRUE
 
 /obj/machinery/power/rad_collector/return_analyzable_air()
-	if(stored_research >= 1)
-		var/obj/item/research_notes/R = new(src)
-		R.value = stored_research
-		R.origin_type = "engineering"
-		R.change_vol()
-		stored_research = 0
 	if(loaded_tank)
 		return loaded_tank.return_analyzable_air()
 	else

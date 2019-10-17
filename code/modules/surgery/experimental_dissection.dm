@@ -74,10 +74,7 @@
 	var/points_earned = check_value(target, surgery)
 	user.visible_message("<span class='notice'>[user] dissects [target], discovering [points_earned] point\s of data!</span>", "<span class='notice'>You dissect [target], finding [points_earned] point\s worth of discoveries!</span>")
 
-	var/obj/item/research_notes/R = new(user.loc)
-	R.value = points_earned
-	R.origin_type = "biology"
-	R.change_vol()
+	new /obj/item/research_notes(user.loc, points_earned, "biology")
 
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
 	target.apply_damage(80, BRUTE, L)
