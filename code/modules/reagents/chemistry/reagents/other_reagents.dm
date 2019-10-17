@@ -1921,3 +1921,13 @@
 	color = "#9C5A19"
 	taste_description = "bananas"
 	can_synth = TRUE
+
+/datum/reagent/powder_that_makes_you_say_yes // yes
+	name = "Powder That Makes You Say Yes"
+	description = "Yes"
+	color = "#EFEFEF"
+	taste_description = "yes"
+	can_synth = TRUE
+
+/datum/reagent/powder_that_makes_you_say_yes/on_mob_add(mob/living/L)
+	L.say("Yes", forced = "Powder That Makes You Say Yes")
