@@ -153,6 +153,15 @@
 	mood_change = 3
 	timeout = 5 MINUTES
 
+/datum/mood_event/bottle_flip
+	description = "<span class='nicegreen'>The bottle landing like that was satisfying.</span>\n"
+	mood_change = 2
+	timeout = 3 MINUTES
+	
+/datum/mood_event/hope_lavaland
+	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
+	mood_change = 5
+
 /datum/mood_event/area
 	description = "" //Fill this out in the area
 	mood_change = 0
