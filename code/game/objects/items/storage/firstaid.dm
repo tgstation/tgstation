@@ -46,7 +46,7 @@
 /obj/item/storage/firstaid/medical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_BULKY //holds the same equipment as a medibelt
+	STR.max_w_class = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
 	STR.max_items = 12
 	STR.max_combined_w_class = 24
 	STR.set_holdable(list(
