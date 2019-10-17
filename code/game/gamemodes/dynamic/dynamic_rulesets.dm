@@ -124,7 +124,7 @@
 				remaining_threat_level -= scaling_cost
 				scaled_times++
 				pop_to_antags = (mode.antags_rolled + antag_cap[indice_pop] * scaled_times) / mode.roundstart_pop_ready
-		log_game("DYNAMIC: [name] roundstart ruleset failed scaling up at [new_prob]% chance after [scaled_times]/3 successful scaleups. [remaining_threat_level] threat remaining.")
+		log_game("DYNAMIC: [name] roundstart ruleset failed scaling up at [new_prob ? new_prob : 0]% chance after [scaled_times]/3 successful scaleups. [remaining_threat_level] threat remaining, antag to crew ratio: [pop_to_antags*100]%.")
 		mode.antags_rolled += (1 + scaled_times) * antag_cap[indice_pop]
 		return scaled_times * scaling_cost
 
