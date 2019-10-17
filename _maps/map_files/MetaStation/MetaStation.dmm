@@ -73992,16 +73992,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"ibz" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Surgery Maintenance";
-	req_access_txt = "45"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "ifN" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -94153,7 +94143,7 @@ fGm
 wAn
 lce
 cBr
-ibz
+fGm
 chZ
 cpS
 chZ
