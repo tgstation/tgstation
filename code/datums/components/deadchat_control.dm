@@ -9,43 +9,41 @@
 	var/list/ckey_to_cooldown = list()
 	var/orbiters = list()
 	var/deadchat_mode
-	var/democracy_cooldown
-	var/anarchy_cooldown
-	var/global_control
+	var/input_cooldown
 
-/datum/component/deadchat_control/Initialize(_deadchat_mode, _inputs, _democracy_cooldown = 12 SECONDS, _anarchy_cooldown = 20 SECONDS, _global_control = FALSE)
+/datum/component/deadchat_control/Initialize(_deadchat_mode, _inputs, _input_cooldown = 12 SECONDS)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(SSdcs, COMSIG_GLOB_DEAD_SAY, .proc/deadchat_react)
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_BEGIN, .proc/orbit_begin)
 	RegisterSignal(parent, COMSIG_ATOM_ORBIT_STOP, .proc/orbit_stop)
 	deadchat_mode = _deadchat_mode
-	if(deadchat_mode == DEMOCRACY_MODE)
-		timerid = addtimer(CALLBACK(src, .proc/democracy_loop), democracy_cooldown)
 	inputs = _inputs
-	democracy_cooldown = _democracy_cooldown
-	anarchy_cooldown = _anarchy_cooldown
-	global_control = _global_control
-	if(!global_control)
-		notify_ghosts("[parent] is now deadchat controllable!", source = parent, action = NOTIFY_ORBIT, header="Something Interesting!")
+	input_cooldown = _input_cooldown
+	if(deadchat_mode == DEMOCRACY_MODE)
+		timerid = addtimer(CALLBACK(src, .proc/democracy_loop), input_cooldown, TIMER_STOPPABLE | TIMER_LOOP)
+	notify_ghosts("[parent] is now deadchat controllable!", source = parent, action = NOTIFY_ORBIT, header="Something Interesting!")
+
+
+/datum/component/deadchat_control/Destroy(force, silent)
+	QDEL_LIST_ASSOC(inputs)
+	orbiters = null
+	ckey_to_cooldown = null
+	return ..()
 
 /datum/component/deadchat_control/proc/deadchat_react(datum/source, mob/player, message)
-	if(!global_control)
-		if(!(player in orbiters))
-			return
 	message = lowertext(message)
-	if(!(message in inputs))
+	if(!inputs[message])
 		return 
 	if(deadchat_mode == ANARCHY_MODE)
 		var/cooldown = ckey_to_cooldown[player.ckey]
 		if(cooldown)
-			return SIGNAL_INTERCEPT
+			return MOB_DEADSAY_SIGNAL_INTERCEPT
 		inputs[message].Invoke()
 		ckey_to_cooldown[player.ckey] = TRUE
-		addtimer(CALLBACK(src, .proc/remove_cooldown, player.ckey), anarchy_cooldown)
+		addtimer(CALLBACK(src, .proc/remove_cooldown, player.ckey), input_cooldown)
 	else if(deadchat_mode == DEMOCRACY_MODE)
 		ckey_to_cooldown[player.ckey] = message
-	return SIGNAL_INTERCEPT
+	return MOB_DEADSAY_SIGNAL_INTERCEPT
 
 /datum/component/deadchat_control/proc/remove_cooldown(ckey)
 	ckey_to_cooldown.Remove(ckey)
@@ -57,32 +55,23 @@
 	var/result = count_democracy_votes()
 	if(!isnull(result))
 		inputs[result].Invoke()
-		var/message = "<span class='deadsay italics bold'>[parent] has done action [result]!<br>New vote started. It will end in [democracy_cooldown/10] seconds.</span>"
-		if(global_control)
-			deadchat_broadcast(message)
-		else
-			for(var/M in orbiters)
-				to_chat(M, message)
+		var/message = "<span class='deadsay italics bold'>[parent] has done action [result]!<br>New vote started. It will end in [input_cooldown/10] seconds.</span>"
+		for(var/M in orbiters)
+			to_chat(M, message)
 	else
 		var/message = "<span class='deadsay italics bold'>No votes were cast this cycle.</span>"
-		if(global_control)
-			deadchat_broadcast(message)
-		else
-			for(var/M in orbiters)
-				to_chat(M, message)
+		for(var/M in orbiters)
+			to_chat(M, message)
 			
 /datum/component/deadchat_control/proc/count_democracy_votes()
+	if(!length(ckey_to_cooldown))
+		return
 	var/list/votes = list()
 	for(var/command in inputs)
 		votes["[command]"] = 0
-	var/found_vote = FALSE
 	for(var/vote in ckey_to_cooldown)
 		votes[ckey_to_cooldown[vote]]++
-		if(ckey_to_cooldown[vote] != NONE)
-			found_vote = TRUE
 		ckey_to_cooldown.Remove(vote)
-	if(!found_vote)
-		return
 	
 	// Solve which had most votes.
 	var/prev_value = 0
@@ -94,8 +83,6 @@
 	
 	if(result in inputs)
 		return result
-	else
-		return
 
 /datum/component/deadchat_control/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -105,14 +92,15 @@
 		return
 	ckey_to_cooldown = list()
 	if(var_value == DEMOCRACY_MODE)
-		timerid = addtimer(CALLBACK(src, .proc/democracy_loop), democracy_cooldown, TIMER_STOPPABLE | TIMER_LOOP)
+		timerid = addtimer(CALLBACK(src, .proc/democracy_loop), input_cooldown, TIMER_STOPPABLE | TIMER_LOOP)
 	else
 		deltimer(timerid)
 
-// TODO: Make orbit_begin and orbit_stop open and close an UI if global control is disabled.
 /datum/component/deadchat_control/proc/orbit_begin(atom/source, atom/orbiter)
+	RegisterSignal(orbiter, COMSIG_MOB_DEADSAY, .proc/deadchat_react)
 	orbiters |= orbiter
 
 /datum/component/deadchat_control/proc/orbit_stop(atom/source, atom/orbiter)
 	if(orbiter in orbiters)
+		UnregisterSignal(orbiter, COMSIG_MOB_DEADSAY)
 		orbiters -= orbiter

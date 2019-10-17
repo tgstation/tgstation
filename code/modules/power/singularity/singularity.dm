@@ -298,7 +298,7 @@
 
 
 /obj/singularity/proc/move(force_move = 0)
-	if(!move_self)
+	if(!move_self && !force_move)
 		return 0
 
 	var/movement_dir = pick(GLOB.alldirs - last_failed_movement)
@@ -453,7 +453,7 @@
 /obj/singularity/deadchat_controlled/Initialize(mapload, starting_energy)
 	. = ..()
 	AddComponent(/datum/component/deadchat_control, DEMOCRACY_MODE, list(
-	 "up" = CALLBACK(src, /atom/movable.proc/forceMove, src, NORTH),
-	 "down" = CALLBACK(src, /atom/movable.proc/forceMove, src, SOUTH),
-	 "left" = CALLBACK(src, /atom/movable.proc/forceMove, src, WEST),
-	 "right" = CALLBACK(src, /atom/movable.proc/forceMove, src, EAST)))
+	 "up" = CALLBACK(src, /obj/singularity.proc/move, NORTH),
+	 "down" = CALLBACK(src, /obj/singularity.proc/move, SOUTH),
+	 "left" = CALLBACK(src, /obj/singularity.proc/move, WEST),
+	 "right" = CALLBACK(src, /obj/singularity.proc/move, EAST)))

@@ -78,7 +78,7 @@
 	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
 	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
-	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_DEAD_SAY, src, message) & SIGNAL_INTERCEPT)
+	if(SEND_SIGNAL(src, COMSIG_MOB_DEADSAY, src, message) | MOB_DEADSAY_SIGNAL_INTERCEPT)
 		return
 	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = key)
 
