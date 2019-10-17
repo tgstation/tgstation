@@ -21,7 +21,7 @@
 		if(isliving(M))
 			var/mob/living/L = M
 			if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-				if(L.hellbound)
+				if(L.hellbound && L.stat == DEAD)
 					return BULLET_ACT_BLOCK
 				if(iscarbon(L))
 					var/mob/living/carbon/C = L
@@ -53,7 +53,7 @@
 		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
 			target.death(0)
 		else
-			if(target.hellbound)
+			if(target.hellbound && target.stat == DEAD)
 				return BULLET_ACT_BLOCK
 			if(iscarbon(target))
 				var/mob/living/carbon/C = target
