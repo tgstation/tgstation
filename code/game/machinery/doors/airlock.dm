@@ -1434,13 +1434,9 @@
 		if("shock-perm")
 			shock_perm(usr)
 			. = TRUE
-				to_chat(usr, "<span class='warning'>You can't enable IdScan - The IdScan wire has been cut.</span>")
-				to_chat(usr, "<span class='notice'>The IdScan feature is not disabled.</span>")
 		if("idscan-toggle")
 			aiDisabledIdScanner = !aiDisabledIdScanner
 			. = TRUE
-				to_chat(usr, "<span class='warning'>The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.</span>")
-				to_chat(usr, "<span class='warning'>You've already disabled the IdScan feature!</span>")
 		if("emergency-toggle")
 			toggle_emergency(usr)
 			. = TRUE
@@ -1457,18 +1453,6 @@
 		if("speed-toggle")
 			normalspeed = !normalspeed
 			. = TRUE
-				to_chat(usr, "<span class='warning'>Control to door bolt lights has been severed!</span>")
-				to_chat(usr, text("<span class='warning'>Door bolt lights are already enabled!</span>"))
-				to_chat(usr, "<span class='warning'>Control to door bolt lights has been severed!</span>")
-				to_chat(usr, "<span class='warning'>Door bolt lights are already disabled!</span>")
-				to_chat(usr, "<span class='warning'>Control to door sensors is disabled!</span>")
-				to_chat(usr, "<span class='warning'>Firmware reports safeties already in place!</span>")
-				to_chat(usr, "<span class='warning'>Control to door sensors is disabled!</span>")
-				to_chat(usr, "<span class='warning'>Firmware reports safeties already overridden!</span>")
-				to_chat(usr, "<span class='warning'>Control to door timing circuitry has been severed!</span>")
-				to_chat(usr,"<span class='notice'>Door timing circuitry currently operating normally.</span>")
-				to_chat(usr, "<span class='warning'>Control to door timing circuitry has been severed!</span>")
-				to_chat(usr, "<span class='warning'>Door timing circuitry already accelerated!</span>")
 		if("open-close")
 			user_toggle_open(usr)
 			. = TRUE
@@ -1503,7 +1487,6 @@
 /obj/machinery/door/airlock/proc/toggle_bolt(mob/user)
 	if(!user_allowed(user))
 		return
-		to_chat(user, "<span class='warning'>Emergency access is already enabled!</span>")
 	if(wires.is_cut(WIRE_BOLTS))
 		to_chat(user, "<span class='warning'>The door bolt drop wire is cut - you can't toggle the door bolts.</span>")
 		return
@@ -1513,19 +1496,14 @@
 		else
 			unbolt()
 	else
-		to_chat(user, "<span class='warning'>Emergency access is already disabled!</span>")
 		bolt()
 
 /obj/machinery/door/airlock/proc/toggle_emergency(mob/user)
 	if(!user_allowed(user))
 		return
-		to_chat(user, "<span class='warning'>The door bolt drop wire is cut - you can't raise the door bolts!</span>")
-		to_chat(user, "<span class='warning'>The door bolts are already up!</span>")
-			to_chat(user, "<span class='warning'>Cannot raise door bolts due to power failure!</span>")
 	emergency = !emergency
 	update_icon()
 
-		to_chat(user, "<span class='warning'>You can't drop the door bolts - The door bolt dropping wire has been cut.</span>")
 /obj/machinery/door/airlock/proc/user_toggle_open(mob/user)
 	if(!user_allowed(user))
 		return
