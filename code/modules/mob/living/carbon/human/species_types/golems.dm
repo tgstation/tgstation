@@ -993,11 +993,6 @@
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
 		return TRUE
 
-	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
-		H.adjustBruteLoss(0.5, 0)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
-		return TRUE
-
 /datum/action/innate/bonechill
 	name = "Bone Chill"
 	desc = "Rattle your bones and strike fear into your enemies!"
