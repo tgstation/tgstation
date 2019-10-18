@@ -25,24 +25,24 @@
 
 
 /datum/component/deadchat_control/Destroy(force, silent)
-	QDEL_LIST_ASSOC(inputs)
+	inputs = null
 	orbiters = null
 	ckey_to_cooldown = null
 	return ..()
 
-/datum/component/deadchat_control/proc/deadchat_react(datum/source, mob/player, message)
+/datum/component/deadchat_control/proc/deadchat_react(mob/source, message)
 	message = lowertext(message)
 	if(!inputs[message])
 		return 
 	if(deadchat_mode == ANARCHY_MODE)
-		var/cooldown = ckey_to_cooldown[player.ckey]
+		var/cooldown = ckey_to_cooldown[source.ckey]
 		if(cooldown)
 			return MOB_DEADSAY_SIGNAL_INTERCEPT
 		inputs[message].Invoke()
-		ckey_to_cooldown[player.ckey] = TRUE
-		addtimer(CALLBACK(src, .proc/remove_cooldown, player.ckey), input_cooldown)
+		ckey_to_cooldown[source.ckey] = TRUE
+		addtimer(CALLBACK(src, .proc/remove_cooldown, source.ckey), input_cooldown)
 	else if(deadchat_mode == DEMOCRACY_MODE)
-		ckey_to_cooldown[player.ckey] = message
+		ckey_to_cooldown[source.ckey] = message
 	return MOB_DEADSAY_SIGNAL_INTERCEPT
 
 /datum/component/deadchat_control/proc/remove_cooldown(ckey)
