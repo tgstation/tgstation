@@ -17434,7 +17434,7 @@
 /area/engine/engineering)
 "aMi" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
-	name = "Gas to Filter"
+	name = "Engine Coolant Bypass"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
