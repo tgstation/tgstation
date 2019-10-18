@@ -272,7 +272,7 @@ GLOBAL_VAR(restart_counter)
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
-			s += "<b>[server_name]</b> &#8212; "
+			s += "<b>[LiquidStation13]</b> &#8212; "
 		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
 		if(CONFIG_GET(flag/allow_vote_mode))
 			features += "vote"
@@ -280,7 +280,7 @@ GLOBAL_VAR(restart_counter)
 			features += "AI allowed"
 		hostedby = CONFIG_GET(string/hostedby)
 
-	s += "<b>[station_name()]</b>";
+	s += "<b>[LiquidStation13(Testing Version 0.2)]</b>";
 	s += " ("
 	s += "<a href=\"byond://14.203.233.104:9115\">" //Change this to wherever you want the hub to link to.
 	s += ""  //Replace this with something else. Or ever better, delete it and uncomment the game version.
