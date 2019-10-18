@@ -603,6 +603,24 @@
 	for(var/i in 1 to 10)
 		var/item = pick(contains)
 		new item(C)
+		
+/datum/supply_pack/security/armory/m1911
+	name = "M1911 Single-Pack"	
+	desc = "High power, low practicality. Contains one M1911 pistol and a spare magazine. Requires Armory access to open."
+	cost = 2500
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/m1911
+					/obj/item/ammo_box/magazine/m45)
+	small_item = TRUE
+
+/datum/supply_pack/security/armory/m1911
+	name = "M1911 Crate"
+	desc = "High power, low practicality. Contains two M1911 pistols and magazines. Requires Armory access to open."
+	cost = 4500
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/m1911
+					/obj/item/gun/ballistic/automatic/pistol/m1911
+					/obj/item/ammo_box/magazine/m45
+					/obj/item/ammo_box/magazine/m45)
+	crate_name = "m1911 crate"
 
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
