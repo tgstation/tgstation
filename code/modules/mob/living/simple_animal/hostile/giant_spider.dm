@@ -27,7 +27,7 @@
 	emote_hear = list("chitters")
 	speak_chance = 5
 	turns_per_move = 5
-	see_in_dark = 10
+	see_in_dark = 4
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -48,13 +48,11 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	unique_name = 1
 	gold_core_spawnable = HOSTILE_SPAWN
-	see_in_dark = 4
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	footstep_type = FOOTSTEP_MOB_CLAW
 	var/playable_spider = FALSE
 	var/datum/action/innate/spider/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
-
-	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
 	. = ..()

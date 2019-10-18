@@ -8,7 +8,6 @@
 	text_lose_indication = "<span class='notice'>The energy in your hands subsides.</span>"
 	power = /obj/effect/proc_holder/spell/targeted/touch/shock
 	instability = 30
-	locked = TRUE
 
 /obj/effect/proc_holder/spell/targeted/touch/shock
 	name = "Shock Touch"

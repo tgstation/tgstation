@@ -75,9 +75,6 @@
 /area/holodeck/rec_center/lounge
 	name = "Holodeck - Lounge"
 
-/area/holodeck/rec_center/medical
-	name = "Holodeck - Emergency Medical"
-
 /area/holodeck/rec_center/pet_lounge
 	name = "Holodeck - Pet Park"
 
@@ -104,6 +101,14 @@
 
 // Bad programs
 
+/area/holodeck/rec_center/medical
+	name = "Holodeck - Emergency Medical"
+	restricted = 1
+
+/area/holodeck/rec_center/thunderdome1218
+	name = "Holodeck - 1218 AD"
+	restricted = 1
+
 /area/holodeck/rec_center/burn
 	name = "Holodeck - Atmospheric Burn Test"
 	restricted = 1
@@ -122,8 +127,4 @@
 
 /area/holodeck/rec_center/refuel
 	name = "Holodeck - Refueling Station"
-	restricted = 1
-
-/area/holodeck/rec_center/thunderdome1218
-	name = "Holodeck - 1218 AD"
 	restricted = 1

@@ -30,9 +30,8 @@
 	return ..()
 
 /obj/projectile/bullet/p50/penetrator
-	name =".50 penetrator bullet"
-	icon_state = "gauss"
 	name = "penetrator round"
+	icon_state = "gauss"
 	damage = 60
 	movement_type = FLYING | UNSTOPPABLE
 	dismemberment = 0 //It goes through you cleanly.

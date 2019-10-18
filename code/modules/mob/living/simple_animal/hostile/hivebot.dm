@@ -37,7 +37,7 @@
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 	var/alert_light
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/hostile/hivebot/Initialize()
 	. = ..()

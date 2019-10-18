@@ -98,12 +98,12 @@
 	name = "Chili Peppers"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/chili)
 
-/datum/bounty/item/botany/chili
+/datum/bounty/item/botany/ice_chili
 	name = "Ice Chili Peppers"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/icepepper)
 	multiplier = 2
 
-/datum/bounty/item/botany/chili
+/datum/bounty/item/botany/ghost_chili
 	name = "Ghost Chili Peppers"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/ghost_chili)
 	multiplier = 2

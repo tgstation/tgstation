@@ -137,10 +137,7 @@
 	if(obj_flags & EMAGGED)
 		return
 
-	if(locked)
-		bolt_raise(usr)
-	else
-		bolt_drop(usr)
+	toggle_bolt(usr)
 	add_hiddenprint(usr)
 
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
@@ -163,10 +160,7 @@
 	if(obj_flags & EMAGGED)
 		return
 
-	if(!emergency)
-		emergency_on(usr)
-	else
-		emergency_off(usr)
+	toggle_emergency(usr)
 	add_hiddenprint(usr)
 
 /* APC */

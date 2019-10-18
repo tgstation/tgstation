@@ -98,9 +98,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50)\
 ))
 
-/obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.sand_recipes
+/obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
+	. += GLOB.sand_recipes
 
 /obj/item/stack/ore/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !ishuman(hit_atom))
@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
 	icon_state = "volcanic_sand"
-	icon_state = "volcanic_sand"
+	item_state = "volcanic_sand"
 	singular_name = "volcanic ash pile"
 
 /obj/item/stack/ore/plasma
@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/gold
 	name = "gold ore"
 	icon_state = "Gold ore"
-	icon_state = "Gold ore"
+	item_state = "Gold ore"
 	singular_name = "gold ore chunk"
 	points = 18
 	custom_materials = list(/datum/material/gold=MINERAL_MATERIAL_AMOUNT)

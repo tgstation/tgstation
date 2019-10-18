@@ -22,7 +22,7 @@
 	response_harm_simple = "kick"
 	gold_core_spawnable = FRIENDLY_SPAWN
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 //Captain fox
 /mob/living/simple_animal/pet/fox/Renault
