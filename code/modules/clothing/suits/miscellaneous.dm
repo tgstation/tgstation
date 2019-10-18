@@ -635,12 +635,12 @@
 
 /obj/item/clothing/head/hooded/ablative/equipped(mob/living/carbon/human/user, slot)
 	..()
-	to_chat(M, "As you put on the hood, a visor shifts into place and starts analyzing the people around you. Neat!")
+	to_chat(user, "As you put on the hood, a visor shifts into place and starts analyzing the people around you. Neat!")
 	ADD_TRAIT(user, TRAIT_SECURITY_HUD, CLOTHING_TRAIT)
 
 /obj/item/clothing/head/hooded/ablative/dropped(mob/living/carbon/human/user)
 	..()
-	to_chat(M, "You take off the hood, removing the visor in the proces and disabling its integrated hud.")
+	to_chat(user, "You take off the hood, removing the visor in the process and disabling its integrated hud.")
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, CLOTHING_TRAIT)
 
 /obj/item/clothing/head/hooded/ablative/IsReflect(def_zone)
