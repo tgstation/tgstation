@@ -57,6 +57,11 @@
 	return TRUE
 
 /turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination)
+	if(A.anchored)
+		return FALSE
+	for(var/obj/O in contents)
+		if(O.obj_flags & BLOCK_Z_FALL)
+			return FALSE
 	return TRUE
 
 /turf/open/openspace/proc/CanCoverUp()
@@ -106,3 +111,24 @@
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
+
+/turf/open/openspace/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(!CanBuildHere())
+		return FALSE
+
+	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+			if(L)
+				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
+			else
+				return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+	return FALSE
+
+/turf/open/openspace/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, "<span class='notice'>You build a floor.</span>")
+			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+			return TRUE
+	return FALSE

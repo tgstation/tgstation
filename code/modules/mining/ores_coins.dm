@@ -17,6 +17,7 @@
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
+	mats_per_stack = MINERAL_MATERIAL_AMOUNT
 	var/list/stack_overlays
 
 /obj/item/stack/ore/update_icon()
@@ -98,9 +99,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50)\
 ))
 
-/obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.sand_recipes
+/obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
+	. += GLOB.sand_recipes
 
 /obj/item/stack/ore/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !ishuman(hit_atom))

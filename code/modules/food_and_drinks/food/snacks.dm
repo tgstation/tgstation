@@ -320,7 +320,7 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))
-		if(iscorgi(M))
+		if(isdog(M))
 			var/mob/living/L = M
 			if(bitecount == 0 || prob(50))
 				M.emote("me", 1, "nibbles away at \the [src]")

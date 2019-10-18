@@ -9,10 +9,6 @@
 		if(safety != "Proceed" || QDELETED(A) || QDELETED(W) || QDELETED(user) || !user.canUseTopic(A, BE_CLOSE, iscarbon(user)))
 			return
 		var/turf/loccheck = get_turf(A)
-		if(is_reebe(loccheck.z))
-			user.visible_message("<span class='warning'>An unseen force knocks [user] to the ground!</span>", "<span class='big_brass'>\"I think not!\"</span>")
-			user.Paralyze(60)
-			return
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
 		playsound(loccheck,'sound/effects/supermatter.ogg', 200, TRUE)
