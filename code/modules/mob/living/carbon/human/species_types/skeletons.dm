@@ -29,7 +29,7 @@
 			H.reagents.remove_reagent(chem.type, chem.volume - 5)
 			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
 		H.heal_bodypart_damage(1,1, 0)
-		H.reagents.remove_reagent(chem.type, metabolization_rate)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
 		H.adjustStaminaLoss(7.5, 0)
