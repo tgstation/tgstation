@@ -133,18 +133,8 @@
 
 /obj/item/organ/heart/vampire
 	name = "vampire heart"
-	actions_types = list(/datum/action/item_action/organ_action/vampire_heart)
 	color = "#1C1C1C"
 
-/datum/action/item_action/organ_action/vampire_heart
-	name = "Check Blood Level"
-	desc = "Check how much blood you have remaining."
-
-/datum/action/item_action/organ_action/vampire_heart/Trigger()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/H = owner
-		to_chat(H, "<span class='notice'>Current blood level: [H.blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>")
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/bat
 	name = "Bat Form"
