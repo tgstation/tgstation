@@ -50,6 +50,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/fon = FALSE //Is the flashlight function on?
 	var/f_lum = 2.3 //Luminosity for the flashlight function
 	var/silent = FALSE //To beep or not to beep, that is the question
+	var/allow_empty_messages = FALSE //Self explanitory, used for mime PDA
 	var/toff = FALSE //If TRUE, messenger disabled
 	var/tnote = null //Current Texts
 	var/last_text //No text spamming
@@ -610,7 +611,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/pda/proc/send_message(mob/living/user, list/obj/item/pda/targets, everyone)
 	var/message = msg_input(user)
-	if(!message || !targets.len)
+	if((!message && !allow_empty_messages) || !targets.len)
 		return
 	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + PDA_SPAM_DELAY))
 		return

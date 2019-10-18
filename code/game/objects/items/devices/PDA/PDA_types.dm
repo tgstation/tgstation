@@ -17,6 +17,20 @@
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 
+//Mime PDA sends "silent" messages.
+/obj/item/pda/mime
+	name = "mime PDA"
+	default_cartridge = /obj/item/cartridge/virus/mime
+	inserted_item = /obj/item/toy/crayon/mime
+	icon_state = "pda-mime"
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. The hardware has been hard coded to take the vow of silence."
+	allow_empty_messages = TRUE
+	silent = TRUE
+	ttone = "silence"
+
+/obj/item/pda/mime/msg_input(mob/living/U = usr)
+	return ""
+
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/pda/ai
 	icon = null
@@ -78,13 +92,6 @@
 	icon_state = "pda-science"
 	ttone = "boom"
 
-/obj/item/pda/mime
-	name = "mime PDA"
-	default_cartridge = /obj/item/cartridge/virus/mime
-	inserted_item = /obj/item/toy/crayon/mime
-	icon_state = "pda-mime"
-	silent = TRUE
-	ttone = "silence"
 
 /obj/item/pda/heads
 	default_cartridge = /obj/item/cartridge/head
