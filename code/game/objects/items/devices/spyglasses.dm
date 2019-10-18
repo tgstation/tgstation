@@ -12,13 +12,15 @@
 		user.audible_message("<span class='warning'>[src] lets off a shrill beep!</span>")
 
 	if("spypopup_map" in user.client.screen_maps) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good. 
-		to_chat(world,"spypopup detected! Closing")
 		return 
-
-	to_chat(world,"success! Calling setup")	
 	user.client.setup_popup("spypopup",3,3,2)
 	var/list/buglist = list(linked_bug.cam_view)
 	user.client.add_objs_to_map(buglist)
+	linked_bug.update_view()
+
+/obj/item/clothing/glasses/regular/spy/dropped(mob/user)
+	. = ..()
+	user.client.close_popup("spypopup_map")
 
 /obj/item/clothing/glasses/regular/spy/verb/activate_remote_view()
 	//yada yada check to see if the glasses are in their eye slot
