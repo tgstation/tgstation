@@ -11,7 +11,6 @@
 	use_skintones = TRUE
 	mutant_heart = /obj/item/organ/heart/vampire
 	mutanttongue = /obj/item/organ/tongue/vampire
-	
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
@@ -143,15 +142,3 @@
 	charge_max = 50
 	cooldown_min = 50
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat
-/*
-/mob/living/carbon/proc/getBlood()
-	var/obj/item/organ/heart/vampire/vessel = getorgan(/obj/item/organ/heart/vampire)
-	if(!vessel)
-		return 0
-	return blood_volume
-
-/mob/living/carbon/vampire/proc/updateBloodDisplay()
-	if(hud_used) //clientless aliens
-		 
-		hud_used.vampire_blood_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='red'>[round(getBlood())]</font></div>"
-*/
