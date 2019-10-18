@@ -8,7 +8,7 @@
 	density = TRUE
 	input_dir = EAST
 	ui_x = 300
-	ui_y = 300
+	ui_y = 250
 
 	var/produced_coins = 0 // how many coins the machine has made in it's last cycle
 	var/processing = FALSE

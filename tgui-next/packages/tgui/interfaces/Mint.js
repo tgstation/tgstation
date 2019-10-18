@@ -10,18 +10,30 @@ export const Mint = props => {
   return (
     <Fragment>
       <Section
-        title="Materials">
+        title="Materials"
+        buttons={(data.processing ? (
+          <Button
+            content="Stop"
+            onClick={() => act(ref, 'stoppress')}
+          />
+        ) : (
+          <Button
+            content="Start"
+            onClick={() => act(ref, 'startpress')}
+          />
+        ))}>
         <LabeledList>
           {inserted_materials.map(material => {
             return (
               <LabeledList.Item
                 label = {material.material}
-                buttons={Boolean(data.chosen_material !== material.material) && (
+                buttons={
                   <Button content="Select"
+                    selected = {data.chosen_material === material.material}
                     onClick={() => act(ref, 'changematerial', {
                       material_name: material.material,
                     })}
-                  />)
+                  />
                 }>
                 {material.amount} cm³
               </LabeledList.Item>
@@ -29,24 +41,9 @@ export const Mint = props => {
           })}
         </LabeledList>
       </Section>
-      <Box as style={{
-        'font-size': '13px',
-      }}>
-        Pressed {data.produced_coins} coins this cycle. <br /><br />
-      </Box>
-      <Button
-        content="Press"
-        onClick={() => act(ref, 'startpress')}
-      />
-      <Button
-        content="Stop"
-        onClick={() => act(ref, 'stoppress')}
-      />
-      <Box as style={{
-        'font-size': '14px',
-      }}>
-        <br />Status: {data.processing ? ("PRESSING") : ("STOPPED")}
-      </Box>
+      <Section>
+        Pressed {data.produced_coins} coins this cycle.
+      </Section>
     </Fragment>
   );
 };
