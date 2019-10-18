@@ -501,6 +501,25 @@
 					/obj/item/gun/energy/e_gun)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+	
+/datum/supply_pack/security/armory/m1911
+	name = "M1911 Single-Pack"	
+	desc = "High power, low practicality. Contains one M1911 pistol and a spare magazine. Requires Armory access to open."
+	cost = 2500
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/m1911,
+					/obj/item/ammo_box/magazine/m45)
+	small_item = TRUE
+
+/datum/supply_pack/security/armory/m1911
+	name = "M1911 Crate"
+	desc = "High power, low practicality. Contains two M1911 pistols and magazines. Requires Armory access to open."
+	cost = 4500
+	contains = list(/obj/item/gun/ballistic/automatic/pistol/m1911,
+					/obj/item/gun/ballistic/automatic/pistol/m1911,
+					/obj/item/ammo_box/magazine/m45,
+					/obj/item/ammo_box/magazine/m45)
+	crate_name = "m1911 crate"
+
 
 /datum/supply_pack/security/armory/exileimp
 	name = "Exile Implants Crate"
@@ -604,24 +623,6 @@
 		var/item = pick(contains)
 		new item(C)
 		
-/datum/supply_pack/security/armory/m1911
-	name = "M1911 Single-Pack"	
-	desc = "High power, low practicality. Contains one M1911 pistol and a spare magazine. Requires Armory access to open."
-	cost = 2500
-	contains = list(/obj/item/gun/ballistic/automatic/pistol/m1911
-					/obj/item/ammo_box/magazine/m45)
-	small_item = TRUE
-
-/datum/supply_pack/security/armory/m1911
-	name = "M1911 Crate"
-	desc = "High power, low practicality. Contains two M1911 pistols and magazines. Requires Armory access to open."
-	cost = 4500
-	contains = list(/obj/item/gun/ballistic/automatic/pistol/m1911
-					/obj/item/gun/ballistic/automatic/pistol/m1911
-					/obj/item/ammo_box/magazine/m45
-					/obj/item/ammo_box/magazine/m45)
-	crate_name = "m1911 crate"
-
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
 	desc = "Contains two fullbody sets of tough, fireproof, pressurized suits designed in a joint effort by IS-ERI and Nanotrasen. Each set contains a suit, helmet, mask, combat belt, and combat gloves. Requires Armory access to open."
