@@ -48,24 +48,24 @@
 			chem.overdosed = TRUE
 		if(chem.overdosed)
 			if(prob(4) && iscarbon(H)) //big oof
-			var/selected_part
-			switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
-				if(1)
-					selected_part = BODY_ZONE_L_ARM
-				if(2)
-					selected_part = BODY_ZONE_R_ARM
-				if(3)
-					selected_part = BODY_ZONE_L_LEG
-				if(4)
-					selected_part = BODY_ZONE_R_LEG
-			var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
-			if(bp)
-				playsound(H, get_sfx("desceration"), 50, TRUE, -1) //You just want to socialize
-				H.visible_message("<span class='warning'>[H] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
-				H.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
-				bp.receive_damage(200, 0, 0) //But I don't think we should
-			else
-				to_chat(H, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
-				H.emote("sigh")
+				var/selected_part
+				switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
+					if(1)
+						selected_part = BODY_ZONE_L_ARM
+					if(2)
+						selected_part = BODY_ZONE_R_ARM
+					if(3)
+						selected_part = BODY_ZONE_L_LEG
+					if(4)
+						selected_part = BODY_ZONE_R_LEG
+				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
+				if(bp)
+					playsound(H, get_sfx("desceration"), 50, TRUE, -1) //You just want to socialize
+					H.visible_message("<span class='warning'>[H] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
+					H.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
+					bp.receive_damage(200, 0, 0) //But I don't think we should
+				else
+					to_chat(H, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
+					H.emote("sigh")
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
