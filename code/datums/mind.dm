@@ -66,7 +66,7 @@
 
 	var/list/learned_recipes //List of learned recipe TYPES.
 
-/datum/mind/New(var/key)
+/datum/mind/New(key)
 	src.key = key
 	soulOwner = src
 	martial_art = default_martial_art
@@ -84,7 +84,7 @@
 
 	return language_holder
 
-/datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
+/datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		UnregisterSignal(current, COMSIG_MOB_DEATH)
@@ -326,9 +326,6 @@
 	else if(is_revolutionary(creator))
 		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
 		converter.add_revolutionary(src,FALSE)
-
-	else if(is_servant_of_ratvar(creator))
-		add_servant_of_ratvar(current)
 
 	else if(is_nuclear_operative(creator))
 		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
@@ -689,7 +686,7 @@
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
-/datum/mind/proc/has_martialart(var/string)
+/datum/mind/proc/has_martialart(string)
 	if(martial_art && martial_art.id == string)
 		return martial_art
 	return FALSE

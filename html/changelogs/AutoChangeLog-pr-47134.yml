@@ -1,0 +1,5 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "The pipes above the new chemistry area on metastation work correctly again."
+  - bugfix: "There is no longer a hole into space in meta maint."

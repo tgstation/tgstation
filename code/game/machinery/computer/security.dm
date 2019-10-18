@@ -30,7 +30,6 @@
 	icon_state = "laptop"
 	icon_screen = "seclaptop"
 	icon_keyboard = "laptop_key"
-	clockwork = TRUE //it'd look weird
 	pass_flags = PASSTABLE
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
@@ -642,7 +641,7 @@ What a mess.*/
 					if("age")
 						if(istype(active1, /datum/data/record))
 							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null) as num|null
-							
+
 							if (!t1)
 								return
 
@@ -733,7 +732,7 @@ What a mess.*/
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
 							var/fine = FLOOR(input(usr, "Please input citation fine:", "Secure. records", 50) as num|null, 1)
-							
+
 							if (isnull(fine))
 								return
 
@@ -745,7 +744,7 @@ What a mess.*/
 
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-								
+
 							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
 							for (var/obj/item/pda/P in GLOB.PDAs)
 								if(P.owner == active1.fields["name"])

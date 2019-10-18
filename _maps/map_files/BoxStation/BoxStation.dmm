@@ -50837,6 +50837,10 @@
 /obj/machinery/computer/bounty,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"ogj" = (
+/obj/machinery/medical_kiosk,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "olh" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -89354,7 +89358,7 @@ aYV
 aYV
 bet
 bfH
-bhh
+ogj
 bhh
 bhg
 bln

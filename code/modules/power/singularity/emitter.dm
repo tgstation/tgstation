@@ -31,7 +31,7 @@
 	var/locked = FALSE
 	var/allow_switch_interact = TRUE
 
-	var/projectile_type = /obj/item/projectile/beam/emitter
+	var/projectile_type = /obj/projectile/beam/emitter
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 	var/datum/effect_system/spark_spread/sparks
 
@@ -204,7 +204,7 @@
 		fire_beam()
 
 /obj/machinery/power/emitter/proc/fire_beam(mob/user)
-	var/obj/item/projectile/P = new projectile_type(get_turf(src))
+	var/obj/projectile/P = new projectile_type(get_turf(src))
 	playsound(get_turf(src), projectile_sound, 50, TRUE)
 	if(prob(35))
 		sparks.start()

@@ -1,0 +1,57 @@
+import { Fragment } from 'inferno';
+import { act } from '../byond';
+import { Button, LabeledList, Section } from '../components';
+import { createLogger } from '../logging';
+
+const logger = createLogger('AirAlarm');
+
+export const Wires = props => {
+  const { state } = props;
+  const { config, data } = state;
+  const { ref } = config;
+  const wires = data.wires || [];
+  const statuses = data.status || [];
+  return (
+    <Fragment>
+      <Section>
+        <LabeledList>
+          {wires.map(wire => (
+            <LabeledList.Item
+              className="candystripe"
+              label={wire.color}
+              labelColor={wire.color}
+              buttons={(
+                <Fragment>
+                  <Button
+                    content={wire.cut ? 'Mend' : 'Cut'}
+                    onClick={() => act(ref, 'cut', {
+                      wire: wire.color,
+                    })} />
+                  <Button
+                    content="Pulse"
+                    onClick={() => act(ref, 'pulse', {
+                      wire: wire.color,
+                    })} />
+                  <Button
+                    content={wire.attached ? 'Detach' : 'Attach'}
+                    onClick={() => act(ref, 'attach', {
+                      wire: wire.color,
+                    })} />
+                </Fragment>
+              )} />
+          ))}
+        </LabeledList>
+      </Section>
+      {!!statuses.length && (
+        <Section>
+          {statuses.map(status => (
+            <Fragment>
+              {status}
+              <br/>
+            </Fragment>
+          ))}
+        </Section>
+      )}
+    </Fragment>
+  );
+};

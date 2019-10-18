@@ -34,6 +34,7 @@
 							CAT_BURGER,
 							CAT_CAKE,
 							CAT_EGG,
+							CAT_ICE,
 							CAT_MEAT,
 							CAT_MISCFOOD,
 							CAT_PASTRY,

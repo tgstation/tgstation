@@ -414,20 +414,6 @@
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/reagent_containers/glass/beaker = 2)
 
-/obj/item/circuitboard/machine/protolathe
-	name = "Protolathe (Machine Board)"
-	icon_state = "generic"
-	build_path = /obj/machinery/rnd/production/protolathe
-	req_components = list(
-		/obj/item/stock_parts/matter_bin = 2,
-		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/reagent_containers/glass/beaker = 2)
-
-/obj/item/circuitboard/machine/protolathe/department
-	name = "Departmental Protolathe (Machine Board)"
-	icon_state = "generic"
-	build_path = /obj/machinery/rnd/production/protolathe/department
-
 /obj/item/circuitboard/machine/protolathe/department
 	name = "Departmental Protolathe (Machine Board)"
 	icon_state = "generic"
@@ -692,9 +678,21 @@
 	name = "Medical Kiosk (Machine Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/medical_kiosk
+	var/custom_cost = 5
 	req_components = list(
 		/obj/item/healthanalyzer = 1,
 		/obj/item/stock_parts/scanning_module = 1)
+
+/obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
+	. = ..()
+	var/new_cost = input("Set a new cost for using this medical kiosk.","New cost", custom_cost) as num|null
+	if(new_cost == null)
+		return
+	custom_cost = CLAMP(round(new_cost, 1), 1, 1000)
+
+/obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)
+	. = ..()
+	. += "The cost to use this kiosk is set to [custom_cost]."
 
 /obj/item/circuitboard/machine/limbgrower
 	name = "Limb Grower (Machine Board)"
@@ -1163,10 +1161,6 @@
 		/obj/item/stock_parts/capacitor = /obj/item/stock_parts/capacitor/quadratic,
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra)
 
-/obj/item/circuitboard/machine/clockwork
-	name = "clockwork board (Report This)"
-	icon_state = "clock_mod"
-
 /obj/item/circuitboard/machine/plantgenes/vault
 	name = "alien board (Plant DNA Manipulator)"
 	icon_state = "abductor_mod"
@@ -1175,5 +1169,3 @@
 		/obj/item/stock_parts/manipulator = /obj/item/stock_parts/manipulator/femto,
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra,
 		/obj/item/stock_parts/scanning_module = /obj/item/stock_parts/scanning_module/triphasic)
-
-

@@ -302,7 +302,9 @@
 
 	reaction_energy += delta_plasma*PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
 	if(instability < FUSION_INSTABILITY_ENDOTHERMALITY)
-		reaction_energy = max(reaction_energy,0) //Stable reactions don't end up endothermic.
+		reaction_energy = max(reaction_energy,0) //Stable reactions don't end up exothermic.
+	else if(air.temperature > FUSION_MAXIMUM_TEMPERATURE && reaction_energy > 0) //Makes the reaction neutral if above max temp.
+		reaction_energy = 0
 	else if (reaction_energy < 0)
 		reaction_energy *= (instability-FUSION_INSTABILITY_ENDOTHERMALITY)**0.5
 
@@ -343,7 +345,7 @@
 	min_requirements = list(
 		/datum/gas/oxygen = 20,
 		/datum/gas/nitrogen = 20,
-		/datum/gas/nitrous_oxide = 5,
+		/datum/gas/pluoxium = 5,
 		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*60
 	)
 
