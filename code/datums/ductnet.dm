@@ -49,7 +49,8 @@
 	for(var/A in D.ducts)
 		var/obj/machinery/duct/M = A
 		M.duct = src //forget your old master
-	qdel(D)
+	
+	destroy_network()
 ///destroy the network and tell all our ducts and plumbers we are gone
 /datum/ductnet/proc/destroy_network(delete=TRUE)
 	for(var/A in suppliers + demanders)
