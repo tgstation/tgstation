@@ -1,9 +1,6 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Button, Section } from '../components';
-import { createLogger } from '../logging';
-
-const logger = createLogger('AirAlarm');
 
 export const BrigTimer = props => {
   const { state } = props;
