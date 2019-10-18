@@ -24,12 +24,18 @@
 	inserted_item = /obj/item/toy/crayon/mime
 	icon_state = "pda-mime"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The hardware has been hard coded to take the vow of silence."
-	allow_empty_messages = TRUE
 	silent = TRUE
 	ttone = "silence"
 
 /obj/item/pda/mime/msg_input(mob/living/U = usr)
-	return ""
+	if(emped || toff)
+		return
+	var/emojis = emoji_sanitize(stripped_input(U, "Please enter emojis", name))
+	if(!emojis)
+		return
+	if(!U.canUseTopic(src, BE_CLOSE))
+		return
+	return emojis
 
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/pda/ai

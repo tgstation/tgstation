@@ -559,6 +559,16 @@ Code:
 		if (54) // Beepsky, Medibot, Floorbot, and Cleanbot access
 			menu = "<h4>[PDAIMG(medbot)] Bots Interlink</h4>"
 			bot_control()
+		if (55) // Emoji Guidebook for mimes
+			menu = "<h4>[PDAIMG(emoji)] Emoji Guidebook</h4>"
+			var/static/list/emoji_icon_states
+			var/breakcounter = 0
+			if(!emoji_icon_states)
+				emoji_icon_states = icon_states(icon('icons/emoji.dmi'))
+			menu += "<br> To use an emoji in a pda message, refer to the guide and add \":\" around the emoji."
+			for(var/emoji in emoji_icon_states)
+				menu += "[breakcounter ? "<br> " : ""]:[emoji]: = \"[emoji]\" [breakcounter ? "" : " || "]"
+				breakcounter = !breakcounter
 		if (99) //Newscaster message permission error
 			menu = "<h5> ERROR : NOT AUTHORIZED [host_pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
 
