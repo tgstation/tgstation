@@ -64,6 +64,7 @@
 	background.layer = -1
 	background.plane = -1
 
+	screen_maps["[popup_name]_map"] += background
 	screen += background
 
 	return newmap

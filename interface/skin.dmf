@@ -262,6 +262,7 @@ window "popupwindow"
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
+		can-resize = false
 
 window "preferences_window"
 	elem "preferences_window"
@@ -270,7 +271,6 @@ window "preferences_window"
 		size = 1280x1000
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
@@ -280,7 +280,6 @@ window "preferences_window"
 		size = 960x1000
 		anchor1 = 0,0
 		anchor2 = 75,100
-		background-color = none
 		saved-params = ""
 	elem "character_preview_map"
 		type = MAP
@@ -298,7 +297,6 @@ window "statwindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "stat"
@@ -309,5 +307,4 @@ window "statwindow"
 		anchor2 = 100,100
 		is-default = true
 		saved-params = ""
-		tab-background-color = none
 

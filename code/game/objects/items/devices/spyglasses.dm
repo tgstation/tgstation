@@ -63,11 +63,11 @@
 	cam_view.screen_info = list(1,1)
 
 /obj/item/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
-	cam_view.vis_contents = null
+	cam_view.vis_contents.Cut()
 	for(var/turf/visible_turf in range(1))
 		cam_view.vis_contents += visible_turf
 
-/obj/item/spy_bug/Move(atom/newloc, direct)
+/obj/item/spy_bug/Moved()
 	. = ..()
 	update_view()
 
