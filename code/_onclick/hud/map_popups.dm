@@ -86,7 +86,7 @@
 			if(0) //legacy - screen_loc is already set up. don't add the map here, assumed to be old HUD code, or some custom overwrite (eg, x TO y) so it'd probably break it.
 
 			else
-				CRASH("[adding]'s screen_data has an invalid length. should be either 4,2,0 - it is [len]")
+				stack_trace("[adding]'s screen_data has an invalid length. should be either 4,2,0 - it is [len]")
 				continue
 		if(!screen_maps[adding.assigned_map])
 			screen_maps[adding.assigned_map] = list()
