@@ -1,5 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "cargo console should be even more responsive"
-  - bugfix: "buy privately button on the cargo console properly triggers a ui update"
