@@ -159,8 +159,6 @@
 					H.say("*custom " + pick(possible_mes), forced = /datum/reagent/toxin/bonehurtingjuice)
 				if(3)
 					to_chat(H, "<span class='warning'>Your bones hurt!</span>")
-		if(chem.volume >= chem.overdose_threshold)
-			chem.overdosed = TRUE
 		if(chem.overdosed)
 			if(prob(4) && iscarbon(H)) //big oof
 				var/selected_part
