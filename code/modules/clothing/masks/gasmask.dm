@@ -138,7 +138,7 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/screech)
 	var/recent_uses = 0
-	var/broken_hailer = 0
+	var/broken_hailer = FALSE
 	var/gorilla = FALSE
 	var/cooldown_special
 
@@ -182,7 +182,7 @@
 			if(4)
 				to_chat(usr, "<span class='userdanger'>\The [src] is smelling like burnt peanuts!</span>")
 			if(5) //overload
-				broken_hailer = 1
+				broken_hailer = TRUE
 				to_chat(usr, "<span class='userdanger'>\The [src]'s the depleted banana module shorts.</span>")
 				new /obj/item/grown/bananapeel(src)
 				return
