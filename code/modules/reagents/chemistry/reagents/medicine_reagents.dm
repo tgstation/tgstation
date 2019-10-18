@@ -868,9 +868,11 @@
 	M.adjustFireLoss(-1.5*REM, 0)
 	M.adjustOxyLoss(-1.5*REM, 0)
 	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
-	M.hair_color = "92f"
-	M.facial_hair_color = "92f"
-	M.update_hair()
+	if(ishuman(M)
+	var/mob/living/carbon/human/H = M
+		M.hair_color = "92f"
+		M.facial_hair_color = "92f"
+		M.update_hair()
 	..()
 	. = 1
 
