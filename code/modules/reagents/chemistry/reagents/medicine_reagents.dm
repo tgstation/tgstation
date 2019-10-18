@@ -115,15 +115,6 @@
 		. = 1
 	..()
 
-/datum/reagent/medicine/inacusiate
-	name = "Inacusiate"
-	description = "Instantly restores all hearing to the patient, but does not cure deafness."
-	color = "#6600FF" // rgb: 100, 165, 255
-
-/datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
-	M.restoreEars()
-	..()
-
 /datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
@@ -389,7 +380,7 @@
 	name = "Salicyclic Acid"
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
-	color = "#FFD800" //part of a process of brute meds going from red to yellow
+	color = "#D2D2D2" //part of a process of brute meds going from red to yellow
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 
@@ -412,7 +403,7 @@
 	name = "Salbutamol"
 	description = "Rapidly restores oxygen deprivation as well as preventing more of it to an extent."
 	reagent_state = LIQUID
-	color = "#6881FF" //part of a process of oxy meds going from purple to blue
+	color = "#00FFFF"	
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/carbon/M)
@@ -628,6 +619,15 @@
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
 		M.set_blurriness(0)
+	..()
+
+/datum/reagent/medicine/inacusiate
+	name = "Inacusiate"
+	description = "Instantly restores all hearing to the patient, but does not cure deafness."
+	color = "#606060" // ditto
+
+/datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
+	M.restoreEars()
 	..()
 
 /datum/reagent/medicine/atropine
@@ -1175,7 +1175,7 @@
 	name = "Trophazole"
 	description = "Orginally developed as fitness supplement, this chemical accelerates wound healing and if ingested turns nutriment into healing peptides"
 	reagent_state = LIQUID
-	color = "#FFFF00" //part of a system where brute reagents go from red to yellow
+	color = "#FFFF6B" //part of a system where brute reagents go from red to yellow
 	overdose_threshold = 20
 
 /datum/reagent/medicine/trophazole/on_mob_life(mob/living/carbon/M)
@@ -1217,7 +1217,7 @@
 	name = "Rhigoxane"
 	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
 	reagent_state = LIQUID
-	color = "#1E8BBE" // part of a system of burn meds going from orange to teal in color
+	color = "#F7FFA5"
 	overdose_threshold = 25
 	reagent_weight = 0.6
 
