@@ -15,5 +15,5 @@
 #define SKILL_EXP_MASTER 1500
 #define SKILL_EXP_LEGENDARY 2500
 
-// Gets the reference for the material type that was given
+// Gets the reference for the skill type that was given
 #define GetSkillRef(A) (SSskills.all_skills[A])
