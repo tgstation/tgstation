@@ -80,8 +80,6 @@ const setupApp = () => {
   // Find data in the page, load inlined state.
   const holder = document.getElementById('data');
   const ref = holder.getAttribute('data-ref');
-  const stateJson = holder.textContent;
-  const state = JSON.parse(stateJson);
 
   // Initialize logger
   setLoggerRef(ref);
@@ -97,12 +95,6 @@ const setupApp = () => {
     // Backend update dispatches a store action
     store.dispatch(backendUpdate(state));
   };
-
-  // Render the app
-  if (state.config) {
-    logger.log('found inlined state');
-    store.dispatch(backendUpdate(state));
-  }
 
   // Enable hot module reloading
   if (module.hot) {

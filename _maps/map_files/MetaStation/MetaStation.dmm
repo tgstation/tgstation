@@ -57131,6 +57131,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Medbay Surgery B";
+	dir = 4;
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms/room_a{
 	name = "Surgery B"
