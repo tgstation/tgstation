@@ -1375,7 +1375,7 @@
 	name = "Iodine"
 	description = "Commonly added to table salt as a nutrient. On its own it tastes far less pleasing."
 	reagent_state = LIQUID
-	color = "#BC8A00" //should probably take these into consideration when mixing potas iodine AIOSDKASODSAODPSAKDK
+	color = "#BC8A00"
 	taste_description = "metal"
 
 /datum/reagent/carpet
