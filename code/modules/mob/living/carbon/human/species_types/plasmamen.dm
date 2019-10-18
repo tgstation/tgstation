@@ -161,16 +161,7 @@
 					to_chat(H, "<span class='warning'>Your bones hurt!</span>")
 		if(chem.overdosed)
 			if(prob(4) && iscarbon(H)) //big oof
-				var/selected_part
-				switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
-					if(1)
-						selected_part = BODY_ZONE_L_ARM
-					if(2)
-						selected_part = BODY_ZONE_R_ARM
-					if(3)
-						selected_part = BODY_ZONE_L_LEG
-					if(4)
-						selected_part = BODY_ZONE_R_LEG
+				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
 				if(bp)
 					playsound(H, get_sfx("desceration"), 50, TRUE, -1) //You just want to socialize
