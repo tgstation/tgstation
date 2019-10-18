@@ -1,0 +1,4 @@
+author: "Akrilla & Skoglol"
+delete-after: True
+changes: 
+  - tweak: "Coin press has a fancy new UI, QoL changes, and actually takes in ore/sheets from the right (floor arrows make sense)."
