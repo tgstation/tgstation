@@ -313,6 +313,9 @@ All the important duct code:
 		return
 	return ..()
 
+/obj/machinery/duct/multilayered/handle_layer()
+	return
+
 /obj/item/stack/ducts
 	name = "stack of duct"
 	desc = "A stack of fluid ducts."
