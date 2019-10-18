@@ -862,15 +862,12 @@
 	toxpwr = 0
 	taste_description = "bone hurting"
 	overdose_threshold = 50
-	self_consuming = TRUE //so that skeletons can process and overdose on bone hurting juice without a liver
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(7.5, 0)
-	if(isskeleton(M) || isplasmaman(M) || M.dna.species.type == /datum/species/golem/bone)
-		M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))
 			if(1)
@@ -896,24 +893,14 @@
 			if(4)
 				selected_part = BODY_ZONE_R_LEG
 		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
-		if(!isskeleton(M) && !isplasmaman(M) && M.dna.species.type != /datum/species/golem/bone) //We're so sorry skeletons, you're so misunderstood
-			if(bp)
-				bp.receive_damage(0, 0, 200)
-				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
-				M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
-				M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
-			else //SUCH A LUST FOR REVENGE!!!
-				to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
-				M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
-		else //you just want to socialize
-			if(bp)
-				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
-				M.visible_message("<span class='warning'>[M] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
-				M.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
-				bp.receive_damage(200, 0, 0) //But I don't think we should
-			else
-				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
-				M.emote("sigh")
+		if(bp)
+			bp.receive_damage(0, 0, 200)
+			playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+			M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
+			M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
+		else //SUCH A LUST FOR REVENGE!!!
+			to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
+			M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
 	return ..()
 
 /datum/reagent/toxin/bungotoxin
