@@ -169,13 +169,13 @@
 
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = 'icons/mob/screen_cyborg.dmi'
-	pull_icon.update_icon(mymob)
+	pull_icon.update_icon()
 	pull_icon.screen_loc = ui_borg_pull
 	hotkeybuttons += pull_icon
 
 
 	zone_select = new /obj/screen/zone_sel/robot()
-	zone_select.update_icon(mymob)
+	zone_select.update_icon()
 	static_inventory += zone_select
 
 
