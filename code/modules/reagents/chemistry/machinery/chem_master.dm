@@ -259,7 +259,7 @@
 						P = new(drop_location())
 					P.name = trim("[name] pill")
 					if(chosenPillStyle == RANDOM_PILL_STYLE)
-						P.icon_state ="pill[rand(1,21)]"
+						P.icon_state ="pill[rand(1,22)]"
 					else
 						P.icon_state = "pill[chosenPillStyle]"
 					if(P.icon_state == "pill4")
