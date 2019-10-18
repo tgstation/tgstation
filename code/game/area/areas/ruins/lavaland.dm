@@ -40,7 +40,7 @@
 
 /area/ruin/unpowered/cultaltar
 	name = "Cult Altar"
-	blob_allowed = TRUE //lets cultists draw runes here
+	flags_1 = CULT_PERMITTED_1
 	ambientsounds = SPOOKY
 
 //Syndicate lavaland base

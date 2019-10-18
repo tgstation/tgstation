@@ -13,6 +13,7 @@
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	unique = FALSE
 	blob_allowed = FALSE
+	flags_1 = CAN_BE_DIRTY_1
 
 /area/shuttle/Initialize()
 	if(!canSmoothWithAreas)
@@ -104,6 +105,7 @@
 /area/shuttle/custom
 	name = "Custom player shuttle"
 	blob_allowed = TRUE
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
@@ -141,6 +143,7 @@
 /area/shuttle/escape
 	name = "Emergency Shuttle"
 	blob_allowed = TRUE
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 /area/shuttle/escape/backup
 	name = "Backup Emergency Shuttle"
