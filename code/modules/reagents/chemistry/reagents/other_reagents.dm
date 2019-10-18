@@ -1477,7 +1477,7 @@
 	name = "Bromine"
 	description = "A brownish liquid that's highly reactive. Useful for stopping free radicals, but not intended for human consumption."
 	reagent_state = LIQUID
-	color = "D35415"
+	color = "#D35415"
 	taste_description = "chemicals"
 
 /datum/reagent/phenol
@@ -1541,7 +1541,7 @@
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
 	taste_description = "sourness"
 
-/datum/reagent/colorful_reagent/Initialize()
+/datum/reagent/hair_dye/Initialize()
 	color = pick(random_color_list)
 
 /datum/reagent/hair_dye/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
