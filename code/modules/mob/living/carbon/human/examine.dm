@@ -220,7 +220,7 @@
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
 			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
-	if(blood_volume < BLOOD_VOLUME_SAFE)
+	if(blood_volume < BLOOD_VOLUME_SAFE || skin_tone == "albino")
 		msg += "[t_He] [t_has] pale skin.\n"
 
 	if(bleedsuppress)
