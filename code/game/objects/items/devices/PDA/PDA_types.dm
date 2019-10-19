@@ -23,7 +23,7 @@
 	default_cartridge = /obj/item/cartridge/virus/mime
 	inserted_item = /obj/item/toy/crayon/mime
 	icon_state = "pda-mime"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. The hardware has been hard coded to take the vow of silence."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. The hardware has been modified for compliance with the vows of silence."
 	silent = TRUE
 	ttone = "silence"
 

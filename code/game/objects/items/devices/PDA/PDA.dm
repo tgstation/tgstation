@@ -472,8 +472,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 					scanmode = PDA_SCANNER_NONE
 				else if((!isnull(cartridge)) && (cartridge.access & CART_ENGINE))
 					scanmode = PDA_SCANNER_HALOGEN
-			if("Emoji Guidebook")
-				
 			if("Honk")
 				if ( !(last_noise && world.time < last_noise + 20) )
 					playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
