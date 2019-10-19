@@ -64,6 +64,11 @@ All the important duct code:
 /obj/machinery/duct/proc/attempt_connect()
 	reset_connects() //All connects are gathered here again eitherway, we might aswell reset it so they properly update when reconnecting
 
+	for(var/atom/movable/AM in loc)
+		var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
+		if(P.active)
+			disconnect_duct() //let's not built under plumbing machinery
+			return
 	for(var/D in GLOB.cardinals)
 		if(dumb && !(D & connects))
 			continue
