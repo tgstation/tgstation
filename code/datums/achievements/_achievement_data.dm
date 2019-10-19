@@ -2,7 +2,7 @@
 /datum/achievement_data
 	var/key
 	///Up to date list of all achievements and their info.
-	var/data = list() 
+	var/data = list()
 	///Original status of achievement.
 	var/original_cached_data = list()
 	///All icons for the UI of achievements
@@ -23,7 +23,7 @@
 /datum/achievement_data/proc/save()
 	for(var/T in data)
 		var/datum/award/A = SSachievements.awards[T]
-		
+
 		if(data[T] != original_cached_data[T])//If our data from before is not the same as now, save it to the hub. This check prevents unnecesary polling.
 			A.save(key,data[T])
 
@@ -66,30 +66,42 @@
 	else if(istype(A, /datum/award/score))
 		data[achievement_type] = 0
 
-/datum/achievement_data/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = null) 
+/datum/achievement_data/ui_base_html(html)
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+
+/datum/achievement_data/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		load_all_achievements() //Only necesary if we havn't used UI before
+		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+		assets.send(user)
 		ui = new(user, src, ui_key, "achievements", "Achievements Menu", 300, 300, master_ui, state)
 		ui.open()
 
 /datum/achievement_data/ui_data(mob/user)
-	data["categories"] = list("Bosses", "Misc")
+	var/ret_data = list() // screw standards (qustinnus you must rename src.data ok)
+	ret_data["categories"] = list("Bosses", "Misc")
+	ret_data["achievements"] = list()
+
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+
 	for(var/achievement_type in SSachievements.achievements)
-		var/list/this = list()
-		this["name"] = SSachievements.achievements[achievement_type].name
-		this["desc"] = SSachievements.achievements[achievement_type].desc
-		this["achieved"] = data[achievement_type]
-		data["achievements"] += list(this)
+		var/this = list(
+			"name" = SSachievements.achievements[achievement_type].name,
+			"desc" = SSachievements.achievements[achievement_type].desc,
+			"category" = SSachievements.achievements[achievement_type].category,
+			"icon_class" = assets.icon_class_name(SSachievements.achievements[achievement_type].icon),
+			"achieved" = data[achievement_type]
+		)
 
-	//Made at init, always stays the same. Accesed as data.AchievementIcons[iconname]
-	data["achievementicons"] = AchievementIcons
+		ret_data["achievements"] += list(this)
 
-	return data
+	return ret_data
 
 /datum/achievement_data/ui_act(action, params)
-  if(..())
-    return
+	if(..())
+		return
 
 /client/verb/checkachievements()
 	set category = "OOC"

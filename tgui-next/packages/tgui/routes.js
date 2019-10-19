@@ -1,4 +1,5 @@
 import { Acclimator } from './interfaces/Acclimator';
+import { Achievements } from './interfaces/Achievements';
 import { AiAirlock } from './interfaces/AiAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
 import { AirlockElectronics } from './interfaces/AirlockElectronics';
@@ -30,6 +31,10 @@ const ROUTES = {
   acclimator: {
     component: () => Acclimator,
     scrollable: false,
+  },
+  achievements: {
+    component: () => Achievements,
+    scrollable: true,
   },
   ai_airlock: {
     component: () => AiAirlock,

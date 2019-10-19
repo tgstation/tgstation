@@ -4,11 +4,11 @@ SUBSYSTEM_DEF(achievements)
 	var/hub_enabled = FALSE
 
 	///List of achievements
-	var/list/achievements
+	var/list/achievements = list()
 	///List of scores
-	var/list/scores
+	var/list/scores = list()
 	///List of all awards
-	var/list/awards
+	var/list/awards = list()
 
 /datum/controller/subsystem/achievements/Initialize(timeofday)
 	if(CONFIG_GET(string/medal_hub_address) && CONFIG_GET(string/medal_hub_password))

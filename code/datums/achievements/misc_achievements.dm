@@ -1,4 +1,4 @@
-/datum/award/achievementmisc
+/datum/award/achievement/misc
 	category = "Misc"
 
 /datum/award/achievement/misc/meteor_examine
