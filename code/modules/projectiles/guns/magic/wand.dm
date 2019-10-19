@@ -75,10 +75,6 @@
 		var/mob/living/L = user
 		if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
 			user.revive(full_heal = 1)
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				C.regenerate_limbs()
-				C.regenerate_organs()
 			to_chat(user, "<span class='notice'>You feel great!</span>")
 			return
 	to_chat(user, "<span class='warning'>You irradiate yourself with pure negative energy! \
@@ -121,10 +117,6 @@
 			user.death(0)
 			return
 	user.revive(full_heal = 1)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		C.regenerate_limbs()
-		C.regenerate_organs()
 	to_chat(user, "<span class='notice'>You feel great!</span>")
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
