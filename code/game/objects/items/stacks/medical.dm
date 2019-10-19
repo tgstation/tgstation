@@ -102,6 +102,7 @@
 	var/stop_bleeding = 1800
 	self_delay = 20
 	max_amount = 12
+	grind_results = list(/datum/reagent/cellulose = 2)
 
 /obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
 	if(ishuman(M))
@@ -219,6 +220,7 @@
 	repeating = TRUE
 	var/heal_burn = 10
 	var/is_open = TRUE ///This var determines if the sterile packaging of the mesh has been opened.
+	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 
 /obj/item/stack/medical/mesh/Initialize()
 	..()
