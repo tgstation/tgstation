@@ -81,7 +81,7 @@
 	name = "red striped bobble hat"
 	desc = "If you're going on a worldwide hike, you'll need some cold protection."
 	icon_state = "waldo_hat"
-	
+
 /obj/item/clothing/head/beanie/rasta
 	name = "rastacap"
 	desc = "Perfect for tucking in those dreadlocks."

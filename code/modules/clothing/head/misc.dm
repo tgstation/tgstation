@@ -436,3 +436,9 @@
 	desc = "An extra-mustahabb way of showing your devotion to Allah."
 	icon_state = "taqiyahred"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
+
+/obj/item/clothing/head/intern
+	name = "\improper CentCom Head Intern beancap"
+	desc = "A horrifying mix of beanie and softcap in CentCom green. You'd have to be pretty desperate for power over your peers to agree to wear this."
+	icon_state = "intern_hat"
+	item_state = "intern_hat"

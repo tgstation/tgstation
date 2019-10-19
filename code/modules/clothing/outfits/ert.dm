@@ -195,13 +195,12 @@
 	name = "CentCom Intern"
 
 	uniform = /obj/item/clothing/under/rank/centcom/intern
-	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/color/black
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/melee/classic_baton
-	suit_store = /obj/item/gun/ballistic/rifle/boltaction
+	r_hand = /obj/item/gun/ballistic/rifle/boltaction
 	back = /obj/item/storage/backpack/satchel
 	l_pocket = /obj/item/ammo_box/a762
 	r_pocket = /obj/item/ammo_box/a762
@@ -222,7 +221,10 @@
 /datum/outfit/centcom_intern/leader
 	name = "CentCom Head Intern"
 	belt = /obj/item/melee/baton/loaded
-	head = /obj/item/clothing/head/centhat
+	suit = /obj/item/clothing/suit/armor/vest
+	suit_store = /obj/item/gun/ballistic/rifle/boltaction
+	r_hand = /obj/item/megaphone=1
+	head = /obj/item/clothing/head/intern
 
 /datum/outfit/ert/commander/inquisitor
 	name = "Inquisition Commander"
