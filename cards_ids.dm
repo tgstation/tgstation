@@ -698,8 +698,3 @@ update_label()
 
 /obj/item/card/id/departmental_budget/update_label()
 	return
-
-/obj/item/card/id/departmental_budget/car
-	department_ID = ACCOUNT_CAR
-	department_name = ACCOUNT_CAR_NAME
-	icon_state = "car_budget" //saving up for a new tesla
