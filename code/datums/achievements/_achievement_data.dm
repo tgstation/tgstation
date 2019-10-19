@@ -5,9 +5,19 @@
 	var/data = list() 
 	///Original status of achievement.
 	var/original_cached_data = list()
+	///All icons for the UI of achievements
+	var/list/AchievementIcons = null
 
 /datum/achievement_data/New(key)
 	src.key = key
+
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+	AchievementIcons = list()
+	for (var/x in SSachievements.achievements)
+		var/list/SL = list()
+		SL["id"] = x.name
+		SL["htmltag"] = assets.icon_tag(x.icon)
+		AchievementIcons += list(SL)
 
 ///Saves any out-of-date achievements to the hub.
 /datum/achievement_data/proc/save()
@@ -64,28 +74,21 @@
     ui.open()
 
 /datum/achievement_data/ui_data(mob/user)
- 	var/list/achievement_data = subtypesof(/datum/award/achievement)
+	data["categories"] = list("Bosses", "Misc")
 	for(var/achievement_type in data)
 		var/list/this = list()
 		this["name"] = SSachievements.achievements[achievement_type].name
 		this["desc"] = SSachievements.achievements[achievement_type].desc
-		this["cat"] = SSachievements.achievements[achievement_type].category
-		this["icon"] = SSachievements.achievements[achievement_type].icon
-		this["icon_state"] = SSachievements.achievements[achievement_type].icon_state
-
 		data["achievements"] += list(this)
+
+	//Made at init, always stays the same
+	data["achievementicons"] = AchievementIcons
 
 	return data
 
 /datum/achievement_data/ui_act(action, params)
   if(..())
     return
-  switch(action)
-    if("copypasta")
-      var/newvar = params["var"]
-      var = Clamp(newvar, min_val, max_val) // Just a demo of proper input sanitation.
-      . = TRUE
-  update_icon() // Not applicable to all objects.
 
 /client/verb/checkachievements()
 	set category = "OOC"

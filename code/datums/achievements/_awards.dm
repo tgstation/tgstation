@@ -1,8 +1,8 @@
 /datum/award
 	var/name = "It's fucking nothing"
 	var/desc = "You did it."
-	var/icon = 'icons/misc/achievements.dmi'
-	var/icon_state = "default"
+	///Found in /datum/asset/spritesheet/simple/achievements
+	var/icon = 'default'
 	var/category = "Normal"
 
 	///What ID do we use on the hub?
