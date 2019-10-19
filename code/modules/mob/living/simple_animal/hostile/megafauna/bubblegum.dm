@@ -62,8 +62,8 @@ Difficulty: Hard
 	var/enrage_time = 70
 	var/revving_charge = FALSE
 	gps_name = "Bloody Signal"
-	achievement_type = /datum/award/achievement/bubblegum_kill
-	crusher_achievement_type = /datum/award/achievement/bubblegum_crusher
+	achievement_type = /datum/award/achievement/boss/bubblegum_kill
+	crusher_achievement_type = /datum/award/achievement/boss/bubblegum_crusher
 	score_achievement_type = /datum/award/score/bubblegum_score
 
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "

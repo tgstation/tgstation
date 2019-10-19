@@ -250,7 +250,7 @@
 				for(var/x in picked_materials)
 					var/datum/material/M = x
 					if(!istype(M, /datum/material/glass) && !istype(M, /datum/material/iron))
-						user.client.give_award(/datum/award/achievement/getting_an_upgrade, user)
+						user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
 
 
 	icon_state = "autolathe"

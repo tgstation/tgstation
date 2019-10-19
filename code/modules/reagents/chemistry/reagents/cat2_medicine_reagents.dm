@@ -56,7 +56,7 @@
 			return
 		else //VICTORY ROYALE
 			to_chat(M, "<span class='hierophant'>You win, and the malevolent spirits fade away as well as your wounds.</span>")
-			M.client.give_award(/datum/award/achievement/helbitaljanken, M)
+			M.client.give_award(/datum/award/achievement/misc/helbitaljanken, M)
 			M.revive(TRUE)
 			M.reagents.del_reagent(type)
 			return

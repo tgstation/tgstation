@@ -148,7 +148,7 @@
 	for(var/mob/living/L in grant_achievement)
 		if(L.stat || !L.client)
 			continue
-		L.client.give_award(/datum/award/achievement/boss_killer, L)
+		L.client.give_award(/datum/award/achievement/boss/boss_killer, L)
 		L.client.give_award(achievement_type, L)
 		if(crusher_kill && istype(L.get_active_held_item(), /obj/item/twohanded/kinetic_crusher))
 			L.client.give_award(crusher_achievement_type, L)

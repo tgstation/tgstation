@@ -61,8 +61,8 @@ Difficulty: Hard
 	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman)
 	wander = FALSE
 	gps_name = "Zealous Signal"
-	achievement_type = /datum/award/achievement/hierophant_kill
-	crusher_achievement_type = /datum/award/achievement/hierophant_crusher
+	achievement_type = /datum/award/achievement/boss/hierophant_kill
+	crusher_achievement_type = /datum/award/achievement/boss/hierophant_crusher
 	score_achievement_type = /datum/award/score/hierophant_score
 	del_on_death = TRUE
 	deathsound = 'sound/magic/repulse.ogg'
