@@ -46,7 +46,7 @@
 #if DM_VERSION < 513
 #define TAN(x) (sin(x) / cos(x))
 #else
-#define TAN(X) tan(x)
+#define TAN(x) tan(x)
 #endif
 
 // Cotangent
