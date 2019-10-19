@@ -3,6 +3,7 @@
 	var/desc = "You did it."
 	var/icon = 'icons/misc/achievements.dmi'
 	var/icon_state = "default"
+	var/category = "Normal"
 
 	///What ID do we use on the hub?
 	var/hub_id
