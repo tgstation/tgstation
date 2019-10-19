@@ -66,18 +66,20 @@
 		data[achievement_type] = 0
 
 /datum/achievement_data/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state) // Remember to use the appropriate state.
-  ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-  if(!ui)
-	load_all_achievements() //Only necesary if we havn't used UI before
-    ui = new(user, src, ui_key, "achievements", name, 300, 300, master_ui, state)
-    ui.open()
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		load_all_achievements() //Only necesary if we havn't used UI before
+		ui = new(user, src, ui_key, "achievements", name, 300, 300, master_ui, state)
+		ui.open()
 
 /datum/achievement_data/ui_data(mob/user)
 	data["categories"] = list("Bosses", "Misc")
-	for(var/achievement_type in data)
+	for(var/achievement in SSachievements.achievements)
+		var/achievement_type = achievement.type
 		var/list/this = list()
 		this["name"] = SSachievements.achievements[achievement_type].name
 		this["desc"] = SSachievements.achievements[achievement_type].desc
+		this["achieved"] = data[achievement_type]
 		data["achievements"] += list(this)
 
 	//Made at init, always stays the same. Accesed as data.AchievementIcons[iconname]
@@ -97,4 +99,6 @@
 	player_details.achievements.ui_interact(usr)
 
 
-
+/mob/verb/unlock_meme()
+	var/achievies = subtypesof(/datum/award/achievement)
+	client.player_details.achievements.unlock(pick(achievies))
