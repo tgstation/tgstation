@@ -71,6 +71,8 @@
 	if(world.time < pulse_cooldown)
 		return
 	for(var/mob/M in orange(host_mob, 5))
+		if(SEND_SIGNAL(M, COMSIG_NANITE_IS_STEALTHY))
+			continue
 		if(sync_programs)
 			SEND_SIGNAL(M, COMSIG_NANITE_SYNC, nanites, sync_overwrite)
 		if(overwrite_cloud)
