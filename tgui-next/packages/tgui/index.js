@@ -113,9 +113,6 @@ const setupApp = () => {
   // Initialize logger
   setLoggerRef(ref);
 
-  const stateJson = holder.textContent;
-  const state = parseStateJson(stateJson);
-
   // Subscribe for state updates
   store.subscribe(() => {
     renderLayout();

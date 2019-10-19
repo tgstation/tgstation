@@ -17,10 +17,12 @@ export const setupDrag = async state => {
   logger.log('setting up');
   dragState.windowRef = state.config.window;
   // Remove window borders
-  if (state.config.fancy) {
-    winset(state.config.window, 'titlebar', false);
-    winset(state.config.window, 'can-resize', false);
-  }
+  // NOTE: We are currently doing it in the open() tgui module proc, and
+  // this bit of code is left here just in case everything goes to shit.
+  // if (state.config.fancy) {
+  //   winset(state.config.window, 'titlebar', false);
+  //   winset(state.config.window, 'can-resize', false);
+  // }
   // Calculate offset caused by windows taskbar
   const realPosition = await winget(dragState.windowRef, 'pos');
   dragState.screenOffset = {
