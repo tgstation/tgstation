@@ -19,7 +19,7 @@
 	var/turns_since_scan = 0
 	var/obj/movement_target
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/pet/dog/Life()
 	..()

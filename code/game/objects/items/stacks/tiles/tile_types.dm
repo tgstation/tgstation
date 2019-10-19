@@ -77,6 +77,15 @@
 	turf_type = /turf/open/floor/grass
 	resistance_flags = FLAMMABLE
 
+//Fairygrass
+/obj/item/stack/tile/fairygrass
+	name = "fairygrass tile"
+	singular_name = "fairygrass floor tile"
+	desc = "A patch of odd, glowing blue grass."
+	icon_state = "tile_fairygrass"
+	item_state = "tile-fairygrass"
+	turf_type = /turf/open/floor/grass/fairy
+	resistance_flags = FLAMMABLE
 
 //Wood
 /obj/item/stack/tile/wood

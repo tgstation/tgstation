@@ -3,4 +3,5 @@
 	..()
 
 	healths = new /obj/screen/healths/revenant()
+	healths.hud = src
 	infodisplay += healths

@@ -723,8 +723,11 @@
 	if(!force)
 		amount = min(remaining_space_items(), amount)
 	for(var/i in 1 to amount)
-		handle_item_insertion(new type(real_location), TRUE)
-		CHECK_TICK
+		if(!handle_item_insertion(new type(real_location), TRUE))
+			return i > 1 //return TRUE only if at least one insertion has been successful.
+		if(CHECK_TICK)
+			if(QDELETED(src))
+				return TRUE
 	return TRUE
 
 /datum/component/storage/proc/on_attack_hand(datum/source, mob/user)
