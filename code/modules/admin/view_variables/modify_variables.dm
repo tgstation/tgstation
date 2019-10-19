@@ -64,8 +64,6 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 		.["[D]([shorttype])[REF(D)]#[i]"] = D
 
-	. = sortList(.)
-
 /client/proc/mod_list_add_ass(atom/O) //hehe
 
 	var/list/L = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))

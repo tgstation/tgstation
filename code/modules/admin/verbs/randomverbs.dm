@@ -151,7 +151,7 @@
 		return
 
 	if(!M)
-		M = input("Direct narrate to whom?", "Active Players") as null|anything in sortNames(GLOB.player_list)
+		M = input("Direct narrate to whom?", "Active Players") as null|anything in GLOB.player_list
 
 	if(!M)
 		return
