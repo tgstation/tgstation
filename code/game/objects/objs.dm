@@ -176,10 +176,6 @@
 /obj/proc/container_resist(mob/living/user)
 	return
 
-/obj/proc/update_icon()
-	SEND_SIGNAL(src, COMSIG_OBJ_UPDATE_ICON)
-	return
-
 /mob/proc/unset_machine()
 	if(machine)
 		machine.on_unset_machine(src)

@@ -485,6 +485,16 @@
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
+/// Updates the icon of the atom
+/atom/proc/update_icon()
+	// I expect we're going to need more return flags and options in this proc
+	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
+	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_ICON_STATE))
+		update_icon_state()
+
+/// Updates the icon state of the atom
+/atom/proc/update_icon_state()
+
 /**
   * An atom we are buckled or is contained within us has tried to move
   *
@@ -1163,6 +1173,9 @@
 		for(var/i in custom_materials)
 			var/datum/material/custom_material = getmaterialref(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
+
+	if(!length(materials))
+		return
 
 	custom_materials = list() //Reset the list
 
