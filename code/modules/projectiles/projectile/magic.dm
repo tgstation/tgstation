@@ -23,10 +23,6 @@
 			if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
 				if(L.hellbound && L.stat == DEAD)
 					return BULLET_ACT_BLOCK
-				if(iscarbon(L))
-					var/mob/living/carbon/C = L
-					C.regenerate_limbs()
-					C.regenerate_organs()
 				if(L.revive(full_heal = 1))
 					L.grab_ghost(force = TRUE) // even suicides
 					to_chat(L, "<span class='notice'>You rise with a start, you're undead!!!</span>")
@@ -55,10 +51,6 @@
 		else
 			if(target.hellbound && target.stat == DEAD)
 				return BULLET_ACT_BLOCK
-			if(iscarbon(target))
-				var/mob/living/carbon/C = target
-				C.regenerate_limbs()
-				C.regenerate_organs()
 			if(target.revive(full_heal = 1))
 				target.grab_ghost(force = TRUE) // even suicides
 				to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
