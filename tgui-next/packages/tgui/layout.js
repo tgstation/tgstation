@@ -57,7 +57,7 @@ export class Layout extends Component {
               return;
             }
             // Bring focus back to the window on every click
-            this.contentRef.current.focus();
+            // this.contentRef.current.focus();
           }}
           onKeyPress={e => {
             // Abort this code path on IE8

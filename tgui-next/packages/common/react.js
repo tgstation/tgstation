@@ -72,3 +72,12 @@ export const pureComponentHooks = {
     return shallowDiffers(lastProps, nextProps);
   },
 };
+
+/**
+ * A helper to determine whether to render an item.
+ */
+export const isFalsy = value => {
+  return value === undefined
+    || value === null
+    || value === false;
+};
