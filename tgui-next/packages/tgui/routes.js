@@ -22,6 +22,7 @@ import { KitchenSink } from './interfaces/KitchenSink';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { Wires } from './interfaces/Wires';
 import { Mint } from './interfaces/Mint';
+import { VaultController} from './interfaces/VaultController';
 
 const ROUTES = {
   airalarm: {
@@ -114,6 +115,10 @@ const ROUTES = {
   },
   mint: {
     component: () => Mint,
+    scrollable: false,
+  },
+  vault_controller: {
+    component: () => VaultController,
     scrollable: false,
   },
 };
