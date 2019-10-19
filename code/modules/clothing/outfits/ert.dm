@@ -202,9 +202,11 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/melee/classic_baton
 	suit_store = /obj/item/gun/ballistic/rifle/boltaction
+	back = /obj/item/storage/backpack/satchel
 	l_pocket = /obj/item/ammo_box/a762
 	r_pocket = /obj/item/ammo_box/a762
 	id = /obj/item/card/id/centcom
+	backpack_contents = list(/obj/item/storage/box/survival = 1)
 
 /datum/outfit/centcom_intern/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
