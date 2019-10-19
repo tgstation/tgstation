@@ -21,11 +21,12 @@
 					/obj/item/reagent_containers/food/drinks/bottle/gin = 5,
 		            /obj/item/reagent_containers/food/drinks/bottle/whiskey = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/tequila = 5,
-					/obj/item/reagent_containers/food/drinks/bottle/vodka = 5,
+					/obj/item/reagent_containers/food/drinks/bottle/vodka = 3,
 					/obj/item/reagent_containers/food/drinks/bottle/vermouth = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/rum = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/wine = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/cognac = 5,
+					/obj/item/reagent_containers/food/drinks/bottle/fernet = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/kahlua = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/hcider = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
@@ -33,7 +34,7 @@
 					/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/applejack = 5)
 	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12,
-					 /obj/item/reagent_containers/food/drinks/bottle/fernet = 5)
+					/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 2)
 	premium = list(/obj/item/reagent_containers/glass/bottle/ethanol = 4,
 				   /obj/item/reagent_containers/food/drinks/bottle/champagne = 5,
 				   /obj/item/reagent_containers/food/drinks/bottle/trappist = 5)
