@@ -527,6 +527,10 @@
 	environment_type = "snow_cavern"
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 
+/turf/closed/mineral/snowmountain/cavern/icemoon
+	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
+	turf_type = /turf/open/floor/plating/asteroid/snow/ice/icemoon
+
 //GIBTONITE
 
 /turf/closed/mineral/gibtonite

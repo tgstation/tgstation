@@ -393,6 +393,11 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+
+/turf/open/floor/plating/asteroid/snow/ice/icemoon
+	initial_gas_mix = FROZEN_ATMOS
+	planetary_atmos = TRUE
+
 /turf/open/floor/plating/asteroid/snow/ice/burn_tile()
 	return FALSE
 

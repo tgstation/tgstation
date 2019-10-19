@@ -2,6 +2,7 @@
 
 /datum/map_template/ruin/icemoon
 	prefix = "_maps/RandomRuins/IceRuins/"
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/icemoon/seed_vault
 	name = "Seed Vault"
@@ -10,7 +11,6 @@
 	However, all the inhabitants seem to do is grow drugs and guns."
 	suffix = "icemoon_surface_seed_vault.dmm"
 	cost = 10
-	allow_duplicates = FALSE
 
 /datum/map_template/ruin/icemoon/ufo_crash
 	name = "UFO Crash"
@@ -26,5 +26,12 @@
 	name = "Survival Capsule Ruins"
 	id = "survivalcapsule"
 	description = "What was once sanctuary to the common miner, is now their tomb."
-	suffix = "icemoon_surface_survivalpod.dmm"
+	suffix = "icemoon_underground_survivalpod.dmm"
+	cost = 5
+
+/datum/map_template/ruin/icemoon/underground/abandonedvillage
+	name = "Abandoned Village"
+	id = "abandonedvillage"
+	description = "Who knows what lies within?"
+	suffix = "icemoon_underground_abandoned_village.dmm"
 	cost = 5

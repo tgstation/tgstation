@@ -19,11 +19,11 @@
 	},
 /obj/structure/fluff/fokoff_sign,
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/underground/unexplored)
+/area/icemoon/underground/explored)
 "bY" = (
 /obj/structure/flora/stump,
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/underground/unexplored)
+/area/icemoon/underground/explored)
 "cj" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/fishandchips,
@@ -38,10 +38,6 @@
 /obj/structure/barricade/wooden/crude/snow,
 /turf/open/floor/wood,
 /area/ruin/powered)
-"fa" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/asteroid/snow,
-/area/icemoon/underground/unexplored)
 "fD" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/blood/bubblegum,
@@ -89,7 +85,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/underground/unexplored)
+/area/icemoon/underground/explored)
 "kl" = (
 /obj/structure/sign/poster/official/nanotrasen_logo,
 /turf/closed/wall,
@@ -100,11 +96,11 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/icemoon/underground/explored)
 "la" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/mob_spawn/human/corpse/assistant,
 /mob/living/simple_animal/hostile/skeleton/eskimo{
 	name = "Village Hunter"
 	},
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/mob_spawn/human/corpse/assistant,
 /turf/open/floor/plating/asteroid/snow,
 /area/icemoon/underground/explored)
 "lg" = (
@@ -127,12 +123,12 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/icemoon/underground/explored)
 "mi" = (
+/obj/effect/decal/remains/human,
 /mob/living/simple_animal/hostile/construct/armored/hostile{
 	health = 450;
 	maxHealth = 450;
 	name = "Right Hand of the Elder"
 	},
-/obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "mI" = (
@@ -145,7 +141,7 @@
 /area/icemoon/underground/explored)
 "nR" = (
 /obj/structure/chair/sofa/left,
-/turf/closed/mineral/snowmountain/cavern,
+/turf/closed/mineral/snowmountain/cavern/icemoon,
 /area/icemoon/underground/explored)
 "oB" = (
 /obj/structure/table/wood,
@@ -157,20 +153,14 @@
 "oF" = (
 /obj/structure/flora/rock/icy,
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/underground/unexplored)
+/area/icemoon/underground/explored)
 "pc" = (
-/turf/open/floor/plating/asteroid/snow/ice,
-/area/icemoon/underground/unexplored)
-"ph" = (
-/turf/open/water,
+/turf/open/floor/plating/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored)
 "pj" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/plating/asteroid/snow,
 /area/icemoon/underground/explored)
-"po" = (
-/turf/open/floor/plating/asteroid/snow,
-/area/icemoon/underground/unexplored)
 "pH" = (
 /obj/structure/sign/poster/official/work_for_a_future,
 /turf/closed/wall/mineral/wood,
@@ -221,9 +211,6 @@
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/icemoon/underground/explored)
-"tq" = (
-/turf/open/floor/plating/asteroid/snow/ice,
-/area/icemoon/underground/explored)
 "tt" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/freezer,
@@ -239,8 +226,8 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/icemoon/underground/explored)
 "tN" = (
-/turf/closed/mineral/snowmountain/cavern,
-/area/icemoon/underground/unexplored)
+/turf/closed/mineral/random/snow,
+/area/icemoon/underground/explored)
 "tX" = (
 /obj/structure/table/wood,
 /obj/structure/bedsheetbin,
@@ -362,22 +349,18 @@
 /turf/open/floor/wood,
 /area/ruin/powered)
 "Ei" = (
-/turf/closed/mineral/snowmountain/cavern,
+/turf/closed/mineral/snowmountain/cavern/icemoon,
 /area/icemoon/underground/explored)
 "EF" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
+/obj/effect/decal/remains/human,
 /mob/living/simple_animal/hostile/construct/armored/hostile{
 	health = 450;
 	maxHealth = 450;
 	name = "Left Hand of the Elder"
 	},
-/obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
-"FL" = (
-/obj/structure/flora/rock/pile/icy,
-/turf/open/floor/plating/asteroid/snow,
-/area/icemoon/underground/unexplored)
 "FR" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating/snowed/smoothed,
@@ -395,7 +378,6 @@
 /area/ruin/powered)
 "Gy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance,
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/plating,
 /area/ruin/powered)
@@ -442,15 +424,12 @@
 "Kd" = (
 /obj/structure/flora/grass/green,
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/underground/unexplored)
+/area/icemoon/underground/explored)
 "LZ" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
 /turf/open/floor/wood,
 /area/ruin/powered)
-"MH" = (
-/turf/open/floor/plating/ice,
-/area/icemoon/underground/unexplored)
 "Nq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -502,6 +481,7 @@
 	},
 /obj/item/bodypart/chest,
 /obj/item/organ/heart,
+/obj/item/multitool,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered)
 "Qt" = (
@@ -520,11 +500,7 @@
 "Rv" = (
 /obj/structure/flora/grass/both,
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/underground/unexplored)
-"RN" = (
-/obj/structure/flora/grass/brown,
-/turf/open/floor/plating/asteroid/snow,
-/area/icemoon/underground/unexplored)
+/area/icemoon/underground/explored)
 "Si" = (
 /obj/structure/mirror,
 /turf/closed/wall/mineral/wood,
@@ -576,10 +552,6 @@
 "Ze" = (
 /turf/closed/wall,
 /area/icemoon/underground/explored)
-"Zj" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/plating/asteroid/snow,
-/area/icemoon/underground/unexplored)
 "Zx" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -602,12 +574,12 @@ tN
 tN
 tN
 tN
-po
-po
-po
-po
-po
-po
+Og
+Og
+Og
+Og
+Og
+Og
 oF
 tN
 tN
@@ -631,24 +603,24 @@ tN
 tN
 tN
 pc
-po
-po
+Og
+Og
 bR
-po
-po
-po
+Og
+Og
+Og
 jP
-po
-po
-po
+Og
+Og
+Og
 Rv
-po
-po
-po
-po
-po
-po
-po
+Og
+Og
+Og
+Og
+Og
+Og
+Og
 tN
 tN
 tN
@@ -659,27 +631,27 @@ tN
 tN
 tN
 tN
-MH
+xc
 pc
-po
-po
+Og
+Og
 aZ
-FL
+pI
 iB
-po
+Og
 kl
-po
-po
-po
-po
-po
-po
-FL
-po
-po
-po
-po
-po
+Og
+Og
+Og
+Og
+Og
+Og
+pI
+Og
+Og
+Og
+Og
+Og
 bY
 tN
 tN
@@ -690,8 +662,8 @@ tN
 tN
 tN
 pc
-po
-po
+Og
+Og
 Ei
 Ze
 iB
@@ -706,11 +678,11 @@ Ei
 Ei
 Ei
 Ei
-fa
+Tc
 pc
 pc
-po
-po
+Og
+Og
 pc
 tN
 tN
@@ -718,9 +690,9 @@ tN
 (5,1,1) = {"
 tN
 tN
-po
-po
-po
+Og
+Og
+Og
 Rv
 Ei
 Ei
@@ -740,16 +712,16 @@ Ei
 Ei
 Ei
 pc
-po
-po
-po
-po
+Og
+Og
+Og
+Og
 "}
 (6,1,1) = {"
 tN
-FL
-po
-po
+pI
+Og
+Og
 bY
 Ei
 Ei
@@ -770,16 +742,16 @@ QR
 wQ
 Ei
 Ei
-po
+Og
 Rv
-po
-po
+Og
+Og
 "}
 (7,1,1) = {"
 tN
-po
+Og
 oF
-po
+Og
 Ei
 Ei
 Vn
@@ -801,15 +773,15 @@ wQ
 Ei
 Ei
 oF
-po
-po
+Og
+Og
 tN
 "}
 (8,1,1) = {"
-po
-po
-po
-po
+Og
+Og
+Og
+Og
 Ei
 Ei
 Vn
@@ -831,14 +803,14 @@ QR
 lg
 Ei
 Ei
-po
-po
+Og
+Og
 tN
 "}
 (9,1,1) = {"
-po
-po
-po
+Og
+Og
+Og
 Ei
 Ei
 la
@@ -861,13 +833,13 @@ QR
 Og
 Ei
 Ei
-po
-po
+Og
+Og
 tN
 "}
 (10,1,1) = {"
 tN
-po
+Og
 Kd
 Ei
 Ei
@@ -891,13 +863,13 @@ Og
 Tc
 Ei
 Ei
-po
-po
+Og
+Og
 tN
 "}
 (11,1,1) = {"
 tN
-po
+Og
 pc
 Ei
 Ei
@@ -921,13 +893,13 @@ Bq
 Og
 Ei
 Ei
-po
-po
-po
+Og
+Og
+Og
 "}
 (12,1,1) = {"
 tN
-po
+Og
 pc
 Ei
 Ei
@@ -952,12 +924,12 @@ Og
 Ei
 Ei
 Ei
-po
-po
+Og
+Og
 "}
 (13,1,1) = {"
 tN
-po
+Og
 pc
 Ei
 Ei
@@ -982,12 +954,12 @@ Vn
 Ei
 Ei
 Ei
-FL
-po
+pI
+Og
 "}
 (14,1,1) = {"
 tN
-po
+Og
 Ei
 Ei
 Ei
@@ -1012,12 +984,12 @@ Vn
 Ei
 Ei
 Ei
-po
-po
+Og
+Og
 "}
 (15,1,1) = {"
 tN
-po
+Og
 Ei
 Vn
 Vn
@@ -1042,12 +1014,12 @@ Vn
 Ei
 Ei
 bY
-po
+Og
 pc
 "}
 (16,1,1) = {"
 tN
-po
+Og
 Ei
 Vn
 EF
@@ -1071,13 +1043,13 @@ Vn
 Vn
 Ei
 Ei
-po
-po
+Og
+Og
 tN
 "}
 (17,1,1) = {"
 tN
-po
+Og
 Ei
 Vn
 Cl
@@ -1101,13 +1073,13 @@ sG
 Vn
 Ei
 Ei
-po
-po
+Og
+Og
 tN
 "}
 (18,1,1) = {"
 tN
-po
+Og
 Ei
 Vn
 mi
@@ -1131,13 +1103,13 @@ Vn
 Vn
 Ei
 Ei
-po
-po
+Og
+Og
 tN
 "}
 (19,1,1) = {"
 tN
-po
+Og
 Ei
 Vn
 Vn
@@ -1150,7 +1122,7 @@ Vn
 Og
 Og
 Og
-tq
+pc
 Dm
 Og
 Og
@@ -1161,13 +1133,13 @@ Og
 Bq
 Ei
 Ei
-po
-RN
+Og
+Dm
 tN
 "}
 (20,1,1) = {"
 tN
-po
+Og
 Ei
 Ei
 Ei
@@ -1179,10 +1151,10 @@ jk
 Vn
 TW
 Og
-tq
+pc
 xc
-tq
-tq
+pc
+pc
 Og
 Og
 Og
@@ -1191,15 +1163,15 @@ Og
 Og
 Ei
 Ei
-po
-po
+Og
+Og
 tN
 "}
 (21,1,1) = {"
 tN
-po
-po
-Zj
+Og
+Og
+pj
 Ei
 Ei
 Vn
@@ -1209,11 +1181,11 @@ Vn
 Vn
 Og
 Dm
-tq
+pc
 xc
 xc
 xc
-tq
+pc
 pj
 Og
 Og
@@ -1221,15 +1193,15 @@ DM
 Ei
 Ei
 Ei
-po
-po
+Og
+Og
 tN
 "}
 (22,1,1) = {"
 tN
 bY
-po
-po
+Og
+Og
 Ei
 Ei
 Ei
@@ -1238,40 +1210,40 @@ Bq
 Og
 Og
 Og
-tq
+pc
 xc
 hI
 Zx
 xc
 xc
-tq
-tq
+pc
+pc
 Og
 Ei
 Ei
 Ei
 bY
-po
-po
+Og
+Og
 tN
 "}
 (23,1,1) = {"
 tN
 tN
-FL
-po
-po
+pI
+Og
+Og
 Ei
 Ei
 Ei
 Ei
 DM
 Tc
-tq
-tq
+pc
+pc
 xc
 xc
-ph
+xc
 xc
 xc
 xc
@@ -1279,10 +1251,10 @@ Ei
 Ei
 Ei
 Ei
-po
-po
-po
-po
+Og
+Og
+Og
+Og
 tN
 "}
 (24,1,1) = {"
@@ -1290,9 +1262,9 @@ tN
 tN
 tN
 pc
-po
-po
-po
+Og
+Og
+Og
 Ei
 Ei
 Ei
@@ -1308,21 +1280,21 @@ Ei
 Ei
 Ei
 Ei
-FL
+pI
 oF
-po
-po
-po
+Og
+Og
+Og
 tN
 "}
 (25,1,1) = {"
 tN
 tN
 tN
-MH
+xc
 pc
 pc
-po
+Og
 Ei
 Ei
 Ei
@@ -1337,23 +1309,23 @@ Ei
 Ei
 Ei
 Ei
-po
-po
-po
-po
-po
-po
+Og
+Og
+Og
+Og
+Og
+Og
 tN
 "}
 (26,1,1) = {"
 tN
 tN
 tN
-MH
+xc
 pc
 oF
-po
-FL
+Og
+pI
 Ei
 Ei
 Ei
@@ -1366,13 +1338,13 @@ Ei
 Ei
 Ei
 pc
-po
-po
-po
+Og
+Og
+Og
 pc
 tN
-po
-po
+Og
+Og
 tN
 "}
 (27,1,1) = {"
@@ -1382,27 +1354,27 @@ tN
 tN
 tN
 tN
-po
-po
-po
-po
-po
-po
-po
-FL
+Og
+Og
+Og
+Og
+Og
+Og
+Og
+pI
 oF
-po
-po
-po
-po
-po
+Og
+Og
+Og
+Og
+Og
 bY
-fa
+Tc
 pc
 tN
 tN
-FL
-po
+pI
+Og
 tN
 "}
 (28,1,1) = {"
@@ -1412,8 +1384,8 @@ tN
 tN
 tN
 tN
-po
-po
+Og
+Og
 tN
 tN
 tN
@@ -1425,13 +1397,13 @@ tN
 tN
 tN
 tN
-po
-po
+Og
+Og
 tN
 tN
 tN
 tN
-po
-po
+Og
+Og
 tN
 "}

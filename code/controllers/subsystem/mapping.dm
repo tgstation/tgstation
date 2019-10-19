@@ -98,7 +98,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ice_ruins_underground = levels_by_trait(ZTRAIT_ICE_RUINS_UNDERGROUND)
 	if (ice_ruins_underground.len)
-		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), /area/icemoon/underground, ice_ruins_underground_templates)
+		seedRuins(ice_ruins_underground, CONFIG_GET(number/icemoon_budget), /area/icemoon/underground/unexplored, ice_ruins_underground_templates)
 		for (var/ice_z in ice_ruins_underground)
 			spawn_rivers(ice_z, 4, /turf/open/lava/plasma/ice_moon, /area/icemoon/underground)
 
