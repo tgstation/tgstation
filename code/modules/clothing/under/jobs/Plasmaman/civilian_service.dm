@@ -4,12 +4,23 @@
 	icon_state = "cargo_envirosuit"
 	item_state = "cargo_envirosuit"
 
+/obj/item/clothing/under/plasmaman/cargo/skirt
+	name = "cargo plasma enviroskirt"
+	desc = "A joint enviroskirt used by plasmamen quartermasters and cargo techs alike, due to the logistical problems of differenciating the two with the length of their pant legs."
+	icon_state = "cargo_envirosuit"
+	item_state = "cargo_enviroskirt"
+
 /obj/item/clothing/under/plasmaman/mining
 	name = "mining plasma envirosuit"
 	desc = "An air-tight khaki suit designed for operations on lavaland by plasmamen."
 	icon_state = "explorer_envirosuit"
 	item_state = "explorer_envirosuit"
 
+/obj/item/clothing/under/plasmaman/mining/skirt
+	name = "mining plasma enviroskirt"
+	desc = "An air-tight khaki suit designed for operations on lavaland by plasmamen."
+	icon_state = "explorer_envirosuit"
+	item_state = "explorer_enviroskirt"
 
 /obj/item/clothing/under/plasmaman/chef
 	name = "chef's plasma envirosuit"
@@ -17,17 +28,35 @@
 	icon_state = "chef_envirosuit"
 	item_state = "chef_envirosuit"
 
+/obj/item/clothing/under/plasmaman/chef/skirt
+	name = "chef's plasma enviroskirt"
+	desc = "A white plasmaman enviroskirt designed for cullinary practices. One might question why a member of a species that doesn't need to eat would become a chef."
+	icon_state = "chef_envirosuit"
+	item_state = "chef_enviroskirt"
+
 /obj/item/clothing/under/plasmaman/enviroslacks
 	name = "enviroslacks"
 	desc = "The pet project of a particularly posh plasmaman, this custom suit was quickly appropriated by Nano-Trasen for it's detectives, lawyers, and bar-tenders alike."
 	icon_state = "enviroslacks"
 	item_state = "enviroslacks"
 
+/obj/item/clothing/under/plasmaman/enviroslacks/skirt
+	name = "enviroslacks"
+	desc = "The pet project of a particularly posh plasmaman, this custom suit was quickly appropriated by Nano-Trasen for it's detectives, lawyers, and bar-tenders alike."
+	icon_state = "enviroslacks"
+	item_state = "enviroskirts"
+
 /obj/item/clothing/under/plasmaman/chaplain
 	name = "chaplain's plasma envirosuit"
 	desc = "An envirosuit specially designed for only the most pious of plasmamen."
 	icon_state = "chap_envirosuit"
 	item_state = "chap_envirosuit"
+
+/obj/item/clothing/under/plasmaman/chaplain/skirt
+	name = "chaplain's plasma enviroskirt"
+	desc = "An enviroskirt specially designed for only the most pious of plasmamen."
+	icon_state = "chap_envirosuit"
+	item_state = "chap_enviroskirt"
 
 /obj/item/clothing/under/plasmaman/curator
 	name = "curator's plasma envirosuit"
@@ -41,18 +70,35 @@
 	icon_state = "janitor_envirosuit"
 	item_state = "janitor_envirosuit"
 
+/obj/item/clothing/under/plasmaman/janitor/skirt
+	name = "janitor's plasma enviroskirt"
+	desc = "A grey and purple enviroskirt designated for plasmamen janitors."
+	icon_state = "janitor_envirosuit"
+	item_state = "janitor_enviroskirt"
+
 /obj/item/clothing/under/plasmaman/botany
 	name = "botany envirosuit"
 	desc = "A green and blue envirosuit designed to protect plasmamen from minor plant-related injuries."
 	icon_state = "botany_envirosuit"
 	item_state = "botany_envirosuit"
 
+/obj/item/clothing/under/plasmaman/botany/skirt
+	name = "botany enviroskirt"
+	desc = "A green and blue enviroskirt designed to protect plasmamen from minor plant-related injuries."
+	icon_state = "botany_envirosuit"
+	item_state = "botany_enviroskirt"
 
 /obj/item/clothing/under/plasmaman/mime
 	name = "mime envirosuit"
 	desc = "It's not very colourful."
 	icon_state = "mime_envirosuit"
 	item_state = "mime_envirosuit"
+
+/obj/item/clothing/under/plasmaman/mime/skirt
+	name = "mime enviroskirt"
+	desc = "It's not very colourful."
+	icon_state = "mime_envirosuit"
+	item_state = "mime_enviroskirt"
 
 /obj/item/clothing/under/plasmaman/clown
 	name = "clown envirosuit"
@@ -72,5 +118,5 @@
 			extinguishes_left--
 			H.visible_message("<span class='warning'>[H]'s suit spews out a tonne of space lube!</span>","<span class='warning'>Your suit spews out a tonne of space lube!</span>")
 			H.ExtinguishMob()
-			new /obj/effect/particle_effect/foam(loc) //Truely terrifying.
+			new /obj/effect/particle_effect/foam(loc) //Truly terrifying.
 	return 0

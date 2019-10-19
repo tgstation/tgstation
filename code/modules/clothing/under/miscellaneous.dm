@@ -130,6 +130,13 @@
 		return
 	return
 
+/obj/item/clothing/under/plasmaman/skirt
+	name = "plasma enviroskirt"
+	desc = "A special containment skirtsuit that allows plasma-based lifeforms to exist safely in an oxygenated environment, and automatically extinguishes them in a crisis. Despite being airtight, it's not spaceworthy. This one has plastic tubing 'stockings'."
+	icon_state = "plasmamanskirt"
+	item_state = "plasmamanskirt"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
+
 /obj/item/extinguisher_refill
 	name = "envirosuit extinguisher cartridge"
 	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
@@ -143,3 +150,10 @@
 	item_state = "durathread"
 	can_adjust = FALSE
 	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)
+
+/obj/item/clothing/under/misc/durathread/skirt
+	name = "durathread jumpskirt"
+	desc = "A jumpskirt made from durathread, its resilient fibres provide some protection to the wearer."
+	icon_state = "durathreadskirt"
+	item_state = "durathreadskirt"
+	armor = list("melee" = 9, "laser" = 9, "fire" = 39, "acid" = 9, "bomb" = 4)

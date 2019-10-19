@@ -57,69 +57,140 @@
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/current_job = J.title
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
-	switch(current_job)
-		if("Chaplain")
-			O = new /datum/outfit/plasmaman/chaplain
+	var/skirt_or_no_skirt = H.jumpsuit_style
+	if(skirt_or_no_skirt == PREF_SUIT)
+		switch(current_job)
+			if("Chaplain")
+				O = new /datum/outfit/plasmaman/chaplain
 
-		if("Curator")
-			O = new /datum/outfit/plasmaman/curator
+			if("Curator")
+				O = new /datum/outfit/plasmaman/curator
 
-		if("Janitor")
-			O = new /datum/outfit/plasmaman/janitor
+			if("Janitor")
+				O = new /datum/outfit/plasmaman/janitor
 
-		if("Botanist")
-			O = new /datum/outfit/plasmaman/botany
+			if("Botanist")
+				O = new /datum/outfit/plasmaman/botany
 
-		if("Bartender", "Lawyer")
-			O = new /datum/outfit/plasmaman/bar
+			if("Bartender", "Lawyer")
+				O = new /datum/outfit/plasmaman/bar
 
-		if("Cook")
-			O = new /datum/outfit/plasmaman/chef
+			if("Cook")
+				O = new /datum/outfit/plasmaman/chef
 
-		if("Security Officer")
-			O = new /datum/outfit/plasmaman/security
+			if("Security Officer")
+				O = new /datum/outfit/plasmaman/security
 
-		if("Detective")
-			O = new /datum/outfit/plasmaman/detective
+			if("Detective")
+				O = new /datum/outfit/plasmaman/detective
 
-		if("Warden")
-			O = new /datum/outfit/plasmaman/warden
+			if("Warden")
+				O = new /datum/outfit/plasmaman/warden
 
-		if("Cargo Technician", "Quartermaster")
-			O = new /datum/outfit/plasmaman/cargo
+			if("Cargo Technician", "Quartermaster")
+				O = new /datum/outfit/plasmaman/cargo
 
-		if("Shaft Miner")
-			O = new /datum/outfit/plasmaman/mining
+			if("Shaft Miner")
+				O = new /datum/outfit/plasmaman/mining
 
-		if("Medical Doctor")
-			O = new /datum/outfit/plasmaman/medical
+			if("Medical Doctor")
+				O = new /datum/outfit/plasmaman/medical
 
-		if("Chemist")
-			O = new /datum/outfit/plasmaman/chemist
+			if("Chemist")
+				O = new /datum/outfit/plasmaman/chemist
 
-		if("Geneticist")
-			O = new /datum/outfit/plasmaman/genetics
+			if("Geneticist")
+				O = new /datum/outfit/plasmaman/genetics
 
-		if("Roboticist")
-			O = new /datum/outfit/plasmaman/robotics
+			if("Roboticist")
+				O = new /datum/outfit/plasmaman/robotics
 
-		if("Virologist")
-			O = new /datum/outfit/plasmaman/viro
+			if("Virologist")
+				O = new /datum/outfit/plasmaman/viro
 
-		if("Scientist")
-			O = new /datum/outfit/plasmaman/science
+			if("Scientist")
+				O = new /datum/outfit/plasmaman/science
 
-		if("Station Engineer")
-			O = new /datum/outfit/plasmaman/engineering
+			if("Station Engineer")
+				O = new /datum/outfit/plasmaman/engineering
 
-		if("Atmospheric Technician")
-			O = new /datum/outfit/plasmaman/atmospherics
+			if("Atmospheric Technician")
+				O = new /datum/outfit/plasmaman/atmospherics
 
-		if("Mime")
-			O = new /datum/outfit/plasmaman/mime
+			if("Mime")
+				O = new /datum/outfit/plasmaman/mime
 
-		if("Clown")
-			O = new /datum/outfit/plasmaman/clown
+			if("Clown")
+				O = new /datum/outfit/plasmaman/clown
+	
+	else if(skirt_or_no_skirt == PREF_SKIRT)
+		switch(current_job)
+
+			if("Assistant")
+				O = new /datum/outfit/plasmaman/skirt
+
+			if("Chaplain")
+				O = new /datum/outfit/plasmaman/chaplain/skirt
+
+			if("Curator")
+				O = new /datum/outfit/plasmaman/curator //no skirts for you
+
+			if("Janitor")
+				O = new /datum/outfit/plasmaman/janitor/skirt
+
+			if("Botanist")
+				O = new /datum/outfit/plasmaman/botany/skirt
+
+			if("Bartender", "Lawyer")
+				O = new /datum/outfit/plasmaman/bar/skirt
+
+			if("Cook")
+				O = new /datum/outfit/plasmaman/chef/skirt
+
+			if("Security Officer")
+				O = new /datum/outfit/plasmaman/security/skirt
+
+			if("Detective")
+				O = new /datum/outfit/plasmaman/detective/skirt
+
+			if("Warden")
+				O = new /datum/outfit/plasmaman/warden/skirt
+
+			if("Cargo Technician", "Quartermaster")
+				O = new /datum/outfit/plasmaman/cargo/skirt
+
+			if("Shaft Miner")
+				O = new /datum/outfit/plasmaman/mining/skirt
+
+			if("Medical Doctor")
+				O = new /datum/outfit/plasmaman/medical/skirt
+
+			if("Chemist")
+				O = new /datum/outfit/plasmaman/chemist/skirt
+
+			if("Geneticist")
+				O = new /datum/outfit/plasmaman/genetics/skirt
+
+			if("Roboticist")
+				O = new /datum/outfit/plasmaman/robotics/skirt
+
+			if("Virologist")
+				O = new /datum/outfit/plasmaman/viro/skirt
+
+			if("Scientist")
+				O = new /datum/outfit/plasmaman/science/skirt
+
+			if("Station Engineer")
+				O = new /datum/outfit/plasmaman/engineering/skirt
+
+			if("Atmospheric Technician")
+				O = new /datum/outfit/plasmaman/atmospherics/skirt
+
+			if("Mime")
+				O = new /datum/outfit/plasmaman/mime/skirt
+
+			if("Clown")
+				O = new /datum/outfit/plasmaman/clown //no clown skirts. never
 
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)

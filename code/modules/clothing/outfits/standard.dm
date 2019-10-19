@@ -362,6 +362,14 @@
 	r_hand= /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
+/datum/outfit/plasmaman/skirt
+	name = "Plasmaman With Skirt"
+
+	head = /obj/item/clothing/head/helmet/space/plasmaman
+	uniform = /obj/item/clothing/under/plasmaman/skirt
+	r_hand= /obj/item/tank/internals/plasmaman/belt/full
+	mask = /obj/item/clothing/mask/breath
+
 /datum/outfit/death_commando
 	name = "Death Commando"
 
