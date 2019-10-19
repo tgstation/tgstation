@@ -72,6 +72,10 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /datum/action/innate/elite_attack/Activate()
 	M.chosen_attack = chosen_attack_num
 	to_chat(M, chosen_message)
+	
+/mob/living/simple_animal/hostile/asteroid/elite/updatehealth()
+	. = ..()
+	update_health_hud()
 		
 /mob/living/simple_animal/hostile/asteroid/elite/update_health_hud()
 	if(hud_used)
@@ -106,7 +110,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		else
 			clear_fullscreen("brute")
 
-//The Glowing Tumor, the actual "spawn-point" of elites, handles the spawning, arena, and procs for dealing with basic scenarios.
+//The Pulsing Tumor, the actual "spawn-point" of elites, handles the spawning, arena, and procs for dealing with basic scenarios.
 
 /obj/structure/elite_tumor
 	name = "pulsing tumor"
@@ -202,7 +206,6 @@ obj/structure/elite_tumor/proc/return_elite()
 				mychild.adjustHealth(-mychild.maxHealth*0.05)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
 				H.color = "#FF0000"
-				mychild.update_health_hud()
 		
 /obj/structure/elite_tumor/attackby(obj/item/I, mob/user, params)
 	. = ..()
