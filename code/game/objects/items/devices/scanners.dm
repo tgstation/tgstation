@@ -293,7 +293,7 @@ GENE SCANNER
 					max_damage += ", "	//prelude the organ if we've already reported an organ
 					max_damage += organ.name	//this just slaps the organ name into the string of text
 				else
-					max_damage = "\t<span class='alert'>Non-Functional Organs: </span>"	//our initial statement
+					max_damage = "\t<span class='alert'>Non-Functional Organs: "	//our initial statement
 					max_damage += organ.name
 			else if(organ.damage > organ.high_threshold)
 				report_organs = TRUE

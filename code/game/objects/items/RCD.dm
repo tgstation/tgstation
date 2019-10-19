@@ -134,7 +134,7 @@ RLD
 	else
 		if(silo_mats.on_hold())
 			if(user)
-				to_chat(user, "<span class='alert'>Mineral access is on hold, please contact the Quartermaster.</span>")
+				to_chat(user, "<span class='alert'>Mineral access is on hold, please contact the quartermaster.</span>")
 			return FALSE
 		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount))
 			if(user)
@@ -151,7 +151,7 @@ RLD
 	else
 		if(silo_mats.on_hold())
 			if(user)
-				to_chat(user, "<span class='alert'>Mineral access is on hold, please contact the Quartermaster.</span>")
+				to_chat(user, "<span class='alert'>Mineral access is on hold, please contact the quartermaster.</span>")
 			return FALSE
 		. = silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount)
 	if(!. && user)
@@ -854,10 +854,10 @@ RLD
 	///index, used in the attack self to get the type. stored here since it doesnt change
 	var/list/choices = list()
 	///index, used in the attack self to get the type. stored here since it doesnt change
-	var/list/name_to_type = list() 
+	var/list/name_to_type = list()
 	///
 	var/list/machinery_data = list("cost" = list(), "delay" = list())
-	
+
 /obj/item/construction/plumbing/attack_self(mob/user)
 	..()
 	if(!choices.len)
@@ -872,7 +872,7 @@ RLD
 	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
-	
+
 	blueprint = name_to_type[choice]
 	playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
 	to_chat(user, "<span class='notice'>You change [name]s blueprint to '[choice]'.</span>")
