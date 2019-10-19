@@ -58,6 +58,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	name = "Elite Attack"
 	icon_icon = 'icons/mob/actions/actions_elites.dmi'
 	button_icon_state = ""
+	background_icon_state = "bg_default"
 	var/mob/living/simple_animal/hostile/asteroid/elite/M
 	var/chosen_message
 	var/chosen_attack_num = 0
@@ -105,7 +106,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		else
 			clear_fullscreen("brute")
 
-//The Pulsing Tumor, the actual "spawn-point" of elites, handles the spawning, arena, and procs for dealing with basic scenarios.
+//The Glowing Tumor, the actual "spawn-point" of elites, handles the spawning, arena, and procs for dealing with basic scenarios.
 
 /obj/structure/elite_tumor
 	name = "pulsing tumor"
