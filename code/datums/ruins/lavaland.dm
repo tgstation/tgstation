@@ -223,13 +223,21 @@
 	suffix = "lavaland_surface_wizard.dmm"
 	cost = 5
 
+/datum/map_template/ruin/lavaland/strong_stone
+	name = "Strong Stone"
+	id = "strong_stone"
+	description = "A stone that seems particularly powerful."
+	suffix = "lavaland_strong_rock.dmm"
+	allow_duplicates = FALSE
+	cost = 2
+
 /datum/map_template/ruin/lavaland/puzzle
 	name = "Ancient Puzzle"
 	id = "puzzle"
 	description = "Mystery to be solved."
 	suffix = "lavaland_surface_puzzle.dmm"
 	cost = 5
-	
+  
 /datum/map_template/ruin/lavaland/elite_tumor
 	name = "Pulsating Tumor"
 	id = "tumor"

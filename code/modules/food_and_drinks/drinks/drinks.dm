@@ -444,7 +444,7 @@
 		crushed_can.icon_state = icon_state
 		qdel(src)
 		return TRUE
-	 . = ..()
+	. = ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/bullet_act(obj/projectile/P)
 	. = ..()
