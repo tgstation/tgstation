@@ -14,7 +14,7 @@
 	if("spypopup_map" in user.client.screen_maps) //alright, the popup this object uses is already IN use, so the window is open. no point in doing any other work here, so we're good. 
 		return 
 	user.client.setup_popup("spypopup",3,3,2)
-	var/list/buglist = list(linked_bug.cam_view)
+	var/list/buglist = list(linked_bug.cam_view,linked_bug.popupmaster)
 	user.client.add_objs_to_map(buglist)
 	linked_bug.update_view()
 
@@ -33,6 +33,7 @@
 	desc = "an advanced holographic projection in the shape of a pocket protector featuring technology similar to a chameleon projector. it has a built in 360 degree camera for all your nefarious needs. Simply hitting an object with it will cause it's projection to change. Microphone not included."
 	var/obj/item/clothing/glasses/regular/spy/linked_glasses
 	var/obj/screen/cam_view
+	var/obj/screen/plane_master/lighting/popupmaster 
 	var/cam_range = 1//ranges higher than one can be used to see through walls.
 	var/list/disallowed_clone_types = list(/obj/mecha) 
 
@@ -63,6 +64,13 @@
 	cam_view.del_on_map_removal = FALSE
 	cam_view.assigned_map = "spypopup_map"
 	cam_view.screen_info = list(1,1)
+
+	popupmaster = new
+	popupmaster.screen_loc = "spypopup_map:CENTER"//note that we don't use screen_info here, due to it being a non-standard placement.
+	popupmaster.assigned_map = "spypopup_map"
+	popupmaster.del_on_map_removal = FALSE //not stored on the client, but instead on the bug. there's no need to 
+	//we need to add a lighting planesmaster to the popup, otherwise blending fucks up massively. Any planesmaster on the main screen does NOT apply to map popups.
+	//if there's ever a way to make planesmasters omnipresent, then this wouldn't be needed.
 
 /obj/item/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
 	cam_view.vis_contents.Cut()
