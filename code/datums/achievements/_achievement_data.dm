@@ -15,9 +15,8 @@
 	AchievementIcons = list()
 	for (var/x in SSachievements.achievements)
 		var/list/SL = list()
-		SL["id"] = x.name
 		SL["htmltag"] = assets.icon_tag(x.icon)
-		AchievementIcons += list(SL)
+		AchievementIcons[x.initial(name)] += list(SL)
 
 ///Saves any out-of-date achievements to the hub.
 /datum/achievement_data/proc/save()
@@ -81,7 +80,7 @@
 		this["desc"] = SSachievements.achievements[achievement_type].desc
 		data["achievements"] += list(this)
 
-	//Made at init, always stays the same
+	//Made at init, always stays the same. Accesed as data.AchievementIcons[iconname]
 	data["achievementicons"] = AchievementIcons
 
 	return data
@@ -95,7 +94,6 @@
 	set name = "Check achievements"
 	set desc = "See all of your achievements!"
 
-	player_details.achievements.load_all()
 	player_details.achievements.ui_interact(usr)
 
 
