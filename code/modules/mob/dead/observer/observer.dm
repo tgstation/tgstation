@@ -171,7 +171,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
  * Hair will always update its dir, so if your sprite has no dirs the haircut will go all over the place.
  * |- Ricotez
  */
-/mob/dead/observer/proc/update_icon(new_form)
+/mob/dead/observer/update_icon(new_form)
+	. = ..()
+
 	if(client) //We update our preferences in case they changed right before update_icon was called.
 		ghost_accs = client.prefs.ghost_accs
 		ghost_others = client.prefs.ghost_others

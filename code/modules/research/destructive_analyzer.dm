@@ -62,7 +62,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/datum/component/material_container/storage = linked_console?.linked_lathe?.materials.mat_container
 	if(storage) //Also sends salvaged materials to a linked protolathe, if any.
 		for(var/material in thing.custom_materials)
-			var/can_insert = min((storage.max_amount - storage.total_amount), (max(thing.custom_materials[material]*(decon_mod/10), thing.custom_materials[material])))
+			var/can_insert = min((storage.max_amount - storage.total_amount), (min(thing.custom_materials[material]*(decon_mod/10), thing.custom_materials[material])))
 			storage.insert_amount_mat(can_insert, material)
 			. += can_insert
 		if (.)

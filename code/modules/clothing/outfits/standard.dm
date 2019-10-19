@@ -1,3 +1,34 @@
+/datum/outfit/spec_ops
+	name = "Special Ops Officer"
+
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/space/officer
+	shoes = /obj/item/clothing/shoes/combat/swat
+	gloves = /obj/item/clothing/gloves/combat
+	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	ears = /obj/item/radio/headset/headset_cent/commander
+	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	head = /obj/item/clothing/head/helmet/space/beret
+	belt = /obj/item/gun/energy/pulse/pistol/m1911
+	r_pocket = /obj/item/lighter
+	back = /obj/item/storage/backpack/satchel/leather
+	id = /obj/item/card/id/centcom
+
+/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/W = H.wear_id
+	W.access = get_all_accesses()
+	W.access += get_centcom_access("Special Ops Officer")
+	W.assignment = "Special Ops Officer"
+	W.registered_name = H.real_name
+	W.update_label()
+
+	var/obj/item/radio/headset/R = H.ears
+	R.set_frequency(FREQ_CENTCOM)
+	R.freqlock = TRUE
+
 /datum/outfit/space
 	name = "Standard Space Gear"
 
@@ -226,37 +257,6 @@
 	W.assignment = "CentCom Commander"
 	W.registered_name = H.real_name
 	W.update_label()
-
-/datum/outfit/spec_ops
-	name = "Special Ops Officer"
-
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/space/officer
-	shoes = /obj/item/clothing/shoes/combat/swat
-	gloves = /obj/item/clothing/gloves/combat
-	glasses = /obj/item/clothing/glasses/thermal/eyepatch
-	ears = /obj/item/radio/headset/headset_cent/commander
-	mask = /obj/item/clothing/mask/cigarette/cigar/havana
-	head = /obj/item/clothing/head/helmet/space/beret
-	belt = /obj/item/gun/energy/pulse/pistol/m1911
-	r_pocket = /obj/item/lighter
-	back = /obj/item/storage/backpack/satchel/leather
-	id = /obj/item/card/id/centcom
-
-/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-
-	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()
-	W.access += get_centcom_access("Special Ops Officer")
-	W.assignment = "Special Ops Officer"
-	W.registered_name = H.real_name
-	W.update_label()
-
-	var/obj/item/radio/headset/R = H.ears
-	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = TRUE
 
 /datum/outfit/ghost_cultist
 	name = "Cultist Ghost"

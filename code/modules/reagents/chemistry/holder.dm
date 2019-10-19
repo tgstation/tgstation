@@ -925,5 +925,5 @@
 /proc/get_chem_id(chem_name)
 	for(var/X in GLOB.chemical_reagents_list)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-		if(chem_name == replacetext(lowertext(R.name), " ", ""))
+		if(ckey(chem_name) == ckey(lowertext(R.name)))
 			return X

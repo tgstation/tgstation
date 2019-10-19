@@ -162,19 +162,36 @@
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
 	taste_description = "death"
+	var/fakedeath_active = FALSE
 
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
-	L.fakedeath(type)
+	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
 
 /datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
 	L.cure_fakedeath(type)
 	..()
 
-/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
-	M.adjustOxyLoss(0.5*REM, 0)
+/datum/reagent/toxin/zombiepowder/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
+	L.adjustOxyLoss(0.5*REM, 0)
+	if(method == INGEST)
+		fakedeath_active = TRUE
+		L.fakedeath(type)
+
+/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M)
 	..()
-	. = 1
+	if(fakedeath_active)
+		return TRUE
+	switch(current_cycle)
+		if(1 to 5)
+			M.confused += 1
+			M.drowsyness += 1
+			M.slurring += 3
+		if(5 to 8)
+			M.adjustStaminaLoss(40, 0)
+		if(9 to INFINITY)
+			fakedeath_active = TRUE
+			M.fakedeath(type)
 
 /datum/reagent/toxin/ghoulpowder
 	name = "Ghoul Powder"

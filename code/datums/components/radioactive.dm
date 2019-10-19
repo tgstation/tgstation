@@ -44,6 +44,7 @@
 		return
 	strength -= strength / hl3_release_date
 	if(strength <= RAD_BACKGROUND_RADIATION)
+		qdel(src)
 		return PROCESS_KILL
 
 /datum/component/radioactive/InheritComponent(datum/component/C, i_am_original, list/arguments)
