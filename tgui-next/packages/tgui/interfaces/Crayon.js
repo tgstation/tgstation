@@ -10,7 +10,7 @@ export const Crayon = props => {
   const drawables = data.drawables || [];
   return (
     <Fragment>
-      {capOrChanges && (
+      {!!capOrChanges && (
         <Section title="Basic">
           <LabeledList>
             <LabeledList.Item label="Cap">
