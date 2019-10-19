@@ -810,6 +810,7 @@
 	description = "Pure iron is a metal."
 	reagent_state = SOLID
 	taste_description = "iron"
+	material = /datum/material/iron
 
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
@@ -830,6 +831,7 @@
 	reagent_state = SOLID
 	color = "#F7C430" // rgb: 247, 196, 48
 	taste_description = "expensive metal"
+	material = /datum/material/gold
 
 /datum/reagent/silver
 	name = "Silver"
@@ -837,6 +839,7 @@
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
 	taste_description = "expensive yet reasonable metal"
+	material = /datum/material/silver
 
 /datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.has_bane(BANE_SILVER))
@@ -850,6 +853,7 @@
 	color = "#B8B8C0" // rgb: 184, 184, 192
 	taste_description = "the inside of a reactor"
 	var/irradiation_level = 1
+	material = /datum/material/uranium
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/M)
 	M.apply_effect(irradiation_level/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
@@ -877,6 +881,7 @@
 	reagent_state = SOLID
 	color = "#0000CC"
 	taste_description = "fizzling blue"
+	material = /datum/material/bluespace
 
 /datum/reagent/bluespace/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -907,6 +912,7 @@
 	reagent_state = SOLID
 	color = "#A8A8A8" // rgb: 168, 168, 168
 	taste_mult = 0
+	material = /datum/material/glass
 
 /datum/reagent/fuel
 	name = "Welding fuel"
@@ -1921,3 +1927,41 @@
 	color = "#9C5A19"
 	taste_description = "bananas"
 	can_synth = TRUE
+
+/datum/reagent/protonium
+	name = "Protonium"
+	description = "An extremely rare metallic-white substance only found on demon-class planets."
+	color = "#FFFFFF" // rgb: 128, 128, 128
+	taste_mult = 0 // oderless and tasteless
+
+/datum/reagent/metal_morphium
+	name = "Metal Morphium"
+	data = list("material"=null)
+	description = "A purple metal morphic liquid, said to impose it's metallic properties on whatever it touches."
+	color = "#b000aa" // rgb: 128, 128, 128
+	taste_mult = 0 // oderless and tasteless
+	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	var/minumum_material_amount = 100
+
+/datum/reagent/metal_morphium/reaction_obj(obj/O, volume)
+	metal_morph(O)
+	return
+
+/datum/reagent/metal_morphium/reaction_turf(turf/T, volume)
+	metal_morph(T)
+	return
+
+/datum/reagent/metal_morphium/proc/metal_morph(atom/A)
+	var/metal_dat = data["material"]
+	if(!metal_dat)
+		return
+	var/metal_amount = 0
+
+	for(var/B in A.custom_materials)
+		metal_amount += A.custom_materials[B]
+
+	if(!metal_amount)
+		metal_amount = minumum_material_amount
+
+	A.material_flags = applied_material_flags
+	A.set_custom_materials(list(getmaterialref(metal_dat) = metal_amount))
