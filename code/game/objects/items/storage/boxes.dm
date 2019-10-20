@@ -29,6 +29,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FLAMMABLE
+	drop_sound = 'sound/items/handling/cardboardbox_drop.ogg'
+	pickup_sound =  'sound/items/handling/cardboardbox_pickup.ogg'
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
 
@@ -654,6 +656,8 @@
 	item_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
+	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
+	pickup_sound =  'sound/items/handling/matchbox_pickup.ogg'
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
@@ -1127,7 +1131,7 @@
 	name = "box of materials"
 	illustration = "implant"
 
-/obj/item/storage/box/material/PopulateContents()
+/obj/item/storage/box/material/PopulateContents() 	//less uranium because radioactive
 	var/static/items_inside = list(
 		/obj/item/stack/sheet/metal/fifty=1,\
 		/obj/item/stack/sheet/glass/fifty=1,\
@@ -1140,8 +1144,8 @@
 		/obj/item/stack/sheet/mineral/titanium=50,\
 		/obj/item/stack/sheet/mineral/gold=50,\
 		/obj/item/stack/sheet/mineral/silver=50,\
-		/obj/item/stack/sheet/mineral/uranium=50,\
 		/obj/item/stack/sheet/mineral/plasma=50,\
+		/obj/item/stack/sheet/mineral/uranium=20,\
 		/obj/item/stack/sheet/mineral/diamond=50,\
 		/obj/item/stack/sheet/bluespace_crystal=50,\
 		/obj/item/stack/sheet/mineral/bananium=50,\
@@ -1158,6 +1162,7 @@
 /obj/item/storage/box/debugtools/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/flashlight/emp/debug=1,\
+		/obj/item/geiger_counter=1,\
 		/obj/item/pipe_dispenser=1,\
 		/obj/item/card/emag=1,\
 		/obj/item/card/id/syndicate/nuke_leader=1,\

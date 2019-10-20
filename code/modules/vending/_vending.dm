@@ -51,7 +51,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	max_integrity = 300
-	integrity_failure = 100
+	integrity_failure = 0.33
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	circuit = /obj/item/circuitboard/machine/vendor
 	payment_department = ACCOUNT_SRV
@@ -676,6 +676,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		use_power(5)
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3) 
 		new R.product_path(get_turf(src))
 		R.amount--
 		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))

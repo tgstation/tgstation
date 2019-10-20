@@ -206,16 +206,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(!air)
 		return SUPERMATTER_ERROR
 
-	if(get_integrity() < SUPERMATTER_DELAM_PERCENT)
+	var/integrity = get_integrity()
+	if(integrity < SUPERMATTER_DELAM_PERCENT)
 		return SUPERMATTER_DELAMINATING
 
-	if(get_integrity() < SUPERMATTER_EMERGENCY_PERCENT)
+	if(integrity < SUPERMATTER_EMERGENCY_PERCENT)
 		return SUPERMATTER_EMERGENCY
 
-	if(get_integrity() < SUPERMATTER_DANGER_PERCENT)
+	if(integrity < SUPERMATTER_DANGER_PERCENT)
 		return SUPERMATTER_DANGER
 
-	if((get_integrity() < SUPERMATTER_WARNING_PERCENT) || (air.temperature > CRITICAL_TEMPERATURE))
+	if((integrity < SUPERMATTER_WARNING_PERCENT) || (air.temperature > CRITICAL_TEMPERATURE))
 		return SUPERMATTER_WARNING
 
 	if(air.temperature > (CRITICAL_TEMPERATURE * 0.8))
@@ -512,7 +513,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	return 1
 
-/obj/machinery/power/supermatter_crystal/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/supermatter_crystal/bullet_act(obj/projectile/Proj)
 	var/turf/L = loc
 	if(!istype(L))
 		return FALSE
@@ -571,9 +572,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/attack_animal(mob/living/simple_animal/S)
 	var/murder
 	if(!S.melee_damage_upper && !S.melee_damage_lower)
-		murder = S.friendly
+		murder = S.friendly_verb_continuous
 	else
-		murder = S.attacktext
+		murder = S.attack_verb_continuous
 	dust_mob(S, \
 	"<span class='danger'>[S] unwisely [murder] [src], and [S.p_their()] body burns brilliantly before flashing into ash!</span>", \
 	"<span class='userdanger'>You unwisely touch [src], and your vision glows brightly as your body crumbles to dust. Oops.</span>", \
@@ -682,6 +683,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 
 	Consume(AM)
+
+/obj/machinery/power/supermatter_crystal/intercept_zImpact(atom/movable/AM, levels)
+	Bumped(AM)
 
 /obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/AM)
 	if(isliving(AM))
@@ -833,7 +837,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			. = zapdir
 
 	if(target_mob)
-		target_mob.electrocute_act(rand(5,10), "Supermatter Discharge Bolt", 1, stun = 0)
+		target_mob.electrocute_act(rand(5,10), "Supermatter Discharge Bolt", 1, SHOCK_NOSTUN)
 		if(prob(15))
 			supermatter_zap(target_mob, 5, power / 2)
 			supermatter_zap(target_mob, 5, power / 2)

@@ -9,6 +9,7 @@
 	id = MARTIALART_CQC
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
+	smashes_tables = TRUE
 	var/old_grab_state = null
 	var/restraining = FALSE
 

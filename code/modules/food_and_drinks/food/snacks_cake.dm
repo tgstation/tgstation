@@ -362,7 +362,7 @@
 	desc = "A quote on quote cake that is made with electronic boards and leaks acid..."
 	icon_state = "hardware_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/hardware_cake_slice
-	bonus_reagents = list(/datum/reagent/toxin/acid = 15, /datum/reagent/oil = 15)
+	bonus_reagents = list(/datum/reagent/toxin/acid = 15, /datum/reagent/fuel/oil = 15)
 	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
 	foodtype = GRAIN | GROSS
 

@@ -343,8 +343,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		fly.Remove(C)
 		QDEL_NULL(fly)
 		if(C.movement_type & FLYING)
-			C.setMovetype(C.movement_type & ~FLYING)
-		ToggleFlight(C,0)
+			ToggleFlight(C)
 	if(C.dna && C.dna.species && (C.dna.features["wings"] == wings_icon))
 		if("wings" in C.dna.species.mutant_bodyparts)
 			C.dna.species.mutant_bodyparts -= "wings"
@@ -996,8 +995,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(chem.type == exotic_blood)
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
 		H.reagents.del_reagent(chem.type)
-		return 1
-	return FALSE
+		return TRUE
+	if(chem.volume >= chem.overdose_threshold)
+		chem.overdosed = TRUE
 
 /datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
 	return 0 //This is not a boolean, it's the multiplier for the damage that the user takes from the item.It is added onto the check_weakness value of the mob, and then the force of the item is multiplied by this value
@@ -1209,14 +1209,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	else
 		//Steal them shoes
 		if(!(target.mobility_flags & MOBILITY_STAND) && (user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG) && user.a_intent == INTENT_GRAB && target.shoes)
-			user.visible_message("<span class='warning'>[user] starts stealing [target]'s shoes!</span>",
-								"<span class='warning'>You start stealing [target]'s shoes!</span>")
 			var/obj/item/I = target.shoes
+			user.visible_message("<span class='warning'>[user] starts stealing [target]'s [I.name]!</span>",
+							"<span class='danger'>You start stealing [target]'s [I.name]...</span>", null, null, target)
+			to_chat(target, "<span class='userdanger'>[user] starts stealing your [I.name]!</span>")
 			if(do_after(user, I.strip_delay, TRUE, target, TRUE))
 				target.dropItemToGround(I, TRUE)
 				user.put_in_hands(I)
-				user.visible_message("<span class='warning'>[user] stole your [I]!</span>",
-									"<span class='warning'>You steal [target]'s [I]!</span>")
+				user.visible_message("<span class='warning'>[user] stole [target]'s [I.name]!</span>",
+								"<span class='notice'>You stole [target]'s [I.name]!</span>", null, null, target)
+				to_chat(target, "<span class='userdanger'>[user] stole your [I.name]!</span>")
 		target.grabbedby(user)
 		return TRUE
 
@@ -1375,7 +1377,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else if(target_table)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 				target.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
-								"<span class='userdanger'>You're shoved onto \the [target_table] by [target.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+								"<span class='userdanger'>You're shoved onto \the [target_table] by [user.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
 				to_chat(user, "<span class='danger'>You shove [target.name] onto \the [target_table]!</span>")
 				target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
 				log_combat(user, target, "shoved", "onto [target_table] (table)")
@@ -1383,7 +1385,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 				target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 				target.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
-					"<span class='userdanger'>You're shoved into [target_collateral_human.name] by [target.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
+					"<span class='userdanger'>You're shoved into [target_collateral_human.name] by [user.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
 				to_chat(user, "<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>")
 				log_combat(user, target, "shoved", "into [target_collateral_human.name]")
 			else if(target_disposal_bin)
@@ -1607,15 +1609,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
 	return 1
 
-/datum/species/proc/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
+/datum/species/proc/on_hit(obj/projectile/P, mob/living/carbon/human/H)
 	// called when hit by a projectile
 	switch(P.type)
-		if(/obj/item/projectile/energy/floramut) // overwritten by plants/pods
+		if(/obj/projectile/energy/floramut) // overwritten by plants/pods
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
-		if(/obj/item/projectile/energy/florayield)
+		if(/obj/projectile/energy/florayield)
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 
-/datum/species/proc/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
+/datum/species/proc/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	// called before a projectile hit
 	return 0
 
@@ -1814,7 +1816,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
 	if(flying_species && H.movement_type & FLYING)
-		ToggleFlight(H,0)
+		ToggleFlight(H)
 		flyslip(H)
 	. = stunmod * H.physiology.stun_mod * amount
 
@@ -1865,7 +1867,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/HandleFlight(mob/living/carbon/human/H)
 	if(H.movement_type & FLYING)
 		if(!CanFly(H))
-			ToggleFlight(H,0)
+			ToggleFlight(H)
 			return FALSE
 		return TRUE
 	else
@@ -1917,7 +1919,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		speedmod -= 0.35
 		H.setMovetype(H.movement_type | FLYING)
 		override_float = TRUE
-		H.pass_flags |= PASSTABLE
+		passtable_on(H, SPECIES_TRAIT)
 		H.OpenWings()
 		H.update_mobility()
 	else
@@ -1925,7 +1927,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		speedmod += 0.35
 		H.setMovetype(H.movement_type & ~FLYING)
 		override_float = FALSE
-		H.pass_flags &= ~PASSTABLE
+		passtable_off(H, SPECIES_TRAIT)
 		H.CloseWings()
 
 /datum/action/innate/flight

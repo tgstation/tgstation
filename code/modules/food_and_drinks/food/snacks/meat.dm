@@ -137,7 +137,7 @@
 	desc = "So shiny you feel like ingesting it might make you shine too"
 	filling_color = "#97ee63"
 	list_reagents = list(/datum/reagent/consumable/liquidelectricity = 3)
-	tastes = list("pure electrictiy" = 2, "meat" = 1)
+	tastes = list("pure electricity" = 2, "meat" = 1)
 	foodtype = RAW | MEAT | TOXIC
 
 ////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////

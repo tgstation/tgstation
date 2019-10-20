@@ -21,6 +21,8 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	dog_fashion = /datum/dog_fashion/head
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
 
 
 	var/extra_headers //For additional styling or other js features.

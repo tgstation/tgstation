@@ -26,7 +26,6 @@
 	GLOB.mob_list -= src
 	GLOB.dead_mob_list -= src
 	GLOB.alive_mob_list -= src
-	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
 	focus = null
 	for (var/alert in alerts)
@@ -479,15 +478,11 @@
 
 ///Update the pulling hud icon
 /mob/proc/update_pull_hud_icon()
-	if(hud_used)
-		if(hud_used.pull_icon)
-			hud_used.pull_icon.update_icon(src)
+	hud_used?.pull_icon?.update_icon()
 
 ///Update the resting hud icon
 /mob/proc/update_rest_hud_icon()
-	if(hud_used)
-		if(hud_used.rest_icon)
-			hud_used.rest_icon.update_icon(src)
+	hud_used?.rest_icon?.update_icon()
 
 /**
   * Verb to activate the object in your held hand
@@ -876,7 +871,7 @@
 		return mind.grab_ghost(force = force)
 
 ///Notify a ghost that it's body is being cloned
-/mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null, flashwindow)
+/mob/proc/notify_ghost_cloning(message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", sound = 'sound/effects/genetics.ogg', atom/source = null, flashwindow)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
 		ghost.notify_cloning(message, sound, source, flashwindow)

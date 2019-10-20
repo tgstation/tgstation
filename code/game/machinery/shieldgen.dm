@@ -273,6 +273,7 @@
 				"<span class='hear'>You hear heavy droning fade out.</span>")
 			icon_state = "shield_wall_gen"
 			active = FALSE
+			log_game("[src] deactivated due to lack of power at [AREACOORD(src)]")
 			for(var/d in GLOB.cardinals)
 				cleanup_field(d)
 	else
@@ -376,11 +377,13 @@
 			"<span class='notice'>You turn off \the [src].</span>", \
 			"<span class='hear'>You hear heavy droning fade out.</span>")
 		active = FALSE
+		log_game("[src] was deactivated by [key_name(user)] at [AREACOORD(src)]")
 	else
 		user.visible_message("<span class='notice'>[user] turned \the [src] on.</span>", \
 			"<span class='notice'>You turn on \the [src].</span>", \
 			"<span class='hear'>You hear heavy droning.</span>")
 		active = ACTIVE_SETUPFIELDS
+		log_game("[src] was activated by [key_name(user)] at [AREACOORD(src)]")
 	add_fingerprint(user)
 
 /obj/machinery/power/shieldwallgen/emag_act(mob/user)
@@ -453,7 +456,7 @@
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
-		if(istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/projectile))
 			return prob(10)
 		else
 			return !density

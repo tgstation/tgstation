@@ -11,7 +11,7 @@
 	var/datum/armor/armor
 	var/obj_integrity	//defaults to max_integrity
 	var/max_integrity = 500
-	var/integrity_failure = 0 //0 if we have no special broken behavior
+	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
 	///Damage under this value will be completely ignored
 	var/damage_deflection = 0
 
@@ -48,16 +48,17 @@
 	return ..()
 
 /obj/Initialize()
-	. = ..()
 	if (islist(armor))
 		armor = getArmor(arglist(armor))
 	else if (!armor)
 		armor = getArmor()
 	else if (!istype(armor, /datum/armor))
 		stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
-
 	if(obj_integrity == null)
 		obj_integrity = max_integrity
+
+	. = ..() //Do this after, else mat datums is mad.
+
 	if (set_obj_flags)
 		var/flagslist = splittext(set_obj_flags,";")
 		var/list/string_to_objflag = GLOB.bitfields["obj_flags"]
@@ -173,10 +174,6 @@
 	ui_interact(user)
 
 /obj/proc/container_resist(mob/living/user)
-	return
-
-/obj/proc/update_icon()
-	SEND_SIGNAL(src, COMSIG_OBJ_UPDATE_ICON)
 	return
 
 /mob/proc/unset_machine()

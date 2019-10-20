@@ -69,7 +69,7 @@ effective or pretty fucking useless.
 */
 
 /obj/item/healthanalyzer/rad_laser
-	materials = list(/datum/material/iron=400)
+	custom_materials = list(/datum/material/iron=400)
 	var/irradiate = 1
 	var/intensity = 10 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds

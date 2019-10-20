@@ -163,7 +163,7 @@
 	var/mob/living/carbon/human/H = user
 	if(H.mind?.miming)
 		return
-	if(ishumanbasic(H) || iscatperson(H))
+	if(ishumanbasic(H) || isfelinid(H))
 		if(user.gender == FEMALE)
 			return pick('sound/voice/human/gasps/femalegasp1.ogg', 'sound/voice/human/gasps/femalegasp2.ogg', 'sound/voice/human/gasps/femalegasp3.ogg', 'sound/voice/human/gasps/femalegasp4.ogg', 'sound/voice/human/gasps/femalegasp5.ogg')
 		else

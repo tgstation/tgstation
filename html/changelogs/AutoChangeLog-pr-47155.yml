@@ -1,0 +1,4 @@
+author: "Bumtickley00"
+delete-after: True
+changes: 
+  - bugfix: "You can now put items inside a medical first aid kit that's inside a bag again"

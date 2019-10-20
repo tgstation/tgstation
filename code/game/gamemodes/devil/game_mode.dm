@@ -34,3 +34,6 @@
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_SOULLESS]
 	hud.leave_hud(soulless_mind.current)
 	set_antag_hud(soulless_mind.current, null)
+
+/proc/isdevil(mob/living/M)
+	return istype(M) && M.mind && M.mind.has_antag_datum(/datum/antagonist/devil)
