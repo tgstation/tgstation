@@ -76,7 +76,7 @@
 
 			if (PARALLAX_LOW)
 				C.parallax_throttle = PARALLAX_DELAY_LOW
-				C.parallax_layers_max = 2
+				C.parallax_layers_max = 1
 				return TRUE
 
 			if (PARALLAX_DISABLE)
