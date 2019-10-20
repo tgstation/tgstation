@@ -18,7 +18,7 @@
 				flash_act(affect_silicon = 1)
 			log_combat(M, src, "attacked")
 			adjustBruteLoss(damage)
-			updatehealth()
+			UPDATEHEALTH(src)
 		else
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, TRUE, -1)
 			visible_message("<span class='danger'>[M]'s swipe misses [src]!</span>", \

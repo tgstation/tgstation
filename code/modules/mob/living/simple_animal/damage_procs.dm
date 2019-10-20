@@ -4,7 +4,7 @@
 		return FALSE
 	bruteloss = round(CLAMP(bruteloss + amount, 0, maxHealth),DAMAGE_PRECISION)
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 	return amount
 
 /mob/living/simple_animal/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)

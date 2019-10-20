@@ -119,7 +119,7 @@
 		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
 		"<span class='hear'>You hear an electrical crack.</span>")
 
-	user.updatehealth()
+	UPDATEHEALTH(user)
 	bump_field(user)
 
 /obj/machinery/field/proc/clear_shock()

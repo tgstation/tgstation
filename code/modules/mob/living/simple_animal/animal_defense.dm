@@ -24,7 +24,7 @@
 			playsound(loc, attacked_sound, 25, TRUE, -1)
 			attack_threshold_check(harm_intent_damage)
 			log_combat(M, src, "attacked")
-			updatehealth()
+			UPDATEHEALTH(src)
 			return TRUE
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user)

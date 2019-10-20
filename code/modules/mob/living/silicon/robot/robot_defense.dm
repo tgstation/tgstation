@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		damage = rand(5, 35)
 	damage = round(damage / 2) // borgs receive half damage
 	adjustBruteLoss(damage)
-	updatehealth()
+	UPDATEHEALTH(src)
 
 	return
 
@@ -177,6 +177,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/bullet_act(obj/projectile/Proj, def_zone)
 	. = ..()
-	updatehealth()
+	UPDATEHEALTH(src)
 	if(prob(75) && Proj.damage > 0)
 		spark_system.start()

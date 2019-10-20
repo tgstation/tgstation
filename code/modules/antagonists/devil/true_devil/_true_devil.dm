@@ -169,7 +169,7 @@
 						"<span class='userdanger'>[M] punches you!</span>")
 				adjustBruteLoss(damage)
 				log_combat(M, src, "attacked")
-				updatehealth()
+				UPDATEHEALTH(src)
 			if ("disarm")
 				if (!(mobility_flags & MOBILITY_STAND) && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))

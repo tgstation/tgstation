@@ -372,7 +372,7 @@
 				return
 
 		adjustBruteLoss(-30)
-		updatehealth()
+		UPDATEHEALTH(src)
 		add_fingerprint(user)
 		visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
 		return
@@ -388,7 +388,7 @@
 			if (coil.use(1))
 				adjustFireLoss(-30)
 				adjustToxLoss(-30)
-				updatehealth()
+				UPDATEHEALTH(src)
 				user.visible_message("<span class='notice'>[user] has fixed some of the burnt wires on [src].</span>", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")

@@ -371,7 +371,7 @@
 					return
 			if(update)
 				update_damage_overlays()
-			updatehealth()
+			UPDATEHEALTH(src)
 
 		visible_message("<span class='danger'>[M.name] hits [src]!</span>", \
 						"<span class='userdanger'>[M.name] hits you!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, M)

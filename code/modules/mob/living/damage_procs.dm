@@ -151,7 +151,7 @@
 		return FALSE
 	bruteloss = CLAMP((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 	return amount
 
 /mob/living/proc/getOxyLoss()
@@ -162,7 +162,7 @@
 		return FALSE
 	oxyloss = CLAMP((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 	return amount
 
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -170,7 +170,7 @@
 		return 0
 	oxyloss = amount
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 	return amount
 
 /mob/living/proc/getToxLoss()
@@ -181,7 +181,7 @@
 		return FALSE
 	toxloss = CLAMP((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 	return amount
 
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -189,7 +189,7 @@
 		return FALSE
 	toxloss = amount
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 	return amount
 
 /mob/living/proc/getFireLoss()
@@ -200,7 +200,7 @@
 		return FALSE
 	fireloss = CLAMP((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 	return amount
 
 /mob/living/proc/getCloneLoss()
@@ -211,7 +211,7 @@
 		return FALSE
 	cloneloss = CLAMP((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 	return amount
 
 /mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -219,7 +219,7 @@
 		return FALSE
 	cloneloss = amount
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 	return amount
 
 /mob/living/proc/adjustOrganLoss(slot, amount, maximum)
@@ -246,7 +246,7 @@
 	adjustFireLoss(-burn, FALSE)
 	adjustStaminaLoss(-stamina, FALSE)
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 		update_stamina()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
@@ -255,7 +255,7 @@
 	adjustFireLoss(burn, FALSE)
 	adjustStaminaLoss(stamina, FALSE)
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 		update_stamina()
 
 // heal MANY bodyparts, in random order
@@ -264,7 +264,7 @@
 	adjustFireLoss(-burn, FALSE)
 	adjustStaminaLoss(-stamina, FALSE)
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 		update_stamina()
 
 // damage MANY bodyparts, in random order
@@ -273,7 +273,7 @@
 	adjustFireLoss(burn, FALSE)
 	adjustStaminaLoss(stamina, FALSE)
 	if(updating_health)
-		updatehealth()
+		UPDATEHEALTH(src)
 		update_stamina()
 
 //heal up to amount damage, in a given order

@@ -128,7 +128,7 @@
 				else
 					I = null
 			log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
-			updatehealth()
+			UPDATEHEALTH(src)
 
 
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
