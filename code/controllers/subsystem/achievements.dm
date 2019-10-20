@@ -24,6 +24,11 @@ SUBSYSTEM_DEF(achievements)
 		scores[T] = instance
 		awards[T] = instance
 
+	for(var/i in GLOB.clients)
+		var/client/C = i
+		if(!C.player_details.achievements.initialized)
+			C.player_details.achievements.InitializeData()
+
 	return ..()
 
 /datum/controller/subsystem/achievements/Shutdown()

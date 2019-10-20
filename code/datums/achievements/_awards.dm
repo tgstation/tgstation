@@ -38,7 +38,6 @@
 		world.ClearMedal(hub_id, key, CONFIG_GET(string/medal_hub_address), CONFIG_GET(string/medal_hub_password))
 
 /datum/award/achievement/load(key)
-	set waitfor = FALSE //Polling is latent so we don't wait for this proc
 	. = ..()
 	//Fallback
 	if(!SSachievements.hub_enabled)
@@ -74,6 +73,8 @@
 	. = ..()
 	//Fallback
 	if(!SSachievements.hub_enabled)
+		return FALSE
+	if(!name) //Not a real achievement
 		return FALSE
 	if(!hub_id)
 		CRASH("Achievement without valid hub_id")
