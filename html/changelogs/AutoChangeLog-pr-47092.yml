@@ -1,0 +1,9 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - rscadd: "Regenerative mesh, a new burn healing medical device."
+  - rscadd: "Sutures, a new brute healing medical device."
+  - rscadd: "Medicated sutures, a new medical device created by a chemical reaction."
+  - rscadd: "Cellulose reagent, used to make the new sutures, can be heated to produce carbon."
+  - balance: "White kits now contain the new medical devices instead of bruise packs and ointment."
+  - balance: "Most bruise packs and ointments have been replaced with the new devices."
