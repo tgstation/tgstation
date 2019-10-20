@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "Race changing while from a race with wings to one without them now properly removes the effects."

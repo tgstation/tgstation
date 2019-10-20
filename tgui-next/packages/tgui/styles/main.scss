@@ -1,0 +1,41 @@
+// Core styles
+@import './functions.scss';
+@import './variables.scss';
+@import './reset.scss';
+
+// Themable styles
+@import './color-map.scss';
+@import './atomic.scss';
+@import './components.scss';
+
+// Miscellaneous bits
+body {
+  color: $text-color-normal;
+  background-color: $background-color-start;
+  background-image: linear-gradient(to bottom,
+    $background-color-start 0%,
+    $background-color-end 100%);
+}
+
+.Layout__content {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.0' viewBox='0 0 425 200' opacity='.3'%3E%3Cpath d='M178 0h-71a7 6 0 00-7 6v188a7 6 0 007 6h53a7 6 0 007-6V92l72 105a7 6 0 006 3h73a7 6 0 007-6V6a7 6 0 00-7-6h-55a7 6 0 00-6 6v103L184 3a7 6 0 00-6-3zM5 22a13 13 0 018-22h67a5 5 0 015 5v80zM420 178a13 13 0 01-8 22h-67a5 5 0 01-5-5v-80z'/%3E%3C/svg%3E");
+  background-size: 70%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+// Syndicate theme
+.theme-syndicate {
+  @import './themes/syndicate.scss';
+  @import './color-map.scss';
+  @import './atomic.scss';
+  @import './components.scss';
+}
+
+// Clockwork theme
+.theme-clockwork {
+  @import './themes/clockwork.scss';
+  @import './color-map.scss';
+  @import './atomic.scss';
+  @import './components.scss';
+}

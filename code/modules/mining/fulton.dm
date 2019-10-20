@@ -43,6 +43,10 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(!beacon)
 		to_chat(user, "<span class='warning'>[src] is not linked to a beacon, and cannot be used!</span>")
 		return
+	if(!(beacon in GLOB.total_extraction_beacons))
+		beacon = null
+		to_chat(user, "<span class='warning'>The connected beacon has been destroyed!</span>")
+		return
 	if(!can_use_indoors)
 		var/area/area = get_area(A)
 		if(!area.outdoors)

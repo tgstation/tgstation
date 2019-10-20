@@ -33,6 +33,8 @@ All the important duct code:
 	var/active = TRUE
 	///track ducts we're connected to. Mainly for ducts we connect to that we normally wouldn't, like different layers and colors, for when we regenerate the ducts
 	var/list/neighbours = list()
+	///wheter we just unanchored or drop whatever is in the variable. either is safe
+	var/drop_on_wrench = /obj/item/stack/ducts
 
 /obj/machinery/duct/Initialize(mapload, no_anchor, color_of_duct, layer_of_duct = DUCT_LAYER_DEFAULT, force_connects)
 	. = ..()
@@ -55,7 +57,7 @@ All the important duct code:
 		if(D == src)
 			continue
 		if(D.duct_layer & duct_layer)
-			qdel(src) //replace with dropping or something
+			disconnect_duct()
 	if(active)
 		attempt_connect()
 ///start looking around us for stuff to connect to
@@ -139,6 +141,10 @@ All the important duct code:
 	lose_neighbours()
 	reset_connects(0)
 	update_icon()
+	if(ispath(drop_on_wrench) && !QDELING(src))
+		new drop_on_wrench(drop_location())
+		qdel(src)
+
 ///create a new duct datum
 /obj/machinery/duct/proc/create_duct()
 	duct = new()
@@ -257,35 +263,99 @@ All the important duct code:
 	var/direction = get_dir(src, D)
 	if(!(direction in GLOB.cardinals))
 		return
+
+	add_connects(direction) //the connect of the other duct is handled in connect_network, but do this here for the parent duct because it's not necessary in normal cases
 	connect_network(D, direction, TRUE)
 	add_connects(direction)
 	update_icon()
-///has a total of 5 layers and doesnt give a shit about color. its also dumb so doesnt autoconnect. the sprite is vomit inducing
+///has a total of 5 layers and doesnt give a shit about color. its also dumb so doesnt autoconnect. 
 /obj/machinery/duct/multilayered
 	name = "duct layer-manifold"
 	icon = 'icons/obj/2x2.dmi'
 	icon_state = "multiduct"
+	pixel_x = -15
+	pixel_y = -15
 
 	color_to_color_support = FALSE
 	duct_layer = FIRST_DUCT_LAYER | SECOND_DUCT_LAYER | THIRD_DUCT_LAYER | FOURTH_DUCT_LAYER | FIFTH_DUCT_LAYER
+	drop_on_wrench = null
 
 	lock_connects = TRUE
 	lock_layers = TRUE
 	ignore_colors = TRUE
 	dumb = TRUE
 
+	active = FALSE
+	anchored = FALSE
+
+/obj/machinery/duct/multilayered/Initialize(mapload, no_anchor, color_of_duct, layer_of_duct = DUCT_LAYER_DEFAULT, force_connects)
+	. = ..()
+	update_connects()
+
 /obj/machinery/duct/multilayered/update_icon()
-	icon_state = initial(icon_state)
-	if((connects & NORTH) || (connects & SOUTH))
-		icon_state += "_vertical"
-		pixel_x = -15
-		pixel_y = -15
+	return
+
+/obj/machinery/duct/multilayered/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	update_connects()
+
+/obj/machinery/duct/multilayered/proc/update_connects()
+	if(dir & NORTH || dir & SOUTH)
+		connects = NORTH | SOUTH
 	else
-		icon_state += "_horizontal"
-		pixel_x = -10
-		pixel_y = -12
+		connects = EAST | WEST
+
 ///don't connect to other multilayered stuff because honestly it shouldnt be done and I dont wanna deal with it
 /obj/machinery/duct/multilayered/connect_duct(obj/machinery/duct/D, direction, ignore_color)
 	if(istype(D, /obj/machinery/duct/multilayered))
 		return
 	return ..()
+
+/obj/item/stack/ducts
+	name = "stack of duct"
+	desc = "A stack of fluid ducts."
+	singular_name = "duct"
+	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
+	icon_state = "ducts"
+	w_class = WEIGHT_CLASS_TINY
+	novariants = FALSE
+	max_amount = 50
+	item_flags = NOBLUDGEON
+	merge_type = /obj/item/stack/ducts
+	///Color of our duct
+	var/duct_color = "grey"
+	///Default layer of our duct
+	var/duct_layer = "Default Layer"
+	///Assoc index with all the available layers. yes five might be a bit much. Colors uses a global by the way
+	var/list/layers = list("First Layer" = FIRST_DUCT_LAYER, "Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, 
+		"Fourth Layer" = FOURTH_DUCT_LAYER, "Fifth Layer" = FIFTH_DUCT_LAYER)
+
+/obj/item/stack/ducts/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>It's current color and layer are [duct_color] and [duct_layer]. Use in-hand to change.</span>"
+
+/obj/item/stack/ducts/attack_self(mob/user)
+	var/new_layer = input("Select a layer", "Layer") as null|anything in layers
+	if(new_layer)
+		duct_layer = new_layer
+	var/new_color = input("Select a color", "Color") as null|anything in GLOB.pipe_paint_colors
+	if(new_color)
+		duct_color = new_color
+		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)
+
+/obj/item/stack/ducts/afterattack(atom/A, user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(istype(A, /obj/machinery/duct))
+		var/obj/machinery/duct/D = A
+		if(!D.anchored)
+			add(1)
+			qdel(D)
+	if(istype(A, /turf/open) && use(1))
+		var/turf/open/OT = A
+		new /obj/machinery/duct(OT, FALSE, GLOB.pipe_paint_colors[duct_color], layers[duct_layer])
+		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+
+/obj/item/stack/ducts/fifty
+	amount = 50

@@ -119,14 +119,6 @@
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
 
-
-/obj/item/clothing/head/flatcap
-	name = "flat cap"
-	desc = "A working man's cap."
-	icon_state = "flat_cap"
-	item_state = "detective"
-
-
 /obj/item/clothing/head/pirate
 	name = "pirate hat"
 	desc = "Yarr."
@@ -356,7 +348,7 @@
 	name = "pharaoh hat"
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
-	icon_state = "pharoah_hat"
+	item_state = "pharoah_hat"
 
 /obj/item/clothing/head/jester/alt
 	name = "jester hat"
@@ -436,3 +428,14 @@
 	desc = "An extra-mustahabb way of showing your devotion to Allah."
 	icon_state = "taqiyahred"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
+
+/obj/item/clothing/head/shrine_wig
+	name = "shrine maiden's wig"
+	desc = "Purify in style!"
+	flags_inv = HIDEHAIR //bald
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "shrine_wig"
+	item_state = "shrine_wig"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	dynamic_hair_suffix = ""

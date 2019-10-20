@@ -138,15 +138,15 @@
 	return ..()
 
 
-/obj/machinery/autolathe/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
-	if(ispath(type_inserted, /obj/item/stack/ore/bluespace_crystal))
+/obj/machinery/autolathe/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
+	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
+	else if(custom_materials && custom_materials.len && custom_materials[getmaterialref(/datum/material/glass)])
+		flick("autolathe_r",src)//plays glass insertion animation by default otherwise
 	else
-		switch(id_inserted)
-			if (/datum/material/iron)
-				flick("autolathe_o",src)//plays metal insertion animation
-			else
-				flick("autolathe_r",src)//plays glass insertion animation by default otherwise
+		flick("autolathe_o",src)//plays metal insertion animation
+			
+				
 		use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
 
@@ -229,7 +229,7 @@
 
 	return
 
-/obj/machinery/autolathe/proc/make_item(power, var/list/materials_used, var/list/picked_materials, multiplier, coeff, is_stack)
+/obj/machinery/autolathe/proc/make_item(power, list/materials_used, list/picked_materials, multiplier, coeff, is_stack)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
@@ -243,9 +243,6 @@
 	else
 		for(var/i=1, i<=multiplier, i++)
 			var/obj/item/new_item = new being_built.build_path(A)
-			new_item.materials = new_item.materials.Copy()
-			for(var/mat in materials_used)
-				new_item.materials[mat] = materials_used[mat] / multiplier
 			new_item.autolathe_crafted(src)
 
 			if(length(picked_materials))

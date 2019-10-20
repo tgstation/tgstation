@@ -9,7 +9,7 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	materials = list(/datum/material/iron=250, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron=250, /datum/material/glass=500)
 	var/max_shield_integrity = 250
 	var/shield_integrity = 250
 	var/max_fields = 3
