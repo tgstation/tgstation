@@ -197,11 +197,9 @@
 				if(!istype(account))
 					say("Invalid bank account.")
 					return
-				if(istype(id_card, /obj/item/card/id/departmental_budget))
-					var/obj/item/card/id/departmental_budget/budget_card = id_card
-					if(pack.group in budget_card.forbidden_cargo_types)
-						say("Unauthorized for purchase.")
-						return
+				if(pack.group == "Armory" && !(ACCESS_ARMORY in id_card.access))
+					say("Unauthorized for purchase.")
+					return
 
 			var/reason = ""
 			if(requestonly && !self_paid)

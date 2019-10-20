@@ -680,7 +680,6 @@ update_label()
 	uses_overlays = FALSE
 	var/department_ID = ACCOUNT_CIV
 	var/department_name = ACCOUNT_CIV_NAME
-	var/list/forbidden_cargo_types = list("Armory") 			//restricts what the budget can be used to order with a supply console 
 
 /obj/item/card/id/departmental_budget/Initialize()
 	. = ..()
@@ -737,4 +736,4 @@ update_label()
 	department_ID = ACCOUNT_SEC
 	department_name = ACCOUNT_SEC_NAME
 	icon_state = "sec_budget"
-	forbidden_cargo_types = list()
+	access = list(ACCESS_ARMORY)
