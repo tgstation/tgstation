@@ -27,7 +27,8 @@ export const Mint = props => {
                 key={material.material}
                 label={material.material}
                 buttons={
-                  <Button content="Select"
+                  <Button
+                    content="Select"
                     selected={data.chosen_material === material.material}
                     onClick={() => act(ref, 'changematerial', {
                       material_name: material.material,
