@@ -253,6 +253,46 @@
 	access = ACCESS_SECURITY
 	crate_type = /obj/structure/closet/crate/secure/gear
 
+/datum/supply_pack/security/combatknives_single
+	name = "Combat Knife Single-Pack"
+	desc = "Contains one sharpened combat knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Security access to open."
+	cost = 1200
+	small_item = TRUE
+	contains = list(/obj/item/kitchen/knife/combat)
+
+/datum/supply_pack/security/combatknives
+	name = "Combat Knives Crate"
+	desc = "Contains three sharpened combat knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Security access to open."
+	cost = 3000
+	contains = list(/obj/item/kitchen/knife/combat,
+					/obj/item/kitchen/knife/combat,
+					/obj/item/kitchen/knife/combat)
+	crate_name = "combat knife crate"
+
+/datum/supply_pack/security/chemimp
+	name = "Chemical Implants Crate"
+	desc = "Contains five Remote Chemical implants. Requires Security access to open."
+	cost = 2000
+	contains = list(/obj/item/storage/box/chemimp)
+	crate_name = "chemical implant crate"
+
+/datum/supply_pack/security/exileimp
+	name = "Exile Implants Crate"
+	desc = "Contains five Exile implants. Requires Security access to open."
+	cost = 3000
+	contains = list(/obj/item/storage/box/exileimp)
+	crate_name = "exile implant crate"
+
+/datum/supply_pack/security/trackingimp
+	name = "Tracking Implants Crate"
+	desc = "Contains four tracking implants and three tracking speedloaders of tracing .38 ammo. Requires Security access to open."
+	cost = 2000
+	contains = list(/obj/item/storage/box/trackimp,
+					/obj/item/ammo_box/c38/trac,
+					/obj/item/ammo_box/c38/trac,
+					/obj/item/ammo_box/c38/trac)
+	crate_name = "tracking implant crate"
+
 /datum/supply_pack/security/ammo
 	name = "Ammo Crate"
 	desc = "Contains two 20-round magazines for the WT-550 Auto Rifle, three boxes of buckshot ammo, three boxes of rubber ammo and special .38 speedloarders. Requires Security access to open."
@@ -279,15 +319,6 @@
 					/obj/item/clothing/suit/armor/vest)
 	crate_name = "armor crate"
 
-/datum/supply_pack/security/disabler
-	name = "Disabler Crate"
-	desc = "Three stamina-draining disabler weapons. Requires Security access to open."
-	cost = 1500
-	contains = list(/obj/item/gun/energy/disabler,
-					/obj/item/gun/energy/disabler,
-					/obj/item/gun/energy/disabler)
-	crate_name = "disabler crate"
-
 /datum/supply_pack/security/forensics
 	name = "Forensics Crate"
 	desc = "Stay hot on the criminal's heels with Nanotrasen's Detective Essentials(tm). Contains a forensics scanner, six evidence bags, camera, tape recorder, white crayon, and of course, a fedora. Requires Security access to open."
@@ -308,15 +339,6 @@
 					/obj/item/clothing/head/helmet/sec,
 					/obj/item/clothing/head/helmet/sec)
 	crate_name = "helmet crate"
-
-/datum/supply_pack/security/laser
-	name = "Lasers Crate"
-	desc = "Contains three lethal, high-energy laser guns. Requires Security access to open."
-	cost = 2000
-	contains = list(/obj/item/gun/energy/laser,
-					/obj/item/gun/energy/laser,
-					/obj/item/gun/energy/laser)
-	crate_name = "laser crate"
 
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
@@ -388,15 +410,6 @@
 					/obj/item/clothing/mask/gas/sechailer)
 	crate_name = "security clothing crate"
 
-/datum/supply_pack/security/baton
-	name = "Stun Batons Crate"
-	desc = "Arm the Civil Protection Forces with three stun batons. Batteries included. Requires Security access to open."
-	cost = 1000
-	contains = list(/obj/item/melee/baton/loaded,
-					/obj/item/melee/baton/loaded,
-					/obj/item/melee/baton/loaded)
-	crate_name = "stun baton crate"
-
 /datum/supply_pack/security/wall_flash
 	name = "Wall-Mounted Flash Crate"
 	desc = "Contains four wall-mounted flashes. Requires Security access to open."
@@ -416,6 +429,33 @@
 	access = ACCESS_ARMORY
 	crate_type = /obj/structure/closet/crate/secure/weapon
 
+/datum/supply_pack/xecurity/armory/disabler
+	name = "Disabler Crate"
+	desc = "Three stamina-draining disabler weapons. Requires Armory access to open."
+	cost = 1500
+	contains = list(/obj/item/gun/energy/disabler,
+					/obj/item/gun/energy/disabler,
+					/obj/item/gun/energy/disabler)
+	crate_name = "disabler crate"
+
+/datum/supply_pack/security/armory/laser
+	name = "Lasers Crate"
+	desc = "Contains three lethal, high-energy laser guns. Requires Armory access to open."
+	cost = 2000
+	contains = list(/obj/item/gun/energy/laser,
+					/obj/item/gun/energy/laser,
+					/obj/item/gun/energy/laser)
+	crate_name = "laser crate"
+
+/datum/supply_pack/security/armory/baton
+	name = "Stun Batons Crate"
+	desc = "Arm the Civil Protection Forces with three stun batons. Batteries included. Requires Armory access to open."
+	cost = 1000
+	contains = list(/obj/item/melee/baton/loaded,
+					/obj/item/melee/baton/loaded,
+					/obj/item/melee/baton/loaded)
+	crate_name = "stun baton crate"
+
 /datum/supply_pack/security/armory/bulletarmor
 	name = "Bulletproof Armor Crate"
 	desc = "Contains three sets of bulletproof armor. Guaranteed to reduce a bullet's stopping power by over half. Requires Armory access to open."
@@ -433,29 +473,6 @@
 					/obj/item/clothing/head/helmet/alt,
 					/obj/item/clothing/head/helmet/alt)
 	crate_name = "bulletproof helmets crate"
-
-/datum/supply_pack/security/armory/chemimp
-	name = "Chemical Implants Crate"
-	desc = "Contains five Remote Chemical implants. Requires Armory access to open."
-	cost = 2000
-	contains = list(/obj/item/storage/box/chemimp)
-	crate_name = "chemical implant crate"
-
-/datum/supply_pack/security/armory/combatknives_single
-	name = "Combat Knife Single-Pack"
-	desc = "Contains one sharpened combat knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
-	cost = 1200
-	small_item = TRUE
-	contains = list(/obj/item/kitchen/knife/combat)
-
-/datum/supply_pack/security/armory/combatknives
-	name = "Combat Knives Crate"
-	desc = "Contains three sharpened combat knives. Each knife guaranteed to fit snugly inside any Nanotrasen-standard boot. Requires Armory access to open."
-	cost = 3000
-	contains = list(/obj/item/kitchen/knife/combat,
-					/obj/item/kitchen/knife/combat,
-					/obj/item/kitchen/knife/combat)
-	crate_name = "combat knife crate"
 
 /datum/supply_pack/security/armory/ballistic_single
 	name = "Combat Shotgun Single-Pack"
@@ -502,13 +519,6 @@
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
 
-/datum/supply_pack/security/armory/exileimp
-	name = "Exile Implants Crate"
-	desc = "Contains five Exile implants. Requires Armory access to open."
-	cost = 3000
-	contains = list(/obj/item/storage/box/exileimp)
-	crate_name = "exile implant crate"
-
 /datum/supply_pack/security/armory/fire
 	name = "Incendiary Weapons Crate"
 	desc = "Burn, baby burn. Contains three incendiary grenades, three plasma canisters, and a flamethrower. Requires Armory access to open."
@@ -531,16 +541,6 @@
 	cost = 4000
 	contains = list(/obj/item/storage/lockbox/loyalty)
 	crate_name = "mindshield implant crate"
-
-/datum/supply_pack/security/armory/trackingimp
-	name = "Tracking Implants Crate"
-	desc = "Contains four tracking implants and three tracking speedloaders of tracing .38 ammo. Requires Armory access to open."
-	cost = 2000
-	contains = list(/obj/item/storage/box/trackimp,
-					/obj/item/ammo_box/c38/trac,
-					/obj/item/ammo_box/c38/trac,
-					/obj/item/ammo_box/c38/trac)
-	crate_name = "tracking implant crate"
 
 /datum/supply_pack/security/armory/laserarmor
 	name = "Reflector Vest Crate"
