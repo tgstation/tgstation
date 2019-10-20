@@ -700,7 +700,7 @@ update_label()
 /obj/item/card/id/departmental_budget/update_label()
 	return
 
-/obj/item/card/id/departmental/AltClick(mob/living/user)
+/obj/item/card/id/departmental_budget/AltClick(mob/living/user)
 	return
 
 /obj/item/card/id/departmental_budget/civ

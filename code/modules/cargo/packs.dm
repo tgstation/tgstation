@@ -429,7 +429,7 @@
 	access = ACCESS_ARMORY
 	crate_type = /obj/structure/closet/crate/secure/weapon
 
-/datum/supply_pack/xecurity/armory/disabler
+/datum/supply_pack/security/armory/disabler
 	name = "Disabler Crate"
 	desc = "Three stamina-draining disabler weapons. Requires Armory access to open."
 	cost = 1500
