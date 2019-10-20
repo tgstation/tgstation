@@ -72,7 +72,7 @@
 		return TRUE
 	for(var/datum/action/A in user.actions)
 		if(A.type == granted_action)
-			to_chat(user, "<span class='notice'>You already know all about [actionname].</span>")
+			to_chat(user, "<span class='warning'>You already know all about [actionname]!</span>")
 			return TRUE
 	return FALSE
 
@@ -125,9 +125,9 @@
 		if(knownspell.type == spell)
 			if(user.mind)
 				if(iswizard(user))
-					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
+					to_chat(user,"<span class='warning'>You're already far more versed in this spell than this flimsy how-to book can provide!</span>")
 				else
-					to_chat(user,"<span class='notice'>You've already read this one.</span>")
+					to_chat(user,"<span class='warning'>You've already read this one!</span>")
 			return TRUE
 	return FALSE
 

@@ -35,10 +35,10 @@
 //because you're expecting user input.
 /obj/item/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
-		to_chat(user, "<span class='notice'>There is no toner cartridge installed in [src]!</span>")
+		to_chat(user, "<span class='warning'>There is no toner cartridge installed in [src]!</span>")
 		return 0
 	else if(ink.charges < 1)
-		to_chat(user, "<span class='notice'>[src] is out of ink!</span>")
+		to_chat(user, "<span class='warning'>[src] is out of ink!</span>")
 		return 0
 	else
 		return 1
@@ -108,7 +108,7 @@
 /obj/item/airlock_painter/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toner))
 		if(ink)
-			to_chat(user, "<span class='notice'>[src] already contains \a [ink].</span>")
+			to_chat(user, "<span class='warning'>[src] already contains \a [ink]!</span>")
 			return
 		if(!user.transferItemToLoc(W, src))
 			return

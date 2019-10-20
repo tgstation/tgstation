@@ -301,7 +301,7 @@ GENE SCANNER
 					major_damage += ", "
 					major_damage += organ.name
 				else
-					major_damage = "\t<span class='info'>Severely Damaged Organs: "
+					major_damage = "\t<span class='info'>Severely Damaged Organs: </span>"
 					major_damage += organ.name
 			else if(organ.damage > organ.low_threshold)
 				report_organs = TRUE
@@ -309,7 +309,7 @@ GENE SCANNER
 					minor_damage += ", "
 					minor_damage += organ.name
 				else
-					minor_damage = "\t<span class='info'>Mildly Damaged Organs: "
+					minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>"
 					minor_damage += organ.name
 
 		if(report_organs)	//we either finish the list, or set it to be empty if no organs were reported in that category

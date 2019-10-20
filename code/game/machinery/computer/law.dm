@@ -46,7 +46,7 @@
 	if (!current)
 		to_chat(user, "<span class='caution'>No active AIs detected!</span>")
 	else
-		to_chat(user, "[current.name] selected for law changes.")
+		to_chat(user, "<span class='notice'>[current.name] selected for law changes.</span>")
 
 /obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
 	if(!A || !isAI(A))
@@ -67,7 +67,7 @@
 	if(!current)
 		to_chat(user, "<span class='caution'>No active unslaved cyborgs detected!</span>")
 	else
-		to_chat(user, "[current.name] selected for law changes.")
+		to_chat(user, "<span class='notice'>[current.name] selected for law changes.</span>")
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
 	if(!B || !iscyborg(B))

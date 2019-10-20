@@ -300,7 +300,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 			to_chat(user, "<span class='notice'>You pop out the encryption keys in the headset.</span>")
 
 		else
-			to_chat(user, "<span class='warning'>This headset doesn't have any unique encryption keys!  How useless...</span>")
+			to_chat(user, "<span class='warning'>This headset doesn't have any unique encryption keys! How useless...</span>")
 
 	else if(istype(W, /obj/item/encryptionkey))
 		if(keyslot && keyslot2)
