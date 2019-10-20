@@ -1,5 +1,6 @@
 /datum/award
-	var/name = "It's fucking nothing"
+	///Name of the achievement, If null it wont show up in the achievement browser. (Handy for inheritance trees)
+	var/name
 	var/desc = "You did it."
 	///Found in /datum/asset/spritesheet/simple/achievements
 	var/icon = "default"
@@ -18,7 +19,7 @@
 
 ///Achievements are one-off awards for usually doing cool things.
 /datum/award/achievement
-	name = "achievement"
+	desc = "Achievement for epic people"
 
 ///Can be overriden for achievement specific events
 /datum/award/proc/on_unlock(mob/user)
@@ -49,11 +50,12 @@
 	return isnull(raw) ? FALSE : raw
 
 /datum/award/achievement/on_unlock(mob/user)
+	. = ..()
 	to_chat(user, "<span class='greenannounce'><B>Achievement unlocked: [name]!</B></span>")
 
 ///Scores are for leaderboarded things, such as killcount of a specific boss
 /datum/award/score
-	name = "score"
+	desc = "you did it sooo many times."
 
 /datum/award/score/save(key,value)
 	set waitfor = FALSE //Polling is latent so we don't wait for this proc

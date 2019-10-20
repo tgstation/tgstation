@@ -13,11 +13,11 @@
 
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
 	AchievementIcons = list()
-	for (var/x in SSachievements.achievements)
-		var/datum/award/achievement = x
+	for (var/achievement_type in SSachievements.achievements)
+		var/datum/award/achievement = SSachievements.achievements[achievement_type]
 		var/list/SL = list()
 		SL["htmltag"] = assets.icon_tag(achievement.icon)
-		AchievementIcons[initial(achievement.name)] += list(SL)
+		AchievementIcons[achievement.name] += list(SL)
 
 ///Saves any out-of-date achievements to the hub.
 /datum/achievement_data/proc/save()
@@ -76,7 +76,7 @@
 		load_all_achievements() //Only necesary if we havn't used UI before
 		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
 		assets.send(user)
-		ui = new(user, src, ui_key, "achievements", "Achievements Menu", 1000, 500, master_ui, state)
+		ui = new(user, src, ui_key, "achievements", "Achievements Menu", 800, 1000, master_ui, state)
 		ui.open()
 
 /datum/achievement_data/ui_data(mob/user)
@@ -87,6 +87,8 @@
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
 
 	for(var/achievement_type in SSachievements.achievements)
+		if(!SSachievements.achievements[achievement_type].name) //No name? we a subtype.
+			continue
 		var/this = list(
 			"name" = SSachievements.achievements[achievement_type].name,
 			"desc" = SSachievements.achievements[achievement_type].desc,
@@ -104,13 +106,9 @@
 		return
 
 /client/verb/checkachievements()
-	set category = "OOC"
+	set category = "Personal"
 	set name = "Check achievements"
 	set desc = "See all of your achievements!"
 
 	player_details.achievements.ui_interact(usr)
-
-
-/mob/verb/unlock_meme()
-	var/achievies = subtypesof(/datum/award/achievement)
-	client.player_details.achievements.unlock(pick(achievies))
+	
