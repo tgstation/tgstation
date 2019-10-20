@@ -702,6 +702,9 @@ update_label()
 /obj/item/card/id/departmental_budget/AltClick(mob/living/user)
 	return
 
+/obj/item/card/id/departmental_budget/insert_money(obj/item/I, mob/user, physical_currency)
+	return
+
 /obj/item/card/id/departmental_budget/civ
 	department_ID = ACCOUNT_CIV
 	department_name = ACCOUNT_CIV_NAME
