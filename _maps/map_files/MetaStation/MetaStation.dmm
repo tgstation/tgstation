@@ -56226,9 +56226,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cts" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -56238,18 +56236,14 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "ctt" = (
 /obj/structure/cable,
 /obj/machinery/light_switch{
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "ctu" = (
 /obj/machinery/door/airlock/medical{
 	name = "Surgery B";
@@ -56257,9 +56251,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "ctw" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -56613,17 +56605,13 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cul" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cum" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -56634,9 +56622,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cun" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -56647,9 +56633,7 @@
 	name = "privacy shutters"
 	},
 /turf/open/floor/plating,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cuo" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -57099,15 +57083,11 @@
 	network = list("ss13","medbay")
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cvp" = (
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cvq" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -57587,17 +57567,13 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cwp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cwq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -57610,9 +57586,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cwr" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -57623,9 +57597,7 @@
 	name = "privacy shutters"
 	},
 /turf/open/floor/plating,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cws" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -58025,9 +57997,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cxf" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -58035,9 +58005,7 @@
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cxg" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -58049,9 +58017,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/smartfridge/organ,
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cxh" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/preopen{
@@ -58059,9 +58025,7 @@
 	name = "privacy shutters"
 	},
 /turf/open/floor/plating,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "cxi" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -74978,9 +74942,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "nIb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
@@ -75005,9 +74967,7 @@
 /area/science/research)
 "nMe" = (
 /turf/closed/wall,
-/area/medical/patients_rooms/room_a{
-	name = "Surgery B"
-	})
+/area/medical/surgery/room_b)
 "nPC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
