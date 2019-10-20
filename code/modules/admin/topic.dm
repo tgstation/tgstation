@@ -1394,20 +1394,16 @@
 		if(!ishuman(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.")
 			return
-
-		//if(is_species(H, /datum/species/lizard))
-		
 		//let's keep it simple
 		//milk to plasmemes and skeletons, meat to lizards, electricity bars to ethereals, cookies to everyone else
-		//var/obj/item/reagent_containers/food/snacks/cookie/cookie = new(H)
 		var/cookiealt = /obj/item/reagent_containers/food/snacks/cookie
-		if(is_species(H, /datum/species/skeleton))
+		if(isskeleton(H))
 			cookiealt = /obj/item/reagent_containers/food/condiment/milk
-		if(is_species(H, /datum/species/plasmaman))
+		if(isplasmaman(H))
 			cookiealt = /obj/item/reagent_containers/food/condiment/milk
-		if(is_species(H, /datum/species/ethereal))
+		if(isethereal(H))
 			cookiealt = /obj/item/reagent_containers/food/snacks/energybar
-		if(is_species(H, /datum/species/lizard))
+		if(islizard(H))
 			cookiealt = /obj/item/reagent_containers/food/snacks/meat/slab
 		var/obj/item/new_item = new cookiealt(H)
 		if(H.put_in_hands(new_item))
