@@ -23,11 +23,14 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
 
 /datum/component/butchering/proc/onItemAttack(obj/item/source, mob/living/M, mob/living/user)
-	if(user.a_intent == INTENT_HARM && M.stat == DEAD && (M.butcher_results || M.guaranteed_butcher_results)) //can we butcher it?
+	if(user.a_intent != INTENT_HARM)
+		return
+	if(M.stat == DEAD && (M.butcher_results || M.guaranteed_butcher_results)) //can we butcher it?
 		if(butchering_enabled && (can_be_blunt || source.get_sharpness()))
 			INVOKE_ASYNC(src, .proc/startButcher, source, M, user)
 			return COMPONENT_ITEM_NO_ATTACK
-	if(user.a_intent == INTENT_HARM && ishuman(M) && source.get_sharpness())
+
+	if(ishuman(M) && source.force && source.get_sharpness())
 		var/mob/living/carbon/human/H = M
 		if((H.health <= H.crit_threshold || (user.pulling == H && user.grab_state >= GRAB_NECK) || H.IsSleeping()) && user.zone_selected == BODY_ZONE_HEAD) // Only sleeping, neck grabbed, or crit, can be sliced.
 			if(H.has_status_effect(/datum/status_effect/neck_slice))
