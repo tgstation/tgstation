@@ -22,6 +22,7 @@ import { DisposalUnit } from './interfaces/DisposalUnit';
 import { KitchenSink } from './interfaces/KitchenSink';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { Wires } from './interfaces/Wires';
+import { Mint } from './interfaces/Mint';
 
 const ROUTES = {
   airalarm: {
@@ -114,6 +115,10 @@ const ROUTES = {
   },
   wires: {
     component: () => Wires,
+    scrollable: false,
+  },
+  mint: {
+    component: () => Mint,
     scrollable: false,
   },
 };
