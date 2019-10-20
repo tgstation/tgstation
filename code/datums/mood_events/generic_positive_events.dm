@@ -100,6 +100,14 @@
 	description = "<span class='nicegreen'>My family heirloom is safe with me.</span>\n"
 	mood_change = 1
 
+/datum/mood_event/fan_clown_pin
+	description = "<span class='nicegreen'>I love showing off my clown pin!</span>\n"
+	mood_change = 1
+
+/datum/mood_event/fan_mime_pin
+	description = "<span class='nicegreen'>I love showing off my mime pin!</span>\n"
+	mood_change = 1
+
 /datum/mood_event/goodmusic
 	description = "<span class='nicegreen'>There is something soothing about this music.</span>\n"
 	mood_change = 3
@@ -124,6 +132,11 @@
 	mood_change = 3
 	timeout = 5 MINUTES
 
+/datum/mood_event/chapel_comforted
+	description = "<span class='nicegreen'>You are comforted by the holy aura of the chapel.</span>\n"
+	mood_change = 3
+	timeout = 15 MINUTES
+
 /datum/mood_event/comically_comforted
 	description = "<span class='nicegreen'>You are comforted by the presence of a comical person.</span>\n"
 	mood_change = 3
@@ -133,6 +146,11 @@
 	description = "<span class='nicegreen'>You are comforted by the presence of a silent person.</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
+
+/datum/mood_event/theater_comforted
+	description = "<span class='nicegreen'>You are comforted by your time in the theatre.</span>\n"
+	mood_change = 3
+	timeout = 15 MINUTES
 
 /datum/mood_event/clownshoes
 	description = "<span class='nicegreen'>The shoes are a clown's legacy, I never want to take them off!</span>\n"
