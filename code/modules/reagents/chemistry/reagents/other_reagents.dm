@@ -1931,14 +1931,14 @@
 /datum/reagent/protonium
 	name = "Protonium"
 	description = "An extremely rare metallic-white substance only found on demon-class planets."
-	color = "#FFFFFF" // rgb: 128, 128, 128
+	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_mult = 0 // oderless and tasteless
 
 /datum/reagent/metal_morphium
 	name = "Metal Morphium"
 	data = list("material"=null)
 	description = "A purple metal morphic liquid, said to impose it's metallic properties on whatever it touches."
-	color = "#b000aa" // rgb: 128, 128, 128
+	color = "#b000aa" 
 	taste_mult = 0 // oderless and tasteless
 	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	var/minumum_material_amount = 100
@@ -1965,3 +1965,23 @@
 
 	A.material_flags = applied_material_flags
 	A.set_custom_materials(list(getmaterialref(metal_dat) = metal_amount))
+
+/datum/reagent/gravitum
+	name = "Gravitum"
+	description = "A rare kind of null fluid, capable of temporalily removing all weight of whatever it touches." //i dont even 
+	color = "#050096" // rgb: 5, 0, 150
+	taste_mult = 0 // oderless and tasteless
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM //20 times as long, so it's actually viable to use
+	var/time_multiplier = 1 MINUTES //1 minute per unit of gravitum on objects. Seems overpowered, but the whole thing is very niche
+
+/datum/reagent/gravitum/reaction_obj(obj/O, volume)
+	var/datum/component/C = new /datum/component/forced_gravity(O, 0)
+	QDEL_IN(C, volume * time_multiplier)
+	return
+
+/datum/reagent/gravitum/on_mob_add(mob/living/L)
+	L.AddComponent(/datum/component/forced_gravity, 0) //0 is the gravity, and in this case weightless
+
+/datum/reagent/gravitum/on_mob_end_metabolize(mob/living/L)
+	var/datum/component/C = GetComponent(/datum/component/forced_gravity)
+	qdel(C)

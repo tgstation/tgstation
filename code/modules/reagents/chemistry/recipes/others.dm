@@ -719,3 +719,11 @@
 		if(R.material && R.volume >= 40)
 			MM.data["material"] = R.material
 			holder.remove_reagent(R.type, 40)
+
+/datum/chemical_reaction/gravitum
+	name = "gravitum"
+	id = /datum/reagent/gravitum
+	required_reagents = list(/datum/reagent/protonium = 1, /datum/reagent/sorium = 10)
+	results = list(/datum/reagent/gravitum = 10)
+
+
