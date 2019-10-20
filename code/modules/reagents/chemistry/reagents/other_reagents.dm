@@ -1352,7 +1352,7 @@
 
 
 
-/datum/reagent/oil
+/datum/reagent/fuel/oil
 	name = "Oil"
 	description = "Burns in a small smoky fire, mostly used to get Ash."
 	reagent_state = LIQUID
@@ -1382,14 +1382,96 @@
 	name = "Carpet"
 	description = "For those that need a more creative way to roll out a red carpet."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#771100"
 	taste_description = "carpet" // Your tounge feels furry.
+	var/carpet_type = /turf/open/floor/carpet
 
 /datum/reagent/carpet/reaction_turf(turf/T, reac_volume)
 	if(isplatingturf(T) || istype(T, /turf/open/floor/plasteel))
 		var/turf/open/floor/F = T
-		F.PlaceOnTop(/turf/open/floor/carpet, flags = CHANGETURF_INHERIT_AIR)
+		F.PlaceOnTop(carpet_type, flags = CHANGETURF_INHERIT_AIR)
 	..()
+
+/datum/reagent/carpet/black
+	name = "Black Carpet"
+	description = "The carpet also comes in... BLAPCK" //yes, the typo is intentional
+	color = "#1E1E1E"
+	taste_description = "licorice"
+	carpet_type = /turf/open/floor/carpet/black
+
+/datum/reagent/carpet/blue
+	name = "Blue Carpet"
+	description = "For those that really need to chill out for a while."
+	color = "#0000DC"
+	taste_description = "frozen carpet"
+	carpet_type = /turf/open/floor/carpet/blue
+
+/datum/reagent/carpet/cyan
+	name = "Cyan Carpet"
+	description = "For those that need a throwback to the years of using poison as a construction material. Smells like asbestos."
+	color = "#00B4FF"
+	taste_description = "asbestos"
+	carpet_type = /turf/open/floor/carpet/cyan
+
+/datum/reagent/carpet/green
+	name = "Green Carpet"
+	description = "For those that need the perfect flourish for your green eggs and ham."
+	color = "#A8E61D"
+	taste_description = "Green" //the caps is intentional
+	carpet_type = /turf/open/floor/carpet/green
+
+/datum/reagent/carpet/orange
+	name = "Orange Carpet"
+	description = "For those that prefer a healthy carpet to go along with their healthy diet."
+	color = "#E78108"
+	taste_description = "orange juice"
+	carpet_type = /turf/open/floor/carpet/orange
+
+/datum/reagent/carpet/purple
+	name = "Purple Carpet"
+	description = "For those that need to waste copious amounts of healing jelly in order to look fancy."
+	color = "#91D865"
+	taste_description = "jelly"
+	carpet_type = /turf/open/floor/carpet/purple
+
+/datum/reagent/carpet/red
+	name = "Red Carpet"
+	description = "For those that need an even redder carpet."
+	color = "#731008"
+	taste_description = "blood and gibs"
+	carpet_type = /turf/open/floor/carpet/red
+
+/datum/reagent/carpet/royal
+	name = "Royal Carpet?"
+	description = "For those that break the game and need to make an issue report."
+
+/datum/reagent/carpet/royal/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	if(!M.mind?.assigned_role)
+		return
+	switch(M.mind.assigned_role)
+		if("Chief Medical Officer", "Captain", "Chief Engineer", "Research Director", "Head of Personnel")
+			if(prob(10))
+				to_chat(M, "You feel like royalty.")
+			if(prob(5))
+				M.say(pick("Peasants..","This carpet is worth more than your contracts!","I could fire you at any time..."), forced = "royal carpet")
+		if("Quartermaster")
+			if(prob(15))
+				to_chat(M, "You feel like an impostor...")
+
+/datum/reagent/carpet/royal/black
+	name = "Royal Black Carpet"
+	description = "For those that feel the need to show off their timewasting skills."
+	color = "#000000"
+	taste_description = "royalty"
+	carpet_type = /turf/open/floor/carpet/royalblack
+
+/datum/reagent/carpet/royal/blue
+	name = "Royal Blue Carpet"
+	description = "For those that feel the need to show off their timewasting skills.. in BLUE."
+	color = "#5A64C8"
+	taste_description = "blueyalty" //also intentional
+	carpet_type = /turf/open/floor/carpet/royalblue
 
 /datum/reagent/bromine
 	name = "Bromine"

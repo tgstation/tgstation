@@ -63,7 +63,7 @@ Difficulty: Medium
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	deathsound = 'sound/magic/demon_dies.ogg'
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/fire_cone,
 							   /datum/action/innate/megafauna_attack/fire_cone_meteors,
 							   /datum/action/innate/megafauna_attack/mass_fire,
@@ -449,7 +449,7 @@ Difficulty: Medium
 		var/lava_turf = /turf/open/lava/smooth
 		var/reset_turf = T.type
 		T.ChangeTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
-		addtimer(CALLBACK(T, /turf.proc/ChangeTurf, reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE)
+		addtimer(CALLBACK(T, /turf.proc/ChangeTurf, reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/effect/temp_visual/drakewall
 	desc = "An ash drakes true flame."

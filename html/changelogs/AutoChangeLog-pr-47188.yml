@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - tweak: "You can no longer start a neck slice with an item that does not have any force."

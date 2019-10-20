@@ -139,6 +139,7 @@
 
 /area/shuttle/supply
 	name = "Supply Shuttle"
+	noteleport = TRUE
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
