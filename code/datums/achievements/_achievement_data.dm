@@ -113,10 +113,6 @@
 
 	return ret_data
 
-/datum/achievement_data/ui_act(action, params)
-	if(..())
-		return
-
 /client/verb/checkachievements()
 	set category = "Personal"
 	set name = "Check achievements"
