@@ -190,7 +190,7 @@
 
 /obj/item/nullrod
 	name = "null rod"
-	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar'Sie and Ratvar's followers."
+	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar'Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -440,7 +440,7 @@
 	if(possessed)
 		return
 
-	to_chat(user, "You attempt to wake the spirit of the blade...")
+	to_chat(user, "<span class='notice'>You attempt to wake the spirit of the blade...</span>")
 
 	possessed = TRUE
 
@@ -459,12 +459,12 @@
 			name = input
 			S.fully_replace_character_name(null, "The spirit of [input]")
 	else
-		to_chat(user, "The blade is dormant. Maybe you can try again later.")
+		to_chat(user, "<span class='warning'>The blade is dormant. Maybe you can try again later.</span>")
 		possessed = FALSE
 
 /obj/item/nullrod/scythe/talking/Destroy()
 	for(var/mob/living/simple_animal/shade/S in contents)
-		to_chat(S, "You were destroyed!")
+		to_chat(S, "<span class='userdanger'>You were destroyed!</span>")
 		qdel(S)
 	return ..()
 
@@ -606,7 +606,7 @@
 /obj/item/nullrod/carp/attack_self(mob/living/user)
 	if(used_blessing)
 	else if(user.mind && (user.mind.isholy))
-		to_chat(user, "You are blessed by Carp-Sie. Wild space carp will no longer attack you.")
+		to_chat(user, "<span class='boldnotice'>You are blessed by Carp-Sie. Wild space carp will no longer attack you.</span>")
 		user.faction |= "carp"
 		used_blessing = TRUE
 

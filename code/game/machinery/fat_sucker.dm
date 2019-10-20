@@ -57,7 +57,7 @@
 			occupant.forceMove(drop_location())
 			occupant = null
 			return
-		to_chat(occupant, "<span class='notice'>You enter [src]</span>")
+		to_chat(occupant, "<span class='notice'>You enter [src].</span>")
 		addtimer(CALLBACK(src, .proc/start_extracting), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
 		update_icon()
 

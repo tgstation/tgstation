@@ -89,6 +89,13 @@
 	program_type = /datum/nanite_program/spreading
 	category = list("Utility Nanites")
 
+/datum/design/nanites/nanite_sting
+	name = "Nanite Sting"
+	desc = "When triggered, projects a nearly invisible spike of nanites that attempts to infect a nearby non-host with a copy of the host's nanites cluster."
+	id = "nanite_sting_nanites"
+	program_type = /datum/nanite_program/triggered/nanite_sting
+	category = list("Utility Nanites")
+
 /datum/design/nanites/mitosis
 	name = "Mitosis"
 	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process, instead of drawing from a template. This rapidly speeds up the replication rate,\

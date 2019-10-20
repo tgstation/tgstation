@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "An old monastery from a previously abandoned sector of space has recently resurfaced in some regions surrounding the station."
+  - rscadd: "Latent scans of the surrounding systems have picked up trace signs of new, smaller cult constructs, however these signatures quickly vanished."
+  - rscadd: "In other news, scavengers in your sector have been seen occasionally with classically recreated maces, so autolathe firmware has been upgraded to accommodate this."

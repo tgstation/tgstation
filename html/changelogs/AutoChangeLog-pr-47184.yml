@@ -1,0 +1,4 @@
+author: "TheChosenEvilOne"
+delete-after: True
+changes: 
+  - bugfix: "Microwaves work again with items that do not have custom materials."

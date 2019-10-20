@@ -12,7 +12,6 @@
 	var/brightness_on = 1
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
-	var/clockwork = FALSE
 	var/time_to_screwdrive = 20
 	var/authenticated = 0
 
@@ -32,22 +31,6 @@
 	if(stat & (NOPOWER|BROKEN))
 		return 0
 	return 1
-
-/obj/machinery/computer/ratvar_act()
-	if(!clockwork)
-		clockwork = TRUE
-		icon_screen = "ratvar[rand(1, 4)]"
-		icon_keyboard = "ratvar_key[rand(1, 6)]"
-		icon_state = "ratvarcomputer[rand(1, 4)]"
-		update_icon()
-
-/obj/machinery/computer/narsie_act()
-	if(clockwork && clockwork != initial(clockwork)) //if it's clockwork but isn't normally clockwork
-		clockwork = FALSE
-		icon_screen = initial(icon_screen)
-		icon_keyboard = initial(icon_keyboard)
-		icon_state = initial(icon_state)
-		update_icon()
 
 /obj/machinery/computer/update_icon()
 	cut_overlays()

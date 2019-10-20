@@ -161,7 +161,7 @@ Contents:
 		toggle_on_off()
 		return TRUE
 	if(!s_initialized)
-		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline.  Please activate suit.</span>")
+		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline. Please activate suit.</span>")
 		return FALSE
 	if(istype(action, /datum/action/item_action/ninjasmoke))
 		ninjasmoke()

@@ -128,7 +128,7 @@
 		if("crossserver")
 			if(authenticated==2)
 				if(!checkCCcooldown())
-					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
+					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to allied stations.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
@@ -151,12 +151,12 @@
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
 					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
-						to_chat(usr, "It's a bit late to buy a new shuttle, don't you think?")
+						to_chat(usr, "<span class='alert'>It's a bit late to buy a new shuttle, don't you think?</span>")
 						return
 					if(SSshuttle.shuttle_purchased)
-						to_chat(usr, "A replacement shuttle has already been purchased.")
+						to_chat(usr, "<span class='alert'>A replacement shuttle has already been purchased.</span>")
 					else if(!S.prerequisites_met())
-						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
+						to_chat(usr, "<span class='alert'>You have not met the requirements for purchasing this shuttle.</span>")
 					else
 						var/points_to_check
 						var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -173,7 +173,7 @@
 							message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
 							SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
 						else
-							to_chat(usr, "Not enough credits.")
+							to_chat(usr, "<span class='alert'>Insufficient credits.</span>")
 
 		if("callshuttle")
 			state = STATE_DEFAULT
@@ -275,7 +275,7 @@
 		if("MessageCentCom")
 			if(authenticated)
 				if(!checkCCcooldown())
-					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
+					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to CentCom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to CentCom.", "")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
@@ -291,7 +291,7 @@
 		if("MessageSyndicate")
 			if((authenticated) && (obj_flags & EMAGGED))
 				if(!checkCCcooldown())
-					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
+					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
@@ -692,7 +692,7 @@
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
 	if(!SScommunications.can_announce(user, is_silicon))
-		to_chat(user, "Intercomms recharging. Please stand by.")
+		to_chat(user, "<span class='alert'>Intercomms recharging. Please stand by.</span>")
 		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
 	if(!input || !user.canUseTopic(src, !issilicon(usr)))

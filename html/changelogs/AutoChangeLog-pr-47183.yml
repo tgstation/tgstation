@@ -1,0 +1,4 @@
+author: "Firecage"
+delete-after: True
+changes: 
+  - bugfix: "The Wizard Academy Teacher ghost roll can now be ignored for the entire round when it pops up, plus it now spawns in the Wizard Academy away mission instead of the Wizard Lair."

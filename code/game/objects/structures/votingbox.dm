@@ -1,10 +1,10 @@
 /obj/structure/votebox
 	name = "voting box"
 	desc = "A automatic voting box."
-	
+
 	icon = 'icons/obj/votebox.dmi'
 	icon_state = "votebox_maint"
-	
+
 	anchored = TRUE
 
 	var/obj/item/card/id/owner //Slapping the box with this ID starts/ends the vote.
@@ -24,7 +24,7 @@
 		if(voting_active)
 			apply_vote(I,user)
 		else
-			to_chat(user,"<span class='notice'>[src] is in maintenance mode. Voting is not possible at the moment.</span>")
+			to_chat(user,"<span class='warning'>[src] is in maintenance mode. Voting is not possible at the moment.</span>")
 		return
 	return ..()
 
@@ -58,7 +58,7 @@
 
 	var/mob/user = usr
 	if(!is_operator(user))
-		to_chat(user,"<span class='notice'>Voting box operator authorization required.</span>")
+		to_chat(user,"<span class='warning'>Voting box operator authorization required!</span>")
 		return
 
 	if(href_list["act"])
@@ -99,7 +99,7 @@
 	var/obj/item/card/id/voter_card = user.get_idcard()
 	if(id_auth)
 		if(!voter_card)
-			to_chat(user,"<span class='warning'>[src] requires a valid id card to vote!</span>")
+			to_chat(user,"<span class='warning'>[src] requires a valid ID card to vote!</span>")
 			return
 		if(voted && (voter_card in voted))
 			to_chat(user,"<span class='warning'>[src] allows only one vote per person.</span>")
@@ -123,7 +123,7 @@
 /obj/structure/votebox/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(voting_active)
-		to_chat(user,"<span class='notice'>You can only retrieve votes if maintenance mode is active.</span>")
+		to_chat(user,"<span class='warning'>You can only retrieve votes if maintenance mode is active!</span>")
 		return FALSE
 	dump_contents()
 	to_chat(user,"<span class='notice'>You open vote retrieval hatch and dump all the votes.</span>")
@@ -143,7 +143,7 @@
 	for(var/obj/item/paper/P in contents)
 		options += P
 	if(!length(options))
-		to_chat(user,"<span class='notice>[src] is empty!</span>")
+		to_chat(user,"<span class='warning>[src] is empty!</span>")
 	else
 		var/obj/item/paper/P = pick(options)
 		user.put_in_hands(P)
@@ -187,7 +187,7 @@
 	P.name = "Voting Results"
 	P.update_icon()
 	user.put_in_hands(P)
-	to_chat(user,"<span class='notice'>[src] prints out the voting tally</span>")
+	to_chat(user,"<span class='notice'>[src] prints out the voting tally.</span>")
 
 /obj/structure/votebox/update_icon()
 	. = ..()
