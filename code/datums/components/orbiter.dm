@@ -41,6 +41,7 @@
 	for(var/i in orbiters)
 		end_orbit(i)
 	orbiters = null
+	QDEL_NULL(tracker)
 	return ..()
 
 /datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, list/arguments)
