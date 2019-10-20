@@ -1,0 +1,4 @@
+author: "qust"
+delete-after: True
+changes: 
+  - bugfix: "mining skill doesnt runtime on corpses anymore"

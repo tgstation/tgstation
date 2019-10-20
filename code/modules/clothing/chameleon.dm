@@ -57,7 +57,7 @@
 	else if(istype(old_headgear, /obj/item/clothing/mask/chameleon/drone))
 		new_headgear = new /obj/item/clothing/head/chameleon/drone()
 	else
-		to_chat(owner, "<span class='warning'>You shouldn't be able to toggle a camogear helmetmask if you're not wearing it</span>")
+		to_chat(owner, "<span class='warning'>You shouldn't be able to toggle a camogear helmetmask if you're not wearing it.</span>")
 	if(new_headgear)
 		// Force drop the item in the headslot, even though
 		// it's has TRAIT_NODROP
@@ -303,14 +303,6 @@
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
-
-/obj/item/clothing/under/chameleon/ratvar
-	name = "ratvarian engineer's jumpsuit"
-	desc = "A tough jumpsuit woven from alloy threads. It can take on the appearance of other jumpsuits."
-	icon = 'icons/obj/clothing/under/engineering.dmi'
-	icon_state = "engine"
-	item_state = "engi_suit"
-	mob_overlay_icon = 'icons/mob/clothing/under/engineering.dmi'
 
 /obj/item/clothing/under/chameleon/Initialize()
 	. = ..()

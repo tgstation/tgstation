@@ -32,7 +32,7 @@
 		to_chat(U, "<span class='notice'>Virus Sent!</span>")
 		target.honkamt = (rand(15,20))
 	else
-		to_chat(U, "PDA not found.")
+		to_chat(U, "<span class='alert'>PDA not found.</span>")
 
 /obj/item/cartridge/virus/mime
 	name = "\improper Gestur-O 1000 cartridge"
@@ -41,7 +41,7 @@
 
 /obj/item/cartridge/virus/mime/send_virus(obj/item/pda/target, mob/living/U)
 	if(charges <= 0)
-		to_chat(U, "<span class='notice'>Out of charges.</span>")
+		to_chat(U, "<span class='alert'>Out of charges.</span>")
 		return
 	if(!isnull(target) && !target.toff)
 		charges--
@@ -49,7 +49,7 @@
 		target.silent = TRUE
 		target.ttone = "silence"
 	else
-		to_chat(U, "PDA not found.")
+		to_chat(U, "<span class='alert'>PDA not found.</span>")
 
 /obj/item/cartridge/virus/syndicate
 	name = "\improper Detomatix cartridge"
@@ -78,7 +78,7 @@
 			U.show_message("<span class='notice'>Success!</span>", MSG_VISUAL)
 			target.explode()
 	else
-		to_chat(U, "PDA not found.")
+		to_chat(U, "<span class='alert'>PDA not found.</span>")
 
 /obj/item/cartridge/virus/frame
 	name = "\improper F.R.A.M.E. cartridge"
@@ -87,12 +87,12 @@
 
 /obj/item/cartridge/virus/frame/send_virus(obj/item/pda/target, mob/living/U)
 	if(charges <= 0)
-		to_chat(U, "<span class='notice'>Out of charges.</span>")
+		to_chat(U, "<span class='alert'>Out of charges.</span>")
 		return
 	if(!isnull(target) && !target.toff)
 		charges--
 		var/lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
-		to_chat(U, "<span class='notice'>Virus Sent!  The unlock code to the target is: [lock_code]</span>")
+		to_chat(U, "<span class='notice'>Virus Sent! The unlock code to the target is: [lock_code]</span>")
 		var/datum/component/uplink/hidden_uplink = target.GetComponent(/datum/component/uplink)
 		if(!hidden_uplink)
 			hidden_uplink = target.AddComponent(/datum/component/uplink)
@@ -103,4 +103,4 @@
 		telecrystals = 0
 		hidden_uplink.active = TRUE
 	else
-		to_chat(U, "PDA not found.")
+		to_chat(U, "<span class='alert'>PDA not found.</span>")

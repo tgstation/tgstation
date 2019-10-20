@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - tweak: "Fusion should now react like before, even with the heat cap."

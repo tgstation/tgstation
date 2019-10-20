@@ -35,6 +35,8 @@
 	for(var/dir in P.ducts)
 		if(P.ducts[dir] == src)
 			P.ducts -= dir
+	if(!ducts.len) //there were no ducts, so it was a direct connection. we destroy ourselves since a ductnet with only one plumber and no ducts is worthless
+		destroy_network()
 ///we combine ductnets. this occurs when someone connects to seperate sets of fluid ducts
 /datum/ductnet/proc/assimilate(datum/ductnet/D)
 	ducts.Add(D.ducts)
@@ -49,7 +51,8 @@
 	for(var/A in D.ducts)
 		var/obj/machinery/duct/M = A
 		M.duct = src //forget your old master
-	qdel(D)
+	
+	destroy_network()
 ///destroy the network and tell all our ducts and plumbers we are gone
 /datum/ductnet/proc/destroy_network(delete=TRUE)
 	for(var/A in suppliers + demanders)

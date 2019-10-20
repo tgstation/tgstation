@@ -254,25 +254,25 @@ GENE SCANNER
 		var/list/damaged = C.get_damaged_bodyparts(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
 			var/list/dmgreport = list()
-			dmgreport += "<table style='margin-left:33px'><tr><font face='Verdana'>\
-							<td style='width: 90px;'><font color='#0000CC'>Damage:</font></td>\
-							<td style='width: 55px;'><font color='red'><b>Brute</b></font></td>\
-							<td style='width: 45px;'><font color='orange'><b>Burn</b></font></td>\
-							<td style='width: 45px;'><font color='green'><b>Toxin</b></font></td>\
-							<td style='width: 90px;'><font color='blue'><b>Suffocation</b></font></td></tr>\
+			dmgreport += "<table style='margin-left:3em'><tr><font face='Verdana'>\
+							<td style='width:7em;'><font color='#0000CC'>Damage:</font></td>\
+							<td style='width:5em;'><font color='red'><b>Brute</b></font></td>\
+							<td style='width:4em;'><font color='orange'><b>Burn</b></font></td>\
+							<td style='width:4em;'><font color='green'><b>Toxin</b></font></td>\
+							<td style='width:8em;'><font color='purple'><b>Suffocation</b></font></td></tr>\
 
 							<tr><td><font color='#0000CC'>Overall:</font></td>\
-							<td><font color='red'>[brute_loss]</font></td>\
-							<td><font color='orange'>[fire_loss]</font></td>\
-							<td><font color='green'>[tox_loss]</font></td>\
-							<td><font color='blue'>[oxy_loss]</font></td></tr>"
+							<td><font color='red'>[CEILING(brute_loss,1)]</font></td>\
+							<td><font color='orange'>[CEILING(fire_loss,1)]</font></td>\
+							<td><font color='green'>[CEILING(tox_loss,1)]</font></td>\
+							<td><font color='blue'>[CEILING(oxy_loss,1)]</font></td></tr>"
 
 			for(var/o in damaged)
 				var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
 				dmgreport += "<tr><td><font color='#0000CC'>[capitalize(org.name)]:</font></td>\
-								<td><font color='red'>[(org.brute_dam > 0) ? "[org.brute_dam]" : "0"]</font></td>\
-								<td><font color='orange'>[(org.burn_dam > 0) ? "[org.burn_dam]" : "0"]</font></td></tr>"
-			dmgreport += "</table>"
+								<td><font color='red'>[(org.brute_dam > 0) ? "[CEILING(org.brute_dam,1)]" : "0"]</font></td>\
+								<td><font color='orange'>[(org.burn_dam > 0) ? "[CEILING(org.burn_dam,1)]" : "0"]</font></td></tr>"
+			dmgreport += "</font></table>"
 			to_chat(user, dmgreport.Join())
 
 
@@ -301,7 +301,7 @@ GENE SCANNER
 					major_damage += ", "
 					major_damage += organ.name
 				else
-					major_damage = "\t<span class='info'>Severely Damaged Organs: "
+					major_damage = "\t<span class='info'>Severely Damaged Organs: </span>"
 					major_damage += organ.name
 			else if(organ.damage > organ.low_threshold)
 				report_organs = TRUE
@@ -309,7 +309,7 @@ GENE SCANNER
 					minor_damage += ", "
 					minor_damage += organ.name
 				else
-					minor_damage = "\t<span class='info'>Mildly Damaged Organs: "
+					minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>"
 					minor_damage += organ.name
 
 		if(report_organs)	//we either finish the list, or set it to be empty if no organs were reported in that category
