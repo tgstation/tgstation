@@ -48802,7 +48802,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area)
+/area/medical/medbay/central)
 "cdz" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -49249,7 +49249,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area)
+/area/medical/medbay/central)
 "ceF" = (
 /obj/structure/bed/roller,
 /obj/item/radio/intercom{
