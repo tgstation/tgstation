@@ -14,6 +14,12 @@
 
 /// Sets up tracking of the given movable atom
 /datum/movement_detector/proc/track(atom/movable/target, datum/callback/listener)
+	if(tracked)
+		var/atom/movable/untrack = tracked
+		while(ismovableatom(untrack))
+			untrack.UnregisterSignal(untrack, COMSIG_MOVABLE_MOVED)
+			untrack = untrack.loc
+
 	tracked = target
 	src.listener = listener
 	
