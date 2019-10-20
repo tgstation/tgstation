@@ -86,7 +86,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// Threat requirement for a third ruleset when high pop override is in effect.
 	var/high_pop_third_rule_req = 60
 	/// The amount of additional rulesets waiting to be picked.
-	var/extra_rulesets_amount
+	var/extra_rulesets_amount = 0
 	/// Number of players who were ready on roundstart.
 	var/roundstart_pop_ready = 0
 	/// List of candidates used on roundstart rulesets.
@@ -363,6 +363,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		else
 			if(!rule.execute())
 				stack_trace("The starting rule \"[rule.name]\" failed to execute.")
+		if(rule.persistent)
+			current_rules += rule
 	..()
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
@@ -478,8 +480,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		else if(starting_rule.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
 		executed_rules += starting_rule
-		if(starting_rule.persistent)
-			current_rules += starting_rule
 		for(var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
 			if(check_blocking(rule.blocking_rules, executed_rules))
 				drafted_rules -= rule
