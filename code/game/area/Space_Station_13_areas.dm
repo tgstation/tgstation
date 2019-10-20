@@ -32,6 +32,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	outdoors = TRUE
 	ambientsounds = SPACE
 	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
+	flags_1 = CAN_BE_DIRTY_1
 
 /area/space/nearstation
 	icon_state = "space_near"
@@ -60,6 +61,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	blob_allowed = FALSE //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 	valid_territory = FALSE
 	ambientsounds = MINING
+	flags_1 = CAN_BE_DIRTY_1
 
 /area/asteroid/nearstation
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
