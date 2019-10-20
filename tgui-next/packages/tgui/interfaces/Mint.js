@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Button, Section, LabeledList, Box } from '../components';
+import { Button, LabeledList, Section } from '../components';
 
 export const Mint = props => {
   const { state } = props;
@@ -14,22 +14,22 @@ export const Mint = props => {
         buttons={(data.processing ? (
           <Button
             content="Stop"
-            onClick={() => act(ref, 'stoppress')}
-          />
+            onClick={() => act(ref, 'stoppress')} />
         ) : (
           <Button
             content="Start"
-            onClick={() => act(ref, 'startpress')}
-          />
+            onClick={() => act(ref, 'startpress')} />
         ))}>
         <LabeledList>
           {inserted_materials.map(material => {
             return (
               <LabeledList.Item
-                label = {material.material}
+                key={material.material}
+                label={material.material}
                 buttons={
-                  <Button content="Select"
-                    selected = {data.chosen_material === material.material}
+                  <Button
+                    content="Select"
+                    selected={data.chosen_material === material.material}
                     onClick={() => act(ref, 'changematerial', {
                       material_name: material.material,
                     })}

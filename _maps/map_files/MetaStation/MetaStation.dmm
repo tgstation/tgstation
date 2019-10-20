@@ -49934,8 +49934,8 @@
 "cfX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "chemistry_shutters";
-	name = "chemistry shutters"
+	id = "apothecary_shutters";
+	name = "apothecary shutters"
 	},
 /turf/open/floor/plating,
 /area/medical/apothecary)
@@ -53412,8 +53412,8 @@
 "cnL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "chemistry_shutters_2";
-	name = "chemistry shutters"
+	id = "apothecary_shutters_2";
+	name = "apothecary shutters"
 	},
 /turf/open/floor/plating,
 /area/medical/apothecary)

@@ -1054,6 +1054,7 @@
 	update_freelook_sight()
 	sleep(4)
 	density = FALSE
+	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(1)
 	sleep(1)
 	layer = OPEN_DOOR_LAYER
@@ -1096,10 +1097,12 @@
 	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		density = TRUE
+		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(1)
 	sleep(1)
 	if(!air_tight)
 		density = TRUE
+		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(1)
 	sleep(4)
 	if(!safe)

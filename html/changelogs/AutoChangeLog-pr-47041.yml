@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Blood cultists can no longer draw runes inside survival pods and lavaland ruins. This kills the survival pod space base."

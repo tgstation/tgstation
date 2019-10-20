@@ -394,8 +394,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		// tgui-next
 		"tgui-main.html" = 'tgui-next/packages/tgui/public/tgui-main.html',
 		"tgui-fallback.html" = 'tgui-next/packages/tgui/public/tgui-fallback.html',
-		"tgui.bundle.js" = 'tgui-next/packages/tgui/public/bundles/tgui.bundle.js',
-		"tgui.bundle.css" = 'tgui-next/packages/tgui/public/bundles/tgui.bundle.css',
+		"tgui.bundle.js" = 'tgui-next/packages/tgui/public/tgui.bundle.js',
+		"tgui.bundle.css" = 'tgui-next/packages/tgui/public/tgui.bundle.css',
 		"shim-console.js" = 'tgui-next/packages/tgui/public/shim-console.js',
 		"shim-html5shiv.js" = 'tgui-next/packages/tgui/public/shim-html5shiv.js',
 		"shim-ie8.js" = 'tgui-next/packages/tgui/public/shim-ie8.js',

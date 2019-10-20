@@ -42,8 +42,7 @@ export const AiAirlock = props => {
             {(!data.wires.main_1 || !data.wires.main_2)
               && '[Wires have been cut!]'
               || (data.power.main_timeleft > 0
-                && `[${data.power.main_timeleft}s]`)
-            }
+                && `[${data.power.main_timeleft}s]`)}
           </LabeledList.Item>
           <LabeledList.Item
             label="Backup"
@@ -60,8 +59,7 @@ export const AiAirlock = props => {
             {(!data.wires.backup_1 || !data.wires.backup_2)
               && '[Wires have been cut!]'
               || (data.power.backup_timeleft > 0
-                && `[${data.power.backup_timeleft}s]`)
-            }
+                && `[${data.power.backup_timeleft}s]`)}
           </LabeledList.Item>
           <LabeledList.Item
             label="Electrify"
@@ -92,8 +90,7 @@ export const AiAirlock = props => {
               || (data.shock_timeleft > 0
                 && `[${data.shock_timeleft}s]`)
               || (data.shock_timeleft === -1
-                && '[Permanent]')
-            }
+                && '[Permanent]')}
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -120,8 +117,8 @@ export const AiAirlock = props => {
                 content={data.emergency ? 'Enabled' : 'Disabled'}
                 selected={data.emergency}
                 onClick={() => act(ref, 'emergency-toggle')} />
-            )}/>
-          <LabeledList.Divider size={1} />
+            )} />
+          <LabeledList.Divider />
           <LabeledList.Item
             label="Door Bolts"
             color="bad"
@@ -174,7 +171,7 @@ export const AiAirlock = props => {
             )}>
             {!data.wires.timing && '[Wires have been cut!]'}
           </LabeledList.Item>
-          <LabeledList.Divider size={1}/>
+          <LabeledList.Divider />
           <LabeledList.Item
             label="Door Control"
             color="bad"

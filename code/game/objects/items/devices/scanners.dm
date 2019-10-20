@@ -262,16 +262,16 @@ GENE SCANNER
 							<td style='width:8em;'><font color='purple'><b>Suffocation</b></font></td></tr>\
 
 							<tr><td><font color='#0000CC'>Overall:</font></td>\
-							<td><font color='red'>[round(brute_loss,1)]</font></td>\
-							<td><font color='orange'>[round(fire_loss,1)]</font></td>\
-							<td><font color='green'>[round(tox_loss,1)]</font></td>\
-							<td><font color='purple'>[round(oxy_loss,1)]</font></td></tr>"
+							<td><font color='red'>[CEILING(brute_loss,1)]</font></td>\
+							<td><font color='orange'>[CEILING(fire_loss,1)]</font></td>\
+							<td><font color='green'>[CEILING(tox_loss,1)]</font></td>\
+							<td><font color='purple'>[CEILING(oxy_loss,1)]</font></td></tr>"
 
 			for(var/o in damaged)
 				var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
 				dmgreport += "<tr><td><font color='#0000CC'>[capitalize(org.name)]:</font></td>\
-								<td><font color='red'>[(org.brute_dam > 0) ? "[round(org.brute_dam,1)]" : "0"]</font></td>\
-								<td><font color='orange'>[(org.burn_dam > 0) ? "[round(org.burn_dam,1)]" : "0"]</font></td></tr>"
+								<td><font color='red'>[(org.brute_dam > 0) ? "[CEILING(org.brute_dam,1)]" : "0"]</font></td>\
+								<td><font color='orange'>[(org.burn_dam > 0) ? "[CEILING(org.burn_dam,1)]" : "0"]</font></td></tr>"
 			dmgreport += "</font></table>"
 			to_chat(user, dmgreport.Join())
 

@@ -135,10 +135,11 @@
 
 	deltimer(recharge_timerid)
 	
-	var/skill_modifier
+	var/skill_modifier = 1
 	if(ishuman(holder))
 		var/mob/living/carbon/human/H = holder
-		skill_modifier = H.mind.get_skill_speed_modifier(/datum/skill/mining)
+		if(H.mind)
+			skill_modifier = H.mind.get_skill_speed_modifier(/datum/skill/mining)
 
 	recharge_timerid = addtimer(CALLBACK(src, .proc/reload), recharge_time * carried * skill_modifier, TIMER_STOPPABLE)
 

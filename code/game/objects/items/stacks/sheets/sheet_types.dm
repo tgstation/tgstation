@@ -384,7 +384,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box),				\
 		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box),					\
 		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets),			\
-		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes),			\
+		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes),
+		new /datum/stack_recipe("nugget box", /obj/item/storage/fancy/nugget_box),			\
 		null,																					\
 
 		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot),			\
@@ -479,7 +480,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	var/turf/T = get_turf(user) //we may have moved. adjust as needed...
 	var/area/A = get_area(user)
-	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !A.blob_allowed))
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !(A.flags_1 & CULT_PERMITTED_1)))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 		return FALSE
 	return ..()

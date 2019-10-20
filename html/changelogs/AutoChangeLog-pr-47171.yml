@@ -1,0 +1,4 @@
+author: "JDawg1290"
+delete-after: True
+changes: 
+  - bugfix: "Doors now properly toggle obscurity. Windoors will not obscure floors ever."
