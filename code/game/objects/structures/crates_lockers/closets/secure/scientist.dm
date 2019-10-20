@@ -20,7 +20,6 @@
 	new /obj/item/clothing/gloves/color/latex(src)
 	new /obj/item/radio/headset/heads/rd(src)
 	new /obj/item/tank/internals/oxygen(src)
-	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/storage/lockbox/medal/sci(src)
 	new /obj/item/clothing/suit/armor/reactive/teleport(src)
