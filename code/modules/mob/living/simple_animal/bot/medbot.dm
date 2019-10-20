@@ -40,6 +40,15 @@
 	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
+    var/treatment_brute_avoid = /datum/reagent/medicine/tricordrazine
+    var/treatment_brute = /datum/reagent/medicine/bicaridine
+    var/treatment_fire_avoid = /datum/reagent/medicine/tricordrazine
+    var/treatment_fire = /datum/reagent/medicine/kelotane
+    var/treatment_tox_avoid = /datum/reagent/medicine/tricordrazine
+    var/treatment_tox = /datum/reagent/medicine/charcoal
+    var/treatment_virus_avoid = null
+    var/treatment_virus = /datum/reagent/medicine/spaceacillin
+    var/treat_virus = 1 //If on, the bot will attempt to treat viral infections, curing them if possible.
 	var/shut_up = 0 //self explanatory :)
 	var/datum/techweb/linked_techweb
 
