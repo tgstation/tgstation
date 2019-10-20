@@ -8,9 +8,6 @@ export const Achievements = props => {
   const { ref } = config;
   return (
     <Fragment>
-      <NoticeBox>
-        <pre>{JSON.stringify(data.achievements)}</pre>
-      </NoticeBox>
 
       <Tabs>
         {data.categories.map(category => (
@@ -27,7 +24,7 @@ export const Achievements = props => {
                       {achievement.desc}
                       <Box
                         color={!!achievement.achieved ? "good" : "bad"}
-                        content={!!achievement.achieved ? "Gottened" : "Locked"} />
+                        content={!!achievement.achieved ? "Unlocked" : "Locked"} />
                     </td>
                   </tr>
               ))}

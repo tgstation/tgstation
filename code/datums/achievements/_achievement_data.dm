@@ -76,7 +76,7 @@
 		load_all_achievements() //Only necesary if we havn't used UI before
 		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
 		assets.send(user)
-		ui = new(user, src, ui_key, "achievements", "Achievements Menu", 300, 300, master_ui, state)
+		ui = new(user, src, ui_key, "achievements", "Achievements Menu", 1000, 500, master_ui, state)
 		ui.open()
 
 /datum/achievement_data/ui_data(mob/user)
