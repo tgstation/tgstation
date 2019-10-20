@@ -24,7 +24,7 @@
 		var/turf/T = get_turf(user)
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, 1, -1)
+			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
 			visible_message("<span class='boldwarning'>[user] melts into the shadows!</span>")
 			user.SetAllImmobility(0)
 			user.setStaminaLoss(0, 0)
@@ -68,7 +68,7 @@
 		else
 			visible_message("<span class='boldwarning'>[jaunter] emerges from the darkness!</span>")
 		jaunter.forceMove(get_turf(src))
-		playsound(get_turf(jaunter), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
+		playsound(get_turf(jaunter), 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 		jaunter = null
 	qdel(src)
 

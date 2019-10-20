@@ -45,7 +45,7 @@
 /obj/item/resonator/pre_attack(atom/target, mob/user, params)
 	if(check_allowed_items(target, 1))
 		CreateResonance(target, user)
-	return TRUE
+	. = ..()
 
 //resonance field, crushes rock, damages mobs
 /obj/effect/temp_visual/resonance
@@ -66,7 +66,7 @@
 	res = set_resonator
 	if(res)
 		res.fields += src
-	playsound(src,'sound/weapons/resonator_fire.ogg',50,1)
+	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
 	transform = matrix()*0.75
 	animate(src, transform = matrix()*1.5, time = duration)
 	deltimer(timerid)
@@ -97,7 +97,7 @@
 		var/turf/closed/mineral/M = T
 		M.gets_drilled(creator)
 	check_pressure(T)
-	playsound(T,'sound/weapons/resonator_blast.ogg',50,1)
+	playsound(T,'sound/weapons/resonator_blast.ogg',50,TRUE)
 	for(var/mob/living/L in T)
 		if(creator)
 			log_combat(creator, L, "used a resonator field on", "resonator")

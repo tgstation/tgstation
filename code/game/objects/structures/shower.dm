@@ -49,6 +49,7 @@
 		return ..()
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
+	..()
 	to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
 	if(I.use_tool(src, user, 50))
 		switch(current_temperature)
@@ -126,7 +127,6 @@
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
 	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
-	L.wash_cream()
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))

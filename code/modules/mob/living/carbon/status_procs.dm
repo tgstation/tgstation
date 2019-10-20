@@ -13,7 +13,10 @@
 		return
 	if(!IsParalyzed())
 		to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
+	var/prev = stam_paralyzed
 	stam_paralyzed = TRUE
+	if(!prev && getStaminaLoss() < 120) // Puts you a little further into the initial stamcrit, makes stamcrit harder to outright counter with chems.
+		adjustStaminaLoss(30, FALSE)
 
 /mob/living/carbon/adjust_drugginess(amount)
 	druggy = max(druggy+amount, 0)

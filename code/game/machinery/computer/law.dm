@@ -3,23 +3,11 @@
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command"
-	var/obj/item/gps/internal/ai_upload/embedded_gps
-	var/obj/item/gps/internal/ai_upload/embedded_gps_type = /obj/item/gps/internal/ai_upload
-	time_to_scewdrive = 60
-
-/obj/item/gps/internal/ai_upload
-	icon_state = null
-	gpstag = "Encrypted Upload Signal"
-	desc = "Signal used to connect remotely with silicons."
-	invisibility = 100
+	time_to_screwdrive = 60
 
 /obj/machinery/computer/upload/Initialize()
-	embedded_gps = new embedded_gps_type(src)
-	return ..()
-
-/obj/machinery/computer/upload/Destroy()
-	QDEL_NULL(embedded_gps)
-	return ..()
+	. = ..()
+	AddComponent(/datum/component/gps, "Encrypted Upload Signal")
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/aiModule))
@@ -58,7 +46,7 @@
 	if (!current)
 		to_chat(user, "<span class='caution'>No active AIs detected!</span>")
 	else
-		to_chat(user, "[current.name] selected for law changes.")
+		to_chat(user, "<span class='notice'>[current.name] selected for law changes.</span>")
 
 /obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
 	if(!A || !isAI(A))
@@ -79,7 +67,7 @@
 	if(!current)
 		to_chat(user, "<span class='caution'>No active unslaved cyborgs detected!</span>")
 	else
-		to_chat(user, "[current.name] selected for law changes.")
+		to_chat(user, "<span class='notice'>[current.name] selected for law changes.</span>")
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
 	if(!B || !iscyborg(B))

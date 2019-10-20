@@ -5,6 +5,8 @@
 	icon_state = "implantchair"
 	density = TRUE
 	opacity = 0
+	ui_x = 375
+	ui_y = 280
 
 	var/ready = TRUE
 	var/replenishing = FALSE
@@ -30,7 +32,7 @@
 /obj/machinery/implantchair/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "implantchair", name, 375, 280, master_ui, state)
+		ui = new(user, src, ui_key, "implantchair", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 
@@ -80,7 +82,7 @@
 			ready = FALSE
 			addtimer(CALLBACK(src,"set_ready"),injection_cooldown)
 	else
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, 1)
+		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 	update_icon()
 
 /obj/machinery/implantchair/proc/implant_action(mob/living/M)
@@ -124,7 +126,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 			return

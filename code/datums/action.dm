@@ -257,6 +257,14 @@
 	if(istype(H))
 		H.toggle_welding_screen(owner)
 
+/datum/action/item_action/toggle_welding_screen/plasmaman
+	name = "Toggle Welding Screen"
+
+/datum/action/item_action/toggle_welding_screen/plasmaman/Trigger()
+	var/obj/item/clothing/head/helmet/space/plasmaman/H = target
+	if(istype(H))
+		H.toggle_welding_screen(owner)
+
 /datum/action/item_action/toggle_headphones
 	name = "Toggle Headphones"
 	desc = "UNTZ UNTZ UNTZ"
@@ -310,44 +318,14 @@
 			return 0
 	return ..()
 
-/datum/action/item_action/clock
-	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
-	background_icon_state = "bg_clock"
-	buttontooltipstyle = "clockcult"
-
-/datum/action/item_action/clock/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
-		return 0
-	return ..()
-
-/datum/action/item_action/clock/toggle_visor
-	name = "Create Judicial Marker"
-	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
-
-/datum/action/item_action/clock/toggle_visor/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
-		return 0
-	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
-		var/obj/item/clothing/glasses/judicial_visor/V = target
-		if(V.recharging)
-			return 0
-	return ..()
-
-/datum/action/item_action/clock/hierophant
-	name = "Hierophant Network"
-	desc = "Lets you discreetly talk with all other servants. Nearby listeners can hear you whispering, so make sure to do this privately."
-	button_icon_state = "hierophant_slab"
-
-/datum/action/item_action/clock/quickbind
-	name = "Quickbind"
-	desc = "If you're seeing this, file a bug report."
-	var/scripture_index = 0 //the index of the scripture we're associated with
-
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
 
 /datum/action/item_action/toggle_helmet_mode
 	name = "Toggle Helmet Mode"
+
+/datum/action/item_action/crew_monitor
+	name = "Interface With Crew Monitor"
 
 /datum/action/item_action/toggle
 
@@ -506,6 +484,7 @@
 		else
 			to_chat(owner, "<span class='warning'>Your hands are full!</span>")
 
+///MGS BOX!
 /datum/action/item_action/agent_box
 	name = "Deploy Box"
 	desc = "Find inner peace, here, in the box."
@@ -513,22 +492,30 @@
 	background_icon_state = "bg_agent"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"
+	///Cooldown between deploys. Uses world.time
 	var/cooldown = 0
-	var/obj/structure/closet/cardboard/agent/box
+	///The type of closet this action spawns.
+	var/boxtype = /obj/structure/closet/cardboard/agent
 
+///Handles opening and closing the box.
 /datum/action/item_action/agent_box/Trigger()
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
-	if(QDELETED(box))
-		if(cooldown < world.time - 100)
-			box = new(owner.drop_location())
-			owner.forceMove(box)
-			cooldown = world.time
-			owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-	else
-		owner.forceMove(box.drop_location())
+	if(istype(owner.loc, /obj/structure/closet/cardboard/agent))
+		var/obj/structure/closet/cardboard/agent/box = owner.loc
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-		QDEL_NULL(box)
+		box.open()
+		return
+	//Box closing from here on out.
+	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
+		to_chat(owner, "<span class='warning'>You need more space to activate this implant!</span>")
+		return
+	if(cooldown < world.time - 100)
+		var/box = new boxtype(owner.drop_location())
+		owner.forceMove(box)
+		cooldown = world.time
+		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
 //Preset for spells
 /datum/action/spell_action
@@ -722,7 +709,7 @@
 	small_icon_state = "goliath2"
 
 /datum/action/small_sprite/megafauna/legion
-	small_icon_state = "dwarf_legion"
+	small_icon_state = "mega_legion"
 
 /datum/action/small_sprite/megafauna/spacedragon
 	small_icon = 'icons/mob/carp.dmi'

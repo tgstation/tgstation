@@ -10,6 +10,7 @@
 	sound = 'sound/effects/magic.ogg'
 	cooldown_min = 300
 	level_max = 0
+	action_icon_state = "spacetime"
 
 /obj/effect/proc_holder/spell/spacetime_dist/can_cast(mob/user = usr)
 	if(ready)
@@ -97,7 +98,7 @@
 	busy = TRUE
 	flick("purplesparkles", src)
 	AM.forceMove(get_turf(src))
-	playsound(get_turf(src),sound,70,0)
+	playsound(get_turf(src),sound,70,FALSE)
 	busy = FALSE
 
 /obj/effect/cross_action/spacetime_dist/Crossed(atom/movable/AM)

@@ -89,7 +89,7 @@
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
 	if (location && !isobserver(teleatom))
 		if (sound)
-			playsound(location, sound, 60, 1)
+			playsound(location, sound, 60, TRUE)
 		if (effect)
 			effect.attach(location)
 			effect.start()

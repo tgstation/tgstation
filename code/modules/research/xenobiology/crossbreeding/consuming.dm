@@ -25,13 +25,13 @@ Consuming extracts:
 			nutriment_eaten += N.volume
 			to_chat(user, "<span class='notice'>[src] opens up and swallows [O] whole!</span>")
 			qdel(O)
-			playsound(src, 'sound/items/eatfood.ogg', 20, 1)
+			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
 		else
 			to_chat(user, "<span class='warning'>[src] burbles unhappily at the offering.</span>")
 		if(nutriment_eaten >= nutriment_required)
 			nutriment_eaten = 0
 			user.visible_message("<span class='notice'>[src] swells up and produces a small pile of cookies!</span>")
-			playsound(src, 'sound/effects/splat.ogg', 40, 1)
+			playsound(src, 'sound/effects/splat.ogg', 40, TRUE)
 			last_produced = world.time
 			for(var/i in 1 to cookies)
 				var/obj/item/S = spawncookie()
@@ -73,8 +73,8 @@ Consuming extracts:
 		var/mob/living/carbon/human/H = M
 
 		if(!istype(H) || !HAS_TRAIT(H, TRAIT_AGEUSIA))
-			to_chat(M, "Tastes like [taste].")
-		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, 1)
+			to_chat(M, "<span class='notice'>Tastes like [taste].</span>")
+		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, TRUE)
 		if(nutrition)
 			M.reagents.add_reagent(/datum/reagent/consumable/nutriment,nutrition)
 		do_effect(M, user)
@@ -125,7 +125,7 @@ Consuming extracts:
 	M.adjustToxLoss(-5, forced=1) //To heal slimepeople.
 	M.adjustOxyLoss(-5)
 	M.adjustCloneLoss(-5)
-	M.adjustBrainLoss(-5)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
 
 /obj/item/slimecross/consuming/blue
 	colour = "blue"
@@ -247,7 +247,7 @@ Consuming extracts:
 	if(target)
 		do_teleport(M, target, 0, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		new /obj/effect/particle_effect/sparks(get_turf(M))
-		playsound(get_turf(M), "sparks", 50, 1)
+		playsound(get_turf(M), "sparks", 50, TRUE)
 
 /obj/item/slimecross/consuming/sepia
 	colour = "sepia"
@@ -336,7 +336,7 @@ Consuming extracts:
 
 /obj/item/slime_cookie/red/do_effect(mob/living/M, mob/user)
 	new /obj/effect/decal/cleanable/blood(get_turf(M))
-	playsound(get_turf(M), 'sound/effects/splat.ogg', 10, 1)
+	playsound(get_turf(M), 'sound/effects/splat.ogg', 10, TRUE)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		C.blood_volume += 25 //Half a vampire drain.
@@ -388,7 +388,7 @@ Consuming extracts:
 	M.dropItemToGround(held)
 	var/newcoin = /obj/item/coin/gold
 	var/obj/item/coin/C = new newcoin(get_turf(M))
-	playsound(get_turf(C), 'sound/items/coinflip.ogg', 50, 1)
+	playsound(get_turf(C), 'sound/items/coinflip.ogg', 50, TRUE)
 	M.put_in_hand(C)
 
 /obj/item/slimecross/consuming/oil

@@ -158,7 +158,7 @@
 		if(EAST)
 			icon_state = "beam_splash_e"
 
-/obj/item/projectile/curse_hand/update_icon()
+/obj/projectile/curse_hand/update_icon()
 	icon_state = "[icon_state][handedness]"
 
 /obj/effect/temp_visual/wizard
@@ -363,6 +363,10 @@
 /obj/effect/temp_visual/impact_effect/purple_laser
 	icon_state = "impact_laser_purple"
 	duration = 4
+
+/obj/effect/temp_visual/impact_effect/shrink
+	icon_state = "m_shield"
+	duration = 10
 
 /obj/effect/temp_visual/impact_effect/ion
 	icon_state = "shieldsparkles"

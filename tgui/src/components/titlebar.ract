@@ -1,6 +1,6 @@
 <script>
 import { UI_INTERACTIVE, UI_UPDATE, UI_DISABLED } from 'util/constants'
-import { href, winset } from 'util/byond'
+import { href, winget, winset, runCommand } from 'util/byond'
 import { drag } from 'util/dragresize'
 
 component.exports = {
@@ -15,6 +15,21 @@ component.exports = {
     }
   },
   oninit () {
+    // Calculate offset between the "browser's screen space" and
+    // "BYOND screen space".
+    // This is necessary, because Windows 10 taskbar decreases the effective
+    // height by about 40px. If taskbar is located at the top and you try
+    // to drag a TGUI window, it rapidly propels itself to the bottom of
+    // the screen and gets stuck.
+    // See: https://github.com/tgstation/tgstation/issues/44038
+    this.set('screenOffsetX', 0);
+    this.set('screenOffsetY', 0);
+    winget(this.get('config.window'), 'pos')
+      .then(pos => {
+        this.set('screenOffsetX', window.screenX - pos.x);
+        this.set('screenOffsetY', window.screenY - pos.y);
+      });
+
     const ondrag = drag.bind(this)
     const onrelease = (event) => this.set({ drag: false, x: null, y: null })
 
@@ -36,7 +51,7 @@ component.exports = {
       },
       close () {
         winset(this.get('config.window'), 'is-visible', false)
-        window.location.href = href({command: `uiclose ${this.get('config.ref')}`}, 'winset')
+        runCommand(`uiclose ${this.get('config.ref')}`)
       },
       minimize () {
         winset(this.get('config.window'), 'is-minimized', true)

@@ -74,8 +74,8 @@
 	key_third_person = "deathgasps"
 	message = "seizes up and falls limp, their eyes dead and lifeless..."
 	message_robot = "shudders violently for a moment before falling still, its eyes slowly darkening."
-	message_AI = "lets out a flurry of sparks, its screen flickering as its systems slowly halt."
-	message_alien = "lets out a waning guttural screech, green blood bubbling from its maw..."
+	message_AI = "screeches, its screen flickering as its systems slowly halt."
+	message_alien = "lets out a waning guttural screech, and collapses onto the floor..."
 	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
 	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
 	message_simple =  "stops moving..."
@@ -154,6 +154,22 @@
 	message = "gasps!"
 	emote_type = EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
+	only_forced_audio = TRUE
+	vary = TRUE
+
+/datum/emote/living/gasp/get_sound(mob/living/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.mind?.miming)
+		return
+	if(ishumanbasic(H) || isfelinid(H))
+		if(user.gender == FEMALE)
+			return pick('sound/voice/human/gasps/femalegasp1.ogg', 'sound/voice/human/gasps/femalegasp2.ogg', 'sound/voice/human/gasps/femalegasp3.ogg', 'sound/voice/human/gasps/femalegasp4.ogg', 'sound/voice/human/gasps/femalegasp5.ogg')
+		else
+			return pick('sound/voice/human/gasps/malegasp1.ogg', 'sound/voice/human/gasps/malegasp2.ogg', 'sound/voice/human/gasps/malegasp3.ogg', 'sound/voice/human/gasps/malegasp4.ogg')
+
+
 
 /datum/emote/living/giggle
 	key = "giggle"
@@ -250,7 +266,7 @@
 				H.Paralyze(20)
 			else
 				message_param = "<span class='userdanger'>bumps [user.p_their()] head on the ground</span> trying to motion towards %t."
-				H.adjustBrainLoss(5)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 	..()
 
 /datum/emote/living/pout
@@ -425,12 +441,12 @@
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
 	if(is_banned_from(user.ckey, "Emote"))
-		to_chat(user, "You cannot send custom emotes (banned).")
+		to_chat(user, "<span class='boldwarning'>You cannot send custom emotes (banned).</span>")
 		return FALSE
 	else if(QDELETED(user))
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
-		to_chat(user, "You cannot send IC messages (muted).")
+		to_chat(user, "<span class='boldwarning'>You cannot send IC messages (muted).</span>")
 		return FALSE
 	else if(!params)
 		var/custom_emote = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)

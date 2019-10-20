@@ -292,8 +292,7 @@
 
 		radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
 
-		spawn(1)
-			updateUsrDialog() // pretty sure this increases responsiveness
+		updateUsrDialog()
 
 	if(href_list["operation"])
 		switch(href_list["operation"])
@@ -316,7 +315,7 @@
 			if("togglemoving")
 				moving = !moving
 				if(moving)
-					spawn() MagnetMove()
+					INVOKE_ASYNC(src, .proc/MagnetMove)
 
 
 	updateUsrDialog()
@@ -353,8 +352,7 @@
 		pathpos++ // increase iterator
 
 		// Broadcast the signal
-		spawn()
-			radio_connection.post_signal(src, signal, filter = RADIO_MAGNETS)
+		INVOKE_ASYNC(CALLBACK(radio_connection, /datum/radio_frequency.proc/post_signal, src, signal, RADIO_MAGNETS))
 
 		if(speed == 10)
 			sleep(1)

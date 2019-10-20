@@ -13,14 +13,16 @@
 #define BANTYPE_TEMP		2
 #define BANTYPE_JOB_PERMA	3
 #define BANTYPE_JOB_TEMP	4
-#define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
+/// used to locate stuff to unban.
+#define BANTYPE_ANY_FULLBAN	5
 
 #define BANTYPE_ADMIN_PERMA	7
 #define BANTYPE_ADMIN_TEMP	8
-#define BANTYPE_ANY_JOB		9 //used to remove jobbans
+/// used to remove jobbans
+#define BANTYPE_ANY_JOB		9
 
 //Admin Permissions
-#define R_BUILD		(1<<0)
+#define R_BUILD			(1<<0)
 #define R_ADMIN			(1<<1)
 #define R_BAN			(1<<2)
 #define R_FUN			(1<<3)
@@ -31,7 +33,7 @@
 #define R_STEALTH		(1<<8)
 #define R_POLL			(1<<9)
 #define R_VAREDIT		(1<<10)
-#define R_SOUND		(1<<11)
+#define R_SOUND			(1<<11)
 #define R_SPAWN			(1<<12)
 #define R_AUTOADMIN		(1<<13)
 #define R_DBRANKS		(1<<14)
@@ -77,14 +79,26 @@
 #define AHELP_CLOSED 2
 #define AHELP_RESOLVED 3
 
-#define ROUNDSTART_LOGOUT_REPORT_TIME	6000 //Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
+/// Amount of time (in deciseconds) after the rounds starts, that the player disconnect report is issued.
+#define ROUNDSTART_LOGOUT_REPORT_TIME	6000
 
-#define SPAM_TRIGGER_WARNING	5	//Number of identical messages required before the spam-prevention will warn you to stfu
-#define SPAM_TRIGGER_AUTOMUTE	10	//Number of identical messages required before the spam-prevention will automute you
+/// Number of identical messages required before the spam-prevention will warn you to stfu
+#define SPAM_TRIGGER_WARNING	5
+/// Number of identical messages required before the spam-prevention will automute you
+#define SPAM_TRIGGER_AUTOMUTE	10
+
+///Max length of a keypress command before it's considered to be a forged packet/bogus command
+#define MAX_KEYPRESS_COMMANDLENGTH 16
+///Max amount of keypress messages per second over two seconds before client is autokicked
+#define MAX_KEYPRESS_AUTOKICK 50
+///Length of held key rolling buffer
+#define HELD_KEY_BUFFER_LENGTH 15
 
 #define STICKYBAN_DB_CACHE_TIME 10 SECONDS
 #define STICKYBAN_ROGUE_CHECK_TIME 5
 
 
-#define POLICY_POLYMORPH "polymorph" //Shown to vicitm of staff of change and related effects.
-#define POLICY_VERB_HEADER "policy_verb_header" //Shown on top of policy verb window
+/// Shown to vicitm of staff of change and related effects.
+#define POLICY_POLYMORPH "polymorph"
+/// Shown on top of policy verb window
+#define POLICY_VERB_HEADER "policy_verb_header"

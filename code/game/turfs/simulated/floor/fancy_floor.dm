@@ -25,7 +25,7 @@
 /turf/open/floor/wood/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
-	return pry_tile(I, user)
+	return pry_tile(I, user) ? TRUE : FALSE
 
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
@@ -90,11 +90,20 @@
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if((C.tool_behaviour == TOOL_SHOVEL) && params)
 		new ore_type(src, 2)
-		user.visible_message("[user] digs up [src].", "<span class='notice'>You [turfverb] [src].</span>")
-		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] digs up [src].</span>", "<span class='notice'>You [turfverb] [src].</span>")
+		playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
 		make_plating()
 	if(..())
 		return
+
+/turf/open/floor/grass/fairy //like grass but fae-er
+	name = "fairygrass patch"
+	desc = "Something about this grass makes you want to frolic. Or get high."
+	icon_state = "fairygrass"
+	floor_tile = /obj/item/stack/tile/fairygrass
+	light_range = 2
+	light_power = 0.80
+	light_color = "#33CCFF"
 
 /turf/open/floor/grass/snow
 	gender = PLURAL
@@ -125,7 +134,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "basalt"
 	ore_type = /obj/item/stack/ore/glass/basalt
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	slowdown = 0
 
 /turf/open/floor/grass/snow/basalt/Initialize()
@@ -200,6 +209,46 @@
 	icon = 'icons/turf/floors/carpet_black.dmi'
 	floor_tile = /obj/item/stack/tile/carpet/black
 	canSmoothWith = list(/turf/open/floor/carpet/black)
+
+/turf/open/floor/carpet/blue
+	icon = 'icons/turf/floors/carpet_blue.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/blue
+	canSmoothWith = list(/turf/open/floor/carpet/blue)
+
+/turf/open/floor/carpet/cyan
+	icon = 'icons/turf/floors/carpet_cyan.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/cyan
+	canSmoothWith = list(/turf/open/floor/carpet/cyan)
+
+/turf/open/floor/carpet/green
+	icon = 'icons/turf/floors/carpet_green.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/green
+	canSmoothWith = list(/turf/open/floor/carpet/green)
+
+/turf/open/floor/carpet/orange
+	icon = 'icons/turf/floors/carpet_orange.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/orange
+	canSmoothWith = list(/turf/open/floor/carpet/orange)
+
+/turf/open/floor/carpet/purple
+	icon = 'icons/turf/floors/carpet_purple.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/purple
+	canSmoothWith = list(/turf/open/floor/carpet/purple)
+
+/turf/open/floor/carpet/red
+	icon = 'icons/turf/floors/carpet_red.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/red
+	canSmoothWith = list(/turf/open/floor/carpet/red)
+
+/turf/open/floor/carpet/royalblack
+	icon = 'icons/turf/floors/carpet_royalblack.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/royalblack
+	canSmoothWith = list(/turf/open/floor/carpet/royalblack)
+
+/turf/open/floor/carpet/royalblue
+	icon = 'icons/turf/floors/carpet_royalblue.dmi'
+	floor_tile = /obj/item/stack/tile/carpet/royalblue
+	canSmoothWith = list(/turf/open/floor/carpet/royalblue)
 
 
 /turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)

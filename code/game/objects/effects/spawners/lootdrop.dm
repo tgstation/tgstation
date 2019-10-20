@@ -356,3 +356,16 @@
 				/obj/item/circuitboard/computer/apc_control,
 				/obj/item/circuitboard/computer/robotics
 				)
+/obj/effect/spawner/lootdrop/special_die
+	name = "special die spawner"
+	loot = list(
+				/obj/item/dice/d1 = 1,
+				/obj/item/dice/d2 = 1,
+				/obj/item/dice/fudge = 1,
+				/obj/item/dice/d6/space = 1,
+				/obj/item/dice/d00 = 1,
+				/obj/item/dice/eightbd20 = 1,
+				/obj/item/dice/fourdd6 = 1,
+				/obj/item/dice/d100 = 1
+				)
+

@@ -335,6 +335,14 @@
 	item_state = "officertanjacket"
 	body_parts_covered = CHEST|ARMS
 
+/obj/item/clothing/suit/shrine_maiden
+	name = "shrine maiden's outfit"
+	desc = "Makes you want to exterminate some troublesome youkai."
+	icon_state = "shrine_maiden"
+	item_state = "shrine_maiden"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT
+
 /*
  * Misc
  */
@@ -461,7 +469,7 @@
 
 /obj/item/clothing/suit/gothcoat
 	name = "gothic coat"
-	desc = "Perfect for those who want stalk in a corner of a bar."
+	desc = "Perfect for those who want to stalk around a corner of a bar."
 	icon_state = "gothcoat"
 	item_state = "gothcoat"
 
@@ -478,7 +486,7 @@
 	name = "pharoah tunic"
 	desc = "Lavish space tomb not included."
 	icon_state = "pharoah"
-	icon_state = "pharoah"
+	item_state = "pharoah"
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/caution

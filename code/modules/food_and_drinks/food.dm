@@ -14,6 +14,7 @@
 	resistance_flags = FLAMMABLE
 	var/foodtype = NONE
 	var/last_check_time
+	var/in_container = FALSE //currently just stops "was bitten X times!" messages on canned food
 
 /obj/item/reagent_containers/food/Initialize(mapload)
 	. = ..()

@@ -172,7 +172,7 @@
 		to_chat(user, "<span class='danger'>[C] is full.</span>")
 		return
 	C.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10))
-	user.visible_message("[user] scoops some plasma from the [src] with \the [C].", "<span class='notice'>You scoop out some plasma from the [src] using \the [C].</span>")
+	user.visible_message("<span class='notice'>[user] scoops some plasma from the [src] with \the [C].</span>", "<span class='notice'>You scoop out some plasma from the [src] using \the [C].</span>")
 
 /turf/open/lava/plasma/burn_stuff(AM)
 	. = 0
@@ -480,7 +480,7 @@
 				/obj/item/storage/firstaid/brute = 27,
 				/obj/item/storage/firstaid/fire = 27,
 				/obj/item/storage/toolbox/syndicate = 12,
-				/obj/item/grenade/plastic/c4 = 7,
+				/obj/item/grenade/c4 = 7,
 				/obj/item/grenade/clusterbuster/smoke = 15,
 				/obj/item/clothing/under/chameleon = 13,
 				/obj/item/clothing/shoes/chameleon/noslip = 10,

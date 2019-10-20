@@ -121,7 +121,10 @@
 					break
 
 	if(href_list["portion"])
-		portion = CLAMP(input("How much drink do you want to dispense per glass?") as num, 0, 50)
+		portion = CLAMP(input("How much drink do you want to dispense per glass?") as num|null, 0, 50)
+		
+		if (isnull(portion))
+			return
 
 	if(href_list["pour"] || href_list["m_pour"])
 		if(glasses-- <= 0)

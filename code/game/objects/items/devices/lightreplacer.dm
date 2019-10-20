@@ -159,7 +159,7 @@
 	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."
 
 /obj/item/lightreplacer/proc/Use(mob/user)
-	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	AddUses(-1)
 	return 1
 
@@ -175,7 +175,7 @@
 	bulb_shards = bulb_shards % shards_required
 	if(new_bulbs != 0)
 		to_chat(user, "<span class='notice'>\The [src] has fabricated a new bulb from the broken glass it has stored. It now has [uses] uses.</span>")
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 	return new_bulbs
 
 /obj/item/lightreplacer/proc/Charge(var/mob/user)
@@ -212,7 +212,7 @@
 			return
 
 		else
-			to_chat(U, "\The [src]'s refill light blinks red.")
+			to_chat(U, "<span class='warning'>\The [src]'s refill light blinks red.</span>")
 			return
 	else
 		to_chat(U, "<span class='warning'>There is a working [target.fitting] already inserted!</span>")
@@ -220,7 +220,7 @@
 
 /obj/item/lightreplacer/proc/Emag()
 	obj_flags ^= EMAGGED
-	playsound(src.loc, "sparks", 100, 1)
+	playsound(src.loc, "sparks", 100, TRUE)
 	if(obj_flags & EMAGGED)
 		name = "shortcircuited [initial(name)]"
 	else
@@ -250,7 +250,7 @@
 			ReplaceLight(A, U)
 
 	if(!used)
-		to_chat(U, "\The [src]'s refill light blinks red.")
+		to_chat(U, "<span class='warning'>\The [src]'s refill light blinks red.</span>")
 
 /obj/item/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	J.put_in_cart(src, user)

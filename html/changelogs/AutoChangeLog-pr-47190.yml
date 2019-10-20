@@ -1,0 +1,6 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a bunch of plumbing bugs"
+  - tweak: "Moves the plumbing RCD from autolathe to medical protolathe"
+  - tweak: "You can now built plumbing machines without ducts in-between, if you so wish"

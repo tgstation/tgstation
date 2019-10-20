@@ -15,21 +15,21 @@
 	var/obj/item/IC = null
 
 /datum/surgery_step/handle_cavity/tool_check(mob/user, obj/item/tool)
-	if(istype(tool, /obj/item/cautery) || istype(tool, /obj/item/gun/energy/laser))
+	if(tool.tool_behaviour == TOOL_CAUTERY || istype(tool, /obj/item/gun/energy/laser))
 		return FALSE
-	return !tool.is_hot()
+	return !tool.get_temperature()
 
 /datum/surgery_step/handle_cavity/preop(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/chest/CH = target.get_bodypart(BODY_ZONE_CHEST)
 	IC = CH.cavity_item
 	if(tool)
 		display_results(user, target, "<span class='notice'>You begin to insert [tool] into [target]'s [target_zone]...</span>",
-			"[user] begins to insert [tool] into [target]'s [target_zone].",
-			"[user] begins to insert [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [target]'s [target_zone].")
+			"<span class='notice'>[user] begins to insert [tool] into [target]'s [target_zone].</span>",
+			"<span class='notice'>[user] begins to insert [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [target]'s [target_zone].</span>")
 	else
 		display_results(user, target, "<span class='notice'>You check for items in [target]'s [target_zone]...</span>",
-			"[user] checks for items in [target]'s [target_zone].",
-			"[user] looks for something in [target]'s [target_zone].")
+			"<span class='notice'>[user] checks for items in [target]'s [target_zone].</span>",
+			"<span class='notice'>[user] looks for something in [target]'s [target_zone].</span>")
 
 /datum/surgery_step/handle_cavity/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/chest/CH = target.get_bodypart(BODY_ZONE_CHEST)
@@ -39,16 +39,16 @@
 			return 0
 		else
 			display_results(user, target, "<span class='notice'>You stuff [tool] into [target]'s [target_zone].</span>",
-				"[user] stuffs [tool] into [target]'s [target_zone]!",
-				"[user] stuffs [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [target]'s [target_zone].")
+				"<span class='notice'>[user] stuffs [tool] into [target]'s [target_zone]!</span>",
+				"<span class='notice'>[user] stuffs [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [target]'s [target_zone].</span>")
 			user.transferItemToLoc(tool, target, TRUE)
 			CH.cavity_item = tool
 			return 1
 	else
 		if(IC)
 			display_results(user, target, "<span class='notice'>You pull [IC] out of [target]'s [target_zone].</span>",
-				"[user] pulls [IC] out of [target]'s [target_zone]!",
-				"[user] pulls [IC.w_class > WEIGHT_CLASS_SMALL ? IC : "something"] out of [target]'s [target_zone].")
+				"<span class='notice'>[user] pulls [IC] out of [target]'s [target_zone]!</span>",
+				"<span class='notice'>[user] pulls [IC.w_class > WEIGHT_CLASS_SMALL ? IC : "something"] out of [target]'s [target_zone].</span>")
 			user.put_in_hands(IC)
 			CH.cavity_item = null
 			return 1

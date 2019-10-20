@@ -9,19 +9,19 @@
 
 /datum/surgery_step/sever_limb
 	name = "sever limb"
-	implements = list(/obj/item/scalpel = 100, /obj/item/circular_saw = 100, /obj/item/melee/transforming/energy/sword/cyborg/saw = 100, /obj/item/melee/arm_blade = 80, /obj/item/twohanded/required/chainsaw = 80, /obj/item/mounted_chainsaw = 80, /obj/item/twohanded/fireaxe = 50, /obj/item/hatchet = 40, /obj/item/kitchen/knife/butcher = 25)
+	implements = list(TOOL_SCALPEL = 100, TOOL_SAW = 100, /obj/item/melee/arm_blade = 80, /obj/item/twohanded/fireaxe = 50, /obj/item/hatchet = 40, /obj/item/kitchen/knife/butcher = 25)
 	time = 64
 
 /datum/surgery_step/sever_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to sever [target]'s [parse_zone(target_zone)]...</span>",
-		"[user] begins to sever [target]'s [parse_zone(target_zone)]!",
-		"[user] begins to sever [target]'s [parse_zone(target_zone)]!")
+		"<span class='notice'>[user] begins to sever [target]'s [parse_zone(target_zone)]!</span>",
+		"<span class='notice'>[user] begins to sever [target]'s [parse_zone(target_zone)]!</span>")
 
 /datum/surgery_step/sever_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/mob/living/carbon/human/L = target
 	display_results(user, target, "<span class='notice'>You sever [L]'s [parse_zone(target_zone)].</span>",
-		"[user] severs [L]'s [parse_zone(target_zone)]!",
-		"[user] severs [L]'s [parse_zone(target_zone)]!")
+		"<span class='notice'>[user] severs [L]'s [parse_zone(target_zone)]!</span>",
+		"<span class='notice'>[user] severs [L]'s [parse_zone(target_zone)]!</span>")
 	if(surgery.operated_bodypart)
 		var/obj/item/bodypart/target_limb = surgery.operated_bodypart
 		target_limb.drop_limb()

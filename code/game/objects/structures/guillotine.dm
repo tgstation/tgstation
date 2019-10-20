@@ -35,7 +35,7 @@
 
 /obj/structure/guillotine/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/sheet/plasteel))
-		to_chat(user, "<span class='notice'>You start repairing the guillotine with the plasteel.</span>")
+		to_chat(user, "<span class='notice'>You start repairing the guillotine with the plasteel...</span>")
 		if(blade_sharpness<10)
 			if(do_after(user,100,target=user))
 				blade_sharpness = min(10,blade_sharpness+3)
@@ -44,7 +44,7 @@
 			else
 				to_chat(user, "<span class='notice'>You stop repairing the guillotine with the plasteel.</span>")
 		else
-			to_chat(user, "<span class='notice'>The guillotine is already fully repaired!</span>")
+			to_chat(user, "<span class='warning'>The guillotine is already fully repaired!</span>")
 
 /obj/structure/guillotine/examine(mob/user)
 	. = ..()
@@ -123,7 +123,7 @@
 		if (QDELETED(head))
 			return
 
-		playsound(src, 'sound/weapons/bladeslice.ogg', 100, 1)
+		playsound(src, 'sound/weapons/bladeslice.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
@@ -175,7 +175,7 @@
 					user.visible_message("<span class='notice'>[user] sharpens the large blade of the guillotine.</span>",
 						                 "<span class='notice'>You sharpen the large blade of the guillotine.</span>")
 					blade_sharpness += 1
-					playsound(src, 'sound/items/unsheath.ogg', 100, 1)
+					playsound(src, 'sound/items/unsheath.ogg', 100, TRUE)
 					return
 				else
 					blade_status = GUILLOTINE_BLADE_RAISED
@@ -246,6 +246,7 @@
 	return ..()
 
 /obj/structure/guillotine/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
 	if (current_action)
 		return
 

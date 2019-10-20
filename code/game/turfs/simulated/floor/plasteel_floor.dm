@@ -52,6 +52,9 @@
 /turf/open/floor/plasteel/white/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
 
+/turf/open/floor/plasteel/airless/showroomfloor
+	icon_state = "showroomfloor"
+
 
 /turf/open/floor/plasteel/yellowsiding
 	icon_state = "yellowsiding"

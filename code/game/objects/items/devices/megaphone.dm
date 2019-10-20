@@ -3,9 +3,9 @@
 	desc = "A device used to project your voice. Loudly."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "megaphone"
-	item_state = "radio"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	item_state = "megaphone"
+	lefthand_file = 'icons/mob/inhands/misc/megaphone_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/megaphone_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	siemens_coefficient = 1
 	var/spamcheck = 0
@@ -33,7 +33,7 @@
 		if(spamcheck > world.time)
 			to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
 		else
-			playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
+			playsound(loc, 'sound/items/megaphone.ogg', 100, FALSE, TRUE)
 			spamcheck = world.time + 50
 			speech_args[SPEECH_SPANS] |= voicespan
 
@@ -47,17 +47,21 @@
 /obj/item/megaphone/sec
 	name = "security megaphone"
 	icon_state = "megaphone-sec"
+	item_state = "megaphone-sec"
 
 /obj/item/megaphone/command
 	name = "command megaphone"
 	icon_state = "megaphone-command"
+	item_state = "megaphone-command"
 
 /obj/item/megaphone/cargo
 	name = "supply megaphone"
 	icon_state = "megaphone-cargo"
+	item_state = "megaphone-cargo"
 
 /obj/item/megaphone/clown
 	name = "clown's megaphone"
 	desc = "Something that should not exist."
 	icon_state = "megaphone-clown"
+	item_state = "megaphone-clown"
 	voicespan = list(SPAN_CLOWN)

@@ -74,7 +74,7 @@
 	hidden = TRUE
 
 /datum/mood_event/badass_antag
-	description = "I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around."
+	description = "<span class='greentext'>I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around.</span>\n"
 	mood_change = 7
 	hidden = TRUE
 	special_screen_obj = "badass_sun"
@@ -148,10 +148,20 @@
 	mood_change = 6
 	timeout = 5 MINUTES
 
+/datum/mood_event/pet_borg
+	description = "<span class='nicegreen'>I just love my robotical friends!</span>\n"
+	mood_change = 3
+	timeout = 5 MINUTES
+
+/datum/mood_event/bottle_flip
+	description = "<span class='nicegreen'>The bottle landing like that was satisfying.</span>\n"
+	mood_change = 2
+	timeout = 3 MINUTES
+
 /datum/mood_event/area
 	description = "" //Fill this out in the area
 	mood_change = 0
 
-/datum/mood_event/area/add_effects(list/param)
-	mood_change = param[1]
-	description = param[2]
+/datum/mood_event/area/add_effects(_mood_change, _description)
+	mood_change = _mood_change
+	description = _description

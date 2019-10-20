@@ -120,7 +120,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	var/obj/item/gun/G = new gun_type(get_turf(H))
 	if (istype(G)) // The list contains some non-gun type guns like the speargun which do not have this proc
 		G.unlock()
-	playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, 1)
+	playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, TRUE)
 
 	var/in_hand = H.put_in_hands(G) // not always successful
 
@@ -144,7 +144,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		lucky = TRUE
 
 	var/obj/item/M = new magic_type(get_turf(H))
-	playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, 1)
+	playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, TRUE)
 
 	var/in_hand = H.put_in_hands(M)
 

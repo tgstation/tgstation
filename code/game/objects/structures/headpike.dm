@@ -19,7 +19,7 @@
 	name = "[victim.name] on a spear"
 	update_icon()
 	if(bonespear)
-		spear = locate(/obj/item/twohanded/bonespear) in parts_list
+		spear = locate(/obj/item/twohanded/spear/bonespear) in parts_list
 	else
 		spear = locate(/obj/item/twohanded/spear) in parts_list
 

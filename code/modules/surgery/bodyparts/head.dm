@@ -24,11 +24,11 @@
 	var/real_name = "" //Replacement name
 	//Hair colour and style
 	var/hair_color = "000"
-	var/hair_style = "Bald"
+	var/hairstyle = "Bald"
 	var/hair_alpha = 255
 	//Facial hair colour and style
 	var/facial_hair_color = "000"
-	var/facial_hair_style = "Shaved"
+	var/facial_hairstyle = "Shaved"
 	//Eye Colouring
 
 	var/lip_style = null
@@ -98,7 +98,7 @@
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
-		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
+		playsound(T, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	for(var/obj/item/I in src)
 		if(I == brain)
 			if(user)
@@ -110,7 +110,7 @@
 				brainmob = null
 			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
 				to_chat(user, "<span class='warning'>[brain] was damaged in the process!</span>")
-				brain.damaged_brain = TRUE
+				brain.setOrganDamage(brain.maxHealth)
 			brain.forceMove(T)
 			brain = null
 			update_icon_dropped()
@@ -133,8 +133,8 @@
 	real_name = C.real_name
 	if(HAS_TRAIT(C, TRAIT_HUSK))
 		real_name = "Unknown"
-		hair_style = "Bald"
-		facial_hair_style = "Shaved"
+		hairstyle = "Bald"
+		facial_hairstyle = "Shaved"
 		lip_style = null
 
 	else if(!animal_origin)
@@ -142,8 +142,8 @@
 		var/datum/species/S = H.dna.species
 
 		//Facial hair
-		if(H.facial_hair_style && (FACEHAIR in S.species_traits))
-			facial_hair_style = H.facial_hair_style
+		if(H.facial_hairstyle && (FACEHAIR in S.species_traits))
+			facial_hairstyle = H.facial_hairstyle
 			if(S.hair_color)
 				if(S.hair_color == "mutcolor")
 					facial_hair_color = H.dna.features["mcolor"]
@@ -153,12 +153,12 @@
 				facial_hair_color = H.facial_hair_color
 			hair_alpha = S.hair_alpha
 		else
-			facial_hair_style = "Shaved"
+			facial_hairstyle = "Shaved"
 			facial_hair_color = "000"
 			hair_alpha = 255
 		//Hair
-		if(H.hair_style && (HAIR in S.species_traits))
-			hair_style = H.hair_style
+		if(H.hairstyle && (HAIR in S.species_traits))
+			hairstyle = H.hairstyle
 			if(S.hair_color)
 				if(S.hair_color == "mutcolor")
 					hair_color = H.dna.features["mcolor"]
@@ -168,7 +168,7 @@
 				hair_color = H.hair_color
 			hair_alpha = S.hair_alpha
 		else
-			hair_style = "Bald"
+			hairstyle = "Bald"
 			hair_color = "000"
 			hair_alpha = initial(hair_alpha)
 		// lipstick
@@ -197,8 +197,8 @@
 
 		if(status != BODYPART_ROBOTIC) //having a robotic head hides certain features.
 			//facial hair
-			if(facial_hair_style)
-				var/datum/sprite_accessory/S = GLOB.facial_hair_styles_list[facial_hair_style]
+			if(facial_hairstyle)
+				var/datum/sprite_accessory/S = GLOB.facial_hairstyles_list[facial_hairstyle]
 				if(S)
 					var/image/facial_overlay = image(S.icon, "[S.icon_state]", -HAIR_LAYER, SOUTH)
 					facial_overlay.color = "#" + facial_hair_color
@@ -219,7 +219,7 @@
 					debrain_overlay.icon_state = "debrained"
 				. += debrain_overlay
 			else
-				var/datum/sprite_accessory/S2 = GLOB.hair_styles_list[hair_style]
+				var/datum/sprite_accessory/S2 = GLOB.hairstyles_list[hairstyle]
 				if(S2)
 					var/image/hair_overlay = image(S2.icon, "[S2.icon_state]", -HAIR_LAYER, SOUTH)
 					hair_overlay.color = "#" + hair_color

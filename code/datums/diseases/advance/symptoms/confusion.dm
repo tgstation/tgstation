@@ -30,7 +30,7 @@ Bonus
 	symptom_delay_max = 30
 	var/brain_damage = FALSE
 	threshold_desc = "<b>Resistance 6:</b> Causes brain damage over time.<br>\
-					  <b>Transmission 6:</b> Increases confusion duration.<br>\
+					  <b>Transmission 6:</b> Increases confusion duration and strength.<br>\
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/confusion/Start(datum/disease/advance/A)
@@ -53,9 +53,10 @@ Bonus
 				to_chat(M, "<span class='warning'>[pick("Your head hurts.", "Your mind blanks for a moment.")]</span>")
 		else
 			to_chat(M, "<span class='userdanger'>You can't think straight!</span>")
-			M.confused = min(100 * power, M.confused + 8)
+			if(M.confused < 100)
+				M.confused += (16 * power)
 			if(brain_damage)
-				M.adjustBrainLoss(3 * power, 80)
+				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
 				M.updatehealth()
 
 	return

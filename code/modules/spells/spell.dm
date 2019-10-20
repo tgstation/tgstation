@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			user.visible_message(invocation, invocation_emote_self) //same style as in mob/living/emote.dm
 
 /obj/effect/proc_holder/spell/proc/playMagSound()
-	playsound(get_turf(usr), sound,50,1)
+	playsound(get_turf(usr), sound,50,TRUE)
 
 /obj/effect/proc_holder/spell/Initialize()
 	. = ..()

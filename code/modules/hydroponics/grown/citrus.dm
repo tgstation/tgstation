@@ -33,6 +33,27 @@
 	filling_color = "#00FF00"
 	juice_results = list(/datum/reagent/consumable/limejuice = 0)
 
+// Electric Lime
+/obj/item/seeds/lime/electric
+	name = "pack of electric lime seeds"
+	desc = "Electrically sour seeds."
+	icon_state = "seed-electriclime"
+	species = "electric lime"
+	plantname = "Electric Lime Tree"
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_grow = "lime-grow"
+	icon_dead = "lime-dead"
+	icon_harvest = "lime-harvest"
+	product = /obj/item/reagent_containers/food/snacks/grown/citrus/lime/electric
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/glow/green)
+
+/obj/item/reagent_containers/food/snacks/grown/citrus/lime/electric
+	seed = /obj/item/seeds/lime/electric
+	name = "electric lime"
+	desc = "It's so sour, you'll be shocked!"
+	icon_state = "electriclime"
+
+
 // Orange
 /obj/item/seeds/orange
 	name = "pack of orange seeds"
@@ -120,7 +141,7 @@
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()
 	icon_state = "firelemon_active"
-	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+	playsound(loc, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
 	addtimer(CALLBACK(src, .proc/prime), rand(10, 60))
 
 /obj/item/reagent_containers/food/snacks/grown/firelemon/burn()
@@ -174,7 +195,7 @@
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/haloperidol = 0.15) //insert joke about the effects of haloperidol and our glorious headcoder here
 
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange_3d
 	seed = /obj/item/seeds/orange_3d

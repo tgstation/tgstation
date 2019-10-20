@@ -43,10 +43,10 @@
 		PlasmaBurn(exposed_temperature)
 
 /turf/open/floor/mineral/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
+	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma flooring was ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
 		log_game("Plasma flooring was ignited by [key_name(user)] in [AREACOORD(src)]")
-		ignite(W.is_hot())
+		ignite(W.get_temperature())
 		return
 	..()
 
@@ -138,7 +138,7 @@
 	icons = list("bananium","bananium_dam")
 	var/spam_flag = 0
 
-/turf/open/floor/mineral/bananium/Entered(var/mob/living/L)
+/turf/open/floor/mineral/bananium/Entered(mob/living/L)
 	.=..()
 	if(!.)
 		if(istype(L))
@@ -161,12 +161,12 @@
 
 /turf/open/floor/mineral/bananium/proc/honk()
 	if(spam_flag < world.time)
-		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 		spam_flag = world.time + 20
 
 /turf/open/floor/mineral/bananium/proc/squeak()
 	if(spam_flag < world.time)
-		playsound(src, "clownstep", 50, 1)
+		playsound(src, "clownstep", 50, TRUE)
 		spam_flag = world.time + 10
 
 /turf/open/floor/mineral/bananium/airless
@@ -191,7 +191,7 @@
 	var/last_event = 0
 	var/active = null
 
-/turf/open/floor/mineral/uranium/Entered(var/mob/AM)
+/turf/open/floor/mineral/uranium/Entered(mob/AM)
 	.=..()
 	if(!.)
 		if(istype(AM))

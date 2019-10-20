@@ -5,7 +5,7 @@
 	item_state = "signaler"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	materials = list(MAT_METAL=400, MAT_GLASS=120)
+	custom_materials = list(/datum/material/iron=400, /datum/material/glass=120)
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = TRUE
 
@@ -13,22 +13,34 @@
 	var/frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/datum/radio_frequency/radio_connection
-	var/suicider = null
+	///Holds the mind that commited suicide.
+	var/datum/mind/suicider
+	///Holds a reference string to the mob, decides how much of a gamer you are.
+	var/suicide_mob
 	var/hearing_range = 1
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] eats \the [src]! If it is signaled, [user.p_they()] will die!</span>")
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
-	user.transferItemToLoc(src, user, TRUE)
-	suicider = user
+	moveToNullspace()
+	suicider = user.mind
+	suicide_mob = REF(user)
 	return MANUAL_SUICIDE_NONLETHAL
 
-/obj/item/assembly/signaler/proc/manual_suicide(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user]'s [src] receives a signal, killing [user.p_them()] instantly!</span>")
+/obj/item/assembly/signaler/proc/manual_suicide(datum/mind/suicidee)
+	var/mob/living/user = suicidee.current
+	if(!istype(user))
+		return
+	if(suicide_mob == REF(user))
+		user.visible_message("<span class='suicide'>[user]'s [src] receives a signal, killing [user.p_them()] instantly!</span>")
+	else
+		user.visible_message("<span class='suicide'>[user]'s [src] receives a signal and [user.p_they()] die[user.p_s()] like a gamer!</span>")
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
 	user.set_suicide(TRUE)
 	user.suicide_log()
+	playsound(user, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	qdel(src)
 
 /obj/item/assembly/signaler/Initialize()
 	. = ..()
@@ -37,6 +49,7 @@
 
 /obj/item/assembly/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
+	suicider = null
 	. = ..()
 
 /obj/item/assembly/signaler/activate()
@@ -100,8 +113,7 @@ Code:
 			code = new_code
 
 	if(href_list["send"])
-		spawn( 0 )
-			signal()
+		INVOKE_ASYNC(src, .proc/signal)
 
 	if(usr)
 		attack_self(usr)
@@ -142,6 +154,7 @@ Code:
 		return
 	if(suicider)
 		manual_suicide(suicider)
+		return
 	pulse(TRUE)
 	audible_message("[icon2html(src, hearers(src))] *beep* *beep* *beep*", null, hearing_range)
 	for(var/CHM in get_hearers_in_view(hearing_range, src))

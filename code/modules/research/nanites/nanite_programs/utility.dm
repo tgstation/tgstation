@@ -246,7 +246,7 @@
 	if(prob(10))
 		var/list/mob/living/target_hosts = list()
 		for(var/mob/living/L in oview(5, host_mob))
-			if(!(MOB_ORGANIC in L.mob_biotypes) && !(MOB_UNDEAD in L.mob_biotypes))
+			if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 				continue
 			target_hosts += L
 		if(!target_hosts.len)
@@ -257,6 +257,32 @@
 			infectee.AddComponent(/datum/component/nanites, 10)
 			SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
 			infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
+
+/datum/nanite_program/triggered/nanite_sting
+	name = "Nanite Sting"
+	desc = "When triggered, projects a nearly invisible spike of nanites that attempts to infect a nearby non-host with a copy of the host's nanites cluster."
+	trigger_cost = 5
+	trigger_cooldown = 100
+	rogue_types = list(/datum/nanite_program/glitch, /datum/nanite_program/toxic)
+
+/datum/nanite_program/triggered/nanite_sting/trigger()
+	if(!..())
+		return
+	var/list/mob/living/target_hosts = list()
+	for(var/mob/living/L in oview(1, host_mob))
+		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)) || SEND_SIGNAL(L, COMSIG_HAS_NANITES) || !L.Adjacent(host_mob))
+			continue
+		target_hosts += L
+	if(!target_hosts.len)
+		consume_nanites(-5)
+		return
+	var/mob/living/infectee = pick(target_hosts)
+	if(prob(100 - (infectee.get_permeability_protection() * 100)))
+		//unlike with Infective Exo-Locomotion, this can't take over existing nanites, because Nanite Sting only targets non-hosts.
+		infectee.AddComponent(/datum/component/nanites, 5)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		infectee.investigate_log("was infected by a nanite cluster by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
+		to_chat(infectee, "<span class='warning'>You feel a tiny prick.</span>")
 
 /datum/nanite_program/mitosis
 	name = "Mitosis"
@@ -270,7 +296,7 @@
 		return
 	var/rep_rate = round(nanites.nanite_volume / 50, 1) //0.5 per 50 nanite volume
 	rep_rate *= 0.5
-	nanites.adjust_nanites(rep_rate)
+	nanites.adjust_nanites(null, rep_rate)
 	if(prob(rep_rate))
 		var/datum/nanite_program/fault = pick(nanites.programs)
 		if(fault == src)

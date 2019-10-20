@@ -60,7 +60,9 @@
 
 /obj/vehicle/ridden/driver_move(mob/user, direction)
 	if(key_type && !is_key(inserted_key))
-		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
+		if(message_cooldown < world.time)
+			to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
+			message_cooldown = world.time + 5 SECONDS
 		return FALSE
 	if(legs_required)
 		var/how_many_legs = user.get_num_legs()
@@ -74,8 +76,8 @@
 		if(how_many_arms < arms_required)
 			if(fall_off_if_missing_arms)
 				unbuckle_mob(user, TRUE)
-				user.visible_message("<span class='danger'>[user] falls off of \the [src].",\
-				"<span class='danger'>You fall of \the [src] while trying to operate it without [arms_required ? "both arms":"an arm"]!</span>")
+				user.visible_message("<span class='danger'>[user] falls off \the [src].</span>",\
+				"<span class='danger'>You fall off \the [src] while trying to operate it without [arms_required ? "both arms":"an arm"]!</span>")
 				if(isliving(user))
 					var/mob/living/L = user
 					L.Stun(30)

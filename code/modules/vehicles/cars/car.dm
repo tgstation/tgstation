@@ -43,10 +43,10 @@
 
 /obj/vehicle/sealed/car/mob_try_exit(mob/M, mob/user, silent = FALSE)
 	if(M == user && (occupants[M] & VEHICLE_CONTROL_KIDNAPPED))
-		to_chat(user, "<span class='notice'>You push against the back of [src] trunk to try and get out.</span>")
+		to_chat(user, "<span class='notice'>You push against the back of \the [src]'s trunk to try and get out.</span>")
 		if(!do_after(user, escape_time, target = src))
 			return FALSE
-		to_chat(user,"<span class='danger'>[user] gets out of [src]</span>")
+		to_chat(user,"<span class='danger'>[user] gets out of [src].</span>")
 		mob_exit(M, silent)
 		return TRUE
 	mob_exit(M, silent)
@@ -56,7 +56,7 @@
 	if(!I.force)
 		return
 	if(occupants[user])
-		to_chat(user, "<span class='notice'>Your attack bounces off of the car's padded interior.</span>")
+		to_chat(user, "<span class='notice'>Your attack bounces off \the [src]'s padded interior.</span>")
 		return
 	return ..()
 

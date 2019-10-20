@@ -1,4 +1,3 @@
-#define LIVER_DEFAULT_HEALTH 100 //amount of damage required for liver failure
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_LETHALITY 0.01 //lower values lower how harmful toxins are to the liver
 
@@ -9,12 +8,15 @@
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
 	desc = "Pairing suggestion: chianti and fava beans."
+
+	maxHealth = STANDARD_ORGAN_THRESHOLD
+	healing_factor = STANDARD_ORGAN_HEALING
+	decay_factor = STANDARD_ORGAN_DECAY
+
 	var/alcohol_tolerance = ALCOHOL_RATE//affects how much damage the liver takes from alcohol
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE//maximum amount of toxins the liver can just shrug off
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
 	var/filterToxins = TRUE //whether to filter toxins
-	maxHealth = LIVER_DEFAULT_HEALTH
-	Unique_Failure_Msg = "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>"
 
 #define HAS_SILENT_TOXIN 0 //don't provide a feedback message if this is the only toxin present
 #define HAS_NO_TOXIN 1
@@ -23,11 +25,11 @@
 /obj/item/organ/liver/on_life()
 	if(HAS_TRAIT(owner, TRAIT_NOMETABOLISM))
 		return
-		
+
 	var/mob/living/carbon/C = owner
 	..()	//perform general on_life()
 	if(istype(C))
-		if(!failing)//can't process reagents with a failing liver
+		if(!(organ_flags & ORGAN_FAILING))//can't process reagents with a failing liver
 
 			var/provide_pain_message = HAS_NO_TOXIN
 			if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
@@ -46,6 +48,15 @@
 
 			if(provide_pain_message && damage > 10 && prob(damage/3))//the higher the damage the higher the probability
 				to_chat(C, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
+
+		else	//for when our liver's failing
+			C.reagents.end_metabolization(C, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
+			C.reagents.metabolize(C, can_overdose=FALSE, liverless = TRUE)
+			if(HAS_TRAIT(C, TRAIT_STABLELIVER))
+				return
+			C.adjustToxLoss(4, TRUE,  TRUE)
+			if(prob(30))
+				to_chat(C, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
 
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
@@ -81,8 +92,8 @@
 	name = "cybernetic liver"
 	icon_state = "liver-c"
 	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
-	synthetic = TRUE
-	maxHealth = 110
+	organ_flags = ORGAN_SYNTHETIC
+	maxHealth = 1.1 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 3.3
 	toxLethality = 0.009
 
@@ -91,7 +102,7 @@
 	icon_state = "liver-c-u"
 	desc = "An upgraded version of the cybernetic liver, designed to improve further upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
 	alcohol_tolerance = 0.001
-	maxHealth = 200 //double the health of a normal liver
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 15 //can shrug off up to 15u of toxins
 	toxLethality = 0.008 //20% less damage than a normal liver
 
@@ -99,8 +110,4 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	switch(severity)
-		if(1)
-			damage+=100
-		if(2)
-			damage+=50
+	damage += 100/severity

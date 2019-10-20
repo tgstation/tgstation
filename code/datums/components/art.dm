@@ -1,7 +1,3 @@
-#define BAD_ART 12.5
-#define GOOD_ART 25
-#define GREAT_ART 50
-
 /datum/component/art
 	var/impressiveness = 0
 
@@ -17,17 +13,18 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/apply_moodlet)
 
 /datum/component/art/proc/apply_moodlet(mob/M, impress)
-	M.visible_message("[M] stops to admire [parent].", \
-						 "<span class='notice'>You take in [parent], admiring the fine craftsmanship.</span>")
+	M.visible_message("<span class='notice'>[M] stops and looks intently at [parent].</span>", \
+						 "<span class='notice'>You stop to take in [parent].</span>")
 	switch(impress)
-		if(GREAT_ART to INFINITY)
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
-		if (GOOD_ART to GREAT_ART)
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artgood", /datum/mood_event/artgood)
-		if (BAD_ART to GOOD_ART)
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
 		if (0 to BAD_ART)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+		if (BAD_ART to GOOD_ART)
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
+		if (GOOD_ART to GREAT_ART)
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artgood", /datum/mood_event/artgood)
+		if(GREAT_ART to INFINITY)
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
+
 
 /datum/component/art/proc/on_other_examine(datum/source, mob/M)
 	apply_moodlet(M, impressiveness)
@@ -37,11 +34,18 @@
 	apply_moodlet(M, impressiveness *(O.obj_integrity/O.max_integrity))
 
 /datum/component/art/proc/on_attack_hand(datum/source, mob/M)
-	to_chat(M, "You start examining [parent].")
+	to_chat(M, "<span class='notice'>You start examining [parent]...</span>")
 	if(!do_after(M, 20, target = parent))
 		return
 	on_obj_examine(source, M)
 
-#undef BAD_ART
-#undef GOOD_ART
-#undef GREAT_ART
+/datum/component/art/rev
+
+/datum/component/art/rev/apply_moodlet(mob/M, impress)
+	M.visible_message("<span class='notice'>[M] stops to inspect [parent].</span>", \
+						 "<span class='notice'>You take in [parent], inspecting the fine craftsmanship of the proletariat.</span>")
+
+	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev))
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
+	else
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)

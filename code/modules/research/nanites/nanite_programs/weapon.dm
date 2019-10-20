@@ -51,7 +51,7 @@
 
 /datum/nanite_program/aggressive_replication/active_effect()
 	var/extra_regen = round(nanites.nanite_volume / 200, 0.1)
-	nanites.adjust_nanites(extra_regen)
+	nanites.adjust_nanites(null, extra_regen)
 	host_mob.adjustBruteLoss(extra_regen / 2, TRUE)
 
 /datum/nanite_program/meltdown

@@ -34,6 +34,7 @@
 							CAT_BURGER,
 							CAT_CAKE,
 							CAT_EGG,
+							CAT_ICE,
 							CAT_MEAT,
 							CAT_MISCFOOD,
 							CAT_PASTRY,
@@ -102,6 +103,8 @@
 				if(AM.flags_1 & HOLOGRAM_1)
 					continue
 				. += AM
+	for(var/slot in list(SLOT_R_STORE, SLOT_L_STORE))
+		. += user.get_item_by_slot(slot)
 
 /datum/component/personal_crafting/proc/get_surroundings(mob/user)
 	. = list()
@@ -169,6 +172,8 @@
 				var/list/parts = del_reqs(R, user)
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
+				if(isitem(I))
+					user.put_in_hands(I)
 				if(send_feedback)
 					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
 				return 0

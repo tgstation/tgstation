@@ -15,12 +15,12 @@
 		var/mob/living/carbon/C = user
 		var/list/missing = C.get_missing_limbs()
 		if(missing.len)
-			playsound(user, 'sound/magic/demon_consume.ogg', 50, 1)
+			playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 			C.visible_message("<span class='warning'>[user]'s missing limbs \
 				reform, making a loud, grotesque sound!</span>",
 				"<span class='userdanger'>Your limbs regrow, making a \
 				loud, crunchy sound and giving you great pain!</span>",
-				"<span class='italics'>You hear organic matter ripping \
+				"<span class='hear'>You hear organic matter ripping \
 				and tearing!</span>")
 			C.emote("scream")
 			C.regenerate_limbs(1)
@@ -30,7 +30,7 @@
 				B = new C.dna.species.mutant_brain()
 			else
 				B = new()
-			B.vital = FALSE
+			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 			B.Insert(C)
 		C.regenerate_organs()

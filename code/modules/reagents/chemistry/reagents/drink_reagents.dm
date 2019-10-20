@@ -287,12 +287,12 @@
 /datum/reagent/consumable/lemonade
 	name = "Lemonade"
 	description = "Sweet, tangy lemonade. Good for the soul."
+	color = "#FFE978"
 	quality = DRINK_NICE
 	taste_description = "sunshine and summertime"
 	glass_icon_state = "lemonpitcher"
 	glass_name = "pitcher of lemonade"
 	glass_desc = "This drink leaves you feeling nostalgic for some reason."
-
 
 /datum/reagent/consumable/tea/arnold_palmer
 	name = "Arnold Palmer"
@@ -533,6 +533,32 @@
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 	. = 1
+
+/datum/reagent/consumable/monkey_energy
+	name = "Monkey Energy"
+	description = "The only drink that will make you unleash the ape."
+	color = "#f39b03" // rgb: 243, 155, 3
+	taste_description = "barbecue and nostalgia"
+	glass_icon_state = "monkey_energy_glass"
+	glass_name = "glass of Monkey Energy"
+	glass_desc = "You can unleash the ape, but without the pop of the can?"
+
+/datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M)
+	M.Jitter(20)
+	M.dizziness +=1
+	M.drowsyness = 0
+	M.AdjustSleeping(-40, FALSE)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
+/datum/reagent/consumable/monkey_energy/on_mob_metabolize(mob/living/L)
+	..()
+	if(ismonkey(L))
+		L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.75, blacklisted_movetypes=(FLYING|FLOATING))
+
+/datum/reagent/consumable/monkey_energy/on_mob_end_metabolize(mob/living/L)
+	L.remove_movespeed_modifier(type)
+	..()
 
 /datum/reagent/consumable/ice
 	name = "Ice"
@@ -793,3 +819,12 @@
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
+
+/datum/reagent/consumable/bungojuice
+	name = "Bungo Juice"
+	color = "#F9E43D"
+	description = "Exotic! You feel like you are on vactation already."
+	taste_description = "succulent bungo"
+	glass_icon_state = "glass_yellow"
+	glass_name = "glass of bungo juice"
+	glass_desc = "Exotic! You feel like you are on vactation already."

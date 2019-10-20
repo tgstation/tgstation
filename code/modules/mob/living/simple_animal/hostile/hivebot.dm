@@ -1,4 +1,4 @@
-/obj/item/projectile/hivebotbullet
+/obj/projectile/hivebotbullet
 	damage = 10
 	damage_type = BRUTE
 
@@ -10,16 +10,17 @@
 	icon_living = "basic"
 	icon_dead = "basic"
 	gender = NEUTER
-	mob_biotypes = list(MOB_ROBOTIC)
+	mob_biotypes = MOB_ROBOTIC
 	health = 15
 	maxHealth = 15
 	healable = 0
 	melee_damage_lower = 2
 	melee_damage_upper = 3
-	attacktext = "claws"
+	attack_verb_continuous = "claws"
+	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	projectilesound = 'sound/weapons/gunshot.ogg'
-	projectiletype = /obj/item/projectile/hivebotbullet
+	projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
+	projectiletype = /obj/projectile/hivebotbullet
 	faction = list("hivebot")
 	check_friendly_fire = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -36,7 +37,7 @@
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 	var/alert_light
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/hostile/hivebot/Initialize()
 	. = ..()

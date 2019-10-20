@@ -20,6 +20,7 @@
 	if(ismovableatom(parent))
 		RegisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT), .proc/play_squeak)
 		RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/play_squeak_crossed)
+		RegisterSignal(parent, COMSIG_ITEM_WEARERCROSSED, .proc/play_squeak_crossed)
 		RegisterSignal(parent, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react)
 		if(isitem(parent))
 			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/play_squeak)
@@ -42,9 +43,9 @@
 /datum/component/squeak/proc/play_squeak()
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
-			playsound(parent, pickweight(default_squeak_sounds), volume, 1, -1)
+			playsound(parent, pickweight(default_squeak_sounds), volume, TRUE, -1)
 		else
-			playsound(parent, pickweight(override_squeak_sounds), volume, 1, -1)
+			playsound(parent, pickweight(override_squeak_sounds), volume, TRUE, -1)
 
 /datum/component/squeak/proc/step_squeak()
 	if(steps > step_delay)
@@ -58,12 +59,16 @@
 		var/obj/item/I = AM
 		if(I.item_flags & ABSTRACT)
 			return
-		else if(istype(AM, /obj/item/projectile))
-			var/obj/item/projectile/P = AM
+		else if(istype(AM, /obj/projectile))
+			var/obj/projectile/P = AM
 			if(P.original != parent)
 				return
 	if(istype(AM, /obj/effect/dummy/phased_mob)) //don't squeek if they're in a phased/jaunting container.
 		return
+	if(ismob(AM))
+		var/mob/M = AM
+		if(M.movement_type & (FLYING|FLOATING))
+			return
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
 		play_squeak()

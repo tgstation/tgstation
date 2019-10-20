@@ -85,6 +85,7 @@
 		Die()
 
 /obj/item/clothing/mask/facehugger/equipped(mob/M)
+	. = ..()
 	Attach(M)
 
 /obj/item/clothing/mask/facehugger/Crossed(atom/target)
@@ -127,14 +128,14 @@
 		return FALSE
 	if(iscarbon(M))
 		// disallowed carbons
-		if(isalien(M) || isdevil(M))
+		if(isalien(M) || istruedevil(M))
 			return FALSE
 		var/mob/living/carbon/target = M
 		// gotta have a head to be implanted (no changelings or sentient plants)
 		if(!target.get_bodypart(BODY_ZONE_HEAD))
 			return FALSE
-
-		if(target.getorgan(/obj/item/organ/alien/hivenode) || target.getorgan(/obj/item/organ/body_egg/alien_embryo))
+		// gotta be able to have the xeno implanted
+		if(HAS_TRAIT(M, TRAIT_XENO_IMMUNE))
 			return FALSE
 		// carbon, has head, not alien or devil, has no hivenode or embryo: valid
 		return TRUE
@@ -150,7 +151,7 @@
 			return FALSE
 	// passed initial checks - time to leap!
 	M.visible_message("<span class='danger'>[src] leaps at [M]'s face!</span>", \
-							"<span class='userdanger'>[src] leaps at [M]'s face!</span>")
+							"<span class='userdanger'>[src] leaps at your face!</span>")
 
 	// probiscis-blocker handling
 	if(iscarbon(M))
@@ -160,7 +161,7 @@
 			var/mob/living/carbon/human/H = M
 			if(H.is_mouth_covered(head_only = 1))
 				H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
-									"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
+									"<span class='userdanger'>[src] smashes against your [H.head]!</span>")
 				Die()
 				return FALSE
 
@@ -168,7 +169,7 @@
 			var/obj/item/clothing/W = target.wear_mask
 			if(target.dropItemToGround(W))
 				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
-									"<span class='userdanger'>[src] tears [W] off of [target]'s face!</span>")
+									"<span class='userdanger'>[src] tears [W] off of your face!</span>")
 		target.equip_to_slot_if_possible(src, SLOT_WEAR_MASK, 0, 1, 1)
 	return TRUE // time for a smoke
 
@@ -203,7 +204,7 @@
 
 	if(!sterile)
 		target.visible_message("<span class='danger'>[src] falls limp after violating [target]'s face!</span>", \
-								"<span class='userdanger'>[src] falls limp after violating [target]'s face!</span>")
+								"<span class='userdanger'>[src] falls limp after violating your face!</span>")
 
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
@@ -216,7 +217,7 @@
 
 	else
 		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", \
-								"<span class='userdanger'>[src] violates [target]'s face!</span>")
+								"<span class='userdanger'>[src] violates your face!</span>")
 
 /obj/item/clothing/mask/facehugger/proc/GoActive()
 	if(stat == DEAD || stat == CONSCIOUS)

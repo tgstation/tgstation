@@ -9,6 +9,8 @@
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_VOICE
 	gender = PLURAL
+	decay_factor = 0	//we don't want decaying vocal cords to somehow matter or appear on scanners since they don't do anything damaged
+	healing_factor = 0
 	var/list/spans = null
 
 /obj/item/organ/vocal_cords/proc/can_speak_with() //if there is any limitation to speaking with these cords
@@ -108,7 +110,7 @@
 	return TRUE
 
 /obj/item/organ/vocal_cords/colossus/handle_speech(message)
-	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
+	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)
 	return //voice of god speaks for us
 
 /obj/item/organ/vocal_cords/colossus/speak_with(message)
@@ -129,8 +131,6 @@
 	if(!span_list || !span_list.len)
 		if(iscultist(user))
 			span_list = list("narsiesmall")
-		else if (is_servant_of_ratvar(user))
-			span_list = list("ratvar")
 		else
 			span_list = list()
 
@@ -167,8 +167,6 @@
 
 	//Cultists are closer to their gods and are more powerful, but they'll give themselves away
 	if(iscultist(user))
-		power_multiplier *= 2
-	else if (is_servant_of_ratvar(user))
 		power_multiplier *= 2
 
 	//Try to check if the speaker specified a name or a job to focus on

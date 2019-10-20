@@ -7,10 +7,13 @@
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
-	circuit = /obj/item/circuitboard/computer/pandemic
 	use_power = TRUE
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
+	circuit = /obj/item/circuitboard/computer/pandemic
+	ui_x = 700
+	ui_y = 500
+
 	var/wait
 	var/mode = MAIN_SCREEN
 	var/datum/symptom/selected_symptom
@@ -150,7 +153,7 @@
 /obj/machinery/computer/pandemic/ui_interact(mob/user, ui_key = "main", datum/tgui/ui, force_open = FALSE, datum/tgui/master_ui, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "pandemic", name, 700, 500, master_ui, state)
+		ui = new(user, src, ui_key, "pandemic", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/pandemic/ui_data(mob/user)
@@ -198,7 +201,7 @@
 			if(!A.mutable)
 				return
 			if(A)
-				var/new_name = stripped_input(usr, "Name the disease", "New name", "", MAX_NAME_LEN)
+				var/new_name = sanitize_name(stripped_input(usr, "Name the disease", "New name", "", MAX_NAME_LEN))
 				if(!new_name || ..())
 					return
 				A.AssignName(new_name)

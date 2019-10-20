@@ -31,6 +31,7 @@
 #define ELVIS		/datum/mutation/human/elvis
 #define RADIOACTIVE	/datum/mutation/human/radioactive
 #define GLOWY		/datum/mutation/human/glow
+#define ANTIGLOWY	/datum/mutation/human/glow/anti
 #define TELEPATHY	/datum/mutation/human/telepathy
 #define FIREBREATH	/datum/mutation/human/firebreath
 #define VOID		/datum/mutation/human/void
@@ -77,8 +78,8 @@
 #define DNA_SKIN_TONE_BLOCK			3
 #define DNA_EYE_COLOR_BLOCK			4
 #define DNA_GENDER_BLOCK			5
-#define DNA_FACIAL_HAIR_STYLE_BLOCK	6
-#define DNA_HAIR_STYLE_BLOCK		7
+#define DNA_FACIAL_HAIRSTYLE_BLOCK	6
+#define DNA_HAIRSTYLE_BLOCK		7
 
 #define DNA_SEQUENCE_LENGTH			4
 #define DNA_MUTATION_BLOCKS			8
@@ -88,9 +89,11 @@
 #define TR_KEEPITEMS	(1<<0)
 #define TR_KEEPVIRUS	(1<<1)
 #define TR_KEEPDAMAGE	(1<<2)
-#define TR_HASHNAME		(1<<3)	// hashing names (e.g. monkey(e34f)) (only in monkeyize)
+/// hashing names (e.g. monkey(e34f)) (only in monkeyize)
+#define TR_HASHNAME		(1<<3)
 #define TR_KEEPIMPLANTS	(1<<4)
-#define TR_KEEPSE		(1<<5)	// changelings shouldn't edit the DNA's SE when turning into a monkey
+/// changelings shouldn't edit the DNA's SE when turning into a monkey
+#define TR_KEEPSE		(1<<5)
 #define TR_DEFAULTMSG	(1<<6)
 #define TR_KEEPORGANS	(1<<8)
 #define TR_KEEPSTUNS	(1<<9)
@@ -108,18 +111,22 @@
 #define LIPS			5
 #define NOBLOOD			6
 #define NOTRANSSTING	7
-#define MUTCOLORS_PARTSONLY	8	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+/// Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define MUTCOLORS_PARTSONLY	8
 #define NOZOMBIE		9
-#define DIGITIGRADE		10	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+/// Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+#define DIGITIGRADE		10
 #define NO_UNDERWEAR	11
 #define NOSTOMACH		12
 #define NO_DNA_COPY     13
 #define DRINKSBLOOD		14
-#define NOFLASH			15
-#define DYNCOLORS		16 //Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
-#define AGENDER			17
-#define NOEYESPRITES	18 //Do not draw eyes or eyeless overlay
+/// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
+#define DYNCOLORS		15
+#define AGENDER			16
+/// Do not draw eyes or eyeless overlay
+#define NOEYESPRITES	17
 
+//organ slots
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
 #define ORGAN_SLOT_RIGHT_ARM_AUG "r_arm_device"
@@ -143,7 +150,13 @@
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_TAIL "tail"
 #define ORGAN_SLOT_PARASITE_EGG "parasite_egg"
+#define ORGAN_SLOT_REGENERATIVE_CORE "hivecore"
 
+//organ defines
+#define STANDARD_ORGAN_THRESHOLD 	100
+#define STANDARD_ORGAN_HEALING 		0.001
+/// designed to fail organs when left to decay for ~15 minutes
+#define STANDARD_ORGAN_DECAY		0.00222
 
 //used for the can_chromosome var on mutations
 #define CHROMOSOME_NEVER 0

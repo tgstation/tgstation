@@ -6,6 +6,14 @@
 	slot = ORGAN_SLOT_EARS
 	gender = PLURAL
 
+	healing_factor = STANDARD_ORGAN_HEALING
+	decay_factor = STANDARD_ORGAN_DECAY
+
+	low_threshold_passed = "<span class='info'>Your ears begin to resonate with an internal ring sometimes.</span>"
+	now_failing = "<span class='warning'>You are unable to hear at all!</span>"
+	now_fixed = "<span class='info'>Noise slowly begins filling your ears once more.</span>"
+	low_threshold_cleared = "<span class='info'>The ringing in your ears has died down.</span>"
+
 	// `deaf` measures "ticks" of deafness. While > 0, the person is unable
 	// to hear anything.
 	var/deaf = 0
@@ -24,18 +32,24 @@
 		return
 	..()
 	var/mob/living/carbon/C = owner
-	if((damage < maxHealth) && failing)	//ear damage can be repaired from the failing condition
-		failing = FALSE
+	if((damage < maxHealth) && (organ_flags & ORGAN_FAILING))	//ear damage can be repaired from the failing condition
+		organ_flags &= ~ORGAN_FAILING
 	// genetic deafness prevents the body from using the ears, even if healthy
 	if(HAS_TRAIT(C, TRAIT_DEAF))
 		deaf = max(deaf, 1)
-	else if(!failing) // if this organ is failing, do not clear deaf stacks.
+	else if(!(organ_flags & ORGAN_FAILING)) // if this organ is failing, do not clear deaf stacks.
 		deaf = max(deaf - 1, 0)
+		if(prob(damage / 20) && (damage > low_threshold))
+			adjustEarDamage(0, 4)
+			SEND_SOUND(C, sound('sound/weapons/flash_ring.ogg'))
+			to_chat(C, "<span class='warning'>The ringing in your ears grows louder, blocking out any external noises for a moment.</span>")
+	else if((organ_flags & ORGAN_FAILING) && (deaf == 0))
+		deaf = 1	//stop being not deaf you deaf idiot
 
 /obj/item/organ/ears/proc/restoreEars()
 	deaf = 0
 	damage = 0
-	failing = FALSE
+	organ_flags &= ~ORGAN_FAILING
 
 	var/mob/living/carbon/C = owner
 
@@ -119,3 +133,22 @@
 	desc = "The robust ears of a bronze golem. "
 	damage_multiplier = 0.1 //STRONK
 	bang_protect = 1 //Fear me weaklings.
+
+/obj/item/organ/ears/cybernetic
+	name = "cybernetic ears"
+	icon_state = "ears-c"
+	desc = "a basic cybernetic designed to mimic the operation of ears."
+	damage_multiplier = 0.9
+	organ_flags = ORGAN_SYNTHETIC
+
+/obj/item/organ/ears/cybernetic/upgraded
+	name = "upgraded cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "an advanced cybernetic ear, surpassing the performance of organic ears"
+	damage_multiplier = 0.5
+
+/obj/item/organ/ears/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	damage += 40/severity

@@ -7,7 +7,7 @@
 
 	w_class = WEIGHT_CLASS_SMALL
 
-	materials = list(MAT_METAL=50, MAT_GLASS=50)
+	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
@@ -25,7 +25,7 @@
 /obj/item/airlock_painter/proc/use_paint(mob/user)
 	if(can_use(user))
 		ink.charges--
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE)
 		return 1
 	else
 		return 0
@@ -35,10 +35,10 @@
 //because you're expecting user input.
 /obj/item/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
-		to_chat(user, "<span class='notice'>There is no toner cartridge installed in [src]!</span>")
+		to_chat(user, "<span class='warning'>There is no toner cartridge installed in [src]!</span>")
 		return 0
 	else if(ink.charges < 1)
-		to_chat(user, "<span class='notice'>[src] is out of ink!</span>")
+		to_chat(user, "<span class='warning'>[src] is out of ink!</span>")
 		return 0
 	else
 		return 1
@@ -74,7 +74,7 @@
 		// TODO maybe add some colorful vomit?
 
 		user.visible_message("<span class='suicide'>[user] vomits out [user.p_their()] [L]!</span>")
-		playsound(user.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(user.loc, 'sound/effects/splat.ogg', 50, TRUE)
 
 		L.forceMove(T)
 
@@ -108,19 +108,19 @@
 /obj/item/airlock_painter/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toner))
 		if(ink)
-			to_chat(user, "<span class='notice'>[src] already contains \a [ink].</span>")
+			to_chat(user, "<span class='warning'>[src] already contains \a [ink]!</span>")
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		to_chat(user, "<span class='notice'>You install [W] into [src].</span>")
 		ink = W
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	else
 		return ..()
 
 /obj/item/airlock_painter/attack_self(mob/user)
 	if(ink)
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		ink.forceMove(user.drop_location())
 		user.put_in_hands(ink)
 		to_chat(user, "<span class='notice'>You remove [ink] from [src].</span>")

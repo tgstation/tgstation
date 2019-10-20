@@ -55,7 +55,7 @@
 	var/organ_spilled = 0
 	var/turf/T = get_turf(C)
 	C.add_splatter_floor(T)
-	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, 1)
+	playsound(get_turf(C), 'sound/misc/splort.ogg', 80, TRUE)
 	for(var/X in C.internal_organs)
 		var/obj/item/organ/O = X
 		var/org_zone = check_zone(O.zone)
@@ -234,7 +234,7 @@
 			var/obj/item/I = X
 			owner.dropItemToGround(I, TRUE)
 
-	owner.wash_cream() //clean creampie overlay
+	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay
 
 	//Handle dental implants
 	for(var/datum/action/item_action/hands_free/activate_pill/AP in owner.actions)
@@ -329,9 +329,9 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		H.hair_color = hair_color
-		H.hair_style = hair_style
+		H.hairstyle = hairstyle
 		H.facial_hair_color = facial_hair_color
-		H.facial_hair_style = facial_hair_style
+		H.facial_hairstyle = facial_hairstyle
 		H.lip_style = lip_style
 		H.lip_color = lip_color
 	if(real_name)

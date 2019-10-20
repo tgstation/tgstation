@@ -50,7 +50,7 @@
 			saved.shoot_inventory = 0
 		if(originMachine)
 			originMachine.speak("I am... vanquished. My people will remem...ber...meeee.")
-			originMachine.visible_message("[originMachine] beeps and seems lifeless.")
+			originMachine.visible_message("<span class='notice'>[originMachine] beeps and seems lifeless.</span>")
 		kill()
 		return
 	vendingMachines = removeNullsFromList(vendingMachines)

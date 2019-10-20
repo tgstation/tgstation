@@ -113,7 +113,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("hot peppers" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | MEAT
 
 /obj/item/reagent_containers/food/snacks/soup/coldchili
 	name = "cold chili"
@@ -122,7 +122,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/frostoil = 1, /datum/reagent/consumable/tomatojuice = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("tomato" = 1, "mint" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | MEAT
 
 /obj/item/reagent_containers/food/snacks/soup/monkeysdelight
 	name = "monkey's delight"
@@ -156,7 +156,7 @@
 	icon_state = "milosoup"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("milo" = 1) // wtf is milo
-	foodtype = GROSS
+	foodtype = GROSS | VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/soup/mushroom
 	name = "chantrelle soup"
@@ -234,3 +234,30 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("caramelized onions" = 1)
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/soup/bisque
+	name = "bisque"
+	desc = "A classic entree from Space-France."
+	icon_state = "bisque"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("creamy texture" = 1, "crab" = 4)
+	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/soup/electron
+	name = "electron soup"
+	desc = "A gastronomic curiosity of ethereal origin. It is famed for the minature weather system formed over a properly prepared soup."
+	icon_state = "electronsoup"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/liquidelectricity = 5)
+	tastes = list("mushroom" = 1, "electrons" = 4)
+	filling_color = "#CC2B52"
+	foodtype = VEGETABLES | TOXIC
+
+/obj/item/reagent_containers/food/snacks/soup/bungocurry
+	name = "bungo curry"
+	desc = "A spicy vegetable curry made with the humble bungo fruit, Exotic!"
+	icon_state = "bungocurry"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/bungojuice = 6)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/capsaicin = 5)
+	tastes = list("bungo" = 2, "hot curry" = 4, "tropical sweetness" = 1)
+	filling_color = "#E6A625"
+	foodtype = VEGETABLES | FRUIT | DAIRY

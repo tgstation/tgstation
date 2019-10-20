@@ -1,0 +1,5 @@
+author: "carshalash"
+delete-after: True
+changes: 
+  - tweak: "Added Triple sec to margaritas so they taste less awful."
+  - balance: "Rebalanced certain alcohol values."

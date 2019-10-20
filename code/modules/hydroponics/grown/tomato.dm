@@ -132,15 +132,18 @@
 	if(awakening || isspaceturf(user.loc))
 		return
 	to_chat(user, "<span class='notice'>You begin to awaken the Killer Tomato...</span>")
-	awakening = 1
+	awakening = TRUE
+	addtimer(CALLBACK(src, .proc/awaken), 3 SECONDS)
+	log_game("[key_name(user)] awakened a killer tomato at [AREACOORD(user)].")
 
-	spawn(30)
-		if(!QDELETED(src))
-			var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(get_turf(src.loc))
-			K.maxHealth += round(seed.endurance / 3)
-			K.melee_damage_lower += round(seed.potency / 10)
-			K.melee_damage_upper += round(seed.potency / 10)
-			K.move_to_delay -= round(seed.production / 50)
-			K.health = K.maxHealth
-			K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
-			qdel(src)
+/obj/item/reagent_containers/food/snacks/grown/tomato/killer/proc/awaken()
+	if(QDELETED(src))
+		return
+	var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(get_turf(src.loc))
+	K.maxHealth += round(seed.endurance / 3)
+	K.melee_damage_lower += round(seed.potency / 10)
+	K.melee_damage_upper += round(seed.potency / 10)
+	K.move_to_delay -= round(seed.production / 50)
+	K.health = K.maxHealth
+	K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
+	qdel(src)

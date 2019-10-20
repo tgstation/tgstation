@@ -27,6 +27,7 @@
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()
 	owner.special_role = "highlander"
+	owner.current.set_species(/datum/species/human)
 	give_equipment()
 	. = ..()
 
@@ -41,11 +42,12 @@
 	if(!istype(H))
 		return
 
-	for(var/obj/item/I in H.get_equipped_items(TRUE))
-		qdel(I)
-	for(var/obj/item/I in H.held_items)
-		qdel(I)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(H), SLOT_W_UNIFORM)
+	for(var/obj/item/I in H)
+		if(!H.dropItemToGround(I))
+			qdel(I)
+	H.regenerate_icons()
+	H.revive(full_heal = TRUE, admin_revive = TRUE)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/kilt/highlander(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), SLOT_EARS)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), SLOT_SHOES)

@@ -42,7 +42,7 @@
 /datum/nanite_program/triggered/shocking/trigger()
 	if(!..())
 		return
-	host_mob.electrocute_act(rand(5,10), "shock nanites", TRUE, TRUE)
+	host_mob.electrocute_act(rand(5,10), "shock nanites", 1, SHOCK_NOGLOVES)
 
 /datum/nanite_program/triggered/stun
 	name = "Neural Shock"
@@ -54,7 +54,7 @@
 /datum/nanite_program/triggered/stun/trigger()
 	if(!..())
 		return
-	playsound(host_mob, "sparks", 75, 1, -1)
+	playsound(host_mob, "sparks", 75, TRUE, -1)
 	host_mob.Paralyze(80)
 
 /datum/nanite_program/pacifying

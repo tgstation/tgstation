@@ -3,7 +3,7 @@
 	id = "fly"
 	say_mod = "buzzes"
 	species_traits = list(NOEYESPRITES)
-	inherent_biotypes = list(MOB_ORGANIC, MOB_HUMANOID, MOB_BUG)
+	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutanttongue = /obj/item/organ/tongue/fly
 	mutantliver = /obj/item/organ/liver/fly
 	mutantstomach = /obj/item/organ/stomach/fly
@@ -25,7 +25,7 @@
 		if(nutri_check.nutriment_factor > 0)
 			var/turf/pos = get_turf(H)
 			H.vomit(0, FALSE, FALSE, 2, TRUE)
-			playsound(pos, 'sound/effects/splat.ogg', 50, 1)
+			playsound(pos, 'sound/effects/splat.ogg', 50, TRUE)
 			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
 						"<span class='userdanger'>You throw up on the floor!</span>")
 	..()

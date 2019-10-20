@@ -14,7 +14,7 @@
 	wreckage = /obj/structure/mecha_wreckage/honker
 	add_req_access = 0
 	max_equip = 3
-	var/squeak = 0
+	var/squeak = TRUE
 
 /obj/mecha/combat/honker/get_stats_part()
 	var/integrity = obj_integrity/max_integrity*100
@@ -128,17 +128,10 @@
 	output += "</div>"
 	return output
 
-
-
-/obj/mecha/combat/honker/mechstep(direction)
-	var/result = step(src,direction)
-	if(result)
-		if(!squeak)
-			playsound(src, "clownstep", 70, 1)
-			squeak = 1
-		else
-			squeak = 0
-	return result
+/obj/mecha/combat/honker/play_stepsound()
+	if(squeak)
+		playsound(src, "clownstep", 70, 1)
+	squeak = !squeak
 
 /obj/mecha/combat/honker/Topic(href, href_list)
 	..()

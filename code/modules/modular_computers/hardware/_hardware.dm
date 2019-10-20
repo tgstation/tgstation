@@ -49,6 +49,7 @@
 	return ..()
 
 /obj/item/computer_hardware/multitool_act(mob/living/user, obj/item/I)
+	..()
 	to_chat(user, "***** DIAGNOSTICS REPORT *****")
 	diagnostics(user)
 	to_chat(user, "******************************")

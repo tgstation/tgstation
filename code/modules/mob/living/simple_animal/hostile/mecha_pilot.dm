@@ -23,7 +23,7 @@
 	desc = "Death to Nanotrasen. This variant comes in MECHA DEATH flavour."
 	wanted_objects = list()
 	search_objects = 0
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
 	var/spawn_mecha_type = /obj/mecha/combat/marauder/mauler/loaded
 	var/obj/mecha/mecha //Ref to pilot's mecha instance
@@ -32,7 +32,7 @@
 
 	//Vars that control when the pilot uses their mecha's abilities (if the mecha has that ability)
 	var/threat_use_mecha_smoke = 5 //5 mobs is enough to engage crowd control
-	var/defence_mode_chance = 35 //Chance to engage Defence mode when damaged
+	var/defense_mode_chance = 35 //Chance to engage Defense mode when damaged
 	var/smoke_chance = 20 //Chance to deploy smoke for crowd control
 	var/retreat_chance = 40 //Chance to run away
 
@@ -78,7 +78,7 @@
 	var/do_ranged = 0
 	for(var/equip in mecha.equipment)
 		var/obj/item/mecha_parts/mecha_equipment/ME = equip
-		if(ME.range & RANGED)
+		if(ME.range & MECHA_RANGED)
 			do_ranged = 1
 			break
 	if(do_ranged)
@@ -144,7 +144,7 @@
 				ME.rearm()
 
 
-/mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/get_mecha_equip_by_flag(flag = RANGED)
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/get_mecha_equip_by_flag(flag = MECHA_RANGED)
 	. = list()
 	if(mecha)
 		for(var/equip in mecha.equipment)
@@ -160,7 +160,7 @@
 	if(mecha)
 		mecha_reload()
 		mecha_face_target(A)
-		var/list/possible_weapons = get_mecha_equip_by_flag(RANGED)
+		var/list/possible_weapons = get_mecha_equip_by_flag(MECHA_RANGED)
 		if(possible_weapons.len)
 			var/obj/item/mecha_parts/mecha_equipment/ME = pick(possible_weapons) //so we don't favor mecha.equipment[1] forever
 			if(ME.action(A))
@@ -173,7 +173,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/AttackingTarget()
 	if(mecha)
-		var/list/possible_weapons = get_mecha_equip_by_flag(MELEE)
+		var/list/possible_weapons = get_mecha_equip_by_flag(MECHA_MELEE)
 		if(possible_weapons.len)
 			var/obj/item/mecha_parts/mecha_equipment/ME = pick(possible_weapons)
 			mecha_face_target(target)
@@ -226,23 +226,22 @@
 				if(mecha.smoke_action && mecha.smoke_action.owner && mecha.smoke)
 					mecha.smoke_action.Activate()
 
-			//Heavy damage - Defence Power or Retreat
+			//Heavy damage - Defense Power or Retreat
 			if(mecha.obj_integrity < mecha.max_integrity*0.25)
-				if(prob(defence_mode_chance))
-					if(mecha.defense_action && mecha.defense_action.owner && !mecha.defence_mode)
+				if(prob(defense_mode_chance))
+					if(mecha.defense_action && mecha.defense_action.owner && !mecha.defense_mode)
 						mecha.leg_overload_mode = 0
 						mecha.defense_action.Activate(TRUE)
-						addtimer(CALLBACK(mecha.defense_action, /datum/action/innate/mecha/mech_defence_mode.proc/Activate, FALSE), 100) //10 seconds of defence, then toggle off
+						addtimer(CALLBACK(mecha.defense_action, /datum/action/innate/mecha/mech_defense_mode.proc/Activate, FALSE), 100) //10 seconds of defense, then toggle off
 
 				else if(prob(retreat_chance))
 					//Speed boost if possible
 					if(mecha.overload_action && mecha.overload_action.owner && !mecha.leg_overload_mode)
 						mecha.overload_action.Activate(TRUE)
-						addtimer(CALLBACK(mecha.overload_action, /datum/action/innate/mecha/mech_defence_mode.proc/Activate, FALSE), 100) //10 seconds of speeeeed, then toggle off
+						addtimer(CALLBACK(mecha.overload_action, /datum/action/innate/mecha/mech_defense_mode.proc/Activate, FALSE), 100) //10 seconds of speeeeed, then toggle off
 
 					retreat_distance = 50
-					spawn(100)
-						retreat_distance = 0
+					addtimer(VARSET_CALLBACK(src, retreat_distance, 0), 10 SECONDS)
 
 
 

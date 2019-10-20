@@ -66,9 +66,8 @@
 			if(Target in view(1,src))
 				if(!CanFeedon(Target)) //If they're not able to be fed upon, ignore them.
 					if(!Atkcool)
-						Atkcool = 1
-						spawn(45)
-							Atkcool = 0
+						Atkcool = TRUE
+						addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
 
 						if(Target.Adjacent(src))
 							Target.attack_slime(src)
@@ -77,9 +76,8 @@
 
 					if(Target.client && Target.health >= 20)
 						if(!Atkcool)
-							Atkcool = 1
-							spawn(45)
-								Atkcool = 0
+							Atkcool = TRUE
+							addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
 
 							if(Target.Adjacent(src))
 								Target.attack_slime(src)
@@ -351,11 +349,6 @@
 
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
-
-					if(ishuman(L)) //Ignore slime(wo)men
-						var/mob/living/carbon/human/H = L
-						if(src.type in H.dna.species.ignored_by)
-							continue
 
 					if(locate(/mob/living/simple_animal/slime) in L.buckled_mobs) // Only one slime can latch on at a time.
 						continue

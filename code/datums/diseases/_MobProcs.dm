@@ -17,13 +17,9 @@
 	if(HasDisease(D))
 		return FALSE
 
-	var/can_infect = FALSE
-	for(var/host_type in D.infectable_biotypes)
-		if(host_type in mob_biotypes)
-			can_infect = TRUE
-			break
-	if(!can_infect)
+	if(!(D.infectable_biotypes & mob_biotypes))
 		return FALSE
+
 
 	if(!(type in D.viable_mobtypes))
 		return FALSE

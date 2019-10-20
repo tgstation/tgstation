@@ -243,7 +243,7 @@
 /area/ruin/space/has_grav/ancientstation/atmo
 	name = "Beta Station Atmospherics"
 	icon_state = "red"
-	has_gravity = FALSE
+	has_gravity = TRUE
 
 /area/ruin/space/has_grav/ancientstation/betanorth
 	name = "Beta Station North Corridor"
@@ -285,9 +285,13 @@
 	name = "Delta Station Research and Development"
 	icon_state = "toxlab"
 
-/area/ruin/space/has_grav/ancientstation/hivebot
-	name = "Hivebot Mothership"
+/area/ruin/space/has_grav/ancientstation/deltaai
+	name = "Delta Station AI Core"
 	icon_state = "teleporter"
+
+/area/ruin/space/has_grav/ancientstation/mining
+	name = "Beta Station Mining Equipment"
+	icon_state = "green"
 
 //DERELICT
 
@@ -368,13 +372,11 @@
 	name = "Ruskie DJ Station"
 	icon_state = "DJ"
 	has_gravity = STANDARD_GRAVITY
-	blob_allowed = FALSE //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
 
 /area/ruin/space/djstation/solars
 	name = "DJ Station Solars"
 	icon_state = "DJ"
 	has_gravity = STANDARD_GRAVITY
-
 
 //ABANDONED TELEPORTER
 

@@ -70,7 +70,10 @@
 						{{#if data.ongoing_contract}}
 							{{#if status == 2 || status == 3 || status == 4}}
 								<tr>
-									<td>{{target}}</td>
+									<td>
+										<div>{{target}}</div>
+										<div>({{target_rank}})</div>
+									</td>
 									<td>{{payout}} (+{{payout_bonus}}) TC</td>
 									<td>{{dropoff}}</td>
 									<td><ui-button action='PRG_contract_abort' {{#if extraction_enroute}}state="disabled"{{/if}} params='{"contract_id": "{{id}}"}'>Cancel</ui-button></td>
@@ -79,7 +82,10 @@
 						{{else}}
 							{{#if status != 5 && status != 6}}
 								<tr>
-									<td>{{target}}</td>
+									<td>
+										<div>{{target}}</div>
+										<div>({{target_rank}})</div>
+									</td>
 									<td>{{payout}} (+{{payout_bonus}}) TC</td>
 									<td>{{dropoff}}</td>
 									<td><ui-button action='PRG_contract-accept' params='{"contract_id": "{{id}}"}'>Accept</ui-button></td>
@@ -105,8 +111,8 @@
 				<br>
 				<br>
 
-				<p>
-					The items available on the Hub are available only to contractors. They are bought using Contractor Rep, with one Rep being given on the completion of a contract.
+				<p style="text-align: center">
+					The items available on the Hub are available only to contractors. They are bought using Contractor Rep, with two Rep being given on the completion of a contract.
 				</p>
 
 				<div class="margin-top: 10px">
@@ -114,7 +120,7 @@
 						{{#if limited != 0}}
 							<div style="margin-top:10px; border: 1px solid white">
 								<div style="text-align:center; margin-top:5px; margin-bottom:3px">
-									{{name}} - {{cost}} Rep
+									{{name}}{{#if cost != 0}} - {{cost}} Rep{{/if}}
 								</div>
 								<div style="text-align:center; margin-top: 10px">
 									<i class="fas {{item_icon}} fa-3x"></i>

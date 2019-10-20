@@ -16,17 +16,17 @@
 	switch(consoleStatus)
 		if (SP_LINKED)
 			linked = TRUE
-			playsound(src,'sound/machines/twobeep.ogg',50,0)
+			playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
 		if (SP_READY)
 			ready = TRUE
 		if (SP_LAUNCH)
 			launched = TRUE
-			playsound(src,'sound/machines/triple_beep.ogg',50,0)
-			playsound(src,'sound/machines/warning-buzzer.ogg',50,0)
+			playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
+			playsound(src,'sound/machines/warning-buzzer.ogg',50,FALSE)
 			addtimer(CALLBACK(src, .proc/endLaunch), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
 		if (SP_UNLINK)
 			linked = FALSE
-			playsound(src,'sound/machines/synth_no.ogg',50,0)
+			playsound(src,'sound/machines/synth_no.ogg',50,FALSE)
 		if (SP_UNREADY)
 			ready = FALSE
 	update_icon()
@@ -81,7 +81,7 @@
 	if (express_console)
 		unlink_console()
 	else
-		to_chat(user, "<span class='notice'>There is no linked console!</span>")
+		to_chat(user, "<span class='alert'>There is no linked console.</span>")
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console

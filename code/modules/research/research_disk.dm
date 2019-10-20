@@ -3,7 +3,7 @@
 	name = "technology disk"
 	desc = "A disk for storing technology data for further research."
 	icon_state = "datadisk0"
-	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
 	var/datum/techweb/stored_research
 
 /obj/item/disk/tech_disk/Initialize()
@@ -15,7 +15,7 @@
 /obj/item/disk/tech_disk/debug
 	name = "\improper CentCom technology disk"
 	desc = "A debug item for research"
-	materials = list()
+	custom_materials = null
 
 /obj/item/disk/tech_disk/debug/Initialize()
 	. = ..()

@@ -53,22 +53,6 @@
 	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
 /*
- * Air
- */
-/obj/item/tank/internals/air
-	name = "air tank"
-	desc = "Mixed anyone?"
-	icon_state = "air"
-	item_state = "air"
-	force = 10
-	dog_fashion = /datum/dog_fashion/back
-
-/obj/item/tank/internals/air/populate_gas()
-	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-	air_contents.gases[/datum/gas/nitrogen][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-
-/*
  * Plasma
  */
 /obj/item/tank/internals/plasma

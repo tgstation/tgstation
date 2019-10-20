@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/singularity_act()
 	return
 
-/obj/effect/hallucination/simple/Initialize(mapload, var/mob/living/carbon/T)
+/obj/effect/hallucination/simple/Initialize(mapload, mob/living/carbon/T)
 	. = ..()
 	target = T
 	current_image = GetImage()
@@ -429,11 +429,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/mob/living/carbon/human/H = pick(mob_pool)
 	feedback_details += " Mob: [H.real_name]"
 
-	var/free_hand = H.get_empty_held_index_for_side(side = "left")
+	var/free_hand = H.get_empty_held_index_for_side(LEFT_HANDS)
 	if(free_hand)
 		side = "left"
 	else
-		free_hand = H.get_empty_held_index_for_side(side = "right")
+		free_hand = H.get_empty_held_index_for_side(RIGHT_HANDS)
 		if(free_hand)
 			side = "right"
 
@@ -472,12 +472,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					image_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 				target.playsound_local(H, "sparks",75,1,-1)
 				A = image(image_file,H,"baton", layer=ABOVE_MOB_LAYER)
-			if("clockspear")
-				if(side == "right")
-					image_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
-				else
-					image_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
-				A = image(image_file,H,"ratvarian_spear", layer=ABOVE_MOB_LAYER)
 			if("ttv")
 				if(side == "right")
 					image_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
@@ -592,7 +586,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	A.override = 1
 	if(target.client)
 		if(wabbajack)
-			to_chat(target, "<span class='italics'>...wabbajack...wabbajack...</span>")
+			to_chat(target, "<span class='hear'>...wabbajack...wabbajack...</span>")
 			target.playsound_local(target,'sound/magic/staff_change.ogg', 50, 1)
 		delusion = A
 		target.client.images |= A
@@ -744,7 +738,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				message_pool.Add("<span class='notice'>[other] puts the [pick(\
 					"revolver","energy sword","cryptographic sequencer","power sink","energy bow",\
 					"hybrid taser","stun baton","flash","syringe gun","circular saw","tank transfer valve",\
-					"ritual dagger","clockwork slab","spellbook",\
+					"ritual dagger","spellbook",\
 					"pulse rifle","captain's spare ID","hand teleporter","hypospray","antique laser gun","X-01 MultiPhase Energy Gun","station's blueprints"\
 					)] into [equipped_backpack].</span>")
 
@@ -1290,9 +1284,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		qdel(src)
 		return
 	var/turf/start = pick(startlocs)
-	var/proj_type = pick(subtypesof(/obj/item/projectile/hallucination))
+	var/proj_type = pick(subtypesof(/obj/projectile/hallucination))
 	feedback_details += "Type: [proj_type]"
-	var/obj/item/projectile/hallucination/H = new proj_type(start)
+	var/obj/projectile/hallucination/H = new proj_type(start)
 	target.playsound_local(start, H.hal_fire_sound, 60, 1)
 	H.hal_target = target
 	H.preparePixelProjectile(target, start)

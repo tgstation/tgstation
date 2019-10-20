@@ -21,7 +21,7 @@
 	for(var/obj/structure/transit_tube/tube in source_turf)
 		existing_tubes +=1
 		if(existing_tubes >= 2)
-			to_chat(user, "<span class='warning'>You cannot wrench anymore transit tubes!</span> ")
+			to_chat(user, "<span class='warning'>You cannot wrench any more transit tubes!</span> ")
 			return FALSE
 	return TRUE
 
@@ -41,6 +41,7 @@
 		icon_state = "[base_icon][flipped]"
 
 /obj/structure/c_transit_tube/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(!can_wrench_in_loc(user))
 		return
 	to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")
@@ -81,6 +82,36 @@
 	build_type = /obj/structure/transit_tube/station/reverse/flipped
 	flipped_build_type = /obj/structure/transit_tube/station/reverse
 
+//all the dispenser stations
+
+/obj/structure/c_transit_tube/station/dispenser
+	icon_state = "closed_dispenser0"
+	name = "unattached dispenser station"
+	build_type = /obj/structure/transit_tube/station/dispenser
+	flipped_build_type = /obj/structure/transit_tube/station/dispenser/flipped
+
+/obj/structure/c_transit_tube/station/dispenser/flipped
+	icon_state = "closed_station1"
+	flipped = 1
+	build_type = /obj/structure/transit_tube/station/dispenser/flipped
+	flipped_build_type = /obj/structure/transit_tube/station/dispenser
+
+//and the ones that reverse
+
+/obj/structure/c_transit_tube/station/dispenser/reverse
+	name = "unattached terminus dispenser station"
+	icon_state = "closed_terminus0"
+	build_type = /obj/structure/transit_tube/station/dispenser/reverse
+	flipped_build_type = /obj/structure/transit_tube/station/dispenser/reverse/flipped
+	base_icon = "closed_terminus"
+
+/obj/structure/c_transit_tube/station/dispenser/reverse/flipped
+	icon_state = "closed_terminus1"
+	flipped = 1
+	build_type = /obj/structure/transit_tube/station/dispenser/reverse/flipped
+	flipped_build_type = /obj/structure/transit_tube/station/dispenser/reverse
+
+//onto some special tube types
 
 /obj/structure/c_transit_tube/crossing
 	icon_state = "crossing"

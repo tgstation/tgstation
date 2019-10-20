@@ -44,7 +44,14 @@
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on the cover of [src]!</span>")
 			return
-		var/n_name = copytext(sanitize(input(user, "What would you like to label the folder?", "Folder Labelling", null) as text), 1, MAX_NAME_LEN)
+
+		var/inputvalue = input(user, "What would you like to label the folder?", "Folder Labelling", null) as text|null
+		
+		if (isnull(inputvalue))
+			return
+		
+		var/n_name = copytext(sanitize(inputvalue), 1, MAX_NAME_LEN)
+		
 		if(user.canUseTopic(src, BE_CLOSE))
 			name = "folder[(n_name ? " - '[n_name]'" : null)]"
 

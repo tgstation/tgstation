@@ -486,7 +486,7 @@
 			to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
 			return FALSE
 		if(dump_destination.storage_contents_dump_act(src, M))
-			playsound(A, "rustle", 50, 1, -5)
+			playsound(A, "rustle", 50, TRUE, -5)
 			return TRUE
 	return FALSE
 
@@ -536,28 +536,30 @@
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
 	set waitfor = FALSE
 	. = COMPONENT_NO_MOUSEDROP
+	if(!ismob(M))
+		return
+	if(!over_object)
+		return
+	if(ismecha(M.loc)) // stops inventory actions in a mech
+		return
+	if(M.incapacitated() || !M.canUseStorage())
+		return
 	var/atom/A = parent
-	if(ismob(M)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
-		A.add_fingerprint(M)
-		if(!over_object)
-			return FALSE
-		if(ismecha(M.loc)) // stops inventory actions in a mech
-			return FALSE
-		// this must come before the screen objects only block, dunno why it wasn't before
-		if(over_object == M)
-			user_show_to_mob(M)
-		if(!M.incapacitated())
-			if(!istype(over_object, /obj/screen))
-				dump_content_at(over_object, M)
-				return
-			if(A.loc != M)
-				return
-			playsound(A, "rustle", 50, 1, -5)
-			if(istype(over_object, /obj/screen/inventory/hand))
-				var/obj/screen/inventory/hand/H = over_object
-				M.putItemFromInventoryInHandIfPossible(A, H.held_index)
-				return
-			A.add_fingerprint(M)
+	A.add_fingerprint(M)
+	// this must come before the screen objects only block, dunno why it wasn't before
+	if(over_object == M)
+		user_show_to_mob(M)
+	if(!istype(over_object, /obj/screen))
+		dump_content_at(over_object, M)
+		return
+	if(A.loc != M)
+		return
+	playsound(A, "rustle", 50, TRUE, -5)
+	if(istype(over_object, /obj/screen/inventory/hand))
+		var/obj/screen/inventory/hand/H = over_object
+		M.putItemFromInventoryInHandIfPossible(A, H.held_index)
+		return
+	A.add_fingerprint(M)
 
 /datum/component/storage/proc/user_show_to_mob(mob/M, force = FALSE)
 	var/atom/A = parent
@@ -612,6 +614,11 @@
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[I] is too big for [host]!</span>")
 		return FALSE
+	var/datum/component/storage/biggerfish = real_location.loc.GetComponent(/datum/component/storage)
+	if(biggerfish && biggerfish.max_w_class < max_w_class)//return false if we are inside of another container, and that container has a smaller max_w_class than us (like if we're a bag in a box)
+		if(!stop_messages)
+			to_chat(M, "<span class='warning'>[I] can't fit in [host] while [real_location.loc] is in the way!</span>")
+		return FALSE
 	var/sum_w_class = I.w_class
 	for(var/obj/item/_I in real_location)
 		sum_w_class += _I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
@@ -656,14 +663,14 @@
 	if(silent && !override)
 		return
 	if(rustle_sound)
-		playsound(parent, "rustle", 50, 1, -5)
+		playsound(parent, "rustle", 50, TRUE, -5)
 	for(var/mob/viewing in viewers(user, null))
 		if(M == viewing)
 			to_chat(usr, "<span class='notice'>You put [I] [insert_preposition]to [parent].</span>")
 		else if(in_range(M, viewing)) //If someone is standing close enough, they can tell what it is...
-			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", 1)
+			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", MSG_VISUAL)
 		else if(I && I.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
-			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", 1)
+			viewing.show_message("<span class='notice'>[M] puts [I] [insert_preposition]to [parent].</span>", MSG_VISUAL)
 
 /datum/component/storage/proc/update_icon()
 	if(isobj(parent))
@@ -716,8 +723,11 @@
 	if(!force)
 		amount = min(remaining_space_items(), amount)
 	for(var/i in 1 to amount)
-		handle_item_insertion(new type(real_location), TRUE)
-		CHECK_TICK
+		if(!handle_item_insertion(new type(real_location), TRUE))
+			return i > 1 //return TRUE only if at least one insertion has been successful.
+		if(CHECK_TICK)
+			if(QDELETED(src))
+				return TRUE
 	return TRUE
 
 /datum/component/storage/proc/on_attack_hand(datum/source, mob/user)
@@ -731,7 +741,7 @@
 		return
 
 	if(rustle_sound)
-		playsound(A, "rustle", 50, 1, -5)
+		playsound(A, "rustle", 50, TRUE, -5)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -782,7 +792,7 @@
 	if(!quickdraw)
 		A.add_fingerprint(user)
 		user_show_to_mob(user)
-		playsound(A, "rustle", 50, 1, -5)
+		playsound(A, "rustle", 50, TRUE, -5)
 		return
 
 	if(!user.incapacitated())
@@ -805,8 +815,8 @@
 	collection_mode = (collection_mode+1)%3
 	switch(collection_mode)
 		if(COLLECT_SAME)
-			to_chat(user, "[parent] now picks up all items of a single type at once.")
+			to_chat(user, "<span class='notice'>[parent] now picks up all items of a single type at once.</span>")
 		if(COLLECT_EVERYTHING)
-			to_chat(user, "[parent] now picks up all items in a tile at once.")
+			to_chat(user, "<span class='notice'>[parent] now picks up all items in a tile at once.</span>")
 		if(COLLECT_ONE)
-			to_chat(user, "[parent] now picks up one item at a time.")
+			to_chat(user, "<span class='notice'>[parent] now picks up one item at a time.</span>")

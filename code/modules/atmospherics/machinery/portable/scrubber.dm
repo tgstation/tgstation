@@ -2,6 +2,8 @@
 	name = "portable air scrubber"
 	icon_state = "pscrubber:0"
 	density = TRUE
+	ui_x = 420
+	ui_y = 435
 
 	var/on = FALSE
 	var/volume_rate = 1000
@@ -39,7 +41,7 @@
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub(var/datum/gas_mixture/mixture)
 	if(air_contents.return_pressure() >= overpressure_m * ONE_ATMOSPHERE)
 		return
-	
+
 	var/transfer_moles = min(1, volume_rate / mixture.volume) * mixture.total_moles()
 
 	var/datum/gas_mixture/filtering = mixture.remove(transfer_moles) // Remove part of the mixture to filter.
@@ -72,7 +74,7 @@
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "portable_scrubber", name, 420, 435, master_ui, state)
+		ui = new(user, src, ui_key, "portable_scrubber", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/scrubber/ui_data()
@@ -134,6 +136,9 @@
 
 /obj/machinery/portable_atmospherics/scrubber/huge/movable
 	movable = TRUE
+
+/obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo
+	anchored = FALSE
 
 /obj/machinery/portable_atmospherics/scrubber/huge/update_icon()
 	icon_state = "scrubber:[on]"

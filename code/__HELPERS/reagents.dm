@@ -72,3 +72,15 @@
 	if(!GLOB.chemical_reactions_list[primary_reagent])
 		GLOB.chemical_reactions_list[primary_reagent] = list()
 	GLOB.chemical_reactions_list[primary_reagent] += R
+
+//Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
+/datum/reagents/proc/create_foam(foamtype,foam_volume,metaltype = 0,notification = null)
+	var/location = get_turf(my_atom)
+	var/datum/effect_system/foam_spread/foam = new foamtype()
+	foam.set_up(foam_volume, location, src, metaltype)
+	foam.start()
+	clear_reagents()
+	if(!notification)
+		return
+	for(var/mob/M in viewers(5, location))
+		to_chat(M, notification)
