@@ -2,7 +2,7 @@ import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 
-export const BSA = props => {
+export const BluespaceArtillery = props => {
   const { state } = props;
   const { config, data } = state;
   const { ref } = config;
@@ -23,11 +23,13 @@ export const BSA = props => {
                 disabled={!data.unlocked}
                 onclick={() => act(ref, 'recalibrate')} />
             )}>
-            <span
-              className={'color-' + (data.target ? 'average' : 'bad')}
-              style="font-size: 25px;">
-              {data.target ? data.target : 'No Target Set'}
-            </span>
+            <Box
+              color={data.target ? 'average' : 'bad'}
+              style={{
+                'font-size': '25px',
+              }}>
+              {data.target || 'No Target Set'}
+            </Box>
           </Section>
           <Section>
             {data.unlocked ? (
@@ -46,17 +48,17 @@ export const BSA = props => {
               </Box>
             ) : (
               <Fragment>
-                <span
-                  className="color-bad"
-                  style="font-size: 18px;">
+                <Box
+                  color="bad"
+                  style={{
+                    'font-size': '18px',
+                  }}>
                   Bluespace artillery is currently locked.
-                </span>
-                <Box size={1} />
-                <br />
-                <span>
+                </Box>
+                <Box mt={1}>
                   Awaiting authorization via keycard reader from at minimum
                   two station heads.
-                </span>
+                </Box>
               </Fragment>
             )}
           </Section>

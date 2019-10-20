@@ -119,6 +119,13 @@
 	if(width && height) // If we have a width and height, use them.
 		window_size = "size=[width]x[height];"
 
+	// Remove titlebar and resize handles for a fancy window
+	// right from the beginning
+	var/list/config_data = get_config_data();
+	if(config_data["fancy"])
+		window_options["titlebar"] = FALSE
+		window_options["can_resize"] = FALSE
+
 	user << browse(get_html(), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
 	if (!custom_browser_id)
 		winset(user, window_id, "on-close=\"uiclose [REF(src)]\"") // Instruct the client to signal UI when the window is closed.

@@ -14,7 +14,9 @@ module.exports = (env = {}, argv) => {
       ],
     },
     output: {
-      path: path.resolve(__dirname, './public/bundles'),
+      path: argv.mode === 'production'
+        ? path.resolve(__dirname, './public')
+        : path.resolve(__dirname, './public/.tmp'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.js',
     },
@@ -26,7 +28,6 @@ module.exports = (env = {}, argv) => {
       rules: [
         {
           test: /\.m?jsx?$/,
-          // exclude: /node_modules/,
           use: [
             {
               loader: 'babel-loader',
@@ -46,6 +47,7 @@ module.exports = (env = {}, argv) => {
                 plugins: [
                   '@babel/plugin-transform-jscript',
                   'babel-plugin-inferno',
+                  'babel-plugin-macros',
                 ],
               },
             },
@@ -62,9 +64,7 @@ module.exports = (env = {}, argv) => {
             },
             {
               loader: 'css-loader',
-              options: {
-                url: false,
-              },
+              options: {},
             },
             {
               loader: 'sass-loader',
@@ -83,31 +83,16 @@ module.exports = (env = {}, argv) => {
             },
             {
               loader: 'css-loader',
-              options: {
-                url: false,
-              },
+              options: {},
             },
           ],
         },
         {
-          test: /\.(png|jpg|gif|ico)$/,
+          test: /\.(png|jpg|svg)$/,
           use: [
             {
-              loader: 'file-loader',
-              options: {
-                name: 'images/[name].[ext]',
-              },
-            },
-          ],
-        },
-        {
-          test: /\.(ttf|woff|woff2|eot|svg)$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: 'fonts/[name].[ext]',
-              },
+              loader: 'url-loader',
+              options: {},
             },
           ],
         },
@@ -115,15 +100,6 @@ module.exports = (env = {}, argv) => {
     },
     optimization: {
       noEmitOnErrors: true,
-      // splitChunks: {
-      //   cacheGroups: {
-      //     commons: {
-      //       test: /[\\/]node_modules[\\/]/,
-      //       name: 'vendor',
-      //       chunks: 'all',
-      //     },
-      //   },
-      // },
     },
     performance: {
       hints: false,

@@ -15,7 +15,9 @@ run-webpack() {
 ## Mr. Proper
 if [[ ${1} == "--clean" ]]; then
   shopt -s globstar
+  rm -rf packages/tgui/public/.tmp
   rm -rf **/node_modules
+  rm -f **/package-lock.json
   exit 0
 fi
 
@@ -44,6 +46,7 @@ fi
 
 ## Make a production webpack build
 if [[ -z ${1} ]]; then
+  eslint packages
   run-webpack --mode=production
 fi
 

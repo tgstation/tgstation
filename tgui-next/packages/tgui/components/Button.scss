@@ -1,14 +1,13 @@
 @mixin button-color($color) {
+  // Adapt text color to background luminance to ensure high contast
+  $luminance: luminance($color);
+  $text-color: if($luminance > 0.3,
+    rgba(0, 0, 0, 1),
+    rgba(255, 255, 255, 1));
+
   transition: color, background-color 50ms;
   background-color: $color;
-
-  // Adapt button color to background luminance to ensure high contast
-  @if luminance($color) > 0.4 {
-    color: rgba(0, 0, 0, 1);
-  }
-  @else {
-    color: rgba(255, 255, 255, 1);
-  }
+  color: $text-color;
 
   &:hover {
     transition: color, background-color 0ms;
@@ -21,12 +20,7 @@
   &:hover,
   &:focus {
     background-color: lighten($color, $button-lighten-hover);
-    @if luminance($color) > 0.4 {
-      color: rgba(0, 0, 0, 1);
-    }
-    @else {
-      color: rgba(255, 255, 255, 1);
-    }
+    color: $text-color;
   }
 }
 

@@ -1,13 +1,16 @@
 import { createLogger, directLog } from 'common/logging.js';
 import http from 'http';
 import WebSocket from 'ws';
+import { inspect } from 'util';
 
 const logger = createLogger('link');
+
+const DEBUG = process.argv.includes('--debug');
 
 export const setupLink = () => {
   logger.log('setting up');
   const wss = setupWebSocketLink();
-  setupSimpleLink();
+  setupHttpLink();
   return {
     wss,
   };
@@ -27,8 +30,21 @@ const handleLinkMessage = msg => {
   const { type, payload } = msg;
 
   if (type === 'log') {
-    const { ns, args } = payload;
-    directLog(ns, ...args);
+    const { level, ns, args } = payload;
+    // Skip debug messages
+    if (level <= 0 && !DEBUG) {
+      return;
+    }
+    directLog(ns, ...args.map(arg => {
+      if (typeof arg === 'object') {
+        return inspect(arg, {
+          depth: Infinity,
+          colors: true,
+          compact: 8,
+        });
+      }
+      return arg;
+    }));
     return;
   }
 
@@ -59,7 +75,7 @@ const setupWebSocketLink = () => {
 };
 
 // One way HTTP-based client link for IE8
-const setupSimpleLink = () => {
+const setupHttpLink = () => {
   const logger = createLogger('link');
   const port = 3001;
 

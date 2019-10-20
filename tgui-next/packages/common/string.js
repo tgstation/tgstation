@@ -1,46 +1,4 @@
 /**
- * @file
- * @copyright 2018 Aleksej Komarov
- * @license GPL-2.0-or-later
- */
-
-/**
- * Removes excess whitespace and indentation from the string
- * @param  {string} str
- * @return {string}
- */
-export const compact = str => {
-  return str
-    .trim()
-    .split('\n')
-    .map(x => x.trim())
-    .filter(x => x.length > 0)
-    .join('\n');
-};
-
-/**
- * Template literal tag for rendering HTML
- */
-export const html = (strings, ...expressions) => {
-  const length = strings.length;
-  let output = '';
-  for (let i = 0; i < length; i++) {
-    output += strings[i];
-    let expr = expressions[i];
-    if (typeof expr === 'boolean' || expr === undefined || expr === null) {
-      // Nothing
-    }
-    else if (Array.isArray(expr)) {
-      output += expr.join('\n');
-    }
-    else {
-      output += expr;
-    }
-  }
-  return output;
-};
-
-/**
  * Matches strings with wildcards.
  * Example: testGlobPattern('*@domain')('user@domain') === true
  */
@@ -59,20 +17,6 @@ export const capitalize = str => {
   }
   // Handle string
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-};
-
-export const toLowerCase = str => {
-  if (typeof str !== 'string') {
-    return str;
-  }
-  return str.toLowerCase();
-};
-
-export const toUpperCase = str => {
-  if (typeof str !== 'string') {
-    return str;
-  }
-  return str.toUpperCase();
 };
 
 export const toTitleCase = str => {

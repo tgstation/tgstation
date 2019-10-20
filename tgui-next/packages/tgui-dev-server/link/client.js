@@ -12,7 +12,7 @@ const ensureConnection = () => {
       socket.onopen = () => {
         // Empty the message queue
         while (queue.length !== 0) {
-          const msg = queue.pop();
+          const msg = queue.shift();
           socket.send(msg);
         }
       };
@@ -32,9 +32,28 @@ if (process.env.NODE_ENV !== 'production') {
 
 const subscribe = fn => subscribers.push(fn);
 
+/**
+ * A json serializer which handles circular references and other junk.
+ */
+const serializeObject = obj => {
+  let cache = [];
+  const json = JSON.stringify(obj, (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (cache.indexOf(value) !== -1) {
+        return '[circular ref]';
+      }
+      cache.push(value);
+      return value;
+    }
+    return value;
+  });
+  cache = null;
+  return json;
+};
+
 const sendRawMessage = msg => {
   if (process.env.NODE_ENV !== 'production') {
-    const json = JSON.stringify(msg);
+    const json = serializeObject(msg);
     // Send message using WebSocket
     if (window.WebSocket) {
       ensureConnection();
@@ -58,12 +77,13 @@ const sendRawMessage = msg => {
   }
 };
 
-export const sendLogEntry = (ns, ...args) => {
+export const sendLogEntry = (level, ns, ...args) => {
   if (process.env.NODE_ENV !== 'production') {
     try {
       sendRawMessage({
         type: 'log',
         payload: {
+          level,
           ns: ns || 'client',
           args,
         },
@@ -79,14 +99,14 @@ export const setupHotReloading = () => {
       && window.WebSocket) {
     if (module.hot) {
       ensureConnection();
-      sendLogEntry(null, 'setting up hot reloading');
+      sendLogEntry(0, null, 'setting up hot reloading');
       subscribe(msg => {
         const { type } = msg;
-        sendLogEntry(null, 'received', type);
+        sendLogEntry(0, null, 'received', type);
         if (type === 'hotUpdate') {
           const status = module.hot.status();
           if (status !== 'idle') {
-            sendLogEntry(null, 'hot reload status:', status);
+            sendLogEntry(0, null, 'hot reload status:', status);
             return;
           }
           module.hot
@@ -95,11 +115,11 @@ export const setupHotReloading = () => {
               ignoreDeclined: true,
               ignoreErrored: true,
             })
-            // .then(modules => {
-            //   sendLogEntry(null, 'outdated modules', modules);
-            // })
+            .then(modules => {
+              sendLogEntry(0, null, 'outdated modules', modules);
+            })
             .catch(err => {
-              sendLogEntry(null, 'reload error', err);
+              sendLogEntry(0, null, 'reload error', err);
             });
         }
       });
