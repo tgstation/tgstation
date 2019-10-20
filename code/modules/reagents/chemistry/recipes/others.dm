@@ -700,3 +700,10 @@
 /datum/chemical_reaction/slime_extractification/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/slime_extract/grey(location)
+
+/datum/chemical_reaction/cellulose_carbonization
+	name = "Cellulose_Carbonization"
+	id = /datum/reagent/carbon
+	results = list(/datum/reagent/carbon = 1)
+	required_reagents = list(/datum/reagent/cellulose = 1)
+	required_temp = 512
