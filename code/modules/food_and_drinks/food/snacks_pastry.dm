@@ -75,7 +75,6 @@
 	desc = "Goes great with a soy latte."
 	icon_state = "donut_pink"
 	bonus_reagents = list(/datum/reagent/consumable/berryjuice = 3, /datum/reagent/consumable/sprinkles = 1) //Extra sprinkles to reward frosting
-	is_decorated = FALSE
 	filling_color = "#E57d9A"
 	decorated_icon = "donut_homer"
 
@@ -112,7 +111,6 @@
 	icon_state = "donut_choc"
 	bonus_reagents = list(/datum/reagent/consumable/hot_coco = 3, /datum/reagent/consumable/sprinkles = 1) //the coco reagent is just bitter.
 	tastes = list("donut" = 4, "bitterness" = 1)
-	is_decorated = FALSE
 	decorated_icon = "donut_choc_sprinkles"
 	filling_color = "#4F230D"
 
@@ -166,8 +164,7 @@
 	name = "pink jelly donut"
 	desc = "Goes great with a soy latte."
 	icon_state = "jelly_pink"
-	bonus_reagents = list(/datum/reagent/consumable/berryjuice = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //Extra sprinkles to reward frosting
-	is_decorated = FALSE
+	bonus_reagents = list(/datum/reagent/consumable/berryjuice = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //Extra sprinkles to reward frosting.
 	filling_color = "#E57d9A"
 	decorated_icon = "jelly_homer"
 
@@ -204,7 +201,6 @@
 	icon_state = "jelly_choc"
 	bonus_reagents = list(/datum/reagent/consumable/hot_coco = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //the coco reagent is just bitter.
 	tastes = list("jelly" = 1, "donut" = 4, "bitterness" = 1)
-	is_decorated = FALSE
 	decorated_icon = "jelly_choc_sprinkles"
 	filling_color = "#4F230D"
 
@@ -251,7 +247,6 @@
 	desc = "Goes great with a soy latte."
 	icon_state = "jelly_pink"
 	bonus_reagents = list(/datum/reagent/consumable/berryjuice = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //Extra sprinkles to reward frosting
-	is_decorated = FALSE
 	filling_color = "#E57d9A"
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly/trumpet
@@ -287,7 +282,6 @@
 	icon_state = "jelly_choc"
 	bonus_reagents = list(/datum/reagent/consumable/hot_coco = 3, /datum/reagent/consumable/sprinkles = 1, /datum/reagent/consumable/nutriment/vitamin = 1) //the coco reagent is just bitter.
 	tastes = list("jelly" = 1, "donut" = 4, "bitterness" = 1)
-	is_decorated = FALSE
 	decorated_icon = "jelly_choc_sprinkles"
 	filling_color = "#4F230D"
 
