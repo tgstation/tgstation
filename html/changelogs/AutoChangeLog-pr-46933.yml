@@ -1,8 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes: 
-  - rscadd: "Added lots of new donuts"
-  - rscadd: "3 new dishes cooked with the new plants."
-  - rscadd: "Added a nugget box. I'm lovin' it"
-  - rscdel: "You can no longer make cherry donuts."
-  - tweak: "Tea powder is less toxic and tastes better."
