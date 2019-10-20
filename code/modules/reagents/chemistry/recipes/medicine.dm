@@ -180,6 +180,12 @@
 	results = list(/datum/reagent/medicine/haloperidol = 5)
 	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/medicine/potass_iodide = 1, /datum/reagent/fuel/oil = 1)
 
+/datum/chemical_reaction/tricordrazine	
+	name = "Tricordrazine"	
+	id = /datum/reagent/medicine/tricordrazine	
+	results = list(/datum/reagent/medicine/tricordrazine = 3)	
+	required_reagents = list(/datum/reagent/medicine/bicaridine = 1, /datum/reagent/medicine/kelotane = 1, /datum/reagent/medicine/antitoxin = 1)	
+
 /datum/chemical_reaction/regen_jelly
 	name = "Regenerative Jelly"
 	id = /datum/reagent/medicine/regen_jelly
