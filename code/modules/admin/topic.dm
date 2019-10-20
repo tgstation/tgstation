@@ -1395,19 +1395,33 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.")
 			return
 
-		var/obj/item/reagent_containers/food/snacks/cookie/cookie = new(H)
-		if(H.put_in_hands(cookie))
+		//if(is_species(H, /datum/species/lizard))
+		
+		//let's keep it simple
+		//milk to plasmemes and skeletons, meat to lizards, electricity bars to ethereals, cookies to everyone else
+		//var/obj/item/reagent_containers/food/snacks/cookie/cookie = new(H)
+		var/cookiealt = /obj/item/reagent_containers/food/snacks/cookie
+		if(is_species(H, /datum/species/skeleton))
+			cookiealt = /obj/item/reagent_containers/food/condiment/milk
+		if(is_species(H, /datum/species/plasmaman))
+			cookiealt = /obj/item/reagent_containers/food/condiment/milk
+		if(is_species(H, /datum/species/ethereal))
+			cookiealt = /obj/item/reagent_containers/food/snacks/energybar
+		if(is_species(H, /datum/species/lizard))
+			cookiealt = /obj/item/reagent_containers/food/snacks/meat/slab
+		var/obj/item/new_item = new cookiealt(H)
+		if(H.put_in_hands(new_item))
 			H.update_inv_hands()
 		else
-			qdel(cookie)
-			log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
-			message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
+			qdel(new_item)
+			log_admin("[key_name(H)] has their hands full, so they did not receive their [new_item], spawned by [key_name(src.owner)].")
+			message_admins("[key_name(H)] has their hands full, so they did not receive their [new_item], spawned by [key_name(src.owner)].")
 			return
 
-		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
-		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
+		log_admin("[key_name(H)] got their [new_item], spawned by [key_name(src.owner)].")
+		message_admins("[key_name(H)] got their [new_item], spawned by [key_name(src.owner)].")
 		SSblackbox.record_feedback("amount", "admin_cookies_spawned", 1)
-		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
+		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best [new_item]</b>!</span>")
 		SEND_SOUND(H, sound('sound/effects/pray_chaplain.ogg'))
 
 	else if(href_list["adminsmite"])
