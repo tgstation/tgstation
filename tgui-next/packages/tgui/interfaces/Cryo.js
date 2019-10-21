@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Button, LabeledList, ProgressBar, Section} from '../components';
+import { Box, Button, LabeledList, ProgressBar, Section} from '../components';
 
 export const Cryo = props => {
   const { state } = props;
@@ -9,7 +9,7 @@ export const Cryo = props => {
   const damageTypes = [
     {
       label: "Brute",
-      type: "bruteloss",
+      type: "bruteLoss",
     },
     {
       label: "Respiratory",
@@ -21,7 +21,7 @@ export const Cryo = props => {
     },
     {
       label: "Burn",
-      type: "fireloss",
+      type: "fireLoss",
     },
   ];
 
@@ -37,18 +37,20 @@ export const Cryo = props => {
             <Fragment>
               <LabeledList.Item
                 label="State"
-                content={data.occupant.stat} />
+                content={data.occupant.stat}
+                color={data.occupant.statstate} />
               <LabeledList.Item
                 label="Temperature"
-                content={data.occupant.bodyTemperature} />
+                content={data.occupant.bodyTemperature + ' K'}
+                color={data.occupant.temperaturestatus} />
               <LabeledList.Item
                 label="Health"
                 content={(
                   <ProgressBar
-                    value={data.occupant.health / (data.occupant.maxHealth - data.occupant.minHealth)}
-                    content="" />)} />
-              <LabeledList.Item
-                content={(damageTypes.map(damageType => (
+                    value={data.occupant.health / data.occupant.maxHealth}
+                    content={data.occupant.health}
+                    color={(data.occupant.health > 0) ? "good" : "average"} />)} />
+              {(damageTypes.map(damageType => (
                   <LabeledList.Item
                     key={damageType.id}
                     label={damageType.label}
@@ -57,7 +59,7 @@ export const Cryo = props => {
                         value={data.occupant[damageType.type]/100}
                         content={data.occupant[damageType.type]} />
                     )} />
-                )))} />
+                )))}
             </Fragment>
           )}
         </LabeledList>
@@ -72,11 +74,12 @@ export const Cryo = props => {
                 icon={data.isOperating ? "power-off" : "times"}
                 disabled={data.isOpen}
                 onClick={() => act(ref, 'power')}
-                content={data.isOperating ? "On" : "Off"} />
+                content={data.isOperating ? "On" : "Off"}
+                color={data.isOperating && ("green")} />
             )} />
           <LabeledList.Item
             label="Temperature"
-            content={data.cellTemperature} K />
+            content={data.cellTemperature + ' K'} />
           <LabeledList.Item label="Door">
             <Button
               icon={data.isOpen ? "unlock" : "lock"}
@@ -91,7 +94,7 @@ export const Cryo = props => {
       </Section>
       <Section
         title="Beaker"
-        button={(
+        buttons={(
           <Button
             icon="eject"
             disabled={!data.isBeakerLoaded}
@@ -102,19 +105,18 @@ export const Cryo = props => {
           <LabeledList.Item label="Contents">
             {data.isBeakerLoaded ? (
               data.beakerContents ? (
-                <LabeledList>
-                  {data.beakerContents.map(beakerContent => (
-                    <LabeledList.Item
-                      key={damageType.id} >
+                  data.beakerContents.map(beakerContent => (
+                    <Box
+                      key={beakerContent.id}
+                      color="pale-blue" >
                       {beakerContent.volume} units of {beakerContent.name}
-                    </LabeledList.Item>
-                  ))}
-                </LabeledList>
+                    </Box>
+                  ))
               ) : (
-                <Fragment>Beaker Empty</Fragment>
+                "Beaker Empty"
               )
             ) : (
-              <Fragment>No Beaker</Fragment>
+              "No Beaker"
             )}
           </LabeledList.Item>
         </LabeledList>
