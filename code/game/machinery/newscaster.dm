@@ -790,7 +790,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		else
 			to_chat(user, "<span class='warning'>You cannot interface with silicon photo uploading!</span>")
 		if(!targetcam.stored.len)
-			to_chat(usr, "<span class='boldannounce'>No images saved</span>")
+			to_chat(usr, "<span class='boldannounce'>No images saved.</span>")
 			return
 		var/datum/picture/selection = targetcam.selectpicture(user)
 		if(selection)
@@ -963,7 +963,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		human_user << browse(dat, "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")
 	else
-		to_chat(user, "The paper is full of unintelligible symbols!")
+		to_chat(user, "<span class='warning'>The paper is full of unintelligible symbols!</span>")
 
 /obj/item/newspaper/proc/notContent(list/L)
 	if(!L.len)
@@ -1013,7 +1013,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
 			return
 		if(scribble_page == curr_page)
-			to_chat(user, "<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>")
+			to_chat(user, "<span class='warning'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>")
 		else
 			var/s = stripped_input(user, "Write something", "Newspaper")
 			if (!s)

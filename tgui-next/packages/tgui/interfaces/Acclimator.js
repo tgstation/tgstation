@@ -28,9 +28,17 @@ export const Acclimator = props => {
         <Box mt={1} />
         <Button
           icon="power-off"
-          content={data.enabled ? 'On' : 'Off' }
+          content={data.enabled ? 'On' : 'Off'}
           selected={data.enabled}
           onClick={() => act(ref, 'toggle_power')} />
+        <Box mt={1} />
+        Change Volume
+        <Button
+          icon="flask"
+          content={data.max_volume}
+          onClick={() => act(ref, 'change_volume')} />
+        <Box mt={1} />
+        Current State - {data.emptying ? "Emptying" : "Filling"}
       </Section>
     </Fragment>
   );

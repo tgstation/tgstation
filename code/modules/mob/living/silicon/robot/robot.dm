@@ -393,7 +393,7 @@
 			else
 				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
 		else
-			to_chat(user, "The wires seem fine, there's no need to fix them.")
+			to_chat(user, "<span class='warning'>The wires seem fine, there's no need to fix them.</span>")
 
 	else if(W.tool_behaviour == TOOL_CROWBAR)	// crowbar means open or close the cover
 		if(opened)
@@ -429,7 +429,7 @@
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
-		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
+		to_chat(user, "<span class='notice'>The wires have been [wiresexposed ? "exposed" : "unexposed"].</span>")
 		update_icons()
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER && opened && cell)	// radio
@@ -698,7 +698,7 @@
 
 //Some sort of magical "modulo" thing which somehow increments lamp power by 2, until it hits the max and resets to 0.
 	lamp_intensity = (lamp_intensity+2) % (lamp_max+2)
-	to_chat(src, "[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled."]")
+	to_chat(src, "<span class='notice'>[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled"].</span>")
 	update_headlamp()
 
 /mob/living/silicon/robot/proc/update_headlamp(turn_off = 0, cooldown = 100)

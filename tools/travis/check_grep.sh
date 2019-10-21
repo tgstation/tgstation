@@ -14,30 +14,30 @@ if grep -P '^\ttag = \"icon' _maps/**/*.dmm;	then
     echo "ERROR: tag vars from icon state generation detected in maps, please remove them."
     st=1
 fi;
-if grep 'step_[xy]' _maps/**/*.dmm;	then
+if grep -P 'step_[xy]' _maps/**/*.dmm;	then
     echo "ERROR: step_x/step_y variables detected in maps, please remove them."
     st=1
 fi;
-if grep 'pixel_[xy] = 0' _maps/**/*.dmm;	then
+if grep -P 'pixel_[xy] = 0' _maps/**/*.dmm;	then
     echo "WARNING: pixel_x/pixel_y = 0 variables detected in maps, please review to ensure they are not dirty varedits."
 fi;
 if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
     st=1
 fi;
-if grep '^/area/.+[\{]' _maps/**/*.dmm;	then
+if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
     echo "ERROR: Vareditted /area path use detected in maps, please replace with proper paths."
     st=1
 fi;
-if grep '\W\/turf\s*[,\){]' _maps/**/*.dmm; then
+if grep -P '\W\/turf\s*[,\){]' _maps/**/*.dmm; then
     echo "ERROR: base /turf path use detected in maps, please replace with proper paths."
     st=1
 fi;
-if grep '^/*var/' code/**/*.dm; then
+if grep -P '^/*var/' code/**/*.dm; then
     echo "ERROR: Unmanaged global var use detected in code, please use the helpers."
     st=1
 fi;
-if grep '(^(?!(.*\n)).*$)' code/**/*.dm; then
+if pcregrep --buffer-size=100K -LMr '\n$' code/**/*.dm; then
     echo "ERROR: No newline at end of file detected"
     st=1
 fi;

@@ -266,6 +266,7 @@
 /datum/antagonist/wizard/academy
 	name = "Academy Teacher"
 	outfit_type = /datum/outfit/wizard/academy
+	move_to_lair = FALSE
 
 /datum/antagonist/wizard/academy/equip_wizard()
 	. = ..()

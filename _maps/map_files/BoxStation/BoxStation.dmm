@@ -44158,7 +44158,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Gas to Filter"
+	name = "Engine Coolant Bypass"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)

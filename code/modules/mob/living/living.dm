@@ -9,10 +9,6 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
-	initialize_footstep()
-
-/mob/living/proc/initialize_footstep()
-	AddComponent(/datum/component/footstep)
 
 /mob/living/prepare_huds()
 	..()
@@ -41,7 +37,8 @@
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels)
-	ZImpactDamage(T, levels)
+	if(!isgroundlessturf(T))
+		ZImpactDamage(T, levels)
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
@@ -377,7 +374,7 @@
 		return FALSE
 	if(!..())
 		return FALSE
-	visible_message("<b>[src]</b> points at [A].", "<span class='notice'>You point at [A].</span>")
+	visible_message("<span class='name'>[src]</span> points at [A].", "<span class='notice'>You point at [A].</span>")
 	return TRUE
 
 /mob/living/verb/succumb(whispered as null)
@@ -585,6 +582,13 @@
 	return
 
 /mob/living/Move(atom/newloc, direct)
+	if(lying) 
+		if(direct & EAST)
+			lying = 90
+		if(direct & EAST)
+			lying = 270
+		update_transform()
+		lying_prev = lying
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)

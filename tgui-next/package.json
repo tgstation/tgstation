@@ -7,14 +7,15 @@
   ],
   "scripts": {
     "watch": "cd packages/tgui-dev-server && node --experimental-modules index.js",
-    "build": "cd packages/tgui && npx webpack --mode=production",
+    "build": "eslint packages && cd packages/tgui && npx webpack --mode=production",
     "analyze": "cd packages/tgui && npx webpack --mode=production --env.analyze=1",
     "lint": "eslint packages",
     "postinstall": "lerna bootstrap --hoist --no-ci && npx symlink-dir packages/common node_modules/common && npx symlink-dir packages/tgui node_modules/tgui && npx symlink-dir packages/tgui-dev-server node_modules/tgui-dev-server"
   },
   "dependencies": {
     "babel-eslint": "^10.0.3",
-    "eslint": "^6.4.0",
+    "eslint": "^6.5.1",
+    "eslint-plugin-react": "^7.16.0",
     "lerna": "^3.16.4",
     "symlink-dir": "^3.1.1"
   }

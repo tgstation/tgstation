@@ -17,7 +17,7 @@
 	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
 	var/valid_territory = TRUE // If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
-	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
+	var/blob_allowed = TRUE // If blobs can spawn there and if it counts towards their score.
 
 	var/fire = null
 	var/atmos = TRUE
@@ -68,7 +68,7 @@
 	var/global/global_uid = 0
 	var/uid
 	var/list/ambientsounds = GENERIC
-	flags_1 = CAN_BE_DIRTY_1
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 	var/list/firedoors
 	var/list/cameras
@@ -443,12 +443,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		L.update()
 
 /**
-  * Update the icon of the area
+  * Update the icon state of the area
   *
   * Im not sure what the heck this does, somethign to do with weather being able to set icon
   * states on areas?? where the heck would that even display?
   */
-/area/proc/update_icon()
+/area/update_icon_state()
 	var/weather_icon
 	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
@@ -461,7 +461,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /**
   * Update the icon of the area (overridden to always be null for space
   */
-/area/space/update_icon()
+/area/space/update_icon_state()
 	icon_state = null
 
 

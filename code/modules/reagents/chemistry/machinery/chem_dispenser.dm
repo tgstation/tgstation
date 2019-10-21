@@ -70,7 +70,7 @@
 		/datum/reagent/ammonia,
 		/datum/reagent/ash,
 		/datum/reagent/diethylamine,
-		/datum/reagent/oil,
+		/datum/reagent/fuel/oil,
 		/datum/reagent/saltpetre
 	)
 	var/list/emagged_reagents = list(
@@ -646,7 +646,7 @@
 		/datum/reagent/ammonia,
 		/datum/reagent/ash,
 		/datum/reagent/diethylamine,
-		/datum/reagent/oil,
+		/datum/reagent/fuel/oil,
 		/datum/reagent/saltpetre,
 		/datum/reagent/medicine/mine_salve,
 		/datum/reagent/medicine/morphine,

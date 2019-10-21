@@ -14,12 +14,14 @@ export const ThermoMachine = props => {
           <LabeledList.Item label="Temperature">
             <AnimatedNumber
               value={data.temperature}
-              format={value => toFixed(value, 2)} /> K
+              format={value => toFixed(value, 2)} />
+            {' K'}
           </LabeledList.Item>
           <LabeledList.Item label="Pressure">
             <AnimatedNumber
               value={data.pressure}
-              format={value => toFixed(value, 2)} /> kPa
+              format={value => toFixed(value, 2)} />
+            {' kPa'}
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -28,7 +30,7 @@ export const ThermoMachine = props => {
           <LabeledList.Item label="Power">
             <Button
               icon={data.on ? 'power-off' : 'times'}
-              content={data.on ? 'On' : 'Off' }
+              content={data.on ? 'On' : 'Off'}
               selected={data.on}
               onClick={() => act(ref, 'power')} />
           </LabeledList.Item>
