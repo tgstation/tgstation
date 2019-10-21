@@ -46,22 +46,22 @@ export const Cryo = props => {
               </LabeledList.Item>
               <LabeledList.Item
                 label="Health">
-                  <ProgressBar
-                    value={data.occupant.health / data.occupant.maxHealth}
-                    color={(data.occupant.health > 0) ? "good" : "average"}>
-                    <AnimatedNumber value={data.occupant.health} />
-                  </ProgressBar>
+                <ProgressBar
+                  value={data.occupant.health / data.occupant.maxHealth}
+                  color={(data.occupant.health > 0) ? "good" : "average"}>
+                  <AnimatedNumber value={data.occupant.health} />
+                </ProgressBar>
               </LabeledList.Item>
               {(damageTypes.map(damageType => (
-                  <LabeledList.Item
-                    key={damageType.id}
-                    label={damageType.label}>
-                    <ProgressBar
-                      value={data.occupant[damageType.type]/100}>
-                      <AnimatedNumber value={data.occupant[damageType.type]} />
-                    </ProgressBar>
-                  </LabeledList.Item>
-                )))}
+                <LabeledList.Item
+                  key={damageType.id}
+                  label={damageType.label}>
+                  <ProgressBar
+                    value={data.occupant[damageType.type]/100}>
+                    <AnimatedNumber value={data.occupant[damageType.type]} />
+                  </ProgressBar>
+                </LabeledList.Item>
+              )))}
             </Fragment>
           )}
         </LabeledList>
@@ -107,19 +107,19 @@ export const Cryo = props => {
         <LabeledList>
           <LabeledList.Item label="Contents">
             {data.isBeakerLoaded ? (
-              data.beakerContents ? (
-                  data.beakerContents.map(beakerContent => (
-                    <Box
-                      key={beakerContent.id}
-                      color="pale-blue" >
-                      {beakerContent.volume} units of {beakerContent.name}
-                    </Box>
-                  ))
+              data.beakerContents.length ? (
+                data.beakerContents.map(beakerContent => (
+                  <Box
+                    key={beakerContent.id}
+                    color="pale-blue" >
+                    {beakerContent.volume} units of {beakerContent.name}
+                  </Box>
+                ))
               ) : (
-                "Beaker Empty"
+                <Box color="bad" content="Beaker Empty" />
               )
             ) : (
-              "No Beaker"
+              <Box color="average" content="No Beaker" />
             )}
           </LabeledList.Item>
         </LabeledList>
