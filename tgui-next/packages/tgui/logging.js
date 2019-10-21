@@ -25,6 +25,9 @@ const log = (level, ns, ...args) => {
         if (typeof value === 'string') {
           return value;
         }
+        if (value instanceof Error) {
+          return value.stack || String(value);
+        }
         return JSON.stringify(value);
       })
       .filter(value => value)
