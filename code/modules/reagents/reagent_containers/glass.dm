@@ -294,7 +294,7 @@
 	icon_state = "smallbottle"
 	item_state = "bottle"
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	custom_materials = list(/datum/material/plastic=1000)
+	custom_materials = list(/datum/material/plastic=0)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
