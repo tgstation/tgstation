@@ -140,7 +140,7 @@
 	var/recent_uses = 0
 	var/broken_hailer = FALSE
 	var/gorilla = FALSE
-	var/cooldown_special
+	var/cooldown_special = 0
 
 
 /obj/item/clothing/mask/gas/monkeymask/ui_action_click(mob/user, action)
