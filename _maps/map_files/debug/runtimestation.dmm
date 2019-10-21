@@ -341,7 +341,7 @@
 "bo" = (
 /obj/structure/table,
 /obj/item/screwdriver/power,
-/obj/item/wirecutters/power,
+/obj/item/crowbar/power,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bp" = (

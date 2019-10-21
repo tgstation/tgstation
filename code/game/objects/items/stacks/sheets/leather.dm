@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	desc = "The by-product of monkey farming."
 	singular_name = "monkey hide piece"
 	icon_state = "sheet-monkey"
-	icon_state = "sheet-monkey"
+	item_state = "sheet-monkey"
 
 GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1), \
@@ -162,7 +162,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("leather overcoat", /obj/item/clothing/suit/jacket/leather/overcoat, 10), \
 ))
 
-/obj/item/stack/sheet/leather/Initialize/get_main_recipes()
+/obj/item/stack/sheet/leather/get_main_recipes()
 	. = ..()
 	. += GLOB.leather_recipes
 /*

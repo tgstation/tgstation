@@ -139,6 +139,7 @@
 /area/shuttle/supply
 	name = "Supply Shuttle"
 	blob_allowed = FALSE
+	noteleport = TRUE
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
