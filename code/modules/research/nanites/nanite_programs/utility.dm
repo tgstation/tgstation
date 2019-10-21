@@ -6,6 +6,7 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 	extra_settings = list("Program Overwrite","Cloud Overwrite")
 
+	var/pulse_cooldown = 0
 	var/sync_programs = TRUE
 	var/sync_overwrite = FALSE
 	var/overwrite_cloud = FALSE
@@ -67,12 +68,16 @@
 	target.sync_overwrite = sync_overwrite
 
 /datum/nanite_program/viral/active_effect()
+	if(world.time < pulse_cooldown)
+		return
 	for(var/mob/M in orange(host_mob, 5))
-		if(prob(5))
-			if(sync_programs)
-				SEND_SIGNAL(M, COMSIG_NANITE_SYNC, nanites, sync_overwrite)
-			if(overwrite_cloud)
-				SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD, set_cloud)
+		if(SEND_SIGNAL(M, COMSIG_NANITE_IS_STEALTHY))
+			continue
+		if(sync_programs)
+			SEND_SIGNAL(M, COMSIG_NANITE_SYNC, nanites, sync_overwrite)
+		if(overwrite_cloud)
+			SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD, set_cloud)
+	pulse_cooldown = world.time + 75
 
 /datum/nanite_program/monitoring
 	name = "Monitoring"
@@ -256,22 +261,27 @@
 			resulting in an extremely infective strain of nanites."
 	use_rate = 1.50
 	rogue_types = list(/datum/nanite_program/aggressive_replication, /datum/nanite_program/necrotic)
+	var/spread_cooldown = 0
 
 /datum/nanite_program/spreading/active_effect()
-	if(prob(10))
-		var/list/mob/living/target_hosts = list()
-		for(var/mob/living/L in oview(5, host_mob))
-			if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
-				continue
-			target_hosts += L
-		if(!target_hosts.len)
-			return
-		var/mob/living/infectee = pick(target_hosts)
-		if(prob(100 - (infectee.get_permeability_protection() * 100)))
-			//this will potentially take over existing nanites!
-			infectee.AddComponent(/datum/component/nanites, 10)
-			SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
-			infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
+	if(spread_cooldown < world.time)
+		return
+	spread_cooldown = world.time + 50
+	var/list/mob/living/target_hosts = list()
+	for(var/mob/living/L in oview(5, host_mob))
+		if(!prob(25))
+			continue
+		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+			continue
+		target_hosts += L
+	if(!target_hosts.len)
+		return
+	var/mob/living/infectee = pick(target_hosts)
+	if(prob(100 - (infectee.get_permeability_protection() * 100)))
+		//this will potentially take over existing nanites!
+		infectee.AddComponent(/datum/component/nanites, 10)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/triggered/nanite_sting
 	name = "Nanite Sting"

@@ -372,7 +372,7 @@
 	name = "Mind Control"
 	desc = "The nanites imprint an absolute directive onto the host's brain while they're active."
 	id = "mindcontrol_nanites"
-	program_type = /datum/nanite_program/mind_control
+	program_type = /datum/nanite_program/triggered/comm/mind_control
 	category = list("Weaponized Nanites")
 
 ////////////////////SUPPRESSION NANITES//////////////////////////////////////
@@ -452,6 +452,20 @@
 	desc = "The nanites make the host see and hear things that aren't real."
 	id = "hallucination_nanites"
 	program_type = /datum/nanite_program/triggered/comm/hallucination
+	category = list("Suppression Nanites")
+
+/datum/design/nanites/good_mood
+	name = "Happiness Enhancer"
+	desc = "The nanites synthesize serotonin inside the host's brain, creating an artificial sense of happiness."
+	id = "good_mood_nanites"
+	program_type = /datum/nanite_program/good_mood
+	category = list("Suppression Nanites")
+
+/datum/design/nanites/bad_mood
+	name = "Happiness Suppressor"
+	desc = "The nanites suppress the production of serotonin inside the host's brain, creating an artificial state of depression."
+	id = "bad_mood_nanites"
+	program_type = /datum/nanite_program/bad_mood
 	category = list("Suppression Nanites")
 
 ////////////////////SENSOR NANITES//////////////////////////////////////

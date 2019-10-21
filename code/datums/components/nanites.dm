@@ -36,6 +36,7 @@
 
 /datum/component/nanites/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_HAS_NANITES, .proc/confirm_nanites)
+	RegisterSignal(parent, COMSIG_NANITE_IS_STEALTHY, .proc/check_stealth)
 	RegisterSignal(parent, COMSIG_NANITE_UI_DATA, .proc/nanite_ui_data)
 	RegisterSignal(parent, COMSIG_NANITE_GET_PROGRAMS, .proc/get_programs)
 	RegisterSignal(parent, COMSIG_NANITE_SET_VOLUME, .proc/set_volume)
@@ -60,6 +61,7 @@
 
 /datum/component/nanites/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_HAS_NANITES,
+								COMSIG_NANITE_IS_STEALTHY,
 								COMSIG_NANITE_UI_DATA,
 								COMSIG_NANITE_GET_PROGRAMS,
 								COMSIG_NANITE_SET_VOLUME,
@@ -191,6 +193,9 @@
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()
+
+/datum/component/nanites/proc/check_stealth(datum/source)
+	return stealth
 
 /datum/component/nanites/proc/on_death(datum/source, gibbed)
 	for(var/X in programs)
