@@ -6,7 +6,7 @@ import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { backendUpdate } from './backend';
-import { act, tridentVersion } from './byond';
+import { act, tridentVersion, winset } from './byond';
 import { setupDrag } from './drag';
 import { createLogger, setLoggerRef } from './logging';
 import { getRoute } from './routes';
@@ -109,6 +109,9 @@ const setupApp = () => {
   // Find data in the page, load inlined state.
   const holder = document.getElementById('data');
   const ref = holder.getAttribute('data-ref');
+
+  // Give focus back to the map
+  winset('mapwindow.map', 'focus', true);
 
   // Initialize logger
   setLoggerRef(ref);
