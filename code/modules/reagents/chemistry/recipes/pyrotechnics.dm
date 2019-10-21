@@ -246,8 +246,8 @@
 	if(isatom(holder.my_atom))
 		var/atom/A = holder.my_atom
 		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
-		if(C.flash_act())
+	for(var/mob/living/C in get_hearers_in_view(range, location))
+		if(C.flash_act(affect_silicon = TRUE))
 			if(get_dist(C, location) < 4)
 				C.Paralyze(60)
 			else
@@ -267,8 +267,8 @@
 	if(isatom(holder.my_atom))
 		var/atom/A = holder.my_atom
 		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
-		if(C.flash_act())
+	for(var/mob/living/C in get_hearers_in_view(range, location))
+		if(C.flash_act(affect_silicon = TRUE))
 			if(get_dist(C, location) < 4)
 				C.Paralyze(60)
 			else
