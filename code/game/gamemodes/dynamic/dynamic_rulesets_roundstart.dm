@@ -373,12 +373,32 @@
 /datum/dynamic_ruleset/roundstart/revs/execute()
 	revolution = new()
 	for(var/datum/mind/M in assigned)
-		var/datum/antagonist/rev/head/new_head = new antag_datum()
-		new_head.give_flash = TRUE
-		new_head.give_hud = TRUE
-		new_head.remove_clumsy = TRUE
-		M.add_antag_datum(new_head,revolution)
-		GLOB.pre_setup_antags -= M
+		if(check_eligible(M))
+			var/datum/antagonist/rev/head/new_head = new antag_datum()
+			new_head.give_flash = TRUE
+			new_head.give_hud = TRUE
+			new_head.remove_clumsy = TRUE
+			M.add_antag_datum(new_head,revolution)
+			GLOB.pre_setup_antags -= M
+		else if(candidates.len)
+			GLOB.pre_setup_antags -= M
+			assigned -= M
+			log_game("Dynamic: [ruletype] [name] discarded [M.name] due to ineligibility and picked a new head revolutionary.")
+			var/mob/newrev
+			for(var/i in 1 to candidates.len)
+				newrev = pick_n_take(candidates)	// Still picking from roundstart candidates
+				if(check_eligible(newrev.mind))
+					break
+			assigned += newrev.mind
+			newrev.mind.restricted_roles = restricted_roles
+			newrev.mind.special_role = antag_flag
+			var/datum/antagonist/rev/head/new_head = new antag_datum()
+			new_head.give_flash = TRUE
+			new_head.give_hud = TRUE
+			new_head.remove_clumsy = TRUE
+			newrev.mind.add_antag_datum(new_head,revolution)
+		else	// If there are 0 candidates turned into revheads, revs will lose immediately. Too edge case to worry about.
+			log_game("Dynamic: [ruletype] [name] failed to fill the headrev team. Initial candidates not eligible, and not enough new candidates.")
 	revolution.update_objectives()
 	revolution.update_heads()
 	SSshuttle.registerHostileEnvironment(src)
@@ -403,6 +423,13 @@
 				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
 				R.remove_revolutionary(FALSE, "gamemode")
 		return RULESET_STOP_PROCESSING
+
+/// Checks for revhead loss conditions and other antag datums.
+/datum/dynamic_ruleset/roundstart/revs/proc/check_eligible(var/datum/mind/M)
+	var/turf/T = get_turf(M.current)
+	if(!considered_afk(M) && considered_alive(M) && is_station_level(T.z) && !M.antag_datums.len)
+		return TRUE
+	return FALSE
 
 /datum/dynamic_ruleset/roundstart/revs/check_finished()
 	if(finished == 1)
