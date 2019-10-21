@@ -579,7 +579,7 @@
 		return
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		to_chat(M, "You have been noticed by a ghost, and it has possessed you!")
+		to_chat(M, "<span class='boldnotice'>You have been noticed by a ghost and it has possessed you!</span>")
 		var/oldkey = M.key
 		M.ghostize(0)
 		M.key = C.key

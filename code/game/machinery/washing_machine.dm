@@ -137,10 +137,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(busy)
 		return
 	if(state_open)
-		to_chat(user, "<span class='notice'>Close the door first</span>")
+		to_chat(user, "<span class='warning'>Close the door first!</span>")
 		return
 	if(bloody_mess)
-		to_chat(user, "<span class='warning'>[src] must be cleaned up first.</span>")
+		to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
 		return
 	busy = TRUE
 	update_icon()
@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		color_source = null
 	update_icon()
 
-/obj/item/proc/dye_item(dye_color, dye_key_override) 
+/obj/item/proc/dye_item(dye_color, dye_key_override)
 	var/dye_key_selector = dye_key_override ? dye_key_override : dying_key
 	if(undyeable)
 		return FALSE
@@ -280,7 +280,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			return TRUE
 
 		if(bloody_mess)
-			to_chat(user, "<span class='warning'>[src] must be cleaned up first.</span>")
+			to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
 			return TRUE
 
 		if(contents.len >= max_wash_capacity)
@@ -303,7 +303,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(.)
 		return
 	if(busy)
-		to_chat(user, "<span class='warning'>[src] is busy.</span>")
+		to_chat(user, "<span class='warning'>[src] is busy!</span>")
 		return
 
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))

@@ -7,7 +7,7 @@
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
 	/**list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
-	* example: list(/datum/reagent/water = 20, /datum/reagent/oil = 50)
+	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
 	*/
 	var/list/required_reagents = list()
 	///our reagent goal has been reached, so now we lock our inputs and start emptying
@@ -23,6 +23,7 @@
 		reagents.flags |= NO_REACT
 
 /obj/machinery/plumbing/reaction_chamber/power_change()
+	. = ..()
 	if(use_power != NO_POWER_USE)
 		icon_state = initial(icon_state) + "_on"
 	else
@@ -40,7 +41,7 @@
 	for(var/A in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
 		var/datum/reagent/R = A
 		text_reagents[initial(R.name)] = required_reagents[R]
-	
+
 	data["reagents"] = text_reagents
 	data["emptying"] = emptying
 	return data

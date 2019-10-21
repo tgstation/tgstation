@@ -64,6 +64,11 @@ All the important duct code:
 /obj/machinery/duct/proc/attempt_connect()
 	reset_connects() //All connects are gathered here again eitherway, we might aswell reset it so they properly update when reconnecting
 
+	for(var/atom/movable/AM in loc)
+		var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
+		if(P?.active)
+			disconnect_duct() //let's not built under plumbing machinery
+			return
 	for(var/D in GLOB.cardinals)
 		if(dumb && !(D & connects))
 			continue
@@ -263,10 +268,12 @@ All the important duct code:
 	var/direction = get_dir(src, D)
 	if(!(direction in GLOB.cardinals))
 		return
+	if(duct_layer != D.duct_layer)
+		return 
 
 	add_connects(direction) //the connect of the other duct is handled in connect_network, but do this here for the parent duct because it's not necessary in normal cases
+	add_neighbour(D)
 	connect_network(D, direction, TRUE)
-	add_connects(direction)
 	update_icon()
 ///has a total of 5 layers and doesnt give a shit about color. its also dumb so doesnt autoconnect. 
 /obj/machinery/duct/multilayered
@@ -310,6 +317,9 @@ All the important duct code:
 	if(istype(D, /obj/machinery/duct/multilayered))
 		return
 	return ..()
+
+/obj/machinery/duct/multilayered/handle_layer()
+	return
 
 /obj/item/stack/ducts
 	name = "stack of duct"

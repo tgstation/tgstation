@@ -35,7 +35,7 @@
 	name = "Convermol"
 	id = /datum/reagent/medicine/C2/convermol
 	results = list(/datum/reagent/medicine/C2/convermol = 3)
-	required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1, /datum/reagent/oil = 1)
+	required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1, /datum/reagent/fuel/oil = 1)
 	required_temp = 370
 	mix_message = "The mixture rapidly turns into a dense pink liquid."
 
@@ -49,7 +49,7 @@
 /*****TOX*****/
 
 /datum/chemical_reaction/seiver
-	name = "Fiziver"
+	name = "Seiver"
 	id = /datum/reagent/medicine/C2/seiver
 	results = list(/datum/reagent/medicine/C2/seiver = 3)
 	required_reagents = list(/datum/reagent/nitrogen = 1, /datum/reagent/potassium = 1, /datum/reagent/aluminium = 1)
