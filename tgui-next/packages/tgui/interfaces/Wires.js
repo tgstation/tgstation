@@ -21,6 +21,7 @@ export const Wires = props => {
               className="candystripe"
               label={wire.color}
               labelColor={wire.color}
+              color={wire.color}
               buttons={(
                 <Fragment>
                   <Button
@@ -39,7 +40,14 @@ export const Wires = props => {
                       wire: wire.color,
                     })} />
                 </Fragment>
-              )} />
+              )}
+            >
+              {!!wire.wire && (
+                <i>
+                  ({wire.wire})
+                </i>
+              )}
+            </LabeledList.Item>
           ))}
         </LabeledList>
       </Section>

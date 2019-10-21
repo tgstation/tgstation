@@ -288,14 +288,14 @@
 /obj/item/chair/proc/plant(mob/user)
 	var/turf/T = get_turf(loc)
 	if(!isfloorturf(T))
-		to_chat(user, "<span class='danger'>You need ground to plant this on!</span>")
+		to_chat(user, "<span class='warning'>You need ground to plant this on!</span>")
 		return
 	for(var/obj/A in T)
 		if(istype(A, /obj/structure/chair))
-			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
+			to_chat(user, "<span class='warning'>There is already a chair here!</span>")
 			return
 		if(A.density && !(A.flags_1 & ON_BORDER_1))
-			to_chat(user, "<span class='danger'>There is already something here.</span>")
+			to_chat(user, "<span class='warning'>There is already something here!</span>")
 			return
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")

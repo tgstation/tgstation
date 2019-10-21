@@ -71,6 +71,19 @@
 	foodtype = JUNKFOOD | GRAIN | SUGAR
 	custom_price = 11
 
+/obj/item/reagent_containers/food/snacks/candy_trash
+	name = "candy cigarette butt"
+	icon_state = "candy_butt"
+	desc = "The leftover from a smoked-out candy cigarette."
+	list_reagents = list(/datum/reagent/consumable/sugar = 4)
+	junkiness = 10 //powergame trash food by buying candy cigs in bulk and eating them when they extinguish
+	filling_color = "#FFFFFF"
+	foodtype = JUNKFOOD | SUGAR
+
+/obj/item/reagent_containers/food/snacks/candy_trash/nicotine
+	desc = "The leftover from a smoked-out candy cigarette. Smells like nicotine..?"
+	list_reagents = list(/datum/reagent/consumable/sugar = 4, /datum/reagent/drug/nicotine = 1)
+
 /obj/item/reagent_containers/food/snacks/cheesiehonkers
 	name = "cheesie honkers"
 	desc = "Bite sized cheesie snacks that will honk all over your mouth."

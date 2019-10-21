@@ -101,21 +101,21 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 
 /obj/item/nuclear_challenge/proc/check_allowed(mob/living/user)
 	if(declaring_war)
-		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
+		to_chat(user, "<span class='boldwarning'>You are already in the process of declaring war! Make your mind up.</span>")
 		return FALSE
 	if(GLOB.player_list.len < CHALLENGE_MIN_PLAYERS)
-		to_chat(user, "The enemy crew is too small to be worth declaring war on.")
+		to_chat(user, "<span class='boldwarning'>The enemy crew is too small to be worth declaring war on.</span>")
 		return FALSE
 	if(!user.onSyndieBase())
-		to_chat(user, "You have to be at your base to use this.")
+		to_chat(user, "<span class='boldwarning'>You have to be at your base to use this.</span>")
 		return FALSE
 	if(world.time-SSticker.round_start_time > CHALLENGE_TIME_LIMIT)
-		to_chat(user, "It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand.")
+		to_chat(user, "<span class='boldwarning'>It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand.</span>")
 		return FALSE
 	for(var/V in GLOB.syndicate_shuttle_boards)
 		var/obj/item/circuitboard/computer/syndicate_shuttle/board = V
 		if(board.moved)
-			to_chat(user, "The shuttle has already been moved! You have forfeit the right to declare war.")
+			to_chat(user, "<span class='boldwarning'>The shuttle has already been moved! You have forfeit the right to declare war.</span>")
 			return FALSE
 	return TRUE
 

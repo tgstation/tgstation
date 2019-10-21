@@ -265,7 +265,7 @@ GENE SCANNER
 							<td><font color='red'>[CEILING(brute_loss,1)]</font></td>\
 							<td><font color='orange'>[CEILING(fire_loss,1)]</font></td>\
 							<td><font color='green'>[CEILING(tox_loss,1)]</font></td>\
-							<td><font color='purple'>[CEILING(oxy_loss,1)]</font></td></tr>"
+							<td><font color='blue'>[CEILING(oxy_loss,1)]</font></td></tr>"
 
 			for(var/o in damaged)
 				var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
@@ -301,7 +301,7 @@ GENE SCANNER
 					major_damage += ", "
 					major_damage += organ.name
 				else
-					major_damage = "\t<span class='info'>Severely Damaged Organs: "
+					major_damage = "\t<span class='info'>Severely Damaged Organs: </span>"
 					major_damage += organ.name
 			else if(organ.damage > organ.low_threshold)
 				report_organs = TRUE
@@ -309,7 +309,7 @@ GENE SCANNER
 					minor_damage += ", "
 					minor_damage += organ.name
 				else
-					minor_damage = "\t<span class='info'>Mildly Damaged Organs: "
+					minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>"
 					minor_damage += organ.name
 
 		if(report_organs)	//we either finish the list, or set it to be empty if no organs were reported in that category

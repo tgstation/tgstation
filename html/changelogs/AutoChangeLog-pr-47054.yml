@@ -1,0 +1,4 @@
+author: "SerJanko for epic asteroid sprites and qustinnus"
+delete-after: True
+changes: 
+  - rscadd: "parallax can now sometimes have asteroids or unidentified space-gas"

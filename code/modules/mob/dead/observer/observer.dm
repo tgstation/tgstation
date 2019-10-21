@@ -350,7 +350,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	can_reenter_corpse = FALSE
-	to_chat(src, "You can no longer be brought back into your body.")
+	to_chat(src, "<span class='boldnotice'>You can no longer be brought back into your body.</span>")
 	return TRUE
 
 /mob/dead/observer/proc/notify_cloning(message, sound, atom/source, flashwindow = TRUE)
@@ -474,7 +474,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.forceMove(T)
 				A.update_parallax_contents()
 			else
-				to_chat(A, "This mob is not located in the game world.")
+				to_chat(A, "<span class='danger'>This mob is not located in the game world.</span>")
 
 /mob/dead/observer/verb/change_view_range()
 	set category = "Ghost"
@@ -529,7 +529,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	ghostvision = !(ghostvision)
 	update_sight()
-	to_chat(usr, "You [(ghostvision?"now":"no longer")] have ghost vision.")
+	to_chat(usr, "<span class='boldnotice'>You [(ghostvision?"now":"no longer")] have ghost vision.</span>")
 
 /mob/dead/observer/verb/toggle_darkness()
 	set name = "Toggle Darkness"

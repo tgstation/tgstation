@@ -1,4 +1,0 @@
-author: "KetasDotepasto"
-delete-after: True
-changes: 
-  - bugfix: "Splitter sends chemicals both ways."

@@ -762,7 +762,7 @@
 			AI.controlled_mech = null
 			AI.remote_control = null
 			icon_state = initial(icon_state)+"-open"
-			to_chat(AI, "You have been downloaded to a mobile storage device. Wireless connection offline.")
+			to_chat(AI, "<span class='notice'>You have been downloaded to a mobile storage device. Wireless connection offline.</span>")
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
 
 		if(AI_MECH_HACK) //Called by AIs on the mech
@@ -1005,7 +1005,7 @@
 /obj/mecha/Exited(atom/movable/M, atom/newloc)
 	if(occupant && occupant == M) // The occupant exited the mech without calling go_out()
 		go_out(TRUE, newloc)
-	
+
 	if(cell && cell == M)
 		cell = null
 		return
