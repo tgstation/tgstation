@@ -229,7 +229,8 @@
 			medibonus += 1
 	M.adjustToxLoss(-0.2 * medibonus)
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 1.5/medibonus : 1)
-	for(var/datum/reagent/the_reagent2 in M.reagents.reagent_list)
+	for(var/r2 in M.reagents.reagent_list)
+		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
 			continue
 		var/amount2purge = 0.1
