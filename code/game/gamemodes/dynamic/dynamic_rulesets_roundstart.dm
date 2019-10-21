@@ -380,25 +380,12 @@
 			new_head.remove_clumsy = TRUE
 			M.add_antag_datum(new_head,revolution)
 			GLOB.pre_setup_antags -= M
-		else if(candidates.len)
+		else
 			GLOB.pre_setup_antags -= M
 			assigned -= M
-			log_game("Dynamic: [ruletype] [name] discarded [M.name] due to ineligibility and picked a new head revolutionary.")
-			var/mob/newrev
-			for(var/i in 1 to candidates.len)
-				newrev = pick_n_take(candidates)	// Still picking from roundstart candidates
-				if(check_eligible(newrev.mind))
-					break
-			assigned += newrev.mind
-			newrev.mind.restricted_roles = restricted_roles
-			newrev.mind.special_role = antag_flag
-			var/datum/antagonist/rev/head/new_head = new antag_datum()
-			new_head.give_flash = TRUE
-			new_head.give_hud = TRUE
-			new_head.remove_clumsy = TRUE
-			newrev.mind.add_antag_datum(new_head,revolution)
-		else	// If there are 0 candidates turned into revheads, revs will lose immediately. Too edge case to worry about.
-			log_game("Dynamic: [ruletype] [name] failed to fill the headrev team. Initial candidates not eligible, and not enough new candidates.")
+			log_game("Dynamic: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
+		if(!revolution.members.len)
+			log_game("Dynamic: [ruletype] [name] failed to get any eligible headrevs.")
 	revolution.update_objectives()
 	revolution.update_heads()
 	SSshuttle.registerHostileEnvironment(src)
