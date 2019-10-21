@@ -32,30 +32,33 @@ export const Cryo = props => {
         <LabeledList>
           <LabeledList.Item
             label="Occupant"
-            content={data.occupant.name ? data.occupant.name : "No Occupant"}/>
+            content={data.occupant.name ? data.occupant.name : "No Occupant"} />
           {data.hasOccupant && (
-            <LabeledList.Item
-              label="State"
-              content={data.occupant.stat}/>
-            <LabeledList.Item
-              label="Temperature"
-              content={data.occupant.bodyTemperature}/>
-            <LabeledList.Item
-              label="Health"
-              content={(
-                <ProgressBar
-                  value={data.occupant.health / (data.occupant.maxHealth - data.occupant.minHealth)}
-                  content=""/>)}/>
-            <LabeledList.Item
-              content={(damageTypes.map(damageType => (
-                <LabeledList.Item
-                  label={damageType.label}
-                  content={(
-                    <ProgressBar
-                      value={data.occupant[damageType.type]/100}
-                      content={data.occupant[damageType.type]}/>
-                  )}/>
-              )))}/>
+            <Fragment>
+              <LabeledList.Item
+                label="State"
+                content={data.occupant.stat} />
+              <LabeledList.Item
+                label="Temperature"
+                content={data.occupant.bodyTemperature} />
+              <LabeledList.Item
+                label="Health"
+                content={(
+                  <ProgressBar
+                    value={data.occupant.health / (data.occupant.maxHealth - data.occupant.minHealth)}
+                    content="" />)} />
+              <LabeledList.Item
+                content={(damageTypes.map(damageType => (
+                  <LabeledList.Item
+                    key={damageType.id}
+                    label={damageType.label}
+                    content={(
+                      <ProgressBar
+                        value={data.occupant[damageType.type]/100}
+                        content={data.occupant[damageType.type]} />
+                    )} />
+                )))} />
+            </Fragment>
           )}
         </LabeledList>
       </Section>
@@ -69,20 +72,20 @@ export const Cryo = props => {
                 icon={data.isOperating ? "power-off" : "close"}
                 disabled={data.isOpen}
                 onClick={() => act(ref, 'power')}
-                content={data.isOperating ? "On" : "Off"}/>
-            )}/>
+                content={data.isOperating ? "On" : "Off"} />
+            )} />
           <LabeledList.Item
             label="Temperature"
-            content={data.cellTemperature} K/>
+            content={data.cellTemperature} K />
           <LabeledList.Item label="Door">
             <Button
               icon={data.isOpen ? "unlock" : "lock"}
               onClick={() => act(ref, 'door')}
-              content={data.isOpen ? "Open" : "Closed"}/>
+              content={data.isOpen ? "Open" : "Closed"} />
             <Button
               icon={data.autoEject ? ("sign-out") : ("sign-in")}
               onClick={() => act(ref, 'autoeject')}
-              content={data.autoEject ? "Auto" : "Manual"}/>
+              content={data.autoEject ? "Auto" : "Manual"} />
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -93,26 +96,28 @@ export const Cryo = props => {
             icon="eject"
             disabled={!!data.isBeakerLoaded}
             onClick={() => act(ref, 'ejectbeaker')}
-            content="Eject"/>
+            content="Eject" />
         )}>
         <LabeledList>
           <LabeledList.Item label="Contents">
             {data.isBeakerLoaded ? (
               data.beakerContents ? (
                 <LabeledList>
-                data.beakerContents.map(beakerContent => (
-                  <LabeledList.Item>
-                    {beakerContent.volume} units of {beakerContent.name}
-                  </LabeledList.Item>
-                ))
+                  {data.beakerContents.map(beakerContent => (
+                    <LabeledList.Item
+                      key={damageType.id} >
+                      {beakerContent.volume} units of {beakerContent.name}
+                    </LabeledList.Item>
+                  ))}
                 </LabeledList>
-                ) : (
-                  <span class='bad'>Beaker Empty</span>
-                )
+              ) : (
+                <Fragment>Beaker Empty</Fragment>
+              )
             ) : (
-              <span class='average'>No Beaker</span>
+              <Fragment>No Beaker</Fragment>
             )}
           </LabeledList.Item>
         </LabeledList>
       </Section>
     </Fragment>
+  ); };
