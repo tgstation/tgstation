@@ -23,6 +23,7 @@ import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { KitchenSink } from './interfaces/KitchenSink';
 import { Mint } from './interfaces/Mint';
+import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
@@ -123,6 +124,10 @@ const ROUTES = {
   mint: {
     component: () => Mint,
     scrollable: false,
+  },
+  shuttle_manipulator: {
+    component: () => ShuttleManipulator,
+    scrollable: true,
   },
   thermomachine: {
     component: () => ThermoMachine,
