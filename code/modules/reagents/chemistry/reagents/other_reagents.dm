@@ -1262,8 +1262,8 @@
 	random_color_list = list(null)	//because using the powder color turns things invisible
 
 /datum/reagent/colorful_reagent/powder/black
-	name = "Black Powder"
-	colorname = "black"
+	name = "Dark Powder" //this is named "dark powder" instead of "black powder" in order to avoid a name conflict with the explosive kind of "black powder"
+	colorname = "black" //we still set colorname to "black", though, since "A dark powder, used for coloring things dark." would be a weird description
 	color = "#1C1C1C" // not quite black
 	random_color_list = list("#8D8D8D")	//more grey than black, not enough to hide your true colors
 
