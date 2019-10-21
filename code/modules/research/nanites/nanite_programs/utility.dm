@@ -317,3 +317,90 @@
 		if(fault == src)
 			return
 		fault.software_error()
+
+/datum/nanite_program/dermal_button
+	name = "Dermal Button"
+	desc = "Displays a button on the host's skin, which can be used to send a signal to the nanites."
+	extra_settings = list("Sent Code","Button Name","Icon","Color")
+	unique = FALSE
+	var/datum/action/innate/nanite_button/button
+	var/button_name = "Button"
+	var/icon = "power"
+	var/color = "green"
+	var/sent_code = 0
+
+/datum/nanite_program/dermal_button/set_extra_setting(user, setting)
+	if(setting == "Sent Code")
+		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
+		if(isnull(new_code))
+			return
+		sent_code = CLAMP(round(new_code, 1), 1, 9999)
+	if(setting == "Button Name")
+		var/new_button_name = stripped_input(user, "Choose the name for the button.", "Button Name", button_name, MAX_NAME_LEN)
+		if(!new_button_name)
+			return
+		button_name = new_button_name
+	if(setting == "Icon")
+		var/new_icon = input("Select the icon to display on the button:", name) as null|anything in list("one","two","three","four","five","plus","minus","power")
+		if(!new_icon)
+			return
+		icon = new_icon
+	if(setting == "Color")
+		var/new_color = input("Select the color of the button's icon:", name) as null|anything in list("green","red","yellow","blue")
+		if(!new_color)
+			return
+		color = new_color
+
+/datum/nanite_program/dermal_button/get_extra_setting(setting)
+	if(setting == "Sent Code")
+		return sent_code
+	if(setting == "Button Name")
+		return button_name
+	if(setting == "Icon")
+		return capitalize(icon)
+	if(setting == "Color")
+		return capitalize(color)
+
+/datum/nanite_program/dermal_button/copy_extra_settings_to(datum/nanite_program/dermal_button/target)
+	target.sent_code = sent_code
+	target.button_name = button_name
+	target.icon = icon
+	target.color = color
+
+/datum/nanite_program/dermal_button/enable_passive_effect()
+	. = ..()
+	if(!button)
+		button = new(src, button_name, icon, color)
+	button.target = host_mob
+	button.Grant(host_mob)
+
+/datum/nanite_program/dermal_button/disable_passive_effect()
+	. = ..()
+	if(button)
+		button.Remove(host_mob)
+
+/datum/nanite_program/dermal_button/on_mob_remove()
+	. = ..()
+	qdel(button)
+
+/datum/nanite_program/dermal_button/proc/press()
+	if(activated)
+		host_mob.visible_message("<span class='notice'>[host_mob] presses a button on [host_mob.p_their()] forearm.</span>",
+								"<span class='notice'>You press the nanite button on your forearm.</span>", null, 2)
+		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, sent_code, "a [name] program")
+
+/datum/action/innate/nanite_button
+	name = "Button"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	button_icon_state = "power_green"
+	var/datum/nanite_program/dermal_button/program
+
+/datum/action/innate/nanite_button/New(datum/nanite_program/dermal_button/_program, _name, _icon, _color)
+	..()
+	program = _program
+	name = _name
+	button_icon_state = "[_icon]_[_color]"
+
+/datum/action/innate/nanite_button/Activate()
+	program.press()
