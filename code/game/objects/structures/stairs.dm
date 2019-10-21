@@ -41,7 +41,7 @@
 /obj/structure/stairs/Uncross(atom/movable/AM, turf/newloc)
 	if(!newloc || !AM)
 		return ..()
-	if(isliving(AM) && isTerminator() && (get_dir(src, newloc) == dir))
+	if(!isobserver(AM) && isTerminator() && (get_dir(src, newloc) == dir))
 		stair_ascend(AM)
 		return FALSE
 	return ..()
@@ -65,7 +65,15 @@
 		return
 	var/turf/target = get_step_multiz(get_turf(src), (dir|UP))
 	if(istype(target) && !target.can_zFall(AM, null, get_step_multiz(target, DOWN)))			//Don't throw them into a tile that will just dump them back down.
-		AM.forceMove(target)
+		if(isliving(AM))
+			var/mob/living/L = AM
+			var/pulling = L.pulling
+			if(pulling)
+				L.pulling.forceMove(target)
+			L.forceMove(target)
+			L.start_pulling(pulling)
+		else
+			AM.forceMove(target)
 
 /obj/structure/stairs/vv_edit_var(var_name, var_value)
 	. = ..()

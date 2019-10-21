@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - rscadd: "Random name/body/age/gender when roundstart antagonist preference added."
-  - rscadd: "Random gender will now have a chance of picking \"Other\"."

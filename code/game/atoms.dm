@@ -485,6 +485,16 @@
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
 
+/// Updates the icon of the atom
+/atom/proc/update_icon()
+	// I expect we're going to need more return flags and options in this proc
+	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
+	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_ICON_STATE))
+		update_icon_state()
+
+/// Updates the icon state of the atom
+/atom/proc/update_icon_state()
+
 /**
   * An atom we are buckled or is contained within us has tried to move
   *
@@ -653,13 +663,6 @@
 /atom/proc/narsie_act()
 	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
 
-/**
-  * Respond to ratvar eating our atom
-  *
-  * Default behaviour is to send COMSIG_ATOM_RATVAR_ACT and return
-  */
-/atom/proc/ratvar_act()
-	SEND_SIGNAL(src, COMSIG_ATOM_RATVAR_ACT)
 
 ///Return the values you get when an RCD eats you?
 /atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -1171,6 +1174,9 @@
 			var/datum/material/custom_material = getmaterialref(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
 
+	if(!length(materials))
+		return
+
 	custom_materials = list() //Reset the list
 
 	for(var/x in materials)
@@ -1178,4 +1184,5 @@
 
 		if(!(material_flags & MATERIAL_NO_EFFECTS))
 			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
-		custom_materials[custom_material] += materials[custom_material] * multiplier
+		custom_materials[custom_material] += materials[x] * multiplier
+

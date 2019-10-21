@@ -30,6 +30,7 @@
 	icon_state = "reishi"
 	filling_color = "#FF4500"
 
+
 // Fly Amanita
 /obj/item/seeds/amanita
 	name = "pack of fly amanita mycelium"

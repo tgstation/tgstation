@@ -617,7 +617,7 @@
 	volume = 30
 
 /obj/item/reagent_containers/food/snacks/canned/proc/open_can(mob/user)
-	to_chat(user, "You pull back the tab of \the [src].")
+	to_chat(user, "<span class='notice'>You pull back the tab of \the [src].</span>")
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
 	ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
 	spillable = TRUE

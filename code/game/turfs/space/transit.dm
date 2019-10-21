@@ -78,9 +78,12 @@
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)
 
-/turf/open/space/transit/proc/update_icon()
-	icon_state = "speedspace_ns_[get_transit_state(src)]"
+/turf/open/space/transit/update_icon()
+	. = ..()
 	transform = turn(matrix(), get_transit_angle(src))
+
+/turf/open/space/transit/update_icon_state()
+	icon_state = "speedspace_ns_[get_transit_state(src)]"
 
 /proc/get_transit_state(turf/T)
 	var/p = 9

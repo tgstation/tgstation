@@ -1,5 +1,0 @@
-author: "Fox McCloud"
-delete-after: True
-changes: 
-  - bugfix: "Fixes being able to mech-punch other mobs, as a pacifist"
-  - bugfix: "Fixes being able to hurt people, as a pacifist, by throwing them into a wall or other mob"

@@ -1,5 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - bugfix: "shades now heal properly upon re-entering a soulstone (previously they would temporarily heal, then take back all the damage next time they were hit)"
-  - bugfix: "shades summoned from a soulstone are no longer invincible"

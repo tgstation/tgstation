@@ -576,5 +576,4 @@
 	icon_state = "laptop"
 	icon_screen = "medlaptop"
 	icon_keyboard = "laptop_key"
-	clockwork = TRUE //it'd look weird
 	pass_flags = PASSTABLE
