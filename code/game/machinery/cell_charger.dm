@@ -10,7 +10,6 @@
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
-	var/chargelevel = -1
 	var/charge_rate = 500
 
 /obj/machinery/cell_charger/update_overlays()
@@ -23,7 +22,6 @@
 	. += "ccharger-on"
 	if(!(stat & (BROKEN|NOPOWER)))
 		var/newlevel = 	round(charging.percent() * 4 / 100)
-		chargelevel = newlevel
 		. += "ccharger-o[newlevel]"
 
 /obj/machinery/cell_charger/examine(mob/user)
@@ -57,7 +55,6 @@
 
 			charging = W
 			user.visible_message("<span class='notice'>[user] inserts a cell into [src].</span>", "<span class='notice'>You insert a cell into [src].</span>")
-			chargelevel = -1
 			update_icon()
 	else
 		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, W))
@@ -80,7 +77,6 @@
 /obj/machinery/cell_charger/proc/removecell()
 	charging.update_icon()
 	charging = null
-	chargelevel = -1
 	update_icon()
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
