@@ -140,7 +140,7 @@
 	list_reagents = list(/datum/reagent/medicine/mutadone = 50)
 	rename_with_volume = TRUE
 
-/obj/item/reagent_containers/pill/salicyclic
+/obj/item/reagent_containers/pill/salicylic
 	name = "salicylic acid pill"
 	desc = "Used to dull pain."
 	icon_state = "pill9"

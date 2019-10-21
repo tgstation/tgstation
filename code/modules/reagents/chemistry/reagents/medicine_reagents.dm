@@ -385,7 +385,7 @@
 	. = 1
 
 /datum/reagent/medicine/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#D2D2D2"
