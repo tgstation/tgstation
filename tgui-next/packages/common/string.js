@@ -1,4 +1,40 @@
 /**
+ * Removes excess whitespace and indentation from the string.
+ *
+ * This function is not called directly in runtime, but instead is called
+ * by the macro, which is defined below, and it runs at compile time.
+ */
+export const multiline = str => {
+  if (Array.isArray(str)) {
+    // Small stub to allow usage as a template tag
+    return multiline(str.join(''));
+  }
+  const lines = str.split('\n');
+  // Determine base indentation
+  let minIndent;
+  for (let line of lines) {
+    for (let indent = 0; indent < line.length; indent++) {
+      const char = line[indent];
+      if (char !== ' ') {
+        if (minIndent === undefined || indent < minIndent) {
+          minIndent = indent;
+        }
+        break;
+      }
+    }
+  }
+  if (!minIndent) {
+    minIndent = 0;
+  }
+  // Remove this base indentation and trim the resulting string
+  // from both ends.
+  return lines
+    .map(line => line.substr(minIndent).trimRight())
+    .join('\n')
+    .trim();
+};
+
+/**
  * Matches strings with wildcards.
  * Example: testGlobPattern('*@domain')('user@domain') === true
  */
