@@ -189,7 +189,7 @@
 	var/obj/item/stack/ore/O = W
 	if(istype(O))
 		if(O.refined_type == null)
-			to_chat(user, "<span class='notice'>[O] has already been refined!</span>")
+			to_chat(user, "<span class='warning'>[O] has already been refined!</span>")
 			return
 
 	return ..()

@@ -358,7 +358,7 @@
 /obj/effect/mob_spawn/human/demonic_friend/Initialize(mapload, datum/mind/owner_mind, obj/effect/proc_holder/spell/targeted/summon_friend/summoning_spell)
 	. = ..()
 	owner = owner_mind
-	flavour_text = "<span class='big bold'>You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for [owner.p_their()] short mortal coil.</span><b> Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought.  [owner.name]'s death will also return you to hell.</b>"
+	flavour_text = "<span class='big bold'>You have been given a reprieve from your eternity of torment, to be [owner.name]'s friend for [owner.p_their()] short mortal coil.</span><b> Be aware that if you do not live up to [owner.name]'s expectations, they can send you back to hell with a single thought. [owner.name]'s death will also return you to hell.</b>"
 	var/area/A = get_area(src)
 	if(!mapload && A)
 		notify_ghosts("\A friendship shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
@@ -379,7 +379,7 @@
 		id.registered_name = L.real_name
 		id.update_label()
 	else
-		to_chat(L, "<span class='userdanger'>Your owner is already dead!  You will soon perish.</span>")
+		to_chat(L, "<span class='userdanger'>Your owner is already dead! You will soon perish.</span>")
 		addtimer(CALLBACK(L, /mob.proc/dust, 150)) //Give em a few seconds as a mercy.
 
 /datum/outfit/demonic_friend

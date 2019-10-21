@@ -3,7 +3,7 @@ import { act } from '../byond';
 import { Button, LabeledList, NoticeBox, ProgressBar, Section, Box } from '../components';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
-export const APC = props => {
+export const Apc = props => {
   const { state } = props;
   const { config, data } = state;
   const { ref } = config;
@@ -57,8 +57,11 @@ export const APC = props => {
     return (
       <NoticeBox>
         <b><h3>SYSTEM FAILURE</h3></b>
-        <i>I/O regulators malfunction detected!
-          Waiting for system reboot...</i><br/>
+        <i>
+          I/O regulators malfunction detected!
+          Waiting for system reboot...
+        </i>
+        <br />
         Automatic reboot in {data.failTime} seconds...
         <Button
           icon="sync"
@@ -81,8 +84,8 @@ export const APC = props => {
             color={externalPowerStatus.color}
             buttons={(
               <Button
-                icon={data.isOperating ? 'power-off' : 'times' }
-                content={data.isOperating ? 'On' : 'Off' }
+                icon={data.isOperating ? 'power-off' : 'times'}
+                content={data.isOperating ? 'On' : 'Off'}
                 selected={data.isOperating && !locked}
                 disabled={locked}
                 onClick={() => act(ref, 'breaker')} />
@@ -99,8 +102,8 @@ export const APC = props => {
             color={chargingStatus.color}
             buttons={(
               <Button
-                icon={data.chargeMode ? 'sync' : 'close' }
-                content={data.chargeMode ? 'Auto' : 'Off' }
+                icon={data.chargeMode ? 'sync' : 'close'}
+                content={data.chargeMode ? 'Auto' : 'Off'}
                 disabled={locked}
                 onClick={() => act(ref, 'charge')} />
             )}>
@@ -114,12 +117,13 @@ export const APC = props => {
             const { topicParams } = channel;
             return (
               <LabeledList.Item
+                key={channel.title}
                 label={channel.title}
                 buttons={(
                   <Fragment>
                     <Box inline mx={2}
                       color={channel.status >= 2 ? 'good' : 'bad'}>
-                      {channel.status >= 2 ? 'On' : 'Off' }
+                      {channel.status >= 2 ? 'On' : 'Off'}
                     </Box>
                     <Button
                       icon="sync"
@@ -154,30 +158,26 @@ export const APC = props => {
       </Section>
       <Section
         title="Misc"
-        buttons={(
+        buttons={!!data.siliconUser && (
           <Fragment>
-            {!!data.siliconUser && (
-              <Fragment>
-                {!!data.malfStatus && (
-                  <Button
-                    icon={malfStatus.icon}
-                    content={malfStatus.content}
-                    color="bad"
-                    onClick={() => act(ref, malfStatus.action)} />
-                )}
-                <Button
-                  icon="lightbulb-o"
-                  content="Overload"
-                  onClick={() => act(ref, 'overload')} />
-              </Fragment>
+            {!!data.malfStatus && (
+              <Button
+                icon={malfStatus.icon}
+                content={malfStatus.content}
+                color="bad"
+                onClick={() => act(ref, malfStatus.action)} />
             )}
+            <Button
+              icon="lightbulb-o"
+              content="Overload"
+              onClick={() => act(ref, 'overload')} />
           </Fragment>
         )}>
         <LabeledList.Item
           label="Cover Lock"
           buttons={(
             <Button
-              icon={data.coverLocked ? 'lock' : 'unlock' }
+              icon={data.coverLocked ? 'lock' : 'unlock'}
               content={data.coverLocked ? 'Engaged' : 'Disengaged'}
               disabled={locked}
               onClick={() => act(ref, 'cover')} />

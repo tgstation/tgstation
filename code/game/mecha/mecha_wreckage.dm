@@ -63,7 +63,7 @@
 		return
 	var/type = pick(welder_salvage)
 	var/N = new type(get_turf(user))
-	user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
+	user.visible_message("<span class='notice'>[user] cuts [N] from [src].</span>", "<span class='notice'>You cut [N] from [src].</span>")
 	if(!istype(N, /obj/item/stack))
 		welder_salvage -= type
 	salvage_num--
@@ -75,7 +75,7 @@
 		to_chat(user, "<span class='notice'>You don't see anything that can be cut with [I]!</span>")
 		return
 	var/N = new /obj/item/stack/cable_coil(get_turf(user), rand(1,3))
-	user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
+	user.visible_message("<span class='notice'>[user] cuts [N] from [src].</span>", "<span class='notice'>You cut [N] from [src].</span>")
 	wires_removed = TRUE
 
 /obj/structure/mecha_wreckage/crowbar_act(mob/living/user, obj/item/I)
@@ -103,7 +103,7 @@
 	AI.forceMove(card) //Move the dead AI to the card.
 	card.AI = AI
 	if(AI.client) //AI player is still in the dead AI and is connected
-		to_chat(AI, "The remains of your file system have been recovered on a mobile storage device.")
+		to_chat(AI, "<span class='notice'>The remains of your file system have been recovered on a mobile storage device.</span>")
 	else //Give the AI a heads-up that it is probably going to get fixed.
 		AI.notify_ghost_cloning("You have been recovered from the wreckage!", source = card)
 	to_chat(user, "<span class='boldnotice'>Backup files recovered</span>: [AI.name] ([rand(1000,9999)].exe) salvaged from [name] and stored within local memory.")

@@ -16,11 +16,7 @@ const LEVEL_ERROR = 4;
 const log = (level, ns, ...args) => {
   // Send logs to a remote log collector
   if (process.env.NODE_ENV !== 'production') {
-    sendLogEntry(ns, ...args);
-  }
-  // Send logs to a globally defined debug print
-  if (window.debugPrint) {
-    debugPrint([ns, ...args]);
+    sendLogEntry(level, ns, ...args);
   }
   // Send important logs to the backend
   if (level >= LEVEL_INFO) {
