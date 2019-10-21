@@ -128,6 +128,7 @@
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED)
 			obj_flags ^= EMAGGED
+			say("Safeties restored. Restarting...")
 
 /obj/machinery/computer/holodeck/process()
 	if(damaged && prob(10))
