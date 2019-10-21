@@ -223,7 +223,7 @@
 	belt = /obj/item/melee/baton/loaded
 	suit = /obj/item/clothing/suit/armor/vest
 	suit_store = /obj/item/gun/ballistic/rifle/boltaction
-	r_hand = /obj/item/megaphone=1
+	r_hand = /obj/item/megaphone
 	head = /obj/item/clothing/head/intern
 
 /datum/outfit/ert/commander/inquisitor
