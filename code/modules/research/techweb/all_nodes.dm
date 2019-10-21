@@ -597,7 +597,7 @@
 
 /datum/techweb_node/adv_rcd_upgrade
 	id = "adv_rcd_upgrade"
-	display_name = "Advanced Bluespace RCD designs."
+	display_name = "Bluespace-Integrated Rapid Construction"
 	description = "Unlocks new RCD designs."
 	design_ids = list("RCD_bluespace", "rcd_upgrade_silo_link")
 	prereq_ids = list("rcd_upgrade", "bluespace_travel")
