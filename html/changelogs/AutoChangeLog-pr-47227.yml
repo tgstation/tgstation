@@ -1,0 +1,11 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - balance: "Viral Nanites now have a 100% chance to work, but only pulse every 7.5 seconds."
+  - tweak: "Stealth nanites grant immunity to viral nanites."
+  - balance: "Spreading nanites now have a higher chance to infect, but only pulse once every 5 seconds."
+  - balance: "Accelerated Regeneration now heals 0.5/s, (from 1) but only costs 0.5 nanites/s (from 2.5)."
+  - balance: "Mechanical Repair now heals 1.5/s (from 1/s)."
+  - balance: "Mind Control is now a Triggered program that costs 30, has a 180s cooldown, and lasts 60 seconds."
+  - rscadd: "Mind control can now be triggered with a comm remote to input a custom objective."
+  - rscadd: "Added the Happiness Enhancement and Happiness Suppression nanite programs, which boost or suppress the host's mood while active."
