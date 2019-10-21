@@ -30,48 +30,50 @@ export const Cryo = props => {
       <Section
         title="Occupant">
         <LabeledList>
-          <LabeledList.Item label="Occupant">
-            <span>{data.occupant.name ? data.occupant.name : "No Occupant"}</span>
-          </LabeledList.Item>
-          {data.hasOccupant ? (
-            <LabeledList.Item label="State">
-              <span class='{data.occupant.statstate}'>{data.occupant.stat}</span>
-            </LabeledList.Item>
-            <LabeledList.Item label="Temperature">
-              <span class='{data.occupant.temperaturestatus}'>{data.occupant.bodyTemperature} K</span>
-            </LabeledList.Item>
-            <LabeledList.Item label="Health">
-              <ProgressBar
-                value={data.occupant.health
-                  / (data.occupant.maxHealth - data.occupant.minHealth)}></ProgressBar>
-            </LabeledList.Item>
-            <LabeledList.Item>
-              <LabeledList>
-                {damageTypes.map(damageType => (
-                  <LabeledList.Item label={damageType.label}>
-                    <ProgressBar value={data.occupant[damageType.type]/100} content={data.occupant[damageType.type]}/>
-                  </LabeledList.Item>
-                ))}
-              </LabeledList>
-            </LabeledList.Item>
-            ) : (
-              <LabeledList.Item>No Occupant</LabeledList.Item>
-            )}
+          <LabeledList.Item
+            label="Occupant"
+            content={data.occupant.name ? data.occupant.name : "No Occupant"}/>
+          {data.hasOccupant && (
+            <LabeledList.Item
+              label="State"
+              content={data.occupant.stat}/>
+            <LabeledList.Item
+              label="Temperature"
+              content={data.occupant.bodyTemperature}/>
+            <LabeledList.Item
+              label="Health"
+              content={(
+                <ProgressBar
+                  value={data.occupant.health / (data.occupant.maxHealth - data.occupant.minHealth)}
+                  content=""/>)}/>
+            <LabeledList.Item
+              content={(damageTypes.map(damageType => (
+                <LabeledList.Item
+                  label={damageType.label}
+                  content={(
+                    <ProgressBar
+                      value={data.occupant[damageType.type]/100}
+                      content={data.occupant[damageType.type]}/>
+                  )}/>
+              )))}/>
+          )}
         </LabeledList>
       </Section>
       <Section
         title="Cell">
         <LabeledList>
-          <LabeledList.Item label="Power">
-            <Button
-              icon={data.isOperating ? "power-off" : "close"}
-              disabled={data.isOpen}
-              onClick={() => act(ref, 'power')}
-              content={data.isOperating ? "On" : "Off"}/>
-          </LabeledList.Item>
-          <LabeledList.Item label="Temperature">
-           <span class='{data.temperaturestatus}'>{data.cellTemperature} K</span>
-          </LabeledList.Item>
+          <LabeledList.Item
+            label="Power"
+            content={(
+              <Button
+                icon={data.isOperating ? "power-off" : "close"}
+                disabled={data.isOpen}
+                onClick={() => act(ref, 'power')}
+                content={data.isOperating ? "On" : "Off"}/>
+            )}/>
+          <LabeledList.Item
+            label="Temperature"
+            content={data.cellTemperature} K/>
           <LabeledList.Item label="Door">
             <Button
               icon={data.isOpen ? "unlock" : "lock"}
@@ -86,11 +88,13 @@ export const Cryo = props => {
       </Section>
       <Section
         title="Beaker"
-        button={(<Button
-                  icon="eject"
-                  disabled={!!data.isBeakerLoaded}
-                  onClick={() => act(ref, 'ejectbeaker')}
-                  content="Eject"/>)}>
+        button={(
+          <Button
+            icon="eject"
+            disabled={!!data.isBeakerLoaded}
+            onClick={() => act(ref, 'ejectbeaker')}
+            content="Eject"/>
+        )}>
         <LabeledList>
           <LabeledList.Item label="Contents">
             {data.isBeakerLoaded ? (
