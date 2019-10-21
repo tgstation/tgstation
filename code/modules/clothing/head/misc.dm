@@ -439,3 +439,9 @@
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/intern
+	name = "\improper CentCom Head Intern beancap"
+	desc = "A horrifying mix of beanie and softcap in CentCom green. You'd have to be pretty desperate for power over your peers to agree to wear this."
+	icon_state = "intern_hat"
+	item_state = "intern_hat"
