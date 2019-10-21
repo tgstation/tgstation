@@ -101,7 +101,7 @@
 			continue
 		if(isnull(data[achievement_type])) //We're still loading
 			continue
-		var/this = list(
+		var/list/this = list(
 			"name" = SSachievements.achievements[achievement_type].name,
 			"desc" = SSachievements.achievements[achievement_type].desc,
 			"category" = SSachievements.achievements[achievement_type].category,
