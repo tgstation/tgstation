@@ -597,11 +597,11 @@
 
 /datum/techweb_node/adv_rcd_upgrade
 	id = "adv_rcd_upgrade"
-	display_name = "Advanced RCD designs upgrade"
+	display_name = "Advanced Bluespace RCD designs."
 	description = "Unlocks new RCD designs."
-	design_ids = list("rcd_upgrade_silo_link")
+	design_ids = list("RCD_bluespace", "rcd_upgrade_silo_link")
 	prereq_ids = list("rcd_upgrade", "bluespace_travel")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 25000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 20000)
 	export_price = 5000
 
 /////////////////////////weaponry tech/////////////////////////

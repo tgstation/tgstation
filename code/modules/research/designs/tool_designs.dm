@@ -63,6 +63,16 @@
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/rcd_bluespace
+	name = "Bluespace RCD"
+	desc = "A compact RCD linked with the ore silo using bluespace technology, with additional uppgraded efficiency."
+	id = "rcd_bluespace"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 60000, /datum/material/glass = 7500, /datum/material/plasma = 4000, /datum/material/uranium = 4500 /datum/material/bluespace = 2500 )
+	build_path = /obj/item/construction/rcd/bluespace
+	category = list("Tool Designs")
+	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING	
+
 /////////////////////////////////////////
 //////////////Alien Tools////////////////
 /////////////////////////////////////////

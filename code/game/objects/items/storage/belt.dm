@@ -60,7 +60,8 @@
 		/obj/item/holosign_creator/engineering,
 		/obj/item/forcefield_projector,
 		/obj/item/assembly/signaler,
-		/obj/item/lightreplacer
+		/obj/item/lightreplacer,
+		/obj/item/construction/rcd/bluespace
 		))
 
 /obj/item/storage/belt/utility/chief
