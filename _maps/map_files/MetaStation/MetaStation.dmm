@@ -56608,7 +56608,7 @@
 /obj/machinery/power/apc{
 	areastring = "/area/medical/patients_rooms/room_a";
 	dir = 8;
-	name = "Patient Room A APC";
+	name = "Surgery B APC";
 	pixel_x = -25
 	},
 /obj/structure/cable,
