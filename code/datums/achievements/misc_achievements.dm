@@ -19,7 +19,7 @@
 /datum/award/achievement/misc/feat_of_strength
 	name = "Feat of Strength"
 	desc = "If the rod is immovable, is it passing you or are you passing it?"
-	hub_id = MEDAL_TIMEWASTE
+	hub_id = MEDAL_RODSUPLEX
 
 /datum/award/achievement/misc/round_and_full
 	name = "Round and Full"
