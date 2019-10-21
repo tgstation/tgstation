@@ -5909,6 +5909,7 @@
 	dir = 8;
 	frequency = 1442;
 	id_tag = "syndie_lavaland_o2_out";
+	internal_pressure_bound = 5066;
 	name = "Plasma Out"
 	},
 /turf/open/floor/engine/plasma,
