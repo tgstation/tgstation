@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 					icon_state = "morgue4" // Cloneable
 					if(mob_occupant.stat == DEAD && beeper)
 						if(world.time > next_beep)
-							playsound(src, 'sound/weapons/smg_empty_alarm.ogg', 50, FALSE) //Clone them you blind fucks
+							playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Clone them you blind fucks
 							next_beep = world.time + beep_cooldown
 					break
 

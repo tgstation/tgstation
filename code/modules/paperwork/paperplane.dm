@@ -84,7 +84,7 @@
 		internalPaper.attackby(P, user) //spoofed attack to update internal paper.
 		update_icon()
 
-	else if(P.is_hot())
+	else if(P.get_temperature())
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 				"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")

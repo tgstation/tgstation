@@ -12,6 +12,8 @@
 	var/spawned_disease = null
 	var/disease_amount = 20
 	var/spillable = FALSE
+	var/list/fill_icon_thresholds = null
+	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -121,3 +123,27 @@
 
 /obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	reagents.expose_temperature(exposed_temperature)
+
+/obj/item/reagent_containers/on_reagent_change(changetype)
+	update_icon()
+
+/obj/item/reagent_containers/update_icon(dont_fill=FALSE)
+	if(!fill_icon_thresholds || dont_fill)
+		return ..()
+
+	cut_overlays()
+
+	if(reagents.total_volume)
+		var/fill_name = fill_icon_state? fill_icon_state : icon_state
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[fill_name][fill_icon_thresholds[1]]")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		for(var/i in 1 to fill_icon_thresholds.len)
+			var/threshold = fill_icon_thresholds[i]
+			var/threshold_end = (i == fill_icon_thresholds.len)? INFINITY : fill_icon_thresholds[i+1]
+			if(threshold <= percent && percent < threshold_end)
+				filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
+
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(filling)
+	. = ..()

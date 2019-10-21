@@ -85,7 +85,7 @@ handles linking back and forth.
 	var/obj/item/multitool/M = I
 	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
 		if (silo == M.buffer)
-			to_chat(user, "<span class='notice'>[parent] is already connected to [silo].</span>")
+			to_chat(user, "<span class='warning'>[parent] is already connected to [silo]!</span>")
 			return COMPONENT_BLOCK_TOOL_ATTACK
 		if (silo)
 			silo.connected -= src

@@ -68,5 +68,5 @@
 
 	changeling.islinking = 0
 	target.mind.linglink = 0
-	to_chat(user, "<span class='notice'>You cannot sustain the connection any longer, your victim fades from the hivemind</span>")
+	to_chat(user, "<span class='notice'>You cannot sustain the connection any longer, your victim fades from the hivemind!</span>")
 	to_chat(target, "<span class='userdanger'>The link cannot be sustained any longer, your connection to the hivemind has faded!</span>")

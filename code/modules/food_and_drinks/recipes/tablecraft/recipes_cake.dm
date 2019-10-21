@@ -83,6 +83,7 @@
 		/obj/item/reagent_containers/food/snacks/store/cake/birthday = 1,
 		/obj/item/melee/transforming/energy/sword = 1,
 	)
+	blacklist = list(/obj/item/reagent_containers/food/snacks/store/cake/birthday/energy)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/birthday/energy
 	subcategory = CAT_CAKE
 
@@ -179,6 +180,18 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/vanilla_cake
 	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/trumpetcake
+	name = "Spaceman's Cake"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cake/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/trumpet = 2,
+		/datum/reagent/consumable/cream = 5,
+		/datum/reagent/consumable/berryjuice = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/store/cake/trumpet
+	subcategory = CAT_CAKE
+
 
 /datum/crafting_recipe/food/cak
 	name = "Living cat/cake hybrid"

@@ -1,3 +1,34 @@
+/datum/outfit/spec_ops
+	name = "Special Ops Officer"
+
+	uniform = /obj/item/clothing/under/syndicate
+	suit = /obj/item/clothing/suit/space/officer
+	shoes = /obj/item/clothing/shoes/combat/swat
+	gloves = /obj/item/clothing/gloves/combat
+	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	ears = /obj/item/radio/headset/headset_cent/commander
+	mask = /obj/item/clothing/mask/cigarette/cigar/havana
+	head = /obj/item/clothing/head/helmet/space/beret
+	belt = /obj/item/gun/energy/pulse/pistol/m1911
+	r_pocket = /obj/item/lighter
+	back = /obj/item/storage/backpack/satchel/leather
+	id = /obj/item/card/id/centcom
+
+/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/W = H.wear_id
+	W.access = get_all_accesses()
+	W.access += get_centcom_access("Special Ops Officer")
+	W.assignment = "Special Ops Officer"
+	W.registered_name = H.real_name
+	W.update_label()
+
+	var/obj/item/radio/headset/R = H.ears
+	R.set_frequency(FREQ_CENTCOM)
+	R.freqlock = TRUE
+
 /datum/outfit/space
 	name = "Standard Space Gear"
 
@@ -227,37 +258,6 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
-/datum/outfit/spec_ops
-	name = "Special Ops Officer"
-
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/space/officer
-	shoes = /obj/item/clothing/shoes/combat/swat
-	gloves = /obj/item/clothing/gloves/combat
-	glasses = /obj/item/clothing/glasses/thermal/eyepatch
-	ears = /obj/item/radio/headset/headset_cent/commander
-	mask = /obj/item/clothing/mask/cigarette/cigar/havana
-	head = /obj/item/clothing/head/helmet/space/beret
-	belt = /obj/item/gun/energy/pulse/pistol/m1911
-	r_pocket = /obj/item/lighter
-	back = /obj/item/storage/backpack/satchel/leather
-	id = /obj/item/card/id/centcom
-
-/datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-
-	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses()
-	W.access += get_centcom_access("Special Ops Officer")
-	W.assignment = "Special Ops Officer"
-	W.registered_name = H.real_name
-	W.update_label()
-
-	var/obj/item/radio/headset/R = H.ears
-	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = TRUE
-
 /datum/outfit/ghost_cultist
 	name = "Cultist Ghost"
 
@@ -422,19 +422,23 @@
 /datum/outfit/debug //Debug objs plus hardsuit
 	name = "Debug outfit"
 	uniform = /obj/item/clothing/under/misc/patriotsuit
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
-	shoes = /obj/item/clothing/shoes/magboots/advance
-	suit_store = /obj/item/tank/internals/oxygen
-	mask = /obj/item/clothing/mask/gas/welding
-	belt = /obj/item/storage/belt/utility/chief/full
-	gloves = /obj/item/clothing/gloves/combat
-	id = /obj/item/card/id/ert
+	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
 	glasses = /obj/item/clothing/glasses/meson/night
 	ears = /obj/item/radio/headset/headset_cent/commander
+	mask = /obj/item/clothing/mask/gas/welding/up
+	gloves = /obj/item/clothing/gloves/combat
+	belt = /obj/item/storage/belt/utility/chief/full
+	shoes = /obj/item/clothing/shoes/magboots/advance
+	id = /obj/item/card/id/ert
+	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/storage/backpack/holding
-	backpack_contents = list(/obj/item/card/emag=1,\
-		/obj/item/flashlight/emp/debug=1,\
+	box = /obj/item/storage/box/debugtools
+	internals_slot = SLOT_S_STORE
+	backpack_contents = list(
 		/obj/item/construction/rcd/combat=1,\
-		/obj/item/gun/magic/wand/resurrection/debug=1,\
 		/obj/item/melee/transforming/energy/axe=1,\
-		/obj/item/storage/part_replacer/bluespace/tier4=1)
+		/obj/item/storage/part_replacer/bluespace/tier4=1,\
+		/obj/item/gun/magic/wand/resurrection/debug=1,\
+		/obj/item/gun/magic/wand/death/debug=1,\
+		/obj/item/debug/human_spawner=1
+		)

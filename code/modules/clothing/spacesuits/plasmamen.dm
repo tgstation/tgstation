@@ -41,7 +41,7 @@
 	icon_state = "plasmaman-helm"
 	item_state = "plasmaman-helm"
 	strip_delay = 80
-	flash_protect = 2
+	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75)
 	resistance_flags = FIRE_PROOF
@@ -104,7 +104,7 @@
 				update_icon()
 				return
 		if(smile == TRUE)
-			to_chat(user, "<span class='notice'>Seems like someone already drew something on this helmet's visor.</span>")
+			to_chat(user, "<span class='warning'>Seems like someone already drew something on this helmet's visor!</span>")
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)
 	. = ..()

@@ -11,14 +11,32 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
 
+/obj/item/clothing/mask/gas/atmos
+	name = "atmospheric gas mask"
+	desc = "Improved gas mask utilized by atmospheric technicians. Still not very good at blocking gas flow, but it's flameproof!"
+	icon_state = "gas_atmos"
+	item_state = "gas_atmos"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 20, "acid" = 10)
+	w_class = WEIGHT_CLASS_SMALL
+	gas_transfer_coefficient = 0.001 //cargo cult time, this var does nothing but just in case someone actually makes it do something
+	permeability_coefficient = 0.001
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/mask/gas/atmos/captain
+	name = "captain's gas mask"
+	desc = "Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone."
+	icon_state = "gas_cap"
+	item_state = "gas_cap"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
 // **** Welding gas mask ****
 
 /obj/item/clothing/mask/gas/welding
 	name = "welding mask"
 	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
 	icon_state = "weldingmask"
-	materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
-	flash_protect = 2
+	flash_protect = FLASH_PROTECTION_WELDER
+	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
 	tint = 2
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 55)
 	actions_types = list(/datum/action/item_action/toggle)
@@ -31,6 +49,11 @@
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
 
+/obj/item/clothing/mask/gas/welding/up
+
+/obj/item/clothing/mask/gas/welding/up/Initialize()
+	..()
+	visor_toggling()
 
 // ********************************************************************
 
@@ -192,7 +215,7 @@
 		for(var/X in actions)
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
-		to_chat(M, "The Tiki Mask has now changed into the [choice] Mask!")
+		to_chat(M, "<span class='notice'>The Tiki Mask has now changed into the [choice] Mask!</span>")
 		return 1
 
 /obj/item/clothing/mask/gas/tiki_mask/yalp_elor

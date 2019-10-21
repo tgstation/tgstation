@@ -12,6 +12,8 @@
 	icon_state = "shuttle"
 	// Loading the same shuttle map at a different time will produce distinct area instances.
 	unique = FALSE
+	blob_allowed = FALSE
+	flags_1 = CAN_BE_DIRTY_1
 
 /area/shuttle/Initialize()
 	if(!canSmoothWithAreas)
@@ -31,7 +33,6 @@
 
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
-	blob_allowed = FALSE
 	ambientsounds = HIGHSEC
 	canSmoothWithAreas = /area/shuttle/syndicate
 
@@ -56,7 +57,6 @@
 
 /area/shuttle/pirate
 	name = "Pirate Shuttle"
-	blob_allowed = FALSE
 	requires_power = TRUE
 	canSmoothWithAreas = /area/shuttle/pirate
 
@@ -65,14 +65,12 @@
 /area/shuttle/hunter
 	name = "Hunter Shuttle"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	blob_allowed = FALSE
 	canSmoothWithAreas = /area/shuttle/hunter
 
 ////////////////////////////White Ship////////////////////////////
 
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
-	blob_allowed = FALSE
 	requires_power = TRUE
 	canSmoothWithAreas = /area/shuttle/abandoned
 
@@ -106,6 +104,8 @@
 
 /area/shuttle/custom
 	name = "Custom player shuttle"
+	blob_allowed = TRUE
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
@@ -113,35 +113,38 @@
 
 /area/shuttle/pod_1
 	name = "Escape Pod One"
+	blob_allowed = TRUE
 
 /area/shuttle/pod_2
 	name = "Escape Pod Two"
+	blob_allowed = TRUE
 
 /area/shuttle/pod_3
 	name = "Escape Pod Three"
+	blob_allowed = TRUE
 
 /area/shuttle/pod_4
 	name = "Escape Pod Four"
+	blob_allowed = TRUE
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
-	blob_allowed = FALSE
 
 /area/shuttle/mining/large
 	name = "Mining Shuttle"
-	blob_allowed = FALSE
 	requires_power = TRUE
 
 /area/shuttle/labor
 	name = "Labor Camp Shuttle"
-	blob_allowed = FALSE
 
 /area/shuttle/supply
 	name = "Supply Shuttle"
-	blob_allowed = FALSE
+	noteleport = TRUE
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
+	blob_allowed = TRUE
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 /area/shuttle/escape/backup
 	name = "Backup Emergency Shuttle"
@@ -160,34 +163,26 @@
 
 /area/shuttle/transport
 	name = "Transport Shuttle"
-	blob_allowed = FALSE
 
 /area/shuttle/assault_pod
 	name = "Steel Rain"
-	blob_allowed = FALSE
 
 /area/shuttle/sbc_starfury
 	name = "SBC Starfury"
-	blob_allowed = FALSE
 
 /area/shuttle/sbc_fighter1
 	name = "SBC Fighter 1"
-	blob_allowed = FALSE
 
 /area/shuttle/sbc_fighter2
 	name = "SBC Fighter 2"
-	blob_allowed = FALSE
 
 /area/shuttle/sbc_corvette
 	name = "SBC corvette"
-	blob_allowed = FALSE
 
 /area/shuttle/syndicate_scout
 	name = "Syndicate Scout"
-	blob_allowed = FALSE
 
 /area/shuttle/caravan
-	blob_allowed = FALSE
 	requires_power = TRUE
 
 /area/shuttle/caravan/syndicate1

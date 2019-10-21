@@ -6,8 +6,10 @@
 	desc = "Inject certain types of monster organs with this stabilizer to preserve their healing powers indefinitely."
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
+/obj/item/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 	var/obj/item/organ/regenerative_core/C = M
 	if(!istype(C, /obj/item/organ/regenerative_core))
 		to_chat(user, "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>")

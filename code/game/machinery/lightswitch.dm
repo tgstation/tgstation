@@ -48,6 +48,7 @@
 	area.power_change()
 
 /obj/machinery/light_switch/power_change()
+	SHOULD_CALL_PARENT(0)
 	if(area == get_area(src))
 		return ..()
 

@@ -55,7 +55,7 @@
 	icon_state = "healthhudnight"
 	item_state = "glasses"
 	darkness_view = 8
-	flash_protect = -1
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -64,7 +64,7 @@
 	desc = "Sunglasses with a medical HUD."
 	icon_state = "sunhudmed"
 	darkness_view = 1
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
 
@@ -81,7 +81,7 @@
 	icon_state = "diagnostichudnight"
 	item_state = "glasses"
 	darkness_view = 8
-	flash_protect = -1
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
@@ -90,7 +90,7 @@
 	desc = "Sunglasses with a diagnostic HUD."
 	icon_state = "sunhuddiag"
 	item_state = "glasses"
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 
 /obj/item/clothing/glasses/hud/security
@@ -104,7 +104,7 @@
 /obj/item/clothing/glasses/hud/security/chameleon
 	name = "chameleon security HUD"
 	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Provides flash protection."
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 
 	// Yes this code is the same as normal chameleon glasses, but we don't
 	// have multiple inheritance, okay?
@@ -135,7 +135,7 @@
 	desc = "Sunglasses with a security HUD."
 	icon_state = "sunhudsec"
 	darkness_view = 1
-	flash_protect = 1
+	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
 
@@ -144,7 +144,7 @@
 	desc = "An advanced heads-up display that provides ID data and vision in complete darkness."
 	icon_state = "securityhudnight"
 	darkness_view = 8
-	flash_protect = -1
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
