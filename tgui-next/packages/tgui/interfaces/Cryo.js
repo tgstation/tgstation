@@ -33,7 +33,7 @@ export const Cryo = props => {
           <LabeledList.Item
             label="Occupant"
             content={data.occupant.name ? data.occupant.name : "No Occupant"} />
-          {data.hasOccupant && (
+          {!!data.hasOccupant && (
             <Fragment>
               <LabeledList.Item
                 label="State"
@@ -69,7 +69,7 @@ export const Cryo = props => {
             label="Power"
             content={(
               <Button
-                icon={data.isOperating ? "power-off" : "close"}
+                icon={data.isOperating ? "power-off" : "times"}
                 disabled={data.isOpen}
                 onClick={() => act(ref, 'power')}
                 content={data.isOperating ? "On" : "Off"} />
@@ -83,7 +83,7 @@ export const Cryo = props => {
               onClick={() => act(ref, 'door')}
               content={data.isOpen ? "Open" : "Closed"} />
             <Button
-              icon={data.autoEject ? ("sign-out") : ("sign-in")}
+              icon={data.autoEject ? "sign-out-alt" : "sign-in-alt"}
               onClick={() => act(ref, 'autoeject')}
               content={data.autoEject ? "Auto" : "Manual"} />
           </LabeledList.Item>
@@ -94,7 +94,7 @@ export const Cryo = props => {
         button={(
           <Button
             icon="eject"
-            disabled={!!data.isBeakerLoaded}
+            disabled={!data.isBeakerLoaded}
             onClick={() => act(ref, 'ejectbeaker')}
             content="Eject" />
         )}>
