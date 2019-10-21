@@ -165,11 +165,7 @@
 		return
 	if(ishumanbasic(H) || isfelinid(H))
 		if(user.gender == FEMALE)
-			return pick('sound/voice/human/gasps/femalegasp1.ogg', 'sound/voice/human/gasps/femalegasp2.ogg', 'sound/voice/human/gasps/femalegasp3.ogg', 'sound/voice/human/gasps/femalegasp4.ogg', 'sound/voice/human/gasps/femalegasp5.ogg')
-		else
-			return pick('sound/voice/human/gasps/malegasp1.ogg', 'sound/voice/human/gasps/malegasp2.ogg', 'sound/voice/human/gasps/malegasp3.ogg', 'sound/voice/human/gasps/malegasp4.ogg')
-
-
+			return 'sound/voice/human/gasps/femalegasp3.ogg'
 
 /datum/emote/living/giggle
 	key = "giggle"
