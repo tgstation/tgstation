@@ -391,6 +391,17 @@
 	else if (check_heads_victory())
 		finished = 2
 		SSshuttle.clearHostileEnvironment(src)
+		priority_announce("It appears the mutiny has been quelled. Please return yourself and your colleagues to work. \
+			We have remotely blacklisted them from your cloning software to prevent accidental cloning.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
+		for(var/datum/mind/M in revolution.members)	// Remove antag datums and prevent headrev cloning then restarting rebellions.
+			if(M.has_antag_datum(/datum/antagonist/rev/head))
+				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev/head)
+				R.remove_revolutionary(FALSE, "gamemode")
+				var/mob/living/carbon/C = M.current
+				C.makeUncloneAble()
+			if(M.has_antag_datum(/datum/antagonist/rev))
+				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
+				R.remove_revolutionary(FALSE, "gamemode")
 		return RULESET_STOP_PROCESSING
 
 /datum/dynamic_ruleset/roundstart/revs/check_finished()
