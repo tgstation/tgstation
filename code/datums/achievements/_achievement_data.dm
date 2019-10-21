@@ -1,5 +1,6 @@
 ///Datum that handles
 /datum/achievement_data
+	///Ckey of this achievement data's owner
 	var/key
 	///Up to date list of all achievements and their info.
 	var/data = list()
