@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, LabeledList, ProgressBar, Section} from '../components';
+import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section} from '../components';
 
 export const Cryo = props => {
   const { state } = props;
@@ -41,24 +41,26 @@ export const Cryo = props => {
                 color={data.occupant.statstate} />
               <LabeledList.Item
                 label="Temperature"
-                content={data.occupant.bodyTemperature + ' K'}
-                color={data.occupant.temperaturestatus} />
+                color={data.occupant.temperaturestatus}>
+                <AnimatedNumber value={data.occupant.bodyTemperature} /> K
+              </LabeledList.Item>
               <LabeledList.Item
-                label="Health"
-                content={(
+                label="Health">
                   <ProgressBar
                     value={data.occupant.health / data.occupant.maxHealth}
-                    content={data.occupant.health}
-                    color={(data.occupant.health > 0) ? "good" : "average"} />)} />
+                    color={(data.occupant.health > 0) ? "good" : "average"}>
+                    <AnimatedNumber value={data.occupant.health} />
+                  </ProgressBar>
+              </LabeledList.Item>
               {(damageTypes.map(damageType => (
                   <LabeledList.Item
                     key={damageType.id}
-                    label={damageType.label}
-                    content={(
-                      <ProgressBar
-                        value={data.occupant[damageType.type]/100}
-                        content={data.occupant[damageType.type]} />
-                    )} />
+                    label={damageType.label}>
+                    <ProgressBar
+                      value={data.occupant[damageType.type]/100}>
+                      <AnimatedNumber value={data.occupant[damageType.type]} />
+                    </ProgressBar>
+                  </LabeledList.Item>
                 )))}
             </Fragment>
           )}
@@ -78,8 +80,9 @@ export const Cryo = props => {
                 color={data.isOperating && ("green")} />
             )} />
           <LabeledList.Item
-            label="Temperature"
-            content={data.cellTemperature + ' K'} />
+            label="Temperature">
+            <AnimatedNumber value={data.cellTemperature} /> K
+          </LabeledList.Item>
           <LabeledList.Item label="Door">
             <Button
               icon={data.isOpen ? "unlock" : "lock"}
