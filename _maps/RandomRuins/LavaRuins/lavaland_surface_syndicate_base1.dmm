@@ -3722,7 +3722,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/layer_manifold/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold/visible{
+	name = "CO2"
+	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kn" = (
@@ -3885,7 +3887,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/binary/pump,
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "CO2"
+	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kC" = (
@@ -3893,9 +3897,6 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
-	},
-/obj/machinery/computer/atmos_control/tank/nitrogen_tank/offstation{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -3905,7 +3906,12 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos,
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	frequency = 1442;
+	id_tag = "syndie_lavaland_co2_out";
+	internal_pressure_bound = 5066;
+	name = "CO2 out"
+	},
 /turf/open/floor/engine/co2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "kF" = (
@@ -4098,10 +4104,12 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
-	dir = 6
+	dir = 6;
+	name = "N2 to Mix"
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible/layer1{
-	dir = 4
+	dir = 4;
+	name = "N2"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -4118,7 +4126,8 @@
 	dir = 8;
 	frequency = 1442;
 	id_tag = "syndie_lavaland_n2_out";
-	name = "nitrogen out"
+	internal_pressure_bound = 5066;
+	name = "Nitrogen Out"
 	},
 /turf/open/floor/engine/n2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -4282,7 +4291,9 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lt" = (
-/obj/machinery/atmospherics/pipe/simple/supplymain/visible,
+/obj/machinery/atmospherics/pipe/simple/supplymain/visible{
+	name = "O2 to Mix"
+	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lu" = (
@@ -4292,7 +4303,8 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible{
-	dir = 9
+	dir = 9;
+	name = "N2 to Mix"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -4472,13 +4484,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/computer/atmos_control/tank/oxygen_tank/offstation{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lQ" = (
-/obj/machinery/air_sensor/atmos/oxygen_tank,
+/obj/machinery/meter/turf,
 /turf/open/floor/engine/o2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "lR" = (
@@ -4665,12 +4674,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 8
+	dir = 8;
+	name = "O2 to Mix"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mk" = (
-/obj/machinery/atmospherics/pipe/manifold/supplymain/visible,
+/obj/machinery/atmospherics/pipe/manifold/supplymain/visible{
+	name = "O2 to Mix"
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -4681,7 +4693,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
-	dir = 4
+	dir = 4;
+	name = "O2 Layer Manifold"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -4690,7 +4703,8 @@
 	dir = 8;
 	frequency = 1442;
 	id_tag = "syndie_lavaland_o2_out";
-	name = "oxygen out"
+	internal_pressure_bound = 5066;
+	name = "Oxygen Out"
 	},
 /turf/open/floor/engine/o2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -4849,26 +4863,24 @@
 "mI" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/light/small,
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
-	dir = 8
+	dir = 8;
+	name = "Plasma to Mix"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mJ" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 10
+	dir = 10;
+	name = "Plasma to Mix"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/atmos_control/tank/toxin_tank/offstation{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mM" = (
@@ -5010,7 +5022,8 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "ng" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
-	dir = 5
+	dir = 5;
+	name = "Plasma to Mix"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -5882,7 +5895,7 @@
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/testlab)
 "rg" = (
-/obj/machinery/air_sensor/atmos/toxin_tank,
+/obj/machinery/meter/turf,
 /turf/open/floor/engine/plasma,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "rF" = (
@@ -5896,7 +5909,7 @@
 	dir = 8;
 	frequency = 1442;
 	id_tag = "syndie_lavaland_o2_out";
-	name = "oxygen out"
+	name = "Plasma Out"
 	},
 /turf/open/floor/engine/plasma,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -5934,7 +5947,7 @@
 /turf/open/floor/engine/o2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "BC" = (
-/obj/machinery/air_sensor/atmos/carbon_tank,
+/obj/machinery/meter/turf,
 /turf/open/floor/engine/co2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "BF" = (
@@ -5985,9 +5998,6 @@
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "Ed" = (
-/obj/machinery/computer/atmos_control/tank/carbon_tank/offstation{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "EZ" = (
@@ -6012,7 +6022,8 @@
 "JB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/layer_manifold/visible{
-	dir = 4
+	dir = 4;
+	name = "Plasma Layer Manifold"
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
@@ -6116,7 +6127,7 @@
 /turf/open/floor/engine/co2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "ZU" = (
-/obj/machinery/air_sensor/atmos/nitrogen_tank,
+/obj/machinery/meter/turf,
 /turf/open/floor/engine/n2,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 

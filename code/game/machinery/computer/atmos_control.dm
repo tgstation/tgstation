@@ -111,7 +111,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	)
 	var/list/sensor_information = list()
 	var/datum/radio_frequency/radio_connection
-	var/can_reconnect = TRUE
 
 	light_color = LIGHT_COLOR_CYAN
 
@@ -146,9 +145,8 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 			"long_name" 	= sanitize(long_name),
 			"pressure"		= info["pressure"],
 			"temperature"	= info["temperature"],
-			"gases"			= info["gases"],
+			"gases"			= info["gases"]
 		))
-	data["can_reconnect"]	= can_reconnect
 	return data
 
 /obj/machinery/computer/atmos_control/receive_signal(datum/signal/signal)
@@ -174,9 +172,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	ui_x = 400
 	ui_y = 300
 
-/obj/machinery/computer/atmos_control/incinerator/offstation
-	can_reconnect = FALSE
-
 //Toxins mix sensor only
 /obj/machinery/computer/atmos_control/toxinsmix
 	name = "Toxins Mixing Air Control"
@@ -184,10 +179,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	circuit = /obj/item/circuitboard/computer/atmos_control/toxinsmix
 	ui_x = 400
 	ui_y = 300
-
-/obj/machinery/computer/atmos_control/toxinsmix/offstation
-	can_reconnect = FALSE
-
 
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL
@@ -203,7 +194,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/list/output_info
 
 	ui_x = 500
-	ui_y = 320
+	ui_y = 305
 
 /obj/machinery/computer/atmos_control/tank/oxygen_tank
 	name = "Oxygen Supply Control"
@@ -212,18 +203,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_O2 = "Oxygen Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/oxygen_tank
 
-/obj/machinery/computer/atmos_control/tank/oxygen_tank/offstation
-	can_reconnect = FALSE
-
 /obj/machinery/computer/atmos_control/tank/toxin_tank
 	name = "Plasma Supply Control"
 	input_tag = ATMOS_GAS_MONITOR_INPUT_TOX
 	output_tag = ATMOS_GAS_MONITOR_OUTPUT_TOX
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_TOX = "Plasma Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/toxin_tank
-
-/obj/machinery/computer/atmos_control/tank/toxin_tank/offstation
-	can_reconnect = FALSE
 
 /obj/machinery/computer/atmos_control/tank/air_tank
 	name = "Mixed Air Supply Control"
@@ -232,18 +217,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_AIR = "Air Mix Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/air_tank
 
-/obj/machinery/computer/atmos_control/tank/air_tank/offstation
-	can_reconnect = FALSE
-
 /obj/machinery/computer/atmos_control/tank/mix_tank
 	name = "Gas Mix Tank Control"
 	input_tag = ATMOS_GAS_MONITOR_INPUT_MIX
 	output_tag = ATMOS_GAS_MONITOR_OUTPUT_MIX
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_MIX = "Gas Mix Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/mix_tank
-
-/obj/machinery/computer/atmos_control/tank/mix_tank/offstation
-	can_reconnect = FALSE
 
 /obj/machinery/computer/atmos_control/tank/nitrous_tank
 	name = "Nitrous Oxide Supply Control"
@@ -252,9 +231,6 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_N2O = "Nitrous Oxide Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/nitrous_tank
 
-/obj/machinery/computer/atmos_control/tank/nitrous_tank/offstation
-	can_reconnect = FALSE
-
 /obj/machinery/computer/atmos_control/tank/nitrogen_tank
 	name = "Nitrogen Supply Control"
 	input_tag = ATMOS_GAS_MONITOR_INPUT_N2
@@ -262,18 +238,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_N2 = "Nitrogen Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/nitrogen_tank
 
-/obj/machinery/computer/atmos_control/tank/nitrogen_tank/offstation
-	can_reconnect = FALSE
-
 /obj/machinery/computer/atmos_control/tank/carbon_tank
 	name = "Carbon Dioxide Supply Control"
 	input_tag = ATMOS_GAS_MONITOR_INPUT_CO2
 	output_tag = ATMOS_GAS_MONITOR_OUTPUT_CO2
 	sensors = list(ATMOS_GAS_MONITOR_SENSOR_CO2 = "Carbon Dioxide Tank")
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank/carbon_tank
-
-/obj/machinery/computer/atmos_control/tank/carbon_tank/offstation
-	can_reconnect = FALSE
 
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
