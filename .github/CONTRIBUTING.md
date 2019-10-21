@@ -258,8 +258,9 @@ This prevents nesting levels from getting deeper then they need to be.
 	* Areas should not be var-edited on a map to change it's name or attributes. All areas of a single type and it's altered instances are considered the same area within the code, and editing their variables on a map can lead to issues with powernets and event subsystems which are difficult to debug.
 
 ### User Interfaces
-* All new user interfaces must use TGUI next; raw HTML and TGUI based interfaces are deprecated.
-* Documentation for TGUI next can be found at: 
+* All new player-facing user interfaces must use TGUI-next; TGUI is deprecated. 
+* Raw HTML is permitted for admin and debug UIs.
+* Documentation for TGUI-next can be found at: 
 	* [tgui-next/README.md](../tgui-next/README.md)
 	* [tgui-next/tutorial-and-examples.md](../tgui-next/docs/tutorial-and-examples.md)
 
