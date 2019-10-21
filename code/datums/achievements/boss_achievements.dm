@@ -3,7 +3,7 @@
 
 /datum/award/achievement/boss/tendril_exterminator
 	name = "Tendril Exterminator"
-	desc = "Watch your step"
+	desc = "Watch your step."
 	hub_id = BOSS_MEDAL_TENDRIL
 
 /datum/award/achievement/boss/boss_killer
@@ -18,12 +18,12 @@
 
 /datum/award/achievement/boss/bubblegum_kill
 	name = "Bubblegum Killer"
-	desc = "I guess he wasn't made of candy after all"
+	desc = "I guess he wasn't made of candy after all..."
 	hub_id = BOSS_MEDAL_BUBBLEGUM
 
 /datum/award/achievement/boss/colussus_kill
-	name = "Colussus Killer"
-	desc = "The bigger they are.... the better the loot"
+	name = "Colossus Killer"
+	desc = "The bigger they are... the better the loot"
 	hub_id = BOSS_MEDAL_COLOSSUS
 
 /datum/award/achievement/boss/drake_kill
@@ -38,12 +38,12 @@
 
 /datum/award/achievement/boss/legion_kill
 	name = "Legion Killer"
-	desc = "We were many..now we are none."
+	desc = "We were many... now we are none."
 	hub_id = BOSS_MEDAL_LEGION
 
 /datum/award/achievement/boss/swarmer_beacon_kill
 	name = "Swarm Beacon Killer"
-	desc = "GET THEM OFF OF ME!"
+	desc = "GET THEM OFF ME!"
 	hub_id = BOSS_MEDAL_SWARMERS
 
 /datum/award/achievement/boss/blood_miner_crusher
@@ -53,12 +53,12 @@
 
 /datum/award/achievement/boss/bubblegum_crusher
 	name = "Bubblegum Crusher"
-	desc = "I guess he wasn't made of candy after all"
+	desc = "I guess he wasn't made of candy after all..."
 	hub_id = BOSS_MEDAL_BUBBLEGUM_CRUSHER
 
 /datum/award/achievement/boss/colussus_crusher
-	name = "Colussus Crusher"
-	desc = "The bigger they are.... the better the loot"
+	name = "Colossus Crusher"
+	desc = "The bigger they are... the better the loot"
 	hub_id = BOSS_MEDAL_COLOSSUS_CRUSHER
 
 /datum/award/achievement/boss/drake_crusher
@@ -73,10 +73,10 @@
 
 /datum/award/achievement/boss/legion_crusher
 	name = "Legion Crusher"
-	desc = "We were many..now we are none."
+	desc = "We were many... now we are none."
 	hub_id = BOSS_MEDAL_LEGION_CRUSHER
 
 /datum/award/achievement/boss/swarmer_beacon_crusher
 	name = "Swarm Beacon Crusher"
-	desc = "GET THEM OFF OF ME!"
+	desc = "GET THEM OFF ME!"
 	hub_id = BOSS_MEDAL_SWARMERS_CRUSHER
