@@ -135,9 +135,10 @@
 
 	deltimer(recharge_timerid)
 
-	var/skill_modifier = MINING_SKILL_DEFAULT_SPEED_MOD
-	if(ishuman(holder))
+	var/skill_modifier = 1
+	if(!unique_frequency && ishuman(holder))
 		var/mob/living/carbon/human/H = holder
+		skill_modifier = MINING_SKILL_DEFAULT_SPEED_MOD
 		if(H.mind)
 			var/ssm = H.mind.get_skill_speed_modifier(/datum/skill/mining)
 			skill_modifier = (ssm ? ssm : MINING_SKILL_DEFAULT_SPEED_MOD)
