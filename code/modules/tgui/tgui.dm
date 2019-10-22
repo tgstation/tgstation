@@ -103,7 +103,6 @@
   * Open this UI (and initialize it with data).
  **/
 /datum/tgui/proc/open()
-	world.log << "Opening [window_id]"
 	if(!user.client)
 		return // Bail if there is no client.
 
