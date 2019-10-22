@@ -22,6 +22,12 @@
 	beauty_modifier = 0.05
 	armor_modifiers = list("melee" = 0.2, "bullet" = 0.2, "laser" = 0, "energy" = 1, "bomb" = 0, "bio" = 0.2, "rad" = 0.2, "fire" = 1, "acid" = 0.2) // yeah ok retard
 
+/*A few materials use color matrices. I recommend you just look them up, but for dummies:
+First element should be tha target color
+Second and third should be different shades of the same color but very dark
+Fourth element is alpha, don't touch it.
+You can make it look way better by just looking them up, but I understand if you just want to quickly make something thats passable*/
+
 ///Has no special properties. Could be good against vampires in the future perhaps.
 /datum/material/silver
 	name = "silver"
