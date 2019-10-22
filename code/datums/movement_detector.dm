@@ -8,23 +8,28 @@
 		track(target, listener)
 
 /datum/movement_detector/Destroy()
+	untrack()
 	tracked = null
 	listener = null
 	return ..()
 
 /// Sets up tracking of the given movable atom
 /datum/movement_detector/proc/track(atom/movable/target, datum/callback/listener)
-	if(tracked)
-		var/atom/movable/untrack = tracked
-		while(ismovableatom(untrack))
-			untrack.UnregisterSignal(untrack, COMSIG_MOVABLE_MOVED)
-			untrack = untrack.loc
-
+	untrack()
 	tracked = target
 	src.listener = listener
 	
 	while(ismovableatom(target))
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/move_react)
+		target = target.loc
+
+/// Stops tracking
+/datum/movement_detector/proc/untrack()
+	if(!tracked)
+		return
+	var/atom/movable/target = tracked
+	while(ismovableatom(target))
+		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 		target = target.loc
 
 /**

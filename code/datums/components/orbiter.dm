@@ -31,9 +31,7 @@
 /datum/component/orbiter/UnregisterFromParent()
 	var/atom/target = parent
 	target.orbiters = null
-	while(ismovableatom(target))
-		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
-		target = target.loc
+	QDEL_NULL(tracker)
 
 /datum/component/orbiter/Destroy()
 	var/atom/master = parent
@@ -41,7 +39,6 @@
 	for(var/i in orbiters)
 		end_orbit(i)
 	orbiters = null
-	QDEL_NULL(tracker)
 	return ..()
 
 /datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, list/arguments)
