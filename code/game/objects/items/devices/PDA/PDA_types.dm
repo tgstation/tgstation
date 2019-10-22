@@ -24,6 +24,7 @@
 	inserted_item = /obj/item/toy/crayon/mime
 	icon_state = "pda-mime"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The hardware has been modified for compliance with the vows of silence."
+	allow_emojis = TRUE
 	silent = TRUE
 	ttone = "silence"
 
