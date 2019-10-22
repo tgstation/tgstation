@@ -201,6 +201,13 @@ MIDROUND_ANTAG WIZARD
 ## The amount of time it takes for the emergency shuttle to be called, from round start.
 SHUTTLE_REFUEL_DELAY 12000
 
+## Variables calculate how number of antagonists will scale to population.
+## Used as (Antagonists = Population / Coeff)
+## Set to 0 to disable scaling and use default numbers instead.
+TRAITOR_SCALING_COEFF 6
+BROTHER_SCALING_COEFF 6
+CHANGELING_SCALING_COEFF 6
+
 ## Variables calculate how number of open security officer positions will scale to population.
 ## Used as (Officers = Population / Coeff)
 ## Set to 0 to disable scaling and use default numbers instead.
