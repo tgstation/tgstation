@@ -36,7 +36,7 @@ highlights differences with React.
 
 You will need these programs to start developing in tgui:
 
-- [Node 12.x](https://nodejs.org)
+- [Node 12.x](https://nodejs.org/en/download/current/)
 - [MSys2](https://www.msys2.org/) (optional)
 
 > MSys2 closely replicates a unix-like environment which is necessary for
@@ -55,15 +55,21 @@ either `Open command window here` or `Open PowerShell window here`.
 Run `npm install`, then:
 
 - `npm run build` - build the project in production mode.
-- `npm run watch` - launch a development server.
-- `npm run lint` - show and fix potential problems with the code.
+- `npm run watch` - launch a development server, with live log collection,
+cache reloading and hot module replacement.
+- `npm run lint` - show problems with the code.
+- `npm run lint --fix` - auto-fix problems with the code.
 - `npm run analyze` - run a bundle analyzer.
 
 For MSys2, WSL, Linux or macOS users:
 
 - `bin/tgui` - build the project in production mode.
-- `bin/tgui --dev` - launch a development server.
-- `bin/tgui --lint` - show and fix potential problems with the code.
+- `bin/tgui --dev` - launch a development server, with live log collection,
+cache reloading and hot module replacement.
+- `bin/tgui --dev --reload-once` - reload byond cache once.
+- `bin/tgui --dev --debug` - run server with debug logging enabled.
+- `bin/tgui --lint` - show problems with the code.
+- `bin/tgui --lint --fix` - auto-fix problems with the code.
 - `bin/tgui --analyze` - run a bundle analyzer.
 - `bin/tgui --clean` - clean up project repo.
 - `bin/tgui [webpack options]` - build the project with custom webpack

@@ -16,9 +16,9 @@ export const ProgressBar = props => {
           'width': (clamp(value, 0, 1) * 100) + '%',
         }} />
       <div className="ProgressBar__content">
-        {value && !hasContent && toFixed(value * 100) + '%'}
-        {content}
-        {children}
+        {hasContent
+          ? (content || children)
+          : (toFixed(value * 100) + '%')}
       </div>
     </div>
   );

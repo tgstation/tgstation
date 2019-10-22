@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Button, LabeledList, ProgressBar, Section } from '../components';
+import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 
 export const BorgPanel = props => {
   const { state } = props;
@@ -50,7 +50,7 @@ export const BorgPanel = props => {
             ) : (
               <span className="color-bad">No cell installed</span>
             ) }
-            <br/>
+            <br />
             <Button
               icon="pencil-alt"
               content="Set"
@@ -68,6 +68,7 @@ export const BorgPanel = props => {
           <LabeledList.Item label="Radio Channels">
             {channels.map(channel => (
               <Button
+                key={channel.name}
                 icon={channel.installed ? 'check-square-o' : 'square-o'}
                 content={channel.name}
                 selected={channel.installed}
@@ -79,6 +80,7 @@ export const BorgPanel = props => {
           <LabeledList.Item label="Module">
             {modules.map(module => (
               <Button
+                key={module.type}
                 icon={borg.active_module === module.type
                   ? 'check-square-o'
                   : 'square-o'}
@@ -92,6 +94,7 @@ export const BorgPanel = props => {
           <LabeledList.Item label="Upgrades">
             {upgrades.map(upgrade => (
               <Button
+                key={upgrade.type}
                 icon={upgrade.installed ? 'check-square-o' : 'square-o'}
                 content={upgrade.name}
                 selected={upgrade.installed}
@@ -103,6 +106,7 @@ export const BorgPanel = props => {
           <LabeledList.Item label="Master AI">
             {ais.map(ai => (
               <Button
+                key={ai.ref}
                 icon={ai.connected ? 'check-square-o' : 'square-o'}
                 content={ai.name}
                 selected={ai.connected}
@@ -123,10 +127,9 @@ export const BorgPanel = props => {
             onClick={() => act(ref, 'toggle_lawupdate')} />
         )}>
         {laws.map(law => (
-          <Fragment>
+          <Box key={law}>
             {law}
-            <br />
-          </Fragment>
+          </Box>
         ))}
       </Section>
     </Fragment>

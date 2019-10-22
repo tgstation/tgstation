@@ -359,3 +359,63 @@
 	target.hal_type = hal_type
 	target.hal_details = hal_details
 	target.comm_code = comm_code
+
+/datum/nanite_program/good_mood
+	name = "Happiness Enhancer"
+	desc = "The nanites synthesize serotonin inside the host's brain, creating an artificial sense of happiness."
+	use_rate = 0.1
+	rogue_types = list(/datum/nanite_program/brain_decay)
+	extra_settings = list("Mood Message")
+	var/message = "HAPPINESS ENHANCEMENT"
+
+/datum/nanite_program/good_mood/set_extra_setting(user, setting)
+	if(setting == "Mood Message")
+		var/new_message = stripped_input(user, "Choose the message visible on the mood effect.", "Message", message, MAX_NAME_LEN)
+		if(!new_message)
+			return
+		message = new_message
+
+/datum/nanite_program/good_mood/get_extra_setting(setting)
+	if(setting == "Mood Message")
+		return message
+
+/datum/nanite_program/good_mood/copy_extra_settings_to(datum/nanite_program/good_mood/target)
+	target.message = message
+
+/datum/nanite_program/good_mood/enable_passive_effect()
+	. = ..()
+	SEND_SIGNAL(host_mob, COMSIG_ADD_MOOD_EVENT, "nanite_happy", /datum/mood_event/nanite_happiness, message)
+
+/datum/nanite_program/good_mood/disable_passive_effect()
+	. = ..()
+	SEND_SIGNAL(host_mob, COMSIG_CLEAR_MOOD_EVENT, "nanite_happy")
+
+/datum/nanite_program/bad_mood
+	name = "Happiness Suppressor"
+	desc = "The nanites suppress the production of serotonin inside the host's brain, creating an artificial state of depression."
+	use_rate = 0.1
+	rogue_types = list(/datum/nanite_program/brain_decay)
+	extra_settings = list("Mood Message")
+	var/message = "HAPPINESS SUPPRESSION"
+
+/datum/nanite_program/bad_mood/set_extra_setting(user, setting)
+	if(setting == "Mood Message")
+		var/new_message = stripped_input(user, "Choose the message visible on the mood effect.", "Message", message, MAX_NAME_LEN)
+		if(!new_message)
+			return
+		message = new_message
+
+/datum/nanite_program/bad_mood/get_extra_setting(setting)
+	if(setting == "Mood Message")
+		return message
+
+/datum/nanite_program/bad_mood/copy_extra_settings_to(datum/nanite_program/bad_mood/target)
+	target.message = message
+
+/datum/nanite_program/bad_mood/enable_passive_effect()
+	. = ..()
+	SEND_SIGNAL(host_mob, COMSIG_ADD_MOOD_EVENT, "nanite_sadness", /datum/mood_event/nanite_sadness, message)
+
+/datum/nanite_program/bad_mood/disable_passive_effect()
+	. = ..()
+	SEND_SIGNAL(host_mob, COMSIG_CLEAR_MOOD_EVENT, "nanite_sadness")

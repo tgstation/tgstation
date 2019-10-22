@@ -28,7 +28,7 @@ export const Acclimator = props => {
         <Box mt={1} />
         <Button
           icon="power-off"
-          content={data.enabled ? 'On' : 'Off' }
+          content={data.enabled ? 'On' : 'Off'}
           selected={data.enabled}
           onClick={() => act(ref, 'toggle_power')} />
         <Box mt={1} />

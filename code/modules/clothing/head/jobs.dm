@@ -90,7 +90,7 @@
 			if(candy_cooldown < world.time)
 				var/obj/item/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/reagent_containers/food/snacks/candy_corn(src)
 				user.put_in_hands(CC)
-				to_chat(user, "You slip a candy corn from your hat.")
+				to_chat(user, "<span class='notice'>You slip a candy corn from your hat.</span>")
 				candy_cooldown = world.time+1200
 			else
 				to_chat(user, "<span class='warning'>You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.</span>")

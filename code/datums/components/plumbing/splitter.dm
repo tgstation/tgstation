@@ -25,7 +25,7 @@
 				return TRUE
 		if(EAST)
 			if(!S.turn_straight && S.transfer_side <= amount)
-				S.turn_straight = FALSE
+				S.turn_straight = TRUE
 				return TRUE
 
 /datum/component/plumbing/splitter/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
