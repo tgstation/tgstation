@@ -91,7 +91,6 @@
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 	var/required_heads_of_staff = 3
-	// 1 for revolution win and 2 for heads of staff win.
 	var/finished = FALSE
 	var/datum/team/revolution/revolution
 
