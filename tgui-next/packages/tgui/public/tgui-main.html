@@ -23,8 +23,8 @@
 
 <!-- Scripts -->
 <script type="text/javascript">
-// Retrieve and save ref to a global variable
-var ref = document.getElementById('data').getAttribute('data-ref');
+// Mark the beginning
+window.__inception__ = new Date().getTime();
 // Early global error handling
 window.onerror = function (msg, url, line, col, error) {
   var logString = msg + ' (' + url + ' line ' + line + ')'
@@ -33,6 +33,7 @@ window.onerror = function (msg, url, line, col, error) {
   // NOTE: document.write() only works on IE8.
   document.write(logString);
   // Send to the backend
+  var ref = document.getElementById('data').getAttribute('data-ref');
   location.href = 'byond://?src=' + ref
     + '&action=tgui:log&error=true'
     + '&log=' + encodeURIComponent(logString);

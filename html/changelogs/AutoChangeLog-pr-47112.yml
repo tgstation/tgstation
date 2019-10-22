@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - admin: "You can now properly apply arguments when adding components/elements via the VV dropdown."

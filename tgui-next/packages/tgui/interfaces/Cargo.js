@@ -42,13 +42,11 @@ export const Cargo = props => {
         )}>
         <LabeledList>
           <LabeledList.Item label="Shuttle">
-            {(data.docked && !data.requestonly) ? (
+            {data.docked && !data.requestonly && (
               <Button
                 content={data.location}
                 onClick={() => act(ref, 'send')} />
-            ) : (
-              <Fragment>{data.location}</Fragment>
-            )}
+            ) || data.location}
           </LabeledList.Item>
           <LabeledList.Item label="CentCom Message">
             {data.message}
@@ -81,7 +79,7 @@ export const Cargo = props => {
                   {cartButtons}
                   <Button
                     ml={1}
-                    icon={data.self_paid ? 'check-square-o' : 'square-o' }
+                    icon={data.self_paid ? 'check-square-o' : 'square-o'}
                     content="Buy Privately"
                     selected={data.self_paid}
                     onClick={() => act(ref, 'toggleprivate')} />
@@ -190,54 +188,55 @@ const Requests = props => {
   const { state, requests } = props;
   const { config, data } = state;
   const { ref } = config;
+  if (requests.length === 0) {
+    return (
+      <Box color="good">
+        No Requests
+      </Box>
+    );
+  }
+  // Labeled list reimplementation to squeeze extra columns out of it
   return (
-    <Fragment>
-      {requests.length ? (
-        // Labeled list reimplementation to squeeze extra columns out of it
-        <table className="LabeledList">
-          {requests.map(request => (
-            <Fragment key={request.id}>
-              <tr className="LabeledList__row candystripe">
-                <td className="LabeledList__cell LabeledList__label">
-                  #{request.id}:
-                </td>
-                <td className="LabeledList__cell LabeledList__content">
-                  {request.object}
-                </td>
-                <td className="LabeledList__cell">
-                  By <b>{request.orderer}</b>
-                </td>
-                <td className="LabeledList__cell">
-                  <i>{request.reason}</i>
-                </td>
-                <td className="LabeledList__cell LabeledList__buttons">
-                  {request.cost} credits
-                  {' '}
-                  {!data.requestonly && (
-                    <Fragment>
-                      <Button
-                        icon="check"
-                        color="good"
-                        onClick={() => act(ref, 'approve', {
-                          id: request.id,
-                        })} />
-                      <Button
-                        icon="times"
-                        color="bad"
-                        onClick={() => act(ref, 'deny', {
-                          id: request.id,
-                        })} />
-                    </Fragment>
-                  )}
-                </td>
-              </tr>
-            </Fragment>
-          ))}
-        </table>
-      ) : (
-        <span className="color-good">No Requests</span>
-      )}
-    </Fragment>
+    <table className="LabeledList">
+      {requests.map(request => (
+        <Fragment key={request.id}>
+          <tr className="LabeledList__row candystripe">
+            <td className="LabeledList__cell LabeledList__label">
+              #{request.id}:
+            </td>
+            <td className="LabeledList__cell LabeledList__content">
+              {request.object}
+            </td>
+            <td className="LabeledList__cell">
+              By <b>{request.orderer}</b>
+            </td>
+            <td className="LabeledList__cell">
+              <i>{request.reason}</i>
+            </td>
+            <td className="LabeledList__cell LabeledList__buttons">
+              {request.cost} credits
+              {' '}
+              {!data.requestonly && (
+                <Fragment>
+                  <Button
+                    icon="check"
+                    color="good"
+                    onClick={() => act(ref, 'approve', {
+                      id: request.id,
+                    })} />
+                  <Button
+                    icon="times"
+                    color="bad"
+                    onClick={() => act(ref, 'deny', {
+                      id: request.id,
+                    })} />
+                </Fragment>
+              )}
+            </td>
+          </tr>
+        </Fragment>
+      ))}
+    </table>
   );
 };
 

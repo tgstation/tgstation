@@ -12,7 +12,8 @@
 	var/list/datum/nanite_program/programs = list()
 	var/max_programs = NANITE_PROGRAM_LIMIT
 
-	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans, and does not display the program list on nanite scans
+	var/stealth = FALSE //if TRUE, does not appear on HUDs and health scans
+	var/diagnostics = TRUE //if TRUE, displays program list when scanned by nanite scanners
 
 /datum/component/nanites/Initialize(amount = 100, cloud = 0)
 	if(!isliving(parent) && !istype(parent, /datum/nanite_cloud_backup))
@@ -36,6 +37,7 @@
 
 /datum/component/nanites/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_HAS_NANITES, .proc/confirm_nanites)
+	RegisterSignal(parent, COMSIG_NANITE_IS_STEALTHY, .proc/check_stealth)
 	RegisterSignal(parent, COMSIG_NANITE_DELETE, .proc/delete_nanites)
 	RegisterSignal(parent, COMSIG_NANITE_UI_DATA, .proc/nanite_ui_data)
 	RegisterSignal(parent, COMSIG_NANITE_GET_PROGRAMS, .proc/get_programs)
@@ -62,6 +64,7 @@
 
 /datum/component/nanites/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_HAS_NANITES,
+								COMSIG_NANITE_IS_STEALTHY,
 								COMSIG_NANITE_DELETE,
 								COMSIG_NANITE_UI_DATA,
 								COMSIG_NANITE_GET_PROGRAMS,
@@ -199,6 +202,9 @@
 		var/datum/nanite_program/NP = X
 		NP.on_minor_shock()
 
+/datum/component/nanites/proc/check_stealth(datum/source)
+	return stealth
+
 /datum/component/nanites/proc/on_death(datum/source, gibbed)
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
@@ -280,8 +286,8 @@
 		to_chat(user, "<span class='info'>Cloud Sync: [cloud_active ? "Active" : "Disabled"]</span>")
 		to_chat(user, "<span class='info'>================</span>")
 		to_chat(user, "<span class='info'>Program List:</span>")
-		if(stealth)
-			to_chat(user, "<span class='alert'>%#$ENCRYPTED&^@</span>")
+		if(!diagnostics)
+			to_chat(user, "<span class='alert'>Diagnostics Disabled</span>")
 		else
 			for(var/X in programs)
 				var/datum/nanite_program/NP = X

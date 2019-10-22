@@ -957,7 +957,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/list/namecounts = list()
 
 	if(aiPDA.toff)
-		to_chat(user, "Turn on your receiver in order to send messages.")
+		to_chat(user, "<span class='alert'>Turn on your receiver in order to send messages.</span>")
 		return
 
 	for (var/obj/item/pda/P in get_viewable_pdas())
@@ -993,7 +993,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
 		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	else
-		to_chat(user, "You do not have a PDA. You should make an issue report about this.")
+		to_chat(user, "<span class='warning'>You do not have a PDA! You should make an issue report about this.</span>")
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/pda/emp_act(severity)

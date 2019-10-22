@@ -385,7 +385,7 @@
 	. = 1
 
 /datum/reagent/medicine/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#D2D2D2"
@@ -1120,11 +1120,11 @@
 			if(prob(50))
 				M.losebreath++
 			if(prob(20))
-				to_chat(M, "You have a sudden fit!")
+				to_chat(M, "<span class='userdanger'>You have a sudden fit!</span>")
 				M.emote("moan")
 				M.Paralyze(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
-			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
+			to_chat(M, "<span class='userdanger'>You feel too exhausted to continue!</span>") // at this point you will eventually die unless you get charcoal
 			M.adjustOxyLoss(0.1*REM, 0)
 			M.adjustStaminaLoss(0.1*REM, 0)
 		if(82 to INFINITY)
