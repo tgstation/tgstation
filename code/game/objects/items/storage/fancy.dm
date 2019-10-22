@@ -245,8 +245,8 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/rollie/nicotine
 
 /obj/item/storage/fancy/cigarettes/cigpack_candy
-	name = "\improper Timmy's First Smokes packet"
-	desc = "Waffling on smoking? Want to bring your children safely into the family tradition? Look no more with this special packet! Includes 100%* Nicotine-Free candy cigarettes."
+	name = "\improper Timmy's First Candy Smokes packet"
+	desc = "Unsure about smoking? Want to bring your children safely into the family tradition? Look no more with this special packet! Includes 100%* Nicotine-Free candy cigarettes."
 	icon_state = "candy"
 	icon_type = "candy cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/candy
@@ -254,7 +254,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigpack_candy/Initialize()
 	. = ..()
-	if(prob(10))
+	if(prob(7))
 		spawn_type = /obj/item/clothing/mask/cigarette/candy/nicotine //uh oh!
 
 /obj/item/storage/fancy/cigarettes/cigpack_shadyjims
