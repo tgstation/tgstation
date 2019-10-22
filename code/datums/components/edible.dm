@@ -18,7 +18,9 @@
 	///Message to send when eating
 	var/eatverb
 	///Whether or not this food can be dunked in reagents
-	var/dunkable = FALSE // for dunkable food, make true
+	var/dunk_amount = 0 // If this is higher than 0 you can dunk this in reagents.
+	///List of tastes players can taste when they consume something, for example list("crisps" = 2, "salt" = 1)
+	var/list/tastes = list("nothing") 
 
 
 	//var/dried_type = null //move this to obj/item/dry-able or to a dry component
@@ -29,7 +31,6 @@
 	//var/custom_food_type = null  //for food customizing. path of the custom food to create
 	
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
-	var/list/tastes  // for example list("crisps" = 2, "salt" = 1)
 
 /datum/component/edible/Initialize(initial_reagents, new_family_name)
 	if(!isatom(parent))
