@@ -47,7 +47,6 @@ module.exports = (env = {}, argv) => {
                 plugins: [
                   '@babel/plugin-transform-jscript',
                   'babel-plugin-inferno',
-                  'babel-plugin-macros',
                 ],
               },
             },
