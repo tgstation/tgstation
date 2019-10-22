@@ -20,9 +20,7 @@ export const ShuttleManipulator = props => {
           <Section>
             <table>
               {shuttles.map(shuttle => (
-                <tr
-                  key={shuttle.id + '_row'}
-                >
+                <tr key={shuttle.id + '_row'}>
                   <td key={shuttle.id + '_jmprow'}>
                     <Button
                       content="JMP"
