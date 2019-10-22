@@ -13,7 +13,7 @@
   * - Fires a spread in every cardinal and diagonal direction at once, then does it again after a bit.
   * - Shoots a single, golden bolt.  Wherever it lands, the herald will be teleported to the location.
   * - Spawns a mirror which reflects projectiles directly at the target.
-  * Herald, like Colossus, is meant to be a bullet hell in a sense.  However, it trades fan-favorite moves like shotgun for some other methods of attacking their target.
+  * Herald is a more concentrated variation of the Colossus fight, having less projectiles overall, but more focused attacks.
   */
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald
