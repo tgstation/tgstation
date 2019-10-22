@@ -49,14 +49,12 @@
 
 /datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
 	var/money_to_transfer = account_job.paycheck * amt_of_paychecks
-	message_admins("[money_to_transfer], [amt_of_paychecks] [account_job.paycheck]")
 	if(free)
-		adjust_money(money_to_transfer*10)
+		adjust_money(money_to_transfer)
 	else
 		var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
 		if(D)
 			if(!transfer_money(D, round(money_to_transfer*D.account_balance*0.01,1)))
-				message_admins("[round(money_to_transfer*D.account_balance*0.01,1)]")
 				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
 				return FALSE
 			else
