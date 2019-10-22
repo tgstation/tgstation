@@ -569,7 +569,7 @@ Code:
 				emoji_icon_states = icon_states(icon('icons/emoji.dmi'))
 			menu += "<br> To use an emoji in a pda message, refer to the guide and add \":\" around the emoji. Click on any of the emojis to preview it.<br>"
 			for(var/emoji in emoji_icon_states)
-				var/preview_link = "<A href='byond://?src=[REF(src)];choice=[show_emoji(emoji)]'>[emoji]</a>" //broken, on opening the menu it sends every single emoji because it is executing the proc to find the choice as soon as it is loaded
+				var/preview_link = "<A href='byond://?src=[REF(src)];emoji=[emoji]'>[emoji]</a>" //broken, on opening the menu it sends every single emoji because it is executing the proc to find the choice as soon as it is loaded
 				menu += "[breakcounter ? "<br> " : ""][preview_link][breakcounter ? " || " : "" ]"
 				breakcounter = !breakcounter
 		if (99) //Newscaster message permission error
@@ -660,6 +660,11 @@ Code:
 			host_pda.Topic(null,list("choice"=num2text(host_pda.mode)))
 			return
 
+	//emoji previews
+	if(href_list["emoji"])
+		var/parse = emoji_parse(":[href_list["emoji"]]:")
+		to_chat(usr, parse)
+
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.
 	if(href_list["op"])
 		switch(href_list["op"])
@@ -739,11 +744,6 @@ Code:
 			return
 
 	return menu
-
-/obj/item/cartridge/proc/show_emoji(emoji)
-	var/parse = emoji_parse(":[emoji]:")
-	to_chat(usr, "[parse]")
-	return 55 //returns to the emoji menu
 
 //If the cartridge adds a special line to the top of the messaging app
 /obj/item/cartridge/proc/message_header()
