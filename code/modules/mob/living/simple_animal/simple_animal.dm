@@ -136,8 +136,8 @@
 
 	///I don't want to confuse this with client registered_z.
 	var/my_z
-
-	var/do_footstep = FALSE
+	///What kind of footstep this mob should have. Null if it shouldn't have any.
+	var/footstep_type
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
@@ -172,10 +172,6 @@
 	if(stat == DEAD)
 		. += "<span class='deadsay'>Upon closer examination, [p_they()] appear[p_s()] to be dead.</span>"
 
-/mob/living/simple_animal/initialize_footstep()
-	if(do_footstep)
-		..()
-
 /mob/living/simple_animal/updatehealth()
 	..()
 	health = CLAMP(health, 0, maxHealth)
@@ -189,7 +185,8 @@
 		else
 			stat = CONSCIOUS
 	med_hud_set_status()
-
+	if(footstep_type)
+		AddComponent(/datum/component/footstep, footstep_type)
 
 /mob/living/simple_animal/handle_status_effects()
 	..()
@@ -442,14 +439,14 @@
 		if(target)
 			return new childspawn(target)
 
-/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(be_close && !in_range(M, src))
 		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
-	if(!(no_dextery || dextrous))
+	if(!(no_dexterity || dextrous))
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	return TRUE

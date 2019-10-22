@@ -53,8 +53,7 @@
 
 /obj/item/defibrillator/update_icon()
 	update_power()
-	update_overlays()
-	update_charge()
+	return ..()
 
 /obj/item/defibrillator/proc/update_power()
 	if(!QDELETED(cell))
@@ -65,23 +64,21 @@
 	else
 		powered = FALSE
 
-/obj/item/defibrillator/proc/update_overlays()
-	cut_overlays()
-	if(!on)
-		add_overlay("[initial(icon_state)]-paddles")
-	if(powered)
-		add_overlay("[initial(icon_state)]-powered")
-	if(!cell)
-		add_overlay("[initial(icon_state)]-nocell")
-	if(!safety)
-		add_overlay("[initial(icon_state)]-emagged")
+/obj/item/defibrillator/update_overlays()
+	. = ..()
 
-/obj/item/defibrillator/proc/update_charge()
-	if(powered) //so it doesn't show charge if it's unpowered
+	if(!on)
+		. += "[initial(icon_state)]-paddles"
+	if(powered)
+		. += "[initial(icon_state)]-powered"
 		if(!QDELETED(cell))
 			var/ratio = cell.charge / cell.maxcharge
 			ratio = CEILING(ratio*4, 1) * 25
-			add_overlay("[initial(icon_state)]-charge[ratio]")
+			. += "[initial(icon_state)]-charge[ratio]"
+	if(!cell)
+		. += "[initial(icon_state)]-nocell"
+	if(!safety)
+		. += "[initial(icon_state)]-emagged"
 
 /obj/item/defibrillator/CheckParts(list/parts_list)
 	..()
@@ -125,7 +122,7 @@
 	else if(istype(W, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/C = W
 		if(cell)
-			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
+			to_chat(user, "<span class='warning'>[src] already has a cell!</span>")
 		else
 			if(C.maxcharge < paddles.revivecost)
 				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
@@ -589,7 +586,7 @@
 				if (H.suiciding)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence.  Further attempts futile.</span>"
+					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence. Further attempts futile.</span>"
 				else if (tplus > tlimit)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
 				else if (!heart)

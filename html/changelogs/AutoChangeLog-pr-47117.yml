@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - tweak: "Most input windows now have sorted lists of choices."

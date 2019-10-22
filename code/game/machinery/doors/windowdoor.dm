@@ -24,6 +24,7 @@
 
 /obj/machinery/door/window/Initialize(mapload, set_dir)
 	. = ..()
+	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	if(set_dir)
 		setDir(set_dir)
 	if(req_access && req_access.len)
@@ -147,7 +148,6 @@
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	icon_state ="[base_state]open"
 	sleep(10)
-
 	density = FALSE
 	air_update_turf(1)
 	update_freelook_sight()

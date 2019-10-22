@@ -1,0 +1,12 @@
+author: "Indie-ana Jones & Meyhazah"
+delete-after: True
+changes: 
+  - rscadd: "New lavaland ruin: Pulsating Tumor"
+  - rscadd: "New lavaland enemies: Lavaland Elites"
+  - rscadd: "New Lavaland Elite: Goliath Broodmother"
+  - rscadd: "New Lavaland Elite: Pandora"
+  - rscadd: "New Lavaland Elite: Legionnaire"
+  - rscadd: "New Lavaland Elite: Herald"
+  - imageadd: "Added lavaland elite sprites and pulsating tumor sprites"
+  - imageadd: "New lavaland loot sprites"
+  - imageadd: "Elite ability sprites"

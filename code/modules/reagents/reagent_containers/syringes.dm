@@ -137,7 +137,7 @@
 						return
 					if(L.reagents.total_volume >= L.reagents.maximum_volume)
 						return
-					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!", \
+					L.visible_message("<span class='danger'>[user] injects [L] with the syringe!</span>", \
 									"<span class='userdanger'>[user] injects you with the syringe!</span>")
 
 				if(L != user)
@@ -264,8 +264,8 @@
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 15)
 
 /obj/item/reagent_containers/syringe/salacid
-	name = "syringe (salicyclic acid)"
-	desc = "Contains salicyclic acid, used to treat severe brute damage."
+	name = "syringe (salicylic acid)"
+	desc = "Contains salicylic acid, used to treat severe brute damage."
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 15)
 
 /obj/item/reagent_containers/syringe/penacid

@@ -9,10 +9,6 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
-	initialize_footstep()
-
-/mob/living/proc/initialize_footstep()
-	AddComponent(/datum/component/footstep)
 
 /mob/living/prepare_huds()
 	..()
@@ -41,7 +37,8 @@
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels)
-	ZImpactDamage(T, levels)
+	if(!isgroundlessturf(T))
+		ZImpactDamage(T, levels)
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
@@ -377,7 +374,7 @@
 		return FALSE
 	if(!..())
 		return FALSE
-	visible_message("<b>[src]</b> points at [A].", "<span class='notice'>You point at [A].</span>")
+	visible_message("<span class='name'>[src]</span> points at [A].", "<span class='notice'>You point at [A].</span>")
 	return TRUE
 
 /mob/living/verb/succumb(whispered as null)
@@ -586,6 +583,13 @@
 	return
 
 /mob/living/Move(atom/newloc, direct)
+	if(lying) 
+		if(direct & EAST)
+			lying = 90
+		if(direct & EAST)
+			lying = 270
+		update_transform()
+		lying_prev = lying
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
@@ -920,14 +924,14 @@
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
 	return
 
-/mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(be_close && !in_range(M, src))
 		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
-	if(!no_dextery)
+	if(!no_dexterity)
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	return TRUE

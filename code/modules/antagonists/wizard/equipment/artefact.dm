@@ -290,7 +290,7 @@
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
 		if(I.get_temperature())
-			to_chat(target, "<span class='userdanger'>You suddenly feel very hot</span>")
+			to_chat(target, "<span class='userdanger'>You suddenly feel very hot!</span>")
 			target.adjust_bodytemperature(50)
 			GiveHint(target)
 		else if(is_pointed(I))
@@ -319,7 +319,7 @@
 
 /obj/item/voodoo/attack_self(mob/user)
 	if(!target && possible.len)
-		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
+		target = input(user, "Select your victim!", "Voodoo") as null|anything in sortNames(possible)
 		return
 
 	if(user.zone_selected == BODY_ZONE_CHEST)
@@ -371,10 +371,10 @@
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
 	if(prob(50) || force)
 		var/way = dir2text(get_dir(victim,get_turf(src)))
-		to_chat(victim, "<span class='notice'>You feel a dark presence from [way]</span>")
+		to_chat(victim, "<span class='notice'>You feel a dark presence from [way].</span>")
 	if(prob(20) || force)
 		var/area/A = get_area(src)
-		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
+		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name].</span>")
 
 /obj/item/voodoo/suicide_act(mob/living/carbon/user)
     user.visible_message("<span class='suicide'>[user] links the voodoo doll to [user.p_them()]self and sits on it, infinitely crushing [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")

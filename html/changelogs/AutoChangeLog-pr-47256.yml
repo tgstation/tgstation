@@ -1,0 +1,6 @@
+author: "genessee596"
+delete-after: True
+changes: 
+  - rscdel: "Removed all departmental budget cards except for cargo card"
+  - tweak: "Cargo now gets 500 credits per paycheck"
+  - balance: "Cargo can't amass infinite money from other departments"

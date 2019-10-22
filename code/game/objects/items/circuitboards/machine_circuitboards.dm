@@ -539,7 +539,7 @@
 			display_vending_names_paths = list()
 			for(var/path in vending_names_paths)
 				display_vending_names_paths[vending_names_paths[path]] = path
-		var/choice =  input(user,"Choose a new brand","Select an Item") as null|anything in display_vending_names_paths
+		var/choice =  input(user,"Choose a new brand","Select an Item") as null|anything in sortList(display_vending_names_paths)
 		set_type(display_vending_names_paths[choice])
 	else
 		return ..()
@@ -1169,5 +1169,3 @@
 		/obj/item/stock_parts/manipulator = /obj/item/stock_parts/manipulator/femto,
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra,
 		/obj/item/stock_parts/scanning_module = /obj/item/stock_parts/scanning_module/triphasic)
-
-
