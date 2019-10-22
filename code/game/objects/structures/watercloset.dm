@@ -71,7 +71,7 @@
 		update_icon()
 
 
-/obj/structure/toilet/update_icon()
+/obj/structure/toilet/update_icon_state()
 	icon_state = "toilet[open][cistern]"
 
 /obj/structure/toilet/deconstruct()
