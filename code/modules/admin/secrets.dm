@@ -446,7 +446,7 @@
 				if("Random")
 					E = new /datum/round_event/disease_outbreak()
 				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in typesof(/datum/disease)
+					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease, /proc/cmp_typepaths_asc))
 					E = new /datum/round_event/disease_outbreak{}()
 					var/datum/round_event/disease_outbreak/DO = E
 					DO.virus_type = virus

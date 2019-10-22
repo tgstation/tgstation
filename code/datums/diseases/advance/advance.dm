@@ -447,7 +447,7 @@
 	symptoms += SSdisease.list_symptoms.Copy()
 	do
 		if(user)
-			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in symptoms
+			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in sortList(symptoms, /proc/cmp_typepaths_asc)
 			if(isnull(symptom))
 				return
 			else if(istext(symptom))

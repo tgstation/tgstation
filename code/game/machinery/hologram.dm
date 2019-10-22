@@ -269,7 +269,7 @@ Possible to do for anyone motivated enough:
 					LAZYADD(callnames[A], I)
 			callnames -= get_area(src)
 
-			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in callnames
+			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in sortNames(callnames)
 			if(QDELETED(usr) || !result || outgoing_call)
 				return
 
