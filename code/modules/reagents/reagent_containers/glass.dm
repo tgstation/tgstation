@@ -374,12 +374,12 @@
 			to_chat(user, "<span class='notice'>You start grinding...</span>")
 			if((do_after(user, 25, target = src)) && grinded)
 				user.adjustStaminaLoss(40)
-				if(grinded.reagents) //food and pills
-					grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 				if(grinded.juice_results) //prioritize juicing
 					grinded.on_juice()
 					reagents.add_reagent_list(grinded.juice_results)
 					to_chat(user, "<span class='notice'>You juice [grinded] into a fine liquid.</span>")
+					if(grinded.reagents) //food and pills
+						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 					QDEL_NULL(grinded)
 					return
 				grinded.on_grind()
