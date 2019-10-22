@@ -17,3 +17,6 @@
 
 // Gets the reference for the skill type that was given
 #define GetSkillRef(A) (SSskills.all_skills[A])
+
+//misc skill stuff
+#define	MINING_SKILL_DEFAULT_SPEED_MOD 1.3

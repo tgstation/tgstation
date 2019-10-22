@@ -5,7 +5,7 @@
 /datum/skill/mining/get_skill_speed_modifier(level)
 	switch(level)
 		if(SKILL_LEVEL_NONE)
-			return 1.3
+			return MINING_SKILL_DEFAULT_SPEED_MOD //used as default for KAs so defined
 		if(SKILL_LEVEL_NOVICE)
 			return 1.2
 		if(SKILL_LEVEL_APPRENTICE)
