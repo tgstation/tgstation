@@ -63,7 +63,7 @@
 		R.mind.grab_ghost()
 		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 
-	R.revive()
+	R.revive(full_heal = FALSE, admin_revive = FALSE)
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"

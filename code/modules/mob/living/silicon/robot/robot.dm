@@ -960,7 +960,7 @@
 	diag_hud_set_aishell()
 	update_health_hud()
 
-/mob/living/silicon/robot/revive(full_heal = 0, admin_revive = 0)
+/mob/living/silicon/robot/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(..()) //successfully ressuscitated from death
 		if(!QDELETED(builtInCamera) && !wires.is_cut(WIRE_CAMERA))
 			builtInCamera.toggle_cam(src,0)
@@ -968,7 +968,7 @@
 		if(admin_revive)
 			locked = TRUE
 		notify_ai(NEW_BORG)
-		. = 1
+		. = TRUE
 
 /mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
 	..()

@@ -233,7 +233,7 @@
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
-	M.revive(full_heal = 1, admin_revive = 1)
+	M.revive(full_heal = TRUE, admin_revive = TRUE)
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
 	to_chat(M, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")

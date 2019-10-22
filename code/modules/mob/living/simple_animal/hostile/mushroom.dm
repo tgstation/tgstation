@@ -112,7 +112,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/simple_animal/hostile/mushroom/revive(full_heal = 0, admin_revive = 0)
+/mob/living/simple_animal/hostile/mushroom/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(..())
 		icon_state = "mushroom_color"
 		UpdateMushroomCap()
@@ -134,7 +134,7 @@
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message("<span class='notice'>[src] slowly begins to recover.</span>")
 	faint_ticker = 0
-	revive(full_heal = 1)
+	revive(full_heal = TRUE, admin_revive = FALSE)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
 	addtimer(CALLBACK(src, .proc/recovery_recharge), 300)

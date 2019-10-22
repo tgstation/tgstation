@@ -922,7 +922,7 @@
 		else
 			clear_fullscreen("remote_view", 0)
 
-/mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
+/mob/living/silicon/ai/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
 	if(.) //successfully ressuscitated from death
 		set_core_display_icon(display_icon_override)
