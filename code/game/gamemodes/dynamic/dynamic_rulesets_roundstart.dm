@@ -355,7 +355,7 @@
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
 	var/datum/team/revolution/revolution
-	var/finished = 0
+	var/finished = FALSE
 
 /datum/dynamic_ruleset/roundstart/revs/pre_execute()
 	var/max_candidates = 3
@@ -371,32 +371,40 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/revs/execute()
+	var/success = TRUE
 	revolution = new()
 	for(var/datum/mind/M in assigned)
+		GLOB.pre_setup_antags -= M
 		if(check_eligible(M))
 			var/datum/antagonist/rev/head/new_head = new antag_datum()
 			new_head.give_flash = TRUE
 			new_head.give_hud = TRUE
 			new_head.remove_clumsy = TRUE
 			M.add_antag_datum(new_head,revolution)
-			GLOB.pre_setup_antags -= M
 		else
-			GLOB.pre_setup_antags -= M
 			assigned -= M
 			log_game("Dynamic: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
 		if(!revolution.members.len)
-			log_game("Dynamic: [ruletype] [name] failed to get any eligible headrevs.")
-	revolution.update_objectives()
-	revolution.update_heads()
-	SSshuttle.registerHostileEnvironment(src)
-	return TRUE
+			success = FALSE
+			log_game("Dynamic: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
+	if(success)
+		revolution.update_objectives()
+		revolution.update_heads()
+		SSshuttle.registerHostileEnvironment(src)
+		return TRUE
+	// If the mode failed to get any antags, deletes the team, stops processing and refunds the cost. Oh boy, its midround/latejoin time.
+	qdel(revolution)
+	mode.refund_threat(cost)	// Maybe force latejoin revs instead in future.
+	mode.current_rules -= src
+	mode.executed_rules -= src
+	return FALSE
 
 /datum/dynamic_ruleset/roundstart/revs/rule_process()
 	if(check_rev_victory())
-		finished = 1
+		finished = REVOLUTION_VICTORY
 		return RULESET_STOP_PROCESSING
 	else if (check_heads_victory())
-		finished = 2
+		finished = STATION_VICTORY
 		SSshuttle.clearHostileEnvironment(src)
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your colleagues to work. \
 			We have remotely blacklisted them from your cloning software to prevent accidental cloning.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
@@ -405,7 +413,7 @@
 				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev/head)
 				R.remove_revolutionary(FALSE, "gamemode")
 				var/mob/living/carbon/C = M.current
-				C.makeUncloneAble()
+				C.makeUncloneable()
 			if(M.has_antag_datum(/datum/antagonist/rev))
 				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
 				R.remove_revolutionary(FALSE, "gamemode")
@@ -419,7 +427,7 @@
 	return FALSE
 
 /datum/dynamic_ruleset/roundstart/revs/check_finished()
-	if(finished == 1)
+	if(finished == REVOLUTION_VICTORY)
 		return TRUE
 	else
 		return ..()
@@ -439,10 +447,10 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/revs/round_result()
-	if(finished == 1)
+	if(finished == REVOLUTION_VICTORY)
 		SSticker.mode_result = "win - heads killed"
 		SSticker.news_report = REVS_WIN
-	else if(finished == 2)
+	else if(finished == STATION_VICTORY)
 		SSticker.mode_result = "loss - rev heads killed"
 		SSticker.news_report = REVS_LOSE
 

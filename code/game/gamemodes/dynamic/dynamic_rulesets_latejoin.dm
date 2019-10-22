@@ -92,7 +92,7 @@
 	flags = HIGHLANDER_RULESET
 	var/required_heads_of_staff = 3
 	// 1 for revolution win and 2 for heads of staff win.
-	var/finished = 0
+	var/finished = FALSE
 	var/datum/team/revolution/revolution
 
 /datum/dynamic_ruleset/latejoin/provocateur/ready(forced=FALSE)
@@ -123,10 +123,10 @@
 
 /datum/dynamic_ruleset/latejoin/provocateur/rule_process()
 	if(check_rev_victory())
-		finished = 1
+		finished = REVOLUTION_VICTORY
 		return RULESET_STOP_PROCESSING
 	else if (check_heads_victory())
-		finished = 2
+		finished = STATION_VICTORY
 		SSshuttle.clearHostileEnvironment(src)
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your colleagues to work. \
 			We have remotely blacklisted them from your cloning software to prevent accidental cloning.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
@@ -135,7 +135,7 @@
 				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev/head)
 				R.remove_revolutionary(FALSE, "gamemode")
 				var/mob/living/carbon/C = M.current
-				C.makeUncloneAble()
+				C.makeUncloneable()
 			if(M.has_antag_datum(/datum/antagonist/rev))
 				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
 				R.remove_revolutionary(FALSE, "gamemode")
@@ -143,7 +143,7 @@
 
 
 /datum/dynamic_ruleset/latejoin/provocateur/check_finished()
-	if(finished == 1)
+	if(finished == REVOLUTION_VICTORY)
 		return TRUE
 	else
 		return ..()
@@ -163,9 +163,9 @@
 	return TRUE
 
 /datum/dynamic_ruleset/latejoin/provocateur/round_result()
-	if(finished == 1)
+	if(finished == REVOLUTION_VICTORY)
 		SSticker.mode_result = "win - heads killed"
 		SSticker.news_report = REVS_WIN
-	else if(finished == 2)
+	else if(finished == STATION_VICTORY)
 		SSticker.mode_result = "loss - rev heads killed"
 		SSticker.news_report = REVS_LOSE
