@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Added the Reduced Diagnostics nanite program: it disables the program list when scanned by portable nanite scanners, in return for a minor increase in replication speed."
-  - tweak: "The functionality has been removed from the Stealth program, but they can easily be stacked together if needed."

@@ -1,5 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer overdose on water."
-  - bugfix: "Skeletons and such should now be properly able to process milk (for realzies this time)."
