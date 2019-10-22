@@ -45,7 +45,7 @@
 
 	var/hack_software = FALSE //Will be able to use hacking actions
 	var/interaction_range = 7			//wireless control range
-	var/obj/item/pda/ai/aiPDA
+	var/obj/item/pda/aiPDA
 
 /mob/living/silicon/Initialize()
 	. = ..()
@@ -68,7 +68,6 @@
 	QDEL_NULL(radio)
 	QDEL_NULL(aicamera)
 	QDEL_NULL(builtInCamera)
-	QDEL_NULL(aiPDA)
 	GLOB.silicon_mobs -= src
 	return ..()
 
@@ -336,7 +335,7 @@
 
 /mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).
 	if(!radio)
-		to_chat(src, "<span class='alert'>Radio not detected.</span>")
+		to_chat(src, "Radio not detected.")
 		return
 
 	//Ask the user to pick a channel from what it has available.
@@ -390,11 +389,11 @@
 		return
 	sensors_on = !sensors_on
 	if (!sensors_on)
-		to_chat(src, "<span class='notice'>Sensor overlay deactivated.</span>")
+		to_chat(src, "Sensor overlay deactivated.")
 		remove_sensors()
 		return
 	add_sensors()
-	to_chat(src, "<span class='notice'>Sensor overlay activated.</span>")
+	to_chat(src, "Sensor overlay activated.")
 
 /mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)

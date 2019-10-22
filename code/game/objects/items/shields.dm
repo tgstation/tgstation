@@ -20,7 +20,7 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
+	materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	transparent = TRUE
@@ -45,7 +45,7 @@
 			cooldown = world.time
 	else if(istype(W, /obj/item/stack/sheet/mineral/titanium))
 		if (obj_integrity >= max_integrity)
-			to_chat(user, "<span class='warning'>[src] is already in perfect condition.</span>")
+			to_chat(user, "<span class='notice'>[src] is already in perfect condition.</span>")
 		else
 			var/obj/item/stack/sheet/mineral/titanium/T = W
 			T.use(1)
@@ -87,7 +87,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	transparent = FALSE
-	custom_materials = list(/datum/material/iron=8500)
+	materials = list(/datum/material/iron=8500)
 	max_integrity = 65
 
 /obj/item/shield/riot/roman/fake
@@ -107,7 +107,7 @@
 	item_state = "buckler"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	custom_materials = null
+	materials = list()
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	transparent = FALSE
@@ -148,10 +148,10 @@
 	if(istype(W, /obj/item/assembly/flash/handheld))
 		var/obj/item/assembly/flash/handheld/flash = W
 		if(flash.burnt_out)
-			to_chat(user, "<span class='warning'>No sense replacing it with a broken bulb!</span>")
+			to_chat(user, "No sense replacing it with a broken bulb.")
 			return
 		else
-			to_chat(user, "<span class='notice'>You begin to replace the bulb...</span>")
+			to_chat(user, "You begin to replace the bulb.")
 			if(do_after(user, 20, target = user))
 				if(flash.burnt_out || !flash || QDELETED(flash))
 					return
@@ -211,7 +211,7 @@
 
 /obj/item/shield/energy/attack_self(mob/living/carbon/human/user)
 	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		to_chat(user, "<span class='userdanger'>You beat yourself in the head with [src]!</span>")
+		to_chat(user, "<span class='warning'>You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	active = !active
 	icon_state = "[base_icon_state][active]"

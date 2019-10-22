@@ -11,16 +11,12 @@
 	health = 30
 	see_in_dark = 3
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/killertomato = 2)
-	response_help_continuous = "prods"
-	response_help_simple = "prod"
-	response_disarm_continuous = "pushes aside"
-	response_disarm_simple = "push aside"
-	response_harm_continuous = "smacks"
-	response_harm_simple = "smack"
+	response_help  = "prods"
+	response_disarm = "pushes aside"
+	response_harm   = "smacks"
 	melee_damage_lower = 8
 	melee_damage_upper = 12
-	attack_verb_continuous = "slams"
-	attack_verb_simple = "slam"
+	attacktext = "slams"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	ventcrawler = VENTCRAWLER_ALWAYS
 	faction = list("plants")

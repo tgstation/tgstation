@@ -29,3 +29,4 @@
 	new /obj/item/door_remote/research_director(src)
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
 	new /obj/item/storage/photo_album/RD(src)
+	new /obj/item/card/id/departmental_budget/sci(src)

@@ -1,14 +1,14 @@
-/obj/projectile/bullet/dart
+/obj/item/projectile/bullet/dart
 	name = "dart"
 	icon_state = "cbbolt"
 	damage = 6
 	var/piercing = FALSE
 
-/obj/projectile/bullet/dart/Initialize()
+/obj/item/projectile/bullet/dart/Initialize()
 	. = ..()
 	create_reagents(50, NO_REACT)
 
-/obj/projectile/bullet/dart/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
@@ -27,12 +27,12 @@
 	reagents.handle_reactions()
 	return BULLET_ACT_HIT
 
-/obj/projectile/bullet/dart/metalfoam/Initialize()
+/obj/item/projectile/bullet/dart/metalfoam/Initialize()
 	. = ..()
 	reagents.add_reagent(/datum/reagent/aluminium, 15)
 	reagents.add_reagent(/datum/reagent/foaming_agent, 5)
 	reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 5)
 
-/obj/projectile/bullet/dart/syringe
+/obj/item/projectile/bullet/dart/syringe
 	name = "syringe"
 	icon_state = "syringeproj"

@@ -1,15 +1,15 @@
 
 	//The mob should have a gender you want before running this proc. Will run fine without H
-/datum/preferences/proc/random_character(gender_override, antag_override = FALSE)
+/datum/preferences/proc/random_character(gender_override)
 	if(randomise[RANDOM_SPECIES])
 		random_species()
 	else if(randomise[RANDOM_NAME])
 		real_name = pref_species.random_name(gender,1)
-	if(gender_override && !(randomise[RANDOM_GENDER] || randomise[RANDOM_GENDER_ANTAG] && antag_override))
+	if(gender_override && !(randomise[RANDOM_GENDER]))
 		gender = gender_override
 	else
-		gender = pick(MALE,FEMALE,PLURAL)
-	if(randomise[RANDOM_AGE] || randomise[RANDOM_AGE_ANTAG] && antag_override)
+		gender = pick(MALE,FEMALE)
+	if(randomise[RANDOM_AGE])
 		age = rand(AGE_MIN,AGE_MAX)
 	if(randomise[RANDOM_UNDERWEAR])
 		underwear = random_underwear(gender)

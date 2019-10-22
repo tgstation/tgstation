@@ -22,7 +22,7 @@ GENE SCANNER
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	custom_materials = list(/datum/material/iron=150)
+	materials = list(/datum/material/iron=150)
 
 /obj/item/t_scanner/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -86,7 +86,7 @@ GENE SCANNER
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=200)
+	materials = list(/datum/material/iron=200)
 	var/mode = 1
 	var/scanmode = 0
 	var/advanced = FALSE
@@ -146,7 +146,7 @@ GENE SCANNER
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
-			to_chat(user, "<span class='alert'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
+			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
@@ -253,28 +253,9 @@ GENE SCANNER
 		var/mob/living/carbon/C = M
 		var/list/damaged = C.get_damaged_bodyparts(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
-			var/list/dmgreport = list()
-			dmgreport += "<table style='margin-left:3em'><tr><font face='Verdana'>\
-							<td style='width:7em;'><font color='#0000CC'>Damage:</font></td>\
-							<td style='width:5em;'><font color='red'><b>Brute</b></font></td>\
-							<td style='width:4em;'><font color='orange'><b>Burn</b></font></td>\
-							<td style='width:4em;'><font color='green'><b>Toxin</b></font></td>\
-							<td style='width:8em;'><font color='purple'><b>Suffocation</b></font></td></tr>\
-
-							<tr><td><font color='#0000CC'>Overall:</font></td>\
-							<td><font color='red'>[CEILING(brute_loss,1)]</font></td>\
-							<td><font color='orange'>[CEILING(fire_loss,1)]</font></td>\
-							<td><font color='green'>[CEILING(tox_loss,1)]</font></td>\
-							<td><font color='blue'>[CEILING(oxy_loss,1)]</font></td></tr>"
-
-			for(var/o in damaged)
-				var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
-				dmgreport += "<tr><td><font color='#0000CC'>[capitalize(org.name)]:</font></td>\
-								<td><font color='red'>[(org.brute_dam > 0) ? "[CEILING(org.brute_dam,1)]" : "0"]</font></td>\
-								<td><font color='orange'>[(org.burn_dam > 0) ? "[CEILING(org.burn_dam,1)]" : "0"]</font></td></tr>"
-			dmgreport += "</font></table>"
-			to_chat(user, dmgreport.Join())
-
+			to_chat(user, "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>")
+			for(var/obj/item/bodypart/org in damaged)
+				to_chat(user, "\t\t<span class='info'>[capitalize(org.name)]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]")
 
 	//Organ damages report
 	if(ishuman(M))
@@ -301,7 +282,7 @@ GENE SCANNER
 					major_damage += ", "
 					major_damage += organ.name
 				else
-					major_damage = "\t<span class='info'>Severely Damaged Organs: </span>"
+					major_damage = "\t<span class='info'>Severely Damaged Organs: "
 					major_damage += organ.name
 			else if(organ.damage > organ.low_threshold)
 				report_organs = TRUE
@@ -309,7 +290,7 @@ GENE SCANNER
 					minor_damage += ", "
 					minor_damage += organ.name
 				else
-					minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>"
+					minor_damage = "\t<span class='info'>Mildly Damaged Organs: "
 					minor_damage += organ.name
 
 		if(report_organs)	//we either finish the list, or set it to be empty if no organs were reported in that category
@@ -367,10 +348,10 @@ GENE SCANNER
 
 	// Time of death
 	if(M.tod && (M.stat == DEAD || ((HAS_TRAIT(M, TRAIT_FAKEDEATH)) && !advanced)))
-		to_chat(user, "<span class='info'>Time of Death: [M.tod]</span>")
+		to_chat(user, "<span class='info'>Time of Death:</span> [M.tod]")
 		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
-			to_chat(user, "<span class='alert'><b>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</b></span>")
+			to_chat(user, "<span class='danger'>Subject died [DisplayTimeText(tdelta)] ago, defibrillation may be possible!</span>")
 
 	for(var/thing in M.diseases)
 		var/datum/disease/D = thing
@@ -385,7 +366,7 @@ GENE SCANNER
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				if(H.bleed_rate)
-					to_chat(user, "<span class='alert'><b>Subject is bleeding!</b></span>")
+					to_chat(user, "<span class='danger'>Subject is bleeding!</span>")
 			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
 			var/blood_type = C.dna.blood_type
 			if(blood_id != /datum/reagent/blood)//special blood substance
@@ -395,11 +376,11 @@ GENE SCANNER
 				else
 					blood_type = blood_id
 			if(C.blood_volume <= BLOOD_VOLUME_SAFE && C.blood_volume > BLOOD_VOLUME_OKAY)
-				to_chat(user, "<span class='alert'>Blood level: LOW [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>")
+				to_chat(user, "<span class='danger'>LOW blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>")
 			else if(C.blood_volume <= BLOOD_VOLUME_OKAY)
-				to_chat(user, "<span class='alert'>Blood level: <b>CRITICAL [blood_percent] %</b>, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>")
+				to_chat(user, "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>")
 			else
-				to_chat(user, "<span class='info'>Blood level: [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>")
+				to_chat(user, "<span class='info'>Blood level [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>")
 
 		var/cyberimp_detect
 		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)
@@ -422,7 +403,7 @@ GENE SCANNER
 			if(M.reagents.addiction_list.len)
 				to_chat(user, "<span class='boldannounce'>Subject is addicted to the following reagents:</span>")
 				for(var/datum/reagent/R in M.reagents.addiction_list)
-					to_chat(user, "<span class='alert'>[R.name]</span>")
+					to_chat(user, "<span class='danger'>[R.name]</span>")
 			else
 				to_chat(user, "<span class='notice'>Subject is not addicted to any reagents.</span>")
 
@@ -463,7 +444,7 @@ GENE SCANNER
 	throw_speed = 3
 	throw_range = 7
 	tool_behaviour = TOOL_ANALYZER
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	materials = list(/datum/material/iron=30, /datum/material/glass=20)
 	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 	var/cooldown = FALSE
 	var/cooldown_time = 250
@@ -658,7 +639,7 @@ GENE SCANNER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	materials = list(/datum/material/iron=30, /datum/material/glass=20)
 
 /obj/item/slime_scanner/attack(mob/living/M, mob/living/user)
 	if(user.stat || user.eye_blind)
@@ -717,7 +698,7 @@ GENE SCANNER
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=200)
+	materials = list(/datum/material/iron=200)
 
 /obj/item/nanite_scanner/attack(mob/living/M, mob/living/carbon/human/user)
 	user.visible_message("<span class='notice'>[user] analyzes [M]'s nanites.</span>", \
@@ -744,7 +725,7 @@ GENE SCANNER
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron=200)
+	materials = list(/datum/material/iron=200)
 	var/list/discovered = list() //hit a dna console to update the scanners database
 	var/list/buffer
 	var/ready = TRUE
@@ -796,7 +777,7 @@ GENE SCANNER
 	for(var/A in buffer)
 		options += get_display_name(A)
 
-	var/answer = input(user, "Analyze Potential", "Sequence Analyzer")  as null|anything in sortList(options)
+	var/answer = input(user, "Analyze Potential", "Sequence Analyzer")  as null|anything in options
 	if(answer && ready && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		var/sequence
 		for(var/A in buffer) //this physically hurts but i dont know what anything else short of an assoc list

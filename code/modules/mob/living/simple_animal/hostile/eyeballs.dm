@@ -6,10 +6,9 @@
 	icon_gib = ""
 	gender = NEUTER
 	mob_biotypes = MOB_ORGANIC
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
+	response_help = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm = "hits"
 	emote_taunt = list("glares")
 	taunt_chance = 25
 	maxHealth = 45
@@ -20,8 +19,7 @@
 	obj_damage = 60
 	melee_damage_lower = 20
 	melee_damage_upper = 25
-	attack_verb_continuous = "blinks at"
-	attack_verb_simple = "blink at"
+	attacktext = "blinks at"
 	attack_sound = 'sound/weapons/pierce.ogg'
 	movement_type = FLYING
 

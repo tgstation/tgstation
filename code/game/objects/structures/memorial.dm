@@ -19,4 +19,3 @@ This memorial has been designed for him and any future coders to perish.
 	icon_state = "memorial"
 	density = TRUE
 	anchored = TRUE
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

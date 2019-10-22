@@ -45,12 +45,7 @@
 			bro.restricted_roles = restricted_jobs
 			log_game("[key_name(bro)] has been selected as a Brother")
 		pre_brother_teams += team
-	. = ..()
-	if(.)	//To ensure the game mode is going ahead
-		for(var/teams in pre_brother_teams)
-			for(var/antag in teams)
-				GLOB.pre_setup_antags += antag
-	return
+	return ..()
 
 /datum/game_mode/traitor/bros/post_setup()
 	for(var/datum/team/brother_team/team in pre_brother_teams)
@@ -58,7 +53,6 @@
 		team.forge_brother_objectives()
 		for(var/datum/mind/M in team.members)
 			M.add_antag_datum(/datum/antagonist/brother, team)
-			GLOB.pre_setup_antags -= M
 		team.update_name()
 	brother_teams += pre_brother_teams
 	return ..()

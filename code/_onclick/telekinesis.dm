@@ -76,9 +76,8 @@
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 
-	var/atom/movable/focus
-	var/mutable_appearance/focus_overlay
-	var/mob/living/carbon/tk_user
+	var/atom/movable/focus = null
+	var/mob/living/carbon/tk_user = null
 
 /obj/item/tk_grab/Initialize()
 	. = ..()
@@ -86,9 +85,6 @@
 
 /obj/item/tk_grab/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	focus = null
-	focus_overlay = null
-	tk_user = null
 	return ..()
 
 /obj/item/tk_grab/process()
@@ -185,16 +181,15 @@
 	new /obj/effect/temp_visual/telekinesis(get_turf(focus))
 
 /obj/item/tk_grab/update_icon()
-	. = ..()
-
-	if(focus_overlay)
-		cut_overlay(focus_overlay)
-		focus_overlay = null
+	cut_overlays()
 	if(focus)
-		focus_overlay = new(focus)
-		focus_overlay.layer = layer + 0.01
-		focus_overlay.plane = ABOVE_HUD_PLANE
-		add_overlay(focus_overlay)
+		var/old_layer = focus.layer
+		var/old_plane = focus.plane
+		focus.layer = layer+0.01
+		focus.plane = ABOVE_HUD_PLANE
+		add_overlay(focus) //this is kind of ick, but it's better than using icon()
+		focus.layer = old_layer
+		focus.plane = old_plane
 
 /obj/item/tk_grab/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")

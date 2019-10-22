@@ -800,7 +800,7 @@
 	},
 /obj/item/gun/energy/ionrifle,
 /obj/item/gun/energy/temperature/security,
-/obj/item/clothing/suit/hooded/ablative,
+/obj/item/clothing/suit/armor/laserproof,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -44158,7 +44158,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Engine Coolant Bypass"
+	name = "Gas to Filter"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -50837,10 +50837,6 @@
 /obj/machinery/computer/bounty,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"ogj" = (
-/obj/machinery/medical_kiosk,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "olh" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -89358,7 +89354,7 @@ aYV
 aYV
 bet
 bfH
-ogj
+bhh
 bhh
 bhg
 bln

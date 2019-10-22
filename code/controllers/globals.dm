@@ -22,7 +22,7 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 
 /datum/controller/global_vars/Destroy(force)
 	// This is done to prevent an exploit where admins can get around protected vars
-	SHOULD_CALL_PARENT(0)
+	SHOULD_CALL_PARENT(FALSE)
 	return QDEL_HINT_IWILLGC
 
 /datum/controller/global_vars/stat_entry()

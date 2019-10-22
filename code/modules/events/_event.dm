@@ -36,7 +36,7 @@
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
-/datum/round_event_control/proc/canSpawnEvent(players_amt, gamemode)
+/datum/round_event_control/proc/canSpawnEvent(var/players_amt, var/gamemode)
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time-SSticker.round_start_time)
@@ -106,8 +106,7 @@
 	var/datum/round_event_control/control
 
 	var/startWhen		= 0	//When in the lifetime to call start().
-	var/announceWhen	= 0	//When in the lifetime to call announce(). If you don't want it to announce use announceChance, below.
-	var/announceChance	= 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Used in ion storms currently.
+	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to -1 if announcement should not be shown.
 	var/endWhen			= 0	//When in the lifetime the event should end.
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
@@ -174,7 +173,7 @@
 		start()
 		processing = TRUE
 
-	if(activeFor == announceWhen && prob(announceChance))
+	if(activeFor == announceWhen)
 		processing = FALSE
 		announce(FALSE)
 		processing = TRUE

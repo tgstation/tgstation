@@ -72,7 +72,7 @@
 
 /obj/item/clothing/gloves/space_ninja/proc/toggledrain()
 	var/mob/living/carbon/human/U = loc
-	to_chat(U, "<span class='notice'>You [candrain?"disable":"enable"] special interaction.</span>")
+	to_chat(U, "You <b>[candrain?"disable":"enable"]</b> special interaction.")
 	candrain=!candrain
 
 /obj/item/clothing/gloves/space_ninja/examine(mob/user)

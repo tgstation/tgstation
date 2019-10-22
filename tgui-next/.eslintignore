@@ -1,6 +1,0 @@
-/**/node_modules
-/**/*.bundle.*
-/**/*.chunk.*
-/**/*.hot-update.*
-/packages/inferno/**
-/packages/tgui/public/shim-*.js

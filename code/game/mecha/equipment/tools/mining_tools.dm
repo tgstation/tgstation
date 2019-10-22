@@ -13,8 +13,6 @@
 	energy_drain = 10
 	force = 15
 	harmful = TRUE
-	tool_behaviour = TOOL_DRILL
-	toolspeed = 0.9
 	var/drill_delay = 7
 	var/drill_level = DRILL_BASIC
 
@@ -143,7 +141,6 @@
 	drill_delay = 4
 	drill_level = DRILL_HARDENED
 	force = 15
-	toolspeed = 0.7
 
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner

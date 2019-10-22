@@ -528,8 +528,7 @@
 			return 150
 
 		if(SLIME_ACTIVATE_MAJOR)
-			var/blacklisted_cans = list(/obj/item/toy/crayon/spraycan/borg, /obj/item/toy/crayon/spraycan/infinite)
-			var/chosen = pick(subtypesof(/obj/item/toy/crayon/spraycan) - blacklisted_cans)
+			var/chosen = pick(subtypesof(/obj/item/toy/crayon/spraycan) - /obj/item/toy/crayon/spraycan/borg)
 			var/obj/item/O = new chosen(null)
 			if(!user.put_in_active_hand(O))
 				O.forceMove(user.drop_location())
@@ -986,7 +985,7 @@
 	item_state = "tile-bluespace"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	custom_materials = list(/datum/material/iron=500)
+	materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
@@ -1003,7 +1002,7 @@
 	item_state = "tile-sepia"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 6
-	custom_materials = list(/datum/material/iron=500)
+	materials = list(/datum/material/iron=500)
 	throwforce = 10
 	throw_speed = 0.1
 	throw_range = 28

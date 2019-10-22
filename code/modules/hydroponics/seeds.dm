@@ -129,8 +129,8 @@
 
 
 
-/obj/item/seeds/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
-	if(istype(Proj, /obj/projectile/energy/florayield))
+/obj/item/seeds/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
+	if(istype(Proj, /obj/item/projectile/energy/florayield))
 		var/rating = 1
 		if(istype(loc, /obj/machinery/hydroponics))
 			var/obj/machinery/hydroponics/H = loc
@@ -360,10 +360,10 @@
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if (length(newplantname) > 20)
-					to_chat(user, "<span class='warning'>That name is too long!</span>")
+					to_chat(user, "That name is too long!")
 					return
 				if(!newplantname)
-					to_chat(user, "<span class='warning'>That name is invalid.</span>")
+					to_chat(user, "That name is invalid.")
 					return
 				else
 					name = "[lowertext(newplantname)]"
@@ -373,10 +373,10 @@
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if (length(newdesc) > 180)
-					to_chat(user, "<span class='warning'>That description is too long!</span>")
+					to_chat(user, "That description is too long!")
 					return
 				if(!newdesc)
-					to_chat(user, "<span class='warning'>That description is invalid.</span>")
+					to_chat(user, "That description is invalid.")
 					return
 				else
 					desc = newdesc
@@ -387,10 +387,10 @@
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if (length(newproductdesc) > 180)
-					to_chat(user, "<span class='warning'>That description is too long!</span>")
+					to_chat(user, "That description is too long!")
 					return
 				if(!newproductdesc)
-					to_chat(user, "<span class='warning'>That description is invalid.</span>")
+					to_chat(user, "That description is invalid.")
 					return
 				else
 					productdesc = newproductdesc

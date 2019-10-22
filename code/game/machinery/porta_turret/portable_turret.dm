@@ -35,7 +35,7 @@
 	var/raising= 0			//if the turret is currently opening or closing its cover
 
 	max_integrity = 160		//the turret's health
-	integrity_failure = 0.5
+	integrity_failure = 80
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
 	var/locked = TRUE			//if the turret's behaviour control access is locked
@@ -197,7 +197,7 @@
 		if(anchored)	//you can't turn a turret on/off if it's not anchored/secured
 			on = !on	//toggle on/off
 		else
-			to_chat(usr, "<span class='warning'>It has to be secured first!</span>")
+			to_chat(usr, "<span class='notice'>It has to be secured first!</span>")
 		interact(usr)
 		return
 
@@ -239,7 +239,6 @@
 				if(prob(70))
 					if(stored_gun)
 						stored_gun.forceMove(loc)
-						stored_gun = null
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(prob(50))
 						new /obj/item/stack/sheet/metal(loc, rand(1,4))
@@ -275,7 +274,7 @@
 			locked = !locked
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
-			to_chat(user, "<span class='alert'>Access denied.</span>")
+			to_chat(user, "<span class='notice'>Access denied.</span>")
 	else if(I.tool_behaviour == TOOL_MULTITOOL && !locked)
 		if(!multitool_check_buffer(user, I))
 			return
@@ -289,7 +288,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
-	audible_message("<span class='hear'>[src] hums oddly...</span>")
+	visible_message("<span class='hear'>[src] hums oddly...</span>")
 	obj_flags |= EMAGGED
 	controllock = TRUE
 	on = FALSE //turns off the turret temporarily
@@ -543,7 +542,7 @@
 					break
 
 	update_icon()
-	var/obj/projectile/A
+	var/obj/item/projectile/A
 	//any emagged turrets drains 2x power and uses a different projectile?
 	if(mode == TURRET_STUN)
 		use_power(reqpower)
@@ -572,7 +571,7 @@
 		popDown()
 	src.mode = mode
 	power_change()
-
+	
 
 /datum/action/turret_toggle
 	name = "Toggle Mode"
@@ -646,8 +645,8 @@
 	scan_range = 9
 	req_access = list(ACCESS_SYNDICATE)
 	mode = TURRET_LETHAL
-	stun_projectile = /obj/projectile/bullet
-	lethal_projectile = /obj/projectile/bullet
+	stun_projectile = /obj/item/projectile/bullet
+	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	stun_projectile_sound = 'sound/weapons/gun/pistol/shot.ogg'
 	icon_state = "syndie_off"
@@ -668,38 +667,38 @@
 /obj/machinery/porta_turret/syndicate/energy
 	icon_state = "standard_lethal"
 	base_icon_state = "standard"
-	stun_projectile = /obj/projectile/energy/electrode
+	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
-	lethal_projectile = /obj/projectile/beam/laser
+	lethal_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
 
 /obj/machinery/porta_turret/syndicate/energy/heavy
 	icon_state = "standard_lethal"
 	base_icon_state = "standard"
-	stun_projectile = /obj/projectile/energy/electrode
+	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
-	lethal_projectile = /obj/projectile/beam/laser/heavylaser
+	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
 
 /obj/machinery/porta_turret/syndicate/energy/raven
-	stun_projectile =  /obj/projectile/beam/laser
+	stun_projectile =  /obj/item/projectile/beam/laser
 	stun_projectile_sound = 'sound/weapons/laser.ogg'
 	faction = list("neutral","silicon","turret")
 
 
 /obj/machinery/porta_turret/syndicate/pod
-	integrity_failure = 0.5
+	integrity_failure = 20
 	max_integrity = 40
-	stun_projectile = /obj/projectile/bullet/syndicate_turret
-	lethal_projectile = /obj/projectile/bullet/syndicate_turret
+	stun_projectile = /obj/item/projectile/bullet/syndicate_turret
+	lethal_projectile = /obj/item/projectile/bullet/syndicate_turret
 
 /obj/machinery/porta_turret/syndicate/shuttle
 	scan_range = 9
 	shot_delay = 3
-	stun_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
-	lethal_projectile = /obj/projectile/bullet/p50/penetrator/shuttle
+	stun_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
+	lethal_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
 	stun_projectile_sound = 'sound/weapons/gun/smg/shot.ogg'
 	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
@@ -724,7 +723,7 @@
 	name = "perimeter defense turret"
 	desc = "A plasma beam turret calibrated to defend outposts against non-humanoid fauna. It is more effective when exposed to the environment."
 	installation = null
-	lethal_projectile = /obj/projectile/plasma/turret
+	lethal_projectile = /obj/item/projectile/plasma/turret
 	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	mode = TURRET_LETHAL //It would be useless in stun mode anyway
 	faction = list("neutral","silicon","turret") //Minebots, medibots, etc that should not be shot.
@@ -750,8 +749,8 @@
 	use_power = NO_POWER_USE
 	has_cover = 0
 	scan_range = 9
-	stun_projectile = /obj/projectile/beam/laser
-	lethal_projectile = /obj/projectile/beam/laser
+	stun_projectile = /obj/item/projectile/beam/laser
+	lethal_projectile = /obj/item/projectile/beam/laser
 	lethal_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	stun_projectile_sound = 'sound/weapons/plasma_cutter.ogg'
 	icon_state = "syndie_off"
@@ -771,11 +770,11 @@
 
 /obj/machinery/porta_turret/centcom_shuttle/weak
 	max_integrity = 120
-	integrity_failure = 0.5
+	integrity_failure = 60
 	name = "Old Laser Turret"
 	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else."
-	stun_projectile = /obj/projectile/beam/weak/penetrator
-	lethal_projectile = /obj/projectile/beam/weak/penetrator
+	stun_projectile = /obj/item/projectile/beam/weak/penetrator
+	lethal_projectile = /obj/item/projectile/beam/weak/penetrator
 	faction = list("neutral","silicon","turret")
 
 ////////////////////////
@@ -827,7 +826,7 @@
 	for(var/obj/machinery/porta_turret/T in control_area)
 		turrets |= T
 		T.cp = src
-
+		
 /obj/machinery/turretid/examine(mob/user)
 	. += ..()
 	if(issilicon(user) && (!stat & BROKEN))
@@ -844,7 +843,7 @@
 		var/obj/item/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
-			to_chat(user, "<span class='notice'>You link \the [M.buffer] with \the [src].</span>")
+			to_chat(user, "You link \the [M.buffer] with \the [src]")
 			return
 
 	if (issilicon(user))
@@ -853,7 +852,7 @@
 	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (allowed(usr))
 			if(obj_flags & EMAGGED)
-				to_chat(user, "<span class='warning'>The turret control is unresponsive!</span>")
+				to_chat(user, "<span class='notice'>The turret control is unresponsive.</span>")
 				return
 
 			locked = !locked
@@ -866,12 +865,12 @@
 				if (user.machine==src)
 					attack_hand(user)
 		else
-			to_chat(user, "<span class='alert'>Access denied.</span>")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, "<span class='notice'>You short out the turret controls' access analysis module.</span>")
+	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
 	obj_flags |= EMAGGED
 	locked = FALSE
 	if(user && user.machine == src)
@@ -881,7 +880,7 @@
 	if(!ailock || IsAdminGhost(user))
 		return attack_hand(user)
 	else
-		to_chat(user, "<span class='warning'>There seems to be a firewall preventing you from accessing this device!</span>")
+		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 
 /obj/machinery/turretid/ui_interact(mob/user)
 	. = ..()
@@ -912,7 +911,7 @@
 		return
 	if (locked)
 		if(!(issilicon(usr) || IsAdminGhost(usr)))
-			to_chat(usr, "<span class='warning'>Control panel is locked!</span>")
+			to_chat(usr, "Control panel is locked!")
 			return
 	if (href_list["toggleOn"])
 		toggle_on(usr)
@@ -960,7 +959,7 @@
 	desc = "Used for building turret control panels."
 	icon_state = "apc"
 	result_path = /obj/machinery/turretid
-	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
 
 /obj/item/gun/proc/get_turret_properties()
 	. = list()
@@ -1000,16 +999,16 @@
 
 /obj/item/gun/energy/laser/bluetag/get_turret_properties()
 	. = ..()
-	.["stun_projectile"] = /obj/projectile/beam/lasertag/bluetag
-	.["lethal_projectile"] = /obj/projectile/beam/lasertag/bluetag
+	.["stun_projectile"] = /obj/item/projectile/beam/lasertag/bluetag
+	.["lethal_projectile"] = /obj/item/projectile/beam/lasertag/bluetag
 	.["base_icon_state"] = "blue"
 	.["shot_delay"] = 30
 	.["team_color"] = "blue"
 
 /obj/item/gun/energy/laser/redtag/get_turret_properties()
 	. = ..()
-	.["stun_projectile"] = /obj/projectile/beam/lasertag/redtag
-	.["lethal_projectile"] = /obj/projectile/beam/lasertag/redtag
+	.["stun_projectile"] = /obj/item/projectile/beam/lasertag/redtag
+	.["lethal_projectile"] = /obj/item/projectile/beam/lasertag/redtag
 	.["base_icon_state"] = "red"
 	.["shot_delay"] = 30
 	.["team_color"] = "red"
@@ -1071,14 +1070,14 @@
 	installation = /obj/item/gun/energy/laser/bluetag
 	team_color = "blue"
 
-/obj/machinery/porta_turret/lasertag/bullet_act(obj/projectile/P)
+/obj/machinery/porta_turret/lasertag/bullet_act(obj/item/projectile/P)
 	. = ..()
 	if(on)
 		if(team_color == "blue")
-			if(istype(P, /obj/projectile/beam/lasertag/redtag))
+			if(istype(P, /obj/item/projectile/beam/lasertag/redtag))
 				on = FALSE
 				addtimer(VARSET_CALLBACK(src, on, TRUE), 10 SECONDS)
 		else if(team_color == "red")
-			if(istype(P, /obj/projectile/beam/lasertag/bluetag))
+			if(istype(P, /obj/item/projectile/beam/lasertag/bluetag))
 				on = FALSE
 				addtimer(VARSET_CALLBACK(src, on, TRUE), 10 SECONDS)

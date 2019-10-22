@@ -1,4 +1,4 @@
-/obj/projectile/bullet
+/obj/item/projectile/bullet
 	name = "bullet"
 	icon_state = "bullet"
 	damage = 60

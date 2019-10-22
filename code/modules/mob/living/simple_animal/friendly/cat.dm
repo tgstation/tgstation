@@ -24,18 +24,15 @@
 	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)
-	response_help_continuous = "pets"
-	response_help_simple = "pet"
-	response_disarm_continuous = "gently pushes aside"
-	response_disarm_simple = "gently push aside"
-	response_harm_continuous = "kicks"
-	response_harm_simple = "kick"
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
 
-	footstep_type = FOOTSTEP_MOB_CLAW
+	do_footstep = TRUE
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
@@ -260,8 +257,7 @@
 	harm_intent_damage = 10
 	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
 	/obj/item/reagent_containers/food/snacks/meat/slab = 2)
-	response_harm_continuous = "takes a bite out of"
-	response_harm_simple = "take a bite out of"
+	response_harm = "takes a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses its false life and collapses!"
 	deathsound = "bodyfall"
@@ -287,8 +283,8 @@
 	if(health < maxHealth)
 		adjustBruteLoss(-8) //Fast life regen
 	for(var/obj/item/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
-		if(!D.is_decorated)
-			D.decorate_donut()
+		if(!D.is_frosted)
+			D.frost_donut()
 
 /mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
 	..()

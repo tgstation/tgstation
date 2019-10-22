@@ -193,10 +193,9 @@ GLOBAL_PROTECT(VVpixelmovement)
 		else
 			variable = L[index]
 			//EXPERIMENTAL - Keep old associated value while modifying key, if any
-			if(IS_VALID_ASSOC_KEY(variable))
-				var/found = L[variable]
-				if(!isnull(found))
-					old_assoc_value = found
+			var/found = L[variable]
+			if(!isnull(found))
+				old_assoc_value = found
 			//
 
 	default = vv_get_class(objectvar, variable)

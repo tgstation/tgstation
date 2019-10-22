@@ -7,12 +7,9 @@
 	desc = "A large, menacing creature covered in armored black scales."
 	speak_emote = list("cackles")
 	emote_hear = list("cackles","screeches")
-	response_help_continuous = "thinks better of touching"
-	response_help_simple = "think better of touching"
-	response_disarm_continuous = "flails at"
-	response_disarm_simple = "flail at"
-	response_harm_continuous = "punches"
-	response_harm_simple = "punch"
+	response_help  = "thinks better of touching"
+	response_disarm = "flails at"
+	response_harm   = "punches"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "imp"
 	icon_living = "imp"
@@ -26,8 +23,7 @@
 	minbodytemp = 250 //Weak to cold
 	maxbodytemp = INFINITY
 	faction = list("hell")
-	attack_verb_continuous = "wildly tears into"
-	attack_verb_simple = "wildly tear into"
+	attacktext = "wildly tears into"
 	maxHealth = 200
 	health = 200
 	healable = 0
@@ -43,8 +39,8 @@
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
 	var/list/consumed_mobs = list()
-	var/playstyle_string = "<span class='big bold'>You are an imp,</span><B> a mischievous creature from hell. You are the lowest rank on the hellish totem pole \
-							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion. However, you are incapable	\
+	var/playstyle_string = "<span class='big bold'>You are an imp,</span><B> a mischievous creature from hell. You are the lowest rank on the hellish totem pole  \
+							Though you are not obligated to help, perhaps by aiding a higher ranking devil, you might just get a promotion.  However, you are incapable	\
 							of intentionally harming a fellow devil.</B>"
 
 /mob/living/simple_animal/imp/Initialize()

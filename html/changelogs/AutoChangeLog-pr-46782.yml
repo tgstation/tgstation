@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - tweak: "Removed non functional code that's supposed to make acid reduce armor values."

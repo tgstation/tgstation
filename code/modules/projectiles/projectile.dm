@@ -2,17 +2,17 @@
 #define MOVES_HITSCAN -1		//Not actually hitscan but close as we get without actual hitscan.
 #define MUZZLE_EFFECT_PIXEL_INCREMENT 17	//How many pixels to move the muzzle flash up so your character doesn't look like they're shitting out lasers.
 
-/obj/projectile
+/obj/item/projectile
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
 	density = FALSE
 	anchored = TRUE
+	item_flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	movement_type = FLYING
-	//The sound this plays on impact.
-	var/hitsound = 'sound/weapons/pierce.ogg'
+	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -83,9 +83,7 @@
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
-	///How much armor this projectile pierces.
-	var/armour_penetration = 0
-	var/projectile_type = /obj/projectile
+	var/projectile_type = /obj/item/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
 	var/decayedRange			//stores original range
 	var/reflect_range_decrease = 5			//amount of original range that falls off when reflecting, so it doesn't go forever
@@ -109,17 +107,17 @@
 
 	var/temporary_unstoppable_movement = FALSE
 
-/obj/projectile/Initialize()
+/obj/item/projectile/Initialize()
 	. = ..()
 	permutated = list()
 	decayedRange = range
 
-/obj/projectile/proc/Range()
+/obj/item/projectile/proc/Range()
 	range--
 	if(range <= 0 && loc)
 		on_range()
 
-/obj/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
+/obj/item/projectile/proc/on_range() //if we want there to be effects when they reach the end of their range
 	qdel(src)
 
 //to get the correct limb (if any) for the projectile hit message
@@ -133,10 +131,10 @@
 	else //when a limb is missing the damage is actually passed to the chest
 		return BODY_ZONE_CHEST
 
-/obj/projectile/proc/prehit(atom/target)
+/obj/item/projectile/proc/prehit(atom/target)
 	return TRUE
 
-/obj/projectile/proc/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_ON_HIT, firer, target, Angle)
 	var/turf/target_loca = get_turf(target)
@@ -208,21 +206,21 @@
 
 	return BULLET_ACT_HIT
 
-/obj/projectile/proc/vol_by_damage()
+/obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
 		return CLAMP((src.damage) * 0.67, 30, 100)// Multiply projectile damage by 0.67, then CLAMP the value between 30 and 100
 	else
 		return 50 //if the projectile doesn't do damage, play its hitsound at 50% volume
 
-/obj/projectile/proc/on_ricochet(atom/A)
+/obj/item/projectile/proc/on_ricochet(atom/A)
 	return
 
-/obj/projectile/proc/store_hitscan_collision(datum/point/pcache)
+/obj/item/projectile/proc/store_hitscan_collision(datum/point/pcache)
 	beam_segments[beam_index] = pcache
 	beam_index = pcache
 	beam_segments[beam_index] = null
 
-/obj/projectile/Bump(atom/A)
+/obj/item/projectile/Bump(atom/A)
 	var/datum/point/pcache = trajectory.copy_to()
 	var/turf/T = get_turf(A)
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
@@ -251,7 +249,7 @@
 #define DO_NOT_QDEL 2		//Pass through.
 #define FORCE_QDEL 3		//Force deletion.
 
-/obj/projectile/proc/process_hit(turf/T, atom/target, qdel_self, hit_something = FALSE)		//probably needs to be reworked entirely when pixel movement is done.
+/obj/item/projectile/proc/process_hit(turf/T, atom/target, qdel_self, hit_something = FALSE)		//probably needs to be reworked entirely when pixel movement is done.
 	if(QDELETED(src) || !T || !target)		//We're done, nothing's left.
 		if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !CHECK_BITFIELD(movement_type, UNSTOPPABLE)))
 			qdel(src)
@@ -279,7 +277,7 @@
 #undef DO_NOT_QDEL
 #undef FORCE_QDEL
 
-/obj/projectile/proc/select_target(turf/T, atom/target)			//Select a target from a turf.
+/obj/item/projectile/proc/select_target(turf/T, atom/target)			//Select a target from a turf.
 	if((original in T) && can_hit_target(original, permutated, TRUE, TRUE))
 		return original
 	if(target && can_hit_target(target, permutated, target == original, TRUE))
@@ -307,17 +305,17 @@
 		return T
 	//Returns null if nothing at all was found.
 
-/obj/projectile/proc/check_ricochet()
+/obj/item/projectile/proc/check_ricochet()
 	if(prob(ricochet_chance))
 		return TRUE
 	return FALSE
 
-/obj/projectile/proc/check_ricochet_flag(atom/A)
+/obj/item/projectile/proc/check_ricochet_flag(atom/A)
 	if(A.flags_1 & CHECK_RICOCHET_1)
 		return TRUE
 	return FALSE
 
-/obj/projectile/proc/return_predicted_turf_after_moves(moves, forced_angle)		//I say predicted because there's no telling that the projectile won't change direction/location in flight.
+/obj/item/projectile/proc/return_predicted_turf_after_moves(moves, forced_angle)		//I say predicted because there's no telling that the projectile won't change direction/location in flight.
 	if(!trajectory && isnull(forced_angle) && isnull(Angle))
 		return FALSE
 	var/datum/point/vector/current = trajectory
@@ -327,15 +325,15 @@
 	var/datum/point/vector/v = current.return_vector_after_increments(moves * SSprojectiles.global_iterations_per_move)
 	return v.return_turf()
 
-/obj/projectile/proc/return_pathing_turfs_in_moves(moves, forced_angle)
+/obj/item/projectile/proc/return_pathing_turfs_in_moves(moves, forced_angle)
 	var/turf/current = get_turf(src)
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
 	return getline(current, ending)
 
-/obj/projectile/Process_Spacemove(movement_dir = 0)
+/obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return TRUE	//Bullets don't drift in space
 
-/obj/projectile/process()
+/obj/item/projectile/process()
 	last_process = world.time
 	if(!loc || !fired || !trajectory)
 		fired = FALSE
@@ -358,7 +356,7 @@
 	for(var/i in 1 to required_moves)
 		pixel_move(1, FALSE)
 
-/obj/projectile/proc/fire(angle, atom/direct_target)
+/obj/item/projectile/proc/fire(angle, atom/direct_target)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	//If no angle needs to resolve it from xo/yo!
@@ -398,7 +396,7 @@
 		START_PROCESSING(SSprojectiles, src)
 	pixel_move(1, FALSE)	//move it now!
 
-/obj/projectile/proc/setAngle(new_angle)	//wrapper for overrides.
+/obj/item/projectile/proc/setAngle(new_angle)	//wrapper for overrides.
 	Angle = new_angle
 	if(!nondirectional_sprite)
 		var/matrix/M = new
@@ -408,7 +406,7 @@
 		trajectory.set_angle(new_angle)
 	return TRUE
 
-/obj/projectile/forceMove(atom/target)
+/obj/item/projectile/forceMove(atom/target)
 	if(!isloc(target) || !isloc(loc) || !z)
 		return ..()
 	var/zc = target.z != z
@@ -425,11 +423,11 @@
 	if(zc)
 		after_z_change(old, target)
 
-/obj/projectile/proc/after_z_change(atom/olcloc, atom/newloc)
+/obj/item/projectile/proc/after_z_change(atom/olcloc, atom/newloc)
 
-/obj/projectile/proc/before_z_change(atom/oldloc, atom/newloc)
+/obj/item/projectile/proc/before_z_change(atom/oldloc, atom/newloc)
 
-/obj/projectile/vv_edit_var(var_name, var_value)
+/obj/item/projectile/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, Angle))
 			setAngle(var_value)
@@ -437,19 +435,19 @@
 		else
 			return ..()
 
-/obj/projectile/proc/set_pixel_speed(new_speed)
+/obj/item/projectile/proc/set_pixel_speed(new_speed)
 	if(trajectory)
 		trajectory.set_speed(new_speed)
 		return TRUE
 	return FALSE
 
-/obj/projectile/proc/record_hitscan_start(datum/point/pcache)
+/obj/item/projectile/proc/record_hitscan_start(datum/point/pcache)
 	if(pcache)
 		beam_segments = list()
 		beam_index = pcache
 		beam_segments[beam_index] = null	//record start.
 
-/obj/projectile/proc/process_hitscan()
+/obj/item/projectile/proc/process_hitscan()
 	var/safety = range * 3
 	record_hitscan_start(RETURN_POINT_VECTOR_INCREMENT(src, Angle, MUZZLE_EFFECT_PIXEL_INCREMENT, 1))
 	while(loc && !QDELETED(src))
@@ -464,7 +462,7 @@
 			return	//Kill!
 		pixel_move(1, TRUE)
 
-/obj/projectile/proc/pixel_move(trajectory_multiplier, hitscanning = FALSE)
+/obj/item/projectile/proc/pixel_move(trajectory_multiplier, hitscanning = FALSE)
 	if(!loc || !trajectory)
 		return
 	last_projectile_move = world.time
@@ -504,7 +502,7 @@
 		animate(src, pixel_x = trajectory.return_px(), pixel_y = trajectory.return_py(), time = 1, flags = ANIMATION_END_NOW)
 	Range()
 
-/obj/projectile/proc/process_homing()			//may need speeding up in the future performance wise.
+/obj/item/projectile/proc/process_homing()			//may need speeding up in the future performance wise.
 	if(!homing_target)
 		return FALSE
 	var/datum/point/PT = RETURN_PRECISE_POINT(homing_target)
@@ -513,7 +511,7 @@
 	var/angle = closer_angle_difference(Angle, angle_between_points(RETURN_PRECISE_POINT(src), PT))
 	setAngle(Angle + CLAMP(angle, -homing_turn_speed, homing_turn_speed))
 
-/obj/projectile/proc/set_homing_target(atom/A)
+/obj/item/projectile/proc/set_homing_target(atom/A)
 	if(!A || (!isturf(A) && !isturf(A.loc)))
 		return FALSE
 	homing = TRUE
@@ -527,7 +525,7 @@
 
 //Returns true if the target atom is on our current turf and above the right layer
 //If direct target is true it's the originally clicked target.
-/obj/projectile/proc/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
+/obj/item/projectile/proc/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
 	if(QDELETED(target))
 		return FALSE
 	if(!ignore_source_check && firer)
@@ -551,7 +549,7 @@
 	return TRUE
 
 //Spread is FORCED!
-/obj/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
+/obj/item/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
 	var/turf/curloc = get_turf(source)
 	var/turf/targloc = get_turf(target)
 	trajectory_ignore_forcemove = TRUE
@@ -609,14 +607,14 @@
 		angle = ATAN2(y - oy, x - ox)
 	return list(angle, p_x, p_y)
 
-/obj/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
+/obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	. = ..()
 	if(isliving(AM) && !(pass_flags & PASSMOB))
 		var/mob/living/L = AM
 		if(can_hit_target(L, permutated, (AM == original)))
 			Bump(AM)
 
-/obj/projectile/Move(atom/newloc, dir = NONE)
+/obj/item/projectile/Move(atom/newloc, dir = NONE)
 	. = ..()
 	if(.)
 		if(temporary_unstoppable_movement)
@@ -625,7 +623,7 @@
 		if(fired && can_hit_target(original, permutated, TRUE))
 			Bump(original)
 
-/obj/projectile/Destroy()
+/obj/item/projectile/Destroy()
 	if(hitscan)
 		finalize_hitscan_and_generate_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
@@ -633,18 +631,18 @@
 	qdel(trajectory)
 	return ..()
 
-/obj/projectile/proc/cleanup_beam_segments()
+/obj/item/projectile/proc/cleanup_beam_segments()
 	QDEL_LIST_ASSOC(beam_segments)
 	beam_segments = list()
 	qdel(beam_index)
 
-/obj/projectile/proc/finalize_hitscan_and_generate_tracers(impacting = TRUE)
+/obj/item/projectile/proc/finalize_hitscan_and_generate_tracers(impacting = TRUE)
 	if(trajectory && beam_index)
 		var/datum/point/pcache = trajectory.copy_to()
 		beam_segments[beam_index] = pcache
 	generate_hitscan_tracers(null, null, impacting)
 
-/obj/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3, impacting = TRUE)
+/obj/item/projectile/proc/generate_hitscan_tracers(cleanup = TRUE, duration = 3, impacting = TRUE)
 	if(!length(beam_segments))
 		return
 	if(tracer_type)
@@ -674,5 +672,5 @@
 	if(cleanup)
 		cleanup_beam_segments()
 
-/obj/projectile/experience_pressure_difference()
+/obj/item/projectile/experience_pressure_difference()
 	return

@@ -6,8 +6,7 @@
 /mob/living/simple_animal/hostile/guardian/beam
 	melee_damage_lower = 7
 	melee_damage_upper = 7
-	attack_verb_continuous = "shocks"
-	attack_verb_simple = "shock"
+	attacktext = "shocks"
 	melee_damage_type = BURN
 	attack_sound = 'sound/machines/defib_zap.ogg'
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)

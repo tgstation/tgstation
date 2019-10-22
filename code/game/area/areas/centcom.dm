@@ -145,7 +145,6 @@
 	icon_state = "yellow"
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
-	flags_1 = NONE
 
 /area/ctf/control_room
 	name = "Control Room A"
@@ -173,3 +172,19 @@
 
 /area/ctf/flag_room2
 	name = "Flag Room B"
+
+// REEBE
+
+/area/reebe
+	name = "Reebe"
+	icon_state = "yellow"
+	requires_power = FALSE
+	has_gravity = STANDARD_GRAVITY
+	noteleport = TRUE
+	hidden = TRUE
+	ambientsounds = REEBE
+
+/area/reebe/city_of_cogs
+	name = "City of Cogs"
+	icon_state = "purple"
+	hidden = FALSE

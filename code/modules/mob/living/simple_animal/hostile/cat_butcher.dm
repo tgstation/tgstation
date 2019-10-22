@@ -8,6 +8,9 @@
 	icon_gib = "syndicate_gib"
 	speak_chance = 0
 	turns_per_move = 5
+	response_help = "pokes"
+	response_disarm = "shoves"
+	response_harm = "hits"
 	speed = 0
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
@@ -16,8 +19,7 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attack_verb_continuous = "slashes at"
-	attack_verb_simple = "slash at"
+	attacktext = "slashes at"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
 	a_intent = INTENT_HARM
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID

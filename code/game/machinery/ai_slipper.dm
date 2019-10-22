@@ -17,7 +17,7 @@
 	. = ..()
 	. += "<span class='notice'>It has <b>[uses]</b> uses of foam remaining.</span>"
 
-/obj/machinery/ai_slipper/update_icon_state()
+/obj/machinery/ai_slipper/update_icon()
 	if(stat & BROKEN)
 		return
 	if((stat & NOPOWER) || cooldown_time > world.time || !uses)

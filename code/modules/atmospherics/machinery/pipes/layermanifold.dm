@@ -136,3 +136,4 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/visible
 	level = PIPE_VISIBLE_LEVEL
 	layer = GAS_PIPE_VISIBLE_LAYER
+	

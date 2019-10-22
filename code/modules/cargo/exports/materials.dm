@@ -14,13 +14,16 @@
 	if(!isitem(O))
 		return 0
 	var/obj/item/I = O
-	if(!(getmaterialref(material_id) in I.custom_materials))
+	if(!(getmaterialref(material_id) in I.materials))
 		return 0
 
-	var/amount = I.custom_materials[getmaterialref(material_id)]
+	var/amount = I.materials[getmaterialref(material_id)]
 
-	if(istype(I, /obj/item/stack/ore))
-		amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
+	if(istype(I, /obj/item/stack))
+		var/obj/item/stack/S = I
+		amount *= S.amount
+		if(istype(I, /obj/item/stack/ore))
+			amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
 
 	return round(amount/MINERAL_MATERIAL_AMOUNT)
 

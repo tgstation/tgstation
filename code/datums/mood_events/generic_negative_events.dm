@@ -84,11 +84,6 @@
 		description =  "<span class='nicegreen'>They want to play on the table!</span>\n"
 		mood_change = 2
 
-/datum/mood_event/table_headsmash
-	description = "<span class='warning'>My fucking head, that hurt...</span>"
-	mood_change = -3
-	timeout = 3 MINUTES
-
 /datum/mood_event/brain_damage
   mood_change = -3
 
@@ -200,11 +195,4 @@
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
 	mood_change = -8
-
-/datum/mood_event/nanite_sadness
-	description = "<span class='warning robot'>+++++++HAPPINESS SUPPRESSION+++++++</span>\n"
-	mood_change = -7
-
-/datum/mood_event/nanite_sadness/add_effects(message)
-	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
 

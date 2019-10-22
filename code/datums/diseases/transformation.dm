@@ -17,7 +17,6 @@
 	var/list/stage5 = list("Oh the humanity!")
 	var/new_form = /mob/living/carbon/human
 	var/bantype
-	var/transformed_antag_datum //Do we add a specific antag datum once the transformation is complete?
 
 /datum/disease/transformation/Copy()
 	var/datum/disease/transformation/D = ..()
@@ -69,8 +68,7 @@
 				affected_mob.mind.transfer_to(new_mob)
 			else
 				new_mob.key = affected_mob.key
-		if(transformed_antag_datum)
-			new_mob.mind.add_antag_datum(transformed_antag_datum)
+
 		new_mob.name = affected_mob.real_name
 		new_mob.real_name = new_mob.name
 		qdel(affected_mob)
@@ -81,12 +79,12 @@
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [affected_mob.name]?", bantype, null, bantype, 50, affected_mob)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		to_chat(affected_mob, "<span class='userdanger'>Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!</span>")
+		to_chat(affected_mob, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
 		affected_mob.ghostize(0)
 		affected_mob.key = C.key
 	else
-		to_chat(new_mob, "<span class='userdanger'>Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!</span>")
+		to_chat(new_mob, "Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!")
 		new_mob.death()
 		if (!QDELETED(new_mob))
 			new_mob.ghostize(can_reenter_corpse = FALSE)
@@ -287,7 +285,6 @@
 	stage5	= list("<span class='danger'>You have become a morph.</span>")
 	new_form = /mob/living/simple_animal/hostile/morph
 	infectable_biotypes = MOB_ORGANIC|MOB_MINERAL|MOB_UNDEAD //magic!
-	transformed_antag_datum = /datum/antagonist/morph
 
 /datum/disease/transformation/gondola
 	name = "Gondola Transformation"

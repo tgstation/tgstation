@@ -276,7 +276,7 @@
 /obj/item/ammo_casing/magic/tentacle
 	name = "tentacle"
 	desc = "A tentacle."
-	projectile_type = /obj/projectile/tentacle
+	projectile_type = /obj/item/projectile/tentacle
 	caliber = "tentacle"
 	icon_state = "tentacle_end"
 	firing_effect_type = null
@@ -290,7 +290,7 @@
 	gun = null
 	return ..()
 
-/obj/projectile/tentacle
+/obj/item/projectile/tentacle
 	name = "tentacle"
 	icon_state = "tentacle_end"
 	pass_flags = PASSTABLE
@@ -301,20 +301,20 @@
 	var/chain
 	var/obj/item/ammo_casing/magic/tentacle/source //the item that shot it
 
-/obj/projectile/tentacle/Initialize()
+/obj/item/projectile/tentacle/Initialize()
 	source = loc
 	. = ..()
 
-/obj/projectile/tentacle/fire(setAngle)
+/obj/item/projectile/tentacle/fire(setAngle)
 	if(firer)
 		chain = firer.Beam(src, icon_state = "tentacle", time = INFINITY, maxdistance = INFINITY, beam_sleep_time = 1)
 	..()
 
-/obj/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)
+/obj/item/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)
 	if(H.in_throw_mode)
 		H.throw_mode_off() //Don't annoy the changeling if he doesn't catch the item
 
-/obj/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
+/obj/item/projectile/tentacle/proc/tentacle_grab(mob/living/carbon/human/H, mob/living/carbon/C)
 	if(H.Adjacent(C))
 		if(H.get_active_held_item() && !H.get_inactive_held_item())
 			H.swap_hand()
@@ -323,7 +323,7 @@
 		C.grabbedby(H)
 		C.grippedby(H, instant = TRUE) //instant aggro grab
 
-/obj/projectile/tentacle/proc/tentacle_stab(mob/living/carbon/human/H, mob/living/carbon/C)
+/obj/item/projectile/tentacle/proc/tentacle_stab(mob/living/carbon/human/H, mob/living/carbon/C)
 	if(H.Adjacent(C))
 		for(var/obj/item/I in H.held_items)
 			if(I.get_sharpness())
@@ -334,7 +334,7 @@
 				playsound(get_turf(H),I.hitsound,75,TRUE)
 				return
 
-/obj/projectile/tentacle/on_hit(atom/target, blocked = FALSE)
+/obj/item/projectile/tentacle/on_hit(atom/target, blocked = FALSE)
 	var/mob/living/carbon/human/H = firer
 	if(blocked >= 100)
 		return BULLET_ACT_BLOCK
@@ -389,7 +389,7 @@
 				L.throw_at(get_step_towards(H,L), 8, 2)
 				. = BULLET_ACT_HIT
 
-/obj/projectile/tentacle/Destroy()
+/obj/item/projectile/tentacle/Destroy()
 	qdel(chain)
 	source = null
 	return ..()

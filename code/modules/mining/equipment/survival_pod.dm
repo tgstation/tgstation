@@ -6,7 +6,6 @@
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	valid_territory = FALSE
-	flags_1 = CAN_BE_DIRTY_1
 
 //Survival Capsule
 /obj/item/survivalcapsule

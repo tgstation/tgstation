@@ -120,7 +120,7 @@
 	if(!istype(user))
 		return
 	if(contents.len)
-		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in sortNames(contents)
+		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in contents
 		if(choice)
 			if(!(user.mobility_flags & MOBILITY_USE) || user.stat || user.restrained() || !in_range(loc, user))
 				return
@@ -190,8 +190,6 @@
 	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
 	resistance_flags = FLAMMABLE
-	drop_sound = 'sound/items/handling/book_drop.ogg'
-	pickup_sound =  'sound/items/handling/book_pickup.ogg'
 	var/dat				//Actual page content
 	var/due_date = 0	//Game time in 1/10th seconds
 	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -233,10 +231,10 @@
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if (length(newtitle) > 20)
-					to_chat(user, "<span class='warning'>That title won't fit on the cover!</span>")
+					to_chat(user, "That title won't fit on the cover!")
 					return
 				if(!newtitle)
-					to_chat(user, "<span class='warning'>That title is invalid.</span>")
+					to_chat(user, "That title is invalid.")
 					return
 				else
 					name = newtitle
@@ -246,7 +244,7 @@
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!content)
-					to_chat(user, "<span class='warning'>The content is invalid.</span>")
+					to_chat(user, "The content is invalid.")
 					return
 				else
 					dat += content
@@ -255,7 +253,7 @@
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!newauthor)
-					to_chat(user, "<span class='warning'>The name is invalid.</span>")
+					to_chat(user, "The name is invalid.")
 					return
 				else
 					author = newauthor
@@ -265,32 +263,32 @@
 	else if(istype(I, /obj/item/barcodescanner))
 		var/obj/item/barcodescanner/scanner = I
 		if(!scanner.computer)
-			to_chat(user, "<span class='alert'>[I]'s screen flashes: 'No associated computer found!'</span>")
+			to_chat(user, "[I]'s screen flashes: 'No associated computer found!'")
 		else
 			switch(scanner.mode)
 				if(0)
 					scanner.book = src
-					to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer.'</span>")
+					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer.'")
 				if(1)
 					scanner.book = src
 					scanner.computer.buffer_book = name
-					to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'</span>")
+					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'")
 				if(2)
 					scanner.book = src
 					for(var/datum/borrowbook/b in scanner.computer.checkouts)
 						if(b.bookname == name)
 							scanner.computer.checkouts.Remove(b)
-							to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer. Book has been checked in.'</span>")
+							to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Book has been checked in.'")
 							return
-					to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'</span>")
+					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'")
 				if(3)
 					scanner.book = src
 					for(var/obj/item/book in scanner.computer.inventory)
 						if(book == src)
-							to_chat(user, "<span class='alert'>[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'</span>")
+							to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'")
 							return
 					scanner.computer.inventory.Add(src)
-					to_chat(user, "<span class='notice'>[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'</span>")
+					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
 
 	else if(istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER)
 		to_chat(user, "<span class='notice'>You begin to carve out [title]...</span>")

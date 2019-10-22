@@ -10,9 +10,9 @@
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
 	if(stage < 4)
-		to_chat(finder, "<span class='notice'>It's small and weak, barely the size of a foetus.</span>")
+		to_chat(finder, "It's small and weak, barely the size of a foetus.")
 	else
-		to_chat(finder, "<span class='notice'>It's grown quite large, and writhes slightly as you look at it.</span>")
+		to_chat(finder, "It's grown quite large, and writhes slightly as you look at it.")
 		if(prob(10))
 			AttemptGrow(0)
 

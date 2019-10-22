@@ -303,7 +303,8 @@
 			var/mob/living/carbon/C = M
 			for(var/s in C.surgeries)
 				var/datum/surgery/S = s
-				S.speed_modifier = max(0.1, S.speed_modifier)
+				S.success_multiplier = max(0.1, S.success_multiplier)
+				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your wounds fade away to nothing!</span>" )
@@ -385,7 +386,7 @@
 	. = 1
 
 /datum/reagent/medicine/sal_acid
-	name = "Salicylic Acid"
+	name = "Salicyclic Acid"
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#D2D2D2"
@@ -1120,11 +1121,11 @@
 			if(prob(50))
 				M.losebreath++
 			if(prob(20))
-				to_chat(M, "<span class='userdanger'>You have a sudden fit!</span>")
+				to_chat(M, "You have a sudden fit!")
 				M.emote("moan")
 				M.Paralyze(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
-			to_chat(M, "<span class='userdanger'>You feel too exhausted to continue!</span>") // at this point you will eventually die unless you get charcoal
+			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
 			M.adjustOxyLoss(0.1*REM, 0)
 			M.adjustStaminaLoss(0.1*REM, 0)
 		if(82 to INFINITY)

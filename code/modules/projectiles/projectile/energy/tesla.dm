@@ -1,4 +1,4 @@
-/obj/projectile/energy/tesla
+/obj/item/projectile/energy/tesla
 	name = "tesla bolt"
 	icon_state = "tesla_projectile"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
@@ -7,23 +7,23 @@
 	var/zap_range = 3
 	var/power = 10000
 
-/obj/projectile/energy/tesla/fire(setAngle)
+/obj/item/projectile/energy/tesla/fire(setAngle)
 	if(firer)
 		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
 
-/obj/projectile/energy/tesla/on_hit(atom/target)
+/obj/item/projectile/energy/tesla/on_hit(atom/target)
 	. = ..()
 	tesla_zap(target, zap_range, power, tesla_flags)
 	qdel(src)
 
-/obj/projectile/energy/tesla/Destroy()
+/obj/item/projectile/energy/tesla/Destroy()
 	QDEL_NULL(chain)
 	return ..()
 
-/obj/projectile/energy/tesla/revolver
+/obj/item/projectile/energy/tesla/revolver
 	name = "energy orb"
 
-/obj/projectile/energy/tesla/cannon
+/obj/item/projectile/energy/tesla/cannon
 	name = "tesla orb"
 	power = 20000

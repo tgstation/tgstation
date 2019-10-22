@@ -40,10 +40,10 @@
 	return FALSE
 /mob/living/proc/is_pepper_proof(check_head = TRUE, check_mask = TRUE)
 	return FALSE
-/mob/living/proc/on_hit(obj/projectile/P)
+/mob/living/proc/on_hit(obj/item/projectile/P)
 	return BULLET_ACT_HIT
 
-/mob/living/bullet_act(obj/projectile/P, def_zone)
+/mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	var/on_hit_state = P.on_hit(src, armor)
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
@@ -53,7 +53,7 @@
 			check_projectile_dismemberment(P, def_zone)
 	return on_hit_state ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
-/mob/living/proc/check_projectile_dismemberment(obj/projectile/P, def_zone)
+/mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	return 0
 
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
@@ -69,8 +69,22 @@
 		var/obj/item/I = AM
 		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
+		var/volume = I.get_volume_by_throwforce_and_or_w_class()
 		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone)
 		dtype = I.damtype
+
+		if (I.throwforce > 0) //If the weapon's throwforce is greater than zero...
+			if (I.throwhitsound) //...and throwhitsound is defined...
+				playsound(loc, I.throwhitsound, volume, TRUE, -1) //...play the weapon's throwhitsound.
+			else if(I.hitsound) //Otherwise, if the weapon's hitsound is defined...
+				playsound(loc, I.hitsound, volume, TRUE, -1) //...play the weapon's hitsound.
+			else if(!I.throwhitsound) //Otherwise, if throwhitsound isn't defined...
+				playsound(loc, 'sound/weapons/genhit.ogg',volume, TRUE, -1) //...play genhit.ogg.
+
+		else if(!I.throwhitsound && I.throwforce > 0) //Otherwise, if the item doesn't have a throwhitsound and has a throwforce greater than zero...
+			playsound(loc, 'sound/weapons/genhit.ogg', volume, TRUE, -1)//...play genhit.ogg
+		if(!I.throwforce)// Otherwise, if the item's throwforce is 0...
+			playsound(loc, 'sound/weapons/throwtap.ogg', 1, volume, -1)//...play throwtap.ogg.
 		if(!blocked)
 			visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
 							"<span class='userdanger'>You're hit by [I]!</span>")
@@ -81,16 +95,12 @@
 		else
 			return 1
 	else
-		playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
+		playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
 	..()
-
 
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == INTENT_HARM)
-		if(HAS_TRAIT(M.occupant, TRAIT_PACIFISM))
-			to_chat(M.occupant, "<span class='warning'>You don't want to harm other living beings!</span>")
-			return
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
@@ -228,9 +238,8 @@
 /mob/living/attack_animal(mob/living/simple_animal/M)
 	M.face_atom(src)
 	if(M.melee_damage_upper == 0)
-		visible_message("<span class='notice'>\The [M] [M.friendly_verb_continuous] [src]!</span>", \
-						"<span class='notice'>\The [M] [M.friendly_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
-		to_chat(M, "<span class='notice'>You [M.friendly_verb_simple] [src]!</span>")
+		visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>", \
+						"<span class='notice'>\The [M] [M.friendly] you!</span>", null, COMBAT_MESSAGE_RANGE)
 		return FALSE
 	if(HAS_TRAIT(M, TRAIT_PACIFISM))
 		to_chat(M, "<span class='warning'>You don't want to hurt anyone!</span>")
@@ -239,9 +248,8 @@
 	if(M.attack_sound)
 		playsound(loc, M.attack_sound, 50, TRUE, TRUE)
 	M.do_attack_animation(src)
-	visible_message("<span class='danger'>\The [M] [M.attack_verb_continuous] [src]!</span>", \
-					"<span class='userdanger'>\The [M] [M.attack_verb_continuous] you!</span>", null, COMBAT_MESSAGE_RANGE, M)
-	to_chat(M, "<span class='danger'>You [M.attack_verb_simple] [src]!</span>")
+	visible_message("<span class='danger'>\The [M] [M.attacktext] [src]!</span>", \
+					"<span class='userdanger'>\The [M] [M.attacktext] you!</span>", null, COMBAT_MESSAGE_RANGE)
 	log_combat(M, src, "attacked")
 	return TRUE
 
@@ -376,6 +384,12 @@
 	if(status_flags & GODMODE || QDELETED(src))
 		return
 
+	if(is_servant_of_ratvar(src) && !stat)
+		to_chat(src, "<span class='userdanger'>You resist Nar'Sie's influence... but not all of it. <i>Run!</i></span>")
+		adjustBruteLoss(35)
+		if(src && reagents)
+			reagents.add_reagent(/datum/reagent/toxin/heparin, 5)
+		return FALSE
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
 		GLOB.cult_narsie.souls_needed -= src
 		GLOB.cult_narsie.souls += 1
@@ -398,10 +412,19 @@
 	gib()
 	return TRUE
 
+
+/mob/living/ratvar_act()
+	if(status_flags & GODMODE)
+		return
+	if(stat != DEAD && !is_servant_of_ratvar(src))
+		to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
+		adjust_fire_stacks(20)
+		IgniteMob()
+		return FALSE
+
+
 //called when the mob receives a bright flash
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
-	if(HAS_TRAIT(src, TRAIT_NOFLASH))
-		return FALSE
 	if(get_eye_protection() < intensity && (override_blindness_check || !(HAS_TRAIT(src, TRAIT_BLIND))))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)

@@ -1,3 +1,5 @@
+#define ION_RANDOM 0
+#define ION_ANNOUNCE 1
 /datum/round_event_control/ion_storm
 	name = "Ion Storm"
 	typepath = /datum/round_event/ion_storm
@@ -9,10 +11,11 @@
 	var/removeRandomLawChance = 10 //chance the AI has one random supplied or inherent law removed
 	var/removeDontImproveChance = 10 //chance the randomly created law replaces a random law instead of simply being added
 	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
-	var/botEmagChance = 1
+	var/botEmagChance = 10
+	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means
 	var/ionMessage = null
+	var/ionAnnounceChance = 33
 	announceWhen	= 1
-	announceChance = 33
 
 /datum/round_event/ion_storm/add_law_only // special subtype that adds a law only
 	replaceLawsetChance = 0
@@ -22,7 +25,7 @@
 	botEmagChance = 0
 
 /datum/round_event/ion_storm/announce(fake)
-	if(prob(announceChance) || fake)
+	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)) || fake)
 		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/ai/ionstorm.ogg')
 
 
@@ -559,3 +562,6 @@
 							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
 
 	return message
+
+#undef ION_RANDOM
+#undef ION_ANNOUNCE

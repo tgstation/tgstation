@@ -4,7 +4,6 @@
 	singular_name = "telecrystal"
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "telecrystal"
-	dye_color = DYE_SYNDICATE
 	w_class = WEIGHT_CLASS_TINY
 	max_amount = 50
 	item_flags = NOBLUDGEON
@@ -32,7 +31,7 @@
 			return
 		cart.telecrystals += amount
 		use(amount)
-		to_chat(user, "<span class='notice'>You slot [src] into [cart]. The next time it's used, it will also give telecrystals.</span>")
+		to_chat(user, "<span class='notice'>You slot [src] into [cart].  The next time it's used, it will also give telecrystals.</span>")
 
 /obj/item/stack/telecrystal/five
 	amount = 5

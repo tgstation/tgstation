@@ -2,7 +2,6 @@
 /obj/effect/decal/cleanable/food
 	icon = 'icons/effects/tomatodecal.dmi'
 	gender = NEUTER
-	beauty = -100
 
 /obj/effect/decal/cleanable/food/tomato_smudge
 	name = "tomato smudge"

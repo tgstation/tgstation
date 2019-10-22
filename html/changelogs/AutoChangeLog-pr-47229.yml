@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "Ghosts can no longer receive a detailed readout of a persons moodlets with the observe verb."

@@ -187,33 +187,33 @@ SUBSYSTEM_DEF(shuttle)
 		emergency = backup_shuttle
 	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
 	if(world.time - SSticker.round_start_time < srd)
-		to_chat(user, "<span class='alert'>The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.</span>")
+		to_chat(user, "The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.")
 		return
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			to_chat(user, "<span class='alert'>The emergency shuttle may not be called while returning to CentCom.</span>")
+			to_chat(user, "The emergency shuttle may not be called while returning to CentCom.")
 			return
 		if(SHUTTLE_CALL)
-			to_chat(user, "<span class='alert'>The emergency shuttle is already on its way.</span>")
+			to_chat(user, "The emergency shuttle is already on its way.")
 			return
 		if(SHUTTLE_DOCKED)
-			to_chat(user, "<span class='alert'>The emergency shuttle is already here.</span>")
+			to_chat(user, "The emergency shuttle is already here.")
 			return
 		if(SHUTTLE_IGNITING)
-			to_chat(user, "<span class='alert'>The emergency shuttle is firing its engines to leave.</span>")
+			to_chat(user, "The emergency shuttle is firing its engines to leave.")
 			return
 		if(SHUTTLE_ESCAPE)
-			to_chat(user, "<span class='alert'>The emergency shuttle is moving away to a safe distance.</span>")
+			to_chat(user, "The emergency shuttle is moving away to a safe distance.")
 			return
 		if(SHUTTLE_STRANDED)
-			to_chat(user, "<span class='alert'>The emergency shuttle has been disabled by CentCom.</span>")
+			to_chat(user, "The emergency shuttle has been disabled by CentCom.")
 			return
 
 	call_reason = trim(html_encode(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && seclevel2num(get_security_level()) > SEC_LEVEL_GREEN)
-		to_chat(user, "<span class='alert'>You must provide a reason.</span>")
+		to_chat(user, "You must provide a reason.")
 		return
 
 	var/area/signal_origin = get_area(user)

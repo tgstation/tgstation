@@ -2,7 +2,7 @@
 	name = "curse arm"
 	layer = LARGE_MOB_LAYER
 
-/obj/projectile/curse_hand
+/obj/item/projectile/curse_hand
 	name = "curse hand"
 	icon_state = "cursehand0"
 	hitsound = 'sound/effects/curse4.ogg'
@@ -15,25 +15,25 @@
 	var/datum/beam/arm
 	var/handedness = 0
 
-/obj/projectile/curse_hand/Initialize(mapload)
+/obj/item/projectile/curse_hand/Initialize(mapload)
 	. = ..()
 	ENABLE_BITFIELD(movement_type, UNSTOPPABLE)
 	handedness = prob(50)
 	icon_state = "cursehand[handedness]"
 
-/obj/projectile/curse_hand/fire(setAngle)
+/obj/item/projectile/curse_hand/fire(setAngle)
 	if(starting)
 		arm = starting.Beam(src, icon_state = "curse[handedness]", time = INFINITY, maxdistance = INFINITY, beam_type=/obj/effect/ebeam/curse_arm)
 	..()
 
-/obj/projectile/curse_hand/prehit(atom/target)
+/obj/item/projectile/curse_hand/prehit(atom/target)
 	if(target == original)
 		DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
 	else if(!isturf(target))
 		return FALSE
 	return ..()
 
-/obj/projectile/curse_hand/Destroy()
+/obj/item/projectile/curse_hand/Destroy()
 	if(arm)
 		arm.End()
 		arm = null

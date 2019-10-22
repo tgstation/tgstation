@@ -1,4 +1,4 @@
-/obj/projectile/energy/floramut
+/obj/item/projectile/energy/floramut
 	name = "alpha somatoray"
 	icon_state = "energy"
 	damage = 0
@@ -6,7 +6,7 @@
 	nodamage = TRUE
 	flag = "energy"
 
-/obj/projectile/energy/florayield
+/obj/item/projectile/energy/florayield
 	name = "beta somatoray"
 	icon_state = "energy2"
 	damage = 0

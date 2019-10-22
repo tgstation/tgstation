@@ -109,7 +109,7 @@
 			if(!ispath(program_to_load))
 				return FALSE
 			var/valid = FALSE
-			var/list/checked = typecacheof(program_cache)
+			var/list/checked = program_cache
 			if(obj_flags & EMAGGED)
 				checked |= emag_programs
 			for(var/prog in checked)
@@ -124,11 +124,10 @@
 			if(A)
 				load_program(A)
 		if("safety")
-			if((obj_flags & EMAGGED) && program)
+			obj_flags ^= EMAGGED
+			if((obj_flags & EMAGGED) && program && emag_programs[program.name])
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED)
-			obj_flags ^= EMAGGED
-			say("Safeties restored. Restarting...")
 
 /obj/machinery/computer/holodeck/process()
 	if(damaged && prob(10))

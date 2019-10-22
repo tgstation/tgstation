@@ -75,7 +75,7 @@
 /obj/structure/AIcore/latejoin_inactive/attackby(obj/item/P, mob/user, params)
 	if(P.tool_behaviour == TOOL_MULTITOOL)
 		active = !active
-		to_chat(user, "<span class='notice'>You [active? "activate" : "deactivate"] \the [src]'s transmitters.</span>")
+		to_chat(user, "You [active? "activate" : "deactivate"] \the [src]'s transmitters.")
 		return
 	return ..()
 
@@ -235,6 +235,8 @@
 					to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 					if(brain)
 						SSticker.mode.remove_antag_for_borging(brain.brainmob.mind)
+						if(!istype(brain.laws, /datum/ai_laws/ratvar))
+							remove_servant_of_ratvar(brain.brainmob, TRUE)
 
 						var/mob/living/silicon/ai/A = null
 
@@ -316,7 +318,7 @@ That prevents a few funky behaviors.
 /atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(istype(card))
 		if(card.flush)
-			to_chat(user, "<span class='alert'>ERROR: AI flush is in progress, cannot execute transfer protocol.</span>")
+			to_chat(user, "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol.")
 			return FALSE
 	return TRUE
 
@@ -328,13 +330,13 @@ That prevents a few funky behaviors.
 		AI.control_disabled = FALSE
 		AI.radio_enabled = TRUE
 		AI.forceMove(loc) // to replace the terminal.
-		to_chat(AI, "<span class='notice'>You have been uploaded to a stationary terminal. Remote device connection restored.</span>")
+		to_chat(AI, "You have been uploaded to a stationary terminal. Remote device connection restored.")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null
 		AI.battery = circuit.battery
 		qdel(src)
 	else //If for some reason you use an empty card on an empty AI terminal.
-		to_chat(user, "<span class='alert'>There is no AI loaded on this terminal.</span>")
+		to_chat(user, "There is no AI loaded on this terminal!")
 
 /obj/item/circuitboard/aicore
 	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent

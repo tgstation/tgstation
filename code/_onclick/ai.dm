@@ -9,7 +9,7 @@
 
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
-/mob/living/silicon/ai/DblClickOn(atom/A, params)
+/mob/living/silicon/ai/DblClickOn(var/atom/A, params)
 	if(control_disabled || incapacitated())
 		return
 
@@ -18,7 +18,7 @@
 	else
 		A.move_camera_by_click()
 
-/mob/living/silicon/ai/ClickOn(atom/A, params)
+/mob/living/silicon/ai/ClickOn(var/atom/A, params)
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
@@ -106,13 +106,13 @@
 	for AI shift, ctrl, and alt clicking.
 */
 
-/mob/living/silicon/ai/CtrlShiftClickOn(atom/A)
+/mob/living/silicon/ai/CtrlShiftClickOn(var/atom/A)
 	A.AICtrlShiftClick(src)
-/mob/living/silicon/ai/ShiftClickOn(atom/A)
+/mob/living/silicon/ai/ShiftClickOn(var/atom/A)
 	A.AIShiftClick(src)
-/mob/living/silicon/ai/CtrlClickOn(atom/A)
+/mob/living/silicon/ai/CtrlClickOn(var/atom/A)
 	A.AICtrlClick(src)
-/mob/living/silicon/ai/AltClickOn(atom/A)
+/mob/living/silicon/ai/AltClickOn(var/atom/A)
 	A.AIAltClick(src)
 
 /*
@@ -137,7 +137,10 @@
 	if(obj_flags & EMAGGED)
 		return
 
-	toggle_bolt(usr)
+	if(locked)
+		bolt_raise(usr)
+	else
+		bolt_drop(usr)
 	add_hiddenprint(usr)
 
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
@@ -160,7 +163,10 @@
 	if(obj_flags & EMAGGED)
 		return
 
-	toggle_emergency(usr)
+	if(!emergency)
+		emergency_on(usr)
+	else
+		emergency_off(usr)
 	add_hiddenprint(usr)
 
 /* APC */
@@ -188,5 +194,5 @@
 // Override TurfAdjacent for AltClicking
 //
 
-/mob/living/silicon/ai/TurfAdjacent(turf/T)
+/mob/living/silicon/ai/TurfAdjacent(var/turf/T)
 	return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(T))

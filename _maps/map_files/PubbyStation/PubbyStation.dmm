@@ -2808,7 +2808,7 @@
 /obj/structure/rack,
 /obj/item/gun/energy/ionrifle,
 /obj/item/gun/energy/temperature/security,
-/obj/item/clothing/suit/hooded/ablative,
+/obj/item/clothing/suit/armor/laserproof,
 /obj/machinery/light{
 	dir = 8;
 	light_color = "#e8eaff"
@@ -31415,8 +31415,8 @@
 /area/maintenance/department/engine)
 "bBY" = (
 /obj/structure/closet/crate/medical,
-/obj/item/stack/medical/mesh,
-/obj/item/stack/medical/suture,
+/obj/item/stack/medical/ointment,
+/obj/item/stack/medical/bruise_pack,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bBZ" = (
@@ -36877,7 +36877,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "bNF" = (
-/obj/item/stack/medical/suture,
+/obj/item/stack/medical/bruise_pack,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bNG" = (
@@ -55566,13 +55566,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/department/science)
-"tzM" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/medical_kiosk,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "tAK" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -87160,7 +87153,7 @@ bik
 bjd
 bkd
 bkh
-tzM
+cqa
 bnD
 boJ
 bpS

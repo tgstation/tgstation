@@ -171,9 +171,8 @@
 	return FALSE
 
 /turf/IsObscured()
-	for(var/item in src)
-		var/atom/movable/AM = item
-		if(AM.flags_1 & PREVENT_CLICK_UNDER_1)
+	for(var/atom/movable/AM in src)
+		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density)
 			return TRUE
 	return FALSE
 
