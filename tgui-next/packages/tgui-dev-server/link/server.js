@@ -1,11 +1,14 @@
 import { createLogger, directLog } from 'common/logging.js';
 import http from 'http';
-import WebSocket from 'ws';
 import { inspect } from 'util';
+import WebSocket from 'ws';
+import { retrace, loadSourceMaps } from './retrace.js';
 
 const logger = createLogger('link');
 
 const DEBUG = process.argv.includes('--debug');
+
+export { loadSourceMaps };
 
 export const setupLink = () => {
   logger.log('setting up');
@@ -24,6 +27,18 @@ export const broadcastMessage = (link, msg) => {
     const json = JSON.stringify(msg);
     client.send(json);
   }
+};
+
+const deserializeObject = obj => {
+  return JSON.parse(obj, (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (value.__type__ === 'error') {
+        return retrace(value.stack);
+      }
+      return value;
+    }
+    return value;
+  });
 };
 
 const handleLinkMessage = msg => {
@@ -61,7 +76,7 @@ const setupWebSocketLink = () => {
     logger.log('client connected');
 
     ws.on('message', json => {
-      const msg = JSON.parse(json);
+      const msg = deserializeObject(json);
       handleLinkMessage(msg);
     });
 

@@ -67,8 +67,10 @@ For MSys2, WSL, Linux or macOS users:
 - `bin/tgui` - build the project in production mode.
 - `bin/tgui --dev` - launch a development server, with live log collection,
 cache reloading and hot module replacement.
-- `bin/tgui --dev --reload-once` - reload byond cache once.
+- `bin/tgui --dev --reload` - reload byond cache once.
 - `bin/tgui --dev --debug` - run server with debug logging enabled.
+- `bin/tgui --dev --no-hot` - disable hot module replacement (helps when
+doing development on IE8).
 - `bin/tgui --lint` - show problems with the code.
 - `bin/tgui --lint --fix` - auto-fix problems with the code.
 - `bin/tgui --analyze` - run a bundle analyzer.
