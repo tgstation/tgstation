@@ -83,7 +83,6 @@
 			if(AOE_SQUARES)
 				aoe_squares(target)
 		return
-		
 	var/aiattack = rand(1,4)
 	switch(aiattack)
 		if(SINGULAR_SHOT)
@@ -94,10 +93,17 @@
 			pandora_teleport(target)
 		if(AOE_SQUARES)
 			aoe_squares(target)
-				
-/obj/effect/temp_visual/hierophant/blast/pandora
-	damage = 20
-	monster_damage_boost = TRUE
+	
+/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life()
+	. = ..()
+	if(health >= maxHealth * 0.5)
+		cooldown_time = 20
+		return
+	if(health < maxHealth * 0.5 && health > maxHealth * 0.25)
+		cooldown_time = 15
+		return
+	else
+		cooldown_time = 10
 	
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/singular_shot(target)	
 	ranged_cooldown = world.time + (cooldown_time * 0.5)
@@ -106,11 +112,12 @@
 	singular_shot_line(sing_shot_length, dir_to_target, T)
 	
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/singular_shot_line(var/procsleft, var/angleused, var/turf/T)
-	if(procsleft > 0)
-		new /obj/effect/temp_visual/hierophant/blast/pandora(T, src)
-		T = get_step(T, angleused)
-		procsleft = procsleft - 1
-		addtimer(CALLBACK(src, .proc/singular_shot_line, procsleft, angleused, T), 2)
+	if(procsleft <= 0)
+		return
+	new /obj/effect/temp_visual/hierophant/blast/pandora(T, src)
+	T = get_step(T, angleused)
+	procsleft = procsleft - 1
+	addtimer(CALLBACK(src, .proc/singular_shot_line, procsleft, angleused, T), 2)
 		
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/magic_box(target)
 	ranged_cooldown = world.time + cooldown_time
@@ -154,25 +161,19 @@
 	addtimer(CALLBACK(src, .proc/aoe_squares_2, T, 0, max_size), 2)
 	
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/aoe_squares_2(var/turf/T, var/ring, var/max_size)
-	if(ring <= max_size)
-		for(var/t in spiral_range_turfs(ring, T))
-			if(get_dist(t, T) == ring)
-				new /obj/effect/temp_visual/hierophant/blast/pandora(t, src)
-		addtimer(CALLBACK(src, .proc/aoe_squares_2, T, (ring + 1), max_size), 2)
+	if(ring > max_size)
+		return
+	for(var/t in spiral_range_turfs(ring, T))
+		if(get_dist(t, T) == ring)
+			new /obj/effect/temp_visual/hierophant/blast/pandora(t, src)
+	addtimer(CALLBACK(src, .proc/aoe_squares_2, T, (ring + 1), max_size), 2)
 		
-/mob/living/simple_animal/hostile/asteroid/elite/pandora/Life()
-	. = ..()
-	if(health >= maxHealth * 0.5)
-		cooldown_time = 20
-		return
-	if(health < maxHealth * 0.5 && health > maxHealth * 0.25)
-		cooldown_time = 15
-		return
-	else
-		cooldown_time = 10
+//The specific version of hiero's squares pandora uses
+/obj/effect/temp_visual/hierophant/blast/pandora
+	damage = 20
+	monster_damage_boost = FALSE
 		
 //Pandora's loot: Hope
-
 /obj/item/clothing/accessory/pandora_hope
 	name = "Hope"
 	desc = "Found at the bottom of Pandora. After all the evil was released, this was the only thing left inside."

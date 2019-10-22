@@ -105,7 +105,6 @@
 			if(HERALD_MIRROR)
 				herald_mirror()
 		return
-		
 	var/aiattack = rand(1,4)
 	switch(aiattack)
 		if(HERALD_TRISHOT)
@@ -122,36 +121,6 @@
 				my_mirror.herald_teleshot(target)
 		if(HERALD_MIRROR)
 			herald_mirror()
-				
-/obj/projectile/herald
-	name ="death bolt"
-	icon_state= "chronobolt"
-	damage = 15
-	armour_penetration = 60
-	speed = 2
-	eyeblur = 0
-	damage_type = BRUTE
-	pass_flags = PASSTABLE
-	
-/obj/projectile/herald/teleshot
-	name ="golden bolt"
-	damage = 0
-	color = rgb(255,255,102)
-
-/obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
-	if(isliving(target))
-		var/mob/living/L = target
-		var/mob/living/F = firer
-		if(F != null && istype(F, /mob/living/simple_animal/hostile/asteroid/elite) && F.faction_check_mob(L))
-			L.heal_overall_damage(damage)
-	. = ..()
-	if(ismineralturf(target))
-		var/turf/closed/mineral/M = target
-		M.gets_drilled()
-		
-/obj/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
-	. = ..()
-	firer.forceMove(get_turf(src))
 		
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/shoot_projectile(turf/marker, set_angle, var/is_teleshot)
 	var/turf/startloc = get_turf(src)
@@ -208,6 +177,17 @@
 	var/angle_to_target = Get_Angle(src, target_turf)
 	shoot_projectile(target_turf, angle_to_target, TRUE)
 	
+/mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_mirror()
+	ranged_cooldown = world.time + 40
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	if(my_mirror != null)
+		qdel(my_mirror)
+		my_mirror = null
+	var/mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/new_mirror = new /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror(loc)
+	my_mirror = new_mirror
+	my_mirror.my_master = src
+	my_mirror.faction = faction.Copy()
+	
 /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror
 	name = "herald's mirror"
 	desc = "This fiendish work of magic copies the herald's attacks.  Seems logical to smash it."
@@ -230,16 +210,36 @@
 		my_master.my_mirror = null
 	. = ..()
 	
-/mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_mirror()
-	ranged_cooldown = world.time + 40
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
-	if(my_mirror != null)
-		qdel(my_mirror)
-		my_mirror = null
-	var/mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/new_mirror = new /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror(loc)
-	my_mirror = new_mirror
-	my_mirror.my_master = src
-	my_mirror.faction = faction.Copy()
+/obj/projectile/herald
+	name ="death bolt"
+	icon_state= "chronobolt"
+	damage = 15
+	armour_penetration = 60
+	speed = 2
+	eyeblur = 0
+	damage_type = BRUTE
+	pass_flags = PASSTABLE
+	
+/obj/projectile/herald/teleshot
+	name ="golden bolt"
+	damage = 0
+	color = rgb(255,255,102)
+
+/obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(ismineralturf(target))
+		var/turf/closed/mineral/M = target
+		M.gets_drilled()
+		return
+	else if(isliving(target))
+		var/mob/living/L = target
+		var/mob/living/F = firer
+		if(F != null && istype(F, /mob/living/simple_animal/hostile/asteroid/elite) && F.faction_check_mob(L))
+			L.heal_overall_damage(damage)
+		
+/obj/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	firer.forceMove(get_turf(src))
 	
 //Herald's loot: Cloak of the Prophet
 
@@ -266,8 +266,9 @@
 	
 /obj/item/clothing/neck/cloak/herald_cloak/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
-	if(rand(1,100) <= hit_reaction_chance)
-		owner.visible_message("<span class='danger'>[owner]'s [src] emits a loud noise as [owner] is struck!</span>")
-		var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
-		playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
-		addtimer(CALLBACK(src, .proc/reactionshot, owner), 10)
+	if(!rand(1,100) <= hit_reaction_chance)
+		return
+	owner.visible_message("<span class='danger'>[owner]'s [src] emits a loud noise as [owner] is struck!</span>")
+	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
+	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
+	addtimer(CALLBACK(src, .proc/reactionshot, owner), 10)
