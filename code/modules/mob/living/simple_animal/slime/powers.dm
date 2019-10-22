@@ -32,7 +32,7 @@
 		if(C!=src && Adjacent(C))
 			choices += C
 
-	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|choices
+	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|sortNames(choices)
 	if(!M)
 		return 0
 	if(CanFeedon(M))

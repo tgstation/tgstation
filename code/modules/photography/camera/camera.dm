@@ -14,7 +14,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_NECK
-	materials = list(/datum/material/iron = 50, /datum/material/glass = 150)
+	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 150)
 	custom_price = 80
 	var/flash_enabled = TRUE
 	var/state_on = "camera"

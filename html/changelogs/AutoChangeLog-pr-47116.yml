@@ -1,0 +1,5 @@
+author: "carlarctg"
+delete-after: True
+changes: 
+  - balance: "armory has a reflective trenchcoat"
+  - tweak: "you can still get the vest from cargo but it's not the objective anymore"

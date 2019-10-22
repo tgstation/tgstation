@@ -1,6 +1,6 @@
 /**
-  * # area 
-  * 
+  * # area
+  *
   * A grouping of tiles into a logical space, mostly used by map editors
   */
 /area
@@ -16,16 +16,18 @@
 
 	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
-	var/valid_territory = TRUE // If it's a valid territory for gangs to claim
-	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
-	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
-	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
+	var/valid_territory = TRUE // If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
+	var/blob_allowed = TRUE // If blobs can spawn there and if it counts towards their score.
 
 	var/fire = null
 	var/atmos = TRUE
 	var/atmosalm = FALSE
 	var/poweralm = TRUE
 	var/lightswitch = TRUE
+
+	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
+	var/beauty = 0 // Beauty average per open turf in the area
+	var/beauty_threshold = 150 //If a room is too big it doesn't have beauty.
 
 	var/requires_power = TRUE
 	var/always_unpowered = FALSE	// This gets overridden to 1 for space in area/Initialize().
@@ -51,7 +53,7 @@
 
 	var/has_gravity = 0
 	///Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-	var/noteleport = FALSE			
+	var/noteleport = FALSE
 	///Hides area from player Teleport function.
 	var/hidden = FALSE
 	///Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
@@ -66,7 +68,7 @@
 	var/global/global_uid = 0
 	var/uid
 	var/list/ambientsounds = GENERIC
-	flags_1 = CAN_BE_DIRTY_1
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 	var/list/firedoors
 	var/list/cameras
@@ -107,7 +109,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if (picked && is_station_level(picked.z))
 			GLOB.teleportlocs[AR.name] = AR
 
-	sortTim(GLOB.teleportlocs, /proc/cmp_text_dsc)
+	sortTim(GLOB.teleportlocs, /proc/cmp_text_asc)
 
 /**
   * Called when an area loads
@@ -167,12 +169,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   */
 /area/LateInitialize()
 	power_change()		// all machines set to current power level, also updates icon
+	update_beauty()
 
 /**
   * Register this area as belonging to a z level
   *
   * Ensures the item is added to the SSmapping.areas_in_z list for this z
-  * 
+  *
   * It also goes through every item in this areas contents and sets the area level z to it
   * breaking the exat first time it does this, this seems crazy but what would I know, maybe
   * areas don't have a valid z themself or something
@@ -197,7 +200,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /**
   * Destroy an area and clean it up
-  * 
+  *
   * Removes the area from GLOB.areas_by_type and also stops it processing on SSobj
   *
   * This is despite the fact that no code appears to put it on SSobj, but
@@ -310,7 +313,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Generate an firealarm alert for this area
   *
   * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
-  * 
+  *
   * Also starts the area processing on SSobj
   */
 /area/proc/firealert(obj/source)
@@ -344,7 +347,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   *
   * resets the alert sent to all ai players, alert consoles, drones and alarm monitor programs
   * in the world
-  * 
+  *
   * Also cycles the icons of all firealarms and deregisters the area from processing on SSOBJ
   */
 /area/proc/firereset(obj/source)
@@ -440,12 +443,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		L.update()
 
 /**
-  * Update the icon of the area
+  * Update the icon state of the area
   *
   * Im not sure what the heck this does, somethign to do with weather being able to set icon
   * states on areas?? where the heck would that even display?
   */
-/area/proc/update_icon()
+/area/update_icon_state()
 	var/weather_icon
 	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
@@ -458,13 +461,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /**
   * Update the icon of the area (overridden to always be null for space
   */
-/area/space/update_icon()
+/area/space/update_icon_state()
 	icon_state = null
 
 
 /**
   * Returns int 1 or 0 if the area has power for the given channel
-  * 
+  *
   * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
   * per channel power_equip, power_light, power_environ
   */
@@ -564,7 +567,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /**
   * Call back when an atom enters an area
-  * 
+  *
   * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to the atom)
   *
   * If the area has ambience, then it plays some ambience music to the ambience channel
@@ -595,6 +598,17 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
 			L.client.played = TRUE
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
+
+///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
+/area/proc/update_beauty()
+	if(!areasize)
+		beauty = 0
+		return FALSE
+	if(areasize >= beauty_threshold)
+		beauty = 0
+		return FALSE //Too big
+	beauty = totalbeauty / areasize
+
 
 /**
   * Called when an atom exits an area

@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Syndicate lavaland base no longer uses gas miners, and their atmos should now be usable every round. Some repiping done in the process, non-functional tank consoles gone."

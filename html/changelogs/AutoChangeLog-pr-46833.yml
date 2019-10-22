@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - bugfix: "Dwarves with wings no longer lose the ability to walk over tables by closing their wings"

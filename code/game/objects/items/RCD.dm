@@ -22,7 +22,7 @@ RLD
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(/datum/material/iron=100000)
+	custom_materials = list(/datum/material/iron=100000)
 	req_access_txt = "11"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
@@ -134,7 +134,7 @@ RLD
 	else
 		if(silo_mats.on_hold())
 			if(user)
-				to_chat(user, "Mineral access is on hold, please contact the quartermaster.")
+				to_chat(user, "<span class='alert'>Mineral access is on hold, please contact the quartermaster.</span>")
 			return FALSE
 		if(!silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount))
 			if(user)
@@ -151,7 +151,7 @@ RLD
 	else
 		if(silo_mats.on_hold())
 			if(user)
-				to_chat(user, "Mineral access is on hold, please contact the quartermaster.")
+				to_chat(user, "<span class='alert'>Mineral access is on hold, please contact the quartermaster.</span>")
 			return FALSE
 		. = silo_mats.mat_container.has_materials(list(/datum/material/iron = 500), amount)
 	if(!. && user)
@@ -173,6 +173,12 @@ RLD
 	else
 		return FALSE
 
+/obj/item/construction/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
 
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
@@ -309,12 +315,6 @@ RLD
 	//Not scaling these down to button size because they look horrible then, instead just bumping up radius.
 	return MA
 
-/obj/item/construction/rcd/proc/check_menu(mob/living/user)
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
-		return FALSE
-	return TRUE
 /obj/item/construction/rcd/proc/change_computer_dir(mob/user)
 	if(!user)
 		return
@@ -642,11 +642,11 @@ RLD
 	w_class = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(/datum/material/iron=12000, /datum/material/glass=8000)
+	custom_materials = list(/datum/material/iron=12000, /datum/material/glass=8000)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
-	materials = list(/datum/material/iron=48000, /datum/material/glass=32000)
+	custom_materials = list(/datum/material/iron=48000, /datum/material/glass=32000)
 	ammoamt = 160
 
 
@@ -708,7 +708,7 @@ RLD
 	var/color_choice = null
 
 
-/obj/item/construction/rld/ui_action_click(mob/user, var/datum/action/A)
+/obj/item/construction/rld/ui_action_click(mob/user, datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
 		color_choice = input(user,"","Choose Color",color_choice) as color
 	else
@@ -839,6 +839,80 @@ RLD
 				G.update_brightness()
 				return TRUE
 			return FALSE
+
+/obj/item/construction/plumbing
+	name = "Plumbing Constructor"
+	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
+	icon_state = "plumberer2"
+	icon = 'icons/obj/tools.dmi'
+
+	matter = 200
+	max_matter = 200
+
+	///type of the plumbing machine
+	var/blueprint = null
+	///index, used in the attack self to get the type. stored here since it doesnt change
+	var/list/choices = list()
+	///index, used in the attack self to get the type. stored here since it doesnt change
+	var/list/name_to_type = list()
+	///
+	var/list/machinery_data = list("cost" = list(), "delay" = list())
+
+/obj/item/construction/plumbing/attack_self(mob/user)
+	..()
+	if(!choices.len)
+		for(var/A in subtypesof(/obj/machinery/plumbing))
+			var/obj/machinery/plumbing/M = A
+			if(initial(M.rcd_constructable))
+				choices += list(initial(M.name) = image(icon = initial(M.icon), icon_state = initial(M.icon_state)))
+				name_to_type[initial(M.name)] = M
+				machinery_data["cost"][A] = initial(M.rcd_cost)
+				machinery_data["delay"][A] = initial(M.rcd_delay)
+
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	if(!check_menu(user))
+		return
+
+	blueprint = name_to_type[choice]
+	playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
+	to_chat(user, "<span class='notice'>You change [name]s blueprint to '[choice]'.</span>")
+
+///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
+/obj/item/construction/plumbing/proc/create_machine(atom/A, mob/user)
+	if(!machinery_data || !isopenturf(A))
+		return FALSE
+
+	if(checkResource(machinery_data["cost"][blueprint], user) && blueprint)
+		if(do_after(user, machinery_data["delay"][blueprint], target = A))
+			if(checkResource(machinery_data["cost"][blueprint], user) && canPlace(A))
+				useResource(machinery_data["cost"][blueprint], user)
+				activate()
+				playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+				new blueprint (A, FALSE, FALSE)
+				return TRUE
+
+/obj/item/construction/plumbing/proc/canPlace(turf/T)
+	if(!isopenturf(T))
+		return FALSE
+	. = TRUE
+	for(var/obj/O in T.contents)
+		if(O.density) //let's not built ontop of dense stuff, like big machines and other obstacles, it kills my immershion
+			return FALSE
+
+/obj/item/construction/plumbing/afterattack(atom/A, mob/user, proximity)
+	. = ..()
+	if(!prox_check(proximity))
+		return
+	if(istype(A, /obj/machinery/plumbing))
+		var/obj/machinery/plumbing/P = A
+		if(P.anchored)
+			to_chat(user, "<span class='warning'>The [P.name] needs to be unanchored!</span>")
+			return
+		if(do_after(user, 20, target = P))
+			P.deconstruct() //Let's not substract matter
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
+	else
+		create_machine(A, user)
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"

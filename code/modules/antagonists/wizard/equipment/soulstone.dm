@@ -79,6 +79,9 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
+	if(!M.mind.hasSoul || isdevil(M))
+		to_chat(user, "<span class='warning'>This... thing has no soul! It's filled with evil!</span>")
+		return
 	if(iscultist(M))
 		if(iscultist(user))
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
@@ -105,8 +108,6 @@
 
 /obj/item/soulstone/proc/release_shades(mob/user)
 	for(var/mob/living/simple_animal/shade/A in src)
-		A.status_flags &= ~GODMODE
-		A.mobility_flags = MOBILITY_FLAGS_DEFAULT
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
 		if(purified)
@@ -202,10 +203,7 @@
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
 			else
-				T.forceMove(src) //put shade in stone
-				T.status_flags |= GODMODE
-				T.mobility_flags = NONE
-				T.health = T.maxHealth
+				T.AddComponent(/datum/component/soulstoned, src)
 				if(purified)
 					icon_state = "purified_soulstone2"
 					if(iscultist(T))
@@ -291,8 +289,7 @@
 	T.invisibility = INVISIBILITY_ABSTRACT
 	T.dust_animation()
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)
-	S.status_flags |= GODMODE //So they won't die inside the stone somehow
-	S.mobility_flags = NONE //Can't move out of the soul stone
+	S.AddComponent(/datum/component/soulstoned, src)
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	S.key = shade_controller.key

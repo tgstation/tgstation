@@ -31,7 +31,7 @@
 	if(speak_emote)
 		D.speak_emote = speak_emote
 
-/datum/dog_fashion/proc/get_overlay(var/dir)
+/datum/dog_fashion/proc/get_overlay(dir)
 	if(icon_file && obj_icon_state)
 		var/image/corgI = image(icon_file, obj_icon_state, dir = dir)
 		corgI.alpha = obj_alpha
@@ -51,7 +51,7 @@
 
 /datum/dog_fashion/head/chef
 	name = "Sous chef REAL_NAME"
-	desc = "Your food will be taste-tested.  All of it."
+	desc = "Your food will be taste-tested. All of it."
 
 
 /datum/dog_fashion/head/captain
@@ -114,7 +114,7 @@
 
 /datum/dog_fashion/head/blue_wizard
 	name = "Grandwizard REAL_NAME"
-	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI NATH!")
 
 /datum/dog_fashion/head/red_wizard
 	name = "Pyromancer REAL_NAME"

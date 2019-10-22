@@ -22,7 +22,7 @@ AI MODULES
 	throw_range = 7
 	var/list/laws = list()
 	var/bypass_law_amt_check = 0
-	materials = list(/datum/material/gold = 50)
+	custom_materials = list(/datum/material/gold = 50)
 
 /obj/item/aiModule/examine(var/mob/user as mob)
 	. = ..()
@@ -161,7 +161,7 @@ AI MODULES
 
 /obj/item/aiModule/supplied/safeguard/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
-		to_chat(user, "No name detected on module, please enter one.")
+		to_chat(user, "<span class='alert'>No name detected on module, please enter one.</span>")
 		return 0
 	..()
 
@@ -187,7 +187,7 @@ AI MODULES
 
 /obj/item/aiModule/zeroth/oneHuman/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
-		to_chat(user, "No name detected on module, please enter one.")
+		to_chat(user, "<span class='alert'>No name detected on module, please enter one.</span>")
 		return 0
 	..()
 
@@ -253,7 +253,7 @@ AI MODULES
 
 /obj/item/aiModule/supplied/freeform/install(datum/ai_laws/law_datum, mob/user)
 	if(laws[1] == "")
-		to_chat(user, "No law detected on module, please create one.")
+		to_chat(user, "<span class='alert'>No law detected on module, please create one.</span>")
 		return 0
 	..()
 

@@ -273,7 +273,7 @@
 
 	if(setting == "Hallucination Type")
 		var/list/possible_hallucinations = list("Random","Message","Battle","Sound","Weird Sound","Station Message","Health","Alert","Fire","Shock","Plasma Flood")
-		var/hal_type_choice = input("Choose the hallucination type", name) as null|anything in possible_hallucinations
+		var/hal_type_choice = input("Choose the hallucination type", name) as null|anything in sortList(possible_hallucinations)
 		if(!hal_type_choice)
 			return
 		switch(hal_type_choice)
@@ -288,7 +288,7 @@
 			if("Battle")
 				hal_type = "Battle"
 				var/sound_list = list("random","laser","disabler","esword","gun","stunprod","harmbaton","bomb")
-				var/hal_choice = input("Choose the hallucination battle type", name) as null|anything in sound_list
+				var/hal_choice = input("Choose the hallucination battle type", name) as null|anything in sortList(sound_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else
@@ -296,7 +296,7 @@
 			if("Sound")
 				hal_type = "Sound"
 				var/sound_list = list("random","airlock","airlock pry","console","explosion","far explosion","mech","glass","alarm","beepsky","mech","wall decon","door hack")
-				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sound_list
+				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sortList(sound_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else
@@ -304,7 +304,7 @@
 			if("Weird Sound")
 				hal_type = "Weird Sound"
 				var/sound_list = list("random","phone","hallelujah","highlander","laughter","hyperspace","game over","creepy","tesla")
-				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sound_list
+				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sortList(sound_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else
@@ -312,7 +312,7 @@
 			if("Station Message")
 				hal_type = "Station Message"
 				var/msg_list = list("random","ratvar","shuttle dock","blob alert","malf ai","meteors","supermatter")
-				var/hal_choice = input("Choose the hallucination station message", name) as null|anything in msg_list
+				var/hal_choice = input("Choose the hallucination station message", name) as null|anything in sortList(msg_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else
@@ -320,7 +320,7 @@
 			if("Health")
 				hal_type = "Health"
 				var/health_list = list("random","critical","dead","healthy")
-				var/hal_choice = input("Choose the health status", name) as null|anything in health_list
+				var/hal_choice = input("Choose the health status", name) as null|anything in sortList(health_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else
@@ -334,7 +334,7 @@
 			if("Alert")
 				hal_type = "Alert"
 				var/alert_list = list("random","not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","gravity","fire","locked","hacked","temphot","tempcold","pressure")
-				var/hal_choice = input("Choose the alert", name) as null|anything in alert_list
+				var/hal_choice = input("Choose the alert", name) as null|anything in sortList(alert_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else
@@ -359,3 +359,63 @@
 	target.hal_type = hal_type
 	target.hal_details = hal_details
 	target.comm_code = comm_code
+
+/datum/nanite_program/good_mood
+	name = "Happiness Enhancer"
+	desc = "The nanites synthesize serotonin inside the host's brain, creating an artificial sense of happiness."
+	use_rate = 0.1
+	rogue_types = list(/datum/nanite_program/brain_decay)
+	extra_settings = list("Mood Message")
+	var/message = "HAPPINESS ENHANCEMENT"
+
+/datum/nanite_program/good_mood/set_extra_setting(user, setting)
+	if(setting == "Mood Message")
+		var/new_message = stripped_input(user, "Choose the message visible on the mood effect.", "Message", message, MAX_NAME_LEN)
+		if(!new_message)
+			return
+		message = new_message
+
+/datum/nanite_program/good_mood/get_extra_setting(setting)
+	if(setting == "Mood Message")
+		return message
+
+/datum/nanite_program/good_mood/copy_extra_settings_to(datum/nanite_program/good_mood/target)
+	target.message = message
+
+/datum/nanite_program/good_mood/enable_passive_effect()
+	. = ..()
+	SEND_SIGNAL(host_mob, COMSIG_ADD_MOOD_EVENT, "nanite_happy", /datum/mood_event/nanite_happiness, message)
+
+/datum/nanite_program/good_mood/disable_passive_effect()
+	. = ..()
+	SEND_SIGNAL(host_mob, COMSIG_CLEAR_MOOD_EVENT, "nanite_happy")
+
+/datum/nanite_program/bad_mood
+	name = "Happiness Suppressor"
+	desc = "The nanites suppress the production of serotonin inside the host's brain, creating an artificial state of depression."
+	use_rate = 0.1
+	rogue_types = list(/datum/nanite_program/brain_decay)
+	extra_settings = list("Mood Message")
+	var/message = "HAPPINESS SUPPRESSION"
+
+/datum/nanite_program/bad_mood/set_extra_setting(user, setting)
+	if(setting == "Mood Message")
+		var/new_message = stripped_input(user, "Choose the message visible on the mood effect.", "Message", message, MAX_NAME_LEN)
+		if(!new_message)
+			return
+		message = new_message
+
+/datum/nanite_program/bad_mood/get_extra_setting(setting)
+	if(setting == "Mood Message")
+		return message
+
+/datum/nanite_program/bad_mood/copy_extra_settings_to(datum/nanite_program/bad_mood/target)
+	target.message = message
+
+/datum/nanite_program/bad_mood/enable_passive_effect()
+	. = ..()
+	SEND_SIGNAL(host_mob, COMSIG_ADD_MOOD_EVENT, "nanite_sadness", /datum/mood_event/nanite_sadness, message)
+
+/datum/nanite_program/bad_mood/disable_passive_effect()
+	. = ..()
+	SEND_SIGNAL(host_mob, COMSIG_CLEAR_MOOD_EVENT, "nanite_sadness")
