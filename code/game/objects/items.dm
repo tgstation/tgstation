@@ -246,7 +246,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	// Extractable materials. Only shows the names, not the amounts.
 	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
-	if (custom_materials.len)
+	if (length(custom_materials))
 		sep = ""
 		for(var/mat in custom_materials)
 			research_msg += sep
@@ -389,7 +389,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user, silent = FALSE)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(1)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -403,7 +403,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(1)
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
 
@@ -417,7 +417,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // for items that can be placed in multiple slots
 // Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(1)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
@@ -758,7 +758,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!delay && !tool_start_check(user, amount))
 		return
 
-	delay *= toolspeed
+	var/skill_modifier = 1
+
+	if(tool_behaviour == TOOL_MINING && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		skill_modifier = H.mind.get_skill_speed_modifier(/datum/skill/mining)
+
+	delay *= toolspeed * skill_modifier	
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)

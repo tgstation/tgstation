@@ -1,4 +1,0 @@
-author: "PKPenguin321"
-delete-after: True
-changes: 
-  - bugfix: "If you somehow manage to get a container into a another container that is smaller than it, like a bag in a box, you're no longer able to put things into that bigger container (such as the bag in the box)."

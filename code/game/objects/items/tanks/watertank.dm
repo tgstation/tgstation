@@ -234,7 +234,7 @@
 /obj/item/extinguisher/mini/nozzle/doMove(atom/destination)
 	if(destination && (destination != tank.loc || !ismob(destination)))
 		if(loc != tank)
-			to_chat(tank.loc, "<span class='notice'>The nozzle snaps back onto the tank!</span>")
+			to_chat(tank.loc, "<span class='notice'>The nozzle snaps back onto the tank.</span>")
 		destination = tank
 	..()
 
@@ -243,17 +243,17 @@
 		if(EXTINGUISHER)
 			nozzle_mode = RESIN_LAUNCHER
 			tank.icon_state = "waterbackpackatmos_1"
-			to_chat(user, "Swapped to resin launcher")
+			to_chat(user, "<span class='notice'>Swapped to resin launcher.</span>")
 			return
 		if(RESIN_LAUNCHER)
 			nozzle_mode = RESIN_FOAM
 			tank.icon_state = "waterbackpackatmos_2"
-			to_chat(user, "Swapped to resin foamer")
+			to_chat(user, "<span class='notice'>Swapped to resin foamer.</span>")
 			return
 		if(RESIN_FOAM)
 			nozzle_mode = EXTINGUISHER
 			tank.icon_state = "waterbackpackatmos_0"
-			to_chat(user, "Swapped to water extinguisher")
+			to_chat(user, "<span class='notice'>Swapped to water extinguisher.</span>")
 			return
 	return
 

@@ -624,7 +624,7 @@
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
-		to_chat(user, "There is no [fitting] in this light.")
+		to_chat(user, "<span class='warning'>There is no [fitting] in this light!</span>")
 		return
 
 	// make it burn hands unless you're wearing heat insulated gloves or have the RESISTHEAT/RESISTHEATHANDS traits
@@ -691,7 +691,7 @@
 
 /obj/machinery/light/attack_tk(mob/user)
 	if(status == LIGHT_EMPTY)
-		to_chat(user, "There is no [fitting] in this light.")
+		to_chat(user, "<span class='warning'>There is no [fitting] in this light!</span>")
 		return
 
 	to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
@@ -731,7 +731,7 @@
 
 // called when area power state changes
 /obj/machinery/light/power_change()
-	SHOULD_CALL_PARENT(FALSE)
+	SHOULD_CALL_PARENT(0)
 	var/area/A = get_area(src)
 	seton(A.lightswitch && A.power_light)
 

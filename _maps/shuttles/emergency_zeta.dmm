@@ -178,8 +178,7 @@
 "E" = (
 /obj/structure/table/abductor,
 /obj/item/crowbar/abductor{
-	pixel_x = -13;
-	pixel_y = 0
+	pixel_x = -13
 	},
 /obj/item/multitool/abductor,
 /turf/open/floor/plating/abductor,

@@ -51,7 +51,7 @@
 	weapon.attack(C, src)
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 	if(C.stat == DEAD)
-		addtimer(CALLBACK(src, .proc/update_icon), 2)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
 		back_to_idle()
 
 

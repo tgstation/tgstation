@@ -1,0 +1,5 @@
+author: "bandit"
+delete-after: True
+changes: 
+  - bugfix: "Ghosts can't use security cameras anymore. Get off your ghost hindquarters and go there yourself."
+  - bugfix: "Simple animals with hands (gorillas, drones, etc.) can now drag themselves onto crates."

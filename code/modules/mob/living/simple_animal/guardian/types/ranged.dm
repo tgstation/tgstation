@@ -97,7 +97,7 @@
 	set name = "Remove Surveillance Snare"
 	set category = "Guardian"
 	set desc = "Disarm unwanted surveillance snares."
-	var/picked_snare = input(src, "Pick which snare to remove", "Remove Snare") as null|anything in src.snares
+	var/picked_snare = input(src, "Pick which snare to remove", "Remove Snare") as null|anything in sortNames(src.snares)
 	if(picked_snare)
 		src.snares -= picked_snare
 		qdel(picked_snare)

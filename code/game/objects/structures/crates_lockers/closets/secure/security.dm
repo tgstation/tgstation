@@ -34,7 +34,6 @@
 	new /obj/item/door_remote/captain(src)
 	new /obj/item/card/id/captains_spare(src)
 	new /obj/item/storage/photo_album/Captain(src)
-	new /obj/item/card/id/departmental_budget/civ(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "\proper head of personnel's locker"
@@ -64,7 +63,6 @@
 	new /obj/item/door_remote/civillian(src)
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/HoP(src)
-	new /obj/item/card/id/departmental_budget/srv(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -100,7 +98,6 @@
 	new /obj/item/pinpointer/nuke(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/HoS(src)
-	new /obj/item/card/id/departmental_budget/sec(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "\proper warden's locker"
@@ -268,7 +265,7 @@
 
 /obj/structure/closet/secure_closet/armory1/PopulateContents()
 	..()
-	new /obj/item/clothing/suit/armor/laserproof(src)
+	new /obj/item/clothing/suit/hooded/ablative(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/riot(src)
 	for(var/i in 1 to 3)

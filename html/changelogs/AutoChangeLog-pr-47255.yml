@@ -1,0 +1,4 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - bugfix: "Lawyer ID color changed to reflect that Lawyers report to the Head of Personnel"
