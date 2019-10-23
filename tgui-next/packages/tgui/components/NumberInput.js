@@ -7,13 +7,7 @@ import { Box } from './Box';
 export class NumberInput extends Component {
   constructor(props) {
     super(props);
-    const {
-      value,
-      step = 1,
-      stepPixelSize = 1,
-      onChange,
-      onDrag,
-    } = props;
+    const { value } = props;
     this.inputRef = createRef();
     this.state = {
       value,
@@ -22,15 +16,16 @@ export class NumberInput extends Component {
       internalValue: null,
       origin: null,
     };
+
     this.handleDragStart = e => {
       const { value } = this.props;
       document.body.style['pointer-events'] = 'none';
       this.ref = e.target;
-      this.setState(prevState => ({
+      this.setState({
         dragging: false,
         origin: e.screenY,
         internalValue: value,
-      }));
+      });
       this.timer = setTimeout(() => {
         this.setState({
           dragging: true,
@@ -38,6 +33,7 @@ export class NumberInput extends Component {
       }, 250);
       this.dragInterval = setInterval(() => {
         const { dragging, value } = this.state;
+        const { onDrag } = this.props;
         if (dragging && onDrag) {
           onDrag(e, value);
         }
@@ -45,10 +41,11 @@ export class NumberInput extends Component {
       document.addEventListener('mousemove', this.handleDragMove);
       document.addEventListener('mouseup', this.handleDragEnd);
     };
+
     this.handleDragMove = e => {
+      const { minValue, maxValue, step, stepPixelSize } = this.props;
       this.setState(prevState => {
         const state = { ...prevState };
-        const { minValue, maxValue } = this.props;
         const offset = state.origin - e.screenY;
         if (prevState.dragging) {
           state.internalValue = clamp(
@@ -61,12 +58,13 @@ export class NumberInput extends Component {
         }
         else if (Math.abs(offset) > 4) {
           state.dragging = true;
-          // state.origin = e.screenY;
         }
         return state;
       });
     };
+
     this.handleDragEnd = e => {
+      const { onChange, onDrag } = this.props;
       const { dragging, value } = this.state;
       document.body.style['pointer-events'] = 'auto';
       clearTimeout(this.timer);
@@ -89,7 +87,6 @@ export class NumberInput extends Component {
           onDrag(e, value);
         }
       }
-      // document.body.focus();
       document.removeEventListener('mousemove', this.handleDragMove);
       document.removeEventListener('mouseup', this.handleDragEnd);
     };
@@ -137,9 +134,6 @@ export class NumberInput extends Component {
             display: !editing ? 'none' : undefined,
           }}
           value={internalValue}
-          onClick={e => {
-            // e.stopImmediatePropagation();
-          }}
           onBlur={e => {
             const value = clamp(e.target.value, minValue, maxValue);
             this.setState({
@@ -178,4 +172,6 @@ NumberInput.defaultHooks = pureComponentHooks;
 NumberInput.defaultProps = {
   minValue: -Infinity,
   maxValue: +Infinity,
+  step: 1,
+  stepPixelSize: 1,
 };
