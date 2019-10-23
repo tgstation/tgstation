@@ -306,7 +306,7 @@
 
 ///returns the amount of material relevant to this container; if this container does not support glass, any glass in 'I' will not be taken into account
 /datum/component/material_container/proc/get_item_material_amount(obj/item/I)
-	if(!istype(I))
+	if(!istype(I) || !I.custom_materials)
 		return FALSE
 	var/material_amount = 0
 	for(var/MAT in materials)

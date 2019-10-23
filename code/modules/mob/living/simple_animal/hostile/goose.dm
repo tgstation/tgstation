@@ -64,6 +64,10 @@
 	goosevomit = new
 	goosevomit.Grant(src)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/goosement)
+	// 5% chance every round to have anarchy mode deadchat control on birdboat.
+	if(prob(5))
+		desc = "[initial(desc)] It's waddling more than usual. It seems to be possessed."
+		deadchat_plays_goose()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Destroy()
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
@@ -154,6 +158,16 @@
 		vomit_prestart(vomitTimeBonus + 25)
 		vomitCoefficient = 1
 		vomitTimeBonus = 0
+
+/// A proc to make it easier for admins to make the goose playable by deadchat.
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/deadchat_plays_goose()
+	stop_automated_movement = TRUE
+	AddComponent(/datum/component/deadchat_control, ANARCHY_MODE, list(
+	 "up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
+	 "down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
+	 "left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
+	 "right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST),
+	 "vomit" = CALLBACK(src, .proc/vomit_prestart, 25)), 12 SECONDS, 4 SECONDS)
 
 /datum/action/cooldown/vomit
 	name = "Vomit"

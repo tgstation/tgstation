@@ -6,6 +6,7 @@
 	rogue_types = list(/datum/nanite_program/toxic)
 	extra_settings = list("Program Overwrite","Cloud Overwrite")
 
+	var/pulse_cooldown = 0
 	var/sync_programs = TRUE
 	var/sync_overwrite = FALSE
 	var/overwrite_cloud = FALSE
@@ -67,12 +68,16 @@
 	target.sync_overwrite = sync_overwrite
 
 /datum/nanite_program/viral/active_effect()
+	if(world.time < pulse_cooldown)
+		return
 	for(var/mob/M in orange(host_mob, 5))
-		if(prob(5))
-			if(sync_programs)
-				SEND_SIGNAL(M, COMSIG_NANITE_SYNC, nanites, sync_overwrite)
-			if(overwrite_cloud)
-				SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD, set_cloud)
+		if(SEND_SIGNAL(M, COMSIG_NANITE_IS_STEALTHY))
+			continue
+		if(sync_programs)
+			SEND_SIGNAL(M, COMSIG_NANITE_SYNC, nanites, sync_overwrite)
+		if(overwrite_cloud)
+			SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD, set_cloud)
+	pulse_cooldown = world.time + 75
 
 /datum/nanite_program/monitoring
 	name = "Monitoring"
@@ -103,7 +108,7 @@
 /datum/nanite_program/triggered/self_scan/set_extra_setting(user, setting)
 	if(setting == "Scan Type")
 		var/list/scan_types = list("Medical","Chemical","Nanite")
-		var/new_scan_type = input("Choose the scan type", name) as null|anything in scan_types
+		var/new_scan_type = input("Choose the scan type", name) as null|anything in sortList(scan_types)
 		if(!new_scan_type)
 			return
 		scan_type = new_scan_type
@@ -130,7 +135,7 @@
 
 /datum/nanite_program/stealth
 	name = "Stealth"
-	desc = "The nanites hide their activity and programming from superficial scans."
+	desc = "The nanites mask their activity from superficial scans, becoming undetectable by HUDs and non-specialized scanners."
 	rogue_types = list(/datum/nanite_program/toxic)
 	use_rate = 0.2
 
@@ -141,6 +146,21 @@
 /datum/nanite_program/stealth/disable_passive_effect()
 	. = ..()
 	nanites.stealth = FALSE
+
+/datum/nanite_program/reduced_diagnostics
+	name = "Reduced Diagnostics"
+	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners. \
+	Doing so saves some power, slightly increasing their replication speed."
+	rogue_types = list(/datum/nanite_program/toxic)
+	use_rate = -0.1
+
+/datum/nanite_program/reduced_diagnostics/enable_passive_effect()
+	. = ..()
+	nanites.diagnostics = FALSE
+
+/datum/nanite_program/reduced_diagnostics/disable_passive_effect()
+	. = ..()
+	nanites.diagnostics = TRUE
 
 /datum/nanite_program/relay
 	name = "Relay"
@@ -241,22 +261,27 @@
 			resulting in an extremely infective strain of nanites."
 	use_rate = 1.50
 	rogue_types = list(/datum/nanite_program/aggressive_replication, /datum/nanite_program/necrotic)
+	var/spread_cooldown = 0
 
 /datum/nanite_program/spreading/active_effect()
-	if(prob(10))
-		var/list/mob/living/target_hosts = list()
-		for(var/mob/living/L in oview(5, host_mob))
-			if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
-				continue
-			target_hosts += L
-		if(!target_hosts.len)
-			return
-		var/mob/living/infectee = pick(target_hosts)
-		if(prob(100 - (infectee.get_permeability_protection() * 100)))
-			//this will potentially take over existing nanites!
-			infectee.AddComponent(/datum/component/nanites, 10)
-			SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
-			infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
+	if(spread_cooldown < world.time)
+		return
+	spread_cooldown = world.time + 50
+	var/list/mob/living/target_hosts = list()
+	for(var/mob/living/L in oview(5, host_mob))
+		if(!prob(25))
+			continue
+		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
+			continue
+		target_hosts += L
+	if(!target_hosts.len)
+		return
+	var/mob/living/infectee = pick(target_hosts)
+	if(prob(100 - (infectee.get_permeability_protection() * 100)))
+		//this will potentially take over existing nanites!
+		infectee.AddComponent(/datum/component/nanites, 10)
+		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
+		infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/triggered/nanite_sting
 	name = "Nanite Sting"
@@ -302,3 +327,90 @@
 		if(fault == src)
 			return
 		fault.software_error()
+
+/datum/nanite_program/dermal_button
+	name = "Dermal Button"
+	desc = "Displays a button on the host's skin, which can be used to send a signal to the nanites."
+	extra_settings = list("Sent Code","Button Name","Icon","Color")
+	unique = FALSE
+	var/datum/action/innate/nanite_button/button
+	var/button_name = "Button"
+	var/icon = "power"
+	var/color = "green"
+	var/sent_code = 0
+
+/datum/nanite_program/dermal_button/set_extra_setting(user, setting)
+	if(setting == "Sent Code")
+		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
+		if(isnull(new_code))
+			return
+		sent_code = CLAMP(round(new_code, 1), 1, 9999)
+	if(setting == "Button Name")
+		var/new_button_name = stripped_input(user, "Choose the name for the button.", "Button Name", button_name, MAX_NAME_LEN)
+		if(!new_button_name)
+			return
+		button_name = new_button_name
+	if(setting == "Icon")
+		var/new_icon = input("Select the icon to display on the button:", name) as null|anything in list("one","two","three","four","five","plus","minus","power")
+		if(!new_icon)
+			return
+		icon = new_icon
+	if(setting == "Color")
+		var/new_color = input("Select the color of the button's icon:", name) as null|anything in list("green","red","yellow","blue")
+		if(!new_color)
+			return
+		color = new_color
+
+/datum/nanite_program/dermal_button/get_extra_setting(setting)
+	if(setting == "Sent Code")
+		return sent_code
+	if(setting == "Button Name")
+		return button_name
+	if(setting == "Icon")
+		return capitalize(icon)
+	if(setting == "Color")
+		return capitalize(color)
+
+/datum/nanite_program/dermal_button/copy_extra_settings_to(datum/nanite_program/dermal_button/target)
+	target.sent_code = sent_code
+	target.button_name = button_name
+	target.icon = icon
+	target.color = color
+
+/datum/nanite_program/dermal_button/enable_passive_effect()
+	. = ..()
+	if(!button)
+		button = new(src, button_name, icon, color)
+	button.target = host_mob
+	button.Grant(host_mob)
+
+/datum/nanite_program/dermal_button/disable_passive_effect()
+	. = ..()
+	if(button)
+		button.Remove(host_mob)
+
+/datum/nanite_program/dermal_button/on_mob_remove()
+	. = ..()
+	qdel(button)
+
+/datum/nanite_program/dermal_button/proc/press()
+	if(activated)
+		host_mob.visible_message("<span class='notice'>[host_mob] presses a button on [host_mob.p_their()] forearm.</span>",
+								"<span class='notice'>You press the nanite button on your forearm.</span>", null, 2)
+		SEND_SIGNAL(host_mob, COMSIG_NANITE_SIGNAL, sent_code, "a [name] program")
+
+/datum/action/innate/nanite_button
+	name = "Button"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
+	button_icon_state = "power_green"
+	var/datum/nanite_program/dermal_button/program
+
+/datum/action/innate/nanite_button/New(datum/nanite_program/dermal_button/_program, _name, _icon, _color)
+	..()
+	program = _program
+	name = _name
+	button_icon_state = "[_icon]_[_color]"
+
+/datum/action/innate/nanite_button/Activate()
+	program.press()

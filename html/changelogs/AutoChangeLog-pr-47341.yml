@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a bug causing dynamic to not run any rulesets."

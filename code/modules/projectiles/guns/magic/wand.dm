@@ -67,11 +67,20 @@
 
 /obj/item/gun/magic/wand/death/zap_self(mob/living/user)
 	..()
-	to_chat(user, "<span class='warning'>You irradiate yourself with pure energy! \
+	charges--
+	if(user.anti_magic_check())
+		user.visible_message("<span class='warning'>[src] has no effect on [user]!</span>")
+		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
+			user.revive(full_heal = TRUE, admin_revive = FALSE)
+			to_chat(user, "<span class='notice'>You feel great!</span>")
+			return
+	to_chat(user, "<span class='warning'>You irradiate yourself with pure negative energy! \
 	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
 	</span>")
-	user.adjustOxyLoss(500)
-	charges--
+	user.death(FALSE)
 
 /obj/item/gun/magic/wand/death/debug
 	desc = "In some obscure circles, this is known as the 'cloning tester's friend'."
@@ -99,11 +108,15 @@
 	if(user.anti_magic_check())
 		user.visible_message("<span class='warning'>[src] has no effect on [user]!</span>")
 		return
-	user.revive(full_heal = 1)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		C.regenerate_limbs()
-		C.regenerate_organs()
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+			to_chat(user, "<span class='warning'>You irradiate yourself with pure positive energy! \
+			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
+			</span>")
+			user.death(0)
+			return
+	user.revive(full_heal = TRUE, admin_revive = FALSE)
 	to_chat(user, "<span class='notice'>You feel great!</span>")
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing

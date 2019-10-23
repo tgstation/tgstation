@@ -53,8 +53,7 @@
 
 /obj/item/defibrillator/update_icon()
 	update_power()
-	update_overlays()
-	update_charge()
+	return ..()
 
 /obj/item/defibrillator/proc/update_power()
 	if(!QDELETED(cell))
@@ -65,23 +64,21 @@
 	else
 		powered = FALSE
 
-/obj/item/defibrillator/proc/update_overlays()
-	cut_overlays()
-	if(!on)
-		add_overlay("[initial(icon_state)]-paddles")
-	if(powered)
-		add_overlay("[initial(icon_state)]-powered")
-	if(!cell)
-		add_overlay("[initial(icon_state)]-nocell")
-	if(!safety)
-		add_overlay("[initial(icon_state)]-emagged")
+/obj/item/defibrillator/update_overlays()
+	. = ..()
 
-/obj/item/defibrillator/proc/update_charge()
-	if(powered) //so it doesn't show charge if it's unpowered
+	if(!on)
+		. += "[initial(icon_state)]-paddles"
+	if(powered)
+		. += "[initial(icon_state)]-powered"
 		if(!QDELETED(cell))
 			var/ratio = cell.charge / cell.maxcharge
 			ratio = CEILING(ratio*4, 1) * 25
-			add_overlay("[initial(icon_state)]-charge[ratio]")
+			. += "[initial(icon_state)]-charge[ratio]"
+	if(!cell)
+		. += "[initial(icon_state)]-nocell"
+	if(!safety)
+		. += "[initial(icon_state)]-emagged"
 
 /obj/item/defibrillator/CheckParts(list/parts_list)
 	..()
@@ -630,7 +627,7 @@
 					user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful.</span>")
 					playsound(src, 'sound/machines/defib_success.ogg', 50, FALSE)
 					H.set_heartattack(FALSE)
-					H.revive()
+					H.revive(full_heal = FALSE, admin_revive = FALSE)
 					H.emote("gasp")
 					H.Jitter(100)
 					SEND_SIGNAL(H, COMSIG_LIVING_MINOR_SHOCK)

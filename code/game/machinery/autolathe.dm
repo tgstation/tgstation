@@ -198,7 +198,7 @@
 						if(materials.materials[i] > 0)
 							list_to_show += i
 
-					used_material = input("Choose [used_material]", "Custom Material") as null|anything in list_to_show
+					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sortList(list_to_show, /proc/cmp_typepaths_asc)
 					if(!used_material)
 						return //Didn't pick any material, so you can't build shit either.
 					custom_materials[used_material] += amount_needed

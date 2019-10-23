@@ -102,3 +102,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_reagents_asc(datum/reagent/a, datum/reagent/b)
     return sorttext(initial(b.name),initial(a.name))
+
+/proc/cmp_typepaths_asc(A, B)
+    return sorttext("[B]","[A]")
