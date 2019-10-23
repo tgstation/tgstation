@@ -57,11 +57,11 @@
 	else
 		new /obj/item/stack/sheet/bone(src, 1)
 	var/flags = NONE
-	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
+	if(defer_change)
 		flags = CHANGETURF_DEFER_CHANGE
 	ScrapeAway(flags=flags)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
-	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
+	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
 
 /turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
 	.=..()
@@ -69,9 +69,9 @@
 		icon_state = "[environment_type][rand(0,6)]"
 
 //***Oil well puddles.
-/obj/structure/sink/oil_well	//Not going to enjoy bathing in this...
+/obj/structure/sink/oil_well	//You're not going to enjoy bathing in this...
 	name = "oil well"
-	desc = "A bubbling pool of oil. Would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
+	desc = "A bubbling pool of oil.This would probably be valuable, had bluespace technology not destroyed the need for fossil fuels 200 years ago."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "puddle-oil"
 	dispensedreagent = /datum/reagent/fuel/oil
@@ -130,7 +130,6 @@
 		if(7)
 			new /obj/item/clothing/glasses/sunglasses(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
-
 
 obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
 	if(opened == FALSE)

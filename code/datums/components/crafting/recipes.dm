@@ -748,7 +748,7 @@
             /obj/item/stack/sheet/bone = 6,
             /datum/reagent/fuel/oil = 5)
 	result = /obj/structure/statue/bone/skull
-	subcategory = CAT_PRIMAL
+	category = CAT_PRIMAL
 
 /datum/crafting_recipe/halfskull
 	name = "Cracked Skull Carving"
@@ -757,7 +757,7 @@
             /obj/item/stack/sheet/bone = 3,
             /datum/reagent/fuel/oil = 5)
 	result = /obj/structure/statue/bone/skull/half
-	subcategory = CAT_PRIMAL
+	category = CAT_PRIMAL
 
 /datum/crafting_recipe/boneshovel
 	name = "Serrated Bone Shovel"
@@ -767,4 +767,4 @@
             /datum/reagent/fuel/oil = 5,
             /obj/item/shovel/spade = 1)
 	result = /obj/item/shovel/serrated
-	subcategory = CAT_PRIMAL
+	category = CAT_PRIMAL
