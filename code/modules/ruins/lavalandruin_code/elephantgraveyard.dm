@@ -41,12 +41,27 @@
 
 /turf/closed/mineral/strong/wasteland
 	name = "Ancient dry rock"
+	color = "#B5651D"
 	environment_type = "wasteland"
 	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = 1
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
+
+/turf/closed/mineral/strong/wasteland/gets_drilled(user)
+	if(prob(10))
+		new /obj/item/stack/ore/iron(src, 1)
+		new /obj/item/stack/ore/glass(src, 1)
+		new /obj/effect/decal/remains/human(src, 1)
+	else
+		new /obj/item/stack/sheet/bone(src, 1)
+	var/flags = NONE
+	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
+		flags = CHANGETURF_DEFER_CHANGE
+	ScrapeAway(flags=flags)
+	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
+	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
 
 /turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
 	.=..()
@@ -95,30 +110,24 @@
 	..()
 	switch(rand(1,8))
 		if(1)
-			new /obj/effect/mob_spawn/human/skeleton
 			new /obj/item/coin/gold(src)
 			new /obj/item/storage/wallet(src)
 		if(2)
-			new /obj/effect/mob_spawn/human/skeleton
 			new /obj/item/clothing/glasses/meson(src)
 		if(3)
-			new /obj/effect/mob_spawn/human/skeleton
 			new /obj/item/coin/silver(src)
 			new /obj/item/shovel/spade(src)
 		if(4)
-			new /obj/effect/mob_spawn/human/skeleton
 			new /obj/item/storage/book/bible/booze(src)
 		if(5)
-			new /obj/effect/mob_spawn/human/skeleton
 			new /obj/item/clothing/neck/stethoscope(src)
 			new	/obj/item/scalpel(src)
-			new /obj/item/hemostat
+			new /obj/item/hemostat(src)
+
 		if(6)
-			new /obj/effect/mob_spawn/human/skeleton
-			new /obj/item/storage/box/beakers(src)
+			new /obj/item/reagent_containers/glass/beaker(src)
 			new /obj/item/clothing/glasses/science(src)
 		if(7)
-			new /obj/effect/mob_spawn/human/skeleton
 			new /obj/item/clothing/glasses/sunglasses(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
 
@@ -201,7 +210,7 @@ obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
 	icon = 'icons/obj/library.dmi'
 	icon_state = "boneworking_learing"
 	oneuse = FALSE
-	remarks = list("Who knew you could bend bones that far back?", "I guess that was much easier before the planet heated up...", "So that's how they made those ruins survive the ashstorms. Neat!", "The page is just filled with insane ramblings about some 'legion' thing.", "But why would they need vinegar to polish the bones? And Rags too?", "You spend a few moments cleaning dirt and blood off of the page, yeesh.")
+	remarks = list("Who knew you could bend bones that far back?", "I guess that was much easier before the planet heated up...", "So that's how they made those ruins survive the ashstorms. Neat!", "The page is just filled with insane ramblings about some 'legion' thing.", "But why would they need vinegar to polish the bones? And rags too?", "You spend a few moments cleaning dirt and blood off of the page, yeesh.")
 
 
 //***Fluff items for lore/intrigue
@@ -224,7 +233,7 @@ obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
 	info = "Alright, we all know that stuck up son a bitch is just doing this to keep us satisifed. Who the hell does he think he is, taking extra rations? We're OUT OF FOOD, CARL. Tomorrow at noon, we're going to try and take the ship by force. He HAS to be lying about the engine cooling down. He HAS TO BE. I'm tellin ya, with this implant I lifted off that last supply ship, I got the smarts to get us offa this shithole. Keep your knife handy carl."
 
 /obj/item/paper/fluff/ruins/elephant_graveyard/hypothesis
-	name = "Reserach Document"
+	name = "Research Document"
 	desc = "Standard Nanotrasen typeface for important research documents."
 	info = "<b>Day 9: Tenative Conclusions</b><BR><BR>While the area appears to be of significant cultural importantance to the lizard race, outside of some sparce contact with native wildlife, we've yet to find any reasoning for the nature of this phenomenon exactly. It seems that organic life is communally drawn to this planet as though it functions as a final resting place for intelegent life. As per company guidelines, this site shall be given the following classification: 'LZ-0271 - Elephant Graveyard' <BR><BR><u>Compiled list of Artifact findings (Currently Sent Offsite)</u><BR>Cultist Blade Fragments: x8<BR>Brass Multiplicative Ore Sample: x105<BR>Syndicate Revolutionary Leader Implant (Broken) x1<BR>Extinct Cortical Borer Tissue Sample x1<BR>Space Carp Fossil x3"
 

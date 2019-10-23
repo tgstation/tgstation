@@ -12,7 +12,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet/crate/grave/lead_researcher,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/item/paper/fluff/ruins/elephant_graveyard/final_message,
+/obj/effect/mob_spawn/human/skeleton,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "ae" = (
@@ -38,7 +38,10 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "aj" = (
-/obj/structure/closet/crate/grave,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/item/paper/fluff/ruins/elephant_graveyard/final_message,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "ak" = (
@@ -75,7 +78,11 @@
 "aq" = (
 /obj/structure/flora/rock,
 /obj/structure/cable,
-/obj/item/pickaxe,
+/obj/item/pickaxe{
+	layer = 2.5;
+	pixel_x = -8;
+	pixel_y = 5
+	},
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "ar" = (
@@ -166,7 +173,7 @@
 "aI" = (
 /obj/effect/spawner/structure/window/shuttle,
 /obj/structure/grille,
-/turf/open/floor/grass/snow/basalt,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/graveyard_shuttle)
 "aJ" = (
 /obj/structure/table,
@@ -289,9 +296,6 @@
 /area/ruin/powered/graveyard_shuttle)
 "bh" = (
 /obj/effect/decal/cleanable/oil,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/structure/chair/office/light,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
@@ -418,11 +422,12 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "bH" = (
-/turf/open/floor/grass/snow/basalt,
+/obj/item/paper/fluff/ruins/elephant_graveyard,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface)
 "bI" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/grass/snow/basalt,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/graveyard_shuttle)
 "bJ" = (
 /obj/structure/sign/warning/xeno_mining,
@@ -487,6 +492,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/ruin/unpowered/elephant_graveyard)
+"bW" = (
+/obj/effect/decal/cleanable/glass,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/airlock/shuttle{
+	name = "archaeology shuttle airlock"
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/graveyard_shuttle)
 "bX" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -500,8 +513,7 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "bZ" = (
-/obj/item/paper/fluff/ruins/elephant_graveyard,
-/turf/open/floor/grass/snow/basalt,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface)
 "ca" = (
 /obj/structure/table,
@@ -563,13 +575,10 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "cl" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "archaeology shuttle"
-	},
-/obj/effect/decal/cleanable/glass,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/mineral/titanium/purple,
-/area/ruin/powered/graveyard_shuttle)
+/obj/structure/closet/crate/grave,
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/plating/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
 "cm" = (
 /obj/structure/table/optable,
 /obj/item/storage/backpack/explorer,
@@ -590,6 +599,7 @@
 /obj/structure/rack,
 /obj/item/shovel,
 /obj/structure/cable,
+/obj/item/wrench,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "cq" = (
@@ -624,17 +634,18 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
+"cw" = (
+/obj/structure/closet/crate/grave,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/plating/asteroid/basalt/wasteland,
+/area/ruin/unpowered/elephant_graveyard)
 "cx" = (
 /obj/item/light/bulb/broken,
 /obj/effect/turf_decal/caution/stand_clear/white,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/graveyard_shuttle)
-"cy" = (
-/obj/structure/closet/crate/grave,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
 "cz" = (
 /obj/structure/stone_tile,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -850,7 +861,7 @@ aY
 ae
 bv
 ae
-aj
+cl
 ae
 ae
 aC
@@ -992,7 +1003,7 @@ ae
 ae
 ae
 ae
-aj
+cl
 ae
 ae
 ae
@@ -1041,7 +1052,7 @@ cz
 ae
 ae
 bn
-cy
+cw
 bf
 bf
 bB
@@ -1061,7 +1072,7 @@ bf
 bf
 bf
 al
-aj
+cl
 ae
 ae
 ae
@@ -1096,7 +1107,7 @@ bf
 ad
 ae
 bf
-aj
+cl
 al
 ae
 ae
@@ -1113,7 +1124,7 @@ ae
 ct
 ar
 ae
-aj
+cl
 ae
 ae
 bf
@@ -1130,7 +1141,7 @@ ac
 "}
 (14,1,1) = {"
 bf
-ai
+aj
 ae
 bf
 ae
@@ -1153,8 +1164,8 @@ ae
 ae
 aE
 bw
-ac
-aj
+bf
+cl
 bB
 ae
 ac
@@ -1183,7 +1194,7 @@ ae
 ae
 ae
 ae
-cy
+cw
 ae
 ae
 ae
@@ -1262,7 +1273,7 @@ ba
 ae
 ae
 aE
-aj
+cl
 al
 bf
 bf
@@ -1458,8 +1469,8 @@ ab
 ab
 ab
 ab
-bH
-bH
+bZ
+bZ
 "}
 (23,1,1) = {"
 aa
@@ -1489,13 +1500,13 @@ ab
 ab
 ab
 ab
-bH
-bH
-bH
+bZ
+bZ
 bZ
 bH
-bH
-bH
+bZ
+bZ
+bZ
 ab
 "}
 (24,1,1) = {"
@@ -1513,24 +1524,24 @@ bf
 aH
 aH
 bg
-cl
+bW
 bg
 aH
 aH
 aH
+bH
 bZ
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
+bZ
+bZ
+bZ
+bZ
+bZ
+bZ
+bZ
+bZ
+bZ
+bZ
+bZ
 ab
 ab
 ab
@@ -1543,7 +1554,7 @@ aa
 aa
 at
 bf
-ac
+bf
 bf
 bf
 aH
@@ -1556,15 +1567,15 @@ by
 aH
 aH
 bI
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
+bZ
+bZ
+bZ
+bZ
+bZ
+bZ
+bZ
+bZ
+bZ
 ab
 ab
 ab
@@ -1593,10 +1604,10 @@ cx
 bE
 aH
 bI
-bH
-bH
-bH
-bH
+bZ
+bZ
+bZ
+bZ
 ab
 ab
 ab
@@ -1630,9 +1641,9 @@ bA
 aH
 aH
 bI
-bH
-bH
-bH
+bZ
+bZ
+bZ
 ab
 ab
 ab
@@ -1666,8 +1677,8 @@ aH
 aH
 aH
 aH
-bH
-bH
+bZ
+bZ
 ab
 ab
 ab
