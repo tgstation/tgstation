@@ -27,7 +27,7 @@
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull-half"
 
-//***Wasteland and cracked earth floor tiles.
+//***Wasteland and cracked earth floor tiles, subtype of strong stone to use here.
 /turf/open/floor/plating/asteroid/basalt/wasteland //Like a more fun version of living in Arizona.
 	name = "cracked earth"
 	icon = 'icons/turf/floors.dmi'
@@ -38,6 +38,15 @@
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	slowdown = 0.5
 	floor_variance = 30
+
+/turf/closed/mineral/strong/wasteland
+	name = "Ancient dry rock"
+	environment_type = "wasteland"
+	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
+	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = 1
+	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
 
 /turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
 	.=..()
@@ -196,37 +205,6 @@ obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
 
 
 //***Fluff items for lore/intrigue
-/*/obj/item/taperecorder/final_message
-	name = "battered tape"
-	desc = "This old, beat up tape was clutched in the hand of the lead researcher. It's tabled 'FINAL MESSAGE'."
-	icon_state = "tape_yellow"
-
-/obj/item/taperecorder/final_message/Initialize()
-	. = ..()
-	PresetMessage()
-
-/obj/item/tape/final_message/proc/PresetMessage()
-	recording = 1
-	mytape.storedinfo += "\[\"00:00\"\] Recording started."
-	mytape.storedinfo += "\[\"00:01\"\] \'Hello? Hello?\'"
-	mytape.storedinfo += "\[\"00:03\"\] \'If you find this... you don't need to know who I am.\'"
-	mytape.storedinfo += "\[\"00:06\"\] \'You need to leave this place.\'"
-	mytape.storedinfo += "\[\"00:08\"\] \'I dunno what shit they did to me out here, but I don't think I'm going to be making it out of here.\'"
-	mytape.storedinfo += "\[\"00:10\"\] \'This place... it wears down your psyche. The other researchers out here laughed it off but...\'"
-	mytape.storedinfo += "\[\"00:14\"\] \'They were the first to go.\'"
-	mytape.storedinfo += "\[\"00:18\"\] \'One by one they started turning on each other.\'"
-	mytape.storedinfo += "\[\"00:23\"\] \'The more they found out, the more they started fighting and arguing...\'"
-	mytape.storedinfo += "\[\"00:26\"\] \'As I speak now, I had to...\'"
-	mytape.storedinfo += "\[\"00:30\"\] \'I...\'"
-	mytape.storedinfo += "\[\"00:34\"\] \'I had to put some of them down.\'"
-	mytape.storedinfo += "\[\"00:38\"\] \'I know what I had to do, and I know there's no way left for me to live with myself.\'"
-	mytape.storedinfo += "\[\"00:41\"\] \'Don't dig up the graves. Don't even THINK about it.\'"
-	mytape.storedinfo += "\[\"00:43\"\] \'With me... all of this dies.\'"
-	mytape.storedinfo += "\[\"00:50\"\] \'Signing off. Heh.\'"
-	recording = 0
-	return
-	*/
-
 /obj/item/paper/fluff/ruins/elephant_graveyard
 	name = "Posted Warning"
 	desc = "It seems to be smudged with mud and... oil?"
