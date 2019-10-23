@@ -27,8 +27,6 @@
 	. = ..()
 	if(.)
 		return
-	if (!parent_turret)
-		return
 	return parent_turret.attack_ai(user)
 
 
@@ -36,14 +34,10 @@
 	. = ..()
 	if(.)
 		return
-	if (!parent_turret)
-		return
 	return parent_turret.attack_hand(user)
 
 
 /obj/machinery/porta_turret_cover/attackby(obj/item/I, mob/user, params)
-	if(!parent_turret)
-		return ..()
 	if(I.tool_behaviour == TOOL_WRENCH && !parent_turret.on)
 		if(parent_turret.raised)
 			return
@@ -77,31 +71,21 @@
 		return ..()
 
 /obj/machinery/porta_turret_cover/attacked_by(obj/item/I, mob/user)
-	if(!parent_turret)
-		return ..()
 	parent_turret.attacked_by(I, user)
 
 /obj/machinery/porta_turret_cover/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(!parent_turret)
-		return ..()
 	parent_turret.attack_alien(user)
 
 /obj/machinery/porta_turret_cover/attack_animal(mob/living/simple_animal/user)
-	if(!parent_turret)
-		return ..()
 	parent_turret.attack_animal(user)
 
 /obj/machinery/porta_turret_cover/attack_hulk(mob/living/carbon/human/user)
-	if(!parent_turret)
-		return ..()
 	return parent_turret.attack_hulk(user)
 
 /obj/machinery/porta_turret_cover/can_be_overridden()
 	. = 0
 
 /obj/machinery/porta_turret_cover/emag_act(mob/user)
-	if(!parent_turret)
-		return
 	if(!(parent_turret.obj_flags & EMAGGED))
 		to_chat(user, "<span class='notice'>You short out [parent_turret]'s threat assessment circuits.</span>")
 		visible_message("<span class='hear'>[parent_turret] hums oddly...</span>")
