@@ -63,8 +63,7 @@
 			continue
 		if(sync_programs)
 			SEND_SIGNAL(M, COMSIG_NANITE_SYNC, nanites, sync_overwrite)
-		if(overwrite_cloud)
-			SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD, set_cloud)
+		SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD, set_cloud)
 	pulse_cooldown = world.time + 75
 
 /datum/nanite_program/monitoring
