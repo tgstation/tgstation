@@ -44,9 +44,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_clientcolour_priority(datum/client_colour/A, datum/client_colour/B)
 	return B.priority - A.priority
 
-/proc/cmp_clockscripture_priority(datum/clockwork_scripture/A, datum/clockwork_scripture/B)
-	return initial(A.sort_priority) - initial(B.sort_priority)
-
 /proc/cmp_ruincost_priority(datum/map_template/ruin/A, datum/map_template/ruin/B)
 	return initial(A.cost) - initial(B.cost)
 
@@ -105,3 +102,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_reagents_asc(datum/reagent/a, datum/reagent/b)
     return sorttext(initial(b.name),initial(a.name))
+
+/proc/cmp_typepaths_asc(A, B)
+    return sorttext("[B]","[A]")

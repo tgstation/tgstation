@@ -271,11 +271,11 @@
 			open = !open
 			to_chat(user, "<span class='notice'>The maintenance panel is now [open ? "opened" : "closed"].</span>")
 		else
-			to_chat(user, "<span class='warning'>The maintenance panel is locked.</span>")
+			to_chat(user, "<span class='warning'>The maintenance panel is locked!</span>")
 	else if(istype(W, /obj/item/card/id) || istype(W, /obj/item/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
-			to_chat(user, "Controls are now [locked ? "locked." : "unlocked."]")
+			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
 			if(emagged)
 				to_chat(user, "<span class='danger'>ERROR</span>")
@@ -285,7 +285,7 @@
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if(istype(W, /obj/item/paicard))
 		insertpai(user, W)
-	else if(istype(W, /obj/item/hemostat) && paicard)
+	else if(W.tool_behaviour == TOOL_HEMOSTAT && paicard)
 		if(open)
 			to_chat(user, "<span class='warning'>Close the access panel before manipulating the personality slot!</span>")
 		else
@@ -312,7 +312,7 @@
 				do_sparks(5, TRUE, src)
 			..()
 
-/mob/living/simple_animal/bot/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		if(prob(75) && Proj.damage > 0)
 			do_sparks(5, TRUE, src)
@@ -588,19 +588,20 @@ Pass a positive integer as an argument to override a bot's default speed.
 		mode = BOT_IDLE
 		return
 
-	if(patrol_target)		// has patrol target
-		spawn(0)
-			calc_path()		// Find a route to it
-			if(path.len == 0)
-				patrol_target = null
-				return
-			mode = BOT_PATROL
+	if(patrol_target) // has patrol target
+		INVOKE_ASYNC(src, .proc/target_patrol)
 	else					// no patrol target, so need a new one
 		speak("Engaging patrol mode.")
 		find_patrol_target()
 		tries++
 	return
 
+/mob/living/simple_animal/bot/proc/target_patrol()
+	calc_path()		// Find a route to it
+	if(!path.len)
+		patrol_target = null
+		return
+	mode = BOT_PATROL
 // perform a single patrol step
 
 /mob/living/simple_animal/bot/proc/patrol_step()
@@ -828,11 +829,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 				bot_reset()
 		if("ejectpai")
 			if(paicard && (!locked || issilicon(usr) || IsAdminGhost(usr)))
-				to_chat(usr, "<span class='notice'>You eject [paicard] from [bot_name]</span>")
+				to_chat(usr, "<span class='notice'>You eject [paicard] from [bot_name].</span>")
 				ejectpai(usr)
 	update_controls()
 
-/mob/living/simple_animal/bot/proc/update_icon()
+/mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[initial(icon_state)][on]"
 
 // Machinery to simplify topic and access calls
@@ -908,7 +909,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		else
 			to_chat(user, "<span class='warning'>The personality slot is locked.</span>")
 	else
-		to_chat(user, "<span class='warning'>[src] is not compatible with [card]</span>")
+		to_chat(user, "<span class='warning'>[src] is not compatible with [card]!</span>")
 
 /mob/living/simple_animal/bot/proc/ejectpai(mob/user = null, announce = 1)
 	if(paicard)
@@ -944,10 +945,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	bot_reset()
 
-/mob/living/simple_animal/bot/revive(full_heal = 0, admin_revive = 0)
+/mob/living/simple_animal/bot/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(..())
 		update_icon()
-		. = 1
+		. = TRUE
 
 /mob/living/simple_animal/bot/ghost()
 	if(stat != DEAD) // Only ghost if we're doing this while alive, the pAI probably isn't dead yet.

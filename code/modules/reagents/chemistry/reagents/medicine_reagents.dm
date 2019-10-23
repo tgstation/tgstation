@@ -303,8 +303,7 @@
 			var/mob/living/carbon/C = M
 			for(var/s in C.surgeries)
 				var/datum/surgery/S = s
-				S.success_multiplier = max(0.1, S.success_multiplier)
-				// +10% success propability on each step, useful while operating in less-than-perfect conditions
+				S.speed_modifier = max(0.1, S.speed_modifier)
 
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your wounds fade away to nothing!</span>" )
@@ -386,7 +385,7 @@
 	. = 1
 
 /datum/reagent/medicine/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#D2D2D2"
@@ -732,7 +731,7 @@
 			M.adjustOxyLoss(-20, 0)
 			M.adjustToxLoss(-20, 0)
 			M.updatehealth()
-			if(M.revive())
+			if(M.revive(full_heal = FALSE, admin_revive = FALSE))
 				M.emote("gasp")
 				log_combat(M, M, "revived", src)
 	..()
@@ -938,16 +937,13 @@
 
 /datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
 	M.hallucination = min(max(0, M.hallucination + 5), 60)
-	M.adjustToxLoss(5 * REM, 0)
-	if(ishuman(M)) //monkeys get a free pass, since they're closer to nature or something. I mean, they still take the tox damage and stuff, but they don't get a pacifism brain trauma upon ODing.
-		var/mob/living/carbon/human/hippie = M
-		var/obj/item/organ/brain/hippiebrain = hippie?.getorganslot(ORGAN_SLOT_BRAIN)
-		if(hippiebrain)
-			var/datum/brain_trauma/severe/pacifism/PBT = hippiebrain.has_trauma_type(/datum/brain_trauma/severe/pacifism)
-			if(!PBT)
-				hippiebrain.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_SURGERY) //if you don't have a pacifism brain trauma, this will give you one
-			else if(PBT.resilience < TRAUMA_RESILIENCE_SURGERY)
-				PBT.resilience = TRAUMA_RESILIENCE_SURGERY  //bumps up your pacifism brain trauma's resilience up to the surgery tier, but won't lower its resilience if it was of a higher tier than that
+	if(current_cycle > 25)
+		M.adjustToxLoss(4 * REM, 0)
+		if(current_cycle > 100) //podpeople get out reeeeeeeeeeeeeeeeeeeee
+			M.adjustToxLoss(6 * REM, 0)
+	if(iscarbon(M))
+		var/mob/living/carbon/hippie = M
+		hippie.gain_trauma(/datum/brain_trauma/severe/pacifism)
 	..()
 	. = 1
 
@@ -999,10 +995,26 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
-	M.AdjustAllImmobility(-20, FALSE)
-	M.adjustStaminaLoss(-1, 0)
 	..()
+	M.AdjustAllImmobility(-20, FALSE)
+	M.adjustStaminaLoss(-10, 0)
+	M.Jitter(10)
+	M.Dizzy(10)
 	return TRUE
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.ignore_slowdown(type)
+
+/datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
+	..()
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.unignore_slowdown(type)
+	L.Dizzy(0)
+	L.Jitter(0)
 
 /datum/reagent/medicine/changelingadrenaline/overdose_process(mob/living/M as mob)
 	M.adjustToxLoss(1, 0)
@@ -1108,11 +1120,11 @@
 			if(prob(50))
 				M.losebreath++
 			if(prob(20))
-				to_chat(M, "You have a sudden fit!")
+				to_chat(M, "<span class='userdanger'>You have a sudden fit!</span>")
 				M.emote("moan")
 				M.Paralyze(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
-			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
+			to_chat(M, "<span class='userdanger'>You feel too exhausted to continue!</span>") // at this point you will eventually die unless you get charcoal
 			M.adjustOxyLoss(0.1*REM, 0)
 			M.adjustStaminaLoss(0.1*REM, 0)
 		if(82 to INFINITY)
@@ -1199,7 +1211,7 @@
 
 /datum/reagent/medicine/rhigoxane
 	name = "Rhigoxane"
-	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. It's high halogen content helps extiguish fires."
+	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
 	reagent_state = LIQUID
 	color = "#B6D2F2"
 	overdose_threshold = 25
@@ -1226,7 +1238,14 @@
 	M.adjustFireLoss(3*REM, 0.)
 	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	..()
-  
+
+/datum/reagent/medicine/silibinin
+	name = "Silibinin"
+	description = "A thistle derrived hepatoprotective flavolignan mixture that help reverse damage to the liver."
+	reagent_state = SOLID
+	color = "#FFFFD0"
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
 /datum/reagent/medicine/silibinin/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, -2)//Add a chance to cure liver trauma once implemented.
 	..()
@@ -1263,3 +1282,62 @@
 	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
 	..()
 	. = 1
+
+/datum/reagent/medicine/granibitaluri
+	name = "Granibitaluri" //achieve "GRANular" amounts of C2
+	description = "A chemical solution useful as a diluent for more potent medicine. Especially useful when combined with brute/burn medication. Large amounts can cause fluid to appear in both the lungs and the heart."
+	reagent_state = LIQUID
+	overdose_threshold = 50
+	metabolization_rate = 0.2 //same as C2s
+
+/datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M)
+	var/tdamage = M.getBruteLoss() //1 var + 2 proccall < 4 proccalls
+	if(tdamage && tdamage <= 10)
+		M.adjustBruteLoss(-0.1)
+	else
+		tdamage = M.getFireLoss()
+		if(tdamage && tdamage <= 10)
+			M.adjustFireLoss(-0.1)
+	..()
+	return TRUE
+
+/datum/reagent/medicine/granibitaluri/overdose_process(mob/living/M)
+	. = TRUE
+	M.adjustOrganLoss(ORGAN_SLOT_HEART,0.2)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS,0.2)
+	..()
+
+/datum/reagent/medicine/badstims  //These are bad for combat on purpose. Used in adrenal implant.
+	name = "Experimental Stimulants"
+	description = "Experimental Stimulants designed to get you away from trouble."
+	reagent_state = LIQUID
+	color = "#F5F5F5"
+
+/datum/reagent/medicine/badstims/on_mob_life(mob/living/carbon/M)
+	..()
+	if(prob(30) && iscarbon(M))
+		var/obj/item/I = M.get_active_held_item()
+		if(I && M.dropItemToGround(I))
+			to_chat(M, "<span class='notice'>Your hands spaz out and you drop what you were holding!</span>")
+	if(prob(33))
+		M.losebreath++
+		M.adjustOxyLoss(1, 0)
+	M.adjustStaminaLoss(-10, 0)
+	M.Jitter(10)
+	M.Dizzy(15)
+
+/datum/reagent/medicine/badstims/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.35, blacklisted_movetypes=(FLYING|FLOATING))
+	L.ignore_slowdown(type)
+
+/datum/reagent/medicine/badstims/on_mob_end_metabolize(mob/living/L)
+	..()
+	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
+	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
+	L.remove_movespeed_modifier(type)
+	L.unignore_slowdown(type)
+	L.Dizzy(0)
+	L.Jitter(0)

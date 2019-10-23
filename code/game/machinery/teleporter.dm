@@ -78,7 +78,7 @@
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
-						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
+						to_chat(M, "<span class='hear'>You hear a buzzing in your ears.</span>")
 						human.set_species(/datum/species/fly)
 
 					human.apply_effect((rand(120 - accuracy * 40, 180 - accuracy * 60)), EFFECT_IRRADIATE, 0)
@@ -92,10 +92,6 @@
 		icon_state = "tele1"
 	else
 		icon_state = "tele0"
-
-/obj/machinery/teleport/hub/power_change()
-	..()
-	update_icon()
 
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
@@ -215,8 +211,7 @@
 	add_fingerprint(user)
 
 /obj/machinery/teleport/station/power_change()
-	..()
-	update_icon()
+	. = ..()
 	if(teleporter_hub)
 		teleporter_hub.update_icon()
 

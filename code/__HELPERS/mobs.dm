@@ -137,7 +137,7 @@
 /proc/random_skin_tone()
 	return pick(GLOB.skin_tones)
 
-GLOBAL_LIST_INIT(skin_tones, list(
+GLOBAL_LIST_INIT(skin_tones, sortList(list(
 	"albino",
 	"caucasian1",
 	"caucasian2",
@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(skin_tones, list(
 	"indian",
 	"african1",
 	"african2"
-	))
+	)))
 
 GLOBAL_LIST_EMPTY(species_list)
 
@@ -413,13 +413,13 @@ GLOBAL_LIST_EMPTY(species_list)
 	message = "<span class='deadsay'>[source]<span class='linkify'>[message]</span></span>"
 	for(var/mob/M in GLOB.player_list)
 		var/datum/preferences/prefs
-		if(M.client && M.client.prefs)
+		if(M.client.prefs)
 			prefs = M.client.prefs
 		else
 			prefs = new
 
 		var/override = FALSE
-		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
+		if(M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
 			override = TRUE
 		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE))
 			override = TRUE

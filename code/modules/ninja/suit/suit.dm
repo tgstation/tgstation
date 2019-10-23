@@ -148,7 +148,7 @@ Contents:
 
 
 /obj/item/clothing/suit/space/space_ninja/examine(mob/user)
-	. = .()
+	. = ..()
 	if(s_initialized)
 		if(user == affecting)
 			. += "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.\n"+\
@@ -161,7 +161,7 @@ Contents:
 		toggle_on_off()
 		return TRUE
 	if(!s_initialized)
-		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline.  Please activate suit.</span>")
+		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline. Please activate suit.</span>")
 		return FALSE
 	if(istype(action, /datum/action/item_action/ninjasmoke))
 		ninjasmoke()

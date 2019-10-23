@@ -45,6 +45,8 @@
 
 	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
 	var/list/managed_vis_overlays
+	///overlays managed by update_overlays() to prevent removing overlays that weren't added by the same proc
+	var/list/managed_overlays
 
 	///Proximity monitor associated with this atom
 	var/datum/proximity_monitor/proximity_monitor
@@ -72,6 +74,8 @@
 	var/list/custom_materials
 	///Bitfield for how the atom handles materials.
 	var/material_flags = NONE
+	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
+	var/material_modifier = 1
 
 
 /**
@@ -152,15 +156,12 @@
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
-	if(custom_materials && custom_materials.len)
-		var/temp_list = list()
-		for(var/i in custom_materials)
-			var/datum/material/material = getmaterialref(i) || i
-			temp_list[material] = custom_materials[material] //Get the proper instanced version
+	var/temp_list = list()
+	for(var/i in custom_materials)
+		temp_list[getmaterialref(i)] = custom_materials[i] //Get the proper instanced version
 
-		custom_materials = null //Null the list to prepare for applying the materials properly
-		set_custom_materials(temp_list)
-
+	custom_materials = null //Null the list to prepare for applying the materials properly
+	set_custom_materials(temp_list)
 
 	ComponentInitialize()
 
@@ -213,7 +214,7 @@
 
 	return ..()
 
-/atom/proc/handle_ricochet(obj/item/projectile/P)
+/atom/proc/handle_ricochet(obj/projectile/P)
 	return
 
 ///Can the mover object pass this atom, while heading for the target turf
@@ -414,7 +415,7 @@
   *
   * Default behaviour is to send the COMSIG_ATOM_BULLET_ACT and then call on_hit() on the projectile
   */
-/atom/proc/bullet_act(obj/item/projectile/P, def_zone)
+/atom/proc/bullet_act(obj/projectile/P, def_zone)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
 	. = P.on_hit(src, 0, def_zone)
 
@@ -485,6 +486,31 @@
 				. += "<span class='danger'>It's empty.</span>"
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+
+/// Updates the icon of the atom
+/atom/proc/update_icon()
+	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
+	
+	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_ICON_STATE))
+		update_icon_state()
+	
+	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_OVERLAYS))
+		var/list/new_overlays = update_overlays()
+		if(managed_overlays)
+			cut_overlay(managed_overlays)
+			managed_overlays = null
+		if(length(new_overlays))
+			managed_overlays = new_overlays
+			add_overlay(new_overlays)
+
+/// Updates the icon state of the atom
+/atom/proc/update_icon_state()
+
+/// Updates the overlays of the atom
+/atom/proc/update_overlays()
+	SHOULD_CALL_PARENT(1)
+	. = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
 /**
   * An atom we are buckled or is contained within us has tried to move
@@ -598,12 +624,6 @@
 		return FALSE
 	return add_blood_DNA(blood_dna)
 
-///wash cream off this object
-///
-///(for the love of space jesus please make this a component)
-/atom/proc/wash_cream()
-	return TRUE
-
 ///Is this atom in space
 /atom/proc/isinspace()
 	if(isspaceturf(get_turf(src)))
@@ -660,13 +680,6 @@
 /atom/proc/narsie_act()
 	SEND_SIGNAL(src, COMSIG_ATOM_NARSIE_ACT)
 
-/**
-  * Respond to ratvar eating our atom
-  *
-  * Default behaviour is to send COMSIG_ATOM_RATVAR_ACT and return
-  */
-/atom/proc/ratvar_act()
-	SEND_SIGNAL(src, COMSIG_ATOM_RATVAR_ACT)
 
 ///Return the values you get when an RCD eats you?
 /atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -894,7 +907,7 @@
 						if(!valid_id)
 							to_chat(usr, "<span class='warning'>A reagent with that ID doesn't exist!</span>")
 				if("Choose from a list")
-					chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in subtypesof(/datum/reagent)
+					chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in sortList(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc)
 				if("I'm feeling lucky")
 					chosen_id = pick(subtypesof(/datum/reagent))
 			if(chosen_id)
@@ -925,11 +938,15 @@
 				var/angle = input(usr, "Choose angle to rotate","Transform Mod") as null|num
 				if(!isnull(angle))
 					transform = M.Turn(angle)
+	if(href_list[VV_HK_AUTO_RENAME] && check_rights(R_VAREDIT))
+		var/newname = input(usr, "What do you want to rename this to?", "Automatic Rename") as null|text
+		if(newname)
+			vv_auto_rename(newname)
 
 /atom/vv_get_header()
 	. = ..()
 	var/refid = REF(src)
-	. += "[VV_HREF_TARGETREF_1V(refid, VV_HK_BASIC_EDIT, "<b id='name'>[src]</b>", NAMEOF(src, name))]"
+	. += "[VV_HREF_TARGETREF(refid, VV_HK_AUTO_RENAME, "<b id='name'>[src]</b>")]"
 	. += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir' id='dir'>[dir2text(dir) || dir]</a> <a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=right'>>></a></font>"
 
 ///Where atoms should drop if taken from this atom
@@ -938,6 +955,9 @@
 	if(!L)
 		return null
 	return L.AllowDrop() ? L : L.drop_location()
+
+/atom/proc/vv_auto_rename(newname)
+	name = newname
 
 /**
   * An atom has entered this atom's contents
@@ -1161,16 +1181,25 @@
 	return FALSE
 
 ///Sets the custom materials for an item.
-/atom/proc/set_custom_materials(var/list/materials, multiplier = 1)
+/atom/proc/set_custom_materials(list/materials, multiplier = 1)
+
+	if(!materials)
+		materials = custom_materials
+
 	if(custom_materials) //Only runs if custom materials existed at first. Should usually be the case but check anyways
 		for(var/i in custom_materials)
-			var/datum/material/custom_material = i
+			var/datum/material/custom_material = getmaterialref(i)
 			custom_material.on_removed(src, material_flags) //Remove the current materials
+
+	if(!length(materials))
+		return
 
 	custom_materials = list() //Reset the list
 
 	for(var/x in materials)
-		var/datum/material/custom_material = x
+		var/datum/material/custom_material = getmaterialref(x)
 
-		custom_material.on_applied(src, materials[custom_material] * multiplier, material_flags)
-		custom_materials[custom_material] += materials[custom_material] * multiplier
+		if(!(material_flags & MATERIAL_NO_EFFECTS))
+			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
+		custom_materials[custom_material] += materials[x] * multiplier
+

@@ -20,7 +20,7 @@
 	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
-		/mob/living/simple_animal/bot/ed209,\
+		/mob/living/simple_animal/bot/secbot/ed209,\
 		/mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper,\
 		/mob/living/simple_animal/hostile/construct/armored)
 
@@ -36,7 +36,7 @@
 			for(var/path in possible_shapes)
 				var/mob/living/simple_animal/A = path
 				animal_list[initial(A.name)] = path
-			var/new_shapeshift_type = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as null|anything in animal_list
+			var/new_shapeshift_type = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as null|anything in sortList(animal_list)
 			if(shapeshift_type)
 				return
 			shapeshift_type = new_shapeshift_type
@@ -157,7 +157,7 @@
 	if(death)
 		stored.death()
 	else if(source.convert_damage)
-		stored.revive(full_heal = TRUE)
+		stored.revive(full_heal = TRUE, admin_revive = FALSE)
 
 		var/damage_percent = (shape.maxHealth - shape.health)/shape.maxHealth;
 		var/damapply = stored.maxHealth * damage_percent

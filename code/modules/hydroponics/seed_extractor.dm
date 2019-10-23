@@ -112,7 +112,7 @@
 	var/potency = 0
 	var/amount = 0
 
-/datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie, var/poten, var/am = 1)
+/datum/seed_pile/New(name, life, endur, matur, prod, yie, poten, am = 1)
 	src.name = name
 	src.lifespan = life
 	src.endurance = endur
@@ -143,7 +143,7 @@
 	popup.open()
 	return
 
-/obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
+/obj/machinery/seed_extractor/Topic(href, list/href_list)
 	if(..())
 		return
 	usr.set_machine(src)

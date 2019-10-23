@@ -59,6 +59,17 @@
 		var/mob/M = usr
 		M.swap_hand()
 	return 1
+	
+/obj/screen/skills
+	name = "skills"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "skills"
+	screen_loc = ui_skill_menu
+
+/obj/screen/skills/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.mind.print_levels(H)
 
 /obj/screen/craft
 	name = "crafting menu"
@@ -104,21 +115,21 @@
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
 	if(world.time <= usr.next_move)
-		return 1
+		return TRUE
 
 	if(usr.incapacitated())
-		return 1
+		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
-		return 1
+		return TRUE
 
-	if(hud && hud.mymob && slot_id)
+	if(hud?.mymob && slot_id)
 		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
 		if(inv_item)
 			return inv_item.Click(location, control, params)
 
 	if(usr.attack_ui(slot_id))
 		usr.update_inv_hands()
-	return 1
+	return TRUE
 
 /obj/screen/inventory/MouseEntered()
 	..()
@@ -129,35 +140,37 @@
 	cut_overlay(object_overlays)
 	object_overlays.Cut()
 
-/obj/screen/inventory/update_icon()
+/obj/screen/inventory/update_icon_state()
 	if(!icon_empty)
 		icon_empty = icon_state
 
-	if(hud && hud.mymob && slot_id && icon_full)
+	if(hud?.mymob && slot_id && icon_full)
 		if(hud.mymob.get_item_by_slot(slot_id))
 			icon_state = icon_full
 		else
 			icon_state = icon_empty
 
 /obj/screen/inventory/proc/add_overlays()
-	var/mob/user = hud.mymob
+	var/mob/user = hud?.mymob
 
-	if(hud && user && slot_id)
-		var/obj/item/holding = user.get_active_held_item()
+	if(!user || !slot_id)
+		return
 
-		if(!holding || user.get_item_by_slot(slot_id))
-			return
+	var/obj/item/holding = user.get_active_held_item()
 
-		var/image/item_overlay = image(holding)
-		item_overlay.alpha = 92
+	if(!holding || user.get_item_by_slot(slot_id))
+		return
 
-		if(!user.can_equip(holding, slot_id, TRUE))
-			item_overlay.color = "#FF0000"
-		else
-			item_overlay.color = "#00ff00"
+	var/image/item_overlay = image(holding)
+	item_overlay.alpha = 92
 
-		object_overlays += item_overlay
-		add_overlay(object_overlays)
+	if(!user.can_equip(holding, slot_id, TRUE))
+		item_overlay.color = "#FF0000"
+	else
+		item_overlay.color = "#00ff00"
+
+	object_overlays += item_overlay
+	add_overlay(object_overlays)
 
 /obj/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay
@@ -165,45 +178,50 @@
 	var/held_index = 0
 
 /obj/screen/inventory/hand/update_icon()
-	..()
+	. = ..()
 
 	if(!handcuff_overlay)
 		var/state = (!(held_index % 2)) ? "markus" : "gabrielle"
 		handcuff_overlay = mutable_appearance('icons/mob/screen_gen.dmi', state)
 
-	cut_overlays()
+	cut_overlay(list(handcuff_overlay, blocked_overlay, "hand_active"))
 
-	if(hud && hud.mymob)
-		if(iscarbon(hud.mymob))
-			var/mob/living/carbon/C = hud.mymob
-			if(C.handcuffed)
-				add_overlay(handcuff_overlay)
+	if(!hud?.mymob)
+		return
 
-			if(held_index)
-				if(!C.has_hand_for_held_index(held_index))
-					add_overlay(blocked_overlay)
+	if(iscarbon(hud.mymob))
+		var/mob/living/carbon/C = hud.mymob
+		if(C.handcuffed)
+			add_overlay(handcuff_overlay)
 
-		if(held_index == hud.mymob.active_hand_index)
-			add_overlay("hand_active")
+		if(held_index)
+			if(!C.has_hand_for_held_index(held_index))
+				add_overlay(blocked_overlay)
+
+	if(held_index == hud.mymob.active_hand_index)
+		add_overlay("hand_active")
 
 
 /obj/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
-	if(usr.incapacitated() || isobserver(usr))
-		return 1
-	if (ismecha(usr.loc)) // stops inventory actions in a mech
-		return 1
+	var/mob/user = hud?.mymob
+	if(usr != user)
+		return TRUE
+	if(world.time <= user.next_move)
+		return TRUE
+	if(user.incapacitated())
+		return TRUE
+	if (ismecha(user.loc)) // stops inventory actions in a mech
+		return TRUE
 
-	if(hud.mymob.active_hand_index == held_index)
-		var/obj/item/I = hud.mymob.get_active_held_item()
+	if(user.active_hand_index == held_index)
+		var/obj/item/I = user.get_active_held_item()
 		if(I)
 			I.Click(location, control, params)
 	else
-		hud.mymob.swap_hand(held_index)
-	return 1
+		user.swap_hand(held_index)
+	return TRUE
 
 /obj/screen/close
 	name = "close"
@@ -334,12 +352,8 @@
 /obj/screen/mov_intent/Click()
 	toggle(usr)
 
-/obj/screen/mov_intent/update_icon(mob/user)
-	if(!user && hud)
-		user = hud.mymob
-	if(!user)
-		return
-	switch(user.m_intent)
+/obj/screen/mov_intent/update_icon_state()
+	switch(hud?.mymob?.m_intent)
 		if(MOVE_INTENT_WALK)
 			icon_state = "walking"
 		if(MOVE_INTENT_RUN)
@@ -360,10 +374,8 @@
 		return
 	usr.stop_pulling()
 
-/obj/screen/pull/update_icon(mob/mymob)
-	if(!mymob)
-		return
-	if(mymob.pulling)
+/obj/screen/pull/update_icon_state()
+	if(hud?.mymob?.pulling)
 		icon_state = "pull"
 	else
 		icon_state = "pull0"
@@ -392,11 +404,12 @@
 		var/mob/living/L = usr
 		L.lay_down()
 
-/obj/screen/rest/update_icon(mob/mymob)
-	if(!isliving(mymob))
+/obj/screen/rest/update_icon_state()
+	var/mob/living/user = hud?.mymob
+	if(!istype(user))
 		return
-	var/mob/living/L = mymob
-	if(!L.resting)
+	
+	if(!user.resting)
 		icon_state = "act_rest"
 	else
 		icon_state = "act_rest0"
@@ -442,6 +455,7 @@
 	var/selecting = BODY_ZONE_CHEST
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
+	var/mutable_appearance/selecting_appearance
 
 /obj/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -532,26 +546,31 @@
 				return BODY_ZONE_HEAD
 
 /obj/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
-	if(isobserver(user))
+	if(user != hud?.mymob)
 		return
 
 	if(choice != selecting)
 		selecting = choice
-		update_icon(usr)
-	return 1
+		update_icon()
+	
+	return TRUE
 
-/obj/screen/zone_sel/update_icon(mob/user)
-	cut_overlays()
-	add_overlay(mutable_appearance('icons/mob/screen_gen.dmi', "[selecting]"))
-	user.zone_selected = selecting
+/obj/screen/zone_sel/update_icon()
+	. = ..()
+	cut_overlay(selecting_appearance)
+	selecting_appearance = mutable_appearance('icons/mob/screen_gen.dmi', "[selecting]")
+	add_overlay(selecting_appearance)
+	hud?.mymob?.zone_selected = selecting
 
 /obj/screen/zone_sel/alien
 	icon = 'icons/mob/screen_alien.dmi'
 
-/obj/screen/zone_sel/alien/update_icon(mob/user)
-	cut_overlays()
-	add_overlay(mutable_appearance('icons/mob/screen_alien.dmi', "[selecting]"))
-	user.zone_selected = selecting
+/obj/screen/zone_sel/alien/update_icon()
+	. = ..()
+	cut_overlay(selecting_appearance)
+	selecting_appearance = mutable_appearance('icons/mob/screen_alien.dmi', "[selecting]")
+	add_overlay(selecting_appearance)
+	hud?.mymob?.zone_selected = selecting
 
 /obj/screen/zone_sel/robot
 	icon = 'icons/mob/screen_cyborg.dmi'
@@ -611,17 +630,6 @@
 	screen_loc = ui_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/obj/screen/healths/clock
-	icon = 'icons/mob/actions.dmi'
-	icon_state = "bg_clock"
-	screen_loc = ui_health
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/obj/screen/healths/clock/gear
-	icon = 'icons/mob/clockwork_mobs.dmi'
-	icon_state = "bg_gear"
-	screen_loc = ui_internal
-
 /obj/screen/healths/revenant
 	name = "essence"
 	icon = 'icons/mob/actions.dmi'
@@ -640,6 +648,12 @@
 	icon_state = "slime_health0"
 	screen_loc = ui_slime_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	
+/obj/screen/healths/lavaland_elite
+	icon = 'icons/mob/screen_elite.dmi'
+	icon_state = "elite_health0"
+	screen_loc = ui_health
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healthdoll
 	name = "health doll"
@@ -653,11 +667,6 @@
 /obj/screen/mood
 	name = "mood"
 	icon_state = "mood5"
-	screen_loc = ui_mood
-
-/obj/screen/sanity
-	name = "sanity"
-	icon_state = "sanity3"
 	screen_loc = ui_mood
 
 /obj/screen/splash

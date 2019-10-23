@@ -3,7 +3,7 @@
 /datum/nanite_program/regenerative
 	name = "Accelerated Regeneration"
 	desc = "The nanites boost the host's natural regeneration, increasing their healing speed. Does not consume nanites if the host is unharmed."
-	use_rate = 2.5
+	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/regenerative/check_conditions()
@@ -23,11 +23,11 @@
 		if(!parts.len)
 			return
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(1/parts.len, 1/parts.len, null, BODYPART_ORGANIC))
+			if(L.heal_damage(0.5/parts.len, 0.5/parts.len, null, BODYPART_ORGANIC))
 				host_mob.update_damage_overlays()
 	else
-		host_mob.adjustBruteLoss(-1, TRUE)
-		host_mob.adjustFireLoss(-1, TRUE)
+		host_mob.adjustBruteLoss(-0.5, TRUE)
+		host_mob.adjustFireLoss(-0.5, TRUE)
 
 /datum/nanite_program/temperature
 	name = "Temperature Adjustment"
@@ -108,7 +108,7 @@
 /datum/nanite_program/repairing
 	name = "Mechanical Repair"
 	desc = "The nanites fix damage in the host's mechanical limbs."
-	use_rate = 0.5 //much more efficient than organic healing
+	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/necrotic)
 
 /datum/nanite_program/repairing/check_conditions()
@@ -133,13 +133,13 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(1/parts.len, 1/parts.len, null, BODYPART_ROBOTIC))
+			if(L.heal_damage(1.5/parts.len, 1.5/parts.len, null, BODYPART_ROBOTIC)) //much faster than organic healing
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()
 	else
-		host_mob.adjustBruteLoss(-1, TRUE)
-		host_mob.adjustFireLoss(-1, TRUE)
+		host_mob.adjustBruteLoss(-1.5, TRUE)
+		host_mob.adjustFireLoss(-1.5, TRUE)
 
 /datum/nanite_program/purging_advanced
 	name = "Selective Blood Purification"
@@ -248,7 +248,7 @@
 	if(check_revivable())
 		playsound(C, 'sound/machines/defib_success.ogg', 50, FALSE)
 		C.set_heartattack(FALSE)
-		C.revive()
+		C.revive(full_heal = FALSE, admin_revive = FALSE)
 		C.emote("gasp")
 		C.Jitter(100)
 		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8">
+
+<!-- Styles -->
+<link rel="stylesheet" type="text/css" href="tgui.bundle.css">
+
+<!-- This is processed in byond, so interfaces can override the
+  html head if needed, for custom sheets of style etc. -->
+<!--customheadhtml-->
+<script id="data" type="application/json" data-ref="[ref]">{}</script>
+
+</head>
+<body class="theme-[style]">
+
+<!-- New TGUI container -->
+<div id="react-root"></div>
+
+<!-- Old TGUI container -->
+<div id="container" class="container"></div>
+
+<!-- Scripts -->
+<script type="text/javascript">
+// Mark the beginning
+window.__inception__ = new Date().getTime();
+// Early global error handling
+window.onerror = function (msg, url, line, col, error) {
+  var logString = msg + ' (' + url + ' line ' + line + ')'
+    + '\nUser Agent: ' + navigator.userAgent;
+  // Print to the page
+  // NOTE: document.write() only works on IE8.
+  document.write(logString);
+  // Send to the backend
+  var ref = document.getElementById('data').getAttribute('data-ref');
+  location.href = 'byond://?src=' + ref
+    + '&action=tgui:log&error=true'
+    + '&log=' + encodeURIComponent(logString);
+};
+</script>
+<script type="text/javascript" src="shim-console.js"></script>
+<script type="text/javascript" defer src="shim-html5shiv.js"></script>
+<script type="text/javascript" defer src="shim-ie8.js"></script>
+<script type="text/javascript" defer src="shim-dom4.js"></script>
+<script type="text/javascript" defer src="shim-css-om.js"></script>
+<script type="text/javascript" defer src="tgui.bundle.js"></script>
+
+<noscript>
+  <div class="NoticeBox">
+    <div>Javascript is required in order to use this interface.</div>
+    <div>Please enable Javascript and restart the game.</div>
+  </div>
+</noscript>
+
+</body>
+</html>

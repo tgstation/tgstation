@@ -35,7 +35,7 @@
 		return
 
 	if(existing_message)
-		user.visible_message("<span class='notice'>[user] starts erasing [existing_message].</span>", "<span class='notice'>You start erasing [existing_message].</span>", "<span class='italics'>You hear a chipping sound.</span>")
+		user.visible_message("<span class='notice'>[user] starts erasing [existing_message].</span>", "<span class='notice'>You start erasing [existing_message].</span>", "<span class='hear'>You hear a chipping sound.</span>")
 		playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 		if(do_after(user, tool_speed, target = existing_message))
 			user.visible_message("<span class='notice'>[user] erases [existing_message].</span>", "<span class='notice'>You erase [existing_message][existing_message.creator_key == user.ckey ? ", refunding a use" : ""].</span>")
@@ -55,10 +55,10 @@
 		to_chat(user, "<span class='warning'>Someone wrote here before you chose! Find another spot.</span>")
 		return
 	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
-	user.visible_message("<span class='notice'>[user] starts engraving a message into [T]...</span>", "<span class='notice'>You start engraving a message into [T]...</span>", "<span class='italics'>You hear a chipping sound.</span>")
+	user.visible_message("<span class='notice'>[user] starts engraving a message into [T]...</span>", "<span class='notice'>You start engraving a message into [T]...</span>", "<span class='hear'>You hear a chipping sound.</span>")
 	if(can_use() && do_after(user, tool_speed, target = T) && can_use()) //This looks messy but it's actually really clever!
 		if(!locate(/obj/structure/chisel_message) in T)
-			user.visible_message("<span class='notice'>[user] leaves a message for future spacemen!</span>", "<span class='notice'>You engrave a message into [T]!</span>", "<span class='italics'>You hear a chipping sound.</span>")
+			user.visible_message("<span class='notice'>[user] leaves a message for future spacemen!</span>", "<span class='notice'>You engrave a message into [T]!</span>", "<span class='hear'>You hear a chipping sound.</span>")
 			playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 			var/obj/structure/chisel_message/M = new(T)
 			M.register(user, message)
@@ -112,11 +112,10 @@
 	desc = "A message from a past traveler."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "soapstone_message"
-	layer = HIGH_OBJ_LAYER
+	layer = LATTICE_LAYER
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 30
-	layer = LATTICE_LAYER
 
 	var/hidden_message
 	var/creator_key

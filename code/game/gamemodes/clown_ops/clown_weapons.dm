@@ -91,7 +91,7 @@
 /obj/item/melee/transforming/energy/sword/bananium/attackby(obj/item/I, mob/living/user, params)
 	if((world.time > next_trombone_allowed) && istype(I, /obj/item/melee/transforming/energy/sword/bananium))
 		next_trombone_allowed = world.time + 50
-		to_chat(user, "You slap the two swords together. Sadly, they do not seem to fit.")
+		to_chat(user, "<span class='warning'>You slap the two swords together. Sadly, they do not seem to fit!</span>")
 		playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 		return TRUE
 	return ..()
@@ -179,7 +179,7 @@
 	bomb = new /obj/item/grenade/syndieminibomb(src)
 	bomb.det_time = det_time
 	if(iscarbon(loc))
-		to_chat(loc, "[src] begins to beep.")
+		to_chat(loc, "<span class='danger'>[src] begins to beep.</span>")
 		var/mob/living/carbon/C = loc
 		C.throw_mode_on()
 	bomb.preprime(loc, null, FALSE)
@@ -247,7 +247,7 @@
 	desc = "A weapon for combat exosuits. Launches primed tear-stache grenades."
 	icon_state = "mecha_grenadelnchr"
 	projectile = /obj/item/grenade/chem_grenade/teargas/moustache
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	projectiles = 6
 	missile_speed = 1.5
 	projectile_energy_cost = 800

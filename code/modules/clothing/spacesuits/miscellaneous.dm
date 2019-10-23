@@ -163,6 +163,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has blue highlights."
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
+	hardsuit_type = "ert_commander"
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
 	brightness_on = 7
@@ -192,6 +193,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has red highlights."
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
+	hardsuit_type = "ert_security"
 
 /obj/item/clothing/suit/space/hardsuit/ert/sec
 	name = "emergency response team security hardsuit"
@@ -206,6 +208,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has orange highlights."
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
+	hardsuit_type = "ert_engineer"
 
 /obj/item/clothing/suit/space/hardsuit/ert/engi
 	name = "emergency response team engineering hardsuit"
@@ -220,6 +223,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has white highlights."
 	icon_state = "hardsuit0-ert_medical"
 	item_state = "hardsuit0-ert_medical"
+	hardsuit_type = "ert_medical"
 
 /obj/item/clothing/suit/space/hardsuit/ert/med
 	name = "emergency response team medical hardsuit"
@@ -234,6 +238,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has purple highlights."
 	icon_state = "hardsuit0-ert_janitor"
 	item_state = "hardsuit0-ert_janitor"
+	hardsuit_type = "ert_janitor"
 
 /obj/item/clothing/suit/space/hardsuit/ert/jani
 	name = "emergency response team janitorial hardsuit"
@@ -255,7 +260,7 @@ Contains:
 	icon_state = "space"
 	item_state = "space"
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
-	flash_protect = 0
+	flash_protect = FLASH_PROTECTION_NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 65)
 
 /obj/item/clothing/head/helmet/space/freedom
@@ -319,6 +324,7 @@ Contains:
 	desc = "A helmet worn by those who deal with paranormal threats for a living."
 	icon_state = "hardsuit0-prt"
 	item_state = "hardsuit0-prt"
+	hardsuit_type = "prt"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
 	resistance_flags = FIRE_PROOF
@@ -350,6 +356,7 @@ Contains:
 	name = "inquisitor's helmet"
 	icon_state = "hardsuit0-inq"
 	item_state = "hardsuit0-inq"
+	hardsuit_type = "inq"
 
 /obj/item/clothing/suit/space/hardsuit/ert/paranormal/berserker
 	name = "champion's hardsuit"
@@ -363,6 +370,7 @@ Contains:
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "hardsuit0-berserker"
 	item_state = "hardsuit0-berserker"
+	hardsuit_type = "berserker"
 
 /obj/item/clothing/head/helmet/space/fragile
 	name = "emergency space helmet"

@@ -85,6 +85,7 @@
 		Die()
 
 /obj/item/clothing/mask/facehugger/equipped(mob/M)
+	. = ..()
 	Attach(M)
 
 /obj/item/clothing/mask/facehugger/Crossed(atom/target)
@@ -127,14 +128,14 @@
 		return FALSE
 	if(iscarbon(M))
 		// disallowed carbons
-		if(isalien(M) || isdevil(M))
+		if(isalien(M) || istruedevil(M))
 			return FALSE
 		var/mob/living/carbon/target = M
 		// gotta have a head to be implanted (no changelings or sentient plants)
 		if(!target.get_bodypart(BODY_ZONE_HEAD))
 			return FALSE
-
-		if(target.getorgan(/obj/item/organ/alien/hivenode) || target.getorgan(/obj/item/organ/body_egg/alien_embryo))
+		// gotta be able to have the xeno implanted
+		if(HAS_TRAIT(M, TRAIT_XENO_IMMUNE))
 			return FALSE
 		// carbon, has head, not alien or devil, has no hivenode or embryo: valid
 		return TRUE

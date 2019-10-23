@@ -24,6 +24,7 @@
 		new /datum/data/mining_equipment("Shelter Capsule",				/obj/item/survivalcapsule,											400),
 		new /datum/data/mining_equipment("GAR Meson Scanners",			/obj/item/clothing/glasses/meson/gar,								500),
 		new /datum/data/mining_equipment("Explorer's Webbing",			/obj/item/storage/belt/mining,										500),
+		new /datum/data/mining_equipment("Point Transfer Card",			/obj/item/card/mining_point_card,									500),
 		new /datum/data/mining_equipment("Survival Medipen",			/obj/item/reagent_containers/hypospray/medipen/survival,			500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",			/obj/item/storage/firstaid/brute,									600),
 		new /datum/data/mining_equipment("Tracking Implant Kit", 		/obj/item/storage/box/minertracker,									600),
@@ -37,6 +38,7 @@
 		new /datum/data/mining_equipment("Silver Pickaxe",				/obj/item/pickaxe/silver,											1000),
 		new /datum/data/mining_equipment("Mining Conscription Kit",		/obj/item/storage/backpack/duffelbag/mining_conscript,				1500),
 		new /datum/data/mining_equipment("Jetpack Upgrade",				/obj/item/tank/jetpack/suit,										2000),
+		new /datum/data/mining_equipment("Space Cash",					/obj/item/stack/spacecash/c1000,									2000),
 		new /datum/data/mining_equipment("Mining Hardsuit",				/obj/item/clothing/suit/space/hardsuit/mining,						2000),
 		new /datum/data/mining_equipment("Diamond Pickaxe",				/obj/item/pickaxe/diamond,											2000),
 		new /datum/data/mining_equipment("Super Resonator",				/obj/item/resonator/upgraded,										2500),
@@ -69,10 +71,6 @@
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_vendor/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/mineral/equipment_vendor/update_icon()
 	if(powered())
 		icon_state = initial(icon_state)
@@ -98,26 +96,25 @@
 	if(href_list["purchase"])
 		var/mob/M = usr
 		var/obj/item/card/id/I = M.get_idcard(TRUE)
-		if(istype(I) && I.registered_account)
-			var/datum/bank_account/account = I.registered_account
+		if(istype(I))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"]) in prize_list
 			if (!prize || !(prize in prize_list))
-				to_chat(usr, "<span class='warning'>Error: Invalid choice!</span>")
+				to_chat(usr, "<span class='alert'>Error: Invalid choice!</span>")
 				flick(icon_deny, src)
 				return
-			if(prize.cost > account.account_balance)
-				to_chat(usr, "<span class='warning'>Error: Insufficient credits for [prize.equipment_name] on [I]!</span>")
+			if(prize.cost > I.mining_points)
+				to_chat(usr, "<span class='alert'>Error: Insufficient points for [prize.equipment_name] on [I]!</span>")
 				flick(icon_deny, src)
 			else
-				if (account.adjust_money(-prize.cost))
+				if (I.mining_points -= prize.cost)
 					to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
 					new prize.equipment_path(src.loc)
 					SSblackbox.record_feedback("nested tally", "mining_equipment_bought", 1, list("[type]", "[prize.equipment_path]"))
 				else
-					to_chat(usr, "<span class='warning'>Error: Transaction failure, please try again later!</span>")
+					to_chat(usr, "<span class='alert'>Error: Transaction failure, please try again later!</span>")
 					flick(icon_deny, src)
 		else
-			to_chat(usr, "<span class='warning'>Error: An ID with a registered account is required!</span>")
+			to_chat(usr, "<span class='alert'>Error: An ID is required!</span>")
 			flick(icon_deny, src)
 	updateUsrDialog()
 	return
@@ -136,7 +133,7 @@
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
 	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator Kit", "Minebot Kit", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
 
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in sortList(items)
 	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
 		return
 	var/drop_location = drop_location()
@@ -200,6 +197,29 @@
 	icon_state = "mining_voucher"
 	w_class = WEIGHT_CLASS_TINY
 
+/**********************Mining Point Card**********************/
+
+/obj/item/card/mining_point_card
+	name = "mining points card"
+	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
+	icon_state = "data_1"
+	var/points = 500
+
+/obj/item/card/mining_point_card/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/card/id))
+		if(points)
+			var/obj/item/card/id/C = I
+			C.mining_points += points
+			to_chat(user, "<span class='info'>You transfer [points] points to [C].</span>")
+			points = 0
+		else
+			to_chat(user, "<span class='alert'>There's no points left on [src].</span>")
+	..()
+
+/obj/item/card/mining_point_card/examine(mob/user)
+	..()
+	to_chat(user, "<span class='alert'>There's [points] point\s on the card.</span>")
+
 ///Conscript kit
 /obj/item/card/mining_access_card
 	name = "mining access card"
@@ -215,7 +235,7 @@
 		I.access |= ACCESS_MECH_MINING
 		I.access |= ACCESS_MINERAL_STOREROOM
 		I.access |= ACCESS_CARGO
-		to_chat(user, "You upgrade [I] with mining access.")
+		to_chat(user, "<span class='notice'>You upgrade [I] with mining access.</span>")
 		qdel(src)
 
 /obj/item/storage/backpack/duffelbag/mining_conscript

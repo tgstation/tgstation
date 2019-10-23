@@ -141,7 +141,7 @@
 	changeling_transform(user, chosen_prof)
 	return TRUE
 
-/datum/antagonist/changeling/proc/select_dna(var/prompt, var/title)
+/datum/antagonist/changeling/proc/select_dna(prompt, title)
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
@@ -149,7 +149,7 @@
 	for(var/datum/changelingprofile/prof in stored_profiles)
 		names += "[prof.name]"
 
-	var/chosen_name = input(prompt, title, null) as null|anything in names
+	var/chosen_name = input(prompt, title, null) as null|anything in sortList(names)
 	if(!chosen_name)
 		return
 

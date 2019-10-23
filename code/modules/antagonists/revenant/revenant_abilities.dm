@@ -25,7 +25,7 @@
 	if(!target.stat)
 		to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul is too strong to harvest.</span>")
 		if(prob(10))
-			to_chat(target, "You feel as if you are being watched.")
+			to_chat(target, "<span class='revennotice'>You feel as if you are being watched.</span>")
 		return
 	face_atom(target)
 	draining = TRUE
@@ -216,7 +216,7 @@
 			continue
 		L.Beam(M,icon_state="purple_lightning",time=5)
 		if(!M.anti_magic_check(FALSE, TRUE))
-			M.electrocute_act(shock_damage, L, safety=TRUE)
+			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
 

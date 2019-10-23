@@ -1,15 +1,19 @@
 /obj/item/clothing/under/rank/civilian/curator
 	name = "sensible suit"
 	desc = "It's very... sensible."
+	icon = 'icons/obj/clothing/under/suits.dmi'
 	icon_state = "red_suit"
 	item_state = "red_suit"
+	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/curator/skirt
 	name = "sensible suitskirt"
 	desc = "It's very... sensible."
+	icon = 'icons/obj/clothing/under/suits.dmi'
 	icon_state = "red_suit_skirt"
 	item_state = "red_suit"
+	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -17,8 +21,10 @@
 /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
 	name = "treasure hunter uniform"
 	desc = "A rugged uniform suitable for treasure hunting."
+	icon = 'icons/obj/clothing/under/civilian.dmi'
 	icon_state = "curator"
 	item_state = "curator"
+	mob_overlay_icon = 'icons/mob/clothing/under/civilian.dmi'
 
 /obj/item/clothing/under/rank/civilian/curator/nasa
 	name = "\improper NASA jumpsuit"

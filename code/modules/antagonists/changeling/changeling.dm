@@ -106,7 +106,7 @@
 	if (owner)
 		var/mob/living/carbon/human/H = owner.current
 		if(istype(H) && owner.assigned_role == "Clown")
-			to_chat(H, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
+			to_chat(H, "<span class='boldnotice'>You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.</span>")
 			H.dna.remove_mutation(CLOWNMUT)
 
 /datum/antagonist/changeling/proc/reset_properties()
@@ -154,7 +154,8 @@
 /datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
 	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
 		return
-	chosen_sting.try_to_sting(ling, A)
+	if(!chosen_sting.try_to_sting(ling, A))
+		return
 	ling.changeNext_move(CLICK_CD_MELEE)
 	return COMSIG_MOB_CANCEL_CLICKON
 
@@ -240,7 +241,7 @@
 			return TRUE
 	return FALSE
 
-/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, var/verbose=1)
+/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose=1)
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return

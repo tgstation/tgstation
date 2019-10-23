@@ -608,7 +608,7 @@
 			for(var/i in C.network)
 				cameralist[i] = i
 	var/old_network = network
-	network = input(U, "Which network would you like to view?") as null|anything in cameralist
+	network = input(U, "Which network would you like to view?") as null|anything in sortList(cameralist)
 
 	if(!U.eyeobj)
 		U.view_core()
@@ -640,7 +640,7 @@
 	if(incapacitated())
 		return
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Thinking", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	var/emote = input("Please, select a status!", "AI Status", null, null) in sortList(ai_emotions)
 	for (var/each in GLOB.ai_status_displays) //change status of displays
 		var/obj/machinery/status_display/ai/M = each
 		M.emotion = emote
@@ -672,7 +672,7 @@
 				personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
 
 			if(personnel_list.len)
-				input = input("Select a crew member:") as null|anything in personnel_list
+				input = input("Select a crew member:") as null|anything in sortList(personnel_list)
 				var/icon/character_icon = personnel_list[input]
 				if(character_icon)
 					qdel(holo_icon)//Clear old icon so we're not storing it in memory.
@@ -697,7 +697,7 @@
 			"spider" = 'icons/mob/animal.dmi'
 			)
 
-			input = input("Please select a hologram:") as null|anything in icon_list
+			input = input("Please select a hologram:") as null|anything in sortList(icon_list)
 			if(input)
 				qdel(holo_icon)
 				switch(input)
@@ -714,10 +714,11 @@
 				"default" = 'icons/mob/ai.dmi',
 				"floating face" = 'icons/mob/ai.dmi',
 				"xeno queen" = 'icons/mob/alien.dmi',
-				"horror" = 'icons/mob/ai.dmi'
+				"horror" = 'icons/mob/ai.dmi',
+				"clock" = 'icons/mob/ai.dmi'
 				)
 
-			input = input("Please select a hologram:") as null|anything in icon_list
+			input = input("Please select a hologram:") as null|anything in sortList(icon_list)
 			if(input)
 				qdel(holo_icon)
 				switch(input)
@@ -809,7 +810,7 @@
 			return
 		disconnect_shell() //If the AI is controlling a borg, force the player back to core!
 		if(!mind)
-			to_chat(user, "<span class='warning'>No intelligence patterns detected.</span>"    )
+			to_chat(user, "<span class='warning'>No intelligence patterns detected.</span>")
 			return
 		ShutOffDoomsdayDevice()
 		var/obj/structure/AIcore/new_core = new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
@@ -830,7 +831,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(control_disabled || incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
@@ -921,7 +922,7 @@
 		else
 			clear_fullscreen("remote_view", 0)
 
-/mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
+/mob/living/silicon/ai/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
 	if(.) //successfully ressuscitated from death
 		set_core_display_icon(display_icon_override)
@@ -971,7 +972,7 @@
 		to_chat(src, "No usable AI shell beacons detected.")
 
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
-		target = input(src, "Which body to control?") as null|anything in possible
+		target = input(src, "Which body to control?") as null|anything in sortNames(possible)
 
 	if (!target || target.stat == DEAD || target.deployed || !(!target.connected_ai ||(target.connected_ai == src)))
 		return

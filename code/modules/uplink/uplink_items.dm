@@ -125,9 +125,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
-			to_chat(H, "[A] materializes into your hands!")
+			to_chat(H, "<span class='boldnotice'>[A] materializes into your hands!</span>")
 			return A
-	to_chat(user, "[A] materializes onto the floor.")
+	to_chat(user, "<span class='boldnotice'>[A] materializes onto the floor!</span>")
 	return A
 
 //Discounts (dynamically filled above)
@@ -583,6 +583,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	slur as if inebriated. It can produce an infinite number \
 	of bolts, but takes time to automatically recharge after each shot."
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
+	player_minimum = 25
 	cost = 10
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear)
@@ -1481,7 +1482,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/implants/adrenal
 	name = "Adrenal Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will inject a chemical \
-			cocktail which removes all incapacitating effects, lets the user run faster and has a mild healing effect."
+			cocktail which lets you push yourself harder to get out of sticky situations. Avoid large doses if possible."
 	item = /obj/item/storage/box/syndie_kit/imp_adrenal
 	cost = 8
 	player_minimum = 25

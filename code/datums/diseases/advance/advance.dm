@@ -48,7 +48,7 @@
 										/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/salglu_solution, /datum/reagent/medicine/epinephrine, /datum/reagent/medicine/C2/multiver
 									),
 									list(	//level 5
-										/datum/reagent/oil, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/mannitol, /datum/reagent/drug/space_drugs, /datum/reagent/cryptobiolin
+										/datum/reagent/fuel/oil, /datum/reagent/medicine/synaptizine, /datum/reagent/medicine/mannitol, /datum/reagent/drug/space_drugs, /datum/reagent/cryptobiolin
 									),
 									list(	// level 6
 										/datum/reagent/phenol, /datum/reagent/medicine/inacusiate, /datum/reagent/medicine/oculine, /datum/reagent/medicine/antihol
@@ -110,11 +110,12 @@
 		return
 
 	if(symptoms && symptoms.len)
-
 		if(!processing)
 			processing = TRUE
 			for(var/datum/symptom/S in symptoms)
-				S.Start(src)
+				if(S.Start(src)) //this will return FALSE if the symptom is neutered
+					S.next_activation = world.time + rand(S.symptom_delay_min * 10, S.symptom_delay_max * 10)
+				S.on_stage_change(src)
 
 		for(var/datum/symptom/S in symptoms)
 			S.Activate(src)
@@ -123,7 +124,7 @@
 /datum/disease/advance/update_stage(new_stage)
 	..()
 	for(var/datum/symptom/S in symptoms)
-		S.on_stage_change(new_stage, src)
+		S.on_stage_change(src)
 
 // Compares type then ID.
 /datum/disease/advance/IsSame(datum/disease/advance/D)
@@ -205,6 +206,10 @@
 /datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
 	AssignProperties()
+	if(processing && symptoms && symptoms.len)
+		for(var/datum/symptom/S in symptoms)
+			S.Start(src)
+			S.on_stage_change(src)
 	id = null
 
 	var/the_id = GetDiseaseID()
@@ -235,8 +240,15 @@
 		else
 			visibility_flags &= ~HIDDEN_SCANNER
 
-		SetSpread(CLAMP(2 ** (properties["transmittable"] - symptoms.len), DISEASE_SPREAD_BLOOD, DISEASE_SPREAD_AIRBORNE))
-
+		if(properties["transmittable"]>=11)
+			SetSpread(DISEASE_SPREAD_AIRBORNE)
+		else if(properties["transmittable"]>=7)
+			SetSpread(DISEASE_SPREAD_CONTACT_SKIN)
+		else if(properties["transmittable"]>=3)
+			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
+		else
+			SetSpread(DISEASE_SPREAD_BLOOD)
+		
 		permeability_mod = max(CEILING(0.4 * properties["transmittable"], 1), 1)
 		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
@@ -435,7 +447,7 @@
 	symptoms += SSdisease.list_symptoms.Copy()
 	do
 		if(user)
-			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in symptoms
+			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in sortList(symptoms, /proc/cmp_typepaths_asc)
 			if(isnull(symptom))
 				return
 			else if(istext(symptom))

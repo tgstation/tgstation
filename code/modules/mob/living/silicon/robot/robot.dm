@@ -205,7 +205,7 @@
 	if(!CONFIG_GET(flag/disable_secborg))
 		modulelist["Security"] = /obj/item/robot_module/security
 
-	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
+	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in sortList(modulelist)
 	if(!input_module || module.type != /obj/item/robot_module)
 		return
 
@@ -393,7 +393,7 @@
 			else
 				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
 		else
-			to_chat(user, "The wires seem fine, there's no need to fix them.")
+			to_chat(user, "<span class='warning'>The wires seem fine, there's no need to fix them.</span>")
 
 	else if(W.tool_behaviour == TOOL_CROWBAR)	// crowbar means open or close the cover
 		if(opened)
@@ -429,7 +429,7 @@
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
-		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
+		to_chat(user, "<span class='notice'>The wires have been [wiresexposed ? "exposed" : "unexposed"].</span>")
 		update_icons()
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER && opened && cell)	// radio
@@ -600,7 +600,7 @@
 		if(lamp_intensity > 2)
 			eye_lights.icon_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_l"
 		else
-			eye_lights.icon_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_e[is_servant_of_ratvar(src) ? "_r" : ""]"
+			eye_lights.icon_state = "[module.special_light_key ? "[module.special_light_key]":"[module.cyborg_base_icon]"]_e"
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
 
@@ -698,10 +698,10 @@
 
 //Some sort of magical "modulo" thing which somehow increments lamp power by 2, until it hits the max and resets to 0.
 	lamp_intensity = (lamp_intensity+2) % (lamp_max+2)
-	to_chat(src, "[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled."]")
+	to_chat(src, "<span class='notice'>[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled"].</span>")
 	update_headlamp()
 
-/mob/living/silicon/robot/proc/update_headlamp(var/turn_off = 0, var/cooldown = 100)
+/mob/living/silicon/robot/proc/update_headlamp(turn_off = 0, cooldown = 100)
 	set_light(0)
 
 	if(lamp_intensity && (turn_off || stat || low_power_mode))
@@ -866,7 +866,7 @@
 		if(DISCONNECT) //Tampering with the wires
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Remote telemetry lost with [name].</span><br>")
 
-/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(stat || lockcharge || low_power_mode)
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
@@ -946,13 +946,13 @@
 		if(IsUnconscious() || IsStun() || IsKnockdown() || IsParalyzed() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
-				blind_eyes(1)
+				become_blind(UNCONSCIOUS_BLIND)
 				update_mobility()
 				update_headlamp()
 		else
 			if(stat == UNCONSCIOUS)
 				stat = CONSCIOUS
-				adjust_blindness(-1)
+				cure_blind(UNCONSCIOUS_BLIND)
 				update_mobility()
 				update_headlamp()
 	diag_hud_set_status()
@@ -960,7 +960,7 @@
 	diag_hud_set_aishell()
 	update_health_hud()
 
-/mob/living/silicon/robot/revive(full_heal = 0, admin_revive = 0)
+/mob/living/silicon/robot/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(..()) //successfully ressuscitated from death
 		if(!QDELETED(builtInCamera) && !wires.is_cut(WIRE_CAMERA))
 			builtInCamera.toggle_cam(src,0)
@@ -968,7 +968,7 @@
 		if(admin_revive)
 			locked = TRUE
 		notify_ai(NEW_BORG)
-		. = 1
+		. = TRUE
 
 /mob/living/silicon/robot/fully_replace_character_name(oldname, newname)
 	..()
@@ -1131,10 +1131,10 @@
 	shell = TRUE
 	cell = null
 
-/mob/living/silicon/robot/MouseDrop_T(mob/living/M, mob/living/user)
-	. = ..()
-	if(!(M in buckled_mobs) && isliving(M))
-		buckle_mob(M)
+/mob/living/silicon/robot/mouse_buckle_handling(mob/living/M, mob/living/user)
+	if(can_buckle && istype(M) && !(M in buckled_mobs) && ((user!=src)||(a_intent != INTENT_HARM)))
+		if(buckle_mob(M))
+			return TRUE
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))

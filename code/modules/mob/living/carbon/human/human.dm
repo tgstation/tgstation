@@ -27,6 +27,8 @@
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
 	AddComponent(/datum/component/personal_crafting)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)
+	GLOB.human_list += src
 
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code
@@ -41,6 +43,7 @@
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
+	GLOB.human_list -= src
 	return ..()
 
 
@@ -210,7 +213,7 @@
 	spreadFire(AM)
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
 		if(!L)
 			return
@@ -239,7 +242,7 @@
 			to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
 			return
 
-	if(href_list["pockets"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY)) //TODO: Make it match (or intergrate it into) strippanel so you get 'item cannot fit here' warnings if mob_can_equip fails
+	if(href_list["pockets"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY)) //TODO: Make it match (or intergrate it into) strippanel so you get 'item cannot fit here' warnings if mob_can_equip fails
 		var/pocket_side = href_list["pockets"]
 		var/pocket_id = (pocket_side == "right" ? SLOT_R_STORE : SLOT_L_STORE)
 		var/obj/item/pocket_item = (pocket_id == SLOT_R_STORE ? r_store : l_store)
@@ -499,7 +502,7 @@
 /mob/living/carbon/human/proc/canUseHUD()
 	return (mobility_flags & MOBILITY_USE)
 
-/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
+/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, penetrate_thick = 0)
 	. = 1 // Default to returning true.
 	if(user && !target_zone)
 		target_zone = user.zone_selected
@@ -675,12 +678,6 @@
 			bloody_hands = 0
 			update_inv_gloves()
 
-/mob/living/carbon/human/wash_cream()
-	if(creamed) //clean both to prevent a rare bug
-		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_lizard"))
-		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_human"))
-		creamed = FALSE
-
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
@@ -701,7 +698,7 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
 	cut_overlay(MA)
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(!(mobility_flags & MOBILITY_UI))
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
@@ -838,14 +835,14 @@
 	if(href_list[VV_HK_MOD_MUTATIONS])
 		if(!check_rights(R_SPAWN))
 			return
-		
+
 		var/list/options = list("Clear"="Clear")
 		for(var/x in subtypesof(/datum/mutation/human))
 			var/datum/mutation/human/mut = x
 			var/name = initial(mut.name)
 			options[dna.check_mutation(mut) ? "[name] (Remove)" : "[name] (Add)"] = mut
 
-		var/result = input(usr, "Choose mutation to add/remove","Mutation Mod") as null|anything in options
+		var/result = input(usr, "Choose mutation to add/remove","Mutation Mod") as null|anything in sortList(options)
 		if(result)
 			if(result == "Clear")
 				dna.remove_all_mutations()
@@ -865,7 +862,7 @@
 			var/qname = initial(T.name)
 			options[has_quirk(T) ? "[qname] (Remove)" : "[qname] (Add)"] = T
 
-		var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in options
+		var/result = input(usr, "Choose quirk to add/remove","Quirk Mod") as null|anything in sortList(options)
 		if(result)
 			if(result == "Clear")
 				for(var/datum/quirk/q in roundstart_quirks)
@@ -949,15 +946,25 @@
 	return (ishuman(target) && !(target.mobility_flags & MOBILITY_STAND))
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
-	if(can_be_firemanned(target))
-		visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
-			"<span class='notice'>You start lifting [target] onto your back...</span>")
-		if(do_after(src, 50, TRUE, target))
+	var/carrydelay = 50 //if you have latex you are faster at grabbing
+	var/skills_space = "" //cobby told me to do this
+	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
+		carrydelay = 30
+		skills_space = "expertly"
+	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
+		carrydelay = 40
+		skills_space = "quickly"
+	if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
+		visible_message("<span class='notice'>[src] starts [skills_space] lifting [target] onto their back..</span>",
+		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
+		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space] start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
+		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
+		if(do_after(src, carrydelay, TRUE, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
 				buckle_mob(target, TRUE, TRUE, 90, 1, 0)
 				return
-		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
+		visible_message("<span class='warning'>[src] fails to fireman carry [target]!</span>")
 	else
 		to_chat(src, "<span class='warning'>You can't fireman carry [target] while they're standing!</span>")
 
@@ -1030,6 +1037,18 @@
 /mob/living/carbon/human/updatehealth()
 	. = ..()
 	dna?.species.spec_updatehealth(src)
+	if(HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
+		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING)
+		return
+	var/health_deficiency = max((maxHealth - health), staminaloss)
+	if(health_deficiency >= 40)
+		add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN, override = TRUE, multiplicative_slowdown = (health_deficiency / 75), blacklisted_movetypes = FLOATING|FLYING)
+		add_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING, override = TRUE, multiplicative_slowdown = (health_deficiency / 25), movetypes = FLOATING)
+	else
+		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN)
+		remove_movespeed_modifier(MOVESPEED_ID_DAMAGE_SLOWDOWN_FLYING)
+
 
 /mob/living/carbon/human/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
@@ -1140,15 +1159,9 @@
 
 /mob/living/carbon/human/species/golem/durathread
 	race = /datum/species/golem/durathread
-	
+
 /mob/living/carbon/human/species/golem/snow
 	race = /datum/species/golem/snow
-
-/mob/living/carbon/human/species/golem/clockwork
-	race = /datum/species/golem/clockwork
-
-/mob/living/carbon/human/species/golem/clockwork/no_scrap
-	race = /datum/species/golem/clockwork/no_scrap
 
 /mob/living/carbon/human/species/golem/capitalist
 	race = /datum/species/golem/capitalist

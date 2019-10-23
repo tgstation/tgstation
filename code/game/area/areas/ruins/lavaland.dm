@@ -4,7 +4,9 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/clownplanet
+	name = "Clown Planet"
 	icon_state = "dk_yellow"
+	ambientsounds = list('sound/ambience/clown.ogg')
 
 /area/ruin/unpowered/gaia
 	name = "Patch of Eden"
@@ -37,6 +39,13 @@
 	name = "Secret Base"
 	icon_state = "dk_yellow"
 	ambientsounds = HIGHSEC
+
+/area/ruin/unpowered/cultaltar
+	name = "Cult Altar"
+	flags_1 = CULT_PERMITTED_1
+	ambientsounds = SPOOKY
+
+//Syndicate lavaland base
 
 /area/ruin/unpowered/syndicate_lava_base/engineering
 	name = "Syndicate Lavaland Engineering"

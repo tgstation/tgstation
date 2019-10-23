@@ -3,9 +3,9 @@
 		This machine only accepts ore. Gibtonite and Slag are not accepted.
 	</ui-section>
 	<ui-section>
-		Current unclaimed credits: {{data.unclaimedPoints}}
+		Current unclaimed points: {{data.unclaimedPoints}}
 			<ui-button action='Claim'>
-				Claim
+				Claim Points
 			</ui-button>
 	</ui-section>
 </ui-display>

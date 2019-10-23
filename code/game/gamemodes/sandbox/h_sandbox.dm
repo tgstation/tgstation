@@ -28,7 +28,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	var/global/list/spawn_forbidden = list(
 		/obj/item/tk_grab, /obj/item/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly, /obj/item/onetankbomb, /obj/item/pda/ai,
-		/obj/item/smallDelivery, /obj/item/projectile,
+		/obj/item/smallDelivery, /obj/projectile,
 		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_module)
 
 /datum/hSB/proc/update()
@@ -130,7 +130,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(sbac)
 					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
 				else
-					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
+					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning. The window will now auto-close after use.</b>")
 				CONFIG_SET(flag/sandbox_autoclose, !sbac)
 				return
 			//

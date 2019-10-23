@@ -34,10 +34,6 @@
 	QDEL_NULL(countdown)
 	. = ..()
 
-/obj/machinery/transformer/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/transformer/update_icon()
 	..()
 	if(stat & (BROKEN|NOPOWER) || cooldown == 1)

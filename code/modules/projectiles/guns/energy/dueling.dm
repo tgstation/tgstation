@@ -244,12 +244,12 @@
 
 /obj/item/ammo_casing/energy/duel
 	e_cost = 0
-	projectile_type = /obj/item/projectile/energy/duel
+	projectile_type = /obj/projectile/energy/duel
 	var/setting
 
 /obj/item/ammo_casing/energy/duel/ready_proj(atom/target, mob/living/user, quiet, zone_override)
 	. = ..()
-	var/obj/item/projectile/energy/duel/D = BB
+	var/obj/projectile/energy/duel/D = BB
 	D.setting = setting
 	D.update_icon()
 
@@ -261,14 +261,14 @@
 
 //Projectile
 
-/obj/item/projectile/energy/duel
+/obj/projectile/energy/duel
 	name = "dueling beam"
 	icon_state = "declone"
 	reflectable = FALSE
 	homing = TRUE
 	var/setting
 
-/obj/item/projectile/energy/duel/update_icon()
+/obj/projectile/energy/duel/update_icon()
 	. = ..()
 	switch(setting)
 		if(DUEL_SETTING_A)
@@ -278,7 +278,7 @@
 		if(DUEL_SETTING_C)
 			color = "blue"
 
-/obj/item/projectile/energy/duel/on_hit(atom/target, blocked)
+/obj/projectile/energy/duel/on_hit(atom/target, blocked)
 	. = ..()
 	var/turf/T = get_turf(target)
 	var/obj/effect/temp_visual/dueling_chaff/C = locate() in T

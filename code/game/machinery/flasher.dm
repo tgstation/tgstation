@@ -6,9 +6,10 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
 	max_integrity = 250
-	integrity_failure = 100
+	integrity_failure = 0.4
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
+	damage_deflection = 10
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
@@ -41,15 +42,18 @@
 	QDEL_NULL(bulb)
 	return ..()
 
-/obj/machinery/flasher/power_change()
-	if (powered() && anchored && bulb)
-		stat &= ~NOPOWER
+/obj/machinery/flasher/powered()
+	if(!anchored || !bulb)
+		return FALSE
+	return ..()
+
+/obj/machinery/flasher/update_icon()
+	if (powered())
 		if(bulb.burnt_out)
 			icon_state = "[base_state]1-p"
 		else
 			icon_state = "[base_state]1"
 	else
-		stat |= NOPOWER
 		icon_state = "[base_state]1-p"
 
 //Don't want to render prison breaks impossible
@@ -89,11 +93,6 @@
 /obj/machinery/flasher/attack_ai()
 	if (anchored)
 		return flash()
-
-/obj/machinery/flasher/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 10) //any melee attack below 10 dmg does nothing
-		return 0
-	. = ..()
 
 /obj/machinery/flasher/proc/flash()
 	if (!powered() || !bulb)
@@ -136,12 +135,10 @@
 			power_change()
 
 /obj/machinery/flasher/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
-			stat |= BROKEN
-			if(bulb)
-				bulb.burn_out()
-				power_change()
+	. = ..()
+	if(. && bulb)
+		bulb.burn_out()
+		power_change()
 
 /obj/machinery/flasher/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

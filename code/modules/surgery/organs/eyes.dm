@@ -25,7 +25,7 @@
 	var/eye_color = "" //set to a hex code to override a mob's eye color
 	var/eye_icon_state = "eyes"
 	var/old_eye_color = "fff"
-	var/flash_protect = 0
+	var/flash_protect = FLASH_PROTECTION_NONE
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	var/lighting_alpha
 	var/no_glasses
@@ -58,7 +58,6 @@
 	M.cure_nearsighted(EYE_DAMAGE)
 	M.set_blindness(0)
 	M.set_blurriness(0)
-	M.update_tint()
 	M.update_sight()
 
 
@@ -156,7 +155,7 @@
 	eye_color = "FC0"
 	sight_flags = SEE_MOBS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	flash_protect = -1
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 	see_in_dark = 8
 
 /obj/item/organ/eyes/robotic/flashlight
@@ -165,7 +164,7 @@
 	eye_color ="fee5a3"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight_eyes"
-	flash_protect = 2
+	flash_protect = FLASH_PROTECTION_WELDER
 	tint = INFINITY
 	var/obj/item/flashlight/eyelight/eye
 
@@ -182,7 +181,7 @@
 	M.become_blind("flashlight_eyes")
 
 
-/obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/eyes/robotic/flashlight/Remove(mob/living/carbon/M, special = 0)
 	eye.on = FALSE
 	eye.update_brightness(M)
 	eye.forceMove(src)
@@ -193,7 +192,7 @@
 /obj/item/organ/eyes/robotic/shield
 	name = "shielded robotic eyes"
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
-	flash_protect = 2
+	flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/organ/eyes/robotic/shield/emp_act(severity)
 	return
@@ -380,7 +379,7 @@
 /obj/item/organ/eyes/moth
 	name = "moth eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
-	flash_protect = -1
+	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /obj/item/organ/eyes/snail
 	name = "snail eyes"

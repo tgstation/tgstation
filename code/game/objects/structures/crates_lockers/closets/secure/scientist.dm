@@ -19,7 +19,7 @@
 	new /obj/item/cartridge/rd(src)
 	new /obj/item/clothing/gloves/color/latex(src)
 	new /obj/item/radio/headset/heads/rd(src)
-	new /obj/item/tank/internals/air(src)
+	new /obj/item/tank/internals/oxygen(src)
 	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/storage/lockbox/medal/sci(src)
@@ -29,4 +29,3 @@
 	new /obj/item/door_remote/research_director(src)
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
 	new /obj/item/storage/photo_album/RD(src)
-	new /obj/item/card/id/departmental_budget/sci(src)

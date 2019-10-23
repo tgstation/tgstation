@@ -40,10 +40,39 @@ GLOBAL_LIST_EMPTY(caps_list)
 
 GLOBAL_LIST_INIT(color_list_ethereal, list("F Class(Green)" = "97ee63", "F2 Class (Light Green)" = "00fa9a", "F3 Class (Dark Green)" = "37835b", "M Class (Red)" = "9c3030", "M1 Class (Purple)" = "ee82ee", "G Class (Yellow)" = "fbdf56", "O Class (Blue)" = "3399ff", "A Class (Cyan)" = "00ffff"))
 
-GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
+GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
+	"ghost",
+	"ghostian",
+	"ghostian2",
+	"ghostking",
+	"ghost_red",
+	"ghost_black",
+	"ghost_blue",
+	"ghost_yellow",
+	"ghost_green",
+	"ghost_pink",
+	"ghost_cyan",
+	"ghost_dblue",
+	"ghost_dred",
+	"ghost_dgreen",
+	"ghost_dcyan",
+	"ghost_grey",
+	"ghost_dyellow",
+	"ghost_dpink",
+	"skeleghost",
+	"ghost_purpleswirl",
+	"ghost_rainbow",
+	"ghost_fire",
+	"ghost_funkypurp",
+	"ghost_pinksherbert",
+	"ghost_blazeit",
+	"ghost_mellow",
+	"ghost_camo",
+	"catghost")) //stores the ghost forms that support directional sprites
+
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
 
-GLOBAL_LIST_INIT(ai_core_display_screens, list(
+GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 	":thinking:",
 	"Alien",
 	"Angel",
@@ -80,7 +109,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Too Deep",
 	"Triumvirate",
 	"Triumvirate-M",
-	"Weird"))
+	"Weird")))
 
 /proc/resolve_ai_icon(input)
 	if(!input || !(input in GLOB.ai_core_display_screens))
@@ -90,7 +119,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 			input = pick(GLOB.ai_core_display_screens - "Random")
 		return "ai-[lowertext(input)]"
 
-GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
+GLOBAL_LIST_INIT(security_depts_prefs, sortList(list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)))
 
 	//Backpacks
 #define GBACKPACK "Grey Backpack"

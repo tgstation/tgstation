@@ -5,7 +5,7 @@
 	icon_state = "empty"
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
-	integrity_failure = 250
+	integrity_failure = 0.5
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	buildable_sign = 0
 
@@ -122,7 +122,7 @@
 
 
 /obj/structure/sign/barsign/proc/pick_sign(mob/user)
-	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in get_bar_names()
+	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in sortList(get_bar_names())
 	if(!picked_name)
 		return
 	chosen_sign = set_sign_by_name(picked_name)

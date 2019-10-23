@@ -70,7 +70,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     sendToNewRoom(chosenRoomNumber, user)
 
 
-/obj/item/hilbertshotel/proc/tryActiveRoom(var/roomNumber, var/mob/user)
+/obj/item/hilbertshotel/proc/tryActiveRoom(roomNumber, mob/user)
     if(activeRooms["[roomNumber]"])
         var/datum/turf_reservation/roomReservation = activeRooms["[roomNumber]"]
         do_sparks(3, FALSE, get_turf(user))
@@ -79,7 +79,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     else
         return FALSE
 
-/obj/item/hilbertshotel/proc/tryStoredRoom(var/roomNumber, var/mob/user)
+/obj/item/hilbertshotel/proc/tryStoredRoom(roomNumber, mob/user)
     if(storedRooms["[roomNumber]"])
         var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
         hotelRoomTempEmpty.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
@@ -102,7 +102,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     else
         return FALSE
 
-/obj/item/hilbertshotel/proc/sendToNewRoom(var/roomNumber, var/mob/user)
+/obj/item/hilbertshotel/proc/sendToNewRoom(roomNumber, mob/user)
     var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
     if(ruinSpawned)
         mysteryRoom = GLOB.hhmysteryRoomNumber
@@ -117,7 +117,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     do_sparks(3, FALSE, get_turf(user))
     user.forceMove(locate(roomReservation.bottom_left_coords[1] + hotelRoomTemp.landingZoneRelativeX, roomReservation.bottom_left_coords[2] + hotelRoomTemp.landingZoneRelativeY, roomReservation.bottom_left_coords[3]))
 
-/obj/item/hilbertshotel/proc/linkTurfs(var/datum/turf_reservation/currentReservation, var/currentRoomnumber)
+/obj/item/hilbertshotel/proc/linkTurfs(datum/turf_reservation/currentReservation, currentRoomnumber)
     var/area/hilbertshotel/currentArea = get_area(locate(currentReservation.bottom_left_coords[1], currentReservation.bottom_left_coords[2], currentReservation.bottom_left_coords[3]))
     currentArea.name = "Hilbert's Hotel Room [currentRoomnumber]"
     currentArea.parentSphere = src

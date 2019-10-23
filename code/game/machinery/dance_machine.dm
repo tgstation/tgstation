@@ -43,11 +43,11 @@
 
 /obj/machinery/jukebox/Initialize()
 	. = ..()
-	var/list/tracks = flist("config/jukebox_music/sounds/")
+	var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
 
 	for(var/S in tracks)
 		var/datum/track/T = new()
-		T.song_path = file("config/jukebox_music/sounds/[S]")
+		T.song_path = file("[global.config.directory]/jukebox_music/sounds/[S]")
 		var/list/L = splittext(S,"+")
 		if(L.len != 3)
 			continue
@@ -136,7 +136,7 @@
 			var/list/available = list()
 			for(var/datum/track/S in songs)
 				available[S.song_name] = S
-			var/selected = input(usr, "Choose your song", "Track:") as null|anything in available
+			var/selected = input(usr, "Choose your song", "Track:") as null|anything in sortList(available)
 			if(QDELETED(src) || !selected || !istype(available[selected], /datum/track))
 				return
 			selection = available[selected]

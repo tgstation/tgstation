@@ -138,11 +138,16 @@ Class Procs:
 		START_PROCESSING(SSmachines, src)
 	else
 		START_PROCESSING(SSfastprocess, src)
-	power_change()
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/LateInitialize()
+	. = ..()
+	power_change()
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 /obj/machinery/Destroy()
 	GLOB.machines.Remove(src)
@@ -370,8 +375,13 @@ Class Procs:
 	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	SHOULD_CALL_PARENT(1)
+	. = ..()
+	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
+		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
+		update_icon()
+		return TRUE
 
 /obj/machinery/contents_explosion(severity, target)
 	if(occupant)
@@ -520,7 +530,7 @@ Class Procs:
 
 /obj/machinery/tesla_act(power, tesla_flags, shocked_objects)
 	..()
-	if(prob(85) && (tesla_flags & TESLA_MACHINE_EXPLOSIVE))
+	if(prob(85) && (tesla_flags & TESLA_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
 		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	if(tesla_flags & TESLA_OBJ_DAMAGE)
 		take_damage(power/2000, BURN, "energy")

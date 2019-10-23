@@ -53,12 +53,12 @@
 	alt_covers_chest = TRUE
 	fitted = FEMALE_UNIFORM_TOP
 
-
 /obj/item/clothing/under/suit/black_really
 	name = "executive suit"
 	desc = "A formal black suit and red tie, intended for the station's finest."
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/suit/black_really/skirt
 	name = "executive suitskirt"
@@ -68,7 +68,6 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
-
 
 /obj/item/clothing/under/suit/black/female
 	name = "executive suit"

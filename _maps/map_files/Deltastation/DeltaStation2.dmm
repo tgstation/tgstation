@@ -353,19 +353,21 @@
 /area/construction/mining/aux_base)
 "abP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/external{
-	name = "Escape Pod 1"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod 1";
+	safety_mode = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "abQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
-	name = "Escape Pod 2"
+	name = "Escape Pod 2";
+	safety_mode = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -990,14 +992,15 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external{
-	name = "External Docking Port"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	safety_mode = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -2036,14 +2039,15 @@
 /area/hallway/secondary/entry)
 "aiA" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external{
-	name = "External Docking Port"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	safety_mode = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -2289,9 +2293,6 @@
 "ajf" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
-	},
-/obj/machinery/door/airlock/external{
-	name = "External Docking Port"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -13055,7 +13056,7 @@
 "aEr" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8;
-	name = "Gas to Filter"
+	name = "Engine Coolant Bypass"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -19599,7 +19600,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/bar/atrium)
 "aQo" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/carpet,
 /area/crew_quarters/bar/atrium)
 "aQp" = (
@@ -20531,7 +20532,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/bar/atrium)
 "aRZ" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -21526,7 +21527,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/bar/atrium)
 "aTG" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -26403,14 +26404,14 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "bbu" = (
-/obj/machinery/door/airlock/external{
-	name = "Escape Pod 3"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod 3"
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -34061,7 +34062,7 @@
 /obj/item/clothing/accessory/armband/deputy,
 /obj/item/clothing/accessory/armband/deputy,
 /obj/item/clothing/accessory/armband/deputy,
-/obj/item/reagent_containers/food/snacks/donut/jelly/cherryjelly,
+/obj/item/reagent_containers/food/snacks/donut/jelly/choco,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -54761,7 +54762,7 @@
 "bXR" = (
 /obj/structure/rack,
 /obj/item/gun/energy/ionrifle,
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/hooded/ablative,
 /obj/item/gun/energy/temperature/security,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -70648,8 +70649,8 @@
 "cBx" = (
 /obj/structure/rack,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/mesh,
 /obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = -3;
 	pixel_y = 3
@@ -78103,10 +78104,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cPp" = (
-/obj/structure/chair,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
+/obj/machinery/medical_kiosk,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cPq" = (
@@ -78137,8 +78135,8 @@
 "cPs" = (
 /obj/structure/table,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/mesh,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -84022,8 +84020,8 @@
 	},
 /obj/item/book/manual/wiki/medicine,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/mesh,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -86139,8 +86137,8 @@
 "ddp" = (
 /obj/structure/table/glass,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/mesh,
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
@@ -89338,7 +89336,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
 "djg" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -89349,7 +89347,7 @@
 	},
 /area/crew_quarters/abandoned_gambling_den)
 "djh" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -89357,7 +89355,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dji" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
@@ -90894,7 +90892,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dmq" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -90941,8 +90939,8 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
 /obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/mesh,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -91695,7 +91693,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den)
 "doc" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -91704,7 +91702,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "doe" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -92668,7 +92666,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
 "dpR" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -92723,7 +92721,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
 "dpV" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -93554,7 +93552,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/abandoned_gambling_den)
 "dru" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -94876,7 +94874,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "duf" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
@@ -96611,7 +96609,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
 "dxB" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -97351,7 +97349,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/abandoned_gambling_den)
 "dyX" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -98590,7 +98588,7 @@
 	dir = 4
 	},
 /obj/machinery/vending/wallmed{
-	pixel_x = -0;
+	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/white,
@@ -102060,7 +102058,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre/abandoned)
 "dIa" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -102857,11 +102855,11 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre/abandoned)
 "dJt" = (
-/mob/living/simple_animal/cockroach,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+/mob/living/simple_animal/cockroach,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre/abandoned)
 "dJu" = (
@@ -102879,7 +102877,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre/abandoned)
 "dJw" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -103329,7 +103327,7 @@
 	},
 /area/crew_quarters/theatre/abandoned)
 "dKq" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -110203,7 +110201,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "dYy" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
@@ -110213,21 +110211,21 @@
 	},
 /area/chapel/main)
 "dYz" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "chapel"
 	},
 /area/chapel/main)
 "dYA" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "chapel"
 	},
 /area/chapel/main)
 "dYB" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	dir = 1;
@@ -110235,7 +110233,7 @@
 	},
 /area/chapel/main)
 "dYC" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel{
 	dir = 1;
@@ -112485,7 +112483,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "edo" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /obj/machinery/light/small,
@@ -112511,7 +112509,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "edp" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /obj/machinery/light/small,
@@ -114050,6 +114048,23 @@
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
+"eAM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	safety_mode = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "eCM" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -114062,6 +114077,22 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
+"eJt" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	safety_mode = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "eMD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -114828,6 +114859,22 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"jMX" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	safety_mode = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "jRy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -114967,6 +115014,23 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/science/misc_lab/range)
+"lcU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	safety_mode = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "ldk" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -115852,6 +115916,22 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"qkG" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	safety_mode = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "qnx" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input,
 /turf/open/floor/engine/vacuum,
@@ -116047,6 +116127,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
+"rKN" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	safety_mode = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "rLD" = (
 /obj/machinery/camera{
 	c_tag = "Medbay - Recovery Room";
@@ -116695,7 +116791,7 @@
 "wEB" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/electrical,
-/obj/item/wrench/power,
+/obj/item/screwdriver/power,
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
@@ -152448,7 +152544,7 @@ aad
 aad
 aad
 aaO
-aea
+lcU
 aaO
 aad
 aad
@@ -152962,14 +153058,14 @@ aaO
 abf
 ads
 aaO
-aec
+qkG
 aaO
 aeV
 afw
 afT
 agk
 aaO
-aej
+eAM
 aaO
 adq
 abf
@@ -154504,14 +154600,14 @@ aad
 aad
 aad
 aaO
-aec
+qkG
 aaO
 aad
 aaa
 aaa
 aad
 aaO
-aej
+eAM
 aaO
 aad
 aad
@@ -156970,9 +157066,9 @@ dSU
 dSU
 dSU
 dSU
-dYI
+eJt
 dZr
-dYI
+rKN
 dSU
 dSU
 ecc
@@ -157074,14 +157170,14 @@ aad
 aad
 aad
 aaO
-aea
+lcU
 aaO
 aad
 aaa
 aaa
 aad
 aaO
-aea
+lcU
 aaO
 aad
 aad
@@ -157484,9 +157580,9 @@ aaa
 aaa
 aaa
 dSU
-dYJ
+jMX
 dSU
-dYJ
+jMX
 dSU
 aaa
 aaa
@@ -157588,14 +157684,14 @@ aaO
 abf
 ads
 aaO
-aej
+eAM
 aaO
 afb
 afz
 afV
 agk
 aaO
-aec
+qkG
 aaO
 adq
 abf

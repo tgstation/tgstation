@@ -240,7 +240,7 @@
 				message_admins("[key_name_admin(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 				log_admin("[key_name(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 			else
-				to_chat(usr, "<span class='admin'>There is no arrivals shuttle</span>")
+				to_chat(usr, "<span class='admin'>There is no arrivals shuttle.</span>")
 		if("showailaws")
 			if(!check_rights(R_ADMIN))
 				return
@@ -267,7 +267,8 @@
 				return
 			var/dat = "<B>Showing DNA from blood.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
 			dat += "</table>"
@@ -277,7 +278,8 @@
 				return
 			var/dat = "<B>Showing Fingerprints.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
 			dat += "</table>"
@@ -287,7 +289,8 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Monkeyize All Humans"))
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
 				INVOKE_ASYNC(H, /mob/living/carbon.proc/monkeyize)
 			ok = 1
 
@@ -300,7 +303,8 @@
 				log_admin("[key_name(usr)] turned all humans into [result]", 1)
 				message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
 				var/newtype = GLOB.species_list[result]
-				for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+				for(var/i in GLOB.human_list)
+					var/mob/living/carbon/human/H = i
 					H.set_species(newtype)
 
 		if("tripleAI")
@@ -346,7 +350,7 @@
 			for(var/mob/living/H in GLOB.player_list)
 				if(!(ishuman(H)||istype(H, /mob/living/silicon/)))
 					continue
-				if(H.stat == DEAD || !H.client || !H.mind || ispAI(H))
+				if(H.stat == DEAD || !H.mind || ispAI(H))
 					continue
 				if(is_special_character(H))
 					continue
@@ -393,7 +397,8 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Chinese Cartoons"))
 			message_admins("[key_name_admin(usr)] made everything kawaii.")
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
 				SEND_SOUND(H, sound('sound/ai/animes.ogg'))
 
 				if(H.dna.species.id == "human")
@@ -418,7 +423,7 @@
 						if(droptype == "Yes")
 							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
 				else
-					to_chat(H, "You're not kawaii enough for this.")
+					to_chat(H, "<span class='warning'>You're not kawaii enough for this!</span>")
 
 		if("whiteout")
 			if(!check_rights(R_FUN))
@@ -441,7 +446,7 @@
 				if("Random")
 					E = new /datum/round_event/disease_outbreak()
 				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in typesof(/datum/disease)
+					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease, /proc/cmp_typepaths_asc))
 					E = new /datum/round_event/disease_outbreak{}()
 					var/datum/round_event/disease_outbreak/DO = E
 					DO.virus_type = virus
@@ -527,7 +532,8 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Dwarf Beards"))
-			for(var/mob/living/carbon/human/B in GLOB.carbon_list)
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/B = i
 				B.facial_hairstyle = "Dward Beard"
 				B.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")
@@ -675,7 +681,7 @@
 				var/list/prefs = settings["mainsettings"]
 
 				if (prefs["amount"]["value"] < 1 || prefs["portalnum"]["value"] < 1)
-					to_chat(usr, "Number of portals and mobs to spawn must be at least 1")
+					to_chat(usr, "<span class='warning'>Number of portals and mobs to spawn must be at least 1.</span>")
 					return
 
 				var/mob/pathToSpawn = prefs["typepath"]["value"]
@@ -683,7 +689,7 @@
 					pathToSpawn = text2path(pathToSpawn)
 
 				if (!ispath(pathToSpawn))
-					to_chat(usr, "Invalid path [pathToSpawn]")
+					to_chat(usr, "<span class='notice'>Invalid path [pathToSpawn].</span>")
 					return
 
 				var/list/candidates = list()
@@ -721,7 +727,7 @@
 		E.processing = FALSE
 		if(E.announceWhen>0)
 			if(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
-				E.announceWhen = -1
+				E.announceChance = 0
 		E.processing = TRUE
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")

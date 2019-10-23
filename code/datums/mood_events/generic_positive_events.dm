@@ -148,10 +148,31 @@
 	mood_change = 6
 	timeout = 5 MINUTES
 
+/datum/mood_event/pet_borg
+	description = "<span class='nicegreen'>I just love my robotical friends!</span>\n"
+	mood_change = 3
+	timeout = 5 MINUTES
+
+/datum/mood_event/bottle_flip
+	description = "<span class='nicegreen'>The bottle landing like that was satisfying.</span>\n"
+	mood_change = 2
+	timeout = 3 MINUTES
+  
+/datum/mood_event/hope_lavaland
+	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
+	mood_change = 5
+  
+/datum/mood_event/nanite_happiness
+	description = "<span class='nicegreen robot'>+++++++HAPPINESS ENHANCEMENT+++++++</span>\n"
+	mood_change = 7
+
+/datum/mood_event/nanite_happiness/add_effects(message)
+	description = "<span class='nicegreen robot'>+++++++[message]+++++++</span>\n"
+
 /datum/mood_event/area
 	description = "" //Fill this out in the area
 	mood_change = 0
 
-/datum/mood_event/area/add_effects(list/param)
-	mood_change = param[1]
-	description = param[2]
+/datum/mood_event/area/add_effects(_mood_change, _description)
+	mood_change = _mood_change
+	description = _description

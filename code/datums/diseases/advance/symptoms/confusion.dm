@@ -54,7 +54,7 @@ Bonus
 		else
 			to_chat(M, "<span class='userdanger'>You can't think straight!</span>")
 			if(M.confused < 100)
-				M.confused += (16 * power) //I'm still not quite sure why I can't just use a clamp here, but I've been told that I can't, so I won't
+				M.confused += (16 * power)
 			if(brain_damage)
 				M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * power, 80)
 				M.updatehealth()

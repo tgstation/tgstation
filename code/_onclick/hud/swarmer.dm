@@ -69,24 +69,30 @@
 
 	using = new /obj/screen/swarmer/FabricateTrap()
 	using.screen_loc = ui_hand_position(2)
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/Barricade()
 	using.screen_loc = ui_hand_position(1)
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/Replicate()
 	using.screen_loc = ui_zonesel
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/RepairSelf()
 	using.screen_loc = ui_storage1
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/ToggleLight()
 	using.screen_loc = ui_back
+	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/ContactSwarmers()
 	using.screen_loc = ui_inventory
+	using.hud = src
 	static_inventory += using

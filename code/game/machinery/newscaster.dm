@@ -174,7 +174,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	name = "newscaster frame"
 	desc = "Used to build newscasters, just secure to the wall."
 	icon_state = "newscaster"
-	materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
+	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
 	result_path = /obj/machinery/newscaster
 
 
@@ -188,7 +188,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	verb_exclaim = "beeps"
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	var/screen = 0
 	var/paper_remaining = 15
 	var/securityCaster = 0
@@ -245,18 +245,6 @@ GLOBAL_LIST_EMPTY(allCasters)
 			add_overlay("crack2")
 		else
 			add_overlay("crack3")
-
-
-/obj/machinery/newscaster/power_change()
-	if(stat & BROKEN)
-		return
-	if(powered())
-		stat &= ~NOPOWER
-		update_icon()
-	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-			update_icon()
 
 /obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -547,7 +535,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
 				if( (!F.locked || F.author == scanned_user) && !F.censored)
 					available_channels += F.channel_name
-			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
+			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in sortList(available_channels)
 			updateUsrDialog()
 		else if(href_list["set_new_message"])
 			var/temp_message = trim(stripped_multiline_input(usr, "Write your Feed story", "Network Channel Handler", msg))
@@ -738,7 +726,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				return
 			user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
 							"<span class='notice'>You begin repairing [src]...</span>", \
-							"<span class='italics'>You hear welding.</span>")
+							"<span class='hear'>You hear welding.</span>")
 			if(I.use_tool(src, user, 40, volume=50))
 				if(!(stat & BROKEN))
 					return
@@ -769,11 +757,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 		new /obj/item/shard(loc)
 	qdel(src)
 
-/obj/machinery/newscaster/obj_break()
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		stat |= BROKEN
+/obj/machinery/newscaster/obj_break(damage_flag)
+	. = ..()
+	if(.)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
-		update_icon()
 
 
 /obj/machinery/newscaster/attack_paw(mob/user)
@@ -803,7 +790,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		else
 			to_chat(user, "<span class='warning'>You cannot interface with silicon photo uploading!</span>")
 		if(!targetcam.stored.len)
-			to_chat(usr, "<span class='boldannounce'>No images saved</span>")
+			to_chat(usr, "<span class='boldannounce'>No images saved.</span>")
 			return
 		var/datum/picture/selection = targetcam.selectpicture(user)
 		if(selection)
@@ -976,7 +963,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		human_user << browse(dat, "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")
 	else
-		to_chat(user, "The paper is full of unintelligible symbols!")
+		to_chat(user, "<span class='warning'>The paper is full of unintelligible symbols!</span>")
 
 /obj/item/newspaper/proc/notContent(list/L)
 	if(!L.len)
@@ -1026,7 +1013,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
 			return
 		if(scribble_page == curr_page)
-			to_chat(user, "<span class='notice'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>")
+			to_chat(user, "<span class='warning'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</span>")
 		else
 			var/s = stripped_input(user, "Write something", "Newspaper")
 			if (!s)

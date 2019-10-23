@@ -71,7 +71,7 @@
 			continue
 		candidates[L.mind.name] = L.mind
 
-	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in candidates
+	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in sortNames(candidates)
 	if(!choice)
 		return
 	var/datum/mind/bro = candidates[choice]
@@ -89,9 +89,6 @@
 /datum/team/brother_team
 	name = "brotherhood"
 	member_name = "blood brother"
-	has_hud = TRUE
-	hud_icon_state = "brother"
-
 	var/meeting_area
 	var/static/meeting_areas = list("The Bar", "Dorms", "Escape Dock", "Arrivals", "Holodeck", "Primary Tool Storage", "Recreation Area", "Chapel", "Library")
 

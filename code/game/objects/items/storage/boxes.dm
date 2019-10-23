@@ -29,6 +29,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FLAMMABLE
+	drop_sound = 'sound/items/handling/cardboardbox_drop.ogg'
+	pickup_sound =  'sound/items/handling/cardboardbox_pickup.ogg'
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
 
@@ -140,7 +142,7 @@
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
@@ -150,7 +152,7 @@
 /obj/item/storage/box/engineer/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-		
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	else
@@ -163,7 +165,7 @@
 // Syndie survival box
 /obj/item/storage/box/syndie/PopulateContents()
 	new /obj/item/clothing/mask/gas/syndicate(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen/engi(src)
 	else
@@ -173,7 +175,7 @@
 /obj/item/storage/box/security/PopulateContents()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
@@ -654,6 +656,8 @@
 	item_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
+	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
+	pickup_sound =  'sound/items/handling/matchbox_pickup.ogg'
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
@@ -783,7 +787,7 @@
 /obj/item/storage/box/hug/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
-	
+
 	if(!isplasmaman(loc))
 		new /obj/item/tank/internals/emergency_oxygen(src)
 	else
@@ -856,7 +860,7 @@
 			to_chat(user, "<span class='warning'>You can't modify [src] with items still inside!</span>")
 			return
 		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILEY, "Cancel")
-		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
+		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in sortList(designs)
 		if(get_dist(usr, src) > 1)
 			to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
 			return
@@ -879,15 +883,15 @@
 			if(SMILEY)
 				desc = "A paper sack with a crude smile etched onto the side."
 		return 0
-	else if(W.is_sharp())
+	else if(W.get_sharpness())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
-				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", 1)
+				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack(user.loc)
 				qdel(src)
 				return 0
 			else if(item_state == "paperbag_SmileyFace")
-				user.show_message("<span class='notice'>You cut eyeholes into [src] and modify the design.</span>", 1)
+				user.show_message("<span class='notice'>You cut eyeholes into [src] and modify the design.</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack/smiley(user.loc)
 				qdel(src)
 				return 0
@@ -1121,4 +1125,55 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/screwdriver = 1)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/material
+	name = "box of materials"
+	illustration = "implant"
+
+/obj/item/storage/box/material/PopulateContents() 	//less uranium because radioactive
+	var/static/items_inside = list(
+		/obj/item/stack/sheet/metal/fifty=1,\
+		/obj/item/stack/sheet/glass/fifty=1,\
+		/obj/item/stack/sheet/rglass=50,\
+		/obj/item/stack/sheet/plasmaglass=50,\
+		/obj/item/stack/sheet/titaniumglass=50,\
+		/obj/item/stack/sheet/plastitaniumglass=50,\
+		/obj/item/stack/sheet/plasteel=50,\
+		/obj/item/stack/sheet/mineral/plastitanium=50,\
+		/obj/item/stack/sheet/mineral/titanium=50,\
+		/obj/item/stack/sheet/mineral/gold=50,\
+		/obj/item/stack/sheet/mineral/silver=50,\
+		/obj/item/stack/sheet/mineral/plasma=50,\
+		/obj/item/stack/sheet/mineral/uranium=20,\
+		/obj/item/stack/sheet/mineral/diamond=50,\
+		/obj/item/stack/sheet/bluespace_crystal=50,\
+		/obj/item/stack/sheet/mineral/bananium=50,\
+		/obj/item/stack/sheet/mineral/wood=50,\
+		/obj/item/stack/sheet/plastic/fifty=1,\
+		/obj/item/stack/sheet/runed_metal/fifty=1
+		)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/debugtools
+	name = "box of debug tools"
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/debugtools/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/flashlight/emp/debug=1,\
+		/obj/item/geiger_counter=1,\
+		/obj/item/pipe_dispenser=1,\
+		/obj/item/card/emag=1,\
+		/obj/item/card/id/syndicate/nuke_leader=1,\
+		/obj/item/card/id/departmental_budget/car=1,\
+		/obj/item/stack/spacecash/c1000=50,\
+		/obj/item/healthanalyzer/advanced=1,\
+		/obj/item/disk/tech_disk/debug=1,\
+		/obj/item/uplink/debug=1,\
+		/obj/item/uplink/nuclear/debug=1,\
+		/obj/item/storage/box/beakers/bluespace=1,\
+		/obj/item/storage/box/beakers/variety=1,\
+		/obj/item/storage/box/material=1
+		)
 	generate_items_inside(items_inside,src)

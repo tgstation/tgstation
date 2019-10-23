@@ -120,10 +120,8 @@ Possible to do for anyone motivated enough:
 	return ..()
 
 /obj/machinery/holopad/power_change()
-	if (powered())
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
+	. = ..()
+	if (!powered())
 		if(replay_mode)
 			replay_stop()
 		if(record_mode)
@@ -162,11 +160,11 @@ Possible to do for anyone motivated enough:
 
 	if(istype(P,/obj/item/disk/holodisk))
 		if(disk)
-			to_chat(user,"<span class='notice'>There's already a disk inside [src]</span>")
+			to_chat(user,"<span class='warning'>There's already a disk inside [src]!</span>")
 			return
 		if (!user.transferItemToLoc(P,src))
 			return
-		to_chat(user,"<span class='notice'>You insert [P] into [src]</span>")
+		to_chat(user,"<span class='notice'>You insert [P] into [src].</span>")
 		disk = P
 		updateDialog()
 		return
@@ -271,7 +269,7 @@ Possible to do for anyone motivated enough:
 					LAZYADD(callnames[A], I)
 			callnames -= get_area(src)
 
-			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in callnames
+			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in sortNames(callnames)
 			if(QDELETED(usr) || !result || outgoing_call)
 				return
 
@@ -449,7 +447,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	else
 		icon_state = "holopad0"
 
-/obj/machinery/holopad/proc/set_holo(mob/living/user, var/obj/effect/overlay/holo_pad_hologram/h)
+/obj/machinery/holopad/proc/set_holo(mob/living/user, obj/effect/overlay/holo_pad_hologram/h)
 	LAZYSET(masters, user, h)
 	LAZYSET(holorays, user, new /obj/effect/overlay/holoray(loc))
 	var/mob/living/silicon/ai/AI = user

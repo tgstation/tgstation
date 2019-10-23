@@ -184,7 +184,7 @@ All foods are distributed among various categories. Use common sense.
 			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0
-	var/sharp = W.is_sharp()
+	var/sharp = W.get_sharpness()
 	if(sharp)
 		if(slice(sharp, W, user))
 			return 1
@@ -270,7 +270,7 @@ All foods are distributed among various categories. Use common sense.
 			trash = null
 			return
 
-/obj/item/reagent_containers/food/snacks/proc/update_overlays(obj/item/reagent_containers/food/snacks/S)
+/obj/item/reagent_containers/food/snacks/proc/update_snack_overlays(obj/item/reagent_containers/food/snacks/S)
 	cut_overlays()
 	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
@@ -320,7 +320,7 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))
-		if(iscorgi(M))
+		if(isdog(M))
 			var/mob/living/L = M
 			if(bitecount == 0 || prob(50))
 				M.emote("me", 1, "nibbles away at \the [src]")
@@ -357,7 +357,7 @@ All foods are distributed among various categories. Use common sense.
 /obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
 	..()
 	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
-		if(W.is_sharp())
+		if(W.get_sharpness())
 			return 0
 		if(stored_item)
 			return 0

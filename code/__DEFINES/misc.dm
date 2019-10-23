@@ -70,7 +70,7 @@
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
 
 #define BE_CLOSE TRUE		//in the case of a silicon, to select if they need to be next to the atom
-#define NO_DEXTERY TRUE	//if other mobs (monkeys, aliens, etc) can use this
+#define NO_DEXTERITY TRUE	//if other mobs (monkeys, aliens, etc) can use this // I had to change 20+ files because some non-dnd-playing fuckchumbis can't spell "dexterity"
 #define NO_TK TRUE
 //used by canUseTopic()
 
@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define ORBITRON	"Orbitron"
 #define SHARE		"Share Tech Mono"
 
-GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
+GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 /////////////////////////////////////
 // atom.appearence_flags shortcuts //
@@ -393,7 +393,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define ION_FILE "ion_laws.json"
 #define PIRATE_NAMES_FILE "pirates.json"
 #define REDPILL_FILE "redpill.json"
-
+#define ARCADE_FILE "arcade.json"
 
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
@@ -424,7 +424,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define PDAIMG(what) {"<span class="pda16x16 [#what]"></span>"}
 
 //Filters
-#define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, border=4, color="#04080FAA")
+#define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, color="#04080FAA")
 #define GAUSSIAN_BLUR(filter_size) filter(type="blur", size=filter_size)
 
 #define STANDARD_GRAVITY 1 //Anything above this is high gravity, anything below no grav

@@ -18,7 +18,7 @@
 	active_power_usage = 200
 	power_channel = EQUIP
 	max_integrity = 300
-	integrity_failure = 100
+	integrity_failure = 0.33
 	var/obj/item/paper/copy = null	//what's in the copier!
 	var/obj/item/photo/photocopy = null
 	var/obj/item/documents/doccopy = null
@@ -252,10 +252,10 @@
 		return ..()
 
 /obj/machinery/photocopier/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(toner > 0)
-			new /obj/effect/decal/cleanable/oil(get_turf(src))
-			toner = 0
+	. = ..()
+	if(. && toner > 0)
+		new /obj/effect/decal/cleanable/oil(get_turf(src))
+		toner = 0
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.

@@ -12004,7 +12004,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/cave)
 "DH" = (
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/cave)
