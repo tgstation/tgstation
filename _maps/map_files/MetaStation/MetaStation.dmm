@@ -1961,7 +1961,7 @@
 	dir = 1
 	},
 /obj/item/gun/energy/temperature/security,
-/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/hooded/ablative,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -48802,7 +48802,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area)
+/area/medical/medbay/central)
 "cdz" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -49249,7 +49249,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area)
+/area/medical/medbay/central)
 "ceF" = (
 /obj/structure/bed/roller,
 /obj/item/radio/intercom{
@@ -56600,7 +56600,7 @@
 /obj/machinery/power/apc{
 	areastring = "/area/medical/patients_rooms/room_a";
 	dir = 8;
-	name = "Patient Room A APC";
+	name = "Surgery B APC";
 	pixel_x = -25
 	},
 /obj/structure/cable,

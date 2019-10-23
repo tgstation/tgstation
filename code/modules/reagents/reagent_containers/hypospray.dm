@@ -182,8 +182,8 @@
 	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/salacid
-	name = "salicyclic acid medipen"
-	desc = "A autoinjector containing salicyclic acid, used to treat severe brute damage."
+	name = "salicylic acid medipen"
+	desc = "A autoinjector containing salicylic acid, used to treat severe brute damage."
 	icon_state = "salacid"
 	item_state = "salacid"
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)

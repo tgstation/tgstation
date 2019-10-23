@@ -18,6 +18,10 @@ export class Layout extends Component {
     this.contentRef = createRef();
   }
 
+  componentDidMount() {
+    this.contentRef.current.focus();
+  }
+
   render() {
     const { props } = this;
     const { state, dispatch } = props;

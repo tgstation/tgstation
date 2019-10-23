@@ -12,7 +12,7 @@
 	fill_icon_thresholds = list(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
 
 /obj/item/reagent_containers/chem_pack/AltClick(mob/living/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERY) && !sealed)
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY) && !sealed)
 		if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
 			to_chat(user, "<span class='warning'>Uh... whoops! You accidentally spill the content of the bag onto yourself.</span>")
 			SplashReagents(user)

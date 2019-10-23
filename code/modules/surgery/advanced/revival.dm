@@ -64,7 +64,7 @@
 	playsound(get_turf(target), 'sound/magic/lightningbolt.ogg', 50, TRUE)
 	target.adjustOxyLoss(-50, 0)
 	target.updatehealth()
-	if(target.revive())
+	if(target.revive(full_heal = FALSE, admin_revive = FALSE))
 		target.visible_message("<span class='notice'>...[target] wakes up, alive and aware!</span>")
 		target.emote("gasp")
 		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) //MAD SCIENCE
