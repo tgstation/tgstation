@@ -409,7 +409,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (threat_level > high_pop_third_rule_req)
 					extra_rulesets_amount++
 		else
-			var/threat_indice = min(10, max(round(threat_level ? threat_level/10 : 1), 1)	// 0-9 threat = 1, 10-19 threat = 2 ...
+			var/threat_indice = min(10, max(round(threat_level ? threat_level/10 : 1), 1))	// 0-9 threat = 1, 10-19 threat = 2 ...
 			if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[threat_indice]))
 				extra_rulesets_amount++
 				if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[threat_indice]))
