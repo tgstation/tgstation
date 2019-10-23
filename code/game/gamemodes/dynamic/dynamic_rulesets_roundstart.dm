@@ -383,10 +383,10 @@
 			M.add_antag_datum(new_head,revolution)
 		else
 			assigned -= M
-			log_game("Dynamic: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
+			log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
 		if(!revolution.members.len)
 			success = FALSE
-			log_game("Dynamic: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
+			log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
 	if(success)
 		revolution.update_objectives()
 		revolution.update_heads()
