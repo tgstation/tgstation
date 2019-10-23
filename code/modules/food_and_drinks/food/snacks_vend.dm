@@ -73,7 +73,7 @@
 
 /obj/item/reagent_containers/food/snacks/candy_trash
 	name = "candy cigarette butt"
-	icon = 'icons/obj/cigarettes.dmi'
+	icon = 'icons/mob/clothing/masks.dmi'
 	icon_state = "candy_butt"
 	desc = "The leftover from a smoked-out candy cigarette."
 	list_reagents = list(/datum/reagent/consumable/sugar = 4, /datum/reagent/ash = 1)
