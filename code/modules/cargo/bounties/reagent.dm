@@ -190,10 +190,10 @@
 	reward += rand(0, 5) * 750 //6000 to 9750 credits
 
 /datum/bounty/pill
-	var/required_ammount = 10
+	var/required_ammount = 80
 	var/shipped_ammount = 0
 	var/datum/reagent/wanted_reagent
-	var/wanted_vol = 10
+	var/wanted_vol = 30
 
 /datum/bounty/pill/completion_string()
 	return {"[shipped_ammount]/[required_ammount] pills"}
@@ -248,7 +248,7 @@
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
 	name = "[wanted_reagent.name] pills"
-	required_ammount += rand(20,60)
-	wanted_vol += rand(1,40)
+	required_ammount += rand(1,60)
+	wanted_vol += rand(1,20)
 	description = "CentCom requires [required_ammount] of [name] containing at least [wanted_vol] each. Ship a container of it to be rewarded."
 	reward += rand(1, 5) * 3000
