@@ -20,39 +20,39 @@ export const ShuttleManipulator = props => {
           <Section>
             <table>
               {shuttles.map(shuttle => (
-                <tr key={shuttle.id + '_row'}>
-                  <td key={shuttle.id + '_jmprow'}>
+                <tr key={shuttle.id}>
+                  <td key={shuttle.id}>
                     <Button
                       content="JMP"
-                      key={shuttle.id + '_jmp'}
+                      key={shuttle.id}
                       onClick={() => act(ref, 'jump_to', {type: "mobile", id: shuttle.id})}
                     />
                   </td>
-                  <td key={shuttle.id + '_flyrow'}>
+                  <td key={shuttle.id}>
                     <Button
                       content="Fly"
-                      key={shuttle.id + '_fly'}
+                      key={shuttle.id}
                       disabled={!shuttle.can_fly}
                       onClick={() => act(ref, 'fly', {id: shuttle.id})}
                     />
                   </td>
-                  <td key={shuttle.id + '_namerow'}>
+                  <td key={shuttle.id}>
                     {shuttle.name}
                   </td>
-                  <td key={shuttle.id + '_idrow'}>
+                  <td key={shuttle.id}>
                     {shuttle.id}
                   </td>
-                  <td key={shuttle.id + '_statusrow'}>
+                  <td key={shuttle.id}>
                     {shuttle.status}
                   </td>
-                  <td key={shuttle.id + '_timerrow'}>
+                  <td key={shuttle.id}>
                     {shuttle.mode}
                     {!!shuttle.timer && (
-                      <Fragment key={shuttle.id + '_travelfrag'}>
+                      <Fragment key={shuttle.id}>
                         ({shuttle.timeleft})
                         <Button
                           content="Fast Travel"
-                          key={shuttle.id + '_fast_travel'}
+                          key={shuttle.id}
                           disabled={!shuttle.can_fast_travel}
                           onClick={() => act(ref, 'fast_travel', {id: shuttle.id})}
                         />
@@ -85,7 +85,7 @@ export const ShuttleManipulator = props => {
                         <Section
                           title={actualTemplate.name}
                           level={2}
-                          key={actualTemplate.shuttle_id + '_section'}
+                          key={actualTemplate.shuttle_id}
                           buttons={(
                             <Button
                               content={isSelected ? 'Selected' : 'Select'}
