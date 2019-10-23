@@ -479,9 +479,10 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "bU" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/mineral/strong/wasteland,
-/area/ruin/unpowered/elephant_graveyard)
+/obj/item/light/bulb/broken,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/powered/graveyard_shuttle)
 "bV" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/mineral/volcanic/lava_land_surface,
@@ -620,15 +621,6 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "cv" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/mineral/titanium/white,
-/area/ruin/powered/graveyard_shuttle)
-"cw" = (
-/obj/item/light/bulb/broken,
-/obj/structure/sink/kitchen{
-	dir = 4;
-	step_x = -12
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
@@ -1411,7 +1403,7 @@ bf
 ck
 aX
 ae
-bU
+bf
 bf
 bf
 bf
@@ -1559,7 +1551,7 @@ aN
 bQ
 bh
 cv
-cw
+bU
 by
 aH
 aH
