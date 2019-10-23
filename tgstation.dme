@@ -86,6 +86,7 @@
 #include "code\__DEFINES\radio.dm"
 #include "code\__DEFINES\reactions.dm"
 #include "code\__DEFINES\reagents.dm"
+#include "code\__DEFINES\reagents_specific_heat.dm"
 #include "code\__DEFINES\research.dm"
 #include "code\__DEFINES\robots.dm"
 #include "code\__DEFINES\role_preferences.dm"
