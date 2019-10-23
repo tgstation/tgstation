@@ -213,22 +213,20 @@ obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
 
 
 //***Fluff items for lore/intrigue
-/obj/item/paper/fluff/ruins/elephant_graveyard
+/obj/item/paper/crumpled/muddy/fluff/elephant_graveyard
 	name = "Posted Warning"
 	desc = "It seems to be smudged with mud and... oil?"
-	icon_state = "scrap_mud"
 	info = "<B>ATTENTION TO WHOOM IT MAY CONCERN</B><BR><BR>This area is property of Nanotrasen Mining Devision.<BR><BR>Tresspassing in this area is illegal, highly dangerous, and subject to several NDAs.<br><br>Please turn back now, under intergalactic law section 48-R."
 
-/obj/item/paper/fluff/ruins/elephant_graveyard/rnd_notes
+/obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/rnd_notes
 	name = "Research Findings: Day 26"
 	desc = "Hunh, this one page looks like it was torn out of a full book. How odd."
 	icon_state = "docs_part"
 	info = "<b>Researcher name:</b> B--*--* J--*s.<BR><BR>Detailed findings:<i>Today the camp site's cond-tion has wor--ene*. The ashst--ms keep blocking us off from le-ving the sit* for m-re supplies, and it's lo-king like we're out of pl*sma to p-wer the ge-erat*r. Can't rea-*y study c-*bon *ating with no li--ts, ya know? Da-*y's been going -*f again and ag-*n a-*ut h*w the company's left us to *ie here, but I j-s* keep tell-ng him to stop che*-in* out these damn graves. We m-y b* archeologists, but -e sho*ld have t-e dec-**cy to know these grav-s are *-l NEW.</i><BR><BR><b>The rest of the page is just semantics about carbon dating methods.</b>"
 
-/obj/item/paper/fluff/ruins/elephant_graveyard/mutiny
+/obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/mutiny
 	name = "Hastily Scribbled Note"
 	desc = "Seems like someone was in a hurry."
-	icon_state = "scrap"
 	info = "Alright, we all know that stuck up son a bitch is just doing this to keep us satisifed. Who the hell does he think he is, taking extra rations? We're OUT OF FOOD, CARL. Tomorrow at noon, we're going to try and take the ship by force. He HAS to be lying about the engine cooling down. He HAS TO BE. I'm tellin ya, with this implant I lifted off that last supply ship, I got the smarts to get us offa this shithole. Keep your knife handy carl."
 
 /obj/item/paper/fluff/ruins/elephant_graveyard/hypothesis
@@ -239,4 +237,4 @@ obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
 /obj/item/paper/fluff/ruins/elephant_graveyard/final_message
 	name = "Important looking Note"
 	desc = "This note is well written, and seems to have been put here so you'd find it."
-	info = "If you find this... you don't need to know who I am.<BR><BR>You need to leave this place. I dunno what shit they did to me out here, but I don't think I'm going to be making it out of here.<BR><BR>This place... it wears down your psyche. The other researchers out here laughed it off but... They were the first to go.<BR><BR>One by one they started turning on each other. The more they found out, the more they started fighting and arguing...<BR>As I speak now, I had to... I wound up having to put most of my men down. I know what I had to do, and I know there's no way left for me to live with myself.<BR> If anyone ever finds this, just don't tocuh the graves.<BR><BR>DO NOT. TOUCH. THE GRAVES. Don't be a dumbass, like we were."
+	info = "If you find this... you don't need to know who I am.<BR><BR>You need to leave this place. I dunno what shit they did to me out here, but I don't think I'm going to be making it out of here.<BR><BR>This place... it wears down your psyche. The other researchers out here laughed it off but... They were the first to go.<BR><BR>One by one they started turning on each other. The more they found out, the more they started fighting and arguing...<BR>As I speak now, I had to... I wound up having to put most of my men down. I know what I had to do, and I know there's no way left for me to live with myself.<BR> If anyone ever finds this, just don't touch the graves.<BR><BR>DO NOT. TOUCH. THE GRAVES. Don't be a dumbass, like we all were."

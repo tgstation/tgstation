@@ -101,7 +101,7 @@
 "au" = (
 /obj/structure/table,
 /obj/structure/cable,
-/obj/item/paper/fluff/ruins/elephant_graveyard/rnd_notes,
+/obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/rnd_notes,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "av" = (
@@ -382,7 +382,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/graveyard_shuttle)
 "bz" = (
-/obj/item/paper/fluff/ruins/elephant_graveyard/mutiny,
+/obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/mutiny,
 /obj/item/cigbutt,
 /obj/item/cigbutt,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
