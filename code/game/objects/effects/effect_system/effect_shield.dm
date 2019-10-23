@@ -8,12 +8,12 @@
 
 /obj/effect/shield/Initialize()
 	. = ..()
-	var/location = get_turf(src)	
+	var/turf/location = get_turf(src)	
 	old_heat_capacity=location.heat_capacity
 	location.heat_capacity = INFINITY
 
 /obj/effect/shield/Destroy()
-	var/location = get_turf(src)	
+	var/turf/location = get_turf(src)	
 	location.heat_capacity=old_heat_capacity
 	..()
 

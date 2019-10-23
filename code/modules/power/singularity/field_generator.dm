@@ -203,8 +203,7 @@ field_generator power level display
 	warming_up++
 	update_icon()
 	if(warming_up >= 3)
-		start_fields()
-		shield_floor(TRUE)
+		start_fields()		
 	else
 		addtimer(CALLBACK(src, .proc/warm_up), 50)
 
@@ -315,6 +314,7 @@ field_generator power level display
 
 	connected_gens |= G
 	G.connected_gens |= src
+	shield_floor(TRUE)
 	update_icon()
 
 
@@ -375,7 +375,7 @@ field_generator power level display
 /obj/machinery/field/generator/proc/place_floor(Location,create)
 	if(create && !locate(/obj/effect/shield) in Location)
 		new/obj/effect/shield(Location)
-	else		
+	else if(!create)		
 		var/obj/effect/shield/S=locate(/obj/effect/shield) in Location
 		if(S)			
 			qdel(S)
