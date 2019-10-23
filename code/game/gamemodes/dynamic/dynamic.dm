@@ -341,6 +341,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		log_game("DYNAMIC: [candidates.len] candidates. "
 		return TRUE
 	if (roundstart_rules.len <= 0)
+		log_game("DYNAMIC: [roundstart_rules.len] rules. "
 		return TRUE
 
 	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
