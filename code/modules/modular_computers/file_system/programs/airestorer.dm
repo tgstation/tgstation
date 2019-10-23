@@ -80,7 +80,7 @@
 	A.adjustBruteLoss(-1, 0)
 	A.updatehealth()
 	if(A.health >= 0 && A.stat == DEAD)
-		A.revive()
+		A.revive(full_heal = FALSE, admin_revive = FALSE)
 	// Finished restoring
 	if(A.health >= 100)
 		ai_slot.locked = FALSE

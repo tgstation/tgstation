@@ -67,7 +67,7 @@
 			if(1)
 				to_chat(usr, "<span class='warning'>Invalid shuttle requested.</span>")
 			else
-				to_chat(usr, "<span class='notice'>Unable to comply.</span>")
+				to_chat(usr, "<span class='warning'>Unable to comply.</span>")
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

@@ -227,7 +227,7 @@
 		if (initial(rodtype.chaplain_spawnable))
 			display_names[initial(rodtype.name)] = rodtype
 
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
+	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in sortList(display_names, /proc/cmp_typepaths_asc)
 	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.incapacitated() || reskinned)
 		return
 
@@ -440,7 +440,7 @@
 	if(possessed)
 		return
 
-	to_chat(user, "You attempt to wake the spirit of the blade...")
+	to_chat(user, "<span class='notice'>You attempt to wake the spirit of the blade...</span>")
 
 	possessed = TRUE
 
@@ -459,12 +459,12 @@
 			name = input
 			S.fully_replace_character_name(null, "The spirit of [input]")
 	else
-		to_chat(user, "The blade is dormant. Maybe you can try again later.")
+		to_chat(user, "<span class='warning'>The blade is dormant. Maybe you can try again later.</span>")
 		possessed = FALSE
 
 /obj/item/nullrod/scythe/talking/Destroy()
 	for(var/mob/living/simple_animal/shade/S in contents)
-		to_chat(S, "You were destroyed!")
+		to_chat(S, "<span class='userdanger'>You were destroyed!</span>")
 		qdel(S)
 	return ..()
 
@@ -606,7 +606,7 @@
 /obj/item/nullrod/carp/attack_self(mob/living/user)
 	if(used_blessing)
 	else if(user.mind && (user.mind.isholy))
-		to_chat(user, "You are blessed by Carp-Sie. Wild space carp will no longer attack you.")
+		to_chat(user, "<span class='boldnotice'>You are blessed by Carp-Sie. Wild space carp will no longer attack you.</span>")
 		user.faction |= "carp"
 		used_blessing = TRUE
 

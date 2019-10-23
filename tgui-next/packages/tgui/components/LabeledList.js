@@ -60,7 +60,7 @@ export const LabeledListDivider = props => {
   return (
     <tr className="LabeledList__row">
       <td style={{
-        'margin-bottom': unit(size),
+        'padding-bottom': unit(size),
       }} />
     </tr>
   );

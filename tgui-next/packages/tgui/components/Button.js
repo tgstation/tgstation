@@ -1,7 +1,11 @@
 import { classes, pureComponentHooks } from 'common/react';
+import { tridentVersion } from '../byond';
+import { createLogger } from '../logging';
 import { Box } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
+
+const logger = createLogger('Button');
 
 export const BUTTON_ACTIVATION_KEYCODES = [
   13, // Enter
@@ -20,11 +24,19 @@ export const Button = props => {
     tooltipPosition,
     content,
     children,
+    onclick,
     onClick,
     ...rest
   } = props;
   const hasContent = !!(content || children);
-  // NOTE: Lowercase "onclick" and unselectable is used for
+  // A warning about the lowercase onclick
+  if (onclick) {
+    logger.warn("Lowercase 'onclick' is not supported on Button and "
+      + "lowercase prop names are discouraged in general. "
+      + "Please use a camelCase 'onClick' instead and read: "
+      + "https://infernojs.org/docs/guides/event-handling");
+  }
+  // NOTE: Lowercase "onclick" and unselectable are used internally for
   // compatibility with IE8. Do not change it!
   return (
     <Box as="span"
@@ -39,8 +51,8 @@ export const Button = props => {
           : 'Button--color--normal',
         className,
       ])}
-      tabindex={!disabled && '0'}
-      unselectable={true}
+      tabIndex={!disabled && '0'}
+      unselectable={tridentVersion <= 4}
       onclick={e => {
         if (disabled || !onClick) {
           return;

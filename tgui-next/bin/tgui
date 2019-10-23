@@ -15,14 +15,14 @@ run-webpack() {
 ## Mr. Proper
 if [[ ${1} == "--clean" ]]; then
   shopt -s globstar
+  rm -rf packages/tgui/public/.tmp
   rm -rf **/node_modules
+  rm -f **/package-lock.json
   exit 0
 fi
 
 ## Install dependencies
-if [[ ! -e node_modules ]]; then
-  npm install
-fi
+yarn install
 
 ## Run a development server
 if [[ ${1} == "--dev" ]]; then
@@ -44,6 +44,7 @@ fi
 
 ## Make a production webpack build
 if [[ -z ${1} ]]; then
+  eslint packages
   run-webpack --mode=production
 fi
 

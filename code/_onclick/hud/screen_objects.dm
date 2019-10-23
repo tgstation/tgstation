@@ -59,6 +59,17 @@
 		var/mob/M = usr
 		M.swap_hand()
 	return 1
+	
+/obj/screen/skills
+	name = "skills"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "skills"
+	screen_loc = ui_skill_menu
+
+/obj/screen/skills/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.mind.print_levels(H)
 
 /obj/screen/craft
 	name = "crafting menu"
@@ -636,6 +647,12 @@
 	icon = 'icons/mob/screen_slime.dmi'
 	icon_state = "slime_health0"
 	screen_loc = ui_slime_health
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	
+/obj/screen/healths/lavaland_elite
+	icon = 'icons/mob/screen_elite.dmi'
+	icon_state = "elite_health0"
+	screen_loc = ui_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healthdoll

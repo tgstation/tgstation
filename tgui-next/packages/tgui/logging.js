@@ -16,11 +16,7 @@ const LEVEL_ERROR = 4;
 const log = (level, ns, ...args) => {
   // Send logs to a remote log collector
   if (process.env.NODE_ENV !== 'production') {
-    sendLogEntry(ns, ...args);
-  }
-  // Send logs to a globally defined debug print
-  if (window.debugPrint) {
-    debugPrint([ns, ...args]);
+    sendLogEntry(level, ns, ...args);
   }
   // Send important logs to the backend
   if (level >= LEVEL_INFO) {
@@ -28,6 +24,9 @@ const log = (level, ns, ...args) => {
       .map(value => {
         if (typeof value === 'string') {
           return value;
+        }
+        if (value instanceof Error) {
+          return value.stack || String(value);
         }
         return JSON.stringify(value);
       })

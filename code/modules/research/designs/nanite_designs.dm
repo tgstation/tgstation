@@ -39,11 +39,26 @@
 	program_type = /datum/nanite_program/triggered/self_scan
 	category = list("Utility Nanites")
 
+/datum/design/nanites/dermal_button
+	name = "Dermal Button"
+	desc = "Displays a button on the host's skin, which can be used to send a signal to the nanites."
+	id = "dermal_button_nanites"
+	program_type = /datum/nanite_program/dermal_button
+	category = list("Utility Nanites")
+
 /datum/design/nanites/stealth
 	name = "Stealth"
 	desc = "The nanites hide their activity and programming from superficial scans."
 	id = "stealth_nanites"
 	program_type = /datum/nanite_program/stealth
+	category = list("Utility Nanites")
+
+/datum/design/nanites/reduced_diagnostics
+	name = "Reduced Diagnostics"
+	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners. \
+	Doing so saves some power, slightly increasing their replication speed."
+	id = "red_diag_nanites"
+	program_type = /datum/nanite_program/reduced_diagnostics
 	category = list("Utility Nanites")
 
 /datum/design/nanites/access
@@ -87,6 +102,13 @@
 			resulting in an extremely infective strain of nanites."
 	id = "spreading_nanites"
 	program_type = /datum/nanite_program/spreading
+	category = list("Utility Nanites")
+
+/datum/design/nanites/nanite_sting
+	name = "Nanite Sting"
+	desc = "When triggered, projects a nearly invisible spike of nanites that attempts to infect a nearby non-host with a copy of the host's nanites cluster."
+	id = "nanite_sting_nanites"
+	program_type = /datum/nanite_program/triggered/nanite_sting
 	category = list("Utility Nanites")
 
 /datum/design/nanites/mitosis
@@ -350,7 +372,7 @@
 	name = "Mind Control"
 	desc = "The nanites imprint an absolute directive onto the host's brain while they're active."
 	id = "mindcontrol_nanites"
-	program_type = /datum/nanite_program/mind_control
+	program_type = /datum/nanite_program/triggered/comm/mind_control
 	category = list("Weaponized Nanites")
 
 ////////////////////SUPPRESSION NANITES//////////////////////////////////////
@@ -430,6 +452,20 @@
 	desc = "The nanites make the host see and hear things that aren't real."
 	id = "hallucination_nanites"
 	program_type = /datum/nanite_program/triggered/comm/hallucination
+	category = list("Suppression Nanites")
+
+/datum/design/nanites/good_mood
+	name = "Happiness Enhancer"
+	desc = "The nanites synthesize serotonin inside the host's brain, creating an artificial sense of happiness."
+	id = "good_mood_nanites"
+	program_type = /datum/nanite_program/good_mood
+	category = list("Suppression Nanites")
+
+/datum/design/nanites/bad_mood
+	name = "Happiness Suppressor"
+	desc = "The nanites suppress the production of serotonin inside the host's brain, creating an artificial state of depression."
+	id = "bad_mood_nanites"
+	program_type = /datum/nanite_program/bad_mood
 	category = list("Suppression Nanites")
 
 ////////////////////SENSOR NANITES//////////////////////////////////////
