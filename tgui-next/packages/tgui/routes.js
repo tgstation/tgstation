@@ -19,6 +19,7 @@ import { ChemDispenser } from './interfaces/ChemDispenser';
 import { ChemHeater } from './interfaces/ChemHeater';
 import { ChemMaster } from './interfaces/ChemMaster';
 import { Crayon } from './interfaces/Crayon';
+import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { KitchenSink } from './interfaces/KitchenSink';
 import { Mint } from './interfaces/Mint';
@@ -110,6 +111,10 @@ const ROUTES = {
   crayon: {
     component: () => Crayon,
     scrollable: true,
+  },
+  cryo: {
+    component: () => Cryo,
+    scrollable: false,
   },
   disposal_unit: {
     component: () => DisposalUnit,
