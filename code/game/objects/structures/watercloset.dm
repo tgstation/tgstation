@@ -100,6 +100,10 @@
 	else if(istype(I, /obj/item/reagent_containers))
 		if (!open)
 			return
+		if(istype(I, /obj/item/reagent_containers/food/snacks/monkeycube))
+			var/obj/item/reagent_containers/food/snacks/monkeycube/cube = I
+			cube.Expand()
+			return
 		var/obj/item/reagent_containers/RG = I
 		RG.reagents.add_reagent(/datum/reagent/water, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		to_chat(user, "<span class='notice'>You fill [RG] from [src]. Gross.</span>")
