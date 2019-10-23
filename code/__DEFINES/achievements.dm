@@ -35,11 +35,11 @@
 
 // Medal hub IDs for boss-kill scores
 #define BOSS_SCORE 	         "Bosses Killed"
-#define MINER_SCORE 		 "Blood-drunk Miner Killed"
+#define MINER_SCORE 		 "BDMs Killed"
 #define BUBBLEGUM_SCORE 	 "Bubblegum Killed"
 #define COLOSSUS_SCORE 	     "Colossus Killed"
 #define DRAKE_SCORE 	     "Drakes Killed"
 #define HIEROPHANT_SCORE 	 "Hierophants Killed"
 #define LEGION_SCORE 	     "Legion Killed"
-#define SWARMER_BEACON_SCORE "Swarmer Beacons Killed"
+#define SWARMER_BEACON_SCORE "Swarmer Beacs Killed"
 #define TENDRIL_CLEAR_SCORE	 "Tendrils Killed"
