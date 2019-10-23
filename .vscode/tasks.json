@@ -4,12 +4,61 @@
     "version": "2.0.0",
     "tasks": [
         {
+			"label": "dm: Build Game",
             "type": "dreammaker",
             "dme": "tgstation.dme",
             "problemMatcher": [
                 "$dreammaker"
             ],
             "group": "build"
-        }
+		},
+		{
+			"label": "tgui: Install Dependencies",
+			"type": "shell",
+			"command": "yarn install",
+			"options": {
+				"cwd": "${workspaceRoot}/tgui-next"
+			}
+		},
+		{
+			"label": "tgui: Build",
+			"type": "shell",
+			"command": "yarn run build",
+			"options": {
+				"cwd": "${workspaceRoot}/tgui-next"
+			}
+		},
+		{
+			"label": "tgui: Run Development Server",
+			"type": "shell",
+			"command": "yarn run watch",
+			"options": {
+				"cwd": "${workspaceRoot}/tgui-next"
+			}
+		},
+		{
+			"label": "tgui: Lint",
+			"type": "shell",
+			"command": "yarn run lint",
+			"options": {
+				"cwd": "${workspaceRoot}/tgui-next"
+			}
+		},
+		{
+			"label": "tgui: Autofix Lint Errors",
+			"type": "shell",
+			"command": "yarn run lint --fix",
+			"options": {
+				"cwd": "${workspaceRoot}/tgui-next"
+			}
+		},
+		{
+			"label": "tgui: Run Build Analysis",
+			"type": "shell",
+			"command": "yarn run analyze",
+			"options": {
+				"cwd": "${workspaceRoot}/tgui-next"
+			}
+		}
     ]
 }
