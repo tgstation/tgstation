@@ -1,4 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - tweak: "tgui dev server can now show real stack traces using source maps."
