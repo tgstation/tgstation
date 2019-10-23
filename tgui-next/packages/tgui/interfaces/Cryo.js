@@ -27,8 +27,7 @@ export const Cryo = props => {
 
   return (
     <Fragment>
-      <Section
-        title="Occupant">
+      <Section title="Occupant">
         <LabeledList>
           <LabeledList.Item
             label="Occupant"
@@ -44,8 +43,7 @@ export const Cryo = props => {
                 color={data.occupant.temperaturestatus}>
                 <AnimatedNumber value={data.occupant.bodyTemperature} /> K
               </LabeledList.Item>
-              <LabeledList.Item
-                label="Health">
+              <LabeledList.Item label="Health">
                 <ProgressBar
                   value={data.occupant.health / data.occupant.maxHealth}
                   color={(data.occupant.health > 0) ? "good" : "average"}>
@@ -76,11 +74,11 @@ export const Cryo = props => {
                 icon={data.isOperating ? "power-off" : "times"}
                 disabled={data.isOpen}
                 onClick={() => act(ref, 'power')}
-                content={data.isOperating ? "On" : "Off"}
-                color={data.isOperating && ("green")} />
+                color={data.isOperating && ("green")}>
+                {data.isOperating ? "On" : "Off"}
+              </Button>
             )} />
-          <LabeledList.Item
-            label="Temperature">
+          <LabeledList.Item label="Temperature">
             <AnimatedNumber value={data.cellTemperature} /> K
           </LabeledList.Item>
           <LabeledList.Item label="Door">
