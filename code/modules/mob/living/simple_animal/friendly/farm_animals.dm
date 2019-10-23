@@ -141,8 +141,8 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
 	food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
-	tame_chance = 50
-	bonus_tame_chance = 50
+	tame_chance = 25
+	bonus_tame_chance = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/cow/Initialize()
