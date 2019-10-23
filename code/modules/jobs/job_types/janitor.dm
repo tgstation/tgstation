@@ -8,7 +8,6 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
-	var/global/janitors = 0
 
 	outfit = /datum/outfit/job/janitor
 
