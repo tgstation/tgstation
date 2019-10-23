@@ -268,6 +268,7 @@
 		to_chat(user, "<span class='notice'>You open the sterile mesh package.</span>")
 		update_icon()
 		playsound(src, 'sound/items/poster_ripped.ogg', 20, TRUE)
+		return
 	. = ..()
 
 	/*
