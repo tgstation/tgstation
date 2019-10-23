@@ -789,7 +789,7 @@
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
+		new /obj/item/tank/internals/emergency_oxygen/clown(src)
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
 
