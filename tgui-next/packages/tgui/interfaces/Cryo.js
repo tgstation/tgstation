@@ -64,8 +64,7 @@ export const Cryo = props => {
           )}
         </LabeledList>
       </Section>
-      <Section
-        title="Cell">
+      <Section title="Cell">
         <LabeledList>
           <LabeledList.Item
             label="Power"
