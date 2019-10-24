@@ -156,26 +156,30 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/screech)
 	var/recent_uses = 0
-	var/broken_hailer = 0
+	var/broken_hailer = FALSE
 	var/gorilla = FALSE
-	var/cooldown_special = 0
 
 
 /obj/item/clothing/mask/gas/monkeymask/ui_action_click(mob/user, action)
+	..()
 	screech()
 
 /obj/item/clothing/mask/gas/monkeymask/attack_self()
+	..()
 	screech()
-/obj/item/clothing/mask/gas/monkeymask/emag_act(mob/user as mob)
+
+/obj/item/clothing/mask/gas/monkeymask/emag_act(mob/user)
 	if(!gorilla)
 		to_chat(user, "<span class='warning'>You silently turn on [src]'s gorilla module with the cryptographic sequencer.</span>")
-	else
-		return
+		gorilla = TRUE
 
 /obj/item/clothing/mask/gas/monkeymask/verb/screech()
 	set category = "Object"
 	set name = "Screech"
 	set src in usr
+	var/phrase = rand(1,18)	//selects which phrase to use
+	var/phrase_text = null
+	var/phrase_sound = null
 	if(!isliving(usr))
 		return
 	if(!can_use(usr))
@@ -184,15 +188,9 @@
 		to_chat(usr, "<span class='warning'>\The [src]'s screeching system is jammed full of bananas paste.</span>")
 		return
 
-	var/phrase = 0	//selects which phrase to use
-	var/phrase_text = null
-	var/phrase_sound = null
-
 
 	if(cooldown < world.time - 30) // A cooldown, to stop people being jerks
 		recent_uses++
-		if(cooldown_special < world.time - 180) //A better cooldown that burns jerks
-			recent_uses = initial(recent_uses)
 
 		switch(recent_uses)
 			if(3)
@@ -201,11 +199,11 @@
 				to_chat(usr, "<span class='userdanger'>\The [src] is smelling like burnt peanuts!</span>")
 			if(5) //overload
 				broken_hailer = TRUE
-				to_chat(usr, "<span class='userdanger'>\The [src]'s the depleted banana module shorts.</span>")
-				new /obj/item/grown/bananapeel(src)
+				to_chat(usr, "<span class='userdanger'>\The [src]'s depleted banana module shorts.</span>")
+				new /obj/item/grown/bananapeel(drop_location())
 				return
 
-		phrase = rand(1,18)
+
 
 		if(gorilla)
 			phrase_text = "FUCK YOUR CUNT YOU SHIT EATING COCKSTORM AND EAT A DONG FUCKING ASS RAMMING SHIT FUCK EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS OF FUCK AND POO AND SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT."
@@ -274,17 +272,16 @@
 		for(var/mob/hear in hearers)
 			if(hear.has_language(/datum/language/monkey))
 				if(gorilla)
-					to_chat(hear, "<font color='brown' size='6'><b>[phrase_text]</b></font>")
+					hear.show_message("<span class='gorilla'>[phrase_text]</span>", MSG_AUDIBLE)
 				else
-					to_chat(hear, "<font color='brown' size='4'><b>[phrase_text]</b></font>")
-			if(!hear.has_language(/datum/language/monkey))
+					hear.show_message("<span class='monkey'>[phrase_text]</span>", MSG_AUDIBLE)
+			else
 				if(gorilla)
-					to_chat(hear, "<font color='brown' size='6'><b>[monkeyspeak.scramble(phrase_text)]</b></font>")
+					hear.show_message("<span class='gorilla'>[monkeyspeak.scramble(phrase_text)]</span>", MSG_AUDIBLE)
 				else
-					to_chat(hear, "<font color='brown' size='4'><b>[monkeyspeak.scramble(phrase_text)]</b></font>")
+					hear.show_message("<span class='monkey'>[monkeyspeak.scramble(phrase_text)]</span>", MSG_AUDIBLE)
 		playsound(src.loc, "sound/voice/complionator/monkey/[phrase_sound].ogg", 100, FALSE, 4)
 		cooldown = world.time
-		cooldown_special = world.time
 
 
 

@@ -426,6 +426,8 @@ h1.alert, h2.alert		{color: #000000;}
 
 .monkeyhive				{color: #a56408;}
 .monkeylead				{color: #af6805;	font-size: 80%;}
+.monkeymask				{color: #663300; font-weight: bold; font-size: 150%;}
+.gorilla				{color: #996633; font-weight: bold; font-size: 185%;}
 
 .connectionClosed, .fatalError {background: red;	color: white;	padding: 5px;}
 .connectionClosed.restored {background: green;}
