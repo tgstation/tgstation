@@ -204,6 +204,10 @@
 //***************************************************************************
 
 
+//************************************************************
+//** Improved Sec Starter Gear by Surrealistik Oct 2019 BEGINS
+//************************************************************
+
 //************************************************************************
 //** Airlock Electroadaptive Psuedo Circuit BEGINS - Surrealistik Oct 2019
 //************************************************************************
@@ -356,3 +360,20 @@
 //** Lets medical and engineering syndiborgs choose a disguise from a list.
 //** Also tweaks the medical syndiborg, removing emag and granting more med items
 //***************************************************************************
+
+/datum/outfit/job/security
+	backpack_contents = null //Start with stun baton in belt.
+	l_pocket = /obj/item/pda/security
+	belt = /obj/item/storage/belt/security/fulp_starter_full
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	box = /obj/item/storage/box/security/improved
+
+/datum/outfit/job/warden
+	backpack_contents = null //Start with stun baton in belt.
+	l_pocket = /obj/item/pda/security
+	belt = /obj/item/storage/belt/security/fulp_starter_full
+	box = /obj/item/storage/box/security/improved
+
+//************************************************************
+//** Improved Sec Starter Gear by Surrealistik Oct 2019 ENDS
+//************************************************************
