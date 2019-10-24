@@ -1,5 +1,0 @@
-author: "Urumasi"
-delete-after: True
-changes: 
-  - rscdel: "Removed relic water bottle from necropolis chests"
-  - bugfix: "Water bottles now show the correct material they're made of"
