@@ -75,6 +75,11 @@
 	var/list/antag_cap = list()
 	/// Base probability used in scaling. The higher it is, the more likely to scale. Kept as a var to allow for config editing._SendSignal(sigtype, list/arguments)
 	var/base_prob = 60
+	/// Rulesets with delays set this var during execute. Prevents early processing.
+	var/status
+	/// Delay for when execute will get called from the time of post_setup (roundstart) or process (midround/latejoin).
+	/// Make sure your ruleset works with execute being called during the game when using this, and that the clean_up proc reverts it properly in case of faliure.
+	var/delay = 0
 
 
 /datum/dynamic_ruleset/New()
@@ -91,9 +96,6 @@
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
 	ruletype = "Roundstart"
-	/// Delay for when execute will get called from the time of post_setup.
-	/// Make sure your ruleset works with execute being called during the game when using this.
-	var/delay = 0
 
 // Can be drafted when a player joins the server
 /datum/dynamic_ruleset/latejoin
@@ -123,6 +125,13 @@
 	if(scaling_cost && scaling_cost <= remaining_threat_level) // Only attempts to scale the modes with a scaling cost explicitly set. 
 		var/new_prob
 		var/pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * (scaled_times + 1))) / mode.roundstart_pop_ready
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+		remaining_threat_level -= cost
+>>>>>>> 0a3a12215ac... scaling calculation again.
+=======
+>>>>>>> 7dd42bf4282... scaling exits earlier of not threat left
 		log_game("DYNAMIC: [name] roundstart ruleset attempting to scale up with [extra_rulesets] rulesets waiting and [remaining_threat_level] threat remaining.")
 		for(var/i in 1 to 3) //Can scale a max of 3 times
 			if(remaining_threat_level >= scaling_cost && pop_to_antags < 0.25)
@@ -161,6 +170,11 @@
 	if (required_candidates > candidates.len)		
 		return FALSE
 	return TRUE
+
+/// Runs from gamemode process() if ruleset fails to start, like delayed rulesets not getting valid candidates.
+/// This one only handles refunding the threat, override in ruleset to clean up the rest.
+/datum/dynamic_ruleset/proc/clean_up()
+	mode.refund_threat(cost + (scaled_times * scaling_cost))
 
 /// Gets weight of the ruleset
 /// Note that this decreases weight if repeatable is TRUE and repeatable_weight_decrease is higher than 0
