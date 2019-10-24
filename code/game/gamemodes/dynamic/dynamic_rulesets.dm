@@ -72,7 +72,7 @@
 	/// Calculated during acceptable(), used in scaling and team sizes.
 	var/indice_pop = 0
 	/// Population scaling. Used by team antags and scaling for solo antags.
-	var/list/antag_cap = list()
+	var/list/antag_cap
 	/// Base probability used in scaling. The higher it is, the more likely to scale. Kept as a var to allow for config editing._SendSignal(sigtype, list/arguments)
 	var/base_prob = 60
 
@@ -111,7 +111,7 @@
 		return (threat_level >= high_population_requirement)
 	else
 		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-		if(antag_cap && requirements.len != antag_cap.len)
+		if(antag_cap.len && requirements.len != antag_cap.len)
 			message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 			log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
