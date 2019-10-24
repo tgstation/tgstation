@@ -74,13 +74,16 @@
 		restoring = FALSE
 		return
 	ai_slot.locked =TRUE
-	A.adjustOxyLoss(-1, 0)
-	A.adjustFireLoss(-1, 0)
-	A.adjustToxLoss(-1, 0)
-	A.adjustBruteLoss(-1, 0)
+	A.adjustOxyLoss(-5, 0)
+	A.adjustFireLoss(-5, 0)
+	A.adjustToxLoss(-5, 0)
+	A.adjustBruteLoss(-5, 0)
 	A.updatehealth()
 	if(A.health >= 0 && A.stat == DEAD)
 		A.revive()
+		if(!A.radio_enabled)
+			A.radio_enabled = TRUE
+			to_chat(A, "<span class='warning'>Your Subspace Transceiver has been enabled!</span>")
 	// Finished restoring
 	if(A.health >= 100)
 		ai_slot.locked = FALSE
