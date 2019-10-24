@@ -17,7 +17,11 @@ const statusToColor = status => {
 export const TitleBar = props => {
   const { className, title, status, fancy, onDragStart, onClose } = props;
   return (
-    <div className={classes('TitleBar', className)}>
+    <div
+      className={classes([
+        'TitleBar',
+        className,
+      ])}>
       <Icon
         className="TitleBar__statusIcon"
         color={statusToColor(status)}

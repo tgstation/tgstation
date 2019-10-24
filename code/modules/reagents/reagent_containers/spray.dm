@@ -392,7 +392,7 @@
 						"Blue" = "sprayer_med_blue")
 
 /obj/item/reagent_containers/spray/medical/AltClick(mob/user)
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		reskin_obj(user)
 
 /obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)

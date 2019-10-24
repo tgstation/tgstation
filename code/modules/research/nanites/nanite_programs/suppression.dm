@@ -273,7 +273,7 @@
 
 	if(setting == "Hallucination Type")
 		var/list/possible_hallucinations = list("Random","Message","Battle","Sound","Weird Sound","Station Message","Health","Alert","Fire","Shock","Plasma Flood")
-		var/hal_type_choice = input("Choose the hallucination type", name) as null|anything in possible_hallucinations
+		var/hal_type_choice = input("Choose the hallucination type", name) as null|anything in sortList(possible_hallucinations)
 		if(!hal_type_choice)
 			return
 		switch(hal_type_choice)
@@ -288,7 +288,7 @@
 			if("Battle")
 				hal_type = "Battle"
 				var/sound_list = list("random","laser","disabler","esword","gun","stunprod","harmbaton","bomb")
-				var/hal_choice = input("Choose the hallucination battle type", name) as null|anything in sound_list
+				var/hal_choice = input("Choose the hallucination battle type", name) as null|anything in sortList(sound_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else
@@ -296,7 +296,7 @@
 			if("Sound")
 				hal_type = "Sound"
 				var/sound_list = list("random","airlock","airlock pry","console","explosion","far explosion","mech","glass","alarm","beepsky","mech","wall decon","door hack")
-				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sound_list
+				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sortList(sound_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else
@@ -304,7 +304,7 @@
 			if("Weird Sound")
 				hal_type = "Weird Sound"
 				var/sound_list = list("random","phone","hallelujah","highlander","laughter","hyperspace","game over","creepy","tesla")
-				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sound_list
+				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sortList(sound_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else
@@ -312,7 +312,7 @@
 			if("Station Message")
 				hal_type = "Station Message"
 				var/msg_list = list("random","ratvar","shuttle dock","blob alert","malf ai","meteors","supermatter")
-				var/hal_choice = input("Choose the hallucination station message", name) as null|anything in msg_list
+				var/hal_choice = input("Choose the hallucination station message", name) as null|anything in sortList(msg_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else
@@ -320,7 +320,7 @@
 			if("Health")
 				hal_type = "Health"
 				var/health_list = list("random","critical","dead","healthy")
-				var/hal_choice = input("Choose the health status", name) as null|anything in health_list
+				var/hal_choice = input("Choose the health status", name) as null|anything in sortList(health_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else
@@ -334,7 +334,7 @@
 			if("Alert")
 				hal_type = "Alert"
 				var/alert_list = list("random","not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","gravity","fire","locked","hacked","temphot","tempcold","pressure")
-				var/hal_choice = input("Choose the alert", name) as null|anything in alert_list
+				var/hal_choice = input("Choose the alert", name) as null|anything in sortList(alert_list)
 				if(!hal_choice || hal_choice == "random")
 					hal_details = null
 				else

@@ -29,9 +29,11 @@ export const LabeledListItem = props => {
         className,
       ])}>
       <td
-        className={classes(['LabeledList__cell',
+        className={classes([
+          'LabeledList__cell',
           'LabeledList__label',
-          'color-' + (labelColor ? labelColor : 'label')])}>
+          'color-' + (labelColor ? labelColor : 'label'),
+        ])}>
         {label}:
       </td>
       <td

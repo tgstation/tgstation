@@ -22,16 +22,6 @@
 	var/width = 0
 	/// The window height
 	var/height = 0
-	/// Extra options to winset().
-	var/window_options = list(
-	  "focus" = FALSE,
-	  "titlebar" = TRUE,
-	  "can_resize" = TRUE,
-	  "can_minimize" = TRUE,
-	  "can_maximize" = FALSE,
-	  "can_close" = TRUE,
-	  "auto_format" = FALSE
-	)
 	/// The style to be used for this UI.
 	var/style = "nanotrasen"
 	/// The interface (template) to be used for this UI.
@@ -110,25 +100,25 @@
 	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
 
-	if(!initial_data)
-		initial_data = src_object.ui_data(user)
-	if(!initial_static_data)
-		initial_static_data = src_object.ui_static_data(user)
-
 	var/window_size = ""
 	if(width && height) // If we have a width and height, use them.
 		window_size = "size=[width]x[height];"
 
 	// Remove titlebar and resize handles for a fancy window
 	// right from the beginning
-	var/list/config_data = get_config_data();
-	if(config_data["fancy"])
-		window_options["titlebar"] = FALSE
-		window_options["can_resize"] = FALSE
+	var/have_title_bar = ""
+	if(user.client.prefs.tgui_fancy)
+		have_title_bar = "titlebar=0;can_resize=0"
 
-	user << browse(get_html(), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
+	user << browse(get_html(), "window=[window_id];can_minimize=0;auto_format=0;[window_size][have_title_bar]") // Open the window.
 	if (!custom_browser_id)
 		winset(user, window_id, "on-close=\"uiclose [REF(src)]\"") // Instruct the client to signal UI when the window is closed.
+
+	if(!initial_data)
+		initial_data = src_object.ui_data(user)
+	if(!initial_static_data)
+		initial_static_data = src_object.ui_static_data(user)
+
 	SStgui.on_open(src)
 
  /**
@@ -164,16 +154,6 @@
 	state = null
 	master_ui = null
 	qdel(src)
-
- /**
-  * public
-  *
-  * Sets the browse() window options for this UI.
-  *
-  * required window_options list The window options to set.
- **/
-/datum/tgui/proc/set_window_options(list/window_options)
-	src.window_options = window_options
 
  /**
   * public
