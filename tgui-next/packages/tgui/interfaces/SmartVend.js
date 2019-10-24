@@ -12,7 +12,7 @@ export const SmartVend = props => {
     <Fragment>
       <Section
         title="Storage"
-        buttons={data.isdryer && (
+        buttons={!!data.isdryer && (
           <Button
             icon={data.drying ? "stop" : "tint"}
             onClick={() => act(ref, 'Dry')}>
