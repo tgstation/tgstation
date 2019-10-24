@@ -362,20 +362,20 @@
 //***************************************************************************
 
 /datum/outfit/job/security
-	backpack_contents = null //Start with stun baton in belt.
-	l_pocket = /obj/item/pda/security
+	backpack_contents = list() //Start with stun baton in belt.
+	r_pocket = /obj/item/pda/security
 	belt = /obj/item/storage/belt/security/fulp_starter_full
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	box = /obj/item/storage/box/security/improved
 
 /datum/outfit/job/warden
-	backpack_contents = null //Start with stun baton in belt.
+	backpack_contents = list() //Start with stun baton in belt.
 	r_pocket = /obj/item/pda/security
 	belt = /obj/item/storage/belt/security/fulp_starter_full
 	box = /obj/item/storage/box/security/improved
 
 /datum/outfit/job/hos
-	backpack_contents = null //Start with stun baton in belt.
+	backpack_contents = list() //Start with stun baton in belt.
 	r_pocket = /obj/item/pda/security
 	belt = /obj/item/storage/belt/security/fulp_starter_full
 	box = /obj/item/storage/box/security/improved

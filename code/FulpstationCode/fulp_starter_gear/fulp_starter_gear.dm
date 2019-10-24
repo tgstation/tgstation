@@ -7,8 +7,5 @@
 	update_icon()
 
 /obj/item/storage/box/security/improved/PopulateContents()
-	..() // we want the regular stuff too
+	..() // we want the regular stuff too; crowbar for latejoins into depowered situations
 	new /obj/item/crowbar/red(src)
-	new /obj/item/flashlight/glowstick(src)
-	new /obj/item/flashlight/glowstick(src)
-	new /obj/item/flashlight/glowstick(src)
