@@ -51,15 +51,13 @@
 			if (restrict_ghost_roles && M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL]) // Are they playing a ghost role?
 				trimmed_list.Remove(M)
 				continue
-			if (M.mind.assigned_role in restricted_roles || M.mind.assigned_role in protected_roles) // Does their job allow it?
+			if (M.mind.assigned_role in restricted_roles) // Does their job allow it?
 				trimmed_list.Remove(M)
 				continue
 			if ((exclusive_roles.len > 0) && !(M.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
 				trimmed_list.Remove(M)
 				continue
 	return trimmed_list
-
-protected_roles
 
 // You can then for example prompt dead players in execute() to join as strike teams or whatever
 // Or autotator someone
