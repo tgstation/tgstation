@@ -37,7 +37,7 @@ export const PortableGenerator = props => {
         <LabeledList>
           <LabeledList.Item label="Power switch">
             <Button
-              icon={data.active ? "power-off" : "cross"}
+              icon={data.active ? "power-off" : "times"}
               onClick={() => act(ref, 'toggle_power')}
               disabled={!data.ready_to_boot}>
               {data.active ? "On" : "Off"}
