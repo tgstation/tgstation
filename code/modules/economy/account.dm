@@ -54,7 +54,7 @@
 	else
 		var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
 		if(D)
-			if(!transfer_money(D, round(money_to_transfer*D.account_balance*0.01,1)))
+			if(!transfer_money(D, round(money_to_transfer*(D.account_balance*0.01),1)))
 				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
 				return FALSE
 			else
