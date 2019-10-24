@@ -468,7 +468,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"scanner"		= 'icons/pda_icons/pda_scanner.png',
 		"signaler"		= 'icons/pda_icons/pda_signaler.png',
 		"status"		= 'icons/pda_icons/pda_status.png',
-		"dronephone"	= 'icons/pda_icons/pda_dronephone.png'
+		"dronephone"	= 'icons/pda_icons/pda_dronephone.png',
+		"emoji"			= 'icons/pda_icons/pda_emoji.png'
 	)
 
 /datum/asset/spritesheet/simple/paper

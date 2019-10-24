@@ -427,13 +427,13 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		reviveNumber += LOSS_PER_DEATH
 		update_hud()
 	if(body)
-		body.revive(TRUE, TRUE) //Adminrevive also recovers organs, preventing someone from resurrecting without a heart.
+		body.revive(full_heal = TRUE, admin_revive = TRUE) //Adminrevive also recovers organs, preventing someone from resurrecting without a heart.
 		if(istype(body.loc, /obj/effect/dummy/phased_mob/slaughter/))
 			body.forceMove(get_turf(body))//Fixes dying while jaunted leaving you permajaunted.
 		if(istype(body, /mob/living/carbon/true_devil))
 			var/mob/living/carbon/true_devil/D = body
 			if(D.oldform)
-				D.oldform.revive(1,0) // Heal the old body too, so the devil doesn't resurrect, then immediately regress into a dead body.
+				D.oldform.revive(full_heal = TRUE, admin_revive = FALSE) // Heal the old body too, so the devil doesn't resurrect, then immediately regress into a dead body.
 		if(body.stat == DEAD)
 			create_new_body()
 	else

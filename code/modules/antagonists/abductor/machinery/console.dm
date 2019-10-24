@@ -45,7 +45,7 @@
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
 		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton (2 Credits)</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=mind_device'>Mental Interface Device (2 Credits)</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=chem_dispenser'>Reagent Synthetizer (2 Credits)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=chem_dispenser'>Reagent Synthesizer (2 Credits)</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=shrink_ray'>Shrink Ray Blaster (2 Credits)</a><br>"
 		dat += "<a href='?src=[REF(src)];dispense=helmet'>Agent Helmet</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=vest'>Agent Vest</A><br>"

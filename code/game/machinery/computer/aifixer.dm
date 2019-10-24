@@ -81,7 +81,7 @@
 	occupier.adjustBruteLoss(-1, 0)
 	occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
-		occupier.revive()
+		occupier.revive(full_heal = FALSE, admin_revive = FALSE)
 	return occupier.health < 100
 
 /obj/machinery/computer/aifixer/process()

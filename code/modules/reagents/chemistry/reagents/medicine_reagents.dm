@@ -385,7 +385,7 @@
 	. = 1
 
 /datum/reagent/medicine/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#D2D2D2"
@@ -731,7 +731,7 @@
 			M.adjustOxyLoss(-20, 0)
 			M.adjustToxLoss(-20, 0)
 			M.updatehealth()
-			if(M.revive())
+			if(M.revive(full_heal = FALSE, admin_revive = FALSE))
 				M.emote("gasp")
 				log_combat(M, M, "revived", src)
 	..()

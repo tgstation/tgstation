@@ -148,8 +148,8 @@
 			known_skills[S] = SKILL_LEVEL_NOVICE
 		if(0 to SKILL_EXP_NOVICE)
 			known_skills[S] = SKILL_LEVEL_NONE
-	if(known_skills[S] == old_level)
-		return //same level
+	if(isnull(old_level) || known_skills[S] == old_level)
+		return //same level or we just started earning xp towards the first level.
 	if(silent)
 		return
 	if(known_skills[S] >= old_level)
@@ -160,27 +160,26 @@
 ///Gets the skill's singleton and returns the result of its get_skill_speed_modifier
 /datum/mind/proc/get_skill_speed_modifier(skill)
 	var/datum/skill/S = GetSkillRef(skill)
-	return S.get_skill_speed_modifier(known_skills[S])
+	return S.get_skill_speed_modifier(known_skills[S] || SKILL_LEVEL_NONE)
 
 /datum/mind/proc/get_skill_level(skill)
 	var/datum/skill/S = GetSkillRef(skill)
-	return known_skills[S]
+	return known_skills[S] || SKILL_LEVEL_NONE
 
 /datum/mind/proc/print_levels(user)
-	var/msg
-
 	var/list/shown_skills = list()
 	for(var/i in known_skills)
-		if(known_skills[i])
+		if(known_skills[i]) //Do we actually have a level in this?
 			shown_skills += i
-	if(!shown_skills.len)
-		msg += "<span class='notice'>You don't seem to have any particularly outstanding skills.</span>"
-		to_chat(user, msg)
-
-	msg += "<span class='info'>*---------*\n<EM>Your skills</EM>\n"
+	if(!length(shown_skills))
+		to_chat(user, "<span class='notice'>You don't seem to have any particularly outstanding skills.</span>")
+		return
+	var/msg = ""
+	msg += "<span class='info'>*---------*\n<EM>Your skills</EM></span>\n<span class='notice'>"
 	for(var/i in shown_skills)
-		var/datum/skill/S
-		msg += "<span class='notice'>[i] - [SSskills.level_names[known_skills[S.name]]]</span>"
+		var/datum/skill/S = i
+		msg += "[i] - [SSskills.level_names[known_skills[S.name]]]\n"
+	msg += "</span>"
 	to_chat(user, msg)
 
 
@@ -452,7 +451,7 @@
 		A.admin_remove(usr)
 
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in get_all_jobs()
+		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in sortList(get_all_jobs())
 		if (!new_role)
 			return
 		assigned_role = new_role
@@ -492,7 +491,7 @@
 					if(1)
 						target_antag = antag_datums[1]
 					else
-						var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(new custom antag)") as null|anything in antag_datums + "(new custom antag)"
+						var/datum/antagonist/target = input("Which antagonist gets the objective:", "Antagonist", "(new custom antag)") as null|anything in sortList(antag_datums) + "(new custom antag)"
 						if (QDELETED(target))
 							return
 						else if(target == "(new custom antag)")
