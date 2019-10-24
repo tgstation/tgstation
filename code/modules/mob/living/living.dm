@@ -367,7 +367,6 @@
 	stop_pulling()
 
 //same as above
-//  
 /mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
 	if(incapacitated())
 		return FALSE
