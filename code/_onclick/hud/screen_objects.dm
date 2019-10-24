@@ -453,7 +453,6 @@
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
 	var/overlay_icon = 'icons/mob/screen_gen.dmi'
-	var/selecting = BODY_ZONE_CHEST
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
 
@@ -549,16 +548,17 @@
 	if(user != hud?.mymob)
 		return
 
-	if(choice != selecting)
-		selecting = choice
-		hud?.mymob?.zone_selected = choice
+	if(choice != hud.mymob.zone_selected)
+		hud.mymob.zone_selected = choice
 		update_icon()
 	
 	return TRUE
 
 /obj/screen/zone_sel/update_overlays()
 	. = ..()
-	. += mutable_appearance(overlay_icon, "[selecting]")
+	if(!hud?.mymob)
+		return
+	. += mutable_appearance(overlay_icon, "[hud.mymob.zone_selected]")
 
 /obj/screen/zone_sel/alien
 	icon = 'icons/mob/screen_alien.dmi'
