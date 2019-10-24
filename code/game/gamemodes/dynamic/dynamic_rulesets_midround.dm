@@ -237,7 +237,7 @@
 
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
-	candidates = mode.current_players[CURRENT_LIVING_PLAYERS].Copy()
+	candidates = living_players
 	for(var/mob/living/player in candidates)
 		if(!isAI(player))
 			candidates -= player
