@@ -427,14 +427,14 @@ GLOBAL_LIST_EMPTY(vending_products)
 	else
 		..()
 
-/obj/machinery/vending/proc/loadingAttempt(obj/item/I,mob/user)
+/obj/machinery/vending/proc/loadingAttempt(obj/item/I, mob/user)
 	. = TRUE
 	if(!user.transferItemToLoc(I, src))
 		return FALSE
-	if(vending_machine_input[I.name])
-		vending_machine_input[I.name]++
+	if(vending_machine_input[format_text(I.name)])
+		vending_machine_input[format_text(I.name)]++
 	else
-		vending_machine_input[I.name] = 1
+		vending_machine_input[format_text(I.name)] = 1
 	to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
 	loaded_items++
 
@@ -526,7 +526,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				var/obj/input_typepath
 				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(A)]'>Dispense</A> "
 				for(var/obj/O in contents)
-					if(O.name == A)
+					if(format_text(O.name) == A)
 						input_typepath = O
 						break
 				if(input_typepath)
@@ -594,6 +594,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(onstation && ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			var/obj/item/card/id/C = H.get_idcard(TRUE)
+			var/obj/input_typepath
 
 			if(!C)
 				say("No card found.")
@@ -605,36 +606,38 @@ GLOBAL_LIST_EMPTY(vending_products)
 				flick(icon_deny,src)
 				vend_ready = TRUE
 				return
-			vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
 			for(var/obj/O in contents)
-				if(O.name == N)
-					var/price_to_use = default_price
-					if(O.custom_price)
-						price_to_use = O.custom_price
-					else if(O.custom_premium_price)
-						price_to_use = O.custom_premium_price
-					var/datum/bank_account/account = C.registered_account
-					if(account?.account_job?.paycheck_department == payment_department)
-						price_to_use = 0
-					if(price_to_use && !account.adjust_money(-price_to_use))
-						say("You do not possess the funds to purchase [O.name].")
-						flick(icon_deny, src)
-						vend_ready = TRUE
-						return
-					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
-					if(D)
-						D.adjust_money(price_to_use)
-					if(last_shopper != usr || purchase_message_cooldown < world.time)
-						say("Thank you for buying local and purchasing [O.name]!")
-						purchase_message_cooldown = world.time + 5 SECONDS
-						last_shopper = usr
-					O.forceMove(drop_location())
-					loaded_items--
+				if(format_text(O.name) == N)
+					input_typepath = O
 					break
+
+			var/price_to_use = default_price
+			if(input_typepath.custom_price)
+				price_to_use = input_typepath.custom_price
+			if(input_typepath.custom_premium_price)
+				price_to_use = input_typepath.custom_premium_price
+			var/datum/bank_account/account = C.registered_account
+			if(account?.account_job?.paycheck_department == payment_department)
+				price_to_use = 0
+			if(price_to_use && !account.adjust_money(-price_to_use))
+				say("You do not possess the funds to purchase [input_typepath.name].")
+				flick(icon_deny, src)
+				vend_ready = TRUE
+				return
+			var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+			if(D)
+				D.adjust_money(price_to_use)
+			if(last_shopper != usr || purchase_message_cooldown < world.time)
+				say("Thank you for buying local and purchasing [input_typepath.name]!")
+				purchase_message_cooldown = world.time + 5 SECONDS
+				last_shopper = usr
+			vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
+			input_typepath.forceMove(drop_location())
+			loaded_items--
 			use_power(5)
-			vend_ready = TRUE
-			updateUsrDialog()
-			return
+
+		vend_ready = TRUE
+		updateUsrDialog()
 
 	if((href_list["vend"]) && (vend_ready))
 		if(panel_open)
@@ -881,7 +884,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				return
 			var/datum/bank_account/account = C.registered_account
 			for(var/obj/O in contents)
-				if(O.name == N)
+				if(format_text(O.name) == N)
 					S = O
 					break
 			if(S)
@@ -941,7 +944,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					price = "FREE"
 				else
 					for(var/obj/T in contents)
-						if(T.name == O)
+						if(format_text(T.name) == O)
 							price = "$[T.custom_price]"
 							break
 				dat += "<B>[O] ([price]): [N]</B><br>"
