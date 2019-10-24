@@ -1,3 +1,9 @@
+// Core styles
+@import './functions.scss';
+@import './variables.scss';
+@import './reset.scss';
+
+// Theme
 $color-normal: #B18B25;
 $color-good: #CFBA47;
 $color-average: #896B19;
@@ -39,8 +45,13 @@ $input-color-background: #CFBA47;
 $tooltip-color-border: #170800;
 $tooltip-color-background: #2D1400;
 
+// Themable styles
+@import './color-map.scss';
+@import './atomic.scss';
+@import './components.scss';
+
 // Body style
-@at-root #{selector-unify(&, body)} {
+body {
   color: $text-color-normal;
   background-color: $background-color-start;
   background-image: linear-gradient(to bottom,

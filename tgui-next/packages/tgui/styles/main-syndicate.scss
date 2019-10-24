@@ -1,3 +1,9 @@
+// Core styles
+@import './functions.scss';
+@import './variables.scss';
+@import './reset.scss';
+
+// Theme
 $color-good: $pale-green;
 $color-highlight: $black;
 $background-color-start: #750000;
@@ -23,8 +29,13 @@ $input-color-text: $white;
 $input-color-background: $dark-red;
 $rule-color-normal: rgba(#000, 0.25);
 
+// Themable styles
+@import './color-map.scss';
+@import './atomic.scss';
+@import './components.scss';
+
 // Body style
-@at-root #{selector-unify(&, body)} {
+body {
   color: $text-color-normal;
   background-color: $background-color-start;
   background-image: linear-gradient(to bottom,

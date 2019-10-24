@@ -8,9 +8,17 @@ module.exports = (env = {}, argv) => {
     mode: argv.mode === 'production' ? 'production' : 'development',
     context: __dirname,
     entry: {
-      tgui: [
-        path.resolve(__dirname, './styles/main.scss'),
+      'tgui-main': [
         path.resolve(__dirname, './index.js'),
+      ],
+      'tgui-clockwork': [
+        path.resolve(__dirname, './styles/main-clockwork.scss'),
+      ],
+      'tgui-nanotrasen': [
+        path.resolve(__dirname, './styles/main-nanotrasen.scss'),
+      ],
+      'tgui-syndicate': [
+        path.resolve(__dirname, './styles/main-syndicate.scss'),
       ],
     },
     output: {
@@ -99,6 +107,35 @@ module.exports = (env = {}, argv) => {
     },
     optimization: {
       noEmitOnErrors: true,
+      splitChunks: {
+        cacheGroups: {
+          vendors: {
+            test: module => {
+              // Do not put modules which aren't in node_modules.
+              if (!module.context.includes('node_modules')) {
+                return false;
+              }
+              // Try to deeply inspect module tree to detect HMR-related code
+              // which we don't want to put into a chunk.
+              let issuer = module;
+              while (true) {
+                if (!issuer) {
+                  break;
+                }
+                if (issuer.context.includes('extract-css-chunks')) {
+                  console.log(module);
+                  return false;
+                }
+                issuer = issuer.issuer;
+              }
+              // This module is none of the above and good for chunking.
+              return true;
+            },
+            chunks: 'initial',
+            filename: 'tgui-vendor.chunk.js',
+          },
+        },
+      },
     },
     performance: {
       hints: false,

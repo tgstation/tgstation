@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 
 <!-- Styles -->
-<link rel="stylesheet" type="text/css" href="tgui.bundle.css">
+<link rel="stylesheet" type="text/css" href="tgui-[style].bundle.css">
 
 <!-- This is processed in byond, so interfaces can override the
   html head if needed, for custom sheets of style etc. -->
@@ -13,7 +13,7 @@
 <script id="data" type="application/json" data-ref="[ref]">{}</script>
 
 </head>
-<body class="theme-[style]">
+<body>
 
 <!-- New TGUI container -->
 <div id="react-root"></div>
@@ -44,7 +44,9 @@ window.onerror = function (msg, url, line, col, error) {
 <script type="text/javascript" defer src="shim-ie8.js"></script>
 <script type="text/javascript" defer src="shim-dom4.js"></script>
 <script type="text/javascript" defer src="shim-css-om.js"></script>
-<script type="text/javascript" defer src="tgui.bundle.js"></script>
+<script type="text/javascript" defer src="tgui-[style].bundle.js"></script>
+<script type="text/javascript" defer src="tgui-vendor.chunk.js"></script>
+<script type="text/javascript" defer src="tgui-main.bundle.js"></script>
 
 <noscript>
   <div class="NoticeBox">
