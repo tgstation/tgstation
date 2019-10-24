@@ -303,7 +303,7 @@
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/stack/cable_coil/cyborg)
-	emag_modules = list(/obj/item/borg/stun)
+	emag_modules = list(/obj/item/melee/baton/cattleprod/borg)
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
 	magpulsing = TRUE
@@ -504,7 +504,7 @@
 		/obj/item/gun/energy/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
-	emag_modules = list(/obj/item/borg/stun)
+	emag_modules = list(/obj/item/melee/baton/cattleprod/borg)
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
 	hat_offset = 0

@@ -219,12 +219,12 @@
 /obj/item/organ/cyberimp/arm/baton
 	name = "arm electrification implant"
 	desc = "An illegal combat implant that allows the user to administer disabling shocks from their arm."
-	contents = newlist(/obj/item/borg/stun)
+	contents = newlist(/obj/item/melee/baton/implant)
 
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
-	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/assembly/flash/armimplant)
+	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/melee/baton/implant, /obj/item/assembly/flash/armimplant)
 
 /obj/item/organ/cyberimp/arm/combat/Initialize()
 	. = ..()

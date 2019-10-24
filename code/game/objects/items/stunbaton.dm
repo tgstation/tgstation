@@ -230,3 +230,40 @@
 /obj/item/melee/baton/cattleprod/baton_effect()
 	if(sparkler.activate())
 		..()
+
+/obj/item/melee/baton/cattleprod/borg
+	name = "eletric arm"
+	desc = "Zap."
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "elecarm"
+	hitcost = 1000
+	status = 1
+
+/obj/item/melee/baton/cattleprod/borg/update_icon()
+	return FALSE
+
+/obj/item/melee/baton/cattleprod/borg/attack_self(mob/user)
+	add_fingerprint(user)
+	return FALSE
+
+/obj/item/melee/baton/cattleprod/borg/attack(mob/M, mob/living/user)
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		cell = R.cell
+		..()
+	return FALSE
+
+/obj/item/melee/baton/implant
+	name = "eletric arm"
+	desc = "Zap."
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "elecarm"
+	status = 1
+	preload_cell_type = /obj/item/stock_parts/cell/infinite
+
+/obj/item/melee/baton/implant/update_icon()
+	return FALSE
+
+/obj/item/melee/baton/implant/attack_self(mob/user)
+	add_fingerprint(user)
+	return FALSE
