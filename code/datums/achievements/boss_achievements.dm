@@ -73,7 +73,7 @@
 
 /datum/award/achievement/boss/legion_crusher
 	name = "Legion Crusher"
-	desc = "We were many..now we are none."
+	desc = "We were many...now we are none."
 	hub_id = BOSS_MEDAL_LEGION_CRUSHER
 
 /datum/award/achievement/boss/swarmer_beacon_crusher
