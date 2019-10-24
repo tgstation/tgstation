@@ -36,12 +36,12 @@
 	var/mixed = FALSE
 
 /obj/item/research_notes/Initialize(mapload, _value, _origin_type)
+	. = ..()
 	if(_value)
 		value = _value
 	if(_origin_type)
 		origin_type = _origin_type
 	change_vol()
-	. = ..()
 
 /obj/item/research_notes/examine(mob/user)
 	. = ..()
@@ -76,7 +76,6 @@
 		mixed = TRUE
 	change_vol()
 	qdel(new_paper)
-
 
 /obj/item/research_notes/attackby(obj/item/I, mob/user, params)
 	. = ..()
