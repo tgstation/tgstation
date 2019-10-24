@@ -81,9 +81,6 @@
 	A.updatehealth()
 	if(A.health >= 0 && A.stat == DEAD)
 		A.revive()
-		if(!A.radio_enabled)
-			A.radio_enabled = TRUE
-			to_chat(A, "<span class='warning'>Your Subspace Transceiver has been enabled!</span>")
 	// Finished restoring
 	if(A.health >= 100)
 		ai_slot.locked = FALSE
