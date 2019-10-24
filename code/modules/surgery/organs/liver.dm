@@ -47,13 +47,7 @@
 				to_chat(C, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
 
 		else	//for when our liver's failing
-			C.reagents.end_metabolization(C, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
-			C.reagents.metabolize(C, can_overdose=FALSE, liverless = TRUE)
-			if(HAS_TRAIT(C, TRAIT_STABLELIVER) || HAS_TRAIT(C, TRAIT_NOMETABOLISM))
-				return
-			C.adjustToxLoss(4, TRUE,  TRUE)
-			if(prob(30))
-				to_chat(C, "<span class='warning'>You feel a stabbing pain in your abdomen!</span>")
+			C.liver_failure()
 
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
