@@ -21,4 +21,3 @@
 #define FOOD_AMAZING 5
 
 #define FOOD_IN_CONTAINER (1<<0)
-#define FOOD_DUNKABLE (1<<0)
