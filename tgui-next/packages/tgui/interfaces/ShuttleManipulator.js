@@ -21,14 +21,14 @@ export const ShuttleManipulator = props => {
             <table>
               {shuttles.map(shuttle => (
                 <tr key={shuttle.id}>
-                  <td key={shuttle.id}>
+                  <td>
                     <Button
                       content="JMP"
                       key={shuttle.id}
                       onClick={() => act(ref, 'jump_to', {type: "mobile", id: shuttle.id})}
                     />
                   </td>
-                  <td key={shuttle.id}>
+                  <td>
                     <Button
                       content="Fly"
                       key={shuttle.id}
@@ -36,19 +36,19 @@ export const ShuttleManipulator = props => {
                       onClick={() => act(ref, 'fly', {id: shuttle.id})}
                     />
                   </td>
-                  <td key={shuttle.id}>
+                  <td>
                     {shuttle.name}
                   </td>
-                  <td key={shuttle.id}>
+                  <td>
                     {shuttle.id}
                   </td>
-                  <td key={shuttle.id}>
+                  <td>
                     {shuttle.status}
                   </td>
-                  <td key={shuttle.id}>
+                  <td>
                     {shuttle.mode}
                     {!!shuttle.timer && (
-                      <Fragment key={shuttle.id}>
+                      <Fragment>
                         ({shuttle.timeleft})
                         <Button
                           content="Fast Travel"
@@ -106,11 +106,12 @@ export const ShuttleManipulator = props => {
                               )}
                             </LabeledList>
                           )}
-
                         </Section>
-                      ); })}
+                      );
+                    })}
                   </Tabs.Tab>
-                ); })(templateObject)}
+                );
+              })(templateObject)}
             </Tabs>
           </Section>
         )}
