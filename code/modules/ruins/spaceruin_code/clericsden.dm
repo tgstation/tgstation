@@ -35,3 +35,12 @@
 /mob/living/simple_animal/hostile/construct/proteon/hostile //Style of mob spawned by trapped cult runes in the cleric ruin.
 	AIStatus = AI_ON
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //standard ai construct behavior, breaks things if it wants, but not walls.
+
+/turf/open/floor/carpet/airless //atmos runtimes and all that goodness.
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/royalblack/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/carpet/royalblue/airless
+	initial_gas_mix = AIRLESS_ATMOS
