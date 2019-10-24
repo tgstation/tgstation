@@ -1,6 +1,6 @@
 /datum/wires/mulebot
 	holder_type = /mob/living/simple_animal/bot/mulebot
-	randomize = TRUE
+	randomize = WIRE_FULL_RANDOM
 
 /datum/wires/mulebot/New(atom/holder)
 	wires = list(

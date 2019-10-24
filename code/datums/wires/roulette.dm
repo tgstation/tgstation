@@ -1,7 +1,7 @@
 /datum/wires/roulette
 	holder_type = /obj/machinery/roulette
 	proper_name = "Roulette Table"
-	randomize = TRUE
+	randomize = WIRE_FULL_RANDOM
 
 /datum/wires/roulette/New(atom/holder)
 	wires = list(

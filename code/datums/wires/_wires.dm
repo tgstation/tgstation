@@ -1,5 +1,11 @@
 #define MAXIMUM_EMP_WIRES 3
 
+#define WIRE_NOT_RANDOM 0
+#define WIRE_PARTLY_RANDOM 1
+#define WIRE_FULL_RANDOM 2
+
+#define MAX_WIRE_VARIATIONS 10
+
 /proc/is_wire_tool(obj/item/I)
 	if(!I)
 		return
@@ -31,7 +37,7 @@
 	var/list/cut_wires = list() // List of wires that have been cut.
 	var/list/colors = list() // Dictionary of colors to wire.
 	var/list/assemblies = list() // List of attached assemblies.
-	var/randomize = 0 // If every instance of these wires should be random.
+	var/randomize = WIRE_NOT_RANDOM // If every instance of these wires should be random.
 					  // Prevents wires from showing up in station blueprints
 
 /datum/wires/New(atom/holder)
@@ -41,15 +47,24 @@
 		return
 
 	src.holder = holder
-	if(randomize)
-		randomize()
-	else
-		if(!GLOB.wire_color_directory[holder_type])
+	switch(randomize)
+		if(WIRE_NOT_RANDOM)
+			if(!GLOB.wire_static_color_directory[holder_type])
+				randomize()
+				GLOB.wire_static_color_directory[holder_type] = colors
+				GLOB.wire_static_name_directory[holder_type] = proper_name
+			else
+				colors = GLOB.wire_static_color_directory[holder_type]
+		if(WIRE_PARTLY_RANDOM)
+			switch(length(GLOB.wire_multiple_color_directories[holder_type]))
+				if(0 to MAX_WIRE_VARIATIONS - 1)
+					randomize()
+					GLOB.wire_multiple_color_directories[holder_type] += list(colors)
+				else
+					colors = pick(GLOB.wire_multiple_color_directories[holder_type])
+		if(WIRE_FULL_RANDOM)
 			randomize()
-			GLOB.wire_color_directory[holder_type] = colors
-			GLOB.wire_name_directory[holder_type] = proper_name
-		else
-			colors = GLOB.wire_color_directory[holder_type]
+
 
 /datum/wires/Destroy()
 	holder = null
@@ -239,7 +254,7 @@
 		reveal_wires = TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
-	else if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
+	else if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && randomize != WIRE_FULL_RANDOM)
 		reveal_wires = TRUE
 
 	for(var/color in colors)

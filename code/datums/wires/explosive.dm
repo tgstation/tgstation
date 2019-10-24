@@ -1,6 +1,6 @@
 /datum/wires/explosive
 	var/duds_number = 2 // All "dud" wires cause an explosion when cut or pulsed
-	randomize = TRUE // Prevents wires from showing up on blueprints
+	randomize = WIRE_FULL_RANDOM // Prevents wires from showing up on blueprints
 
 /datum/wires/explosive/New(atom/holder)
 	add_duds(duds_number) // Duds also explode here.

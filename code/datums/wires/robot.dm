@@ -1,6 +1,6 @@
 /datum/wires/robot
 	holder_type = /mob/living/silicon/robot
-	randomize = TRUE
+	randomize = WIRE_FULL_RANDOM
 
 /datum/wires/robot/New(atom/holder)
 	wires = list(

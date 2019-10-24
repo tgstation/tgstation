@@ -1,6 +1,6 @@
 
 /datum/wires/tesla_coil
-	randomize = 1	//Only one wire don't need blueprints
+	randomize = WIRE_FULL_RANDOM //Only one wire don't need blueprints
 	holder_type = /obj/machinery/power/tesla_coil
 
 /datum/wires/tesla_coil/New(atom/holder)

@@ -1,6 +1,6 @@
 /datum/wires/syndicatebomb
 	holder_type = /obj/machinery/syndicatebomb
-	randomize = TRUE
+	randomize = WIRE_FULL_RANDOM
 
 /datum/wires/syndicatebomb/New(atom/holder)
 	wires = list(
