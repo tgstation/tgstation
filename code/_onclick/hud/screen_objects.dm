@@ -452,10 +452,10 @@
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
+	var/overlay_icon = 'icons/mob/screen_gen.dmi'
 	var/selecting = BODY_ZONE_CHEST
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
-	var/mutable_appearance/selecting_appearance
 
 /obj/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -551,30 +551,21 @@
 
 	if(choice != selecting)
 		selecting = choice
+		hud?.mymob?.zone_selected = choice
 		update_icon()
 	
 	return TRUE
 
-/obj/screen/zone_sel/update_icon()
+/obj/screen/zone_sel/update_overlays()
 	. = ..()
-	cut_overlay(selecting_appearance)
-	selecting_appearance = mutable_appearance('icons/mob/screen_gen.dmi', "[selecting]")
-	add_overlay(selecting_appearance)
-	hud?.mymob?.zone_selected = selecting
+	. += mutable_appearance(overlay_icon, "[selecting]")
 
 /obj/screen/zone_sel/alien
 	icon = 'icons/mob/screen_alien.dmi'
-
-/obj/screen/zone_sel/alien/update_icon()
-	. = ..()
-	cut_overlay(selecting_appearance)
-	selecting_appearance = mutable_appearance('icons/mob/screen_alien.dmi', "[selecting]")
-	add_overlay(selecting_appearance)
-	hud?.mymob?.zone_selected = selecting
+	overlay_icon = 'icons/mob/screen_alien.dmi'
 
 /obj/screen/zone_sel/robot
 	icon = 'icons/mob/screen_cyborg.dmi'
-
 
 /obj/screen/flash
 	name = "flash"
