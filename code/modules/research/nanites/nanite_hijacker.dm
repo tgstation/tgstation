@@ -94,7 +94,8 @@
 	return data
 
 /obj/item/nanite_hijacker/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("eject")

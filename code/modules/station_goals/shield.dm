@@ -52,7 +52,8 @@
 		ui.open()
 
 /obj/machinery/computer/sat_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("toggle")

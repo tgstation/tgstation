@@ -57,7 +57,8 @@
 	return data
 
 /datum/cellular_emporium/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)

@@ -65,7 +65,8 @@
 	ui_interact(reader)
 
 /obj/item/book/codex_gigas/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!action)
 		return FALSE

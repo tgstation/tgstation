@@ -10,7 +10,8 @@
 	tgui_id = "ntos_net_monitor"
 
 /datum/computer_file/program/ntnetmonitor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return 1
 	switch(action)
 		if("resetIDS")

@@ -33,7 +33,8 @@
 	return data
 
 /obj/machinery/plumbing/splitter/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)

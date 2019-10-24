@@ -43,7 +43,8 @@
 
 
 /datum/computer_file/program/revelation/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return 1
 	switch(action)
 		if("PRG_arm")

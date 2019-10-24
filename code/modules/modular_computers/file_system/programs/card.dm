@@ -95,7 +95,8 @@
 	return formatted
 
 /datum/computer_file/program/card_mod/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return 1
 
 	var/obj/item/computer_hardware/card_slot/card_slot

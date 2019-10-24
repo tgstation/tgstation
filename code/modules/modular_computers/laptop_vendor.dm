@@ -170,7 +170,8 @@
 
 
 /obj/machinery/lapvend/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return 1
 
 	switch(action)

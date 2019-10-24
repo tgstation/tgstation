@@ -13,7 +13,8 @@
 	var/error
 
 /datum/computer_file/program/filemanager/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return 1
 
 	var/obj/item/computer_hardware/hard_drive/HDD = computer.all_components[MC_HDD]

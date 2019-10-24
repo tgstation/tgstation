@@ -180,7 +180,8 @@
 	return data
 
 /obj/machinery/computer/pandemic/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("eject_beaker")

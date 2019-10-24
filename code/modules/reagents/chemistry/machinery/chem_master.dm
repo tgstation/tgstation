@@ -187,7 +187,8 @@
 	return data
 
 /obj/machinery/chem_master/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	if(action == "eject")

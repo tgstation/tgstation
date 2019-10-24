@@ -443,7 +443,8 @@
 	return data
 
 /obj/machinery/suit_storage_unit/ui_act(action, params)
-	if(..() || uv)
+	. = ..()
+	if(. || uv)
 		return
 	switch(action)
 		if("door")

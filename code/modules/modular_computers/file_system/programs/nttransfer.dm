@@ -84,7 +84,8 @@
 	download_completion = 0
 
 /datum/computer_file/program/nttransfer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return 1
 	switch(action)
 		if("PRG_downloadfile")

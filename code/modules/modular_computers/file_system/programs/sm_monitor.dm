@@ -108,7 +108,8 @@
 	return data
 
 /datum/computer_file/program/supermatter_monitor/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return TRUE
 
 	switch(action)

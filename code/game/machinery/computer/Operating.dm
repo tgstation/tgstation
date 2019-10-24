@@ -130,7 +130,8 @@
 	return data
 
 /obj/machinery/computer/operating/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("change_menu")

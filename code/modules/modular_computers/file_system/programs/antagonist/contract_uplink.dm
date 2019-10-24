@@ -20,7 +20,8 @@
 	. = ..(user)
 
 /datum/computer_file/program/contract_uplink/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return 1
 
 	var/mob/living/user = usr

@@ -41,7 +41,8 @@
 	return data
 
 /obj/machinery/computer/atmos_alert/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("clear")

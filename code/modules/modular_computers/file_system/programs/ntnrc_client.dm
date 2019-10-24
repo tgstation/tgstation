@@ -21,7 +21,8 @@
 	username = "DefaultUser[rand(100, 999)]"
 
 /datum/computer_file/program/chatclient/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return 1
 
 	switch(action)

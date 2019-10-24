@@ -96,7 +96,8 @@
 	return data
 
 /obj/machinery/computer/launchpad/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("return")

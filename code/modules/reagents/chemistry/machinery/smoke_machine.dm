@@ -129,7 +129,8 @@
 	return data
 
 /obj/machinery/smoke_machine/ui_act(action, params)
-	if(..() || !anchored)
+	. = ..()
+	if(. || !anchored)
 		return
 	switch(action)
 		if("purge")

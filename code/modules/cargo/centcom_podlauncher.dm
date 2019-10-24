@@ -96,7 +96,8 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	return data
 
 /datum/centcom_podlauncher/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		////////////////////////////UTILITIES//////////////////

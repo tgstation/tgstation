@@ -328,7 +328,8 @@
 	return data
 
 /datum/action/innate/swap_body/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/mob/living/carbon/human/H = owner
 	if(!isslimeperson(owner))

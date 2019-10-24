@@ -138,7 +138,8 @@
 
 
 /obj/machinery/computer/vaultcontroller/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("togglelock")

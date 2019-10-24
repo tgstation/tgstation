@@ -199,7 +199,8 @@
 	return data
 
 /obj/machinery/space_heater/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("power")

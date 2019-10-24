@@ -346,7 +346,8 @@
 	pad.doteleport(user, sending)
 
 /obj/item/launchpad_remote/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("right")

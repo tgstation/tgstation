@@ -33,7 +33,8 @@
 	return null
 
 /datum/computer_file/program/aidiag/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return TRUE
 
 	var/mob/living/silicon/ai/A = get_ai()
