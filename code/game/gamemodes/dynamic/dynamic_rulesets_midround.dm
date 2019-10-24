@@ -41,11 +41,11 @@
 			continue
 		if(antag_flag_override)
 			if(!(antag_flag_override in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
-				candidates.Remove(M)
+				trimmed_list.Remove(M)
 				continue
 		else
 			if(!(antag_flag in M.client.prefs.be_special) || is_banned_from(M.ckey, list(antag_flag, ROLE_SYNDICATE)))
-				candidates.Remove(M)
+				trimmed_list.Remove(M)
 				continue
 		if (M.mind)
 			if (restrict_ghost_roles && M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL]) // Are they playing a ghost role?
@@ -237,7 +237,7 @@
 
 /datum/dynamic_ruleset/midround/malf/trim_candidates()
 	..()
-	candidates = candidates[CURRENT_LIVING_PLAYERS]
+	candidates = mode.current_players[CURRENT_LIVING_PLAYERS].Copy()
 	for(var/mob/living/player in candidates)
 		if(!isAI(player))
 			candidates -= player
