@@ -149,7 +149,7 @@
 	for(var/datum/changelingprofile/prof in stored_profiles)
 		names += "[prof.name]"
 
-	var/chosen_name = input(prompt, title, null) as null|anything in names
+	var/chosen_name = input(prompt, title, null) as null|anything in sortList(names)
 	if(!chosen_name)
 		return
 

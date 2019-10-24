@@ -1,0 +1,10 @@
+.Table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+}
+
+.Table__cell--collapsing {
+  width: 0.01%;
+  white-space: nowrap;
+}

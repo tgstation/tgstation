@@ -273,7 +273,7 @@
 		if(12)
 			//Healing
 			T.visible_message("<span class='userdanger'>[user] looks very healthy!</span>")
-			user.revive(full_heal = 1, admin_revive = 1)
+			user.revive(full_heal = TRUE, admin_revive = TRUE)
 		if(13)
 			//Mad Dosh
 			T.visible_message("<span class='userdanger'>Mad dosh shoots out of [src]!</span>")
