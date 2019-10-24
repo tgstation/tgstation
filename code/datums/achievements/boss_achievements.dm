@@ -23,7 +23,7 @@
 
 /datum/award/achievement/boss/colussus_kill
 	name = "Colussus Killer"
-	desc = "The bigger they are.... the better the loot"
+	desc = "The bigger they are... the better the loot"
 	hub_id = BOSS_MEDAL_COLOSSUS
 
 /datum/award/achievement/boss/drake_kill
@@ -58,7 +58,7 @@
 
 /datum/award/achievement/boss/colussus_crusher
 	name = "Colussus Crusher"
-	desc = "The bigger they are.... the better the loot"
+	desc = "The bigger they are... the better the loot"
 	hub_id = BOSS_MEDAL_COLOSSUS_CRUSHER
 
 /datum/award/achievement/boss/drake_crusher
@@ -73,7 +73,7 @@
 
 /datum/award/achievement/boss/legion_crusher
 	name = "Legion Crusher"
-	desc = "We were many...now we are none."
+	desc = "We were many... now we are none."
 	hub_id = BOSS_MEDAL_LEGION_CRUSHER
 
 /datum/award/achievement/boss/swarmer_beacon_crusher
