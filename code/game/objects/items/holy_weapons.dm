@@ -469,7 +469,7 @@
 	return ..()
 
 /obj/item/nullrod/scythe/talking/dummy
-	name = "ventriloquist dummy"
+	name = "possessed dummy"
 	desc = "It's a dummy, dummy. It glares at you with cold, unblinking eyes."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "assistant"
