@@ -19,6 +19,9 @@
 	var/obj/item/card/id/C          //the account of the person using the console.
 
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
+  if(!istype(C))
+	say("No ID card detected.") // No unidentified crew.
+	return
   if(C.registered_account)
     account = C.registered_account
   else
