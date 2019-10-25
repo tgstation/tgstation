@@ -14,7 +14,6 @@
 	var/obj/structure/table/optable/table
 	var/list/advanced_surgeries = list()
 	var/datum/techweb/linked_techweb
-	var/menu = MENU_OPERATION
 	light_color = LIGHT_COLOR_BLUE
 	var/list/linked_stasisbeds
 
@@ -71,7 +70,6 @@
 /obj/machinery/computer/operating/ui_data(mob/user)
 	var/list/data = list()
 	data["table"] = table
-	data["menu"] = menu
 
 	var/list/surgeries = list()
 	for(var/X in advanced_surgeries)
@@ -82,8 +80,8 @@
 		surgeries += list(surgery)
 	data["surgeries"] = surgeries
 	if(table)
-		data["patient"] = list()
 		if(table.check_patient())
+			data["patient"] = list()
 			patient = table.patient
 			switch(patient.stat)
 				if(CONSCIOUS)
@@ -133,9 +131,6 @@
 	if(..())
 		return
 	switch(action)
-		if("change_menu")
-			menu = text2num(params["menu"])
-			. = TRUE
 		if("sync")
 			sync_surgeries()
 			. = TRUE
