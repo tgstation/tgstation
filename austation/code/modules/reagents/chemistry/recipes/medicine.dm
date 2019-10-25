@@ -42,6 +42,15 @@
 /datum/chemical_reaction/antihol
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/charcoal = 1, /datum/reagent/copper = 1)
 
+/datum/chemical_reaction/tricordrazine
+	name = "Tricordrazine"
+	id = /datum/reagent/medicine/tricordrazine
+	results = list(/datum/reagent/medicine/tricordrazine = 3)
+	required_reagents = list(/datum/reagent/medicine/bicaridine = 1, /datum/reagent/medicine/kelotane = 1, /datum/reagent/medicine/antitoxin = 1)
+
+/datum/chemical_reaction/regen_jelly
+	required_reagents = list(/datum/reagent/medicine/tricordrazine = 1, /datum/reagent/toxin/slimejelly = 1)
+
 /datum/chemical_reaction/thializid
 	name = "Thializid"
 	id = /datum/reagent/medicine/thializid
