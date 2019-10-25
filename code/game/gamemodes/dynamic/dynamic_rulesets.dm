@@ -119,10 +119,10 @@
 
 /// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the amount of scaled steps.
 /datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
-	if(scaling_cost) // Only attempts to scale the modes with a scaling cost explicitly set. 
+	remaining_threat_level -= cost
+	if(scaling_cost && scaling_cost <= remaining_threat_level) // Only attempts to scale the modes with a scaling cost explicitly set. 
 		var/new_prob
 		var/pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * (scaled_times + 1))) / mode.roundstart_pop_ready
-		remaining_threat_level -= cost
 		log_game("DYNAMIC: [name] roundstart ruleset attempting to scale up with [extra_rulesets] rulesets waiting and [remaining_threat_level] threat remaining.")
 		for(var/i in 1 to 3) //Can scale a max of 3 times
 			if(remaining_threat_level >= scaling_cost && pop_to_antags < 0.25)
