@@ -406,7 +406,16 @@
 	var/spent = FALSE
 	var/race_type = "Human"
 	var/mode = "Is"
-	var/race_match = 0
+	var/list/allowed_species = list(
+    "Human" = /datum/species/human,
+    "Lizard" = /datum/species/lizard,
+	"Moth" = /datum/species/moth,
+	"Ethereal" = /datum/species/ethereal,
+	"Pod" = /datum/species/pod,
+	"Fly" = /datum/species/fly,
+	"Felinid" = /datum/species/human/felinid,
+	"Jelly" = /datum/species/jelly
+)
 
 /datum/nanite_program/sensor/race/set_extra_setting(user, setting)
 	if(setting == "Sent Code")
@@ -415,11 +424,13 @@
 			return
 		sent_code = CLAMP(round(new_code, 1), 1, 9999)
 	if(setting == "Race")
-		var/list/race_types = list("Human","Lizard","Moth","Ethereal","Pod","Fly","Felinid","Jelly","Other")
+		var/list/race_types = list()
+		for(var/name in allowed_species)
+			race_types += name
+		race_types += "Other"
 		var/new_race_type = input("Choose the race", name) as null|anything in sortList(race_types)
 		if(!new_race_type)
 			return
-		race_type = new_race_type
 	if(setting == "Mode")
 		if(mode == "Is")
 			mode = "Is Not"
@@ -446,39 +457,25 @@
 	if(host_mob.stat == DEAD)
 		return
 
-	switch(race_type)
-		if("Human")
-			if(ishumanbasic(host_mob))
-				race_match = 1
-		if("Lizard")
-			if(islizard(host_mob))
-				race_match = 1	
-		if("Moth")
-			if(ismoth(host_mob))
-				race_match = 1	
-		if("Ethereal")
-			if(isethereal(host_mob))
-				race_match = 1
-		if("Pod")
-			if(ispodperson(host_mob))
-				race_match = 1
-		if("Fly")
-			if(isflyperson(host_mob))
-				race_match = 1
-		if("Felinid")
-			if(isfelinid(host_mob))
-				race_match = 1
-		if("Jelly")
-			if(isjellyperson(host_mob))
-				race_match = 1
-		if("Other")
-			if(!(ishumanbasic(host_mob) || islizard(host_mob) || ismoth(host_mob) || isethereal(host_mob) || ispodperson(host_mob) || isflyperson(host_mob) || isfelinid(host_mob) || isjellyperson(host_mob)))
-				race_match = 1
+	var/species = allowed_species[race_type]
+	var/race_match = FALSE
+
+	if(species)
+		if(is_species(host_mob, species))
+			race_match = TRUE
+	else
+		var/matches_any = FALSE
+		for(var/name in allowed_species)
+			var/species_other = allowed_species[name]
+			if(is_species(host_mob, species_other))
+				matches_any = TRUE
+				break
+		race_match = !matches_any
 
 	switch(mode)
 		if("Is")
-			if(race_match == 1)
+			if(race_match == TRUE)
 				send_code()
 		if("Is Not")
-			if(race_match == 0)
+			if(race_match == FALSE)
 				send_code()
