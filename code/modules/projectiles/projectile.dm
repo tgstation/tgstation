@@ -196,8 +196,7 @@
 			if(!L.message_timeouts || L.message_timeouts <= world.time)
 				L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
 						"<span class='userdanger'>You're hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
-				if(lagshot)
-					LAZYSET(L.message_timeouts,type,world.time+ chat_timeout)
+				LAZYSET(L.message_timeouts,type,world.time+ chat_timeout)
 		L.on_hit(src)
 
 	var/reagent_note
