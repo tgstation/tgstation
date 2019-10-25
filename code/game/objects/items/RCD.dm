@@ -636,7 +636,7 @@ RLD
 /obj/item/construction/rcd/bluespace
 	name = "bluespace RCD"
 	desc = "Compact, efficient bluespace RCD that is linked to the ORM,"
-	icon = "icons/obj/BRCD"
+	icon = "icons/obj/BRCD.dmi"
 	icon_state = "BRCD"
 	sheetmultiplier = 4.4 //slightly better than original RCD due to tech advancement
 	w_class = WEIGHT_CLASS_SMALL
