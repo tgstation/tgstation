@@ -27,7 +27,7 @@
 	icon = 'icons/obj/statuelarge.dmi'
 	icon_state = "skull-half"
 
-//***Wasteland and cracked earth floor tiles, subtype of strong stone to use here.
+//***Wasteland floor and rock turfs here.
 /turf/open/floor/plating/asteroid/basalt/wasteland //Like a more fun version of living in Arizona.
 	name = "cracked earth"
 	icon = 'icons/turf/floors.dmi'
@@ -39,6 +39,11 @@
 	slowdown = 0.5
 	floor_variance = 30
 
+/turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
+	.=..()
+	if(prob(floor_variance))
+		icon_state = "[environment_type][rand(0,6)]"
+
 /turf/closed/mineral/strong/wasteland
 	name = "Ancient dry rock"
 	color = "#B5651D"
@@ -49,24 +54,13 @@
 	defer_change = 1
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
 
-/turf/closed/mineral/strong/wasteland/gets_drilled(user)
+/turf/closed/mineral/strong/wasteland/drop_ores()
 	if(prob(10))
 		new /obj/item/stack/ore/iron(src, 1)
 		new /obj/item/stack/ore/glass(src, 1)
 		new /obj/effect/decal/remains/human(src, 1)
 	else
 		new /obj/item/stack/sheet/bone(src, 1)
-	var/flags = NONE
-	if(defer_change)
-		flags = CHANGETURF_DEFER_CHANGE
-	ScrapeAway(flags=flags)
-	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
-	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
-
-/turf/open/floor/plating/asteroid/basalt/wasteland/Initialize()
-	.=..()
-	if(prob(floor_variance))
-		icon_state = "[environment_type][rand(0,6)]"
 
 //***Oil well puddles.
 /obj/structure/sink/oil_well	//You're not going to enjoy bathing in this...
@@ -77,14 +71,12 @@
 	dispensedreagent = /datum/reagent/fuel/oil
 
 /obj/structure/sink/oil_well/attack_hand(mob/M)
-	icon_state = "puddle-oil-splash"
-	. = ..()
-	icon_state = "puddle-oil"
+	flick("puddle-oil-splash",src)
+	to_chat(M, "<span class='notice'>Washing your hands with oil probably wouldn't be wise.</span>")
 
 /obj/structure/sink/oil_well/attackby(obj/item/O, mob/user, params)
-	icon_state = "puddle-oil-splash"
+	flick("puddle-oil-splash",src)
 	. = ..()
-	icon_state = "puddle-oil"
 
 /obj/structure/sink/oil_well/deconstruct(disassembled = TRUE)
 	qdel(src)
@@ -105,6 +97,7 @@
 	cutting_tool = /obj/item/shovel
 	var/lead_tomb = FALSE
 	var/first_open = FALSE
+	var/untouched = TRUE
 
 /obj/structure/closet/crate/grave/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
@@ -131,38 +124,32 @@
 			new /obj/item/clothing/glasses/sunglasses(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
 
-obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
+/obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
 	if(opened == FALSE)
-		if(istype(S,cutting_tool))
-			if(S.tool_behaviour == TOOL_SHOVEL)
-				to_chat(user, "<span class='notice'>You start start to dig open \the [src]  with \the [S]. You're not sure if this is wise...</span>")
-				if (do_after(user,10, target = src))
-					open()
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
-		else
-			to_chat(user, "<span class='notice'>You can't dig up a grave with \the [src].</span>")
+		to_chat(user, "<span class='notice'>The ground here is too hard to dig up with your bare hands. You'll need a shovel.")
 	else
 		to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
 
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HELP) //checks to attempt to dig the grave, must be done on help intent only.
 		if(opened == FALSE)
-			if(istype(S,cutting_tool))
-				if(S.tool_behaviour == TOOL_SHOVEL)
-					to_chat(user, "<span class='notice'>You start start to dig open \the [src]  with \the [S]...</span>")
-					if (do_after(user,20, target = src))
-						opened = TRUE
-						locked = TRUE
-						dump_contents()
-						update_icon()
-						SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
-						if(lead_tomb == TRUE && first_open == TRUE)
-							user.gain_trauma(/datum/brain_trauma/magic/stalker)
-							to_chat(user, "<span class='boldwarning'>Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!</span>")
-							first_open = FALSE
-						return 1
-				else
+			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
+				to_chat(user, "<span class='notice'>You start start to dig open \the [src]  with \the [S]...</span>")
+				if (do_after(user,20, target = src))
+					opened = TRUE
+					locked = TRUE
+					dump_contents()
+					update_icon()
+					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
+					if(lead_tomb == TRUE && first_open == TRUE)
+						user.gain_trauma(/datum/brain_trauma/magic/stalker)
+						to_chat(user, "<span class='boldwarning'>Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!</span>")
+						first_open = FALSE
+					if(untouched == TRUE)
+						new /obj/effect/decal/remains/human(loc)
+						untouched = FALSE
 					return 1
+				return 1
 			else
 				to_chat(user, "<span class='notice'>You can't dig up a grave with \the [S.name].</span>")
 				return 1
