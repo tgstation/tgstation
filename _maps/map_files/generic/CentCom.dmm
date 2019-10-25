@@ -1118,7 +1118,9 @@
 /obj/structure/window{
 	dir = 8
 	},
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 1
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -1130,7 +1132,9 @@
 	},
 /area/holodeck/rec_center/medical)
 "dd" = (
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 1
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},

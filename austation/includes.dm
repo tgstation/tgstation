@@ -23,5 +23,6 @@
 #include "code\modules\reagents\reagent_containers\pill.dm"
 #include "code\modules\reagents\reagent_containers\syringes.dm"
 #include "code\modules\research\designs\limbgrower_designs.dm"
+#include "code\modules\research\designs\machine_designs.dm"
 #include "code\modules\vending\medical.dm"
 #include "code\modules\vending\medical_wall.dm"

@@ -31,14 +31,11 @@
 	payment_department = ACCOUNT_MED
 	fair_market_price = 5
 
-/obj/machinery/sleeper/Initialize(mapload)
+/obj/machinery/sleeper/Initialize() // austation start -- adds back sleepers to the map and techweb
 	. = ..()
-	if(mapload)
-		component_parts -= circuit
-		QDEL_NULL(circuit)
 	occupant_typecache = GLOB.typecache_living
 	update_icon()
-	reset_chem_buttons()
+	reset_chem_buttons() // austation end
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -270,6 +267,7 @@
 /obj/machinery/sleeper/syndie/fullupgrade/Initialize()
 	. = ..()
 	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/sleeper(null)
 	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
 	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
 	component_parts += new /obj/item/stack/sheet/glass(null)
