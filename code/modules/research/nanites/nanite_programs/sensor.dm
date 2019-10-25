@@ -472,7 +472,7 @@
 			if(isjellyperson(host_mob))
 				race_match = 1
 		if("Other")
-			if(!(ishumanbasic(host_mob) & islizard(host_mob) & ismoth(host_mob) & isethereal(host_mob) & ispodperson(host_mob) & isflyperson(host_mob) & isfelinid(host_mob) & isjellyperson(host_mob)))
+			if(!(ishumanbasic(host_mob) && islizard(host_mob) && ismoth(host_mob) && isethereal(host_mob) && ispodperson(host_mob) && isflyperson(host_mob) && isfelinid(host_mob) && isjellyperson(host_mob)))
 				race_match = 1
 
 	switch(mode)
