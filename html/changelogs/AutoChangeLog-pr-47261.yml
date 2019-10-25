@@ -1,0 +1,4 @@
+author: "Shapsy"
+delete-after: True
+changes: 
+  - tweak: "Characters with albino skin now always look pale when examined."
