@@ -440,7 +440,7 @@
 	name = "Service"
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
-		/obj/item/reagent_containers/food/drinks/drinkingglass,
+		/obj/item/reagent_containers/glass/beaker/large, //I know a shaker is more appropiate but this is for ease of identification
 		/obj/item/reagent_containers/food/condiment/enzyme,
 		/obj/item/pen,
 		/obj/item/toy/crayon/spraycan/borg,
