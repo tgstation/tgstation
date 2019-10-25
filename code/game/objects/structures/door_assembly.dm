@@ -239,7 +239,7 @@
 				door.setDir(dir)
 				door.unres_sides = electronics.unres_sides
 				//door.req_access = req_access
-				door.electronics = electronics
+				door.add_airlock_electronics(electronics)
 				door.heat_proof = heat_proof_finished
 				door.security_level = 0
 				if(electronics.one_access)

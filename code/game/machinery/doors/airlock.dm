@@ -1519,6 +1519,11 @@
 	else
 		open()
 
+/obj/machinery/door/airlock/proc/add_airlock_electronics(obj/item/electronics/airlock/new_electronics)
+	electronics = new_electronics
+	if(electronics.random_wires != wires.randomize)
+		wires.randomize_wire_colors(electronics.random_wires)
+
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING
 #undef AIRLOCK_OPEN

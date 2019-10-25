@@ -53,6 +53,14 @@ export const AirlockElectronics = props => {
       <Section title="Main">
         <LabeledList>
           <LabeledList.Item
+            label="Wire Pattern">
+            <Button
+              icon={data.random_wires ? 'random' : 'random'}
+              content={data.random_wires ? 'Random' : 'Static'}
+              onClick={() => act(ref, 'wire_toggle')}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item
             label="Access Required">
             <Button
               icon={data.oneAccess ? 'unlock' : 'lock'}

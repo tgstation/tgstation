@@ -47,6 +47,14 @@
 		return
 
 	src.holder = holder
+
+	randomize_wire_colors()
+
+
+/datum/wires/proc/randomize_wire_colors(randomize_value)
+	if(!isnull(randomize_value))
+		randomize = randomize_value
+
 	switch(randomize)
 		if(WIRE_NOT_RANDOM)
 			if(!GLOB.wire_static_color_directory[holder_type])

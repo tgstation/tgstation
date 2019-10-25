@@ -6,6 +6,7 @@
 	var/list/accesses = list()
 	var/one_access = 0
 	var/unres_sides = 0 //unrestricted sides, or sides of the airlock that will open regardless of access
+	var/random_wires = WIRE_PARTLY_RANDOM
 
 /obj/item/electronics/airlock/examine(mob/user)
 	. = ..()
@@ -37,6 +38,7 @@
 	data["regions"] = regions
 	data["oneAccess"] = one_access
 	data["unres_direction"] = unres_sides
+	data["random_wires"] = random_wires
 
 	return data
 
@@ -64,4 +66,10 @@
 		if("direc_set")
 			var/unres_direction = text2num(params["unres_direction"])
 			unres_sides ^= unres_direction //XOR, toggles only the bit that was clicked
+			. = TRUE
+		if("wire_toggle")
+			if(random_wires == WIRE_PARTLY_RANDOM)
+				random_wires = WIRE_NOT_RANDOM
+			else
+				random_wires = WIRE_PARTLY_RANDOM
 			. = TRUE
