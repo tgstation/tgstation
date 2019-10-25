@@ -140,7 +140,7 @@
 	var/obj/item/udder/udder = null
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
-	food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
+	food_type = list(/obj/item/reagent_containers/food/snacks/grown/wheat)
 	tame_chance = 25
 	bonus_tame_chance = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
@@ -273,7 +273,7 @@
 	turns_per_move = 3
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
-	food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
+	food_type = list(/obj/item/reagent_containers/food/snacks/grown/wheat)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -315,7 +315,7 @@
 	return ..()
 
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
-	if(istype(O, food_type)) //feedin' dem chickens
+	if(is_type_in_list(O, food_type)) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
 			var/feedmsg = "[user] feeds [O] to [name]! [pick(feedMessages)]"
 			user.visible_message(feedmsg)

@@ -134,7 +134,7 @@
 	///Domestication.
 	var/tame = FALSE
 	///What the mob eats, typically used for taming or animal husbandry.
-	var/food_type
+	var/list/food_type
 	///Starting success chance for taming.
 	var/tame_chance
 	///Added success chance after every failed tame attempt.
@@ -174,17 +174,20 @@
 	return ..()
 
 /mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
-	if(istype(O, food_type))
+	if(!is_type_in_list(O, food_type))
+		..()
+		return
+	else
 		user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
 		qdel(O)
-		if(!tame)
+		if(tame)
+			return
+		else
 			if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
 				tame = TRUE
 				tamed()
 			else
 				tame_chance += bonus_tame_chance
-	else
-		..()
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
 /mob/living/simple_animal/proc/tamed()
