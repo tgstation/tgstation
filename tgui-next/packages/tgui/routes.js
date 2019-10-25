@@ -34,7 +34,7 @@ const ROUTES = {
   achievements: {
     component: () => Achievements,
   },
-    scrollable: true,
+  scrollable: true,
   ai_airlock: {
     component: () => AiAirlock,
     scrollable: false,
