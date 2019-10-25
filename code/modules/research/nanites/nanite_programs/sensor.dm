@@ -394,3 +394,91 @@
 	else
 		if(hearing_args[HEARING_RAW_MESSAGE] == sentence)
 			send_code()
+
+/datum/nanite_program/sensor/race
+	name = "Race Sensor"
+	desc = "When triggered, the nanites scan the host to determine their race and output a signal depending on the conditions set in the settings."
+	can_trigger = TRUE
+	trigger_cost = 0
+	trigger_cooldown = 5
+
+	extra_settings = list("Sent Code","Race","Mode")
+	var/spent = FALSE
+	var/race_type = "Human"
+	var/mode = "Is"
+	var/race_match = 0
+
+/datum/nanite_program/sensor/race/set_extra_setting(user, setting)
+	if(setting == "Sent Code")
+		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
+		if(isnull(new_code))
+			return
+		sent_code = CLAMP(round(new_code, 1), 1, 9999)
+	if(setting == "Race")
+		var/list/race_types = list("Human","Lizard","Moth","Ethereal","Pod","Fly","Felinid","Jelly","Other")
+		var/new_race_type = input("Choose the race", name) as null|anything in sortList(race_types)
+		if(!new_race_type)
+			return
+		race_type = new_race_type
+	if(setting == "Mode")
+		if(mode == "Is")
+			mode = "Is Not"
+		else
+			mode = "Is"
+
+
+/datum/nanite_program/sensor/race/get_extra_setting(setting)
+	if(setting == "Sent Code")
+		return sent_code
+	if(setting == "Race")
+		return race_type
+	if(setting == "Mode")
+		return mode
+
+/datum/nanite_program/sensor/race/copy_extra_settings_to(datum/nanite_program/sensor/race/target)
+	target.sent_code = sent_code
+	target.race_type = race_type
+	target.mode = mode
+
+/datum/nanite_program/sensor/race/trigger()
+	if(!..())
+		return
+	if(host_mob.stat == DEAD)
+		return
+
+	switch(race_type)
+		if("Human")
+			if(ishumanbasic(host_mob))
+				race_match = 1
+		if("Lizard")
+			if(islizard(host_mob))
+				race_match = 1	
+		if("Moth")
+			if(ismoth(host_mob))
+				race_match = 1	
+		if("Ethereal")
+			if(isethereal(host_mob))
+				race_match = 1
+		if("Pod")
+			if(ispodperson(host_mob))
+				race_match = 1
+		if("Fly")
+			if(isflyperson(host_mob))
+				race_match = 1
+		if("Felinid")
+			if(isfelinid(host_mob))
+				race_match = 1
+		if("Jelly")
+			if(isjellyperson(host_mob))
+				race_match = 1
+		if("Other")
+			if(!(ishumanbasic(host_mob) & islizard(host_mob) & ismoth(host_mob) & isethereal(host_mob) & ispodperson(host_mob) & isflyperson(host_mob) & isfelinid(host_mob) & isjellyperson(host_mob)))
+				race_match = 1
+
+	switch(mode)
+		if("Is")
+			if(race_match == 1)
+				send_code()
+		if("Is Not")
+			if(race_match == 0)
+				send_code()
