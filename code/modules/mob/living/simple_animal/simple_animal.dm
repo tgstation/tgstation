@@ -182,12 +182,11 @@
 		qdel(O)
 		if(tame)
 			return
+		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
+			tame = TRUE
+			tamed()
 		else
-			if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
-				tame = TRUE
-				tamed()
-			else
-				tame_chance += bonus_tame_chance
+			tame_chance += bonus_tame_chance
 
 ///Extra effects to add when the mob is tamed, such as adding a riding component
 /mob/living/simple_animal/proc/tamed()
