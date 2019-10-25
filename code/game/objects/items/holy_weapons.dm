@@ -468,6 +468,62 @@
 		qdel(S)
 	return ..()
 
+/obj/item/nullrod/scythe/talking/dummy
+	name = "ventriloquist dummy"
+	desc = "It's a dummy, dummy. It glares at you with cold, unblinking eyes."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "assistant"
+	item_state = "doll"
+	attack_verb = list("bit", "slapped", "mocked")
+	hitsound = "swing_hit"
+	var/possessed = FALSE
+	force = 5
+	throwforce = 3
+	w_class = WEIGHT_CLASS_TINY
+	sharpness = IS_BLUNT
+	armour_penetration = 0
+	slot_flags = 0
+	var/doll_name = "Dummy"
+
+/obj/item/nullrod/scythe/talking/dummy/attack_self(mob/living/user)
+	if(possessed)
+		return
+
+	to_chat(user, "<span class='notice'>You attempt to wake the spirit of the dummy...</span>")
+
+	possessed = TRUE
+
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the spirit of [user.real_name]'s dummy?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+
+	if(LAZYLEN(candidates))
+		var/mob/dead/observer/C = pick(candidates)
+		var/mob/living/simple_animal/shade/S = new(src)
+		S.ckey = C.ckey
+		S.fully_replace_character_name(null, "[doll_name]")
+		name = "[initial(name)] - [doll_name]"
+		S.status_flags |= GODMODE
+		S.language_holder = user.language_holder.copy(S)
+		ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT) //once the dummy has been possessed, you can't take it off of your hand
+		var/input = sanitize_name(stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN))
+		if(src && input)
+			doll_name = input
+			name = "[initial(name)] - [doll_name]"
+			S.fully_replace_character_name(null, "[doll_name]")
+	else
+		to_chat(user, "<span class='warning'>The dummy is dormant. Maybe you can try again later.</span>")
+		possessed = FALSE
+
+/obj/item/nullrod/scythe/talking/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language)
+	var/mob/M = A
+	if(istype(M))
+		M.log_talk(message, LOG_SAY, tag="dummy toy")
+
+	say(message, language)
+	return NOPASS
+
+/obj/item/nullrod/scythe/talking/dummy/GetVoice()
+	return doll_name
+
 /obj/item/nullrod/scythe/talking/chainsword
 	icon_state = "chainswordon"
 	item_state = "chainswordon"
