@@ -67,7 +67,7 @@
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
-	src.window_id = browser_id ? browser_id : "[REF(src_object)]-[ui_key]"
+	src.window_id = browser_id ? browser_id : "[REF(src_object)]-[ui_key]" // DO NOT replace with \ref here. src_object could potentially be tagged
 	src.custom_browser_id = browser_id ? TRUE : FALSE
 
 	set_interface(interface)
@@ -119,12 +119,18 @@
 	// Allow the src object to override the html if needed
 	html = src_object.ui_base_html(html)
 	// Replace template tokens with important UI data
-	html = replacetextEx(html, "\[ref]", "[REF(src)]")
+	// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+	// be tagged, so this is an effective unwrap
+	html = replacetextEx(html, "\[ref]", "\ref[src]")
 	html = replacetextEx(html, "\[style]", style)
 
-	user << browse(html, "window=[window_id];can_minimize=0;auto_format=0;[window_size][have_title_bar]") // Open the window.
+	// Open the window.
+	user << browse(html, "window=[window_id];can_minimize=0;auto_format=0;[window_size][have_title_bar]")
 	if (!custom_browser_id)
-		winset(user, window_id, "on-close=\"uiclose [REF(src)]\"") // Instruct the client to signal UI when the window is closed.
+		// Instruct the client to signal UI when the window is closed.
+		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+		// be tagged, so this is an effective unwrap
+		winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
 
 	if(!initial_data)
 		initial_data = src_object.ui_data(user)
@@ -217,17 +223,10 @@
 		"fancy" = user.client.prefs.tgui_fancy,
 		"locked" = user.client.prefs.tgui_lock && !custom_browser_id,
 		"window" = window_id,
-		"ref" = "[REF(src)]",
-		"user" = list(
-			"name" = user.name,
-			"ref" = "[REF(user)]",
-		),
-		"srcObject" = list(
-			"name" = "[src_object]",
-			"ref" = "[REF(src_object)]",
-		),
-		"titlebar" = titlebar,
+		// Intentional \ref usage; tgui datums can't/shouldn't be tagged so this is an effective unwrap
+		"ref" = "\ref[src]"
 	)
+	
 	if(!isnull(data))
 		json_data["data"] = data
 	if(!isnull(static_data))
