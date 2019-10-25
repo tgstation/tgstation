@@ -633,6 +633,22 @@ RLD
 	matter = 500
 	canRturf = TRUE
 
+/obj/item/construction/rcd/bluespace
+	name = "bluespace RCD"
+	desc = "Compact, efficient bluespace RCD that is linked to the ORM,"
+	icon_state = "BRCD"
+	sheetmultiplier = 4.4 //slightly better than original RCD due to tech advancement
+	w_class = WEIGHT_CLASS_SMALL
+	upgrade = TRUE
+	upgrade = RCD_UPGRADE_SILO_LINK
+	delay_mod = 0.85 
+	item_state = "ircd"
+	max_matter = 180
+
+/obj/item/construction/rcd/bluespace/Initialize()
+	. = ..()
+	silo_mats.LateInitialize() //initializes silo connection on creation
+
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
 	desc = "Highly compressed matter for the RCD."
