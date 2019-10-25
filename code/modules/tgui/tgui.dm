@@ -106,7 +106,7 @@
 
 	// Remove titlebar and resize handles for a fancy window
 	// right from the beginning
-	var/have_title_bar = ""
+	var/have_title_bar = "titlebar=1;can_resize=1"
 	if(user.client.prefs.tgui_fancy)
 		have_title_bar = "titlebar=0;can_resize=0"
 
@@ -215,25 +215,25 @@
  **/
 /datum/tgui/proc/get_config_data()
 	var/list/config_data = list(
-			"title"     = title,
-			"status"    = status,
-			"screen"	= ui_screen,
-			"style"     = style,
-			"interface" = interface,
-			"fancy"     = user.client.prefs.tgui_fancy,
-			"locked"    = user.client.prefs.tgui_lock && !custom_browser_id,
-			"window"    = window_id,
-			"ref"       = "[REF(src)]",
-			"user"      = list(
-				"name"  = user.name,
-				"ref"   = "[REF(user)]"
-			),
-			"srcObject" = list(
-				"name" = "[src_object]",
-				"ref"  = "[REF(src_object)]"
-			),
-			"titlebar" = titlebar
-		)
+		"title"     = title,
+		"status"    = status,
+		"screen"	= ui_screen,
+		"style"     = style,
+		"interface" = interface,
+		"fancy"     = user.client.prefs.tgui_fancy,
+		"locked"    = user.client.prefs.tgui_lock && !custom_browser_id,
+		"window"    = window_id,
+		"ref"       = "[REF(src)]",
+		"user"      = list(
+			"name"  = user.name,
+			"ref"   = "[REF(user)]"
+		),
+		"srcObject" = list(
+			"name" = "[src_object]",
+			"ref"  = "[REF(src_object)]"
+		),
+		"titlebar" = titlebar
+	)
 	return config_data
 
  /**

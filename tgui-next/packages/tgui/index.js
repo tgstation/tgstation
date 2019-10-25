@@ -47,7 +47,7 @@ const renderLayout = () => {
         // Load old TGUI using redirection method for IE8
         if (tridentVersion <= 4) {
           setTimeout(() => {
-            location.href = 'tgui-fallback.html?ref=' + ref;
+            location.href = 'tgui-fallback.html?ref=' + window.__ref__;
           }, 10);
           return;
         }
