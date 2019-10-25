@@ -159,7 +159,7 @@
 	data["burn_health"] = fire_loss
 	data["toxin_health"] = tox_loss
 	data["suffocation_health"] = oxy_loss
-  	data["clone_health"] = clone_loss
+	data["clone_health"] = clone_loss
 	data["brain_health"] = brain_status
 	data["brain_damage"] = brain_loss
 	data["patient_status"] = patient_status
