@@ -1,4 +1,3 @@
-import { Acclimator } from './interfaces/Acclimator';
 import { AiAirlock } from './interfaces/AiAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
 import { AirlockElectronics } from './interfaces/AirlockElectronics';
@@ -12,12 +11,14 @@ import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
-import { Cargo } from './interfaces/Cargo';
+import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
+import { ChemAcclimator } from './interfaces/ChemAcclimator';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemDispenser } from './interfaces/ChemDispenser';
 import { ChemHeater } from './interfaces/ChemHeater';
 import { ChemMaster } from './interfaces/ChemMaster';
+import { CodexGigas } from './interfaces/CodexGigas';
 import { Crayon } from './interfaces/Crayon';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
@@ -29,10 +30,6 @@ import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
 
 const ROUTES = {
-  acclimator: {
-    component: () => Acclimator,
-    scrollable: false,
-  },
   ai_airlock: {
     component: () => AiAirlock,
     scrollable: false,
@@ -89,12 +86,20 @@ const ROUTES = {
     component: () => Cargo,
     scrollable: true,
   },
+  cargo_express: {
+    component: () => CargoExpress,
+    scrollable: true,
+  },
   cellular_emporium: {
     component: () => CellularEmporium,
     scrollable: true,
   },
   centcom_podlauncher: {
     component: () => CentcomPodLauncher,
+    scrollable: false,
+  },
+  acclimator: {
+    component: () => ChemAcclimator,
     scrollable: false,
   },
   chem_dispenser: {
@@ -108,6 +113,10 @@ const ROUTES = {
   chem_master: {
     component: () => ChemMaster,
     scrollable: true,
+  },
+  codex_gigas: {
+    component: () => CodexGigas,
+    scrollable: false,
   },
   crayon: {
     component: () => Crayon,
