@@ -476,7 +476,7 @@
 	item_state = "doll"
 	attack_verb = list("bit", "slapped", "mocked")
 	hitsound = "swing_hit"
-	var/possessed = FALSE
+	possessed = FALSE
 	force = 5
 	throwforce = 3
 	w_class = WEIGHT_CLASS_TINY
