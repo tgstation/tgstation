@@ -49,3 +49,37 @@
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
 	else
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+
+// NT/syndicate themed art, currently used in posters
+
+/datum/component/art/nt
+
+/datum/component/art/nt/on_obj_examine(datum/source, mob/M)
+	apply_moodlet(M, 0)
+
+/datum/component/art/nt/apply_moodlet(mob/M, impress)
+	var/postscript
+	if(M.mind && !M.mind.has_antag_datum(/datum/antagonist))
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
+		postscript = "Glory to efficiency! Glory to potent plasma! Glory to Nanotrasen!"
+	else
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+		postscript = "Then you take some bodily fluids and apply them to the paper."
+	M.visible_message("<span class='notice'>[M] stops to inspect [parent].</span>", \
+						 "<span class='notice'>You take in the wholesome corporate message of \the [parent]. [postscript] </span>")
+
+/datum/component/art/syndicate
+
+/datum/component/art/syndicate/on_obj_examine(datum/source, mob/M)
+	apply_moodlet(M, 0)
+
+/datum/component/art/syndicate/apply_moodlet(mob/M, impress)
+	var/postscript
+	if(M.mind && M.mind.has_antag_datum(/datum/antagonist))
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
+		postscript = "Looks like at least one other person here has finally woken up."
+	else
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+		postscript = "Must be another Syndicate psy-op."
+	M.visible_message("<span class='notice'>[M] stops to inspect [parent].</span>", \
+						 "<span class='notice'>You take in the subversive propaganda of \the [parent]. [postscript]</span>")
