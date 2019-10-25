@@ -647,7 +647,6 @@ RLD
 
 /obj/item/construction/rcd/bluespace/Initialize()
 	. = ..()
-//	var/datum/component/remote_materials/InitializeB = AddComponent(/datum/component/remote_materials/, "RCD", , , TRUE)
 	silo_mats.LateInitialize()
 
 /obj/item/rcd_ammo
