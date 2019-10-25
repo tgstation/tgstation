@@ -64,7 +64,7 @@
 		postscript = "Glory to efficiency! Glory to potent plasma! Glory to Nanotrasen!"
 	else
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
-		postscript = "Then you take some bodily fluids and apply them to the paper."
+		postscript = "Then you take some bodily fluids and apply them to the edge."
 	M.visible_message("<span class='notice'>[M] stops to inspect [parent].</span>", \
 						 "<span class='notice'>You take in the wholesome corporate message of \the [parent]. [postscript] </span>")
 
