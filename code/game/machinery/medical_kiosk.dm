@@ -117,15 +117,15 @@
 		var/list/trauma_text = list()
 		for(var/datum/brain_trauma/B in user.get_traumas())
 			var/trauma_desc = ""
-		switch(B.resilience)
-			if(TRAUMA_RESILIENCE_SURGERY)
-				trauma_desc += "severe "
-			if(TRAUMA_RESILIENCE_LOBOTOMY)
-				trauma_desc += "deep-rooted "
-			if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
-				trauma_desc += "permanent "
-		trauma_desc += B.scan_desc
-		trauma_text += trauma_desc
+			switch(B.resilience)
+				if(TRAUMA_RESILIENCE_SURGERY)
+					trauma_desc += "severe "
+				if(TRAUMA_RESILIENCE_LOBOTOMY)
+					trauma_desc += "deep-rooted "
+				if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
+					trauma_desc += "permanent "
+			trauma_desc += B.scan_desc
+			trauma_text += trauma_desc
 		trauma_status = "Cerebral traumas detected: patient appears to be suffering from [english_list(trauma_text)]."
 
 	if(user.stat == DEAD || HAS_TRAIT(user, TRAIT_FAKEDEATH))  //Patient status checks.
