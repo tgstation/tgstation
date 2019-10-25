@@ -2834,22 +2834,13 @@
 /turf/closed/wall/rust,
 /area/security/execution/education)
 "aeD" = (
-/obj/structure/transit_tube/horizontal{
-	icon_state = "straight";
-	dir = 1
-	},
-/obj/structure/lattice/catwalk,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/maintenance/central)
 "aeE" = (
-/obj/machinery/light,
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/hallway/secondary/command)
 "aeF" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -3134,12 +3125,8 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "afh" = (
-/obj/structure/flora/ausbushes/palebush,
-/obj/machinery/light,
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/turf/open/space/basic,
+/area/hallway/secondary/command)
 "afi" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
@@ -9753,23 +9740,9 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "app" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/structure/transit_tube/station/reverse/flipped{
-	icon_state = "closed_terminus1";
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/ai_upload)
+/obj/machinery/light,
+/turf/open/space,
+/area/hallway/secondary/command)
 "apq" = (
 /obj/structure/table,
 /obj/item/stack/packageWrap,
@@ -11688,20 +11661,10 @@
 /turf/closed/wall/r_wall,
 /area/medical/morgue)
 "asj" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/structure/transit_tube/horizontal{
-	icon_state = "straight";
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/ai_upload)
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "ask" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -15056,10 +15019,10 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
 "axf" = (
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "axg" = (
 /obj/structure/table/wood/fancy,
 /obj/effect/turf_decal/tile/neutral,
@@ -21671,15 +21634,11 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/kitchen)
 "aHz" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/obj/structure/window/reinforced,
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "aHA" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -21919,11 +21878,24 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/science/robotics/lab)
 "aHQ" = (
-/obj/structure/flora/grass/jungle/b,
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
 	},
-/area/maintenance/central/secondary)
+/obj/structure/transit_tube/station/reverse/flipped{
+	icon_state = "closed_terminus1";
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/ai_monitored/turret_protected/ai_upload)
 "aHR" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -24604,19 +24576,31 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aLW" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/fernybush,
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+/obj/machinery/camera{
+	c_tag = "AI Upload Garden";
+	dir = 4;
+	name = "upload camera";
+	network = list("aiupload")
 	},
-/area/maintenance/central/secondary)
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/hallway/secondary/command)
 "aLX" = (
-/obj/structure/flora/rock/pile,
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
 	},
-/area/maintenance/central/secondary)
+/obj/structure/transit_tube/horizontal{
+	icon_state = "straight";
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/ai_monitored/turret_protected/ai_upload)
 "aLY" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -26187,9 +26171,15 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/cryo)
 "aOk" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/maintenance/central)
+/obj/machinery/camera{
+	c_tag = "AI Upload Transit Exterior";
+	dir = 8;
+	name = "upload camera";
+	network = list("aiupload")
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/hallway/secondary/command)
 "aOl" = (
 /obj/machinery/computer/scan_consolenew{
 	dir = 4
@@ -31818,16 +31808,13 @@
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/miningoffice)
 "aVO" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	name = "Arrival Shuttle Airlock";
-	safety_mode = 1
+/obj/machinery/light{
+	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/hallway/secondary/entry)
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "aVP" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
 	dir = 4
@@ -35178,12 +35165,21 @@
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "baw" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+/obj/structure/transit_tube/horizontal{
+	icon_state = "straight";
+	dir = 1
 	},
-/area/maintenance/central/secondary)
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "bax" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -36458,16 +36454,14 @@
 	},
 /area/bridge)
 "bcw" = (
-/obj/structure/flora/ausbushes/palebush,
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/transit_tube/horizontal{
+	icon_state = "straight";
 	dir = 1
 	},
+/obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "bcx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
@@ -36896,17 +36890,16 @@
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
 "bcY" = (
-/obj/structure/window/reinforced,
-/obj/structure/flora/ausbushes/palebush,
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	icon_state = "hrwindow_spawner_middle";
+	dir = 4
 	},
-/area/maintenance/central/secondary)
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "bcZ" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -36940,16 +36933,11 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/science/research)
 "bda" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
+/obj/structure/transit_tube/crossing,
+/obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "bdb" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
@@ -37538,13 +37526,13 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/chemistry)
 "bdP" = (
-/obj/structure/flora/grass/jungle/b,
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+/obj/machinery/light/small{
+	dir = 8
 	},
-/area/maintenance/central/secondary)
+/obj/structure/cable,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "bdQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -37626,15 +37614,13 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/science/mixing)
 "bdW" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/transit_tube/horizontal{
+	icon_state = "straight";
+	dir = 1
 	},
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "bdX" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -38569,13 +38555,10 @@
 	},
 /area/engine/engineering)
 "bff" = (
-/obj/structure/flora/grass/jungle,
-/obj/effect/turf_decal/sand/plating,
+/obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "bfg" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
@@ -38635,24 +38618,12 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "bfk" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/transit_tube/curved/flipped{
+	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "AI Upload Transit Exterior";
-	dir = 8;
-	name = "upload camera";
-	network = list("aiupload")
-	},
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "bfl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -39772,35 +39743,18 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/science/xenobiology)
 "bgP" = (
-/obj/structure/flora/rock/pile,
-/obj/machinery/light{
+/obj/structure/window/reinforced,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
+"bgQ" = (
+/obj/structure/window/reinforced,
+/obj/machinery/light/small{
 	dir = 4
 	},
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
-"bgQ" = (
-/obj/structure/transit_tube/horizontal{
-	icon_state = "straight";
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
 /obj/structure/lattice/catwalk,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "bgR" = (
 /obj/effect/turf_decal/box/corners{
 	icon_state = "box_corners";
@@ -39812,16 +39766,16 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "bgS" = (
-/obj/structure/flora/grass/jungle,
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/apc{
+	areastring = "/area/hallway/secondary/command";
+	dir = 8;
+	name = "Command Maintenance APC";
+	pixel_x = -25
 	},
 /obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "bgT" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -41629,17 +41583,12 @@
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/miningoffice)
 "bjm" = (
-/obj/structure/transit_tube/horizontal{
-	icon_state = "straight";
-	dir = 1
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /obj/structure/lattice/catwalk,
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/turf/open/floor/plating/airless,
+/area/hallway/secondary/command)
 "bjn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -42203,12 +42152,24 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bkg" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/turf_decal/box,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Departures Cargo Dock";
+	dir = 4;
+	name = "shuttle camera"
+	},
 /turf/open/floor/plating/airless{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/maintenance/central/secondary)
+/area/hallway/secondary/entry)
 "bkh" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral{
@@ -42344,15 +42305,20 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bks" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/line{
+/obj/structure/lattice/catwalk,
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/machinery/camera{
+	c_tag = "Arrivals Drydock Canisters";
+	dir = 1;
+	name = "shuttle camera"
+	},
 /turf/open/floor/plating/airless{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/maintenance/central/secondary)
+/area/hallway/secondary/entry)
 "bkt" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/silvercrate,
@@ -42397,19 +42363,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
-"bkw" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	icon_state = "hrwindow_spawner_middle";
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "bkx" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
@@ -42454,17 +42407,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"bkB" = (
-/obj/structure/flora/grass/jungle/b,
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "bkC" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -42544,14 +42486,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
-"bkI" = (
-/obj/structure/flora/ausbushes/palebush,
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "bkJ" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -42859,16 +42793,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"ble" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "blf" = (
 /turf/closed/wall,
 /area/security/checkpoint/supply)
@@ -42913,17 +42837,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"blj" = (
-/obj/structure/flora/grass/jungle,
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "blk" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/cargo{
@@ -42973,15 +42886,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
-"bln" = (
-/obj/structure/transit_tube/crossing,
-/obj/structure/lattice/catwalk,
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "blo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -45585,16 +45489,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/kitchen)
-"boW" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "boX" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -47080,14 +46974,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/central)
-"brb" = (
-/obj/structure/lattice/catwalk,
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "brc" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral{
@@ -48414,15 +48300,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
-"bsR" = (
-/obj/structure/flora/grass/jungle,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "bsS" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -49651,19 +49528,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
-"buH" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/palebush,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "buI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral,
@@ -49852,20 +49716,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
-"buY" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Central Maintenance APC";
-	areastring = "/area/maintenance/central/secondary";
-	pixel_x = -25
-	},
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "buZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -51833,16 +51683,6 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"byi" = (
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/flora/ausbushes/palebush,
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "byj" = (
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
@@ -52815,12 +52655,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
-"bzD" = (
-/obj/structure/flora/ausbushes/palebush,
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "bzE" = (
 /obj/machinery/door/airlock/vault{
 	id_tag = "bank";
@@ -59750,16 +59584,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/prison)
-"bJO" = (
-/obj/structure/transit_tube/curved/flipped{
-	dir = 1
-	},
-/obj/structure/lattice/catwalk,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "bJP" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
@@ -65805,16 +65629,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"bSi" = (
-/obj/structure/flora/grass/jungle/b,
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "bSj" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -68021,18 +67835,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
-"bVK" = (
-/obj/structure/flora/grass/jungle/b,
-/obj/machinery/camera{
-	c_tag = "AI Upload Garden";
-	dir = 4;
-	name = "upload camera";
-	network = list("aiupload")
-	},
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "bVL" = (
 /obj/structure/sign/warning/explosives,
 /turf/closed/wall/r_wall/rust,
@@ -70557,14 +70359,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
-"bZj" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	name = "Arrival Shuttle Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plasteel/dark,
-/area/hallway/secondary/entry)
 "bZk" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/blue,
@@ -71183,15 +70977,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"caa" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	name = "Arrival Shuttle Airlock";
-	safety_mode = 1
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plasteel/dark,
-/area/hallway/secondary/entry)
 "cab" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -75241,16 +75026,6 @@
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/fore)
-"cgx" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	name = "Arrival Shuttle Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/hallway/secondary/entry)
 "cgy" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -75891,15 +75666,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
-"chs" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
 "cht" = (
 /obj/structure/flora/rock/pile,
 /obj/effect/turf_decal/stripes/corner,
@@ -76275,20 +76041,6 @@
 /turf/open/floor/engine,
 /area/ai_monitored/storage/satellite)
 "cic" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/hallway/secondary/entry)
-"cid" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -88992,28 +88744,29 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "cCi" = (
-/obj/structure/window/reinforced,
-/obj/structure/flora/grass/jungle/b,
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+/obj/machinery/door/airlock/external{
+	name = "Arrival Shuttle Airlock"
 	},
-/area/maintenance/central/secondary)
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel/dark,
+/area/hallway/secondary/entry)
 "cCj" = (
-/obj/structure/window/reinforced,
-/obj/structure/flora/grass/jungle,
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+/obj/machinery/door/airlock/external{
+	name = "Arrival Shuttle Airlock";
+	safety_mode = 1
 	},
-/area/maintenance/central/secondary)
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel/dark,
+/area/hallway/secondary/entry)
 "cCk" = (
-/obj/structure/window/reinforced,
-/obj/machinery/light/small{
-	dir = 4
+/obj/machinery/door/airlock/external{
+	name = "Arrival Shuttle Airlock"
 	},
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
-/area/maintenance/central/secondary)
+/turf/open/floor/plasteel/dark,
+/area/hallway/secondary/entry)
 "cCl" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "engsm";
@@ -89023,17 +88776,15 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/supermatter)
 "cCm" = (
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/machinery/door/airlock/external{
+	name = "Arrival Shuttle Airlock";
+	safety_mode = 1
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/flora/grass/jungle/b,
-/turf/open/floor/plating/asteroid/airless{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/maintenance/central/secondary)
+/turf/open/floor/plasteel/dark,
+/area/hallway/secondary/entry)
 "cCn" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -124479,15 +124230,15 @@ aKK
 cgU
 aIV
 aox
-aOk
+aeD
 apX
 aox
-bsR
+aeE
+afh
 aLW
-bVK
-aHz
-bzD
-aLW
+aeE
+afh
+aeE
 aox
 bqZ
 aox
@@ -124736,18 +124487,18 @@ aNy
 aPv
 aKe
 aTR
+aeE
+aeE
+asj
 axf
-aHz
-baw
-bcw
+axf
+axf
+aVO
+axf
+axf
 bdP
 bff
-bgP
-bdP
-bkg
-boW
-brb
-buY
+bgS
 bpf
 bzq
 bAA
@@ -124993,15 +124744,15 @@ aRk
 aPw
 aSn
 aTR
-aHz
-aeE
+afh
+app
 arl
 arl
 bdQ
 bdQ
 bha
 arl
-bkg
+axf
 bpf
 bpf
 atP
@@ -125250,7 +125001,7 @@ aRl
 aPz
 aKg
 aTR
-aHQ
+aeE
 arl
 arl
 boi
@@ -125258,7 +125009,7 @@ bsI
 byP
 bzj
 bdQ
-bks
+axf
 bpf
 brc
 bvh
@@ -125515,7 +125266,7 @@ bnU
 bzf
 bzk
 bzd
-bkw
+bcY
 auy
 brf
 bvm
@@ -125772,7 +125523,7 @@ byJ
 byS
 bdQ
 bdQ
-bkB
+axf
 bpf
 bri
 bvm
@@ -126028,8 +125779,8 @@ byH
 byK
 byT
 bdQ
-aHz
-bkI
+afh
+axf
 bpf
 brs
 bvn
@@ -126286,7 +126037,7 @@ byL
 byU
 bdQ
 bdQ
-bks
+axf
 bpf
 bru
 bvw
@@ -126543,7 +126294,7 @@ bza
 bzg
 bzb
 bze
-bkw
+bcY
 auy
 brv
 bvF
@@ -126792,7 +126543,7 @@ aRv
 aQf
 aLk
 aTR
-aLW
+aeE
 arl
 arl
 byM
@@ -126800,7 +126551,7 @@ aZH
 bas
 bzr
 bdQ
-ble
+axf
 bpf
 brK
 bvL
@@ -127049,15 +126800,15 @@ aRw
 aPw
 aSn
 aTR
-aHQ
 afh
+app
 bha
 arl
 aZQ
 bau
 arl
 arl
-blj
+axf
 bpf
 bpf
 atP
@@ -127306,18 +127057,18 @@ aRy
 aQg
 aKe
 aTR
-aLX
-aHz
-baw
-bcY
-app
+aeE
+aeE
 asj
-bgQ
+aHz
+aHQ
+aLX
+baw
+bcw
+bda
+bdW
+bfk
 bjm
-bln
-aeD
-bJO
-cCm
 bpf
 bzM
 bAI
@@ -127563,17 +127314,17 @@ aKK
 aQK
 aLE
 aox
+aeD
+aox
+aox
+afh
+aeE
 aOk
-aox
-aox
-bda
-bdW
-bfk
-bgS
-bSi
-chs
-buH
-byi
+afh
+aeE
+afh
+aeE
+bgP
 baa
 atT
 atT
@@ -127830,7 +127581,7 @@ apX
 apX
 aox
 aox
-cCi
+bgP
 bcq
 aem
 auw
@@ -128086,8 +127837,8 @@ bfl
 bgV
 bjp
 blo
-aOk
-cCj
+aeD
+bgP
 bcv
 agQ
 agZ
@@ -128344,7 +128095,7 @@ ajt
 ajt
 blq
 apX
-cCk
+bgQ
 bcF
 bzy
 auZ
@@ -134553,7 +134304,7 @@ aIY
 bUI
 bQT
 bQT
-cid
+bkg
 bSy
 crG
 crJ
@@ -135575,9 +135326,9 @@ bWO
 bYE
 aSD
 bXl
-bZj
+cCi
 cbu
-cgx
+cCk
 bUN
 bUN
 bUN
@@ -136870,7 +136621,7 @@ bUN
 bUN
 bUN
 bUN
-bUt
+bks
 bUo
 aeu
 bzG
@@ -137117,9 +136868,9 @@ bTq
 bTO
 bXb
 bXo
-caa
+cCj
 ceU
-aVO
+cCm
 bUN
 bUN
 bUN
