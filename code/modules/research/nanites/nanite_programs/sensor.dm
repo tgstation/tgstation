@@ -407,14 +407,14 @@
 	var/race_type = "Human"
 	var/mode = "Is"
 	var/list/allowed_species = list(
-    "Human" = /datum/species/human,
-    "Lizard" = /datum/species/lizard,
-	"Moth" = /datum/species/moth,
-	"Ethereal" = /datum/species/ethereal,
-	"Pod" = /datum/species/pod,
-	"Fly" = /datum/species/fly,
-	"Felinid" = /datum/species/human/felinid,
-	"Jelly" = /datum/species/jelly
+    	"Human" = /datum/species/human,
+    	"Lizard" = /datum/species/lizard,
+		"Moth" = /datum/species/moth,
+		"Ethereal" = /datum/species/ethereal,
+		"Pod" = /datum/species/pod,
+		"Fly" = /datum/species/fly,
+		"Felinid" = /datum/species/human/felinid,
+		"Jelly" = /datum/species/jelly
 )
 
 /datum/nanite_program/sensor/race/set_extra_setting(user, setting)
@@ -431,6 +431,7 @@
 		var/new_race_type = input("Choose the race", name) as null|anything in sortList(race_types)
 		if(!new_race_type)
 			return
+		race_type = new_race_type
 	if(setting == "Mode")
 		if(mode == "Is")
 			mode = "Is Not"
