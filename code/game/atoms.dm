@@ -77,6 +77,9 @@
 	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
 	var/material_modifier = 1
 
+	var/datum/wires/wires = null
+
+	var/list/alternate_appearances
 
 /**
   * Called when an atom is created in byond (built in engine proc)
