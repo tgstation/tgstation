@@ -48,11 +48,11 @@
 	results = list(/datum/reagent/medicine/mine_salve = 15)
 	required_reagents = list(/datum/reagent/toxin/plasma = 5, /datum/reagent/iron = 5, /datum/reagent/consumable/sugar = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
 
-/datum/chemical_reaction/instabitaluri
+/*/datum/chemical_reaction/instabitaluri austation begin -- revert cobbychem
 	name = "Synthflesh (Instabitaluri)"
 	id = /datum/reagent/medicine/C2/instabitaluri
 	results = list(/datum/reagent/medicine/C2/instabitaluri = 3)
-	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/libital = 1)
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/libital = 1) austation end*/
 
 /datum/chemical_reaction/calomel
 	name = "Calomel"
@@ -226,12 +226,12 @@
 	results = list(/datum/reagent/medicine/trophazole = 4)
 	required_reagents = list(/datum/reagent/copper = 1, /datum/reagent/acetone = 2,  /datum/reagent/phosphorus = 1)
 
-/datum/chemical_reaction/granibitaluri
+/*/datum/chemical_reaction/granibitaluri austation begin -- revert cobbychem
 	name = "Granibitaluri"
 	id = /datum/reagent/medicine/granibitaluri
 	results = list(/datum/reagent/medicine/granibitaluri = 1)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/space_cleaner/sterilizine = 1) //haha guys totally not some sort of saline reference!
-	required_temp = 373
+	required_temp = 373 austation end*/
 
 /datum/chemical_reaction/medsuture
 	name = "Medicated Suture"
@@ -243,4 +243,3 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/suture/medicated(location)
 	return
-

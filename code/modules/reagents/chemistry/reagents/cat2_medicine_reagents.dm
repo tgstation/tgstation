@@ -1,5 +1,5 @@
 // Category 2 medicines are medicines that have an ill effect regardless of volume/OD to dissuade doping. Mostly used as emergency chemicals OR to convert damage (and heal a bit in the process). The type is used to prompt borgs that the medicine is harmful.
-/datum/reagent/medicine/C2
+/*/datum/reagent/medicine/C2 austation begin -- bye bye cobster
 	harmful = TRUE
 	metabolization_rate = 0.2
 
@@ -345,3 +345,4 @@
 
 /******NICHE******/
 //todo
+austation end */

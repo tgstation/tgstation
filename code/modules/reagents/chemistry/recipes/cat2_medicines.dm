@@ -1,4 +1,4 @@
-
+/* austation begin -- bye bye cobby
 
 /*****BRUTE*****/
 
@@ -67,3 +67,4 @@
 	id = /datum/reagent/medicine/C2/syriniver
 	results = list(/datum/reagent/medicine/C2/syriniver = 5)
 	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
+austation end */

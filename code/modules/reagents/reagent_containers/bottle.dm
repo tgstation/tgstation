@@ -52,10 +52,10 @@
 	desc = "A small bottle of Mannitol. Useful for healing brain damage."
 	list_reagents = list(/datum/reagent/medicine/mannitol = 30)
 
-/obj/item/reagent_containers/glass/bottle/multiver
+/*/obj/item/reagent_containers/glass/bottle/multiver austation begin -- revert cobbychem
 	name = "multiver bottle"
 	desc = "A small bottle of multiver, which removes toxins and other chemicals from the bloodstream but causes shortness of breath. All effects scale with the amount of reagents in the patient."
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 30)
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 30) austation end */
 
 /obj/item/reagent_containers/glass/bottle/syriniver
 	name = "syriniver bottle"
@@ -384,4 +384,3 @@
 /obj/item/reagent_containers/glass/bottle/bromine
 	name = "bromine bottle"
 	list_reagents = list(/datum/reagent/bromine = 30)
-
