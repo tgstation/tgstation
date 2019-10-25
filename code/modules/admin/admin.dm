@@ -652,10 +652,16 @@
 	set desc = "(atom path) Spawn an atom"
 	set name = "Spawn"
 
-	if(!check_rights(R_SPAWN))
+	if(!check_rights(R_SPAWN) || !object)
 		return
 
-	var/chosen = pick_closest_path(object)
+	var/list/preparsed = splittext(object,":")
+	var/path = preparsed[1]
+	var/amount = 1
+	if(preparsed.len > 1)
+		amount = CLAMP(text2num(preparsed[2]),1,ADMIN_SPAWN_CAP)
+
+	var/chosen = pick_closest_path(path)
 	if(!chosen)
 		return
 	var/turf/T = get_turf(usr)
@@ -663,10 +669,11 @@
 	if(ispath(chosen, /turf))
 		T.ChangeTurf(chosen)
 	else
-		var/atom/A = new chosen(T)
-		A.flags_1 |= ADMIN_SPAWNED_1
+		for(var/i in 1 to amount)
+			var/atom/A = new chosen(T)
+			A.flags_1 |= ADMIN_SPAWNED_1
 
-	log_admin("[key_name(usr)] spawned [chosen] at [AREACOORD(usr)]")
+	log_admin("[key_name(usr)] spawned [amount] x [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/podspawn_atom(object as text)

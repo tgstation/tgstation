@@ -102,3 +102,27 @@ $input-color-background: $white;
 // Tooltips
 $tooltip-color-border: $dark-gray;
 $tooltip-color-background: $gray;
+
+// "health" indicator colors
+$color-health-0: #17d568;
+$color-health-1: #2ecc71;
+$color-health-2: #e67e22;
+$color-health-3: #ed5100;
+$color-health-4: #e74c3c;
+$color-health-5: #ed2814;
+
+// Department Colors
+$color-dept-cap: #c06616;
+$color-dept-sec: #e74c3c;
+$color-dept-med: #3498db;
+$color-dept-sci: #9b59b6;
+$color-dept-eng: #f1c40f;
+$color-dept-cargo: #f39c12;
+$color-dept-cent: #00c100;
+$color-dept-other: #c38312;
+
+// Damage type colors
+$color-damage-oxy: #3498db;
+$color-damage-toxin: #2ecc71;
+$color-damage-burn: #e67e22;
+$color-damage-brute: #e74c3c;
