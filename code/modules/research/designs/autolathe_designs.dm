@@ -272,6 +272,14 @@
 	category = list("hacked","Misc","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
+/datum/design/generic_gas_tank
+	name = "Generic Gas Tank"
+	id = "generic_tank"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	build_path = /obj/item/tank/internals/generic
+	category = list("initial","Misc","Equipment")
+
 /datum/design/metal
 	name = "Metal"
 	id = "metal"
