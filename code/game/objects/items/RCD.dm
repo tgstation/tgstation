@@ -647,7 +647,7 @@ RLD
 
 /obj/item/construction/rcd/bluespace/Initialize()
 	. = ..()
-	silo_mats.LateInitialize()
+	silo_mats.LateInitialize() //initializes silo connection on creation
 
 /obj/item/rcd_ammo
 	name = "compressed matter cartridge"
