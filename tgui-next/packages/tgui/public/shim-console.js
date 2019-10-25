@@ -1,8 +1,5 @@
 /**
- * Shims the console in embedded IE8 window.
- *
- * You can subscribe using console.__subscribe__(fn) to handle
- * incoming log messages, otherwise they will be simply lost.
+ * Adds a console object stub for IE8.
  */
 
 /* eslint-disable */
@@ -15,27 +12,15 @@ if (window.console) {
 
 var noop = function () {};
 
-var handleLogs = function () {
-  for (var i = 0; i < subscribers.length; i++) {
-    subscribers[i].apply(null, arguments);
-  }
-};
-
-var subscribers = [];
-
 // Start shimming
 window.console = {};
 
-console.__subscribe__ = function (fn) {
-  subscribers.push(fn);
-};
-
-console.debug = handleLogs;
-console.error = handleLogs;
-console.info = handleLogs;
-console.log = handleLogs;
-console.trace = handleLogs;
-console.warn = handleLogs;
+console.debug = noop;
+console.error = noop;
+console.info = noop;
+console.log = noop;
+console.trace = noop;
+console.warn = noop;
 
 console.assert = noop;
 console.count = noop;
