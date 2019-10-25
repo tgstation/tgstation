@@ -415,7 +415,7 @@
 		"Fly" = /datum/species/fly,
 		"Felinid" = /datum/species/human/felinid,
 		"Jelly" = /datum/species/jelly
-)
+	)
 
 /datum/nanite_program/sensor/race/set_extra_setting(user, setting)
 	if(setting == "Sent Code")
