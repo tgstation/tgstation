@@ -1,0 +1,4 @@
+author: "bandit"
+delete-after: True
+changes: 
+  - tweak: "Request console announcements, like the ones in Head of Staff offices, have deadchat broadcasts."
