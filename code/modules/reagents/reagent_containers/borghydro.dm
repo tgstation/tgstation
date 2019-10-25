@@ -76,7 +76,7 @@ Borg Hypospray
 
 /obj/item/reagent_containers/borghypo/proc/del_reagent(datum/reagent/reagent)
 	reagent_ids -= reagent
-	if(istype(reagent, /datum/reagent/medicine/C2))
+	if(initial(reagent.harmful)) // austation -- fixes a compile error from code modularization AND a bug at the same time!
 		reagent_names -= C2NAMEREAGENT
 	else
 		reagent_names -= initial(reagent.name)

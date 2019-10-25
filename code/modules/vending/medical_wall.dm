@@ -4,7 +4,7 @@
 	icon_state = "wallmed"
 	icon_deny = "wallmed-deny"
 	density = FALSE
-	products = list(/obj/item/reagent_containers/syringe = 3,
+	/*products = list(/obj/item/reagent_containers/syringe = 3, austation start -- trekchems added back. Changes in equiv file in austation dir
 		            /obj/item/reagent_containers/pill/patch/libital = 5,
 					/obj/item/reagent_containers/pill/patch/aiuri = 5,
 					/obj/item/reagent_containers/pill/multiver = 2,
@@ -12,7 +12,7 @@
 					/obj/item/reagent_containers/medigel/aiuri = 2,
 					/obj/item/reagent_containers/medigel/sterilizine = 1)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 2,
-	                  /obj/item/reagent_containers/pill/morphine = 2)
+	                  /obj/item/reagent_containers/pill/morphine = 2) austation end */
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/wallmed

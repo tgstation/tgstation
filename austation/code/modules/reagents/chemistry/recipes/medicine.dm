@@ -32,7 +32,7 @@
 	name = "Perfluorodecalin"
 	id = /datum/reagent/medicine/perfluorodecalin
 	results = list(/datum/reagent/medicine/perfluorodecalin = 3)
-	required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1, /datum/reagent/oil = 1)
+	required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1, /datum/reagent/fuel/oil = 1)
 	required_temp = 370
 	mix_message = "The mixture rapidly turns into a dense pink liquid."
 
