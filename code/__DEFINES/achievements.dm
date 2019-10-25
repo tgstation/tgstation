@@ -2,14 +2,14 @@
 #define ACHIEVEMENT_SCORE "score"
 
 //Misc Medal hub IDs
-#define MEDAL_METEOR 	"Your Life Before Your Eyes"
-#define MEDAL_PULSE 	"Jackpot"
-#define MEDAL_TIMEWASTE "Overextended The Joke"
-#define MEDAL_RODSUPLEX "Feat of Strength"
-#define MEDAL_CLOWNCARKING "Round and Full"
-#define MEDAL_THANKSALOT "The Best Driver"
-#define MEDAL_HELBITALJANKEN "Hel-bent on Winning"
-#define MEDAL_MATERIALCRAFT "Getting an Upgrade"
+#define MEDAL_METEOR 			"Your Life Before Your Eyes"
+#define MEDAL_PULSE 			"Jackpot"
+#define MEDAL_TIMEWASTE 		"Overextended The Joke"
+#define MEDAL_RODSUPLEX 		"Feat of Strength"
+#define MEDAL_CLOWNCARKING 		"Round and Full"
+#define MEDAL_THANKSALOT 		"The Best Driver"
+#define MEDAL_HELBITALJANKEN	"Hel-bent on Winning"
+#define MEDAL_MATERIALCRAFT 	"Getting an Upgrade"
 
 
 //Boss medals
@@ -25,13 +25,13 @@
 #define BOSS_MEDAL_TENDRIL	  "Tendril Exterminator"
 #define BOSS_MEDAL_SWARMERS   "Swarmer Beacon Killer"
 
-#define BOSS_MEDAL_MINER_CRUSHER	  "Blood-drunk Miner Crusher"
-#define BOSS_MEDAL_BUBBLEGUM_CRUSHER  "Bubblegum Crusher"
-#define BOSS_MEDAL_COLOSSUS_CRUSHER	  "Colossus Crusher"
-#define BOSS_MEDAL_DRAKE_CRUSHER	  "Drake Crusher"
-#define BOSS_MEDAL_HIEROPHANT_CRUSHER "Hierophant Crusher"
-#define BOSS_MEDAL_LEGION_CRUSHER	  "Legion Crusher"
-#define BOSS_MEDAL_SWARMERS_CRUSHER  "Swarmer Beacon Crusher"
+#define BOSS_MEDAL_MINER_CRUSHER	  	"Blood-drunk Miner Crusher"
+#define BOSS_MEDAL_BUBBLEGUM_CRUSHER  	"Bubblegum Crusher"
+#define BOSS_MEDAL_COLOSSUS_CRUSHER	  	"Colossus Crusher"
+#define BOSS_MEDAL_DRAKE_CRUSHER	  	"Drake Crusher"
+#define BOSS_MEDAL_HIEROPHANT_CRUSHER 	"Hierophant Crusher"
+#define BOSS_MEDAL_LEGION_CRUSHER	 	"Legion Crusher"
+#define BOSS_MEDAL_SWARMERS_CRUSHER		"Swarmer Beacon Crusher"
 
 // Medal hub IDs for boss-kill scores
 #define BOSS_SCORE 	         "Bosses Killed"
