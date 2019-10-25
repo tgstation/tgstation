@@ -1,5 +1,6 @@
 // This is synced up to the poster placing animation.
-#define PLACE_SPEED 37
+// Unless it isn't then change it obviously
+#define PLACE_SPEED 25
 
 // The poster item
 
@@ -66,7 +67,7 @@
 		original_name = name // can't use initial because of random posters
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
-	
+
 	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 300), 0)
 
 /obj/structure/sign/poster/proc/randomise(base_type)
@@ -103,6 +104,9 @@
 	if(.)
 		return
 	if(ruined)
+		return
+	if(user.a_intent == INTENT_HELP)
+		user.examinate(src)
 		return
 	visible_message("<span class='notice'>[user] rips [src] in a single, decisive motion!</span>" )
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, TRUE)
@@ -607,5 +611,10 @@
 	name = "Carbon Dioxide"
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
+
+/obj/structure/sign/poster/official/wyci
+	name = "WYCI"
+	desc = "A poster encouraging Nanotrasen crew members to get involved in the technological development of their station, signed by CentComm's own Development Lead Sisyphus."
+	icon_state = "poster36_legit"
 
 #undef PLACE_SPEED
