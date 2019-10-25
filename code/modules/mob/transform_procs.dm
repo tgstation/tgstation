@@ -207,11 +207,9 @@
 	new /obj/effect/temp_visual/monkeyify/humanify(loc)
 	sleep(22)
 
-
-	var/list/equippable_blacklist = typecacheof(list(/obj/item/storage/backpack/satchel/flat)) // stuff in human's loc we don't want equipped
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
-		if(is_type_in_typecache(C, equippable_blacklist))
+		if(C.anchored)
 			continue
 		O.equip_to_appropriate_slot(C)
 
