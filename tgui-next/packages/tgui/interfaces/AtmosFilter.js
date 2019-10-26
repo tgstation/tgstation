@@ -1,5 +1,6 @@
 import { act } from '../byond';
 import { AnimatedNumber, Button, LabeledList, Section } from '../components';
+import { NumberInput } from '../components/NumberInput';
 
 export const AtmosFilter = props => {
   const { state } = props;
@@ -17,18 +18,19 @@ export const AtmosFilter = props => {
             onClick={() => act(ref, 'power')} />
         </LabeledList.Item>
         <LabeledList.Item label="Transfer Rate">
-          <Button
-            icon="pencil-alt"
-            content="Set"
-            onClick={() => act(ref, 'rate', {rate: 'input'})} />
+          <NumberInput
+            value={parseFloat(data.rate)}
+            width="62px"
+            unit={"L/s"}
+            minValue={0}
+            maxValue={200}
+            onChange={(e, value) => act(ref, 'rate', {rate: value})}
+          />
           <Button
             icon="plus"
             content="Max"
             disabled={data.rate === data.max_rate}
             onClick={() => act(ref, 'rate', {rate: 'max'})} />
-          {' '}
-          <AnimatedNumber value={parseFloat(data.rate)} />
-          {' L/s'}
         </LabeledList.Item>
         <LabeledList.Item label="Filter">
           {filterTypes.map(filter => (
