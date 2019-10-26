@@ -43,14 +43,14 @@
 	desc = "You janked hard"
 	hub_id = MEDAL_HELBITALJANKEN
 	icon = "helbital"
-	
+
 /datum/award/achievement/misc/getting_an_upgrade
 	name = "Getting an upgrade"
 	desc = "Make your first unique material item!"
 	hub_id = MEDAL_MATERIALCRAFT
 	icon = "upgrade"
 
-/datum/award/achievement/misc/erp
+/datum/award/achievement/misc/rule8
 	name = "Rule 8"
 	desc = "Call an admin this is ILLEGAL!!"
 	hub_id = MEDAL_RULE8
