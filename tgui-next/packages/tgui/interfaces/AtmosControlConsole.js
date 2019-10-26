@@ -1,9 +1,8 @@
 import { map } from 'common/fp';
-import { round, toFixed } from 'common/math';
+import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Button, LabeledList, Section } from '../components';
-import { NumberInput } from '../components/NumberInput';
+import { Button, LabeledList, Section, NumberInput } from '../components';
 
 export const AtmosControlConsole = props => {
   const { state } = props;
@@ -30,9 +29,9 @@ export const AtmosControlConsole = props => {
                     {toFixed(sensor.temperature, 2) + ' K'}
                   </LabeledList.Item>
                 )}
-                {map((gasPercent, gasID) => {
+                {map((gasPercent, gasId) => {
                   return (
-                    <LabeledList.Item label={gasID}>
+                    <LabeledList.Item label={gasId}>
                       {toFixed(gasPercent, 2) + '%'}
                     </LabeledList.Item>
                   );
@@ -63,11 +62,12 @@ export const AtmosControlConsole = props => {
               <NumberInput
                 value={data.inputRate}
                 unit="L/s"
-                width="62px"
+                width="63px"
                 minValue={0}
                 maxValue={200}
-                onChange={(e, value) => act(ref, 'rate', {rate: value})}
-              />
+                onChange={(e, value) => act(ref, 'rate', {
+                  rate: value,
+                })} />
             </LabeledList.Item>
             <LabeledList.Item label="Output Regulator">
               <Button
@@ -80,12 +80,13 @@ export const AtmosControlConsole = props => {
               <NumberInput
                 value={parseFloat(data.outputPressure)}
                 unit="kPa"
-                width="73px"
+                width="75px"
                 minValue={0}
                 maxValue={4500}
                 step={10}
-                onChange={(e, value) => act(ref, 'pressure', {pressure: value})}
-              />
+                onChange={(e, value) => act(ref, 'pressure', {
+                  pressure: value,
+                })} />
             </LabeledList.Item>
           </LabeledList>
         </Section>

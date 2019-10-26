@@ -1,8 +1,7 @@
+import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { AnimatedNumber, LabeledList, Button, Section } from '../components';
-import { toFixed } from 'common/math';
-import { NumberInput } from '../components/NumberInput';
+import { AnimatedNumber, Button, LabeledList, NumberInput, Section } from '../components';
 
 export const ThermoMachine = props => {
   const { state } = props;
@@ -33,44 +32,45 @@ export const ThermoMachine = props => {
             icon={data.on ? 'power-off' : 'times'}
             content={data.on ? 'On' : 'Off'}
             selected={data.on}
-            onClick={() => act(ref, 'power')}
-          />
-        )}
-      >
+            onClick={() => act(ref, 'power')} />
+        )}>
         <LabeledList>
           <LabeledList.Item label="Target Temperature">
             <NumberInput
+              animated
               value={Math.round(data.target)}
               unit="K"
-              width="59px"
+              width="62px"
               minValue={Math.round(data.min)}
               maxValue={Math.round(data.max)}
               step={5}
-              onChange={(e, value) => act(ref, "target", {target: value})}
-            />
+              stepPixelSize={3}
+              onDrag={(e, value) => act(ref, "target", {
+                target: value,
+              })} />
           </LabeledList.Item>
           <LabeledList.Item label="Presets">
             <Button
-              icon="minus"
+              icon="fast-backward"
               disabled={data.target === data.min}
-              tooltip="Minimum temperature"
-              tooltipPosition="top"
-              onClick={() => act(ref, "target", {target: data.min})}
-            />
+              title="Minimum temperature"
+              onClick={() => act(ref, "target", {
+                target: data.min,
+              })} />
             <Button
               icon="sync"
               disabled={data.target === data.initial}
-              tooltip="Room Temperature"
-              tooltipPosition="top"
-              onClick={() => act(ref, "target", {target: data.initial})}
-            />
+              title="Room Temperature"
+              onClick={() => act(ref, "target", {
+                target: data.initial,
+              })} />
             <Button
-              icon="plus"
+              icon="fast-forward"
               disabled={data.target === data.max}
-              tooltip="Maximum Temperature"
-              tooltipPosition="top"
-              onClick={() => act(ref, "target", {target: data.max})}
-            />
+              title="Maximum Temperature"
+              onClick={() => act(ref, "target", {
+                target: data.max,
+              })} />
           </LabeledList.Item>
         </LabeledList>
       </Section>

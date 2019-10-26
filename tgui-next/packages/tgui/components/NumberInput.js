@@ -61,9 +61,12 @@ export class NumberInput extends Component {
         const state = { ...prevState };
         const offset = state.origin - e.screenY;
         if (prevState.dragging) {
+          // Translate mouse movement to value
+          // Give it some headroom (by increasing clamp range by 1 step)
           state.internalValue = clamp(
             state.internalValue + offset * step / stepPixelSize,
-            minValue, maxValue);
+            minValue - step, maxValue + step);
+          // Clamp the final value
           state.value = clamp(
             state.internalValue - state.internalValue % step,
             minValue, maxValue);
@@ -156,7 +159,9 @@ export class NumberInput extends Component {
           <div
             className="NumberInput__bar"
             style={{
-              height: clamp(displayValue / maxValue * 100, 0, 100) + '%',
+              height: clamp(
+                (displayValue - minValue) / (maxValue - minValue) * 100,
+                0, 100) + '%',
             }} />
         </div>
         {contentElement}
@@ -168,6 +173,9 @@ export class NumberInput extends Component {
           }}
           value={internalValue}
           onBlur={e => {
+            if (!editing) {
+              return;
+            }
             const value = clamp(e.target.value, minValue, maxValue);
             this.setState({
               editing: false,
@@ -183,16 +191,25 @@ export class NumberInput extends Component {
           }}
           onKeyDown={e => {
             if (e.keyCode === 13) {
+              const value = clamp(e.target.value, minValue, maxValue);
               this.setState({
                 editing: false,
-                value: clamp(e.target.value, minValue, maxValue),
+                value,
               });
               this.suppressFlicker();
+              if (onChange) {
+                onChange(e, value);
+              }
+              if (onDrag) {
+                onDrag(e, value);
+              }
+              return;
             }
             if (e.keyCode === 27) {
               this.setState({
                 editing: false,
               });
+              return;
             }
           }}
           onInput={e => this.setState({

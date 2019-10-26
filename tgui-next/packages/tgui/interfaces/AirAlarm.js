@@ -2,11 +2,10 @@ import { toFixed } from 'common/math';
 import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, LabeledList, Section } from '../components';
-import { GAS_LABEL_MAPPING } from '../constants';
+import { Box, Button, LabeledList, NumberInput, Section } from '../components';
 import { createLogger } from '../logging';
+import { getGasLabel } from './common/atmos';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
-import { NumberInput } from '../components/NumberInput';
 
 const logger = createLogger('AirAlarm');
 
@@ -276,7 +275,7 @@ const Vent = props => {
             <NumberInput
               value={Math.round(internal)}
               unit="kPa"
-              width="73px"
+              width="75px"
               minValue={0}
               step={10}
               maxValue={5066}
@@ -296,7 +295,7 @@ const Vent = props => {
             <NumberInput
               value={Math.round(external)}
               unit="kPa"
-              width="73px"
+              width="75px"
               minValue={0}
               step={10}
               maxValue={5066}
@@ -382,8 +381,7 @@ const Scrubber = props => {
             && filter_types.map(filter => (
               <Button key={filter.gas_id}
                 icon={filter.enabled ? 'check-square-o' : 'square-o'}
-                content={GAS_LABEL_MAPPING[filter.gas_id]
-                  || filter.gas_name}
+                content={getGasLabel(filter.gas_id, filter.gas_name)}
                 title={filter.gas_name}
                 selected={filter.enabled}
                 onClick={() => act(ref, 'toggle_filter', {
