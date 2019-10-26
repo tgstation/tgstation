@@ -1,4 +1,4 @@
-#define EXTRA_RULESET_PENALTY 15	// Changes how likely a gamemode is to scale based on how many other roundstart rulesets are waiting to be rolled.
+#define EXTRA_RULESET_PENALTY 20	// Changes how likely a gamemode is to scale based on how many other roundstart rulesets are waiting to be rolled.
 #define POP_SCALING_PENALTY 50		// Discourages scaling up rulesets if ratio of antags to crew is high.
 
 #define REVOLUTION_VICTORY 1
@@ -107,26 +107,31 @@
 	if(maximum_players > 0 && population > maximum_players)
 		return FALSE
 	if (population >= GLOB.dynamic_high_pop_limit)
+		indice_pop = 10
 		return (threat_level >= high_population_requirement)
 	else
 		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
+		if(antag_cap && requirements.len != antag_cap.len)
+			message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
+			log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 		return (threat_level >= requirements[indice_pop])
 
 /// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the amount of scaled steps.
 /datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
 	if(scaling_cost) // Only attempts to scale the modes with a scaling cost explicitly set. 
-		log_game("DYNAMIC: [name] roundstart ruleset attempting to scale up with [extra_rulesets] rulesets waiting and [remaining_threat_level] threat remaining.")
 		var/new_prob
-		var/pop_to_antags = (mode.antags_rolled + antag_cap[indice_pop]) / mode.roundstart_pop_ready
+		var/pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * scaled_times + 1)) / mode.roundstart_pop_ready
+		remaining_threat_level -= cost
+		log_game("DYNAMIC: [name] roundstart ruleset attempting to scale up with [extra_rulesets] rulesets waiting and [remaining_threat_level] threat remaining.")
 		for(var/i in 1 to 3) //Can scale a max of 3 times
-			if(remaining_threat_level >= scaling_cost && pop_to_antags < 0.5)
-				new_prob = base_prob + remaining_threat_level - (scaled_times * scaling_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) - (pop_to_antags * POP_SCALING_PENALTY)
+			if(remaining_threat_level >= scaling_cost && pop_to_antags < 0.25)
+				new_prob = base_prob + (remaining_threat_level) - (scaled_times * scaling_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) - (pop_to_antags * POP_SCALING_PENALTY)
 				if (!prob(new_prob))
 					break
 				remaining_threat_level -= scaling_cost
 				scaled_times++
-				pop_to_antags = (mode.antags_rolled + antag_cap[indice_pop] * scaled_times) / mode.roundstart_pop_ready
+				pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * scaled_times + 1)) / mode.roundstart_pop_ready
 		log_game("DYNAMIC: [name] roundstart ruleset failed scaling up at [new_prob ? new_prob : 0]% chance after [scaled_times]/3 successful scaleups. [remaining_threat_level] threat remaining, antag to crew ratio: [pop_to_antags*100]%.")
 		mode.antags_rolled += (1 + scaled_times) * antag_cap[indice_pop]
 		return scaled_times * scaling_cost

@@ -1,4 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - bugfix: "tgui-next interfaces can be scrolled without clicking on them on Windows 8.1+ and higher."

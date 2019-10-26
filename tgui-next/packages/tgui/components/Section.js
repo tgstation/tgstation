@@ -1,4 +1,4 @@
-import { classes, pureComponentHooks } from 'common/react';
+import { classes, isFalsy, pureComponentHooks } from 'common/react';
 import { Box } from './Box';
 
 export const Section = props => {
@@ -11,7 +11,8 @@ export const Section = props => {
     children,
     ...rest
   } = props;
-  const hasTitle = !!(title || buttons);
+  const hasTitle = !isFalsy(title) || !isFalsy(buttons);
+  const hasContent = !isFalsy(content) || !isFalsy(children);
   return (
     <Box
       className={classes([
@@ -30,10 +31,12 @@ export const Section = props => {
           </div>
         </div>
       )}
-      <div className="Section__content">
-        {content}
-        {children}
-      </div>
+      {hasContent && (
+        <div className="Section__content">
+          {content}
+          {children}
+        </div>
+      )}
     </Box>
   );
 };

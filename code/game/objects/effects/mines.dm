@@ -160,7 +160,7 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='notice'>You feel great!</span>")
-	victim.revive(full_heal = 1, admin_revive = 1)
+	victim.revive(full_heal = TRUE, admin_revive = TRUE)
 
 /obj/effect/mine/pickup/speed
 	name = "Yellow Orb"

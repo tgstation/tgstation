@@ -29,7 +29,45 @@ export const setupDrag = async state => {
     x: realPosition.x - window.screenX,
     y: realPosition.y - window.screenY,
   };
+  // Constraint window position
+  const [relocated, safePosition] = constraintPosition(realPosition);
+  if (relocated) {
+    winset(dragState.windowRef, 'pos', [
+      safePosition.x,
+      safePosition.y,
+    ].join(','));
+  }
   logger.debug('current dragState', dragState);
+};
+
+/**
+ * Constraints window position to safe screen area, accounting for safe
+ * margins which could be a system taskbar.
+ */
+const constraintPosition = position => {
+  let { x, y } = position;
+  let relocated = false;
+  // Left
+  if (x < 0) {
+    x = 0;
+    relocated = true;
+  }
+  // Right
+  else if (x + window.innerWidth > window.screen.availWidth) {
+    x = window.screen.availWidth - window.innerWidth;
+    relocated = true;
+  }
+  // Top
+  if (y < 0) {
+    y = 0;
+    relocated = true;
+  }
+  // Bottom
+  else if (y + window.innerHeight > window.screen.availHeight) {
+    y = window.screen.availHeight - window.innerHeight;
+    relocated = true;
+  }
+  return [relocated, { x, y }];
 };
 
 export const dragStartHandler = event => {

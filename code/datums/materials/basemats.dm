@@ -22,12 +22,18 @@
 	beauty_modifier = 0.05
 	armor_modifiers = list("melee" = 0.2, "bullet" = 0.2, "laser" = 0, "energy" = 1, "bomb" = 0, "bio" = 0.2, "rad" = 0.2, "fire" = 1, "acid" = 0.2) // yeah ok retard
 
+/*A few materials use color matrices. I recommend you just look them up, but for dummies:
+First element should be tha target color
+Second and third should be different shades of the same color but very dark
+Fourth element is alpha, don't touch it.
+You can make it look way better by just looking them up, but I understand if you just want to quickly make something thats passable*/
+
 ///Has no special properties. Could be good against vampires in the future perhaps.
 /datum/material/silver
 	name = "silver"
 	id = "silver"
 	desc = "Silver"
-	color = "#bdbebf"
+	color = list(rgb(154, 170, 181), rgb(68, 89, 102), rgb(92, 92, 92), rgb(0,0,0))
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	value_per_unit = 0.025
@@ -38,7 +44,7 @@
 	name = "gold"
 	id = "gold"
 	desc = "Gold"
-	color = "#C7ED55"
+	color = list(rgb(232, 201, 23), rgb(79, 82, 1), rgb(143, 129, 43), rgb(0,0,0))
 	strength_modifier = 1.2
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
@@ -64,7 +70,7 @@
 	name = "uranium"
 	id = "uranium"
 	desc = "Uranium"
-	color = "#1fb83b"
+	color = list(rgb(2, 115, 2), rgb(35, 74, 24), rgb(11, 48, 0), rgb(0,0,0))
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	value_per_unit = 0.05
@@ -84,7 +90,7 @@
 	name = "plasma"
 	id = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
-	color = "#D30EB0"
+	color = list(rgb(161, 10, 163), rgb(85, 36, 110), rgb(52, 0, 79), rgb(0,0,0))
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	value_per_unit = 0.1
@@ -107,7 +113,8 @@
 	name = "bluespace crystal"
 	id = "bluespace_crystal"
 	desc = "Crystals with bluespace properties"
-	color = "#3E65D1"
+	color = list(rgb(72, 104, 240), rgb(46, 74, 92), rgb(1, 39, 64), rgb(0,0,0))
+	alpha = 200
 	categories = list(MAT_CATEGORY_ORE = TRUE)
 	beauty_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal

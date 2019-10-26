@@ -1,6 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "Having no skill whatsoever in a thing now returns the worst possible skill modifier. Basically... PKAs now have a cooldown again."
-  - bugfix: "Starting to earn XP towards the first level of a skill no longer tell you that you got better at the skill since you factually didn't."
-  - spellcheck: "Fixes formatting when viewing skills."

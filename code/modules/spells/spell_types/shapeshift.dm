@@ -157,7 +157,7 @@
 	if(death)
 		stored.death()
 	else if(source.convert_damage)
-		stored.revive(full_heal = TRUE)
+		stored.revive(full_heal = TRUE, admin_revive = FALSE)
 
 		var/damage_percent = (shape.maxHealth - shape.health)/shape.maxHealth;
 		var/damapply = stored.maxHealth * damage_percent
