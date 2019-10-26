@@ -2,8 +2,8 @@ import { clamp } from 'common/math';
 import { pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { tridentVersion } from '../byond';
-import { Box } from './Box';
 import { AnimatedNumber } from './AnimatedNumber';
+import { Box } from './Box';
 
 export class NumberInput extends Component {
   constructor(props) {
@@ -135,16 +135,17 @@ export class NumberInput extends Component {
       <div
         className="NumberInput__content"
         unselectable={tridentVersion <= 4}>
-        {(format ? format(value) : value)
-          + (unit ? ' ' + unit : '')}
+        {value + (unit ? ' ' + unit : '')}
       </div>
     );
     const contentElement = (animated && !dragging && !suppressingFlicker && (
-      <AnimatedNumber value={displayValue}>
+      <AnimatedNumber
+        value={displayValue}
+        format={format}>
         {renderContentElement}
       </AnimatedNumber>
     ) || (
-      renderContentElement(displayValue)
+      renderContentElement(format ? format(displayValue) : displayValue)
     ));
     return (
       <Box
