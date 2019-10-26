@@ -1,4 +1,0 @@
-author: "py01"
-delete-after: True
-changes: 
-  - code_imp: "Debug uplinks automatically show all role and species restricted items."

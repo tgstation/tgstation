@@ -1,4 +1,0 @@
-author: "StonebayKyle"
-delete-after: True
-changes: 
-  - bugfix: "Destructive analyzer no longer breaks when an item with no materials is placed inside."

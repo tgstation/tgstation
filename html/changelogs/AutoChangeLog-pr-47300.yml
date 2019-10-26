@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - refactor: "Refactored tgui-next's initial open resulting in it now opening 2-2.5x as fast"
