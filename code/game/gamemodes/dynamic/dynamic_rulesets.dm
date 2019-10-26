@@ -72,7 +72,7 @@
 	/// Calculated during acceptable(), used in scaling and team sizes.
 	var/indice_pop = 0
 	/// Population scaling. Used by team antags and scaling for solo antags.
-	var/list/antag_cap
+	var/list/antag_cap = list()
 	/// Base probability used in scaling. The higher it is, the more likely to scale. Kept as a var to allow for config editing._SendSignal(sigtype, list/arguments)
 	var/base_prob = 60
 
