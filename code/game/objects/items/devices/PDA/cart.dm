@@ -566,7 +566,7 @@ Code:
 			var/static/list/emoji_icon_states
 			var/breakcounter = FALSE
 			if(!emoji_icon_states)
-				emoji_icon_states = icon_states(icon('icons/emoji.dmi'))
+				emoji_icon_states = sortList(icon_states(icon('icons/emoji.dmi')))
 			menu += "<br> To use an emoji in a pda message, refer to the guide and add \":\" around the emoji. Click on any of the emojis to preview it.<br>"
 			for(var/emoji in emoji_icon_states)
 				var/preview_link = "<A href='byond://?src=[REF(src)];emoji=[emoji]'>[emoji]</a>" //broken, on opening the menu it sends every single emoji because it is executing the proc to find the choice as soon as it is loaded
