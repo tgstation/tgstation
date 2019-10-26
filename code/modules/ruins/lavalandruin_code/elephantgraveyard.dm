@@ -56,7 +56,7 @@
 	if(prob(10))
 		new /obj/item/stack/ore/iron(src, 1)
 		new /obj/item/stack/ore/glass(src, 1)
-		new /obj/effect/decal/remains/human(loc, 1)
+		new /obj/effect/decal/remains/human/grave(src, 1)
 	else
 		new /obj/item/stack/sheet/bone(src, 1)
 
@@ -168,7 +168,7 @@
 						to_chat(user, "<span class='boldwarning'>Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!</span>")
 						first_open = FALSE
 					if(untouched == TRUE)
-						new /obj/effect/decal/remains/human(loc)
+						new /obj/effect/decal/remains/human/grave(src)
 						untouched = FALSE
 					return 1
 				return 1
@@ -206,9 +206,11 @@
 
 /obj/structure/closet/crate/grave/lead_researcher/PopulateContents()  //ADVANCED GRAVEROBBING
 	..()
-	new /obj/effect/decal/remains/human(loc)
 	new /obj/effect/decal/cleanable/blood/gibs/old(src)
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)
+
+/obj/effect/decal/remains/human/grave
+	turf_loc_check = FALSE
 
 /obj/item/book/granter/crafting_recipe/boneyard_notes
 	name = "The Complete Works of Lavaland Bone Architecture"
