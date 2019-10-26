@@ -1,7 +1,9 @@
 // AuStation includes file. Add all modularized code files here.
 
+#include "code\datums\ai_laws.dm"
 #include "code\datums\diseases\tuberculosis.dm"
 #include "code\game\machinery\Sleeper.dm"
+#include "code\game\objects\items\AI_modules.dm"
 #include "code\game\objects\items\robot\robot_upgrades.dm"
 #include "code\game\objects\items\stacks\medical.dm"
 #include "code\game\objects\items\storage\firstaid.dm"
@@ -23,6 +25,7 @@
 #include "code\modules\reagents\reagent_containers\patch.dm"
 #include "code\modules\reagents\reagent_containers\pill.dm"
 #include "code\modules\reagents\reagent_containers\syringes.dm"
+#include "code\modules\research\designs\AI_module_designs.dm"
 #include "code\modules\research\designs\limbgrower_designs.dm"
 #include "code\modules\research\designs\machine_designs.dm"
 #include "code\modules\research\designs\mechfabricator_designs.dm"
