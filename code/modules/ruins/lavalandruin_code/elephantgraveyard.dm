@@ -50,8 +50,6 @@
 	environment_type = "wasteland"
 	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	defer_change = 1
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
 
 /turf/closed/mineral/strong/wasteland/drop_ores()
@@ -86,6 +84,7 @@
 		to_chat(user, "You fill in the oil well with soil.")
 		O.play_tool_sound(src)
 		deconstruct()
+		return 1
 	if(istype(O, /obj/item/reagent_containers)) //Refilling bottles with oil
 		var/obj/item/reagent_containers/RG = O
 		if(RG.is_refillable())
