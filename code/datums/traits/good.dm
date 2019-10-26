@@ -61,7 +61,7 @@
 
 datum/quirk/fan_clown
 	name = "Clown Fan"
-	desc = "You enjoy the clown's antics and get a mood boost when you see them."
+	desc = "You enjoy the clown's antics and get a mood boost from wearing clown pins."
 	value = 2
 	mob_trait = TRAIT_FAN_CLOWN
 	gain_text = "<span class='notice'>You are a big fan of the Clown.</span>"
@@ -79,7 +79,7 @@ datum/quirk/fan_clown
 
 datum/quirk/fan_mime
 	name = "Mime Fan"
-	desc = "You enjoy the Mime's antics and get a mood boost when you see them."
+	desc = "You enjoy the clown's antics and get a mood boost from wearing mime pins."
 	value = 2
 	mob_trait = TRAIT_FAN_MIME
 	gain_text = "<span class='notice'>You are a big fan of the Mime.</span>"

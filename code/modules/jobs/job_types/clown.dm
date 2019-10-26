@@ -22,8 +22,6 @@
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
 	. = ..()
 	H.apply_pref_name("clown", M.client)
-	if(H.mind)
-		H.mind.isclowny = TRUE
 
 /datum/outfit/job/clown
 	name = "Clown"

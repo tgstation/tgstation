@@ -20,8 +20,6 @@
 
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
 	H.apply_pref_name("mime", M.client)
-	if(H.mind)
-		H.mind.ismimey = TRUE
 
 /datum/outfit/job/mime
 	name = "Mime"

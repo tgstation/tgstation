@@ -126,19 +126,6 @@
 			M.visible_message("<span class='warning'>[user] buckles [M] to [src]!</span>",\
 				"<span class='warning'>[user] buckles you to [src]!</span>",\
 				"<span class='hear'>You hear metal clanking.</span>")
-	var/area/A = get_area(M)
-	if(HAS_TRAIT(M, TRAIT_SPIRITUAL) && istype(A, /area/chapel))
-		if(do_after(M,1200,0,null,1))
-			M.visible_message("<span class='notice'>You feel at peace.</span>")
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chapel_comfort", /datum/mood_event/chapel_comforted)
-	if(HAS_TRAIT(M, TRAIT_FAN_CLOWN) && istype(A, /area/crew_quarters/theatre))
-		if(do_after(M,1200,0,null,1))
-			M.visible_message("<span class='notice'>You feel your spirits lifted.</span>")
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "theater_comfort", /datum/mood_event/theater_comforted)
-	if(HAS_TRAIT(M, TRAIT_FAN_MIME) && istype(A, /area/crew_quarters/theatre))
-		if(do_after(M,1200,0,null,1))
-			M.visible_message("<span class='notice'>You feel your spirits lifted.</span>")
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "theater_comfort", /datum/mood_event/theater_comforted)
 
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	var/mob/living/M = unbuckle_mob(buckled_mob)
