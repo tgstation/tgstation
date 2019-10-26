@@ -75694,7 +75694,7 @@
 	pixel_x = -4;
 	pixel_y = 12
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = 7;
 	pixel_y = 12
 	},
