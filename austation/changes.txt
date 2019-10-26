@@ -4,3 +4,5 @@ MCterra10/Peer:Adds new AI lawsets and corresponding boards
 MCterra10:HOP no longer rolls for antag
 Chrome:Adds space bitters beers
 Chrome/Terra:New roundend sound
+Flatgub:Crew autotransfer vote
+Flatgub:Autosandbox and respawn

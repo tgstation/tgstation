@@ -1,0 +1,14 @@
+## Uncomment to enable automatic switching to sandbox when player count falls below a threshold 
+AUTOSANDBOX_ENABLED
+
+## The threshold at which the server will automatically swap from secret to sandbox if server population is less than or equal to this number (default: 5)
+AUTOSANDBOX_MIN 5
+
+## The threshold at which the server will automatically swap from sandbox to secret if server population is greater than or equal to this number (default: 10)
+AUTOSANDBOX_MAX 10
+
+## autovote initial delay (deciseconds) before first automatic transfer vote call (default 120 minutes)
+VOTE_AUTOTRANSFER_INITIAL 72000
+
+##autovote delay (deciseconds) before sequential automatic transfer votes are called (default 30 minutes)
+VOTE_AUTOTRANSFER_INTERVAL 18000

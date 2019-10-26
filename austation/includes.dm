@@ -1,5 +1,8 @@
 // AuStation includes file. Add all modularized code files here.
 
+#include "code\controllers\configuration\entries\game_options.dm"
+#include "code\controllers\configuration\entries\general.dm"
+#include "code\controllers\subsystem\autotransfer.dm"
 #include "code\datums\ai_laws.dm"
 #include "code\datums\diseases\tuberculosis.dm"
 #include "code\game\machinery\Sleeper.dm"
