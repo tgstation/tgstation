@@ -406,7 +406,7 @@
 	var/spent = FALSE
 	var/race_type = "Human"
 	var/mode = "Is"
-	var/list/allowed_species = list(
+	var/list/static/allowed_species = list(
     	"Human" = /datum/species/human,
     	"Lizard" = /datum/species/lizard,
 		"Moth" = /datum/species/moth,
@@ -462,19 +462,18 @@
 	if(species)
 		if(is_species(host_mob, species))
 			race_match = TRUE
-	else
-		var/matches_any = FALSE
+	else	//this is the check for the "Other" option
+		race_match = TRUE
 		for(var/name in allowed_species)
 			var/species_other = allowed_species[name]
 			if(is_species(host_mob, species_other))
-				matches_any = TRUE
+				race_match = FALSE
 				break
-		race_match = !matches_any
 
 	switch(mode)
 		if("Is")
-			if(race_match == TRUE)
+			if(race_match)
 				send_code()
 		if("Is Not")
-			if(race_match == FALSE)
+			if(!race_match)
 				send_code()
