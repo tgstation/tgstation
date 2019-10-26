@@ -163,3 +163,9 @@
 /turf/open/floor/black
 	name = "black floor"
 	icon_state = "black"
+
+/turf/open/floor/plastic
+	name = "plastic floor"
+	desc = "Cheap, lightweight flooring."
+	icon_state = "plastic"
+	floor_tile = /obj/item/stack/tile/plastic
