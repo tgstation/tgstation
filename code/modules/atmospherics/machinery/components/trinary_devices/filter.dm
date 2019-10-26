@@ -163,9 +163,6 @@
 			if(.)
 				transfer_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
-		if("set_rate")
-			rate = params["value"]
-			. = TRUE
 		if("filter")
 			filter_type = null
 			var/filter_name = "nothing"

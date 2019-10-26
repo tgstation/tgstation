@@ -30,7 +30,8 @@ export const AtmosFilter = props => {
             icon="plus"
             content="Max"
             disabled={data.rate === data.max_rate}
-            onClick={() => act(ref, 'rate', {rate: 'max'})} />
+            onClick={() => act(ref, 'rate', {rate: 'max'})}
+          />
         </LabeledList.Item>
         <LabeledList.Item label="Filter">
           {filterTypes.map(filter => (

@@ -3,6 +3,7 @@ import { round, toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Button, LabeledList, Section } from '../components';
+import { NumberInput } from '../components/NumberInput';
 
 export const AtmosControlConsole = props => {
   const { state } = props;
@@ -59,10 +60,14 @@ export const AtmosControlConsole = props => {
                 onClick={() => act(ref, 'input')} />
             </LabeledList.Item>
             <LabeledList.Item label="Input Rate">
-              <Button
-                icon="pencil-alt"
-                content={round(data.inputRate) + ' L/s'}
-                onClick={() => act(ref, 'rate')} />
+              <NumberInput
+                value={data.inputRate}
+                unit="L/s"
+                width="62px"
+                minValue={0}
+                maxValue={200}
+                onChange={(e, value) => act(ref, 'rate', {rate: value})}
+              />
             </LabeledList.Item>
             <LabeledList.Item label="Output Regulator">
               <Button
@@ -72,10 +77,15 @@ export const AtmosControlConsole = props => {
                 onClick={() => act(ref, 'output')} />
             </LabeledList.Item>
             <LabeledList.Item label="Output Pressure">
-              <Button
-                icon="pencil-alt"
-                content={round(data.outputPressure) + ' kPa'}
-                onClick={() => act(ref, 'pressure')} />
+              <NumberInput
+                value={parseFloat(data.outputPressure)}
+                unit="kPa"
+                width="73px"
+                minValue={0}
+                maxValue={4500}
+                step={10}
+                onChange={(e, value) => act(ref, 'pressure', {pressure: value})}
+              />
             </LabeledList.Item>
           </LabeledList>
         </Section>
