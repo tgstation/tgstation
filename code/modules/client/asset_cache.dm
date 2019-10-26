@@ -587,6 +587,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"none_button.png" = 'html/none_button.png',
 	)
 
+/datum/asset/spritesheet/simple/achievements
+	name ="achievements"
+	assets = list(
+		"default" = 'icons/UI_Icons/Achievements/default.png'
+	)
+
 /datum/asset/spritesheet/simple/pills
 	name ="pills"
 	assets = list(
