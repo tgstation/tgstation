@@ -35,6 +35,14 @@
 /area/ruin/powered/seedvault
 	icon_state = "dk_yellow"
 
+/area/ruin/unpowered/elephant_graveyard
+	name = "Elephant Graveyard"
+	icon_state = "dk_yellow"
+
+/area/ruin/powered/graveyard_shuttle
+	name = "Elephant Graveyard"
+	icon_state = "green"
+
 /area/ruin/unpowered/syndicate_lava_base
 	name = "Secret Base"
 	icon_state = "dk_yellow"

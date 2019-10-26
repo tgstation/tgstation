@@ -357,13 +357,16 @@
 
 /obj/structure/sink/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
-		if(buildstacktype)
-			new buildstacktype(loc,buildstackamount)
-		else
-			for(var/i in custom_materials)
-				var/datum/material/M = i
-				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+		drop_materials()
 	..()
+
+/obj/structure/sink/proc/drop_materials()
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	else
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
