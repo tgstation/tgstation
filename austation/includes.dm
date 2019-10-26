@@ -7,6 +7,7 @@
 #include "code\datums\ai_laws.dm"
 #include "code\datums\diseases\tuberculosis.dm"
 #include "code\game\machinery\Sleeper.dm"
+#include "code\game\objects\effects\decals\turfdecal\markings.dm"
 #include "code\game\objects\items\AI_modules.dm"
 #include "code\game\objects\items\robot\robot_upgrades.dm"
 #include "code\game\objects\items\stacks\medical.dm"
