@@ -17,6 +17,7 @@
 					/obj/item/reagent_containers/food/drinks/bottle/grenadine = 4,
 					/obj/item/reagent_containers/food/drinks/bottle/menthol = 4,
 					/obj/item/reagent_containers/food/drinks/ale = 6,
+					/obj/item/reagent_containers/food/drinks/soda_cans/space_bitters = 10, // austation -- Adds space bitters beer
 					/obj/item/reagent_containers/food/drinks/beer = 6,
 					/obj/item/reagent_containers/food/drinks/bottle/gin = 5,
 		            /obj/item/reagent_containers/food/drinks/bottle/whiskey = 5,

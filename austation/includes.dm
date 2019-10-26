@@ -7,6 +7,7 @@
 #include "code\game\objects\items\robot\robot_upgrades.dm"
 #include "code\game\objects\items\stacks\medical.dm"
 #include "code\game\objects\items\storage\firstaid.dm"
+#include "code\modules\food_and_drinks\drinks\drinks.dm"
 #include "code\modules\food_and_drinks\food\snacks_other.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\smartfridge.dm"
 #include "code\modules\hydroponics\grown\ambrosia.dm"

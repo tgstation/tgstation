@@ -2,3 +2,4 @@ MCterra10:Repo rebase August 2019
 MCterra10:Adds secborg upgrade board
 MCterra10/Peer:Adds new AI lawsets and corresponding boards
 MCterra10:HOP no longer rolls for antag
+Chrome:Adds space bitters beers
