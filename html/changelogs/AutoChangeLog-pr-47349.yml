@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an issue where you could get an extra monkey from a monkey cube by using it on a toilet."
+  - bugfix: "You will now always leave fingerprints on toilets when you use them. Detectives, get on that!"
