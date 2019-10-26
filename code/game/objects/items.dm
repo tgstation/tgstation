@@ -94,6 +94,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/tool_behaviour = NONE
 	var/toolspeed = 1
+	var/in_use = FALSE //to check if item is currently being used for something
 
 	var/block_chance = 0
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
@@ -766,6 +767,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	delay *= toolspeed * skill_modifier	
 
+	if(in_use)
+		return FALSE
+	in_use = TRUE
+
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
 
@@ -775,18 +780,21 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 		if(ismob(target))
 			if(!do_mob(user, target, delay, extra_checks=tool_check))
+				in_use = FALSE
 				return
-
 		else
 			if(!do_after(user, delay, target=target, extra_checks=tool_check))
+				in_use = FALSE
 				return
 	else
 		// Invoke the extra checks once, just in case.
 		if(extra_checks && !extra_checks.Invoke())
+			in_use = FALSE
 			return
 
 	// Use tool's fuel, stack sheets or charges if amount is set.
 	if(amount && !use(amount))
+		in_use = FALSE
 		return
 
 	// Play tool sound at the end of tool usage,
@@ -794,6 +802,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(delay >= MIN_TOOL_SOUND_DELAY)
 		play_tool_sound(target, volume)
 
+	in_use = FALSE
 	return TRUE
 
 // Called before use_tool if there is a delay, or by use_tool if there isn't.
