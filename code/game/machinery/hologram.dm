@@ -160,11 +160,11 @@ Possible to do for anyone motivated enough:
 
 	if(istype(P,/obj/item/disk/holodisk))
 		if(disk)
-			to_chat(user,"<span class='notice'>There's already a disk inside [src]</span>")
+			to_chat(user,"<span class='warning'>There's already a disk inside [src]!</span>")
 			return
 		if (!user.transferItemToLoc(P,src))
 			return
-		to_chat(user,"<span class='notice'>You insert [P] into [src]</span>")
+		to_chat(user,"<span class='notice'>You insert [P] into [src].</span>")
 		disk = P
 		updateDialog()
 		return
@@ -269,7 +269,7 @@ Possible to do for anyone motivated enough:
 					LAZYADD(callnames[A], I)
 			callnames -= get_area(src)
 
-			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in callnames
+			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in sortNames(callnames)
 			if(QDELETED(usr) || !result || outgoing_call)
 				return
 

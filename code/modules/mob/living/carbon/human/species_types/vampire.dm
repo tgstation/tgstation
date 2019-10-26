@@ -16,6 +16,9 @@
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
 	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform //attached to the datum itself to avoid cloning memes, and other duplicates
 
+
+
+
 /datum/species/vampire/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
@@ -44,7 +47,7 @@
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
 		return
-	C.blood_volume -= 0.75
+	C.blood_volume -= 0.25
 	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
 		var/obj/shapeshift_holder/H = locate() in C
@@ -117,20 +120,20 @@
 
 #undef VAMP_DRAIN_AMOUNT
 
+
+/mob/living/carbon/Stat()
+	..()
+	if(statpanel("Status"))	
+		var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
+		if(darkheart)
+			stat(null, "<span class='notice'>Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>")
+			return 1
+
+
 /obj/item/organ/heart/vampire
 	name = "vampire heart"
-	actions_types = list(/datum/action/item_action/organ_action/vampire_heart)
 	color = "#1C1C1C"
 
-/datum/action/item_action/organ_action/vampire_heart
-	name = "Check Blood Level"
-	desc = "Check how much blood you have remaining."
-
-/datum/action/item_action/organ_action/vampire_heart/Trigger()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/H = owner
-		to_chat(H, "<span class='notice'>Current blood level: [H.blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>")
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/bat
 	name = "Bat Form"

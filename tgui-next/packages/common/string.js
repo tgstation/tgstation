@@ -1,43 +1,37 @@
 /**
- * @file
- * @copyright 2018 Aleksej Komarov
- * @license GPL-2.0-or-later
+ * Removes excess whitespace and indentation from the string.
+ *
+ * This function is not called directly in runtime, but instead is called
+ * by the macro, which is defined below, and it runs at compile time.
  */
-
-/**
- * Removes excess whitespace and indentation from the string
- * @param  {string} str
- * @return {string}
- */
-export const compact = str => {
-  return str
-    .trim()
-    .split('\n')
-    .map(x => x.trim())
-    .filter(x => x.length > 0)
-    .join('\n');
-};
-
-/**
- * Template literal tag for rendering HTML
- */
-export const html = (strings, ...expressions) => {
-  const length = strings.length;
-  let output = '';
-  for (let i = 0; i < length; i++) {
-    output += strings[i];
-    let expr = expressions[i];
-    if (typeof expr === 'boolean' || expr === undefined || expr === null) {
-      // Nothing
-    }
-    else if (Array.isArray(expr)) {
-      output += expr.join('\n');
-    }
-    else {
-      output += expr;
+export const multiline = str => {
+  if (Array.isArray(str)) {
+    // Small stub to allow usage as a template tag
+    return multiline(str.join(''));
+  }
+  const lines = str.split('\n');
+  // Determine base indentation
+  let minIndent;
+  for (let line of lines) {
+    for (let indent = 0; indent < line.length; indent++) {
+      const char = line[indent];
+      if (char !== ' ') {
+        if (minIndent === undefined || indent < minIndent) {
+          minIndent = indent;
+        }
+        break;
+      }
     }
   }
-  return output;
+  if (!minIndent) {
+    minIndent = 0;
+  }
+  // Remove this base indentation and trim the resulting string
+  // from both ends.
+  return lines
+    .map(line => line.substr(minIndent).trimRight())
+    .join('\n')
+    .trim();
 };
 
 /**
@@ -59,20 +53,6 @@ export const capitalize = str => {
   }
   // Handle string
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-};
-
-export const toLowerCase = str => {
-  if (typeof str !== 'string') {
-    return str;
-  }
-  return str.toLowerCase();
-};
-
-export const toUpperCase = str => {
-  if (typeof str !== 'string') {
-    return str;
-  }
-  return str.toUpperCase();
 };
 
 export const toTitleCase = str => {

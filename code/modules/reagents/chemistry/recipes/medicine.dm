@@ -74,7 +74,7 @@
 	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/chlorine = 1, /datum/reagent/ammonia = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/sodium = 1, /datum/reagent/toxin/cyanide = 1)
 
 /datum/chemical_reaction/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	id = /datum/reagent/medicine/sal_acid
 	results = list(/datum/reagent/medicine/sal_acid = 5)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/phenol = 1, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)
@@ -232,3 +232,15 @@
 	results = list(/datum/reagent/medicine/granibitaluri = 1)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/space_cleaner/sterilizine = 1) //haha guys totally not some sort of saline reference!
 	required_temp = 373
+
+/datum/chemical_reaction/medsuture
+	name = "Medicated Suture"
+	id = "med_suture"
+	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/toxin/formaldehyde = 30, /datum/reagent/medicine/polypyr = 30) //This might be a bit much, reagent cost should be reviewed after implementation.
+
+/datum/chemical_reaction/medsuture/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/medical/suture/medicated(location)
+	return
+

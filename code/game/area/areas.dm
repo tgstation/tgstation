@@ -17,7 +17,7 @@
 	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
 	var/valid_territory = TRUE // If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
-	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
+	var/blob_allowed = TRUE // If blobs can spawn there and if it counts towards their score.
 
 	var/fire = null
 	var/atmos = TRUE
@@ -68,7 +68,7 @@
 	var/global/global_uid = 0
 	var/uid
 	var/list/ambientsounds = GENERIC
-	flags_1 = CAN_BE_DIRTY_1
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 	var/list/firedoors
 	var/list/cameras
@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if (picked && is_station_level(picked.z))
 			GLOB.teleportlocs[AR.name] = AR
 
-	sortTim(GLOB.teleportlocs, /proc/cmp_text_dsc)
+	sortTim(GLOB.teleportlocs, /proc/cmp_text_asc)
 
 /**
   * Called when an area loads

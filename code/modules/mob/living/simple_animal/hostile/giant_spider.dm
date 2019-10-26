@@ -90,7 +90,7 @@
 	if(spider_ask == "No" || !src || QDELETED(src))
 		return 1
 	if(key)
-		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
+		to_chat(user, "<span class='warning'>Someone else already took this spider!</span>")
 		return 1
 	key = user.key
 	if(directive)

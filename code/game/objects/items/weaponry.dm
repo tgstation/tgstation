@@ -131,7 +131,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/attack(mob/living/target, mob/living/user)
 	. = ..()
 	if(!QDELETED(target) && iscarbon(target) && target.stat == DEAD && target.mind && target.mind.special_role == "highlander")
-		user.fully_heal() //STEAL THE LIFE OF OUR FALLEN FOES
+		user.fully_heal(admin_revive = FALSE) //STEAL THE LIFE OF OUR FALLEN FOES
 		add_notch(user)
 		target.visible_message("<span class='warning'>[target] crumbles to dust beneath [user]'s blows!</span>", "<span class='userdanger'>As you fall, your body crumbles to dust!</span>")
 		target.dust()
@@ -568,7 +568,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		..()
 		return
 	if(homerun_ready)
-		to_chat(user, "<span class='notice'>You're already ready to do a home run!</span>")
+		to_chat(user, "<span class='warning'>You're already ready to do a home run!</span>")
 		..()
 		return
 	to_chat(user, "<span class='warning'>You begin gathering strength...</span>")

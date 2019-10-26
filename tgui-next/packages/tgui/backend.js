@@ -25,11 +25,12 @@ export const backendReducer = (state, action) => {
   const { type, payload } = action;
 
   if (type === 'backendUpdate') {
-    // Merge config and data
+    // Merge config
     const config = {
       ...state.config,
       ...payload.config,
     };
+    // Merge data
     const data = {
       ...state.data,
       ...payload.static_data,

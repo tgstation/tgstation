@@ -29,9 +29,11 @@ export const LabeledListItem = props => {
         className,
       ])}>
       <td
-        className={classes(['LabeledList__cell',
+        className={classes([
+          'LabeledList__cell',
           'LabeledList__label',
-          'color-' + (labelColor ? labelColor : 'label')])}>
+          'color-' + (labelColor ? labelColor : 'label'),
+        ])}>
         {label}:
       </td>
       <td
@@ -60,7 +62,7 @@ export const LabeledListDivider = props => {
   return (
     <tr className="LabeledList__row">
       <td style={{
-        'margin-bottom': unit(size),
+        'padding-bottom': unit(size),
       }} />
     </tr>
   );

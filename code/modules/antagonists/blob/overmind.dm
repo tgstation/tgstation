@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)
 		else
-			L.fully_heal()
+			L.fully_heal(admin_revive = FALSE)
 
 		for(var/area/A in GLOB.sortedAreas)
 			if(!(A.type in GLOB.the_station_areas))
@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "You cannot send IC messages (muted).")
+			to_chat(src, "<span class='boldwarning'>You cannot send IC messages (muted).</span>")
 			return
 		if (!(ignore_spam || forced) && src.client.handle_spam_prevention(message,MUTE_IC))
 			return
