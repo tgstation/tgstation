@@ -6,6 +6,7 @@ import { Box, Button, LabeledList, Section } from '../components';
 import { GAS_LABEL_MAPPING } from '../constants';
 import { createLogger } from '../logging';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
+import { NumberInput } from '../components/NumberInput';
 
 const logger = createLogger('AirAlarm');
 
@@ -272,12 +273,15 @@ const Vent = props => {
         </LabeledList.Item>
         {!!incheck && (
           <LabeledList.Item label="Internal Target">
-            <Button
-              icon="pencil-alt"
-              content={toFixed(internal)}
-              onClick={() => act(ref, 'set_internal_pressure', {
-                id_tag,
-              })} />
+            <NumberInput
+              value={Math.round(internal)}
+              unit="kPa"
+              width="73px"
+              minValue={0}
+              step={10}
+              maxValue={5066}
+              onChange={(e, value) => act(ref, 'set_internal_pressure', { id_tag, value: value})}
+            />
             <Button
               icon="undo"
               disabled={intdefault}
@@ -289,12 +293,15 @@ const Vent = props => {
         )}
         {!!excheck && (
           <LabeledList.Item label="External Target">
-            <Button
-              icon="pencil-alt"
-              content={toFixed(external)}
-              onClick={() => act(ref, 'set_external_pressure', {
-                id_tag,
-              })} />
+            <NumberInput
+              value={Math.round(external)}
+              unit="kPa"
+              width="73px"
+              minValue={0}
+              step={10}
+              maxValue={5066}
+              onChange={(e, value) => act(ref, 'set_external_pressure', { id_tag, value: value})}
+            />
             <Button
               icon="undo"
               disabled={extdefault}
