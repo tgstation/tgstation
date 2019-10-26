@@ -10,6 +10,11 @@
 #define MEDAL_THANKSALOT 		"The Best Driver"
 #define MEDAL_HELBITALJANKEN	"Hel-bent on Winning"
 #define MEDAL_MATERIALCRAFT 	"Getting an Upgrade"
+#define MEDAL_RULE8				"Rule 8"
+#define MEDAL_LONGSHIFT			"longshift"
+
+//Skill medal hub IDs
+#define MEDAL_LEGENDARY_MINER		"Legendary Miner"
 
 
 //Boss medals

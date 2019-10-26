@@ -551,11 +551,12 @@
 		to_chat(usr, "<span class='warning'>The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner.</span>")
 		
 
-/turf/closed/mineral/strong/gets_drilled(user)
+/turf/closed/mineral/strong/gets_drilled(mob/user)
 	if(prob(10))
 		new /obj/item/stack/sheet/mineral/mythril(src, 5)
 	else
 		new /obj/item/stack/sheet/mineral/adamantine(src, 5)
+	user.client.give_award(/datum/award/achievement/skill/legendary_miner, user)
 	var/flags = NONE
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
