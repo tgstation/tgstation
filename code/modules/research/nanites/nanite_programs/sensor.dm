@@ -455,8 +455,6 @@
 /datum/nanite_program/sensor/race/trigger()
 	if(!..())
 		return
-	if(host_mob.stat == DEAD)
-		return
 
 	var/species = allowed_species[race_type]
 	var/race_match = FALSE
