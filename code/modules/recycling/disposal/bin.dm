@@ -12,7 +12,7 @@
 	obj_flags = CAN_BE_HIT | USES_TGUI
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	ui_x = 300
-	ui_y = 200
+	ui_y = 180
 
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/full_pressure = FALSE

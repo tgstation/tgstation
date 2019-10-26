@@ -13,8 +13,8 @@
 		All sales are near instantaneous - please choose carefully"
 	icon_screen = "supply_express"
 	circuit = /obj/item/circuitboard/computer/cargo/express
-	ui_x = 1000
-	ui_y = 800
+	ui_x = 600
+	ui_y = 700
 	blockade_warning = "Bluespace instability detected. Delivery impossible."
 	req_access = list(ACCESS_QM)
 

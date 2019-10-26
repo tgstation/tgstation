@@ -50,12 +50,16 @@ export class AnimatedNumber extends Component {
 
   render() {
     const { props, state } = this;
-    const { format } = props;
+    const { format, children } = props;
     const currentValue = state.value;
     const targetValue = props.value;
     // Directly display values which can't be animated
     if (!isSafeNumber(targetValue)) {
       return targetValue || null;
+    }
+    // Use a custom render function
+    if (typeof children === 'function') {
+      return children(currentValue);
     }
     // Use custom formatter
     if (format) {

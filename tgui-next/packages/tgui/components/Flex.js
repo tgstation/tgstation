@@ -11,7 +11,10 @@ export const computeFlexProps = props => {
     ...rest
   } = props;
   return {
-    className: classes('Flex', className),
+    className: classes([
+      'Flex',
+      className,
+    ]),
     style: {
       ...rest.style,
       'flex-direction': direction,
@@ -38,7 +41,10 @@ export const computeFlexItemProps = props => {
     ...rest
   } = props;
   return {
-    className: classes('Flex__item', className),
+    className: classes([
+      'Flex__item',
+      className,
+    ]),
     style: {
       ...rest.style,
       'flex-grow': grow,

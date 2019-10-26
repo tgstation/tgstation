@@ -383,6 +383,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 120
 	icon_on = "candyon"
 	icon_off = "candyoff" //make sure to add positional sprites in icons/obj/cigarettes.dmi if you add more.
+	item_state = "candyoff"
+	icon_state = "candyoff"
 	type_butt = /obj/item/reagent_containers/food/snacks/candy_trash
 	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/caramel = 10)
 
