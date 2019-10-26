@@ -9,6 +9,7 @@
 	icon_state = "blueprints"
 	attack_verb = list("attacked", "bapped", "hit")
 	var/fluffnotice = "Nobody's gonna read this stuff!"
+	var/in_use = FALSE
 
 /obj/item/areaeditor/attack_self(mob/user)
 	add_fingerprint(user)
