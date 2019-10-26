@@ -392,6 +392,8 @@
 			var/target = params["value"]
 			if(!isnull(target))
 				send_signal(device_id, list("[action]" = target), usr)
+				. = TRUE
+				return
 			target = input("New target pressure:", name, A.air_vent_info[device_id][(action == "set_external_pressure" ? "external" : "internal")]) as num|null
 			if(!isnull(target) && !..())
 				send_signal(device_id, list("[action]" = target), usr)
