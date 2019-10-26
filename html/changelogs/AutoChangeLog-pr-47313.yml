@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - admin: "Dynamic game mode panel can now be accessed from the Check Antagonists window."
