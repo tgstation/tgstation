@@ -82,10 +82,27 @@
 
 /obj/structure/sink/oil_well/attackby(obj/item/O, mob/user, params)
 	flick("puddle-oil-splash",src)
-	. = ..()
+	if(O.tool_behaviour == TOOL_SHOVEL && !(flags_1&NODECONSTRUCT_1)) //attempt to deconstruct the puddle with a shovel
+		to_chat(user, "You fill in the oil well with soil.")
+		O.play_tool_sound(src)
+		deconstruct()
+	if(istype(O, /obj/item/reagent_containers)) //Refilling bottles with oil
+		var/obj/item/reagent_containers/RG = O
+		if(RG.is_refillable())
+			if(!RG.reagents.holder_full())
+				RG.reagents.add_reagent(dispensedreagent, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+				to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
+				return TRUE
+			to_chat(user, "<span class='notice'>\The [RG] is full.</span>")
+			return FALSE
+	if(user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='notice'>You won't have any luck getting \the [O] out if you drop it in the oil.</span>")
+		return 1
+	else
+		return ..()
 
-/obj/structure/sink/oil_well/deconstruct(disassembled = TRUE)
-	qdel(src)
+/obj/structure/sink/oil_well/drop_materials()
+	new /obj/effect/decal/cleanable/oil(loc)
 
 //***Grave mounds.
 /obj/structure/closet/crate/grave
@@ -132,7 +149,7 @@
 
 /obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
 	if(!opened)
-		to_chat(user, "<span class='notice'>The ground here is too hard to dig up with your bare hands. You'll need a shovel.")
+		to_chat(user, "<span class='notice'>The ground here is too hard to dig up with your bare hands. You'll need a shovel.</span>")
 	else
 		to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
 
