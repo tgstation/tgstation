@@ -316,7 +316,9 @@
 		temp = "drawing"
 	else if(drawing in graffiti|oriented)
 		temp = "graffiti"
-
+	var/gang_check = hippie_gang_check(user,target) // hippie start -- gang check and temp setting
+	if(!gang_check) return
+	else if(gang_check == "gang graffiti") temp = gang_check // hippie end
 
 	var/graf_rot
 	if(drawing in oriented)
@@ -348,7 +350,7 @@
 	var/wait_time = 50
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
-
+	if(gang) instant = FALSE // hippie -- gang spraying must not be instant, balance reasons
 	if(!instant)
 		if(!do_after(user, 50, target = target))
 			return
@@ -359,6 +361,11 @@
 
 	var/list/turf/affected_turfs = list()
 
+	if(gang) // hippie start -- gang spraying is done differently
+		if(gang_final(user, target, affected_turfs))
+			return
+		actually_paints = FALSE // skip the next if check
+	// hippie end
 	if(actually_paints)
 		var/obj/effect/decal/cleanable/crayon/C
 		switch(paint_mode)
