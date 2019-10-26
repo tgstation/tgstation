@@ -15,6 +15,9 @@
 			client.dsay(message)
 		return
 
+	if(check_emote(message, forced))
+		return
+
 	. = say_dead(message)
 
 /mob/dead/observer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
