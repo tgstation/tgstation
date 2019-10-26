@@ -416,6 +416,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	Radio = new /obj/item/radio(src)
 	Radio.listening = 0
 
+/obj/machinery/computer/arcade/orion_trail/Destroy()
+	QDEL_NULL(Radio)
+	return ..()
+
 /obj/machinery/computer/arcade/orion_trail/kobayashi
 	name = "Kobayashi Maru control computer"
 	desc = "A test for cadets"
