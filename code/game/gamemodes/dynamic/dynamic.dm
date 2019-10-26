@@ -73,11 +73,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	  * 0-6, 7-13, 14-20, 21-27, 28-34, 35-41, 42-48, 49-55, 56-62, 63+
 	  */
 	var/pop_per_requirement = 6
-	/// The requirement used for checking if a second rule should be selected.
+	/// The requirement used for checking if a second rule should be selected. Index based on pop_per_requirement.
 	var/list/second_rule_req = list(100, 100, 80, 70, 60, 50, 30, 20, 10, 0)
 	/// The probability for a second ruleset with index being every ten threat.
 	var/list/second_rule_prob = list(0,0,60,80,80,80,100,100,100,100)
-	/// The requirement used for checking if a third rule should be selected.
+	/// The requirement used for checking if a third rule should be selected. Index based on pop_per_requirement.
 	var/list/third_rule_req = list(100, 100, 100, 90, 80, 70, 60, 50, 40, 30)
 	/// The probability for a third ruleset with index being every ten threat.
 	var/list/third_rule_prob = list(0,0,0,0,60,60,80,90,100,100)
@@ -338,8 +338,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			candidates.Add(player)
 	log_game("DYNAMIC: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if (candidates.len <= 0)
+		log_game("DYNAMIC: [candidates.len] candidates.")
 		return TRUE
 	if (roundstart_rules.len <= 0)
+		log_game("DYNAMIC: [roundstart_rules.len] rules.")
 		return TRUE
 
 	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
@@ -350,6 +352,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/starting_rulesets = ""
 	for (var/datum/dynamic_ruleset/roundstart/DR in executed_rules)
 		starting_rulesets += "[DR.name], "
+	log_game("DYNAMIC: Picked the following roundstart rules: [starting_rulesets]")
 	candidates.Cut()
 	return TRUE
 
@@ -406,22 +409,23 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (threat_level > high_pop_third_rule_req)
 					extra_rulesets_amount++
 		else
-			if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[min(10, round(threat_level ? 0 : threat_level/10))]))
+			var/threat_indice = min(10, max(round(threat_level ? threat_level/10 : 1), 1))	// 0-9 threat = 1, 10-19 threat = 2 ...
+			if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[threat_indice]))
 				extra_rulesets_amount++
-				if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[min(10, round(threat_level ? 0 : threat_level/10))]))
+				if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[threat_indice]))
 					extra_rulesets_amount++
+	log_game("DYNAMIC: Trying to roll [extra_rulesets_amount + 1] roundstart rulesets. Picking from [drafted_rules.len] eligible rulesets.")
 
 	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
-		if (extra_rulesets_amount > 0) // We've got enough population and threat for a second roundstart rule
+		log_game("DYNAMIC: First ruleset picked successfully. [extra_rulesets_amount] remaining.")
+		while(extra_rulesets_amount > 0)	// We had enough threat for one or two more rulesets
 			for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
 				if (rule.cost > threat)
 					drafted_rules -= rule
-			if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
-				if (extra_rulesets_amount > 1) // We've got enough population and threat for a third roundstart rule
-					for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
-						if (rule.cost > threat)
-							drafted_rules -= rule
-					picking_roundstart_rule(drafted_rules)
+			if(drafted_rules.len)
+				picking_roundstart_rule(drafted_rules)
+				extra_rulesets_amount--
+				log_game("DYNAMIC: Additional ruleset picked successfully, now [executed_rules.len] picked. [extra_rulesets_amount] remaining.")
 	else
 		if(threat >= 10)
 			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this.")
@@ -464,7 +468,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				return FALSE
 			starting_rule = pickweight(drafted_rules)
 
-	log_game("DYNAMIC: Picking a ruleset [starting_rule.name]")
+	log_game("DYNAMIC: Picked a ruleset: [starting_rule.name]")
 
 	roundstart_rules -= starting_rule
 	drafted_rules -= starting_rule

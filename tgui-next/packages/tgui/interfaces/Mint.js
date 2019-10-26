@@ -26,15 +26,14 @@ export const Mint = props => {
               <LabeledList.Item
                 key={material.material}
                 label={material.material}
-                buttons={
+                buttons={(
                   <Button
                     content="Select"
                     selected={data.chosen_material === material.material}
                     onClick={() => act(ref, 'changematerial', {
                       material_name: material.material,
-                    })}
-                  />
-                }>
+                    })} />
+                )}>
                 {material.amount} cm³
               </LabeledList.Item>
             );

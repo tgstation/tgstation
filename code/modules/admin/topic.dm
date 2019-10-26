@@ -609,7 +609,7 @@
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
 			var/datum/dynamic_ruleset/roundstart/newrule = new rule()
 			roundstart_rules[newrule.name] = newrule
-		var/added_rule = input(usr,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", null) as null|anything in sortNames(roundstart_rules)
+		var/added_rule = input(usr,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", null) as null|anything in sortList(roundstart_rules)
 		if (added_rule)
 			GLOB.dynamic_forced_roundstart_ruleset += roundstart_rules[added_rule]
 			log_admin("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.")
@@ -644,7 +644,7 @@
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/latejoin))
 			var/datum/dynamic_ruleset/latejoin/newrule = new rule()
 			latejoin_rules[newrule.name] = newrule
-		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in sortNames(latejoin_rules)
+		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in sortList(latejoin_rules)
 		if (added_rule)
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			mode.forced_latejoin_rule = latejoin_rules[added_rule]
@@ -673,7 +673,7 @@
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/midround))
 			var/datum/dynamic_ruleset/midround/newrule = new rule()
 			midround_rules[newrule.name] = rule
-		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in sortNames(midround_rules)
+		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in sortList(midround_rules)
 		if (added_rule)
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			log_admin("[key_name(usr)] executed the [added_rule] ruleset.")
@@ -1130,7 +1130,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living.")
 			return
 
-		L.revive(full_heal = 1, admin_revive = 1)
+		L.revive(full_heal = TRUE, admin_revive = TRUE)
 		message_admins("<span class='danger'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!</span>")
 		log_admin("[key_name(usr)] healed / Revived [key_name(L)].")
 
@@ -1599,7 +1599,7 @@
 			return
 
 		var/list/offset = splittext(href_list["offset"],",")
-		var/number = CLAMP(text2num(href_list["object_count"]), 1, 100)
+		var/number = CLAMP(text2num(href_list["object_count"]), 1, ADMIN_SPAWN_CAP)
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0

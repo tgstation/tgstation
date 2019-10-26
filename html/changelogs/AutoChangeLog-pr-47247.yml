@@ -1,4 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - bugfix: "air alarm in medical lobby is no longer a Space air alarm"

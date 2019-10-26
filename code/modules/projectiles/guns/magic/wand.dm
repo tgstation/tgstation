@@ -74,13 +74,13 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
-			user.revive(full_heal = TRUE)
+			user.revive(full_heal = TRUE, admin_revive = FALSE)
 			to_chat(user, "<span class='notice'>You feel great!</span>")
 			return
 	to_chat(user, "<span class='warning'>You irradiate yourself with pure negative energy! \
 	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
 	</span>")
-	user.death(0)
+	user.death(FALSE)
 
 /obj/item/gun/magic/wand/death/debug
 	desc = "In some obscure circles, this is known as the 'cloning tester's friend'."
@@ -116,7 +116,7 @@
 			</span>")
 			user.death(0)
 			return
-	user.revive(full_heal = TRUE)
+	user.revive(full_heal = TRUE, admin_revive = FALSE)
 	to_chat(user, "<span class='notice'>You feel great!</span>")
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing

@@ -34,6 +34,16 @@
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
 	QDEL_LIST(diseases)
+	for(var/s in ownedSoullinks)
+		var/datum/soullink/S = s
+		S.ownerDies(FALSE)
+		qdel(s) //If the owner is destroy()'d, the soullink is destroy()'d
+	ownedSoullinks = null
+	for(var/s in sharedSoullinks)
+		var/datum/soullink/S = s
+		S.sharerDies(FALSE)
+		S.removeSoulsharer(src) //If a sharer is destroy()'d, they are simply removed
+	sharedSoullinks = null
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels)
@@ -367,7 +377,7 @@
 	stop_pulling()
 
 //same as above
-/mob/living/pointed(atom/A as mob|obj|turf in view())
+/mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
 	if(incapacitated())
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_DEATHCOMA))
@@ -502,11 +512,11 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-//proc used to ressuscitate a mob
+//Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
-		fully_heal(admin_revive)
+		fully_heal(admin_revive = TRUE)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
 		GLOB.dead_mob_list -= src
 		GLOB.alive_mob_list += src
@@ -517,7 +527,7 @@
 		update_sight()
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
-		. = 1
+		. = TRUE
 		if(mind)
 			for(var/S in mind.spell_list)
 				var/obj/effect/proc_holder/spell/spell = S
@@ -543,7 +553,8 @@
 
 
 //proc used to completely heal a mob.
-/mob/living/proc/fully_heal(admin_revive = 0)
+//admin_revive = TRUE is used in other procs, for example mob/living/carbon/fully_heal()
+/mob/living/proc/fully_heal(admin_revive = FALSE)
 	restore_blood()
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)
@@ -574,9 +585,9 @@
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
-	. = 1
+	. = TRUE
 	if(health <= HEALTH_THRESHOLD_DEAD)
-		return 0
+		return FALSE
 
 /mob/living/proc/update_damage_overlays()
 	return
@@ -593,7 +604,7 @@
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
-			return 0
+			return FALSE
 
 	var/old_direction = dir
 	var/turf/T = loc

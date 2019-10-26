@@ -19,7 +19,7 @@
 	scaling_cost = 10
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	high_population_requirement = 10
-	antag_cap = list(1,1,1,2,2,2,3,3,3,4)
+	antag_cap = list(1,1,1,1,2,2,2,2,3,3)
 	var/autotraitor_cooldown = 450 // 15 minutes (ticks once per 2 sec)
 
 /datum/dynamic_ruleset/roundstart/traitor/pre_execute()
@@ -109,7 +109,7 @@
 	scaling_cost = 15
 	requirements = list(70,70,60,50,40,20,20,10,10,10)
 	high_population_requirement = 10
-	antag_cap = list(1,1,1,2,2,2,2,2,3,3)
+	antag_cap = list(1,1,1,1,1,2,2,2,2,3)
 	var/team_mode_probability = 30
 
 /datum/dynamic_ruleset/roundstart/changeling/pre_execute()
@@ -261,7 +261,6 @@
 	required_candidates = 5
 	weight = 3
 	cost = 40
-	pop_per_requirement = 5
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
 	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET
@@ -351,6 +350,7 @@
 	cost = 35
 	requirements = list(101,101,70,40,30,20,10,10,10,10)
 	high_population_requirement = 10
+	antag_cap = list(3,3,3,3,3,3,3,3,3,3)
 	flags = HIGHLANDER_RULESET
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
@@ -358,7 +358,7 @@
 	var/finished = FALSE
 
 /datum/dynamic_ruleset/roundstart/revs/pre_execute()
-	var/max_candidates = 3
+	var/max_candidates = antag_cap[indice_pop]
 	mode.antags_rolled += max_candidates
 	for(var/i = 1 to max_candidates)
 		if(candidates.len <= 0)
@@ -383,10 +383,10 @@
 			M.add_antag_datum(new_head,revolution)
 		else
 			assigned -= M
-			log_game("Dynamic: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
+			log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
 		if(!revolution.members.len)
 			success = FALSE
-			log_game("Dynamic: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
+			log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
 	if(success)
 		revolution.update_objectives()
 		revolution.update_heads()

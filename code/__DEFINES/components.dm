@@ -114,6 +114,8 @@
 	#define COMPONENT_BLOCK_TOOL_ATTACK 1
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"		//called when teleporting into a protected turf: (channel, turf/origin)
 	#define COMPONENT_BLOCK_TELEPORT 1
+#define COMSIG_ATOM_ORBIT_BEGIN "atom_orbit_begin"           //called when an atom starts orbiting another atom: (atom)
+#define COMSIG_ATOM_ORBIT_STOP "atom_orbit_stop"           //called when an atom stops orbiting another atom: (atom)
 /////////////////
 #define COMSIG_ATOM_ATTACK_GHOST "atom_attack_ghost"			//from base of atom/attack_ghost(): (mob/dead/observer/ghost)
 #define COMSIG_ATOM_ATTACK_HAND "atom_attack_hand"				//from base of atom/attack_hand(): (mob/user)
@@ -204,7 +206,8 @@
 	#define SPEECH_LANGUAGE 5
 	#define SPEECH_IGNORE_SPAM 6
 	#define SPEECH_FORCED 7 */
-
+#define COMSIG_MOB_DEADSAY "mob_deadsay" // from /mob/say_dead(): (mob/speaker, message)
+	#define MOB_DEADSAY_SIGNAL_INTERCEPT 1
 // /mob/living signals
 #define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_IGNITED "living_ignite"					//from base of mob/living/IgniteMob() (/mob/living)

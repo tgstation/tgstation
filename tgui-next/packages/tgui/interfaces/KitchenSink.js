@@ -174,7 +174,7 @@ class KitchenSinkTabs extends Component {
 const KitchenSinkTooltips = props => {
   return (
     <Section label="Tooltips">
-      <Box position="relative">
+      <Box inline position="relative" mr={1}>
         Box (hover me).
         <Tooltip
           content="Tooltip text."
