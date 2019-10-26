@@ -124,6 +124,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
+	var/canMouseDown = FALSE
+
 
 /obj/item/Initialize()
 
@@ -246,7 +248,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	// Extractable materials. Only shows the names, not the amounts.
 	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
-	if (custom_materials.len)
+	if (length(custom_materials))
 		sep = ""
 		for(var/mat in custom_materials)
 			research_msg += sep

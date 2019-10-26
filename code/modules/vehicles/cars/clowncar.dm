@@ -41,7 +41,7 @@
 	if(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED).len >= 30)
 		for(var/i in return_drivers())
 			var/mob/voreman = i
-			SSmedals.UnlockMedal(MEDAL_CLOWNCARKING,voreman.client)
+			voreman.client.give_award(/datum/award/achievement/misc/round_and_full, voreman)
 
 /obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/M)
 	if((M.loc != src) || M.environment_smash & (ENVIRONMENT_SMASH_WALLS|ENVIRONMENT_SMASH_RWALLS))
@@ -201,4 +201,4 @@
 	if(thankscount >= 100)
 		for(var/i in return_drivers())
 			var/mob/busdriver = i
-			SSmedals.UnlockMedal(MEDAL_THANKSALOT,busdriver.client)
+			busdriver.client.give_award(/datum/award/achievement/misc/the_best_driver, busdriver)

@@ -212,7 +212,7 @@
 			return
 
 		else
-			to_chat(U, "\The [src]'s refill light blinks red.")
+			to_chat(U, "<span class='warning'>\The [src]'s refill light blinks red.</span>")
 			return
 	else
 		to_chat(U, "<span class='warning'>There is a working [target.fitting] already inserted!</span>")
@@ -250,7 +250,7 @@
 			ReplaceLight(A, U)
 
 	if(!used)
-		to_chat(U, "\The [src]'s refill light blinks red.")
+		to_chat(U, "<span class='warning'>\The [src]'s refill light blinks red.</span>")
 
 /obj/item/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	J.put_in_cart(src, user)

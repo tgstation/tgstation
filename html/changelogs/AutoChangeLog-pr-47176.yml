@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "Removes a stray 0 in the crayon ui"

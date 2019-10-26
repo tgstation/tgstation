@@ -452,10 +452,9 @@
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
-	var/selecting = BODY_ZONE_CHEST
+	var/overlay_icon = 'icons/mob/screen_gen.dmi'
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
-	var/mutable_appearance/selecting_appearance
 
 /obj/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
@@ -549,32 +548,24 @@
 	if(user != hud?.mymob)
 		return
 
-	if(choice != selecting)
-		selecting = choice
+	if(choice != hud.mymob.zone_selected)
+		hud.mymob.zone_selected = choice
 		update_icon()
 	
 	return TRUE
 
-/obj/screen/zone_sel/update_icon()
+/obj/screen/zone_sel/update_overlays()
 	. = ..()
-	cut_overlay(selecting_appearance)
-	selecting_appearance = mutable_appearance('icons/mob/screen_gen.dmi', "[selecting]")
-	add_overlay(selecting_appearance)
-	hud?.mymob?.zone_selected = selecting
+	if(!hud?.mymob)
+		return
+	. += mutable_appearance(overlay_icon, "[hud.mymob.zone_selected]")
 
 /obj/screen/zone_sel/alien
 	icon = 'icons/mob/screen_alien.dmi'
-
-/obj/screen/zone_sel/alien/update_icon()
-	. = ..()
-	cut_overlay(selecting_appearance)
-	selecting_appearance = mutable_appearance('icons/mob/screen_alien.dmi', "[selecting]")
-	add_overlay(selecting_appearance)
-	hud?.mymob?.zone_selected = selecting
+	overlay_icon = 'icons/mob/screen_alien.dmi'
 
 /obj/screen/zone_sel/robot
 	icon = 'icons/mob/screen_cyborg.dmi'
-
 
 /obj/screen/flash
 	name = "flash"
@@ -647,6 +638,12 @@
 	icon = 'icons/mob/screen_slime.dmi'
 	icon_state = "slime_health0"
 	screen_loc = ui_slime_health
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	
+/obj/screen/healths/lavaland_elite
+	icon = 'icons/mob/screen_elite.dmi'
+	icon_state = "elite_health0"
+	screen_loc = ui_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healthdoll

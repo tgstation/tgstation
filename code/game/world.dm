@@ -14,9 +14,9 @@ GLOBAL_VAR(restart_counter)
   *
   * Note this happens after the Master subsystem is created (as that is a global datum), this means all the subsystems exist,
   * but they have not been Initialized at this point, only their New proc has run
-  * 
-  * Nothing happens until something moves. ~Albert Einstein 
-  * 
+  *
+  * Nothing happens until something moves. ~Albert Einstein
+  *
   */
 /world/New()
 
@@ -221,7 +221,7 @@ GLOBAL_VAR(restart_counter)
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
-		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request</span>")
+		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request.</span>")
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns

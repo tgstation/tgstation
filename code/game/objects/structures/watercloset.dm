@@ -9,7 +9,8 @@
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
-
+	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
+	var/buildstackamount = 1
 
 /obj/structure/toilet/Initialize()
 	. = ..()
@@ -70,11 +71,21 @@
 		update_icon()
 
 
-/obj/structure/toilet/update_icon()
+/obj/structure/toilet/update_icon_state()
 	icon_state = "toilet[open][cistern]"
 
+/obj/structure/toilet/deconstruct()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
+		else
+			for(var/i in custom_materials)
+				var/datum/material/M = i
+				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+	..()
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user, params)
+	add_fingerprint(user)
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, TRUE)
@@ -82,7 +93,9 @@
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='hear'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
-
+	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+		I.play_tool_sound(src)
+		deconstruct()
 	else if(cistern)
 		if(user.a_intent != INTENT_HARM)
 			if(I.w_class > WEIGHT_CLASS_NORMAL)
@@ -99,6 +112,10 @@
 
 	else if(istype(I, /obj/item/reagent_containers))
 		if (!open)
+			return
+		if(istype(I, /obj/item/reagent_containers/food/snacks/monkeycube))
+			var/obj/item/reagent_containers/food/snacks/monkeycube/cube = I
+			cube.Expand()
 			return
 		var/obj/item/reagent_containers/RG = I
 		RG.reagents.add_reagent(/datum/reagent/water, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
@@ -118,8 +135,9 @@
 		w_items += secret.w_class
 		contents += secret
 
-
-
+/obj/structure/toilet/greyscale
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	buildstacktype = null
 
 /obj/structure/urinal
 	name = "urinal"
@@ -153,7 +171,7 @@
 
 	else if(exposed)
 		if(!hiddenitem)
-			to_chat(user, "<span class='notice'>There is nothing in the drain holder.</span>")
+			to_chat(user, "<span class='warning'>There is nothing in the drain holder!</span>")
 		else
 			if(ishuman(user))
 				user.put_in_hands(hiddenitem)
@@ -167,7 +185,7 @@
 /obj/structure/urinal/attackby(obj/item/I, mob/living/user, params)
 	if(exposed)
 		if (hiddenitem)
-			to_chat(user, "<span class='warning'>There is already something in the drain enclosure.</span>")
+			to_chat(user, "<span class='warning'>There is already something in the drain enclosure!</span>")
 			return
 		if(I.w_class > 1)
 			to_chat(user, "<span class='warning'>[I] is too large for the drain enclosure.</span>")
@@ -223,6 +241,8 @@
 	anchored = TRUE
 	var/busy = FALSE 	//Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
+	var/buildstacktype = /obj/item/stack/sheet/metal
+	var/buildstackamount = 1
 
 /obj/structure/sink/attack_hand(mob/living/user)
 	. = ..()
@@ -236,7 +256,7 @@
 		return
 
 	if(busy)
-		to_chat(user, "<span class='notice'>Someone's already washing here.</span>")
+		to_chat(user, "<span class='warning'>Someone's already washing here!</span>")
 		return
 	var/selected_area = parse_zone(user.zone_selected)
 	var/washing_face = 0
@@ -300,6 +320,11 @@
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
+	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+		O.play_tool_sound(src)
+		deconstruct()
+	return
+
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
 		new /obj/item/reagent_containers/glass/rag(src.loc)
@@ -330,11 +355,18 @@
 	else
 		return ..()
 
-/obj/structure/sink/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 3)
-	qdel(src)
+/obj/structure/sink/deconstruct()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		drop_materials()
+	..()
 
-
+/obj/structure/sink/proc/drop_materials()
+	if(buildstacktype)
+		new buildstacktype(loc,buildstackamount)
+	else
+		for(var/i in custom_materials)
+			var/datum/material/M = i
+			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
@@ -361,10 +393,12 @@
 /obj/structure/sink/puddle/deconstruct(disassembled = TRUE)
 	qdel(src)
 
+/obj/structure/sink/greyscale
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	buildstacktype = null
 
 //Shower Curtains//
 //Defines used are pre-existing in layers.dm//
-
 
 /obj/structure/curtain
 	name = "curtain"

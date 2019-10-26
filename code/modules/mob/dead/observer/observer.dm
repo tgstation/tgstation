@@ -350,7 +350,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	can_reenter_corpse = FALSE
-	to_chat(src, "You can no longer be brought back into your body.")
+	to_chat(src, "<span class='boldnotice'>You can no longer be brought back into your body.</span>")
 	return TRUE
 
 /mob/dead/observer/proc/notify_cloning(message, sound, atom/source, flashwindow = TRUE)
@@ -474,7 +474,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.forceMove(T)
 				A.update_parallax_contents()
 			else
-				to_chat(A, "This mob is not located in the game world.")
+				to_chat(A, "<span class='danger'>This mob is not located in the game world.</span>")
 
 /mob/dead/observer/verb/change_view_range()
 	set category = "Ghost"
@@ -529,7 +529,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	ghostvision = !(ghostvision)
 	update_sight()
-	to_chat(usr, "You [(ghostvision?"now":"no longer")] have ghost vision.")
+	to_chat(usr, "<span class='boldnotice'>You [(ghostvision?"now":"no longer")] have ghost vision.</span>")
 
 /mob/dead/observer/verb/toggle_darkness()
 	set name = "Toggle Darkness"
@@ -598,34 +598,34 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(!(L in GLOB.player_list) && !L.mind)
 			possessible += L
 
-	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null) as null|anything in possessible
+	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null) as null|anything in sortNames(possessible)
 
 	if(!target)
-		return 0
+		return FALSE
 
 	if(ismegafauna(target))
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
-		return 0
+		return FALSE
 
 	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
-			return 0
+			return FALSE
 	if(target.key)
 		to_chat(src, "<span class='warning'>Someone has taken this body while you were choosing!</span>")
-		return 0
+		return FALSE
 
 	target.key = key
 	target.faction = list("neutral")
-	return 1
+	return TRUE
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
 //overridden here and in /mob/living for different point span classes and sanity checks
-/mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
+/mob/dead/observer/pointed(atom/A as mob|obj|turf in view(client.view, src))
 	if(!..())
-		return 0
+		return FALSE
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A].</span>")
-	return 1
+	return TRUE
 
 /mob/dead/observer/verb/view_manifest()
 	set name = "View Crew Manifest"
@@ -748,7 +748,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	update_icon()
 
-/mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/dead/observer/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	return IsAdminGhost(usr)
 
 /mob/dead/observer/is_literate()

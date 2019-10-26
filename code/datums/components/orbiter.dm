@@ -14,19 +14,22 @@
 
 	orbiters = list()
 
-	var/atom/master = parent
-	master.orbiters = src
-
 	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+
+/datum/component/orbiter/PostTransfer()
+	if(!isatom(parent) || isarea(parent))
+		return COMPONENT_INCOMPATIBLE	
 
 /datum/component/orbiter/RegisterWithParent()
 	var/atom/target = parent
+	target.orbiters = src
 	while(ismovableatom(target))
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/move_react)
 		target = target.loc
 
 /datum/component/orbiter/UnregisterFromParent()
 	var/atom/target = parent
+	target.orbiters = null
 	while(ismovableatom(target))
 		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 		target = target.loc
@@ -60,6 +63,7 @@
 	orbiters[orbiter] = TRUE
 	orbiter.orbiting = src
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
 	var/matrix/initial_transform = matrix(orbiter.transform)
 
 	// Head first!
@@ -86,6 +90,7 @@
 	if(!orbiters[orbiter])
 		return
 	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
+	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
 	orbiter.SpinAnimation(0, 0)
 	orbiters -= orbiter
 	orbiter.stop_orbit(src)

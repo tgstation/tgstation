@@ -731,3 +731,40 @@
 	reqs = list(/obj/item/stack/ducts = 5)
 	category = CAT_MISC
 	tools = list(TOOL_WELDER)
+
+/datum/crafting_recipe/rib
+	name = "Collosal Rib"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 10,
+            /datum/reagent/fuel/oil = 5)
+	result = /obj/structure/statue/bone/rib
+	subcategory = CAT_PRIMAL
+
+/datum/crafting_recipe/skull
+	name = "Skull Carving"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 6,
+            /datum/reagent/fuel/oil = 5)
+	result = /obj/structure/statue/bone/skull
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/halfskull
+	name = "Cracked Skull Carving"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 3,
+            /datum/reagent/fuel/oil = 5)
+	result = /obj/structure/statue/bone/skull/half
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/boneshovel
+	name = "Serrated Bone Shovel"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 4,
+            /datum/reagent/fuel/oil = 5,
+            /obj/item/shovel/spade = 1)
+	result = /obj/item/shovel/serrated
+	category = CAT_PRIMAL

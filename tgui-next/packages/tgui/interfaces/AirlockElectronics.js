@@ -119,23 +119,20 @@ export const AirlockElectronics = props => {
               const icon = diffMap[checkAccessIcon(accesses)].icon;
               return (
                 <Tabs.Tab
+                  key={name}
                   icon={icon}
                   label={name}>
-                  {() => (
-                    <Fragment>
-                      {accesses.map(access => (
-                        <Box>
-                          <Button
-                            icon={access.req ? 'check-square-o' : 'square-o' }
-                            content={access.name}
-                            selected={access.req}
-                            onClick={() => act(ref, 'set', {
-                              access: access.id,
-                            })} />
-                        </Box>
-                      ))}
-                    </Fragment>
-                  )}
+                  {() => accesses.map(access => (
+                    <Box key={access.id}>
+                      <Button
+                        icon={access.req ? 'check-square-o' : 'square-o'}
+                        content={access.name}
+                        selected={access.req}
+                        onClick={() => act(ref, 'set', {
+                          access: access.id,
+                        })} />
+                    </Box>
+                  ))}
                 </Tabs.Tab>
               );
             })}

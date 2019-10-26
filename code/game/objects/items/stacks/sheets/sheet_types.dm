@@ -230,7 +230,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 	novariants = TRUE
-	grind_results = list(/datum/reagent/carbon = 20)
+	grind_results = list(/datum/reagent/cellulose = 20) //no lignocellulose or lignin reagents yet,
 
 /obj/item/stack/sheet/mineral/wood/get_main_recipes()
 	. = ..()
@@ -259,7 +259,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
-	grind_results = list("carbon" = 5)
+	grind_results = list(/datum/reagent/cellulose = 10)
 
 /obj/item/stack/sheet/mineral/bamboo/get_main_recipes()
 	. = ..()
@@ -308,6 +308,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cloth
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
+	grind_results = list(/datum/reagent/cellulose = 20)
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
 	. = ..()
@@ -354,6 +355,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cotton
 	var/pull_effort = 30
 	var/loom_result = /obj/item/stack/sheet/cloth
+	grind_results = list(/datum/reagent/cellulose = 20)
 
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"
@@ -363,7 +365,7 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/durathread
-
+	grind_results = list()
 
 /*
  * Cardboard
@@ -384,7 +386,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 		new /datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box),				\
 		new /datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box),					\
 		new /datum/stack_recipe("donk-pockets box", /obj/item/storage/box/donkpockets),			\
-		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes),			\
+		new /datum/stack_recipe("monkey cube box", /obj/item/storage/box/monkeycubes),
+		new /datum/stack_recipe("nugget box", /obj/item/storage/fancy/nugget_box),			\
 		null,																					\
 
 		new /datum/stack_recipe("lethal ammo box", /obj/item/storage/box/lethalshot),			\
@@ -428,6 +431,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cardboard
 	novariants = TRUE
+	grind_results = list(/datum/reagent/cellulose = 10)
 
 /obj/item/stack/sheet/cardboard/get_main_recipes()
 	. = ..()
@@ -479,7 +483,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	var/turf/T = get_turf(user) //we may have moved. adjust as needed...
 	var/area/A = get_area(user)
-	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !A.blob_allowed))
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !(A.flags_1 & CULT_PERMITTED_1)))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 		return FALSE
 	return ..()
@@ -623,6 +627,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	item_state = "sheet-paper"
 	merge_type = /obj/item/stack/sheet/paperframes
 	resistance_flags = FLAMMABLE
+	grind_results = list(/datum/reagent/cellulose = 20)
 
 /obj/item/stack/sheet/paperframes/get_main_recipes()
 	. = ..()

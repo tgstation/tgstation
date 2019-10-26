@@ -17,7 +17,7 @@ export RUST_G_VERSION=0.4.2
 export BSQL_VERSION=v1.4.0.0
 
 #node version
-export NODE_VERSION=8
+export NODE_VERSION=12
 
 # PHP version
 export PHP_VERSION=5.6
