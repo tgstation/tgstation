@@ -473,7 +473,7 @@
 
 	switch(mode)
 		if("Is")
-			if(race_match == TRUE)
+			if(race_match)
 				send_code()
 		if("Is Not")
 			if(race_match == FALSE)
