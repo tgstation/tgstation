@@ -291,7 +291,7 @@
 	extra_settings = list("Sent Code","Damage Type","Damage","Direction")
 	can_rule = TRUE
 	var/spent = FALSE
-	var/damage_type = "Brute"
+	var/damage_type = BRUTE
 	var/damage = 50
 	var/direction = "Above"
 
@@ -307,7 +307,7 @@
 			return
 		damage = CLAMP(round(new_damage, 1), 0, 500)
 	if(setting == "Damage Type")
-		var/list/damage_types = list("Brute","Burn","Toxin","Oxygen","Cellular")
+		var/list/damage_types = list(BRUTE,BURN,TOX,OXY,CLONE)
 		var/new_damage_type = input("Choose the damage type", name) as null|anything in sortList(damage_types)
 		if(!new_damage_type)
 			return
@@ -324,7 +324,7 @@
 	if(setting == "Damage")
 		return damage
 	if(setting == "Damage Type")
-		return damage_type
+		return capitalize(damage_type)
 	if(setting == "Direction")
 		return direction
 
@@ -339,15 +339,15 @@
 	var/check_above = (direction == "Above")
 	var/damage_amt = 0
 	switch(damage_type)
-		if("Brute")
+		if(BRUTE)
 			damage_amt = host_mob.getBruteLoss()
-		if("Burn")
+		if(BURN)
 			damage_amt = host_mob.getFireLoss()
-		if("Toxin")
+		if(TOX)
 			damage_amt = host_mob.getToxLoss()
-		if("Oxygen")
+		if(OXY)
 			damage_amt = host_mob.getOxyLoss()
-		if("Cellular")
+		if(CLONE)
 			damage_amt = host_mob.getCloneLoss()
 
 	if(damage_amt >= damage)

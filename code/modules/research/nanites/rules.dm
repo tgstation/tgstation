@@ -33,15 +33,13 @@
 
 /datum/nanite_rule/health/check_rule()
 	var/health_percent = program.host_mob.health / program.host_mob.maxHealth * 100
-	var/detected = FALSE
 	if(above)
 		if(health_percent >= threshold)
-			detected = TRUE
+			return TRUE
 	else
 		if(health_percent < threshold)
-			detected = TRUE
-
-	return detected
+			return TRUE
+	return FALSE
 
 /datum/nanite_rule/health/display()
 	return "[name] [above ? ">" : "<"] [threshold]%"
@@ -97,15 +95,13 @@
 
 /datum/nanite_rule/nanites/check_rule()
 	var/nanite_percent = (program.nanites.nanite_volume - program.nanites.safety_threshold)/(program.nanites.max_nanites - program.nanites.safety_threshold)*100
-	var/detected = FALSE
 	if(above)
 		if(nanite_percent >= threshold)
-			detected = TRUE
+			return TRUE
 	else
 		if(nanite_percent < threshold)
-			detected = TRUE
-
-	return detected
+			return TRUE
+	return FALSE
 
 /datum/nanite_rule/nanites/copy_to(datum/nanite_program/new_program)
 	var/datum/nanite_rule/nanites/rule = new(new_program)
@@ -124,27 +120,25 @@
 	var/damage_type = "Brute"
 
 /datum/nanite_rule/damage/check_rule()
-	var/reached_threshold = FALSE
 	var/damage_amt = 0
 	switch(damage_type)
-		if("Brute")
+		if(BRUTE)
 			damage_amt = program.host_mob.getBruteLoss()
-		if("Burn")
+		if(BURN)
 			damage_amt = program.host_mob.getFireLoss()
-		if("Toxin")
+		if(TOX)
 			damage_amt = program.host_mob.getToxLoss()
-		if("Oxygen")
+		if(OXY)
 			damage_amt = program.host_mob.getOxyLoss()
-		if("Cellular")
+		if(CLONE)
 			damage_amt = program.host_mob.getCloneLoss()
 
 	if(damage_amt >= threshold)
 		if(above)
-			reached_threshold = TRUE
+			return TRUE
 	else if(!above)
-		reached_threshold = TRUE
-
-	return reached_threshold
+		return TRUE
+	return FALSE
 
 /datum/nanite_rule/damage/copy_to(datum/nanite_program/new_program)
 	var/datum/nanite_rule/damage/rule = new(new_program)
