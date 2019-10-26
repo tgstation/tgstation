@@ -70,6 +70,8 @@
 	var/zoom_out_amt = 0
 	var/datum/action/toggle_scope_zoom/azoom
 
+	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
+
 /obj/item/gun/Initialize()
 	. = ..()
 	if(pin)
