@@ -1,0 +1,6 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - refactor: "tgui-next interfaces initialize earlier and load faster (by about 28%)."
+  - rscdel: "Removed clockwork cult theme from tgui-next."
+  - bugfix: "Tgui will no longer spawn outside of your screen."

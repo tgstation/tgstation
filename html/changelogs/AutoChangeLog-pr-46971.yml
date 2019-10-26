@@ -1,0 +1,4 @@
+author: "Jdawg1290"
+delete-after: True
+changes: 
+  - balance: "Field Generators now block gasses and shield floors from melting when active"

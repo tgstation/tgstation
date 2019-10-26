@@ -1,6 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscadd: "Added missing broken chameleon tie to broken chameleon kit."
-  - bugfix: "Fixed an issue with a chameleon tie being invisible."
-  - bugfix: "NASA jumpsuit now has proper sprite icons."

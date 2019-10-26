@@ -1,0 +1,4 @@
+author: "Shaps/Ryll"
+delete-after: True
+changes: 
+  - tweak: "You can start messages with asterisks in deadchat now"

@@ -1,5 +1,0 @@
-author: "Kaffe-work"
-delete-after: True
-changes: 
-  - tweak: "moved vampire blood counter into status bar"
-  - balance: "vampire blood loss is now 1/3 of previous value"

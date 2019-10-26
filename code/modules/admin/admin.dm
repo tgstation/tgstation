@@ -437,7 +437,7 @@
 	if(marked_datum && istype(marked_datum, /atom))
 		dat += "<A href='?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
 
-	usr << browse(dat, "window=admin2;size=210x200")
+	usr << browse(dat, "window=admin2;size=240x280")
 	return
 
 /////////////////////////////////////////////////////////////////////////////////////////////////admins2.dm merge

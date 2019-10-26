@@ -1,0 +1,4 @@
+author: "Dingo-Dongler"
+delete-after: True
+changes: 
+  - rscadd: "Paper can now be attached to wrapped packages."
