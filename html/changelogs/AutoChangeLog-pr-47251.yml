@@ -1,7 +1,0 @@
-author: "Cobby"
-delete-after: True
-changes: 
-  - balance: "Multiver now only provides unique medicine bonus to purging toxins, not other medicines (still deletes medicines slowly)"
-  - balance: "Multiver now considers alcohol \"toxins\" for the purpose of chem removal"
-  - balance: "Multiver has less base damage, still scales down with medicines (EPIN YOURSELF)"
-  - balance: "Multiver pills have more... well... multiver"
