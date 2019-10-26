@@ -197,11 +197,23 @@
 	mode_flags = GANGS | GANGMAGEDDON | VIGILANTE
 
 /datum/gang_item/weapon/improvised
-	name = "Sawn-Off Improvised Shotgun"
+	name = "Sawn-Off Shotgun"
 	id = "sawn"
-	cost = 6
-	item_path = /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn
+	cost = 10
+	item_path = /obj/item/gun/ballistic/shotgun/doublebarrel/gang
 	mode_flags = GANGS | GANGMAGEDDON | VIGILANTE
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/gang
+	name = "sawn-off double-barreled shotgun"
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BELT
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual/gang
+	recoil = SAWN_OFF_RECOIL
+	sawn_off = TRUE
+
+/obj/item/ammo_box/magazine/internal/shot/dual/gang
+	name = "sawn-off double-barrel shotgun internal magazine"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
 /datum/gang_item/weapon/ammo/improvised_ammo
 	name = "Box of Buckshot"

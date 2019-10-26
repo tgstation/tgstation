@@ -7,7 +7,7 @@
 	anchored = TRUE
 	layer = HIGH_OBJ_LAYER
 	max_integrity = 300
-	integrity_failure = 100
+	integrity_failure = 0.33
 	move_resist = INFINITY
 	armor = list("melee" = 20, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 10, "acid" = 70)
 	var/datum/team/gang/gang

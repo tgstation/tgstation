@@ -3,12 +3,12 @@
 	if(type == "poseur tag")
 		var/datum/team/gang/gang = pick(subtypesof(/datum/team/gang))
 		var/gangname = initial(gang.name)
-		icon = 'icons/effects/crayondecal.dmi'
+		icon = 'austation/icons/effects/crayondecal.dmi'
 		icon_state = "[gangname]"
 		type = null
 
 /obj/effect/decal/cleanable/crayon/gang
-	icon = 'icons/effects/crayondecal.dmi'
+	icon = 'austation/icons/effects/crayondecal.dmi'
 	layer = ABOVE_NORMAL_TURF_LAYER //Harder to hide
 	plane = GAME_PLANE
 	do_icon_rotate = FALSE //These are designed to always face south, so no rotation please.
