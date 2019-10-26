@@ -36,12 +36,6 @@
 		QDEL_IN(src, 1)
 		return
 
-	// Check if chat should have focus but doesn't, give it focus and pre-enter the key.
-	if(!prefs.hotkeys && winget(src, null, "input.focus"))
-		winset(src, null, "input.focus=true")
-		winset(src, null, "input=[list2params(list(text = _key))]")
-		return
-
 	//offset by 1 because the buffer address is 0 indexed because the math was simpler
 	keys_held[current_key_address + 1] = _key
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
