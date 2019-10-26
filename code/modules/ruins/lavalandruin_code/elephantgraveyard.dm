@@ -45,7 +45,7 @@
 		icon_state = "[environment_type][rand(0,6)]"
 
 /turf/closed/mineral/strong/wasteland
-	name = "Ancient dry rock"
+	name = "ancient dry rock"
 	color = "#B5651D"
 	environment_type = "wasteland"
 	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
@@ -58,7 +58,7 @@
 	if(prob(10))
 		new /obj/item/stack/ore/iron(src, 1)
 		new /obj/item/stack/ore/glass(src, 1)
-		new /obj/effect/decal/remains/human(src, 1)
+		new /obj/effect/decal/remains/human(loc, 1)
 	else
 		new /obj/item/stack/sheet/bone(src, 1)
 
@@ -125,14 +125,14 @@
 			new /obj/item/clothing/mask/cigarette/rollie(src)
 
 /obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S)
-	if(opened == FALSE)
+	if(!opened)
 		to_chat(user, "<span class='notice'>The ground here is too hard to dig up with your bare hands. You'll need a shovel.")
 	else
 		to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
 
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HELP) //checks to attempt to dig the grave, must be done on help intent only.
-		if(opened == FALSE)
+		if(!opened)
 			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
 				to_chat(user, "<span class='notice'>You start start to dig open \the [src]  with \the [S]...</span>")
 				if (do_after(user,20, target = src))
@@ -157,15 +157,14 @@
 			to_chat(user, "<span class='notice'>The grave has already been dug up.</span>")
 			return 1
 
-	else if(user.a_intent != INTENT_HELP) //checks to attempt to remove the grave entirely.
-		if(opened == TRUE)
-			if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
-				to_chat(user, "<span class='notice'>You start to remove \the [src]  with \the [S].</span>")
-				if (do_after(user,15, target = src))
-					to_chat(user, "<span class='notice'>You remove \the [src]  completely.</span>")
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
-					deconstruct(TRUE)
-					return 1
+	else if((user.a_intent != INTENT_HELP) && opened) //checks to attempt to remove the grave entirely.
+		if(istype(S,cutting_tool) && S.tool_behaviour == TOOL_SHOVEL)
+			to_chat(user, "<span class='notice'>You start to remove \the [src]  with \the [S].</span>")
+			if (do_after(user,15, target = src))
+				to_chat(user, "<span class='notice'>You remove \the [src]  completely.</span>")
+				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "graverobbing", /datum/mood_event/graverobbing)
+				deconstruct(TRUE)
+				return 1
 	return
 
 /obj/structure/closet/crate/grave/bust_open()
@@ -185,13 +184,13 @@
 
 /obj/structure/closet/crate/grave/lead_researcher/PopulateContents()  //ADVANCED GRAVEROBBING
 	..()
-	new /obj/effect/decal/remains/human(src)
+	new /obj/effect/decal/remains/human(loc)
 	new /obj/effect/decal/cleanable/blood/gibs/old(src)
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)
 
 /obj/item/book/granter/crafting_recipe/boneyard_notes
 	name = "The Complete Works of Lavaland Bone Architecture"
-	desc = "Pried from the lead archeologist's cold, dead hands, this seems to explain how ancient bone architecture was erected, long ago."
+	desc = "Pried from the lead  Archaeologist's cold, dead hands, this seems to explain how ancient bone architecture was erected long ago."
 	crafting_recipe_types = list(/datum/crafting_recipe/rib, /datum/crafting_recipe/boneshovel, /datum/crafting_recipe/halfskull, /datum/crafting_recipe/skull)
 	icon = 'icons/obj/library.dmi'
 	icon_state = "boneworking_learing"
@@ -201,25 +200,25 @@
 
 //***Fluff items for lore/intrigue
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard
-	name = "Posted Warning"
+	name = "posted warning"
 	desc = "It seems to be smudged with mud and... oil?"
-	info = "<B>ATTENTION TO WHOOM IT MAY CONCERN</B><BR><BR>This area is property of Nanotrasen Mining Devision.<BR><BR>Tresspassing in this area is illegal, highly dangerous, and subject to several NDAs.<br><br>Please turn back now, under intergalactic law section 48-R."
+	info = "<B>TO WHOM IT MAY CONCERN</B><BR><BR>This area is property of the Nanotrasen Mining Division.<BR><BR>Trespassing in this area is illegal, highly dangerous, and subject to several NDAs.<br><br>Please turn back now, under intergalactic law section 48-R."
 
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/rnd_notes
 	name = "Research Findings: Day 26"
-	desc = "Hunh, this one page looks like it was torn out of a full book. How odd."
+	desc = "Huh, this one page looks like it was torn out of a full book. How odd."
 	icon_state = "docs_part"
-	info = "<b>Researcher name:</b> B--*--* J--*s.<BR><BR>Detailed findings:<i>Today the camp site's cond-tion has wor--ene*. The ashst--ms keep blocking us off from le-ving the sit* for m-re supplies, and it's lo-king like we're out of pl*sma to p-wer the ge-erat*r. Can't rea-*y study c-*bon *ating with no li--ts, ya know? Da-*y's been going -*f again and ag-*n a-*ut h*w the company's left us to *ie here, but I j-s* keep tell-ng him to stop che*-in* out these damn graves. We m-y b* archeologists, but -e sho*ld have t-e dec-**cy to know these grav-s are *-l NEW.</i><BR><BR><b>The rest of the page is just semantics about carbon dating methods.</b>"
+	info = "<b>Researcher name:</b> B--*--* J--*s.<BR><BR>Detailed findings:<i>Today the camp site's cond-tion has wor--ene*. The ashst--ms keep blocking us off from le-ving the sit* for m-re supplies, and it's lo-king like we're out of pl*sma to p-wer the ge-erat*r. Can't rea-*y study c-*bon *ating with no li--ts, ya know? Da-*y's been going -*f again and ag-*n a-*ut h*w the company's left us to *ie here, but I j-s* keep tell-ng him to stop che*-in* out these damn graves. We m-y b*  archaeologists, but -e sho*ld have t-e dec-**cy to know these grav-s are *-l NEW.</i><BR><BR><b>The rest of the page is just semantics about carbon dating methods.</b>"
 
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard/mutiny
-	name = "Hastily Scribbled Note"
+	name = "hastily scribbled note"
 	desc = "Seems like someone was in a hurry."
 	info = "Alright, we all know that stuck up son a bitch is just doing this to keep us satisifed. Who the hell does he think he is, taking extra rations? We're OUT OF FOOD, CARL. Tomorrow at noon, we're going to try and take the ship by force. He HAS to be lying about the engine cooling down. He HAS TO BE. I'm tellin ya, with this implant I lifted off that last supply ship, I got the smarts to get us offa this shithole. Keep your knife handy carl."
 
 /obj/item/paper/fluff/ruins/elephant_graveyard/hypothesis
-	name = "Research Document"
+	name = "research document"
 	desc = "Standard Nanotrasen typeface for important research documents."
-	info = "<b>Day 9: Tenative Conclusions</b><BR><BR>While the area appears to be of significant cultural importantance to the lizard race, outside of some sparce contact with native wildlife, we've yet to find any reasoning for the nature of this phenomenon exactly. It seems that organic life is communally drawn to this planet as though it functions as a final resting place for intelegent life. As per company guidelines, this site shall be given the following classification: 'LZ-0271 - Elephant Graveyard' <BR><BR><u>Compiled list of Artifact findings (Currently Sent Offsite)</u><BR>Cultist Blade Fragments: x8<BR>Brass Multiplicative Ore Sample: x105<BR>Syndicate Revolutionary Leader Implant (Broken) x1<BR>Extinct Cortical Borer Tissue Sample x1<BR>Space Carp Fossil x3"
+	info = "<b>Day 9: Tenative Conclusions</b><BR><BR>While the area appears to be of significant cultural importance to the lizard race, outside of some sparce contact with native wildlife, we're yet to find any exact reasoning for the nature of this phenomenon. It seems that organic life is communally drawn to this planet as though it functions as a final resting place for intelligent life. As per company guidelines, this site shall be given the following classification: 'LZ-0271 - Elephant Graveyard' <BR><BR><u>Compiled list of Artifact findings (Currently Sent Offsite)</u><BR>Cultist Blade Fragments: x8<BR>Brass Multiplicative Ore Sample: x105<BR>Syndicate Revolutionary Leader Implant (Broken) x1<BR>Extinct Cortical Borer Tissue Sample x1<BR>Space Carp Fossil x3"
 
 /obj/item/paper/fluff/ruins/elephant_graveyard/final_message
 	name = "Important looking Note"
