@@ -67,7 +67,7 @@
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
-	src.window_id = browser_id ? browser_id : "[REF(src_object)]-[ui_key]"
+	src.window_id = browser_id ? browser_id : "[REF(src_object)]-[ui_key]" // DO NOT replace with \ref here. src_object could potentially be tagged
 	src.custom_browser_id = browser_id ? TRUE : FALSE
 
 	set_interface(interface)
@@ -100,19 +100,37 @@
 	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
 
-	var/window_size = ""
+	var/window_size
 	if(width && height) // If we have a width and height, use them.
 		window_size = "size=[width]x[height];"
+	else
+		window_size = ""
 
 	// Remove titlebar and resize handles for a fancy window
-	// right from the beginning
-	var/have_title_bar = ""
+	var/have_title_bar
 	if(user.client.prefs.tgui_fancy)
-		have_title_bar = "titlebar=0;can_resize=0"
+		have_title_bar = "titlebar=0;can_resize=0;"
+	else
+		have_title_bar = "titlebar=1;can_resize=1;"
 
-	user << browse(get_html(), "window=[window_id];can_minimize=0;auto_format=0;[window_size][have_title_bar]") // Open the window.
+	// Generate page html
+	var/html
+	html = SStgui.basehtml
+	// Allow the src object to override the html if needed
+	html = src_object.ui_base_html(html)
+	// Replace template tokens with important UI data
+	// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+	// be tagged, so this is an effective unwrap
+	html = replacetextEx(html, "\[ref]", "\ref[src]")
+	html = replacetextEx(html, "\[style]", style)
+
+	// Open the window.
+	user << browse(html, "window=[window_id];can_minimize=0;auto_format=0;[window_size][have_title_bar]")
 	if (!custom_browser_id)
-		winset(user, window_id, "on-close=\"uiclose [REF(src)]\"") // Instruct the client to signal UI when the window is closed.
+		// Instruct the client to signal UI when the window is closed.
+		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+		// be tagged, so this is an effective unwrap
+		winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
 
 	if(!initial_data)
 		initial_data = src_object.ui_data(user)
@@ -188,57 +206,6 @@
  /**
   * private
   *
-  * Generate HTML for this UI.
-  *
-  * return string UI HTML output.
- **/
-/datum/tgui/proc/get_html()
-	var/html
-	html = SStgui.basehtml
-
-	//Allow the src object to override the html if needed
-	html = src_object.ui_base_html(html)
-	//Strip out any remaining custom tags that are used in ui_base_html
-	html = replacetext(html, "<!--customheadhtml-->", "")
-
-	//Setup for tgui stuff, including styles
-	html = replacetextEx(html, "\[ref]", "[REF(src)]")
-	html = replacetextEx(html, "\[style]", style)
-	return html
-
- /**
-  * private
-  *
-  * Get the config data/datastructure to initialize the UI with.
-  *
-  * return list The config data.
- **/
-/datum/tgui/proc/get_config_data()
-	var/list/config_data = list(
-			"title"     = title,
-			"status"    = status,
-			"screen"	= ui_screen,
-			"style"     = style,
-			"interface" = interface,
-			"fancy"     = user.client.prefs.tgui_fancy,
-			"locked"    = user.client.prefs.tgui_lock && !custom_browser_id,
-			"window"    = window_id,
-			"ref"       = "[REF(src)]",
-			"user"      = list(
-				"name"  = user.name,
-				"ref"   = "[REF(user)]"
-			),
-			"srcObject" = list(
-				"name" = "[src_object]",
-				"ref"  = "[REF(src_object)]"
-			),
-			"titlebar" = titlebar
-		)
-	return config_data
-
- /**
-  * private
-  *
   * Package the data to send to the UI, as JSON.
   * This includes the UI data and config_data.
   *
@@ -247,7 +214,19 @@
 /datum/tgui/proc/get_json(list/data, list/static_data)
 	var/list/json_data = list()
 
-	json_data["config"] = get_config_data()
+	json_data["config"] = list(
+		"title" = title,
+		"status" = status,
+		"screen" = ui_screen,
+		"style" = style,
+		"interface" = interface,
+		"fancy" = user.client.prefs.tgui_fancy,
+		"locked" = user.client.prefs.tgui_lock && !custom_browser_id,
+		"window" = window_id,
+		// Intentional \ref usage; tgui datums can't/shouldn't be tagged so this is an effective unwrap
+		"ref" = "\ref[src]"
+	)
+	
 	if(!isnull(data))
 		json_data["data"] = data
 	if(!isnull(static_data))
