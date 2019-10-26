@@ -119,10 +119,10 @@
 	cutting_tool = /obj/item/shovel
 	var/lead_tomb = FALSE
 	var/first_open = FALSE
-	var/untouched = TRUE
 
 /obj/structure/closet/crate/grave/PopulateContents()  //GRAVEROBBING IS NOW A FEATURE
 	..()
+	new /obj/effect/decal/remains/human/grave(src)
 	switch(rand(1,8))
 		if(1)
 			new /obj/item/coin/gold(src)
@@ -167,9 +167,6 @@
 						user.gain_trauma(/datum/brain_trauma/magic/stalker)
 						to_chat(user, "<span class='boldwarning'>Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!</span>")
 						first_open = FALSE
-					if(untouched == TRUE)
-						new /obj/effect/decal/remains/human/grave(src)
-						untouched = FALSE
 					return 1
 				return 1
 			else
