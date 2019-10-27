@@ -194,7 +194,8 @@
 /obj/item/reagent_containers/glass/beaker/slime
 	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
-/*/obj/item/reagent_containers/glass/beaker/large/libital austation start -- revert cobbychem
+/* austation start -- revert cobbychem
+/obj/item/reagent_containers/glass/beaker/large/libital
 	name = "libital reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/C2/libital = 10,/datum/reagent/medicine/granibitaluri = 40)
 
@@ -204,14 +205,17 @@
 
 /obj/item/reagent_containers/glass/beaker/large/multiver
 	name = "multiver reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40) austation end */
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40)
+austation end */
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
-/*/obj/item/reagent_containers/glass/beaker/instabitaluri austation start -- revert cobbychem
-	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 50) austation end */
+/* austation start -- revert cobbychem
+/obj/item/reagent_containers/glass/beaker/instabitaluri
+	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 50)
+austation end */
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"

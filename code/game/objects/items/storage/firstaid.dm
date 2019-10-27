@@ -316,7 +316,8 @@
 	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (TOXLOSS)
 
-/*/obj/item/storage/pill_bottle/multiver austation begin -- revert cobbychem
+/* austation begin -- revert cobbychem
+/obj/item/storage/pill_bottle/multiver
 	name = "bottle of multiver pills"
 	desc = "Contains pills used to counter toxins."
 
@@ -328,7 +329,8 @@
 
 /obj/item/storage/pill_bottle/multiver/less/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/multiver(src) austation end */
+		new /obj/item/reagent_containers/pill/multiver(src) 
+austation end */
 
 /obj/item/storage/pill_bottle/epinephrine
 	name = "bottle of epinephrine pills"

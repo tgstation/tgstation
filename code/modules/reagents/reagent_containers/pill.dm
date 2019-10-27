@@ -112,12 +112,14 @@
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 30)
 	rename_with_volume = TRUE
 
-/*/obj/item/reagent_containers/pill/multiver austation begin -- revert cobbychem
+/* austation begin -- revert cobbychem
+/obj/item/reagent_containers/pill/multiver
 	name = "multiver pill"
 	desc = "Neutralizes many common toxins and scales with unique medicine in the system. Diluted with granibitaluri."
 	icon_state = "pill17"
 	list_reagents = list(/datum/reagent/medicine/C2/multiver = 5, /datum/reagent/medicine/granibitaluri = 5)
-	rename_with_volume = TRUE austation end */
+	rename_with_volume = TRUE
+austation end */
 
 /obj/item/reagent_containers/pill/epinephrine
 	name = "epinephrine pill"

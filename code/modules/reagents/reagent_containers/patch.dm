@@ -27,7 +27,8 @@
 		return 0
 	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
 
-/*/obj/item/reagent_containers/pill/patch/libital austation begin -- revert cobbychem
+/* austation begin -- revert cobbychem
+/obj/item/reagent_containers/pill/patch/libital
 	name = "libital patch (brute)"
 	desc = "A pain reliever. Does minor liver damage. Diluted with Granibitaluri."
 	list_reagents = list(/datum/reagent/medicine/C2/libital = 2, /datum/reagent/medicine/granibitaluri = 8) //10 iterations
@@ -43,4 +44,5 @@
 	name = "instabitaluri patch"
 	desc = "Helps with brute and burn injuries."
 	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 20)
-	icon_state = "bandaid_both" austation end */
+	icon_state = "bandaid_both"
+austation end */

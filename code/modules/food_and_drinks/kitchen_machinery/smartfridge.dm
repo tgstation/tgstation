@@ -465,11 +465,13 @@
 	return FALSE
 
 /obj/machinery/smartfridge/chemistry/preloaded
-	/*initial_contents = list( austation start -- trekchems added back. Changes in equiv file in austation dir
+	/* austation start -- trekchems added back. Changes in equiv file in austation dir
+	initial_contents = list(
 		/obj/item/reagent_containers/pill/epinephrine = 12,
 		/obj/item/reagent_containers/pill/multiver = 5,
 		/obj/item/reagent_containers/glass/bottle/epinephrine = 1,
-		/obj/item/reagent_containers/glass/bottle/multiver = 1) austation end */
+		/obj/item/reagent_containers/glass/bottle/multiver = 1)
+	austation end */
 
 // ----------------------------
 // Virology Medical Smartfridge
