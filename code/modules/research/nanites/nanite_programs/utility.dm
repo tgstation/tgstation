@@ -1,7 +1,7 @@
 //Programs that interact with other programs or nanites directly, or have other special purposes.
 /datum/nanite_program/viral
 	name = "Viral Replica"
-	desc = "The nanites constantly send encrypted signals attempting to forcefully copy their own programming into other nanite clusters."
+	desc = "The nanites constantly send encrypted signals attempting to forcefully copy their own programming into other nanite clusters, also overriding or disabling their cloud sync."
 	use_rate = 0.5
 	rogue_types = list(/datum/nanite_program/toxic)
 	extra_settings = list("Program Overwrite","Cloud Overwrite")
@@ -9,7 +9,6 @@
 	var/pulse_cooldown = 0
 	var/sync_programs = TRUE
 	var/sync_overwrite = FALSE
-	var/overwrite_cloud = FALSE
 	var/set_cloud = 0
 
 /datum/nanite_program/viral/set_extra_setting(user, setting)
@@ -28,21 +27,16 @@
 				sync_programs = TRUE
 				sync_overwrite = TRUE
 	if(setting == "Cloud Overwrite")
-		var/overwrite_type = input("Choose what to do with the target's Cloud ID", name) as null|anything in list("Overwrite","Disable","Keep")
+		var/overwrite_type = input("Choose what to do with the target's Cloud ID", name) as null|anything in list("Overwrite","Set to 0 (Disable)")
 		if(!overwrite_type)
 			return
 		switch(overwrite_type)
-			if("Keep") //Don't change the cloud ID
-				overwrite_cloud = FALSE
-				set_cloud = 0
-			if("Disable") //Set the cloud ID to disabled
-				overwrite_cloud = TRUE
+			if("Set to 0 (Disable)") //Set the cloud ID to 0
 				set_cloud = 0
 			if("Overwrite") //Set the cloud ID to what we choose
 				var/new_cloud = input(user, "Choose the Cloud ID to set on infected nanites (1-100)", name, null) as null|num
 				if(isnull(new_cloud))
 					return
-				overwrite_cloud = TRUE
 				set_cloud = CLAMP(round(new_cloud, 1), 1, 100)
 
 /datum/nanite_program/viral/get_extra_setting(setting)
@@ -54,15 +48,9 @@
 		else
 			return "Add To"
 	if(setting == "Cloud Overwrite")
-		if(!overwrite_cloud)
-			return "None"
-		else if(set_cloud == 0)
-			return "Disable"
-		else
-			return set_cloud
+		return set_cloud
 
 /datum/nanite_program/viral/copy_extra_settings_to(datum/nanite_program/viral/target)
-	target.overwrite_cloud = overwrite_cloud
 	target.set_cloud = set_cloud
 	target.sync_programs = sync_programs
 	target.sync_overwrite = sync_overwrite
@@ -75,8 +63,7 @@
 			continue
 		if(sync_programs)
 			SEND_SIGNAL(M, COMSIG_NANITE_SYNC, nanites, sync_overwrite)
-		if(overwrite_cloud)
-			SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD, set_cloud)
+		SEND_SIGNAL(M, COMSIG_NANITE_SET_CLOUD, set_cloud)
 	pulse_cooldown = world.time + 75
 
 /datum/nanite_program/monitoring
@@ -311,14 +298,12 @@
 
 /datum/nanite_program/mitosis
 	name = "Mitosis"
-	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process, instead of drawing from a template. This rapidly speeds up the replication rate,\
-			but it causes occasional software errors due to faulty copies. Not compatible with cloud sync."
+	desc = "The nanites gain the ability to self-replicate, using bluespace to power the process. Becomes more effective the more nanites are already in the host.\
+			The replication has also a chance to corrupt the nanite programming due to copy faults - cloud sync is highly recommended."
 	use_rate = 0
 	rogue_types = list(/datum/nanite_program/toxic)
 
 /datum/nanite_program/mitosis/active_effect()
-	if(nanites.cloud_id)
-		return
 	var/rep_rate = round(nanites.nanite_volume / 50, 1) //0.5 per 50 nanite volume
 	rep_rate *= 0.5
 	nanites.adjust_nanites(null, rep_rate)

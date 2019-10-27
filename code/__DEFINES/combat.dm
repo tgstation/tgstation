@@ -5,8 +5,8 @@
 //Damage defines //TODO: merge these down to reduce on defines
 #define BRUTE		"brute"
 #define BURN		"fire"
-#define TOX			"tox"
-#define OXY			"oxy"
+#define TOX			"toxin"
+#define OXY			"oxygen"
 #define CLONE		"clone"
 #define STAMINA 	"stamina"
 #define BRAIN		"brain"
