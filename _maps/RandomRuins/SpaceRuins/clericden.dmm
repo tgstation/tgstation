@@ -27,18 +27,19 @@
 /turf/open/floor/plating,
 /area/ruin/unpowered/no_grav)
 "h" = (
-/obj/structure/light_prism,
-/turf/open/floor/plating,
-/area/ruin/unpowered/no_grav)
-"i" = (
 /obj/structure/grille/broken,
 /obj/structure/barricade/wooden/crude,
 /obj/structure/trap/cult,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered/no_grav)
+"i" = (
+/obj/structure/light_prism,
+/turf/open/floor/plasteel/airless/dark,
 /area/ruin/unpowered/no_grav)
 "j" = (
-/turf/open/floor/plasteel/airless/dark,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "k" = (
 /obj/item/ectoplasm,
@@ -49,53 +50,51 @@
 /turf/open/floor/plasteel/airless/dark,
 /area/ruin/unpowered/no_grav)
 "m" = (
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "n" = (
-/obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/bottle/holywater,
-/turf/open/floor/carpet,
+/turf/open/floor/carpet/royalblack/airless,
 /area/ruin/unpowered/no_grav)
 "o" = (
-/obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/drinks/bottle/holywater,
+/turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "p" = (
-/obj/structure/closet/crate/coffin,
-/turf/open/floor/plating,
+/obj/structure/table/wood/fancy,
+/obj/item/melee/cleric_mace,
+/turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "q" = (
 /obj/effect/decal/cleanable/shreds,
-/turf/open/floor/carpet,
+/turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "r" = (
-/obj/structure/table/wood/fancy,
-/obj/item/melee/cleric_mace,
-/turf/open/floor/carpet,
+/obj/effect/decal/cleanable/shreds,
+/obj/effect/decal/remains/human,
+/obj/item/disk/design_disk/adv/cleric_mace,
+/obj/structure/trap/cult,
+/turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "s" = (
 /obj/effect/decal/cleanable/shreds,
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/carpet/royalblack/airless,
 /area/ruin/unpowered/no_grav)
 "t" = (
-/obj/structure/bonfire,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/carpet/royalblue/airless,
 /area/ruin/unpowered/no_grav)
 "u" = (
-/turf/open/floor/carpet/royalblue,
+/turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "v" = (
-/turf/open/floor/carpet,
-/area/ruin/unpowered/no_grav)
-"w" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/shreds,
-/turf/open/floor/carpet,
+/turf/open/floor/carpet/airless,
+/area/ruin/unpowered/no_grav)
+"w" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/carpet/royalblack/airless,
 /area/ruin/unpowered/no_grav)
 "x" = (
 /obj/structure/bonfire,
@@ -103,60 +102,55 @@
 /area/ruin/unpowered/no_grav)
 "y" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/carpet,
+/turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "z" = (
-/obj/effect/decal/cleanable/shreds,
-/obj/effect/decal/remains/human,
-/obj/item/disk/design_disk/adv/cleric_mace,
-/obj/structure/trap/cult,
-/turf/open/floor/carpet,
+/obj/item/paper/fluff/ruins/clericsden/contact,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "A" = (
 /obj/structure/table/wood{
 	layer = 3.3
 	},
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/carpet/royalblack/airless,
 /area/ruin/unpowered/no_grav)
 "B" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/carpet,
+/turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "C" = (
-/obj/structure/bonfire,
-/turf/open/floor/plating,
-/area/ruin/unpowered/no_grav)
-"D" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/turf/open/floor/carpet/royalblue,
+/turf/open/floor/carpet/royalblue/airless,
+/area/ruin/unpowered/no_grav)
+"D" = (
+/obj/effect/decal/remains/human,
+/obj/structure/trap/cult,
+/turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "E" = (
-/obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/carpet/royalblack,
+/obj/effect/decal/cleanable/blood/tracks,
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "F" = (
-/turf/open/floor/plating,
+/obj/item/flashlight/flare/torch,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "G" = (
-/obj/item/flashlight/flare/torch,
-/turf/open/floor/plasteel/airless/dark,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/structure/trap/cult,
+/turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "H" = (
-/obj/item/paper/fluff/ruins/clericsden/contact,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/structure/light_prism,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "I" = (
-/obj/structure/rack,
-/obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask/breath,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/carpet/airless,
 /area/ruin/unpowered/no_grav)
 "J" = (
 /obj/structure/rack,
@@ -167,51 +161,35 @@
 "K" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
-/obj/structure/barricade/wooden/crude,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "L" = (
 /obj/machinery/door/airlock/wood,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "M" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/machinery/door/airlock/wood,
-/turf/open/floor/plasteel/airless/dark,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "N" = (
 /mob/living/simple_animal/hostile/construct/proteon,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "O" = (
-/obj/effect/decal/remains/human,
-/obj/structure/trap/cult,
-/turf/open/floor/carpet,
-/area/ruin/unpowered/no_grav)
-"P" = (
-/obj/effect/decal/cleanable/blood/tracks,
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
-/turf/open/floor/carpet,
+/obj/structure/grille,
+/obj/structure/window/fulltile,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "Q" = (
 /obj/item/storage/book/bible,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
-"R" = (
-/obj/effect/decal/cleanable/blood/tracks,
-/obj/structure/trap/cult,
-/turf/open/floor/carpet,
-/area/ruin/unpowered/no_grav)
 "S" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
-"T" = (
-/obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/carpet,
 /area/ruin/unpowered/no_grav)
 "U" = (
 /obj/effect/decal/remains/human,
@@ -294,7 +272,7 @@ b
 b
 b
 b
-c
+b
 b
 c
 a
@@ -307,7 +285,7 @@ d
 e
 d
 e
-g
+K
 d
 d
 d
@@ -323,17 +301,17 @@ a
 a
 b
 e
-h
+i
 l
 e
-t
-j
+x
+m
 e
-C
-F
+x
+m
 e
-F
-I
+m
+J
 d
 e
 b
@@ -343,18 +321,18 @@ a
 a
 a
 e
-o
-m
-m
-u
-E
+j
+n
+n
+t
+w
 A
-D
-m
+C
+n
 A
-D
-m
-h
+C
+n
+H
 e
 d
 a
@@ -362,19 +340,19 @@ a
 (8,1,1) = {"
 a
 f
-i
-j
-n
+h
+m
+o
 q
-v
-v
-v
-O
-v
-v
-v
-v
-T
+u
+u
+u
+D
+u
+u
+u
+u
+I
 L
 c
 c
@@ -383,17 +361,17 @@ c
 a
 b
 g
-j
+m
+p
 r
-z
-w
+v
 y
 B
-P
+E
 B
 y
 B
-R
+G
 B
 M
 U
@@ -403,18 +381,18 @@ S
 a
 b
 d
-F
 m
+n
 s
-u
-m
+t
+n
 A
-D
-m
+C
+n
 A
-D
-m
-h
+C
+n
+H
 d
 e
 c
@@ -423,16 +401,16 @@ c
 a
 c
 e
-h
-p
+i
+l
 d
 x
-H
+z
 e
-C
-G
+x
+F
 e
-j
+m
 J
 e
 d
@@ -447,7 +425,7 @@ e
 d
 d
 e
-K
+O
 d
 d
 d
@@ -472,7 +450,7 @@ b
 b
 b
 b
-c
+b
 b
 b
 b
