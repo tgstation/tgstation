@@ -198,8 +198,7 @@ All the important duct code:
 		D.neighbours[src] = turn(direction, 180)
 ///remove all our neighbours, and remove us from our neighbours aswell
 /obj/machinery/duct/proc/lose_neighbours()
-	for(var/A in neighbours)
-		var/obj/machinery/duct/D = A
+	for(var/obj/machinery/duct/D in neighbours)
 		D.neighbours.Remove(src)
 	neighbours = list()
 ///add a connect direction
