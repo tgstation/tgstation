@@ -93,7 +93,7 @@ All the important duct code:
 
 	if(!dumb && D.dumb && !(opposite_dir & D.connects))
 		return
-	if(dumb && D.dumb && !(connects & D.connects)) //we eliminated a few more scenario in attempt connect
+	if(dumb && D.dumb && !(connects & D.connects)) //we eliminated a few more scenarios in attempt connect
 		return
 
 	if((duct == D.duct) && duct)//check if we're not just comparing two null values
@@ -120,7 +120,14 @@ All the important duct code:
 			create_duct()
 			duct.add_duct(D)
 	add_neighbour(D)
-	D.attempt_connect()//tell our buddy its time to pass on the torch of connecting to pipes. This shouldn't ever infinitely loop since it only works on pipes that havent been inductrinated
+	//tell our buddy its time to pass on the torch of connecting to pipes. This shouldn't ever infinitely loop since it only works on pipes that havent been inductrinated
+	if(!neighbours.len) //we have not yet connected to anyone, that only happens at roundstart
+		D.attempt_connect() 
+	else //kinda shitty, but this way we properly connect without going through unnecessary checks 
+		D.add_neighbour(src)
+		D.add_connects(opposite_dir) 
+		D.update_icon()
+
 	return TRUE
 ///connect to a plumbing object
 /obj/machinery/duct/proc/connect_plumber(datum/component/plumbing/P, direction)
