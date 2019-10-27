@@ -35,6 +35,7 @@
 	var/icon_vomit_start = "vomit_start"
 	var/icon_vomit = "vomit"
 	var/icon_vomit_end = "vomit_end"
+	var/message_cooldown = 0
 
 /mob/living/simple_animal/hostile/retaliate/goose/handle_automated_movement()
 	. = ..()
@@ -81,7 +82,9 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/reagent_containers/food/tasty)
 	if (contents.len > GOOSE_SATIATED)
-		visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
+		if(message_cooldown < world.time)
+			visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
+			message_cooldown = world.time + 5 SECONDS
 		return
 	if (tasty.foodtype & GROSS)
 		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
@@ -90,7 +93,9 @@
 		vomitCoefficient += 3
 		vomitTimeBonus += 2
 	else
-		visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
+		if(message_cooldown < world.time)
+			visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
+			message_cooldown = world.time + 5 SECONDS
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
 	var/turf/T = get_turf(src)
