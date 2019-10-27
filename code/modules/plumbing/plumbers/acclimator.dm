@@ -27,7 +27,7 @@
 	var/emptying = FALSE
 
 	ui_x = 320
-	ui_y = 300
+	ui_y = 310
 
 /obj/machinery/plumbing/acclimator/Initialize(mapload, bolt)
 	. = ..()
