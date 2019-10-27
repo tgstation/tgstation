@@ -432,10 +432,7 @@
 			return
 		race_type = new_race_type
 	if(setting == "Mode")
-		if(mode == "Is")
-			mode = "Is Not"
-		else
-			mode = "Is"
+		mode = mode == "Is" ? "Is Not" : "Is"
 
 
 /datum/nanite_program/sensor/race/get_extra_setting(setting)
