@@ -168,4 +168,7 @@
 	name = "plastic floor"
 	desc = "Cheap, lightweight flooring."
 	icon_state = "plastic"
+	thermal_conductivity = 0.1
+	heat_capacity = 900
 	floor_tile = /obj/item/stack/tile/plastic
+	broken_states = list("plastic-damaged1","plastic-damaged2")
