@@ -505,9 +505,16 @@
 	program_type = /datum/nanite_program/sensor/voice
 	category = list("Sensor Nanites")
 
-/datum/design/nanites/sensor__nanite_volume
+/datum/design/nanites/sensor_nanite_volume
 	name = "Nanite Volume Sensor"
 	desc = "The nanites receive a signal when the nanite supply is above/below a certain percentage."
 	id = "sensor_nanite_volume"
 	program_type = /datum/nanite_program/sensor/nanite_volume
+	category = list("Sensor Nanites")
+
+/datum/design/nanites/sensor_race
+	name = "Race Sensor"
+	desc = "When triggered, the nanites scan the host to determine their race and output a signal depending on the conditions set in the settings."
+	id = "sensor_race_nanites"
+	program_type = /datum/nanite_program/sensor/race
 	category = list("Sensor Nanites")

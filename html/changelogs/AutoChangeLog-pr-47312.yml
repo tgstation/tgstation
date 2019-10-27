@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - admin: "Plumbing smoke reactions no longer spam admin notifications."

@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
   * For when you have pie on your face
   */
 /datum/component/creamed
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 	var/mutable_appearance/creamface
 

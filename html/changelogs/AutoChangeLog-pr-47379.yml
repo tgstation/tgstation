@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Fixed some pointing inconsistencies in darkness and across walls. If you can see it, you can point at it."

@@ -1,4 +1,0 @@
-author: "AnturK"
-delete-after: True
-changes: 
-  - admin: "You can now specify amount spawned in spawn verb in \"path:amount\" format."
