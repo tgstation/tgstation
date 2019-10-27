@@ -10,7 +10,7 @@ All the important duct code:
 	level = 1
 	///bitfield with the directions we're connected in
 	var/connects
-	///set to TRUE to disable smart cable behaviour
+	///set to TRUE to disable smart duct behaviour
 	var/dumb = FALSE
 	///wheter we allow our connects to be changed after initialization or not
 	var/lock_connects = FALSE
@@ -97,7 +97,7 @@ All the important duct code:
 		return
 
 	if((duct == D.duct) && duct)//check if we're not just comparing two null values
-		add_neighbour(D)
+		add_neighbour(D, direction)
 
 		D.add_connects(opposite_dir)
 		D.update_icon()
@@ -119,14 +119,9 @@ All the important duct code:
 		else
 			create_duct()
 			duct.add_duct(D)
-	add_neighbour(D)
+	add_neighbour(D, direction)
 	//tell our buddy its time to pass on the torch of connecting to pipes. This shouldn't ever infinitely loop since it only works on pipes that havent been inductrinated
-	if(!neighbours.len) //we have not yet connected to anyone, that only happens at roundstart
-		D.attempt_connect() 
-	else //kinda shitty, but this way we properly connect without going through unnecessary checks 
-		D.add_neighbour(src)
-		D.add_connects(opposite_dir) 
-		D.update_icon()
+	D.attempt_connect() 
 
 	return TRUE
 ///connect to a plumbing object
@@ -142,8 +137,9 @@ All the important duct code:
 	if(opposite_dir & comp_directions)
 		if(!duct)
 			create_duct()
-		duct.add_plumber(P, opposite_dir)
-		return TRUE
+		if(duct.add_plumber(P, opposite_dir))
+			neighbours[P.parent] = direction
+			return TRUE
 ///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
 /obj/machinery/duct/proc/disconnect_duct()
 	anchored = FALSE
@@ -157,16 +153,49 @@ All the important duct code:
 		new drop_on_wrench(drop_location())
 		qdel(src)
 
+///''''''''''''''''optimized''''''''''''''''' proc for quickly reconnecting after a duct net was destroyed
+/obj/machinery/duct/proc/reconnect()
+	if(neighbours.len && !duct)
+		create_duct()
+	for(var/atom/movable/AM in neighbours)
+		if(istype(AM, /obj/machinery/duct))
+			var/obj/machinery/duct/D = AM
+			if(D.duct)
+				if(D.duct == duct) //we're already connected
+					continue 
+				else 
+					duct.assimilate(D.duct)
+					continue 
+			else 
+				duct.add_duct(D)
+				D.reconnect()
+		else 
+			var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
+			if(AM in get_step(src, neighbours[AM])) //did we move?
+				if(P)
+					connect_plumber(P, neighbours[AM])
+			else 
+				neighbours -= AM //we moved
+
+///Special proc to draw a new connect frame based on neighbours. not the norm so we can support multiple duct kinds
+/obj/machinery/duct/proc/generate_connects()
+	if(lock_connects)
+		return 
+	connects = 0
+	for(var/A in neighbours)
+		connects |= neighbours[A]
+	update_icon()
+
 ///create a new duct datum
 /obj/machinery/duct/proc/create_duct()
 	duct = new()
 	duct.add_duct(src)
 ///add a duct as neighbour. this means we're connected and will connect again if we ever regenerate
-/obj/machinery/duct/proc/add_neighbour(obj/machinery/duct/D)
+/obj/machinery/duct/proc/add_neighbour(obj/machinery/duct/D, direction)
 	if(!(D in neighbours))
-		neighbours += D
+		neighbours[D] = direction
 	if(!(src in D.neighbours))
-		D.neighbours += src
+		D.neighbours[src] = turn(direction, 180)
 ///remove all our neighbours, and remove us from our neighbours aswell
 /obj/machinery/duct/proc/lose_neighbours()
 	for(var/A in neighbours)
@@ -279,7 +308,7 @@ All the important duct code:
 		return 
 
 	add_connects(direction) //the connect of the other duct is handled in connect_network, but do this here for the parent duct because it's not necessary in normal cases
-	add_neighbour(D)
+	add_neighbour(D, direction)
 	connect_network(D, direction, TRUE)
 	update_icon()
 ///has a total of 5 layers and doesnt give a shit about color. its also dumb so doesnt autoconnect. 
