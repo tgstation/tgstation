@@ -1399,25 +1399,25 @@
 		var/cookiealt = /obj/item/reagent_containers/food/snacks/cookie
 		if(isskeleton(H))
 			cookiealt = /obj/item/reagent_containers/food/condiment/milk
-		if(isplasmaman(H))
+		else if(isplasmaman(H))
 			cookiealt = /obj/item/reagent_containers/food/condiment/milk
-		if(isethereal(H))
+		else if(isethereal(H))
 			cookiealt = /obj/item/reagent_containers/food/snacks/energybar
-		if(islizard(H))
+		else if(islizard(H))
 			cookiealt = /obj/item/reagent_containers/food/snacks/meat/slab
 		var/obj/item/new_item = new cookiealt(H)
 		if(H.put_in_hands(new_item))
 			H.update_inv_hands()
 		else
 			qdel(new_item)
-			log_admin("[key_name(H)] has their hands full, so they did not receive their [new_item], spawned by [key_name(src.owner)].")
-			message_admins("[key_name(H)] has their hands full, so they did not receive their [new_item], spawned by [key_name(src.owner)].")
+			log_admin("[key_name(H)] has their hands full, so they did not receive their [new_item.name], spawned by [key_name(src.owner)].")
+			message_admins("[key_name(H)] has their hands full, so they did not receive their [new_item.name], spawned by [key_name(src.owner)].")
 			return
 
 		log_admin("[key_name(H)] got their [new_item], spawned by [key_name(src.owner)].")
 		message_admins("[key_name(H)] got their [new_item], spawned by [key_name(src.owner)].")
 		SSblackbox.record_feedback("amount", "admin_cookies_spawned", 1)
-		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best [new_item]</b>!</span>")
+		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best [new_item.name]!</b></span>")
 		SEND_SOUND(H, sound('sound/effects/pray_chaplain.ogg'))
 
 	else if(href_list["adminsmite"])
