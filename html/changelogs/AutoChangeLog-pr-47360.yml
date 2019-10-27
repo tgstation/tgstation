@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "The Clerics Den ruin no longer has any atmos differences at roundstart."
