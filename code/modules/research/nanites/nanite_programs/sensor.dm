@@ -3,7 +3,7 @@
 	desc = "These nanites send a signal code when a certain condition is met."
 	unique = FALSE
 	extra_settings = list("Sent Code")
-
+	var/can_rule = FALSE
 	var/sent_code = 0
 
 /datum/nanite_program/sensor/set_extra_setting(user, setting)
@@ -30,6 +30,9 @@
 /datum/nanite_program/sensor/active_effect()
 	if(sent_code && check_event())
 		send_code()
+
+/datum/nanite_program/sensor/proc/make_rule(datum/nanite_program/target)
+	return
 
 /datum/nanite_program/sensor/repeat
 	name = "Signal Repeater"
@@ -124,6 +127,7 @@
 	name = "Health Sensor"
 	desc = "The nanites receive a signal when the host's health is above/below a target percentage."
 	extra_settings = list("Sent Code","Health Percent","Direction")
+	can_rule = TRUE
 	var/spent = FALSE
 	var/percent = 50
 	var/direction = "Above"
@@ -177,9 +181,16 @@
 		spent = FALSE
 		return FALSE
 
+/datum/nanite_program/sensor/health/make_rule(datum/nanite_program/target)
+	var/datum/nanite_rule/health/rule = new(target)
+	rule.above = (direction == "Above")
+	rule.threshold = percent
+	return rule
+
 /datum/nanite_program/sensor/crit
 	name = "Critical Health Sensor"
 	desc = "The nanites receive a signal when the host first reaches critical health."
+	can_rule = TRUE
 	var/spent = FALSE
 
 /datum/nanite_program/sensor/crit/check_event()
@@ -192,18 +203,28 @@
 		spent = FALSE
 		return FALSE
 
+/datum/nanite_program/sensor/crit/make_rule(datum/nanite_program/target)
+	var/datum/nanite_rule/crit/rule = new(target)
+	return rule
+
 /datum/nanite_program/sensor/death
 	name = "Death Sensor"
 	desc = "The nanites receive a signal when they detect the host is dead."
+	can_rule = TRUE
 	var/spent = FALSE
 
 /datum/nanite_program/sensor/death/on_death()
 	send_code()
 
+/datum/nanite_program/sensor/death/make_rule(datum/nanite_program/target)
+	var/datum/nanite_rule/death/rule = new(target)
+	return rule
+
 /datum/nanite_program/sensor/nanite_volume
 	name = "Nanite Volume Sensor"
 	desc = "The nanites receive a signal when the nanite supply is above/below a certain percentage."
 	extra_settings = list("Sent Code","Nanite Percent","Direction")
+	can_rule = TRUE
 	var/spent = FALSE
 	var/percent = 50
 	var/direction = "Above"
@@ -258,12 +279,19 @@
 		spent = FALSE
 		return FALSE
 
+/datum/nanite_program/sensor/nanite_volume/make_rule(datum/nanite_program/target)
+	var/datum/nanite_rule/nanites/rule = new(target)
+	rule.above = (direction == "Above")
+	rule.threshold = percent
+	return rule
+
 /datum/nanite_program/sensor/damage
 	name = "Damage Sensor"
 	desc = "The nanites receive a signal when a host's specific damage type is above/below a target value."
 	extra_settings = list("Sent Code","Damage Type","Damage","Direction")
+	can_rule = TRUE
 	var/spent = FALSE
-	var/damage_type = "Brute"
+	var/damage_type = BRUTE
 	var/damage = 50
 	var/direction = "Above"
 
@@ -279,7 +307,7 @@
 			return
 		damage = CLAMP(round(new_damage, 1), 0, 500)
 	if(setting == "Damage Type")
-		var/list/damage_types = list("Brute","Burn","Toxin","Oxygen","Cellular")
+		var/list/damage_types = list(BRUTE,BURN,TOX,OXY,CLONE)
 		var/new_damage_type = input("Choose the damage type", name) as null|anything in sortList(damage_types)
 		if(!new_damage_type)
 			return
@@ -296,7 +324,7 @@
 	if(setting == "Damage")
 		return damage
 	if(setting == "Damage Type")
-		return damage_type
+		return capitalize(damage_type)
 	if(setting == "Direction")
 		return direction
 
@@ -311,15 +339,15 @@
 	var/check_above = (direction == "Above")
 	var/damage_amt = 0
 	switch(damage_type)
-		if("Brute")
+		if(BRUTE)
 			damage_amt = host_mob.getBruteLoss()
-		if("Burn")
+		if(BURN)
 			damage_amt = host_mob.getFireLoss()
-		if("Toxin")
+		if(TOX)
 			damage_amt = host_mob.getToxLoss()
-		if("Oxygen")
+		if(OXY)
 			damage_amt = host_mob.getOxyLoss()
-		if("Cellular")
+		if(CLONE)
 			damage_amt = host_mob.getCloneLoss()
 
 	if(damage_amt >= damage)
@@ -336,6 +364,13 @@
 	else
 		spent = FALSE
 		return FALSE
+
+/datum/nanite_program/sensor/damage/make_rule(datum/nanite_program/target)
+	var/datum/nanite_rule/damage/rule = new(target)
+	rule.above = (direction == "Above")
+	rule.threshold = damage
+	rule.damage_type = damage_type
+	return rule
 
 /datum/nanite_program/sensor/voice
 	name = "Voice Sensor"
