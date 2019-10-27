@@ -3384,16 +3384,17 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port/aft)
 "afB" = (
-/obj/machinery/light/small{
-	dir = 4
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken6"
-	},
-/area/space)
+/obj/structure/window/reinforced,
+/obj/machinery/monkey_recycler,
+/turf/open/floor/plasteel/dark,
+/area/science/xenobiology)
 "afC" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -38537,7 +38538,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/checkpoint/science/research)
 "bfd" = (
-/obj/machinery/processor/slime,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -38545,7 +38545,18 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/machinery/button/door{
+	id = "xeno4";
+	name = "Creature Cell 4 Toggle";
+	pixel_x = 24;
+	pixel_y = -24;
+	req_access_txt = "55"
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 0
+	},
+/obj/machinery/processor/slime,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "bfe" = (
@@ -39636,27 +39647,16 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/surgery)
 "bgJ" = (
-/obj/machinery/monkey_recycler,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
+/obj/machinery/light/small{
+	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/machinery/button/door{
-	id = "xeno4";
-	name = "Creature Cell 4 Toggle";
-	pixel_x = 24;
-	pixel_y = -24;
-	req_access_txt = "55"
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
 	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel/dark,
-/area/science/xenobiology)
+/area/crew_quarters/locker)
 "bgK" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -42363,6 +42363,24 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/quartermaster/storage)
+"bkw" = (
+/obj/structure/bed,
+/obj/machinery/button/door{
+	id = "Cabin_3";
+	name = "Cabin 3 Privacy Lock";
+	normaldoorcontrol = 1;
+	pixel_x = 0;
+	pixel_y = 24;
+	specialfunctions = 4
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
+/obj/effect/landmark/start/assistant,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/wood,
+/area/crew_quarters/locker)
 "bkx" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
@@ -42407,6 +42425,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"bkB" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/crew_quarters/locker)
 "bkC" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -42486,6 +42515,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
+"bkI" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/locker)
 "bkJ" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -42793,6 +42831,27 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"ble" = (
+/obj/structure/bed,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/machinery/button/door{
+	id = "Cabin_2";
+	name = "Cabin 2 Privacy Lock";
+	normaldoorcontrol = 1;
+	pixel_x = 0;
+	pixel_y = 24;
+	specialfunctions = 4
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/effect/landmark/start/assistant,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/crew_quarters/locker)
 "blf" = (
 /turf/closed/wall,
 /area/security/checkpoint/supply)
@@ -42837,6 +42896,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"blj" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/locker)
 "blk" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/computer/cargo{
@@ -42886,6 +42955,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
+"bln" = (
+/obj/structure/bed,
+/obj/effect/landmark/start/assistant,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/wood,
+/area/crew_quarters/locker)
 "blo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -45489,6 +45564,21 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/kitchen)
+"boW" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/machinery/newscaster{
+	pixel_x = -30
+	},
+/obj/machinery/button/door{
+	id = "Cabin_3Privacy";
+	name = "Cabin 3 Privacy Toggle";
+	pixel_x = -24;
+	pixel_y = -24
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/crew_quarters/locker)
 "boX" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -46974,6 +47064,10 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/central)
+"brb" = (
+/obj/structure/dresser,
+/turf/open/floor/wood,
+/area/crew_quarters/locker)
 "brc" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral{
@@ -48300,6 +48394,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
+"bsR" = (
+/obj/structure/sign/poster/contraband/revolver,
+/turf/closed/wall,
+/area/crew_quarters/locker)
 "bsS" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -49528,6 +49626,12 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
+"buH" = (
+/obj/structure/table/wood,
+/obj/item/folder/red,
+/obj/item/lighter,
+/turf/open/floor/wood,
+/area/crew_quarters/locker)
 "buI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral,
@@ -49716,6 +49820,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
+"buY" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/machinery/newscaster{
+	pixel_x = 30
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/locker)
 "buZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -59635,9 +59746,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
-"bJS" = (
-/turf/closed/wall,
-/area/space)
 "bJT" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -59659,24 +59767,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"bJU" = (
-/obj/structure/bed,
-/obj/machinery/button/door{
-	id = "Cabin_3";
-	name = "Cabin 3 Privacy Lock";
-	normaldoorcontrol = 1;
-	pixel_x = 0;
-	pixel_y = 24;
-	specialfunctions = 4
-	},
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
-	},
-/obj/effect/landmark/start/assistant,
-/obj/item/bedsheet/random,
-/turf/open/floor/wood,
-/area/space)
 "bJV" = (
 /obj/effect/turf_decal/tile/red,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -59705,26 +59795,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"bJY" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
-	},
-/area/space)
-"bJZ" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/space)
 "bKa" = (
 /obj/structure/dresser,
 /obj/machinery/button/door{
@@ -59741,27 +59811,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/locker)
-"bKb" = (
-/obj/structure/bed,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/button/door{
-	id = "Cabin_2";
-	name = "Cabin 2 Privacy Lock";
-	normaldoorcontrol = 1;
-	pixel_x = 0;
-	pixel_y = 24;
-	specialfunctions = 4
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/effect/landmark/start/assistant,
-/obj/item/bedsheet/random,
-/turf/open/floor/wood{
-	icon_state = "wood-broken3"
-	},
-/area/space)
 "bKc" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/newscaster{
@@ -59777,44 +59826,6 @@
 	icon_state = "wood-broken4"
 	},
 /area/crew_quarters/locker)
-"bKd" = (
-/turf/closed/wall/rust,
-/area/space)
-"bKe" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/space)
-"bKf" = (
-/obj/structure/bed,
-/obj/effect/landmark/start/assistant,
-/obj/item/bedsheet/random,
-/turf/open/floor/wood,
-/area/space)
-"bKg" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/machinery/newscaster{
-	pixel_x = -30
-	},
-/obj/machinery/button/door{
-	id = "Cabin_3Privacy";
-	name = "Cabin 3 Privacy Toggle";
-	pixel_x = -24;
-	pixel_y = -24
-	},
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
-/area/space)
-"bKh" = (
-/obj/structure/dresser,
-/turf/open/floor/wood,
-/area/space)
 "bKi" = (
 /obj/structure/chair/pew{
 	icon_state = "pewmiddle";
@@ -59914,10 +59925,6 @@
 /obj/effect/turf_decal/caution/stand_clear,
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
-"bKq" = (
-/obj/structure/sign/poster/contraband/revolver,
-/turf/closed/wall,
-/area/space)
 "bKr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/grunge{
@@ -66223,12 +66230,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/starboard/aft)
-"bTc" = (
-/obj/structure/table/wood,
-/obj/item/folder/red,
-/obj/item/lighter,
-/turf/open/floor/wood,
-/area/space)
 "bTd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -66823,13 +66824,6 @@
 /obj/machinery/status_display/evac,
 /turf/closed/wall,
 /area/hallway/secondary/entry)
-"bUa" = (
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/machinery/newscaster{
-	pixel_x = 30
-	},
-/turf/open/floor/wood,
-/area/space)
 "bUb" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -116542,8 +116536,8 @@ bJm
 bLA
 bJG
 arf
-afB
-bKf
+bgJ
+bln
 bKk
 csS
 bVe
@@ -116799,8 +116793,8 @@ bJs
 bAi
 bJy
 bIV
-bJS
-bJS
+bIV
+bIV
 bLu
 cBI
 bUv
@@ -117056,8 +117050,8 @@ bJn
 bAy
 caL
 bIV
-bJU
-bKg
+bkw
+boW
 cBW
 cBv
 bUv
@@ -117313,8 +117307,8 @@ bJo
 bAL
 bJL
 arj
-bJY
-bKh
+bkB
+brb
 cBW
 cBy
 bVi
@@ -117570,8 +117564,8 @@ bJp
 bHw
 bIV
 bLu
-bJS
-bKq
+bIV
+bsR
 bIV
 csN
 bUv
@@ -117827,8 +117821,8 @@ bJq
 bHx
 bJL
 bKv
-bJZ
-bTc
+bkI
+buH
 bLu
 cht
 bVj
@@ -118084,8 +118078,8 @@ bJr
 bHy
 bFR
 bIV
-bKb
-bUa
+ble
+buY
 bIV
 afz
 bVk
@@ -118341,8 +118335,8 @@ bKC
 bHz
 bJK
 bIV
-bKd
-bJS
+bLu
+bIV
 bIV
 afA
 bVo
@@ -118598,8 +118592,8 @@ bJu
 bHD
 bJR
 bKH
-bKe
-bKf
+blj
+bln
 bIV
 ajd
 aer
@@ -133968,9 +133962,9 @@ afW
 acv
 bgz
 aWR
-bfd
+afB
 aho
-bgJ
+bfd
 bgF
 bgX
 aho
