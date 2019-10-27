@@ -1,0 +1,6 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - tweak: "Profits from selling returned items now goes to relevant department instead of it always being service department."
+  - tweak: "Returned vendor items will now be free for the workers of the relevant department, and prices will now properly reflect their true value."
+  - bugfix: "Fixed an issue where certain items would be unable to dispensed from a vendor."
