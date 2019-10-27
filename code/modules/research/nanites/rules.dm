@@ -117,7 +117,7 @@
 
 	var/threshold = 50
 	var/above = TRUE
-	var/damage_type = "Brute"
+	var/damage_type = BRUTE
 
 /datum/nanite_rule/damage/check_rule()
 	var/damage_amt = 0
