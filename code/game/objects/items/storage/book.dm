@@ -236,7 +236,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			sword.possessed = FALSE //allows the chaplain (or someone else) to reroll a new spirit for their sword
 			sword.name = initial(sword.name)
 			REMOVE_TRAIT(sword, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT) //in case the "sword" is a possessed dummy
-			user.visible_message("<span class='notice'>[user] has exorcised [sword]!</span>")
+			user.visible_message("<span class='notice'>[user] has exorcised [sword]!</span>", \
+								"<span class='notice'>You successfully exorcise [sword]!</span>")
 
 /obj/item/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."
