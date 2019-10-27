@@ -349,12 +349,13 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 
-		var/delmob = FALSE
-		switch(alert("Delete old mob?","Message","Yes","No","Cancel"))
-			if("Cancel")
-				return
-			if("Yes")
-				delmob = TRUE
+		var/delmob = TRUE
+		if(!isobserver(M))
+			switch(alert("Delete old mob?","Message","Yes","No","Cancel"))
+				if("Cancel")
+					return
+				if("No")
+					delmob = FALSE
 
 		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
