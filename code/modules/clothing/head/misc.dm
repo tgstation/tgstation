@@ -135,7 +135,7 @@
 		return
 	if(slot == SLOT_HEAD)
 		user.grant_language(/datum/language/piratespeak/)
-		to_chat(user, "You suddenly know how to speak like a pirate!")
+		to_chat(user, "<span class='boldnotice'>You suddenly know how to speak like a pirate!</span>")
 
 /obj/item/clothing/head/pirate/dropped(mob/user)
 	. = ..()
@@ -144,7 +144,7 @@
 	var/mob/living/carbon/human/H = user
 	if(H.get_item_by_slot(SLOT_HEAD) == src)
 		user.remove_language(/datum/language/piratespeak/)
-		to_chat(user, "You can no longer speak like a pirate.")
+		to_chat(user, "<span class='boldnotice'>You can no longer speak like a pirate.</span>")
 
 /obj/item/clothing/head/pirate/captain
 	icon_state = "hgpiratecap"
@@ -439,3 +439,9 @@
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/intern
+	name = "\improper CentCom Head Intern beancap"
+	desc = "A horrifying mix of beanie and softcap in CentCom green. You'd have to be pretty desperate for power over your peers to agree to wear this."
+	icon_state = "intern_hat"
+	item_state = "intern_hat"

@@ -294,7 +294,7 @@
 	icon_state = "smallbottle"
 	item_state = "bottle"
 	list_reagents = list(/datum/reagent/water = 49.5, /datum/reagent/fluorine = 0.5)//see desc, don't think about it too hard
-	custom_materials = list(/datum/material/glass=0)
+	custom_materials = list(/datum/material/plastic=1000)
 	volume = 50
 	amount_per_transfer_from_this = 10
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 80, 90)
@@ -394,7 +394,7 @@
 /obj/item/reagent_containers/glass/waterbottle/large
 	desc = "A fresh commercial-sized bottle of water."
 	icon_state = "largebottle"
-	custom_materials = list(/datum/material/glass=0)
+	custom_materials = list(/datum/material/plastic=3000)
 	list_reagents = list(/datum/reagent/water = 100)
 	volume = 100
 	amount_per_transfer_from_this = 20
@@ -403,6 +403,18 @@
 /obj/item/reagent_containers/glass/waterbottle/large/empty
 	list_reagents = list()
 	cap_on = FALSE
+
+// Admin spawn
+/obj/item/reagent_containers/glass/waterbottle/relic
+	name = "mysterious bottle"
+	desc = "A bottle quite similar to a water bottle, but with some words scribbled on with a marker. It seems to be radiating some kind of energy."
+	flip_chance = 100 // FLIPP
+
+/obj/item/reagent_containers/glass/waterbottle/relic/Initialize()
+	var/datum/reagent/random_reagent = get_random_reagent_id()
+	list_reagents = list(random_reagent = 50)
+	. = ..()
+	desc +=  "<span class='notice'>The writing reads '[random_reagent.name]'.</span>"
 
 /obj/item/pestle
 	name = "pestle"
@@ -426,7 +438,7 @@
 	if(grinded)
 		grinded.forceMove(drop_location())
 		grinded = null
-		to_chat(user, "You eject the item inside.")
+		to_chat(user, "<span class='notice'>You eject the item inside.</span>")
 
 /obj/item/reagent_containers/glass/mortar/attackby(obj/item/I, mob/living/carbon/human/user)
 	..()
@@ -438,12 +450,12 @@
 			to_chat(user, "<span class='notice'>You start grinding...</span>")
 			if((do_after(user, 25, target = src)) && grinded)
 				user.adjustStaminaLoss(40)
-				if(grinded.reagents) //food and pills
-					grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 				if(grinded.juice_results) //prioritize juicing
 					grinded.on_juice()
 					reagents.add_reagent_list(grinded.juice_results)
 					to_chat(user, "<span class='notice'>You juice [grinded] into a fine liquid.</span>")
+					if(grinded.reagents) //food and pills
+						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 					QDEL_NULL(grinded)
 					return
 				grinded.on_grind()

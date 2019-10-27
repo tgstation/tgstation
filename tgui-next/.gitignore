@@ -1,4 +1,7 @@
 node_modules
 *.log
-/packages/tgui/public/bundles/*.hot-update.*
 package-lock.json
+
+/packages/tgui/public/.tmp/**/*
+/packages/tgui/public/**/*.hot-update.*
+/packages/tgui/public/**/*.map

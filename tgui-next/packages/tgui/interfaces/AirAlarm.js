@@ -437,10 +437,10 @@ const AirAlarmControlThresholds = props => {
       </thead>
       <tbody>
         {thresholds.map(threshold => (
-          <tr>
+          <tr key={threshold.name}>
             <td className="LabeledList__label">{threshold.name}</td>
             {threshold.settings.map(setting => (
-              <td>
+              <td key={setting.val}>
                 <Button
                   content={toFixed(setting.selected, 2)}
                   onClick={() => act(ref, 'threshold', {

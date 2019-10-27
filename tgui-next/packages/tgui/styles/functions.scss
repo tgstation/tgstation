@@ -42,6 +42,7 @@
 
 // Returns the NTSC luminance of `$color` as a float (between 0 and 1).
 // 1 is pure white, 0 is pure black.
+// WARNING: Call to this function is **very expensive**. Use sparingly.
 @function luminance($color) {
   $colors: (
     'red': red($color),
