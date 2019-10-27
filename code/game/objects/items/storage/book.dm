@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			user.visible_message("<span class='notice'>[user] has purified [SS]!</span>")
 	else if(istype(A, /obj/item/nullrod/scythe/talking))
 		var/obj/item/nullrod/scythe/talking/sword = A
-		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
+		to_chat(user, "<span class='notice'>You begin to exorcise [sword]...</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 40, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
