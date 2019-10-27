@@ -429,3 +429,82 @@
 	else
 		if(hearing_args[HEARING_RAW_MESSAGE] == sentence)
 			send_code()
+
+/datum/nanite_program/sensor/race
+	name = "Race Sensor"
+	desc = "When triggered, the nanites scan the host to determine their race and output a signal depending on the conditions set in the settings."
+	can_trigger = TRUE
+	trigger_cost = 0
+	trigger_cooldown = 5
+
+	extra_settings = list("Sent Code","Race","Mode")
+	var/race_type = "Human"
+	var/mode = "Is"
+	var/list/static/allowed_species = list(
+    	"Human" = /datum/species/human,
+    	"Lizard" = /datum/species/lizard,
+		"Moth" = /datum/species/moth,
+		"Ethereal" = /datum/species/ethereal,
+		"Pod" = /datum/species/pod,
+		"Fly" = /datum/species/fly,
+		"Felinid" = /datum/species/human/felinid,
+		"Jelly" = /datum/species/jelly
+	)
+
+/datum/nanite_program/sensor/race/set_extra_setting(user, setting)
+	if(setting == "Sent Code")
+		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
+		if(isnull(new_code))
+			return
+		sent_code = CLAMP(round(new_code, 1), 1, 9999)
+	if(setting == "Race")
+		var/list/race_types = list()
+		for(var/name in allowed_species)
+			race_types += name
+		race_types += "Other"
+		var/new_race_type = input("Choose the race", name) as null|anything in sortList(race_types)
+		if(!new_race_type)
+			return
+		race_type = new_race_type
+	if(setting == "Mode")
+		mode = mode == "Is" ? "Is Not" : "Is"
+
+
+/datum/nanite_program/sensor/race/get_extra_setting(setting)
+	if(setting == "Sent Code")
+		return sent_code
+	if(setting == "Race")
+		return race_type
+	if(setting == "Mode")
+		return mode
+
+/datum/nanite_program/sensor/race/copy_extra_settings_to(datum/nanite_program/sensor/race/target)
+	target.sent_code = sent_code
+	target.race_type = race_type
+	target.mode = mode
+
+/datum/nanite_program/sensor/race/trigger()
+	if(!..())
+		return
+
+	var/species = allowed_species[race_type]
+	var/race_match = FALSE
+
+	if(species)
+		if(is_species(host_mob, species))
+			race_match = TRUE
+	else	//this is the check for the "Other" option
+		race_match = TRUE
+		for(var/name in allowed_species)
+			var/species_other = allowed_species[name]
+			if(is_species(host_mob, species_other))
+				race_match = FALSE
+				break
+
+	switch(mode)
+		if("Is")
+			if(race_match)
+				send_code()
+		if("Is Not")
+			if(!race_match)
+				send_code()
