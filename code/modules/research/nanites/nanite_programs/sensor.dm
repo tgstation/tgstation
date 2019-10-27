@@ -403,7 +403,6 @@
 	trigger_cooldown = 5
 
 	extra_settings = list("Sent Code","Race","Mode")
-	var/spent = FALSE
 	var/race_type = "Human"
 	var/mode = "Is"
 	var/list/static/allowed_species = list(
