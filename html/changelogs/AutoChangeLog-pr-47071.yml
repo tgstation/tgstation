@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Added a new nanite program under Mesh Nanite Programming: Dermal Button. It gives an action button to hosts that signals their nanites when pressed."

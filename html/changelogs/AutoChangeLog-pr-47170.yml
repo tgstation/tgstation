@@ -1,6 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - balance: "Bolts of resurrection now instantly kill the undead instead of fully healing them."
-  - balance: "Bolts of death now fully heal the undead instead of instantly killing them."
-  - tweak: "Hellbound people can now be healed by magical bolts, provided that they aren't dead (yet)."

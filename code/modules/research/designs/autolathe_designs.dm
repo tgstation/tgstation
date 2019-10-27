@@ -272,6 +272,14 @@
 	category = list("hacked","Misc","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
+/datum/design/generic_gas_tank
+	name = "Generic Gas Tank"
+	id = "generic_tank"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	build_path = /obj/item/tank/internals/generic
+	category = list("initial","Misc","Equipment")
+
 /datum/design/metal
 	name = "Metal"
 	id = "metal"
@@ -683,14 +691,6 @@
 	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/flamethrower/full
 	category = list("hacked", "Security")
-
-/datum/design/rcd
-	name = "Rapid Construction Device (RCD)"
-	id = "rcd"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 30000)
-	build_path = /obj/item/construction/rcd
-	category = list("hacked", "Construction")
 
 /datum/design/rpd
 	name = "Rapid Pipe Dispenser (RPD)"

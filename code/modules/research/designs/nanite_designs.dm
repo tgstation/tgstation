@@ -505,7 +505,7 @@
 	program_type = /datum/nanite_program/sensor/voice
 	category = list("Sensor Nanites")
 
-/datum/design/nanites/sensor__nanite_volume
+/datum/design/nanites/sensor_nanite_volume
 	name = "Nanite Volume Sensor"
 	desc = "The nanites receive a signal when the nanite supply is above/below a certain percentage."
 	id = "sensor_nanite_volume"

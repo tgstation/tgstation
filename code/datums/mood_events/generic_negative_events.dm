@@ -192,6 +192,11 @@
 	mood_change = -2
 	timeout = 1200
 
+/datum/mood_event/graverobbing
+	description ="<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
+	mood_change = -8
+	timeout = 3 MINUTES
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse
 	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"

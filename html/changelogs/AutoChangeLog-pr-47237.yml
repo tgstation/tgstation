@@ -1,4 +1,0 @@
-author: "bobbahbrown"
-delete-after: True
-changes: 
-  - bugfix: "Objects will once again properly report when they do not contain materials."

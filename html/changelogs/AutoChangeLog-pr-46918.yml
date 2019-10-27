@@ -1,0 +1,8 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Sensor nanites (most of them) can now be installed as internal rules to programs, using their current setting. Rules must be met for the program to stay active, but it won't affect triggering."
+  - rscdel: "The Nanite chamber can no longer install/uninstall programs, although it can still view them."
+  - rscadd: "Instead, the nanite chamber can now easily destroy nanites from a host."
+  - tweak: "Viral nanites now disable cloud sync, if they don't modify Cloud ID, making them always effective."
+  - balance: "The Mitosis program now also works while connected to a cloud, although it will still generate errors in case the cloud sync stops working."

@@ -39,7 +39,7 @@ export const ThermoMachine = props => {
               icon="fast-backward"
               disabled={data.target === data.min}
               onClick={() => act(ref, 'target', {
-                adjust: -20,
+                adjust: -50,
               })} />
             <Button
               icon="backward"
@@ -66,7 +66,7 @@ export const ThermoMachine = props => {
               icon="fast-forward"
               disabled={data.target === data.max}
               onClick={() => act(ref, 'target', {
-                adjust: 20,
+                adjust: 50,
               })} />
           </LabeledList.Item>
         </LabeledList>
