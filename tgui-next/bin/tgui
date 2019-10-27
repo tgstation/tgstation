@@ -1,23 +1,57 @@
 #!/bin/bash
 ## Script for building tgui. Requires MSYS2 to run.
 set -e
+shopt -s globstar
+
 cd "$(dirname "${0}")/.."
 base_dir="$(pwd)"
 
 ## Add locally installed node programs to path
 PATH="${PATH}:node_modules/.bin"
 
-run-webpack() {
+task-webpack() {
   cd "${base_dir}/packages/tgui"
-  exec webpack "${@}"
+  webpack "${@}"
+}
+
+task-eslint() {
+  cd "${base_dir}"
+  eslint ./packages "${@}"
 }
 
 ## Mr. Proper
-if [[ ${1} == "--clean" ]]; then
-  shopt -s globstar
+task-clean() {
+  cd "${base_dir}"
   rm -rf packages/tgui/public/.tmp
   rm -rf **/node_modules
   rm -f **/package-lock.json
+}
+
+task-validate-build() {
+  cd "${base_dir}"
+  local diff
+  diff="$(git diff packages/tgui/public/tgui.bundle.*)"
+  if [[ -n ${diff} ]]; then
+    echo "Error: our build differs from the build committed into git."
+    echo "Please rebuild tgui."
+    exit 1
+  fi
+}
+
+## Continuous integration scenario
+if [[ ${1} == "--ci" ]]; then
+  task-clean
+  yarn install
+  task-eslint
+  task-webpack --mode=production
+  task-validate-build
+  echo "tgui: build is ok"
+  exit 0
+fi
+
+## Mr. Proper
+if [[ ${1} == "--clean" ]]; then
+  task-clean
   exit 0
 fi
 
@@ -34,19 +68,22 @@ fi
 ## Run a linter through all packages
 if [[ ${1} == '--lint' ]]; then
   shift
-  exec eslint ./packages "${@}"
+  task-eslint "${@}"
+  exit "${?}"
 fi
 
 ## Analyze the bundle
 if [[ ${1} == '--analyze' ]]; then
-  run-webpack --mode=production --analyze
+  task-webpack --mode=production --analyze
+  exit "${?}"
 fi
 
 ## Make a production webpack build
 if [[ -z ${1} ]]; then
   eslint packages
-  run-webpack --mode=production
+  task-webpack --mode=production
+  exit "${?}"
 fi
 
 ## Run webpack with custom flags
-run-webpack "${@}"
+task-webpack "${@}"
