@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "Xeno and changeling impregnation times now get stopped by stasis. Also fixes a bug where they were growing up almost twice as fast as intended."
