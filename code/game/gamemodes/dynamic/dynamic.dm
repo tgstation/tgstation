@@ -418,7 +418,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
 		log_game("DYNAMIC: First ruleset picked successfully. [extra_rulesets_amount] remaining.")
-		while(extra_rulesets_amount > 0)	// We had enough threat for one or two more rulesets
+		while(extra_rulesets_amount > 0 && drafted_rules.len > 0)	// We had enough threat for one or two more rulesets
 			for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
 				if (rule.cost > threat)
 					drafted_rules -= rule
