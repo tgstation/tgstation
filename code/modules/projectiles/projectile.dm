@@ -193,7 +193,7 @@
 			if(hitsound)
 				var/volume = vol_by_damage()
 				playsound(loc, hitsound, volume, TRUE, -1)
-			if(!L.message_timeouts || L.message_timeouts <= world.time)
+			if(!L.message_timeouts[type] || L.message_timeouts[type] <= world.time)
 				L.visible_message("<span class='danger'>[L] is hit by \a [src][organ_hit_text]!</span>", \
 						"<span class='userdanger'>You're hit by \a [src][organ_hit_text]!</span>", null, COMBAT_MESSAGE_RANGE)
 				LAZYSET(L.message_timeouts,type,world.time+ chat_timeout)
