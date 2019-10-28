@@ -71,12 +71,7 @@
 				else
 					tablepush(user, pushed_mob)
 			if(user.a_intent == INTENT_HELP)
-				pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
-									"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
-				if(do_after(user, 35, target = pushed_mob))
-					tableplace(user, pushed_mob)
-				else
-					return
+				tableplace(user, pushed_mob)
 			user.stop_pulling()
 		else if(user.pulling.pass_flags & PASSTABLE)
 			user.Move_Pulled(src)
@@ -84,6 +79,7 @@
 				user.visible_message("<span class='notice'>[user] places [user.pulling] onto [src].</span>",
 					"<span class='notice'>You place [user.pulling] onto [src].</span>")
 				user.stop_pulling()
+				playsound(user.pulling, 'sound/weapons/genhit.ogg',90, TRUE)
 	return ..()
 
 /obj/structure/table/attack_tk()
@@ -111,6 +107,7 @@
 	pushed_mob.visible_message("<span class='notice'>[user] places [pushed_mob] onto [src].</span>", \
 								"<span class='notice'>[user] places [pushed_mob] onto [src].</span>")
 	log_combat(user, pushed_mob, "places", null, "onto [src]")
+	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
