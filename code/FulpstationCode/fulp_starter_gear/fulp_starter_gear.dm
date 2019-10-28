@@ -1,3 +1,7 @@
+#define SEC_RADIO_SCAN_SOUND_ACCEPT list('sound/machines/beep.ogg')
+#define SEC_RADIO_SCAN_SOUND_DENY list('sound/machines/buzz-two.ogg')
+#define SEC_RADIO_SCAN_COOLDOWN 2 SECONDS
+
 /obj/item/storage/belt/security/fulp_starter_full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/flashlight/seclite(src)
@@ -14,13 +18,14 @@
 	name = "security station bounced radio"
 	icon = 'icons/Fulpicons/surreal_stash/sec_radio.dmi'
 	icon_state = "sec_radio"
-	desc = "A sophisticated full range station bounced radio. Preconfigured with a radio channel for emergency security use in the event of telecom disruption."
+	desc = "A sophisticated full range station bounced radio. Preconfigured with a radio frequency for emergency security use in the event of telecom disruption. You can use a Security ID to reset its frequency to the emergency security channel."
 	freerange = TRUE //Can access the full spectrum
 	subspace_switchable = TRUE
+	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 250)
-	canhear_range = 0 //To keep dispatches private
+	canhear_range = 3 //To keep dispatches private
+	var/sound_time_stamp
 	var/static/random_static_channel //This is the random channel we use.
-
 
 /obj/item/radio/off/security/Initialize()
 	. = ..()
@@ -37,6 +42,38 @@
 	frequency = sanitize_frequency(random_static_channel, freerange)
 	set_frequency(frequency)
 
+
+/obj/item/radio/off/security/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	var/obj/item/card/id/I
+	if (istype(W, /obj/item/card/id))
+		I = W
+	else if (istype(W, /obj/item/pda))
+		var/obj/item/pda/P = W
+		I = P.id
+
+	if(!I)
+		return
+
+	if(check_access(I))
+		to_chat(user, "<span class='notice'>ID authenticated. Unit reset to security emergency frequency.</span>") //If we swipe it with Sec access, we return to the default emergency signal.
+		frequency = sanitize_frequency(random_static_channel, freerange)
+		set_frequency(frequency)
+		sec_radio_sound()
+
+	else
+		to_chat(user, "<span class='warning'>ID is not authorized for reset to security emergency frequency.</span>")
+		sec_radio_sound(FALSE)
+
+/obj/item/radio/off/security/proc/sec_radio_sound(accepted = TRUE)
+	if(world.time - sound_time_stamp > SEC_RADIO_SCAN_COOLDOWN)
+
+		if(accepted)
+			playsound(loc, SEC_RADIO_SCAN_SOUND_ACCEPT, get_clamped_volume(), TRUE, -1)
+		else
+			playsound(loc, SEC_RADIO_SCAN_SOUND_DENY, get_clamped_volume(), TRUE, -1)
+
+		sound_time_stamp = world.time
 
 /datum/design/security_station_bounced_radio
 	name = "Security Station Bounced Radio"
