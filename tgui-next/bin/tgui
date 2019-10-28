@@ -1,19 +1,54 @@
 #!/bin/bash
-## Script for building tgui. Requires MSYS2 to run.
 set -e
 shopt -s globstar
+shopt -s expand_aliases
 
-cd "$(dirname "${0}")/.."
-base_dir="$(pwd)"
+## Initial set-up
+## --------------------------------------------------------
+
+## Returns an absolute path to file
+alias tgui-realpath="readlink -f"
+
+## Fallbacks for GNU readlink
+## Detecting GNU coreutils http://stackoverflow.com/a/8748344/319952
+if ! readlink --version >/dev/null 2>&1; then
+  if hash greadlink 2>/dev/null; then
+    alias tgui-realpath="greadlink -f"
+  else
+    alias tgui-realpath="perl -MCwd -le 'print Cwd::abs_path(shift)'"
+  fi
+fi
+
+## Find a canonical path to project root
+base_dir="$(dirname "$(tgui-realpath "${0}")")/.."
+base_dir="$(tgui-realpath "${base_dir}")"
 
 ## Add locally installed node programs to path
 PATH="${PATH}:node_modules/.bin"
 
+
+## Functions
+## --------------------------------------------------------
+
+## Installs node modules
+task-install() {
+  cd "${base_dir}"
+  yarn install
+}
+
+## Runs webpack
 task-webpack() {
   cd "${base_dir}/packages/tgui"
   webpack "${@}"
 }
 
+## Runs a development server
+task-dev-server() {
+  cd "${base_dir}/packages/tgui-dev-server"
+  exec node --experimental-modules index.js "${@}"
+}
+
+## Run a linter through all packages
 task-eslint() {
   cd "${base_dir}"
   eslint ./packages "${@}"
@@ -27,6 +62,7 @@ task-clean() {
   rm -f **/package-lock.json
 }
 
+## Validates current build against the build stored in git
 task-validate-build() {
   cd "${base_dir}"
   local diff
@@ -36,54 +72,95 @@ task-validate-build() {
     echo "Please rebuild tgui."
     exit 1
   fi
+  echo "tgui: build is ok"
 }
+
+## Installs merge drivers and git hooks
+task-install-git-hooks() {
+  cd "${base_dir}"
+  local git_root
+  local git_base_dir
+  git_root="$(git rev-parse --show-toplevel)"
+  git_base_dir="${base_dir/${git_root}/.}"
+  git config --replace-all merge.tgui-merge-bundle.driver \
+    "${git_base_dir}/${0} --merge=bundle %O %A %B %L"
+  echo "Merge drivers have been successfully installed!"
+}
+
+## Bundle merge driver
+task-merge-bundle() {
+  local file_ancestor="${1}"
+  local file_current="${2}"
+  local file_other="${3}"
+  local conflict_marker_size="${4}"
+  echo "tgui: Discarding a local tgui build"
+  ## Do nothing (file_current will be merged and is what we want to keep).
+  exit 0
+}
+
+
+## Main
+## --------------------------------------------------------
+
+if [[ ${1} == "--merge"* ]]; then
+  if [[ ${1} == "--merge=bundle" ]]; then
+    shift 1
+    task-merge-bundle "${@}"
+  fi
+  echo "Unknown merge strategy: ${1}"
+  exit 1
+fi
+
+if [[ ${1} == "--install-git-hooks" ]]; then
+  shift 1
+  task-install-git-hooks
+  exit 0
+fi
 
 ## Continuous integration scenario
 if [[ ${1} == "--ci" ]]; then
   task-clean
-  yarn install
+  task-install
   task-eslint
   task-webpack --mode=production
   task-validate-build
-  echo "tgui: build is ok"
   exit 0
 fi
 
-## Mr. Proper
 if [[ ${1} == "--clean" ]]; then
   task-clean
   exit 0
 fi
 
-## Install dependencies
-yarn install
-
-## Run a development server
 if [[ ${1} == "--dev" ]]; then
   shift
-  cd "${base_dir}/packages/tgui-dev-server"
-  exec node --experimental-modules index.js "${@}"
+  task-install
+  task-dev-server "${@}"
+  exit 0
 fi
 
-## Run a linter through all packages
 if [[ ${1} == '--lint' ]]; then
-  shift
+  shift 1
+  task-install
   task-eslint "${@}"
-  exit "${?}"
+  exit 0
 fi
 
 ## Analyze the bundle
 if [[ ${1} == '--analyze' ]]; then
+  task-install
   task-webpack --mode=production --analyze
-  exit "${?}"
+  exit 0
 fi
 
 ## Make a production webpack build
 if [[ -z ${1} ]]; then
-  eslint packages
+  task-install
+  task-eslint
   task-webpack --mode=production
-  exit "${?}"
+  exit 0
 fi
 
 ## Run webpack with custom flags
+task-install
 task-webpack "${@}"
