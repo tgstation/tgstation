@@ -52,7 +52,7 @@ You will need these programs to start developing in tgui:
 **For MSys2, Git Bash, WSL, Linux or macOS users:**
 
 First and foremost, run `bin/tgui --install-git-hooks` to install merge
-drivers which will help you during rebases of your branches.
+drivers which will help you resolve conflicts when rebasing your branches.
 
 - `bin/tgui` - build the project in production mode.
 - `bin/tgui --dev` - launch a development server, with live log
