@@ -24,7 +24,9 @@ import { Crayon } from './interfaces/Crayon';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { KitchenSink } from './interfaces/KitchenSink';
+import { LanguageMenu } from './interfaces/LanguageMenu';
 import { Mint } from './interfaces/Mint';
+import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
@@ -137,9 +139,17 @@ const ROUTES = {
     component: () => DisposalUnit,
     scrollable: false,
   },
+  language_menu: {
+    component: () => LanguageMenu,
+    scrollable: true,
+  },
   mint: {
     component: () => Mint,
     scrollable: false,
+  },
+  personal_crafting: {
+    component: () => PersonalCrafting,
+    scrollable: true,
   },
   portable_generator: {
     component: () => PortableGenerator,
