@@ -244,11 +244,11 @@ GLOBAL_LIST_EMPTY(allCasters)
 		if(75 to 100)
 			return
 		if(50 to 75)
-			add_overlay("crack1")
+			. += "crack1"
 		if(25 to 50)
-			add_overlay("crack2")
+			. += "crack2"
 		else
-			add_overlay("crack3")
+			. += "crack3"
 
 /obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
