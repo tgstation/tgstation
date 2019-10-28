@@ -129,6 +129,8 @@
 	START_PROCESSING(SSobj,src)
 
 /obj/machinery/shuttle_scrambler/interact(mob/user)
+	if (ismob(user) && !isliving(user))
+		return
 	if(!active)
 		if(alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", "Yes", "Cancel") == "Cancel")
 			return
@@ -211,6 +213,8 @@
 	var/next_use = 0
 
 /obj/machinery/loot_locator/interact(mob/user)
+	if (ismob(user) && !isliving(user))
+		return
 	if(world.time <= next_use)
 		to_chat(user,"<span class='warning'>[src] is recharging.</span>")
 		return
