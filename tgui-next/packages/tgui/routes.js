@@ -27,6 +27,7 @@ import { KitchenSink } from './interfaces/KitchenSink';
 import { Mint } from './interfaces/Mint';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { SmartVend } from './interfaces/SmartVend';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
@@ -146,6 +147,10 @@ const ROUTES = {
   },
   shuttle_manipulator: {
     component: () => ShuttleManipulator,
+    scrollable: true,
+  },
+  smartvend: {
+    component: () => SmartVend,
     scrollable: true,
   },
   thermomachine: {
