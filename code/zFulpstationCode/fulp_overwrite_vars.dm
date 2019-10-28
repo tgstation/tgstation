@@ -383,6 +383,48 @@
 	box = /obj/item/storage/box/security/improved
 	pda_slot = SLOT_R_STORE
 
+
+/datum/techweb_node/sec_basic
+	design_ids = list("seclite", "pepperspray", "bola_energy", "zipties", "evidencebag", "sec_radio", "sec_belt", "protolathe_handcuffs", "security_helmet", "security_armor", "security_uniform", "security_boots", "stun_baton")
+
+/obj/machinery/vending/security
+	products = list(/obj/item/restraints/handcuffs = 8,
+					/obj/item/restraints/handcuffs/cable/zipties = 10,
+					/obj/item/grenade/flashbang = 15, //Increase of flashbangs to compensate for loss of flashbangs from Sec Officer belt (Estimating ~5) and Sec lockers (~6).
+					/obj/item/assembly/flash/handheld = 5,
+					/obj/item/reagent_containers/food/snacks/donut = 12,
+					/obj/item/storage/box/evidence = 6,
+					/obj/item/flashlight/seclite = 4,
+					/obj/item/radio/headset/headset_sec/alt = 6, //Compensate for loss of gear from sec-lockers (~6).
+					/obj/item/clothing/glasses/hud/security/sunglasses = 6, //Compensate for loss of gear from sec-lockers (~6).
+					/obj/item/restraints/legcuffs/bola/energy = 7)
+
+/obj/machinery/vending/wardrobe/sec_wardrobe
+	products = list(/obj/item/clothing/suit/hooded/wintercoat/security = 3,
+					/obj/item/storage/backpack/security = 3,
+					/obj/item/storage/backpack/satchel/sec = 3,
+					/obj/item/storage/backpack/duffelbag/sec = 3,
+					/obj/item/clothing/under/rank/security/officer = 3,
+					/obj/item/clothing/suit/armor/vest/alt = 6, //Compensate for loss of gear from sec-lockers (~6).
+					/obj/item/clothing/head/helmet = 6, //Compensate for loss of gear from sec-lockers (~6).
+					/obj/item/clothing/shoes/jackboots = 3,
+					/obj/item/clothing/head/beret/sec = 3,
+					/obj/item/clothing/head/soft/sec = 3,
+					/obj/item/clothing/mask/bandana/red = 3,
+					/obj/item/clothing/under/rank/security/officer/skirt = 3,
+					/obj/item/clothing/under/rank/security/officer/grey = 3,
+					/obj/item/clothing/under/pants/khaki = 3,
+					/obj/item/clothing/under/rank/security/officer/blueshirt = 3,
+					/obj/item/clothing/shoes/jackboots/digitigrade = 2)
+
+/obj/machinery/vending/wardrobe/sec_wardrobe
+	req_access = list(ACCESS_SECURITY) //We can now vend armor and helmets, so we need to protect the contents.
+
+/obj/structure/closet/secure_closet/security/PopulateContents()
+	..()
+	for(var/atom/movable/AM in src) //Empty to reduce locker bloat due to better on-spawn gear and expanded protolathe options; let the grand purge begin.
+		qdel(AM)
+
 //************************************************************
 //** Improved Sec Starter Gear by Surrealistik Oct 2019 ENDS
 //************************************************************
