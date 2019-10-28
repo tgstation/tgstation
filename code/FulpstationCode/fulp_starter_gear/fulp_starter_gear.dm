@@ -130,7 +130,7 @@
 	desc = "A standard issue tactical security jumpsuit for officers complete with Nanotrasen belt buckle."
 	id = "security_uniform"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 250, /datum/material/plastic = 250)
+	materials = list(/datum/material/iron = 200, /datum/material/plastic = 200)
 	build_path = /obj/item/clothing/under/rank/security/officer
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
@@ -142,6 +142,16 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 50, /datum/material/plastic = 100)
 	build_path = /obj/item/clothing/shoes/jackboots
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/sec_headset
+	name = "Security Bowman Headset"
+	desc = "Standard-issue security bowman headset. Protects ears from flashbangs. Comes with security encryption key."
+	id = "security_headset"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	build_path = /obj/item/radio/headset/headset_sec/alt
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 

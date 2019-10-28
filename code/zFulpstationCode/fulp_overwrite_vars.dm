@@ -385,7 +385,7 @@
 
 
 /datum/techweb_node/sec_basic
-	design_ids = list("seclite", "pepperspray", "bola_energy", "zipties", "evidencebag", "sec_radio", "sec_belt", "protolathe_handcuffs", "security_helmet", "security_armor", "security_uniform", "security_boots", "stun_baton")
+	design_ids = list("seclite", "pepperspray", "bola_energy", "zipties", "evidencebag", "sec_radio", "protolathe_handcuffs", "stun_baton", "sec_belt", "security_helmet", "security_armor", "security_uniform", "security_boots", "security_headset")
 
 /obj/machinery/vending/security
 	products = list(/obj/item/restraints/handcuffs = 8,
