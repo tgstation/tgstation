@@ -30,6 +30,7 @@
 	user.reagents.add_reagent(/datum/reagent/medicine/pen_acid, 20)
 	user.reagents.add_reagent(/datum/reagent/medicine/antihol, 10)
 	user.reagents.add_reagent(/datum/reagent/medicine/mannitol, 25)
+	user.reagents.add_reagent(/datum/reagent/medicine/changelingpanacea, 10)
 
 	if(isliving(user))
 		var/mob/living/L = user

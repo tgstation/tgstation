@@ -1040,6 +1040,16 @@
 	..()
 	return TRUE
 
+/datum/reagent/medicine/changelingpanacea
+	name = "Changeling Panacea"
+	description = "Cures all but the most magical and permanent brain traumas."
+	color = "#C8A5DC"
+	can_synth = FALSE
+
+/datum/reagent/medicine/changelingpanacea/on_mob_life(mob/living/carbon/M)
+	M.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
+	..()
+
 /datum/reagent/medicine/corazone
 	// Heart attack code will not do damage if corazone is present
 	// because it's SPACE MAGIC ASPIRIN
