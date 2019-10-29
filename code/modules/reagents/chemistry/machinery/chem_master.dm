@@ -312,10 +312,10 @@
 				return	//FULP
 			var/amount_full = 0	//FULP
 			var/amount = 0	//FULP
-			if(reagents.get_master_reagent_name() in approved_reagent_list)	//FULP
-				if(reagents.reag)	
+			if(reagents.get_master_reagent_name() in approved_reagent_list)	//FULP	
+				var/firstReagent = reagents.get_master_reagent_id()	//FULP
 				if(text2num(many))	//FULP
-					amount_full = round(reagents.total_volume / 10)	//FULP
+					amount_full = round((reagents.get_reagent_amount(reagents.get_master_reagent_id())) / 10)	//FULP
 					amount = CLAMP(round(input(usr, "Medipens only contain 10u", "How many medipens?", amount) as num|null), 0, 10)	//FULP
 					if(amount > amount_full)	//FULP
 						to_chat(usr, "<span class='notice'>You have selected an amount larger than the possible maximum of [amount_full], creating [amount_full] instead...")	//FULP
@@ -353,7 +353,7 @@
 					P.name = trim("[name] medipen")	//FULP
 					adjust_item_drop_location(P)	//FULP
 					reagents.trans_to(P, 10, transfered_by = usr)	//FULP
-					reagents.remove_reagent(reagents.get_master_reagent_id(), 10)	//FULP
+					reagents.remove_reagent(firstReagent, 10)	//FULP
 			else	//FULP
 				to_chat(usr, "<span class='notice'> This reagent {[reagents.get_master_reagent_name()]} is not Federation-Approved. </span>")	//FULP
 				return	//FULP
