@@ -599,9 +599,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		return TRUE
 
 /mob/living/carbon/proc/liver_failure()
-	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		check_damage_thresholds(liver) //I'm pretty sure that this is dead/useless code, since check_damage_thresholds() should run on its own whenever damage is applied to an organ, but the maintainers wanted me to put a check here, and so I did
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
 	reagents.metabolize(src, can_overdose=FALSE, liverless = TRUE)
 	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
