@@ -18,6 +18,7 @@
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_VERY_STRONG
+	anchored = TRUE
 	density = TRUE
 	mobility_flags = ALL
 	status_flags = CANSTUN|CANPUSH
@@ -339,14 +340,14 @@
 			return
 		battery = battery - 50
 		to_chat(src, "<span class='notice'>You route power from your backup battery to move the bolts.</span>")
-	var/is_anchored = FALSE
 	if(move_resist == MOVE_FORCE_VERY_STRONG)
+		anchored = FALSE
 		move_resist = MOVE_FORCE_NORMAL
 	else
-		is_anchored = TRUE
+		anchored = TRUE
 		move_resist = MOVE_FORCE_VERY_STRONG
 
-	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
+	to_chat(src, "<b>You are now [anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored
 
 /mob/living/silicon/ai/update_mobility() //If the AI dies, mobs won't go through it anymore
