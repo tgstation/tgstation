@@ -288,21 +288,14 @@
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/plasteel/cyborg,
-		/obj/item/borg/apparatus/circuit/basic,
+		/obj/item/borg/apparatus/circuit,
 		/obj/item/stack/cable_coil/cyborg)
 
-/obj/item/borg/apparatus/circuit/basic
-	name = "basic component manipulation apparatus"
+/obj/item/borg/apparatus/circuit
+	name = "component manipulation apparatus"
 	desc = "A special apparatus for carrying and manipulating engineering components like electronics and wall mounted frames. Alt-Z or right-click to drop the stored object."
+	var/upgraded = FALSE
 	storable = list(/obj/item/wallframe,
-				/obj/item/electronics)
-
-/obj/item/borg/apparatus/circuit/advanced
-	name = "advanced component manipulation apparatus"
-	desc = "A special apparatus for carrying and manipulating engineering components like electronics and wall mounted frames. This one has been upgraded to handle stock parts and circuit boards. Alt-Z or right-click to drop the stored object."
-	storable = list(/obj/item/circuitboard,
-				/obj/item/wallframe,
-				/obj/item/stock_parts,
 				/obj/item/electronics)
 
 /obj/item/borg/upgrade/circuit_app
