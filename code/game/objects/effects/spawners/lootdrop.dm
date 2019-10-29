@@ -14,6 +14,8 @@
 		var/loot_spawned = 0
 		while((lootcount-loot_spawned) && loot.len)
 			var/lootspawn = pickweight(loot)
+			while(istype(lootspawn, /list))
+				lootspawn = pickweight(lootspawn)
 			if(!lootdoubles)
 				loot.Remove(lootspawn)
 
