@@ -18,7 +18,6 @@
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_VERY_STRONG
-	anchored = TRUE
 	density = TRUE
 	mobility_flags = ALL
 	status_flags = CANSTUN|CANPUSH
@@ -105,6 +104,7 @@
 		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
+	anchored = TRUE
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
 		laws.associate(src)
