@@ -21,12 +21,15 @@ export class NumberInput extends Component {
 
     // Suppresses flickering while the value propagates through the backend
     this.suppressFlicker = () => {
-      this.setState({
-        suppressingFlicker: true,
-      });
-      setTimeout(() => this.setState({
-        suppressingFlicker: false,
-      }), 50);
+      const { suppressFlicker } = this.props;
+      if (suppressFlicker > 0) {
+        this.setState({
+          suppressingFlicker: true,
+        });
+        setTimeout(() => this.setState({
+          suppressingFlicker: false,
+        }), suppressFlicker);
+      }
     };
 
     this.handleDragStart = e => {
@@ -226,4 +229,5 @@ NumberInput.defaultProps = {
   maxValue: +Infinity,
   step: 1,
   stepPixelSize: 1,
+  suppressFlicker: 50,
 };
