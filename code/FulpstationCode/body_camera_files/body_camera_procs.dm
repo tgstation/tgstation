@@ -1,5 +1,7 @@
 #define SEC_BODY_CAM_SOUND list('sound/machines/beep.ogg')
+#define SEC_BODY_CAM_SOUND_DENY list('sound/machines/buzz-two.ogg')
 #define SEC_BODY_CAM_REG_DELAY 1 SECONDS
+#define SEC_BODY_CAM_COOLDOWN 2 SECONDS
 
 /obj/item/clothing/under/rank/security/Initialize()
 	. = ..()
@@ -47,7 +49,7 @@
 		register_body_camera(I, user)
 	else
 		to_chat(user, "<span class='warning'>ID is not authorized for registration with this uniform's body camera.</span>")
-
+		camera_sound(FALSE)
 
 /obj/item/clothing/under/rank/security/proc/register_body_camera(obj/item/card/id/I, mob/user)
 	if(!I) //Sanity check
@@ -116,9 +118,12 @@
 			camera_sound()
 			to_chat(user, "[message]")
 
-/obj/item/clothing/under/rank/security/proc/camera_sound()
-	if(world.time - sound_time_stamp > 20)
-		playsound(loc, SEC_BODY_CAM_SOUND, get_clamped_volume(), TRUE, -1)
+/obj/item/clothing/under/rank/security/proc/camera_sound(accepted = TRUE)
+	if(world.time - sound_time_stamp > SEC_BODY_CAM_COOLDOWN)
+		if(accepted)
+			playsound(loc, SEC_BODY_CAM_SOUND, get_clamped_volume(), TRUE, -1)
+		else
+			playsound(loc, SEC_BODY_CAM_SOUND_DENY, get_clamped_volume(), TRUE, -1)
 		sound_time_stamp = world.time
 
 /obj/item/clothing/under/rank/security/emp_act()
