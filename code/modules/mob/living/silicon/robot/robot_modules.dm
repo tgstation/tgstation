@@ -455,7 +455,8 @@
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/lollipop,
-		/obj/item/stack/pipe_cleaner_coil/cyborg)
+		/obj/item/stack/pipe_cleaner_coil/cyborg,
+		/obj/item/borg/apparatus/beaker/service)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
 	moduleselect_icon = "service"
 	special_light_key = "service"
