@@ -103,7 +103,7 @@
 		return
 	add_dead_carp_overlay()
 
-/mob/living/simple_animal/hostile/carp/revive(full_heal = 0, admin_revive = 0)
+/mob/living/simple_animal/hostile/carp/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
 	if(.)
 		regenerate_icons()

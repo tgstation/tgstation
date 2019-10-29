@@ -34,8 +34,6 @@ component.exports = {
     const onrelease = (event) => this.set({ drag: false, x: null, y: null })
 
     this.observe('config.fancy', (newkey, oldkey, keypath) => {
-      winset(this.get('config.window'), 'titlebar', !newkey && this.get('config.titlebar'))
-
       if (newkey) {
         document.addEventListener('mousemove', ondrag)
         document.addEventListener('mouseup', onrelease)
@@ -61,16 +59,14 @@ component.exports = {
 }
 </script>
 
-{{#if config.titlebar}}
-  <header class='titlebar' on-mousedown='drag'>
-    <i class='statusicon fa fa-eye fa-2x {{visualStatus}}'></i>
-    <span class='title'>{{yield}}</span>
-    {{#if config.fancy}}
-      <i class='minimize fa fa-minus fa-2x' on-click='minimize'></i>
-      <i class='close fa fa-close fa-2x' on-click='close'></i>
-    {{else}}
-      <i class='minimize no-icons' on-click='minimize'></i>
-      <i class='close no-icons' on-click='close'></i>
-    {{/if}}
-  </header>
-{{/if}}
+<header class='titlebar' on-mousedown='drag'>
+  <i class='statusicon fa fa-eye fa-2x {{visualStatus}}'></i>
+  <span class='title'>{{yield}}</span>
+  {{#if config.fancy}}
+    <i class='minimize fa fa-minus fa-2x' on-click='minimize'></i>
+    <i class='close fa fa-close fa-2x' on-click='close'></i>
+  {{else}}
+    <i class='minimize no-icons' on-click='minimize'></i>
+    <i class='close no-icons' on-click='close'></i>
+  {{/if}}
+</header>

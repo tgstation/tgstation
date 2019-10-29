@@ -3,7 +3,7 @@ import fs from 'fs';
 import { createRequire } from 'module';
 import { promisify } from 'util';
 import webpack from 'webpack';
-import { broadcastMessage } from './link/server.js';
+import { broadcastMessage, loadSourceMaps, setupLink } from './link/server.js';
 import { reloadByondCache } from './reloader.js';
 import { resolveGlob } from './util.js';
 
@@ -15,9 +15,11 @@ export const getWebpackConfig = async options => {
   return createConfig({}, options);
 };
 
-export const setupWebpack = async (link, config) => {
+export const setupWebpack = async config => {
   logger.log('setting up');
   const bundleDir = config.output.path;
+  // Setup link
+  const link = setupLink();
   // Instantiate the compiler
   const compiler = webpack(config);
   // Clear garbage before compiling
@@ -31,6 +33,9 @@ export const setupWebpack = async (link, config) => {
   });
   // Start reloading when it's finished
   compiler.hooks.done.tap('tgui-dev-server', async stats => {
+    // Load source maps
+    await loadSourceMaps(bundleDir);
+    // Reload cache
     await reloadByondCache(bundleDir);
     // Notify all clients that update has happened
     broadcastMessage(link, {

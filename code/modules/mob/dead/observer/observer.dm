@@ -601,31 +601,31 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/mob/living/target = input("Your new life begins today!", "Possess Mob", null, null) as null|anything in sortNames(possessible)
 
 	if(!target)
-		return 0
+		return FALSE
 
 	if(ismegafauna(target))
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
-		return 0
+		return FALSE
 
 	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
-			return 0
+			return FALSE
 	if(target.key)
 		to_chat(src, "<span class='warning'>Someone has taken this body while you were choosing!</span>")
-		return 0
+		return FALSE
 
 	target.key = key
 	target.faction = list("neutral")
-	return 1
+	return TRUE
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
 //overridden here and in /mob/living for different point span classes and sanity checks
-/mob/dead/observer/pointed(atom/A as mob|obj|turf in view())
+/mob/dead/observer/pointed(atom/A as mob|obj|turf in view(client.view, src))
 	if(!..())
-		return 0
+		return FALSE
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A].</span>")
-	return 1
+	return TRUE
 
 /mob/dead/observer/verb/view_manifest()
 	set name = "View Crew Manifest"

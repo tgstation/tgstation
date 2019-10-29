@@ -47,6 +47,7 @@ module.exports = (env = {}, argv) => {
                 plugins: [
                   '@babel/plugin-transform-jscript',
                   'babel-plugin-inferno',
+                  'babel-plugin-transform-remove-console',
                 ],
               },
             },
@@ -103,7 +104,6 @@ module.exports = (env = {}, argv) => {
     performance: {
       hints: false,
     },
-    // Unfortunately, source maps don't work with BYOND's IE.
     devtool: false,
     plugins: [
       new webpack.EnvironmentPlugin({
@@ -171,6 +171,7 @@ module.exports = (env = {}, argv) => {
     if (argv.hot) {
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
+    config.devtool = 'cheap-module-source-map';
     config.devServer = {
       // Informational flags
       progress: false,

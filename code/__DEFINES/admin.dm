@@ -102,3 +102,6 @@
 #define POLICY_POLYMORPH "polymorph"
 /// Shown on top of policy verb window
 #define POLICY_VERB_HEADER "policy_verb_header"
+
+//How many things you can spawn at once with spawn verb/create panel
+#define ADMIN_SPAWN_CAP 100

@@ -1,4 +1,0 @@
-author: "bandit"
-delete-after: True
-changes: 
-  - bugfix: "Restoring the holodeck safeties works again."
