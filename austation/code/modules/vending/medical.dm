@@ -3,6 +3,7 @@
 					/obj/item/reagent_containers/syringe = 12,
 					/obj/item/reagent_containers/dropper = 3,
 					/obj/item/healthanalyzer = 4,
+					/obj/item/wrench/medical = 1,
 					/obj/item/reagent_containers/pill/patch/styptic = 5,
 					/obj/item/reagent_containers/pill/patch/silver_sulf = 5,
 					/obj/item/reagent_containers/syringe/perfluorodecalin = 2,
