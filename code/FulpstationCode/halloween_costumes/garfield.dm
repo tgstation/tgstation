@@ -1,4 +1,4 @@
-/obj/item/clothing/mask/garfield_head
+/obj/item/clothing/head/garfield_head
 	name = "Garfield Mask"
 	desc = "Mmm Lasagna."
 	icon = 'icons/fulpicons/halloween_costumes/jo_icon.dmi'

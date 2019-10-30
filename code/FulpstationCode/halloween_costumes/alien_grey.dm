@@ -1,4 +1,4 @@
-/obj/item/clothing/mask/grey_head
+/obj/item/clothing/head/grey_head
 	name = "Grey Alien Head"
 	desc = "Now you too can look like a Grey."
 	icon = 'icons/fulpicons/halloween_costumes/jo_icon.dmi'
@@ -7,7 +7,7 @@
 	dynamic_hair_suffix = ""
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR
 	
-/obj/item/clothing/suit/space/hardsuit/toy/grey_alien
+/obj/item/clothing/suit/grey_alien
 	name = "Grey Alien"
 	desc = "Space Suit for Aliens."
 	icon = 'icons/fulpicons/halloween_costumes/jo_icon.dmi'
