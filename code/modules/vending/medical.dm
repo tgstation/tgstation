@@ -5,10 +5,12 @@
 	icon_deny = "med-deny"
 	product_ads = "Go save some lives!;The best stuff for your medbay.;Only the finest tools.;Natural chemicals!;This stuff saves lives.;Don't you want some?;Ping!"
 	req_access = list(ACCESS_MEDICAL)
-	/*products = list(/obj/item/stack/medical/gauze = 8, austation start -- trekchems added back. Changes in equiv file in austation dir
+	/* austation start -- trekchems added back. Changes in equiv file in austation dir
+	products = list(/obj/item/stack/medical/gauze = 8,
 					/obj/item/reagent_containers/syringe = 12,
 					/obj/item/reagent_containers/dropper = 3,
 					/obj/item/healthanalyzer = 4,
+					/obj/item/wrench/medical = 1,
 					/obj/item/reagent_containers/pill/patch/libital = 5,
 					/obj/item/reagent_containers/pill/patch/aiuri = 5,
 					/obj/item/reagent_containers/syringe/convermol = 2,
@@ -34,8 +36,8 @@
 		           /obj/item/storage/pill_bottle/psicodine = 2,
 		           /obj/item/reagent_containers/hypospray/medipen = 3,
 		           /obj/item/storage/belt/medical = 3,
-		           /obj/item/wrench/medical = 1,
-		           /obj/item/storage/firstaid/advanced = 2) austation end */
+		           /obj/item/storage/firstaid/advanced = 2)
+	austation end */
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/medical
