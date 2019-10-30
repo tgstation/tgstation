@@ -32,10 +32,8 @@ export const setupDrag = async state => {
   // Constraint window position
   const [relocated, safePosition] = constraintPosition(realPosition);
   if (relocated) {
-    winset(dragState.windowRef, 'pos', [
-      safePosition.x,
-      safePosition.y,
-    ].join(','));
+    winset(dragState.windowRef, 'pos',
+      safePosition.x + ',' + safePosition.y);
   }
   logger.debug('current dragState', dragState);
 };
@@ -105,7 +103,7 @@ const dragHandler = event => {
   let y = event.screenY
     + dragState.screenOffset.y
     + dragState.dragPointOffset.y;
-  winset(dragState.windowRef, 'pos', [x, y].join(','));
+  winset(dragState.windowRef, 'pos', x + ',' + y);
 };
 
 export const resizeStartHandler = (x, y) => event => {
@@ -154,9 +152,7 @@ const resizeHandler = event => {
       + dragState.dragPointOffset.y
       + 1)
     * dragState.resizeMatrix.y;
-  winset(dragState.windowRef, 'size', [
+  winset(dragState.windowRef, 'size',
     // Sane window size values
-    Math.max(x, 250),
-    Math.max(y, 120),
-  ].join(','));
+    Math.max(x, 250) + ',' + Math.max(y, 120));
 };
