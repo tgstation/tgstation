@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - tweak: "Atmos machines now use NumberInput: Slick in ui setting of values"
