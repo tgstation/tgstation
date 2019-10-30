@@ -18,18 +18,31 @@
 	var/rad_record = 0
 	var/grace_count = 0
 	var/datum/looping_sound/geiger/soundloop
+	var/evatoggle = FALSE //can you toggle helmet to go zoom?
+	var/obj/item/clothing/suit/space/hardsuit/linkedsuit = null //can you be toggled with helmet to go zoom?
 
 /obj/item/clothing/head/helmet/space/hardsuit/Initialize()
 	. = ..()
 	soundloop = new(list(), FALSE, TRUE)
 	soundloop.volume = 5
 	START_PROCESSING(SSobj, src)
+	if(evatoggle)
+		actions_types = list(/datum/action/item_action/toggle_helmet_mode)
+		if(istype(loc, /obj/item/clothing/suit/space/hardsuit)) //this means that if you somehow wear a say syndicate hardsuit helmet and a medical hardsuit, this links those two together which honestly isn't that bad
+			linkedsuit = loc
+
+/obj/item/clothing/head/helmet/space/hardsuit/update_icon()
+	if(evatoggle)
+		icon_state = "hardsuit[on]-[hardsuit_type]"
 
 /obj/item/clothing/head/helmet/space/hardsuit/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
+	if(evatoggle)
+		toggle_helmet_mode()
+		return
 	on = !on
 	icon_state = "[basestate][on]-[hardsuit_type]"
 	user.update_inv_head()	//so our mob-overlays update
@@ -271,20 +284,24 @@
 	hardsuit_type = "syndi"
 	armor = list("melee" = 40, "bullet" = 50, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 90)
 	on = TRUE
-	var/obj/item/clothing/suit/space/hardsuit/syndi/linkedsuit = null
-	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	visor_flags = STOPSPRESSUREDAMAGE
+	evatoggle = TRUE
 
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
-	icon_state = "hardsuit[on]-[hardsuit_type]"
+/obj/item/clothing/suit/space/hardsuit/syndi
+	name = "blood-red hardsuit"
+	desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in EVA mode. Property of Gorlex Marauders."
+	alt_desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in combat mode. Property of Gorlex Marauders."
+	icon_state = "hardsuit1-syndi"
+	item_state = "syndie_hardsuit"
+	hardsuit_type = "syndi"
+	w_class = WEIGHT_CLASS_NORMAL
+	armor = list("melee" = 40, "bullet" = 50, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 90)
+	allowed = list(/obj/item/gun, /obj/item/ammo_box,/obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
+	jetpack = /obj/item/tank/jetpack/suit
 
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/Initialize()
-	. = ..()
-	if(istype(loc, /obj/item/clothing/suit/space/hardsuit/syndi))
-		linkedsuit = loc
-
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/attack_self(mob/user) //Toggle Helmet
+/obj/item/clothing/head/helmet/space/hardsuit/proc/toggle_helmet_mode(mob/user) //Toggle Helmet
 	if(!isturf(user.loc))
 		to_chat(user, "<span class='warning'>You cannot toggle your helmet while in this [user.loc]!</span>" )
 		return
@@ -318,7 +335,7 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
+/obj/item/clothing/head/helmet/space/hardsuit/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
 	if(linkedsuit)
 		if(on)
 			linkedsuit.name = initial(linkedsuit.name)
@@ -338,19 +355,26 @@
 		user.update_inv_wear_suit()
 		user.update_inv_w_uniform()
 
+	//Medical hardsuit
+/obj/item/clothing/head/helmet/space/hardsuit/medical
+	name = "medical hardsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low pressure environment. Built with lightweight materials for extra comfort, but does not protect the eyes from intense light."
+	icon_state = "hardsuit0-medical"
+	item_state = "medical_helm"
+	hardsuit_type = "medical"
+	flash_protect = FLASH_PROTECTION_NONE
+	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SCAN_REAGENTS | SNUG_FIT
+	evatoggle = TRUE
 
-/obj/item/clothing/suit/space/hardsuit/syndi
-	name = "blood-red hardsuit"
-	desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in EVA mode. Property of Gorlex Marauders."
-	alt_desc = "A dual-mode advanced hardsuit designed for work in special operations. It is in combat mode. Property of Gorlex Marauders."
-	icon_state = "hardsuit1-syndi"
-	item_state = "syndie_hardsuit"
-	hardsuit_type = "syndi"
-	w_class = WEIGHT_CLASS_NORMAL
-	armor = list("melee" = 40, "bullet" = 50, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 90)
-	allowed = list(/obj/item/gun, /obj/item/ammo_box,/obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-	jetpack = /obj/item/tank/jetpack/suit
+/obj/item/clothing/suit/space/hardsuit/medical
+	name = "medical hardsuit"
+	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement. Can store standard medical supplies like medkits and bio or chemistry bags."
+	icon_state = "hardsuit-medical"
+	item_state = "medical_hardsuit"
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical, /obj/item/storage/bag/bio)
+	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
 
 //Elite Syndie suit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
@@ -435,28 +459,6 @@
 /obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, FALSE, FALSE, ITEM_SLOT_OCLOTHING, INFINITY, FALSE)
-
-
-	//Medical hardsuit
-/obj/item/clothing/head/helmet/space/hardsuit/medical
-	name = "medical hardsuit helmet"
-	desc = "A special helmet designed for work in a hazardous, low pressure environment. Built with lightweight materials for extra comfort, but does not protect the eyes from intense light."
-	icon_state = "hardsuit0-medical"
-	item_state = "medical_helm"
-	hardsuit_type = "medical"
-	flash_protect = FLASH_PROTECTION_NONE
-	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SCAN_REAGENTS | SNUG_FIT
-
-/obj/item/clothing/suit/space/hardsuit/medical
-	name = "medical hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement."
-	icon_state = "hardsuit-medical"
-	item_state = "medical_hardsuit"
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical)
-	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
-	slowdown = 0.5
 
 	//Research Director hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/rd
