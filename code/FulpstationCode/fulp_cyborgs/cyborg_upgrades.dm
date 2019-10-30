@@ -1,3 +1,5 @@
+#define ADVANCED_BORG_LIST list(/obj/item/circuitboard, /obj/item/stock_parts, /obj/item/tank, /obj/item/vending_refill)
+
 
 /obj/item/borg/upgrade/circuit_app/proc/upgrade_engiborg_manipulator(mob/living/silicon/robot/R, mob/user)
 
@@ -12,10 +14,13 @@
 
 	C.upgraded = TRUE
 	C.name = "advanced component manipulation apparatus"
-	C.storable = list(/obj/item/circuitboard,
-			/obj/item/wallframe,
-			/obj/item/stock_parts,
-			/obj/item/electronics)
+	C.desc = "A special apparatus for carrying and manipulating engineering components like electronics and wall mounted frames. This has been upgraded to also manipulate circuitboards, stock parts, gas tanks and vendor refills. Alt-Z or right-click to drop the stored object."
+	C.storable = list(/obj/item/wallframe,
+					/obj/item/electronics,
+					/obj/item/circuitboard,
+					/obj/item/stock_parts,
+					/obj/item/tank,
+					/obj/item/vending_refill)
 
 
 /obj/item/borg/upgrade/circuit_app/proc/remove_engiborg_manipulator_upgrade(mob/living/silicon/robot/R, mob/user)
@@ -23,6 +28,10 @@
 	var/obj/item/borg/apparatus/circuit/C = locate() in R.module.modules
 	if(C && C.upgraded) //If upgraded, remove the upgrade
 		C.upgraded = FALSE
-		C.name = "basic component manipulation apparatus"
+		C.name = initial(C.name)
+		C.desc = initial(C.desc)
 		C.storable = list(/obj/item/wallframe,
 					/obj/item/electronics)
+		var/obj/item/stored_item = C.stored
+		if(stored_item in ADVANCED_BORG_LIST) //Drop stuff we can no longer hold.
+			stored_item.forceMove(get_turf(usr))

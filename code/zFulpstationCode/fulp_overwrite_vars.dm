@@ -292,7 +292,7 @@
 		/obj/item/stack/cable_coil/cyborg)
 
 /obj/item/borg/apparatus/circuit
-	name = "component manipulation apparatus"
+	name = "basic component manipulation apparatus"
 	desc = "A special apparatus for carrying and manipulating engineering components like electronics and wall mounted frames. Alt-Z or right-click to drop the stored object."
 	var/upgraded = FALSE
 	storable = list(/obj/item/wallframe,
