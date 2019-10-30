@@ -105,6 +105,7 @@
 
 /datum/component/nanites/process()
 	adjust_nanites(null, regen_rate)
+	add_research()
 	for(var/X in programs)
 		var/datum/nanite_program/NP = X
 		NP.on_process()
@@ -271,6 +272,19 @@
 /datum/component/nanites/proc/get_programs(datum/source, list/nanite_programs)
 	nanite_programs |= programs
 
+/datum/component/nanites/proc/add_research()
+	var/research_value = NANITE_BASE_RESEARCH
+	if(!ishuman(host_mob))	
+		if(!iscarbon(host_mob))
+			research_value *= 0.4
+		else
+			research_value *= 0.8
+	if(!host_mob.client)
+		research_value *= 0.5
+	if(host_mob.stat == DEAD)
+		research_value *= 0.75
+	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_NANITES = research_value))
+	
 /datum/component/nanites/proc/nanite_scan(datum/source, mob/user, full_scan)
 	if(!full_scan)
 		if(!stealth)
