@@ -166,7 +166,7 @@
 
 /turf/open/floor/plastic
 	name = "plastic floor"
-	desc = "Cheap, lightweight flooring."
+	desc = "Cheap, lightweight flooring. Melts easily."
 	icon_state = "plastic"
 	thermal_conductivity = 0.1
 	heat_capacity = 900
