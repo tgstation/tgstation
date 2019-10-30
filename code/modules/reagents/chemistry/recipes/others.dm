@@ -471,7 +471,7 @@
 	name = /datum/reagent/carpet/cyan
 	id = /datum/reagent/carpet/cyan
 	results = list(/datum/reagent/carpet/cyan = 2)
-	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/toxin/cyanide = 1) 
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/toxin/cyanide = 1)
 	//cyan = cyanide get it huehueuhuehuehheuhe
 
 /datum/chemical_reaction/carpet/green
@@ -682,7 +682,6 @@
 	required_reagents = list(/datum/reagent/fuel = 3)
 	required_container = /obj/item/reagent_containers/food/snacks/deadmouse
 
-
 /datum/chemical_reaction/slimejelly
 	name = "artificial slime jelly"
 	id = /datum/reagent/toxin/slimejelly
@@ -707,3 +706,27 @@
 	results = list(/datum/reagent/carbon = 1)
 	required_reagents = list(/datum/reagent/cellulose = 1)
 	required_temp = 512
+
+/datum/chemical_reaction/toilet_water
+	name = "toilet water"
+	id = "toilet water"
+	results = list(/datum/reagent/water/toilet = 1)
+	required_reagents = list(/datum/reagent/water = 1)
+	required_container = /obj/structure/toilet
+	mix_message = "The water becomes pale."
+	mix_sound = null
+
+/datum/chemical_reaction/toilet_water/alt
+	required_container = /obj/structure/toilet/greyscale
+
+/datum/chemical_reaction/eau_de_toilette
+	name = "eau de toilette"
+	id = "toilette"
+	results = list(/datum/reagent/consumable/ethanol/toilette = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 1)
+	required_container = /obj/structure/toilet
+	mix_message = "The ethanol turns yellow."
+	mix_sound = null
+
+/datum/chemical_reaction/eau_de_toilette/alt
+	required_container = /obj/structure/toilet/greyscale

@@ -1929,3 +1929,29 @@
 	color = "#E6E6DA"
 	taste_mult = 0
 
+/datum/reagent/water/toilet
+	name = "toilet water"
+	description = "99% water."
+	color = "4f919f" // 79, 145, 159
+	taste_description = "toilet water"
+	glass_name = "glass of water"
+	glass_desc = "It seems normal water..."
+
+/datum/reagent/water/toilet/on_mob_life(mob/living/carbon/M)
+	M.adjust_disgust(3)
+	..()
+
+/datum/reagent/consumable/ethanol/toilette
+	name = "Eau de toilette"
+	description = "A french perfume."
+	boozepwr = 80
+	color = "#ffffe0" // 255, 255, 224
+	taste_description = "toilet water"
+	glass_icon_state = "toilette"
+	glass_name = "Eau de toilette"
+	glass_desc = "A bottle of perfume."
+
+/datum/reagent/consumable/ethanol/toilette/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(istype(M) && method != INGEST && method != INJECT)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "eau_the_toilette", /datum/mood_event/eau_de_toilette)
+	..()

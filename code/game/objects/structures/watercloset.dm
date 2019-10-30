@@ -6,21 +6,51 @@
 	density = FALSE
 	anchored = TRUE
 	var/open = FALSE			//if the lid is up
-	var/cistern = 0			//if the cistern bit is open
+	var/cistern = FALSE		//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 	var/buildstacktype = /obj/item/stack/sheet/metal //they're metal now, shut up
 	var/buildstackamount = 1
+	///if its in "filtering mode"
+	var/centrifuge = FALSE
+	///reference to where you put the reagents once filtered
+	var/obj/item/reagent_containers/output
+	///to prevent spam noise
+	var/fwoosh_cooldown = 0
 
-/obj/structure/toilet/Initialize()
+/obj/structure/toilet/Initialize(mapload)
 	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
+	create_reagents(100, OPENCONTAINER)
+	if(mapload)
+		reagents.add_reagent(/datum/reagent/water/toilet, 30)
 
+/obj/structure/toilet/examine(mob/user)
+	. = ..()
+	if(centrifuge)
+		. += "<span class='notice'>Insert a beaker, fill the chemical compost you want to filter and flush to transfer one type of reagent into the beaker.</span>"
+
+/obj/structure/toilet/AltClick(mob/living/user)
+	if(!reagents.total_volume)
+		to_chat(user, "<span class='warning'>There is nothing inside!</span>")
+		return
+	if(fwoosh_cooldown < world.time)
+		//add sound here
+		to_chat(user, "<span class='notice'>You fwoosh the toilet.</span>")
+		fwoosh_cooldown = world.time + 5 SECONDS
+		if(output)
+			var/datum/reagent/R = pick(reagents.reagent_list)
+			reagents.trans_id_to(output,R.type, 100)
+	else
+		to_chat(user, "<span class='warning'>The toilet is still fwooshing!</span>")
 
 /obj/structure/toilet/attack_hand(mob/living/user)
 	. = ..()
-	if(.)
+	if(output)
+		if(ishuman(user))
+			user.put_in_hands(output)
+			output = null
 		return
 	if(swirlie)
 		user.changeNext_move(CLICK_CD_MELEE)
@@ -45,6 +75,8 @@
 							var/mob/living/carbon/C = GM
 							if(!C.internal)
 								C.adjustOxyLoss(5)
+								if(reagents.total_volume)
+									reagents.trans_to(GM, 10)
 						else
 							GM.adjustOxyLoss(5)
 					swirlie = null
@@ -93,9 +125,11 @@
 			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='hear'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
+		return
 	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		I.play_tool_sound(src)
 		deconstruct()
+		return
 	else if(cistern)
 		if(user.a_intent != INTENT_HARM)
 			if(I.w_class > WEIGHT_CLASS_NORMAL)
@@ -109,7 +143,12 @@
 				return
 			w_items += I.w_class
 			to_chat(user, "<span class='notice'>You carefully place [I] into the cistern.</span>")
-
+			return
+	else if(istype(I, /obj/item/paper))
+		centrifuge = TRUE
+		to_chat(user, "<span class='notice'>You stick some fitering papers inside</span>")
+		qdel(I)
+		return TRUE
 	else if(istype(I, /obj/item/reagent_containers))
 		if (!open)
 			return
@@ -117,11 +156,17 @@
 			var/obj/item/reagent_containers/food/snacks/monkeycube/cube = I
 			cube.Expand()
 			return
-		var/obj/item/reagent_containers/RG = I
-		RG.reagents.add_reagent(/datum/reagent/water, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
-		to_chat(user, "<span class='notice'>You fill [RG] from [src]. Gross.</span>")
-	else
-		return ..()
+		if(!output && centrifuge)
+			if(user.transferItemToLoc(I, src))
+				output = I
+				to_chat(user, "<span class='notice'>You insert an output beaker.</span>")
+				return TRUE
+	return ..()
+
+/obj/structure/toilet/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+	if(centrifuge)
+		centrifuge = FALSE
+		to_chat(user, "<span class='notice'>You remove the filtering papers.</span>")
 
 /obj/structure/toilet/secret
 	var/obj/item/secret
