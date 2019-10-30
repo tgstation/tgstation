@@ -168,25 +168,25 @@
 	trigger_cooldown = 1800
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
-	extra_settings = list("Directive","Comm Code")
+	extra_settings = list(NES_DIRECTIVE,NES_COMM_CODE)
 	var/directive = "..."
 
 /datum/nanite_program/triggered/comm/mind_control/set_extra_setting(user, setting)
-	if(setting == "Directive")
-		var/new_directive = stripped_input(user, "Choose the directive to imprint with mind control.", "Directive", directive, MAX_MESSAGE_LEN)
+	if(setting == NES_DIRECTIVE)
+		var/new_directive = stripped_input(user, "Choose the directive to imprint with mind control.", NES_DIRECTIVE, directive, MAX_MESSAGE_LEN)
 		if(!new_directive)
 			return
 		directive = new_directive
-	if(setting == "Comm Code")
+	if(setting == NES_COMM_CODE)
 		var/new_code = input(user, "Set the communication code (1-9999) or set to 0 to disable external signals.", name, null) as null|num
 		if(isnull(new_code))
 			return
 		comm_code = CLAMP(round(new_code, 1), 0, 9999)
 
 /datum/nanite_program/triggered/comm/mind_control/get_extra_setting(setting)
-	if(setting == "Directive")
+	if(setting == NES_DIRECTIVE)
 		return directive
-	if(setting == "Comm Code")
+	if(setting == NES_COMM_CODE)
 		return comm_code
 
 /datum/nanite_program/triggered/comm/mind_control/copy_extra_settings_to(datum/nanite_program/triggered/comm/mind_control/target)
