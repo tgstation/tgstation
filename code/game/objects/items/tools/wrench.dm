@@ -41,7 +41,7 @@
 	force = 2 //MEDICAL
 	throwforce = 4
 
-	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed", "whacked")
+	attack_verb = list("healed", "medicaled", "tapped", "poked", "analyzed") //"cobbyed"
 
 /obj/item/wrench/medical/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!</span>")
