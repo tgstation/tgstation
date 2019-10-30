@@ -1,4 +1,4 @@
-#define STARTING_PAYCHECKS 10
+#define STARTING_PAYCHECKS 5
 
 ///these defines are the % of budget they get on payday
 #define PAYCHECK_ASSISTANT 1
