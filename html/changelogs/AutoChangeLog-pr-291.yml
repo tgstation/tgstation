@@ -1,0 +1,4 @@
+author: "Effectism"
+delete-after: True
+changes: 
+  - config: "added maximum fusion temperature config option"
