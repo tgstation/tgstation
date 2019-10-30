@@ -116,7 +116,6 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			continue
 		var/list/signal = list()
 		signal["entrytag"] = G.gpstag //Name or 'tag' of the GPS
-		signal["area"] = get_area_name(G, TRUE)
 		signal["coord"] = "[pos.x], [pos.y], [pos.z]"
 		if(pos.z == curr.z) //Distance/Direction calculations for same z-level only
 			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
