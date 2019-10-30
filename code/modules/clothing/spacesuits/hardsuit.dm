@@ -20,6 +20,12 @@
 	var/datum/looping_sound/geiger/soundloop
 	var/evatoggle = FALSE //can you toggle helmet to go zoom?
 	var/obj/item/clothing/suit/space/hardsuit/linkedsuit = null //can you be toggled with helmet to go zoom?
+	var/evamode_string = "you shed a single tear as you disable the sonic mode on your hardsuit" //what's said when you toggle EVA mode
+	var/speedmode_string = "you toggle your suit's Sonic button, allowing it to go super fast" //ditto for combat/speed mode
+	var/hardsuit_speed_suffix = "(fast" //hardsuit (fast)
+	var/armor_eva = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
+	var/armor_speed = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
+	/*armor changes between the modes*/
 
 /obj/item/clothing/head/helmet/space/hardsuit/Initialize()
 	. = ..()
@@ -41,7 +47,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
 	if(evatoggle)
-		toggle_helmet_mode()
+		toggle_helmet_mode(user)
 		return
 	on = !on
 	icon_state = "[basestate][on]-[hardsuit_type]"
@@ -118,8 +124,10 @@
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
 	var/obj/item/tank/jetpack/suit/jetpack = null
 	var/hardsuit_type
-
-
+	var/armor_eva = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
+	var/armor_speed = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
+	/*armor changes between the modes, for hardsuits proper*/
+	var/armor_switch = FALSE //toggles if armor_eva and armor_speed are used
 /obj/item/clothing/suit/space/hardsuit/Initialize()
 	if(jetpack && ispath(jetpack))
 		jetpack = new jetpack(src)
@@ -287,6 +295,9 @@
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	visor_flags = STOPSPRESSUREDAMAGE
 	evatoggle = TRUE
+	evamode_string = "You switch your hardsuit to EVA mode, sacrificing speed for space protection."
+	speedmode_string = "You switch your hardsuit to combat mode and can now run at full speed."
+	hardsuit_speed_suffix = "(combat)"
 
 /obj/item/clothing/suit/space/hardsuit/syndi
 	name = "blood-red hardsuit"
@@ -307,7 +318,7 @@
 		return
 	on = !on
 	if(on || force)
-		to_chat(user, "<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>")
+		to_chat(user, "<span class='notice'>[evamode_string]</span>")
 		name = initial(name)
 		desc = initial(desc)
 		set_light(brightness_on)
@@ -316,8 +327,8 @@
 		flags_inv |= visor_flags_inv
 		cold_protection |= HEAD
 	else
-		to_chat(user, "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>")
-		name += " (combat)"
+		to_chat(user, "<span class='notice'>[speedmode_string]</span>")
+		name += " [hardsuit_speed_suffix]"
 		desc = alt_desc
 		set_light(0)
 		clothing_flags &= ~visor_flags
@@ -343,12 +354,18 @@
 			linkedsuit.slowdown = 1
 			linkedsuit.clothing_flags |= STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+			if(linkedsuit.armor_switch)
+				linkedsuit.armor = linkedsuit.armor_speed
+				armor = armor_speed //for the helmet
 		else
-			linkedsuit.name += " (combat)"
+			linkedsuit.name += " [hardsuit_speed_suffix]"
 			linkedsuit.desc = linkedsuit.alt_desc
 			linkedsuit.slowdown = 0
 			linkedsuit.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection &= ~(CHEST | GROIN | LEGS | FEET | ARMS | HANDS)
+			if(linkedsuit.armor_switch)
+				linkedsuit.armor = linkedsuit.armor_eva
+				armor = armor_eva
 
 		linkedsuit.icon_state = "hardsuit[on]-[hardsuit_type]"
 		linkedsuit.update_icon()
@@ -366,15 +383,24 @@
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SCAN_REAGENTS | SNUG_FIT
 	evatoggle = TRUE
+	evamode_string = "You switch your hardsuit to Protection mode, sacrificing speed for EVA, melee and radiation protection."
+	speedmode_string = "You switch your hardsuit to Mobility mode and can now run at full speed, but your hardsuit has reduced protection against radiation and melee."
+	hardsuit_speed_suffix = "(mobility)"
+	armor_eva = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 20, "bio" = 100, "rad" = 100, "fire" = 75, "acid" = 90)
+	armor_speed = list("melee" = 10, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 50, "fire" = 60, "acid" = 75)
 
 /obj/item/clothing/suit/space/hardsuit/medical
 	name = "medical hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement. Can store standard medical supplies like medkits and bio or chemistry bags."
-	icon_state = "hardsuit-medical"
-	item_state = "medical_hardsuit"
+	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement. Can store standard medical supplies like medkits and bio or chemistry bags. Comes with a special switch that toggles between protection and mobility modes, it is currently set to protection."
+	alt_desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement. Can store standard medical supplies like medkits and bio or chemistry bags. Comes with a special switch that toggles between protection and mobility modes, it is currently set to speed."
+	icon_state = "hardsuit0-medical"
+	item_state = "hardsuit-medical"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical, /obj/item/storage/bag/bio)
-	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
+	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 20, "bio" = 100, "rad" = 100, "fire" = 75, "acid" = 90)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
+	armor_switch = TRUE
+	armor_eva = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 20, "bio" = 100, "rad" = 100, "fire" = 75, "acid" = 90)
+	armor_speed = list("melee" = 10, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 50, "fire" = 60, "acid" = 75)
 
 //Elite Syndie suit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
@@ -412,19 +438,23 @@
 //The Owl Hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
 	name = "owl hardsuit helmet"
-	desc = "A dual-mode advanced helmet designed for any crime-fighting situation. It is in travel mode."
-	alt_desc = "A dual-mode advanced helmet designed for any crime-fighting situation. It is in combat mode."
+	desc = "A dual-mode advanced helmet designed for any crime-fighting situation. It is in tracking mode."
+	alt_desc = "A dual-mode advanced helmet designed for any crime-fighting situation. It is in justice mode."
 	icon_state = "hardsuit1-owl"
 	item_state = "s_helmet"
 	hardsuit_type = "owl"
 	visor_flags_inv = 0
 	visor_flags = 0
 	on = FALSE
+	evamode_string = "You switch your hardsuit to Tracking mode, sacrificing speed for EVA protection."
+	speedmode_string = "You switch your hardsuit to Justice mode and can now run at full speed. Let no criminals leave unpunished today."
+	hardsuit_speed_suffix = "(justice)"
+
 
 /obj/item/clothing/suit/space/hardsuit/syndi/owl
 	name = "owl hardsuit"
-	desc = "A dual-mode advanced hardsuit designed for any crime-fighting situation. It is in travel mode."
-	alt_desc = "A dual-mode advanced hardsuit designed for any crime-fighting situation. It is in combat mode."
+	desc = "A dual-mode advanced hardsuit designed for any crime-fighting situation. It is in tracking mode."
+	alt_desc = "A dual-mode advanced hardsuit designed for any crime-fighting situation. It is in justice mode."
 	icon_state = "hardsuit1-owl"
 	item_state = "s_suit"
 	hardsuit_type = "owl"
