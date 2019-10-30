@@ -138,13 +138,17 @@
 		add_program(null, SNP.copy())
 
 /datum/component/nanites/proc/cloud_sync()
-	if(!cloud_id)
-		return
-	var/datum/nanite_cloud_backup/backup = SSnanites.get_cloud_backup(cloud_id)
-	if(backup)
-		var/datum/component/nanites/cloud_copy = backup.nanites
-		if(cloud_copy)
-			sync(null, cloud_copy)
+	if(cloud_id)
+		var/datum/nanite_cloud_backup/backup = SSnanites.get_cloud_backup(cloud_id)
+		if(backup)
+			var/datum/component/nanites/cloud_copy = backup.nanites
+			if(cloud_copy)
+				sync(null, cloud_copy)
+				return
+	//Without cloud syncing nanites can accumulate errors and/or defects
+	if(prob(8))
+		var/datum/nanite_program/NP = pick(programs)
+		NP.software_error()
 
 /datum/component/nanites/proc/add_program(datum/source, datum/nanite_program/new_program, datum/nanite_program/source_program)
 	for(var/X in programs)
