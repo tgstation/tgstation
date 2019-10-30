@@ -12,3 +12,6 @@ VOTE_AUTOTRANSFER_INITIAL 72000
 
 ##autovote delay (deciseconds) before sequential automatic transfer votes are called (default 30 minutes)
 VOTE_AUTOTRANSFER_INTERVAL 18000
+
+## fusion max temperature multiplier (default: 1e8)
+FUSIONCAP 1

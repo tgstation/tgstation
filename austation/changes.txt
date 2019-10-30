@@ -14,3 +14,4 @@ Effectism/Terra:Added Custom plaques
 Terra:OOC remains active during sandbox rounds
 Terra:Closets no longer have drag slowdown
 Effectism:Gangs and Gangmageddon gamemodes
+Effectism:Fusion max temperature config

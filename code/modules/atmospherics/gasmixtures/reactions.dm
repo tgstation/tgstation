@@ -330,7 +330,7 @@
 			radiation_pulse(location,rad_power)
 
 		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY && (air.temperature <= FUSION_MAXIMUM_TEMPERATURE || reaction_energy <= 0))	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY && (air.temperature <= (FUSION_MAXIMUM_TEMPERATURE*(CONFIG_GET(number/fusioncap))) || reaction_energy <= 0))	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions. Austation -- The fusion temperature limit can be modified in server config
 			air.temperature = CLAMP(((air.temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB,INFINITY)
 		return REACTING
 
