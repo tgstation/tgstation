@@ -329,7 +329,7 @@
 
 /obj/item/stack/tile/plastic
 	name = "plastic tile"
-	singular_name = "platic floor tile"
+	singular_name = "plastic floor tile"
 	desc = "A tile of cheap, flimsy plastic flooring."
 	icon_state = "tile_plastic"
 	custom_materials = list(/datum/material/plastic=500)
