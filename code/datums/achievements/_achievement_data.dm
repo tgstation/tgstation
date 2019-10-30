@@ -115,7 +115,7 @@
 	return ret_data
 
 /client/verb/checkachievements()
-	set category = "Personal"
+	set category = "OOC"
 	set name = "Check achievements"
 	set desc = "See all of your achievements!"
 
