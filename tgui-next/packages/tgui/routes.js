@@ -16,7 +16,10 @@ import { Cargo } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemDispenser } from './interfaces/ChemDispenser';
+import { ChemHeater } from './interfaces/ChemHeater';
+import { ChemMaster } from './interfaces/ChemMaster';
 import { Crayon } from './interfaces/Crayon';
+import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { KitchenSink } from './interfaces/KitchenSink';
 import { Mint } from './interfaces/Mint';
@@ -97,9 +100,21 @@ const ROUTES = {
     component: () => ChemDispenser,
     scrollable: true,
   },
+  chem_heater: {
+    component: () => ChemHeater,
+    scrollable: true,
+  },
+  chem_master: {
+    component: () => ChemMaster,
+    scrollable: true,
+  },
   crayon: {
     component: () => Crayon,
     scrollable: true,
+  },
+  cryo: {
+    component: () => Cryo,
+    scrollable: false,
   },
   disposal_unit: {
     component: () => DisposalUnit,

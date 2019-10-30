@@ -1,0 +1,5 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - rscadd: "New ChemMaster interface."
+  - rscadd: "New ChemHeater interface."

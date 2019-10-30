@@ -1137,7 +1137,7 @@
 	else
 		optionlist = list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
 
-	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
+	var/paintjob = input(user, "Please select a paintjob for this airlock.") in sortList(optionlist)
 	if((!in_range(src, usr) && loc != usr) || !W.use_paint(user))
 		return
 	switch(paintjob)

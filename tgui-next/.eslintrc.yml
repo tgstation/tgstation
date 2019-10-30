@@ -136,7 +136,7 @@ rules:
   ## Prevent extraneous defaultProps on components
   react/default-props-match-prop-types: error
   ## Rule enforces consistent usage of destructuring assignment in component
-  react/destructuring-assignment: error
+  react/destructuring-assignment: [error, always, { ignoreClassFields: true }]
   ## Prevent missing displayName in a React component definition
   react/display-name: error
   ## Forbid certain props on Components
@@ -223,7 +223,7 @@ rules:
   ## Enforce the state initialization style to be either in a constructor or with a class property
   react/state-in-constructor: error
   ## Enforces where React component static properties should be positioned.
-  react/static-property-placement: error
+  # react/static-property-placement: error
   ## Enforce style prop value being an object
   react/style-prop-object: error
   ## Prevent void DOM elements (e.g. <img />, <br />) from receiving children
@@ -292,7 +292,7 @@ rules:
   ## Disallow JSX props spreading
   # react/jsx-props-no-spreading: error
   ## Enforce default props alphabetical sorting
-  react/jsx-sort-default-props: error
+  # react/jsx-sort-default-props: error
   ## Enforce props alphabetical sorting (fixable)
   # react/jsx-sort-props: error
   ## Validate whitespace in and around the JSX opening and closing brackets (fixable)

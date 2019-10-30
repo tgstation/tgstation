@@ -1,0 +1,4 @@
+author: "bandit"
+delete-after: True
+changes: 
+  - bugfix: "Bank accounts should display the correct names for non-humans who join as command roles when Enforce Human Authority is enabled."

@@ -3,7 +3,7 @@ import { clamp, toFixed } from 'common/math';
 
 export const ProgressBar = props => {
   const { value, content, color, children } = props;
-  const hasContent = !!(content || children);
+  const hasContent = content !== undefined || children !== undefined;
   return (
     <div
       className={classes([
@@ -16,9 +16,9 @@ export const ProgressBar = props => {
           'width': (clamp(value, 0, 1) * 100) + '%',
         }} />
       <div className="ProgressBar__content">
-        {hasContent
-          ? (content || children)
-          : (toFixed(value * 100) + '%')}
+        {hasContent && content}
+        {hasContent && children}
+        {!hasContent && toFixed(value * 100) + '%'}
       </div>
     </div>
   );

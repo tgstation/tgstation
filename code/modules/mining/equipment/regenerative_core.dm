@@ -60,7 +60,7 @@
 	if(inert)
 		to_chat(owner, "<span class='notice'>[src] breaks down as it tries to activate.</span>")
 	else
-		owner.revive(full_heal = 1)
+		owner.revive(full_heal = TRUE, admin_revive = FALSE)
 	qdel(src)
 
 /obj/item/organ/regenerative_core/on_life()
