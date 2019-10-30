@@ -124,7 +124,7 @@
 			//Just build whatever it is
 			new buildpath(loc)
 	else
-		src.visible_message("<span class=\"error\"> Something went very wrong and there isnt enough instabitaluri anymore!</span>")
+		src.visible_message("<span class='warning'>Something went very wrong, there isn't enough instabitaluri anymore!</span>")
 	busy = FALSE
 	flick("limbgrower_unfill",src)
 	icon_state = "limbgrower_idleoff"

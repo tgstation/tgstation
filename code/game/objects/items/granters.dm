@@ -147,7 +147,7 @@
 /obj/item/book/granter/spell/onlearned(mob/user)
 	..()
 	if(oneuse)
-		user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
+		user.visible_message("<span class='warning'>[src] glows dark for a second!</span>")
 
 /obj/item/book/granter/spell/fireball
 	spell = /obj/effect/proc_holder/spell/aimed/fireball
@@ -180,7 +180,7 @@
 
 /obj/item/book/granter/spell/smoke/recoil(mob/user)
 	..()
-	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
+	to_chat(user,"<span class='warning'>Your stomach rumbles...</span>")
 	if(user.nutrition)
 		user.set_nutrition(200)
 		if(user.nutrition <= 0)
