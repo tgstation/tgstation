@@ -984,3 +984,19 @@
 	build_path = /obj/item/stack/ducts
 	category = list("initial", "Construction")
 	maxstack = 50
+
+/datum/design/toygun
+	name = "Cap Gun"
+	id = "toygun"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
+	build_path = /obj/item/toy/gun
+	category = list("hacked", "Misc")
+
+/datum/design/capbox
+	name = "Box of Cap Gun Shots"
+	id = "capbox"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
+	build_path = /obj/item/toy/ammo/gun
+	category = list("hacked", "Misc")
