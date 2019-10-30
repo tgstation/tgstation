@@ -36,7 +36,7 @@
 		to_chat(user, "<span class='warning'>There is nothing inside!</span>")
 		return
 	if(fwoosh_cooldown < world.time)
-		//add sound here
+		playsound(src, 'sound/misc/toilet.ogg', 100, TRUE)
 		to_chat(user, "<span class='notice'>You fwoosh the toilet.</span>")
 		fwoosh_cooldown = world.time + 5 SECONDS
 		if(output)
@@ -146,7 +146,7 @@
 			return
 	else if(istype(I, /obj/item/paper))
 		centrifuge = TRUE
-		to_chat(user, "<span class='notice'>You stick some fitering papers inside</span>")
+		to_chat(user, "<span class='notice'>You stick some filtering papers inside</span>")
 		qdel(I)
 		return TRUE
 	else if(istype(I, /obj/item/reagent_containers))
