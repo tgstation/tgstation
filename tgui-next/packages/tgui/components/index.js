@@ -6,6 +6,7 @@ export { Grid } from './Grid';
 export { Icon } from './Icon';
 export { LabeledList } from './LabeledList';
 export { NoticeBox } from './NoticeBox';
+export { NumberInput } from './NumberInput';
 export { ProgressBar } from './ProgressBar';
 export { Section } from './Section';
 export { Table } from './Table';

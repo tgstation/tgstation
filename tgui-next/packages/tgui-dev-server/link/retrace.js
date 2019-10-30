@@ -33,7 +33,7 @@ export const loadSourceMaps = async bundleDir => {
 };
 
 export const retrace = stack => {
-  const header = stack.split('\n')[0];
+  const header = stack.split(/\n\s.*at/)[0];
   const mappedStack = StackTraceParser.parse(stack)
     .map(frame => {
       if (!frame.file) {
