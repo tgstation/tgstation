@@ -121,6 +121,8 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	var/bloody_mess = 0
 	var/obj/item/color_source
 	var/max_wash_capacity = 5
+	var/list/obj/item/reagent_containers/beakers = list()
+
 
 /obj/machinery/washing_machine/ComponentInitialize()
 	. = ..()
@@ -145,6 +147,23 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	busy = TRUE
 	update_icon()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
+	for(var/X in contents - beakers)
+		message_admins(" contents")
+		if(istype(X, /obj/item/reagent_containers) && beakers.len)
+			message_admins("istyype x ")
+			var/obj/item/reagent_containers/C = X
+			var/i = 1
+			var/list/cached_reagents = C.reagents.reagent_list
+			for(var/datum/reagents/R in cached_reagents)
+				message_admins("[i] [R.type] ")
+				if(beakers[i])
+					message_admins("i m inside beaker[i] ")
+					reagents.trans_id_to(beakers[i],R.type, 100)
+					i++
+				else
+					C.reagents.clear_reagents()
+					return
+
 
 	START_PROCESSING(SSfastprocess, src)
 
@@ -267,6 +286,11 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		add_overlay("wm_panel")
 
 /obj/machinery/washing_machine/attackby(obj/item/W, mob/user, params)
+	if(panel_open && istype(W, /obj/item/reagent_containers))
+		var/obj/item/reagent_containers/C = W
+		beakers += C
+		user.transferItemToLoc(C, src)
+		return
 	if(panel_open && !busy && default_unfasten_wrench(user, W))
 		return
 
@@ -300,8 +324,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
 	. = ..()
-	if(.)
-		return
+	if(state_open && beakers.len && user.a_intent == INTENT_HARM)
+		for(var/X in beakers)
+			var/atom/movable/AM = X
+			AM.forceMove(user.loc)
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] is busy!</span>")
 		return
