@@ -124,12 +124,18 @@
 		new /obj/item/disk/nanite_program(src)
 
 // Ordinary survival box
+/obj/item/storage/box/survival
+	var/mask_type = /obj/item/clothing/mask/breath
+	var/internal_type = /obj/item/tank/internals/emergency_oxygen
+	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
+
 /obj/item/storage/box/survival/PopulateContents()
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+	new mask_type(src)
+	if(!isnull(medipen_type))
+		new medipen_type(src)
 
 	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
+		new internal_type(src)
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
 
@@ -138,52 +144,41 @@
 	new /obj/item/radio/off(src)
 
 // Mining survival box
-/obj/item/storage/box/survival_mining/PopulateContents()
-	new /obj/item/clothing/mask/gas/explorer(src)
-	new /obj/item/crowbar/red(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+/obj/item/storage/box/survival/mining
+	mask_type = /obj/item/clothing/mask/gas/explorer
 
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
+/obj/item/storage/box/survival/mining/PopulateContents()
+	..()
+	new /obj/item/crowbar/red(src)
 
 // Engineer survival box
-/obj/item/storage/box/engineer/PopulateContents()
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+/obj/item/storage/box/survival/engineer
+	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen/engi(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
-
-/obj/item/storage/box/engineer/radio/PopulateContents()
+/obj/item/storage/box/survival/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
 	new /obj/item/radio/off(src)
 
 // Syndie survival box
-/obj/item/storage/box/syndie/PopulateContents()
-	new /obj/item/clothing/mask/gas/syndicate(src)
+/obj/item/storage/box/survival/syndie
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
+	medipen_type = null
 
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen/engi(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
+/obj/item/storage/box/survival/syndie/clown
+	mask_type = /obj/item/clothing/mask/gas/clown_hat
 
 // Security survival box
-/obj/item/storage/box/security/PopulateContents()
-	new /obj/item/clothing/mask/gas/sechailer(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+/obj/item/storage/box/survival/security
+	mask_type = /obj/item/clothing/mask/gas/sechailer
 
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
-
-/obj/item/storage/box/security/radio/PopulateContents()
+/obj/item/storage/box/survival/security/radio/PopulateContents()
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
+
+// Mime survival box
+/obj/item/storage/box/survival/mime
+	mask_type = /obj/item/clothing/mask/gas/mime
 
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
@@ -785,7 +780,7 @@
 
 // Clown survival box
 /obj/item/storage/box/hug/survival/PopulateContents()
-	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/clothing/mask/gas/clown_hat(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 	if(!isplasmaman(loc))
