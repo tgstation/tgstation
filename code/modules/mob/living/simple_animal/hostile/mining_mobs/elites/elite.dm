@@ -39,10 +39,21 @@
 		var/mob/living/simple_animal/hostile/M = target
 		if(faction_check_mob(M))
 			return FALSE
+	if(istype(target, /obj/structure/elite_tumor))
+		var/obj/structure/elite_tumor/T = target
+		if(T.mychild == src && T.activity == TUMOR_PASSIVE)
+			var/elite_remove = alert("Re-enter the tumor?", "Despawn yourself?", "Yes", "No")
+			if(elite_remove == "No" || !src || QDELETED(src))
+				return
+			T.mychild = null
+			T.activity = TUMOR_INACTIVE
+			T.icon_state = "advanced_tumor"
+			qdel(src)
+			return FALSE
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
-		M.gets_drilled()
+		M.gets_drilled()			
 		
 //Elites can't talk (normally)!
 /mob/living/simple_animal/hostile/asteroid/elite/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
@@ -309,6 +320,7 @@ obj/structure/elite_tumor/proc/onEliteWon()
 		user.visible_message("<span class='notice'>[user] stabs [E] with [src], reviving it.</span>")
 		SEND_SOUND(E, sound('sound/effects/magic.ogg'))
 		to_chat(E, "<span class='userdanger'>You have been revived by [user].  While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span")
+		to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
 		E.maxHealth = E.maxHealth * 0.5
 		E.health = E.maxHealth
 		E.desc = "[E.desc]  However, this one appears appears less wild in nature, and calmer around people."
@@ -325,7 +337,7 @@ obj/structure/elite_tumor/proc/onEliteWon()
 	smooth = SMOOTH_TRUE
 	layer = BELOW_MOB_LAYER
 	var/mob/living/carbon/human/activator = null
-	var/mob/living/ourelite = null
+	var/mob/living/simple_animal/hostile/asteroid/elite/ourelite = null
 	color = rgb(255,0,0)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = LIGHT_COLOR_RED
