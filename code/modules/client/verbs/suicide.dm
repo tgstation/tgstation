@@ -224,10 +224,10 @@
 		death(FALSE)
 
 /mob/living/proc/suicide_log()
-	log_message("[key_name(src)] committed suicide at [AREACOORD(src)] as [src.type].", LOG_ATTACK)
+	log_attack("[key_name(src)] committed suicide at [AREACOORD(src)] as [src.type].")
 
 /mob/living/carbon/human/suicide_log()
-	log_message("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].", LOG_ATTACK)
+	log_attack("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].")
 
 /mob/living/proc/canSuicide()
 	switch(stat)
