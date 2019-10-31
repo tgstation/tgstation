@@ -455,7 +455,7 @@
 			else if(ispath(symptom))
 				var/datum/symptom/S = new symptom
 				if(!D.HasSymptom(S))
-					D.symptoms += S
+					D.AddSymptom(S)
 					i -= 1
 	while(i > 0)
 
@@ -467,12 +467,26 @@
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
-			if(!is_station_level(H.z))
-				continue
-			if(!H.HasDisease(D))
+		var/list/targets = list("Random")
+		targets += sortNames(GLOB.human_list)
+		var/target = input("Pick a viable human target for the disease.", "Disease Target") as null|anything in targets
+
+		if(!target)
+			return
+		if(target == "Random")
+			for(var/mob/living/carbon/human/H in shuffle(GLOB.human_list))
+				if(!is_station_level(H.z))
+					continue
+				if(!H.HasDisease(D))
+					H.ForceContractDisease(D)
+					break
+		else
+			var/mob/living/carbon/human/H = target
+			if(istype(H))
 				H.ForceContractDisease(D)
-				break
+			else
+				to_chat(user, "Target could not be infected. Check mob type or resistances.")
+				return
 
 		var/list/name_symptoms = list()
 		for(var/datum/symptom/S in D.symptoms)
