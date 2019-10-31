@@ -1,4 +1,4 @@
-/obj/item/clothing/mask/hades
+/obj/item/clothing/head/hades
 	name = "Hades"
 	desc = "Ouch, now that's hot!"
 	icon = 'icons/fulpicons/halloween_costumes/jo_icon.dmi'

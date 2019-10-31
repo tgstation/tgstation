@@ -1,4 +1,4 @@
-/obj/item/clothing/mask/thanos_head
+/obj/item/clothing/head/thanos_head
 	name = "Thanos"
 	desc = "Now you too  have a wrinkly chin."
 	icon = 'icons/fulpicons/halloween_costumes/jo_icon.dmi'
