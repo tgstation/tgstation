@@ -323,7 +323,7 @@
 	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		O.play_tool_sound(src)
 		deconstruct()
-	return
+		return
 
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
