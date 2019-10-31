@@ -596,7 +596,7 @@
 	if(lying) 
 		if(direct & EAST)
 			lying = 90
-		if(direct & EAST)
+		if(direct & WEST)
 			lying = 270
 		update_transform()
 		lying_prev = lying
