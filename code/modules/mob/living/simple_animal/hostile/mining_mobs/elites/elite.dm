@@ -171,6 +171,7 @@ obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
 	if(boosted)
 		mychild.key = elitemind.key
 		mychild.sentience_act()
+	icon_state = "tumor_popped"
 	INVOKE_ASYNC(src, .proc/arena_checks)
 
 obj/structure/elite_tumor/proc/return_elite()
