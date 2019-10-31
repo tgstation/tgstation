@@ -440,3 +440,42 @@
 
 /obj/structure/chair/mime/post_unbuckle_mob(mob/living/M)
 	M.pixel_y -= 5
+
+
+/obj/structure/chair/plastic
+	icon_state = "plastic_chair"
+	name = "folding plastic chair"
+	desc = "No matter how much you squirm, it'll still be uncomfortable."
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
+	custom_materials = list(/datum/material/plastic = 2000)
+	buildstacktype = /obj/item/stack/sheet/plastic
+	buildstackamount = 2
+	item_chair = /obj/item/chair/plastic
+
+/obj/structure/chair/plastic/post_buckle_mob(mob/living/Mob)
+	Mob.pixel_y += 2
+	.=..()
+	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
+		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
+		if(do_after(Mob, 100, target = Mob))
+			qdel(src)
+			Mob.visible_message("<span class='notice'>The plastic chair snaps under the weight of [Mob]!</span>")
+
+/obj/structure/chair/plastic/post_unbuckle_mob(mob/living/Mob)
+	Mob.pixel_y -= 2
+
+/obj/item/chair/plastic
+	name = "folding plastic chair"
+	desc = "Somehow, you can always find one under the wrestling ring."
+	icon = 'icons/obj/chairs.dmi'
+	icon_state = "folded_chair"
+	item_state = "folded_chair"
+	lefthand_file = 'icons/mob/inhands/misc/chairs_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/chairs_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 7
+	throw_range = 5 //Lighter Weight --> Flies Farther.
+	custom_materials = list(/datum/material/plastic = 2000)
+	break_chance = 25
+	origin_type = /obj/structure/chair/plastic
