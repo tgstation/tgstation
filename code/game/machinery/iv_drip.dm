@@ -211,7 +211,7 @@
 	if(usr.incapacitated())
 		return
 	mode = !mode
-	to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
+	to_chat(usr, "<span class='notice'>The IV drip is now [mode ? "injecting" : "taking blood"].</span>")
 	update_icon()
 
 /obj/machinery/iv_drip/examine(mob/user)

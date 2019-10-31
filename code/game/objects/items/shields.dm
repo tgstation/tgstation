@@ -25,6 +25,7 @@
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	transparent = TRUE
 	max_integrity = 75
+	material_flags = MATERIAL_NO_EFFECTS
 
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
@@ -45,7 +46,7 @@
 			cooldown = world.time
 	else if(istype(W, /obj/item/stack/sheet/mineral/titanium))
 		if (obj_integrity >= max_integrity)
-			to_chat(user, "<span class='notice'>[src] is already in perfect condition.</span>")
+			to_chat(user, "<span class='warning'>[src] is already in perfect condition.</span>")
 		else
 			var/obj/item/stack/sheet/mineral/titanium/T = W
 			T.use(1)
@@ -148,10 +149,10 @@
 	if(istype(W, /obj/item/assembly/flash/handheld))
 		var/obj/item/assembly/flash/handheld/flash = W
 		if(flash.burnt_out)
-			to_chat(user, "No sense replacing it with a broken bulb.")
+			to_chat(user, "<span class='warning'>No sense replacing it with a broken bulb!</span>")
 			return
 		else
-			to_chat(user, "You begin to replace the bulb.")
+			to_chat(user, "<span class='notice'>You begin to replace the bulb...</span>")
 			if(do_after(user, 20, target = user))
 				if(flash.burnt_out || !flash || QDELETED(flash))
 					return
@@ -211,7 +212,7 @@
 
 /obj/item/shield/energy/attack_self(mob/living/carbon/human/user)
 	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		to_chat(user, "<span class='warning'>You beat yourself in the head with [src].</span>")
+		to_chat(user, "<span class='userdanger'>You beat yourself in the head with [src]!</span>")
 		user.take_bodypart_damage(5)
 	active = !active
 	icon_state = "[base_icon_state][active]"
@@ -238,6 +239,7 @@
 	icon_state = "teleriot0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	custom_materials = list(/datum/material/iron = 3600, /datum/material/glass = 3600, /datum/material/silver = 270, /datum/material/titanium = 180)
 	slot_flags = null
 	force = 3
 	throwforce = 3

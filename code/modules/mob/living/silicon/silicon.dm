@@ -14,7 +14,7 @@
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	deathsound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
-
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -74,9 +74,6 @@
 
 /mob/living/silicon/contents_explosion(severity, target)
 	return
-
-/mob/living/silicon/prevent_content_explosion()
-	return TRUE
 
 /mob/living/silicon/proc/cancelAlarm()
 	return
@@ -336,7 +333,7 @@
 
 /mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).
 	if(!radio)
-		to_chat(src, "Radio not detected.")
+		to_chat(src, "<span class='alert'>Radio not detected.</span>")
 		return
 
 	//Ask the user to pick a channel from what it has available.
@@ -390,11 +387,11 @@
 		return
 	sensors_on = !sensors_on
 	if (!sensors_on)
-		to_chat(src, "Sensor overlay deactivated.")
+		to_chat(src, "<span class='notice'>Sensor overlay deactivated.</span>")
 		remove_sensors()
 		return
 	add_sensors()
-	to_chat(src, "Sensor overlay activated.")
+	to_chat(src, "<span class='notice'>Sensor overlay activated.</span>")
 
 /mob/living/silicon/proc/GetPhoto(mob/user)
 	if (aicamera)

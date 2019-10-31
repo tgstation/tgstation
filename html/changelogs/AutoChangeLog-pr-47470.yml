@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - balance: "Nanites who aren't regularly syncing to a cloud console have a chance of encountering software errors over time."

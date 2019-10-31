@@ -41,6 +41,7 @@
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
@@ -60,7 +61,11 @@
 		/obj/item/holosign_creator/engineering,
 		/obj/item/forcefield_projector,
 		/obj/item/assembly/signaler,
-		/obj/item/lightreplacer
+		/obj/item/lightreplacer,
+		/obj/item/construction/rcd,
+		/obj/item/pipe_dispenser,
+		/obj/item/inducer,
+		/obj/item/plunger
 		))
 
 /obj/item/storage/belt/utility/chief
@@ -163,7 +168,10 @@
 		/obj/item/implant,
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
-		/obj/item/holosign_creator/medical
+		/obj/item/holosign_creator/medical,
+		/obj/item/pipe_dispenser/plumbing,
+		/obj/item/construction/plumbing,
+		/obj/item/plunger
 		))
 
 /obj/item/storage/belt/security
@@ -440,6 +448,8 @@
 		/obj/item/multitool,
 		/obj/item/reagent_containers/food/drinks/bottle/molotov,
 		/obj/item/grenade/c4,
+		/obj/item/reagent_containers/food/snacks/grown/cherry_bomb,
+		/obj/item/reagent_containers/food/snacks/grown/firelemon
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
@@ -506,7 +516,8 @@
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
-		/obj/item/assembly/mousetrap
+		/obj/item/assembly/mousetrap,
+		/obj/item/paint/paint_remover
 		))
 
 /obj/item/storage/belt/janitor/full/PopulateContents()

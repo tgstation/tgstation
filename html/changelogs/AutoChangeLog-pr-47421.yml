@@ -1,0 +1,6 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Nanites now have their own research point type, gained over time based on the amount of mobs with active nanites."
+  - balance: "Basic nanite programming is much cheaper and no longer requires basic robotics."
+  - balance: "All other nodes had their cost split into normal and nanite research, lowering their impact on the research progression for other departments."

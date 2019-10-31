@@ -7,6 +7,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/giftwrapped = FALSE
 	var/sortTag = 0
+	var/obj/item/paper/note
 
 /obj/structure/bigDelivery/interact(mob/user)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
@@ -21,6 +22,15 @@
 /obj/structure/bigDelivery/contents_explosion(severity, target)
 	for(var/atom/movable/AM in contents)
 		AM.ex_act()
+
+/obj/structure/bigDelivery/examine(mob/user)
+	. = ..()
+	if(note)
+		if(!in_range(user, src))
+			. += "There's a [note.name] attached to it. You can't read it from here."
+		else
+			. += "There's a [note.name] attached to it..."
+			. += note.examine(user)
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/destTagger))
@@ -53,6 +63,21 @@
 			icon_state = "gift[icon_state]"
 		else
 			to_chat(user, "<span class='warning'>You need more paper!</span>")
+
+	else if(istype(W, /obj/item/paper))
+		if(note)
+			to_chat(user, "<span class='warning'>This package already has a note attached!</span>")
+			return
+		if(!user.transferItemToLoc(W, src))
+			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] attaches [W] to [src].</span>", "<span class='notice'>You attach [W] to [src].</span>")
+		note = W
+		if(giftwrapped)
+			add_overlay(copytext("[icon_state]_note",5))
+			return
+		add_overlay("[icon_state]_note")
+
 	else
 		return ..()
 
@@ -82,6 +107,7 @@
 	item_state = "deliverypackage"
 	var/giftwrapped = 0
 	var/sortTag = 0
+	var/obj/item/paper/note
 
 /obj/item/smallDelivery/contents_explosion(severity, target)
 	for(var/atom/movable/AM in contents)
@@ -108,6 +134,15 @@
 			AM.forceMove(src.loc)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	qdel(src)
+
+/obj/item/smallDelivery/examine(mob/user)
+	. = ..()
+	if(note)
+		if(!in_range(user, src))
+			. += "There's a [note.name] attached to it. You can't read it from here."
+		else
+			. += "There's a [note.name] attached to it..."
+			. += note.examine(user)
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/destTagger))
@@ -141,6 +176,19 @@
 		else
 			to_chat(user, "<span class='warning'>You need more paper!</span>")
 
+	else if(istype(W, /obj/item/paper))
+		if(note)
+			to_chat(user, "<span class='warning'>This package already has a note attached!</span>")
+			return
+		if(!user.transferItemToLoc(W, src))
+			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
+			return
+		user.visible_message("<span class='notice'>[user] attaches [W] to [src].</span>", "<span class='notice'>You attach [W] to [src].</span>")
+		note = W
+		if(giftwrapped)
+			add_overlay(copytext("[icon_state]_note",5))
+			return
+		add_overlay("[icon_state]_note")
 
 /obj/item/destTagger
 	name = "destination tagger"
@@ -161,7 +209,7 @@
 	desc = "Used to fool the disposal mail network into thinking that you're a harmless parcel. Does actually work as a regular destination tagger as well."
 
 /obj/item/destTagger/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins tagging [user.p_their()] final destination!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] begins tagging [user.p_their()] final destination! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if (islizard(user))
 		to_chat(user, "<span class='notice'>*HELL*</span>")//lizard nerf
 	else

@@ -624,7 +624,7 @@
 	add_fingerprint(user)
 
 	if(status == LIGHT_EMPTY)
-		to_chat(user, "There is no [fitting] in this light.")
+		to_chat(user, "<span class='warning'>There is no [fitting] in this light!</span>")
 		return
 
 	// make it burn hands unless you're wearing heat insulated gloves or have the RESISTHEAT/RESISTHEATHANDS traits
@@ -691,7 +691,7 @@
 
 /obj/machinery/light/attack_tk(mob/user)
 	if(status == LIGHT_EMPTY)
-		to_chat(user, "There is no [fitting] in this light.")
+		to_chat(user, "<span class='warning'>There is no [fitting] in this light!</span>")
 		return
 
 	to_chat(user, "<span class='notice'>You telekinetically remove the light [fitting].</span>")
@@ -831,10 +831,7 @@
 /obj/item/light/Crossed(mob/living/L)
 	. = ..()
 	if(istype(L) && has_gravity(loc))
-		if(HAS_TRAIT(L, TRAIT_LIGHT_STEP))
-			playsound(loc, 'sound/effects/glass_step.ogg', 30, TRUE)
-		else
-			playsound(loc, 'sound/effects/glass_step.ogg', 50, TRUE)
+		playsound(loc, 'sound/effects/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter()
 

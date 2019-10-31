@@ -195,7 +195,7 @@
 		if (nofur)
 			to_chat(user, "<span class='warning'>You can't shave this corgi, it doesn't have a fur coat!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
+		user.visible_message("<span class='notice'>[user] starts to shave [src] using \the [O].</span>", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50, target = src))
 			user.visible_message("<span class='notice'>[user] shaves [src]'s hair using \the [O].</span>")
 			playsound(loc, 'sound/items/welder2.ogg', 20, TRUE)
@@ -234,7 +234,7 @@
 					update_corgi_fluff()
 					regenerate_icons()
 				else
-					to_chat(usr, "<span class='danger'>There is nothing to remove from its [remove_from].</span>")
+					to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from]!</span>")
 					return
 			if("back")
 				if(inventory_back)
@@ -243,7 +243,7 @@
 					update_corgi_fluff()
 					regenerate_icons()
 				else
-					to_chat(usr, "<span class='danger'>There is nothing to remove from its [remove_from].</span>")
+					to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from]!</span>")
 					return
 			if("collar")
 				if(pcollar)
@@ -623,7 +623,7 @@
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		to_chat(usr, "<span class='danger'>[src] already has a cute bow!</span>")
+		to_chat(usr, "<span class='warning'>[src] already has a cute bow!</span>")
 		return
 	..()
 

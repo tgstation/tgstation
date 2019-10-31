@@ -204,6 +204,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
 #define STATUS_EFFECT_TRAIT "status-effect"
 #define CLOTHING_TRAIT "clothing"
+#define HELMET_TRAIT "helmet"
 #define GLASSES_TRAIT "glasses"
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"
@@ -244,5 +245,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LOCKED_HELMET_TRAIT "locked-helmet"
 #define NINJA_SUIT_TRAIT "ninja-suit"
 #define ANTI_DROP_IMPLANT_TRAIT "anti-drop-implant"
-#define VR_ZONE_TRAIT "vr_zone_trait"
 #define SLEEPING_CARP_TRAIT "sleeping_carp"
+#define MADE_UNCLONEABLE "made-uncloneable"

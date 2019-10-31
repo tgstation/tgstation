@@ -1,0 +1,5 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - bugfix: "Old tgui windows are resizable again."
+  - tweak: "Placebo-tier performance improvement of window dragging."
