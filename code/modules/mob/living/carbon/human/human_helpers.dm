@@ -114,6 +114,12 @@
 		if(id_card)
 			return id_card
 
+/mob/living/carbon/human/get_id_in_hand()
+	var/obj/item/held_item = get_active_held_item()
+	if(!held_item)
+		return
+	return held_item.GetID()
+
 /mob/living/carbon/human/IsAdvancedToolUser()
 	if(HAS_TRAIT(src, TRAIT_MONKEYLIKE))
 		return FALSE
