@@ -56,6 +56,7 @@
 	item_flags = NONE
 	casing_ejector = FALSE
 	can_suppress = FALSE
+	pb_knockback = 0
 
 /obj/item/gun/ballistic/shotgun/toy/update_icon()
 	. = ..()
