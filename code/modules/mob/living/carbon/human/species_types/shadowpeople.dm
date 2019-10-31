@@ -140,7 +140,7 @@
 			respawn_progress++
 			playsound(owner,'sound/effects/singlebeat.ogg',40,TRUE)
 	if(respawn_progress >= HEART_RESPAWN_THRESHHOLD)
-		owner.revive(full_heal = TRUE)
+		owner.revive(full_heal = TRUE, admin_revive = FALSE)
 		if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
 			var/mob/living/carbon/old_owner = owner
 			Remove(owner, HEART_SPECIAL_SHADOWIFY)

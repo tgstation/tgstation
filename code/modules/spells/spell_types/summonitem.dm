@@ -36,9 +36,9 @@
 
 			if(!marked_item)
 				if(hand_items)
-					message = "<span class='caution'>You aren't holding anything that can be marked for recall.</span>"
+					message = "<span class='warning'>You aren't holding anything that can be marked for recall!</span>"
 				else
-					message = "<span class='notice'>You must hold the desired item in your hands to mark it for recall.</span>"
+					message = "<span class='warning'>You must hold the desired item in your hands to mark it for recall!</span>"
 
 		else if(marked_item && marked_item in hand_items) //unlinking item to the spell
 			message = "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>"
@@ -73,7 +73,7 @@
 						if(issilicon(M)) //Items in silicons warp the whole silicon
 							M.loc.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
 							M.forceMove(L.loc)
-							M.loc.visible_message("<span class='caution'>[M] suddenly appears!</span>")
+							M.loc.visible_message("<span class='warning'>[M] suddenly appears!</span>")
 							item_to_retrieve = null
 							break
 						M.dropItemToGround(item_to_retrieve)
@@ -107,10 +107,10 @@
 				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
 			if(!L.put_in_hands(item_to_retrieve))
 				item_to_retrieve.forceMove(L.drop_location())
-				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
+				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly appears!</span>")
 				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 			else
-				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears in [L]'s hand!</span>")
+				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly appears in [L]'s hand!</span>")
 				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 
 

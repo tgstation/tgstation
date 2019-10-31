@@ -79,16 +79,16 @@
 		return
 
 	else if(is_special_character(user))
-		to_chat(user, "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away.")
+		to_chat(user, "Even to a heart as dark as yours, you know nothing good will come of this. Something instinctual makes you pull away.")
 
 	else if (!insistinga)
-		to_chat(user, "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?")
+		to_chat(user, "Your first touch makes the Wish Granter stir, listening to you. Are you really sure you want to do this?")
 		insistinga++
 
 	else
 		chargesa--
 		insistinga = 0
-		var/wish = input("You want...","Wish") as null|anything in list("Power","Wealth","Immortality","Peace")
+		var/wish = input("You want...","Wish") as null|anything in sortList(list("Power","Wealth","Immortality","Peace"))
 		switch(wish)
 			if("Power")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")

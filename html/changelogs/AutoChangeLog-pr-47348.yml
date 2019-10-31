@@ -1,0 +1,4 @@
+author: "JStheguy"
+delete-after: True
+changes: 
+  - imageadd: "ID cards, budget cards, and wallets have new sprites. Emags have been reverted to their old look."

@@ -124,6 +124,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
+	var/canMouseDown = FALSE
+
 
 /obj/item/Initialize()
 
@@ -246,7 +248,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	// Extractable materials. Only shows the names, not the amounts.
 	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
-	if (custom_materials.len)
+	if (length(custom_materials))
 		sep = ""
 		for(var/mat in custom_materials)
 			research_msg += sep
@@ -758,7 +760,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!delay && !tool_start_check(user, amount))
 		return
 
-	delay *= toolspeed
+	var/skill_modifier = 1
+
+	if(tool_behaviour == TOOL_MINING && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		skill_modifier = H.mind.get_skill_speed_modifier(/datum/skill/mining)
+
+	delay *= toolspeed * skill_modifier	
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)

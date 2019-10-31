@@ -7,7 +7,9 @@
 	pull_icon.icon = ui_style
 	pull_icon.update_icon()
 	pull_icon.screen_loc = ui_construct_pull
+	pull_icon.hud = src
 	static_inventory += pull_icon
 
 	healths = new /obj/screen/healths/construct()
+	healths.hud = src
 	infodisplay += healths

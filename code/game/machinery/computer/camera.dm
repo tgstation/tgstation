@@ -56,7 +56,9 @@
 	return ..()
 
 /obj/machinery/computer/security/interact(mob/user)
-	if(stat)
+	if (stat)
+		return
+	if (ismob(user) && !isliving(user)) // ghosts don't need cameras
 		return
 	if (!network)
 		user.unset_machine()

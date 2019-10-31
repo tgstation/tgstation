@@ -1,6 +1,0 @@
-author: "smallveggiepaws"
-delete-after: True
-changes: 
-  - tweak: "Flamethrowers emit dim light when lit."
-  - imageadd: "Lit flamethrowers inhand sprite animated. Smokey."
-  - soundadd: "Flamethrowers make a sound when you light/extinguish them."

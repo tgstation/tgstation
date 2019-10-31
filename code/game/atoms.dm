@@ -45,6 +45,8 @@
 
 	///vis overlays managed by SSvis_overlays to automaticaly turn them like other overlays
 	var/list/managed_vis_overlays
+	///overlays managed by update_overlays() to prevent removing overlays that weren't added by the same proc
+	var/list/managed_overlays
 
 	///Proximity monitor associated with this atom
 	var/datum/proximity_monitor/proximity_monitor
@@ -75,6 +77,9 @@
 	///Modifier that raises/lowers the effect of the amount of a material, prevents small and easy to get items from being death machines.
 	var/material_modifier = 1
 
+	var/datum/wires/wires = null
+
+	var/list/alternate_appearances
 
 /**
   * Called when an atom is created in byond (built in engine proc)
@@ -487,13 +492,28 @@
 
 /// Updates the icon of the atom
 /atom/proc/update_icon()
-	// I expect we're going to need more return flags and options in this proc
 	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
+	
 	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_ICON_STATE))
 		update_icon_state()
+	
+	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_OVERLAYS))
+		var/list/new_overlays = update_overlays()
+		if(managed_overlays)
+			cut_overlay(managed_overlays)
+			managed_overlays = null
+		if(length(new_overlays))
+			managed_overlays = new_overlays
+			add_overlay(new_overlays)
 
 /// Updates the icon state of the atom
 /atom/proc/update_icon_state()
+
+/// Updates the overlays of the atom
+/atom/proc/update_overlays()
+	SHOULD_CALL_PARENT(1)
+	. = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_OVERLAYS, .)
 
 /**
   * An atom we are buckled or is contained within us has tried to move
@@ -506,10 +526,6 @@
 		buckle_message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
 	return
-
-/// Return true if this atoms contents should not have ex_act called on ex_act
-/atom/proc/prevent_content_explosion()
-	return FALSE
 
 /// Handle what happens when your contents are exploded by a bomb
 /atom/proc/contents_explosion(severity, target)
@@ -890,7 +906,7 @@
 						if(!valid_id)
 							to_chat(usr, "<span class='warning'>A reagent with that ID doesn't exist!</span>")
 				if("Choose from a list")
-					chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in subtypesof(/datum/reagent)
+					chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in sortList(subtypesof(/datum/reagent), /proc/cmp_typepaths_asc)
 				if("I'm feeling lucky")
 					chosen_id = pick(subtypesof(/datum/reagent))
 			if(chosen_id)

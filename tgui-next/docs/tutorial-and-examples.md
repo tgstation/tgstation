@@ -222,7 +222,7 @@ const SampleInterface = props => {
   const { config, data } = state;
   // Extract window reference (will be used later for dispatching actions)
   const { ref } = config;
-  // Return the Virtual DOM
+  // Return the UI
   return (
     <Section title="Section name">
       <LabeledList>

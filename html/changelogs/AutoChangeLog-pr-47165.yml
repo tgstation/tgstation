@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "The plumbing reaction chamber now responds correctly to power changes."

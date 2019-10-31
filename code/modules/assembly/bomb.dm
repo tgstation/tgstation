@@ -47,7 +47,7 @@
 	..()
 	. = FALSE
 	if(status)
-		to_chat(user, "<span class='notice'>[bombtank] already has a pressure hole!</span>")
+		to_chat(user, "<span class='warning'>[bombtank] already has a pressure hole!</span>")
 		return
 	if(!I.tool_start_check(user, amount=0))
 		return

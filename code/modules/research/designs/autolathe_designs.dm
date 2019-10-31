@@ -272,6 +272,14 @@
 	category = list("hacked","Misc","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
+/datum/design/generic_gas_tank
+	name = "Generic Gas Tank"
+	id = "generic_tank"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	build_path = /obj/item/tank/internals/generic
+	category = list("initial","Misc","Equipment")
+
 /datum/design/metal
 	name = "Metal"
 	id = "metal"
@@ -684,28 +692,12 @@
 	build_path = /obj/item/flamethrower/full
 	category = list("hacked", "Security")
 
-/datum/design/rcd
-	name = "Rapid Construction Device (RCD)"
-	id = "rcd"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 30000)
-	build_path = /obj/item/construction/rcd
-	category = list("hacked", "Construction")
-
 /datum/design/rpd
 	name = "Rapid Pipe Dispenser (RPD)"
 	id = "rpd"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500)
 	build_path = /obj/item/pipe_dispenser
-	category = list("hacked", "Construction")
-
-/datum/design/plumbing_rcd
-	name = "Plumbing Constructor"
-	id = "plumbing_rcd"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500)
-	build_path = /obj/item/construction/plumbing
 	category = list("hacked", "Construction")
 
 /datum/design/electropack
@@ -991,3 +983,20 @@
 	materials = list(/datum/material/iron = 500)
 	build_path = /obj/item/stack/ducts
 	category = list("initial", "Construction")
+	maxstack = 50
+
+/datum/design/toygun
+	name = "Cap Gun"
+	id = "toygun"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
+	build_path = /obj/item/toy/gun
+	category = list("hacked", "Misc")
+
+/datum/design/capbox
+	name = "Box of Cap Gun Shots"
+	id = "capbox"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
+	build_path = /obj/item/toy/ammo/gun
+	category = list("hacked", "Misc")

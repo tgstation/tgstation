@@ -1,12 +1,12 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, Section, Box } from '../components';
 
 export const CellularEmporium = props => {
   const { state } = props;
   const { config, data } = state;
   const { ref } = config;
-  const abilities = data.abilities;
+  const { abilities } = data;
   return (
     <Fragment>
       <Section>
@@ -29,6 +29,7 @@ export const CellularEmporium = props => {
         <LabeledList>
           {abilities.map(ability => (
             <LabeledList.Item
+              key={ability.name}
               className="candystripe"
               label={ability.name}
               buttons={(
@@ -43,8 +44,9 @@ export const CellularEmporium = props => {
                 </Fragment>
               )}>
               {ability.desc}
-              <br />
-              <span className="color-good">{ability.helptext}</span>
+              <Box color="good">
+                {ability.helptext}
+              </Box>
             </LabeledList.Item>
           ))}
         </LabeledList>

@@ -1,4 +1,0 @@
-author: "WarlockD"
-delete-after: True
-changes: 
-  - bugfix: "Geiger counter will display the correct contamination values now"

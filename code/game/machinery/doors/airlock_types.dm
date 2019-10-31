@@ -286,6 +286,16 @@
 	opacity = 0
 	glass = TRUE
 
+/obj/machinery/door/airlock/bronze
+	name = "bronze airlock"
+	icon = 'icons/obj/doors/airlocks/clockwork/pinion_airlock.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/clockwork/overlays.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_bronze
+
+/obj/machinery/door/airlock/bronze/seethru
+	assemblytype = /obj/structure/door_assembly/door_assembly_bronze/seethru
+	opacity = 0
+	glass = TRUE
 //////////////////////////////////
 /*
 	Station2 Airlocks

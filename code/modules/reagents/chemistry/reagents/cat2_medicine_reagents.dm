@@ -56,8 +56,8 @@
 			return
 		else //VICTORY ROYALE
 			to_chat(M, "<span class='hierophant'>You win, and the malevolent spirits fade away as well as your wounds.</span>")
-			SSmedals.UnlockMedal(MEDAL_HELBITALJANKEN,M.client)
-			M.revive(TRUE)
+			M.client.give_award(/datum/award/achievement/misc/helbitaljanken, M)
+			M.revive(full_heal = TRUE, admin_revive = FALSE)
 			M.reagents.del_reagent(type)
 			return
 
@@ -228,13 +228,14 @@
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
 	M.adjustToxLoss(-0.2 * medibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 2.5/medibonus : 1)
-	for(var/datum/reagent/the_reagent2 in M.reagents.reagent_list)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 1.5/medibonus : 1)
+	for(var/r2 in M.reagents.reagent_list)
+		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
 			continue
-		var/amount2purge = medibonus*0.1
-		if(istype(the_reagent2,/datum/reagent/toxin))
-			amount2purge *= 5 //very good antitox (well just removing them) for roundstart availability
+		var/amount2purge = 0.1
+		if(istype(the_reagent2,/datum/reagent/toxin) || istype(the_reagent2,/datum/reagent/consumable/ethanol/))
+			amount2purge *= (5*medibonus) //very good antitox and antidrink (well just removing them) for roundstart availability
 		else if(medibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
 			continue
 		M.reagents.remove_reagent(the_reagent2.type, amount2purge)

@@ -1,0 +1,6 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added the Distributed Computing nanite program, which slowly adds research points over time."
+  - rscadd: "Added the Neural Network nanite program, which adds research points over time as well, but scales in efficiency for each mob that is currently running the program, breaking even with Distributed Computing at 12 hosts."
+  - rscadd: "All of these programs only work on complex mobs (humans, monkeys, xenomorphs) and only have 25% efficiency on non-sentient mobs."
