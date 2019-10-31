@@ -126,7 +126,6 @@
 	else
 		log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
 		log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
-		status = RULESET_FAILED
 		return FALSE
 
 /datum/dynamic_ruleset/latejoin/provocateur/rule_process()

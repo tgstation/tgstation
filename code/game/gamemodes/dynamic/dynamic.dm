@@ -373,7 +373,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				rule.status = RULESET_FAILED // Doesnt trigger anything, but for consistency
 				rule.clean_up()	// Refund threat, delete teams and so on.
 				stack_trace("The starting rule \"[rule.name]\" failed to execute.")
-			rule.status = RULESET_STARTED
+			else
+				rule.status = RULESET_STARTED
 		if(rule.persistent)
 			current_rules += rule
 	..()
@@ -620,9 +621,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		update_playercounts()
 
 	for (var/datum/dynamic_ruleset/rule in current_rules)
-		if(rule.status == RULESET_WAITING) // Ruleset hasnt started yet, probably delayed start.
+		if(rule.status == RULESET_WAITING) // Ruleset hasn't executed yet, probably delayed start.
 			continue
-		if(rule.status == RULESET_FAILED) // Ruleset failed to start. Clean up time.
+		if(rule.status == RULESET_FAILED) // Ruleset has failed to execute. Clean up time.
 			rule.clean_up()
 			current_rules -= rule
 			executed_rules -= rule
