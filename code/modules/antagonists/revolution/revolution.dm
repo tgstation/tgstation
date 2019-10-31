@@ -212,7 +212,7 @@
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
 		to_chat(owner, "<span class ='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
 	else if(issilicon(owner.current))
-		owner.current.visible_message("<span class='deconversion_message'>The frame beeps contentedly, suppressing the illoyal personality traits from the MMI before initalizing it.</span>", null, null, null, owner.current)
+		owner.current.visible_message("<span class='deconversion_message'>The frame beeps contentedly, suppressing the disloyal personality traits from the MMI before initalizing it.</span>", null, null, null, owner.current)
 		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and suppresses your unwanted personality traits! You feel more content with the leadership around these parts.</span>")
 
 //blunt trauma deconversions call this through species.dm spec_attacked_by()

@@ -168,6 +168,7 @@
 /// This one only handles refunding the threat, override in ruleset to clean up the rest.
 /datum/dynamic_ruleset/proc/clean_up()
 	mode.refund_threat(cost + (scaled_times * scaling_cost))
+	mode.threat_log += "[worldtime2text()]: [ruletype] [name] refunded [cost + (scaled_times * scaling_cost)]"
 
 /// Gets weight of the ruleset
 /// Note that this decreases weight if repeatable is TRUE and repeatable_weight_decrease is higher than 0
