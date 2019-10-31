@@ -108,7 +108,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /obj/structure/elite_tumor
 	name = "pulsing tumor"
-	desc = "An odd, pulsing tumor sticking out of the ground.  You fell compelled to reach out and touch it..."
+	desc = "An odd, pulsing tumor sticking out of the ground.  You feel compelled to reach out and touch it..."
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE
 	var/activity = TUMOR_INACTIVE
@@ -134,7 +134,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		switch(activity)
 			if(TUMOR_PASSIVE)
 				activity = TUMOR_ACTIVE
-				visible_message("<span class='boldwarning'>The tumor convulses as your arm enters its radius.  Your instincts tell you to step back.</span>")
+				visible_message("<span class='boldwarning'>[src] convulses as your arm enters its radius.  Your instincts tell you to step back.</span>")
 				activator = user
 				if(boosted)
 					SEND_SOUND(mychild, sound('sound/effects/magic.ogg'))
@@ -144,12 +144,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			if(TUMOR_INACTIVE)
 				activity = TUMOR_ACTIVE
 				var/mob/dead/observer/elitemind = null
-				visible_message("<span class='boldwarning'>The tumor begins to convulse.  Your instincts tell you to step back.</span>")
+				visible_message("<span class='boldwarning'>[src] begins to convulse.  Your instincts tell you to step back.</span>")
 				activator = user
 				if(!boosted)
 					addtimer(CALLBACK(src, .proc/spawn_elite), 30)
 					return
-				visible_message("<span class='boldwarning'>Something within the tumor stirs...</span>")
+				visible_message("<span class='boldwarning'>Something within [src] stirs...</span>")
 				var/list/candidates = pollCandidatesForMob("Do you want to play as a lavaland elite?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, src, POLL_IGNORE_SENTIENCE_POTION)
 				if(candidates.len)
 					audible_message("<span class='boldwarning'>The stirring sounds increase in volume!</span>")
@@ -166,7 +166,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
 	var/selectedspawn = pick(potentialspawns)
 	mychild = new selectedspawn(loc)
-	visible_message("<span class='boldwarning'>[mychild] emerges from the tumor!</span>")
+	visible_message("<span class='boldwarning'>[mychild] emerges from [src]!</span>")
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(boosted)
 		mychild.key = elitemind.key
@@ -175,7 +175,7 @@ obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
 
 obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
-	visible_message("<span class='boldwarning'>[mychild] emerges from the tumor!</span>")
+	visible_message("<span class='boldwarning'>[mychild] emerges from [src]!</span>")
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
 	if(boosted)
@@ -195,8 +195,8 @@ obj/structure/elite_tumor/proc/return_elite()
 	
 /obj/structure/elite_tumor/process()
 	if(isturf(loc))
-		for(var/mob/living/simple_animal/hostile/asteroid/elite/elitehere in loc)
-			if(elitehere == mychild && activity == TUMOR_PASSIVE)
+		for(var/mob/living/livinghere in loc)
+			if(livinghere == mychild && activity == TUMOR_PASSIVE)
 				mychild.adjustHealth(-mychild.maxHealth*0.05)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
 				H.color = "#FF0000"
@@ -207,7 +207,7 @@ obj/structure/elite_tumor/proc/return_elite()
 		var/obj/item/organ/regenerative_core/core = I
 		if(!core.preserved)
 			return
-		visible_message("<span class='boldwarning'>As [user] drops the core into the tumor, the tumor appears to swell.</span>")
+		visible_message("<span class='boldwarning'>As [user] drops the core into [src], [src] appears to swell.</span>")
 		icon_state = "advanced_tumor"
 		boosted = TRUE
 		light_range = 6
@@ -243,17 +243,17 @@ obj/structure/elite_tumor/proc/return_elite()
 /obj/structure/elite_tumor/proc/border_check()
 	if(activator != null && get_dist(src, activator) >= 12)
 		activator.forceMove(loc)
-		visible_message("<span class='boldwarning'>[activator] suddenly reappears above the tumor!</span>")
+		visible_message("<span class='boldwarning'>[activator] suddenly reappears above [src]!</span>")
 		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(mychild != null && get_dist(src, mychild) >= 12)
 		mychild.forceMove(loc)
-		visible_message("<span class='boldwarning'>[mychild] suddenly reappears above the tumor!</span>")
+		visible_message("<span class='boldwarning'>[mychild] suddenly reappears above [src]!</span>")
 		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	
 obj/structure/elite_tumor/proc/onEliteLoss()
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
-	visible_message("<span class='boldwarning'>The tumor begins to convulse violently before beginning to dissipate.</span>")
-	visible_message("<span class='boldwarning'>As the tumor closes, something is forced up from down below.</span>")
+	visible_message("<span class='boldwarning'>[src] begins to convulse violently before beginning to dissipate.</span>")
+	visible_message("<span class='boldwarning'>As [src] closes, something is forced up from down below.</span>")
 	var/obj/structure/closet/crate/necropolis/tendril/lootbox = new /obj/structure/closet/crate/necropolis/tendril(loc)
 	if(!boosted)
 		mychild = null
@@ -323,7 +323,7 @@ obj/structure/elite_tumor/proc/onEliteWon()
 	smooth = SMOOTH_TRUE
 	layer = BELOW_MOB_LAYER
 	var/mob/living/carbon/human/activator = null
-	var/mob/living/simple_animal/hostile/asteroid/elite/ourelite = null
+	var/mob/living/ourelite = null
 	color = rgb(255,0,0)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = LIGHT_COLOR_RED
