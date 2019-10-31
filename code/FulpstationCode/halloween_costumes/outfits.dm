@@ -66,6 +66,7 @@
 /datum/outfit/halloween/zombie_rider
 	name = "Costume: Zombie Rider"
 	suit = /obj/item/clothing/suit/zombie_rider
+	plasma_compatible = TRUE
 
 datum/outfit/halloween/alien_green
 	name = "Costume: Green Alien"
@@ -98,6 +99,7 @@ datum/outfit/halloween/censorship
 datum/outfit/halloween/centaur
 	name = "Costume: Centaur"
 	suit = /obj/item/clothing/suit/centaur
+	plasma_compatible = TRUE
 
 datum/outfit/halloween/cyberdemon
 	name = "Costume: Cyberdemon"
