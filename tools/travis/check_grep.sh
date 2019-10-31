@@ -18,9 +18,6 @@ if grep -P 'step_[xy]' _maps/**/*.dmm;	then
     echo "ERROR: step_x/step_y variables detected in maps, please remove them."
     st=1
 fi;
-if grep -P 'pixel_[xy] = 0' _maps/**/*.dmm;	then
-    echo "WARNING: pixel_x/pixel_y = 0 variables detected in maps, please review to ensure they are not dirty varedits."
-fi;
 if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
     st=1
@@ -41,9 +38,6 @@ if pcregrep --buffer-size=100K -LMr '\n$' code/**/*.dm; then
     echo "ERROR: No newline at end of file detected"
     st=1
 fi;
-if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
-    echo "WARNING: changed files contains proc argument starting with 'var'"
-fi;
 if grep -i 'centcomm' code/**/*.dm; then
     echo "ERROR: Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."
     st=1
@@ -52,5 +46,18 @@ if grep -i 'centcomm' _maps/**/*.dmm; then
     echo "ERROR: Misspelling(s) of CENTCOM detected in maps, please remove the extra M(s)."
     st=1
 fi;
+if ls _maps/*.json | grep -P "[A-Z]"; then
+    echo "Uppercase in a map json detected, these must be all lowercase."
+	st=1
+fi;
+for json in _maps/*.json
+do
+    filename="_maps/$(jq -r '.map_path' $json)/$(jq -r '.map_file' $json)"
+    if [ ! -f $filename ]
+    then
+        echo "found invalid file reference to $filename in _maps/$json"
+        st=1
+    fi
+done
 
 exit $st

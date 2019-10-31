@@ -44,7 +44,6 @@
 	var/list/powermonitors = list()
 	var/message1	// used for status_displays
 	var/message2
-	var/emoji_preview = "" //which emoji will be sent to chat in a preview
 	var/list/stored_data = list()
 	var/current_channel
 
@@ -564,14 +563,19 @@ Code:
 		if (55) // Emoji Guidebook for mimes
 			menu = "<h4>[PDAIMG(emoji)] Emoji Guidebook</h4>"
 			var/static/list/emoji_icon_states
-			var/breakcounter = FALSE
-			if(!emoji_icon_states)
-				emoji_icon_states = icon_states(icon('icons/emoji.dmi'))
-			menu += "<br> To use an emoji in a pda message, refer to the guide and add \":\" around the emoji. Click on any of the emojis to preview it.<br>"
-			for(var/emoji in emoji_icon_states)
-				var/preview_link = "<A href='byond://?src=[REF(src)];emoji=[emoji]'>[emoji]</a>" //broken, on opening the menu it sends every single emoji because it is executing the proc to find the choice as soon as it is loaded
-				menu += "[breakcounter ? "<br> " : ""][preview_link][breakcounter ? " || " : "" ]"
-				breakcounter = !breakcounter
+			var/static/emoji_table
+			if(!emoji_table)
+				var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/goonchat)
+				var/list/collate = list("<br><table>")
+				for(var/emoji in sortList(icon_states(icon('icons/emoji.dmi'))))
+					var/tag = sheet.icon_tag("emoji-[emoji]")
+					collate += "<tr><td>[emoji]</td><td>[tag]</td></tr>"
+				collate += "</table><br>"
+				emoji_table = collate.Join()
+
+			menu += "<br> To use an emoji in a pda message, refer to the guide and add \":\" around the emoji. Your PDA supports the following emoji:<br>"
+			menu += emoji_table
+
 		if (99) //Newscaster message permission error
 			menu = "<h5> ERROR : NOT AUTHORIZED [host_pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
 

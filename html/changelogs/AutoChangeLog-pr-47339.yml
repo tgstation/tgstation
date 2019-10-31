@@ -1,4 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - refactor: "Improved tgui-next render performance by about 2x-2.5x."

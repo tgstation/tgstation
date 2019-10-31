@@ -1,12 +1,6 @@
 import { sendLogEntry } from 'tgui-dev-server/link/client';
 import { act } from './byond';
 
-let _ref = null;
-
-export const setLoggerRef = ref => {
-  _ref = ref;
-};
-
 const LEVEL_DEBUG = 0;
 const LEVEL_LOG = 1;
 const LEVEL_INFO = 2;
@@ -33,7 +27,7 @@ const log = (level, ns, ...args) => {
       .filter(value => value)
       .join(' ')
       + '\nUser Agent: ' + navigator.userAgent;
-    act(_ref, 'tgui:log', {
+    act(window.__ref__, 'tgui:log', {
       log: logEntry,
     });
   }

@@ -1,0 +1,4 @@
+author: "Couls"
+delete-after: True
+changes: 
+  - bugfix: "round-start riot and telescopic shields now have regular integrity"

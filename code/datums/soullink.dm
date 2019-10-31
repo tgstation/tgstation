@@ -1,24 +1,4 @@
 
-
-/mob/living
-	var/list/ownedSoullinks //soullinks we are the owner of
-	var/list/sharedSoullinks //soullinks we are a/the sharer of
-
-/mob/living/Destroy()
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
-		S.ownerDies(FALSE)
-		qdel(s) //If the owner is destroy()'d, the soullink is destroy()'d
-	ownedSoullinks = null
-	for(var/s in sharedSoullinks)
-		var/datum/soullink/S = s
-		S.sharerDies(FALSE)
-		S.removeSoulsharer(src) //If a sharer is destroy()'d, they are simply removed
-	sharedSoullinks = null
-	return ..()
-
-
-
 //Keeps track of a Mob->Mob (potentially Player->Player) connection
 //Can be used to trigger actions on one party when events happen to another
 //Eg: shared deaths

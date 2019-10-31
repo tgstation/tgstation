@@ -80,22 +80,22 @@
 	..()
 
 
-/datum/chemical_reaction/blackpowder
-	name = "Black Powder"
-	id = /datum/reagent/blackpowder
-	results = list(/datum/reagent/blackpowder = 3)
+/datum/chemical_reaction/gunpowder
+	name = "Gunpowder"
+	id = /datum/reagent/gunpowder
+	results = list(/datum/reagent/gunpowder = 3)
 	required_reagents = list(/datum/reagent/saltpetre = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/sulfur = 1)
 
-/datum/chemical_reaction/reagent_explosion/blackpowder_explosion
-	name = "Black Powder Kaboom"
-	id = "blackpowder_explosion"
-	required_reagents = list(/datum/reagent/blackpowder = 1)
+/datum/chemical_reaction/reagent_explosion/gunpowder_explosion
+	name = "Gunpowder Kaboom"
+	id = "gunpowder_explosion"
+	required_reagents = list(/datum/reagent/gunpowder = 1)
 	required_temp = 474
 	strengthdiv = 6
 	modifier = 1
-	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
+	mix_message = "<span class='boldannounce'>Sparks start flying around the gunpowder!</span>"
 
-/datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
 	sleep(rand(50,100))
 	..()
 
@@ -406,7 +406,7 @@
 	name = "Teslium"
 	id = /datum/reagent/teslium
 	results = list(/datum/reagent/teslium = 3)
-	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/silver = 1, /datum/reagent/blackpowder = 1)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/silver = 1, /datum/reagent/gunpowder = 1)
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
 
