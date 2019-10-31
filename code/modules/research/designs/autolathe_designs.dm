@@ -335,10 +335,10 @@
 /datum/design/plastic_knife
 	name = "Plastic Knife"
 	id = "plastic_knife"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/plastic = 100)
 	build_path = /obj/item/kitchen/knife/plastic
-	category = list("initial","Equipment","Dinnerware")
+	category = list("initial", "Tool Designs","Dinnerware")
 
 /datum/design/fork
 	name = "Fork"
@@ -354,7 +354,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/plastic = 80)
 	build_path = /obj/item/kitchen/fork/plastic
-	category = list("initial","Equipment","Dinnerware")
+	category = list("initial", "Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/plastic_spoon
@@ -363,7 +363,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/plastic = 120)
 	build_path = /obj/item/kitchen/spoon/plastic
-	category = list("initial","Equipment","Dinnerware")
+	category = list("initial", "Tool Designs", "Dinnerware")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/tray
