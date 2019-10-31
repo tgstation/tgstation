@@ -35,7 +35,7 @@
 /obj/machinery/computer/shuttle/hunter
 	name = "shuttle console"
 	shuttleId = "huntership"
-	possible_destinations = "huntership_away;huntership_home;huntership_custom"
+	possible_destinations = "huntership_home;huntership_custom;whiteship_home"
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter
 	name = "shuttle navigation computer"

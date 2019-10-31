@@ -2,7 +2,7 @@
 "aa" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
 	dir = 8;
-	jumpto_ports = list("huntership_home" = 1);
+	jumpto_ports = list("huntership_home" = 1, "whiteship_home" = 1, "syndicate_nw" = 1);
 	view_range = 7;
 	x_offset = 6
 	},
