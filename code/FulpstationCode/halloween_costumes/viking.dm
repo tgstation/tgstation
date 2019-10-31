@@ -1,4 +1,4 @@
-/obj/item/clothing/mask/viking_wig
+/obj/item/clothing/head/viking_wig
 	name = "Viking wig"
 	desc = "Gives you flowing red hair."
 	icon = 'icons/fulpicons/halloween_costumes/jo_icon.dmi'
