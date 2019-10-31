@@ -195,8 +195,8 @@ obj/structure/elite_tumor/proc/return_elite()
 	
 /obj/structure/elite_tumor/process()
 	if(isturf(loc))
-		for(var/mob/living/livinghere in loc)
-			if(livinghere == mychild && activity == TUMOR_PASSIVE)
+		for(var/mob/living/simple_animal/hostile/asteroid/elite/elitehere in loc)
+			if(elitehere == mychild && activity == TUMOR_PASSIVE)
 				mychild.adjustHealth(-mychild.maxHealth*0.05)
 				var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
 				H.color = "#FF0000"
