@@ -23,7 +23,7 @@ export const Gps = props => {
     updating,
   } = data;
   const signals = flow([
-    map(signal => {
+    map((signal, index) => {
       // Calculate distance to the target. BYOND distance is capped to 127,
       // that's why we roll our own calculations here.
       const dist = signal.dist && (
@@ -31,7 +31,7 @@ export const Gps = props => {
           .subtract(coordsToVec(signal.coords))
           .magnitude())
       );
-      return { ...signal, dist };
+      return { ...signal, dist, index };
     }),
     sortBy(
       // Signals with distance metric go first
@@ -93,7 +93,7 @@ export const Gps = props => {
               </Table.Row>
               {signals.map(signal => (
                 <Table.Row
-                  key={signal.entrytag + signal.coords}
+                  key={signal.entrytag + signal.coords + signal.index}
                   className="candystripe">
                   <Table.Cell bold color="label">
                     {signal.entrytag}
