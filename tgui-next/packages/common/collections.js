@@ -95,3 +95,46 @@ export const sortBy = (...iterateeFns) => array => {
   }
   return mappedArray;
 };
+
+/**
+ * A fast implementation of map.
+ */
+export const fastMap = (array, iterateeFn) => {
+  const result = [];
+  for (let i = 0; i < array.length; i++) {
+    result.push(iterateeFn(array[i], i));
+  }
+  return result;
+};
+
+/**
+ * A version of fastMap, but for mapping over two arrays instead of one.
+ */
+export const fastProduct = (arrayA, arrayB, iterateeFn) => {
+  const result = [];
+  for (let i = 0; i < arrayA.length; i++) {
+    result.push(iterateeFn(arrayA[i], arrayB[i], i));
+  }
+  return result;
+};
+
+/**
+ * A fast implementation of reduce.
+ */
+export const fastReduce = (array, reducerFn, initialValue) => {
+  const length = array.length;
+  let i;
+  let result;
+  if (initialValue === undefined) {
+    i = 1;
+    result = array[0];
+  }
+  else {
+    i = 0;
+    result = initialValue;
+  }
+  for (; i < length; i++) {
+    result = reducerFn(result, array[i], i, array);
+  }
+  return result;
+};
