@@ -1,4 +1,6 @@
-#define ADVANCED_BORG_LIST list(/obj/item/circuitboard, /obj/item/stock_parts, /obj/item/tank, /obj/item/vending_refill)
+GLOBAL_LIST_INIT(basic_engiborg_manipulator_allowed, typecacheof(list(
+				/obj/item/wallframe,
+				/obj/item/electronics)))
 
 
 /obj/item/borg/upgrade/circuit_app/proc/upgrade_engiborg_manipulator(mob/living/silicon/robot/R, mob/user)
@@ -33,5 +35,5 @@
 		C.storable = list(/obj/item/wallframe,
 					/obj/item/electronics)
 		var/obj/item/stored_item = C.stored
-		if(stored_item in ADVANCED_BORG_LIST) //Drop stuff we can no longer hold.
+		if(is_type_in_typecache(stored_item, GLOB.basic_engiborg_manipulator_allowed)) //Drop stuff we can no longer hold.
 			stored_item.forceMove(get_turf(usr))
