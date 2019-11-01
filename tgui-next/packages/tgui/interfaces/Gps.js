@@ -1,17 +1,14 @@
-import { map, fastMap, sortBy } from 'common/collections';
+import { fastMap, map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { vec } from 'common/vector';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
-import { createLogger } from '../logging';
 
 const coordsToVec = coords => vec(fastMap(
   coords.split(', '),
   x => parseInt(x, 10)));
-
-const logger = createLogger('Gps');
 
 export const Gps = props => {
   const { state } = props;
@@ -25,7 +22,6 @@ export const Gps = props => {
     tag,
     updating,
   } = data;
-  logger.log(currentCoords, coordsToVec(currentCoords));
   const signals = flow([
     map(signal => {
       // Calculate distance to the target. BYOND distance is capped to 127,
