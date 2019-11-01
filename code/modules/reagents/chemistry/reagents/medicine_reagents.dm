@@ -863,16 +863,18 @@
 	color = "#9423FF"
 	taste_description = "jelly"
 
+/datum/reagent/medicine/regen_jelly/reaction_mob(mob/living/M, reac_volume)
+	if(M && ishuman(M) && reac_volume >= 0.5)
+		var/mob/living/carbon/human/H = M
+		H.hair_color = "92f"
+		H.facial_hair_color = "92f"
+		H.update_hair()
+
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1.5*REM, 0)
 	M.adjustFireLoss(-1.5*REM, 0)
 	M.adjustOxyLoss(-1.5*REM, 0)
 	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		M.hair_color = "92f"
-		M.facial_hair_color = "92f"
-		M.update_hair()
 	..()
 	. = 1
 
