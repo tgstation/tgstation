@@ -125,6 +125,8 @@
 						"alternative_step" = alternative_step,
 						"alt_chems_needed" = alt_chems_needed
 					))
+		else
+			data["patient"] = null
 	return data
 
 /obj/machinery/computer/operating/ui_act(action, params)
