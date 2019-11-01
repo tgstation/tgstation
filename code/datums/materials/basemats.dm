@@ -14,7 +14,7 @@
 	id = "glass"
 	desc = "Glass forged by melting sand."
 	color = "#88cdf1"
-	alpha = 210
+	alpha = 150
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	integrity_modifier = 0.1
 	sheet_type = /obj/item/stack/sheet/glass
@@ -43,7 +43,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "gold"
 	id = "gold"
 	desc = "Gold"
-	color = list(400/255, 362/255, 51/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //gold is shiny, but not as bright as bananium
+	color = list(340/255, 240/255, 50/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //gold is shiny, but not as bright as bananium
 	strength_modifier = 1.2
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
@@ -207,7 +207,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "mythril"
 	id = "mythril"
 	desc = "How this even exists is byond me"
-	color = "#ffedee"
+	color = "#f2d5d7"
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/mythril
 	value_per_unit = 0.75
