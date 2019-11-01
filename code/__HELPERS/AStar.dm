@@ -108,7 +108,7 @@ Actual Adjacent procs :
 		return FALSE
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything
-		if(get_dist(start, end) > maxnodes)
+		if(call(dist)(start, end) > maxnodes)
 			return FALSE
 		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
 	var/datum/Heap/open = new /datum/Heap(/proc/HeapPathWeightCompare) //the open list
