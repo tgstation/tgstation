@@ -130,17 +130,16 @@
 /obj/structure/table/abductor/wabbajack/right
 	desc = "It wakes so you may sleep."
 
-// Bar staff, GODMODE mobs that just want to make sure people have drinks
+// Bar staff, GODMODE mobs(as long as they stay in the shuttle) that just want to make sure people have drinks
 // and a good time.
 
 /mob/living/simple_animal/drone/snowflake/bardrone
 	name = "Bardrone"
-	desc = "A barkeeping drone, an indestructible robot built to tend bars."
+	desc = "A barkeeping drone, a robot built to tend bars."
 	hacked = TRUE
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
-	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
 
@@ -148,12 +147,18 @@
 	. = ..()
 	access_card.access |= ACCESS_CENT_BAR
 
+/mob/living/simple_animal/drone/snowflake/bardrone/Life(seconds, times_fired)
+	. = ..()
+	if(istype(get_area(loc), /area/shuttle/escape))
+		status_flags |= GODMODE
+	else
+		status_flags &= ~GODMODE
+
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = NO_SPAWN
 	name = "Barmaid"
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE
-	status_flags = GODMODE
 	unique_name = FALSE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
@@ -166,6 +171,13 @@
 	access_card.access = C.get_access()
 	access_card.access |= ACCESS_CENT_BAR
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+
+/mob/living/simple_animal/hostile/alien/maid/barmaid/Life()
+	. = ..()
+	if(istype(get_area(loc), /area/shuttle/escape))
+		status_flags |= GODMODE
+	else
+		status_flags &= ~GODMODE
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
