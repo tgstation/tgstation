@@ -53,7 +53,6 @@
 				if(!turfyoudieon || !pipeyoudiein) //not sure how this happens but sanity
 					return
 				to_chat(M, "<span class='userdanger'>Shapeshifting inside of [pipeyoudiein] quickly turns you into a bloody mush.</span>")
-				var/list/bloody_vents = list() //the vents we picked to splatter gore
 				var/list/viable_vents = list() //list of vents and scrubbers in the pipeline
 				for(var/obj/machinery/atmospherics/components/unary/possiblevent in pipeyoudiein.parent.other_atmosmch)
 					if(istype(possiblevent, /obj/machinery/atmospherics/components/unary/vent_pump) || istype(possiblevent, /obj/machinery/atmospherics/components/unary/vent_scrubber))
@@ -61,11 +60,7 @@
 				for(var/i in 1 to 3)
 					if(!viable_vents.len)
 						break
-					var/chosen_one = pick(viable_vents)
-					bloody_vents += chosen_one
-					viable_vents.Remove(chosen_one) //so we can't pick the same vent twice
-				for(var/obj/vent in bloody_vents)
-					new /obj/effect/gibspawner/generic(get_turf(vent))
+					new /obj/effect/gibspawner/generic(get_turf(pick_n_take(viable_vents)))
 				M.remove_ventcrawl()
 				M.death()
 				qdel(M)
