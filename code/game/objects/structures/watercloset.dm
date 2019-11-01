@@ -394,6 +394,7 @@
 	qdel(src)
 
 /obj/structure/sink/greyscale
+	icon_state = "sink_greyscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	buildstacktype = null
 
