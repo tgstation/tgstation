@@ -34,6 +34,10 @@ export class NumberInput extends Component {
 
     this.handleDragStart = e => {
       const { value } = this.props;
+      const { editing } = this.state;
+      if (editing) {
+        return;
+      }
       document.body.style['pointer-events'] = 'none';
       this.ref = e.target;
       this.setState({
@@ -88,19 +92,12 @@ export class NumberInput extends Component {
       document.body.style['pointer-events'] = 'auto';
       clearTimeout(this.timer);
       clearInterval(this.dragInterval);
-      const editing = !dragging;
       this.setState({
         dragging: false,
-        editing,
+        editing: !dragging,
         origin: null,
       });
-      if (editing) {
-        if (this.inputRef) {
-          this.inputRef.current.focus();
-          this.inputRef.current.select();
-        }
-      }
-      else {
+      if (dragging) {
         this.suppressFlicker();
         if (onChange) {
           onChange(e, value);
@@ -108,6 +105,10 @@ export class NumberInput extends Component {
         if (onDrag) {
           onDrag(e, value);
         }
+      }
+      else if (this.inputRef) {
+        this.inputRef.current.focus();
+        this.inputRef.current.select();
       }
       document.removeEventListener('mousemove', this.handleDragMove);
       document.removeEventListener('mouseup', this.handleDragEnd);
