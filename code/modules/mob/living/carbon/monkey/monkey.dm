@@ -105,7 +105,7 @@
 	return
 
 
-/mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
+/mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys can't use advanced tools
 	if(mind && is_monkey(mind))
 		return TRUE
 	return FALSE
@@ -158,6 +158,9 @@
 	return 1
 
 /mob/living/carbon/monkey/can_use_guns(obj/item/G)
+	if(G.trigger_guard == TRIGGER_GUARD_NONE)
+		to_chat(src, "<span class='warning'>You can't seem to fire this!</span>")
+		return FALSE
 	return TRUE
 
 /mob/living/carbon/monkey/angry
