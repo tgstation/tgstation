@@ -73,11 +73,11 @@ export const SMES = props => {
             <Button
               icon="backward"
               disabled={data.inputLevel === 0}
-              onClick={() => act(ref, 'input', {target: '-10000'})} />
+              onClick={() => act(ref, 'input', {adjust: -10000})} />
             <Button
               icon="forward"
               disabled={data.inputLevel === data.inputLevelMax}
-              onClick={() => act(ref, 'input', {target: '10000'})} />
+              onClick={() => act(ref, 'input', {adjust: 10000})} />
             <Button
               icon="fast-forward"
               disabled={data.inputLevel === data.inputLevelMax}
@@ -117,11 +117,11 @@ export const SMES = props => {
             <Button
               icon="backward"
               disabled={data.outputLevel === 0}
-              onClick={() => act(ref, 'output', {target: '-10000'})} />
+              onClick={() => act(ref, 'output', {adjust: -10000})} />
             <Button
               icon="forward"
               disabled={data.outputLevel === data.outputLevelMax}
-              onClick={() => act(ref, 'output', {target: '10000'})} />
+              onClick={() => act(ref, 'output', {adjust: 10000})} />
             <Button
               icon="fast-forward"
               disabled={data.outputLevel === data.outputLevelMax}
