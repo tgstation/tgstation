@@ -47311,14 +47311,13 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cav" = (
-/obj/structure/chair,
-/obj/effect/landmark/start/assistant,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/lapvend,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "caw" = (
@@ -47339,6 +47338,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "caz" = (
@@ -73570,15 +73570,11 @@
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	dir = 4;
-	icon_state = "sink_alt";
 	name = "old sink";
-	pixel_x = -12;
-	pixel_y = 0;
-	pixel_z = 0
+	pixel_x = -12
 	},
 /obj/structure/mirror{
-	pixel_x = -27;
-	pixel_y = 0
+	pixel_x = -27
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
@@ -73956,8 +73952,7 @@
 	pixel_y = 2
 	},
 /obj/item/folder/yellow{
-	pixel_x = -5;
-	pixel_y = 0
+	pixel_x = -5
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)

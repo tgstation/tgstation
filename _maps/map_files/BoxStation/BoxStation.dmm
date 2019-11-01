@@ -16733,9 +16733,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQX" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
+/obj/machinery/vending/modularpc,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQY" = (
@@ -19236,6 +19234,7 @@
 /area/crew_quarters/locker)
 "aXt" = (
 /obj/effect/turf_decal/stripes/corner,
+/obj/machinery/lapvend,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aXu" = (
@@ -22751,7 +22750,6 @@
 	areastring = "/area/medical/apothecary";
 	dir = 1;
 	name = "Apothecary APC";
-	pixel_x = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
@@ -51907,6 +51905,12 @@
 /obj/item/flashlight,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"uea" = (
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "uhH" = (
 /obj/item/wrench,
 /obj/item/weldingtool,
@@ -69691,7 +69695,7 @@ aLE
 aNl
 aOl
 aPA
-aQN
+uea
 aQN
 aQN
 aUn
