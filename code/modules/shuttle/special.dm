@@ -146,13 +146,8 @@
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
 	access_card.access |= ACCESS_CENT_BAR
-
-/mob/living/simple_animal/drone/snowflake/bardrone/Life(seconds, times_fired)
-	. = ..()
-	if(istype(get_area(loc), /area/shuttle/escape))
-		status_flags |= GODMODE
-	else
-		status_flags &= ~GODMODE
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
+	check_barstaff_godmode()
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = NO_SPAWN
@@ -171,17 +166,18 @@
 	access_card.access = C.get_access()
 	access_card.access |= ACCESS_CENT_BAR
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Life()
-	. = ..()
-	if(istype(get_area(loc), /area/shuttle/escape))
-		status_flags |= GODMODE
-	else
-		status_flags &= ~GODMODE
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
+	check_barstaff_godmode()
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
 	. = ..()
+
+/mob/living/simple_animal/proc/check_barstaff_godmode()
+	if(istype(get_area(loc), /area/shuttle/escape))
+		status_flags |= GODMODE
+	else
+		status_flags &= ~GODMODE
 
 // Bar table, a wooden table that kicks you in a direction if you're not
 // barstaff (defined as someone who was a roundstart bartender or someone
