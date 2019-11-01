@@ -250,7 +250,7 @@
 		/datum/reagent/firefighting_foam)
 
 	var/datum/reagent/reagent_type = pick(possible_reagents)
-	wanted_reagent = reagent_type.type
+	wanted_reagent = new reagent_type
 	name = "[wanted_reagent.name] pills"
 	required_ammount += rand(1,60)
 	wanted_vol += rand(1,20)
