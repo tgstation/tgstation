@@ -354,6 +354,7 @@
 			linkedsuit.slowdown = 1
 			linkedsuit.clothing_flags |= STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+			linkedsuit.flags_inv |= HIDEJUMPSUIT
 			if(linkedsuit.armor_switch)
 				linkedsuit.armor = linkedsuit.armor_speed
 				armor = armor_speed //for the helmet
@@ -363,6 +364,7 @@
 			linkedsuit.slowdown = 0
 			linkedsuit.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection &= ~(CHEST | GROIN | LEGS | FEET | ARMS | HANDS)
+			linkedsuit.flags_inv &= ~HIDEJUMPSUIT
 			if(linkedsuit.armor_switch)
 				linkedsuit.armor = linkedsuit.armor_eva
 				armor = armor_eva
@@ -383,6 +385,8 @@
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SCAN_REAGENTS | SNUG_FIT
 	evatoggle = TRUE
+	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	visor_flags = STOPSPRESSUREDAMAGE
 	evamode_string = "You switch your hardsuit to Protection mode, sacrificing speed for EVA, melee and radiation protection."
 	speedmode_string = "You switch your hardsuit to Mobility mode and can now run at full speed, but your hardsuit has reduced protection against radiation and melee."
 	hardsuit_speed_suffix = "(mobility)"
@@ -399,6 +403,7 @@
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 20, "bio" = 100, "rad" = 100, "fire" = 75, "acid" = 90)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
 	armor_switch = TRUE
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_eva = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 20, "bio" = 100, "rad" = 100, "fire" = 75, "acid" = 90)
 	armor_speed = list("melee" = 10, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 50, "fire" = 60, "acid" = 75)
 
@@ -580,7 +585,7 @@
 	desc = "A tactical SWAT helmet MK.II."
 	armor = list("melee" = 40, "bullet" = 50, "laser" = 50, "energy" = 25, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR //we want to see the mask //this makes the hardsuit not fireproof you genius
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR //we want to see the mask //this makes the hardsuit not fireproof you genius!
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
@@ -706,6 +711,7 @@
 	allowed = null
 	armor = list("melee" = 30, "bullet" = 15, "laser" = 30, "energy" = 10, "bomb" = 10, "bio" = 100, "rad" = 50, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	var/current_charges = 3
 	var/max_charges = 3 //How many charges total the shielding has
 	var/recharge_delay = 200 //How long after we've been shot before we can start recharging. 20 seconds here
