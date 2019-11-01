@@ -152,12 +152,14 @@
 /obj/item/clothing/under/rank/civilian/lawyer/female
 	name = "female black suit"
 	icon_state = "black_suit_fem"
-	item_state = "bl_suit"
+	item_state = "black_suit_fem"
+	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
 
 /obj/item/clothing/under/rank/civilian/lawyer/female/skirt
 	name = "female black suitskirt"
 	icon_state = "black_suit_fem_skirt"
-	item_state = "bl_suit"
+	item_state = "black_suit_fem_skirt"
+	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/lawyer/red
