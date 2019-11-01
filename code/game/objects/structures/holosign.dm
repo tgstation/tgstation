@@ -62,7 +62,9 @@
 	if(mover.pass_flags & (PASSGLASS|PASSTABLE|PASSGRILLE))
 		return TRUE
 	if(iscarbon(mover))
-		var/mob/living/carbon/C = mover
+		var/mob/living/carbon/C = mover		
+		if(C.stat)	// Lets not prevent dragging unconscious/dead people.
+			return TRUE
 		if(allow_walk && C.m_intent == MOVE_INTENT_WALK)
 			return TRUE
 
@@ -75,6 +77,8 @@
 /obj/structure/holosign/barrier/wetsign/CanPass(atom/movable/mover, turf/target)
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
+		if(C.stat)	// Lets not prevent dragging unconscious/dead people.
+			return TRUE
 		if(allow_walk && C.m_intent != MOVE_INTENT_WALK)
 			return FALSE
 	return TRUE
