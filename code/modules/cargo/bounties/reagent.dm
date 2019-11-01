@@ -190,9 +190,13 @@
 	reward += rand(0, 5) * 750 //6000 to 9750 credits
 
 /datum/bounty/pill
+	/// quantity of the pills needed, this value acts as minimum, gets randomized on new()
 	var/required_ammount = 80
+	/// counter for pills sent
 	var/shipped_ammount = 0
+	/// reagent requested
 	var/datum/reagent/wanted_reagent
+	/// minimum volume of chemical needed, gets randomized on new()
 	var/wanted_vol = 30
 
 /datum/bounty/pill/completion_string()
@@ -204,7 +208,7 @@
 /datum/bounty/pill/applies_to(obj/O)
 	if(!istype(O, /obj/item/reagent_containers/pill))
 		return FALSE
-	if(O.reagents && (O.reagents.get_reagent_amount(wanted_reagent.type) >= wanted_vol))
+	if(O?.reagents.get_reagent_amount(wanted_reagent.type) >= wanted_vol)
 		return TRUE
 	return FALSE
 
@@ -245,8 +249,8 @@
 		/datum/reagent/phlogiston,\
 		/datum/reagent/firefighting_foam)
 
-	var/reagent_type = pick(possible_reagents)
-	wanted_reagent = new reagent_type
+	var/datum/reagent/reagent_type = pick(possible_reagents)
+	wanted_reagent = reagent_type.type
 	name = "[wanted_reagent.name] pills"
 	required_ammount += rand(1,60)
 	wanted_vol += rand(1,20)
