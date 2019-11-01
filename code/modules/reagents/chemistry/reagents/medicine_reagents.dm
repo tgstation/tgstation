@@ -1040,6 +1040,7 @@
 	..()
 	return TRUE
 
+
 /datum/reagent/medicine/corazone
 	// Heart attack code will not do damage if corazone is present
 	// because it's SPACE MAGIC ASPIRIN
@@ -1056,6 +1057,21 @@
 /datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
 	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
+	..()
+/datum/reagent/medicine/penthrite
+	// Same as corazone. but slightly better
+	name = "penthrite"
+	description = "A medication used to treat certain heart conditions, also it is explosive"
+	color = "#F5F5F5"
+	self_consuming = TRUE
+
+/datum/reagent/medicine/penthrite/on_mob_metabolize(mob/living/M)
+	..()
+	M.adjustOrganLoss(ORGAN_SLOT_HEART,-0.3)
+	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+
+/datum/reagent/medicine/penthrite/on_mob_end_metabolize(mob/living/M)
+	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
 	..()
 
 /datum/reagent/medicine/muscle_stimulant

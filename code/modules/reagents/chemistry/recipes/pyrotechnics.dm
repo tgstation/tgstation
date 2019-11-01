@@ -29,7 +29,7 @@
 	id = /datum/reagent/nitroglycerin
 	results = list(/datum/reagent/nitroglycerin = 2)
 	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/toxin/acid/fluacid = 1, /datum/reagent/toxin/acid = 1)
-	strengthdiv = 2
+	strengthdiv = 1.5
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -42,14 +42,72 @@
 	id = "nitroglycerin_explosion"
 	required_reagents = list(/datum/reagent/nitroglycerin = 1)
 	required_temp = 474
+	strengthdiv = 1.5
+
+/datum/chemical_reaction/reagent_explosion/rdx
+	name = "RDX"
+	id = /datum/reagent/rdx
+	results = list(/datum/reagent/rdx= 2)
+	required_reagents = list(/datum/reagent/hexamine = 2, /datum/reagent/toxin/acid/nitracid = 1)
+	required_temp = 459
+	strengthdiv = 4
+
+/datum/chemical_reaction/reagent_explosion/rdx/on_reaction(datum/reagents/holder, created_volume)
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
+		return
+	holder.remove_reagent(/datum/reagent/rdx, created_volume*2)
+	..()
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion
+	name = "RDX explosion"
+	id = "rdx_explosion"
+	required_reagents = list(/datum/reagent/rdx = 1)
+	required_temp = 474
+	strengthdiv = 4
+
+
+/datum/chemical_reaction/reagent_explosion/tatp
+	name = "TaTP"
+	id = /datum/reagent/tatp
+	results = list(/datum/reagent/tatp= 1)
+	required_reagents = list(/datum/reagent/acetone_peroxide = 3, /datum/reagent/toxin/acid/nitracid = 1)
+	required_temp = 450
 	strengthdiv = 2
+
+/datum/chemical_reaction/reagent_explosion/tatp/New()
+	..()
+	required_temp = 450 + rand(-49,49)
+
+/datum/chemical_reaction/reagent_explosion/tatp/on_reaction(datum/reagents/holder, created_volume)
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
+		return
+	holder.remove_reagent(/datum/reagent/tatp, created_volume*1)
+	..()
+
+/datum/chemical_reaction/reagent_explosion/tatp_explosion
+	name = "TaTP explosion"
+	id = "tatp_explosion"
+	required_reagents = list(/datum/reagent/tatp = 1)
+	required_temp = 500 // this makes making tatp before pyro nades, and extreme pain in the ass to make
+	strengthdiv = 2
+
+/datum/chemical_reaction/reagent_explosion/tatp_explosion/New()
+	..()
+	required_temp = 500 + rand(-49,49)
+
+/datum/chemical_reaction/reagent_explosion/penthrite_explosion
+	name = "Penthrite explosion"
+	id = "penthrite_explosion"
+	required_reagents = list(/datum/reagent/medicine/penthrite = 1,/datum/reagent/toxin/acid/nitracid = 1)
+	required_temp = 474
+	strengthdiv = 5
 
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	name = "Explosion"
 	id = "potassium_explosion"
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/potassium = 1)
-	strengthdiv = 10
+	strengthdiv = 14
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
 	name = "Holy Explosion"

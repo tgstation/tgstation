@@ -251,6 +251,54 @@
 			qdel(R)
 	T.Bless()
 
+/datum/reagent/hydrogen_peroxide
+	name = "Hydrogen peroxide"
+	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen and oxygen."
+	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
+	taste_description = "burning water"
+	var/cooling_temperature = 2
+	glass_icon_state = "glass_clear"
+	glass_name = "glass of oxygenated water"
+	glass_desc = "The father of all refreshments. surely it tastes great? right.."
+	shot_glass_icon_state = "shotglassclear"
+
+/*
+ *	Water reaction to turf
+ */
+
+/datum/reagent/hydrogen_peroxide/reaction_turf(turf/open/T, reac_volume)
+	if(!istype(T))
+		return
+	var/CT = cooling_temperature
+
+	if(reac_volume >= 5)
+		T.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
+
+	for(var/mob/living/simple_animal/slime/M in T)
+		M.apply_water()
+
+	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
+	if(hotspot && !isspaceturf(T))
+		if(T.air)
+			var/datum/gas_mixture/G = T.air
+			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),TCMB)
+			G.react(src)
+			qdel(hotspot)
+	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
+	if(A)
+		A.acid_level = max(A.acid_level - reac_volume*50, 0)
+/*
+ *	Water reaction to a mob
+ */
+
+/datum/reagent/hydrogen_peroxide/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with water can help put them out!
+	if(!istype(M))
+		return
+	if(method == TOUCH)
+		M.adjust_fire_stacks(-(reac_volume / 10))
+		M.ExtinguishMob()
+	..()
+
 /datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
 	description = "Something that shouldn't exist on this plane of existence."
@@ -1479,6 +1527,34 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	taste_description = "chemicals"
+
+/datum/reagent/hexamine
+	name = "Hexamine"
+	description = "A White crystalline compound useful for synthesizing other chemicals"
+	reagent_state = SOLID
+	color = "#E6FFFF"
+	taste_description = "chemicals"
+
+/datum/reagent/pentaerythritol
+	name = "Pentaerythritol"
+	description = "Slow down , it aint no spelling bee!"
+	reagent_state = SOLID
+	color = "#E66FFF"
+	taste_description = "acid"
+
+/datum/reagent/acetaldehyde
+	name = "Acetaldehyde"
+	description = "Simmiliar to plastic. Tastes like dead people"
+	reagent_state = SOLID
+	color = "#EEEEEF"
+	taste_description = "dead people" //made from formaldehyde, ya get da joke ?
+
+/datum/reagent/acetone_peroxide
+	name = "Acetone Peroxide"
+	description = "Enslaved oxygen"
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	taste_description = "acid"
 
 /datum/reagent/phenol
 	name = "Phenol"
