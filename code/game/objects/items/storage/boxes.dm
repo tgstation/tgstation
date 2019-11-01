@@ -165,9 +165,6 @@
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 	medipen_type = null
 
-/obj/item/storage/box/survival/syndie/clown
-	mask_type = /obj/item/clothing/mask/gas/clown_hat
-
 // Security survival box
 /obj/item/storage/box/survival/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
@@ -175,10 +172,6 @@
 /obj/item/storage/box/survival/security/radio/PopulateContents()
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
-
-// Mime survival box
-/obj/item/storage/box/survival/mime
-	mask_type = /obj/item/clothing/mask/gas/mime
 
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
@@ -780,7 +773,7 @@
 
 // Clown survival box
 /obj/item/storage/box/hug/survival/PopulateContents()
-	new /obj/item/clothing/mask/gas/clown_hat(src)
+	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 	if(!isplasmaman(loc))
