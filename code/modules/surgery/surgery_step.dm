@@ -113,7 +113,7 @@
 		"<span class='notice'>[user] begins to perform surgery on [target].</span>")
 
 /datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = TRUE)
-	if(display_results)
+	if(default_display_results)
 		display_results(user, target, "<span class='notice'>You succeed.</span>",
 				"<span class='notice'>[user] succeeds!</span>",
 				"<span class='notice'>[user] finishes.</span>")
