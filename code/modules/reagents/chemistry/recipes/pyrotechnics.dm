@@ -48,9 +48,9 @@
 	name = "RDX"
 	id = /datum/reagent/rdx
 	results = list(/datum/reagent/rdx= 2)
-	required_reagents = list(/datum/reagent/hexamine = 2, /datum/reagent/toxin/acid/nitracid = 1)
+	required_reagents = list(/datum/reagent/hexamine = 2, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/hexamine = 1 )
 	required_temp = 459
-	strengthdiv = 4
+	strengthdiv = 5
 
 /datum/chemical_reaction/reagent_explosion/rdx/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -70,9 +70,9 @@
 	name = "TaTP"
 	id = /datum/reagent/tatp
 	results = list(/datum/reagent/tatp= 1)
-	required_reagents = list(/datum/reagent/acetone_peroxide = 3, /datum/reagent/toxin/acid/nitracid = 1)
+	required_reagents = list(/datum/reagent/acetone_peroxide = 3, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/pentaerythritol = 1 )
 	required_temp = 450
-	strengthdiv = 2
+	strengthdiv = 3
 
 /datum/chemical_reaction/reagent_explosion/tatp/New()
 	..()
@@ -98,8 +98,8 @@
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion
 	name = "Penthrite explosion"
 	id = "penthrite_explosion"
-	required_reagents = list(/datum/reagent/medicine/penthrite = 1,/datum/reagent/toxin/acid/nitracid = 1)
-	required_temp = 474
+	required_reagents = list(/datum/reagent/medicine/penthrite = 1, /datum/reagent/hexamine = 1, /datum/reagent/acetone_peroxide = 1)
+	required_temp = 315
 	strengthdiv = 5
 
 
@@ -107,7 +107,7 @@
 	name = "Explosion"
 	id = "potassium_explosion"
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/potassium = 1)
-	strengthdiv = 14
+	strengthdiv = 12
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
 	name = "Holy Explosion"

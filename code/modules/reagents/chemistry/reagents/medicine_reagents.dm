@@ -1067,7 +1067,7 @@
 
 /datum/reagent/medicine/penthrite/on_mob_metabolize(mob/living/M)
 	..()
-	M.adjustOrganLoss(ORGAN_SLOT_HEART,-0.3)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART,-0.15)
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
 
 /datum/reagent/medicine/penthrite/on_mob_end_metabolize(mob/living/M)

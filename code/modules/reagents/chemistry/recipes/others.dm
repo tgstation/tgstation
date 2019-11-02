@@ -723,14 +723,14 @@
 /datum/chemical_reaction/hexamine
 	name = "Acetone peroxide"
 	id = /datum/reagent/hexamine
-	results = list(/datum/reagent/hexamine = 2)
-	required_reagents = list(/datum/reagent/toxin/formaldehyde = 1, /datum/reagent/acetone = 1)
+	results = list(/datum/reagent/hexamine = 5)
+	required_reagents = list(/datum/reagent/toxin/formaldehyde = 1, /datum/reagent/acetone = 1,  /datum/reagent/phenol = 1 ,  /datum/reagent/ash = 1)
 
 /datum/chemical_reaction/pentaerythritol
 	name = "Pentaerythritol"
 	id = /datum/reagent/pentaerythritol
 	results = list(/datum/reagent/pentaerythritol = 2)
-	required_reagents = list(/datum/reagent/acetaldehyde = 1, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/acetaldehyde = 1, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/water = 1 )
 
 /datum/chemical_reaction/acetaldehyde
 	name = "Acetaldehyde"
