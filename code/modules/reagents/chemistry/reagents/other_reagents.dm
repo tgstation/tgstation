@@ -1530,7 +1530,7 @@
 
 /datum/reagent/hexamine
 	name = "Hexamine"
-	description = "A White crystalline compound useful for synthesizing other chemicals"
+	description = "A white crystalline compound useful for synthesizing other chemicals."
 	reagent_state = SOLID
 	color = "#E6FFFF"
 	taste_description = "chemicals"
