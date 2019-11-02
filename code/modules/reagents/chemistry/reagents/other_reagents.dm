@@ -244,8 +244,6 @@
 
 /datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
 	..()
-	if(!istype(T))
-		return
 	if(reac_volume>=10)
 		for(var/obj/effect/rune/R in T)
 			qdel(R)
@@ -269,34 +267,20 @@
 /datum/reagent/hydrogen_peroxide/reaction_turf(turf/open/T, reac_volume)
 	if(!istype(T))
 		return
-	var/CT = cooling_temperature
-
 	if(reac_volume >= 5)
 		T.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
-
-	for(var/mob/living/simple_animal/slime/M in T)
-		M.apply_water()
-
-	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
-	if(hotspot && !isspaceturf(T))
-		if(T.air)
-			var/datum/gas_mixture/G = T.air
-			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),TCMB)
-			G.react(src)
-			qdel(hotspot)
 	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
 	if(A)
-		A.acid_level = max(A.acid_level - reac_volume*50, 0)
+		A.acid_level = max(A.acid_level + reac_volume*50, 0)
 /*
  *	Water reaction to a mob
  */
 
-/datum/reagent/hydrogen_peroxide/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with water can help put them out!
+/datum/reagent/hydrogen_peroxide/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with h2o2 can burn them !
 	if(!istype(M))
 		return
 	if(method == TOUCH)
-		M.adjust_fire_stacks(-(reac_volume / 10))
-		M.ExtinguishMob()
+		M.adjustBruteLoss(2, 0) // burns
 	..()
 
 /datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
@@ -1549,12 +1533,23 @@
 	color = "#EEEEEF"
 	taste_description = "dead people" //made from formaldehyde, ya get da joke ?
 
-/datum/reagent/acetone_peroxide
-	name = "Acetone Peroxide"
+/datum/reagent/acetone_oxide
+	name = "Acetone oxide"
 	description = "Enslaved oxygen"
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 	taste_description = "acid"
+
+
+/datum/reagent/acetone_oxide/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with water can help put them out!
+	if(!istype(M))
+		return
+	if(method == TOUCH)
+		M.adjustBruteLoss(2, 0) // burns
+		M.adjust_fire_stacks((reac_volume / 10))
+	..()
+
+
 
 /datum/reagent/phenol
 	name = "Phenol"

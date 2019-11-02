@@ -714,11 +714,11 @@
 	results = list(/datum/reagent/hydrogen_peroxide = 3)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
 
-/datum/chemical_reaction/acetone_peroxide
+/datum/chemical_reaction/acetone_oxide
 	name = "Acetone peroxide"
-	id = /datum/reagent/acetone_peroxide
-	results = list(/datum/reagent/acetone_peroxide = 3)
-	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen_peroxide = 1)
+	id = /datum/reagent/acetone_oxide
+	results = list(/datum/reagent/acetone_oxide = 2)
+	required_reagents = list(/datum/reagent/acetone = 2, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen_peroxide = 1)
 
 /datum/chemical_reaction/hexamine
 	name = "Acetone peroxide"
