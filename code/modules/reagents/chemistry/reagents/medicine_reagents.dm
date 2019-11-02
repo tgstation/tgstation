@@ -1068,7 +1068,7 @@
 /datum/reagent/medicine/penthrite/on_mob_metabolize(mob/living/M)
 	..()
 	if(prob(10))
-		M.adjustOrganLoss(ORGAN_SLOT_STOMACH,REM)
+		M.adjustOrganLoss(ORGAN_SLOT_STOMACH,-REM)
 	M.dizziness += 1
 	M.confused += 1
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
