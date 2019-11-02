@@ -33,7 +33,7 @@
 //Healing
 /datum/skill/medical
 	name = "Medical"
-	desc = "From Bandaids to Biopsies, This improves your ability so get people back up both in the field and on the operating table."
+	desc = "From Bandaids to biopsies, this improves your ability to get people back up both in the field and on the operating table."
 
 /datum/skill/medical/get_skill_speed_modifier(level)
 	switch(level)
