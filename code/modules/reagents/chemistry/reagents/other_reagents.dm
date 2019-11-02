@@ -1544,7 +1544,7 @@
 
 /datum/reagent/acetaldehyde
 	name = "Acetaldehyde"
-	description = "Simmiliar to plastic. Tastes like dead people"
+	description = "Similar to plastic. Tastes like dead people."
 	reagent_state = SOLID
 	color = "#EEEEEF"
 	taste_description = "dead people" //made from formaldehyde, ya get da joke ?
