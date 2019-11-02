@@ -1061,14 +1061,18 @@
 /datum/reagent/medicine/penthrite
 	// Same as corazone. but slightly better
 	name = "Penthrite"
-	description = "An explosive compound used to treat certain heart conditions."
+	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
 	color = "#F5F5F5"
 	self_consuming = TRUE
 
 /datum/reagent/medicine/penthrite/on_mob_metabolize(mob/living/M)
 	..()
-	M.adjustOrganLoss(ORGAN_SLOT_HEART,-0.15)
+	if(prob(10))
+		M.adjustOrganLoss(ORGAN_SLOT_STOMACH,REM)
+	M.dizziness += 1
+	M.confused += 1
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+
 
 /datum/reagent/medicine/penthrite/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
