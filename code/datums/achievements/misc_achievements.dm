@@ -58,6 +58,6 @@
 
 /datum/award/achievement/misc/speed_round
 	name = "Long shift"
-	desc = "Well, that didn't take long"
+	desc = "Well, that didn't take long."
 	hub_id = MEDAL_LONGSHIFT
 	icon = "longshift"
