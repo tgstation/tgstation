@@ -116,7 +116,16 @@ class KitchenSinkProgress extends Component {
     const { progress } = this.state;
     return (
       <Section title="Progress">
-        <ProgressBar value={progress} />
+        <ProgressBar
+          ranges={{
+            good: [0.5, Infinity],
+            bad: [-Infinity, 0.1],
+            average: [0, 0.5],
+          }}
+          minValue={-1}
+          maxValue={1}
+          value={progress}
+          content={`value: ${Number(progress).toFixed(1)}`} />
         <Button
           content="-0.1"
           onClick={() => this.setState(prevState => ({

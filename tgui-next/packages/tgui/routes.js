@@ -40,6 +40,7 @@ import { Radio } from './interfaces/Radio';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
 import { SMES } from './interfaces/SMES';
+import { SolarControl } from './interfaces/SolarControl';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
@@ -211,6 +212,10 @@ const ROUTES = {
   },
   smes: {
     component: () => SMES,
+    scrollable: false,
+  },
+  solar_control: {
+    component: () => SolarControl,
     scrollable: false,
   },
   thermomachine: {

@@ -14,12 +14,18 @@ export const Grid = props => {
 
 Grid.defaultHooks = pureComponentHooks;
 
-export const GridItem = props => {
+export const GridColumn = props => {
+  const { size = 1, style, ...rest } = props;
   return (
-    <Table.Cell {...props} />
+    <Table.Cell
+      style={{
+        width: size + '%',
+        ...style,
+      }}
+      {...rest} />
   );
 };
 
 Grid.defaultHooks = pureComponentHooks;
 
-Grid.Item = GridItem;
+Grid.Column = GridColumn;
