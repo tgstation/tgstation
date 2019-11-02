@@ -1,7 +1,6 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Button, LabeledList, Section } from '../components';
-import { createLogger } from '../logging';
 
 export const LanguageMenu = props => {
   const { state } = props;
