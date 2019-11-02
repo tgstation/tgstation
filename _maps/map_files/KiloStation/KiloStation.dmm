@@ -7669,14 +7669,15 @@
 	},
 /area/maintenance/solars/port/fore)
 "ame" = (
-/obj/machinery/computer/prisoner{
-	dir = 4
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/obj/machinery/newscaster/security_unit{
-	pixel_x = -28
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/heads/hos)
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/obj/machinery/computer/prisoner/management,
+/turf/open/floor/plasteel/dark,
+/area/security/prison)
 "amf" = (
 /obj/machinery/power/apc{
 	areastring = "/area/maintenance/solars/port/fore";
@@ -15254,17 +15255,23 @@
 	},
 /area/tcommsat/server)
 "axw" = (
-/obj/machinery/modular_computer/console/preset/engineering{
-	icon_state = "console";
-	dir = 4
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/computer/prisoner/management{
+	icon_state = "computer";
 	dir = 4
 	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/crew_quarters/heads/chief)
+/turf/open/floor/plasteel/dark,
+/area/security/warden)
 "axx" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -17181,21 +17188,18 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "aAu" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible/layer3,
 /obj/machinery/modular_computer/console/preset/engineering{
-	dir = 8
+	icon_state = "console";
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
+/turf/open/floor/plasteel,
+/area/crew_quarters/heads/chief)
 "aAv" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -51794,6 +51798,29 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"byi" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Supermatter Cooler";
+	dir = 2;
+	name = "engineering camera";
+	network = list("ss13","engine")
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 28
+	},
+/obj/structure/cable,
+/obj/machinery/modular_computer/console/preset/engineering,
+/turf/open/floor/plasteel/dark,
+/area/engine/engineering)
 "byj" = (
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
@@ -52766,6 +52793,16 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/hydroponics)
+"bzD" = (
+/obj/machinery/newscaster/security_unit{
+	pixel_x = -28
+	},
+/obj/machinery/computer/prisoner/management{
+	icon_state = "computer";
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/heads/hos)
 "bzE" = (
 /obj/machinery/door/airlock/vault{
 	id_tag = "bank";
@@ -59695,6 +59732,21 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/prison)
+"bJO" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible/layer3,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical,
+/obj/item/clothing/mask/gas,
+/turf/open/floor/plasteel/dark,
+/area/engine/engineering)
 "bJP" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
@@ -73268,16 +73320,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
-"cdH" = (
-/obj/machinery/computer/prisoner,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/structure/cable,
-/turf/open/floor/plasteel/dark,
-/area/security/prison)
 "cdI" = (
 /turf/closed/wall/r_wall/rust,
 /area/security/nuke_storage)
@@ -75225,23 +75267,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/security/detectives_office)
-"cgL" = (
-/obj/machinery/computer/prisoner{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/warden)
 "cgM" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -77649,30 +77674,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/aft)
-"ckt" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/emergency,
-/obj/item/clothing/mask/gas,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Supermatter Cooler";
-	dir = 2;
-	name = "engineering camera";
-	network = list("ss13","engine")
-	},
-/obj/effect/decal/cleanable/blood/old,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 28
-	},
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
 "cku" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/solars/starboard/aft)
@@ -110378,7 +110379,7 @@ aeu
 aeF
 cBL
 aau
-cdH
+ame
 ces
 cfw
 cRB
@@ -114510,7 +114511,7 @@ afV
 ctY
 als
 alJ
-ame
+bzD
 cmP
 cmP
 aaa
@@ -116292,7 +116293,7 @@ bWs
 abO
 ceA
 aei
-cgL
+axw
 coF
 cqg
 coV
@@ -131718,7 +131719,7 @@ cja
 awX
 awx
 aNh
-axw
+aAu
 cod
 czB
 awV
@@ -132755,7 +132756,7 @@ bZt
 bZu
 awC
 aLL
-ckt
+byi
 cyD
 cFD
 aGq
@@ -133275,7 +133276,7 @@ cKV
 axa
 cAL
 cAQ
-aAu
+bJO
 cBl
 cBM
 axV
