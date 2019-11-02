@@ -259,7 +259,7 @@
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
 	glass_name = "glass of oxygenated water"
-	glass_desc = "The father of all refreshments. surely it tastes great? right.."
+	glass_desc = "The father of all refreshments. Surely it tastes great, right?"
 	shot_glass_icon_state = "shotglassclear"
 
 /*
