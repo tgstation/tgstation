@@ -88,7 +88,7 @@ export class NumberInput extends Component {
 
     this.handleDragEnd = e => {
       const { onChange, onDrag } = this.props;
-      const { dragging, value } = this.state;
+      const { dragging, value, internalValue } = this.state;
       document.body.style['pointer-events'] = 'auto';
       clearTimeout(this.timer);
       clearInterval(this.dragInterval);
@@ -97,6 +97,8 @@ export class NumberInput extends Component {
         editing: !dragging,
         origin: null,
       });
+      document.removeEventListener('mousemove', this.handleDragMove);
+      document.removeEventListener('mouseup', this.handleDragEnd);
       if (dragging) {
         this.suppressFlicker();
         if (onChange) {
@@ -107,11 +109,11 @@ export class NumberInput extends Component {
         }
       }
       else if (this.inputRef) {
-        this.inputRef.current.focus();
-        this.inputRef.current.select();
+        const input = this.inputRef.current;
+        input.value = internalValue;
+        input.focus();
+        input.select();
       }
-      document.removeEventListener('mousemove', this.handleDragMove);
-      document.removeEventListener('mouseup', this.handleDragEnd);
     };
   }
 
@@ -120,7 +122,6 @@ export class NumberInput extends Component {
       dragging,
       editing,
       value: intermediateValue,
-      internalValue,
       suppressingFlicker,
     } = this.state;
     const {
@@ -175,7 +176,6 @@ export class NumberInput extends Component {
           style={{
             display: !editing ? 'none' : undefined,
           }}
-          value={internalValue}
           onBlur={e => {
             if (!editing) {
               return;
@@ -215,10 +215,7 @@ export class NumberInput extends Component {
               });
               return;
             }
-          }}
-          onInput={e => this.setState({
-            internalValue: e.target.value,
-          })} />
+          }} />
       </Box>
     );
   }
