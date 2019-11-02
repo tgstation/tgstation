@@ -1537,7 +1537,7 @@
 
 /datum/reagent/pentaerythritol
 	name = "Pentaerythritol"
-	description = "Slow down , it aint no spelling bee!"
+	description = "Slow down, it ain't no spelling bee!"
 	reagent_state = SOLID
 	color = "#E66FFF"
 	taste_description = "acid"
