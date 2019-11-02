@@ -1060,7 +1060,7 @@
 	..()
 /datum/reagent/medicine/penthrite
 	// Same as corazone. but slightly better
-	name = "penthrite"
+	name = "Penthrite"
 	description = "A medication used to treat certain heart conditions, also it is explosive"
 	color = "#F5F5F5"
 	self_consuming = TRUE
