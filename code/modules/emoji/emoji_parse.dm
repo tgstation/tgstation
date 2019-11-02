@@ -45,7 +45,6 @@
 			search = findtext(text, ":", pos+1)
 			if(search)
 				var/word = lowertext(copytext(text, pos+1, search))
-				to_chat(world, word)
 				if(word in emojis)
 					final += lowertext(copytext(text, pos, search+1))
 				pos = search + 1
