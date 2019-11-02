@@ -681,6 +681,9 @@
 		..()
 
 /mob/living/carbon/human/proc/check_self_for_injuries()
+	if(stat == DEAD || stat == UNCONSCIOUS)
+		return
+
 	visible_message("<span class='notice'>[src] examines [p_them()]self.</span>", \
 		"<span class='notice'>You check yourself for injuries.</span>")
 
