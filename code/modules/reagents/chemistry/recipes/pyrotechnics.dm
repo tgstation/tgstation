@@ -83,7 +83,7 @@
 /datum/chemical_reaction/reagent_explosion/tatp/proc/UpdateInfo()
 	..()
 	required_temp = 450 + rand(-49,49)
-	message_admins("TaTP explosion unmixed temp [required_temp]")
+	//message_admins("TaTP explosion unmixed temp [required_temp]")
 
 /datum/chemical_reaction/reagent_explosion/tatp/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -101,7 +101,7 @@
 /datum/chemical_reaction/reagent_explosion/tatp_explosion/proc/UpdateInfo()
 	..()
 	required_temp = 550 + rand(-49,49)
-	message_admins("TaTP explosion mixed temp [required_temp]")
+	//message_admins("TaTP explosion mixed temp [required_temp]")
 
 
 
