@@ -104,6 +104,7 @@ export const Box = props => {
     as = 'div',
     className,
     color,
+    textColor,
     content,
     children,
     ...rest
@@ -120,6 +121,7 @@ export const Box = props => {
     classes([
       className,
       color && 'color-' + color,
+      textColor && 'color-' + textColor,
     ]),
     content || children,
     ChildFlags.UnknownChildren,

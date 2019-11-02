@@ -75,7 +75,9 @@ export class NumberInput extends Component {
             minValue - step, maxValue + step);
           // Clamp the final value
           state.value = clamp(
-            state.internalValue - state.internalValue % step,
+            state.internalValue
+              - state.internalValue % step
+              + minValue % step,
             minValue, maxValue);
           state.origin = e.screenY;
         }

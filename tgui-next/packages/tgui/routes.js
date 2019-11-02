@@ -21,7 +21,9 @@ import { ChemDispenser } from './interfaces/ChemDispenser';
 import { ChemFilter } from './interfaces/ChemFilter';
 import { ChemHeater } from './interfaces/ChemHeater';
 import { ChemMaster } from './interfaces/ChemMaster';
+import { ChemPress } from './interfaces/ChemPress';
 import { ChemSplitter } from './interfaces/ChemSplitter';
+import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
 import { CodexGigas } from './interfaces/CodexGigas';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
@@ -33,14 +35,13 @@ import { Mint } from './interfaces/Mint';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
+import { Radio } from './interfaces/Radio';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
 import { SMES } from './interfaces/SMES';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
-import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
-import { ChemPress } from './interfaces/ChemPress';
 
 const ROUTES = {
   achievements: {
@@ -189,6 +190,10 @@ const ROUTES = {
   },
   portable_generator: {
     component: () => PortableGenerator,
+    scrollable: false,
+  },
+  radio: {
+    component: () => Radio,
     scrollable: false,
   },
   shuttle_manipulator: {
