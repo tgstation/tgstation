@@ -1,13 +1,7 @@
-import { toFixed } from 'common/math';
-import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, LabeledList, Section } from '../components';
-import { GAS_LABEL_MAPPING } from '../constants';
+import { Button, LabeledList, Section } from '../components';
 import { createLogger } from '../logging';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
-
-const logger = createLogger('AirAlarm');
 
 export const LanguageMenu = props => {
   const { state } = props;

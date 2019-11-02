@@ -1,10 +1,5 @@
-import { toFixed } from 'common/math';
-import { decodeHtmlEntities } from 'common/string';
-import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, LabeledList, Section, Table } from '../components';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
-import { classes } from 'common/react';
+import { Box, Button, Section, Table } from '../components';
 
 export const HealthIcon = props => {
   const {level} = props;
@@ -32,7 +27,6 @@ export const CrewConsole = props => {
   const { state } = props;
   const { config, data } = state;
   const { ref } = config;
-  const locked = data.locked && !data.siliconUser;
   const isHead = function (jobId) {
     return jobId % 10 === 0;
   };

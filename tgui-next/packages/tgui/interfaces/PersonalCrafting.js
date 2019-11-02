@@ -1,14 +1,7 @@
-import { toFixed } from 'common/math';
-import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Box, Button, LabeledList, Section, Tabs, Icon } from '../components';
-import { GAS_LABEL_MAPPING } from '../constants';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 import { map } from 'common/fp';
-import { createLogger } from '../logging';
-
-const logger = createLogger("Personal Crafting");
 
 export const CraftingList = props => {
   const {
