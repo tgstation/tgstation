@@ -454,7 +454,7 @@
 	Mob.pixel_y += 2
 	.=..()
 	if(iscarbon(Mob))
-		INVOKE_ASYNC(src, /obj/structure/chair/plastic/.proc/snap_check, Mob)
+		INVOKE_ASYNC(src, .proc/snap_check, Mob)
 
 /obj/structure/chair/plastic/post_unbuckle_mob(mob/living/Mob)
 	Mob.pixel_y -= 2
