@@ -124,7 +124,6 @@
 
 ///Material chair
 /obj/structure/chair/greyscale
-	icon_state = "chair_greyscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	item_chair = /obj/item/chair/greyscale
 	buildstacktype = null //Custom mats handle this
@@ -341,8 +340,6 @@
 		smash(user)
 
 /obj/item/chair/greyscale
-	icon_state = "chair_greyscale_toppled"
-	item_state = "chair_greyscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
 	origin_type = /obj/structure/chair/greyscale
 
@@ -456,15 +453,18 @@
 /obj/structure/chair/plastic/post_buckle_mob(mob/living/Mob)
 	Mob.pixel_y += 2
 	.=..()
-	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
-		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
-		if(do_after(Mob, 60, 1, Mob, 0))
-			addtimer(CALLBACK(src, /atom/movable/.proc/post_unbuckle_mob), 60)
-			qdel(src)
-			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
+	if(iscarbon(Mob))
+		INVOKE_ASYNC(src, /obj/structure/chair/plastic/.proc/snap_check, Mob)
 
 /obj/structure/chair/plastic/post_unbuckle_mob(mob/living/Mob)
 	Mob.pixel_y -= 2
+
+/obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
+	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
+		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
+		if(do_after(Mob, 60, 1, Mob, 0))
+			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
+			qdel(src)
 
 /obj/item/chair/plastic
 	name = "folding plastic chair"
