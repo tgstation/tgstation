@@ -860,14 +860,14 @@
 	name = "Regenerative Jelly"
 	description = "Gradually regenerates all types of damage, without harming slime anatomy."
 	reagent_state = LIQUID
-	color = "#9423FF"
+	color = "#CC23FF"
 	taste_description = "jelly"
 
 /datum/reagent/medicine/regen_jelly/reaction_mob(mob/living/M, reac_volume)
 	if(M && ishuman(M) && reac_volume >= 0.5)
 		var/mob/living/carbon/human/H = M
-		H.hair_color = "92f"
-		H.facial_hair_color = "92f"
+		H.hair_color = "C2F"
+		H.facial_hair_color = "C2F"
 		H.update_hair()
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M)

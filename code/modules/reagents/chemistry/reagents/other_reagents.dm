@@ -208,7 +208,7 @@
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(iscultist(M))
-		to_chat(M, "<span class='userdanger'>A vile holiness begins to spread its shining tendrils through your mind, purging the Justiciar's influence!</span>")
+		to_chat(M, "<span class='userdanger'>A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!</span>")
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
@@ -1505,12 +1505,15 @@
 	name = "Colorful Reagent"
 	description = "Thoroughly sample the rainbow."
 	reagent_state = LIQUID
-	color = "#C8A5DC" //gets overwritten
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
+	color = "#C8A5DC"
 	taste_description = "rainbows"
 	var/can_colour_mobs = TRUE
 
-/datum/reagent/colorful_reagent/Initialize()
+/datum/reagent/colorful_reagent/New()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+
+/datum/reagent/colorful_reagent/proc/UpdateColor()
 	color = pick(random_color_list)
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M)
@@ -1537,12 +1540,15 @@
 	name = "Quantum Hair Dye"
 	description = "Has a high chance of making you look like a mad scientist."
 	reagent_state = LIQUID
-	color = "#C8A5DC" //gets overwritten
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
+	color = "#C8A5DC"
 	taste_description = "sourness"
 
-/datum/reagent/hair_dye/Initialize()
-	color = pick(random_color_list)
+/datum/reagent/hair_dye/New()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+
+/datum/reagent/hair_dye/proc/UpdateColor()
+	color = pick(potential_colors)
 
 /datum/reagent/hair_dye/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
