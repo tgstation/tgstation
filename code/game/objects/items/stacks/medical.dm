@@ -60,8 +60,8 @@
 		var/burn2heal = burn
 		if(user?.mind.get_skill_speed_modifier(/datum/skill/medical))
 			var/skillmods = user.mind.get_skill_speed_modifier(/datum/skill/medical)
-			brute2heal *= (1+(1-skillmods))//higher skill goes DOWN so we have to convert it to go UP. Same percent difference (0.95 skill speed = 5% INCREASE in heals)
-			burn2heal *= (1+(1-skillmods))
+			brute2heal *= (2-skillmods))
+			burn2heal *= (2-skillmods))
 		if(affecting.heal_damage(brute2heal, burn2heal))
 			C.update_damage_overlays()
 		return TRUE
