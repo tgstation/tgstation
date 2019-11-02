@@ -33,6 +33,7 @@ import { KitchenSink } from './interfaces/KitchenSink';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { Mint } from './interfaces/Mint';
 import { OperatingComputer } from './interfaces/OperatingComputer';
+import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { Radio } from './interfaces/Radio';
@@ -179,6 +180,10 @@ const ROUTES = {
   mint: {
     component: () => Mint,
     scrollable: false,
+  },
+  ore_redemption_machine: {
+    component: () => OreRedemptionMachine,
+    scrollable: true,
   },
   operating_computer: {
     component: () => OperatingComputer,
