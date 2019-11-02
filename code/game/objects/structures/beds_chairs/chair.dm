@@ -458,9 +458,10 @@
 	.=..()
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
 		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
-		if(do_after(Mob, 100, target = Mob))
+		if(do_after(Mob, 60, 1, Mob, 0))
+			addtimer(CALLBACK(src, /atom/movable/.proc/post_unbuckle_mob), 60)
 			qdel(src)
-			Mob.visible_message("<span class='notice'>The plastic chair snaps under the weight of [Mob]!</span>")
+			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
 
 /obj/structure/chair/plastic/post_unbuckle_mob(mob/living/Mob)
 	Mob.pixel_y -= 2
