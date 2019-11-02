@@ -48,7 +48,7 @@
 	name = "RDX"
 	id = /datum/reagent/rdx
 	results = list(/datum/reagent/rdx= 2)
-	required_reagents = list(/datum/reagent/hexamine = 2, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/acetone_oxide = 1 )
+	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/acetone_oxide = 1 )
 	required_temp = 459
 	strengthdiv = 5
 
@@ -82,12 +82,12 @@
 
 /datum/chemical_reaction/reagent_explosion/tatp/proc/UpdateInfo()
 	required_temp = 450 + rand(-49,49)
-	message_admins("TaTP explosion unmixed temp [required_temp]")
+	//message_admins("TaTP reaction temp [required_temp]")
 
 /datum/chemical_reaction/reagent_explosion/tatp/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent(/datum/reagent/tatp, created_volume*1)
+	holder.remove_reagent(/datum/reagent/tatp, created_volume)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/tatp_explosion
@@ -99,14 +99,14 @@
 
 /datum/chemical_reaction/reagent_explosion/tatp_explosion/proc/UpdateInfo()
 	required_temp = 550 + rand(-49,49)
-	message_admins("TaTP explosion mixed temp [required_temp]")
+	//message_admins("TaTP explosion mixed temp [required_temp]")
 
 
 
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion
 	name = "Penthrite explosion"
 	id = "penthrite_explosion"
-	required_reagents = list(/datum/reagent/medicine/penthrite = 1, /datum/reagent/hexamine = 1, /datum/reagent/acetone_oxide = 1)
+	required_reagents = list(/datum/reagent/medicine/penthrite = 1, /datum/reagent/phenol = 1, /datum/reagent/acetone_oxide = 1)
 	required_temp = 315
 	strengthdiv = 5
 

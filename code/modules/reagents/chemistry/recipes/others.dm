@@ -720,12 +720,6 @@
 	results = list(/datum/reagent/acetone_oxide = 2)
 	required_reagents = list(/datum/reagent/acetone = 2, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen_peroxide = 1)
 
-/datum/chemical_reaction/hexamine
-	name = "Acetone peroxide"
-	id = /datum/reagent/hexamine
-	results = list(/datum/reagent/hexamine = 5)
-	required_reagents = list(/datum/reagent/toxin/formaldehyde = 1, /datum/reagent/acetone = 1,  /datum/reagent/phenol = 1 ,  /datum/reagent/ash = 1)
-
 /datum/chemical_reaction/pentaerythritol
 	name = "Pentaerythritol"
 	id = /datum/reagent/pentaerythritol
