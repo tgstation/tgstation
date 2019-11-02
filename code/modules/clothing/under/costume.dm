@@ -244,8 +244,10 @@
 /obj/item/clothing/under/costume/russian_officer
 	name = "\improper Russian officer's uniform"
 	desc = "The latest in fashionable russian outfits."
+	icon = 'icons/obj/clothing/under/security.dmi'
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
+	mob_overlay_icon =  'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
 	strip_delay = 50

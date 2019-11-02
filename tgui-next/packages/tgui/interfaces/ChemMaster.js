@@ -1,8 +1,6 @@
-import { Fragment, Component } from 'inferno';
+import { Component, Fragment } from 'inferno';
 import { act } from '../byond';
-import { AnimatedNumber, Box, Button, LabeledList, Section, Table, Grid } from '../components';
-import { NumberInput } from '../components/NumberInput';
-import { clamp } from 'common/math';
+import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section, Table } from '../components';
 
 export const ChemMaster = props => {
   const { state, dispatch } = props;

@@ -1,0 +1,6 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "Multiplied the speed at which AI integrity restorers heal intellicarded AIs by 5."
+  - balance: "Made AI integrity restorer consoles automatically turn on an intellicard's subspace tranceiver when they heal a conscious AI inside of said intellicard."
+  - balance: "Multiplied the speed at which wiping an intellicard deals damage to an AI within that intellicard by 5."
