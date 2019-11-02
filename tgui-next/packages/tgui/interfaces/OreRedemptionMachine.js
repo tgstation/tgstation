@@ -44,9 +44,7 @@ export const OreRedemptionMachine = props => {
             </Box>
             <Table>
               {diskDesigns.map(design => (
-                <Table.Row
-                  key={design.index}
-                  className="candystripe">
+                <Table.Row key={design.index}>
                   <Table.Cell>
                     File {design.index}: {design.name}
                   </Table.Cell>
