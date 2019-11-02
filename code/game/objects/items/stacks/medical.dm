@@ -60,8 +60,8 @@
 		var/burn2heal = burn
 		if(user?.mind.get_skill_speed_modifier(/datum/skill/medical))
 			var/skillmods = user.mind.get_skill_speed_modifier(/datum/skill/medical)
-			brute2heal *= (2-skillmods))
-			burn2heal *= (2-skillmods))
+			brute2heal *= (2-skillmods)
+			burn2heal *= (2-skillmods)
 		if(affecting.heal_damage(brute2heal, burn2heal))
 			C.update_damage_overlays()
 		return TRUE
