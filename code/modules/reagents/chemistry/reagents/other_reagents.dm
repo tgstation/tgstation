@@ -254,7 +254,7 @@
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
 	glass_name = "glass of oxygenated water"
-	glass_desc = "The father of all refreshments. surely it tastes great? right.."
+	glass_desc = "The father of all refreshments. Surely it tastes great, right?"
 	shot_glass_icon_state = "shotglassclear"
 
 /*
@@ -1511,14 +1511,14 @@
 
 /datum/reagent/pentaerythritol
 	name = "Pentaerythritol"
-	description = "Slow down , it aint no spelling bee!"
+	description = "Slow down, it ain't no spelling bee!"
 	reagent_state = SOLID
 	color = "#E66FFF"
 	taste_description = "acid"
 
 /datum/reagent/acetaldehyde
 	name = "Acetaldehyde"
-	description = "Simmiliar to plastic. Tastes like dead people"
+	description = "Similar to plastic. Tastes like dead people."
 	reagent_state = SOLID
 	color = "#EEEEEF"
 	taste_description = "dead people" //made from formaldehyde, ya get da joke ?
