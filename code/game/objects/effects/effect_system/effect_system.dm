@@ -56,16 +56,16 @@ would spawn and follow the beaker, even if it is carried or thrown.
 			return
 		INVOKE_ASYNC(src, .proc/generate_effect)
 
-/datum/effect_system/proc/generate_effect()
+/datum/effect_system/proc/generate_effect(var/direction = 0)
 	if(holder)
 		location = get_turf(holder)
 	var/obj/effect/E = new effect_type(location)
 	total_effects++
-	var/direction
-	if(cardinals)
-		direction = pick(GLOB.cardinals)
-	else
-		direction = pick(GLOB.alldirs)
+	if(!direction)
+		if(cardinals)
+			direction = pick(GLOB.cardinals)
+		else
+			direction = pick(GLOB.alldirs)
 	var/steps_amt = pick(1,2,3)
 	for(var/j in 1 to steps_amt)
 		sleep(5)
