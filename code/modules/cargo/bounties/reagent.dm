@@ -233,7 +233,7 @@
 	//reagent that are possible to be chem factory'd
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/spaceacillin,\
-		/datum/reagent/medicine/C2/instabitaluri,\
+		/datum/reagent/medicine/synthflesh,\
 		/datum/reagent/medicine/pen_acid,\
 		/datum/reagent/medicine/atropine,\
 		/datum/reagent/medicine/cryoxadone,\
@@ -247,7 +247,7 @@
 		/datum/reagent/pax,\
 		/datum/reagent/flash_powder,\
 		/datum/reagent/phlogiston,\
-		/datum/reagent/firefighting_foam)
+		/datum/reagent/firefighting_foam) // austation -- no cobbychem brought to you by austation
 
 	var/datum/reagent/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
