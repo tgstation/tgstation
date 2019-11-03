@@ -37,6 +37,7 @@
 		if(stat != DEAD)
 			//heart attack stuff
 			handle_heart()
+			handle_liver()
 
 		if(stat != DEAD)
 			//Stuff jammed in your limbs hurts

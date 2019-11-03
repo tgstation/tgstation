@@ -39,12 +39,6 @@
 	message_param = "pings at %t."
 	sound = 'sound/machines/ping.ogg'
 
-/datum/emote/silicon/chime
-	key = "chime"
-	key_third_person = "chimes"
-	message = "chimes."
-	sound = 'sound/machines/chime.ogg'
-
 /datum/emote/silicon/sad
 	key = "sad"
 	message = "plays a sad trombone..."

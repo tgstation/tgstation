@@ -233,9 +233,8 @@
 	name = "improvised pneumatic cannon"
 	desc = "A gas-powered, object-firing cannon made out of common parts."
 	force = 5
-	maxWeightClass = 7
-	gasPerThrow = 5
 	maxWeightClass = 10
+	gasPerThrow = 5
 
 /obj/item/pneumatic_cannon/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)

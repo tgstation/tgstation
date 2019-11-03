@@ -6,7 +6,6 @@
 	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the forests of central Africa."
 	icon = 'icons/mob/gorilla.dmi'
 	icon_state = "crawling"
-	icon_state = "crawling"
 	icon_living = "crawling"
 	icon_dead = "dead"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -42,7 +41,7 @@
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 	var/oogas = 0
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.

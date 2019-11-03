@@ -24,6 +24,9 @@
 	bolt_wording = "pump"
 	cartridge_wording = "shell"
 	tac_reloads = FALSE
+	weapon_weight = WEAPON_HEAVY
+
+	pb_knockback = 2
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
@@ -100,9 +103,9 @@
 	alternate_magazine = current_mag
 	toggled = !toggled
 	if(toggled)
-		to_chat(user, "You switch to tube B.")
+		to_chat(user, "<span class='notice'>You switch to tube B.</span>")
 	else
-		to_chat(user, "You switch to tube A.")
+		to_chat(user, "<span class='notice'>You switch to tube A.</span>")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -168,11 +171,18 @@
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	can_be_sawn_off  = TRUE
+	pb_knockback = 3 // it's a super shotgun!
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		reskin_obj(user)
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
+	. = ..()
+	if(.)
+		weapon_weight = WEAPON_MEDIUM
+
 // IMPROVISED SHOTGUN //
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised
@@ -216,7 +226,7 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawn
 	name = "sawn-off improvised shotgun"
 	desc = "A single-shot shotgun. Better not miss."
-	icon_state = "ishotgun" //_sawn
+	icon_state = "ishotgun_sawn"
 	item_state = "ishotgun_sawn"
 	w_class = WEIGHT_CLASS_NORMAL
 	sawn_off = TRUE

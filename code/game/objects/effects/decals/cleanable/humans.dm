@@ -33,7 +33,6 @@
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
-	icon_state = "tracks"
 	random_icon_states = null
 	beauty = -50
 

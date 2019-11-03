@@ -94,7 +94,7 @@
 	options["The Rainbow Color"] ="rainbow"
 	options["The Jester"] ="chaos" //Nepeta33Leijon is holding me captive and forced me to help with this please send help
 
-	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
+	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in sortList(options)
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
@@ -135,7 +135,7 @@
 	options["Effrayé"] = "scaredmime"
 	options["Excité"] ="sexymime"
 
-	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
+	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in sortList(options)
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
@@ -166,8 +166,8 @@
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
-	icon_state = "death_commando_mask"
-	item_state = "death_commando_mask"
+	icon_state = "swat"
+	item_state = "swat"
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
@@ -207,7 +207,7 @@
 	options["Confused Tiki"] = "tiki_confused"
 	options["Angry Tiki"] ="tiki_angry"
 
-	var/choice = input(M,"To what form do you wish to change this mask?","Morph Mask") in options
+	var/choice = input(M,"To what form do you wish to change this mask?","Morph Mask") in sortList(options)
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
@@ -215,7 +215,7 @@
 		for(var/X in actions)
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
-		to_chat(M, "The Tiki Mask has now changed into the [choice] Mask!")
+		to_chat(M, "<span class='notice'>The Tiki Mask has now changed into the [choice] Mask!</span>")
 		return 1
 
 /obj/item/clothing/mask/gas/tiki_mask/yalp_elor

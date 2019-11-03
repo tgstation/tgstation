@@ -1,9 +1,5 @@
-
-
 GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 
-/mob
-	var/datum/hSB/sandbox = null
 /mob/proc/CanBuild()
 	sandbox = new/datum/hSB
 	sandbox.owner = src.ckey
@@ -130,7 +126,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 				if(sbac)
 					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
 				else
-					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
+					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning. The window will now auto-close after use.</b>")
 				CONFIG_SET(flag/sandbox_autoclose, !sbac)
 				return
 			//

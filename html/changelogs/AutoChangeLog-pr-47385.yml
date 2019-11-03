@@ -1,0 +1,5 @@
+author: "Anonmare"
+delete-after: True
+changes: 
+  - rscadd: "Service cyborgs have a drink manipulator - Rejoice!"
+  - tweak: "The service cyborg shaker has more options available - show the bartender why his job will be automated away"

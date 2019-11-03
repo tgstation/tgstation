@@ -45,8 +45,9 @@ Difficulty: Very Hard
 	pixel_x = -32
 	del_on_death = TRUE
 	gps_name = "Angelic Signal"
-	medal_type = BOSS_MEDAL_COLOSSUS
-	score_type = COLOSSUS_SCORE
+	achievement_type = /datum/award/achievement/boss/colussus_kill
+	crusher_achievement_type = /datum/award/achievement/boss/colussus_crusher
+	score_achievement_type = /datum/award/score/colussus_score
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
@@ -588,7 +589,7 @@ Difficulty: Very Hard
 					H.set_species(/datum/species/shadow, 1)
 					H.regenerate_limbs()
 					H.regenerate_organs()
-					H.revive(1,0)
+					H.revive(full_heal = TRUE, admin_revive = FALSE)
 					ADD_TRAIT(H, TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
 					H.grab_ghost(force = TRUE)
 
@@ -660,7 +661,6 @@ Difficulty: Very Hard
 	faction = list("neutral")
 	del_on_death = TRUE
 	unsuitable_atmos_damage = 0
-	movement_type = FLYING
 	minbodytemp = 0
 	maxbodytemp = 1500
 	obj_damage = 0

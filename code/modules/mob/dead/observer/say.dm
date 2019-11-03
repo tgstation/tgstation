@@ -1,3 +1,8 @@
+/mob/dead/observer/check_emote(message, forced)
+	if(message == "*spin" || message == "*flip")
+		emote(copytext(message, 2), intentional = !forced)
+		return 1
+
 /mob/dead/observer/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if (!message)

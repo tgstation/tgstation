@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - tweak: "paychecks are a % of budget instead of fixed numbers"

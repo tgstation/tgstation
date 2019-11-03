@@ -21,10 +21,11 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 		GLOB.monkey_recyclers += src
 
 /obj/machinery/monkey_recycler/Destroy()
-	if(src in GLOB.monkey_recyclers)
-		GLOB.monkey_recyclers -= src
-	for(var/obj/machinery/computer/camera_advanced/xenobio/console in connected)
+	GLOB.monkey_recyclers -= src
+	for(var/thing in connected)
+		var/obj/machinery/computer/camera_advanced/xenobio/console = thing
 		console.connected_recycler = null
+	connected.Cut()
 	return ..()
 
 /obj/machinery/monkey_recycler/RefreshParts()	//Ranges from 0.2 to 0.8 per monkey recycled

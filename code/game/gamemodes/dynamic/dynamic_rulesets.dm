@@ -1,3 +1,9 @@
+#define EXTRA_RULESET_PENALTY 20	// Changes how likely a gamemode is to scale based on how many other roundstart rulesets are waiting to be rolled.
+#define POP_SCALING_PENALTY 50		// Discourages scaling up rulesets if ratio of antags to crew is high.
+
+#define REVOLUTION_VICTORY 1
+#define STATION_VICTORY 2
+
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
 	var/name = ""
@@ -34,7 +40,13 @@
 	/// 1 -> 9, probability for this rule to be picked against other rules
 	var/weight = 5 
 	/// Threat cost for this rule, this is decreased from the mode's threat when the rule is executed.
-	var/cost = 0 
+	var/cost = 0
+	/// Cost per level the rule scales up.
+	var/scaling_cost = 0
+	/// How many times a rule has scaled up upon getting picked.
+	var/scaled_times = 0
+	/// Used for the roundend report
+	var/total_cost = 0
 	/// A flag that determines how the ruleset is handled
 	/// HIGHLANDER_RULESET are rulesets can end the round.
 	/// TRAITOR_RULESET and MINOR_RULESET can't end the round and have no difference right now.
@@ -57,6 +69,12 @@
 	/// The maximum amount of players required for the rule to be considered.
 	/// Anything below zero or exactly zero is ignored. 
 	var/maximum_players = 0
+	/// Calculated during acceptable(), used in scaling and team sizes.
+	var/indice_pop = 0
+	/// Population scaling. Used by team antags and scaling for solo antags.
+	var/list/antag_cap = list()
+	/// Base probability used in scaling. The higher it is, the more likely to scale. Kept as a var to allow for config editing._SendSignal(sigtype, list/arguments)
+	var/base_prob = 60
 
 
 /datum/dynamic_ruleset/New()
@@ -89,11 +107,34 @@
 	if(maximum_players > 0 && population > maximum_players)
 		return FALSE
 	if (population >= GLOB.dynamic_high_pop_limit)
+		indice_pop = 10
 		return (threat_level >= high_population_requirement)
 	else
 		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-		var/indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+		if(antag_cap.len && requirements.len != antag_cap.len)
+			message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
+			log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
+		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 		return (threat_level >= requirements[indice_pop])
+
+/// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the amount of scaled steps.
+/datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
+	remaining_threat_level -= cost
+	if(scaling_cost && scaling_cost <= remaining_threat_level) // Only attempts to scale the modes with a scaling cost explicitly set. 
+		var/new_prob
+		var/pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * (scaled_times + 1))) / mode.roundstart_pop_ready
+		log_game("DYNAMIC: [name] roundstart ruleset attempting to scale up with [extra_rulesets] rulesets waiting and [remaining_threat_level] threat remaining.")
+		for(var/i in 1 to 3) //Can scale a max of 3 times
+			if(remaining_threat_level >= scaling_cost && pop_to_antags < 0.25)
+				new_prob = base_prob + (remaining_threat_level) - (scaled_times * scaling_cost) - (extra_rulesets * EXTRA_RULESET_PENALTY) - (pop_to_antags * POP_SCALING_PENALTY)
+				if (!prob(new_prob))
+					break
+				remaining_threat_level -= scaling_cost
+				scaled_times++
+				pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * (scaled_times + 1))) / mode.roundstart_pop_ready
+		log_game("DYNAMIC: [name] roundstart ruleset failed scaling up at [new_prob ? new_prob : 0]% chance after [scaled_times]/3 successful scaleups. [remaining_threat_level] threat remaining, antag to crew ratio: [pop_to_antags*100]%.")
+		mode.antags_rolled += (1 + scaled_times) * antag_cap[indice_pop]
+		return scaled_times * scaling_cost
 
 /// This is called if persistent variable is true everytime SSTicker ticks.
 /datum/dynamic_ruleset/proc/rule_process()
@@ -110,6 +151,7 @@
 /datum/dynamic_ruleset/proc/execute()
 	for(var/datum/mind/M in assigned)
 		M.add_antag_datum(antag_datum)
+		GLOB.pre_setup_antags -= M
 	return TRUE
 
 /// Here you can perform any additional checks you want. (such as checking the map etc)
