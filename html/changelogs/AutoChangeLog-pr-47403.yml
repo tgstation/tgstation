@@ -1,0 +1,4 @@
+author: "Neo-0"
+delete-after: True
+changes: 
+  - bugfix: "Holoparasite summoners now properly dust when their guardians are cremated"
