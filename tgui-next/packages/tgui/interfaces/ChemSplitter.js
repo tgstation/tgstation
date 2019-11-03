@@ -1,6 +1,7 @@
 import { act } from '../byond';
 import { LabeledList, Section } from '../components';
 import { NumberInput } from '../components/NumberInput';
+import { toFixed } from 'common/math';
 
 export const ChemSplitter = props => {
   const { state } = props;
@@ -21,6 +22,7 @@ export const ChemSplitter = props => {
             width="55px"
             minValue={1}
             maxValue={max_transfer}
+            format={value => toFixed(value, 2)}
             step={0.05}
             stepPixelSize={4}
             onChange={(e, value) => act(ref, "set_amount", {target: "straight", amount: value})}
@@ -33,6 +35,7 @@ export const ChemSplitter = props => {
             width="55px"
             minValue={1}
             maxValue={max_transfer}
+            format={value => toFixed(value, 2)}
             step={0.05}
             stepPixelSize={4}
             onChange={(e, value) => act(ref, "set_amount", {target: "side", amount: value})}
