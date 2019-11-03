@@ -436,12 +436,6 @@
 	dir = 8
 	},
 /area/bridge)
-"bH" = (
-/obj/structure/table,
-/obj/item/ammo_box/c10mm,
-/obj/item/gun/ballistic,
-/turf/open/floor/plasteel,
-/area/bridge)
 "bI" = (
 /obj/structure/table,
 /turf/open/floor/plasteel,
@@ -454,14 +448,6 @@
 "bK" = (
 /obj/structure/table,
 /obj/item/storage/backpack/holding,
-/turf/open/floor/plasteel,
-/area/bridge)
-"bL" = (
-/obj/structure/table,
-/obj/item/rcd_ammo/large,
-/obj/item/rcd_ammo/large,
-/obj/item/rcd_ammo/large,
-/obj/item/construction/rcd,
 /turf/open/floor/plasteel,
 /area/bridge)
 "bM" = (
@@ -1187,6 +1173,13 @@
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"ij" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/suit_storage_unit/ce,
+/turf/open/floor/plasteel,
+/area/construction)
 "ip" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -1264,6 +1257,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"mb" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/engine/storage)
 "mZ" = (
 /turf/open/floor/plasteel{
 	dir = 4
@@ -1411,11 +1408,24 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/structure/table,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/rcd_ammo/large,
+/obj/item/construction/rcd/combat/admin,
 /turf/open/floor/plasteel,
 /area/construction)
 "vT" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/construction)
+"xr" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel,
 /area/construction)
 "xB" = (
@@ -1476,6 +1486,21 @@
 "AG" = (
 /turf/closed/wall/r_wall,
 /area/engine/storage)
+"AI" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/tank/jetpack/oxygen/captain,
+/obj/item/storage/belt/utility/chief/full,
+/obj/item/clothing/gloves/color/yellow{
+	pixel_y = 10
+	},
+/turf/open/floor/plasteel,
+/area/construction)
 "Bk" = (
 /obj/structure/grille,
 /turf/open/openspace,
@@ -1607,6 +1632,10 @@
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plasteel,
 /area/engine/storage)
+"Jg" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/hallway/secondary/service)
 "Jt" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1708,6 +1737,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/storage/primary)
+"St" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/construction/plumbing,
+/turf/open/floor/plasteel,
+/area/construction)
 "Tf" = (
 /obj/structure/fluff/railing{
 	icon_state = "railing";
@@ -2681,8 +2718,8 @@ bE
 cQ
 cY
 dn
-dn
-dn
+cN
+BM
 dn
 dn
 dn
@@ -2735,8 +2772,8 @@ bE
 cN
 cY
 dn
-cN
-BM
+dn
+Fs
 dn
 dn
 dn
@@ -2887,7 +2924,7 @@ an
 ai
 ag
 bv
-bH
+bI
 cf
 eb
 bv
@@ -2960,7 +2997,7 @@ dn
 dn
 CP
 Pm
-dL
+ij
 cN
 af
 ad
@@ -3014,7 +3051,7 @@ dn
 dn
 dn
 dn
-dL
+St
 cN
 af
 ad
@@ -3068,7 +3105,7 @@ dn
 dn
 dn
 dn
-dL
+xr
 cN
 af
 ad
@@ -3103,7 +3140,7 @@ aj
 ac
 ac
 bv
-bL
+bI
 eb
 eb
 bv
@@ -3121,7 +3158,7 @@ dz
 dz
 dz
 dz
-do
+AI
 vF
 cN
 ME
@@ -5490,8 +5527,8 @@ dY
 dY
 eu
 Gb
-Gb
-Gb
+TY
+XQ
 Gb
 Gb
 Gb
@@ -5544,8 +5581,8 @@ dY
 dY
 eu
 Gb
-TY
-XQ
+Gb
+Jg
 Gb
 Gb
 Gb
@@ -8245,7 +8282,7 @@ qo
 qo
 qo
 xB
-TH
+DG
 TH
 TH
 TH
@@ -8299,8 +8336,8 @@ qo
 qo
 qo
 xB
-DG
-TH
+AG
+UA
 TH
 TH
 TH
@@ -8353,8 +8390,8 @@ qo
 qo
 qo
 xB
-AG
-UA
+TH
+mb
 TH
 TH
 TH
