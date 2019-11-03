@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - code_imp: "revive() with admin_revive = FALSE no longer calls fully_heal(admin_revive = TRUE)."
