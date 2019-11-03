@@ -4,8 +4,6 @@
 	icon_state = "grey"
 	baseturfs = /turf/open/openspace
 	CanAtmosPassVertical = ATMOS_PASS_YES
-	plane = FLOOR_OPENSPACE_PLANE
-	layer = OPENSPACE_LAYER
 	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
@@ -14,8 +12,10 @@
 	..()
 	return TRUE
 
-/turf/open/openspace/Initialize()
+/turf/open/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
+	plane = FLOOR_OPENSPACE_PLANE
+	layer = OPENSPACE_LAYER
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/openspace/LateInitialize()
