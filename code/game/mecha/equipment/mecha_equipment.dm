@@ -14,6 +14,7 @@
 	///Bitflag. Determines the range of the equipment.
 	var/range = MECHA_MELEE
 	var/salvageable = 1
+	var/detachable = TRUE // Set to FALSE for built-in equipment that cannot be removed
 	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
 	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
 	var/destroy_sound = 'sound/mecha/critdestr.ogg'
@@ -130,6 +131,8 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
+	if(!detachable)
+		return FALSE
 	moveto = moveto || get_turf(chassis)
 	if(src.Move(moveto))
 		chassis.equipment -= src

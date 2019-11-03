@@ -271,16 +271,7 @@
 	operation_req_access = list(ACCESS_SYNDICATE)
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
-	max_equip = 3
-
-/obj/mecha/combat/honker/dark/GrantActions(mob/living/user, human_occupant = 0)
-	..()
-	thrusters_action.Grant(user, src)
-
-
-/obj/mecha/combat/honker/dark/RemoveActions(mob/living/user, human_occupant = 0)
-	..()
-	thrusters_action.Remove(user)
+	max_equip = 4
 
 /obj/mecha/combat/honker/dark/add_cell(obj/item/stock_parts/cell/C)
 	if(C)
@@ -291,7 +282,9 @@
 
 /obj/mecha/combat/honker/dark/loaded/Initialize()
 	. = ..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker()
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana()//Needed more offensive weapons.
 	ME.attach(src)
