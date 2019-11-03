@@ -19,6 +19,7 @@
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother
 	name = "goliath broodmother"
 	desc = "An example of sexual dimorphism, this female goliath looks much different than the males of her species.  She is, however, just as dangerous, if not more."
+	gender = FEMALE
 	icon_state = "broodmother"
 	icon_living = "broodmother"
 	icon_aggro = "broodmother"
@@ -119,7 +120,7 @@
 	ranged_cooldown = world.time + 40
 	visible_message("<span class='boldwarning'>The ground churns behind [src]!</span>")
 	for(var/i in 1 to 2)
-		if(!children_list.len < 8)
+		if(children_list.len >= 8)
 			return
 		var/mob/living/simple_animal/hostile/asteroid/elite/broodmother_child/newchild = new /mob/living/simple_animal/hostile/asteroid/elite/broodmother_child(loc)
 		newchild.GiveTarget(target)
@@ -206,7 +207,7 @@
 			continue
 		visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
 		L.Stun(10)
-		L.adjustBruteLoss(rand(20,25))
+		L.adjustBruteLoss(rand(30,35))
 		latched = TRUE
 	if(!latched)
 		retract()
