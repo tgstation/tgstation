@@ -104,7 +104,7 @@
 /area/engine/gravity_generator)
 "au" = (
 /turf/open/openspace,
-/area/security)
+/area/space)
 "av" = (
 /obj/structure/stairs{
 	dir = 1
@@ -131,10 +131,6 @@
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/engine/atmos)
-"aC" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/openspace,
-/area/security)
 "aD" = (
 /obj/structure/fans/tiny,
 /obj/structure/cable,
@@ -217,10 +213,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
-"aX" = (
-/obj/machinery/gravity_generator/main/station,
-/turf/open/openspace,
-/area/security)
 "aY" = (
 /obj/machinery/light{
 	dir = 4
@@ -1113,6 +1105,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
+"eQ" = (
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/storage)
 "eV" = (
 /obj/structure/ladder,
 /turf/open/floor/plasteel,
@@ -1131,11 +1130,11 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/engine/storage)
-"fn" = (
-/turf/closed/wall/r_wall,
-/area/space)
 "fo" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
@@ -1200,6 +1199,14 @@
 "iu" = (
 /turf/open/openspace,
 /area/hallway/secondary/service)
+"iH" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/engine/storage)
 "iK" = (
 /turf/open/floor/plasteel{
 	dir = 8
@@ -1276,9 +1283,6 @@
 /obj/machinery/power/deck_relay,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
-"nI" = (
-/turf/open/openspace,
-/area/storage/primary)
 "od" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/spawner/structure/window/reinforced,
@@ -1318,6 +1322,10 @@
 	icon_state = "warningline_white";
 	dir = 9
 	},
+/obj/structure/fluff/railing/corner{
+	icon_state = "railing_corner";
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/engine/storage)
 "rd" = (
@@ -1349,6 +1357,17 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
+"sE" = (
+/obj/effect/turf_decal/stripes/white/line{
+	icon_state = "warningline_white";
+	dir = 4
+	},
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/storage)
 "td" = (
 /obj/effect/turf_decal/stripes/white/line{
 	icon_state = "warningline_white";
@@ -1382,6 +1401,9 @@
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/storage)
@@ -1432,6 +1454,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/construction)
+"zZ" = (
+/obj/structure/disposalpipe/trunk{
+	icon_state = "pipe-t";
+	dir = 1
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/plating,
+/area/construction)
 "Af" = (
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/plating,
@@ -1472,6 +1502,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"CK" = (
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin,
+/turf/open/floor/plating,
+/area/hallway/secondary/service)
 "CP" = (
 /obj/structure/fluff/railing{
 	icon_state = "railing";
@@ -1493,6 +1528,14 @@
 /area/engine/storage)
 "DK" = (
 /obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/engine/storage)
+"Eb" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/engine/storage)
 "EF" = (
@@ -1628,14 +1671,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/engine/storage)
-"On" = (
-/obj/machinery/disposal/deliveryChute,
-/obj/structure/disposalpipe/trunk{
-	icon_state = "pipe-t";
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/construction)
 "Pm" = (
 /obj/structure/fluff/railing/corner{
 	icon_state = "railing_corner";
@@ -1701,15 +1736,6 @@
 /obj/machinery/atmospherics/pipe/simple/multiz,
 /turf/open/floor/plating,
 /area/engine/storage)
-"Vi" = (
-/obj/effect/turf_decal/stripes/asteroid/line,
-/obj/structure/disposalpipe/trunk,
-/obj/machinery/disposal/deliveryChute{
-	icon_state = "intake";
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/secondary/service)
 "Vm" = (
 /obj/machinery/power/deck_relay,
 /obj/structure/cable,
@@ -2547,10 +2573,10 @@ bN
 cP
 cX
 dn
+dn
 ZH
 FY
-On
-dn
+zZ
 dn
 dn
 cR
@@ -2604,8 +2630,8 @@ dn
 dn
 dn
 dn
-In
-jD
+dn
+dn
 dn
 cR
 dn
@@ -2658,8 +2684,8 @@ dn
 dn
 dn
 dn
-sm
-Tf
+dn
+dn
 dn
 cR
 hi
@@ -2712,8 +2738,8 @@ dn
 cN
 BM
 dn
-CP
-Pm
+dn
+dn
 dn
 cR
 FL
@@ -2824,8 +2850,8 @@ dn
 dn
 dn
 dn
-dn
-dn
+In
+jD
 dL
 cN
 af
@@ -2878,8 +2904,8 @@ dn
 dn
 dn
 dn
-dn
-dn
+sm
+Tf
 dL
 cN
 af
@@ -2932,8 +2958,8 @@ dn
 dn
 dn
 dn
-dn
-dn
+CP
+Pm
 dL
 cN
 af
@@ -5354,10 +5380,10 @@ dY
 dY
 dY
 dY
-Vi
+eu
+CK
 gW
 Qo
-Gb
 Gb
 Gb
 Gb
@@ -5412,8 +5438,8 @@ eu
 Gb
 Gb
 Gb
-hY
-Lu
+Gb
+Gb
 Gb
 Gb
 eF
@@ -5466,8 +5492,8 @@ eu
 Gb
 Gb
 Gb
-XN
-iu
+Gb
+Gb
 Gb
 Gb
 eF
@@ -5520,8 +5546,8 @@ eu
 Gb
 TY
 XQ
-IL
-zd
+Gb
+Gb
 Gb
 Gb
 eF
@@ -5574,8 +5600,8 @@ eu
 Gb
 Gb
 nF
-XN
-av
+Gb
+Gb
 Gb
 Gb
 Gb
@@ -5628,12 +5654,12 @@ eu
 Gb
 TY
 Fd
-Ai
-su
 Gb
 Gb
 Gb
 Gb
+hY
+Lu
 Gb
 eL
 TY
@@ -5686,8 +5712,8 @@ LE
 IC
 jb
 Gb
-Gb
-Gb
+XN
+iu
 Gb
 eL
 TY
@@ -5740,8 +5766,8 @@ Zc
 Gb
 Gb
 Gb
-Gb
-Gb
+IL
+zd
 Gb
 eL
 TY
@@ -5794,8 +5820,8 @@ Gb
 Gb
 Gb
 Gb
-Gb
-Gb
+XN
+av
 Gb
 eL
 TY
@@ -5848,8 +5874,8 @@ Gb
 Gb
 Gb
 Gb
-Gb
-Gb
+Ai
+su
 Gb
 Kw
 TY
@@ -6222,15 +6248,15 @@ dY
 dY
 dY
 eF
-au
-au
-au
-au
-au
-au
-au
-au
-au
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6276,15 +6302,15 @@ dY
 dY
 dY
 eF
-au
-au
-au
-au
-au
-au
-au
-au
-au
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6330,15 +6356,15 @@ dY
 dY
 dY
 eF
-au
-au
-au
-au
-au
-au
-au
-au
-au
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6384,15 +6410,15 @@ dY
 dY
 dY
 eF
-au
-au
-au
-au
-au
-au
-au
-au
-au
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6438,15 +6464,15 @@ dY
 dY
 dY
 eF
-au
-au
-au
-aC
-nI
-au
-au
-au
-au
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6492,15 +6518,15 @@ dY
 dY
 dY
 eF
-au
-au
-au
-au
-au
-au
-au
-au
-au
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6546,15 +6572,15 @@ dY
 dY
 dY
 eF
-au
-au
-au
-au
-au
-au
-au
-au
-au
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6600,15 +6626,15 @@ dY
 dY
 dY
 eF
-au
-au
-au
-au
-au
-au
-au
-au
-au
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6654,15 +6680,15 @@ dY
 eN
 dY
 eF
-au
-au
-au
-au
-au
-au
-au
-au
-au
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6708,15 +6734,15 @@ TY
 TY
 TY
 TY
-au
-au
-au
-au
-au
-au
-au
-au
-au
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -7930,38 +7956,38 @@ au
 au
 au
 au
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
 au
 au
 au
@@ -7984,7 +8010,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -8015,7 +8041,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8038,7 +8064,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -8069,7 +8095,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8092,7 +8118,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -8123,7 +8149,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8146,7 +8172,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -8177,7 +8203,7 @@ ZQ
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8200,7 +8226,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -8231,7 +8257,7 @@ od
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8254,7 +8280,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -8285,7 +8311,7 @@ od
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8308,7 +8334,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -8339,7 +8365,7 @@ od
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8362,15 +8388,15 @@ au
 au
 au
 au
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
 vt
 Um
 Um
@@ -8384,16 +8410,16 @@ xB
 TH
 Vm
 TH
-qo
 TH
 TH
 TH
 TH
+Pz
 Af
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8416,7 +8442,7 @@ au
 au
 au
 au
-fn
+AG
 nx
 nx
 nx
@@ -8447,7 +8473,7 @@ Af
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8470,7 +8496,7 @@ au
 au
 au
 au
-fn
+AG
 nx
 nx
 nx
@@ -8501,7 +8527,7 @@ Af
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8524,7 +8550,7 @@ au
 au
 au
 au
-fn
+AG
 nx
 nx
 nx
@@ -8550,12 +8576,12 @@ TH
 TH
 Pu
 TH
-TH
-Af
+eQ
+iH
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8578,7 +8604,7 @@ au
 au
 au
 au
-fn
+AG
 nx
 nx
 nx
@@ -8604,12 +8630,12 @@ TH
 TH
 TH
 TH
-TH
-Af
+qo
+Eb
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8632,7 +8658,7 @@ au
 au
 au
 au
-fn
+AG
 nx
 nx
 nx
@@ -8658,12 +8684,12 @@ eX
 eX
 eX
 eX
-eX
+sE
 qR
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8686,7 +8712,7 @@ au
 au
 au
 au
-fn
+AG
 nx
 nx
 nx
@@ -8717,7 +8743,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8740,7 +8766,7 @@ au
 au
 au
 au
-fn
+AG
 nx
 nx
 nx
@@ -8771,7 +8797,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8794,15 +8820,15 @@ au
 au
 au
 au
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
 fa
 Qw
 Qw
@@ -8825,7 +8851,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8848,7 +8874,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -8879,7 +8905,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8902,7 +8928,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -8933,7 +8959,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -8956,7 +8982,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -8987,7 +9013,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9010,7 +9036,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -9041,7 +9067,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9064,7 +9090,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -9095,7 +9121,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9118,7 +9144,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -9149,7 +9175,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9172,7 +9198,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -9203,7 +9229,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9226,7 +9252,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -9257,7 +9283,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9280,7 +9306,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -9311,7 +9337,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9334,7 +9360,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -9365,7 +9391,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9388,7 +9414,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -9419,7 +9445,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9442,7 +9468,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -9473,7 +9499,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9496,7 +9522,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -9527,7 +9553,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9550,7 +9576,7 @@ au
 au
 au
 au
-fn
+AG
 qo
 qo
 qo
@@ -9581,7 +9607,7 @@ qo
 qo
 qo
 qo
-fn
+AG
 au
 au
 au
@@ -9604,38 +9630,38 @@ au
 au
 au
 au
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
-fn
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
+AG
 au
 au
 au
@@ -9764,7 +9790,7 @@ aa
 au
 au
 au
-aX
+au
 au
 au
 au
