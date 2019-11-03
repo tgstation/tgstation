@@ -5,9 +5,6 @@
 /datum/skill/proc/get_skill_speed_modifier(level)
 	return
 
-/datum/skill/proc/get_skill_effciency_modifier(level)
-	return
-
 //Mining
 /datum/skill/mining
 	name = "Mining"
