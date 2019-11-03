@@ -57,6 +57,7 @@
 	response_harm_simple = "kick"
 	gold_core_spawnable = NO_SPAWN
 	random_retaliate = FALSE
+	var/choking = FALSE
 	var/vomiting = FALSE
 	var/vomitCoefficient = 1
 	var/vomitTimeBonus = 0
@@ -94,6 +95,12 @@
 			visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
 			message_cooldown = world.time + 5 SECONDS
 		return
+	if(tasty.custom_materials && tasty.custom_materials[getmaterialref(/datum/material/plastic)]) // dumb goose'll swallow food or drink with plastic in it
+		visible_message("<span class='danger'>[src] starts choking on \the [tasty]! </span>")
+		tasty.forceMove(src)
+		choke(tasty)
+		choking = TRUE
+		return
 	if (tasty.foodtype & GROSS)
 		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
 		tasty.forceMove(src)
@@ -105,11 +112,35 @@
 			visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
 			message_cooldown = world.time + 5 SECONDS
 
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/choke(obj/item/reagent_containers/food/plastic)
+	if(stat == DEAD)
+		return
+	if(prob(25))
+		visible_message("<span class='warning'>[src] is gagging on \the [plastic]!</span>")
+		emote("me", 1, "gags!")
+		addtimer(CALLBACK(src, .proc/vomit), 300)
+	else
+		addtimer(CALLBACK(src, .proc/suffocate), 300)
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/Life()
+	. = ..()
+	if(choking && stat)
+		do_jitter_animation(50)
+		if(prob(20))
+			emote("gasp")
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/suffocate()
+	if(!choking)
+		return
+	deathmessage = "lets out one final oxygen-depraved honk before they go limp and lifeless.."
+	death()
+
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
 	if (stat == DEAD)
 		return
 	var/turf/T = get_turf(src)
 	var/obj/item/reagent_containers/food/consumed = locate() in contents //Barf out a single food item from our guts
+	choking = FALSE // assume birdboat is vomiting out whatever he was choking on
 	if (prob(50) && consumed)
 		barf_food(consumed)
 	else
@@ -166,7 +197,7 @@
 	var/turf/currentTurf = get_turf(src)
 	while (currentTurf == get_turf(src))
 		var/obj/item/reagent_containers/food/tasty = locate() in currentTurf
-		if (tasty)
+		if(tasty)
 			feed(tasty)
 		stoplag(2)
 	if(prob(vomitCoefficient * 0.2))
