@@ -1498,8 +1498,10 @@
 			to_chat(user, "<span class='warning'>The door has no power - you can't raise the door bolts.</span>")
 		else
 			unbolt()
+			log_combat(user, src, "unbolted")
 	else
 		bolt()
+		log_combat(user, src, "bolted")
 
 /obj/machinery/door/airlock/proc/toggle_emergency(mob/user)
 	if(!user_allowed(user))
