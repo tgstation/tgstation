@@ -83,7 +83,7 @@ task-install-git-hooks() {
   git_root="$(git rev-parse --show-toplevel)"
   git_base_dir="${base_dir/${git_root}/.}"
   git config --replace-all merge.tgui-merge-bundle.driver \
-    "${git_base_dir}/${0} --merge=bundle %O %A %B %L"
+    "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L"
   echo "tgui: Merge drivers have been successfully installed!"
 }
 
