@@ -36,7 +36,7 @@
 	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
 	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
 
-/obj/item/seeds/Initialize(loc, nogenes = 0)
+/obj/item/seeds/Initialize(mapload, nogenes = 0)
 	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
