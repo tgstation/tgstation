@@ -424,7 +424,7 @@
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof)
 	crate_name = "bulletproof armor crate"
-	
+
 /datum/supply_pack/security/armory/bullethelmets
 	name = "Bulletproof Helmets Crate"
 	desc = "Contains three bulletproof helmets. Requires Armory access to open."
@@ -2363,11 +2363,11 @@
 					/obj/item/pen/fountain,
 					/obj/item/pen/blue,
 					/obj/item/pen/red,
-					/obj/item/folder/blue,
-					/obj/item/folder/red,
-					/obj/item/folder/yellow,
-					/obj/item/clipboard,
-					/obj/item/clipboard,
+					/obj/item/storage/bag/folder/blue,
+					/obj/item/storage/bag/folder/red,
+					/obj/item/storage/bag/folder/yellow,
+					/obj/item/storage/bag/clipboard,
+					/obj/item/storage/bag/clipboard,
 					/obj/item/stamp,
 					/obj/item/stamp/denied,
 					/obj/item/laser_pointer/purple)

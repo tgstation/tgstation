@@ -719,8 +719,8 @@
 /area/shuttle/escape)
 "bj" = (
 /obj/structure/table,
-/obj/item/clipboard,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen,
 /obj/item/hand_labeler_refill,
 /obj/structure/sign/warning/nosmoking/circle{

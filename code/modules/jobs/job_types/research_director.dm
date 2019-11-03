@@ -43,7 +43,7 @@
 	uniform = /obj/item/clothing/under/rank/rnd/research_director
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat
-	l_hand = /obj/item/clipboard
+	l_hand = /obj/item/storage/bag/clipboard
 	l_pocket = /obj/item/laser_pointer
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced=1)
 

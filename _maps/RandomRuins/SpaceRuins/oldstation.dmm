@@ -243,7 +243,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/toy/cards/deck,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/item/pen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -2879,7 +2879,7 @@
 "hA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/ancientstation/sec)
@@ -3300,7 +3300,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/reagent_containers/glass/beaker,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,

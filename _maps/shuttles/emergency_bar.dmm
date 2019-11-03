@@ -546,7 +546,7 @@
 /area/shuttle/escape)
 "bO" = (
 /obj/structure/table/wood/bar,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "bP" = (

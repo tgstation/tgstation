@@ -264,7 +264,7 @@
 				return
 			iscrayon = 1
 
-		if(!in_range(src, usr) && loc != usr && !istype(loc, /obj/item/clipboard) && loc.loc != usr && usr.get_active_held_item() != i)	//Some check to see if he's allowed to write
+		if(!in_range(src, usr) && loc != usr && !istype(loc, /obj/item/storage/bag/clipboard) && loc.loc != usr && usr.get_active_held_item() != i)	//Some check to see if he's allowed to write
 			return
 
 		log_paper("[key_name(usr)] writing to paper [t]")

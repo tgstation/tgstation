@@ -49,7 +49,7 @@
 /area/survivalpod)
 "j" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/toy/figure/bartender,
 /turf/open/floor/pod/dark,
 /area/survivalpod)

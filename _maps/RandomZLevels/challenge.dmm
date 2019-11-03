@@ -727,7 +727,7 @@
 "cr" = (
 /obj/structure/table/wood,
 /obj/item/paper/fluff/gateway,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /turf/open/floor/carpet,
 /area/awaymission/challenge/end)
 "cs" = (

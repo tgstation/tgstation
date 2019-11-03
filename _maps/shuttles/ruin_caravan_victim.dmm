@@ -850,7 +850,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/folder/yellow{
+/obj/item/storage/bag/folder/yellow{
 	pixel_x = -6
 	},
 /obj/effect/turf_decal/tile/blue,

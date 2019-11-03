@@ -2955,7 +2955,7 @@
 "hD" = (
 /obj/structure/cable,
 /obj/structure/table/reinforced,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /turf/open/floor/plasteel/white,
 /area/awaymission/cabin)
 "hE" = (
@@ -3715,10 +3715,10 @@
 /area/awaymission/cabin)
 "jA" = (
 /obj/structure/table/wood,
-/obj/item/folder/yellow{
+/obj/item/storage/bag/folder/yellow{
 	pixel_x = -7
 	},
-/obj/item/folder/blue{
+/obj/item/storage/bag/folder/blue{
 	pixel_x = 7
 	},
 /turf/open/floor/wood,

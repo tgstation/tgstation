@@ -987,7 +987,7 @@
 /area/shuttle/abandoned/bridge)
 "bS" = (
 /obj/structure/table,
-/obj/item/folder/blue{
+/obj/item/storage/bag/folder/blue{
 	pixel_x = 6;
 	pixel_y = 5
 	},

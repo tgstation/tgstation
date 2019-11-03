@@ -879,7 +879,7 @@
 /obj/item/clothing/suit/space/hardsuit/syndi,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
-/obj/item/folder/syndicate/mining,
+/obj/item/storage/bag/folder/syndicate/mining,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cJ" = (

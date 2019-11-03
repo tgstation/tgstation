@@ -172,7 +172,7 @@
 	l_pocket = /obj/item/pen
 	back = /obj/item/storage/backpack/satchel
 	r_pocket = /obj/item/pda/heads
-	l_hand = /obj/item/clipboard
+	l_hand = /obj/item/storage/bag/clipboard
 	id = /obj/item/card/id/centcom
 
 /datum/outfit/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -298,4 +298,3 @@
 		/obj/item/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/grenade/clusterbuster/cleaner=3)
-

@@ -68,11 +68,11 @@
 /obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/toy/figure/syndie,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1

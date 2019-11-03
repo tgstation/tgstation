@@ -50,6 +50,13 @@
 	if(manifest)
 		tear_manifest(user)
 
+/obj/structure/closet/crate/attackby(obj/item/W, mob/user, params)
+	if(manifest && (istype(W, /obj/item/storage/bag/folder) || istype(W,  /obj/item/storage/bag/clipboard)))
+		tear_manifest(user, W)
+		return TRUE
+	if(user.a_intent == INTENT_HARM)
+		return ..()
+
 /obj/structure/closet/crate/open(mob/living/user)
 	. = ..()
 	if(. && manifest)
@@ -59,13 +66,16 @@
 		manifest = null
 		update_icon()
 
-/obj/structure/closet/crate/proc/tear_manifest(mob/user)
+/obj/structure/closet/crate/proc/tear_manifest(mob/user, obj/item/storage/bag/storer)
 	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 
-	manifest.forceMove(loc)
-	if(ishuman(user))
-		user.put_in_hands(manifest)
+	if(storer)
+		manifest.forceMove(storer)
+	else
+		manifest.forceMove(loc)
+		if(ishuman(user))
+			user.put_in_hands(manifest)
 	manifest = null
 	update_icon()
 

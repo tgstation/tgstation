@@ -137,7 +137,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,

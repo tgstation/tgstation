@@ -1496,7 +1496,7 @@
 /area/holodeck/rec_center/chapelcourt)
 "dX" = (
 /obj/structure/table/wood,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/melee/classic_baton/telescopic,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/school)
@@ -1876,7 +1876,7 @@
 /area/holodeck/rec_center/kobayashi)
 "fb" = (
 /obj/structure/table,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/pen/blue,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -1891,7 +1891,7 @@
 /area/holodeck/rec_center/kobayashi)
 "fc" = (
 /obj/structure/table,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1906,7 +1906,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/pen/red,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -4046,8 +4046,8 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "kg" = (
-/obj/item/clipboard,
-/obj/item/folder/red,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/red,
 /obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
@@ -4214,8 +4214,8 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "kz" = (
-/obj/item/clipboard,
-/obj/item/folder/red,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/red,
 /obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
@@ -4293,8 +4293,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/clipboard,
-/obj/item/folder/blue,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/blue,
 /obj/item/stamp/law,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
@@ -4430,8 +4430,8 @@
 /area/centcom/control)
 "kY" = (
 /obj/structure/table/wood,
-/obj/item/clipboard,
-/obj/item/folder/blue,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/blue,
 /obj/item/stamp/law,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
@@ -4748,8 +4748,8 @@
 /area/centcom/control)
 "lO" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/red,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/red,
 /obj/item/pen/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -4886,8 +4886,8 @@
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen/red,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -5043,7 +5043,7 @@
 /area/centcom/control)
 "mp" = (
 /obj/structure/table/wood,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/pen/red,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -5190,7 +5190,7 @@
 /area/centcom/supply)
 "mK" = (
 /obj/structure/table,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/stack/packageWrap,
 /obj/item/stack/cable_coil,
 /obj/item/hand_labeler,
@@ -5277,8 +5277,8 @@
 /area/centcom/control)
 "mS" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/red,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/red,
 /obj/item/pen/red,
 /obj/machinery/button/door/indestructible{
 	id = "XCCsec3";
@@ -5632,7 +5632,7 @@
 /turf/open/floor/plasteel/white,
 /area/centcom/ferry)
 "nD" = (
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
@@ -6112,8 +6112,8 @@
 /area/centcom/ferry)
 "op" = (
 /obj/structure/table/wood,
-/obj/item/clipboard,
-/obj/item/folder/blue,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/blue,
 /obj/item/melee/chainofcommand,
 /obj/item/stamp/captain,
 /obj/machinery/newscaster/security_unit{
@@ -6297,8 +6297,8 @@
 /area/centcom/ferry)
 "oG" = (
 /obj/structure/table/wood,
-/obj/item/clipboard,
-/obj/item/folder/red,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/red,
 /obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
@@ -6606,7 +6606,7 @@
 /area/centcom/ferry)
 "pi" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/stamp/qm,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -6651,8 +6651,8 @@
 	name = "CentCom Customs";
 	req_access_txt = "109"
 	},
-/obj/item/clipboard,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen/red,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -7116,7 +7116,7 @@
 /area/syndicate_mothership/control)
 "qb" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash/handheld,
@@ -7138,7 +7138,7 @@
 /area/centcom/ferry)
 "qc" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/lighter,
 /obj/machinery/firealarm{
 	dir = 1;
@@ -7178,7 +7178,7 @@
 /area/centcom/ferry)
 "qg" = (
 /obj/structure/table/wood,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/toy/figure/dsquad,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -7304,7 +7304,7 @@
 /area/centcom/supply)
 "qo" = (
 /obj/structure/table/reinforced,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
@@ -7697,7 +7697,7 @@
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/radio/headset/headset_cent,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -8146,8 +8146,8 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "rY" = (
-/obj/item/clipboard,
-/obj/item/folder/red,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/red,
 /obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
@@ -8382,7 +8382,7 @@
 /turf/open/floor/wood,
 /area/centcom/ferry)
 "sA" = (
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/structure/table/reinforced,
 /obj/item/detective_scanner,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -8843,7 +8843,7 @@
 /area/centcom/ferry)
 "tA" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash/handheld,
 /obj/effect/turf_decal/tile/neutral{
@@ -9139,8 +9139,8 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "uj" = (
-/obj/item/clipboard,
-/obj/item/folder/red,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/red,
 /obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
@@ -9621,7 +9621,7 @@
 "vd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/pen/red,
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
@@ -10259,11 +10259,11 @@
 /area/centcom/control)
 "wD" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/red{
+/obj/item/storage/bag/folder/red{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/folder/blue{
+/obj/item/storage/bag/folder/blue{
 	pixel_x = 2;
 	pixel_y = 2
 	},
@@ -10868,8 +10868,8 @@
 /area/centcom/control)
 "yu" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/white,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen/blue,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -10919,8 +10919,8 @@
 /area/centcom/control)
 "yx" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/red,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/red,
 /obj/item/pen/red,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -11514,11 +11514,11 @@
 /area/centcom/ferry)
 "Ac" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/red{
+/obj/item/storage/bag/folder/red{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/folder/blue{
+/obj/item/storage/bag/folder/blue{
 	pixel_x = 2;
 	pixel_y = 2
 	},
@@ -11557,8 +11557,8 @@
 /area/centcom/ferry)
 "Af" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/white,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen/blue,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -11771,8 +11771,8 @@
 /area/centcom/ferry)
 "AO" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/red,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/red,
 /obj/item/pen/red,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -11806,8 +11806,8 @@
 /area/centcom/ferry)
 "AQ" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -12017,8 +12017,8 @@
 /area/centcom/ferry)
 "Bz" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen/blue,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -12228,7 +12228,7 @@
 "BO" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/pen/red,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -12282,7 +12282,7 @@
 /area/syndicate_mothership)
 "BZ" = (
 /obj/structure/table/wood,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/radio/headset/headset_cent,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -12426,7 +12426,7 @@
 /area/syndicate_mothership)
 "Cq" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash/handheld,
@@ -12444,7 +12444,7 @@
 /area/centcom/ferry)
 "Cr" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/lighter,
 /obj/machinery/newscaster{
 	pixel_y = -32
@@ -13008,8 +13008,8 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/evac)
 "Dh" = (
-/obj/item/clipboard,
-/obj/item/folder/red,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/red,
 /obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
@@ -13179,8 +13179,8 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "DF" = (
-/obj/item/clipboard,
-/obj/item/folder/red,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/red,
 /obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
@@ -13215,7 +13215,7 @@
 "DH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/pen/red,
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
@@ -13230,7 +13230,7 @@
 "DI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen/blue,
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
@@ -13375,8 +13375,8 @@
 /area/centcom/control)
 "DY" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
-/obj/item/folder/white,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen/blue,
 /obj/machinery/airalarm{
 	dir = 1;
@@ -13508,7 +13508,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Et" = (
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/stamp/denied{
 	pixel_x = 3;
 	pixel_y = 3
@@ -16233,7 +16233,7 @@
 /area/tdome/tdomeadmin)
 "Kp" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash/handheld,
@@ -16251,7 +16251,7 @@
 /area/tdome/tdomeadmin)
 "Kq" = (
 /obj/structure/table/wood,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/radio/headset/headset_cent,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -16357,7 +16357,7 @@
 /area/tdome/tdomeadmin)
 "Kv" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/lighter,
 /obj/machinery/newscaster{
 	pixel_y = -32
@@ -16654,7 +16654,7 @@
 /area/centcom/evac)
 "Lm" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/stamp,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evac)
@@ -16829,7 +16829,7 @@
 /area/centcom/evac)
 "LQ" = (
 /obj/structure/table,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/pen,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)

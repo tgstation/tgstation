@@ -1236,7 +1236,7 @@
 /area/security/main)
 "acQ" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/stamp/hos,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -1595,7 +1595,7 @@
 /area/security/execution/transfer)
 "adE" = (
 /obj/structure/table,
-/obj/item/folder/red{
+/obj/item/storage/bag/folder/red{
 	pixel_x = 3
 	},
 /obj/item/taperecorder{
@@ -3010,7 +3010,7 @@
 /area/security/brig)
 "agE" = (
 /obj/structure/table,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/pen,
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -3647,7 +3647,7 @@
 /area/security/brig)
 "ahV" = (
 /obj/structure/table,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/taperecorder,
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
@@ -3747,7 +3747,7 @@
 /area/security/brig)
 "aie" = (
 /obj/structure/table,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/pen,
 /obj/item/hand_labeler,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4852,7 +4852,7 @@
 /area/security/brig)
 "akn" = (
 /obj/structure/table/wood,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -7525,10 +7525,10 @@
 /area/security/detectives_office)
 "arX" = (
 /obj/structure/table/wood,
-/obj/item/folder/blue,
-/obj/item/folder/blue,
-/obj/item/folder/blue,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
+/obj/item/storage/bag/folder/blue,
+/obj/item/storage/bag/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/item/stamp/law,
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -11124,7 +11124,7 @@
 /area/ai_monitored/nuke_storage)
 "aBW" = (
 /obj/structure/filingcabinet,
-/obj/item/folder/documents,
+/obj/item/storage/bag/folder/documents,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -11828,7 +11828,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/stamp/rd{
 	pixel_x = 3;
 	pixel_y = -2
@@ -14294,7 +14294,7 @@
 /area/hydroponics)
 "aJP" = (
 /obj/structure/table/wood,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen,
 /turf/open/floor/wood,
 /area/library)
@@ -19947,7 +19947,7 @@
 /area/hallway/secondary/exit)
 "aZn" = (
 /obj/structure/table/wood,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
 /area/vacant_room/office)
@@ -21179,7 +21179,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bcN" = (
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
@@ -22232,7 +22232,7 @@
 /area/crew_quarters/heads/captain)
 "bfB" = (
 /obj/structure/table/wood,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/item/stamp/captain,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
@@ -24493,7 +24493,7 @@
 /area/medical/medbay/central)
 "bll" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /turf/open/floor/plasteel/white,
@@ -25433,7 +25433,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/pen/red,
 /obj/structure/table,
 /turf/open/floor/plasteel,
@@ -25631,7 +25631,7 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -26232,7 +26232,7 @@
 /area/medical/genetics)
 "bpH" = (
 /obj/structure/table/glass,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/radio/headset/headset_medsci,
 /obj/machinery/requests_console{
 	department = "Genetics";
@@ -26873,7 +26873,7 @@
 	id = "robotics2";
 	name = "robotics lab shutters"
 	},
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /turf/open/floor/plating,
 /area/science/robotics/lab)
@@ -27535,7 +27535,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "btu" = (
@@ -28071,7 +28071,7 @@
 /area/crew_quarters/heads/hop)
 "buO" = (
 /obj/structure/table,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/item/stack/packageWrap{
 	pixel_x = -1;
 	pixel_y = -1
@@ -29302,7 +29302,7 @@
 /area/science/server)
 "byg" = (
 /obj/structure/table,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -29349,7 +29349,7 @@
 /area/security/checkpoint/science)
 "byl" = (
 /obj/structure/table,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen{
 	pixel_x = 4;
 	pixel_y = 4
@@ -30911,7 +30911,7 @@
 /area/science/server)
 "bBW" = (
 /obj/structure/table,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/science/server)
@@ -31230,7 +31230,7 @@
 /area/medical/sleeper)
 "bCG" = (
 /obj/structure/table,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/gun/syringe,
 /obj/item/reagent_containers/dropper,
 /obj/item/soap/nanotrasen,
@@ -31469,7 +31469,7 @@
 /area/science/storage)
 "bDk" = (
 /obj/structure/table,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen,
 /obj/machinery/requests_console{
 	department = "Mining";
@@ -31897,7 +31897,7 @@
 /area/crew_quarters/heads/cmo)
 "bEk" = (
 /obj/structure/table/glass,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/stamp/cmo,
 /obj/item/clothing/glasses/hud/health,
 /obj/effect/turf_decal/tile/blue{
@@ -35251,7 +35251,7 @@
 /obj/item/pen{
 	pixel_x = -3
 	},
-/obj/item/folder/yellow{
+/obj/item/storage/bag/folder/yellow{
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel,
@@ -35918,8 +35918,8 @@
 /area/medical/virology)
 "bPs" = (
 /obj/structure/table,
-/obj/item/folder/white,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /obj/item/taperecorder,
 /obj/item/paper_bin{
@@ -36015,7 +36015,7 @@
 /obj/item/paper_bin{
 	pixel_y = 4
 	},
-/obj/item/folder/white{
+/obj/item/storage/bag/folder/white{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -36211,7 +36211,7 @@
 /area/construction)
 "bQd" = (
 /obj/structure/table,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/item/pen/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -40078,8 +40078,8 @@
 /area/maintenance/starboard/aft)
 "cbh" = (
 /obj/structure/table,
-/obj/item/folder/white,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -40760,7 +40760,7 @@
 /area/chapel/main)
 "cdm" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/paper/monitorkey,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -42243,7 +42243,7 @@
 /area/crew_quarters/heads/chief)
 "cio" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/stamp/ce,
 /obj/structure/disposalpipe/segment,
 /obj/effect/landmark/event_spawn,
@@ -42612,7 +42612,7 @@
 	dir = 9
 	},
 /obj/structure/table,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -43649,7 +43649,7 @@
 	dir = 9
 	},
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cnj" = (
@@ -44971,7 +44971,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/folder{
+/obj/item/storage/bag/folder{
 	pixel_x = 3
 	},
 /obj/item/phone{
@@ -46179,7 +46179,7 @@
 /area/ai_monitored/turret_protected/ai)
 "cwm" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cwn" = (
@@ -47186,7 +47186,7 @@
 /area/quartermaster/warehouse)
 "cBj" = (
 /obj/structure/table,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
@@ -47825,7 +47825,7 @@
 /area/space/nearstation)
 "cDZ" = (
 /obj/structure/table,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
@@ -49917,7 +49917,7 @@
 /area/science/nanite)
 "ifv" = (
 /obj/structure/table,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/book/manual/wiki/experimentor,
 /turf/open/floor/plasteel/white/corner{
 	dir = 4

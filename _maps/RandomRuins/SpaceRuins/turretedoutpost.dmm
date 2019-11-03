@@ -52,7 +52,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "am" = (
 /obj/structure/table/reinforced,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/radio,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/turretedoutpost)
@@ -174,7 +174,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aD" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/machinery/light{
 	dir = 1
 	},

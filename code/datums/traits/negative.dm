@@ -162,7 +162,7 @@
 			if("Quartermaster")
 				heirloom_type = pick(/obj/item/stamp, /obj/item/stamp/denied)
 			if("Cargo Technician")
-				heirloom_type = /obj/item/clipboard
+				heirloom_type = /obj/item/storage/bag/clipboard
 			if("Shaft Miner")
 				heirloom_type = pick(/obj/item/pickaxe/mini, /obj/item/shovel)
 

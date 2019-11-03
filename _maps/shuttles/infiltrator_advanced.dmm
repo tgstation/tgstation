@@ -612,7 +612,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/eva)
 "bl" = (
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/reagent_containers/hypospray/medipen,
 /obj/item/reagent_containers/hypospray/medipen{
 	pixel_y = 6
@@ -953,7 +953,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "bW" = (
-/obj/item/clipboard{
+/obj/item/storage/bag/clipboard{
 	pixel_x = 4;
 	pixel_y = 4
 	},

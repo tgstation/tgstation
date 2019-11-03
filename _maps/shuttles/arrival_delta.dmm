@@ -291,7 +291,7 @@
 /area/shuttle/arrival)
 "B" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/toy/figure/assistant,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -305,7 +305,7 @@
 /area/shuttle/arrival)
 "D" = (
 /obj/structure/table/reinforced,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/storage/pill_bottle/dice,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,

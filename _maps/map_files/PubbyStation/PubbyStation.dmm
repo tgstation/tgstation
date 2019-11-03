@@ -4000,7 +4000,7 @@
 	pixel_y = 12
 	},
 /obj/item/pen,
-/obj/item/folder/red{
+/obj/item/storage/bag/folder/red{
 	layer = 2.9;
 	pixel_x = 8
 	},
@@ -4045,7 +4045,7 @@
 /area/crew_quarters/heads/hos)
 "alL" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/stamp/hos,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
@@ -5972,7 +5972,7 @@
 /area/ai_monitored/nuke_storage)
 "aqP" = (
 /obj/structure/filingcabinet,
-/obj/item/folder/documents,
+/obj/item/storage/bag/folder/documents,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6309,7 +6309,7 @@
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
-/obj/item/folder/yellow{
+/obj/item/storage/bag/folder/yellow{
 	pixel_y = 4
 	},
 /obj/structure/table/glass,
@@ -6801,7 +6801,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "asJ" = (
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/taperecorder,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
@@ -8066,7 +8066,7 @@
 	name = "Brig Desk";
 	req_access_txt = "1"
 	},
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/restraints/handcuffs,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -8665,7 +8665,7 @@
 	name = "brig shutters"
 	},
 /obj/structure/table/reinforced,
-/obj/item/folder/red{
+/obj/item/storage/bag/folder/red{
 	layer = 2.9
 	},
 /obj/machinery/door/firedoor,
@@ -9968,7 +9968,7 @@
 /area/crew_quarters/heads/captain)
 "aAy" = (
 /obj/structure/table/wood,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/item/stamp/captain,
 /obj/machinery/light{
 	dir = 4
@@ -16255,7 +16255,7 @@
 /area/quartermaster/sorting)
 "aRj" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen,
 /obj/item/paper_bin{
 	layer = 2.9
@@ -18973,7 +18973,7 @@
 	id = "papersplease";
 	name = "privacy shutters"
 	},
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/pen,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -20342,8 +20342,8 @@
 /area/quartermaster/office)
 "bat" = (
 /obj/structure/table,
-/obj/item/clipboard,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/clipboard,
+/obj/item/storage/bag/folder/yellow,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
@@ -21575,7 +21575,7 @@
 /area/quartermaster/miningdock)
 "bdJ" = (
 /obj/structure/table,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -22326,7 +22326,7 @@
 /area/quartermaster/qm)
 "bfC" = (
 /obj/structure/table,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/machinery/light,
 /obj/machinery/camera{
 	c_tag = "Cargo Quartermaster's Office";
@@ -24290,7 +24290,7 @@
 /area/medical/medbay/central)
 "blr" = (
 /obj/structure/table,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/healthanalyzer,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -25121,7 +25121,7 @@
 /area/storage/emergency/port)
 "bnz" = (
 /obj/structure/table,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/storage/fancy/candle_box,
 /obj/machinery/light_switch{
@@ -25602,7 +25602,7 @@
 /area/medical/medbay/central)
 "boJ" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -25917,7 +25917,7 @@
 /area/science/xenobiology)
 "bpt" = (
 /obj/structure/table,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/pen,
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
@@ -26164,7 +26164,7 @@
 	id = "chemistry_shutters";
 	name = "chemistry shutters"
 	},
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -26208,7 +26208,7 @@
 	id = "research_shutters_2";
 	name = "research shutters"
 	},
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /turf/open/floor/plating,
 /area/science/lab)
 "bqd" = (
@@ -26325,7 +26325,7 @@
 /area/science/server)
 "bqn" = (
 /obj/structure/table,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/science/server)
@@ -28885,7 +28885,7 @@
 /area/medical/genetics)
 "bwv" = (
 /obj/structure/table,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /obj/machinery/airalarm{
 	pixel_y = 22
@@ -30015,7 +30015,7 @@
 /area/science/explab)
 "byV" = (
 /obj/structure/table,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/pen,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/machinery/light,
@@ -31671,7 +31671,7 @@
 /area/crew_quarters/heads/cmo)
 "bCt" = (
 /obj/structure/table/glass,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/clothing/glasses/hud/health,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -32271,7 +32271,7 @@
 /area/security/checkpoint/science)
 "bDK" = (
 /obj/structure/table,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/pen,
 /obj/structure/sign/poster/random{
 	pixel_x = 32
@@ -32767,7 +32767,7 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "bEG" = (
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/item/stamp/cmo,
 /obj/structure/table,
 /obj/machinery/firealarm{
@@ -32924,7 +32924,7 @@
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/pen,
 /obj/item/stamp/rd,
 /obj/machinery/status_display/evac{
@@ -35971,7 +35971,7 @@
 /area/medical/virology)
 "bLF" = (
 /obj/structure/table,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/pen{
 	layer = 3.1
 	},
@@ -36923,7 +36923,7 @@
 /area/medical/virology)
 "bNM" = (
 /obj/structure/table/glass,
-/obj/item/folder/white{
+/obj/item/storage/bag/folder/white{
 	pixel_y = 4
 	},
 /obj/item/pen/red,
@@ -36931,7 +36931,7 @@
 /area/medical/virology)
 "bNN" = (
 /obj/structure/table/glass,
-/obj/item/folder/white{
+/obj/item/storage/bag/folder/white{
 	pixel_y = 4
 	},
 /obj/item/pen/red,
@@ -40239,7 +40239,7 @@
 	req_access_txt = "24"
 	},
 /obj/structure/table/reinforced,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/paper/monitorkey,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/yellow{
@@ -40262,7 +40262,7 @@
 /area/crew_quarters/heads/chief)
 "bVH" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/lighter,
 /obj/item/stamp/ce,
 /obj/item/stock_parts/cell/high/plus,
@@ -44664,7 +44664,7 @@
 /area/maintenance/department/chapel/monastery)
 "ckS" = (
 /obj/structure/table/wood,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen,
 /obj/machinery/camera{
 	c_tag = "Monastery Library";
@@ -46362,7 +46362,7 @@
 /area/space/nearstation)
 "crt" = (
 /obj/structure/table/wood/fancy,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
@@ -48230,7 +48230,7 @@
 /area/library)
 "czD" = (
 /obj/structure/table/wood,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen,
 /turf/open/floor/plasteel/dark,
 /area/library)
@@ -49989,7 +49989,7 @@
 /area/engine/atmos)
 "gdJ" = (
 /obj/structure/table/glass,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/item/pen,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -52649,7 +52649,7 @@
 /area/security/execution/transfer)
 "mtu" = (
 /obj/structure/table,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/reagent_containers/food/snacks/donut,
 /obj/machinery/light/small{
 	dir = 4
@@ -54275,7 +54275,7 @@
 /area/science/xenobiology)
 "qcH" = (
 /obj/structure/table/glass,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -55792,7 +55792,7 @@
 /area/maintenance/department/science)
 "ueP" = (
 /obj/structure/table/glass,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/item/pen,
 /obj/machinery/button/door{
 	id = "xenobiomain";
@@ -56006,8 +56006,8 @@
 /area/tcommsat/computer)
 "uAU" = (
 /obj/structure/table/wood,
-/obj/item/folder/blue,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/carpet,
 /area/lawoffice)
@@ -56922,8 +56922,8 @@
 /area/maintenance/department/security/brig)
 "wTD" = (
 /obj/structure/table/wood,
-/obj/item/folder/red,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/radio/intercom{
 	pixel_x = 27

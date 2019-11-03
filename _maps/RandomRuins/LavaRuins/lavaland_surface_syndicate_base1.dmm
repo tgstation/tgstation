@@ -467,7 +467,7 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/reagent_containers/glass/beaker/large{
 	pixel_x = -3
 	},
@@ -1627,7 +1627,7 @@
 	pixel_y = 1
 	},
 /obj/structure/table,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/stack/wrapping_paper{
 	pixel_y = 5
 	},
@@ -2486,7 +2486,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hS" = (
 /obj/structure/table/reinforced,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /obj/item/suppressor,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/ears/earmuffs,
@@ -2765,7 +2765,7 @@
 	dir = 5
 	},
 /obj/structure/filingcabinet,
-/obj/item/folder/syndicate/mining,
+/obj/item/storage/bag/folder/syndicate/mining,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

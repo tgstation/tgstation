@@ -3289,8 +3289,8 @@
 /area/awaymission/research/interior/security)
 "hf" = (
 /obj/structure/table,
-/obj/item/folder,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
+/obj/item/storage/bag/folder,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

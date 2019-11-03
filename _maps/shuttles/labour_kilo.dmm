@@ -24,7 +24,7 @@
 /area/shuttle/labor)
 "e" = (
 /obj/structure/table,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/restraints/handcuffs,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)

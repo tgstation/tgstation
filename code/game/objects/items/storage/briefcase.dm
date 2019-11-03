@@ -13,7 +13,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	resistance_flags = FLAMMABLE
 	max_integrity = 150
-	var/folder_path = /obj/item/folder //this is the path of the folder that gets spawned in New()
+	var/folder_path = /obj/item/storage/bag/folder //this is the path of the folder that gets spawned in New()
 
 /obj/item/storage/briefcase/ComponentInitialize()
 	. = ..()
@@ -23,12 +23,12 @@
 
 /obj/item/storage/briefcase/PopulateContents()
 	new /obj/item/pen(src)
-	var/obj/item/folder/folder = new folder_path(src)
+	var/obj/item/storage/bag/folder = new folder_path(src)
 	for(var/i in 1 to 6)
 		new /obj/item/paper(folder)
 
 /obj/item/storage/briefcase/lawyer
-	folder_path = /obj/item/folder/blue
+	folder_path = /obj/item/storage/bag/folder/blue
 
 /obj/item/storage/briefcase/lawyer/PopulateContents()
 	new /obj/item/stamp/law(src)

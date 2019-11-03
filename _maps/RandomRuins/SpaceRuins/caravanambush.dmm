@@ -521,7 +521,7 @@
 /area/shuttle/caravan/freighter3)
 "ha" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /obj/item/pen{
 	pixel_x = 6;
 	pixel_y = 6
@@ -1147,7 +1147,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/folder/yellow{
+/obj/item/storage/bag/folder/yellow{
 	pixel_x = -6
 	},
 /turf/open/floor/plating/airless,

@@ -3401,7 +3401,7 @@
 /area/awaymission/moonoutpost19/research)
 "hh" = (
 /obj/structure/table,
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -3804,7 +3804,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/folder/white,
+/obj/item/storage/bag/folder/white,
 /obj/item/stamp/rd{
 	pixel_x = 3;
 	pixel_y = -2
@@ -6105,7 +6105,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "mV" = (
 /obj/structure/table,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/pen,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/moonoutpost19/arrivals)

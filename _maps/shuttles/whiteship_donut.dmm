@@ -335,7 +335,7 @@
 	icon_state = "paperstack";
 	dir = 4
 	},
-/obj/item/folder/yellow,
+/obj/item/storage/bag/folder/yellow,
 /turf/open/floor/plasteel/airless,
 /area/shuttle/abandoned)
 "bb" = (
@@ -376,7 +376,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},

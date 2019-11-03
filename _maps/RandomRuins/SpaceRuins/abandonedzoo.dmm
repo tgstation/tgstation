@@ -88,7 +88,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "ax" = (
 /obj/structure/table/reinforced,
-/obj/item/clipboard,
+/obj/item/storage/bag/clipboard,
 /obj/item/clothing/mask/surgical,
 /obj/item/razor,
 /obj/machinery/light{
@@ -196,7 +196,7 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aN" = (
 /obj/structure/table/reinforced,
-/obj/item/folder,
+/obj/item/storage/bag/folder,
 /turf/open/floor/plasteel/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
 "aO" = (

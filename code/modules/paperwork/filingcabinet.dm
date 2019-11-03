@@ -35,7 +35,7 @@
 	. = ..()
 	if(mapload)
 		for(var/obj/item/I in loc)
-			if(istype(I, /obj/item/paper) || istype(I, /obj/item/folder) || istype(I, /obj/item/photo))
+			if(istype(I, /obj/item/paper) || istype(I, /obj/item/storage/bag/folder) || istype(I, /obj/item/photo))
 				I.forceMove(src)
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
@@ -46,7 +46,7 @@
 	qdel(src)
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/paper) || istype(P, /obj/item/folder) || istype(P, /obj/item/photo) || istype(P, /obj/item/documents))
+	if(istype(P, /obj/item/paper) || istype(P, /obj/item/storage/bag/folder) || istype(P, /obj/item/photo) || istype(P, /obj/item/documents))
 		if(!user.transferItemToLoc(P, src))
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")

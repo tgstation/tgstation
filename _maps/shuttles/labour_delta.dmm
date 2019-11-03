@@ -22,7 +22,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
 "e" = (
-/obj/item/folder/red,
+/obj/item/storage/bag/folder/red,
 /obj/item/restraints/handcuffs,
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,

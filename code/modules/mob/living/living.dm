@@ -478,7 +478,7 @@
 	for(var/i in ret.Copy())			//iterate storage objects
 		var/atom/A = i
 		SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
-	for(var/obj/item/folder/F in ret.Copy())		//very snowflakey-ly iterate folders
+	for(var/obj/item/storage/bag/folder/F in ret.Copy())		//very snowflakey-ly iterate folders
 		ret |= F.contents
 	return ret
 

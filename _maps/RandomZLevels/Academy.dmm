@@ -28,7 +28,7 @@
 /area/awaymission/academy/headmaster)
 "ag" = (
 /obj/structure/table/reinforced,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ah" = (
@@ -222,7 +222,7 @@
 /area/awaymission/academy/headmaster)
 "aZ" = (
 /obj/structure/table/wood,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ba" = (
@@ -292,7 +292,7 @@
 /area/awaymission/academy/headmaster)
 "bm" = (
 /obj/structure/table/wood,
-/obj/item/folder/blue,
+/obj/item/storage/bag/folder/blue,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "bn" = (
