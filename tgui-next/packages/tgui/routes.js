@@ -27,11 +27,8 @@ import { DisposalUnit } from './interfaces/DisposalUnit';
 import { KitchenSink } from './interfaces/KitchenSink';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { Mint } from './interfaces/Mint';
-<<<<<<< HEAD
-=======
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
->>>>>>> 4477fb387b... Language and Crafting tgui-next (#47474)
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
@@ -136,6 +133,10 @@ const ROUTES = {
     component: () => Crayon,
     scrollable: true,
   },
+  crew: {
+    component: () => CrewConsole,
+    scrollable: true,
+  },
   cryo: {
     component: () => Cryo,
     scrollable: false,
@@ -166,6 +167,10 @@ const ROUTES = {
   },
   smartvend: {
     component: () => SmartVend,
+    scrollable: true,
+  },
+  operating_computer: {
+    component: () => OperatingComputer,
     scrollable: true,
   },
   thermomachine: {
