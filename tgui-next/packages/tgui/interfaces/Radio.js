@@ -3,17 +3,71 @@ import { toFixed } from 'common/math';
 import { act } from '../byond';
 import { Box, Button, LabeledList, NumberInput, Section } from '../components';
 
-// TODO: Move this to ui_data.
 const CHANNELS = [
   {
+    name: 'Syndicate',
+    freq: 1213,
+    color: '#a52a2a',
+  },
+  {
+    name: 'Red Team',
+    freq: 1215,
+    color: '#ff4444',
+  },
+  {
+    name: 'Blue Team',
+    freq: 1217,
+    color: '#3434fd',
+  },
+  {
+    name: 'CentCom',
+    freq: 1337,
+    color: '#2681a5',
+  },
+  {
+    name: 'Supply',
+    freq: 1347,
+    color: '#b88646',
+  },
+  {
+    name: 'Service',
+    freq: 1349,
+    color: '#6ca729',
+  },
+  {
+    name: 'Science',
+    freq: 1351,
+    color: '#c68cfa',
+  },
+  {
+    name: 'Command',
+    freq: 1353,
+    color: '#5177ff',
+  },
+  {
+    name: 'Medical',
+    freq: 1355,
+    color: '#57b8f0',
+  },
+  {
+    name: 'Engineering',
+    freq: 1357,
+    color: '#f37746',
+  },
+  {
+    name: 'Security',
+    freq: 1359,
+    color: '#dd3535',
+  },
+  {
     name: 'AI Private',
-    frequency: 1447,
-    color: 'violet',
+    freq: 1447,
+    color: '#d65d95',
   },
   {
     name: 'Common',
-    frequency: 1459,
-    color: 'green',
+    freq: 1459,
+    color: '#1ecc43',
   },
 ];
 
@@ -34,7 +88,7 @@ export const Radio = props => {
     subspaceSwitchable,
   } = data;
   const tunedChannel = CHANNELS
-    .find(channel => channel.frequency === frequency);
+    .find(channel => channel.freq === frequency);
   const channels = map((value, key) => ({
     name: key,
     status: !!value,
