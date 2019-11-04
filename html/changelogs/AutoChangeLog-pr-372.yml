@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - imageadd: "restored airlock painter inhand sprites"
