@@ -1,6 +1,7 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, Section, LabeledList } from '../components';
+import { Button, Section, LabeledList } from '../components';
+import { NumberInput } from '../components/NumberInput';
 
 export const ChemAcclimator = props => {
   const { state } = props;
@@ -11,42 +12,59 @@ export const ChemAcclimator = props => {
       <Section title="Acclimator">
         <LabeledList>
           <LabeledList.Item label="Current Temperature">
-            {data.chem_temp}
+            {data.chem_temp} K
           </LabeledList.Item>
           <LabeledList.Item label="Target Temperature">
-            <Button
-              icon="thermometer-half"
-              content={data.target_temperature}
-              onClick={() => act(ref, 'set_target_temperature')}
+            <NumberInput
+              value={data.target_temperature}
+              unit="K"
+              width="59px"
+              minValue={0}
+              maxValue={1000}
+              step={5}
+              stepPixelSize={2}
+              onChange={(e, value) => act(ref, "set_target_temperature", {temperature: value})}
             />
           </LabeledList.Item>
           <LabeledList.Item label="Acceptable Temp. Difference">
-            <Button
-              icon="thermometer-quarter"
-              content={data.allowed_temperature_difference}
-              onClick={() => act(ref, 'set_allowed_temperature_difference')}
+            <NumberInput
+              value={data.allowed_temperature_difference}
+              unit="K"
+              width="59px"
+              minValue={1}
+              maxValue={data.target_temperature}
+              stepPixelSize={2}
+              onChange={(e, value) => act(ref, "set_allowed_temperature_difference", {temperature: value})}
             />
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Section title="Status">
+      <Section
+        title="Status"
+        buttons={(
+          <Button
+            icon="power-off"
+            content={data.enabled ? "On" : "Off"}
+            selected={data.enabled}
+            onClick={() => act(ref, 'toggle_power')}
+          />
+        )}
+      >
         <LabeledList>
+          <LabeledList.Item label="Volume">
+            <NumberInput
+              value={data.max_volume}
+              unit="u"
+              width="50px"
+              minValue={data.reagent_volume}
+              maxValue={200}
+              step={2}
+              stepPixelSize={2}
+              onChange={(e, value) => act(ref, 'change_volume', {volume: value})}
+            />
+          </LabeledList.Item>
           <LabeledList.Item label="Current Operation">
             {data.acclimate_state}
-          </LabeledList.Item>
-          <LabeledList.Item label="Power">
-            <Button
-              icon="power-off"
-              selected={data.enabled}
-              onClick={() => act(ref, 'toggle_power')}
-            />
-          </LabeledList.Item>
-          <LabeledList.Item label="Change Volume">
-            <Button
-              icon="flask"
-              content={data.max_volume}
-              onClick={() => act(ref, 'change_volume')}
-            />
           </LabeledList.Item>
           <LabeledList.Item label="Current State">
             {data.emptying ? 'Emptying' : 'Filling'}
