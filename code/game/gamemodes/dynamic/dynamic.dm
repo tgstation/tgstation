@@ -496,7 +496,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
 	return FALSE
 
-/// Mainly here to facilitate delayed rulesets. All rules roundstart rulesets are executed with a timered callback to this proc.
+/// Mainly here to facilitate delayed rulesets. All roundstart rulesets are executed with a timered callback to this proc.
 /datum/game_mode/dynamic/proc/execute_roundstart_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if(rule.execute())
@@ -589,7 +589,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
 	return FALSE
 
-/// Mainly here to facilitate delayed rulesets. All rules midround/latejoin rulesets are executed with a timered callback to this proc.
+/// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
 /datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if (rule.execute())
