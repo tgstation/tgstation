@@ -162,6 +162,17 @@
 	M.toggle_move_intent()
 	return TRUE
 
+/datum/keybinding/mob/toggle_move_intent_alternative
+	key = "Unbound"
+	name = "toggle_move_intent_alt"
+	full_name = "press to cycle move intent"
+	description = "Pressing this cycle to the opposite move intent, does not cycle back"
+
+/datum/keybinding/mob/toggle_move_intent_alternative/down(client/user)
+	var/mob/M = user.mob
+	M.toggle_move_intent()
+	return TRUE
+
 /datum/keybinding/mob/target_head_cycle
 	key = "Numpad8"
 	name = "target_head_cycle"
