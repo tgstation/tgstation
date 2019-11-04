@@ -1,5 +1,8 @@
-import { Fragment, Component } from 'inferno';
-import { Section, Tabs, Box, Button, Flex, ProgressBar, Tooltip } from '../components';
+import { Component, Fragment } from 'inferno';
+import {
+  Box, Button, Flex, Input, LabeledList, NumberInput,
+  ProgressBar, Section, Tabs, Tooltip,
+} from '../components';
 
 const COLORS_ARBITRARY = [
   'black',
@@ -44,6 +47,7 @@ export const KitchenSink = props => {
       <KitchenSinkProgress />
       <KitchenSinkTabs />
       <KitchenSinkTooltips />
+      <KitchenSinkInputs />
     </Fragment>
   );
 };
@@ -195,6 +199,62 @@ const KitchenSinkTooltips = props => {
     </Section>
   );
 };
+
+class KitchenSinkInputs extends Component {
+  constructor() {
+    super();
+    this.state = {
+      number: 0,
+      text: 'Sample text',
+    };
+  }
+
+  render() {
+    const { number, text } = this.state;
+    return (
+      <Section title="Inputs">
+        <LabeledList>
+          <LabeledList.Item label="NumberInput">
+            <NumberInput
+              animated
+              width={10}
+              step={1}
+              stepPixelSize={5}
+              value={number}
+              minValue={-100}
+              maxValue={100}
+              onChange={(e, value) => this.setState({
+                number: value,
+              })} />
+            <NumberInput
+              animated
+              width={10}
+              step={1}
+              stepPixelSize={5}
+              value={number}
+              minValue={-100}
+              maxValue={100}
+              onDrag={(e, value) => this.setState({
+                number: value,
+              })} />
+          </LabeledList.Item>
+          <LabeledList.Item label="Input">
+            <Input
+              value={text}
+              onChange={(e, value) => this.setState({
+                text: value,
+              })} />
+            <Input
+              value={text}
+              onInput={(e, value) => this.setState({
+                text: value,
+              })} />
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
+    );
+  }
+}
 
 const BoxOfSampleText = props => {
   return (

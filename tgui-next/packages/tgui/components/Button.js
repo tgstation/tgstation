@@ -51,18 +51,19 @@ export const Button = props => {
       tabIndex={!disabled && '0'}
       unselectable={tridentVersion <= 4}
       onclick={e => {
-        if (disabled || !onClick) {
-          return;
-        }
         refocusLayout();
-        onClick(e);
+        if (!disabled && onClick) {
+          onClick(e);
+        }
       }}
       onKeyDown={e => {
         const keyCode = window.event ? e.which : e.keyCode;
         // Simulate a click when pressing space or enter.
         if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
           e.preventDefault();
-          onClick(e);
+          if (!disabled && onClick) {
+            onClick(e);
+          }
           return;
         }
         // Refocus layout on pressing escape.

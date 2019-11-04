@@ -278,7 +278,7 @@ Buttons allow users to take actions, and make choices, with a single click.
 Props:
 
 - See inherited props: [Box](#box)
-- `fluid: boolean` - Tells the button to fill all available horizontal space.
+- `fluid: boolean` - Fill all available horizontal space.
 - `icon: string` - Adds an icon to the button.
 - `color: string` - Button color, as defined in `variables.scss`.
   - There is also a special color `transparent` - makes the button
@@ -437,6 +437,22 @@ Fractional numbers are supported.
 - `spin: boolean` - Whether an icon should be spinning. Good for load
 indicators.
 
+### `Input`
+
+A basic text input, which allow users to enter text into a UI.
+
+> Input does not support custom font size and height due to the way
+> it's implemented in CSS. Eventually, this needs to be fixed.
+
+Props:
+
+- See inherited props: [Box](#box)
+- `value: string` - Value of an input.
+- `fluid: boolean` - Fill all available horizontal space.
+- `onChange: (e, value) => void` - An event, which fires when you commit
+the text by either unfocusing the input box, or by pressing the Enter key.
+- `onInput: (e, value) => void` - An event, which fires on every keypress.
+
 ### `LabeledList`
 
 LabeledList is a continuous, vertical list of text and other content, where
@@ -514,6 +530,7 @@ to fine tune the value, or single click it to manually type a number.
 Props:
 
 - `animated: boolean` - Animates the value if it was changed externally.
+- `fluid: boolean` - Fill all available horizontal space.
 - `value: number` - Value itself.
 - `unit: string` - Unit to display to the right of value.
 - `minValue: number` - Lowest possible value.

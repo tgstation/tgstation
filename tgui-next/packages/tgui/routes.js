@@ -29,7 +29,6 @@ import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
-import { KitchenSink } from './interfaces/KitchenSink';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { Mint } from './interfaces/Mint';
 import { OperatingComputer } from './interfaces/OperatingComputer';
@@ -233,12 +232,15 @@ const ROUTES = {
 };
 
 export const getRoute = state => {
-  // Show a kitchen sink
-  if (state.showKitchenSink) {
-    return {
-      component: () => KitchenSink,
-      scrollable: true,
-    };
+  if (process.env.NODE_ENV !== 'production') {
+    // Show a kitchen sink
+    if (state.showKitchenSink) {
+      const { KitchenSink } = require('./interfaces/KitchenSink');
+      return {
+        component: () => KitchenSink,
+        scrollable: true,
+      };
+    }
   }
   // Refer to the routing table
   return ROUTES[state.config && state.config.interface];
