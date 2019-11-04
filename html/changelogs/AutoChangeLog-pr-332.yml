@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Fixed several issues with some clothing items, where no sprites would show when worn or on the ground."

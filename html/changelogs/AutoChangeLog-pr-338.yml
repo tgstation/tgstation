@@ -1,9 +1,0 @@
-author: "AustationBot"
-delete-after: True
-changes: 
-  - rscadd: "Added Plastic Signs. Use a pen on a blank sign to add flair to your department!"
-  - rscadd: "Added Plastic Folding chairs. Hold events on the fly, just don't put too much weight on them."
-  - rscadd: "Added Plastic Utensils. Construct-able from the Autolathe / Service Protolathe. Cuts and Feeds, if they don't snap in your hands beforehand."
-  - rscadd: "Plastic Colo Cups. A Hip, Trendy, Legally distinct cup for hosting parties where everyone is totally drinking water."
-  - tweak: "Signs around the station are now made of plastic."
-  - imageadd: "Adds 9 additional sign icons."

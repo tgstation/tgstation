@@ -1,4 +1,0 @@
-author: "AustationBot"
-delete-after: True
-changes: 
-  - code_imp: "Lootdrop spawners support nested lists, allowing for easier to modify loot tables."
