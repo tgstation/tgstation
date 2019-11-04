@@ -78,7 +78,7 @@
 			H.forceMove(LM.loc)
 			break
 
-	add_antag_hud(antag_hud_type, antag_hud_name, mob_override ? mob_override.mind : owner.current)
+	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
 /datum/antagonist/abductor/scientist/on_gain()
 	ADD_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, ABDUCTOR_ANTAGONIST)
@@ -185,10 +185,12 @@
 	objectives += O
 
 /datum/antagonist/abductee/apply_innate_effects(mob/living/mob_override)
-	add_antag_hud(antag_hud_type, antag_hud_name, mob_override ? mob_override.mind : owner.current)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 
 /datum/antagonist/abductee/remove_innate_effects(mob/living/mob_override)
-	remove_antag_hud(antag_hud_type, mob_override ? mob_override.mind : owner.current)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
 
 
 // LANDMARKS

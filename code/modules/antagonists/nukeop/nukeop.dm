@@ -14,11 +14,13 @@
 
 
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
-	add_antag_hud(antag_hud_type, antag_hud_name, mob_override ? mob_override : owner.current)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/remove_innate_effects(mob/living/mob_override)
-	remove_antag_hud(antag_hud_type, mob_override ? mob_override : owner.current)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
 	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/proc/equip_op()

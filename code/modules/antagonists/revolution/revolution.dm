@@ -22,10 +22,12 @@
 			return FALSE
 
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
-	add_antag_hud(antag_hud_type, antag_hud_name, mob_override ? mob_override : owner.current)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 
 /datum/antagonist/rev/remove_innate_effects(mob/living/mob_override)
-	remove_antag_hud(antag_hud_type, mob_override ? mob_override : owner.current)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/rev/proc/equip_rev()
 	return

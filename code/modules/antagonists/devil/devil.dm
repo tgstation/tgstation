@@ -524,7 +524,8 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/apply_innate_effects(mob/living/mob_override)
 	give_appropriate_spells()
-	add_antag_hud(antag_hud_type, antag_hud_name, mob_override ? mob_override : owner.current)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	owner.current.grant_all_languages(TRUE)
 	update_hud()
 	.=..()
@@ -534,7 +535,8 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		var/obj/effect/proc_holder/spell/S = X
 		if(is_type_in_typecache(S, devil_spells))
 			owner.RemoveSpell(S)
-	remove_antag_hud(antag_hud_type, mob_override ? mob_override : owner.current)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
 	.=..()
 
 /datum/antagonist/devil/proc/printdevilinfo()

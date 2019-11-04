@@ -225,14 +225,16 @@
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	add_antag_hud(antag_hud_type, antag_hud_name, mob_override ? mob_override : owner.current)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	var/mob/living/silicon/ai/A = mob_override || owner.current
 	if(istype(A) && traitor_kind == TRAITOR_AI)
 		A.hack_software = TRUE
 
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
 	. = ..()
-	remove_antag_hud(antag_hud_type, mob_override ? mob_override : owner.current)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
 	var/mob/living/silicon/ai/A = mob_override || owner.current
 	if(istype(A)  && traitor_kind == TRAITOR_AI)
 		A.hack_software = FALSE
