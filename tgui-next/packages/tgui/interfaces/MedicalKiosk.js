@@ -40,7 +40,7 @@ export const MedicalKiosk = props => {
               color="grey">
               <AnimatedNumber value={data.patient_health} />%
             </ProgressBar>
-          <LabeledList.Divider size={2} />
+            <LabeledList.Divider size={2} />
           </LabeledList.Item>
           <LabeledList.Item
             label="Brute Health">
@@ -83,7 +83,7 @@ export const MedicalKiosk = props => {
             label="Patient Status"
             color="health-0">
             {data.patient_status}
-          <LabeledList.Divider size={1} />
+            <LabeledList.Divider size={1} />
           </LabeledList.Item>
           <LabeledList.Item
             label="Disease Status">
@@ -96,7 +96,7 @@ export const MedicalKiosk = props => {
           <LabeledList.Item
             label="Blood Levels">
             {data.bleed_status}
-          <LabeledList.Divider size={1} />
+            <LabeledList.Divider size={1} />
             <ProgressBar
               value={data.blood_levels/100}
               color="bad">                  
@@ -131,7 +131,7 @@ export const MedicalKiosk = props => {
           label="Brain Status"
           color="health-0">
           {data.brain_health}
-        <LabeledList.Divider size={1} />
+          <LabeledList.Divider size={1} />
         </LabeledList.Item>
         <LabeledList.Item
           label="Radiation Status">

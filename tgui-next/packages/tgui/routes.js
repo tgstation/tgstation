@@ -37,16 +37,20 @@ import { Gps } from './interfaces/Gps';
 =======
 import { KitchenSink } from './interfaces/KitchenSink';
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
 >>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
 import { LanguageMenu } from './interfaces/LanguageMenu';
 =======
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
+=======
+>>>>>>> Merge conflicts are the bane of my existance
 <<<<<<< HEAD
 >>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
 =======
+>>>>>>> Merge conflicts are the bane of my existance
 import { LanguageMenu } from './interfaces/LanguageMenu';
->>>>>>> This too
+import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
