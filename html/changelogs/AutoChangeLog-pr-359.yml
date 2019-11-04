@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Updated the multi Z debug map with multi Z wiring/piping/disposals and stairs."
