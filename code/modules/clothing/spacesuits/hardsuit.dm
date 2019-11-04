@@ -402,8 +402,7 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical, /obj/item/storage/bag/bio)
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 20, "bio" = 100, "rad" = 100, "fire" = 75, "acid" = 90)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
-	armor_switch = TRUE
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	armor_switch = TRUE //shit just doesn't work, make this like current syndicate hardsuit instead.
 	armor_eva = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 20, "bio" = 100, "rad" = 100, "fire" = 75, "acid" = 90)
 	armor_speed = list("melee" = 10, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 50, "fire" = 60, "acid" = 75)
 
