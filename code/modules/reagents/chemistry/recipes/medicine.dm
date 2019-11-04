@@ -22,8 +22,10 @@
 	name = "Oculine"
 	id = /datum/reagent/medicine/oculine
 	results = list(/datum/reagent/medicine/oculine = 3)
+	/* austation begin -- trekchems added back. Changes in equiv file in austation dir
 	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
-	mix_message = "The mixture bubbles noticeably and becomes a dark grey color!"
+	austation end */
+	mix_message = "The mixture sputters loudly and becomes a pale pink color."
 
 /datum/chemical_reaction/inacusiate
 	name = /datum/reagent/medicine/inacusiate
@@ -116,15 +118,6 @@ austation end*/
 	results = list(/datum/reagent/medicine/diphenhydramine = 4)
 	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/carbon = 1, /datum/reagent/bromine = 1, /datum/reagent/diethylamine = 1, /datum/reagent/consumable/ethanol = 1)
 	mix_message = "The mixture dries into a pale blue powder."
-
-/datum/chemical_reaction/oculine
-	name = "Oculine"
-	id = /datum/reagent/medicine/oculine
-	results = list(/datum/reagent/medicine/oculine = 3)
-	/* austation begin -- trekchems added back. Changes in equiv file in austation dir
-	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
-	austation end */
-	mix_message = "The mixture sputters loudly and becomes a pale pink color."
 
 /datum/chemical_reaction/atropine
 	name = "Atropine"
