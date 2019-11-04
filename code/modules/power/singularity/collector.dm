@@ -2,9 +2,10 @@
 #define RAD_COLLECTOR_EFFICIENCY 80 	// radiation needs to be over this amount to get power
 #define RAD_COLLECTOR_COEFFICIENT 100
 #define RAD_COLLECTOR_STORED_OUT 0.04	// (this*100)% of stored power outputted per tick. Doesn't actualy change output total, lower numbers just means collectors output for longer in absence of a source
-#define RAD_COLLECTOR_MINING_CONVERSION_RATE 0.000005 //This is gonna need a lot of tweaking to get right. This is the number used to calculate the conversion of watts to research points per process()
+#define RAD_COLLECTOR_MINING_CONVERSION_RATE 0.00001 //This is gonna need a lot of tweaking to get right. This is the number used to calculate the conversion of watts to research points per process()
 #define RAD_COLLECTOR_OUTPUT min(stored_energy, (stored_energy*RAD_COLLECTOR_STORED_OUT)+1000) //Produces at least 1000 watts if it has more than that stored
-
+#define PUBLIC_TECHWEB_GAIN 0.6 //how many research points go directly into the main pool
+#define PRIVATE_TECHWEB_GAIN (1 - PUBLIC_TECHWEB_GAIN) //how many research points go directly into the main pool
 /obj/machinery/power/rad_collector
 	name = "Radiation Collector Array"
 	desc = "A device which uses Hawking Radiation and plasma to produce power."
@@ -76,8 +77,8 @@
 			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
 			if(D)
 				D.adjust_money(bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
-			stored_research += bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE
-			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
+			stored_research += bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE*PRIVATE_TECHWEB_GAIN
+			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE*PUBLIC_TECHWEB_GAIN)
 			stored_energy-=bitcoins_mined
 
 /obj/machinery/power/rad_collector/interact(mob/user)
@@ -258,3 +259,5 @@
 #undef RAD_COLLECTOR_STORED_OUT
 #undef RAD_COLLECTOR_MINING_CONVERSION_RATE
 #undef RAD_COLLECTOR_OUTPUT
+#undef PUBLIC_TECHWEB_GAIN
+#undef PRIVATE_TECHWEB_GAIN
