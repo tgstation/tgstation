@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - tweak: "the monastery shuttle can now be used as a mining shuttle"

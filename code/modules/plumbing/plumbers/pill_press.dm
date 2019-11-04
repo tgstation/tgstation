@@ -20,6 +20,9 @@
 	///max amount of pills allowed on our tile before we start storing them instead
 	var/max_floor_pills = 10
 
+	ui_x = 300
+	ui_y = 199
+
 /obj/machinery/plumbing/pill_press/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>The [name] currently has [stored_pills.len] stored. There needs to be less than [max_floor_pills] on the floor to continue dispensing.</span>"
@@ -34,7 +37,7 @@
 	for (var/x in 1 to PILL_STYLE_COUNT)
 		var/list/SL = list()
 		SL["id"] = x
-		SL["htmltag"] = assets.icon_tag("pill[x]")
+		SL["class_name"] = assets.icon_class_name("pill[x]")
 		pill_styles += list(SL)
 
 /obj/machinery/plumbing/pill_press/process()
@@ -72,7 +75,7 @@
 	if(!ui)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
 		assets.send(user)
-		ui = new(user, src, ui_key, "chem_press", name, 410, 300, master_ui, state)
+		ui = new(user, src, ui_key, "chem_press", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/plumbing/pill_press/ui_data(mob/user)
@@ -91,7 +94,7 @@
 		if("change_pill_style")
 			pill_number = CLAMP(text2num(params["id"]), 1 , PILL_STYLE_COUNT)
 		if("change_pill_size")
-			pill_size = round(CLAMP(input("New target volume", name, pill_size) as num|null, minimum_pill, maximum_pill))
+			pill_size = CLAMP(text2num(params["volume"]), minimum_pill, maximum_pill)
 		if("change_pill_name")
 			var/new_name = stripped_input(usr, "Enter a pill name.", name, pill_name)
 			if(findtext(new_name, "pill")) //names like pillatron and Pilliam are thus valid

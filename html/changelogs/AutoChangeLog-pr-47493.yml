@@ -1,0 +1,9 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - rscadd: "Elites who win their freedom can re-enter their tumor to despawn themselves, letting the tumor be re-activated to spawn a different elite."
+  - tweak: "A renamed pulsing tumor uses its new name in messages now."
+  - tweak: "Pulsing tumors now use their popped sprite after spawning an elite."
+  - tweak: "Boosted elites are now warned against being friendly with crew."
+  - balance: "Broodmother's tentacles do 30-35 damage from 20-25."
+  - bugfix: "Fixed the Broodmother being unable to create children."

@@ -27,7 +27,7 @@
 	var/emptying = FALSE
 
 	ui_x = 320
-	ui_y = 310
+	ui_y = 271
 
 /obj/machinery/plumbing/acclimator/Initialize(mapload, bolt)
 	. = ..()
@@ -80,6 +80,7 @@
 	data["allowed_temperature_difference"] = allowed_temperature_difference
 	data["acclimate_state"] = acclimate_state
 	data["max_volume"] = reagents.maximum_volume
+	data["reagent_volume"] = reagents.total_volume
 	data["emptying"] = emptying
 	return data
 
@@ -89,20 +90,15 @@
 	. = TRUE
 	switch(action)
 		if("set_target_temperature")
-			var/target = input("New target temperature:", name, target_temperature) as num|null
+			var/target = text2num(params["temperature"])
 			target_temperature = CLAMP(target, 0, 1000)
 		if("set_allowed_temperature_difference")
-			var/target = input("New acceptable difference:", name, allowed_temperature_difference) as num|null
+			var/target = text2num(params["temperature"])
 			allowed_temperature_difference = CLAMP(target, 0, 1000)
 		if("toggle_power")
 			enabled = !enabled
 		if("change_volume")
-			var/target = input("New maximum volume between 1 and [buffer]):", name, reagents.maximum_volume) as num|null
-			if(!target)
-				return
-			if(reagents.total_volume > target)
-				to_chat(usr, "<span class='warning'>You can't set the maximum volume lower than the current total reagent volume! Empty it first!</span>")
-				return
+			var/target = text2num(params["volume"])
 			reagents.maximum_volume = CLAMP(round(target), 1, buffer)
 
 #undef COOLING

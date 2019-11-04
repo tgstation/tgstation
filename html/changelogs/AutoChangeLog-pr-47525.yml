@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - admin: "Added airlock bolt/unbolt logging to the combat log."

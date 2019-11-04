@@ -90,9 +90,9 @@
 
 /datum/component/nanites/Destroy()
 	STOP_PROCESSING(SSnanites, src)
-	set_nanite_bar(TRUE)
 	QDEL_LIST(programs)
 	if(host_mob)
+		set_nanite_bar(TRUE)
 		host_mob.hud_set_nanite_indicator()
 	host_mob = null
 	return ..()
