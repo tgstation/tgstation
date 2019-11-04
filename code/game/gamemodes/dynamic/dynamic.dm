@@ -10,10 +10,6 @@
 
 #define RULESET_STOP_PROCESSING 1
 
-#define RULESET_WAITING	1
-#define RULESET_STARTED	2
-#define RULESET_FAILED 	3
-
 // -- Injection delays
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_min, (5 MINUTES))
 GLOBAL_VAR_INIT(dynamic_latejoin_delay_max, (25 MINUTES))
@@ -366,7 +362,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
-		rule.status = RULESET_WAITING
 	..()
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
@@ -500,12 +495,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/execute_roundstart_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if(rule.execute())
-		rule.status = RULESET_STARTED
 		if(rule.persistent)
 			current_rules += rule
 		return TRUE
-	rule.status = RULESET_FAILED // Doesn't trigger anything, but we know the status now.
 	rule.clean_up()	// Refund threat, delete teams and so on.
+	executed_rules -= rule
 	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	return FALSE
 
@@ -541,7 +535,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			midround_rules = remove_from_list(midround_rules, rule.type)
 
 	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)
-	rule.status = RULESET_WAITING
 	return TRUE
 
 /// An experimental proc to allow admins to call rules on the fly or have rules call other rules.
@@ -608,9 +601,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		rule.candidates.Cut()
 		if (rule.persistent)
 			current_rules += rule
-		rule.status = RULESET_STARTED
 		return TRUE
-	rule.status = RULESET_FAILED // Doesn't trigger anything, but we know the status now.
 	rule.clean_up()
 	stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
 	return FALSE
@@ -621,13 +612,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		update_playercounts()
 
 	for (var/datum/dynamic_ruleset/rule in current_rules)
-		if(rule.status == RULESET_WAITING) // Ruleset hasn't executed yet, probably delayed start.
-			continue
-		if(rule.status == RULESET_FAILED) // Ruleset has failed to execute. Clean up time.
-			rule.clean_up()
-			current_rules -= rule
-			executed_rules -= rule
-			continue
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
 
