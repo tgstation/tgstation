@@ -42,7 +42,11 @@ import { KitchenSink } from './interfaces/KitchenSink';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 =======
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
+<<<<<<< HEAD
 >>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
+=======
+import { LanguageMenu } from './interfaces/LanguageMenu';
+>>>>>>> This too
 import { Mint } from './interfaces/Mint';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
@@ -207,7 +211,14 @@ const ROUTES = {
   medical_kiosk: {
     component: () => MedicalKiosk,
     scrollable: false,
+<<<<<<< HEAD
 >>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
+=======
+  },  
+  language_menu: {
+    component: () => LanguageMenu,
+    scrollable: true,
+>>>>>>> This too
   },
   mint: {
     component: () => Mint,
