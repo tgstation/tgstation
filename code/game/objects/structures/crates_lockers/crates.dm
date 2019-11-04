@@ -25,6 +25,7 @@
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
 	update_icon()
+	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/tear_manifest)
 
 /obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)
 	if(!istype(mover, /obj/structure/closet))
@@ -45,27 +46,28 @@
 
 /obj/structure/closet/crate/attack_hand(mob/user)
 	. = ..()
-	if(.)
-		return
 	if(manifest)
-		tear_manifest(user)
+		tear_manifest(FALSE, FALSE, user)
 
 /obj/structure/closet/crate/open(mob/living/user)
 	. = ..()
-	if(. && manifest)
-		to_chat(user, "<span class='notice'>The manifest is torn off [src].</span>")
-		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
-		manifest.forceMove(get_turf(src))
-		manifest = null
-		update_icon()
+	if(manifest)
+		tear_manifest(FALSE, FALSE, user)
 
-/obj/structure/closet/crate/proc/tear_manifest(mob/user)
+/obj/structure/closet/crate/proc/tear_manifest(datum/source, obj/item/S, mob/user)
+	if(!manifest)
+		return
+	if(S)
+		if(istype(S, /obj/item/clipboard) || istype(S, /obj/item/folder))
+			manifest.forceMove(S)
+		else
+			return
+	else
+		manifest.forceMove(loc)
+		if(ishuman(user))
+			user.put_in_hands(manifest)
 	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
-
-	manifest.forceMove(loc)
-	if(ishuman(user))
-		user.put_in_hands(manifest)
 	manifest = null
 	update_icon()
 

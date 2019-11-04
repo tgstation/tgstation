@@ -15,6 +15,7 @@
 	var/opened = FALSE
 	var/welded = FALSE
 	var/locked = FALSE
+	var/speciallock = FALSE // var that can be used for special ways to open
 	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/breakout_time = 1200
@@ -98,7 +99,7 @@
 	return !density
 
 /obj/structure/closet/proc/can_open(mob/living/user)
-	if(welded || locked)
+	if(welded || locked || speciallock)
 		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)

@@ -27,7 +27,6 @@
 	uniform = /obj/item/clothing/under/rank/cargo/qm
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
-	l_hand = /obj/item/clipboard
+	l_pocket = /obj/item/clipboard
 
 	chameleon_extras = /obj/item/stamp/qm
-
