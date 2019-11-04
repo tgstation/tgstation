@@ -688,7 +688,7 @@
 	var/new_cost = input("Set a new cost for using this medical kiosk.","New cost", custom_cost) as num|null
 	if(new_cost == null)
 		return
-	custom_cost = CLAMP(round(new_cost, 1), 1, 1000)
+	custom_cost = CLAMP(round(new_cost, 5), 5, 1000)
 
 /obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)
 	. = ..()

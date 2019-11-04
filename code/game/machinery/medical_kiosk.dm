@@ -2,7 +2,7 @@
 
 /obj/machinery/medical_kiosk
 	name = "medical kiosk"
-	desc = "A freestanding medical kiosk, which can provide your basic medical status. Less effective than a medical analyzer."
+	desc = "A freestanding medical kiosk, which can provide several different kinds of medical analysis for a price."
 	icon = 'icons/obj/machines/medical_kiosk.dmi'
 	icon_state = "kiosk"
 	layer = ABOVE_MOB_LAYER
@@ -81,9 +81,12 @@
 	return ..()
 
 /obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	if(!ishuman(user))
+		user.visible_message("<span class='notice'>The biometric scanner only works for living, human-like beings.</span>")
+		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "medical_kiosk", name, 600, 500, master_ui, state)
+		ui = new(user, src, ui_key, "medical_kiosk", name, 700, 800, master_ui, state)
 		ui.open()
 		scan_active = FALSE
 		icon_state = "kiosk_off"
@@ -96,15 +99,34 @@
 	var/list/data = list()
 	var/patient_name = user.name   //T1 upgrade information
 	var/patient_status = "Alive."
+	var/max_health = user.maxHealth
+	var/total_health = user.health
 	var/brute_loss = user.getBruteLoss()
 	var/fire_loss = user.getFireLoss()
 	var/tox_loss = user.getToxLoss()
 	var/oxy_loss = user.getOxyLoss()
 	var/sickness = "Patient does not show signs of disease."
-	for(var/thing in user.diseases)
+	var/sickness_data = "Not Applicable."
+	var/bleed_status = "Patient is not currently bleeding."
+	var/blood_status = " Patient either has no blood, or does not require it to function."
+	var/blood_percent =  round((user.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+	var/blood_type = user.dna.blood_type
+	var/blood_warning = " "
+
+	for(var/thing in user.diseases) //Disease Information
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
+			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
+
+	if(user.has_dna()) //Blood levels Information
+		if(user.bleed_rate)
+			bleed_status = "Patient is currently bleeding!"
+		if(blood_percent <= 80)
+			blood_warning = " Patient has low blood levels. Seek a large meal, or iron supplements."
+		if(blood_percent <= 60)
+			blood_warning = " Patient has DANGEROUSLY low blood levels. Seek a blood transfusion, iron supplements, or saline glucose immedietly. Ignoring treatment may lead to death!"
+		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type] type blood. [blood_warning]"
 
 	var/rad_value = user.radiation  //T2 upgrade information
 	var/rad_status = "Target within normal-low radiation levels."
@@ -151,10 +173,11 @@
 	else if(user.radiation >= 500)
 		rad_status = "Patient is suffering from alarming radiation poisoning. Suggested treatment: Heavy use of showers and decontamination of clothing. Take Pentetic Acid or Potassium Iodine."
 	else if(user.radiation >= 100)
-		rad_status = "Patient has moderate radioactive signatures. Keep under showers until symptoms subside."
+		rad_status = "Patient has moderate radioactive signatures. Decontaminate using showers until symptoms subside."
 
 	data["kiosk_cost"] = active_price
 	data["patient_name"] = patient_name
+	data["patient_health"] = (total_health/max_health)*100
 	data["brute_health"] = brute_loss
 	data["burn_health"] = fire_loss
 	data["toxin_health"] = tox_loss
@@ -167,6 +190,10 @@
 	data["rad_status"] = rad_status
 	data["trauma_status"] = trauma_status
 	data["patient_illness"] = sickness
+	data["illness_info"] = sickness_data
+	data["bleed_status"] = bleed_status
+	data["blood_levels"] = blood_percent
+	data["blood_status"] = blood_status
 	data["active_status"] = scan_active ? 0 : 1
 	data["upgrade_active_status"] = upgrade_scan_active ? 0 : 1
 	data["adv_active_status"] = adv_scan_active ? 0 : 1

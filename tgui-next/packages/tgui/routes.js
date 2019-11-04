@@ -30,8 +30,19 @@ import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
+<<<<<<< HEAD
 import { Gps } from './interfaces/Gps';
+=======
+<<<<<<< HEAD
+=======
+import { KitchenSink } from './interfaces/KitchenSink';
+<<<<<<< HEAD
+>>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
+>>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
 import { LanguageMenu } from './interfaces/LanguageMenu';
+=======
+import { MedicalKiosk } from './interfaces/MedicalKiosk';
+>>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
 import { Mint } from './interfaces/Mint';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
@@ -181,13 +192,22 @@ const ROUTES = {
     component: () => DisposalUnit,
     scrollable: false,
   },
+<<<<<<< HEAD
   gps: {
     component: () => Gps,
     scrollable: true,
   },
+=======
+<<<<<<< HEAD
+>>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
   language_menu: {
     component: () => LanguageMenu,
     scrollable: true,
+=======
+  medical_kiosk: {
+    component: () => MedicalKiosk,
+    scrollable: false,
+>>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
   },
   mint: {
     component: () => Mint,
