@@ -18,11 +18,23 @@
 	results = list(/datum/reagent/medicine/spaceacillin = 2)
 	required_reagents = list(/datum/reagent/cryptobiolin = 1, /datum/reagent/medicine/epinephrine = 1)
 
+/datum/chemical_reaction/oculine
+	name = "Oculine"
+	id = /datum/reagent/medicine/oculine
+	results = list(/datum/reagent/medicine/oculine = 3)
+	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
+	mix_message = "The mixture bubbles noticeably and becomes a dark grey color!"
+
 /datum/chemical_reaction/inacusiate
 	name = /datum/reagent/medicine/inacusiate
 	id = /datum/reagent/medicine/inacusiate
 	results = list(/datum/reagent/medicine/inacusiate = 2)
+<<<<<<< HEAD
 	//required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/multiver = 1) austation -- trekchems added back. Changes in equiv file in austation dir
+=======
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/multiver = 1)
+	mix_message = "The mixture sputters loudly and becomes a light grey color!"
+>>>>>>> 688e532f52... (AGAIN) Kills default chemical color, adds syndicate pill sprite, nerfs xenobiology (#47535)
 
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
@@ -107,6 +119,7 @@ austation end*/
 	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/carbon = 1, /datum/reagent/bromine = 1, /datum/reagent/diethylamine = 1, /datum/reagent/consumable/ethanol = 1)
 	mix_message = "The mixture dries into a pale blue powder."
 
+<<<<<<< HEAD
 /datum/chemical_reaction/oculine
 	name = "Oculine"
 	id = /datum/reagent/medicine/oculine
@@ -114,6 +127,8 @@ austation end*/
 	//required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1) austation -- trekchems added back. Changes in equiv file in austation dir
 	mix_message = "The mixture sputters loudly and becomes a pale pink color."
 
+=======
+>>>>>>> 688e532f52... (AGAIN) Kills default chemical color, adds syndicate pill sprite, nerfs xenobiology (#47535)
 /datum/chemical_reaction/atropine
 	name = "Atropine"
 	id = /datum/reagent/medicine/atropine
