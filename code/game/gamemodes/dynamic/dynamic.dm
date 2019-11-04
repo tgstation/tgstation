@@ -365,18 +365,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
-		if(rule.delay > 0)
-			addtimer(CALLBACK(rule, /datum/dynamic_ruleset/roundstart.proc/execute), rule.delay)
-			rule.status = RULESET_WAITING
-		else
-			if(!rule.execute())
-				rule.status = RULESET_FAILED // Doesnt trigger anything, but for consistency
-				rule.clean_up()	// Refund threat, delete teams and so on.
-				stack_trace("The starting rule \"[rule.name]\" failed to execute.")
-			else
-				rule.status = RULESET_STARTED
-		if(rule.persistent)
-			current_rules += rule
+		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
+		rule.status = RULESET_WAITING
 	..()
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
@@ -506,6 +496,19 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
 	return FALSE
 
+/// Mainly here to facilitate delayed rulesets. All rules roundstart rulesets are executed with a timered callback to this proc.
+/datum/game_mode/dynamic/proc/execute_roundstart_rule(sent_rule)
+	var/datum/dynamic_ruleset/rule = sent_rule
+	if(rule.execute())
+		rule.status = RULESET_STARTED
+		if(rule.persistent)
+			current_rules += rule
+		return TRUE
+	rule.status = RULESET_FAILED // Doesn't trigger anything, but we know the status now.
+	rule.clean_up()	// Refund threat, delete teams and so on.
+	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
+	return FALSE
+
 /// Picks a random midround OR latejoin rule from the list given as an argument and executes it.
 /// Also this could be named better.
 /datum/game_mode/dynamic/proc/picking_midround_latejoin_rule(list/drafted_rules = list(), forced = FALSE)
@@ -537,12 +540,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		else if(rule.type == "Midround")
 			midround_rules = remove_from_list(midround_rules, rule.type)
 
-	if(rule.delay > 0)
-		addtimer(CALLBACK(rule, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule), rule.delay)
-		rule.status = RULESET_WAITING
-		return TRUE
-	else
-		. = execute_midround_latejoin_rule(rule)
+	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)
+	rule.status = RULESET_WAITING
+	return TRUE
 
 /// An experimental proc to allow admins to call rules on the fly or have rules call other rules.
 /datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced = FALSE)
@@ -589,10 +589,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
 	return FALSE
 
+/// Mainly here to facilitate delayed rulesets. All rules midround/latejoin rulesets are executed with a timered callback to this proc.
 /datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if (rule.execute())
-		rule.status = RULESET_STARTED
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		spend_threat(rule.cost)
 		threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
@@ -608,11 +608,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		rule.candidates.Cut()
 		if (rule.persistent)
 			current_rules += rule
+		rule.status = RULESET_STARTED
 		return TRUE
-	else
-		rule.status = RULESET_FAILED
-		rule.clean_up()
-		stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
+	rule.status = RULESET_FAILED // Doesn't trigger anything, but we know the status now.
+	rule.clean_up()
+	stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
 	return FALSE
 
 /datum/game_mode/dynamic/process()

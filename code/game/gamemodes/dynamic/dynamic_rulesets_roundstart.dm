@@ -371,7 +371,6 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/revs/execute()
-	status = RULESET_FAILED
 	var/success = TRUE
 	revolution = new()
 	for(var/datum/mind/M in assigned)
@@ -392,7 +391,6 @@
 		revolution.update_objectives()
 		revolution.update_heads()
 		SSshuttle.registerHostileEnvironment(src)
-		status = RULESET_STARTED
 		return TRUE
 	return FALSE
 

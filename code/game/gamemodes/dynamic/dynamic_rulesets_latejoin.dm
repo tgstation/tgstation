@@ -107,7 +107,6 @@
 	return (head_check >= required_heads_of_staff)
 
 /datum/dynamic_ruleset/latejoin/provocateur/execute()
-	status = RULESET_FAILED
 	var/mob/M = pick(candidates)	// This should contain a single player, but in case.
 	if(check_eligible(M.mind))	// Didnt die/run off z-level/get implanted since leaving shuttle.
 		assigned += M.mind
@@ -121,7 +120,6 @@
 		revolution.update_objectives()
 		revolution.update_heads()
 		SSshuttle.registerHostileEnvironment(src)
-		status = RULESET_STARTED
 		return TRUE
 	else
 		log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
