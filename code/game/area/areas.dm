@@ -65,7 +65,7 @@
 
 	var/parallax_movedir = 0
 
-	var/global/global_uid = 0
+	var/static/global_uid = 0
 	var/uid
 	var/list/ambientsounds = GENERIC
 	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
