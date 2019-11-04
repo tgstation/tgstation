@@ -16,9 +16,12 @@ import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemAcclimator } from './interfaces/ChemAcclimator';
+import { ChemDebugSynthesizer } from './interfaces/ChemDebugSynthesizer';
 import { ChemDispenser } from './interfaces/ChemDispenser';
+import { ChemFilter } from './interfaces/ChemFilter';
 import { ChemHeater } from './interfaces/ChemHeater';
 import { ChemMaster } from './interfaces/ChemMaster';
+import { ChemSplitter } from './interfaces/ChemSplitter';
 import { CodexGigas } from './interfaces/CodexGigas';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
@@ -36,6 +39,8 @@ import { SMES } from './interfaces/SMES';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
+import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
+import { ChemPress } from './interfaces/ChemPress';
 
 const ROUTES = {
   achievements: {
@@ -118,6 +123,10 @@ const ROUTES = {
     component: () => ChemDispenser,
     scrollable: true,
   },
+  chemical_filter: {
+    component: () => ChemFilter,
+    scrollable: true,
+  },
   chem_heater: {
     component: () => ChemHeater,
     scrollable: true,
@@ -125,6 +134,22 @@ const ROUTES = {
   chem_master: {
     component: () => ChemMaster,
     scrollable: true,
+  },
+  chem_press: {
+    component: () => ChemPress,
+    scrollable: false,
+  },
+  chem_splitter: {
+    component: () => ChemSplitter,
+    scrollable: false,
+  },
+  chem_synthesizer: {
+    component: () => ChemDebugSynthesizer,
+    scrollable: false,
+  },
+  synthesizer: {
+    component: () => ChemSynthesizer,
+    scrollable: false,
   },
   codex_gigas: {
     component: () => CodexGigas,
