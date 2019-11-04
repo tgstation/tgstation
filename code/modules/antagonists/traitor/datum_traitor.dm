@@ -7,6 +7,8 @@
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
 	antag_moodlet = /datum/mood_event/focused
+	antag_hud_type = ANTAG_HUD_TRAITOR
+	antag_hud_name = "traitor"
 	var/special_role = ROLE_TRAITOR
 	var/employer = "The Syndicate"
 	var/give_objectives = TRUE
@@ -210,16 +212,6 @@
 	if(should_give_codewords)
 		give_codewords()
 
-/datum/antagonist/traitor/proc/update_traitor_icons_added(datum/mind/traitor_mind)
-	var/datum/atom_hud/antag/traitorhud = GLOB.huds[ANTAG_HUD_TRAITOR]
-	traitorhud.join_hud(owner.current)
-	set_antag_hud(owner.current, "traitor")
-
-/datum/antagonist/traitor/proc/update_traitor_icons_removed(datum/mind/traitor_mind)
-	var/datum/atom_hud/antag/traitorhud = GLOB.huds[ANTAG_HUD_TRAITOR]
-	traitorhud.leave_hud(owner.current)
-	set_antag_hud(owner.current, null)
-
 /datum/antagonist/traitor/proc/finalize_traitor()
 	switch(traitor_kind)
 		if(TRAITOR_AI)
@@ -233,14 +225,14 @@
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
-	update_traitor_icons_added()
+	add_antag_hud(antag_hud_type, antag_hud_name, mob_override ? mob_override : owner.current)
 	var/mob/living/silicon/ai/A = mob_override || owner.current
 	if(istype(A) && traitor_kind == TRAITOR_AI)
 		A.hack_software = TRUE
 
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
 	. = ..()
-	update_traitor_icons_removed()
+	remove_antag_hud(antag_hud_type, mob_override ? mob_override : owner.current)
 	var/mob/living/silicon/ai/A = mob_override || owner.current
 	if(istype(A)  && traitor_kind == TRAITOR_AI)
 		A.hack_software = FALSE

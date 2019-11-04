@@ -7,7 +7,8 @@
 	antagpanel_category = "Revolution"
 	job_rank = ROLE_REV
 	antag_moodlet = /datum/mood_event/revolution
-	var/hud_type = "rev"
+	antag_hud_type = ANTAG_HUD_REV
+	antag_hud_name = "rev"
 	var/datum/team/revolution/rev_team
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
@@ -21,12 +22,10 @@
 			return FALSE
 
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	update_rev_icons_added(M)
+	add_antag_hud(antag_hud_type, antag_hud_name, mob_override ? mob_override : owner.current)
 
 /datum/antagonist/rev/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	update_rev_icons_removed(M)
+	remove_antag_hud(antag_hud_type, mob_override ? mob_override : owner.current)
 
 /datum/antagonist/rev/proc/equip_rev()
 	return
@@ -147,23 +146,13 @@
 
 /datum/antagonist/rev/head
 	name = "Head Revolutionary"
-	hud_type = "rev_head"
+	antag_hud_name = "rev_head"
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
 
 /datum/antagonist/rev/head/antag_listing_name()
 	return ..() + "(Leader)"
-
-/datum/antagonist/rev/proc/update_rev_icons_added(mob/living/M)
-	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
-	revhud.join_hud(M)
-	set_antag_hud(M,hud_type)
-
-/datum/antagonist/rev/proc/update_rev_icons_removed(mob/living/M)
-	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
-	revhud.leave_hud(M)
-	set_antag_hud(M, null)
 
 /datum/antagonist/rev/proc/can_be_converted(mob/living/candidate)
 	if(!candidate.mind)

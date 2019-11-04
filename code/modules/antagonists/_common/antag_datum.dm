@@ -15,6 +15,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
 	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
+	var/antag_hud_type
+	var/antag_hud_name
 
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
@@ -58,6 +60,19 @@ GLOBAL_LIST_EMPTY(antagonists)
 //This handles the removal of antag huds/special abilities
 /datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
 	return
+
+// Adds the specified antag hud to the player. Usually called in an antag datum file
+/datum/antagonist/proc/add_antag_hud(antag_hud_type, antag_hud_name, datum/mind/antag_mind)
+	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
+	hud.join_hud(antag_mind)
+	set_antag_hud(antag_mind, antag_hud_name)
+
+
+// Removes the specified antag hud from the player. Usually called in an antag datum file
+/datum/antagonist/proc/remove_antag_hud(antag_hud_type, datum/mind/antag_mind)
+	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
+	hud.join_hud(antag_mind)
+	set_antag_hud(antag_mind, null)
 
 //Assign default team and creates one for one of a kind team antagonists
 /datum/antagonist/proc/create_team(datum/team/team)

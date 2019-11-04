@@ -9,6 +9,8 @@
 	var/datum/action/innate/cult/mastervote/vote = new
 	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
+	antag_hud_type = ANTAG_HUD_CULT
+	antag_hud_name = "cult"
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
@@ -58,7 +60,6 @@
 	if(give_equipment)
 		equip_cultist(TRUE)
 	SSticker.mode.cult += owner // Only add after they've been given objectives
-	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
 
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
@@ -102,6 +103,7 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
+	add_antag_hud(antag_hud_type, antag_hud_name, current)
 	current.faction |= "cult"
 	current.grant_language(/datum/language/narsie)
 	if(!cult_team.cult_master)
@@ -120,6 +122,7 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
+	remove_antag_hud(antag_hud_type, current)
 	current.faction -= "cult"
 	current.remove_language(/datum/language/narsie)
 	vote.Remove(current)
@@ -136,7 +139,6 @@
 
 /datum/antagonist/cult/on_removal()
 	SSticker.mode.cult -= owner
-	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>", null, null, null, owner.current)
 		to_chat(owner.current, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant.</span>")

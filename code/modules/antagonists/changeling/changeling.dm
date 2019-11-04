@@ -8,6 +8,8 @@
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/focused
+	antag_hud_type = ANTAG_HUD_CHANGELING
+	antag_hud_name = "changeling"
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
@@ -362,10 +364,10 @@
 			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
 		RegisterSignal(C, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/stingAtom)
-	update_changeling_icons_added()
+	add_antag_hud(antag_hud_type, antag_hud_name)
 
 /datum/antagonist/changeling/remove_innate_effects()
-	update_changeling_icons_removed()
+	remove_antag_hud(antag_hud_type)
 	UnregisterSignal(owner.current, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 
 
@@ -478,15 +480,6 @@
 			objectives += identity_theft
 		escape_objective_possible = FALSE
 
-/datum/antagonist/changeling/proc/update_changeling_icons_added()
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
-	hud.join_hud(owner.current)
-	set_antag_hud(owner.current, "changeling")
-
-/datum/antagonist/changeling/proc/update_changeling_icons_removed()
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
-	hud.leave_hud(owner.current)
-	set_antag_hud(owner.current, null)
 
 /datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
 	. = ..()
