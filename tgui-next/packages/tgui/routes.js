@@ -197,6 +197,7 @@ const ROUTES = {
     scrollable: false,
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
   gps: {
     component: () => Gps,
     scrollable: true,
@@ -204,21 +205,15 @@ const ROUTES = {
 =======
 <<<<<<< HEAD
 >>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
+=======
+>>>>>>> Cleans up some JS hopefully
   language_menu: {
     component: () => LanguageMenu,
     scrollable: true,
-=======
+  },
   medical_kiosk: {
     component: () => MedicalKiosk,
     scrollable: false,
-<<<<<<< HEAD
->>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
-=======
-  },  
-  language_menu: {
-    component: () => LanguageMenu,
-    scrollable: true,
->>>>>>> This too
   },
   mint: {
     component: () => Mint,
