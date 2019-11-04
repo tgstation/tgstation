@@ -220,7 +220,7 @@
 
 //blunt trauma deconversions call this through species.dm spec_attacked_by()
 /datum/antagonist/rev/proc/remove_revolutionary(borged, deconverter)
-	log_attack("[key_name(owner.current)] has been deconverted from the revolution by [key_name(deconverter)]!")
+	log_attack("[key_name(owner.current)] has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!")
 	if(borged)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	owner.special_role = null
@@ -228,6 +228,10 @@
 		var/mob/living/carbon/C = owner.current
 		C.Unconscious(100)
 	owner.remove_antag_datum(type)
+
+/datum/antagonist/rev/head/remove_revolutionary(borged,deconverter)
+	if(borged || deconverter == "gamemode")
+		. = ..()
 
 /datum/antagonist/rev/head/equip_rev()
 	var/mob/living/carbon/H = owner.current
