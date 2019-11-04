@@ -745,3 +745,7 @@
 	target.layer = old_layer
 	target.plane = old_plane
 	current_button.appearance_cache = target.appearance
+
+/datum/action/item_action/instant_learn
+	name = "Activate Automatic Education Headset"
+	desc = "Instantly learn the contents of whatever education chip is loaded."

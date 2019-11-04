@@ -1,5 +1,5 @@
 
-///books that teach things (intrinsic actions like bar flinging, spells like fireball or smoke, or martial arts)///
+///books that teach things (intrinsic actions like bar flinging, spells like fireball or smoke)///
 
 /obj/item/book/granter
 	due_date = 0 // Game time in deciseconds
@@ -308,93 +308,6 @@
 	var/real_type = pick(subtypesof(/obj/item/book/granter/spell) - banned_spells)
 	new real_type(loc)
 	return INITIALIZE_HINT_QDEL
-
-///MARTIAL ARTS///
-
-/obj/item/book/granter/martial
-	var/martial
-	var/martialname = "bug jitsu"
-	var/greet = "You feel like you have mastered the art in breaking code. Nice work, jackass."
-
-
-/obj/item/book/granter/martial/already_known(mob/user)
-	if(!martial)
-		return TRUE
-	var/datum/martial_art/MA = martial
-	if(user.mind.has_martialart(initial(MA.id)))
-		to_chat(user,"<span class='warning'>You already know [martialname]!</span>")
-		return TRUE
-	return FALSE
-
-/obj/item/book/granter/martial/on_reading_start(mob/user)
-	to_chat(user, "<span class='notice'>You start reading about [martialname]...</span>")
-
-/obj/item/book/granter/martial/on_reading_finished(mob/user)
-	to_chat(user, "[greet]")
-	var/datum/martial_art/MA = new martial
-	MA.teach(user)
-	user.log_message("learned the martial art [martialname] ([MA])", LOG_ATTACK, color="orange")
-	onlearned(user)
-
-/obj/item/book/granter/martial/cqc
-	martial = /datum/martial_art/cqc
-	name = "old manual"
-	martialname = "close quarters combat"
-	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
-	greet = "<span class='boldannounce'>You've mastered the basics of CQC.</span>"
-	icon_state = "cqcmanual"
-	remarks = list("Kick... Slam...", "Lock... Kick...", "Strike their abdomen, neck and back for critical damage...", "Slam... Lock...", "I could probably combine this with some other martial arts!", "Words that kill...", "The last and final moment is yours...")
-
-/obj/item/book/granter/martial/cqc/onlearned(mob/living/carbon/user)
-	..()
-	if(oneuse == TRUE)
-		to_chat(user, "<span class='warning'>[src] beeps ominously...</span>")
-
-/obj/item/book/granter/martial/cqc/recoil(mob/living/carbon/user)
-	to_chat(user, "<span class='warning'>[src] explodes!</span>")
-	playsound(src,'sound/effects/explosion1.ogg',40,TRUE)
-	user.flash_act(1, 1)
-	user.adjustBruteLoss(6)
-	user.adjustFireLoss(6)
-	qdel(src)
-
-/obj/item/book/granter/martial/carp
-	martial = /datum/martial_art/the_sleeping_carp
-	name = "mysterious scroll"
-	martialname = "sleeping carp"
-	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
-	greet = "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
-	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll2"
-	remarks = list("I must prove myself worthy to the masters of the sleeping carp...", "Stance means everything...", "Focus... And you'll be able to incapacitate any foe in seconds...", "I must pierce armor for maximum damage...", "I don't think this would combine with other martial arts...", "Grab them first so they don't retaliate...", "I must prove myself worthy of this power...")
-
-/obj/item/book/granter/martial/carp/onlearned(mob/living/carbon/user)
-	..()
-	if(oneuse == TRUE)
-		desc = "It's completely blank."
-		name = "empty scroll"
-		icon_state = "blankscroll"
-
-/obj/item/book/granter/martial/plasma_fist
-	martial = /datum/martial_art/plasma_fist
-	name = "frayed scroll"
-	martialname = "plasma fist"
-	desc = "An aged and frayed scrap of paper written in shifting runes. There are hand-drawn illustrations of pugilism."
-	greet = "<span class='boldannounce'>You have learned the ancient martial art of Plasma Fist. Your combos are extremely hard to pull off, but include some of the most deadly moves ever seen including \
-	the plasma fist, which when pulled off will make someone violently explode.</span>"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state ="scroll2"
-	remarks = list("Balance...", "Power...", "Control...", "Mastery...", "Vigilance...", "Skill...")
-
-/obj/item/book/granter/martial/plasma_fist/onlearned(mob/living/carbon/user)
-	..()
-	if(oneuse == TRUE)
-		desc = "It's completely blank."
-		name = "empty scroll"
-		icon_state = "blankscroll"
-
-// I did not include mushpunch's grant, it is not a book and the item does it just fine.
 
 //Crafting Recipe books
 

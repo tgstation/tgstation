@@ -546,3 +546,16 @@
 /obj/item/storage/box/syndie_kit/signaler/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/assembly/signaler(src)
+
+//martial arts stuff, needs to be in a kit now due to the addition of automatic education device
+/obj/item/storage/box/syndicate/cqc
+
+/obj/item/storage/box/syndicate/cqc/PopulateContents()
+	new /obj/item/clothing/head/AED(src)
+	new /obj/item/education_chip/cqc(src)
+
+/obj/item/storage/box/syndicate/carp
+//
+/obj/item/storage/box/syndicate/carp/PopulateContents()
+	new /obj/item/clothing/head/AED(src)
+	new /obj/item/education_chip/carp(src)

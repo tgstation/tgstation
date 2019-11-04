@@ -937,6 +937,7 @@
 #include "code\game\objects\items\devices\camera_bug.dm"
 #include "code\game\objects\items\devices\chameleonproj.dm"
 #include "code\game\objects\items\devices\desynchronizer.dm"
+#include "code\game\objects\items\devices\education_chips.dm"
 #include "code\game\objects\items\devices\electroadaptive_pseudocircuit.dm"
 #include "code\game\objects\items\devices\flashlight.dm"
 #include "code\game\objects\items\devices\forcefieldprojector.dm"
