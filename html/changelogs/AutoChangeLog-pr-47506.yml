@@ -1,4 +1,0 @@
-author: "Firecage"
-delete-after: True
-changes: 
-  - bugfix: "Objects can now once more be washed within sinks."
