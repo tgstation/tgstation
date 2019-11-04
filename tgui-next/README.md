@@ -1,36 +1,37 @@
-# tgui-next
+# tgui
 
 ## Introduction
 
-tgui is a robust user interface framework of /tg/station. It is rendered
-completely in the browser, based on JSON data sent from the server.
-This data flow is always unidirectional, and the only way to make changes
-to the game state is to dispatch actions which are processed on the server,
-in a similar method to native BYOND Topic(). Once the action is processed,
-an updated JSON is sent.
+tgui is a robust user interface framework of /tg/station.
 
-tgui is very different from most UIs you will encounter in BYOND programming,
-and is heavily reliant of Javascript and web technologies as opposed to DM.
-However, if you are familiar with NanoUI (a library which can be found on almost
+tgui is very different from most UIs you will encounter in BYOND programming.
+It is heavily reliant on Javascript and web technologies as opposed to DM.
+If you are familiar with NanoUI (a library which can be found on almost
 every other SS13 codebase), tgui should be fairly easy to pick up.
 
-tgui is a fork of an older tgui (based on Ractive), which is a fork of NanoUI.
-The server-side code (DM) is similar and derived from NanoUI, while the
-clientside is a wholly new project with no code in common.
+## Learn tgui
 
-To get a clearer picture how to create a completely new interface from scratch,
-please refer to this [tutorial document](docs/tutorial-and-examples.md).
-If you don't know how tgui backend works, or have very little knowledge about
-both frontend and backend, or simply want a step by step instruction,
-we recommend you first read the document linked above.
+People come to tgui from different backgrounds and with different
+learning styles. Whether you prefer a more theoretical or a practical
+approach, we hope you’ll find this section helpful.
+
+### Practical tutorial
+
+If you are completely new to frontend and prefer to **learn by doing**,
+start with our [practical tutorial](docs/tutorial-and-examples.md).
+
+### Guides
 
 This project uses **Inferno** - a very fast UI rendering engine with a similar
-API to React. If you are new to Inferno or React, take your time to read
-these documents:
+API to React. Take your time to read these guides:
 
 - [React guide](https://reactjs.org/docs/hello-world.html)
 - [Inferno documentation](https://infernojs.org/docs/guides/components) -
 highlights differences with React.
+
+If you were already familiar with an older, Ractive-based tgui, and want
+to translate concepts between old and new tgui, read this
+[interface conversion guide](docs/converting-old-tgui-interfaces.md).
 
 ## Pre-requisites
 
@@ -51,12 +52,19 @@ You will need these programs to start developing in tgui:
 
 **For MSys2, Git Bash, WSL, Linux or macOS users:**
 
-First and foremost, run `bin/tgui --install-git-hooks` to install merge
-drivers which will help you resolve conflicts when rebasing your branches.
+First and foremost, change your directory to `tgui-next`.
+
+Run `bin/tgui --install-git-hooks` (optional) to install merge drivers
+which will assist you in conflict resolution when rebasing your branches.
+
+Run one of the following:
 
 - `bin/tgui` - build the project in production mode.
-- `bin/tgui --dev` - launch a development server, with live log
-collection, byond cache reloading and hot module replacement.
+- `bin/tgui --dev` - launch a development server.
+  - tgui development server provides you with incremental compilation,
+  hot module replacement and logging facilities in all running instances
+  of tgui. In short, this means that you will instantly see changes in the
+  game as you code it. Very useful, highly recommended.
 - `bin/tgui --dev --reload` - reload byond cache once.
 - `bin/tgui --dev --debug` - run server with debug logging enabled.
 - `bin/tgui --dev --no-hot` - disable hot module replacement (helps when
@@ -74,20 +82,19 @@ If you haven't opened the console already, you can do that by holding
 Shift and right clicking on the `tgui-next` folder, then pressing
 either `Open command window here` or `Open PowerShell window here`.
 
-Run `yarn install`, then:
+Run `yarn install` to install npm dependencies, then one of the following:
 
 - `yarn run build` - build the project in production mode.
-- `yarn run watch` - launch a development server, with live log
-collection, byond cache reloading and hot module replacement.
+- `yarn run watch` - launch a development server.
 - `yarn run lint` - show problems with the code.
 - `yarn run lint --fix` - auto-fix problems with the code.
 - `yarn run analyze` - run a bundle analyzer.
 
-We also got some batch files in store, which are very simple to use:
+We also got some batch files in store, for those who don't like fiddling
+with the console:
 
 - `bin/tgui-build.bat` - build the project in production mode.
-- `bin/tgui-dev-server.bat` - launch a development server, with live log
-collection, cache reloading and hot module replacement.
+- `bin/tgui-dev-server.bat` - launch a development server.
 
 > Remember to always run a full build before submitting a PR. It creates
 > a compressed javascript bundle which is then referenced from DM code.
