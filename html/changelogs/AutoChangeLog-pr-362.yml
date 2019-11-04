@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Mimes can no longer send invalid emojis."
