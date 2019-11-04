@@ -407,8 +407,7 @@
 		SSshuttle.clearHostileEnvironment(src)
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 			We have remotely blacklisted the head revolutionaries from your cloning software to prevent accidental cloning.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
-		revolution.ex_headrevs = get_antag_minds(/datum/antagonist/rev/head, TRUE)
-		revolution.ex_revs = get_antag_minds(/datum/antagonist/rev, TRUE)
+		revolution.save_members()
 		for(var/datum/mind/M in revolution.members)	// Remove antag datums and prevents podcloned or exiled headrevs restarting rebellions.
 			if(M.has_antag_datum(/datum/antagonist/rev/head))
 				var/datum/antagonist/rev/head/R = M.has_antag_datum(/datum/antagonist/rev/head)
