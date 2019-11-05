@@ -175,11 +175,11 @@ Props:
 first appears. If you set initial to `0` for example, number will always
 animate starting from `0`, and if omitted, it will not play an initial
 animation.
-- `format: function` - Output formatter.
+- `format: value => value` - Output formatter.
   - Example: `value => Math.round(value)`.
-- `children: function` - Pull a raw number to animate more complex things
-deeper in the DOM tree.
-  - Example: `value => <Icon rotation={value} />`
+- `children: (formattedValue, rawValue) => any` - Pull the animated number to
+animate more complex things deeper in the DOM tree.
+  - Example: `(_, value) => <Icon rotation={value} />`
 
 ### `BlockQuote`
 
