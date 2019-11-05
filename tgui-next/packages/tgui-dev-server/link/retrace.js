@@ -63,6 +63,9 @@ export const retrace = stack => {
     .map(frame => {
       // Stringify the frame
       const { file, methodName, lineNumber } = frame;
+      if (!file) {
+        return `  at ${methodName}`;
+      }
       const compactPath = file
         .replace(/^webpack:\/\/\/?/, './')
         .replace(/.*node_modules\//, '');

@@ -63783,6 +63783,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"cJf" = (
+/obj/effect/landmark/carpspawn,
+/turf/open/space/basic,
+/area/space)
 "cJg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/bedsheet/medical,
@@ -112290,7 +112294,7 @@ cMs
 cNq
 cKP
 aaa
-aac
+aav
 aaa
 aaa
 cRi
@@ -118191,7 +118195,7 @@ aaf
 aaa
 aaa
 aaa
-aaa
+cJf
 aaa
 aaa
 aaa
