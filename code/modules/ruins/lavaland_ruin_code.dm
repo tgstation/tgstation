@@ -78,7 +78,6 @@
 		/obj/item/stack/sheet/cloth	                = /datum/species/golem/cloth,
 		/obj/item/stack/sheet/mineral/adamantine	= /datum/species/golem/adamantine,
 		/obj/item/stack/sheet/plastic	            = /datum/species/golem/plastic,
-		/obj/item/stack/tile/brass					= /datum/species/golem/clockwork,
 		/obj/item/stack/tile/bronze					= /datum/species/golem/bronze,
 		/obj/item/stack/sheet/cardboard				= /datum/species/golem/cardboard,
 		/obj/item/stack/sheet/leather				= /datum/species/golem/leather,
@@ -94,7 +93,7 @@
 		var/species = golem_shell_species_types[O.merge_type]
 		if(species)
 			if(O.use(10))
-				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
+				to_chat(user, "<span class='notice'>You finish up the golem shell with ten sheets of [O].</span>")
 				new shell_type(get_turf(src), species, user)
 				qdel(src)
 			else

@@ -23,6 +23,7 @@
 	dog_fashion = /datum/dog_fashion/head
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
+	grind_results = list(/datum/reagent/cellulose = 3)
 
 
 	var/extra_headers //For additional styling or other js features.
@@ -375,3 +376,6 @@
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
+
+/obj/item/paper/crumpled/muddy
+	icon_state = "scrap_mud"

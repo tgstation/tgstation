@@ -57,14 +57,14 @@
 	name = "executive suit"
 	desc = "A formal black suit and red tie, intended for the station's finest."
 	icon_state = "really_black_suit"
-	item_state = "bl_suit"
+	item_state = "really_black_suit"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/suit/black_really/skirt
 	name = "executive suitskirt"
 	desc = "A formal black suitskirt and red tie, intended for the station's finest."
 	icon_state = "really_black_suit_skirt"
-	item_state = "bl_suit"
+	item_state = "really_black_suit_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -78,8 +78,10 @@
 /obj/item/clothing/under/suit/green
 	name = "green suit"
 	desc = "A green suit and yellow necktie. Baller."
+	icon = 'icons/obj/clothing/under/captain.dmi'
 	icon_state = "green_suit"
 	item_state = "dg_suit"
+	mob_overlay_icon = 'icons/mob/clothing/under/captain.dmi'
 	can_adjust = FALSE
 
 /obj/item/clothing/under/suit/red

@@ -55,12 +55,13 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			changelings += changeling
 			changeling.special_role = ROLE_CHANGELING
 			changeling.restricted_roles = restricted_jobs
+			GLOB.pre_setup_antags += changeling
 		// FULPSTATION: Assign Hunters (as many as monsters, plus one)
 		assign_monster_hunters(changelings.len, FALSE, changelings)	// FULP
-		return 1
+		return TRUE
 	else
 		setup_error = "Not enough changeling candidates"
-		return 0
+		return FALSE
 
 /datum/game_mode/changeling/post_setup()
 	//Decide if it's ok for the lings to have a team objective
@@ -81,6 +82,7 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 		var/datum/antagonist/changeling/new_antag = new()
 		new_antag.team_mode = TRUE
 		changeling.add_antag_datum(new_antag)
+		GLOB.pre_setup_antags -= changeling
 	..()
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners

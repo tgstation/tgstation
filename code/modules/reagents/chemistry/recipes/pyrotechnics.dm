@@ -15,7 +15,8 @@
 	if(lastkey)
 		var/mob/toucher = get_mob_by_key(lastkey)
 		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
-	message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
+	if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
+		message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
 	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
@@ -79,22 +80,22 @@
 	..()
 
 
-/datum/chemical_reaction/blackpowder
-	name = "Black Powder"
-	id = /datum/reagent/blackpowder
-	results = list(/datum/reagent/blackpowder = 3)
+/datum/chemical_reaction/gunpowder
+	name = "Gunpowder"
+	id = /datum/reagent/gunpowder
+	results = list(/datum/reagent/gunpowder = 3)
 	required_reagents = list(/datum/reagent/saltpetre = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/sulfur = 1)
 
-/datum/chemical_reaction/reagent_explosion/blackpowder_explosion
-	name = "Black Powder Kaboom"
-	id = "blackpowder_explosion"
-	required_reagents = list(/datum/reagent/blackpowder = 1)
+/datum/chemical_reaction/reagent_explosion/gunpowder_explosion
+	name = "Gunpowder Kaboom"
+	id = "gunpowder_explosion"
+	required_reagents = list(/datum/reagent/gunpowder = 1)
 	required_temp = 474
 	strengthdiv = 6
 	modifier = 1
-	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
+	mix_message = "<span class='boldannounce'>Sparks start flying around the gunpowder!</span>"
 
-/datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
 	sleep(rand(50,100))
 	..()
 
@@ -245,8 +246,8 @@
 	if(isatom(holder.my_atom))
 		var/atom/A = holder.my_atom
 		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
-		if(C.flash_act())
+	for(var/mob/living/C in get_hearers_in_view(range, location))
+		if(C.flash_act(affect_silicon = TRUE))
 			if(get_dist(C, location) < 4)
 				C.Paralyze(60)
 			else
@@ -266,8 +267,8 @@
 	if(isatom(holder.my_atom))
 		var/atom/A = holder.my_atom
 		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
-		if(C.flash_act())
+	for(var/mob/living/C in get_hearers_in_view(range, location))
+		if(C.flash_act(affect_silicon = TRUE))
 			if(get_dist(C, location) < 4)
 				C.Paralyze(60)
 			else
@@ -359,7 +360,7 @@
 	name = "Napalm"
 	id = /datum/reagent/napalm
 	results = list(/datum/reagent/napalm = 3)
-	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1 )
+	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1 )
 
 /datum/chemical_reaction/cryostylane
 	name = /datum/reagent/cryostylane
@@ -405,7 +406,7 @@
 	name = "Teslium"
 	id = /datum/reagent/teslium
 	results = list(/datum/reagent/teslium = 3)
-	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/silver = 1, /datum/reagent/blackpowder = 1)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/silver = 1, /datum/reagent/gunpowder = 1)
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
 

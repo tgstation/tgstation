@@ -51,13 +51,18 @@
 			changeling.special_role = ROLE_CHANGELING
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs
-		return ..()
+		. = ..()
+		if(.)	//To ensure the game mode is going ahead
+			for(var/antag in changelings)
+				GLOB.pre_setup_antags += antag
+		return
 	else
-		return 0
+		return FALSE
 
 /datum/game_mode/traitor/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)
 		changeling.add_antag_datum(/datum/antagonist/changeling)
+		GLOB.pre_setup_antags -= changeling
 	return ..()
 
 /datum/game_mode/traitor/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners

@@ -1,4 +1,0 @@
-author: "Anonmare"
-delete-after: True
-changes: 
-  - bugfix: "fixes a missing space, allowing Tend wounds (Burn, Exp) to actually unlock properly"

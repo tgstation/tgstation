@@ -32,6 +32,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	outdoors = TRUE
 	ambientsounds = SPACE
 	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
+	flags_1 = CAN_BE_DIRTY_1
 
 /area/space/nearstation
 	icon_state = "space_near"
@@ -60,6 +61,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	blob_allowed = FALSE //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 	valid_territory = FALSE
 	ambientsounds = MINING
+	flags_1 = CAN_BE_DIRTY_1
 
 /area/asteroid/nearstation
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
@@ -434,8 +436,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "chapel"
 	ambientsounds = HOLY
 	flags_1 = NONE
-	clockwork_warp_allowed = FALSE
-	clockwork_warp_fail = "The consecration here prevents you from warping in."
 
 /area/chapel/main
 	name = "Chapel"
@@ -506,8 +506,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/gravity_generator
 	name = "Gravity Generator Room"
 	icon_state = "grav_gen"
-	clockwork_warp_allowed = FALSE
-	clockwork_warp_fail = "The gravitons generated here could throw off your warp's destination and possibly throw you into deep space."
 
 /area/engine/storage
 	name = "Engineering Storage"
@@ -675,8 +673,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chemistry"
 	icon_state = "chem"
 
+/area/medical/apothecary
+	name = "Apothecary"
+	icon_state = "apothecary"
+
 /area/medical/surgery
 	name = "Surgery"
+	icon_state = "surgery"
+
+/area/medical/surgery/room_b
+	name = "Surgery B"
 	icon_state = "surgery"
 
 /area/medical/cryo
@@ -953,7 +959,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
-	clockwork_warp_allowed = FALSE
 
 /area/storage/emergency/starboard
 	name = "Starboard Emergency Storage"
@@ -1070,8 +1075,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 // Telecommunications Satellite
 
 /area/tcommsat
-	clockwork_warp_allowed = FALSE
-	clockwork_warp_fail = "For safety reasons, warping here is disallowed; the radio and bluespace noise could cause catastrophic results."
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
 											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 

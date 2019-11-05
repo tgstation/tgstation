@@ -77,7 +77,7 @@
 		return
 	occupant.AddComponent(/datum/component/nanites, 100)
 
-/obj/machinery/nanite_chamber/proc/install_program(datum/nanite_program/NP)
+/obj/machinery/nanite_chamber/proc/remove_nanites(datum/nanite_program/NP)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if((stat & MAINT) || panel_open)
@@ -88,45 +88,21 @@
 	var/locked_state = locked
 	locked = TRUE
 
-	//TODO COMPUTERY MACHINE SOUNDS
-	set_busy(TRUE, "Initializing installation protocol...", "[initial(icon_state)]_raising")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Connecting to nanite framework...", "[initial(icon_state)]_active"),20)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Installing program...", "[initial(icon_state)]_falling"),35)
-	addtimer(CALLBACK(src, .proc/complete_installation, locked_state, NP),55)
+	//TODO OMINOUS MACHINE SOUNDS
+	set_busy(TRUE, "Initializing cleanup protocol...", "[initial(icon_state)]_raising")
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Analyzing host bio-structure...", "[initial(icon_state)]_active"),20)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Pinging nanites...", "[initial(icon_state)]_active"),40)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Initiating graceful self-destruct sequence...", "[initial(icon_state)]_active"),70)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Removing debris...", "[initial(icon_state)]_falling"),110)
+	addtimer(CALLBACK(src, .proc/complete_removal, locked_state),130)
 
-/obj/machinery/nanite_chamber/proc/complete_installation(locked_state, datum/nanite_program/NP)
+/obj/machinery/nanite_chamber/proc/complete_removal(locked_state)
 	//TODO MACHINE DING
 	locked = locked_state
 	set_busy(FALSE)
 	if(!occupant)
 		return
-
-	SEND_SIGNAL(occupant, COMSIG_NANITE_ADD_PROGRAM, NP.copy())
-
-/obj/machinery/nanite_chamber/proc/uninstall_program(datum/nanite_program/NP)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if((stat & MAINT) || panel_open)
-		return
-	if(!occupant || busy)
-		return
-
-	var/locked_state = locked
-	locked = TRUE
-
-	//TODO COMPUTERY MACHINE SOUNDS
-	set_busy(TRUE, "Initializing uninstallation protocol...", "[initial(icon_state)]_raising")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Connecting to nanite framework...", "[initial(icon_state)]_active"),20)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "Uninstalling program...", "[initial(icon_state)]_falling"),35)
-	addtimer(CALLBACK(src, .proc/complete_uninstallation, locked_state, NP),55)
-
-/obj/machinery/nanite_chamber/proc/complete_uninstallation(locked_state, datum/nanite_program/NP)
-	//TODO MACHINE DING
-	locked = locked_state
-	set_busy(FALSE)
-	if(!occupant)
-		return
-	qdel(NP)
+	SEND_SIGNAL(occupant, COMSIG_NANITE_DELETE)
 
 /obj/machinery/nanite_chamber/update_icon()
 	cut_overlays()

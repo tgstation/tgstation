@@ -180,10 +180,10 @@
 	if(!proximity)
 		return
 	if(contents.len)
-		to_chat(user, "<span class='notice'>[src] already has something inside it.</span>")
+		to_chat(user, "<span class='warning'>[src] already has something inside it!</span>")
 		return
 	if(!isorgan(I) && !isbodypart(I))
-		to_chat(user, "<span class='notice'>[src] can only hold body parts!</span>")
+		to_chat(user, "<span class='warning'>[src] can only hold body parts!</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>")
@@ -211,7 +211,7 @@
 		icon_state = "evidenceobj"
 		desc = "A container for holding body parts."
 	else
-		to_chat(user, "[src] is empty.")
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 	return
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
@@ -271,6 +271,7 @@
 		icon_state = "scalpel_a"
 
 /obj/item/scalpel/advanced/examine()
+	. = ..()
 	. += " It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode."
 
 /obj/item/retractor/advanced
@@ -292,7 +293,8 @@
 		icon_state = "retractor_a"
 
 /obj/item/retractor/advanced/examine()
-	. += " It resembles a retractor[tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]."
+	. = ..()
+	. += " It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]."
 
 /obj/item/surgicaldrill/advanced
 	name = "searing tool"
@@ -319,4 +321,5 @@
 		icon_state = "surgicaldrill_a"
 
 /obj/item/surgicaldrill/advanced/examine()
+	. = ..()
 	. += " It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode."

@@ -207,9 +207,20 @@
 		owner.current.visible_message("<span class='deconversion_message'>The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.</span>", null, null, null, owner.current)
 		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you.</span>")
 
+/datum/antagonist/rev/head/farewell()
+	if((ishuman(owner.current) || ismonkey(owner.current)))
+		if(owner.current.stat != DEAD)
+			owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
+			to_chat(owner, "<span class ='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
+		else
+			to_chat(owner, "<span class ='deconversion_message bold'>The sweet release of death. You are no longer a Head Revolutionary.</span>")
+	else if(issilicon(owner.current))
+		owner.current.visible_message("<span class='deconversion_message'>The frame beeps contentedly, suppressing the disloyal personality traits from the MMI before initalizing it.</span>", null, null, null, owner.current)
+		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and suppresses your unwanted personality traits! You feel more content with the leadership around these parts.</span>")
+
 //blunt trauma deconversions call this through species.dm spec_attacked_by()
 /datum/antagonist/rev/proc/remove_revolutionary(borged, deconverter)
-	log_attack("[key_name(owner.current)] has been deconverted from the revolution by [key_name(deconverter)]!")
+	log_attack("[key_name(owner.current)] has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!")
 	if(borged)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	owner.special_role = null
@@ -219,9 +230,8 @@
 	owner.remove_antag_datum(type)
 
 /datum/antagonist/rev/head/remove_revolutionary(borged,deconverter)
-	if(!borged)
-		return
-	. = ..()
+	if(borged || deconverter == "gamemode")
+		. = ..()
 
 /datum/antagonist/rev/head/equip_rev()
 	var/mob/living/carbon/H = owner.current
@@ -253,6 +263,8 @@
 /datum/team/revolution
 	name = "Revolution"
 	var/max_headrevs = 3
+	var/list/ex_headrevs = list() // Dynamic removes revs on loss, used to keep a list for the roundend report.
+	var/list/ex_revs = list()
 
 /datum/team/revolution/proc/update_objectives(initial = FALSE)
 	var/untracked_heads = SSjob.get_all_heads()
@@ -302,9 +314,12 @@
 
 	addtimer(CALLBACK(src,.proc/update_heads),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
+/datum/team/revolution/proc/save_members()
+	ex_headrevs = get_antag_minds(/datum/antagonist/rev/head, TRUE)
+	ex_revs = get_antag_minds(/datum/antagonist/rev, TRUE)
 
 /datum/team/revolution/roundend_report()
-	if(!members.len)
+	if(!members.len && !ex_headrevs.len)
 		return
 
 	var/list/result = list()
@@ -324,8 +339,18 @@
 
 
 	var/list/targets = list()
-	var/list/datum/mind/headrevs = get_antag_minds(/datum/antagonist/rev/head)
-	var/list/datum/mind/revs = get_antag_minds(/datum/antagonist/rev,TRUE)
+	var/list/datum/mind/headrevs
+	var/list/datum/mind/revs
+	if(ex_headrevs.len)
+		headrevs = ex_headrevs
+	else
+		headrevs = get_antag_minds(/datum/antagonist/rev/head, TRUE)
+
+	if(ex_revs.len)
+		revs = ex_revs
+	else
+		revs = get_antag_minds(/datum/antagonist/rev, TRUE)
+
 	if(headrevs.len)
 		var/list/headrev_part = list()
 		headrev_part += "<span class='header'>The head revolutionaries were:</span>"

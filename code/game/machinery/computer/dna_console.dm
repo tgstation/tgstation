@@ -75,7 +75,7 @@
 		if(LAZYLEN(stored_chromosomes) < max_chromosomes)
 			I.forceMove(src)
 			stored_chromosomes += I
-			to_chat(user, "<span class='notice'>You insert [I]</span>")
+			to_chat(user, "<span class='notice'>You insert [I].</span>")
 		else
 			to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
 		return
@@ -848,7 +848,7 @@
 					var/datum/mutation/human/HM = new A.type()
 					HM.copy_mutation(A)
 					stored_mutations += HM
-					to_chat(usr,"<span class='notice'>Successfully wrote [A.name] to storage.")
+					to_chat(usr,"<span class='notice'>Successfully wrote [A.name] to storage.</span>")
 		if("combine")
 			if(num && (LAZYLEN(stored_mutations) >= num))
 				if(LAZYLEN(stored_mutations) < max_storage)
@@ -858,7 +858,7 @@
 						var/result_path = get_mixed_mutation(combine, path)
 						if(result_path)
 							stored_mutations += new result_path()
-							to_chat(usr, "<span class='boldnotice'>Succes! New mutation has been added to storage</span>")
+							to_chat(usr, "<span class='boldnotice'>Success! New mutation has been added to storage</span>")
 							discover(result_path)
 							combine = null
 						else
@@ -883,7 +883,7 @@
 					if(CM.can_apply(HM))
 						chromosomes += CM
 				if(chromosomes.len)
-					var/obj/item/chromosome/CM = input("Select a chromosome to apply", "Apply Chromosome") as null|anything in chromosomes
+					var/obj/item/chromosome/CM = input("Select a chromosome to apply", "Apply Chromosome") as null|anything in sortNames(chromosomes)
 					if(CM)
 						to_chat(usr, "<span class='notice'>You apply [CM] to [HM.name].</span>")
 						stored_chromosomes -= CM

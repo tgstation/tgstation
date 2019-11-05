@@ -60,6 +60,7 @@
 #define ACCESS_CE 56
 #define ACCESS_HOP 57
 #define ACCESS_HOS 58
+#define ACCESS_APOTHECARY 59
 /// Request console announcements
 #define ACCESS_RC_ANNOUNCE 59
 /// Used for events which require at least two people to confirm them
@@ -128,8 +129,6 @@
 
 	//Special, for anything that's basically internal
 #define ACCESS_BLOODCULT 250
-#define ACCESS_CLOCKCULT 251
-
 
 	// Mech Access, allows maintanenace of internal components and altering keycard requirements.
 #define ACCESS_MECH_MINING 300

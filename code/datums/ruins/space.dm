@@ -281,3 +281,15 @@
 	suffix = "hilbertshoteltestingsite.dmm"
 	name = "Hilbert Research Facility"
 	description = "A research facility of great bluespace discoveries. Long since abandoned, willingly or not..."
+
+/datum/map_template/ruin/space/clownplanet
+	id = "clownplanet"
+	suffix = "clownplanet.dmm"
+	name = "Clown Planet"
+	description = "Thought lost in 2552, this minor planet has recently been rediscovered."
+
+/datum/map_template/ruin/space/clericden
+	id = "clericden"
+	suffix = "clericden.dmm"
+	name = "Cleric's Den"
+	description = "Once part of a larger monastery, this holy order of long dead clerics practiced far less non-violence than they preached. Appears to have been untouched by looters, however. Odd."

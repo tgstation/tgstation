@@ -47,17 +47,19 @@
 
 	if(devils.len < required_enemies)
 		setup_error = "Not enough devil candidates"
-		return 0
+		return FALSE
+	for(var/antag in devils)
+		GLOB.pre_setup_antags += antag
 	// FULPSTATION: Assign Hunters (as many as monsters, plus one)
 	assign_monster_hunters(devils.len / 1.5, FALSE, devils)	// FULP
-	return 1
+	return TRUE
 
 
 /datum/game_mode/devil/post_setup()
 	for(var/datum/mind/devil in devils)
 		post_setup_finalize(devil)
 	..()
-	return 1
+	return TRUE
 
 /datum/game_mode/devil/generate_report()
 	return "Infernal creatures have been seen nearby offering great boons in exchange for souls.  This is considered theft against Nanotrasen, as all employment contracts contain a lien on the \
@@ -65,6 +67,7 @@
 
 /datum/game_mode/devil/proc/post_setup_finalize(datum/mind/devil)
 	add_devil(devil.current, ascendable = TRUE) //Devil gamemode devils are ascendable.
+	GLOB.pre_setup_antags -= devil
 	add_devil_objectives(devil,2)
 
 /proc/is_devil(mob/living/M)

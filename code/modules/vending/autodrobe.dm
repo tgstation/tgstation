@@ -120,7 +120,10 @@
 					/obj/item/clothing/head/zepellihat = 1, //fulp
 					/obj/item/clothing/shoes/clown_shoes/digitigrade = 1, //fulp
 					/obj/item/clothing/shoes/sneakers/mime/digitigrade = 1, //fulp
-					/obj/item/clothing/under/costume/saiyan = 1) //fulp
+					/obj/item/clothing/under/costume/saiyan = 1, //fulp
+					/obj/item/clothing/head/shrine_wig = 1,
+					/obj/item/clothing/suit/shrine_maiden = 1,
+					/obj/item/gohei = 1)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
 					  /obj/item/clothing/head/powdered_wig = 1,
 					  /obj/item/gun/magic/wand = 2,

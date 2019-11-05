@@ -718,10 +718,10 @@
 /datum/reagent/consumable/triple_citrus
 	name = "Triple Citrus"
 	description = "A solution."
-	color = "#C8A5DC"
+	color = "#EEFF00"
 	quality = DRINK_NICE
 	taste_description = "extreme bitterness"
-	glass_icon_state = "triplecitrus" //needs own sprite mine are trash
+	glass_icon_state = "triplecitrus" //needs own sprite mine are trash //your sprite is great tho
 	glass_name = "glass of triple citrus"
 	glass_desc = "A mixture of citrus juices. Tangy, yet smooth."
 
@@ -819,3 +819,12 @@
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
+
+/datum/reagent/consumable/bungojuice
+	name = "Bungo Juice"
+	color = "#F9E43D"
+	description = "Exotic! You feel like you are on vactation already."
+	taste_description = "succulent bungo"
+	glass_icon_state = "glass_yellow"
+	glass_name = "glass of bungo juice"
+	glass_desc = "Exotic! You feel like you are on vactation already."

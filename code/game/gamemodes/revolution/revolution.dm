@@ -55,6 +55,8 @@
 		setup_error = "Not enough headrev candidates"
 		return FALSE
 
+	for(var/antag in headrev_candidates)
+		GLOB.pre_setup_antags += antag
 	return TRUE
 
 /datum/game_mode/revolution/post_setup()
@@ -97,6 +99,7 @@
 		new_head.give_hud = TRUE
 		new_head.remove_clumsy = TRUE
 		rev_mind.add_antag_datum(new_head,revolution)
+		GLOB.pre_setup_antags -= rev_mind
 
 	revolution.update_objectives()
 	revolution.update_heads()
