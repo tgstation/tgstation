@@ -151,7 +151,7 @@
 			break
 	if(prev_turf && !(flags & FALL_NO_MESSAGE))
 		prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
-	if(CHECK_BITFIELD(flags, FALL_INTERCEPTED))
+	if(flags & FALL_INTERCEPTED)
 		return
 	if(zFall(A, ++levels, src))
 		return FALSE
