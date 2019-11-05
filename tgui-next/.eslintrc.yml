@@ -234,7 +234,7 @@ rules:
   ## Enforce boolean attributes notation in JSX (fixable)
   react/jsx-boolean-value: error
   ## Enforce or disallow spaces inside of curly braces in JSX attributes and expressions.
-  react/jsx-child-element-spacing: error
+  # react/jsx-child-element-spacing: error
   ## Validate closing bracket location in JSX (fixable)
   ## NOTE: Too fucking annoying because all styles are viable
   # react/jsx-closing-bracket-location: [error, {

@@ -12,8 +12,6 @@
 	active_power_usage = 0
 	max_integrity = 150
 	integrity_failure = 0.33
-	ui_x = 500
-	ui_y = 400
 
 	var/id = 0
 	var/obscured = 0
@@ -347,7 +345,7 @@
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "solar_control", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "solar_control", name, 380, 230, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/solar_control/ui_data()
@@ -368,39 +366,47 @@
 /obj/machinery/power/solar_control/ui_act(action, params)
 	if(..())
 		return
-	switch(action)
-		if("angle")
-			var/adjust = text2num(params["adjust"])
-			if(adjust)
-				currentdir = CLAMP((360 + adjust + currentdir) % 360, 0, 359)
-				targetdir = currentdir
-				set_panels(currentdir)
-				. = TRUE
-		if("rate")
-			var/adjust = text2num(params["adjust"])
-			if(adjust)
-				trackrate = CLAMP(trackrate + adjust, -7200, 7200)
-				if(trackrate)
-					nexttime = world.time + 36000 / abs(trackrate)
-				. = TRUE
-		if("tracking")
-			var/mode = text2num(params["mode"])
-			track = mode
-			if(mode == 2 && connected_tracker)
-				connected_tracker.set_angle(SSsun.angle)
-				set_panels(currentdir)
-			else if(mode == 1)
-				targetdir = currentdir
-				if(trackrate)
-					nexttime = world.time + 36000 / abs(trackrate)
-				set_panels(targetdir)
-			. = TRUE
-		if("refresh")
-			search_for_connected()
-			if(connected_tracker && track == 2)
-				connected_tracker.set_angle(SSsun.angle)
+	if(action == "angle")
+		var/adjust = text2num(params["adjust"])
+		var/value = text2num(params["value"])
+		if(adjust)
+			value = currentdir + adjust
+		if(value != null)
+			currentdir = CLAMP((360 + value) % 360, 0, 359)
+			targetdir = currentdir
 			set_panels(currentdir)
-			. = TRUE
+			return TRUE
+		return FALSE
+	if(action == "rate")
+		var/adjust = text2num(params["adjust"])
+		var/value = text2num(params["value"])
+		if(adjust)
+			value = trackrate + adjust
+		if(value != null)
+			trackrate = CLAMP(value, -7200, 7200)
+			if(trackrate)
+				nexttime = world.time + 36000 / abs(trackrate)
+			return TRUE
+		return FALSE
+	if(action == "tracking")
+		var/mode = text2num(params["mode"])
+		track = mode
+		if(mode == 2 && connected_tracker)
+			connected_tracker.set_angle(SSsun.angle)
+			set_panels(currentdir)
+		else if(mode == 1)
+			targetdir = currentdir
+			if(trackrate)
+				nexttime = world.time + 36000 / abs(trackrate)
+			set_panels(targetdir)
+		return TRUE
+	if(action == "refresh")
+		search_for_connected()
+		if(connected_tracker && track == 2)
+			connected_tracker.set_angle(SSsun.angle)
+		set_panels(currentdir)
+		return TRUE
+	return FALSE
 
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
