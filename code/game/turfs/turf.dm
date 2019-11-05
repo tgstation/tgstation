@@ -147,7 +147,7 @@
 	for(var/i in contents)
 		var/atom/thing = i
 		flags |= thing.intercept_zImpact(A, levels)
-		if(CHECK_BITFIELD(flags, FALL_STOP_INTERCEPTING))
+		if(flags & FALL_STOP_INTERCEPTING)
 			break
 	if(prev_turf && !CHECK_BITFIELD(flags, FALL_NO_MESSAGE))
 		prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
