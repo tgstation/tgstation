@@ -61,7 +61,7 @@ BONUS
 					to_chat(M, "<span notice='warning'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>")
 				else if (prob(50)) //50% of the time, the "You lightly cough." message SHOULD be chosen, so we don't display anything (because the host has the TRAIT_SOOTHED_THROAT trait)
 					to_chat(M, "<span notice='warning'>"You swallow excess mucus."</span>")
-		else if(!HAS_TRAIT(M, TRAIT_SOOTHED_THROAT)) //you already can't cough if your throat is soothed, but we should probably also make sure that you don't suffer from any of the other effects of coughing (due to this symptom) either
+		else if(!HAS_TRAIT(M, TRAIT_SOOTHED_THROAT)) //you already can't cough if your throat is soothed, but we also need to make sure that you won't suffer from any of the other effects of coughing (due to this symptom) either
 			M.emote("cough")
 			if(M.CanSpreadAirborneDisease())
 				A.spread(spread_range)
