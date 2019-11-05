@@ -39,6 +39,17 @@
 		var/mob/living/simple_animal/hostile/M = target
 		if(faction_check_mob(M))
 			return FALSE
+	if(istype(target, /obj/structure/elite_tumor))
+		var/obj/structure/elite_tumor/T = target
+		if(T.mychild == src && T.activity == TUMOR_PASSIVE)
+			var/elite_remove = alert("Re-enter the tumor?", "Despawn yourself?", "Yes", "No")
+			if(elite_remove == "No" || !src || QDELETED(src))
+				return
+			T.mychild = null
+			T.activity = TUMOR_INACTIVE
+			T.icon_state = "advanced_tumor"
+			qdel(src)
+			return FALSE
 	. = ..()
 	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
@@ -108,7 +119,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /obj/structure/elite_tumor
 	name = "pulsing tumor"
-	desc = "An odd, pulsing tumor sticking out of the ground.  You fell compelled to reach out and touch it..."
+	desc = "An odd, pulsing tumor sticking out of the ground.  You feel compelled to reach out and touch it..."
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE
 	var/activity = TUMOR_INACTIVE
@@ -134,7 +145,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		switch(activity)
 			if(TUMOR_PASSIVE)
 				activity = TUMOR_ACTIVE
-				visible_message("<span class='boldwarning'>The tumor convulses as your arm enters its radius.  Your instincts tell you to step back.</span>")
+				visible_message("<span class='boldwarning'>[src] convulses as your arm enters its radius.  Your instincts tell you to step back.</span>")
 				activator = user
 				if(boosted)
 					SEND_SOUND(mychild, sound('sound/effects/magic.ogg'))
@@ -144,12 +155,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			if(TUMOR_INACTIVE)
 				activity = TUMOR_ACTIVE
 				var/mob/dead/observer/elitemind = null
-				visible_message("<span class='boldwarning'>The tumor begins to convulse.  Your instincts tell you to step back.</span>")
+				visible_message("<span class='boldwarning'>[src] begins to convulse.  Your instincts tell you to step back.</span>")
 				activator = user
 				if(!boosted)
 					addtimer(CALLBACK(src, .proc/spawn_elite), 30)
 					return
-				visible_message("<span class='boldwarning'>Something within the tumor stirs...</span>")
+				visible_message("<span class='boldwarning'>Something within [src] stirs...</span>")
 				var/list/candidates = pollCandidatesForMob("Do you want to play as a lavaland elite?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, src, POLL_IGNORE_SENTIENCE_POTION)
 				if(candidates.len)
 					audible_message("<span class='boldwarning'>The stirring sounds increase in volume!</span>")
@@ -166,16 +177,17 @@ While using this makes the system rely on OnFire, it still gives options for tim
 obj/structure/elite_tumor/proc/spawn_elite(var/mob/dead/observer/elitemind)
 	var/selectedspawn = pick(potentialspawns)
 	mychild = new selectedspawn(loc)
-	visible_message("<span class='boldwarning'>[mychild] emerges from the tumor!</span>")
+	visible_message("<span class='boldwarning'>[mychild] emerges from [src]!</span>")
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(boosted)
 		mychild.key = elitemind.key
 		mychild.sentience_act()
+	icon_state = "tumor_popped"
 	INVOKE_ASYNC(src, .proc/arena_checks)
 
 obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
-	visible_message("<span class='boldwarning'>[mychild] emerges from the tumor!</span>")
+	visible_message("<span class='boldwarning'>[mychild] emerges from [src]!</span>")
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
 	if(boosted)
@@ -207,7 +219,7 @@ obj/structure/elite_tumor/proc/return_elite()
 		var/obj/item/organ/regenerative_core/core = I
 		if(!core.preserved)
 			return
-		visible_message("<span class='boldwarning'>As [user] drops the core into the tumor, the tumor appears to swell.</span>")
+		visible_message("<span class='boldwarning'>As [user] drops the core into [src], [src] appears to swell.</span>")
 		icon_state = "advanced_tumor"
 		boosted = TRUE
 		light_range = 6
@@ -243,17 +255,17 @@ obj/structure/elite_tumor/proc/return_elite()
 /obj/structure/elite_tumor/proc/border_check()
 	if(activator != null && get_dist(src, activator) >= 12)
 		activator.forceMove(loc)
-		visible_message("<span class='boldwarning'>[activator] suddenly reappears above the tumor!</span>")
+		visible_message("<span class='boldwarning'>[activator] suddenly reappears above [src]!</span>")
 		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	if(mychild != null && get_dist(src, mychild) >= 12)
 		mychild.forceMove(loc)
-		visible_message("<span class='boldwarning'>[mychild] suddenly reappears above the tumor!</span>")
+		visible_message("<span class='boldwarning'>[mychild] suddenly reappears above [src]!</span>")
 		playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
 	
 obj/structure/elite_tumor/proc/onEliteLoss()
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, 0, 50, TRUE, TRUE)
-	visible_message("<span class='boldwarning'>The tumor begins to convulse violently before beginning to dissipate.</span>")
-	visible_message("<span class='boldwarning'>As the tumor closes, something is forced up from down below.</span>")
+	visible_message("<span class='boldwarning'>[src] begins to convulse violently before beginning to dissipate.</span>")
+	visible_message("<span class='boldwarning'>As [src] closes, something is forced up from down below.</span>")
 	var/obj/structure/closet/crate/necropolis/tendril/lootbox = new /obj/structure/closet/crate/necropolis/tendril(loc)
 	if(!boosted)
 		mychild = null
@@ -281,6 +293,7 @@ obj/structure/elite_tumor/proc/onEliteWon()
 		SEND_SOUND(mychild, sound('sound/effects/magic.ogg'))
 		to_chat(mychild, "<span class='boldwarning'>As the life in the activator's eyes fade, the forcefield around you dies out and you feel your power subside.\nDespite this inferno being your home, you feel as if you aren't welcome here anymore.\nWithout any guidance, your purpose is now for you to decide.</span>")
 		to_chat(mychild, "<b>Your max health has been halved, but can now heal by standing on your tumor.  Note, it's your only way to heal.\nBear in mind, if anyone interacts with your tumor, you'll be resummoned here to carry out another fight.  In such a case, you will regain your full max health.\nAlso, be weary of your fellow inhabitants, they likely won't be happy to see you!</b>")
+		to_chat(mychild, "<span class='big bold'>Note that you are a lavaland monster, and thus not allied to the station.  You should not cooperate or act friendly with any station crew unless under extreme circumstances!</span>")
 			
 /obj/item/tumor_shard
 	name = "tumor shard"
@@ -307,6 +320,7 @@ obj/structure/elite_tumor/proc/onEliteWon()
 		user.visible_message("<span class='notice'>[user] stabs [E] with [src], reviving it.</span>")
 		SEND_SOUND(E, sound('sound/effects/magic.ogg'))
 		to_chat(E, "<span class='userdanger'>You have been revived by [user].  While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span")
+		to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
 		E.maxHealth = E.maxHealth * 0.5
 		E.health = E.maxHealth
 		E.desc = "[E.desc]  However, this one appears appears less wild in nature, and calmer around people."
