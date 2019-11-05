@@ -128,7 +128,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			S["facial_style_name"]	>> facial_hairstyle
 			
 	if(current_version < 27)
-		key_bindings = sanitize_islist(key_bindings, deepCopyList(GLOB.keybinding_list_by_key))
+		key_bindings = deepCopyList(GLOB.keybinding_list_by_key)
 		WRITE_FILE(S["key_bindings"], key_bindings)
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
