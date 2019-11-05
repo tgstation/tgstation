@@ -13,7 +13,7 @@
   top: 0;
   left: 0;
   bottom: 0;
-  transition: background-color, width 500ms;
+  transition: background-color 500ms, width 500ms;
   background-color: $bar-color-normal;
 }
 
