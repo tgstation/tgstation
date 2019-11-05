@@ -310,10 +310,16 @@
 		adjustHealth(unsuitable_atmos_damage)
 
 /mob/living/simple_animal/gib()
+	var/atom/Tsec
 	if(butcher_results)
-		var/atom/Tsec = drop_location()
+		Tsec = drop_location()
 		for(var/path in butcher_results)
 			for(var/i in 1 to butcher_results[path])
+				new path(Tsec)
+	if(guaranteed_butcher_results)
+		Tsec = drop_location()
+		for(var/path in guaranteed_butcher_results)
+			for(var/i in 1 to guaranteed_butcher_results[path])
 				new path(Tsec)
 	..()
 
