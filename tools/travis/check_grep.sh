@@ -34,10 +34,16 @@ if grep -P '^/*var/' code/**/*.dm; then
     echo "ERROR: Unmanaged global var use detected in code, please use the helpers."
     st=1
 fi;
-if pcregrep --buffer-size=100K -LMr '\n$' code/**/*.dm; then
-    echo "ERROR: No newline at end of file detected"
-    st=1
-fi;
+nl='
+'
+nl=$'\n'
+while read f; do
+    t=$(tail -c2 "$f"; printf x); r1="${nl}$"; r2="${nl}${r1}"
+    if [[ ! ${t%x} =~ $r1 ]]; then
+        echo "file $f is missing a trailing newline"
+        st=1
+    fi;
+done < <(find . -type f -name '*.dm')
 if grep -i 'centcomm' code/**/*.dm; then
     echo "ERROR: Misspelling(s) of CENTCOM detected in code, please remove the extra M(s)."
     st=1
