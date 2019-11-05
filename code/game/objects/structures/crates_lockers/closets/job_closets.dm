@@ -173,8 +173,6 @@
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3)
 	generate_items_inside(items_inside,src)
-	if(prob(20))
-		new /obj/item/book/granter/language_book/ratvarian(src) //FULP
 	return
 
 /obj/structure/closet/wardrobe/engineering_yellow
@@ -193,8 +191,6 @@
 		/obj/item/clothing/shoes/workboots = 3,
 		/obj/item/clothing/head/hardhat = 3)
 	generate_items_inside(items_inside,src)
-	if(prob(10))
-		new /obj/item/book/granter/language_book/ratvarian(src) //FULP
 	return
 
 /obj/structure/closet/wardrobe/white/medical

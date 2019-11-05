@@ -70,15 +70,15 @@
 	remarks = list("Finally, I see!", "The veil peels back before my mortal eyes...", "Ph'nglui mglw'nafh Nar'sie R'lyeh wgah'nagl fhtagn...", "Is this welsh?", "I can feel her behind my eyes...")
 	icon_state = "book_narsie"
 	language_name = "Nar'sian"
-	
 
-/obj/item/book/granter/language_book/ratvarian
+
+/*obj/item/book/granter/language_book/ratvarian
 	name = "Your Guide to the One True God"
 	desc = "This guide details how to speak Ratvarian, without being a cultist! The entire tome is making an unsettling ticking noise."
 	learnable_language = /datum/language/ratvar
 	remarks = list("Yes, of course...", "How logical...", "Tick tock tick tock tick tock...", "It's all connected!", "Like clockwork...")
 	icon_state = "book_ratvar"
-	language_name = "Ratvarian"
+	language_name = "Ratvarian"*/
 
 ///obj/item/book/granter/language_book/piratespeak  //not actually assigned to pirates, so currently unused
 //	name = "To Hornswagle a Bilgerat"

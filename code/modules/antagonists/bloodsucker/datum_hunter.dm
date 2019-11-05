@@ -216,7 +216,7 @@
 	monsters += SSticker.mode.cult
 	monsters += SSticker.mode.wizards
 	monsters += SSticker.mode.apprentices
-	monsters += SSticker.mode.servants_of_ratvar
+	//monsters += SSticker.mode.servants_of_ratvar
 	monsters += SSticker.mode.changelings
 	//
 	for(var/datum/mind/M in monsters)

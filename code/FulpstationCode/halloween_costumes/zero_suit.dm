@@ -95,6 +95,6 @@
 		return
 	..()
 
-/obj/item/gun/ballistic/shotgun/toy/toy_arm_cannon/update_icon() //Prevents all the shitty overlays breaking the icon
-	SEND_SIGNAL(src, COMSIG_OBJ_UPDATE_ICON)
-	return
+///obj/item/gun/ballistic/shotgun/toy/toy_arm_cannon/update_icon() //Prevents all the shitty overlays breaking the icon   // UPDATE 11/4/19 This proc throws errors now.
+//	SEND_SIGNAL(src, COMSIG_OBJ_UPDATE_ICON)
+//	return
