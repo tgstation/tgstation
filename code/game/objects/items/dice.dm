@@ -6,14 +6,14 @@
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
 	var/list/special_die = list(
-				/obj/item/dice/d1 = 1,
-				/obj/item/dice/d2 = 1,
-				/obj/item/dice/fudge = 1,
-				/obj/item/dice/d6/space = 1,
-				/obj/item/dice/d00 = 1,
-				/obj/item/dice/eightbd20 = 1,
-				/obj/item/dice/fourdd6 = 1,
-				/obj/item/dice/d100 = 1
+				/obj/item/dice/d1,
+				/obj/item/dice/d2,
+				/obj/item/dice/fudge,
+				/obj/item/dice/d6/space,
+				/obj/item/dice/d00,
+				/obj/item/dice/eightbd20,
+				/obj/item/dice/fourdd6,
+				/obj/item/dice/d100
 				)
 
 /obj/item/storage/pill_bottle/dice/PopulateContents()
