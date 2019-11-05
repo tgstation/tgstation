@@ -36,7 +36,7 @@
 /obj/effect/turf_decal/tile/neutral
 	name = "neutral corner"
 	color = "#D4D4D4"
-	alpha = 50
+	alpha = 110
 
 /obj/effect/turf_decal/trimline
 	layer = TURF_PLATING_DECAL_LAYER
