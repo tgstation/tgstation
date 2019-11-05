@@ -1,5 +1,5 @@
 import { act } from '../byond';
-import { AnimatedNumber, Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, NumberInput, Section } from '../components';
 
 export const AtmosPump = props => {
   const { state } = props;
@@ -17,33 +17,46 @@ export const AtmosPump = props => {
         </LabeledList.Item>
         {data.max_rate ? (
           <LabeledList.Item label="Transfer Rate">
+            <NumberInput
+              animated
+              value={parseFloat(data.rate)}
+              width="63px"
+              unit="L/s"
+              minValue={0}
+              maxValue={200}
+              onChange={(e, value) => act(ref, 'rate', {
+                rate: value,
+              })} />
             <Button
-              icon="pencil-alt"
-              content="Set"
-              onClick={() => act(ref, 'rate', { rate: 'input' })} />
-            <Button
+              ml={1}
               icon="plus"
               content="Max"
               disabled={data.rate === data.max_rate}
-              onClick={() => act(ref, 'rate', { rate: 'max' })} />
-            {' '}
-            <AnimatedNumber value={parseFloat(data.rate)} />
-            {' L/s'}
+              onClick={() => act(ref, 'rate', {
+                rate: 'max',
+              })} />
           </LabeledList.Item>
         ) : (
           <LabeledList.Item label="Output Pressure">
+            <NumberInput
+              animated
+              value={parseFloat(data.pressure)}
+              unit="kPa"
+              width="75px"
+              minValue={0}
+              maxValue={4500}
+              step={10}
+              onChange={(e, value) => act(ref, 'pressure', {
+                pressure: value,
+              })} />
             <Button
-              icon="pencil-alt"
-              content="Set"
-              onClick={() => act(ref, 'pressure', {pressure: 'input'})} />
-            <Button
+              ml={1}
               icon="plus"
               content="Max"
               disabled={data.pressure === data.max_pressure}
-              onClick={() => act(ref, 'pressure', { pressure: 'max' })} />
-            {' '}
-            <AnimatedNumber value={data.pressure} />
-            {' kPa'}
+              onClick={() => act(ref, 'pressure', {
+                pressure: 'max',
+              })} />
           </LabeledList.Item>
         )}
       </LabeledList>

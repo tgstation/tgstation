@@ -73,11 +73,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	  * 0-6, 7-13, 14-20, 21-27, 28-34, 35-41, 42-48, 49-55, 56-62, 63+
 	  */
 	var/pop_per_requirement = 6
-	/// The requirement used for checking if a second rule should be selected.
+	/// The requirement used for checking if a second rule should be selected. Index based on pop_per_requirement.
 	var/list/second_rule_req = list(100, 100, 80, 70, 60, 50, 30, 20, 10, 0)
 	/// The probability for a second ruleset with index being every ten threat.
 	var/list/second_rule_prob = list(0,0,60,80,80,80,100,100,100,100)
-	/// The requirement used for checking if a third rule should be selected.
+	/// The requirement used for checking if a third rule should be selected. Index based on pop_per_requirement.
 	var/list/third_rule_req = list(100, 100, 100, 90, 80, 70, 60, 50, 40, 30)
 	/// The probability for a third ruleset with index being every ten threat.
 	var/list/third_rule_prob = list(0,0,0,0,60,60,80,90,100,100)
@@ -361,13 +361,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
-		if(rule.delay > 0)
-			addtimer(CALLBACK(rule, /datum/dynamic_ruleset/roundstart.proc/execute), rule.delay)
-		else
-			if(!rule.execute())
-				stack_trace("The starting rule \"[rule.name]\" failed to execute.")
-		if(rule.persistent)
-			current_rules += rule
+		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
 	..()
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
@@ -409,25 +403,23 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (threat_level > high_pop_third_rule_req)
 					extra_rulesets_amount++
 		else
-			if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[min(10, round(threat_level ? threat_level/10 : 1))]))
+			var/threat_indice = min(10, max(round(threat_level ? threat_level/10 : 1), 1))	// 0-9 threat = 1, 10-19 threat = 2 ...
+			if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[threat_indice]))
 				extra_rulesets_amount++
-				if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[min(10, round(threat_level ? threat_level/10 : 1))]))
+				if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[threat_indice]))
 					extra_rulesets_amount++
 	log_game("DYNAMIC: Trying to roll [extra_rulesets_amount + 1] roundstart rulesets. Picking from [drafted_rules.len] eligible rulesets.")
 
 	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
 		log_game("DYNAMIC: First ruleset picked successfully. [extra_rulesets_amount] remaining.")
-		if (extra_rulesets_amount > 0) // We've got enough population and threat for a second roundstart rule
-			log_game("DYNAMIC: Additional ruleset picked successfully. [extra_rulesets_amount] remaining.")
+		while(extra_rulesets_amount > 0 && drafted_rules.len > 0)	// We had enough threat for one or two more rulesets
 			for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
 				if (rule.cost > threat)
 					drafted_rules -= rule
-			if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
-				if (extra_rulesets_amount > 1) // We've got enough population and threat for a third roundstart rule
-					for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
-						if (rule.cost > threat)
-							drafted_rules -= rule
-					picking_roundstart_rule(drafted_rules)
+			if(drafted_rules.len)
+				picking_roundstart_rule(drafted_rules)
+				extra_rulesets_amount--
+				log_game("DYNAMIC: Additional ruleset picked successfully, now [executed_rules.len] picked. [extra_rulesets_amount] remaining.")
 	else
 		if(threat >= 10)
 			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this.")
@@ -499,6 +491,18 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
 	return FALSE
 
+/// Mainly here to facilitate delayed rulesets. All roundstart rulesets are executed with a timered callback to this proc.
+/datum/game_mode/dynamic/proc/execute_roundstart_rule(sent_rule)
+	var/datum/dynamic_ruleset/rule = sent_rule
+	if(rule.execute())
+		if(rule.persistent)
+			current_rules += rule
+		return TRUE
+	rule.clean_up()	// Refund threat, delete teams and so on.
+	executed_rules -= rule
+	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
+	return FALSE
+
 /// Picks a random midround OR latejoin rule from the list given as an argument and executes it.
 /// Also this could be named better.
 /datum/game_mode/dynamic/proc/picking_midround_latejoin_rule(list/drafted_rules = list(), forced = FALSE)
@@ -530,26 +534,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		else if(rule.type == "Midround")
 			midround_rules = remove_from_list(midround_rules, rule.type)
 
-	if (rule.execute())
-		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
-		spend_threat(rule.cost)
-		threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
-		if(rule.flags & HIGHLANDER_RULESET)
-			highlander_executed = TRUE
-		else if(rule.flags & ONLY_RULESET)
-			only_ruleset_executed = TRUE
-		if(rule.ruletype == "Latejoin")
-			var/mob/M = pick(rule.candidates)
-			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
-			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
-		executed_rules += rule
-		rule.candidates.Cut()
-		if (rule.persistent)
-			current_rules += rule
-		return TRUE
-	else
-		stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
-	return FALSE
+	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)
+	return TRUE
 
 /// An experimental proc to allow admins to call rules on the fly or have rules call other rules.
 /datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced = FALSE)
@@ -594,6 +580,30 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				return TRUE
 		else if (forced)
 			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
+	return FALSE
+
+/// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
+/datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
+	var/datum/dynamic_ruleset/rule = sent_rule
+	if (rule.execute())
+		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
+		spend_threat(rule.cost)
+		threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
+		if(rule.flags & HIGHLANDER_RULESET)
+			highlander_executed = TRUE
+		else if(rule.flags & ONLY_RULESET)
+			only_ruleset_executed = TRUE
+		if(rule.ruletype == "Latejoin")
+			var/mob/M = pick(rule.candidates)
+			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
+			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
+		executed_rules += rule
+		rule.candidates.Cut()
+		if (rule.persistent)
+			current_rules += rule
+		return TRUE
+	rule.clean_up()
+	stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
 	return FALSE
 
 /datum/game_mode/dynamic/process()

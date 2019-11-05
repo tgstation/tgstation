@@ -1,17 +1,13 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { tridentVersion } from '../byond';
+import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
 import { createLogger } from '../logging';
+import { refocusLayout } from '../refocus';
 import { Box } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
-import { refocusLayout } from '../refocus';
 
 const logger = createLogger('Button');
-
-export const BUTTON_ACTIVATION_KEYCODES = [
-  13, // Enter
-  32, // Space
-];
 
 export const Button = props => {
   const {
@@ -61,17 +57,20 @@ export const Button = props => {
         refocusLayout();
         onClick(e);
       }}
-      onKeyPress={e => {
+      onKeyDown={e => {
         const keyCode = window.event ? e.which : e.keyCode;
-        if (!BUTTON_ACTIVATION_KEYCODES.includes(keyCode)) {
+        // Simulate a click when pressing space or enter.
+        if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
+          e.preventDefault();
+          onClick(e);
           return;
         }
-        if (disabled || !onClick) {
+        // Refocus layout on pressing escape.
+        if (keyCode === KEY_ESCAPE) {
+          e.preventDefault();
+          refocusLayout();
           return;
         }
-        e.preventDefault();
-        refocusLayout();
-        onClick(e);
       }}
       {...rest}>
       {icon && (

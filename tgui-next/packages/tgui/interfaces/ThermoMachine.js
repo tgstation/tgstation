@@ -1,7 +1,7 @@
+import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { AnimatedNumber, LabeledList, Button, Section } from '../components';
-import { toFixed } from 'common/math';
+import { AnimatedNumber, Button, LabeledList, NumberInput, Section } from '../components';
 
 export const ThermoMachine = props => {
   const { state } = props;
@@ -25,48 +25,51 @@ export const ThermoMachine = props => {
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Section title="Controls">
+      <Section
+        title="Controls"
+        buttons={(
+          <Button
+            icon={data.on ? 'power-off' : 'times'}
+            content={data.on ? 'On' : 'Off'}
+            selected={data.on}
+            onClick={() => act(ref, 'power')} />
+        )}>
         <LabeledList>
-          <LabeledList.Item label="Power">
-            <Button
-              icon={data.on ? 'power-off' : 'times'}
-              content={data.on ? 'On' : 'Off'}
-              selected={data.on}
-              onClick={() => act(ref, 'power')} />
-          </LabeledList.Item>
           <LabeledList.Item label="Target Temperature">
+            <NumberInput
+              animated
+              value={Math.round(data.target)}
+              unit="K"
+              width="62px"
+              minValue={Math.round(data.min)}
+              maxValue={Math.round(data.max)}
+              step={5}
+              stepPixelSize={3}
+              onDrag={(e, value) => act(ref, "target", {
+                target: value,
+              })} />
+          </LabeledList.Item>
+          <LabeledList.Item label="Presets">
             <Button
               icon="fast-backward"
               disabled={data.target === data.min}
-              onClick={() => act(ref, 'target', {
-                adjust: -50,
+              title="Minimum temperature"
+              onClick={() => act(ref, "target", {
+                target: data.min,
               })} />
             <Button
-              icon="backward"
-              disabled={data.target === data.min}
-              onClick={() => act(ref, 'target', {
-                adjust: -5,
-              })} />
-            <Button
-              icon="pencil-alt"
-              onClick={() => act(ref, 'target', {
-                target: 'input',
-              })}>
-              <AnimatedNumber
-                value={data.target}
-                format={value => toFixed(value, 2)} />
-            </Button>
-            <Button
-              icon="forward"
-              disabled={data.target === data.max}
-              onClick={() => act(ref, 'target', {
-                adjust: 5,
+              icon="sync"
+              disabled={data.target === data.initial}
+              title="Room Temperature"
+              onClick={() => act(ref, "target", {
+                target: data.initial,
               })} />
             <Button
               icon="fast-forward"
               disabled={data.target === data.max}
-              onClick={() => act(ref, 'target', {
-                adjust: 50,
+              title="Maximum Temperature"
+              onClick={() => act(ref, "target", {
+                target: data.max,
               })} />
           </LabeledList.Item>
         </LabeledList>

@@ -1,5 +1,6 @@
 import { act } from '../byond';
-import { AnimatedNumber, Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, NumberInput, Section } from '../components';
+import { getGasLabel } from './common/atmos';
 
 export const AtmosFilter = props => {
   const { state } = props;
@@ -17,25 +18,31 @@ export const AtmosFilter = props => {
             onClick={() => act(ref, 'power')} />
         </LabeledList.Item>
         <LabeledList.Item label="Transfer Rate">
+          <NumberInput
+            animated
+            value={parseFloat(data.rate)}
+            width="63px"
+            unit="L/s"
+            minValue={0}
+            maxValue={200}
+            onDrag={(e, value) => act(ref, 'rate', {
+              rate: value,
+            })} />
           <Button
-            icon="pencil-alt"
-            content="Set"
-            onClick={() => act(ref, 'rate', {rate: 'input'})} />
-          <Button
+            ml={1}
             icon="plus"
             content="Max"
             disabled={data.rate === data.max_rate}
-            onClick={() => act(ref, 'rate', {rate: 'max'})} />
-          {' '}
-          <AnimatedNumber value={parseFloat(data.rate)} />
-          {' L/s'}
+            onClick={() => act(ref, 'rate', {
+              rate: 'max',
+            })} />
         </LabeledList.Item>
         <LabeledList.Item label="Filter">
           {filterTypes.map(filter => (
             <Button
               key={filter.id}
               selected={filter.selected}
-              content={filter.name}
+              content={getGasLabel(filter.id, filter.name)}
               onClick={() => act(ref, 'filter', {
                 mode: filter.id,
               })} />

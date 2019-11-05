@@ -47,26 +47,16 @@ You will need these programs to start developing in tgui:
 > a "pacman" package manager, and you can install a text editor like "vim"
 > for a full boomer experience.
 
-## Workflow
+## Usage
 
-If you haven't opened the console already, you can do that by holding
-Shift and right clicking on the `tgui-next` folder, then pressing
-either `Open command window here` or `Open PowerShell window here`.
+**For MSys2, Git Bash, WSL, Linux or macOS users:**
 
-Run `yarn install`, then:
-
-- `yarn run build` - build the project in production mode.
-- `yarn run watch` - launch a development server, with live log collection,
-cache reloading and hot module replacement.
-- `yarn run lint` - show problems with the code.
-- `yarn run lint --fix` - auto-fix problems with the code.
-- `yarn run analyze` - run a bundle analyzer.
-
-For MSys2, WSL, Linux or macOS users:
+First and foremost, run `bin/tgui --install-git-hooks` to install merge
+drivers which will help you resolve conflicts when rebasing your branches.
 
 - `bin/tgui` - build the project in production mode.
-- `bin/tgui --dev` - launch a development server, with live log collection,
-cache reloading and hot module replacement.
+- `bin/tgui --dev` - launch a development server, with live log
+collection, byond cache reloading and hot module replacement.
 - `bin/tgui --dev --reload` - reload byond cache once.
 - `bin/tgui --dev --debug` - run server with debug logging enabled.
 - `bin/tgui --dev --no-hot` - disable hot module replacement (helps when
@@ -78,16 +68,31 @@ doing development on IE8).
 - `bin/tgui [webpack options]` - build the project with custom webpack
 options.
 
-We also got some batch files in store, which are simple to use:
+**For everyone else:**
+
+If you haven't opened the console already, you can do that by holding
+Shift and right clicking on the `tgui-next` folder, then pressing
+either `Open command window here` or `Open PowerShell window here`.
+
+Run `yarn install`, then:
+
+- `yarn run build` - build the project in production mode.
+- `yarn run watch` - launch a development server, with live log
+collection, byond cache reloading and hot module replacement.
+- `yarn run lint` - show problems with the code.
+- `yarn run lint --fix` - auto-fix problems with the code.
+- `yarn run analyze` - run a bundle analyzer.
+
+We also got some batch files in store, which are very simple to use:
 
 - `bin/tgui-build.bat` - build the project in production mode.
-- `bin/tgui-watch.bat` - launch a development server, with live log
+- `bin/tgui-dev-server.bat` - launch a development server, with live log
 collection, cache reloading and hot module replacement.
 
-Remember to always run a full build before submitting a PR. It creates
-a compressed javascript bundle which is then referenced from DM code.
-We prefer to keep it version controlled, so that people could build the
-game just by using Dream Maker.
+> Remember to always run a full build before submitting a PR. It creates
+> a compressed javascript bundle which is then referenced from DM code.
+> We prefer to keep it version controlled, so that people could build the
+> game just by using Dream Maker.
 
 ## Project structure
 

@@ -1,8 +1,7 @@
+import { round, toFixed } from 'common/math';
 import { Fragment } from 'inferno';
-import { AnimatedNumber, Button, LabeledList, Section, Box } from '../components';
 import { act } from '../byond';
-import { toFixed, round } from 'common/math';
-import { NumberInput } from '../components/NumberInput';
+import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section } from '../components';
 
 export const ChemHeater = props => {
   const { state, dispatch } = props;

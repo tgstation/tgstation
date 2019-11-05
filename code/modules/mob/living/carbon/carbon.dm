@@ -1,6 +1,3 @@
-/mob/living/carbon
-	blood_volume = BLOOD_VOLUME_NORMAL
-
 /mob/living/carbon/Initialize()
 	. = ..()
 	create_reagents(1000)

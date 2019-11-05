@@ -1,7 +1,4 @@
 
-/mob
-	var/bloody_hands = 0
-
 /obj/item/clothing/gloves
 	var/transfer_blood = 0
 

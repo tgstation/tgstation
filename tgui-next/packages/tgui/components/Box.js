@@ -1,9 +1,8 @@
-import { classes, pureComponentHooks } from 'common/react';
+import { classes, pureComponentHooks, isFalsy } from 'common/react';
 import { createVNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 
-const REM_PX = 12;
-const REM_PER_INTEGER = 0.5;
+const UNIT_PX = 6;
 
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
@@ -13,88 +12,115 @@ export const unit = value => {
     return value;
   }
   if (typeof value === 'number') {
-    return (value * REM_PX * REM_PER_INTEGER) + 'px';
+    return (value * UNIT_PX) + 'px';
   }
 };
 
-/**
- * Nullish coalesce function
- */
-const firstDefined = (...args) => {
-  return args.find(arg => arg !== undefined && arg !== null);
+const mapRawPropTo = attrName => (style, value) => {
+  if (!isFalsy(value)) {
+    style[attrName] = value;
+  }
+};
+
+const mapUnitPropTo = attrName => (style, value) => {
+  if (!isFalsy(value)) {
+    style[attrName] = unit(value);
+  }
+};
+
+const mapBooleanPropTo = (attrName, attrValue) => (style, value) => {
+  if (!isFalsy(value)) {
+    style[attrName] = attrValue;
+  }
+};
+
+const mapDirectionalUnitPropTo = (attrName, dirs) => (style, value) => {
+  if (!isFalsy(value)) {
+    for (let i = 0; i < dirs.length; i++) {
+      style[attrName + '-' + dirs[i]] = unit(value);
+    }
+  }
+};
+
+const styleMapperByPropName = {
+  // Direct mapping
+  position: mapRawPropTo('position'),
+  width: mapUnitPropTo('width'),
+  minWidth: mapUnitPropTo('min-width'),
+  maxWidth: mapUnitPropTo('max-width'),
+  height: mapUnitPropTo('height'),
+  minHeight: mapUnitPropTo('min-height'),
+  maxHeight: mapUnitPropTo('max-height'),
+  fontSize: mapUnitPropTo('font-size'),
+  lineHeight: mapUnitPropTo('line-height'),
+  opacity: mapRawPropTo('opacity'),
+  textAlign: mapRawPropTo('text-align'),
+  // Boolean props
+  inline: mapBooleanPropTo('display', 'inline-block'),
+  bold: mapBooleanPropTo('font-weight', 'bold'),
+  italic: mapBooleanPropTo('font-style', 'italic'),
+  // Margins
+  m: mapDirectionalUnitPropTo('margin', ['top', 'bottom', 'left', 'right']),
+  mx: mapDirectionalUnitPropTo('margin', ['left', 'right']),
+  my: mapDirectionalUnitPropTo('margin', ['top', 'bottom']),
+  mt: mapUnitPropTo('margin-top'),
+  mb: mapUnitPropTo('margin-bottom'),
+  ml: mapUnitPropTo('margin-left'),
+  mr: mapUnitPropTo('margin-right'),
 };
 
 export const computeBoxProps = props => {
-  const {
-    className,
-    color,
-    width,
-    minWidth,
-    maxWidth,
-    height,
-    minHeight,
-    maxHeight,
-    fontSize,
-    lineHeight,
-    inline,
-    m, mx, my, mt, mb, ml, mr,
-    opacity,
-    bold,
-    italic,
-    textAlign,
-    position,
-    top,
-    left,
-    right,
-    bottom,
-    ...rest
-  } = props;
-  return {
-    ...rest,
-    className: classes([
-      className,
-      color && 'color-' + color,
-    ]),
-    style: {
-      'display': inline ? 'inline-block' : undefined,
-      'margin-top': unit(firstDefined(mt, my, m)),
-      'margin-bottom': unit(firstDefined(mb, my, m)),
-      'margin-left': unit(firstDefined(ml, mx, m)),
-      'margin-right': unit(firstDefined(mr, mx, m)),
-      'opacity': opacity,
-      'width': unit(width),
-      'min-width': unit(minWidth),
-      'max-width': unit(maxWidth),
-      'height': unit(height),
-      'min-height': unit(minHeight),
-      'max-height': unit(maxHeight),
-      'font-size': unit(fontSize),
-      'line-height': unit(lineHeight),
-      'font-weight': bold ? 'bold' : undefined,
-      'font-style': italic ? 'italic' : undefined,
-      'text-align': textAlign,
-      'position': position,
-      'top': unit(top),
-      'left': unit(left),
-      'right': unit(right),
-      'bottom': unit(bottom),
-      ...rest.style,
-    },
-  };
+  const computedProps = {};
+  const computedStyles = {};
+  // Compute props
+  for (let propName of Object.keys(props)) {
+    if (propName === 'style') {
+      continue;
+    }
+    const propValue = props[propName];
+    const mapPropToStyle = styleMapperByPropName[propName];
+    if (mapPropToStyle) {
+      mapPropToStyle(computedStyles, propValue);
+    }
+    else {
+      computedProps[propName] = propValue;
+    }
+  }
+  // Concatenate styles
+  Object.assign(computedStyles, props.style);
+  let style = '';
+  for (let attrName of Object.keys(computedStyles)) {
+    const attrValue = computedStyles[attrName];
+    style += attrName + ':' + attrValue + ';';
+  }
+  if (style.length > 0) {
+    computedProps.style = style;
+  }
+  return computedProps;
 };
 
 export const Box = props => {
-  const { as = 'div', content, children, ...rest } = props;
+  const {
+    as = 'div',
+    className,
+    color,
+    content,
+    children,
+    ...rest
+  } = props;
   // Render props
   if (typeof children === 'function') {
     return children(computeBoxProps(props));
   }
-  const { className, ...computedProps } = computeBoxProps(rest);
+  const computedProps = computeBoxProps(rest);
   // Render a wrapper element
   return createVNode(
     VNodeFlags.HtmlElement,
     as,
-    className,
+    classes([
+      className,
+      color && 'color-' + color,
+    ]),
     content || children,
     ChildFlags.UnknownChildren,
     computedProps);
