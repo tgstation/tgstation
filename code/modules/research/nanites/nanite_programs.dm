@@ -47,17 +47,19 @@
 	var/trigger_code 		= 0 	//Code that triggers the program (if available) [1-9999]
 
 	//Extra settings
-	//Must be listed in text form, with the same title they'll be displayed in the programmer UI
-	//Changing these values is handled by set_extra_setting()
-	//Viewing these values is handled by get_extra_setting()
-	//Copying these values is handled by copy_extra_settings_to()
+	///Don't ever override this or I will come to your house and stand menacingly behind a bush
 	var/list/extra_settings = list()
 
 	//Rules
 	//Rules that automatically manage if the program's active without requiring separate sensor programs
 	var/list/datum/nanite_rule/rules = list()
 
+/datum/nanite_program/New()
+	. = ..()
+	register_extra_settings()
+
 /datum/nanite_program/Destroy()
+	extra_settings = null
 	if(host_mob)
 		if(activated)
 			deactivate()
@@ -94,14 +96,32 @@
 	if(istype(target,src))
 		copy_extra_settings_to(target)
 
-/datum/nanite_program/proc/set_extra_setting(user, setting)
+///Register extra settings by overriding this.  
+///extra_settings[name] = new typepath() for each extra setting
+/datum/nanite_program/proc/register_extra_settings()
 	return
 
-/datum/nanite_program/proc/get_extra_setting(setting)
-	return
+///You can override this if you need to have special behavior after setting certain settings.
+/datum/nanite_program/proc/set_extra_setting(setting, value)
+	var/datum/nanite_extra_setting/ES = extra_settings[setting]
+	return ES.set_value(value)
 
+///You probably shouldn't be overriding this one, but I'm not a cop.
+/datum/nanite_program/proc/get_extra_setting_value(setting)
+	var/datum/nanite_extra_setting/ES = extra_settings[setting]
+	return ES.get_value()
+
+///Used for getting information about the extra settings to the frontend
+/datum/nanite_program/proc/get_extra_settings_frontend()
+	var/list/out = list()
+	for(var/name in extra_settings)
+		var/datum/nanite_extra_setting/ES = extra_settings[name]
+		out += ES.get_frontend_list(name)
+	return out
+
+///Copy of the list instead of direct reference for obvious reasons
 /datum/nanite_program/proc/copy_extra_settings_to(datum/nanite_program/target)
-	return
+	target.extra_settings = extra_settings.Copy()
 
 /datum/nanite_program/proc/on_add(datum/component/nanites/_nanites)
 	nanites = _nanites
@@ -264,3 +284,4 @@
 	if(kill_code && code == kill_code)
 		host_mob.investigate_log("'s [name] nanite program was deleted by [source] with code [code].", INVESTIGATE_NANITES)
 		qdel(src)
+

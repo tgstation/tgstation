@@ -86,6 +86,7 @@ export class Input extends Component {
       onInput,
       onChange,
       value,
+      maxLength,
       ...boxProps
     } = props;
     // Box props
@@ -111,7 +112,8 @@ export class Input extends Component {
           onInput={this.handleInput}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          onKeyDown={this.handleKeyDown} />
+          onKeyDown={this.handleKeyDown}
+          maxLength={maxLength} />
       </Box>
     );
   }

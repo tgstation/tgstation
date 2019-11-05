@@ -1,0 +1,12 @@
+/datum/nanite_extra_setting/text
+	setting_type = NESTYPE_TEXT
+
+/datum/nanite_extra_setting/text/New(initial)
+	value = initial
+
+/datum/nanite_extra_setting/text/get_frontend_list(name)
+	return list(list(
+		"name" = name,
+		"type" = setting_type,
+		"value" = value
+	))
