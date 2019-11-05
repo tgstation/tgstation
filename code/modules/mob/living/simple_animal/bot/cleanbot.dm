@@ -33,23 +33,85 @@
 	var/next_dest
 	var/next_dest_loc
 
+	var/obj/item/weapon
+	var/weapon_orig_force = 0
+
+	var/list/stolen_valor
+
+	var/orig_name
+
+	var/list/command = list("Admiral" = "Admiral", "Spec Ops Officer" = "Col.", "Captain" = "Cpt.","Head of Personnel" = "Lt.")
+	var/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" =  "Det.", "Security Officer" = "Officer")
+	var/list/engineering = list("Chief Engineer" = "Chief Engineer", "Station Engineer" = "Engineer", "Atmospherics Technician" = "Technician")
+	var/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.")
+	var/list/research = list("Research Director" = "Ph.D.", "Scientist" = "Ph.D.")
+	var/list/legal = list("Lawyer" = "Esq")
+	var/list/prefixes
+	var/list/suffixes
+
+
+/mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/W, mob/user)
+	if(in_range(src, user))
+		to_chat(user, "<span class='notice'>You attach \the [W] to \the [src].</span>")
+		user.transferItemToLoc(W, src)
+		weapon = W
+		weapon_orig_force = weapon.force
+		weapon.force = weapon.force / 3
+		icon_state = "cleanbot[on]" + (weapon ? "-armed" : "")
+
+/mob/living/simple_animal/bot/cleanbot/proc/update_titles()
+	var/working_title = ""
+
+	for(var/pref in prefixes)
+		for(var/title in pref)
+			if(title in stolen_valor)
+				working_title += pref[title] + " "
+				break
+
+	working_title += orig_name
+
+	for(var/suf in suffixes)
+		for(var/title in suf)
+			if(title in stolen_valor)
+				working_title += " " + suf[title]
+				break
+
+	name = working_title
+
+/mob/living/simple_animal/bot/cleanbot/examine(mob/user)
+	. = ..()
+	if(weapon)
+		. += " <span class='warning'>Is that \a [weapon] taped to it...?</span>"
+
 /mob/living/simple_animal/bot/cleanbot/Initialize()
 	. = ..()
 	get_targets()
-	icon_state = "cleanbot[on]"
+	icon_state = "cleanbot[on]" + (weapon ? "-armed" : "")
 
 	var/datum/job/janitor/J = new/datum/job/janitor
 	access_card.access += J.get_access()
 	prev_access = access_card.access
+	orig_name = name
+	stolen_valor = list()
+
+	prefixes = list(command, security, engineering)
+	suffixes = list(research, medical, legal)
+
+/mob/living/simple_animal/bot/cleanbot/Destroy()
+	if(weapon)
+		var/atom/Tsec = drop_location()
+		weapon.force = weapon_orig_force
+		drop_part(weapon, Tsec)
+	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/turn_on()
 	..()
-	icon_state = "cleanbot[on]"
+	icon_state = "cleanbot[on]" + (weapon ? "-armed" : "")
 	bot_core.updateUsrDialog()
 
 /mob/living/simple_animal/bot/cleanbot/turn_off()
 	..()
-	icon_state = "cleanbot[on]"
+	icon_state = "cleanbot[on]" + (weapon ? "-armed" : "")
 	bot_core.updateUsrDialog()
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
@@ -63,6 +125,23 @@
 	text_dehack = "[name]'s software has been reset!"
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
+/mob/living/simple_animal/bot/cleanbot/Crossed(atom/movable/AM)
+	if(has_gravity() && ismob(AM) && weapon)
+		var/mob/living/carbon/C = AM
+		if(!istype(C) || !C)
+			return
+		C.visible_message("<span class='warning'>\The [src] jabs [C] in the ankle with \the [weapon].</span>", "<span class='userdanger'>Ow! \The [src] stabs you in the ankle with \the [weapon]!</span>")
+		weapon.attack(C, src)
+		C.Knockdown(20)
+		var/mob/living/carbon/human/H = C
+		if(!istype(H) || !H || !H.mind)
+			return
+		if(!(H.mind.assigned_role in stolen_valor))
+			stolen_valor += H.mind.assigned_role
+		update_titles()
+		return
+	..()
+
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
@@ -75,6 +154,9 @@
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
+	else if(istype(W, /obj/item/kitchen/knife) && user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='notice'>You start attaching the [W] to \the [src]...</span>")
+		addtimer(CALLBACK(src, .proc/deputize, W, user), 40)
 	else
 		return ..()
 
@@ -210,7 +292,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
 	if(is_cleanable(A))
-		icon_state = "cleanbot-c"
+		icon_state = "cleanbot-c" + (weapon ? "-armed" : "")
 		mode = BOT_CLEANING
 
 		var/turf/T = get_turf(A)
@@ -224,7 +306,7 @@
 			target = null
 
 		mode = BOT_IDLE
-		icon_state = "cleanbot[on]"
+		icon_state = "cleanbot[on]" + (weapon ? "-armed" : "")
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
