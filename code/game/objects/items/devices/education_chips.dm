@@ -5,18 +5,7 @@
   desc = "A complex assortment of metal, electrodes, and wires. Simply put the headset on, insert an education chip, and turn it on to instantly learn the contents of said chip."
   icon_state = "electrode_helmet"
   actions_types = list(/datum/action/item_action/instant_learn)
-  var/chip_storage = 1
-
-/obj/item/clothing/head/AED/attackby(obj/item/E, mob/user, params)
-  var/obj/item/education_chip = E
-  if(chip_storage == 1)
-    chip_storage -1
-    to_chat(user, "<span class='notice'>You insert the [E] into the [src].</span>")
-    qdel(W)
-    return
-  else
-    to_chat(user, "<span class='warning'>\The [src] is full.</span>")
-    return
+  pocket_storage_component_path = /datum/component/storage/concrete/pockets/tiny/AED
 
 /obj/item/education_chip
   name = "Empty Education Chip"
@@ -25,6 +14,7 @@
   icon_state = "edchip"
   lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
   righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+  w_class = WEIGHT_CLASS_TINY
   var/subject
 
 /obj/item/education_chip/cqc

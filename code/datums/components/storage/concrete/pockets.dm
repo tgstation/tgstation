@@ -91,3 +91,10 @@
 					  /obj/item/reagent_containers/food/drinks/bottle/molotov,
 					  /obj/item/reagent_containers/food/drinks/drinkingglass,
 					  /obj/item/ammo_box/a762))
+
+/datum/component/storage/concrete/pockets/tiny/AED
+	quickdraw = TRUE
+
+/datum/component/storage/concrete/pockets/tiny/AED/Initialize()
+	. = ..()
+	set_holdable(list(/obj/item/education_chip))
