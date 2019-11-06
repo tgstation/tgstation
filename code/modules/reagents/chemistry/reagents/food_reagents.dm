@@ -337,7 +337,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "bitterness"
 
-/datum/reagent/consumable/hot_coco
+/datum/reagent/consumable/hot_cocoa
 	name = "Hot Chocolate"
 	description = "Made with love! And cocoa beans."
 	nutriment_factor = 3 * REAGENTS_METABOLISM
@@ -347,7 +347,7 @@
 	glass_name = "glass of chocolate"
 	glass_desc = "Tasty."
 
-/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
+/datum/reagent/consumable/hot_cocoa/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
