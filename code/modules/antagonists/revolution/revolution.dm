@@ -24,10 +24,12 @@
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	handle_clown_mutation(M, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 
 /datum/antagonist/rev/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, M)
+	handle_clown_mutation(M)
 
 /datum/antagonist/rev/proc/equip_rev()
 	return
@@ -218,10 +220,6 @@
 	var/mob/living/carbon/H = owner.current
 	if(!ishuman(H) && !ismonkey(H))
 		return
-
-	if(remove_clumsy && owner.assigned_role == "Clown")
-		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		H.dna.remove_mutation(CLOWNMUT)
 
 	if(give_flash)
 		var/obj/item/assembly/flash/T = new(H)

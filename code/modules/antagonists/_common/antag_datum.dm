@@ -62,17 +62,29 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return
 
 // Adds the specified antag hud to the player. Usually called in an antag datum file
-/datum/antagonist/proc/add_antag_hud(antag_hud_type, antag_hud_name, datum/mind/antag_mind)
+/datum/antagonist/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
 	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
-	hud.join_hud(antag_mind)
-	set_antag_hud(antag_mind, antag_hud_name)
+	hud.join_hud(mob_override)
+	set_antag_hud(mob_override, antag_hud_name)
 
 
 // Removes the specified antag hud from the player. Usually called in an antag datum file
-/datum/antagonist/proc/remove_antag_hud(antag_hud_type, datum/mind/antag_mind)
+/datum/antagonist/proc/remove_antag_hud(antag_hud_type, mob/living/mob_override)
 	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
-	hud.join_hud(antag_mind)
-	set_antag_hud(antag_mind, null)
+	hud.join_hud(mob_override)
+	set_antag_hud(mob_override, null)
+
+// Handles adding and removing the clumsy mutation from clown antags. Gets called in apply/remove_innate_effects
+/datum/antagonist/proc/handle_clown_mutation(mob/living/mob_override, message)
+	var/mob/living/carbon/human/H = mob_override
+	if(H.mind.assigned_role == "Clown")
+		if(H && istype(H))
+			if(H.dna.check_mutation(CLOWNMUT)) // They're a clown becoming an antag, remove clumsy
+				if(!silent && message)
+					to_chat(H, "<span class='boldnotice'>[message]</span>")
+				H.dna.remove_mutation(CLOWNMUT)
+			else
+				H.dna.add_mutation(CLOWNMUT) // We're removing their antag status, add back clumsy
 
 //Assign default team and creates one for one of a kind team antagonists
 /datum/antagonist/proc/create_team(datum/team/team)

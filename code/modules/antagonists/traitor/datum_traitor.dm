@@ -28,21 +28,7 @@
 		forge_traitor_objectives()
 	finalize_traitor()
 	RegisterSignal(owner.current, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
-	..()
-
-/datum/antagonist/traitor/apply_innate_effects()
-	if(owner.assigned_role == "Clown")
-		var/mob/living/carbon/human/traitor_mob = owner.current
-		if(traitor_mob && istype(traitor_mob))
-			if(!silent)
-				to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-			traitor_mob.dna.remove_mutation(CLOWNMUT)
-
-/datum/antagonist/traitor/remove_innate_effects()
-	if(owner.assigned_role == "Clown")
-		var/mob/living/carbon/human/traitor_mob = owner.current
-		if(traitor_mob && istype(traitor_mob))
-			traitor_mob.dna.add_mutation(CLOWNMUT)
+	return ..()
 
 /datum/antagonist/traitor/on_removal()
 	//Remove malf powers.
@@ -57,7 +43,7 @@
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
 	owner.special_role = null
-	..()
+	return ..()
 
 /datum/antagonist/traitor/proc/handle_hearing(datum/source, list/hearing_args)
 	var/message = hearing_args[HEARING_MESSAGE]
@@ -227,7 +213,8 @@
 	. = ..()
 	var/mob/living/M = mob_override || owner.current
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
-	var/mob/living/silicon/ai/A = mob_override || owner.current
+	handle_clown_mutation(M, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+	var/mob/living/silicon/ai/A = M
 	if(istype(A) && traitor_kind == TRAITOR_AI)
 		A.hack_software = TRUE
 
@@ -235,7 +222,8 @@
 	. = ..()
 	var/mob/living/M = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, M)
-	var/mob/living/silicon/ai/A = mob_override || owner.current
+	handle_clown_mutation(M)
+	var/mob/living/silicon/ai/A = M
 	if(istype(A)  && traitor_kind == TRAITOR_AI)
 		A.hack_software = FALSE
 

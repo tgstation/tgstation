@@ -90,7 +90,6 @@
 		if(team_mode)
 			forge_team_objectives()
 		forge_objectives()
-	remove_clownmut()
 	. = ..()
 
 /datum/antagonist/changeling/on_removal()
@@ -103,13 +102,6 @@
 			B.decoy_override = FALSE
 	remove_changeling_powers()
 	. = ..()
-
-/datum/antagonist/changeling/proc/remove_clownmut()
-	if (owner)
-		var/mob/living/carbon/human/H = owner.current
-		if(istype(H) && owner.assigned_role == "Clown")
-			to_chat(H, "<span class='boldnotice'>You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.</span>")
-			H.dna.remove_mutation(CLOWNMUT)
 
 /datum/antagonist/changeling/proc/reset_properties()
 	changeling_speak = 0
@@ -366,10 +358,12 @@
 		RegisterSignal(C, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/stingAtom)
 	var/mob/living/M = mob_override || owner.current
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	handle_clown_mutation(M, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, M)
+	handle_clown_mutation(M)
 	UnregisterSignal(owner.current, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 
 

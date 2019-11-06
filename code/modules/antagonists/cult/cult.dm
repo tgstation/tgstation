@@ -70,9 +70,6 @@
 	var/mob/living/carbon/H = owner.current
 	if(!istype(H))
 		return
-	if (owner.assigned_role == "Clown")
-		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		H.dna.remove_mutation(CLOWNMUT)
 	. += cult_give_item(/obj/item/melee/cultblade/dagger, H)
 	if(metal)
 		. += cult_give_item(/obj/item/stack/sheet/runed_metal/ten, H)
@@ -104,6 +101,7 @@
 	if(mob_override)
 		current = mob_override
 	add_antag_hud(antag_hud_type, antag_hud_name, current)
+	handle_clown_mutation(current, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	current.faction |= "cult"
 	current.grant_language(/datum/language/narsie)
 	if(!cult_team.cult_master)
@@ -123,6 +121,7 @@
 	if(mob_override)
 		current = mob_override
 	remove_antag_hud(antag_hud_type, current)
+	handle_clown_mutation(current)
 	current.faction -= "cult"
 	current.remove_language(/datum/language/narsie)
 	vote.Remove(current)
