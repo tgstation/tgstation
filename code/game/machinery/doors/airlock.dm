@@ -401,8 +401,8 @@
 // shock user with probability prb (if all connections & power are working)
 // returns TRUE if shocked, FALSE otherwise
 // The preceding comment was borrowed from the grille's shock script
-/obj/machinery/door/airlock/proc/shock(mob/user, prb)
-	if(!hasPower())		// unpowered, no shock
+/obj/machinery/door/airlock/proc/shock(mob/living/user, prb)
+	if(!istype(user) || !hasPower())		// unpowered, no shock
 		return FALSE
 	if(shockCooldown > world.time)
 		return FALSE	//Already shocked someone recently?
@@ -1137,7 +1137,7 @@
 	else
 		optionlist = list("Standard", "Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Freezer", "Science", "Virology", "Mining", "Maintenance", "External", "External Maintenance")
 
-	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
+	var/paintjob = input(user, "Please select a paintjob for this airlock.") in sortList(optionlist)
 	if((!in_range(src, usr) && loc != usr) || !W.use_paint(user))
 		return
 	switch(paintjob)
@@ -1498,8 +1498,10 @@
 			to_chat(user, "<span class='warning'>The door has no power - you can't raise the door bolts.</span>")
 		else
 			unbolt()
+			log_combat(user, src, "unbolted")
 	else
 		bolt()
+		log_combat(user, src, "bolted")
 
 /obj/machinery/door/airlock/proc/toggle_emergency(mob/user)
 	if(!user_allowed(user))

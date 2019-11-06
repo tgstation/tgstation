@@ -473,8 +473,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		drowsyness = max(drowsyness - restingpwr, 0)
 		blur_eyes(2)
 		if(prob(5))
-			AdjustSleeping(20)
-			Unconscious(100)
+			AdjustSleeping(100)
 
 	//Jitteriness
 	if(jitteriness)
@@ -590,11 +589,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(!dna)
 		return
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)
-	if(liver)
-		if(liver.damage < liver.maxHealth)
-			return
-		liver.organ_flags |= ORGAN_FAILING
-	liver_failure()
+	if(!liver)
+		liver_failure()
 
 /mob/living/carbon/proc/undergoing_liver_failure()
 	var/obj/item/organ/liver/liver = getorganslot(ORGAN_SLOT_LIVER)

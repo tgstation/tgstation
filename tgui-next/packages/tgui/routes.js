@@ -1,4 +1,4 @@
-import { Acclimator } from './interfaces/Acclimator';
+import { Achievements } from './interfaces/Achievements';
 import { AiAirlock } from './interfaces/AiAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
 import { AirlockElectronics } from './interfaces/AirlockElectronics';
@@ -12,22 +12,42 @@ import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
-import { Cargo } from './interfaces/Cargo';
+import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
+import { ChemAcclimator } from './interfaces/ChemAcclimator';
+import { ChemDebugSynthesizer } from './interfaces/ChemDebugSynthesizer';
 import { ChemDispenser } from './interfaces/ChemDispenser';
+import { ChemFilter } from './interfaces/ChemFilter';
+import { ChemHeater } from './interfaces/ChemHeater';
+import { ChemMaster } from './interfaces/ChemMaster';
+import { ChemPress } from './interfaces/ChemPress';
+import { ChemSplitter } from './interfaces/ChemSplitter';
+import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
+import { CodexGigas } from './interfaces/CodexGigas';
 import { Crayon } from './interfaces/Crayon';
+import { CrewConsole } from './interfaces/CrewConsole';
+import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
-import { KitchenSink } from './interfaces/KitchenSink';
+import { LanguageMenu } from './interfaces/LanguageMenu';
 import { Mint } from './interfaces/Mint';
+import { OperatingComputer } from './interfaces/OperatingComputer';
+import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
+import { PersonalCrafting } from './interfaces/PersonalCrafting';
+import { PortableGenerator } from './interfaces/PortableGenerator';
+import { Radio } from './interfaces/Radio';
+import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { SmartVend } from './interfaces/SmartVend';
+import { SMES } from './interfaces/SMES';
+import { SolarControl } from './interfaces/SolarControl';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
 
 const ROUTES = {
-  acclimator: {
-    component: () => Acclimator,
-    scrollable: false,
+  achievements: {
+    component: () => Achievements,
+    scrollable: true,
   },
   ai_airlock: {
     component: () => AiAirlock,
@@ -85,6 +105,10 @@ const ROUTES = {
     component: () => Cargo,
     scrollable: true,
   },
+  cargo_express: {
+    component: () => CargoExpress,
+    scrollable: true,
+  },
   cellular_emporium: {
     component: () => CellularEmporium,
     scrollable: true,
@@ -93,20 +117,104 @@ const ROUTES = {
     component: () => CentcomPodLauncher,
     scrollable: false,
   },
+  acclimator: {
+    component: () => ChemAcclimator,
+    scrollable: false,
+  },
   chem_dispenser: {
     component: () => ChemDispenser,
     scrollable: true,
+  },
+  chemical_filter: {
+    component: () => ChemFilter,
+    scrollable: true,
+  },
+  chem_heater: {
+    component: () => ChemHeater,
+    scrollable: true,
+  },
+  chem_master: {
+    component: () => ChemMaster,
+    scrollable: true,
+  },
+  chem_press: {
+    component: () => ChemPress,
+    scrollable: false,
+  },
+  chem_splitter: {
+    component: () => ChemSplitter,
+    scrollable: false,
+  },
+  chem_synthesizer: {
+    component: () => ChemDebugSynthesizer,
+    scrollable: false,
+  },
+  synthesizer: {
+    component: () => ChemSynthesizer,
+    scrollable: false,
+  },
+  codex_gigas: {
+    component: () => CodexGigas,
+    scrollable: false,
   },
   crayon: {
     component: () => Crayon,
     scrollable: true,
   },
+  crew: {
+    component: () => CrewConsole,
+    scrollable: true,
+  },
+  cryo: {
+    component: () => Cryo,
+    scrollable: false,
+  },
   disposal_unit: {
     component: () => DisposalUnit,
     scrollable: false,
   },
+  language_menu: {
+    component: () => LanguageMenu,
+    scrollable: true,
+  },
   mint: {
     component: () => Mint,
+    scrollable: false,
+  },
+  ore_redemption_machine: {
+    component: () => OreRedemptionMachine,
+    scrollable: true,
+  },
+  operating_computer: {
+    component: () => OperatingComputer,
+    scrollable: true,
+  },
+  personal_crafting: {
+    component: () => PersonalCrafting,
+    scrollable: true,
+  },
+  portable_generator: {
+    component: () => PortableGenerator,
+    scrollable: false,
+  },
+  radio: {
+    component: () => Radio,
+    scrollable: false,
+  },
+  shuttle_manipulator: {
+    component: () => ShuttleManipulator,
+    scrollable: true,
+  },
+  smartvend: {
+    component: () => SmartVend,
+    scrollable: true,
+  },
+  smes: {
+    component: () => SMES,
+    scrollable: false,
+  },
+  solar_control: {
+    component: () => SolarControl,
     scrollable: false,
   },
   thermomachine: {
@@ -124,12 +232,15 @@ const ROUTES = {
 };
 
 export const getRoute = state => {
-  // Show a kitchen sink
-  if (state.showKitchenSink) {
-    return {
-      component: () => KitchenSink,
-      scrollable: true,
-    };
+  if (process.env.NODE_ENV !== 'production') {
+    // Show a kitchen sink
+    if (state.showKitchenSink) {
+      const { KitchenSink } = require('./interfaces/KitchenSink');
+      return {
+        component: () => KitchenSink,
+        scrollable: true,
+      };
+    }
   }
   // Refer to the routing table
   return ROUTES[state.config && state.config.interface];

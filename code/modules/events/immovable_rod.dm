@@ -49,6 +49,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	pull_force = INFINITY
 	density = TRUE
 	anchored = TRUE
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/mob/living/wizard
 	var/z_original = 0
 	var/destination
@@ -96,9 +97,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	destination = get_edge_target_turf(src, dir)
 	walk(src,0)
 	walk_towards(src, destination, 1)
-
-/obj/structure/closet/supplypod/prevent_content_explosion()
-	return TRUE
 
 /obj/effect/immovablerod/ex_act(severity, target)
 	return 0
@@ -160,7 +158,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 				wizard.apply_damage(25, BRUTE)
 				qdel(src)
 			else
-				SSmedals.UnlockMedal(MEDAL_RODSUPLEX,U.client) //rod-form wizards would probably make this a lot easier to get so keep it to regular rods only
+				U.client.give_award(/datum/award/achievement/misc/feat_of_strength, U) //rod-form wizards would probably make this a lot easier to get so keep it to regular rods only
 				U.visible_message("<span class='boldwarning'>[U] suplexes [src] into the ground!</span>", "<span class='warning'>You suplex [src] into the ground!</span>")
 				new /obj/structure/festivus/anchored(drop_location())
 				new /obj/effect/anomaly/flux(drop_location())

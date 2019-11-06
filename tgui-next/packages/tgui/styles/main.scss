@@ -31,11 +31,3 @@ body {
   @import './atomic.scss';
   @import './components.scss';
 }
-
-// Clockwork theme
-.theme-clockwork {
-  @import './themes/clockwork.scss';
-  @import './color-map.scss';
-  @import './atomic.scss';
-  @import './components.scss';
-}

@@ -55,6 +55,7 @@
 	icon_state = "donut_chaos"
 	bitesize = 10
 	tastes = list("donut" = 3, "chaos" = 1)
+	is_decorated = TRUE
 
 /obj/item/reagent_containers/food/snacks/donut/chaos/Initialize()
 	. = ..()
@@ -69,6 +70,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ketchup = 2)
 	tastes = list("meat" = 1)
 	foodtype = JUNKFOOD | MEAT | GROSS | FRIED | BREAKFAST
+	is_decorated = TRUE
 
 /obj/item/reagent_containers/food/snacks/donut/berry
 	name = "pink donut"
@@ -671,13 +673,13 @@
 			to_chat(user, "<span class='notice'>You add the [I] to the [name].</span>")
 			P.name = initial(P.name)
 			contents += P
-			update_overlays(P)
+			update_snack_overlays(P)
 			if (P.contents.len)
 				for(var/V in P.contents)
 					P = V
 					P.name = initial(P.name)
 					contents += P
-					update_overlays(P)
+					update_snack_overlays(P)
 			P = I
 			clearlist(P.contents)
 		return
@@ -686,7 +688,7 @@
 		return O.attackby(I, user, params)
 	..()
 
-/obj/item/reagent_containers/food/snacks/pancakes/update_overlays(obj/item/reagent_containers/food/snacks/P)
+/obj/item/reagent_containers/food/snacks/pancakes/update_snack_overlays(obj/item/reagent_containers/food/snacks/P)
 	var/mutable_appearance/pancake = mutable_appearance(icon, "[P.item_state]_[rand(1,3)]")
 	pancake.pixel_x = rand(-1,1)
 	pancake.pixel_y = 3 * contents.len - 1

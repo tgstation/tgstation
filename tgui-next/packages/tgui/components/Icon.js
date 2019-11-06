@@ -4,7 +4,7 @@ import { Box } from './Box';
 const FA_OUTLINE_REGEX = /-o$/;
 
 export const Icon = props => {
-  const { name, size, className, style = {}, ...rest } = props;
+  const { name, size, spin, className, style = {}, ...rest } = props;
   if (size) {
     style['font-size'] = (size * 100) + '%';
   }
@@ -17,6 +17,7 @@ export const Icon = props => {
         className,
         faRegular ? 'far' : 'fas',
         'fa-' + faName,
+        spin && 'fa-spin',
       ])}
       style={style}
       {...rest} />

@@ -1,8 +1,8 @@
 import { map } from 'common/fp';
-import { round, toFixed } from 'common/math';
+import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, Section, NumberInput } from '../components';
 
 export const AtmosControlConsole = props => {
   const { state } = props;
@@ -29,9 +29,9 @@ export const AtmosControlConsole = props => {
                     {toFixed(sensor.temperature, 2) + ' K'}
                   </LabeledList.Item>
                 )}
-                {map((gasPercent, gasID) => {
+                {map((gasPercent, gasId) => {
                   return (
-                    <LabeledList.Item label={gasID}>
+                    <LabeledList.Item label={gasId}>
                       {toFixed(gasPercent, 2) + '%'}
                     </LabeledList.Item>
                   );
@@ -59,10 +59,16 @@ export const AtmosControlConsole = props => {
                 onClick={() => act(ref, 'input')} />
             </LabeledList.Item>
             <LabeledList.Item label="Input Rate">
-              <Button
-                icon="pencil-alt"
-                content={round(data.inputRate) + ' L/s'}
-                onClick={() => act(ref, 'rate')} />
+              <NumberInput
+                value={data.inputRate}
+                unit="L/s"
+                width="63px"
+                minValue={0}
+                maxValue={200}
+                suppressFlicker={2000} // This takes an exceptionally long time to update due to being an async signal
+                onChange={(e, value) => act(ref, 'rate', {
+                  rate: value,
+                })} />
             </LabeledList.Item>
             <LabeledList.Item label="Output Regulator">
               <Button
@@ -72,10 +78,17 @@ export const AtmosControlConsole = props => {
                 onClick={() => act(ref, 'output')} />
             </LabeledList.Item>
             <LabeledList.Item label="Output Pressure">
-              <Button
-                icon="pencil-alt"
-                content={round(data.outputPressure) + ' kPa'}
-                onClick={() => act(ref, 'pressure')} />
+              <NumberInput
+                value={parseFloat(data.outputPressure)}
+                unit="kPa"
+                width="75px"
+                minValue={0}
+                maxValue={4500}
+                step={10}
+                suppressFlicker={2000} // This takes an exceptionally long time to update due to being an async signal
+                onChange={(e, value) => act(ref, 'pressure', {
+                  pressure: value,
+                })} />
             </LabeledList.Item>
           </LabeledList>
         </Section>
