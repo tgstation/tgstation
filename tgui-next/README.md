@@ -297,6 +297,14 @@ over the button.
 - `content/children: any` - Content to render inside the button.
 - `onClick: function` - Called when element is clicked.
 
+### `Dimmer`
+
+Dims surrounding area to emphasize content placed inside.
+
+Props:
+
+- See inherited props: [Box](#box)
+
 ### `Flex`
 
 Quickly manage the layout, alignment, and sizing of grid columns, navigation, components, and more with a full suite of responsive flexbox utilities.
