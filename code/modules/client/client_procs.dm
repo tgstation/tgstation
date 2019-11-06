@@ -951,4 +951,4 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 
 /client/proc/give_award(achievement_type, mob/user)
-	return	player_details.achievements.unlock(achievement_type, mob/user)
+	return	player_details.achievements.unlock(achievement_type, user)
