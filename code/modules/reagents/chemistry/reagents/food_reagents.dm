@@ -329,9 +329,9 @@
 	// no color (ie, black)
 	taste_description = "pepper"
 
-/datum/reagent/consumable/coco
-	name = "Coco Powder"
-	description = "A fatty, bitter paste made from coco beans."
+/datum/reagent/consumable/cocoa
+	name = "cocoa Powder"
+	description = "A fatty, bitter paste made from cocoa beans."
 	reagent_state = SOLID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
@@ -339,7 +339,7 @@
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
-	description = "Made with love! And coco beans."
+	description = "Made with love! And cocoa beans."
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	taste_description = "creamy chocolate"

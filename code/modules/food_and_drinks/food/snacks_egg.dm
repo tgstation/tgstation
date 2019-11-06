@@ -6,7 +6,7 @@
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolateegg"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/cocoa = 2)
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 4, "sweetness" = 1)
 	foodtype = JUNKFOOD | SUGAR

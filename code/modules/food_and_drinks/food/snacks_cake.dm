@@ -310,7 +310,7 @@
 	desc = "A chocolate cake, filled with assortment of blackberries and strawberries!"
 	icon_state = "blackbarry_strawberries_cake_coco_cake"
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/bscc
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = 14, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/coco = 5)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 14, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/cocoa = 5)
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
 

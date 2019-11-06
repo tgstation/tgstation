@@ -221,7 +221,7 @@
 	desc = "Contains less than 10% real rabbit!"
 	icon_state = "chocolatebunny"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/cocoa = 2)
 	filling_color = "#A0522D"
 
 /datum/crafting_recipe/food/chocolatebunny

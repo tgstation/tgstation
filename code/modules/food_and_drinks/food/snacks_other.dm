@@ -51,7 +51,7 @@
 	name = "chocolate bar"
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolatebar"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/cocoa = 2)
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
@@ -214,7 +214,7 @@
 	desc = "A completely edible but nonflippable festive coin."
 	icon_state = "chococoin"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/coco = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cocoa = 1)
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
@@ -224,7 +224,7 @@
 	desc = "A little cube of chocolate that tends to have a less intense taste if you eat too many at once."
 	icon_state = "chocodice"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 1)
-	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/coco = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cocoa = 1)
 	filling_color = "#A0522D"
 	trash = /obj/item/dice/fudge
 	tastes = list("fudge" = 1)
@@ -600,7 +600,7 @@
 	name = "chocolate"
 	desc = "A tiny and sweet chocolate."
 	icon_state = "tiny_chocolate"
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/coco = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/cocoa = 1)
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR

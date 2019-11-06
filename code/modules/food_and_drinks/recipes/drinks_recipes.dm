@@ -557,7 +557,7 @@
 	name = "chocolate milk"
 	id = /datum/reagent/consumable/milk/chocolate_milk
 	results = list(/datum/reagent/consumable/milk/chocolate_milk = 2)
-	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/coco = 1)
+	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/cocoa = 1)
 	mix_message = "The color changes as the mixture blends smoothly."
 
 /datum/chemical_reaction/eggnog
@@ -651,7 +651,7 @@
 	id = /datum/reagent/consumable/ethanol/peppermint_patty
 	results = list(/datum/reagent/consumable/ethanol/peppermint_patty = 10)
 	required_reagents = list(/datum/reagent/consumable/hot_coco = 6, /datum/reagent/consumable/ethanol/creme_de_cacao = 1, /datum/reagent/consumable/ethanol/creme_de_menthe = 1, /datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/menthol = 1)
-	mix_message = "The coco turns mint green just as the strong scent hits your nose."
+	mix_message = "The cocoa turns mint green just as the strong scent hits your nose."
 
 /datum/chemical_reaction/alexander
 	name = "Alexander"
