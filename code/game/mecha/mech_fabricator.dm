@@ -19,6 +19,7 @@
 	var/processing_queue = 0
 	var/screen = "main"
 	var/temp
+	var/datum/component/remote_materials/rmat
 	var/list/part_sets = list(
 								"Cyborg",
 								"Ripley",
@@ -34,13 +35,10 @@
 								"Misc"
 								)
 
-/obj/machinery/mecha_part_fabricator/Initialize()
-    var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
-     list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace), 0,
-        TRUE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
-    materials.precise_insertion = TRUE
-    stored_research = new
-    return ..()
+/obj/machinery/mecha_part_fabricator/Initialize(mapload)
+	stored_research = new
+	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload)
+	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
@@ -48,8 +46,7 @@
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.max_amount = (200000 + (T*50000))
+		rmat.set_local_size((200000 + (T*50000)))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
 	T = 1.15
@@ -65,9 +62,8 @@
 
 /obj/machinery/mecha_part_fabricator/examine(mob/user)
 	. = ..()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.</span>"
+		. += "<span class='notice'>The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.<span>"
 
 /obj/machinery/mecha_part_fabricator/emag_act()
 	if(obj_flags & EMAGGED)
@@ -81,7 +77,6 @@
 	say("User DB corrupted \[Code 0x00FA\]. Truncating data structure...")
 	sleep(30)
 	say("User DB truncated. Please contact your Nanotrasen system operator for future assistance.")
-
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
@@ -111,17 +106,21 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_available_resources()
 	var/output
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	for(var/mat_id in materials.materials)
-		var/datum/material/M = mat_id
-		var/amount = materials.materials[mat_id]
-		output += "<span class=\"res_name\">[M.name]: </span>[amount] cm&sup3;"
-		if(amount >= MINERAL_MATERIAL_AMOUNT)
-			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=[REF(mat_id)]'>1</a>\]"
-			if(amount >= (MINERAL_MATERIAL_AMOUNT * 10))
-				output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=[REF(M)]'>10</a>\]"
-			output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[REF(M)]'>All</a>\]</span>"
-		output += "<br/>"
+	var/datum/component/material_container/materials = rmat.mat_container
+
+	if(materials)
+		for(var/mat_id in materials.materials)
+			var/datum/material/M = mat_id
+			var/amount = materials.materials[mat_id]
+			output += "<span class=\"res_name\">[M.name]: </span>[amount] cm&sup3;"
+			if(amount >= MINERAL_MATERIAL_AMOUNT)
+				output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=materials.materials[mat_id]'>1</a>\]"
+				if(amount >= (MINERAL_MATERIAL_AMOUNT * 10))
+					output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=materials.materials[mat_id]'>10</a>\]"
+				output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=materials.materials[mat_id]'>All</a>\]</span>"
+			output += "<br>"
+	else
+		output += "<font color='red'>No material storage connected, please contact the quartermaster.</font><br>"
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/get_resources_w_coeff(datum/design/D)
@@ -134,7 +133,7 @@
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
 	if(D.reagents_list.len) // No reagents storage - no reagent designs.
 		return FALSE
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/materials = rmat.mat_container
 	if(materials.has_materials(get_resources_w_coeff(D)))
 		return TRUE
 	return FALSE
@@ -144,8 +143,21 @@
 	desc = "It's building \a [initial(D.name)]."
 	var/list/res_coef = get_resources_w_coeff(D)
 
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/materials = rmat.mat_container
+	if (!materials)
+		say("No access to material storage, please contact the quartermaster.")
+		return 0
+	if (rmat.on_hold())
+		say("Mineral access is on hold, please contact the quartermaster.")
+		return 0
+	if(!check_resources(D))
+		say("Not enough resources. Queue processing stopped.")
+		temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
+					<a href='?src=[REF(src)];process_queue=1'>Try again</a> | <a href='?src=[REF(src)];clear_temp=1'>Return</a><a>"}
+		return FALSE
 	materials.use_materials(res_coef)
+	rmat.silo_log(src, "built", -1, "[D.name]", res_coef)
+
 	add_overlay("fab-active")
 	use_power = ACTIVE_POWER_USE
 	updateUsrDialog()
@@ -201,13 +213,10 @@
 	while(D)
 		if(stat&(NOPOWER|BROKEN))
 			return FALSE
-		if(!check_resources(D))
-			say("Not enough resources. Queue processing stopped.")
-			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
-						<a href='?src=[REF(src)];process_queue=1'>Try again</a> | <a href='?src=[REF(src)];clear_temp=1'>Return</a><a>"}
+		if(build_part(D))
+			remove_from_queue(1)
+		else
 			return FALSE
-		remove_from_queue(1)
-		build_part(D)
 		D = listgetindex(queue, 1)
 	say("Queue processing finished successfully.")
 
@@ -397,10 +406,19 @@
 	process_queue()
 	processing_queue = 0
 
-/obj/machinery/mecha_part_fabricator/on_deconstruction()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	materials.retrieve_all()
-	..()
+/obj/machinery/mecha_part_fabricator/proc/eject_sheets(eject_sheet, eject_amt)
+	var/datum/component/material_container/mat_container = rmat.mat_container
+	if (!mat_container)
+		say("No access to material storage, please contact the quartermaster.")
+		return 0
+	if (rmat.on_hold())
+		say("Mineral access is on hold, please contact the quartermaster.")
+		return 0
+	var/count = mat_container.retrieve_sheets(text2num(eject_amt), eject_sheet, drop_location())
+	var/list/matlist = list()
+	matlist[eject_sheet] = text2num(eject_amt)
+	rmat.silo_log(src, "ejected", -count, "sheets", matlist)
+	return count
 
 /obj/machinery/mecha_part_fabricator/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
 	var/datum/material/M = id_inserted
