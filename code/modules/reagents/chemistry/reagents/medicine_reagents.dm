@@ -1059,7 +1059,7 @@
 	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
 	..()
 /datum/reagent/medicine/penthrite
-	// Same as corazone. but slightly better
+	// Same as corazone. but slightly worse
 	name = "Penthrite"
 	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
 	color = "#F5F5F5"
@@ -1067,10 +1067,7 @@
 
 /datum/reagent/medicine/penthrite/on_mob_metabolize(mob/living/M)
 	. = ..()
-	if(prob(10))
-		M.adjustOrganLoss(ORGAN_SLOT_STOMACH,-REM)
-	M.dizziness += 1
-	M.confused += 1
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.5 * REM)
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
 
 

@@ -244,7 +244,7 @@
 		new /obj/item/stack/medical/suture/medicated(location)
 	return
 
-datum/chemical_reaction/penthrite
+/datum/chemical_reaction/penthrite
 	name = "Penthrite"
 	id  = /datum/reagent/medicine/penthrite
 	results = list(/datum/reagent/medicine/penthrite = 4)

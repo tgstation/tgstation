@@ -266,9 +266,6 @@
 		return
 	if(reac_volume >= 5)
 		T.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
-	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
-	if(A)
-		A.acid_level = max(A.acid_level + reac_volume*50, 0)
 /*
  *	Water reaction to a mob
  */
@@ -277,7 +274,7 @@
 	if(!istype(M))
 		return
 	if(method == TOUCH)
-		M.adjustBruteLoss(2, 0) // burns
+		M.adjustFireLoss(2, 0) // burns
 	..()
 
 /datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke

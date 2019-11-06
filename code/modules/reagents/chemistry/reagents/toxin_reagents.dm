@@ -811,7 +811,7 @@
 	acidpwr = 5.0
 
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(current_cycle/12, FALSE) //here you go nervar
+	M.adjustFireLoss(current_cycle/15, FALSE) //here you go nervar
 	. = TRUE
 	..()
 
