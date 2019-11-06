@@ -2780,12 +2780,12 @@
 "he" = (
 /obj/structure/table/wood,
 /obj/structure/cable,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/food/drinks/mug/cocoa{
 	desc = "Still hot!";
 	pixel_x = 0;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/food/drinks/mug/cocoa{
 	desc = "Still hot!";
 	pixel_x = 8;
 	pixel_y = 8
@@ -2965,7 +2965,7 @@
 /area/awaymission/cabin)
 "hF" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/food/drinks/mug/cocoa{
 	desc = "Still hot!";
 	pixel_x = 0;
 	pixel_y = 2
@@ -3369,7 +3369,7 @@
 /area/awaymission/cabin/caves)
 "iR" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/food/drinks/mug/cocoa{
 	desc = "Still hot!";
 	pixel_x = -7;
 	pixel_y = -2
@@ -3378,7 +3378,7 @@
 /area/awaymission/cabin)
 "iS" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/food/drinks/mug/cocoa{
 	desc = "Still hot!";
 	pixel_x = 7;
 	pixel_y = 2
@@ -3387,7 +3387,7 @@
 /area/awaymission/cabin)
 "iT" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/food/drinks/mug/cocoa{
 	desc = "Still hot!";
 	pixel_x = -4;
 	pixel_y = 4
@@ -3396,12 +3396,12 @@
 /area/awaymission/cabin)
 "iU" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/food/drinks/mug/cocoa{
 	desc = "Still hot!";
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/food/drinks/mug/cocoa{
 	desc = "Still hot!";
 	pixel_x = 7;
 	pixel_y = -2
