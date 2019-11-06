@@ -14,7 +14,7 @@
 	model = "Cleanbot"
 	bot_core_type = /obj/machinery/bot_core/cleanbot
 	window_id = "autoclean"
-	window_name = "Automatic Station Cleaner v1.3"
+	window_name = "Automatic Station Cleaner v1.4"
 	pass_flags = PASSMOB
 	path_image_color = "#993299"
 
@@ -60,7 +60,7 @@
 		user.transferItemToLoc(W, src)
 		weapon = W
 		weapon_orig_force = weapon.force
-		weapon.force = weapon.force / 3
+		weapon.force = weapon.force / 2
 		icon_state = "cleanbot[on]" + (weapon ? "-armed" : "")
 
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
@@ -132,11 +132,11 @@
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
 /mob/living/simple_animal/bot/cleanbot/Crossed(atom/movable/AM)
+	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	if(has_gravity() && ismob(AM) && weapon)
 		var/mob/living/carbon/C = AM
 		if(!istype(C) || !C)
 			return
-		C.visible_message("<span class='warning'>\The [src] jabs [C] in the ankle with \the [weapon].</span>", "<span class='userdanger'>Ow! \The [src] stabs you in the ankle with \the [weapon]!</span>")
 		weapon.attack(C, src)
 		C.Knockdown(20)
 		var/mob/living/carbon/human/H = C
