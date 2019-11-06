@@ -33,7 +33,7 @@
 			mapname += "\]"
 
 		maprotatechoices[mapname] = VM
-	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in maprotatechoices
+	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in sortList(maprotatechoices)
 	if (!chosenmap)
 		return
 	SSticker.maprotatechecked = 1
@@ -42,7 +42,6 @@
 	log_admin("[key_name(usr)] is changing the map to [VM.map_name]")
 	if (SSmapping.changemap(VM) == 0)
 		message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")
-
 /client/proc/adminchangeminingmap()
 	set category = "Server"
 	set name = "Change Mining Map"

@@ -48,7 +48,7 @@
 				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
 			else
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
-			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
+			to_chat(user, "<span class='notice'>[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src].</span>")
 			log_combat(user, M, "injected", src, "([contained])")
 		return TRUE
 	return FALSE
@@ -182,8 +182,8 @@
 	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/salacid
-	name = "salicyclic acid medipen"
-	desc = "A autoinjector containing salicyclic acid, used to treat severe brute damage."
+	name = "salicylic acid medipen"
+	desc = "A autoinjector containing salicylic acid, used to treat severe brute damage."
 	icon_state = "salacid"
 	item_state = "salacid"
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)

@@ -167,9 +167,9 @@
 
 	if(istype(W, /obj/item/mmi))
 		if(mmi_move_inside(W,user))
-			to_chat(user, "[src]-[W] interface initialized successfully.")
+			to_chat(user, "<span class='notice'>[src]-[W] interface initialized successfully.</span>")
 		else
-			to_chat(user, "[src]-[W] interface initialization failed.")
+			to_chat(user, "<span class='warning'>[src]-[W] interface initialization failed.</span>")
 		return
 
 	if(istype(W, /obj/item/mecha_ammo))
@@ -203,7 +203,7 @@
 				cell = C
 				log_message("Powercell installed", LOG_MECHA)
 			else
-				to_chat(user, "<span class='notice'>There's already a power cell installed.</span>")
+				to_chat(user, "<span class='warning'>There's already a power cell installed!</span>")
 		return
 
 	if(istype(W, /obj/item/stock_parts/scanning_module))
@@ -217,7 +217,7 @@
 				log_message("[W] installed", LOG_MECHA)
 				update_part_values()
 			else
-				to_chat(user, "<span class='notice'>There's already a scanning module installed.</span>")
+				to_chat(user, "<span class='warning'>There's already a scanning module installed!</span>")
 		return
 
 	if(istype(W, /obj/item/stock_parts/capacitor))
@@ -231,7 +231,7 @@
 				log_message("[W] installed", LOG_MECHA)
 				update_part_values()
 			else
-				to_chat(user, "<span class='notice'>There's already a capacitor installed.</span>")
+				to_chat(user, "<span class='warning'>There's already a capacitor installed!</span>")
 		return
 
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -336,16 +336,6 @@
 
 /obj/mecha/narsie_act()
 	emp_act(EMP_HEAVY)
-
-/obj/mecha/ratvar_act()
-	if((GLOB.ratvar_awakens || GLOB.clockwork_gateway_activated) && occupant)
-		if(is_servant_of_ratvar(occupant)) //reward the minion that got a mech by repairing it
-			full_repair(TRUE)
-		else
-			var/mob/living/L = occupant
-			go_out(TRUE)
-			if(L)
-				L.ratvar_act()
 
 /obj/mecha/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
 	if(!no_effect)

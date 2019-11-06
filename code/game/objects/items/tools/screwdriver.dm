@@ -84,15 +84,6 @@
 		M = user
 	return eyestab(M,user)
 
-/obj/item/screwdriver/brass
-	name = "brass screwdriver"
-	desc = "A screwdriver made of brass. The handle feels freezing cold."
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "screwdriver_brass"
-	item_state = "screwdriver_brass"
-	toolspeed = 0.5
-	random_color = FALSE
-
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
 	desc = "An ultrasonic screwdriver."
@@ -141,11 +132,11 @@
 	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
 		tool_behaviour = TOOL_WRENCH
-		to_chat(user, "<span class='notice'>You attach the screw bit to [src].</span>")
+		to_chat(user, "<span class='notice'>You attach the bolt bit to [src].</span>")
 		icon_state = "drill_bolt"
 	else
 		tool_behaviour = TOOL_SCREWDRIVER
-		to_chat(user, "<span class='notice'>You attach the bolt bit to [src].</span>")
+		to_chat(user, "<span class='notice'>You attach the screw bit to [src].</span>")
 		icon_state = "drill_screw"
 
 /obj/item/screwdriver/cyborg

@@ -84,6 +84,7 @@
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	flora_allowed = TRUE
+	blob_allowed = FALSE
 
 /area/lavaland/surface
 	name = "Lavaland"
@@ -134,6 +135,7 @@
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
 	flora_allowed = TRUE
+	blob_allowed = FALSE
 
 /area/icemoon/surface
 	name = "Icemoon"

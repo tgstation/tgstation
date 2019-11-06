@@ -1,0 +1,5 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Dynamic: Latejoin revs is now slightly delayed, will no longer lose instantly if on offstation arrivals shuttle."
+  - bugfix: "Dynamic: Clarified some ic messages for revolution."

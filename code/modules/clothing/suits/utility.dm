@@ -35,12 +35,11 @@
 	icon_state = "firesuit"
 	item_state = "firefighter"
 
-
 /obj/item/clothing/suit/fire/heavy
 	name = "heavy firesuit"
 	desc = "An old, bulky thermal protection suit."
 	icon_state = "thermal"
-	item_state = "ro_suit"
+	item_state = "firefighter"
 	slowdown = 1.5
 
 /obj/item/clothing/suit/fire/atmos

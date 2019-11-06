@@ -16,10 +16,7 @@
 	var/isGlass = TRUE //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
 /obj/item/reagent_containers/food/drinks/on_reagent_change(changetype)
-	if (gulp_size < 5)
-		gulp_size = 5
-	else
-		gulp_size = max(round(reagents.total_volume / 5), 5)
+	gulp_size = max(round(reagents.total_volume / 5), 5)
 
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
 
@@ -444,7 +441,7 @@
 		crushed_can.icon_state = icon_state
 		qdel(src)
 		return TRUE
-	 . = ..()
+	. = ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/bullet_act(obj/projectile/P)
 	. = ..()
@@ -557,6 +554,7 @@
 	name = "Monkey Energy"
 	desc = "Unleash the ape!"
 	icon_state = "monkey_energy"
+	item_state = "monkey_energy"
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	foodtype = SUGAR | JUNKFOOD
 
