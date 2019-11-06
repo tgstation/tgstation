@@ -25,7 +25,7 @@
     "terser-webpack-plugin": "^2.1.0",
     "url-loader": "^2.2.0",
     "webpack": "^4.40.2",
-    "webpack-build-notifier": "^1.1.1",
+    "webpack-build-notifier": "^2.0.0",
     "webpack-bundle-analyzer": "^3.5.1",
     "webpack-cli": "^3.3.9"
   }

@@ -68,22 +68,19 @@ module.exports = (env = {}, argv) => {
             },
             {
               loader: 'sass-loader',
-              options: {},
-            },
-          ],
-        },
-        {
-          test: /\.css$/,
-          use: [
-            {
-              loader: ExtractCssChunks.loader,
               options: {
-                hot: argv.hot,
+                sassOptions: {
+                  functions: {
+                    // Power function polyfill
+                    'math-pow($number, $exp)': (number, exp) => {
+                      const sass = require('sass');
+                      return new sass.types.Number(Math.pow(
+                        number.getValue(),
+                        exp.getValue()));
+                    },
+                  },
+                },
               },
-            },
-            {
-              loader: 'css-loader',
-              options: {},
             },
           ],
         },
