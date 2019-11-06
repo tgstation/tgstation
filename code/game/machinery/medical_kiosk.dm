@@ -150,6 +150,34 @@
 			trauma_text += trauma_desc
 		trauma_status = "Cerebral traumas detected: patient appears to be suffering from [english_list(trauma_text)]."
 
+<<<<<<< HEAD
+=======
+	var/chem_status = FALSE
+	var/chemical_list= list()
+	var/overdose_list = list("N/A")
+	var/addict_status = "None."
+	var/hallucination_status = "Patient is not hallucinating."
+
+	overdose_list += list("")
+	if(user.reagents.reagent_list.len)	//Chemical Analysis details.
+		chem_status = TRUE
+		for(var/datum/reagent/R in user.reagents.reagent_list)
+			//chemical_list += "[round(R.volume, 0.001)] units of [R.name] [R.overdosed == 1 ? "| OVERDOSING |" : ""]"
+			chemical_list += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
+			overdose_list += list("[R.overdosed == 1 ? " [R.name] |" : ""]")
+	else
+		chemical_list = "Patient contains no reagents"
+		chemical_list = ""
+
+
+	if(user.reagents.addiction_list.len)
+		addict_status = ""
+		for(var/datum/reagent/R in user.reagents.addiction_list)
+			addict_status += "[R.name] | "
+	if (user.hallucinating())
+		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
+
+>>>>>>> Chemical readout is done and looks up to par, shows overdosing, addictions, chems and units.
 	if(user.stat == DEAD || HAS_TRAIT(user, TRAIT_FAKEDEATH))  //Patient status checks.
 		patient_status = "Dead."
 	if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 80)
@@ -177,12 +205,21 @@
 
 	data["kiosk_cost"] = active_price
 	data["patient_name"] = patient_name
+<<<<<<< HEAD
 	data["patient_health"] = (total_health/max_health)*100
 	data["brute_health"] = brute_loss
 	data["burn_health"] = fire_loss
 	data["toxin_health"] = tox_loss
 	data["suffocation_health"] = oxy_loss
 	data["clone_health"] = clone_loss
+=======
+	data["patient_health"] = ((total_health - (chaos_modifier * (rand(1,50)))) / max_health) * 100
+	data["brute_health"] = brute_loss+(chaos_modifier * (rand(1,30)))
+	data["burn_health"] = fire_loss+(chaos_modifier * (rand(1,30)))
+	data["toxin_health"] = tox_loss+(chaos_modifier * (rand(1,30)))
+	data["suffocation_health"] = oxy_loss+(chaos_modifier * (rand(1,30)))
+	data["clone_health"] = clone_loss+(chaos_modifier * (rand(1,30)))
+>>>>>>> Chemical readout is done and looks up to par, shows overdosing, addictions, chems and units.
 	data["brain_health"] = brain_status
 	data["brain_damage"] = brain_loss
 	data["patient_status"] = patient_status
@@ -194,9 +231,22 @@
 	data["bleed_status"] = bleed_status
 	data["blood_levels"] = blood_percent
 	data["blood_status"] = blood_status
+<<<<<<< HEAD
 	data["active_status"] = scan_active ? 0 : 1
 	data["upgrade_active_status"] = upgrade_scan_active ? 0 : 1
 	data["adv_active_status"] = adv_scan_active ? 0 : 1
+=======
+	data["are_chems_present"] = chem_status ? TRUE : FALSE
+	data["chemical_list"] = chemical_list
+	data["overdose_status"] = overdose_list
+	data["addiction_status"] = addict_status
+	data["hallucinating_status"] = hallucination_status
+
+	data["active_status_1"] = scan_active_1 ? 0 : 1 //General Scan Check
+	data["active_status_2"] = scan_active_2 ? 0 : 1	//Symptom Scan Check
+	data["active_status_3"] = scan_active_3 ? 0 : 1	//Radio-Neuro Scan Check
+	data["active_status_4"] = scan_active_4 ? 0 : 1	//Radio-Neuro Scan Check
+>>>>>>> Chemical readout is done and looks up to par, shows overdosing, addictions, chems and units.
 	return data
 
 /obj/machinery/medical_kiosk/ui_act(action,active)

@@ -10,6 +10,7 @@ export const MedicalKiosk = props => {
   return (
     <Fragment>
       <Section title="Health Kiosk"
+<<<<<<< HEAD
         textAlign="center">
         <Box as="span" m={1} textAlign="center">
           Greetings Valued Employee. Please select your desired treatment type from the options below.
@@ -22,12 +23,43 @@ export const MedicalKiosk = props => {
             icon="heartbeat"
             disabled={data.active_status}
             onClick={() => act(ref, 'beginScan')}
+=======
+        textAlign="center"
+        icon="procedures">
+        <Box m={1} textAlign="center">
+          Greetings Valued Employee. Please select your desired diagnosis. Diagnosis costs {data.kiosk_cost} credits.
+          <Box mt={2} />
+          <Button
+            icon="procedures"
+            disabled={!data.active_status_1}
+            tooltip="Reads back exact values of your general health scan."
+            onClick={() => act(ref, 'beginScan_1')}
+            content="General Health Scan" />
+          <Button
+            icon="heartbeat"
+            disabled={!data.active_status_2}
+            tooltip="Provides information based on various non-obvious symptoms, like blood levels or disease status."
+            onClick={() => act(ref, 'beginScan_2')}
+>>>>>>> Chemical readout is done and looks up to par, shows overdosing, addictions, chems and units.
             content="Symptom Based Checkup" />
           <Button
             icon="radiation-alt"
+<<<<<<< HEAD
             disabled={data.active_status}
             onClick={() => act(ref, 'beginScan')}
             content="Neurological/Radiological Scan" />
+=======
+            disabled={!data.active_status_3}
+            tooltip="Provides information about brain trauma and radiation."
+            onClick={() => act(ref, 'beginScan_3')}
+            content="Neurological/Radiological Scan" />
+          <Button
+            icon="mortar-pestle"
+            disabled={!data.active_status_4}
+            tooltip="Provides a list of consumed chemicals, as well as potential side effects."
+            onClick={() => act(ref, 'beginScan_4')}
+            content="Chemical Analysis and Psychoactive Scan" />
+>>>>>>> Chemical readout is done and looks up to par, shows overdosing, addictions, chems and units.
         </Box>
       </Section>
       <Section title="Patient Health"
@@ -89,6 +121,7 @@ export const MedicalKiosk = props => {
             label="Disease Status">
             {data.patient_illness}
           </LabeledList.Item>
+<<<<<<< HEAD
           <LabeledList.Item
             label="Disease information">
             {data.illness_info}
@@ -102,6 +135,40 @@ export const MedicalKiosk = props => {
               color="bad">                  
               <AnimatedNumber value={data.blood_levels} />
             </ProgressBar>
+=======
+        </Section>
+      )}
+      {data.active_status_4 === 0 && (
+        <Section title="Chemical and Psychoactive Analysis"
+          textAlign="center">
+          <LabeledList.Item label="Chemical Contents">
+            {data.are_chems_present ? (
+              data.chemical_list.length ? (
+                data.chemical_list.map(specificChem => (
+                  <Box
+                    key={specificChem.id}
+                    color="good" >
+                    {specificChem.volume} units of {specificChem.name}
+                  </Box>
+                ))
+              ) : (
+                <Box content="No reagents detected." />
+              )
+            ) : (
+              <Box color="average" content="No reagents detected." /> 
+            )}
+				
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Overdose Status"
+            color="bad">
+            {data.overdose_status} 
+          </LabeledList.Item>
+          <LabeledList.Item
+            label="Addiction Status"
+            color="good">
+            {data.addiction_status}
+>>>>>>> Chemical readout is done and looks up to par, shows overdosing, addictions, chems and units.
           </LabeledList.Item>
           <LabeledList.Item
             label="Blood Information">
