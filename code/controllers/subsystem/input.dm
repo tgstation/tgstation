@@ -35,6 +35,7 @@ SUBSYSTEM_DEF(input)
 	for(var/i in 1 to clients.len)
 		var/client/user = clients[i]
 		user.set_macros()
+		user.update_movement_keys()
 
 /datum/controller/subsystem/input/fire()
 	var/list/clients = GLOB.clients // Let's sing the list cache song
