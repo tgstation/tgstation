@@ -1066,7 +1066,7 @@
 	self_consuming = TRUE
 
 /datum/reagent/medicine/penthrite/on_mob_metabolize(mob/living/M)
-	..()
+	. = ..()
 	if(prob(10))
 		M.adjustOrganLoss(ORGAN_SLOT_STOMACH,-REM)
 	M.dizziness += 1
@@ -1076,7 +1076,7 @@
 
 /datum/reagent/medicine/penthrite/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
-	..()
+	. = ..()
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"
