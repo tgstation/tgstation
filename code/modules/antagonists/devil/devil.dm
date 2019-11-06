@@ -522,7 +522,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	give_appropriate_spells()
 	var/mob/living/M = mob_override || owner.current
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
-	handle_clown_mutation(M, mob_override ? null : "Your infernal nature has allowed you to overcome your clownishness.", TRUE)
+	handle_clown_mutation(M, mob_override ? null : "Your infernal nature has allowed you to overcome your clownishness.")
 	owner.current.grant_all_languages(TRUE)
 	update_hud()
 	.=..()
