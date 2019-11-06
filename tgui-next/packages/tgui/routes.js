@@ -27,7 +27,11 @@ import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
+<<<<<<< HEAD
 import { KitchenSink } from './interfaces/KitchenSink';
+=======
+import { Gps } from './interfaces/Gps';
+>>>>>>> 13abb720b5... GPS, suit storage, and tank dispenser tgui-next (#47480)
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { Mint } from './interfaces/Mint';
 import { OperatingComputer } from './interfaces/OperatingComputer';
@@ -36,6 +40,12 @@ import { PortableGenerator } from './interfaces/PortableGenerator';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
 import { SMES } from './interfaces/SMES';
+<<<<<<< HEAD
+=======
+import { SolarControl } from './interfaces/SolarControl';
+import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
+import { TankDispenser } from './interfaces/TankDispenser';
+>>>>>>> 13abb720b5... GPS, suit storage, and tank dispenser tgui-next (#47480)
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
@@ -171,6 +181,10 @@ const ROUTES = {
     component: () => DisposalUnit,
     scrollable: false,
   },
+  gps: {
+    component: () => Gps,
+    scrollable: true,
+  },
   language_menu: {
     component: () => LanguageMenu,
     scrollable: true,
@@ -203,6 +217,21 @@ const ROUTES = {
     component: () => SMES,
     scrollable: false,
   },
+<<<<<<< HEAD
+=======
+  solar_control: {
+    component: () => SolarControl,
+    scrollable: false,
+  },
+  suit_storage_unit: {
+    component: () => SuitStorageUnit,
+    scrollable: false,
+  },
+  tank_dispenser: {
+    component: () => TankDispenser,
+    scrollable: false,
+  },
+>>>>>>> 13abb720b5... GPS, suit storage, and tank dispenser tgui-next (#47480)
   thermomachine: {
     component: () => ThermoMachine,
     scrollable: false,

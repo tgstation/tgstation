@@ -2,12 +2,13 @@ import { classes, pureComponentHooks } from 'common/react';
 import { Box } from './Box';
 
 export const Table = props => {
-  const { className, content, children, ...rest } = props;
+  const { collapsing, className, content, children, ...rest } = props;
   return (
     <Box
       as="table"
       className={classes([
         'Table',
+        collapsing && 'Table--collapsing',
         className,
       ])}
       {...rest}>
