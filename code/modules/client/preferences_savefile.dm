@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	26
+#define SAVEFILE_VERSION_MAX	27
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -127,12 +127,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(S["facial_style_name"])
 			S["facial_style_name"]	>> facial_hairstyle
 			
-	if(current_version < 26)
-		key_bindings = sanitize_islist(key_bindings, deepCopyList(GLOB.keybinding_list_by_key))
-		key_bindings["T"] = list(1 = "say")
-		key_bindings["M"] = list(1 = "me")
-		key_bindings["O"] = list(1 = "ooc")
-		key_bindings["L"] = list(1 = "looc")
+	if(current_version < 27)
+		key_bindings = deepCopyList(GLOB.keybinding_list_by_key)
 		WRITE_FILE(S["key_bindings"], key_bindings)
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
