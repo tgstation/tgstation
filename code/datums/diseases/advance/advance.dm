@@ -469,7 +469,7 @@
 
 		var/list/targets = list("Random")
 		targets += sortNames(GLOB.human_list)
-		var/target = input("Pick a viable human target for the disease.", "Disease Target") as null|anything in targets
+		var/target = input(user, "Pick a viable human target for the disease.", "Disease Target") as null|anything in targets
 
 		var/mob/living/carbon/human/H
 		if(!target)
@@ -477,11 +477,14 @@
 		if(target == "Random")
 			for(var/human in shuffle(GLOB.human_list))
 				H = human
+				var/found = FALSE
 				if(!is_station_level(H.z))
 					continue
 				if(!H.HasDisease(D))
-					H.ForceContractDisease(D)
+					found = H.ForceContractDisease(D)
 					break
+				if(!found)
+					to_chat(user, "Could not find a valid target for the disease.")
 		else
 			H = target
 			if(istype(H) && D.infectable_biotypes & H.mob_biotypes)
@@ -490,9 +493,6 @@
 				to_chat(user, "Target could not be infected. Check mob biotype compatibility or resistances.")
 				return
 
-		var/list/name_symptoms = list()
-		for(var/datum/symptom/S in D.symptoms)
-			name_symptoms += S.name
 		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.admin_details()] in [ADMIN_LOOKUPFLW(H)]")
 		log_virus("[key_name(user)] has triggered a custom virus outbreak of [D.admin_details()] in [H]!")
 
