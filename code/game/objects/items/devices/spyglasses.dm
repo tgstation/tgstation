@@ -18,9 +18,14 @@
 	user.client.add_objs_to_map(buglist)
 	linked_bug.update_view()
 
+/obj/item/clothing/glasses/regular/spy/equipped(mob/user, slot)
+	. = ..()
+	if(slot != SLOT_GLASSES)
+		user.client.close_popup("spypopup")
+
 /obj/item/clothing/glasses/regular/spy/dropped(mob/user)
 	. = ..()
-	user.client.close_popup("spypopup_map")
+	user.client.close_popup("spypopup")
 
 /obj/item/clothing/glasses/regular/spy/verb/activate_remote_view()
 	//yada yada check to see if the glasses are in their eye slot
@@ -35,7 +40,6 @@
 	var/obj/screen/cam_view
 	var/obj/screen/plane_master/lighting/popupmaster 
 	var/cam_range = 1//ranges higher than one can be used to see through walls.
-	var/list/disallowed_clone_types = list(/obj/mecha) 
 
 	var/datum/movement_detector/tracker
 
@@ -60,28 +64,16 @@
 	. = ..()
 	qdel(tracker)
 
-/obj/item/spy_bug/proc/clone_object(var/obj/to_clone)
-	for(var/type in disallowed_clone_types)
-		if(istype(to_clone,type))
-			audible_message("<span class='warning'>[src] lets off a shrill beep!</span>")
-			return
-	icon = to_clone.icon
-	icon_state = to_clone.icon_state
-	name = to_clone.name
-	desc = to_clone.desc
-
-/obj/item/spy_bug/proc/reset_to_init()
-	name = initial(name)
-	icon = initial(icon)
-	icon_state = initial(icon_state)
-	desc = initial(desc)
-
 /obj/item/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
 	cam_view.vis_contents.Cut()
-	for(var/turf/visible_turf in range(1,get_turf(src)))//fuck you usr
+	for(var/turf/visible_turf in view(1,get_turf(src)))//fuck you usr
 		cam_view.vis_contents += visible_turf
 
 //it needs to be linked, hence a kit.
+/obj/item/storage/box/rxglasses/spyglasskit
+	name = "spyglass kit"
+	desc = "this box contains <b>cool</b> nerd glasses; with built-in displays to view a linked camera."
+
 /obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
 	var/obj/item/spy_bug/newbug = new(src)
 	var/obj/item/clothing/glasses/regular/spy/newglasses = new(src)
