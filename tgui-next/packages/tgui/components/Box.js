@@ -1,6 +1,7 @@
-import { classes, pureComponentHooks, isFalsy } from 'common/react';
+import { classes, isFalsy, pureComponentHooks } from 'common/react';
 import { createVNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
+import { CSS_COLORS } from '../constants';
 
 const UNIT_PX = 6;
 
@@ -16,9 +17,10 @@ export const unit = value => {
   }
 };
 
-const isColorCode = str => typeof str === 'string' && (
-  str.startsWith('#') || str.startsWith('rgb')
-);
+const isColorCode = str => !isColorClass(str);
+
+const isColorClass = str => typeof str === 'string'
+  && CSS_COLORS.includes(str);
 
 const mapRawPropTo = attrName => (style, value) => {
   if (!isFalsy(value)) {
@@ -133,7 +135,7 @@ export const Box = props => {
     as,
     classes([
       className,
-      color && !isColorCode(color) && 'color-' + color,
+      isColorClass(color) && 'color-' + color,
     ]),
     content || children,
     ChildFlags.UnknownChildren,

@@ -26,6 +26,28 @@ export const COLORS = {
   },
 };
 
+// Colors defined in CSS
+export const CSS_COLORS = [
+  'black',
+  'white',
+  'red',
+  'orange',
+  'yellow',
+  'olive',
+  'green',
+  'teal',
+  'blue',
+  'violet',
+  'purple',
+  'pink',
+  'brown',
+  'grey',
+  'good',
+  'average',
+  'bad',
+  'label',
+];
+
 export const RADIO_CHANNELS = [
   {
     name: 'Syndicate',
