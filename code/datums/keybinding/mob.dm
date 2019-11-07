@@ -57,7 +57,7 @@
 
 /datum/keybinding/mob/stop_pulling/down(client/user)
 	var/mob/M = user.mob
-	if (M.pulling)
+	if(!M.pulling)
 		to_chat(user, "<span class='notice'>You are not pulling anything.</span>")
 	else
 		M.stop_pulling()
@@ -158,6 +158,17 @@
 	return TRUE
 
 /datum/keybinding/mob/toggle_move_intent/up(client/user)
+	var/mob/M = user.mob
+	M.toggle_move_intent()
+	return TRUE
+
+/datum/keybinding/mob/toggle_move_intent_alternative
+	key = "Unbound"
+	name = "toggle_move_intent_alt"
+	full_name = "press to cycle move intent"
+	description = "Pressing this cycle to the opposite move intent, does not cycle back"
+
+/datum/keybinding/mob/toggle_move_intent_alternative/down(client/user)
 	var/mob/M = user.mob
 	M.toggle_move_intent()
 	return TRUE
