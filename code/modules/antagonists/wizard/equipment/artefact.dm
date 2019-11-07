@@ -449,8 +449,7 @@
 	if(interrupted(user))
 		return
 	on_cooldown = 2
-	sleep(40)
-	on_cooldown = 0
+	addtimer(VARSET_CALLBACK(src, on_cooldown, 0), 4 SECONDS)
 
 /obj/item/warpwhistle/Destroy()
 	if(on_cooldown == 1 && last_user) //Flute got dunked somewhere in the teleport
