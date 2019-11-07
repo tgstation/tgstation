@@ -91,7 +91,7 @@
 	var/ignorelistcleanuptimer = 1 // This ticks up every automated action, at 300 we clean the ignore list
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
 
-	var/commissioned = 0 // Will other (noncommissioned) bots salute this bot?
+	var/commissioned = FALSE // Will other (noncommissioned) bots salute this bot?
 	var/can_salute = TRUE
 	var/salute_delay = 600 // how long between salutes in deciseconds
 
@@ -245,15 +245,12 @@
 		return
 
 	if(can_salute)
-		var/in_view = get_hearers_in_view(5, get_turf(src))
-		for(var/mob/living/L in in_view)
-			if(isbot(L))
-				var/mob/living/simple_animal/bot/B = L
-				if(B.commissioned && !src.commissioned)
-					src.visible_message("<b>[src.name]</b> performs an elaborate salute for [B]!")
-					can_salute = FALSE
-					addtimer(VARSET_CALLBACK(src, can_salute, TRUE), salute_delay)
-					break
+		for(var/mob/living/simple_animal/bot/B in get_hearers_in_view(5, get_turf(src)))
+			if(B.commissioned && !src.commissioned)
+				src.visible_message("<b>[src.name]</b> performs an elaborate salute for [B]!")
+				can_salute = FALSE
+				addtimer(VARSET_CALLBACK(src, can_salute, TRUE), salute_delay)
+				break
 
 
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.

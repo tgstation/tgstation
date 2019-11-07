@@ -37,12 +37,9 @@
 	var/weapon_orig_force = 0
 
 	var/list/stolen_valor
-
-
 	var/orig_name
 
 	var/list/officers = list("Admiral", "Spec Ops Officer", "Captain", "Head of Personnel", "Death Commando", "Head of Security")
-
 	var/list/command = list("Admiral" = "Admiral", "Spec Ops Officer" = "Col.", "Captain" = "Cpt.","Head of Personnel" = "Lt.")
 	var/list/security = list("Death Commando" = "Trooper", "Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" =  "Det.", "Security Officer" = "Officer")
 	var/list/engineering = list("Chief Engineer" = "Chief Engineer", "Station Engineer" = "Engineer", "Atmospherics Technician" = "Technician")
@@ -71,7 +68,7 @@
 			if(title in stolen_valor)
 				working_title += pref[title] + " "
 				if(title in officers)
-					commissioned = 1
+					commissioned = TRUE
 				break
 
 	working_title += orig_name
@@ -133,17 +130,14 @@
 
 /mob/living/simple_animal/bot/cleanbot/Crossed(atom/movable/AM)
 	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	if(has_gravity() && ismob(AM) && weapon)
+	if(weapon && has_gravity() && ismob(AM))
 		var/mob/living/carbon/C = AM
 		if(!istype(C) || !C)
 			return
 		weapon.attack(C, src)
 		C.Knockdown(20)
-		var/mob/living/carbon/human/H = C
-		if(!istype(H) || !H || !H.mind)
-			return
-		if(!(H.mind.assigned_role in stolen_valor))
-			stolen_valor += H.mind.assigned_role
+		if(!(C.mind.assigned_role in stolen_valor))
+			stolen_valor += C.mind.assigned_role
 		update_titles()
 		return
 	..()
