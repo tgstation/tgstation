@@ -297,6 +297,19 @@ over the button.
 - `content/children: any` - Content to render inside the button.
 - `onClick: function` - Called when element is clicked.
 
+### `ColorBox`
+
+Displays a 1-character wide colored square. Can be used as a status indicator,
+or for visually representing a color.
+
+If you want to set a background color on an element, use a plain
+[Box](#box) instead.
+
+Props:
+
+- See inherited props: [Box](#box)
+- `color: string` - Color of the box.
+
 ### `Dimmer`
 
 Dims surrounding area to emphasize content placed inside.

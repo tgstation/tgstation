@@ -1,5 +1,5 @@
 import { act } from '../byond';
-import { Box, Button, Section, Table } from '../components';
+import { Box, Button, Section, Table, ColorBox, Icon } from '../components';
 import { COLORS } from '../constants';
 
 const HEALTH_COLOR_BY_LEVEL = [
@@ -11,25 +11,9 @@ const HEALTH_COLOR_BY_LEVEL = [
   '#ed2814',
 ];
 
-const HealthIcon = props => {
-  const { level } = props;
-  return (
-    <Box
-      inline={1}
-      width="16px"
-      height="16px"
-      position="relative"
-      ml={2.5}
-      style={{
-        'background-color': HEALTH_COLOR_BY_LEVEL[level],
-        'vertical-align': 'text-bottom',
-      }} />
-  );
-};
+const jobIsHead = jobId => jobId % 10 === 0;
 
-const isHead = jobId => jobId % 10 === 0;
-
-const deptClass = jobId => {
+const jobToColor = jobId => {
   if (jobId === 0) {
     return COLORS.department.captain;
   }
@@ -54,9 +38,10 @@ const deptClass = jobId => {
   return COLORS.department.other;
 };
 
-const healthLevel = (oxy, tox, burn, brute) => {
+const healthToColor = (oxy, tox, burn, brute) => {
   const healthSum = oxy + tox + burn + brute;
-  return Math.min(Math.max(Math.ceil(healthSum / 25), 0), 5);
+  const level = Math.min(Math.max(Math.ceil(healthSum / 25), 0), 5);
+  return HEALTH_COLOR_BY_LEVEL[level];
 };
 
 const HealthStat = props => {
@@ -81,16 +66,14 @@ export const CrewConsole = props => {
     <Section minHeight={90}>
       <Table>
         <Table.Row>
-          <Table.Cell bold width="40%">
+          <Table.Cell bold>
             Name
           </Table.Cell>
-          <Table.Cell bold width="5%">
-            Status
-          </Table.Cell>
-          <Table.Cell bold width="20%" textAlign="center">
+          <Table.Cell bold collapsing />
+          <Table.Cell bold collapsing textAlign="center">
             Vitals
           </Table.Cell>
-          <Table.Cell bold collapsing>
+          <Table.Cell bold>
             Position
           </Table.Cell>
           {!!data.link_allowed && (
@@ -102,22 +85,21 @@ export const CrewConsole = props => {
         {sensors.map(sensor => (
           <Table.Row key={sensor.name}>
             <Table.Cell
-              bold={isHead(sensor.ijob)}
-              color={deptClass(sensor.ijob)}>
+              bold={jobIsHead(sensor.ijob)}
+              color={jobToColor(sensor.ijob)}>
               {sensor.name} ({sensor.assignment})
             </Table.Cell>
-            <Table.Cell>
-              <HealthIcon
-                level={healthLevel(
+            <Table.Cell collapsing textAlign="center">
+              <ColorBox
+                color={healthToColor(
                   sensor.oxydam,
                   sensor.toxdam,
                   sensor.brutedam,
                   sensor.brutedam)} />
             </Table.Cell>
-            <Table.Cell textAlign="center">
+            <Table.Cell collapsing textAlign="center">
               {sensor.oxydam !== null ? (
                 <Box inline>
-                  {'('}
                   <HealthStat type="oxy" value={sensor.oxydam} />
                   {'/'}
                   <HealthStat type="toxin" value={sensor.toxdam} />
@@ -125,13 +107,12 @@ export const CrewConsole = props => {
                   <HealthStat type="burn" value={sensor.burndam} />
                   {'/'}
                   <HealthStat type="brute" value={sensor.brutedam} />
-                  {')'}
                 </Box>
               ) : (
                 sensor.life_status ? 'Alive' : 'Dead'
               )}
             </Table.Cell>
-            <Table.Cell collapsing>
+            <Table.Cell>
               {sensor.pos_x !== null ? sensor.area : 'N/A'}
             </Table.Cell>
             {!!data.link_allowed && (
