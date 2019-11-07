@@ -537,8 +537,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 
 /datum/uplink_item/stealthy_weapons/cqc
-	name = "CQC Manual"
-	desc = "A manual that teaches a single user tactical Close-Quarters Combat before self-destructing."
+	name = "CQC Education Chip"
+	desc = "A sleek box containing an AED and CQC Education chip; simply insert the chip and activate the AED to learn Close-Quarters-Combat."
 	item = /obj/item/storage/box/syndicate/cqc
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cost = 13
@@ -566,8 +566,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 2
 
 /datum/uplink_item/stealthy_weapons/martialarts
-	name = "Martial Arts Scroll"
-	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
+	name = "The Sleeping Carp Box"
+	desc = "A sleek box containing an AED and a Sleeping Carp education chip; simply insert the chip and activate the AED to learn the Martial Art. You will master unarmed combat, \
 			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/storage/box/syndicate/carp
 	cost = 17

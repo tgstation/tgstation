@@ -20,10 +20,10 @@
     to_chat(usr, "<span class='warning'>There is nothing loaded in the [src]!</span>")
     return
   for(var/obj/item/education_chip/E in src.contents)
-    var/datum/martial_art/MA = new E.subject
     if(!E.subject)
       to_chat(usr, "<span class='warning'>The Education Chip doesn't have a subject!</span>")
       return
+    var/datum/martial_art/MA = new E.subject
     if(usr.mind.has_martialart(initial(MA.id)))
       to_chat(usr,"<span class='warning'>You already know [E.subject_name]!</span>")
       return
@@ -31,8 +31,11 @@
     to_chat(usr, "[E.greet]")
     MA.teach(usr)
     usr.log_message("learned the subject [E.subject_name] ([MA])", LOG_ATTACK, color="orange")
+    qdel(E)
+    new /obj/item/education_chip(src)
 
 
+////Education Chips////
 
 /obj/item/education_chip
   name = "Empty Education Chip"
@@ -80,3 +83,13 @@
 /obj/item/education_chip/plasma_fist/Initialize()
   . = ..()
   add_overlay("edchip_pfist")
+
+/obj/item/education_chip/krav_maga
+  name = "Krava Maga Education Chip"
+  desc = "An education chip containing the martial art of Krav Maga. Insert into an Automatic Education Device to learn."
+  subject = /datum/martial_art/krav_maga
+  subject_name = "Krav Maga"
+
+/obj/item/education_chip/krav_maga/Initialize()
+  . = ..()
+  add_overlay("edchip_cqc")
