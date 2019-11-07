@@ -98,7 +98,14 @@ const renderLayout = () => {
 // Parse JSON and report all abnormal JSON strings coming from BYOND
 const parseStateJson = json => {
   try {
-    return JSON.parse(json);
+    return JSON.parse(json, (key, value) => {
+      if (typeof value === 'object' && value !== null) {
+        if (value.__number__) {
+          return parseFloat(value.__number__);
+        }
+      }
+      return value;
+    });
   }
   catch (err) {
     logger.error('JSON parsing error: ' + err.message + '\n' + json);

@@ -93,7 +93,7 @@ export const PersonalCrafting = props => {
   const craftingRecipes = map((subcategory, category) => {
     const hasSubcats = ('has_subcats' in subcategory);
     const firstSubcatName = Object.keys(subcategory)
-      .find(name => name !== 'has_cubcats');
+      .find(name => name !== 'has_subcats');
     return {
       category,
       subcategory,
