@@ -312,8 +312,10 @@
 /mob/living/simple_animal/gib()
 	if(butcher_results || guaranteed_butcher_results)
 		var/atom/Tsec = drop_location()
-		for(var/path in guaranteed_butcher_results + butcher_results)
-			new path(Tsec)
+		var/list/butcher = butcher_results + guaranteed_butcher_results
+		for(var/path in butcher)
+			for(var/i in 1 to butcher[path])
+				new path(Tsec)
 	..()
 
 /mob/living/simple_animal/gib_animation()
