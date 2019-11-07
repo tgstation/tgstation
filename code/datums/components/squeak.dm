@@ -59,8 +59,8 @@
 		var/obj/item/I = AM
 		if(I.item_flags & ABSTRACT)
 			return
-		else if(istype(AM, /obj/item/projectile))
-			var/obj/item/projectile/P = AM
+		else if(istype(AM, /obj/projectile))
+			var/obj/projectile/P = AM
 			if(P.original != parent)
 				return
 	if(istype(AM, /obj/effect/dummy/phased_mob)) //don't squeek if they're in a phased/jaunting container.

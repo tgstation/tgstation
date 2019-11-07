@@ -147,7 +147,7 @@
 	return ..()
 
 /obj/machinery/scanner_gate/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "scanner_gate", name, ui_x, ui_y, master_ui, state)
 		ui.open()
@@ -167,14 +167,14 @@
 		return
 	switch(action)
 		if("set_mode")
-			var/new_mode = input("Choose the scan mode","Scan Mode") as null|anything in list(SCANGATE_NONE,
+			var/new_mode = input("Choose the scan mode","Scan Mode") as null|anything in sortList(list(SCANGATE_NONE,
 																								SCANGATE_MINDSHIELD,
 																								SCANGATE_NANITES,
 																								SCANGATE_DISEASE,
 																								SCANGATE_GUNS,
 																								SCANGATE_WANTED,
 																								SCANGATE_SPECIES,
-																								SCANGATE_NUTRITION)
+																								SCANGATE_NUTRITION))
 			if(new_mode)
 				scangate_mode = new_mode
 			. = TRUE
@@ -182,13 +182,13 @@
 			reverse = !reverse
 			. = TRUE
 		if("set_disease_threshold")
-			var/new_threshold = input("Set disease threshold","Scan Mode") as null|anything in list(DISEASE_SEVERITY_POSITIVE,
+			var/new_threshold = input("Set disease threshold","Scan Mode") as null|anything in sortList(list(DISEASE_SEVERITY_POSITIVE,
 																								DISEASE_SEVERITY_NONTHREAT,
 																								DISEASE_SEVERITY_MINOR,
 																								DISEASE_SEVERITY_MEDIUM,
 																								DISEASE_SEVERITY_HARMFUL,
 																								DISEASE_SEVERITY_DANGEROUS,
-																								DISEASE_SEVERITY_BIOHAZARD)
+																								DISEASE_SEVERITY_BIOHAZARD))
 			if(new_threshold)
 				disease_threshold = new_threshold
 			. = TRUE
@@ -199,7 +199,7 @@
 			. = TRUE
 		//Some species are not scannable, like abductors (too unknown), androids (too artificial) or skeletons (too magic)
 		if("set_target_species")
-			var/new_species = input("Set target species","Scan Mode") as null|anything in list("Human",
+			var/new_species = input("Set target species","Scan Mode") as null|anything in sortList(list("Human",
 																								"Lizardperson",
 																								"Flyperson",
 																								"Plasmaman",
@@ -207,7 +207,7 @@
 																								"Jellyperson",
 																								"Podperson",
 																								"Golem",
-																								"Zombie")
+																								"Zombie"))
 			if(new_species)
 				switch(new_species)
 					if("Human")
@@ -230,8 +230,8 @@
 						detect_species = /datum/species/zombie
 			. = TRUE
 		if("set_target_nutrition")
-			var/new_nutrition = input("Set target nutrition level","Scan Mode") as null|anything in list("Starving",
-																											"Obese")
+			var/new_nutrition = input("Set target nutrition level","Scan Mode") as null|anything in sortList(list("Starving",
+																											"Obese"))
 			if(new_nutrition)
 				switch(new_nutrition)
 					if("Starving")

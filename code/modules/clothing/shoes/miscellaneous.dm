@@ -29,10 +29,9 @@
 	desc = "A pair of rather plain wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
-	strip_delay = 50
+	strip_delay = 5
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
-	strip_delay = 5
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -368,12 +367,12 @@
 	if(user.stat || !(user.mobility_flags & MOBILITY_USE) || user.restrained() || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
 		return
 	if(occupants.len >= max_occupants)
-		to_chat(user, "<span class='notice'>[src] are full!</span>")
+		to_chat(user, "<span class='warning'>[src] are full!</span>")
 		return
 	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
 		occupants += target
 		target.forceMove(src)
-		to_chat(user, "<span class='notice'>[target] slithers into [src]</span>")
+		to_chat(user, "<span class='notice'>[target] slithers into [src].</span>")
 
 /obj/item/clothing/shoes/cowboy/container_resist(mob/living/user)
 	if(!do_after(user, 10, target = user))
@@ -415,3 +414,8 @@
 	loot = list(
 		/obj/item/clothing/shoes/cowboy/lizard = 7,
 		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1)
+		
+/obj/item/clothing/shoes/cookflops
+	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"
+	name = "grilling sandals"
+	icon_state = "cookflops"

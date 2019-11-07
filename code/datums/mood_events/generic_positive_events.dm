@@ -100,6 +100,14 @@
 	description = "<span class='nicegreen'>My family heirloom is safe with me.</span>\n"
 	mood_change = 1
 
+/datum/mood_event/fan_clown_pin
+	description = "<span class='nicegreen'>I love showing off my clown pin!</span>\n"
+	mood_change = 1
+
+/datum/mood_event/fan_mime_pin
+	description = "<span class='nicegreen'>I love showing off my mime pin!</span>\n"
+	mood_change = 1
+
 /datum/mood_event/goodmusic
 	description = "<span class='nicegreen'>There is something soothing about this music.</span>\n"
 	mood_change = 3
@@ -152,6 +160,22 @@
 	description = "<span class='nicegreen'>I just love my robotical friends!</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
+
+/datum/mood_event/bottle_flip
+	description = "<span class='nicegreen'>The bottle landing like that was satisfying.</span>\n"
+	mood_change = 2
+	timeout = 3 MINUTES
+  
+/datum/mood_event/hope_lavaland
+	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
+	mood_change = 5
+  
+/datum/mood_event/nanite_happiness
+	description = "<span class='nicegreen robot'>+++++++HAPPINESS ENHANCEMENT+++++++</span>\n"
+	mood_change = 7
+
+/datum/mood_event/nanite_happiness/add_effects(message)
+	description = "<span class='nicegreen robot'>+++++++[message]+++++++</span>\n"
 
 /datum/mood_event/area
 	description = "" //Fill this out in the area

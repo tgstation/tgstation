@@ -182,11 +182,12 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/porta_turret_cover,
+/obj/structure/fluff/oldturret,
+/obj/structure/fluff/oldturret,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bg" = (
-/obj/machinery/porta_turret_cover,
+/obj/structure/fluff/oldturret,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bh" = (
@@ -356,7 +357,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bP" = (
-/obj/machinery/porta_turret_cover,
+/obj/structure/fluff/oldturret,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bQ" = (
@@ -392,6 +393,10 @@
 "bV" = (
 /obj/structure/rack,
 /obj/item/circuitboard/machine/circuit_imprinter,
+/obj/item/aiModule/core/full/drone{
+	pixel_x = -4;
+	pixel_y = -2
+	},
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/ai_upload)
 "bW" = (
@@ -1259,7 +1264,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "fw" = (
-/obj/effect/mob_spawn/drone/dusty,
+/obj/effect/mob_spawn/drone/derelict,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/access)
 "fx" = (
@@ -1980,7 +1985,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "in" = (
-/obj/effect/mob_spawn/drone/dusty,
+/obj/effect/mob_spawn/drone/derelict,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "io" = (
@@ -2871,7 +2876,7 @@
 	},
 /area/ruin/space/derelict/atmospherics)
 "lO" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector,
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste,
 /turf/open/floor/engine/air{
 	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
 	},
@@ -3424,7 +3429,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/effect/mob_spawn/drone/dusty,
+/obj/effect/mob_spawn/drone/derelict,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "nV" = (
@@ -3663,7 +3668,8 @@
 "ES" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/turf/open/floor/plasteel/airless,
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "Gu" = (
 /obj/structure/grille,
@@ -3673,6 +3679,10 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
+"GP" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "Ih" = (
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged3"
@@ -3725,6 +3735,10 @@
 "KN" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/hallway/primary/port)
+"KP" = (
+/obj/item/dronespeak_manual,
+/turf/open/floor/plasteel/airless,
+/area/ruin/space/derelict/bridge/ai_upload)
 "KS" = (
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plasteel/airless,
@@ -3805,6 +3819,7 @@
 "Qt" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
+/obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "Rd" = (
@@ -3837,6 +3852,13 @@
 "Uz" = (
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"UG" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/derelict/bridge/ai_upload)
 "Vt" = (
 /obj/structure/cable,
 /turf/closed/indestructible/riveted{
@@ -3884,17 +3906,14 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
-"ZA" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/ruin/space/derelict/bridge/ai_upload)
 "ZB" = (
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
+"ZM" = (
+/obj/machinery/droneDispenser/derelict,
+/turf/open/floor/plasteel,
+/area/ruin/space/derelict/bridge/access)
 
 (1,1,1) = {"
 aa
@@ -10359,10 +10378,10 @@ bj
 ax
 bG
 Ob
-bO
-bz
-bO
-ax
+xr
+GP
+YQ
+ce
 aa
 aa
 aa
@@ -10475,7 +10494,7 @@ bE
 bO
 bO
 bO
-ax
+ce
 aa
 aa
 aa
@@ -10588,7 +10607,7 @@ Lr
 xr
 YQ
 LX
-ZA
+UG
 ce
 ce
 ce
@@ -10706,7 +10725,7 @@ bj
 bj
 bj
 cs
-cx
+ZM
 cF
 cx
 cT
@@ -11151,7 +11170,7 @@ bW
 Zu
 bz
 rC
-bz
+KP
 vo
 bW
 bj

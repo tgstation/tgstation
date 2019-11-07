@@ -16,9 +16,8 @@
 	var/lastfired = 0
 	var/shot_delay = 15
 	var/shoot_sound = 'sound/weapons/laser.ogg'
-	var/projectile = /obj/item/projectile/beam/disabler
-	var/fair_market_projectile = /obj/item/projectile/bullet/c38 // For shooting the worst scumbags of all: the poor
-	do_footstep = TRUE
+	var/projectile = /obj/projectile/beam/disabler
+	var/fair_market_projectile = /obj/projectile/bullet/c38 // For shooting the worst scumbags of all: the poor
 
 /mob/living/simple_animal/bot/secbot/ed209/Initialize(mapload)
 	. = ..()
@@ -62,9 +61,9 @@
 /mob/living/simple_animal/bot/secbot/ed209/proc/set_weapon()  //used to update the projectile type and firing sound
 	shoot_sound = 'sound/weapons/laser.ogg'
 	if(emagged == 2)
-		projectile = /obj/item/projectile/beam
+		projectile = /obj/projectile/beam
 	else
-		projectile = /obj/item/projectile/beam/disabler
+		projectile = /obj/projectile/beam/disabler
 
 /mob/living/simple_animal/bot/secbot/ed209/proc/shootAt(mob/target)
 	if(world.time <= lastfired + shot_delay)
@@ -80,7 +79,7 @@
 	if(!projectile)
 		return
 
-	var/obj/item/projectile/A = new projectile (loc)
+	var/obj/projectile/A = new projectile (loc)
 	playsound(src, shoot_sound, 50, TRUE)
 	A.preparePixelProjectile(target, src)
 	A.fire()

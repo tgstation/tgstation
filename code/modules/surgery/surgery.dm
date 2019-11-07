@@ -2,23 +2,23 @@
 	var/name = "surgery"
 	var/desc = "surgery description"
 	var/status = 1
-	var/list/steps = list()									//Steps in a surgery
+	var/list/steps = list()										//Steps in a surgery
 	var/step_in_progress = FALSE								//Actively performing a Surgery
 	var/can_cancel = TRUE										//Can cancel this surgery after step 1 with cautery
-	var/list/target_mobtypes = list(/mob/living/carbon/human)		//Acceptable Species
-	var/location = BODY_ZONE_CHEST							//Surgery location
-	var/requires_bodypart_type = BODYPART_ORGANIC			//Prevents you from performing an operation on incorrect limbs. 0 for any limb type
-	var/list/possible_locs = list() 						//Multiple locations
+	var/list/target_mobtypes = list(/mob/living/carbon/human)	//Acceptable Species
+	var/location = BODY_ZONE_CHEST								//Surgery location
+	var/requires_bodypart_type = BODYPART_ORGANIC				//Prevents you from performing an operation on incorrect limbs. 0 for any limb type
+	var/list/possible_locs = list() 							//Multiple locations
 	var/ignore_clothes = FALSE									//This surgery ignores clothes
-	var/mob/living/carbon/target							//Operation target mob
-	var/obj/item/bodypart/operated_bodypart					//Operable body part
-	var/requires_bodypart = TRUE							//Surgery available only when a bodypart is present, or only when it is missing.
-	var/success_multiplier = 0								//Step success propability multiplier
+	var/mob/living/carbon/target								//Operation target mob
+	var/obj/item/bodypart/operated_bodypart						//Operable body part
+	var/requires_bodypart = TRUE								//Surgery available only when a bodypart is present, or only when it is missing.
+	var/speed_modifier = 0										//Step speed modifier
 	var/requires_real_bodypart = FALSE							//Some surgeries don't work on limbs that don't really exist
-	var/lying_required = TRUE								//Does the vicitm needs to be lying down.
-	var/self_operable = FALSE								//Can the surgery be performed on yourself.
-	var/requires_tech = FALSE								//handles techweb-oriented surgeries, previously restricted to the /advanced subtype (You still need to add designs)
-	var/replaced_by											//type; doesn't show up if this type exists. Set to /datum/surgery if you want to hide a "base" surgery (useful for typing parents IE healing.dm just make sure to null it out again)
+	var/lying_required = TRUE									//Does the vicitm needs to be lying down.
+	var/self_operable = FALSE									//Can the surgery be performed on yourself.
+	var/requires_tech = FALSE									//handles techweb-oriented surgeries, previously restricted to the /advanced subtype (You still need to add designs)
+	var/replaced_by												//type; doesn't show up if this type exists. Set to /datum/surgery if you want to hide a "base" surgery (useful for typing parents IE healing.dm just make sure to null it out again)
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
@@ -66,23 +66,25 @@
 				return TRUE
 
 	var/turf/T = get_turf(patient)
-	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
-	if(table)
-		if(table.computer.stat & (NOPOWER|BROKEN))
-			return .
-		if(replaced_by in table.computer.advanced_surgeries)
-			return FALSE
-		if(type in table.computer.advanced_surgeries)
-			return TRUE
 
-	var/obj/machinery/stasis/the_stasis_bed = locate(/obj/machinery/stasis, T)
-	if(the_stasis_bed?.op_computer)
-		if(the_stasis_bed.op_computer.stat & (NOPOWER|BROKEN))
-			return .
-		if(replaced_by in the_stasis_bed.op_computer.advanced_surgeries)
-			return FALSE
-		if(type in the_stasis_bed.op_computer.advanced_surgeries)
-			return TRUE
+	//Get the relevant operating computer
+	var/obj/machinery/computer/operating/opcomputer
+	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
+	if(table?.computer)
+		opcomputer = table.computer
+	else
+		var/obj/machinery/stasis/the_stasis_bed = locate(/obj/machinery/stasis, T)
+		if(the_stasis_bed?.op_computer)
+			opcomputer = the_stasis_bed.op_computer
+
+	if(!opcomputer)
+		return
+	if(opcomputer.stat & (NOPOWER|BROKEN))
+		return .
+	if(replaced_by in opcomputer.advanced_surgeries)
+		return FALSE
+	if(type in opcomputer.advanced_surgeries)
+		return TRUE
 
 /datum/surgery/proc/next_step(mob/user, intent)
 	if(location != user.zone_selected)
@@ -119,21 +121,6 @@
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
 	qdel(src)
 
-/datum/surgery/proc/get_propability_multiplier()
-	var/propability = 0.5
-	var/turf/T = get_turf(target)
-
-	if(locate(/obj/structure/table/optable, T))
-		propability = 1
-	else if(locate(/obj/machinery/stasis, T))
-		propability = 0.9
-	else if(locate(/obj/structure/table, T))
-		propability = 0.8
-	else if(locate(/obj/structure/bed, T))
-		propability = 0.7
-
-	return propability + success_multiplier
-
 /datum/surgery/advanced
 	name = "advanced surgery"
 	requires_tech = TRUE
@@ -142,14 +129,14 @@
 	name = "Surgery Procedure Disk"
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	icon_state = "datadisk1"
-	materials = list(/datum/material/iron=300, /datum/material/glass=100)
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
 	var/list/surgeries
 
 /obj/item/disk/surgery/debug
 	name = "Debug Surgery Disk"
 	desc = "A disk that contains all existing surgery procedures."
 	icon_state = "datadisk1"
-	materials = list(/datum/material/iron=300, /datum/material/glass=100)
+	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
 
 /obj/item/disk/surgery/debug/Initialize()
 	. = ..()

@@ -195,89 +195,107 @@
 // Language menu
 	using = new /obj/screen/language_menu
 	using.screen_loc = ui_borg_language_menu
+	using.hud = src
 	static_inventory += using
 
 //AI core
 	using = new /obj/screen/ai/aicore()
 	using.screen_loc = ui_ai_core
+	using.hud = src
 	static_inventory += using
 
 //Camera list
 	using = new /obj/screen/ai/camera_list()
 	using.screen_loc = ui_ai_camera_list
+	using.hud = src
 	static_inventory += using
 
 //Track
 	using = new /obj/screen/ai/camera_track()
 	using.screen_loc = ui_ai_track_with_camera
+	using.hud = src
 	static_inventory += using
 
 //Camera light
 	using = new /obj/screen/ai/camera_light()
 	using.screen_loc = ui_ai_camera_light
+	using.hud = src
 	static_inventory += using
 
 //Crew Monitoring
 	using = new /obj/screen/ai/crew_monitor()
 	using.screen_loc = ui_ai_crew_monitor
+	using.hud = src
 	static_inventory += using
 
 //Crew Manifest
 	using = new /obj/screen/ai/crew_manifest()
 	using.screen_loc = ui_ai_crew_manifest
+	using.hud = src
 	static_inventory += using
 
 //Alerts
 	using = new /obj/screen/ai/alerts()
 	using.screen_loc = ui_ai_alerts
+	using.hud = src
 	static_inventory += using
 
 //Announcement
 	using = new /obj/screen/ai/announcement()
 	using.screen_loc = ui_ai_announcement
+	using.hud = src
 	static_inventory += using
 
 //Shuttle
 	using = new /obj/screen/ai/call_shuttle()
 	using.screen_loc = ui_ai_shuttle
+	using.hud = src
 	static_inventory += using
 
 //Laws
 	using = new /obj/screen/ai/state_laws()
 	using.screen_loc = ui_ai_state_laws
+	using.hud = src
 	static_inventory += using
 
 //PDA message
 	using = new /obj/screen/ai/pda_msg_send()
 	using.screen_loc = ui_ai_pda_send
+	using.hud = src
 	static_inventory += using
 
 //PDA log
 	using = new /obj/screen/ai/pda_msg_show()
 	using.screen_loc = ui_ai_pda_log
+	using.hud = src
 	static_inventory += using
 
 //Take image
 	using = new /obj/screen/ai/image_take()
 	using.screen_loc = ui_ai_take_picture
+	using.hud = src
 	static_inventory += using
 
 //View images
 	using = new /obj/screen/ai/image_view()
 	using.screen_loc = ui_ai_view_images
+	using.hud = src
 	static_inventory += using
 
 //Medical/Security sensors
 	using = new /obj/screen/ai/sensors()
 	using.screen_loc = ui_ai_sensor
+	using.hud = src
 	static_inventory += using
 
 //Multicamera mode
 	using = new /obj/screen/ai/multicam()
 	using.screen_loc = ui_ai_multicam
+	using.hud = src
 	static_inventory += using
 
 //Add multicamera camera
 	using = new /obj/screen/ai/add_multicam()
 	using.screen_loc = ui_ai_add_multicam
+	using.hud = src
 	static_inventory += using

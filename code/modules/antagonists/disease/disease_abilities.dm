@@ -302,7 +302,7 @@ new /datum/disease_ability/symptom/powerful/youth
 	name = "Involuntary Coughing"
 	symptoms = list(/datum/symptom/cough)
 	short_desc = "Cause victims to cough intermittently."
-	long_desc = "Cause victims to cough intermittently, spreading your infection if your transmissibility is high."
+	long_desc = "Cause victims to cough intermittently, spreading your infection."
 
 /datum/disease_ability/symptom/mild/sneeze
 	name = "Involuntary Sneezing"
