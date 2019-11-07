@@ -557,7 +557,6 @@
 						selected_reaction = competitor
 			var/list/cached_required_reagents = selected_reaction.required_reagents
 			var/list/cached_results = selected_reaction.results
-			var/special_react_result = selected_reaction.check_special_react(src)
 			var/list/multiplier = INFINITY
 
 			//Splits reactions into two types; FermiChem is advanced reaction mechanics, Other is default reaction.
