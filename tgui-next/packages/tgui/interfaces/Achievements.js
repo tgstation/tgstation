@@ -1,7 +1,4 @@
-import { Fragment } from 'inferno';
-import { act } from '../byond';
 import { Box, Tabs, LabeledList, Section } from '../components';
-import { LabeledListItem } from '../components/LabeledList';
 
 export const Achievement = props => {
   const {
@@ -61,16 +58,14 @@ export const Achievements = props => {
             {data.achievements
               .filter(x => x.category === category)
               .map(achievement => {
-                if (achievement.score)
-                {
+                if (achievement.score) {
                   return (<Score
                     name={achievement.name}
                     desc={achievement.desc}
                     icon_class={achievement.icon_class}
                     value={achievement.value} />);
                 }
-                else
-                {
+                else {
                   return (<Achievement
                     name={achievement.name}
                     desc={achievement.desc}
@@ -86,13 +81,12 @@ export const Achievements = props => {
         {data.highscore.map(highscore => {
           return (
             <Section key={highscore.name} title={highscore.name}>
-              <LabeledList>
-                {
-                  Object.keys(highscore.scores).map(key =>
-                  {
-                    return (<LabeledListItem key={key} label={key}>{highscore.scores[key]}</LabeledListItem>);
-                  })
-                }
+              <LabeledList>{ Object.keys(highscore.scores).map(key => {
+                return (
+                  <LabeledList.Item key={key} label={key}>
+                    {highscore.scores[key]}
+                  </LabeledList.Item>);
+              })}
               </LabeledList>
             </Section>);
         })}
