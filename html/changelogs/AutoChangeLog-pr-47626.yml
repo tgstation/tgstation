@@ -1,7 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - rscadd: "Movement keys are now customizable"
-  - rscdel: "T, O and M are no longer customizable"
-  - rscdel: "admin commands for messing with movement keys, this won't work since they're different for each client"
-  - bugfix: "ooc, say and me are all escapable now and no longer lag at higher pings"
