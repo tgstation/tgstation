@@ -320,7 +320,7 @@ BLIND     // can't see anything
 	if(damage_flag == "bomb" || damage_flag == "melee")
 		var/turf/T = get_turf(src)
 		//so the shred survives potential turf change from the explosion.
-		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(name)), 1)
+		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(T, name)), 1)
 		deconstruct(FALSE)
 	else
 		..()
