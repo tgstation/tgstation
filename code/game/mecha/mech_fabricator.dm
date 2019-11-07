@@ -46,7 +46,7 @@
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
-		rmat.set_local_size((200000 + (T*50000)))
+			rmat.set_local_size((200000 + (T*50000)))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
 	T = 1.15
@@ -112,12 +112,13 @@
 		for(var/mat_id in materials.materials)
 			var/datum/material/M = mat_id
 			var/amount = materials.materials[mat_id]
+			var/ref = REF(M)
 			output += "<span class=\"res_name\">[M.name]: </span>[amount] cm&sup3;"
 			if(amount >= MINERAL_MATERIAL_AMOUNT)
-				output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=materials.materials[mat_id]'>1</a>\]"
+				output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=[ref]'>1</a>\]"
 				if(amount >= (MINERAL_MATERIAL_AMOUNT * 10))
-					output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=materials.materials[mat_id]'>10</a>\]"
-				output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=materials.materials[mat_id]'>All</a>\]</span>"
+					output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=[ref]'>10</a>\]"
+				output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[ref]'>All</a>\]</span>"
 			output += "<br>"
 	else
 		output += "<font color='red'>No material storage connected, please contact the quartermaster.</font><br>"
@@ -139,22 +140,20 @@
 	return FALSE
 
 /obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D)
-	being_built = D
-	desc = "It's building \a [initial(D.name)]."
 	var/list/res_coef = get_resources_w_coeff(D)
 
 	var/datum/component/material_container/materials = rmat.mat_container
 	if (!materials)
 		say("No access to material storage, please contact the quartermaster.")
-		return 0
+		return FALSE
 	if (rmat.on_hold())
 		say("Mineral access is on hold, please contact the quartermaster.")
-		return 0
+		return FALSE
 	if(!check_resources(D))
 		say("Not enough resources. Queue processing stopped.")
-		temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
-					<a href='?src=[REF(src)];process_queue=1'>Try again</a> | <a href='?src=[REF(src)];clear_temp=1'>Return</a><a>"}
 		return FALSE
+	being_built = D
+	desc = "It's building \a [initial(D.name)]."
 	materials.use_materials(res_coef)
 	rmat.silo_log(src, "built", -1, "[D.name]", res_coef)
 
@@ -392,18 +391,17 @@
 					break
 
 	if(href_list["remove_mat"] && href_list["material"])
-		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/datum/material/Mat = locate(href_list["material"])
-		materials.retrieve_sheets(text2num(href_list["remove_mat"]), Mat)
+		eject_sheets(Mat, text2num(href_list["remove_mat"]))
 
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/do_process_queue()
-	if(processing_queue || being_built)
-		return FALSE
+/obj/machinery/mecha_part_fabricator/proc/do_process_queue()		
+	if(processing_queue || being_built)		
+		return FALSE		
 	processing_queue = 1
-	process_queue()
+	process_queue()		
 	processing_queue = 0
 
 /obj/machinery/mecha_part_fabricator/proc/eject_sheets(eject_sheet, eject_amt)
