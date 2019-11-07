@@ -37,18 +37,18 @@
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
 		GLOB.species_list[S.id] = spath
-	sortList(GLOB.species_list)
+	sortList(GLOB.species_list, /proc/cmp_typepaths_asc)
 
 	//Surgeries
 	for(var/path in subtypesof(/datum/surgery))
 		GLOB.surgeries_list += new path()
-	sortList(GLOB.surgeries_list)
+	sortList(GLOB.surgeries_list, /proc/cmp_typepaths_asc)
 
 	//Materials
 	for(var/path in subtypesof(/datum/material))
 		var/datum/material/D = new path()
 		GLOB.materials_list[D.id] = D
-	sortList(GLOB.materials_list)
+	sortList(GLOB.materials_list, /proc/cmp_typepaths_asc)
 
 	// Keybindings
 	for(var/KB in subtypesof(/datum/keybinding))

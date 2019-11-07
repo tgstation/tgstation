@@ -1,36 +1,37 @@
-# tgui-next
+# tgui
 
 ## Introduction
 
-tgui is a robust user interface framework of /tg/station. It is rendered
-completely in the browser, based on JSON data sent from the server.
-This data flow is always unidirectional, and the only way to make changes
-to the game state is to dispatch actions which are processed on the server,
-in a similar method to native BYOND Topic(). Once the action is processed,
-an updated JSON is sent.
+tgui is a robust user interface framework of /tg/station.
 
-tgui is very different from most UIs you will encounter in BYOND programming,
-and is heavily reliant of Javascript and web technologies as opposed to DM.
-However, if you are familiar with NanoUI (a library which can be found on almost
+tgui is very different from most UIs you will encounter in BYOND programming.
+It is heavily reliant on Javascript and web technologies as opposed to DM.
+If you are familiar with NanoUI (a library which can be found on almost
 every other SS13 codebase), tgui should be fairly easy to pick up.
 
-tgui is a fork of an older tgui (based on Ractive), which is a fork of NanoUI.
-The server-side code (DM) is similar and derived from NanoUI, while the
-clientside is a wholly new project with no code in common.
+## Learn tgui
 
-To get a clearer picture how to create a completely new interface from scratch,
-please refer to this [tutorial document](docs/tutorial-and-examples.md).
-If you don't know how tgui backend works, or have very little knowledge about
-both frontend and backend, or simply want a step by step instruction,
-we recommend you first read the document linked above.
+People come to tgui from different backgrounds and with different
+learning styles. Whether you prefer a more theoretical or a practical
+approach, we hope you’ll find this section helpful.
+
+### Practical tutorial
+
+If you are completely new to frontend and prefer to **learn by doing**,
+start with our [practical tutorial](docs/tutorial-and-examples.md).
+
+### Guides
 
 This project uses **Inferno** - a very fast UI rendering engine with a similar
-API to React. If you are new to Inferno or React, take your time to read
-these documents:
+API to React. Take your time to read these guides:
 
 - [React guide](https://reactjs.org/docs/hello-world.html)
 - [Inferno documentation](https://infernojs.org/docs/guides/components) -
 highlights differences with React.
+
+If you were already familiar with an older, Ractive-based tgui, and want
+to translate concepts between old and new tgui, read this
+[interface conversion guide](docs/converting-old-tgui-interfaces.md).
 
 ## Pre-requisites
 
@@ -51,12 +52,19 @@ You will need these programs to start developing in tgui:
 
 **For MSys2, Git Bash, WSL, Linux or macOS users:**
 
-First and foremost, run `bin/tgui --install-git-hooks` to install merge
-drivers which will help you resolve conflicts when rebasing your branches.
+First and foremost, change your directory to `tgui-next`.
+
+Run `bin/tgui --install-git-hooks` (optional) to install merge drivers
+which will assist you in conflict resolution when rebasing your branches.
+
+Run one of the following:
 
 - `bin/tgui` - build the project in production mode.
-- `bin/tgui --dev` - launch a development server, with live log
-collection, byond cache reloading and hot module replacement.
+- `bin/tgui --dev` - launch a development server.
+  - tgui development server provides you with incremental compilation,
+  hot module replacement and logging facilities in all running instances
+  of tgui. In short, this means that you will instantly see changes in the
+  game as you code it. Very useful, highly recommended.
 - `bin/tgui --dev --reload` - reload byond cache once.
 - `bin/tgui --dev --debug` - run server with debug logging enabled.
 - `bin/tgui --dev --no-hot` - disable hot module replacement (helps when
@@ -74,20 +82,19 @@ If you haven't opened the console already, you can do that by holding
 Shift and right clicking on the `tgui-next` folder, then pressing
 either `Open command window here` or `Open PowerShell window here`.
 
-Run `yarn install`, then:
+Run `yarn install` to install npm dependencies, then one of the following:
 
 - `yarn run build` - build the project in production mode.
-- `yarn run watch` - launch a development server, with live log
-collection, byond cache reloading and hot module replacement.
+- `yarn run watch` - launch a development server.
 - `yarn run lint` - show problems with the code.
 - `yarn run lint --fix` - auto-fix problems with the code.
 - `yarn run analyze` - run a bundle analyzer.
 
-We also got some batch files in store, which are very simple to use:
+We also got some batch files in store, for those who don't like fiddling
+with the console:
 
 - `bin/tgui-build.bat` - build the project in production mode.
-- `bin/tgui-dev-server.bat` - launch a development server, with live log
-collection, cache reloading and hot module replacement.
+- `bin/tgui-dev-server.bat` - launch a development server.
 
 > Remember to always run a full build before submitting a PR. It creates
 > a compressed javascript bundle which is then referenced from DM code.
@@ -170,6 +177,19 @@ animate starting from `0`, and if omitted, it will not play an initial
 animation.
 - `format: function` - Output formatter.
   - Example: `value => Math.round(value)`.
+- `children: function` - Pull a raw number to animate more complex things
+deeper in the DOM tree.
+  - Example: `value => <Icon rotation={value} />`
+
+### `BlockQuote`
+
+Just a block quote, just like this example in markdown:
+
+> Here's an example of a block quote.
+
+Props:
+
+- See inherited props: [Box](#box)
 
 ### `Box`
 
@@ -241,10 +261,15 @@ all available horizontal space.
   - `relative` - Relative positioning.
   - `absolute` - Absolute positioning.
   - `fixed` - Fixed positioning.
-- `top: number` - Vertical position of a positioned element.
-- `bottom: number` - Vertical position of a positioned element.
-- `left: number` - Horizontal position of a positioned element.
-- `right: number` - Horizontal position of a positioned element.
+- `color: string` - An alias to `textColor`.
+- `textColor: string` - Sets text color.
+  - `#ffffff` - Hex format
+  - `rgba(255, 255, 255, 1)` - RGB format
+  - `purple` - Applies an atomic `color-<name>` class to the element.
+  See `styles/color-map.scss`.
+- `backgroundColor: string` - Sets background color.
+  - `#ffffff` - Hex format
+  - `rgba(255, 255, 255, 1)` - RGB format
 
 ### `Button`
 
@@ -253,7 +278,7 @@ Buttons allow users to take actions, and make choices, with a single click.
 Props:
 
 - See inherited props: [Box](#box)
-- `fluid: boolean` - Tells the button to fill all available horizontal space.
+- `fluid: boolean` - Fill all available horizontal space.
 - `icon: string` - Adds an icon to the button.
 - `color: string` - Button color, as defined in `variables.scss`.
   - There is also a special color `transparent` - makes the button
@@ -359,6 +384,36 @@ remaining space is distributed. It can be a length (e.g. `20%`, `5rem`, etc.),
 an `auto` or `content` keyword.
 - `align: string` - This allows the default alignment (or the one specified by align-items) to be overridden for individual flex items. See: [Flex](#flex).
 
+
+### `Grid`
+
+Helps you to divide horizontal space into two or more equal sections.
+It is essentially a single-row `Table`, but with some extra features.
+
+Example:
+
+```jsx
+<Grid>
+  <Grid.Column>
+    <Section title="Section 1" content="Hello world!" />
+  </Grid.Column>
+  <Grid.Column size={2}>
+    <Section title="Section 2" content="Hello world!" />
+  </Grid.Column>
+</Grid>
+```
+
+Props:
+
+- See inherited props: [Table](#table)
+
+### `Grid.Column`
+
+Props:
+
+- See inherited props: [Table.Cell](#table-cell)
+- `size: number` (default: 1) - Size of the column relative to other columns.
+
 ### `Icon`
 
 Renders one of the FontAwesome icons of your choice.
@@ -378,6 +433,25 @@ Props:
 - `name: string` - Icon name.
 - `size: number` - Icon size. `1` is normal size, `2` is two times bigger.
 Fractional numbers are supported.
+- `rotation: number` - Icon rotation, in degrees.
+- `spin: boolean` - Whether an icon should be spinning. Good for load
+indicators.
+
+### `Input`
+
+A basic text input, which allow users to enter text into a UI.
+
+> Input does not support custom font size and height due to the way
+> it's implemented in CSS. Eventually, this needs to be fixed.
+
+Props:
+
+- See inherited props: [Box](#box)
+- `value: string` - Value of an input.
+- `fluid: boolean` - Fill all available horizontal space.
+- `onChange: (e, value) => void` - An event, which fires when you commit
+the text by either unfocusing the input box, or by pressing the Enter key.
+- `onInput: (e, value) => void` - An event, which fires on every keypress.
 
 ### `LabeledList`
 
@@ -440,6 +514,42 @@ Props:
 
 - `size: number` - Size of the divider.
 
+### `NoticeBox`
+
+A notice box, which warns you about something very important.
+
+Props:
+
+- See inherited props: [Box](#box)
+
+### `NumberInput`
+
+A fancy, interactive number input, which you can either drag up and down
+to fine tune the value, or single click it to manually type a number.
+
+Props:
+
+- `animated: boolean` - Animates the value if it was changed externally.
+- `fluid: boolean` - Fill all available horizontal space.
+- `value: number` - Value itself.
+- `unit: string` - Unit to display to the right of value.
+- `minValue: number` - Lowest possible value.
+- `maxValue: number` - Highest possible value.
+- `step: number` (default: 1) - Adjust value by this amount when
+dragging the input.
+- `stepPixelSize: number` (default: 1) - Screen distance mouse needs
+to travel to adjust value by one `step`.
+- `width: string|number` - Width of the element, in `Box` units or pixels.
+- `format: value => value` - Format value using this function before
+displaying it.
+- `suppressFlicker: number` - A number in milliseconds, for which the input
+will hold off from updating while events propagate through the backend.
+Default is about 250ms, increase it if you still see flickering.
+- `onChange: (e, value) => void` - An event, which fires when you release
+the input, or successfully enter a number.
+- `onDrag: (e, value) => void` - An event, which fires about every 500ms
+when you drag the input up and down, on release and on manual editing.
+
 ### `ProgressBar`
 
 Progress indicators inform users about the status of ongoing processes.
@@ -448,8 +558,27 @@ Progress indicators inform users about the status of ongoing processes.
 <ProgressBar value={0.6} />
 ```
 
-- `value: number` - Current progress as a floating point number,
-from 0 to 1. Determines how filled the bar is.
+Usage of `ranges` prop:
+
+```jsx
+<ProgressBar
+  ranges={{
+    good: [0.5, Infinity],
+    average: [0.25, 0.5],
+    bad: [-Infinity, 0.25],
+  }}
+  value={0.6} />
+```
+
+Props:
+
+- `value: number` - Current progress as a floating point number between
+`minValue` (default: 0) and `maxValue` (default: 1). Determines the
+percentage and how filled the bar is.
+- `minValue: number` - Lowest possible value.
+- `maxValue: number` - Highest possible value.
+- `ranges: { color: [from, to] }` - Applies a `color` to the progress bar
+based on whether the value lands in the range between `from` and `to`.
 - `color: string` - Color of the progress bar.
 - `content/children: any` - Content to render inside the progress bar.
 
@@ -488,6 +617,50 @@ If you want to have a button on the right side of an section title
 means deeper level of nesting. Must be an integer number.
 - `buttons: any` - Buttons to render aside the section title.
 - `content/children: any` - Content of this section.
+
+### `Table`
+
+A straight forward mapping to a standard html table, which is slightly
+simplified (does not need a `<tbody>` tag) and with sane default styles
+(e.g. table width is 100% by default).
+
+Example:
+
+```jsx
+<Table>
+  <Table.Row>
+    <Table.Cell bold>
+      Hello world!
+    </Table.Cell>
+    <Table.Cell collapsing color="label">
+      Label
+    </Table.Cell>
+  </Table.Row>
+</Table>
+```
+
+Props:
+
+- See inherited props: [Box](#box)
+- `collapsing: boolean` - Collapses table to the smallest possible size.
+
+### `Table.Row`
+
+A straight forward mapping to `<tr>` element.
+
+Props:
+
+- See inherited props: [Box](#box)
+
+### `Table.Cell`
+
+A straight forward mapping to `<td>` element.
+
+Props:
+
+- See inherited props: [Box](#box)
+- `collapsing: boolean` - Collapses table cell to the smallest possible size,
+and stops any text inside from wrapping.
 
 ### `Tabs`
 

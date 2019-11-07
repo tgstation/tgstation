@@ -629,9 +629,11 @@
 								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
 
-				selected_reaction.on_reaction(src, multiplier, special_react_result)
-				reaction_occurred = TRUE
-				continue_reacting = TRUE
+
+			my_atom?.on_reagent_change(REACT_REAGENTS)
+			selected_reaction.on_reaction(src, multiplier)
+			reaction_occurred = 1
+
 
 	while(reaction_occurred)
 	update_total()

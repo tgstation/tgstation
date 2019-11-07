@@ -16,6 +16,10 @@ export const unit = value => {
   }
 };
 
+const isColorCode = str => typeof str === 'string' && (
+  str.startsWith('#') || str.startsWith('rgb')
+);
+
 const mapRawPropTo = attrName => (style, value) => {
   if (!isFalsy(value)) {
     style[attrName] = value;
@@ -39,6 +43,12 @@ const mapDirectionalUnitPropTo = (attrName, dirs) => (style, value) => {
     for (let i = 0; i < dirs.length; i++) {
       style[attrName + '-' + dirs[i]] = unit(value);
     }
+  }
+};
+
+const mapColorPropTo = attrName => (style, value) => {
+  if (isColorCode(value)) {
+    style[attrName] = value;
   }
 };
 
@@ -67,6 +77,10 @@ const styleMapperByPropName = {
   mb: mapUnitPropTo('margin-bottom'),
   ml: mapUnitPropTo('margin-left'),
   mr: mapUnitPropTo('margin-right'),
+  // Color props
+  color: mapColorPropTo('color'),
+  textColor: mapColorPropTo('color'),
+  backgroundColor: mapColorPropTo('background-color'),
 };
 
 export const computeBoxProps = props => {
@@ -103,11 +117,11 @@ export const Box = props => {
   const {
     as = 'div',
     className,
-    color,
     content,
     children,
     ...rest
   } = props;
+  const color = props.textColor || props.color;
   // Render props
   if (typeof children === 'function') {
     return children(computeBoxProps(props));
@@ -119,7 +133,7 @@ export const Box = props => {
     as,
     classes([
       className,
-      color && 'color-' + color,
+      color && !isColorCode(color) && 'color-' + color,
     ]),
     content || children,
     ChildFlags.UnknownChildren,

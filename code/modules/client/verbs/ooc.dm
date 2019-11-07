@@ -3,7 +3,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 /client/verb/ooc_wrapper()
 	set hidden = TRUE
-	var/message = input("", "OOC") as text
+	var/message = input("", "OOC \"text\"") as null|text
 	ooc(message)
 	
 /client/verb/ooc(msg as text)

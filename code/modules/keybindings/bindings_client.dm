@@ -47,11 +47,12 @@
 
 	// Client-level keybindings are ones anyone should be able to do at any time
 	// Things like taking screenshots, hitting tab, and adminhelps.
-
 	var/AltMod = keys_held["Alt"] ? "Alt-" : ""
 	var/CtrlMod = keys_held["Ctrl"] ? "Ctrl-" : ""
 	var/ShiftMod = keys_held["Shift"] ? "Shift-" : ""
 	var/full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
+	if(_key == "Alt" || _key == "Ctrl" || _key == "Shift") // only add modifiers if the key is not a modifier already
+		full_key = _key
 	var/keycount = 0
 	for(var/kb_name in prefs.key_bindings[full_key])
 		keycount++
