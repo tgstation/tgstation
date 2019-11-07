@@ -79,7 +79,7 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
-	if(!M.mind.hasSoul || isdevil(M))
+	if(!M.mind.hasSoul || is_devil(M))
 		to_chat(user, "<span class='warning'>This... thing has no soul! It's filled with evil!</span>")
 		return
 	if(iscultist(M))
@@ -249,8 +249,7 @@
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
 				for(var/datum/mind/B in SSticker.mode.cult)
 					if(B == A.mind)
-						SSticker.mode.cult -= A.mind
-						SSticker.mode.update_cult_icons_removed(A.mind)
+						SSticker.mode.remove_cultist(A.mind)
 				qdel(T)
 				qdel(src)
 			else

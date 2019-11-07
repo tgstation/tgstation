@@ -27,8 +27,6 @@ SUBSYSTEM_DEF(pai)
 
 			card.setPersonality(pai)
 
-			SSticker.mode.update_cult_icons_removed(card.pai.mind)
-
 			candidates -= candidate
 			usr << browse(null, "window=findPai")
 

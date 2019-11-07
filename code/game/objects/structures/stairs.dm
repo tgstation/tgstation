@@ -111,7 +111,9 @@
 			T.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)
 
 /obj/structure/stairs/intercept_zImpact(atom/movable/AM, levels = 1)
-	return isTerminator()
+	. = ..()
+	if(isTerminator())
+		. |= FALL_INTERCEPTED | FALL_NO_MESSAGE
 
 /obj/structure/stairs/proc/isTerminator()			//If this is the last stair in a chain and should move mobs up
 	if(terminator_mode != STAIR_TERMINATOR_AUTOMATIC)
