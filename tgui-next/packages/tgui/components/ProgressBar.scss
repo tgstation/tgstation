@@ -3,7 +3,7 @@
   position: relative;
   width: 100%;
   padding: 0 6px;
-  border: 1px solid $color-primary;
+  border: 1px solid $progressbar-color-primary;
   border-radius: $base-border-radius;
   transition: border-color 500ms;
 }
@@ -14,7 +14,7 @@
   left: 0;
   bottom: 0;
   transition: background-color 500ms, width 500ms;
-  background-color: $color-primary;
+  background-color: $progressbar-color-primary;
 }
 
 .ProgressBar__content {

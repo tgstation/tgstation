@@ -24,10 +24,10 @@ body {
   background-repeat: no-repeat;
 }
 
-// // Syndicate theme
-// .theme-syndicate {
-//   @import './themes/syndicate.scss';
-//   @import './color-map.scss';
-//   @import './atomic.scss';
-//   @import './components.scss';
-// }
+// Syndicate theme
+.theme-syndicate {
+  @import './themes/syndicate.scss';
+  @import './color-map.scss';
+  @import './atomic.scss';
+  @import './components.scss';
+}

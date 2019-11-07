@@ -21,6 +21,12 @@
   }
 }
 
+.Table__row--header .Table__cell,
+.Table__cell--header {
+  font-weight: bold;
+  padding-bottom: 6px;
+}
+
 .Table__cell--collapsing {
   width: 0.01%;
   white-space: nowrap;

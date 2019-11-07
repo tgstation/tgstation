@@ -27,7 +27,7 @@
 .Button {
   position: relative;
   display: inline-block;
-  line-height: 19px;
+  line-height: 20px;
   padding: 0 6px;
   margin-right: 2px;
   white-space: nowrap;
@@ -46,7 +46,10 @@
 .Button--hasContent {
   // Add a margin to the icon to keep it separate from the text
   .fa, .fas, .far {
-    margin-right: 6px;
+    margin-left: -2px;
+    margin-right: 5px;
+    min-width: 14px;
+    text-align: center;
   }
 }
 

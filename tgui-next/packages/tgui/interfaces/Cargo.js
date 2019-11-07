@@ -60,7 +60,7 @@ export const Cargo = props => {
                   disabled={!(data.away && data.docked)}
                   onClick={() => act(ref, 'loan')} />
               ) : (
-                <span className="color-bad">Loaned to Centcom</span>
+                <Box color="bad">Loaned to Centcom</Box>
               )}
             </LabeledList.Item>
           ) : ''}

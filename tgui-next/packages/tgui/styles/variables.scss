@@ -3,7 +3,7 @@ $color-black: #000000;
 $color-white: #ffffff;
 $color-red: #db2828;
 $color-orange: #f2711c;
-$color-yellow: #fbbd08;
+$color-yellow: #fbd608;
 $color-olive: #b5cc18;
 $color-green: #20b142;
 $color-teal: #00b5ad;
@@ -16,60 +16,32 @@ $color-grey: #767676;
 
 $color-nanotrasen: #40628a;
 $color-primary: #4972a1;
-$color-good: #5fb922;
-$color-average: #fbae08;
+$color-good: #5db422;
+$color-average: #fb9008;
 $color-bad: #db2828;
+$color-label: #7e90a7;
 
-// Background colors
-$color-bg-black: scale-color($color-black, $lightness: -15%);
-$color-bg-white: scale-color($color-white, $lightness: -15%);
-$color-bg-red: scale-color($color-red, $lightness: -15%);
-$color-bg-orange: scale-color($color-orange, $lightness: -15%);
-$color-bg-yellow: scale-color($color-yellow, $lightness: -15%);
-$color-bg-olive: scale-color($color-olive, $lightness: -15%);
-$color-bg-green: scale-color($color-green, $lightness: -15%);
-$color-bg-teal: scale-color($color-teal, $lightness: -15%);
-$color-bg-blue: scale-color($color-blue, $lightness: -15%);
-$color-bg-violet: scale-color($color-violet, $lightness: -15%);
-$color-bg-purple: scale-color($color-purple, $lightness: -15%);
-$color-bg-pink: scale-color($color-pink, $lightness: -15%);
-$color-bg-brown: scale-color($color-brown, $lightness: -15%);
-$color-bg-grey: scale-color($color-grey, $lightness: -15%);
+// Background and foreground color lightness ratios
+$color-bg-lightness: -15%;
+$color-fg-lightness: 10%;
 
-$color-bg-primary: scale-color($color-primary, $lightness: -15%);
-$color-bg-good: scale-color($color-good, $lightness: -15%);
-$color-bg-average: scale-color($color-average, $lightness: -15%);
-$color-bg-bad: scale-color($color-bad, $lightness: -15%);
+@function color-bg($color) {
+  @return scale-color($color, $lightness: $color-bg-lightness);
+}
 
-// Foreground colors
-$color-fg-black: scale-color($color-black, $lightness: 10%);
-$color-fg-white: scale-color($color-white, $lightness: 10%);
-$color-fg-red: scale-color($color-red, $lightness: 10%);
-$color-fg-orange: scale-color($color-orange, $lightness: 10%);
-$color-fg-yellow: scale-color($color-yellow, $lightness: 10%);
-$color-fg-olive: scale-color($color-olive, $lightness: 10%);
-$color-fg-green: scale-color($color-green, $lightness: 10%);
-$color-fg-teal: scale-color($color-teal, $lightness: 10%);
-$color-fg-blue: scale-color($color-blue, $lightness: 10%);
-$color-fg-violet: scale-color($color-violet, $lightness: 10%);
-$color-fg-purple: scale-color($color-purple, $lightness: 10%);
-$color-fg-pink: scale-color($color-pink, $lightness: 10%);
-$color-fg-brown: scale-color($color-brown, $lightness: 10%);
-$color-fg-grey: scale-color($color-grey, $lightness: 10%);
-
-$color-fg-primary: scale-color($color-primary, $lightness: 10%);
-$color-fg-good: scale-color($color-good, $lightness: 10%);
-$color-fg-average: scale-color($color-average, $lightness: 10%);
-$color-fg-bad: scale-color($color-bad, $lightness: 10%);
-$color-fg-label: #929faf;
+@function color-fg($color) {
+  @return scale-color($color, $lightness: $color-fg-lightness);
+}
 
 // Base page colors
 $base-color-text: #ffffff;
 $base-color-background: #252525;
 $base-color-background-start: adjust-color(
-  $base-color-background, $lightness: 2%);
+  $base-color-background,
+  $lightness: 2%);
 $base-color-background-end: adjust-color(
-  $base-color-background, $lightness: -2%);
+  $base-color-background,
+  $lightness: -2%);
 $base-border-radius: 2px;
 
 // TitleBar
@@ -90,15 +62,15 @@ $noticebox-color-second: #b1905d;
 $noticebox-color-border: #272727;
 
 // ProgressBar
-$progressbar-color-border: $color-bg-primary;
+$progressbar-color-primary: color-bg($color-primary);
 $progressbar-color-background: #272727;
 
 // Buttons
-$button-color-normal: $color-bg-primary;
+$button-color-normal: color-bg($color-primary);
 $button-color-disabled: #999999;
-$button-color-selected: $color-bg-green;
-$button-color-caution: $color-bg-yellow;
-$button-color-danger: $color-bg-red;
+$button-color-selected: color-bg($color-green);
+$button-color-caution: color-bg($color-yellow);
+$button-color-danger: color-bg($color-red);
 
 // Tooltips
 $tooltip-color-background: #272727;

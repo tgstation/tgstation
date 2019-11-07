@@ -14,15 +14,30 @@
   left: 0;
   right: 0;
   overflow-x: hidden;
+  overflow-y: hidden;
 
-  // // Fancy scrollbar
-  // scrollbar-base-color: lighten($titlebar-color-background, -50%);
-  // scrollbar-face-color: lighten($titlebar-color-background, 50%);
-  // scrollbar-3dlight-color: lighten($titlebar-color-background, 100%);
-  // scrollbar-highlight-color: lighten($titlebar-color-background, 100%);
-  // scrollbar-track-color: lighten($titlebar-color-background, -50%);
-  // scrollbar-arrow-color: lighten($titlebar-color-background, 150%);
-  // scrollbar-shadow-color: $titlebar-color-background;
+  // Fancy scrollbar
+  scrollbar-base-color: scale-color(
+    $base-color-background,
+    $lightness: -25%);
+  scrollbar-face-color: scale-color(
+    $base-color-background,
+    $lightness: 10%);
+  scrollbar-3dlight-color: scale-color(
+    $base-color-background,
+    $lightness: 0%);
+  scrollbar-highlight-color: scale-color(
+    $base-color-background,
+    $lightness: 0%);
+  scrollbar-track-color: scale-color(
+    $base-color-background,
+    $lightness: -25%);
+  scrollbar-arrow-color: scale-color(
+    $base-color-background,
+    $lightness: 50%);
+  scrollbar-shadow-color: scale-color(
+    $base-color-background,
+    $lightness: 10%);
 }
 
 .Layout__content--scrollable {
