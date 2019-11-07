@@ -46447,6 +46447,7 @@
 	charge = 100;
 	maxcharge = 15000
 	},
+/obj/item/circuitboard/machine/mechfab,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bYK" = (
@@ -47862,10 +47863,12 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cby" = (
-/obj/machinery/mecha_part_fabricator{
-	name = "counterfeit exosuit fabricator";
-	req_access = null
-	},
+/obj/structure/frame/machine,
+/obj/item/stack/sheet/glass,
+/obj/item/stock_parts/micro_laser/high,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/matter_bin,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cbz" = (
@@ -49083,6 +49086,7 @@
 	},
 /obj/item/hand_labeler,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ceq" = (
@@ -63783,10 +63787,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cJf" = (
-/obj/effect/landmark/carpspawn,
-/turf/open/space/basic,
-/area/space)
 "cJg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/bedsheet/medical,
@@ -73824,6 +73824,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"gGX" = (
+/obj/effect/landmark/carpspawn,
+/turf/open/space/basic,
+/area/space)
 "gHh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/maintenance,
@@ -118195,7 +118199,7 @@ aaf
 aaa
 aaa
 aaa
-cJf
+gGX
 aaa
 aaa
 aaa
