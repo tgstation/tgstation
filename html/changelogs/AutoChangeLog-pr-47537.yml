@@ -1,6 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - rscadd: "New Radio interface."
-  - rscadd: "New Ore Redemption Machine interface."
-  - rscadd: "New Solar Tracker interface."

@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "Reaction chambers now don't break after certain reactions, like meat creation."

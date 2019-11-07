@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Teleporter accidents no longer mistakenly report the fly person-ing of nonhumans in logs."

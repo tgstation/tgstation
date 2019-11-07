@@ -1,6 +1,0 @@
-author: "SteelSlayer"
-delete-after: True
-changes: 
-  - code_imp: "Cleans up some scattered hud removal procs and puts them into their respective antag datum file so when the player loses the antag status, they lose the hud"
-  - refactor: "Refactors antag hud adding and removing procs. Moves them into the base antag datum file. The new procs can dynamically assign a hud from given arguments. Cuts down on copy and paste"
-  - refactor: "Refactors the clown mutation adding and removing procs for antags. Merges it into a single proc in the base antag datum file."

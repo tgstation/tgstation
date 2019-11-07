@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - rscadd: "Suit storage, tank dispenser, and GPS have been tgui-nextified"
