@@ -3,8 +3,8 @@
   position: relative;
   width: 100%;
   padding: 0 6px;
-  border: 1px solid $bar-color-border;
-  background-color: $bar-color-background;
+  border: 1px solid $color-primary;
+  border-radius: $base-border-radius;
   transition: border-color 500ms;
 }
 
@@ -14,7 +14,7 @@
   left: 0;
   bottom: 0;
   transition: background-color 500ms, width 500ms;
-  background-color: $bar-color-normal;
+  background-color: $color-primary;
 }
 
 .ProgressBar__content {
@@ -24,26 +24,12 @@
   text-align: right;
 }
 
-.ProgressBar--color--good {
-  border-color: $bar-color-good !important;
+@each $color-name, $color-value in $color-bg-map {
+  .ProgressBar--color--#{$color-name} {
+    border-color: $color-value !important;
 
-  .ProgressBar__fill {
-    background-color: $bar-color-good;
-  }
-}
-
-.ProgressBar--color--average {
-  border-color: $bar-color-average !important;
-
-  .ProgressBar__fill {
-    background-color: $bar-color-average;
-  }
-}
-
-.ProgressBar--color--bad {
-  border-color: $bar-color-bad !important;
-
-  .ProgressBar__fill {
-    background-color: $bar-color-bad;
+    .ProgressBar__fill {
+      background-color: $color-value;
+    }
   }
 }

@@ -1,7 +1,7 @@
 @mixin button-color($color) {
   // Adapt text color to background luminance to ensure high contast
   $luminance: luminance($color);
-  $text-color: if($luminance > 0.3,
+  $text-color: if($luminance > 0.35,
     rgba(0, 0, 0, 1),
     rgba(255, 255, 255, 1));
 
@@ -19,7 +19,7 @@
 
   &:hover,
   &:focus {
-    background-color: lighten($color, $button-lighten-hover);
+    background-color: lighten($color, 15%);
     color: $text-color;
   }
 }
@@ -32,6 +32,7 @@
   margin-right: 2px;
   white-space: nowrap;
   outline: 0;
+  border-radius: $base-border-radius;
   margin-bottom: 2px;
   // Disable selection in buttons
   user-select: none;
@@ -56,7 +57,7 @@
   // padding: 3px 6px;
 }
 
-@each $color-name, $color-value in $color-map {
+@each $color-name, $color-value in $color-bg-map {
   .Button--color--#{$color-name} {
     @include button-color($color-value);
   }
@@ -75,8 +76,8 @@
 }
 
 .Button--color--transparent {
-  @include button-color($dark-gray);
-  background-color: rgba($dark-gray, 0);
+  @include button-color($base-color-background);
+  background-color: rgba($base-color-background, 0);
   color: rgba(255, 255, 255, 0.5);
 }
 

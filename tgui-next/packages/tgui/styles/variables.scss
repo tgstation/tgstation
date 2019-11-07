@@ -1,107 +1,107 @@
 // Base colors
-$white: #ffffff;
-$pink: #ffc0cb;
-$pale-red: #e74242;
-$crimson: #dc143c;
-$red: #b00e0e;
-$dark-red: #9d0808;
-$magenta: #ff00ff;
-$yellow: #9a9d00;
-$bright-yellow: lighten($yellow, 50%);
-$yellow-orange: #be6209;
-$orange: #ffa500;
-$gold: #fdd700;
-$brown: #a52a2a;
-$pale-green: #73e573;
-$green: #2f943c;
-$grass-green: #537d29;
-$dark-green: #397439;
-$violet: #ee82ee;
-$purple: #800080;
-$blue: #0000ff;
-$cyan: #00ffff;
-$royal-blue: #40628a;
-$pale-blue: #8ba5c4;
-$black: #000000;
-$black-gray: #161616;
-$dark-gray: #272727;
-$gray: #363636;
-// i'm sorry these are different, grey is used for some uis like wire
-$grey: #808080;
-$silver: #c0c0c0;
-$light-gray: #999999;
+$color-black: #000000;
+$color-white: #ffffff;
+$color-red: #db2828;
+$color-orange: #f2711c;
+$color-yellow: #fbbd08;
+$color-olive: #b5cc18;
+$color-green: #20b142;
+$color-teal: #00b5ad;
+$color-blue: #2185d0;
+$color-violet: #6435c9;
+$color-purple: #a333c8;
+$color-pink: #e03997;
+$color-brown: #a5673f;
+$color-grey: #767676;
 
-// Branding Colors
-$color-normal: $royal-blue;
-$color-good: $grass-green;
-$color-average: $yellow-orange;
-$color-bad: $red;
-$color-highlight: $pale-blue;
+$color-nanotrasen: #40628a;
+$color-primary: #4972a1;
+$color-good: #5fb922;
+$color-average: #fbae08;
+$color-bad: #db2828;
 
-// Text
-$text-color-normal: $white;
-$text-color-inverse: $black;
+// Background colors
+$color-bg-black: scale-color($color-black, $lightness: -15%);
+$color-bg-white: scale-color($color-white, $lightness: -15%);
+$color-bg-red: scale-color($color-red, $lightness: -15%);
+$color-bg-orange: scale-color($color-orange, $lightness: -15%);
+$color-bg-yellow: scale-color($color-yellow, $lightness: -15%);
+$color-bg-olive: scale-color($color-olive, $lightness: -15%);
+$color-bg-green: scale-color($color-green, $lightness: -15%);
+$color-bg-teal: scale-color($color-teal, $lightness: -15%);
+$color-bg-blue: scale-color($color-blue, $lightness: -15%);
+$color-bg-violet: scale-color($color-violet, $lightness: -15%);
+$color-bg-purple: scale-color($color-purple, $lightness: -15%);
+$color-bg-pink: scale-color($color-pink, $lightness: -15%);
+$color-bg-brown: scale-color($color-brown, $lightness: -15%);
+$color-bg-grey: scale-color($color-grey, $lightness: -15%);
 
-// Background
-$background-color-start: #2a2a2a;
-$background-color-end: #202020;
+$color-bg-primary: scale-color($color-primary, $lightness: -15%);
+$color-bg-good: scale-color($color-good, $lightness: -15%);
+$color-bg-average: scale-color($color-average, $lightness: -15%);
+$color-bg-bad: scale-color($color-bad, $lightness: -15%);
 
-// Rules (<hr/> etc)
-$rule-color-normal: $royal-blue;
-$rule-color-dark: $dark-gray;
-$rule-size: 2px;
+// Foreground colors
+$color-fg-black: scale-color($color-black, $lightness: 10%);
+$color-fg-white: scale-color($color-white, $lightness: 10%);
+$color-fg-red: scale-color($color-red, $lightness: 10%);
+$color-fg-orange: scale-color($color-orange, $lightness: 10%);
+$color-fg-yellow: scale-color($color-yellow, $lightness: 10%);
+$color-fg-olive: scale-color($color-olive, $lightness: 10%);
+$color-fg-green: scale-color($color-green, $lightness: 10%);
+$color-fg-teal: scale-color($color-teal, $lightness: 10%);
+$color-fg-blue: scale-color($color-blue, $lightness: 10%);
+$color-fg-violet: scale-color($color-violet, $lightness: 10%);
+$color-fg-purple: scale-color($color-purple, $lightness: 10%);
+$color-fg-pink: scale-color($color-pink, $lightness: 10%);
+$color-fg-brown: scale-color($color-brown, $lightness: 10%);
+$color-fg-grey: scale-color($color-grey, $lightness: 10%);
 
-// Titlebar
-$titlebar-color-text: $pale-blue;
-$titlebar-color-button: $pale-blue;
-$titlebar-color-background: $gray;
-$titlebar-color-coreshadow: $black-gray;
-$titlebar-color-shadow: rgba(#000, 0.1);
+$color-fg-primary: scale-color($color-primary, $lightness: 10%);
+$color-fg-good: scale-color($color-good, $lightness: 10%);
+$color-fg-average: scale-color($color-average, $lightness: 10%);
+$color-fg-bad: scale-color($color-bad, $lightness: 10%);
+$color-fg-label: #929faf;
 
-// Resize
-$resize-color: $gray;
+// Base page colors
+$base-color-text: #ffffff;
+$base-color-background: #252525;
+$base-color-background-start: adjust-color(
+  $base-color-background, $lightness: 2%);
+$base-color-background-end: adjust-color(
+  $base-color-background, $lightness: -2%);
+$base-border-radius: 2px;
 
-// Display
-$display-color-title: $white;
-$display-color-background: rgba(#000, 0.33);
-$display-color-shadow: rgba(#000, 0.5);
-
-// Notice
-$notice-color-first: #bb9b68;
-$notice-color-second: #b1905d;
-$notice-color-border: $dark-gray;
+// TitleBar
+$titlebar-color-text: rgba(255, 255, 255, 0.75);
+$titlebar-color-background: #363636;
+$titlebar-color-shadow-core: #161616;
+$titlebar-color-shadow: rgba(0, 0, 0, 0.1);
 
 // Section
-$section-color-label: $pale-blue;
-$section-color-candystripe: rgba(#000, 0.25);
+$section-color-title: #ffffff;
+$section-color-background: rgba(#000, 0.33);
+$section-color-shadow: rgba(#000, 0.5);
+$section-color-separator: $color-primary;
 
-// Bar
-$bar-color-normal: $color-normal;
-$bar-color-good: $color-good;
-$bar-color-average: $color-average;
-$bar-color-bad: $color-bad;
-$bar-color-border: $royal-blue;
-$bar-color-background: $dark-gray;
+// NoticeBox
+$noticebox-color-first: #bb9b68;
+$noticebox-color-second: #b1905d;
+$noticebox-color-border: #272727;
+
+// ProgressBar
+$progressbar-color-border: $color-bg-primary;
+$progressbar-color-background: #272727;
 
 // Buttons
-$button-color-normal: $royal-blue;
-$button-color-disabled: $light-gray;
-$button-color-selected: $green;
-$button-color-caution: $yellow;
-$button-color-danger: $dark-red;
-$button-color-border: $dark-gray;
-$button-lighten-hover: 15%;
-$button-desaturate-inactive: 50%;
-
-// Input
-$input-color-text: $black;
-$input-color-placeholder: $light-gray;
-$input-color-border: $dark-gray;
-$input-color-background: $white;
+$button-color-normal: $color-bg-primary;
+$button-color-disabled: #999999;
+$button-color-selected: $color-bg-green;
+$button-color-caution: $color-bg-yellow;
+$button-color-danger: $color-bg-red;
 
 // Tooltips
-$tooltip-color-border: $dark-gray;
-$tooltip-color-background: $gray;
+$tooltip-color-background: #272727;
 
 // Inputs
 $input-base-color: #88bfff;

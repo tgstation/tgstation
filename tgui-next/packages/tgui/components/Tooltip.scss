@@ -10,7 +10,7 @@
     display: block;
     z-index: 2;
     width: 250px;
-    padding: 10px;
+    padding: 6px 10px;
     transform: translateX(-50%);
     pointer-events: none;
     visibility: hidden;
@@ -19,11 +19,12 @@
     text-align: left;
     content: attr(data-tooltip);
     transition: all 150ms;
-    border: 1px solid $tooltip-color-border;
     background-color: $tooltip-color-background;
+    box-shadow: 1px 1px 15px -1px rgba(0, 0, 0, 0.5);
   }
 
   &:hover::after {
+    transition: all 70ms;
     pointer-events: none;
     visibility: visible;
     opacity: 1;

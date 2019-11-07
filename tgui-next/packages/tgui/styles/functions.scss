@@ -22,22 +22,14 @@
 //  Color
 // --------------------------------------------------------
 
-// Increases the lightness component of the color relative to
-// its current lightness.
+// Increases perceptual color lightness.
 @function lighten($color, $percent) {
-  @return hsl(
+  $scaled: hsl(
     hue($color),
     saturation($color),
     lightness($color) * (1 + num($percent)));
-}
-
-// Decreases the lightness component of the color relative to
-// its current lightness.
-@function darken($color, $percent) {
-  @return hsl(
-    hue($color),
-    saturation($color),
-    lightness($color) * (1 - num($percent)));
+  $mixed: mix(#ffffff, $color, 100% * num($percent));
+  @return mix($scaled, $mixed, 75%);
 }
 
 // Returns the NTSC luminance of `$color` as a float (between 0 and 1).
