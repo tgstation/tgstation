@@ -21,6 +21,7 @@
     transition: all 150ms;
     background-color: $tooltip-color-background;
     box-shadow: 1px 1px 15px -1px rgba(0, 0, 0, 0.5);
+    border-radius: $base-border-radius;
   }
 
   &:hover::after {

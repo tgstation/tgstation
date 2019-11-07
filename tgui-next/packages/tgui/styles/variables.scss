@@ -16,14 +16,14 @@ $color-grey: #767676;
 
 $color-nanotrasen: #40628a;
 $color-primary: #4972a1;
-$color-good: #5db422;
-$color-average: #fb9008;
+$color-good: #5baa27;
+$color-average: #f08f11;
 $color-bad: #db2828;
 $color-label: #7e90a7;
 
 // Background and foreground color lightness ratios
 $color-bg-lightness: -15%;
-$color-fg-lightness: 10%;
+$color-fg-lightness: 5%;
 
 @function color-bg($color) {
   @return scale-color($color, $lightness: $color-bg-lightness);
@@ -73,7 +73,7 @@ $button-color-caution: color-bg($color-yellow);
 $button-color-danger: color-bg($color-red);
 
 // Tooltips
-$tooltip-color-background: #272727;
+$tooltip-color-background: #333333;
 
 // Inputs
 $input-base-color: #88bfff;

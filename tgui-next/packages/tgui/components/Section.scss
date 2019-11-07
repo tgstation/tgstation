@@ -4,6 +4,7 @@
   background-color: $section-color-background;
   box-shadow: inset 0 0 5px $section-color-shadow;
   box-sizing: border-box;
+  border-radius: $base-border-radius;
 
   &:last-child {
     margin-bottom: 0;
