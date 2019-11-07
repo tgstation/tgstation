@@ -37,11 +37,10 @@
 	var/weapon_orig_force = 0
 
 	var/list/stolen_valor
-	var/orig_name
 
-	var/list/officers = list("Admiral", "Special Ops Officer", "Captain", "Head of Personnel", "Death Commando", "Head of Security")
-	var/list/command = list("Admiral" = "Admiral", "Special Ops Officer" = "Col.", "Captain" = "Cpt.","Head of Personnel" = "Lt.")
-	var/list/security = list("Death Commando" = "Trooper", "Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" =  "Det.", "Security Officer" = "Officer")
+	var/list/officers = list("Captain", "Head of Personnel", "Head of Security")
+	var/list/command = list("Captain" = "Cpt.","Head of Personnel" = "Lt.")
+	var/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" =  "Det.", "Security Officer" = "Officer")
 	var/list/engineering = list("Chief Engineer" = "Chief Engineer", "Station Engineer" = "Engineer", "Atmospherics Technician" = "Technician")
 	var/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.", "Chemist" = "Pharm.D.")
 	var/list/research = list("Research Director" = "Ph.D.", "Roboticist" = "M.S.", "Scientist" = "B.S.")
@@ -71,7 +70,7 @@
 					commissioned = TRUE
 				break
 
-	working_title += orig_name
+	working_title += initial(name)
 
 	for(var/suf in suffixes)
 		for(var/title in suf)
@@ -94,7 +93,6 @@
 	var/datum/job/janitor/J = new/datum/job/janitor
 	access_card.access += J.get_access()
 	prev_access = access_card.access
-	orig_name = name
 	stolen_valor = list()
 
 	prefixes = list(command, security, engineering)
