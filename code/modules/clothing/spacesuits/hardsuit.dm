@@ -354,7 +354,6 @@
 			linkedsuit.slowdown = 1
 			linkedsuit.clothing_flags |= STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
-			linkedsuit.flags_inv |= HIDEJUMPSUIT
 			if(linkedsuit.armor_switch)
 				linkedsuit.armor = linkedsuit.armor_speed
 				armor = armor_speed //for the helmet
@@ -364,7 +363,6 @@
 			linkedsuit.slowdown = 0
 			linkedsuit.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection &= ~(CHEST | GROIN | LEGS | FEET | ARMS | HANDS)
-			linkedsuit.flags_inv &= ~HIDEJUMPSUIT
 			if(linkedsuit.armor_switch)
 				linkedsuit.armor = linkedsuit.armor_eva
 				armor = armor_eva
@@ -398,11 +396,11 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement. Can store standard medical supplies like medkits and bio or chemistry bags. Comes with a special switch that toggles between protection and mobility modes, it is currently set to protection."
 	alt_desc = "A special suit that protects against hazardous, low pressure environments. Built with lightweight materials for easier movement. Can store standard medical supplies like medkits and bio or chemistry bags. Comes with a special switch that toggles between protection and mobility modes, it is currently set to speed."
 	icon_state = "hardsuit0-medical"
-	item_state = "hardsuit-medical"
+	item_state = "hardsuit0-medical"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical, /obj/item/storage/bag/bio)
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 20, "bio" = 100, "rad" = 100, "fire" = 75, "acid" = 90)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
-	armor_switch = TRUE //shit just doesn't work, make this like current syndicate hardsuit instead.
+	armor_switch = TRUE
 	armor_eva = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 20, "bio" = 100, "rad" = 100, "fire" = 75, "acid" = 90)
 	armor_speed = list("melee" = 10, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 50, "fire" = 60, "acid" = 75)
 
@@ -865,6 +863,7 @@
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_helm"
 	hardsuit_type = "syndi"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR //when toggled to 'combat', won't hide your mask and make you look bald
 	armor = list("melee" = 40, "bullet" = 50, "laser" = 30, "energy" = 15, "bomb" = 35, "bio" = 100, "rad" = 50, "fire" = 100, "acid" = 100)
 
 ///SWAT version

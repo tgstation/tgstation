@@ -199,7 +199,7 @@
 		M.adjustToxLoss(toxcalc*-1)
 		healypoints += toxcalc
 
-	//and you're cold
+	//and you're colda
 	var/radcalc = round((T0C-chemtemp)/6,0.1) //max ~45 rad loss unless you've hit below 0K. if so, wow.
 	if(radcalc > 0)
 		//no cost percent healing if you are SUPER cold (on top of cost healing)
