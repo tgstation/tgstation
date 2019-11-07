@@ -26851,9 +26851,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/computer/shuttle/mining/common{
-	dir = 4
-	},
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
 "bgz" = (
@@ -31429,8 +31427,8 @@
 	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
 	width = 7
 	},
-/turf/open/space/basic,
-/area/space)
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "bqh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
@@ -75542,6 +75540,17 @@
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
+"rGl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/science/research)
+"rJv" = (
+/turf/open/floor/plating,
+/area/hallway/primary/port)
 "rLL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -76532,6 +76541,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"xzi" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/computer/shuttle/mining/common,
+/turf/open/floor/plating,
+/area/security/checkpoint/customs)
 "xAp" = (
 /obj/structure/chair/comfy,
 /obj/machinery/power/apc/auto_name/north,
@@ -90917,11 +90934,11 @@ bix
 bjY
 ong
 kqz
-aaa
-aaa
-aaa
-aaa
-aaa
+rJv
+rJv
+rJv
+rJv
+rJv
 kqz
 djW
 oyR
@@ -91174,11 +91191,11 @@ biy
 bjZ
 blW
 bnM
-aaa
-aaa
-aaa
-aaa
-aaa
+rJv
+rJv
+rJv
+rJv
+rJv
 bnM
 jMF
 lfx
@@ -91427,15 +91444,15 @@ bbK
 bcZ
 beM
 bgy
-biz
+xzi
 bka
 blX
 bnM
-aaa
-aaa
-aaa
-aaa
-aaa
+rJv
+rJv
+rJv
+rJv
+rJv
 bnM
 jMF
 iyV
@@ -91689,10 +91706,10 @@ bjX
 blY
 bnP
 bqg
-aaa
-aaa
-aaa
-aaa
+rJv
+rJv
+rJv
+rJv
 bnM
 tbC
 wQZ
@@ -91945,11 +91962,11 @@ biz
 bkb
 blZ
 bnM
-aaa
-aaa
-aaa
-aaa
-aaa
+rJv
+rJv
+rJv
+rJv
+rJv
 bnM
 bBh
 bnL
@@ -92202,11 +92219,11 @@ bcW
 bkc
 bma
 bnM
-aaa
-aaa
-aaa
-aaa
-aaa
+rJv
+rJv
+rJv
+rJv
+rJv
 bnM
 jMF
 xoZ
@@ -92459,11 +92476,11 @@ bcW
 dhP
 blV
 kqz
-aaa
-aaa
-aaa
-aaa
-aaa
+rJv
+rJv
+rJv
+rJv
+rJv
 kqz
 djW
 bsx
