@@ -41,7 +41,7 @@
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
 	keys_held[_key] = world.time
 	current_key_address = ((current_key_address + 1) % HELD_KEY_BUFFER_LENGTH)
-	var/movement = SSinput.movement_keys[_key]
+	var/movement = movement_keys[_key]
 	if(!(next_move_dir_sub & movement) && !keys_held["Ctrl"])
 		next_move_dir_add |= movement
 
@@ -72,7 +72,7 @@
 		if(keys_held[i] == _key)
 			keys_held[i] = null
 			break
-	var/movement = SSinput.movement_keys[_key]
+	var/movement = movement_keys[_key]
 	if(!(next_move_dir_add & movement))
 		next_move_dir_sub |= movement
 

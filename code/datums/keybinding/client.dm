@@ -33,13 +33,3 @@
 /datum/keybinding/client/minimal_hud/down(client/user)
     user.mob.button_pressed_F12()
     return TRUE  
-
-/datum/keybinding/client/ooc
-	key = "O"
-	name = "ooc"
-	full_name = "OOC"
-	description = ""
-
-/datum/keybinding/client/ooc/down(client/user)
-	user.ooc_wrapper()
-	return TRUE

@@ -521,6 +521,7 @@
 #include "code\datums\keybinding\human.dm"
 #include "code\datums\keybinding\living.dm"
 #include "code\datums\keybinding\mob.dm"
+#include "code\datums\keybinding\movement.dm"
 #include "code\datums\keybinding\robot.dm"
 #include "code\datums\looping_sounds\_looping_sound.dm"
 #include "code\datums\looping_sounds\item_sounds.dm"
