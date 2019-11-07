@@ -1,6 +1,6 @@
 //antag spyglasses. meant to be an example for map_popups.dm
 /obj/item/clothing/glasses/regular/spy
-	desc = "Made by Nerd. Co's infiltration and surveillance departmentt. Upon closer inspection, there's a small screen put into the lenses."
+	desc = "Made by Nerd. Co's infiltration and surveillance department. Upon closer inspection, there's a small screen in each lens."
 	var/obj/item/spy_bug/linked_bug
 
 /obj/item/clothing/glasses/regular/spy/proc/show_to_user(var/mob/user)//this is the meat of it. most of the map_popup usage is in this.
@@ -37,28 +37,12 @@
 	var/cam_range = 1//ranges higher than one can be used to see through walls.
 	var/list/disallowed_clone_types = list(/obj/mecha) 
 
+	var/datum/movement_detector/tracker
 
-
-
-/obj/item/spy_bug/proc/clone_object(var/obj/to_clone)
-	for(var/type in disallowed_clone_types)
-		if(istype(to_clone,type))
-			audible_message("<span class='warning'>[src] lets off a shrill beep!</span>")
-			return
-	icon = to_clone.icon
-	icon_state = to_clone.icon_state
-	name = to_clone.name
-	desc = to_clone.desc
-
-
-/obj/item/spy_bug/proc/reset_to_init()
-	name = initial(name)
-	icon = initial(icon)
-	icon_state = initial(icon_state)
-	desc = initial(desc)
-
-/obj/item/spy_bug/New(loc, ...)
+/obj/item/spy_bug/Initialize()
 	. = ..()
+	tracker = new /datum/movement_detector(src, CALLBACK(src, .proc/update_view))
+	
 	cam_view = new
 	cam_view.name = "screen"
 	cam_view.del_on_map_removal = FALSE
@@ -72,20 +56,34 @@
 	//we need to add a lighting planesmaster to the popup, otherwise blending fucks up massively. Any planesmaster on the main screen does NOT apply to map popups.
 	//if there's ever a way to make planesmasters omnipresent, then this wouldn't be needed.
 
+/obj/item/spy_bug/Destroy()
+	. = ..()
+	qdel(tracker)
+
+/obj/item/spy_bug/proc/clone_object(var/obj/to_clone)
+	for(var/type in disallowed_clone_types)
+		if(istype(to_clone,type))
+			audible_message("<span class='warning'>[src] lets off a shrill beep!</span>")
+			return
+	icon = to_clone.icon
+	icon_state = to_clone.icon_state
+	name = to_clone.name
+	desc = to_clone.desc
+
+/obj/item/spy_bug/proc/reset_to_init()
+	name = initial(name)
+	icon = initial(icon)
+	icon_state = initial(icon_state)
+	desc = initial(desc)
+
 /obj/item/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
 	cam_view.vis_contents.Cut()
-	for(var/turf/visible_turf in range(1))
+	for(var/turf/visible_turf in range(1,get_turf(src)))//fuck you usr
 		cam_view.vis_contents += visible_turf
-
-/obj/item/spy_bug/Moved()
-	. = ..()
-	update_view()
 
 //it needs to be linked, hence a kit.
 /obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
 	var/obj/item/spy_bug/newbug = new(src)
 	var/obj/item/clothing/glasses/regular/spy/newglasses = new(src)
-
 	newbug.linked_glasses = newglasses
 	newglasses.linked_bug = newbug
-
