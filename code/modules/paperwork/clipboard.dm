@@ -9,7 +9,6 @@
 	throw_range = 7
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
-	var/component_type = /datum/component/storage/concrete
 
 /obj/item/clipboard/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins putting [user.p_their()] head into the clip of \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -19,6 +18,14 @@
 	. = ..()
 	update_icon()
 
+/obj/item/clipboard/pre_attack(atom/target, mob/user, params)
+	. = ..()
+	if(istype(target, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/C = target
+		if(!C.manifest)
+			return
+		C.tear_manifest(user, src)
+
 /obj/item/clipboard/AllowDrop()
 	return FALSE
 
@@ -27,8 +34,8 @@
 
 /obj/item/clipboard/ComponentInitialize()
 	. = ..()
-	AddComponent(component_type)
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	AddComponent(/datum/component/storage/concrete)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete)
 	STR.allow_quick_gather = TRUE
 	STR.allow_quick_empty = TRUE
 	STR.display_numerical_stacking = TRUE
@@ -42,6 +49,7 @@
 						  /obj/item/ticket_machine_ticket,
 						  /obj/item/toy/crayon,
 						  /obj/item/photo,
+						  /obj/item/export_scanner,
 						  /obj/item/laser_pointer))
 
 /obj/item/clipboard/update_icon()

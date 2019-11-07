@@ -11,12 +11,11 @@
 	close_sound = 'sound/machines/wooden_closet_close.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 50
-	speciallock = TRUE
 
 /obj/structure/closet/crate/large/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(manifest)
-		tear_manifest(FALSE, FALSE, user)
+		tear_manifest(user)
 	else
 		to_chat(user, "<span class='warning'>You need a crowbar to pry this open!</span>")
 
@@ -34,4 +33,8 @@
 			new material_drop(src)
 		for(var/atom/movable/AM in contents)
 			AM.forceMove(T)
+		tear_manifest(user)
 		qdel(src)
+
+/obj/structure/closet/crate/large/can_open(mob/living/user)
+	return FALSE

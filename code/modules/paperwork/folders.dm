@@ -6,7 +6,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	pressure_resistance = 2
 	resistance_flags = FLAMMABLE
-	var/component_type = /datum/component/storage/concrete
 
 
 /obj/item/clipboard/AllowDrop()
@@ -17,8 +16,8 @@
 
 /obj/item/folder/ComponentInitialize()
 	. = ..()
-	AddComponent(component_type)
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	AddComponent(/datum/component/storage/concrete)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete)
 	STR.allow_quick_gather = TRUE
 	STR.allow_quick_empty = TRUE
 	STR.display_numerical_stacking = TRUE
@@ -31,6 +30,13 @@
 						  /obj/item/photo,
 						  /obj/item/documents))
 
+/obj/item/folder/pre_attack(atom/target, mob/user, params)
+	. = ..()
+	if(istype(target, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/C = target
+		if(!C.manifest)
+			return
+		C.tear_manifest(user, src)
 
 /obj/item/folder/update_icon()
 	cut_overlays()

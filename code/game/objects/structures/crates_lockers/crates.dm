@@ -25,7 +25,6 @@
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
 	update_icon()
-	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/tear_manifest)
 
 /obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)
 	if(!istype(mover, /obj/structure/closet))
@@ -47,19 +46,20 @@
 /obj/structure/closet/crate/attack_hand(mob/user)
 	. = ..()
 	if(manifest)
-		tear_manifest(FALSE, FALSE, user)
+		tear_manifest(user)
 
 /obj/structure/closet/crate/open(mob/living/user)
 	. = ..()
 	if(manifest)
-		tear_manifest(FALSE, FALSE, user)
+		tear_manifest(user)
 
-/obj/structure/closet/crate/proc/tear_manifest(datum/source, obj/item/S, mob/user)
+/obj/structure/closet/crate/proc/tear_manifest(mob/user, datum/source)
 	if(!manifest)
 		return
-	if(S)
-		if(istype(S, /obj/item/clipboard) || istype(S, /obj/item/folder))
-			manifest.forceMove(S)
+	if(source)
+		var/datum/component/storage/STR = source.GetComponent(/datum/component/storage)
+		if(STR)
+			STR.handle_item_insertion(manifest,FALSE,user)
 		else
 			return
 	else
