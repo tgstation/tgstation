@@ -9,12 +9,6 @@
 		return
 	if(message)
 		say(message)
-
-/mob/verb/say_wrapper()
-	set name = ".Say"
-	set hidden = TRUE
-	var/message = input("", "Say \"text\"") as null|text
-	say_verb(message)
 	
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
