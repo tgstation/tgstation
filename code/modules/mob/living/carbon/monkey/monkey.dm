@@ -110,6 +110,11 @@
 		return TRUE
 	return FALSE
 
+/mob/living/carbon/monkey/can_use_guns(obj/item/G)
+	. = ..()
+	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
+		return TRUE
+
 /mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return FALSE
 
