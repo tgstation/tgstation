@@ -18,10 +18,6 @@
 /obj/vehicle/ridden/pioneer_stone/Moved()
 	. = ..()
 	playsound(src, 'sound/effects/clang.ogg', 25, TRUE)
-	if(has_buckled_mobs())
-		for(var/atom/movable/A in range(0, src))
-			if(!(A in buckled_mobs))
-				Bump(A)
 
 /obj/vehicle/ridden/pioneer_stone/Bump(atom/movable/A)
 	. = ..()
