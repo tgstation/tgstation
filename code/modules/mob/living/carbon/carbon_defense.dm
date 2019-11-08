@@ -223,10 +223,18 @@
 	//Pulling
 	if(iscarbon(pulling) && !(flags & SHOCK_ILLUSION) && source != pulling)
 		var/mob/living/carbon/C = pulling
-		C.electrocute_act(shock_damage*0.75, src, flags)
+		C.electrocute_act(shock_damage*0.75, src, 1, flags)
 	if(iscarbon(pulledby) && !(flags & SHOCK_ILLUSION) && source != pulledby)
 		var/mob/living/carbon/C = pulledby
-		C.electrocute_act(shock_damage*0.75, src, flags)
+		C.electrocute_act(shock_damage*0.75, src, 1, flags)
+	if(iscarbon(buckled) && !(flags & SHOCK_ILLUSION) && source != buckled)
+		var/mob/living/carbon/C = buckled
+		C.electrocute_act(shock_damage*0.75, src, 1, flags)
+	for(var/thing in buckled_mobs)
+		if(iscarbon(thing) && !(flags & SHOCK_ILLUSION) && source != thing)
+			var/mob/living/carbon/C = thing
+			C.electrocute_act(shock_damage*0.75, src, 1, flags)
+
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
 	if(should_stun)
