@@ -248,7 +248,7 @@
 
 /datum/reagent/hydrogen_peroxide
 	name = "Hydrogen peroxide"
-	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen and oxygen."
+	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen and oxygen." //intended intended
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "burning water"
 	var/cooling_temperature = 2
