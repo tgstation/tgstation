@@ -623,7 +623,7 @@
 
 /obj/screen/healths/revenant
 	name = "essence"
-	icon = 'icons/mob/actions.dmi'
+	icon = 'icons/mob/actions/backgrounds.dmi'
 	icon_state = "bg_revenant"
 	screen_loc = ui_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
