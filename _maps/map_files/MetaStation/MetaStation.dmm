@@ -46514,6 +46514,7 @@
 	charge = 100;
 	maxcharge = 15000
 	},
+/obj/item/circuitboard/machine/mechfab,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bYK" = (
@@ -47925,9 +47926,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cby" = (
-/obj/machinery/mecha_part_fabricator{
-	name = "counterfeit exosuit fabricator";
-	req_access = null
+/obj/machinery/mecha_part_fabricator/maint{
+	name = "forgotten exosuit fabricator"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -49146,6 +49146,7 @@
 	},
 /obj/item/hand_labeler,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ceq" = (
@@ -63780,10 +63781,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"cJf" = (
-/obj/effect/landmark/carpspawn,
-/turf/open/space/basic,
-/area/space)
 "cJg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/bedsheet/medical,
@@ -75898,6 +75895,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"tIk" = (
+/obj/effect/landmark/carpspawn,
+/turf/open/space/basic,
+/area/space)
 "tKc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable,
@@ -118178,7 +118179,7 @@ aaf
 aaa
 aaa
 aaa
-cJf
+tIk
 aaa
 aaa
 aaa
