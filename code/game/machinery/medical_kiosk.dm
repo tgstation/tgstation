@@ -136,7 +136,8 @@
 		to_chat(user, "<span class='warning'>The scanner wand is currently removed from the machine.</span>")
 		return
 	if(!user.put_in_hands(scanner_wand))
-		to_chat(user, "<span class='warning'>You need a free hand!</span>")
+		to_chat(user, "<span class='warning'>The scanner wand falls to the floor.</span>")
+		scanner_wand = null
 		return
 	user.visible_message("<span class='notice'>[user] unhooks the [scanner_wand] from [src].</span>", \
 	"<span class='notice'>You detach the [scanner_wand] from [src].</span>")
