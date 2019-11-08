@@ -355,8 +355,8 @@
 			linkedsuit.clothing_flags |= STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 			if(linkedsuit.armor_switch)
-				linkedsuit.armor = linkedsuit.armor_speed
-				armor = armor_speed //for the helmet
+				linkedsuit.armor = getArmor(arglist(linkedsuit.armor_speed))
+				armor = getArmor(arglist(linkedsuit.armor_speed)) //for the helmet
 		else
 			linkedsuit.name += " [hardsuit_speed_suffix]"
 			linkedsuit.desc = linkedsuit.alt_desc
@@ -364,9 +364,8 @@
 			linkedsuit.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			linkedsuit.cold_protection &= ~(CHEST | GROIN | LEGS | FEET | ARMS | HANDS)
 			if(linkedsuit.armor_switch)
-				linkedsuit.armor = linkedsuit.armor_eva
-				armor = armor_eva
-
+				linkedsuit.armor = getArmor(arglist(linkedsuit.armor_eva))
+				armor = getArmor(arglist(armor_eva))
 		linkedsuit.icon_state = "hardsuit[on]-[hardsuit_type]"
 		linkedsuit.update_icon()
 		user.update_inv_wear_suit()
@@ -380,7 +379,7 @@
 	item_state = "medical_helm"
 	hardsuit_type = "medical"
 	flash_protect = FLASH_PROTECTION_NONE
-	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 50, "fire" = 60, "acid" = 75)
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SCAN_REAGENTS | SNUG_FIT
 	evatoggle = TRUE
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
@@ -398,7 +397,7 @@
 	icon_state = "hardsuit0-medical"
 	item_state = "hardsuit0-medical"
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical, /obj/item/storage/bag/bio)
-	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 20, "bio" = 100, "rad" = 100, "fire" = 75, "acid" = 90)
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 50, "fire" = 60, "acid" = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
 	armor_switch = TRUE
 	armor_eva = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 20, "bio" = 100, "rad" = 100, "fire" = 75, "acid" = 90)
