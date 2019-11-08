@@ -311,7 +311,7 @@
 
 /mob/living/simple_animal/gib()
 	if(butcher_results || guaranteed_butcher_results)
-		var/list/butcher
+		var/list/butcher = list()
 		if(butcher_results)
 			butcher += butcher_results
 		if(guaranteed_butcher_results)
