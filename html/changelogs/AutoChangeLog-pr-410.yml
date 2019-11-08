@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - bugfix: "Revenant health HUD background icon will now show properly."
