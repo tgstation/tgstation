@@ -17,7 +17,7 @@ handles linking back and forth.
 	var/local_size = INFINITY
 	var/start_linked = TRUE
 
-/datum/component/remote_materials/Initialize(category, mapload, allow_standalone = TRUE, force_connect = FALSE, start_linked = TRUE)
+/datum/component/remote_materials/Initialize(category, mapload, allow_standalone = TRUE, force_connect = FALSE, )
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -28,7 +28,7 @@ handles linking back and forth.
 	RegisterSignal(parent, COMSIG_ATOM_MULTITOOL_ACT, .proc/OnMultitool)
 
 	var/turf/T = get_turf(parent)
-	if (start_linked && (force_connect || (mapload && is_station_level(T.z))))
+	if ((force_connect || (mapload && is_station_level(T.z))))
 		addtimer(CALLBACK(src, .proc/LateInitialize))
 	else if (allow_standalone)
 		_MakeLocal()

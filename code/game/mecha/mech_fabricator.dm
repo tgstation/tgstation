@@ -38,7 +38,8 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	stored_research = new
-	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload, start_linked = link_on_init )
+	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init)
+	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
@@ -47,7 +48,7 @@
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
-		rmat.set_local_size((200000 + (T*50000)))
+	rmat.set_local_size((200000 + (T*50000)))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
 	T = 1.15
