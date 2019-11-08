@@ -147,7 +147,7 @@
 /obj/item/book/granter/spell/onlearned(mob/user)
 	..()
 	if(oneuse)
-		user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
+		user.visible_message("<span class='warning'>[src] glows dark for a second!</span>")
 
 /obj/item/book/granter/spell/fireball
 	spell = /obj/effect/proc_holder/spell/aimed/fireball
@@ -180,7 +180,7 @@
 
 /obj/item/book/granter/spell/smoke/recoil(mob/user)
 	..()
-	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
+	to_chat(user,"<span class='warning'>Your stomach rumbles...</span>")
 	if(user.nutrition)
 		user.set_nutrition(200)
 		if(user.nutrition <= 0)
@@ -413,7 +413,13 @@
 /obj/item/book/granter/crafting_recipe/cooking_sweets_101
 	name = "Cooking Desserts 101"
 	desc = "A cook book that teaches you some more of the newest desserts. AI approved, and a best seller on Honkplanet."
-	crafting_recipe_types = list(/datum/crafting_recipe/food/mimetart, /datum/crafting_recipe/food/berrytart, /datum/crafting_recipe/food/cocolavatart, /datum/crafting_recipe/food/clowncake, /datum/crafting_recipe/food/vanillacake)
+	crafting_recipe_types = list(
+		/datum/crafting_recipe/food/mimetart,
+		/datum/crafting_recipe/food/berrytart,
+		/datum/crafting_recipe/food/cocolavatart,
+		/datum/crafting_recipe/food/clowncake,
+		/datum/crafting_recipe/food/vanillacake
+	)
 	icon_state = "cooking_learing_sweets"
 	oneuse = FALSE
 	remarks = list("So that is how icing is made!", "Placing fruit on top? How simple...", "Huh layering cake seems harder then this...", "This book smells like candy", "A clown must have made this page, or they forgot to spell check it before printing...", "Wait, a way to cook slime to be safe?")

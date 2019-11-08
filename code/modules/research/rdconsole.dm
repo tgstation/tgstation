@@ -113,6 +113,12 @@ Nothing else in the console has ID requirements.
 	return ..()
 
 /obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
+	if(istype(D, /obj/item/research_notes))
+		var/obj/item/research_notes/R = D
+		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = R.value))
+		playsound(src,'sound/machines/copier.ogg', 100, TRUE)
+		qdel(R)
+		return TRUE
 	//Loading a disk into it.
 	if(istype(D, /obj/item/disk))
 		if(istype(D, /obj/item/disk/tech_disk))
@@ -626,7 +632,7 @@ Nothing else in the console has ID requirements.
 
 		if(!(linked_destroy.loaded_item.resistance_flags & INDESTRUCTIBLE))
 			var/list/materials = linked_destroy.loaded_item.custom_materials
-			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>[materials.len? "Material Reclamation" : "Destroy Item"]</A>"
+			l += "<div class='statusDisplay'><A href='?src=[REF(src)];deconstruct=[RESEARCH_MATERIAL_RECLAMATION_ID]'>[LAZYLEN(materials)? "Material Reclamation" : "Destroy Item"]</A>"
 			for (var/M in materials)
 				l += "* [CallMaterialName(M)] x [materials[M]]"
 			l += "</div>[RDSCREEN_NOBREAK]"

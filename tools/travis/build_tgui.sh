@@ -21,5 +21,4 @@ node node_modules/gulp/bin/gulp.js --min
 
 echo "Building 'tgui-next'"
 cd "${base_dir}/tgui-next"
-bin/tgui --clean
-bin/tgui
+bin/tgui --ci

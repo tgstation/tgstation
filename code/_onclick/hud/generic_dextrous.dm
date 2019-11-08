@@ -46,8 +46,8 @@
 
 	zone_select = new /obj/screen/zone_sel()
 	zone_select.icon = ui_style
-	zone_select.update_icon()
 	zone_select.hud = src
+	zone_select.update_icon()
 	static_inventory += zone_select
 
 	using = new /obj/screen/area_creator

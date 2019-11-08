@@ -3,10 +3,23 @@ import { Component } from 'inferno';
 import { Button } from './Button';
 import { Box } from './Box';
 
+// A magic value for enforcing type safety
+const TAB_MAGIC_TYPE = 'Tab';
+
+const validateTabs = tabs => {
+  for (let tab of tabs) {
+    if (!tab.props || tab.props.__type__ !== TAB_MAGIC_TYPE) {
+      throw new Error("<Tabs> only accepts children of type <Tabs.Tab>."
+       + "\nThis is what we received: " + JSON.stringify(tab, null, 2));
+    }
+  }
+};
+
 export class Tabs extends Component {
   constructor(props) {
     super(props);
     const tabs = normalizeChildren(props.children);
+    validateTabs(tabs);
     const firstTab = tabs[0];
     const firstTabKey = firstTab && (firstTab.key || firstTab.props.label);
     this.state = {
@@ -23,6 +36,7 @@ export class Tabs extends Component {
       ...rest
     } = props;
     const tabs = normalizeChildren(children);
+    validateTabs(tabs);
     // Find the active tab
     const activeTabKey = props.activeTab || state.activeTabKey;
     const activeTab = tabs
@@ -96,5 +110,9 @@ export class Tabs extends Component {
  * tab container.
  */
 export const Tab = props => null;
+
+Tab.defaultProps = {
+  __type__: TAB_MAGIC_TYPE,
+};
 
 Tabs.Tab = Tab;

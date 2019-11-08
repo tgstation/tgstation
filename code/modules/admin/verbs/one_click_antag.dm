@@ -363,11 +363,11 @@
 			ert_team.mission = missionobj
 
 			var/list/spawnpoints = GLOB.emergencyresponseteamspawn
+			var/index = 0
 			while(numagents && candidates.len)
-				if (numagents > spawnpoints.len)
-					numagents--
-					continue // This guy's unlucky, not enough spawn points, we skip him.
-				var/spawnloc = spawnpoints[numagents]
+				var/spawnloc = spawnpoints[index+1]
+				//loop through spawnpoints one at a time
+				index = (index + 1) % spawnpoints.len
 				var/mob/dead/observer/chosen_candidate = pick(candidates)
 				candidates -= chosen_candidate
 				if(!chosen_candidate.key)

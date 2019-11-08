@@ -65,8 +65,6 @@
 
 	var/parallax_movedir = 0
 
-	var/global/global_uid = 0
-	var/uid
 	var/list/ambientsounds = GENERIC
 	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
@@ -134,7 +132,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Initialize()
 	icon_state = ""
 	layer = AREA_LAYER
-	uid = ++global_uid
 	map_name = name // Save the initial (the name set in the map) name of the area.
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 

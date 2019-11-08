@@ -1,7 +1,8 @@
 import { clamp } from 'common/math';
-import { pureComponentHooks } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { tridentVersion } from '../byond';
+import { AnimatedNumber } from './AnimatedNumber';
 import { Box } from './Box';
 
 export class NumberInput extends Component {
@@ -15,15 +16,36 @@ export class NumberInput extends Component {
       editing: false,
       internalValue: null,
       origin: null,
+      suppressingFlicker: false,
+    };
+
+    // Suppresses flickering while the value propagates through the backend
+    this.flickerTimer = null;
+    this.suppressFlicker = () => {
+      const { suppressFlicker } = this.props;
+      if (suppressFlicker > 0) {
+        this.setState({
+          suppressingFlicker: true,
+        });
+        clearTimeout(this.flickerTimer);
+        this.flickerTimer = setTimeout(() => this.setState({
+          suppressingFlicker: false,
+        }), suppressFlicker);
+      }
     };
 
     this.handleDragStart = e => {
       const { value } = this.props;
+      const { editing } = this.state;
+      if (editing) {
+        return;
+      }
       document.body.style['pointer-events'] = 'none';
       this.ref = e.target;
       this.setState({
         dragging: false,
         origin: e.screenY,
+        value,
         internalValue: value,
       });
       this.timer = setTimeout(() => {
@@ -48,11 +70,19 @@ export class NumberInput extends Component {
         const state = { ...prevState };
         const offset = state.origin - e.screenY;
         if (prevState.dragging) {
+          const stepOffset = Number.isFinite(minValue)
+            ? minValue % step
+            : 0;
+          // Translate mouse movement to value
+          // Give it some headroom (by increasing clamp range by 1 step)
           state.internalValue = clamp(
             state.internalValue + offset * step / stepPixelSize,
-            minValue, maxValue);
+            minValue - step, maxValue + step);
+          // Clamp the final value
           state.value = clamp(
-            state.internalValue - state.internalValue % step,
+            state.internalValue
+              - state.internalValue % step
+              + stepOffset,
             minValue, maxValue);
           state.origin = e.screenY;
         }
@@ -65,21 +95,19 @@ export class NumberInput extends Component {
 
     this.handleDragEnd = e => {
       const { onChange, onDrag } = this.props;
-      const { dragging, value } = this.state;
+      const { dragging, value, internalValue } = this.state;
       document.body.style['pointer-events'] = 'auto';
       clearTimeout(this.timer);
       clearInterval(this.dragInterval);
-      const editing = !dragging;
       this.setState({
         dragging: false,
-        editing,
+        editing: !dragging,
         origin: null,
       });
-      if (editing && this.inputRef) {
-        this.inputRef.current.focus();
-        this.inputRef.current.select();
-      }
-      else {
+      document.removeEventListener('mousemove', this.handleDragMove);
+      document.removeEventListener('mouseup', this.handleDragEnd);
+      if (dragging) {
+        this.suppressFlicker();
         if (onChange) {
           onChange(e, value);
         }
@@ -87,8 +115,12 @@ export class NumberInput extends Component {
           onDrag(e, value);
         }
       }
-      document.removeEventListener('mousemove', this.handleDragMove);
-      document.removeEventListener('mouseup', this.handleDragEnd);
+      else if (this.inputRef) {
+        const input = this.inputRef.current;
+        input.value = internalValue;
+        input.focus();
+        input.select();
+      }
     };
   }
 
@@ -97,20 +129,48 @@ export class NumberInput extends Component {
       dragging,
       editing,
       value: intermediateValue,
-      internalValue,
+      suppressingFlicker,
     } = this.state;
     const {
+      className,
+      fluid,
+      animated,
       value,
       unit,
       minValue,
       maxValue,
       width,
+      format,
       onChange,
       onDrag,
     } = this.props;
+    let displayValue = value;
+    if (dragging || suppressingFlicker) {
+      displayValue = intermediateValue;
+    }
+    const renderContentElement = value => (
+      <div
+        className="NumberInput__content"
+        unselectable={tridentVersion <= 4}>
+        {value + (unit ? ' ' + unit : '')}
+      </div>
+    );
+    const contentElement = (animated && !dragging && !suppressingFlicker && (
+      <AnimatedNumber
+        value={displayValue}
+        format={format}>
+        {renderContentElement}
+      </AnimatedNumber>
+    ) || (
+      renderContentElement(format ? format(displayValue) : displayValue)
+    ));
     return (
       <Box
-        className="NumberInput"
+        className={classes([
+          'NumberInput',
+          fluid && 'NumberInput--fluid',
+          className,
+        ])}
         minWidth={width}
         onMouseDown={this.handleDragStart}>
         <div className="NumberInput__barContainer">
@@ -118,28 +178,27 @@ export class NumberInput extends Component {
             className="NumberInput__bar"
             style={{
               height: clamp(
-                (intermediateValue - minValue) / maxValue * 100,
+                (displayValue - minValue) / (maxValue - minValue) * 100,
                 0, 100) + '%',
             }} />
         </div>
-        <div
-          className="NumberInput__content"
-          unselectable={tridentVersion <= 4}>
-          {dragging ? intermediateValue : value} {unit}
-        </div>
+        {contentElement}
         <input
           ref={this.inputRef}
-          className="NumberInput__editable"
+          className="NumberInput__input"
           style={{
             display: !editing ? 'none' : undefined,
           }}
-          value={internalValue}
           onBlur={e => {
+            if (!editing) {
+              return;
+            }
             const value = clamp(e.target.value, minValue, maxValue);
             this.setState({
               editing: false,
               value,
             });
+            this.suppressFlicker();
             if (onChange) {
               onChange(e, value);
             }
@@ -149,20 +208,27 @@ export class NumberInput extends Component {
           }}
           onKeyDown={e => {
             if (e.keyCode === 13) {
+              const value = clamp(e.target.value, minValue, maxValue);
               this.setState({
                 editing: false,
-                value: clamp(e.target.value, minValue, maxValue),
+                value,
               });
+              this.suppressFlicker();
+              if (onChange) {
+                onChange(e, value);
+              }
+              if (onDrag) {
+                onDrag(e, value);
+              }
+              return;
             }
             if (e.keyCode === 27) {
               this.setState({
                 editing: false,
               });
+              return;
             }
-          }}
-          onInput={e => this.setState({
-            internalValue: e.target.value,
-          })} />
+          }} />
       </Box>
     );
   }
@@ -174,4 +240,5 @@ NumberInput.defaultProps = {
   maxValue: +Infinity,
   step: 1,
   stepPixelSize: 1,
+  suppressFlicker: 50,
 };

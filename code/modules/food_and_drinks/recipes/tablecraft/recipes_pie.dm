@@ -165,6 +165,7 @@
 	        /obj/item/slime_extract = 1 //The reason you dont know how to make it!
 	        )
 	result = /obj/item/reagent_containers/food/snacks/pie/cocolavatart
+	subcategory = CAT_PIE
 
 /datum/crafting_recipe/food/blumpkinpie
 	name = "Blumpkin pie"

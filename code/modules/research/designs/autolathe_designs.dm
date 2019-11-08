@@ -272,6 +272,14 @@
 	category = list("hacked","Misc","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
+/datum/design/generic_gas_tank
+	name = "Generic Gas Tank"
+	id = "generic_tank"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 1000)
+	build_path = /obj/item/tank/internals/generic
+	category = list("initial","Misc","Equipment")
+
 /datum/design/metal
 	name = "Metal"
 	id = "metal"
@@ -324,6 +332,14 @@
 	build_path = /obj/item/kitchen/knife
 	category = list("initial","Dinnerware")
 
+/datum/design/plastic_knife
+	name = "Plastic Knife"
+	id = "plastic_knife"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/plastic = 100)
+	build_path = /obj/item/kitchen/knife/plastic
+	category = list("initial", "Tool Designs","Dinnerware")
+
 /datum/design/fork
 	name = "Fork"
 	id = "fork"
@@ -331,6 +347,24 @@
 	materials = list(/datum/material/iron = 80)
 	build_path = /obj/item/kitchen/fork
 	category = list("initial","Dinnerware")
+
+/datum/design/plastic_fork
+	name = "Plastic Fork"
+	id = "plastic_fork"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/plastic = 80)
+	build_path = /obj/item/kitchen/fork/plastic
+	category = list("initial", "Tool Designs", "Dinnerware")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/plastic_spoon
+	name = "Plastic Spoon"
+	id = "plastic_spoon"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/plastic = 120)
+	build_path = /obj/item/kitchen/spoon/plastic
+	category = list("initial", "Tool Designs", "Dinnerware")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/tray
 	name = "Tray"
@@ -684,14 +718,6 @@
 	build_path = /obj/item/flamethrower/full
 	category = list("hacked", "Security")
 
-/datum/design/rcd
-	name = "Rapid Construction Device (RCD)"
-	id = "rcd"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 30000)
-	build_path = /obj/item/construction/rcd
-	category = list("hacked", "Construction")
-
 /datum/design/rpd
 	name = "Rapid Pipe Dispenser (RPD)"
 	id = "rpd"
@@ -984,3 +1010,19 @@
 	build_path = /obj/item/stack/ducts
 	category = list("initial", "Construction")
 	maxstack = 50
+
+/datum/design/toygun
+	name = "Cap Gun"
+	id = "toygun"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
+	build_path = /obj/item/toy/gun
+	category = list("hacked", "Misc")
+
+/datum/design/capbox
+	name = "Box of Cap Gun Shots"
+	id = "capbox"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
+	build_path = /obj/item/toy/ammo/gun
+	category = list("hacked", "Misc")

@@ -109,7 +109,7 @@
 			if(!ispath(program_to_load))
 				return FALSE
 			var/valid = FALSE
-			var/list/checked = typecacheof(program_cache)
+			var/list/checked = program_cache.Copy()
 			if(obj_flags & EMAGGED)
 				checked |= emag_programs
 			for(var/prog in checked)

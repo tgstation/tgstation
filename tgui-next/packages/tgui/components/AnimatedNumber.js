@@ -57,17 +57,21 @@ export class AnimatedNumber extends Component {
     if (!isSafeNumber(targetValue)) {
       return targetValue || null;
     }
-    // Use a custom render function
-    if (typeof children === 'function') {
-      return children(currentValue);
-    }
+    let formattedValue = currentValue;
     // Use custom formatter
     if (format) {
-      return format(currentValue);
+      formattedValue = format(currentValue);
     }
     // Fix our animated precision at target value's precision.
-    const fraction = String(targetValue).split('.')[1];
-    const precision = fraction ? fraction.length : 0;
-    return toFixed(currentValue, clamp(precision, 0, 8));
+    else {
+      const fraction = String(targetValue).split('.')[1];
+      const precision = fraction ? fraction.length : 0;
+      formattedValue = toFixed(currentValue, clamp(precision, 0, 8));
+    }
+    // Use a custom render function
+    if (typeof children === 'function') {
+      return children(formattedValue);
+    }
+    return formattedValue;
   }
 }
