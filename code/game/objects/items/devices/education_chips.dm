@@ -27,19 +27,21 @@
     if(usr.mind.has_martialart(initial(MA.id)))
       to_chat(usr,"<span class='warning'>You already know [E.subject_name]!</span>")
       return
-    to_chat(usr, "<span class='notice'>Your head whirls with a sudden rush of information as you instantly learn about [E.subject_name]!</span>")
-    to_chat(usr, "[E.greet]")
+    to_chat(usr, "<span class='boldannounce'>Your head whirls with a sudden rush of information as you instantly learn about [E.subject_name]!</span>")
+    if(E.greet)
+      to_chat(usr, "[E.greet]")
     MA.teach(usr)
     usr.log_message("learned the subject [E.subject_name] ([MA])", LOG_ATTACK, color="orange")
-    qdel(E)
-    new /obj/item/education_chip(src)
+    if(!E.unlimited)
+      qdel(E)
+      new /obj/item/education_chip(src)
 
 
 ////Education Chips////
 
 /obj/item/education_chip
   name = "Empty Education Chip"
-  desc = "An empty education chip."
+  desc = "An empty education chip. Who knows what information it could have contained?"
   icon = 'icons/obj/device.dmi'
   icon_state = "edchip"
   lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -48,6 +50,13 @@
   var/subject
   var/subject_name
   var/greet
+  var/unlimited = FALSE //for admins if they want unlimited uses
+  var/overlay
+
+/obj/item/education_chip/Initialize()
+  . = ..()
+  add_overlay(overlay)
+
 
 /obj/item/education_chip/cqc
   name = "Close-Quarters-Combat Education Chip"
@@ -55,10 +64,7 @@
   subject = /datum/martial_art/cqc
   subject_name = "Close-Quarters-Combat"
   greet = "<span class='boldannounce'>You've mastered the basics of CQC.</span>"
-
-/obj/item/education_chip/cqc/Initialize()
-  . = ..()
-  add_overlay("edchip_cqc")
+  overlay = "edchip_cqc"
 
 /obj/item/education_chip/carp
   name = "the Sleeping Carp Education Chip"
@@ -67,10 +73,7 @@
   subject_name = "The Sleeping Carp"
   greet = "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
 	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
-
-/obj/item/education_chip/carp/Initialize()
-  . = ..()
-  add_overlay("edchip_carp")
+  overlay = "edchip_carp"
 
 /obj/item/education_chip/plasma_fist
   name = "Plasma Fist Education Chip"
@@ -79,17 +82,11 @@
   subject_name = "Plasma Fist"
   greet = "<span class='boldannounce'>You have learned the ancient martial art of Plasma Fist. Your combos are extremely hard to pull off, but include some of the most deadly moves ever seen including \
 	the plasma fist, which when pulled off will make someone violently explode.</span>"
-
-/obj/item/education_chip/plasma_fist/Initialize()
-  . = ..()
-  add_overlay("edchip_pfist")
+  overlay = "edchip_pfist"
 
 /obj/item/education_chip/krav_maga
   name = "Krava Maga Education Chip"
   desc = "An education chip containing the martial art of Krav Maga. Insert into an Automatic Education Device to learn."
   subject = /datum/martial_art/krav_maga
   subject_name = "Krav Maga"
-
-/obj/item/education_chip/krav_maga/Initialize()
-  . = ..()
-  add_overlay("edchip_cqc")
+  overlay = "edchip_cqc"
