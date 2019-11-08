@@ -229,9 +229,9 @@
 			shocking_queue += pulledby
 		if(iscarbon(buckled) && source != buckled)
 			shocking_queue += buckled
-		for(var/thing in buckled_mobs)
-			if(iscarbon(thing) && source != thing)
-				shocking_queue += thing
+		for(var/mob/living/carbon/carried in buckled_mobs)
+			if(source != carried)
+				shocking_queue += carried
 		//Found our victims, now lets shock them all
 		for(var/victim in shocking_queue)
 			var/mob/living/carbon/C = victim
