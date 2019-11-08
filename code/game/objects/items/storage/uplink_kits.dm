@@ -549,13 +549,25 @@
 
 //martial arts stuff, needs to be in a kit now due to the addition of automatic education device
 /obj/item/storage/box/syndicate/cqc
+	name = "CQC Box"
+	desc = "Contains an Automatic Education Device and CQC Education Chip."
 
 /obj/item/storage/box/syndicate/cqc/PopulateContents()
 	new /obj/item/clothing/head/AED(src)
 	new /obj/item/education_chip/cqc(src)
 
 /obj/item/storage/box/syndicate/carp
-//
+	name = "the Sleeping Carp Box"
+	desc = "Contains an Automatic Education Device and Sleeping Carp Education Chip."
+
 /obj/item/storage/box/syndicate/carp/PopulateContents()
 	new /obj/item/clothing/head/AED(src)
 	new /obj/item/education_chip/carp(src)
+
+/obj/item/storage/box/syndicate/plasma_fist //not in uplinks, used on away mission
+	name = "Plasma Fist Box"
+	desc = "Contains an Automatic Education Device and Plasma Fist Education Chip."
+
+/obj/item/storage/box/syndicate/plasma_fist/PopulateContents()
+	new /obj/item/clothing/head/AED(src)
+	new /obj/item/education_chip/plasma_fist(src)
