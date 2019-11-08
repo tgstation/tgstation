@@ -225,7 +225,7 @@
 		if(O)
 			O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
-	
+
 		if(R.applies_mats && custom_materials && custom_materials.len)
 			var/list/used_materials = list()
 			for(var/i in custom_materials)
