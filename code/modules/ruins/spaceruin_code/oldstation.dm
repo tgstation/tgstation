@@ -55,4 +55,3 @@
 /obj/item/paper/fluff/ruins/oldstation/protosleep
 	name = "Prototype Delivery"
 	info = "<b>*Prototype Sleeper*</b><br><br>We have deliverted the lastest in medical technology to the medical bay."
-
