@@ -54,7 +54,7 @@ export const MedicalKiosk = props => {
         </Box>
       </Section>
       <Tabs>
-        <Tabs.Tab key="tab_1" color="normal" label="General Health Scan">
+        <Tabs.Tab key="tab_1" color="normal" label="View General Health Scan">
           {() => (
             <Box>
               {data.active_status_1 === 0 && (
@@ -107,7 +107,7 @@ export const MedicalKiosk = props => {
             </Box>
           )}
         </Tabs.Tab>
-        <Tabs.Tab key="tab_2" color="normal" label="Symptom Based Checkup">
+        <Tabs.Tab key="tab_2" color="normal" label="View Symptom Based Checkup">
           {() => (
             <Box>
               {data.active_status_2 === 0 && (
@@ -149,7 +149,7 @@ export const MedicalKiosk = props => {
             </Box>
           )}
         </Tabs.Tab>
-        <Tabs.Tab key="tab_3" color="normal" label="Neurological/Radiological Scan">
+        <Tabs.Tab key="tab_3" color="normal" label="View Neurological/Radiological Scan">
           {() => (
             <Box>
               {data.active_status_3 === 0 && (
@@ -194,7 +194,7 @@ export const MedicalKiosk = props => {
             </Box>
           )}
         </Tabs.Tab>
-        <Tabs.Tab key="tab_4" color="normal" label="Chemical Analysis and Psychoactive Scan">
+        <Tabs.Tab key="tab_4" color="normal" label="View Chemical Analysis and Psychoactive Scan">
           {() => (
             <Box>
               {data.active_status_4 === 0 && (
