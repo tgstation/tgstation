@@ -220,19 +220,21 @@
 	. = ..()
 	if(!.)
 		return
-	//Pulling
-	if(iscarbon(pulling) && !(flags & SHOCK_ILLUSION) && source != pulling)
-		var/mob/living/carbon/C = pulling
-		C.electrocute_act(shock_damage*0.75, src, 1, flags)
-	if(iscarbon(pulledby) && !(flags & SHOCK_ILLUSION) && source != pulledby)
-		var/mob/living/carbon/C = pulledby
-		C.electrocute_act(shock_damage*0.75, src, 1, flags)
-	if(iscarbon(buckled) && !(flags & SHOCK_ILLUSION) && source != buckled)
-		var/mob/living/carbon/C = buckled
-		C.electrocute_act(shock_damage*0.75, src, 1, flags)
-	for(var/thing in buckled_mobs)
-		if(iscarbon(thing) && !(flags & SHOCK_ILLUSION) && source != thing)
-			var/mob/living/carbon/C = thing
+	//Propagation through pulling, fireman carry
+	if(!(flags & SHOCK_ILLUSION))
+		var/list/shocking_queue = list()
+		if(iscarbon(pulling) && source != pulling)
+			shocking_queue += pulling
+		if(iscarbon(pulledby) && source != pulledby)
+			shocking_queue += pulledby
+		if(iscarbon(buckled) && source != buckled)
+			shocking_queue += buckled
+		for(var/thing in buckled_mobs)
+			if(iscarbon(thing) && source != thing)
+				shocking_queue += thing
+		//Found our victims, now lets shock them all
+		for(var/victim in shocking_queue)
+			var/mob/living/carbon/C = victim
 			C.electrocute_act(shock_damage*0.75, src, 1, flags)
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
