@@ -234,7 +234,6 @@
 		if(iscarbon(thing) && !(flags & SHOCK_ILLUSION) && source != thing)
 			var/mob/living/carbon/C = thing
 			C.electrocute_act(shock_damage*0.75, src, 1, flags)
-
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
 	if(should_stun)
