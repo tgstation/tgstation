@@ -47863,12 +47863,9 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cby" = (
-/obj/structure/frame/machine,
-/obj/item/stack/sheet/glass,
-/obj/item/stock_parts/micro_laser/high,
-/obj/item/stock_parts/matter_bin,
-/obj/item/stock_parts/manipulator,
-/obj/item/stock_parts/matter_bin,
+/obj/machinery/mecha_part_fabricator/maint{
+	name = "forgotten exosuit fabricator"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cbz" = (
@@ -73824,10 +73821,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"gGX" = (
-/obj/effect/landmark/carpspawn,
-/turf/open/space/basic,
-/area/space)
 "gHh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/maintenance,
@@ -75919,6 +75912,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"tIk" = (
+/obj/effect/landmark/carpspawn,
+/turf/open/space/basic,
+/area/space)
 "tKc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable,
@@ -118199,7 +118196,7 @@ aaf
 aaa
 aaa
 aaa
-gGX
+tIk
 aaa
 aaa
 aaa

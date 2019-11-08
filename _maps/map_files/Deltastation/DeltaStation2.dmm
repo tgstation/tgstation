@@ -94943,8 +94943,6 @@
 /obj/structure/frame/machine,
 /obj/item/stack/cable_coil,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/matter_bin,
-/obj/item/stock_parts/matter_bin,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
 "duq" = (
@@ -94961,8 +94959,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/frame/machine,
-/obj/item/circuitboard/machine/mechfab,
+/obj/machinery/mecha_part_fabricator/maint{
+	name = "forgotten exosuit fabricator"
+	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dus" = (
@@ -94971,7 +94970,6 @@
 /obj/item/stock_parts/micro_laser,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/item/stock_parts/manipulator,
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dut" = (

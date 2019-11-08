@@ -18,6 +18,7 @@
 	var/list/queue = list()
 	var/processing_queue = 0
 	var/screen = "main"
+	var/link_on_init = TRUE
 	var/temp
 	var/datum/component/remote_materials/rmat
 	var/list/part_sets = list(
@@ -37,7 +38,7 @@
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
 	stored_research = new
-	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload)
+	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload, start_linked = link_on_init )
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
@@ -118,7 +119,7 @@
 				output += "<span style='font-size:80%;'>- Remove \[<a href='?src=[REF(src)];remove_mat=1;material=[ref]'>1</a>\]"
 				if(amount >= (MINERAL_MATERIAL_AMOUNT * 10))
 					output += " | \[<a href='?src=[REF(src)];remove_mat=10;material=[ref]'>10</a>\]"
-				output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[ref]'>All</a>\]</span>"
+				output += " | \[<a href='?src=[REF(src)];remove_mat=50;material=[ref]'>50</a>\]</span>"
 			output += "<br>"
 	else
 		output += "<font color='red'>No material storage connected, please contact the quartermaster.</font><br>"
@@ -443,3 +444,6 @@
 		return FALSE
 
 	return TRUE
+
+/obj/machinery/mecha_part_fabricator/maint
+	link_on_init = FALSE
