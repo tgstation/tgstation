@@ -23,6 +23,7 @@ import { ChemHeater } from './interfaces/ChemHeater';
 import { ChemMaster } from './interfaces/ChemMaster';
 import { ChemSplitter } from './interfaces/ChemSplitter';
 import { CodexGigas } from './interfaces/CodexGigas';
+import { ComputerFabricator } from './interfaces/ComputerFabricator';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
@@ -153,6 +154,10 @@ const ROUTES = {
   },
   codex_gigas: {
     component: () => CodexGigas,
+    scrollable: false,
+  },
+  computer_fabricator: {
+    component: () => ComputerFabricator,
     scrollable: false,
   },
   crayon: {
