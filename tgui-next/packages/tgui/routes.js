@@ -30,25 +30,8 @@ import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
-<<<<<<< HEAD
 import { Gps } from './interfaces/Gps';
-=======
-<<<<<<< HEAD
-=======
 import { KitchenSink } from './interfaces/KitchenSink';
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
->>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
-import { LanguageMenu } from './interfaces/LanguageMenu';
-=======
-import { MedicalKiosk } from './interfaces/MedicalKiosk';
-=======
->>>>>>> Merge conflicts are the bane of my existance
-<<<<<<< HEAD
->>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
-=======
->>>>>>> Merge conflicts are the bane of my existance
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
@@ -200,17 +183,10 @@ const ROUTES = {
     component: () => DisposalUnit,
     scrollable: false,
   },
-<<<<<<< HEAD
-<<<<<<< HEAD
   gps: {
     component: () => Gps,
     scrollable: true,
   },
-=======
-<<<<<<< HEAD
->>>>>>> Kiosk V3 baby, Sanitizes Inputs, Increases base cost but adds additional functionality roundstart. TGUI-next
-=======
->>>>>>> Cleans up some JS hopefully
   language_menu: {
     component: () => LanguageMenu,
     scrollable: true,
