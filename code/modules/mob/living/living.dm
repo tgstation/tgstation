@@ -284,7 +284,6 @@
 
 	if(ismob(AM))
 		var/mob/M = AM
-		var/mob/living/carbon/human/H = M
 
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
