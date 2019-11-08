@@ -46447,7 +46447,6 @@
 	charge = 100;
 	maxcharge = 15000
 	},
-/obj/item/circuitboard/machine/mechfab,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bYK" = (
@@ -49083,7 +49082,6 @@
 	},
 /obj/item/hand_labeler,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/stack/cable_coil,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ceq" = (
@@ -75473,6 +75471,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"qpN" = (
+/obj/effect/landmark/carpspawn,
+/turf/open/space/basic,
+/area/space)
 "qqg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -75912,10 +75914,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
-"tIk" = (
-/obj/effect/landmark/carpspawn,
-/turf/open/space/basic,
-/area/space)
 "tKc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable,
@@ -118196,7 +118194,7 @@ aaf
 aaa
 aaa
 aaa
-tIk
+qpN
 aaa
 aaa
 aaa
