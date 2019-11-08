@@ -1560,6 +1560,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					key_bindings[full_key] = sortList(key_bindings[full_key])
 
 					user << browse(null, "window=capturekeypress")
+					user.client.update_movement_keys()
 					save_preferences()
 
 				if("keybindings_reset")
