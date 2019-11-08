@@ -22,7 +22,7 @@
 	var/paying_customer = FALSE		//Ticked yes if passing inuse()
 
 	var/datum/bank_account/account  //payer's account.
-	var/mob/living/carbon/human/H   //the person using the console in each instance.
+	var/mob/living/carbon/human/H   //The person using the console in each instance. Used for paying for the kiosk.
 	var/mob/living/carbon/human/altPatient   //If scanning someone else, this will be the target.
 	var/obj/item/card/id/C          //the account of the person using the console.
 
@@ -301,8 +301,9 @@
 
 	if(pandemonium == TRUE)
 		chaos_modifier = 1
-	else if (altPatient.hallucinating())
+	else if (user.hallucinating())
 		chaos_modifier = 0.3
+
 
 	data["kiosk_cost"] = active_price + (chaos_modifier * (rand(1,25)))
 	data["patient_name"] = patient_name
