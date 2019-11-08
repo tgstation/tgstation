@@ -723,10 +723,11 @@
 			sleep(100) //so the ghost has time to re-enter
 
 
-			var/mob/living/carbon/H = M
-			for(var/organ in H.internal_organs)
-				var/obj/item/organ/O = organ
-				O.setOrganDamage(0)
+			if(iscarbon(M))
+				var/mob/living/carbon/H = M
+				for(var/organ in H.internal_organs)
+					var/obj/item/organ/O = organ
+					O.setOrganDamage(0)
 
 			M.adjustOxyLoss(-20, 0)
 			M.adjustToxLoss(-20, 0)
