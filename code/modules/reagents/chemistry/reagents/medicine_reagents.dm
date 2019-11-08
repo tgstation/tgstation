@@ -726,7 +726,7 @@
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M
 				if(!(C.dna && C.dna.species && (NOBLOOD in C.dna.species.species_traits)))
-					H.blood_volume = max(owner.blood_volume, BLOOD_VOLUME_NORMAL) //so you don't instantly re-die from a lack of blood
+					C.blood_volume = max(C.blood_volume, BLOOD_VOLUME_NORMAL) //so you don't instantly re-die from a lack of blood
 				for(var/organ in C.internal_organs)
 					var/obj/item/organ/O = organ
 					O.setOrganDamage(0) //so you don't near-instantly re-die because your heart has decayed to the point of complete failure
