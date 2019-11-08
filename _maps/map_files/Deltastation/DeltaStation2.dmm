@@ -94955,11 +94955,13 @@
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dur" = (
-/obj/machinery/mecha_part_fabricator,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/mecha_part_fabricator/maint{
+	name = "forgotten exosuit fabricator"
+	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dus" = (

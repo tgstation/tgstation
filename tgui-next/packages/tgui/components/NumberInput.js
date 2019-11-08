@@ -1,5 +1,5 @@
 import { clamp } from 'common/math';
-import { pureComponentHooks } from 'common/react';
+import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { tridentVersion } from '../byond';
 import { AnimatedNumber } from './AnimatedNumber';
@@ -20,13 +20,15 @@ export class NumberInput extends Component {
     };
 
     // Suppresses flickering while the value propagates through the backend
+    this.flickerTimer = null;
     this.suppressFlicker = () => {
       const { suppressFlicker } = this.props;
       if (suppressFlicker > 0) {
         this.setState({
           suppressingFlicker: true,
         });
-        setTimeout(() => this.setState({
+        clearTimeout(this.flickerTimer);
+        this.flickerTimer = setTimeout(() => this.setState({
           suppressingFlicker: false,
         }), suppressFlicker);
       }
@@ -34,6 +36,10 @@ export class NumberInput extends Component {
 
     this.handleDragStart = e => {
       const { value } = this.props;
+      const { editing } = this.state;
+      if (editing) {
+        return;
+      }
       document.body.style['pointer-events'] = 'none';
       this.ref = e.target;
       this.setState({
@@ -64,6 +70,9 @@ export class NumberInput extends Component {
         const state = { ...prevState };
         const offset = state.origin - e.screenY;
         if (prevState.dragging) {
+          const stepOffset = Number.isFinite(minValue)
+            ? minValue % step
+            : 0;
           // Translate mouse movement to value
           // Give it some headroom (by increasing clamp range by 1 step)
           state.internalValue = clamp(
@@ -71,7 +80,9 @@ export class NumberInput extends Component {
             minValue - step, maxValue + step);
           // Clamp the final value
           state.value = clamp(
-            state.internalValue - state.internalValue % step,
+            state.internalValue
+              - state.internalValue % step
+              + stepOffset,
             minValue, maxValue);
           state.origin = e.screenY;
         }
@@ -84,23 +95,18 @@ export class NumberInput extends Component {
 
     this.handleDragEnd = e => {
       const { onChange, onDrag } = this.props;
-      const { dragging, value } = this.state;
+      const { dragging, value, internalValue } = this.state;
       document.body.style['pointer-events'] = 'auto';
       clearTimeout(this.timer);
       clearInterval(this.dragInterval);
-      const editing = !dragging;
       this.setState({
         dragging: false,
-        editing,
+        editing: !dragging,
         origin: null,
       });
-      if (editing) {
-        if (this.inputRef) {
-          this.inputRef.current.focus();
-          this.inputRef.current.select();
-        }
-      }
-      else {
+      document.removeEventListener('mousemove', this.handleDragMove);
+      document.removeEventListener('mouseup', this.handleDragEnd);
+      if (dragging) {
         this.suppressFlicker();
         if (onChange) {
           onChange(e, value);
@@ -109,8 +115,12 @@ export class NumberInput extends Component {
           onDrag(e, value);
         }
       }
-      document.removeEventListener('mousemove', this.handleDragMove);
-      document.removeEventListener('mouseup', this.handleDragEnd);
+      else if (this.inputRef) {
+        const input = this.inputRef.current;
+        input.value = internalValue;
+        input.focus();
+        input.select();
+      }
     };
   }
 
@@ -119,10 +129,11 @@ export class NumberInput extends Component {
       dragging,
       editing,
       value: intermediateValue,
-      internalValue,
       suppressingFlicker,
     } = this.state;
     const {
+      className,
+      fluid,
       animated,
       value,
       unit,
@@ -155,7 +166,11 @@ export class NumberInput extends Component {
     ));
     return (
       <Box
-        className="NumberInput"
+        className={classes([
+          'NumberInput',
+          fluid && 'NumberInput--fluid',
+          className,
+        ])}
         minWidth={width}
         onMouseDown={this.handleDragStart}>
         <div className="NumberInput__barContainer">
@@ -170,11 +185,10 @@ export class NumberInput extends Component {
         {contentElement}
         <input
           ref={this.inputRef}
-          className="NumberInput__editable"
+          className="NumberInput__input"
           style={{
             display: !editing ? 'none' : undefined,
           }}
-          value={internalValue}
           onBlur={e => {
             if (!editing) {
               return;
@@ -214,10 +228,7 @@ export class NumberInput extends Component {
               });
               return;
             }
-          }}
-          onInput={e => this.setState({
-            internalValue: e.target.value,
-          })} />
+          }} />
       </Box>
     );
   }

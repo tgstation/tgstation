@@ -327,7 +327,7 @@
 	if(cap_lost)
 		to_chat(user, "<span class='warning'>The cap seems to be missing! Where did it go?</span>")
 		return
-	
+
 	var/fumbled = HAS_TRAIT(user, TRAIT_CLUMSY) && prob(5)
 	if(cap_on || fumbled)
 		cap_on = FALSE
@@ -366,7 +366,7 @@
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
 		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
 		return
-	
+
 	else if(istype(target, /obj/item/reagent_containers/glass/waterbottle))
 		var/obj/item/reagent_containers/glass/waterbottle/WB = target
 		if(WB.cap_on)
@@ -480,3 +480,22 @@
 	name = "saline canister"
 	volume = 5000
 	list_reagents = list(/datum/reagent/medicine/salglu_solution = 5000)
+
+/obj/item/reagent_containers/glass/colocup
+	name = "colo cup"
+	desc = "A cheap, mass produced style of cup, typically used at parties. They never seem to come out red, for some reason..."
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "colocup"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	item_state = "colocup"
+	custom_materials = list(/datum/material/plastic = 1000)
+	possible_transfer_amounts = list(5, 10, 15, 20)
+	volume = 20
+	amount_per_transfer_from_this = 5
+
+/obj/item/reagent_containers/glass/colocup/Initialize()
+	.=..()
+	icon_state = "colocup[rand(0, 6)]"
+	pixel_x = rand(-4,4)
+	pixel_y = rand(-4,4)

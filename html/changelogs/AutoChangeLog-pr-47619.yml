@@ -1,0 +1,4 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - rscadd: "Modifications have been made to the Mech Fabricator to allow it to withdraw and deposit to the ore silo (Thanks to alexkar598 from Yogstation for the code!)"

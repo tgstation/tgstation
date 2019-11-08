@@ -17,16 +17,6 @@ export const PortableGenerator = props => {
   else {
     stackPercentState = "bad";
   }
-  let sheetsAmount;
-  if (data.sheets > 5) {
-    sheetsAmount = "good";
-  }
-  else if (data.sheets > 0) {
-    sheetsAmount = "average";
-  }
-  else {
-    sheetsAmount = "bad";
-  }
 
   return (
     <Fragment>
@@ -57,7 +47,11 @@ export const PortableGenerator = props => {
           <LabeledList.Item label="Current sheet level">
             <ProgressBar
               value={data.stack_percent}
-              color={sheetsAmount} />
+              ranges={{
+                good: [5, Infinity],
+                average: [0.01, 5],
+                bad: [-Infinity, 0.01],
+              }} />
           </LabeledList.Item>
           <LabeledList.Item label="Heat level">
             {data.current_heat < 100 ? (

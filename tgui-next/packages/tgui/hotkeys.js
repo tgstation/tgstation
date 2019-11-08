@@ -3,6 +3,10 @@ import { createLogger } from './logging';
 const logger = createLogger('hotkeys');
 
 // Key codes
+export const KEY_TAB = 9;
+export const KEY_ENTER = 13;
+export const KEY_ESCAPE = 27;
+export const KEY_SPACE = 32;
 export const KEY_0 = 48;
 export const KEY_1 = 49;
 export const KEY_2 = 50;
