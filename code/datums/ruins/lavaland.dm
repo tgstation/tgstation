@@ -27,6 +27,14 @@
 	description = "WELCOME TO CLOWN PLANET! HONK HONK HONK etc.!"
 	suffix = "lavaland_biodome_clown_planet.dmm"
 
+/datum/map_template/ruin/lavaland/pioneer_camp
+	name = "Pioneer Camp"
+	id = "pioneer-camp"
+	description = "Wastelands of a long forgotten civilization. The small building still have the structural integrity needed to support themselves.\
+	 I wonder how they traveled in this wasteland? Why are there so many god damn crabs?! "
+	suffix = "lavaland_surface_pioneer_camp.dmm"
+	cost = 5
+
 /datum/map_template/ruin/lavaland/cube
 	name = "The Wishgranter Cube"
 	id = "wishgranter-cube"
