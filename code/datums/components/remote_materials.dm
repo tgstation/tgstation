@@ -15,7 +15,6 @@ handles linking back and forth.
 	var/category
 	var/allow_standalone
 	var/local_size = INFINITY
-	var/start_linked = TRUE
 
 /datum/component/remote_materials/Initialize(category, mapload, allow_standalone = TRUE, force_connect = FALSE, )
 	if (!isatom(parent))
@@ -28,7 +27,7 @@ handles linking back and forth.
 	RegisterSignal(parent, COMSIG_ATOM_MULTITOOL_ACT, .proc/OnMultitool)
 
 	var/turf/T = get_turf(parent)
-	if ((force_connect || (mapload && is_station_level(T.z))))
+	if (force_connect || (mapload && is_station_level(T.z)))
 		addtimer(CALLBACK(src, .proc/LateInitialize))
 	else if (allow_standalone)
 		_MakeLocal()
@@ -74,12 +73,6 @@ handles linking back and forth.
 	mat_container = null
 	if (allow_standalone)
 		_MakeLocal()
-
-// Used to start something on the map that isn't automatically connected ie mechfabs in maintenance
-/datum/component/remote_materials/proc/Disconnect()
-	if(silo)
-		silo.connected -= src
-		disconnect_from(silo)
 
 /datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	if (silo && istype(I, /obj/item/stack))
