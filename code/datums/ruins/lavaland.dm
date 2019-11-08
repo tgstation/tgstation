@@ -30,8 +30,7 @@
 /datum/map_template/ruin/lavaland/pioneer_camp
 	name = "Pioneer Camp"
 	id = "pioneer-camp"
-	description = "Wastelands of a long forgotten civilization. The small building still have the structural integrity needed to support themselves.\
-	 I wonder how they traveled in this wasteland? Why are there so many god damn crabs?! "
+	description = "Wastelands of a long forgotten civilization. Builder for some reason was obsessed with crabs. We have no idea how they survived that long. "
 	suffix = "lavaland_surface_pioneer_camp.dmm"
 	cost = 5
 

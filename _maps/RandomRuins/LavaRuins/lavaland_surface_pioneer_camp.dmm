@@ -1,467 +1,528 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
+"aJ" = (
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"bx" = (
+/turf/template_noop,
+/area/template_noop)
+"bI" = (
+/obj/item/shovel,
 /turf/open/floor/plating/ashplanet/rocky,
 /area/ruin/unpowered)
-"b" = (
-/obj/structure/table/wood,
-/obj/item/cane,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"c" = (
-/mob/living/simple_animal/crab,
-/turf/open/floor/plating/ashplanet/ash,
-/area/ruin/unpowered)
-"d" = (
-/obj/structure/table/wood,
-/obj/item/crowbar,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"e" = (
-/obj/item/seeds/tower,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"g" = (
+"bT" = (
+/obj/structure/table/greyscale,
+/obj/item/kitchen/rollingpin,
+/turf/open/floor/plating/ashplanet/rocky,
+/area/space)
+"dv" = (
 /obj/structure/bed,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
-"h" = (
-/obj/structure/loom,
-/turf/open/floor/plating/ashplanet/ash,
-/area/ruin/unpowered)
-"i" = (
-/obj/structure/table/wood,
-/obj/item/oar,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"j" = (
+"dA" = (
 /obj/structure/table/wood,
 /obj/item/scythe,
 /obj/item/reagent_containers/food/snacks/burger,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
-"l" = (
-/obj/structure/bonfire,
-/turf/open/floor/plating/ashplanet/rocky,
-/area/ruin/unpowered)
-"m" = (
-/turf/open/floor/plating/ashplanet/ash,
-/area/ruin/unpowered)
-"n" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface)
-"o" = (
+"eu" = (
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered)
-"p" = (
-/obj/structure/ore_box,
-/turf/open/floor/plating/ashplanet/rocky,
-/area/ruin/unpowered)
-"q" = (
-/obj/machinery/hydroponics/soil,
-/obj/item/seeds/wheat,
-/turf/open/floor/plating/ashplanet/ash,
-/area/ruin/unpowered)
-"s" = (
-/obj/machinery/hydroponics/soil,
-/turf/open/floor/plating/ashplanet/ash,
-/area/ruin/unpowered)
-"t" = (
+"eE" = (
 /turf/closed/wall/mineral/wood,
 /area/ruin/unpowered)
-"v" = (
-/mob/living/simple_animal/crab,
-/turf/open/floor/plating/ashplanet/rocky,
-/area/ruin/unpowered)
-"w" = (
-/obj/item/shovel,
-/turf/open/floor/plating/ashplanet/rocky,
-/area/ruin/unpowered)
-"x" = (
-/obj/item/pickaxe,
-/turf/open/floor/plating/ashplanet/ash,
-/area/ruin/unpowered)
-"y" = (
-/obj/structure/table/wood,
-/obj/item/seeds/random,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"z" = (
+"eT" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/burger,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
-"A" = (
-/obj/machinery/iv_drip,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"B" = (
-/obj/item/hatchet/wooden,
-/turf/open/floor/plating/ashplanet/rocky,
-/area/ruin/unpowered)
-"C" = (
+"jc" = (
+/turf/closed/wall/mineral/wood,
+/area/lavaland/surface)
+"jw" = (
 /obj/structure/table/wood,
-/obj/item/pizzabox/pineapple,
-/obj/item/soap/homemade,
+/obj/item/cane,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
-"D" = (
-/obj/item/seeds/tomato,
-/turf/open/floor/plating/ashplanet/ash,
-/area/ruin/unpowered)
-"E" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/burger/bearger,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"F" = (
-/obj/structure/chair/wood,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"I" = (
-/obj/item/seeds/tomato,
-/turf/open/floor/plating/ashplanet/rocky,
-/area/ruin/unpowered)
-"J" = (
-/obj/item/cultivator,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered)
-"K" = (
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"M" = (
-/obj/structure/falsewall/wood,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"N" = (
-/obj/structure/table/wood,
-/obj/item/pizzabox/meat,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"P" = (
-/mob/living/simple_animal/crab,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"Q" = (
-/obj/machinery/hydroponics/soil,
-/turf/open/floor/plating/asteroid/basalt/wasteland,
-/area/ruin/unpowered)
-"S" = (
-/obj/structure/chair/wood,
-/obj/structure/chair/wood,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"T" = (
-/obj/vehicle/ridden/pioneer_stone,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"U" = (
-/obj/structure/table/wood,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"V" = (
-/turf/template_noop,
-/area/template_noop)
-"W" = (
-/obj/structure/barricade/wooden,
-/turf/open/floor/plating/ashplanet/ash,
-/area/ruin/unpowered)
-"X" = (
+"jz" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/whitebeet,
 /turf/open/floor/plating/ashplanet/rocky,
 /area/ruin/unpowered)
-"Z" = (
+"ll" = (
+/obj/structure/bonfire,
+/turf/open/floor/plating/ashplanet/rocky,
+/area/ruin/unpowered)
+"lv" = (
+/obj/structure/chair/wood,
+/obj/structure/chair/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ml" = (
+/obj/structure/table/wood,
+/obj/item/oar,
+/obj/item/storage/briefcase,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"nB" = (
+/turf/open/floor/plating/ashplanet/ash,
+/area/ruin/unpowered)
+"oT" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/turf/open/floor/plating/ashplanet/rocky,
+/area/ruin/unpowered)
+"pM" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"rc" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating/ashplanet/ash,
+/area/ruin/unpowered)
+"tf" = (
+/obj/structure/table/wood,
+/obj/item/seeds/random,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ud" = (
+/obj/item/seeds/tomato,
+/turf/open/floor/plating/ashplanet/rocky,
+/area/ruin/unpowered)
+"xS" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/plating/ashplanet/ash,
+/area/ruin/unpowered)
+"zs" = (
+/mob/living/simple_animal/crab,
+/turf/open/floor/plating/ashplanet/rocky,
+/area/ruin/unpowered)
+"Bc" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/burger/bearger,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Bi" = (
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c10,
+/turf/open/floor/carpet,
+/area/lavaland/surface)
+"Bn" = (
+/obj/machinery/grill,
+/turf/open/floor/plating/ashplanet/ash,
+/area/ruin/unpowered)
+"CE" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/ashplanet/ash,
+/area/ruin/unpowered)
+"Dq" = (
+/turf/open/floor/plating/ashplanet/rocky,
+/area/space)
+"DM" = (
+/obj/item/pickaxe,
+/turf/open/floor/plating/ashplanet/ash,
+/area/ruin/unpowered)
+"DV" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/wheat,
+/turf/open/floor/plating/ashplanet/ash,
+/area/ruin/unpowered)
+"ED" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ER" = (
 /obj/structure/table/wood,
 /obj/item/pizzabox/bomb,
 /obj/item/reagent_containers/food/snacks/burger/superbite,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
+"EY" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/plating/ashplanet/rocky,
+/area/ruin/unpowered)
+"Fk" = (
+/obj/machinery/iv_drip,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Gb" = (
+/obj/item/hatchet/wooden,
+/turf/open/floor/plating/ashplanet/rocky,
+/area/ruin/unpowered)
+"Gl" = (
+/obj/item/seeds/tower,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"GR" = (
+/turf/open/floor/carpet,
+/area/lavaland/surface)
+"Hy" = (
+/obj/structure/table/wood,
+/obj/item/crowbar,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"KA" = (
+/obj/structure/loom,
+/turf/open/floor/plating/ashplanet/ash,
+/area/ruin/unpowered)
+"MD" = (
+/mob/living/simple_animal/crab,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"MH" = (
+/obj/structure/table/wood,
+/obj/item/storage/bag/tray,
+/obj/item/storage/bag/tray,
+/obj/item/storage/bag/tray,
+/obj/item/storage/bag/tray,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Nu" = (
+/obj/structure/table/wood,
+/obj/item/pizzabox/pineapple,
+/obj/item/soap/homemade,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"OC" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface)
+"OL" = (
+/obj/structure/table/greyscale,
+/obj/item/kitchen/knife/butcher,
+/turf/open/floor/plating/ashplanet/ash,
+/area/ruin/unpowered)
+"OR" = (
+/obj/item/cultivator,
+/turf/open/floor/plating/asteroid/basalt/wasteland,
+/area/ruin/unpowered)
+"Pm" = (
+/obj/structure/table/wood,
+/obj/item/pizzabox/meat,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"PO" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating/ashplanet/rocky,
+/area/ruin/unpowered)
+"RM" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Tc" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/asteroid/basalt/wasteland,
+/area/ruin/unpowered)
+"Te" = (
+/obj/structure/chair/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Tm" = (
+/obj/structure/table/wood,
+/obj/item/pizzabox/meat,
+/obj/item/reagent_containers/spray,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"UA" = (
+/obj/item/seeds/tomato,
+/turf/open/floor/plating/ashplanet/ash,
+/area/ruin/unpowered)
+"Wg" = (
+/turf/open/floor/plating/ashplanet/rocky,
+/area/ruin/unpowered)
+"XE" = (
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
+/obj/vehicle/ridden/pioneer_stone,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ZN" = (
+/mob/living/simple_animal/crab,
+/turf/open/floor/plating/ashplanet/ash,
+/area/ruin/unpowered)
 
 (1,1,1) = {"
-n
-n
-n
-n
-n
-n
-n
-n
-n
-n
-n
-n
-n
-n
-V
-V
+OC
+OC
+OC
+OC
+OC
+OC
+OC
+OC
+OC
+OC
+OC
+OC
+OC
+OC
+bx
+bx
 "}
 (2,1,1) = {"
-t
-t
-t
-t
-t
-n
-n
-n
-n
-m
-n
-n
-n
-n
-n
-V
+eE
+eE
+eE
+eE
+eE
+OC
+OC
+OC
+OC
+nB
+OC
+OC
+OC
+OC
+OC
+bx
 "}
 (3,1,1) = {"
-t
-T
-e
-e
-t
-h
-m
-o
-m
-c
-o
-n
-n
-n
-n
-n
+eE
+XE
+Gl
+Gl
+eE
+KA
+nB
+eu
+nB
+ZN
+eu
+OC
+OC
+OC
+OC
+OC
 "}
 (4,1,1) = {"
-t
-K
-K
-K
-M
-m
-a
-K
-t
-o
-m
-o
-m
-n
-n
-n
+eE
+ED
+ED
+ED
+aJ
+nB
+Wg
+ED
+eE
+eu
+nB
+eu
+nB
+OC
+OC
+OC
 "}
 (5,1,1) = {"
-t
-Z
-i
-d
-t
-K
-K
-K
-P
-K
-J
-s
-q
-o
-n
-n
+eE
+ER
+ml
+Hy
+eE
+ED
+ED
+ED
+MD
+ED
+OR
+CE
+DV
+eu
+OC
+OC
 "}
 (6,1,1) = {"
-t
-t
-t
-t
-t
-F
-z
-N
-K
-B
-a
-Q
-Q
-m
-m
-m
+eE
+eE
+eE
+eE
+eE
+Te
+eT
+Pm
+ED
+Gb
+Wg
+Tc
+Tc
+nB
+xS
+nB
 "}
 (7,1,1) = {"
-n
-n
-m
-m
-t
-S
-E
-U
-a
-a
-a
-X
-s
-v
-m
-m
+OC
+jc
+OL
+Bn
+eE
+lv
+Bc
+MH
+Wg
+Wg
+Wg
+jz
+CE
+zs
+xS
+nB
 "}
 (8,1,1) = {"
-n
-n
-n
-a
-m
-F
-y
-z
-a
-l
-a
-I
-D
-m
-n
-n
+OC
+jc
+bT
+Wg
+eE
+Te
+tf
+eT
+Wg
+ll
+Wg
+ud
+UA
+nB
+OC
+OC
 "}
 (9,1,1) = {"
-V
-n
-n
-a
-m
-c
-K
-w
-K
-a
-a
-a
-a
-o
-n
-n
+bx
+jc
+Dq
+Wg
+xS
+ZN
+ED
+bI
+ED
+Wg
+Wg
+Wg
+Wg
+eu
+OC
+OC
 "}
 (10,1,1) = {"
-n
-n
-a
-t
-K
-K
-t
-a
-t
-a
-a
-m
-x
-o
-o
-n
+OC
+jc
+oT
+eE
+eE
+RM
+eE
+Wg
+eE
+Wg
+Wg
+nB
+DM
+eu
+eu
+OC
 "}
 (11,1,1) = {"
-n
-a
-a
-t
-K
-K
-K
-a
-a
-a
-a
-c
-m
-t
-t
-t
+OC
+eE
+eE
+eE
+ED
+ED
+pM
+Wg
+Wg
+Wg
+Wg
+ZN
+eE
+eE
+eE
+eE
 "}
 (12,1,1) = {"
-n
-n
-n
-t
-g
-N
-W
-a
-m
-a
-p
-o
-m
-m
-A
-t
+OC
+OC
+OC
+eE
+dv
+Tm
+rc
+Wg
+nB
+Wg
+PO
+eu
+xS
+nB
+Fk
+eE
 "}
 (13,1,1) = {"
-V
-n
-n
-t
-t
-t
-t
-a
-t
-K
-a
-K
-t
-b
-g
-t
+bx
+OC
+OC
+eE
+eE
+eE
+eE
+EY
+eE
+RM
+eE
+eE
+eE
+jw
+dv
+eE
 "}
 (14,1,1) = {"
-V
-n
-n
-n
-n
-n
-n
-n
-t
-K
-K
-C
-t
-t
-t
-t
+bx
+OC
+OC
+OC
+jc
+Bi
+GR
+GR
+eE
+ED
+ED
+Nu
+eE
+eE
+eE
+eE
 "}
 (15,1,1) = {"
-V
-V
-n
-n
-n
-n
-n
-n
-t
-g
-K
-j
-t
-n
-n
-n
+bx
+bx
+OC
+OC
+jc
+jc
+jc
+jc
+eE
+dv
+ED
+dA
+eE
+OC
+OC
+OC
 "}
 (16,1,1) = {"
-V
-V
-V
-V
-n
-n
-n
-n
-t
-t
-t
-t
-t
-n
-n
-V
+bx
+bx
+bx
+bx
+OC
+OC
+OC
+OC
+eE
+eE
+eE
+eE
+eE
+OC
+OC
+bx
 "}
