@@ -75898,10 +75898,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
-"tIk" = (
-/obj/effect/landmark/carpspawn,
-/turf/open/space/basic,
-/area/space)
 "tKc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/cable,
