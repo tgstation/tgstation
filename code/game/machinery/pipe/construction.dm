@@ -155,7 +155,7 @@ Buildable meters
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
-		"<span class='italics'>You hear ratcheting.</span>")
+		"<span class='hear'>You hear ratcheting.</span>")
 
 	qdel(src)
 

@@ -253,7 +253,7 @@
 	start()
 
 /obj/machinery/microwave/proc/turn_on()
-	visible_message("<span class='notice'>\The [src] turns on.</span>", null, "<span class='italics'>You hear a microwave humming.</span>")
+	visible_message("<span class='notice'>\The [src] turns on.</span>", null, "<span class='hear'>You hear a microwave humming.</span>")
 	operating = TRUE
 
 	set_light(1.5)
@@ -309,8 +309,9 @@
 	var/metal = 0
 	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
-		if(O.materials[/datum/material/iron])
-			metal += O.materials[/datum/material/iron]
+		if(O.custom_materials && length(O.custom_materials))
+			if(O.custom_materials[getmaterialref(/datum/material/iron)])
+				metal += O.custom_materials[getmaterialref(/datum/material/iron)]
 
 	if(metal)
 		spark()

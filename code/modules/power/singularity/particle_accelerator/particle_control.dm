@@ -80,7 +80,7 @@
 		return
 
 	if(!interface_control)
-		to_chat(usr, "<span class='error'>ERROR: Request timed out. Check wire contacts.</span>")
+		to_chat(usr, "<span class='alert'>ERROR: Request timed out. Check wire contacts.</span>")
 		return
 
 	if(href_list["close"])
@@ -132,7 +132,7 @@
 
 
 /obj/machinery/particle_accelerator/control_box/power_change()
-	..()
+	. = ..()
 	if(stat & NOPOWER)
 		active = FALSE
 		use_power = NO_POWER_USE

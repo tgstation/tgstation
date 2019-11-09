@@ -15,29 +15,6 @@
 /obj/item/radio/intercom/unscrewed
 	unfastened = TRUE
 
-/obj/item/radio/intercom/ratvar
-	name = "hierophant intercom"
-	desc = "A modified intercom that uses the Hierophant network instead of subspace tech. Can listen to and broadcast on any frequency."
-	icon_state = "intercom_ratvar"
-	freerange = TRUE
-
-/obj/item/radio/intercom/ratvar/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, "<span class='warning'>[src] is fastened to the wall with [is_servant_of_ratvar(user) ? "replicant alloy" : "some material you've never seen"], and can't be removed.</span>")
-		return //no unfastening!
-	. = ..()
-
-/obj/item/radio/intercom/ratvar/process()
-	if(!istype(SSticker.mode, /datum/game_mode/clockwork_cult))
-		invisibility = INVISIBILITY_OBSERVER
-		alpha = 125
-		emped = TRUE
-	else
-		invisibility = initial(invisibility)
-		alpha = initial(alpha)
-		emped = FALSE
-	..()
-
 /obj/item/radio/intercom/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
@@ -153,4 +130,4 @@
 	result_path = /obj/item/radio/intercom/unscrewed
 	pixel_shift = 29
 	inverse = TRUE
-	materials = list(/datum/material/iron = 75, /datum/material/glass = 25)
+	custom_materials = list(/datum/material/iron = 75, /datum/material/glass = 25)

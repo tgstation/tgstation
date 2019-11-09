@@ -10,7 +10,7 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	move_to_delay = 20
-	projectiletype = /obj/item/projectile/temp/basilisk
+	projectiletype = /obj/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
@@ -24,18 +24,18 @@
 	obj_damage = 60
 	melee_damage_lower = 12
 	melee_damage_upper = 12
-	attacktext = "bites into"
+	attack_verb_continuous = "bites into"
+	attack_verb_simple = "bite into"
 	a_intent = INTENT_HARM
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	vision_range = 2
 	aggro_vision_range = 9
 	turns_per_move = 5
 	gold_core_spawnable = HOSTILE_SPAWN
 	loot = list(/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER},
 				/obj/item/stack/ore/diamond{layer = ABOVE_MOB_LAYER})
 
-/obj/item/projectile/temp/basilisk
+/obj/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
 	damage = 0
@@ -71,7 +71,8 @@
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "impales"
+	attack_verb_continuous = "impales"
+	attack_verb_simple = "impale"
 	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -103,7 +104,7 @@
 	light_range = 3
 	light_power = 2.5
 	light_color = LIGHT_COLOR_LAVA
-	projectiletype = /obj/item/projectile/temp/basilisk/magmawing
+	projectiletype = /obj/projectile/temp/basilisk/magmawing
 	crusher_loot = /obj/item/crusher_trophy/blaster_tubes/magma_wing
 	crusher_drop_mod = 60
 
@@ -116,12 +117,12 @@
 	icon_dead = "watcher_icewing_dead"
 	maxHealth = 170
 	health = 170
-	projectiletype = /obj/item/projectile/temp/basilisk/icewing
+	projectiletype = /obj/projectile/temp/basilisk/icewing
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/bone = 1) //No sinew; the wings are too fragile to be usable
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
 	crusher_drop_mod = 30
 
-/obj/item/projectile/temp/basilisk/magmawing
+/obj/projectile/temp/basilisk/magmawing
 	name = "scorching blast"
 	icon_state = "lava"
 	damage = 5
@@ -129,7 +130,7 @@
 	nodamage = FALSE
 	temperature = 500 //Heats you up!
 
-/obj/item/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/temp/basilisk/magmawing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(.)
 		var/mob/living/L = target
@@ -137,12 +138,12 @@
 			L.adjust_fire_stacks(0.1)
 			L.IgniteMob()
 
-/obj/item/projectile/temp/basilisk/icewing
+/obj/projectile/temp/basilisk/icewing
 	damage = 5
 	damage_type = BURN
 	nodamage = FALSE
 
-/obj/item/projectile/temp/basilisk/icewing/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/temp/basilisk/icewing/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(.)
 		var/mob/living/L = target

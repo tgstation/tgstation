@@ -97,3 +97,9 @@
 	cost = 2500
 	unit_name = "bilton wrangler boots"
 	export_types = list(/obj/item/clothing/shoes/cowboy/fancy)
+
+/datum/export/gear/ebonydie
+	cost = 500
+	unit_name = "ebony die"
+	export_types = list(/obj/item/dice/d6/ebony)
+

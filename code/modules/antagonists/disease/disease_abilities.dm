@@ -106,8 +106,10 @@ new /datum/disease_ability/symptom/powerful/youth
 			for(var/T in symptoms)
 				var/datum/symptom/S = new T()
 				SD.symptoms += S
+				S.OnAdd(SD)
 				if(SD.processing)
-					S.Start(SD)
+					if(S.Start(SD))
+						S.next_activation = world.time + rand(S.symptom_delay_min * 10, S.symptom_delay_max * 10)
 			SD.Refresh()
 	for(var/T in actions)
 		var/datum/action/A = new T()
@@ -134,6 +136,7 @@ new /datum/disease_ability/symptom/powerful/youth
 				var/datum/symptom/S = locate(T) in SD.symptoms
 				if(S)
 					SD.symptoms -= S
+					S.OnRemove(SD)
 					if(SD.processing)
 						S.End(SD)
 					qdel(S)
@@ -299,7 +302,7 @@ new /datum/disease_ability/symptom/powerful/youth
 	name = "Involuntary Coughing"
 	symptoms = list(/datum/symptom/cough)
 	short_desc = "Cause victims to cough intermittently."
-	long_desc = "Cause victims to cough intermittently, spreading your infection if your transmissibility is high."
+	long_desc = "Cause victims to cough intermittently, spreading your infection."
 
 /datum/disease_ability/symptom/mild/sneeze
 	name = "Involuntary Sneezing"

@@ -82,3 +82,26 @@
 #define JP_LOW 1
 #define JP_MEDIUM 2
 #define JP_HIGH 3
+
+//randomised elements
+#define RANDOM_NAME "random_name"
+#define RANDOM_NAME_ANTAG "random_name_antag"
+#define RANDOM_BODY "random_body"
+#define RANDOM_BODY_ANTAG "random_body_antag"
+#define RANDOM_SPECIES "random_species"
+#define RANDOM_GENDER "random_gender"
+#define RANDOM_GENDER_ANTAG "random_gender_antag"
+#define RANDOM_AGE "random_age"
+#define RANDOM_AGE_ANTAG "random_age_antag"
+#define RANDOM_UNDERWEAR "random_underwear"
+#define RANDOM_UNDERWEAR_COLOR "random_underwear_color"
+#define RANDOM_UNDERSHIRT "random_undershirt"
+#define RANDOM_SOCKS "random_socks"
+#define RANDOM_BACKPACK "random_backpack"
+#define RANDOM_JUMPSUIT_STYLE "random_jumpsuit_style"
+#define RANDOM_HAIRSTYLE "random_hairstyle"
+#define RANDOM_HAIR_COLOR "random_hair_color"
+#define RANDOM_FACIAL_HAIR_COLOR "random_facial_hair_color"
+#define RANDOM_FACIAL_HAIRSTYLE "random_facial_hairstyle"
+#define RANDOM_SKIN_TONE "random_skin_tone"
+#define RANDOM_EYE_COLOR "random_eye_color"

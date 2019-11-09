@@ -40,9 +40,7 @@
 			else
 				R.add_reagent(pick(saferChems), reagentsAmount)
 
-			var/datum/effect_system/foam_spread/foam = new
-			foam.set_up(200, get_turf(vent), R)
-			foam.start()
+			R.create_foam(/datum/effect_system/foam_spread,200)
 
 			var/cockroaches = prob(33) ? 3 : 0
 			while(cockroaches)
@@ -97,9 +95,7 @@
 			R.my_atom = vent
 			R.add_reagent(/datum/reagent/consumable/ethanol/beer, reagentsAmount)
 
-			var/datum/effect_system/foam_spread/foam = new
-			foam.set_up(200, get_turf(vent), R)
-			foam.start()
+			R.create_foam(200)
 		CHECK_TICK
 
 /datum/round_event/vent_clog/plasma_decon/announce()

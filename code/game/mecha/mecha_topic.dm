@@ -202,6 +202,11 @@
 			<body>
 				[add_req_access?"<a href='?src=[REF(src)];req_access=1;id_card=[REF(id_card)];user=[REF(user)]'>Edit operation keycodes</a>":null]
 				[maint_access?"<a href='?src=[REF(src)];maint_access=1;id_card=[REF(id_card)];user=[REF(user)]'>[(construction_state > MECHA_LOCKED) ? "Terminate" : "Initiate"] maintenance protocol</a>":null]
+				[(construction_state == MECHA_OPEN_HATCH) ?"--------------------</br>":null]
+				[(construction_state == MECHA_OPEN_HATCH) ?"[cell?"<a href='?src=[REF(src)];drop_cell=1;id_card=[REF(id_card)];user=[REF(user)]'>Drop power cell</a>":"No cell installed</br>"]":null]
+				[(construction_state == MECHA_OPEN_HATCH) ?"[scanmod?"<a href='?src=[REF(src)];drop_scanmod=1;id_card=[REF(id_card)];user=[REF(user)]'>Drop scanning module</a>":"No scanning module installed</br>"]":null]
+				[(construction_state == MECHA_OPEN_HATCH) ?"[capacitor?"<a href='?src=[REF(src)];drop_cap=1;id_card=[REF(id_card)];user=[REF(user)]'>Drop capacitor</a>":"No capacitor installed</br>"]":null]
+				[(construction_state == MECHA_OPEN_HATCH) ?"--------------------</br>":null]
 				[(construction_state > MECHA_LOCKED) ?"<a href='?src=[REF(src)];set_internal_tank_valve=1;user=[REF(user)]'>Set Cabin Air Pressure</a>":null]
 			</body>
 		</html>"}
@@ -246,10 +251,28 @@
 					return
 				if(construction_state == MECHA_LOCKED)
 					construction_state = MECHA_SECURE_BOLTS
-					to_chat(usr, "The securing bolts are now exposed.")
+					to_chat(usr, "<span class='notice'>The securing bolts are now exposed.</span>")
 				else if(construction_state == MECHA_SECURE_BOLTS)
 					construction_state = MECHA_LOCKED
-					to_chat(usr, "The securing bolts are now hidden.")
+					to_chat(usr, "<span class='notice'>The securing bolts are now hidden.</span>")
+				output_maintenance_dialog(id_card,usr)
+				return
+			if(href_list["drop_cell"])
+				if(construction_state == MECHA_OPEN_HATCH)
+					cell.forceMove(get_turf(src))
+					cell = null
+				output_maintenance_dialog(id_card,usr)
+				return
+			if(href_list["drop_scanmod"])
+				if(construction_state == MECHA_OPEN_HATCH)
+					scanmod.forceMove(get_turf(src))
+					scanmod = null
+				output_maintenance_dialog(id_card,usr)
+				return
+			if(href_list["drop_cap"])
+				if(construction_state == MECHA_OPEN_HATCH)
+					capacitor.forceMove(get_turf(src))
+					capacitor = null
 				output_maintenance_dialog(id_card,usr)
 				return
 

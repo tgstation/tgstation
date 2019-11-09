@@ -26,8 +26,8 @@
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/pipe_flags = NONE
 
-	var/global/list/iconsetids = list()
-	var/global/list/pipeimages = list()
+	var/static/list/iconsetids = list()
+	var/static/list/pipeimages = list()
 
 	var/image/pipe_vision_img = null
 
@@ -205,7 +205,7 @@
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
 			"<span class='notice'>You unfasten \the [src].</span>", \
-			"<span class='italics'>You hear ratchet.</span>")
+			"<span class='hear'>You hear ratchet.</span>")
 		investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 		//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.

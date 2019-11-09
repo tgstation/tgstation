@@ -36,10 +36,10 @@
 
 /datum/crafting_recipe/lance
 	name = "Explosive Lance (Grenade)"
-	result = /obj/item/twohanded/spear
+	result = /obj/item/twohanded/spear/explosive
 	reqs = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
-	blacklist = list(/obj/item/twohanded/spear/explosive)
+	blacklist = list(/obj/item/twohanded/spear/explosive, /obj/item/twohanded/spear/bonespear)
 	parts = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
 	time = 15
@@ -135,7 +135,7 @@
 
 /datum/crafting_recipe/ed209
 	name = "ED209"
-	result = /mob/living/simple_animal/bot/ed209
+	result = /mob/living/simple_animal/bot/secbot/ed209
 	reqs = list(/obj/item/robot_suit = 1,
 				/obj/item/clothing/head/helmet = 1,
 				/obj/item/clothing/suit/armor/vest = 1,
@@ -143,8 +143,7 @@
 				/obj/item/bodypart/r_leg/robot = 1,
 				/obj/item/stack/sheet/metal = 1,
 				/obj/item/stack/cable_coil = 1,
-				/obj/item/gun/energy/e_gun/dragnet = 1,
-				/obj/item/stock_parts/cell = 1,
+				/obj/item/gun/energy/disabler = 1,
 				/obj/item/assembly/prox_sensor = 1)
 	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER)
 	time = 60
@@ -584,7 +583,7 @@
 
 /datum/crafting_recipe/bonespear
 	name = "Bone Spear"
-	result = /obj/item/twohanded/bonespear
+	result = /obj/item/twohanded/spear/bonespear
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 4,
 				 /obj/item/stack/sheet/sinew = 1)
@@ -626,16 +625,17 @@
 				/obj/item/bodypart/head = 1)
 	parts = list(/obj/item/bodypart/head = 1,
 			/obj/item/twohanded/spear = 1)
+	blacklist = list(/obj/item/twohanded/spear/explosive, /obj/item/twohanded/spear/bonespear)
 	result = /obj/structure/headpike
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/headpikebone
 	name = "Spike Head (Bone Spear)"
 	time = 65
-	reqs = list(/obj/item/twohanded/bonespear = 1,
+	reqs = list(/obj/item/twohanded/spear/bonespear = 1,
 				/obj/item/bodypart/head = 1)
 	parts = list(/obj/item/bodypart/head = 1,
-			/obj/item/twohanded/bonespear = 1)
+			/obj/item/twohanded/spear/bonespear = 1)
 	result = /obj/structure/headpike/bone
 	category = CAT_PRIMAL
 
@@ -723,3 +723,48 @@
 	reqs = list(/obj/item/tank/internals/oxygen = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = MAXCOIL)
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/multiduct
+	name = "Multi-layer duct"
+	result = /obj/machinery/duct/multilayered
+	time = 5
+	reqs = list(/obj/item/stack/ducts = 5)
+	category = CAT_MISC
+	tools = list(TOOL_WELDER)
+
+/datum/crafting_recipe/rib
+	name = "Collosal Rib"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 10,
+            /datum/reagent/fuel/oil = 5)
+	result = /obj/structure/statue/bone/rib
+	subcategory = CAT_PRIMAL
+
+/datum/crafting_recipe/skull
+	name = "Skull Carving"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 6,
+            /datum/reagent/fuel/oil = 5)
+	result = /obj/structure/statue/bone/skull
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/halfskull
+	name = "Cracked Skull Carving"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 3,
+            /datum/reagent/fuel/oil = 5)
+	result = /obj/structure/statue/bone/skull/half
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/boneshovel
+	name = "Serrated Bone Shovel"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 4,
+            /datum/reagent/fuel/oil = 5,
+            /obj/item/shovel/spade = 1)
+	result = /obj/item/shovel/serrated
+	category = CAT_PRIMAL

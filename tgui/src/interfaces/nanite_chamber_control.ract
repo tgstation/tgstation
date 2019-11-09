@@ -1,43 +1,4 @@
 <ui-display title='Nanite Chamber Console'>
-<ui-display title='Program Disk'>
-{{#if data.has_disk}}
-	<ui-button icon='eject' action='eject'>Eject Disk</ui-button><br>
-	{{#if data.has_program}}
-		<ui-section label='Program Name'>{{data.disk.name}}</ui-section>
-		<ui-section label='Description'>{{data.disk.desc}}</ui-section>
-		<ui-section label='Activation Status'>{{data.disk.activated ? "Active" : "Inactive" }}</ui-section>
-		{{#if data.disk.activation_delay}}
-			<ui-section label='Activation Delay'>{{data.disk.activation_delay}}</ui-section>
-		{{/if}}
-		{{#if data.disk.timer}}
-			<ui-section label='Timer'>{{data.disk.timer}}</ui-section>
-			<ui-section label='Timer Type '>{{data.disk.timer_type}}</ui-section>
-		{{/if}}
-		{{#if data.disk.activation_code}}
-			<ui-section label='Activation Code'>{{data.disk.activation_code}}</ui-section>
-		{{/if}}
-		{{#if data.disk.deactivation_code}}
-			<ui-section label='Deactivation Code'>{{data.disk.deactivation_code}}</ui-section>
-		{{/if}}
-		{{#if data.disk.kill_code}}
-			<ui-section label='Kill Code'>{{data.disk.kill_code}}</ui-section>
-		{{/if}}
-		{{#if data.disk.trigger_code}}
-			<ui-section label='Trigger Code'>{{data.disk.trigger_code}}</ui-section>
-		{{/if}}
-		{{#if data.disk.has_extra_settings}}
-			{{#each data.disk.extra_settings}}
-			  <ui-section label='{{name}}'>{{value}}</ui-section>
-			{{/each}}
-		{{/if}}
-	{{else}}
-		<ui-notice>No program detected.</ui-notice>
-	{{/if}}
-{{else}}
-	<ui-notice>Insert disk.</ui-notice>
-{{/if}}
-</ui-display>
-<br>
 {{#if data.status_msg}}
 	<ui-notice>{{data.status_msg}}</ui-notice>
 {{else}}
@@ -49,20 +10,16 @@
 			<ui-section><ui-button icon='syringe' action='nanite_injection'>Implant Nanites</ui-button></ui-section>
 	{{else}}
 		<ui-display title='Nanites'>
-			{{#if data.has_program}}
-				<ui-button icon='download' action='add_program'>Install Program From Disk</ui-button><br>
-				<br>
-			{{/if}}
 			<ui-section>
 				<ui-section label='Nanite Volume'>{{data.nanite_volume}}</ui-section>
 				<ui-section label='Growth Rate'>{{data.regen_rate}}</ui-section>
 				<ui-section label='Safety Threshold'>{{data.safety_threshold}} <ui-button icon='pencil' action='set_safety'>Set</ui-button> </ui-section>
 				<ui-section label='Cloud ID'>{{data.cloud_id ? data.cloud_id : "No Cloud" }} <ui-button icon='pencil' action='set_cloud'>Set</ui-button> </ui-section>
 			</ui-section>
+      <ui-button icon='delete' style='danger' action='remove_nanites'>Destroy Nanites</ui-button>
 			<ui-display title='Programs'>
 				{{#each data.mob_programs}}
 					<ui-display title='{{name}}' button>
-					<ui-button icon='minus' action='remove_program' params='{"program_id": "{{id}}"}'>Uninstall</ui-button>
 					<ui-section label='Description'>{{desc}}</ui-section>
 					{{#if data.scan_level >= 2}}
 						<ui-section label='Activation Status'>{{activated ? "Active" : "Inactive" }}</ui-section>
@@ -83,6 +40,13 @@
 								{{#each extra_settings}}
 								  <ui-section label='{{name}}'>{{value}}</ui-section>
 								{{/each}}
+                {{#if has_rules}}
+                  <ui-section label='Rules'>
+                    {{#each rules}}
+                      {{display}} <br>
+                    {{/each}}
+                  </ui-section>
+                {{/if}}
 							{{/if}}
 							{{#if data.scan_level >= 4}}
 								{{#if activation_code}}
@@ -96,6 +60,13 @@
 								{{/if}}
 								{{#if trigger_code}}
 									<ui-section label='Trigger Code'>{{trigger_code}}</ui-section>
+								{{/if}}
+								{{#if has_rules}}
+									<ui-section label='Rules'>
+										{{#each rules}}
+											{{display}}<br>
+										{{/each}}
+									</ui-section>
 								{{/if}}
 							{{/if}}
 						{{/if}}

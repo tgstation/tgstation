@@ -40,6 +40,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	for(var/i in reverseRange(contents))
 		var/atom/movable/thing = i
 		var/sold = FALSE
+		if(QDELETED(thing))
+			continue
 		for(var/datum/export/E in GLOB.exports_list)
 			if(!E)
 				continue
