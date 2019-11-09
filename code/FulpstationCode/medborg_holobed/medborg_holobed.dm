@@ -1,6 +1,8 @@
 /obj/item/holobed_projector
 	name = "holobed projector"
 	desc = "Projects a roller bed formed from hard light."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "signmaker_med"
 	var/obj/structure/bed/holobed/loaded = null
 	var/projecting = FALSE
 	var/holo_range = 4
@@ -24,6 +26,9 @@
 	projecting = !projecting //toggle the projection
 
 	if(!projecting)
+		if(!loaded)
+			return
+		new /obj/effect/temp_visual/dir_setting/firing_effect/magic(loaded.loc)
 		qdel(loaded)
 		loaded.visible_message("<span class='notice'>[src] flickers and vanishes as you stop projecting it.</span>")
 		return
@@ -35,10 +40,8 @@
 		loaded.visible_message("<span class='warning'>[src] suddenly flickers and vanishes!</span>")
 
 	loaded.forceMove(location)
+	new /obj/effect/temp_visual/dir_setting/firing_effect/magic(loaded.loc)
 	user.visible_message("<span class='notice'>[user] projects [loaded].</span>", "<span class='notice'>You project [loaded].</span>")
-
-
-
 
 
 /obj/item/holobed_projector/robot //cyborg version
@@ -46,10 +49,9 @@
 	desc = "Projects a roller bed formed from hard light."
 
 
-
 /obj/structure/bed/holobed
 	name = "holo bed"
-	desc = "A bed formed from projected hard light. Looks surprisingly comfortable."
+	desc = "A bed formed from hard light. Looks surprisingly comfortable."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
 	anchored = FALSE
@@ -66,6 +68,10 @@
 	else
 		return ..()
 
+/obj/structure/bed/holobed/post_buckle_mob(mob/living/M)
+	icon_state = "up"
+
+/* Probably not worth the resources that would need to be expended.
 /obj/structure/bed/holobed/Moved()
 	. = ..()
 	if(validate_location()) //Check if we're out of projection range
@@ -74,8 +80,6 @@
 	qdel(src)
 
 
-/obj/structure/bed/holobed/post_buckle_mob(mob/living/M)
-	icon_state = "up"
 
 
 /obj/structure/bed/holobed/proc/validate_location()
@@ -85,5 +89,5 @@
 	if(T.z == z && get_dist(T, src) <= projector.holo_range)
 		return TRUE
 	else
-		return FALSE
+		return FALSE*/
 
