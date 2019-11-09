@@ -4,6 +4,9 @@
 // eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
 
 
+//hand convulsionies
+/mob/proc/convulsing(amount)
+	convulsion = max(convulsion,amount,0)
 
 ///Set the jitter of a mob
 /mob/proc/Jitter(amount)

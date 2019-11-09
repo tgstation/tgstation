@@ -171,7 +171,8 @@
 	if(!try_use_flash())
 		return
 	AOE_flash()
-	burn_out()
+	if(prob(40))
+		burn_out()
 
 /obj/item/assembly/flash/activate()//AOE flash on signal received
 	if(!..())

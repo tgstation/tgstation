@@ -483,6 +483,14 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "jittery")
 
+	if(convulsion)
+		if(prob(40))
+			var/obj/item/I = get_active_held_item()
+			if(I && dropItemToGround(I))
+				to_chat(src, "<span class='userdanger'>Your hand convulses violently and you drop what you were holding!</span>")
+				jitteriness += 10
+		convulsion = max(convulsion-1,0)
+
 	if(stuttering)
 		stuttering = max(stuttering-1, 0)
 

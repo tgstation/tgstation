@@ -483,12 +483,16 @@
 	busy = TRUE
 	M.visible_message("<span class='danger'>[user] has touched [M] with [src]!</span>", \
 			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
-	M.adjustStaminaLoss(50)
-	M.Paralyze(100)
+	M.adjustStaminaLoss(60)
+	M.Knockdown(75)
+	M.Jitter(50)
+	if(M.convulsing <= 100)
+		M.convulsing(150) //makes your hands spaz out and drop items every two lifes or so
 	M.updatehealth() //forces health update before next life tick //isn't this done by adjustStaminaLoss anyway?
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, TRUE, -1)
-	M.emote("gasp")
-	log_combat(user, M, "stunned", src)
+	if(HAS_TRAIT(M,MOB_ORGANIC))
+		M.emote("gasp")
+	log_combat(user, M, "zapped", src)
 	if(req_defib)
 		defib.deductcharge(revivecost)
 		cooldown = TRUE
