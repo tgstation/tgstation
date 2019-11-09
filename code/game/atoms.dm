@@ -493,10 +493,10 @@
 /// Updates the icon of the atom
 /atom/proc/update_icon()
 	var/signalOut = SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_ICON)
-	
+
 	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_ICON_STATE))
 		update_icon_state()
-	
+
 	if(!(signalOut & COMSIG_ATOM_NO_UPDATE_OVERLAYS))
 		var/list/new_overlays = update_overlays()
 		if(managed_overlays)
@@ -1177,7 +1177,7 @@
 		return filters[filter_data.Find(name)]
 
 /atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
-	return FALSE
+	. |= SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_Z_FALL, AM, levels)
 
 ///Sets the custom materials for an item.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)

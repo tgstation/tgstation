@@ -17,7 +17,7 @@
 /datum/reagent/medicine/leporazine
 	name = "Leporazine"
 	description = "Leporazine will effectively regulate a patient's body temperature, ensuring it never leaves safe levels."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#DB90C6"
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/carbon/M)
 	if(M.bodytemperature > BODYTEMP_NORMAL)
@@ -29,7 +29,7 @@
 /datum/reagent/medicine/adminordrazine //An OP chemical for admins
 	name = "Adminordrazine"
 	description = "It's magic. We don't have to explain it."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#E0BB00" //golden for the gods
 	can_synth = FALSE
 	taste_description = "badmins"
 
@@ -115,15 +115,6 @@
 		. = 1
 	..()
 
-/datum/reagent/medicine/inacusiate
-	name = "Inacusiate"
-	description = "Instantly restores all hearing to the patient, but does not cure deafness."
-	color = "#6600FF" // rgb: 100, 165, 255
-
-/datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
-	M.restoreEars()
-	..()
-
 /datum/reagent/medicine/cryoxadone
 	name = "Cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
@@ -146,7 +137,7 @@
 /datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
 	description = "A chemical that derives from Cryoxadone. It specializes in healing clone damage, but nothing else. Requires very cold temperatures to properly metabolize, and metabolizes quicker than cryoxadone."
-	color = "#0000C8"
+	color = "#3D3DC6"
 	taste_description = "muscle"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
@@ -211,7 +202,7 @@
 /datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
 	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#E1F2E6"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
 //Goon Chems. Ported mainly from Goonstation. Easily mixable (or not so easily) and provide a variety of effects.
@@ -220,13 +211,13 @@
 	name = "Oxandrolone"
 	description = "Stimulates the healing of severe burns. Extremely rapidly heals severe burns and slowly heals minor ones. Overdose will worsen existing burns."
 	reagent_state = LIQUID
-	color = "#f7ffa5"
+	color = "#1E8BFF"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/carbon/M)
 	if(M.getFireLoss() > 25)
-		M.adjustFireLoss(-4*REM, 0) //Twice as effective as silver sulfadiazine for severe burns
+		M.adjustFireLoss(-4*REM, 0) //Twice as effective as AIURI for severe burns
 	else
 		M.adjustFireLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
 	..()
@@ -360,7 +351,7 @@
 	name = "Potassium Iodide"
 	description = "Efficiently restores low radiation damage."
 	reagent_state = LIQUID
-	color = "#14FF3C"
+	color = "#BAA15D"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/M)
@@ -392,7 +383,6 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 
-
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/carbon/M)
 	if(M.getBruteLoss() > 25)
 		M.adjustBruteLoss(-4*REM, 0)
@@ -423,7 +413,7 @@
 
 /datum/reagent/medicine/ephedrine
 	name = "Ephedrine"
-	description = "Increases stun resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
+	description = "Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -604,7 +594,7 @@
 	name = "Oculine"
 	description = "Quickly restores eye damage, cures nearsightedness, and has a chance to restore vision to the blind."
 	reagent_state = LIQUID
-	color = "#FFFFFF"
+	color = "#404040" //oculine is dark grey, inacusiate is light grey
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	taste_description = "dull toxin"
 
@@ -629,11 +619,20 @@
 		M.set_blurriness(0)
 	..()
 
+/datum/reagent/medicine/inacusiate
+	name = "Inacusiate"
+	description = "Instantly restores all hearing to the patient, but does not cure deafness."
+	color = "#606060" // ditto
+
+/datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
+	M.restoreEars()
+	..()
+
 /datum/reagent/medicine/atropine
 	name = "Atropine"
 	description = "If a patient is in critical condition, rapidly heals all damage types as well as regulating oxygen in the body. Excellent for stabilizing wounded patients."
 	reagent_state = LIQUID
-	color = "#000000"
+	color = "#1D3535" //slightly more blue, like epinephrine
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 35
 
@@ -659,7 +658,7 @@
 
 /datum/reagent/medicine/epinephrine
 	name = "Epinephrine"
-	description = "Minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
+	description = "Very minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -723,10 +722,13 @@
 			sleep(100) //so the ghost has time to re-enter
 
 
-			var/mob/living/carbon/H = M
-			for(var/organ in H.internal_organs)
-				var/obj/item/organ/O = organ
-				O.setOrganDamage(0)
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				if(!(C.dna && C.dna.species && (NOBLOOD in C.dna.species.species_traits)))
+					C.blood_volume = max(C.blood_volume, BLOOD_VOLUME_NORMAL) //so you don't instantly re-die from a lack of blood
+				for(var/organ in C.internal_organs)
+					var/obj/item/organ/O = organ
+					O.setOrganDamage(0) //so you don't near-instantly re-die because your heart has decayed to the point of complete failure
 
 			M.adjustOxyLoss(-20, 0)
 			M.adjustToxLoss(-20, 0)
@@ -745,7 +747,7 @@
 /datum/reagent/medicine/mannitol
 	name = "Mannitol"
 	description = "Efficiently restores brain damage."
-	color = "#DCDCFF"
+	color = "#A0A0A0" //mannitol is light grey, neurine is lighter grey
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
 	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -2*REM)
@@ -754,7 +756,7 @@
 /datum/reagent/medicine/neurine
 	name = "Neurine"
 	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
-	color = "#EEFF8F"
+	color = "#C0C0C0" //ditto
 
 /datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/consumable/ethanol/neurotoxin))
@@ -846,11 +848,11 @@
 
 //Trek Chems, used primarily by medibots. Only heals a specific damage type, but is very efficient.
 
-/datum/reagent/medicine/inaprovaline
+/datum/reagent/medicine/inaprovaline //is this used anywhere?
 	name = "Inaprovaline"
 	description = "Stabilizes the breathing of patients. Good for those in critical condition."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#A4D8D8"
 
 /datum/reagent/medicine/inaprovaline/on_mob_life(mob/living/carbon/M)
 	if(M.losebreath >= 5)
@@ -861,16 +863,23 @@
 	name = "Regenerative Jelly"
 	description = "Gradually regenerates all types of damage, without harming slime anatomy."
 	reagent_state = LIQUID
-	color = "#91D865"
+	color = "#CC23FF"
 	taste_description = "jelly"
+
+/datum/reagent/medicine/regen_jelly/reaction_mob(mob/living/M, reac_volume)
+	if(M && ishuman(M) && reac_volume >= 0.5)
+		var/mob/living/carbon/human/H = M
+		H.hair_color = "C2F"
+		H.facial_hair_color = "C2F"
+		H.update_hair()
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1.5*REM, 0)
 	M.adjustFireLoss(-1.5*REM, 0)
 	M.adjustOxyLoss(-1.5*REM, 0)
 	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
-	. = 1
 	..()
+	. = 1
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"
@@ -899,7 +908,7 @@
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
 	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain. For some strange reason, it also induces temporary pacifism in those who imbibe it and semi-permanent pacifism in those who overdose on it."
-	color = rgb(255, 175, 0)
+	color = "#FFAF00"
 	metabolization_rate = 0.4 //Math is based on specific metab rate so we want this to be static AKA if define or medicine metab rate changes, we want this to stay until we can rework calculations.
 	overdose_threshold = 25
 
@@ -971,7 +980,7 @@
 /datum/reagent/medicine/lavaland_extract
 	name = "Lavaland Extract"
 	description = "An extract of lavaland atmospheric and mineral elements. Heals the user in small doses, but is extremely toxic otherwise."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#6B372E" //dark and red like lavaland
 	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
 	can_synth = FALSE
 
@@ -991,7 +1000,7 @@
 /datum/reagent/medicine/changelingadrenaline
 	name = "Changeling Adrenaline"
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
-	color = "#C8A5DC"
+	color = "#C1151D"
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
@@ -1024,7 +1033,7 @@
 /datum/reagent/medicine/changelinghaste
 	name = "Changeling Haste"
 	description = "Drastically increases movement speed, but deals toxin damage."
-	color = "#C8A5DC"
+	color = "#AE151D"
 	metabolization_rate = 1
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
@@ -1044,8 +1053,8 @@
 	// Heart attack code will not do damage if corazone is present
 	// because it's SPACE MAGIC ASPIRIN
 	name = "Corazone"
-	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
-	color = "#F5F5F5"
+	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks. Can also be used to stabilize livers."
+	color = "#F49797"
 	self_consuming = TRUE
 
 /datum/reagent/medicine/corazone/on_mob_metabolize(mob/living/M)
@@ -1198,7 +1207,7 @@
 	description = "This enzyme catalyzes the conversion of nutricious food into healing peptides."
 	metabolization_rate = 0.0625  * REAGENTS_METABOLISM //slow metabolism rate so the patient can self heal with food even after the troph has metabolized away for amazing reagent efficency.
 	reagent_state = SOLID
-	color = "#DC605D"
+	color = "#FFBE00"
 	overdose_threshold = 10
 
 /datum/reagent/medicine/metafactor/overdose_start(mob/living/carbon/M)
@@ -1213,7 +1222,7 @@
 	name = "Rhigoxane"
 	description = "A second generation burn treatment agent exibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
 	reagent_state = LIQUID
-	color = "#B6D2F2"
+	color = "#F7FFA5"
 	overdose_threshold = 25
 	reagent_weight = 0.6
 
@@ -1286,6 +1295,7 @@
 /datum/reagent/medicine/granibitaluri
 	name = "Granibitaluri" //achieve "GRANular" amounts of C2
 	description = "A chemical solution useful as a diluent for more potent medicine. Especially useful when combined with brute/burn medication. Large amounts can cause fluid to appear in both the lungs and the heart."
+	color = "#E0E0E0"
 	reagent_state = LIQUID
 	overdose_threshold = 50
 	metabolization_rate = 0.2 //same as C2s

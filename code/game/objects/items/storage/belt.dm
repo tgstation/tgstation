@@ -511,7 +511,7 @@
 		/obj/item/flashlight,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
-		/obj/item/holosign_creator/janibarrier,
+		/obj/item/holosign_creator,
 		/obj/item/forcefield_projector,
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
@@ -524,7 +524,7 @@
 	new /obj/item/lightreplacer(src)
 	new /obj/item/reagent_containers/spray/cleaner(src)
 	new /obj/item/soap/nanotrasen(src)
-	new /obj/item/holosign_creator/janibarrier(src)
+	new /obj/item/holosign_creator(src)
 	new /obj/item/melee/flyswatter(src)
 
 /obj/item/storage/belt/bandolier

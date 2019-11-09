@@ -23,7 +23,7 @@
 
 /datum/award/achievement/misc/round_and_full
 	name = "Round and Full"
-	desc = "Well atleast you aren't down the river, I hear they eat people there."
+	desc = "Well at least you aren't down the river, I hear they eat people there."
 	hub_id = MEDAL_CLOWNCARKING
 
 /datum/award/achievement/misc/the_best_driver

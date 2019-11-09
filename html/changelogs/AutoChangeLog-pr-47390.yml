@@ -1,4 +1,0 @@
-author: "MCterra10"
-delete-after: True
-changes: 
-  - bugfix: "Med Kiosks no longer runtime when no ID is equipped."

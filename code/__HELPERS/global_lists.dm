@@ -37,19 +37,33 @@
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
 		GLOB.species_list[S.id] = spath
-	sortList(GLOB.species_list)
+	sortList(GLOB.species_list, /proc/cmp_typepaths_asc)
 
 	//Surgeries
 	for(var/path in subtypesof(/datum/surgery))
 		GLOB.surgeries_list += new path()
-	sortList(GLOB.surgeries_list)
+	sortList(GLOB.surgeries_list, /proc/cmp_typepaths_asc)
 
 	//Materials
 	for(var/path in subtypesof(/datum/material))
 		var/datum/material/D = new path()
 		GLOB.materials_list[D.id] = D
-	sortList(GLOB.materials_list)
+	sortList(GLOB.materials_list, /proc/cmp_typepaths_asc)
 
+	// Keybindings
+	for(var/KB in subtypesof(/datum/keybinding))
+		var/datum/keybinding/keybinding = KB
+		if(!initial(keybinding.key))
+			continue
+		var/datum/keybinding/instance = new keybinding
+		GLOB.keybindings_by_name[initial(instance.name)] = instance
+		if (!GLOB.keybinding_list_by_key[initial(instance.key)])
+			GLOB.keybinding_list_by_key[initial(instance.key)] = list()
+		GLOB.keybinding_list_by_key[initial(instance.key)] += instance.name
+	// Sort all the keybindings by their weight
+	for(var/key in GLOB.keybinding_list_by_key)
+		GLOB.keybinding_list_by_key[key] = sortList(GLOB.keybinding_list_by_key[key])
+		
 	GLOB.emote_list = init_emote_list()
 
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)
@@ -71,3 +85,4 @@
 		for(var/path in subtypesof(prototype))
 			L+= path
 		return L
+

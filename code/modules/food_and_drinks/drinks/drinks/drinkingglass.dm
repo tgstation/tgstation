@@ -54,10 +54,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(changetype)
 	cut_overlays()
 
-	if (gulp_size < 15)
-		gulp_size = 15
-	else
-		gulp_size = max(round(reagents.total_volume / 15), 15)
+	gulp_size = max(round(reagents.total_volume / 15), 15)
 
 	if (reagents.reagent_list.len > 0)
 		var/datum/reagent/largest_reagent = reagents.get_master_reagent()
