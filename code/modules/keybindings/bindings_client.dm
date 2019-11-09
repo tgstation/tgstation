@@ -60,8 +60,8 @@
 		if(kb.down(src) && keycount >= MAX_COMMANDS_PER_KEY)
 			break
 
-	holder?.key_down(full_key, src)
-	mob.focus?.key_down(full_key, src)
+	holder?.key_down(_key, src)
+	mob.focus?.key_down(_key, src)
 
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
