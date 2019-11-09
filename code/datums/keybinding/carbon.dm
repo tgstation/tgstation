@@ -6,7 +6,7 @@
 /datum/keybinding/carbon/toggle_throw_mode
 	key = "R"
 	name = "toggle_throw_mode"
-	classic_key = "END"
+	classic_key = "Southwest" // END
 	full_name = "Toggle throw mode"
 	description = "Toggle throwing the current item or not."
 	category = CATEGORY_CARBON
@@ -63,5 +63,7 @@
 	category = CATEGORY_CARBON
 
 /datum/keybinding/carbon/select_harm_intent/down(client/user)
+	if(iscyborg(user.mob))
+		return FALSE
 	user.mob?.a_intent_change(INTENT_HARM)
 	return TRUE

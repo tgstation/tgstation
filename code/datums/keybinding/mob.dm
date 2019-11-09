@@ -69,7 +69,7 @@
 	return TRUE
 
 /datum/keybinding/mob/cycle_intent_right
-	key = "Home"
+	key = "Northwest" // HOME
 	name = "cycle_intent_right"
 	full_name = "cycle intent right"
 	description = ""
@@ -103,7 +103,7 @@
 
 /datum/keybinding/mob/activate_inhand
 	key = "Z"
-	classic_key = "PAGEDOWN"
+	classic_key = "Southeast" // PAGEDOWN
 	name = "activate_inhand"
 	full_name = "Activate in-hand"
 	description = "Uses whatever item you have inhand"
