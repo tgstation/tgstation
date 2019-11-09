@@ -30,9 +30,9 @@
 /datum/map_template/ruin/lavaland/pioneer_camp
 	name = "Pioneer Camp"
 	id = "pioneer-camp"
-	description = "Wastelands of a long forgotten civilization. Builder for some reason was obsessed with crabs. We have no idea how they survived that long. "
+	description = "Wastelands of a long forgotten civilization. Builders for some reason were obsessed with crabs. We have no idea how they survived that long. "
 	suffix = "lavaland_surface_pioneer_camp.dmm"
-	cost = 5
+	cost = 10
 
 /datum/map_template/ruin/lavaland/cube
 	name = "The Wishgranter Cube"
