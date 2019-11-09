@@ -1,0 +1,4 @@
+author: "Cenrus"
+delete-after: True
+changes: 
+  - bugfix: "The abandoned bar and port quarter solars are now connected to the air supply"
