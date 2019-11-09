@@ -21,26 +21,28 @@ import { ChemDispenser } from './interfaces/ChemDispenser';
 import { ChemFilter } from './interfaces/ChemFilter';
 import { ChemHeater } from './interfaces/ChemHeater';
 import { ChemMaster } from './interfaces/ChemMaster';
+import { ChemPress } from './interfaces/ChemPress';
 import { ChemSplitter } from './interfaces/ChemSplitter';
+import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
 import { CodexGigas } from './interfaces/CodexGigas';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
-import { KitchenSink } from './interfaces/KitchenSink';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { Mint } from './interfaces/Mint';
 import { OperatingComputer } from './interfaces/OperatingComputer';
+import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
+import { Radio } from './interfaces/Radio';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
 import { SMES } from './interfaces/SMES';
+import { SolarControl } from './interfaces/SolarControl';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
-import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
-import { ChemPress } from './interfaces/ChemPress';
 
 const ROUTES = {
   achievements: {
@@ -179,6 +181,10 @@ const ROUTES = {
     component: () => Mint,
     scrollable: false,
   },
+  ore_redemption_machine: {
+    component: () => OreRedemptionMachine,
+    scrollable: true,
+  },
   operating_computer: {
     component: () => OperatingComputer,
     scrollable: true,
@@ -191,6 +197,10 @@ const ROUTES = {
     component: () => PortableGenerator,
     scrollable: false,
   },
+  radio: {
+    component: () => Radio,
+    scrollable: false,
+  },
   shuttle_manipulator: {
     component: () => ShuttleManipulator,
     scrollable: true,
@@ -201,6 +211,10 @@ const ROUTES = {
   },
   smes: {
     component: () => SMES,
+    scrollable: false,
+  },
+  solar_control: {
+    component: () => SolarControl,
     scrollable: false,
   },
   thermomachine: {
@@ -218,12 +232,15 @@ const ROUTES = {
 };
 
 export const getRoute = state => {
-  // Show a kitchen sink
-  if (state.showKitchenSink) {
-    return {
-      component: () => KitchenSink,
-      scrollable: true,
-    };
+  if (process.env.NODE_ENV !== 'production') {
+    // Show a kitchen sink
+    if (state.showKitchenSink) {
+      const { KitchenSink } = require('./interfaces/KitchenSink');
+      return {
+        component: () => KitchenSink,
+        scrollable: true,
+      };
+    }
   }
   // Refer to the routing table
   return ROUTES[state.config && state.config.interface];
