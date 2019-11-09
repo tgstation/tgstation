@@ -44812,7 +44812,6 @@
 	},
 /area/maintenance/solars/port/aft)
 "bUO" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
 /obj/machinery/camera/autoname,
 /turf/open/floor/plating,
@@ -45274,7 +45273,7 @@
 "bVR" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
@@ -53145,6 +53144,9 @@
 	doorOpen = 'sound/effects/doorcreaky.ogg';
 	name = "The Gobetting Barmaid"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cnm" = (
@@ -57576,6 +57578,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cwj" = (
@@ -73406,6 +73411,9 @@
 /obj/structure/girder,
 /obj/structure/grille,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -73416,6 +73424,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"ewp" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "eyv" = (
 /obj/structure/grille/broken,
 /obj/structure/lattice,
@@ -73614,6 +73630,7 @@
 	pixel_x = -32
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "fwb" = (
@@ -73750,6 +73767,9 @@
 "glz" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
@@ -74196,6 +74216,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port/aft)
+"jnX" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "jrE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -74203,6 +74230,11 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"jrQ" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "jwW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/crew_quarters/fitness/recreation)
@@ -74454,6 +74486,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"kRs" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "kSB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/trunk,
@@ -74501,6 +74540,9 @@
 	name = "Port Quarter Solar Access";
 	req_access_txt = "10"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "liQ" = (
@@ -74543,6 +74585,9 @@
 "luh" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "lwA" = (
@@ -74886,6 +74931,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "nwq" = (
@@ -75113,6 +75161,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"oCO" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "oFI" = (
 /obj/machinery/door/window/eastright{
 	dir = 8;
@@ -75154,6 +75212,13 @@
 /obj/structure/sign/warning/biohazard,
 /turf/closed/wall,
 /area/maintenance/port/aft)
+"oRm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "oRL" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -75205,6 +75270,9 @@
 /obj/structure/cable,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -76191,6 +76259,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
+"vKK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/maintenance/port/aft)
 "vKU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical{
@@ -89119,7 +89193,7 @@ cjt
 ckS
 ckP
 ckP
-bXE
+cdg
 ptP
 ckP
 ckP
@@ -89633,7 +89707,7 @@ tSO
 diI
 dux
 uYL
-ckP
+vKK
 dux
 dux
 dux
@@ -90379,9 +90453,9 @@ bJq
 bKX
 bbL
 bbL
-bPG
-bxT
-bSn
+oRm
+bbL
+jrQ
 nfn
 aob
 aob
@@ -90404,7 +90478,7 @@ gcu
 cmB
 tQS
 cga
-cbx
+nPC
 wkM
 bTn
 bUN
@@ -90661,7 +90735,7 @@ fwL
 cmB
 wij
 cga
-cbx
+nPC
 reI
 bTn
 bUO
@@ -90918,7 +90992,7 @@ fwL
 cmB
 wij
 cga
-cbx
+nPC
 uqB
 bTp
 bUP
@@ -91175,7 +91249,7 @@ gUb
 cmB
 wij
 snr
-cbx
+nPC
 dux
 bTn
 bTn
@@ -91433,9 +91507,9 @@ cmB
 hwW
 cga
 luh
-cbx
+jnX
 fvT
-cbx
+uOc
 cwh
 hEP
 dux
@@ -91690,7 +91764,7 @@ cmB
 jPu
 cga
 cxR
-cbx
+nPC
 ceu
 dyw
 bXE
@@ -91947,7 +92021,7 @@ kBT
 omB
 cga
 ceu
-cbx
+nPC
 dux
 dux
 ckN
@@ -92204,7 +92278,7 @@ tRO
 cga
 cga
 cLI
-cbx
+nPC
 dux
 anT
 aaf
@@ -92461,7 +92535,7 @@ fkj
 cga
 sfQ
 bXE
-cbx
+nPC
 ckN
 aaf
 aaa
@@ -92718,7 +92792,7 @@ xTm
 cga
 ceu
 dvt
-cbx
+nPC
 ckN
 aaf
 aaa
@@ -93232,7 +93306,7 @@ ndC
 xZy
 cga
 hdX
-cbx
+nPC
 ckN
 aaf
 aaa
@@ -93489,7 +93563,7 @@ wpK
 eSm
 cga
 ceu
-cbx
+nPC
 ckN
 aaf
 aaa
@@ -93746,7 +93820,7 @@ cmB
 cqt
 cga
 jNy
-cbx
+nPC
 dux
 aaf
 aaf
@@ -94003,7 +94077,7 @@ mtp
 vQt
 cga
 oXP
-luh
+ewp
 dux
 dux
 dux
@@ -94260,7 +94334,7 @@ cga
 cga
 cga
 ceu
-luh
+ewp
 bXE
 dvq
 dux
@@ -94516,8 +94590,8 @@ fFJ
 csi
 chZ
 chZ
-cvl
-cbx
+oCO
+kRs
 ceu
 dux
 dux
