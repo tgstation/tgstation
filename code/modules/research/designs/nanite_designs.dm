@@ -527,7 +527,7 @@
 	category = list("Sensor Nanites")
 
 /datum/design/nanites/sensor_species
-	name = "Race Sensor"
+	name = "Species Sensor"
 	desc = "When triggered, the nanites scan the host to determine their species and output a signal depending on the conditions set in the settings."
 	id = "sensor_species_nanites"
 	program_type = /datum/nanite_program/sensor/species
