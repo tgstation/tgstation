@@ -66,7 +66,7 @@
 	item_state = "synth"
 	instrumentId = "piano"
 	instrumentExt = "ogg"
-	var/static/list/insTypes = list("accordion" = "mid", "bikehorn" = "ogg", "glockenspiel" = "mid", "guitar" = "ogg", "harmonica" = "mid", "piano" = "ogg", "recorder" = "mid", "saxophone" = "mid", "trombone" = "mid", "violin" = "mid", "xylophone" = "mid")	//No eguitar you ear-rapey fuckers.
+	var/static/list/insTypes = list("accordion" = "mid", "bikehorn" = "ogg", "glockenspiel" = "mid", "banjo" = "ogg", "guitar" = "ogg", "harmonica" = "mid", "piano" = "ogg", "recorder" = "mid", "saxophone" = "mid", "trombone" = "mid", "violin" = "mid", "xylophone" = "mid")	//No eguitar you ear-rapey fuckers.
 	actions_types = list(/datum/action/item_action/synthswitch)
 
 /obj/item/instrument/piano_synth/proc/changeInstrument(name = "piano")
@@ -78,6 +78,16 @@
 	if(!insTypes[chosen])
 		return
 	return changeInstrument(chosen)
+
+/obj/item/instrument/banjo
+	name = "banjo"
+	desc = "A 'Mura' brand banjo. It's pretty much just a drum with a neck and strings."
+	icon_state = "banjo"
+	item_state = "banjo"
+	instrumentExt = "ogg"
+	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-digged", "clawhammered")
+	hitsound = 'sound/weapons/banjoslap.ogg'
+	instrumentId = "banjo"
 
 /obj/item/instrument/guitar
 	name = "guitar"
@@ -247,6 +257,7 @@
 		instruments = list()
 		var/list/templist = list(/obj/item/instrument/violin,
 							/obj/item/instrument/piano_synth,
+							/obj/item/instrument/banjo,
 							/obj/item/instrument/guitar,
 							/obj/item/instrument/eguitar,
 							/obj/item/instrument/glockenspiel,
