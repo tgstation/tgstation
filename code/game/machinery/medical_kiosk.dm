@@ -62,9 +62,6 @@
 	RefreshParts()
 	return
 
-<<<<<<< HEAD
-/obj/machinery/medical_kiosk/update_icon_state()
-=======
 /obj/machinery/medical_kiosk/proc/clearScans() //Called it enough times to be it's own proc
 	scan_active_1 = FALSE
 	scan_active_2 = FALSE
@@ -72,8 +69,7 @@
 	scan_active_4 = FALSE
 	return
 
-/obj/machinery/medical_kiosk/update_icon()
->>>>>>> Should just rebuild tgui and maybe some minor tweaks
+/obj/machinery/medical_kiosk/update_icon_state()
 	if(is_operational())
 		icon_state = "kiosk_off"
 	else
