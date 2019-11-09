@@ -92,6 +92,7 @@
 
 /datum/keybinding/mob/swap_hands
 	key = "X"
+	classic_key = "Northeast" // PAGEUP
 	name = "swap_hands"
 	full_name = "Swap hands"
 	description = ""
