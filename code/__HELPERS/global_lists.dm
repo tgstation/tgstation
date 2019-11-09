@@ -50,19 +50,33 @@
 		GLOB.materials_list[D.id] = D
 	sortList(GLOB.materials_list, /proc/cmp_typepaths_asc)
 
-	// Keybindings
+	// Keybindings (classic)
 	for(var/KB in subtypesof(/datum/keybinding))
-		var/datum/keybinding/keybinding = KB
-		if(!initial(keybinding.key))
+		var/datum/keybinding/instance = new KB
+		if(!instance.name || !instance.key)
 			continue
-		var/datum/keybinding/instance = new keybinding
-		GLOB.keybindings_by_name[initial(instance.name)] = instance
-		if (!GLOB.keybinding_list_by_key[initial(instance.key)])
-			GLOB.keybinding_list_by_key[initial(instance.key)] = list()
-		GLOB.keybinding_list_by_key[initial(instance.key)] += instance.name
+		GLOB.keybindings_by_name[instance.name] = instance
+
+		// Classic
+		if(instance.classic_key)
+			if (!(instance.classic_key in GLOB.classic_keybinding_list_by_key))
+				GLOB.classic_keybinding_list_by_key[instance.classic_key] = list()
+			GLOB.classic_keybinding_list_by_key[instance.classic_key] += instance.name
+
+		// Hotkey
+		if(instance.hotkey_key)
+			if (!(instance.hotkey_key in GLOB.hotkey_keybinding_list_by_key))
+				GLOB.hotkey_keybinding_list_by_key[instance.hotkey_key] = list()
+			GLOB.hotkey_keybinding_list_by_key[instance.hotkey_key] += instance.name
+
 	// Sort all the keybindings by their weight
-	for(var/key in GLOB.keybinding_list_by_key)
-		GLOB.keybinding_list_by_key[key] = sortList(GLOB.keybinding_list_by_key[key])
+	// Classic mode first
+	for(var/key in GLOB.classic_keybinding_list_by_key)
+		GLOB.classic_keybinding_list_by_key[key] = sortList(GLOB.classic_keybinding_list_by_key[key])
+
+	// Then hotkey mode
+	for(var/key in GLOB.hotkey_keybinding_list_by_key)
+		GLOB.hotkey_keybinding_list_by_key[key] = sortList(GLOB.hotkey_keybinding_list_by_key[key])
 		
 	GLOB.emote_list = init_emote_list()
 

@@ -6,6 +6,7 @@
 /datum/keybinding/carbon/toggle_throw_mode
 	key = "R"
 	name = "toggle_throw_mode"
+	classic_key = "END"
 	full_name = "Toggle throw mode"
 	description = "Toggle throwing the current item or not."
 	category = CATEGORY_CARBON

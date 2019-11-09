@@ -1,2 +1,3 @@
-GLOBAL_LIST_EMPTY(keybinding_list_by_key)
+GLOBAL_LIST_EMPTY(classic_keybinding_list_by_key)
+GLOBAL_LIST_EMPTY(hotkey_keybinding_list_by_key)
 GLOBAL_LIST_EMPTY(keybindings_by_name)

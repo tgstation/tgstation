@@ -129,13 +129,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
-	key_bindings = deepCopyList(GLOB.keybinding_list_by_key) // give them default keybinds too
+	addtimer(CALLBACK(src, .proc/load_default_keybindings, C), 5 SECONDS)
 	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
 	menuoptions = list()
 	return
+
+
+/datum/preferences/proc/load_default_keybindings(client/C)
+	to_chat(C, "Empty keybindings, setting defaults")
+
+	var/choice = tgalert(C, "Would you prefer 'Hotkey' or 'Classic' defaults?", "Setup keybindings", "Hotkey", "Classic")
+	hotkeys = (choice == "Hotkey")
+	key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
+	save_preferences()
 
 #define APPEARANCE_CATEGORY_COLUMN "<td valign='top' width='14%'>"
 #define MAX_MUTANT_ROWS 4
@@ -715,7 +724,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/bound_key = user_binds[kb.name]
 					bound_key = (bound_key) ? bound_key : "Unbound"
 
-					dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key] Default: ( [kb.key] )</a>"
+					dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key] Default: ( [hotkeys ? kb.hotkey_key : kb.classic_key] )</a>"
 					dat += "<br>"
 
 			dat += "<br><br>"
@@ -1564,7 +1573,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					save_preferences()
 
 				if("keybindings_reset")
-					key_bindings = deepCopyList(GLOB.keybinding_list_by_key)
+					var/choice = tgalert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", "Hotkey", "Classic", "Cancel")
+					if(choice == "Cancel")
+						ShowChoices(user)
+						return
+					hotkeys = (choice == "Hotkey")
+					key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
 
 				if("action_buttons")
 					buttons_locked = !buttons_locked
