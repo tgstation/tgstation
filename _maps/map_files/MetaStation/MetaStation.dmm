@@ -46514,7 +46514,6 @@
 	charge = 100;
 	maxcharge = 15000
 	},
-/obj/item/circuitboard/machine/mechfab,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bYK" = (
@@ -47225,6 +47224,16 @@
 	pixel_x = 8;
 	pixel_y = 2
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
+"cak" = (
+/obj/machinery/medical_kiosk,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -49146,7 +49155,6 @@
 	},
 /obj/item/hand_labeler,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/stack/cable_coil,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ceq" = (
