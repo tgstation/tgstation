@@ -486,9 +486,7 @@
 	M.adjustStaminaLoss(60)
 	M.Knockdown(75)
 	M.Jitter(50)
-	if(M.convulsing <= 100)
-		M.convulsing(150) //makes your hands spaz out and drop items every two lifes or so
-	M.updatehealth() //forces health update before next life tick //isn't this done by adjustStaminaLoss anyway?
+	M.convulsing(150) //makes your hands spaz out and drop items every two lifes or so
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, TRUE, -1)
 	if(HAS_TRAIT(M,MOB_ORGANIC))
 		M.emote("gasp")
