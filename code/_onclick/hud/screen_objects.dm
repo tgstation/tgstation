@@ -590,6 +590,10 @@
 	icon_state = "health0"
 	screen_loc = ui_health
 
+/obj/screen/healths/living
+	screen_loc = ui_living_health
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /obj/screen/healths/alien
 	icon = 'icons/mob/screen_alien.dmi'
 	screen_loc = ui_alien_health
@@ -618,14 +622,14 @@
 	name = "summoner health"
 	icon = 'icons/mob/guardian.dmi'
 	icon_state = "base"
-	screen_loc = ui_health
+	screen_loc = ui_living_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/revenant
 	name = "essence"
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_revenant"
-	screen_loc = ui_health
+	screen_loc = ui_living_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/construct
@@ -643,7 +647,7 @@
 /obj/screen/healths/lavaland_elite
 	icon = 'icons/mob/screen_elite.dmi'
 	icon_state = "elite_health0"
-	screen_loc = ui_health
+	screen_loc = ui_living_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healthdoll
