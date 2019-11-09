@@ -1,6 +1,11 @@
 .Section {
   position: relative;
   margin-bottom: 6px;
+  // IE8 Hack
+  background-color: adjust-color(
+    $section-color-background,
+    $lightness: 10%,
+    $alpha: 1);
   background-color: $section-color-background;
   box-shadow: inset 0 0 5px $section-color-shadow;
   box-sizing: border-box;

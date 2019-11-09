@@ -63,7 +63,7 @@
   height: 40px;
   line-height: 39px;
   padding: 0 12px;
-  background-color: darken($base-color-background, 50%);
+  background-color: scale-color($base-color-background, $lightness: -50%);
   color: rgba(255, 255, 255, 0.8);
 }
 
