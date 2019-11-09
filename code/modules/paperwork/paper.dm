@@ -340,13 +340,13 @@
 /obj/item/paper/fire_act(exposed_temperature, exposed_volume)
 	..()
 	if(!(resistance_flags & FIRE_PROOF))
-		icon_state = "paper_onfire"
+		add_overlay("paper_onfire_overlay")
 		info = "[stars(info)]"
 
 
 /obj/item/paper/extinguish()
 	..()
-	update_icon()
+	cut_overlay("paper_onfire_overlay")
 
 /*
  * Construction paper
