@@ -1,0 +1,4 @@
+author: "SteelSlayer"
+delete-after: True
+changes: 
+  - bugfix: "Fixes players not getting removed from antag huds properly"
