@@ -722,10 +722,13 @@
 			sleep(100) //so the ghost has time to re-enter
 
 
-			var/mob/living/carbon/H = M
-			for(var/organ in H.internal_organs)
-				var/obj/item/organ/O = organ
-				O.setOrganDamage(0)
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				if(!(C.dna && C.dna.species && (NOBLOOD in C.dna.species.species_traits)))
+					C.blood_volume = max(C.blood_volume, BLOOD_VOLUME_NORMAL) //so you don't instantly re-die from a lack of blood
+				for(var/organ in C.internal_organs)
+					var/obj/item/organ/O = organ
+					O.setOrganDamage(0) //so you don't near-instantly re-die because your heart has decayed to the point of complete failure
 
 			M.adjustOxyLoss(-20, 0)
 			M.adjustToxLoss(-20, 0)
