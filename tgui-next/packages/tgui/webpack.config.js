@@ -58,6 +58,7 @@ module.exports = (env = {}, argv) => {
                   '@babel/plugin-transform-jscript',
                   'babel-plugin-inferno',
                   'babel-plugin-transform-remove-console',
+                  'common/string.babel-plugin.cjs',
                 ],
               },
             },

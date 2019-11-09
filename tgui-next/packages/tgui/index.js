@@ -1,4 +1,7 @@
-import 'core-js/stable';
+import 'core-js/es';
+import 'core-js/web/immediate';
+import 'core-js/web/queue-microtask';
+import 'core-js/web/timers';
 import 'regenerator-runtime/runtime';
 import './polyfills';
 
