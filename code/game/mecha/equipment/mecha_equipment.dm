@@ -42,6 +42,8 @@
 		if(chassis.occupant)
 			chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
 			chassis.occupant.playsound_local(chassis, destroy_sound, 50)
+		if(!detachable) //If we're a built-in nondetachable equipment, let's lock up the slot that we were in.
+			chassis.max_equip--
 		chassis = null
 	return ..()
 
@@ -131,8 +133,6 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
-	if(!detachable)
-		return FALSE
 	moveto = moveto || get_turf(chassis)
 	if(src.Move(moveto))
 		chassis.equipment -= src
