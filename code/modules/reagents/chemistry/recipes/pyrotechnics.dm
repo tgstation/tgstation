@@ -29,7 +29,7 @@
 	id = /datum/reagent/nitroglycerin
 	results = list(/datum/reagent/nitroglycerin = 2)
 	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/toxin/acid = 1)
-	strengthdiv = 1.5
+	strengthdiv = 2
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -50,7 +50,7 @@
 	results = list(/datum/reagent/rdx= 2)
 	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/acetone_oxide = 1 )
 	required_temp = 404
-	strengthdiv = 7
+	strengthdiv = 8
 
 /datum/chemical_reaction/reagent_explosion/rdx/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
@@ -63,17 +63,19 @@
 	id = "rdx_explosion"
 	required_reagents = list(/datum/reagent/rdx = 1)
 	required_temp = 474
-	strengthdiv = 6
+	strengthdiv = 8
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion2 //makes rdx unique , on its own it is a good bomb, but when combined with liquid electricity it becomes truly destructive
 	name = "Electric RDX explosion"
 	id = "rdx_explosion2"
 	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/consumable/liquidelectricity = 1)
-	strengthdiv = 5
+	strengthdiv = 4
+	modifier = 2
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion2/on_reaction(datum/reagents/holder, created_volume)
+	var/fire_range = round(created_volume/100)
 	var/turf/T = get_turf(holder.my_atom)
-	for(var/turf/turf in range(1,T))
+	for(var/turf/turf in range(fire_range,T))
 		new /obj/effect/hotspot(turf)
 	holder.chem_temp = 500
 	..()
@@ -82,11 +84,13 @@
 	name = "Teslium RDX explosion"
 	id = "rdx_explosion3"
 	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/teslium = 1)
+	modifier = 4
 	strengthdiv = 4
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion3/on_reaction(datum/reagents/holder, created_volume)
+	var/fire_range = round(created_volume/50)
 	var/turf/T = get_turf(holder.my_atom)
-	for(var/turf/turf in range(2,T))
+	for(var/turf/turf in range(fire_range,T))
 		new /obj/effect/hotspot(turf)
 	holder.chem_temp = 750
 	..()
@@ -97,7 +101,7 @@
 	results = list(/datum/reagent/tatp= 1)
 	required_reagents = list(/datum/reagent/acetone_oxide = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/pentaerythritol = 1 )
 	required_temp = 450
-	strengthdiv = 4
+	strengthdiv = 3
 
 /datum/chemical_reaction/reagent_explosion/tatp/New()
 	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo)) //method used by secret sauce.
