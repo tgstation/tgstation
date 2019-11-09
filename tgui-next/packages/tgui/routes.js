@@ -25,6 +25,7 @@ import { ChemPress } from './interfaces/ChemPress';
 import { ChemSplitter } from './interfaces/ChemSplitter';
 import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
 import { CodexGigas } from './interfaces/CodexGigas';
+import { ComputerFabricator } from './interfaces/ComputerFabricator';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
@@ -158,6 +159,10 @@ const ROUTES = {
   },
   codex_gigas: {
     component: () => CodexGigas,
+    scrollable: false,
+  },
+  computer_fabricator: {
+    component: () => ComputerFabricator,
     scrollable: false,
   },
   crayon: {

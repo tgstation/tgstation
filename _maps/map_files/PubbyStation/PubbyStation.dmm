@@ -24277,7 +24277,7 @@
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/aft)
 "bkr" = (
-/obj/machinery/modular_computer/console/preset/civilian,
+/obj/machinery/lapvend,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/aft)
 "bks" = (
