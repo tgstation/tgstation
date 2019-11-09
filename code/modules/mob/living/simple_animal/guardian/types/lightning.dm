@@ -102,15 +102,7 @@
 				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
 					continue
 				if(successfulshocks > 4)
-					if(iscarbon(L))
-						var/mob/living/carbon/C = L
-						if(ishuman(C))
-							var/mob/living/carbon/human/H = C
-							H.electrocution_animation(20)
-						C.Jitter(1000)
-						C.do_jitter_animation(1000)
-						C.stuttering += 1
-						addtimer(CALLBACK(C, /mob.proc/Jitter, 10), 2 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+					L.electrocute_act(0)
 					L.visible_message(
 						"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
