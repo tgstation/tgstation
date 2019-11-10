@@ -346,7 +346,7 @@
 
 /******ORGAN HEALING******/
 /*Suffix: -rite*/
-
+	//replaces corazone's heart stabilization
 /datum/reagent/medicine/C2/penthrite
 	name = "Penthrite"
 	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
