@@ -2,6 +2,8 @@ export { AnimatedNumber } from './AnimatedNumber';
 export { BlockQuote } from './BlockQuote';
 export { Box } from './Box';
 export { Button } from './Button';
+export { ColorBox } from './ColorBox';
+export { Dimmer } from './Dimmer';
 export { Flex } from './Flex';
 export { Grid } from './Grid';
 export { Icon } from './Icon';

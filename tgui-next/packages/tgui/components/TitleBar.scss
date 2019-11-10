@@ -1,19 +1,19 @@
 .TitleBar {
   background-color: $titlebar-color-background;
-  border-bottom: 1px solid $titlebar-color-coreshadow;
+  border-bottom: 1px solid $titlebar-color-shadow-core;
   box-shadow: 0 2px 2px $titlebar-color-shadow;
   user-select: none;
   -ms-user-select: none;
 }
 
 .TitleBar__clickable {
-  color: rgba(255, 255, 255, 0.5);
-  background-color: darken($titlebar-color-background, 0%);
+  color: change-color($titlebar-color-text, $alpha: 0.5);
+  background-color: $titlebar-color-background;
   transition: color 250ms, background-color 250ms;
 
   &:hover {
     color: rgba(255, 255, 255, 1.0);
-    background-color: #c00;
+    background-color: #cc0000;
     transition: color 0ms, background-color 0ms;
   }
 }
@@ -22,7 +22,7 @@
   position: absolute;
   top: 0;
   left: 46px;
-  color: rgba(255, 255, 255, 0.7);
+  color: $titlebar-color-text;
   font-size: 14px;
   line-height: 31px;
   white-space: nowrap;

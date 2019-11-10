@@ -33,8 +33,8 @@ export const Button = props => {
       + "Please use a camelCase 'onClick' instead and read: "
       + "https://infernojs.org/docs/guides/event-handling");
   }
-  // NOTE: Lowercase "onclick" and unselectable are used internally for
-  // compatibility with IE8. Do not change it!
+  // IE8: Use a lowercase "onclick" because synthetic events are fucked.
+  // IE8: Use an "unselectable" prop because "user-select" doesn't work.
   return (
     <Box as="span"
       className={classes([

@@ -1,8 +1,5 @@
 /**
  * Removes excess whitespace and indentation from the string.
- *
- * This function is not called directly in runtime, but instead is called
- * by the macro, which is defined below, and it runs at compile time.
  */
 export const multiline = str => {
   if (Array.isArray(str)) {

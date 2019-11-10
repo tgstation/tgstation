@@ -39,7 +39,7 @@ export const backendReducer = (state, action) => {
     // Calculate our own fields
     const visible = config.status !== UI_DISABLED;
     const interactive = config.status === UI_INTERACTIVE;
-    // Override fancy setting for IE8
+    // IE8: Force the non-fancy setting
     if (tridentVersion <= 4) {
       config.fancy = 0;
     }
