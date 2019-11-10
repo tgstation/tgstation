@@ -526,9 +526,18 @@
 	program_type = /datum/nanite_program/sensor/nanite_volume
 	category = list("Sensor Nanites")
 
+<<<<<<< HEAD
 /datum/design/nanites/sensor_race
 	name = "Race Sensor"
 	desc = "When triggered, the nanites scan the host to determine their race and output a signal depending on the conditions set in the settings."
 	id = "sensor_race_nanites"
 	program_type = /datum/nanite_program/sensor/race
 	category = list("Sensor Nanites")
+=======
+/datum/design/nanites/sensor_species
+	name = "Species Sensor"
+	desc = "When triggered, the nanites scan the host to determine their species and output a signal depending on the conditions set in the settings."
+	id = "sensor_species_nanites"
+	program_type = /datum/nanite_program/sensor/species
+	category = list("Sensor Nanites")
+>>>>>>> 83469db1e4... Renames the nanite race sensor to species sensor (#47641)
