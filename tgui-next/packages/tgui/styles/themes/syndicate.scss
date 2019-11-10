@@ -1,35 +1,38 @@
-$color-good: $pale-green;
-$color-highlight: $black;
-$background-color-start: #750000;
-$background-color-end: #340404;
-$rule-color-normal: $dark-gray;
+$color-good: #73e573;
+$color-primary: #397439;
+
+$base-color-background: #550202;
+$base-color-background-start: adjust-color(
+  $base-color-background,
+  $lightness: 6%);
+$base-color-background-end: adjust-color(
+  $base-color-background,
+  $lightness: -6%);
+
 $titlebar-color-background: #910101;
-$titlebar-color-text: $pale-red;
-$titlebar-color-button: $pale-red;
-$display-color-background: rgba(#000, 0.33);
-$display-color-shadow: rgba(#000, 0.5);
-$notice-color-first: #750000;
-$notice-color-second: #910101;
-$section-color-label: $white;
-$bar-color-normal: $black;
-$bar-color-good: $pale-green;
-$bar-color-border: $black;
-$button-color-normal: $dark-green;
-$button-color-disabled: $gray;
-$button-color-selected: $dark-red;
-$button-color-caution: $yellow-orange;
-$button-color-danger: $yellow;
-$input-color-text: $white;
-$input-color-background: $dark-red;
-$rule-color-normal: rgba(#000, 0.25);
+
+$section-color-background: rgba(0, 0, 0, 0.33);
+$section-color-shadow: rgba(0, 0, 0, 0.5);
+
+$noticebox-color-first: #750000;
+$noticebox-color-second: #910101;
+$section-color-label: #ffffff;
+
+$button-color-normal: $color-primary;
+$button-color-disabled: #363636;
+$button-color-selected: #9d0808;
+$button-color-caution: #be6209;
+$button-color-danger: #9a9d00;
+
+$section-color-separator: $color-primary;
 
 // Body style
 @at-root #{selector-unify(&, body)} {
-  color: $text-color-normal;
-  background-color: $background-color-start;
+  color: $base-color-text;
+  background-color: $base-color-background;
   background-image: linear-gradient(to bottom,
-    $background-color-start 0%,
-    $background-color-end 100%);
+    $base-color-background-start 0%,
+    $base-color-background-end 100%);
 }
 
 .Layout__content {
