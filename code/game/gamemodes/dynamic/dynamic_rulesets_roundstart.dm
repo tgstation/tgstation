@@ -392,12 +392,11 @@
 		revolution.update_heads()
 		SSshuttle.registerHostileEnvironment(src)
 		return TRUE
-	// If the mode failed to get any antags, deletes the team, stops processing and refunds the cost. Oh boy, its midround/latejoin time.
-	qdel(revolution)
-	mode.refund_threat(cost)	// Maybe force latejoin revs instead in future.
-	mode.current_rules -= src
-	mode.executed_rules -= src
 	return FALSE
+
+/datum/dynamic_ruleset/roundstart/revs/clean_up()
+	qdel(revolution)
+	..()
 
 /datum/dynamic_ruleset/roundstart/revs/rule_process()
 	if(check_rev_victory())
@@ -406,14 +405,16 @@
 	else if (check_heads_victory())
 		finished = STATION_VICTORY
 		SSshuttle.clearHostileEnvironment(src)
-		priority_announce("It appears the mutiny has been quelled. Please return yourself and your colleagues to work. \
-			We have remotely blacklisted them from your cloning software to prevent accidental cloning.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
-		for(var/datum/mind/M in revolution.members)	// Remove antag datums and prevent headrev cloning then restarting rebellions.
+		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
+			We have remotely blacklisted the head revolutionaries from your cloning software to prevent accidental cloning.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
+		revolution.save_members()
+		for(var/datum/mind/M in revolution.members)	// Remove antag datums and prevents podcloned or exiled headrevs restarting rebellions.
 			if(M.has_antag_datum(/datum/antagonist/rev/head))
-				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev/head)
+				var/datum/antagonist/rev/head/R = M.has_antag_datum(/datum/antagonist/rev/head)
 				R.remove_revolutionary(FALSE, "gamemode")
 				var/mob/living/carbon/C = M.current
-				C.makeUncloneable()
+				if(C.stat == DEAD)
+					C.makeUncloneable()
 			if(M.has_antag_datum(/datum/antagonist/rev))
 				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
 				R.remove_revolutionary(FALSE, "gamemode")
@@ -422,7 +423,7 @@
 /// Checks for revhead loss conditions and other antag datums.
 /datum/dynamic_ruleset/roundstart/revs/proc/check_eligible(var/datum/mind/M)
 	var/turf/T = get_turf(M.current)
-	if(!considered_afk(M) && considered_alive(M) && is_station_level(T.z) && !M.antag_datums?.len)
+	if(!considered_afk(M) && considered_alive(M) && is_station_level(T.z) && !M.antag_datums?.len && !HAS_TRAIT(M, TRAIT_MINDSHIELD))
 		return TRUE
 	return FALSE
 

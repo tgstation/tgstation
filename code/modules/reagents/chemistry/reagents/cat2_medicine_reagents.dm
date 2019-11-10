@@ -95,7 +95,7 @@
 	name = "Lenturi"
 	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#6171FF"
 	var/resetting_probability = 0
 	var/spammer = 0
 
@@ -115,7 +115,7 @@
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#8C93FF"
 	var/resetting_probability = 0
 	var/message_cd = 0
 

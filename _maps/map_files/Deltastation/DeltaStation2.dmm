@@ -82801,12 +82801,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/item/gps,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cXw" = (
-/obj/structure/table,
-/obj/item/gps,
-/obj/item/assembly/flash/handheld,
 /obj/machinery/status_display/evac{
 	pixel_y = -32
 	},
@@ -82814,6 +82812,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/lapvend,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cXx" = (
@@ -82822,6 +82821,7 @@
 /obj/item/pen,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/purple,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cXy" = (
@@ -94955,11 +94955,13 @@
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dur" = (
-/obj/machinery/mecha_part_fabricator,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/mecha_part_fabricator/maint{
+	name = "forgotten exosuit fabricator"
+	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dus" = (
@@ -98588,7 +98590,6 @@
 	dir = 4
 	},
 /obj/machinery/vending/wallmed{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/white,

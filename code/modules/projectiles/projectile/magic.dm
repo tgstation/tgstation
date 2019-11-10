@@ -23,7 +23,7 @@
 			if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
 				if(L.hellbound && L.stat == DEAD)
 					return BULLET_ACT_BLOCK
-				if(L.revive(full_heal = TRUE, admin_revive = FALSE))
+				if(L.revive(full_heal = TRUE, admin_revive = TRUE))
 					L.grab_ghost(force = TRUE) // even suicides
 					to_chat(L, "<span class='notice'>You rise with a start, you're undead!!!</span>")
 				else if(L.stat != DEAD)
@@ -51,7 +51,7 @@
 		else
 			if(target.hellbound && target.stat == DEAD)
 				return BULLET_ACT_BLOCK
-			if(target.revive(full_heal = TRUE, admin_revive = FALSE))
+			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
 				target.grab_ghost(force = TRUE) // even suicides
 				to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
 			else if(target.stat != DEAD)

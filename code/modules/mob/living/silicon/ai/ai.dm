@@ -17,7 +17,7 @@
 	real_name = "AI"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	move_resist = MOVE_FORCE_VERY_STRONG
+	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
 	mobility_flags = ALL
 	status_flags = CANSTUN|CANPUSH
@@ -104,6 +104,7 @@
 		new/obj/structure/AIcore/deactivated(loc) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
 
+	ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
 		laws.associate(src)
@@ -340,11 +341,13 @@
 		battery = battery - 50
 		to_chat(src, "<span class='notice'>You route power from your backup battery to move the bolts.</span>")
 	var/is_anchored = FALSE
-	if(move_resist == MOVE_FORCE_VERY_STRONG)
+	if(move_resist == MOVE_FORCE_OVERPOWERING)
 		move_resist = MOVE_FORCE_NORMAL
+		REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, src)
 	else
 		is_anchored = TRUE
-		move_resist = MOVE_FORCE_VERY_STRONG
+		move_resist = MOVE_FORCE_OVERPOWERING
+		ADD_TRAIT(src, TRAIT_NO_TELEPORT, src)
 
 	to_chat(src, "<b>You are now [is_anchored ? "" : "un"]anchored.</b>")
 	// the message in the [] will change depending whether or not the AI is anchored

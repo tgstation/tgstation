@@ -681,6 +681,9 @@
 		..()
 
 /mob/living/carbon/human/proc/check_self_for_injuries()
+	if(stat == DEAD || stat == UNCONSCIOUS)
+		return
+
 	visible_message("<span class='notice'>[src] examines [p_them()]self.</span>", \
 		"<span class='notice'>You check yourself for injuries.</span>")
 
@@ -809,7 +812,7 @@
 			broken_plural = TRUE
 		else
 			var/holder = broken[1]	//our one and only element
-			if(holder[lentext(holder)] == "s")
+			if(holder[length(holder)] == "s")
 				broken_plural = TRUE
 		//Put the items in that list into a string of text
 		for(var/B in broken)
@@ -821,7 +824,7 @@
 			damaged_plural = TRUE
 		else
 			var/holder = damaged[1]
-			if(holder[lentext(holder)] == "s")
+			if(holder[length(holder)] == "s")
 				damaged_plural = TRUE
 		for(var/D in damaged)
 			damaged_message += D
