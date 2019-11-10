@@ -1045,7 +1045,7 @@
 	//Corazone no longer stops heart attacks. look into C2 penthrite.
 	name = "Corazone"
 	description = "A medication used to treat pain, fever, and inflammation."
-	color = "#F5F5F5"
+	color = "#F49797"
 	self_consuming = TRUE
 
 /datum/reagent/medicine/corazone/on_mob_add(mob/living/M)
