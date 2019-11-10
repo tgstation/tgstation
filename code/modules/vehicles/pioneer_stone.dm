@@ -21,11 +21,9 @@
 
 /obj/vehicle/ridden/pioneer_stone/Bump(atom/movable/A)
 	. = ..()
-	if(!(A.density && has_buckled_mobs()))
+	if(!(A.density && has_buckled_mobs())||(!ishuman(A)))
 		return FALSE
 	var/atom/throw_target = get_edge_target_turf(A, dir)
-	if(!ishuman(A))
-		return FALSE
 	var/mob/living/carbon/human/H = A
 	var/damage_force = rand(10,max_damage_force)
 	H.apply_damage(damage_force, BRUTE)
