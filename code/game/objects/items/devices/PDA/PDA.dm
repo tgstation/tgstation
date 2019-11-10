@@ -137,7 +137,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			equipped = TRUE
 
 /obj/item/pda/proc/update_label()
-	name = "[owner] ([ownjob])" //Name generalisation
+	name = "PDA-[owner] ([ownjob])" //Name generalisation
 
 /obj/item/pda/GetAccess()
 	if(id)
@@ -342,7 +342,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					for (var/obj/item/pda/P in get_viewable_pdas(sort_by_job))
 						if (P == src)
 							continue
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Message;target=[REF(P)]'>[P]</a>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Message;target=[REF(P)]'>[P.owner] ([P.ownjob])</a>"
 						if(cartridge)
 							dat += cartridge.message_special(P)
 						dat += "</li>"
