@@ -39,6 +39,7 @@
 					CAT_SOUP,
 					CAT_SPAGHETTI,
 				),
+				CAT_DRINK = CAT_NONE,
 				CAT_CLOTHING = CAT_NONE,
 			)
 
@@ -368,7 +369,7 @@
 			crafting_recipes[R.category][R.subcategory] += list(build_recipe_data(R))
 
 	data["crafting_recipes"] = crafting_recipes
-	return data	
+	return data
 
 
 /datum/component/personal_crafting/ui_act(action, params)
