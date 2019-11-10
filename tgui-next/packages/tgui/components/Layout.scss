@@ -15,6 +15,7 @@
   right: 0;
   overflow-x: hidden;
   overflow-y: hidden;
+  margin-bottom: -6px;
 
   // Fancy scrollbar
   scrollbar-base-color: scale-color(
@@ -42,6 +43,7 @@
 
 .Layout__content--scrollable {
   overflow-y: scroll;
+  margin-bottom: 0;
 }
 
 .Layout__dimmer {

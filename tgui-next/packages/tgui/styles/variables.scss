@@ -64,6 +64,7 @@ $noticebox-color-border: #272727;
 // ProgressBar
 $progressbar-color-primary: color-bg($color-primary);
 $progressbar-color-background: #272727;
+$progressbar-border-radius: 0;
 
 // Buttons
 $button-color-normal: color-bg($color-primary);
@@ -71,9 +72,12 @@ $button-color-disabled: #999999;
 $button-color-selected: color-bg($color-green);
 $button-color-caution: color-bg($color-yellow);
 $button-color-danger: color-bg($color-red);
+$button-border-radius: 0;
 
 // Tooltips
 $tooltip-color-background: #333333;
+$tooltip-border-radius: $base-border-radius;
 
 // Inputs
 $input-base-color: #88bfff;
+$input-border-radius: $base-border-radius;

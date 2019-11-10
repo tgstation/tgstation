@@ -32,7 +32,7 @@
   margin-right: 2px;
   white-space: nowrap;
   outline: 0;
-  border-radius: $base-border-radius;
+  border-radius: $button-border-radius;
   margin-bottom: 2px;
   // Disable selection in buttons
   user-select: none;
@@ -47,7 +47,7 @@
   // Add a margin to the icon to keep it separate from the text
   .fa, .fas, .far {
     margin-left: -2px;
-    margin-right: 5px;
+    margin-right: 4px;
     min-width: 14px;
     text-align: center;
   }
