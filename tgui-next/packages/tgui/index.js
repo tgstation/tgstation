@@ -156,7 +156,7 @@ const setupApp = () => {
   loadCSS('font-awesome.css');
 };
 
-// Wait for DOM to properly load on IE8
+// IE8: Wait for DOM to properly load
 if (tridentVersion <= 4 && document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', setupApp);
 }

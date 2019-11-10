@@ -1,7 +1,7 @@
 .Section {
   position: relative;
   margin-bottom: 6px;
-  // IE8 Hack
+  // IE8: Does not support rgba colors
   background-color: adjust-color(
     $section-color-background,
     $lightness: 10%,
