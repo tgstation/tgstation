@@ -795,7 +795,7 @@
 /mob/proc/canface()
 	if(world.time < client.last_turn)
 		return FALSE
-	if(stat == DEAD || stat == UNCONSCIOUS)
+	if((stat == DEAD || stat == UNCONSCIOUS) && isliving(src))
 		return FALSE
 	if(anchored)
 		return FALSE
