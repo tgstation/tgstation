@@ -1040,8 +1040,6 @@
 	..()
 	return TRUE
 
-
-
 /datum/reagent/medicine/corazone
 	//Corazone no longer stops heart attacks. look into C2 penthrite.
 	name = "Corazone"
@@ -1051,11 +1049,9 @@
 
 /datum/reagent/medicine/corazone/on_mob_add(mob/living/M)
 	..()
-
 	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 
 /datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
-
 	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
 	..()
 
