@@ -1,4 +1,0 @@
-author: "PepperPrepper"
-delete-after: True
-changes: 
-  - rscadd: "scan gates can now detect Felinids"

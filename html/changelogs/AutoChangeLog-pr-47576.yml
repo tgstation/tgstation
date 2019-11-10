@@ -1,6 +1,0 @@
-author: "Potato Masher"
-delete-after: True
-changes: 
-  - rscadd: "Oldstation (ghost role spacestation) now has a proper basic atmos system with a scrubber loop, as well as additional N2 and O2 in enlarged tanks."
-  - tweak: "Oldstation QoL improvements, including reduced xeno resin spread and an added autolathe to RnD."
-  - bugfix: "Oldstation: A few missing pipes have been fixed, having multiple resin floors on one tile/resin floors inside walls have been fixed."

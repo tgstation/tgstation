@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Fixed shock propagation."
-  - rscadd: "Adds shock propagation to fireman carry."

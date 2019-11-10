@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Ejecting materials from circuit printer/protolathe through an RND console works again."
-  - bugfix: "Materials view of circuit imprinter through rnd console now formatted correctly."

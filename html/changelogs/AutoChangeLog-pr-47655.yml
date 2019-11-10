@@ -1,5 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Strange reagent properly resurrects non-carbons (it still can resurrect carbons, of course)."
-  - balance: "Strange reagent now brings the blood level of a revived carbon (without the NOBLOOD species trait) up to a safe level."
