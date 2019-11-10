@@ -34,8 +34,7 @@ document.getElementById('data').setAttribute('data-ref', ref);
 window.onerror = function (msg, url, line, col, error) {
   var logString = msg + ' (' + url + ' line ' + line + ')'
     + '\nUser Agent: ' + navigator.userAgent;
-  // Print to the page
-  // NOTE: document.write() only works on IE8.
+  // IE8: Print to the page
   document.write(logString);
   // Send to the backend
   location.href = 'byond://?src=' + ref

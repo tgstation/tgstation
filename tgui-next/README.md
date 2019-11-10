@@ -37,7 +37,7 @@ to translate concepts between old and new tgui, read this
 
 You will need these programs to start developing in tgui:
 
-- [Node v12.10+](https://nodejs.org/en/download/current/)
+- [Node v12.13+](https://nodejs.org/en/download/)
 - [Yarn v1.19+](https://yarnpkg.com/en/docs/install)
 - [MSys2](https://www.msys2.org/) (optional)
 
@@ -175,11 +175,11 @@ Props:
 first appears. If you set initial to `0` for example, number will always
 animate starting from `0`, and if omitted, it will not play an initial
 animation.
-- `format: function` - Output formatter.
+- `format: value => value` - Output formatter.
   - Example: `value => Math.round(value)`.
-- `children: function` - Pull a raw number to animate more complex things
-deeper in the DOM tree.
-  - Example: `value => <Icon rotation={value} />`
+- `children: (formattedValue, rawValue) => any` - Pull the animated number to
+animate more complex things deeper in the DOM tree.
+  - Example: `(_, value) => <Icon rotation={value} />`
 
 ### `BlockQuote`
 
@@ -296,6 +296,27 @@ over the button.
 over the button.
 - `content/children: any` - Content to render inside the button.
 - `onClick: function` - Called when element is clicked.
+
+### `ColorBox`
+
+Displays a 1-character wide colored square. Can be used as a status indicator,
+or for visually representing a color.
+
+If you want to set a background color on an element, use a plain
+[Box](#box) instead.
+
+Props:
+
+- See inherited props: [Box](#box)
+- `color: string` - Color of the box.
+
+### `Dimmer`
+
+Dims surrounding area to emphasize content placed inside.
+
+Props:
+
+- See inherited props: [Box](#box)
 
 ### `Flex`
 

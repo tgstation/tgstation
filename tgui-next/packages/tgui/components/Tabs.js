@@ -80,7 +80,7 @@ export class Tabs extends Component {
                 className={classes([
                   'Tabs__tab',
                   active && 'Tabs__tab--active',
-                  highlight && !active && 'color-bright-yellow',
+                  highlight && !active && 'color-yellow',
                   className,
                 ])}
                 selected={active}

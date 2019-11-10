@@ -14,19 +14,36 @@
   left: 0;
   right: 0;
   overflow-x: hidden;
+  overflow-y: hidden;
+  margin-bottom: -6px;
 
   // Fancy scrollbar
-  scrollbar-base-color: lighten($titlebar-color-background, -50%);
-  scrollbar-face-color: lighten($titlebar-color-background, 50%);
-  scrollbar-3dlight-color: lighten($titlebar-color-background, 100%);
-  scrollbar-highlight-color: lighten($titlebar-color-background, 100%);
-  scrollbar-track-color: lighten($titlebar-color-background, -50%);
-  scrollbar-arrow-color: lighten($titlebar-color-background, 150%);
-  scrollbar-shadow-color: $titlebar-color-background;
+  scrollbar-base-color: scale-color(
+    $base-color-background,
+    $lightness: -25%);
+  scrollbar-face-color: scale-color(
+    $base-color-background,
+    $lightness: 10%);
+  scrollbar-3dlight-color: scale-color(
+    $base-color-background,
+    $lightness: 0%);
+  scrollbar-highlight-color: scale-color(
+    $base-color-background,
+    $lightness: 0%);
+  scrollbar-track-color: scale-color(
+    $base-color-background,
+    $lightness: -25%);
+  scrollbar-arrow-color: scale-color(
+    $base-color-background,
+    $lightness: 50%);
+  scrollbar-shadow-color: scale-color(
+    $base-color-background,
+    $lightness: 10%);
 }
 
 .Layout__content--scrollable {
   overflow-y: scroll;
+  margin-bottom: 0;
 }
 
 .Layout__dimmer {
@@ -35,7 +52,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(lighten($gray, 30%), 0.25);
+  background-color: rgba(lighten($base-color-background, 30%), 0.25);
   pointer-events: none;
 }
 
@@ -48,7 +65,7 @@
   height: 40px;
   line-height: 39px;
   padding: 0 12px;
-  background-color: darken($gray, 50%);
+  background-color: scale-color($base-color-background, $lightness: -50%);
   color: rgba(255, 255, 255, 0.8);
 }
 
