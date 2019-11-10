@@ -16,8 +16,7 @@
 
 /obj/item/folder/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/storage/concrete)
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete)
+	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
 	STR.allow_quick_gather = TRUE
 	STR.allow_quick_empty = TRUE
 	STR.display_numerical_stacking = TRUE
