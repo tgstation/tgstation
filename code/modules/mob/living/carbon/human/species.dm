@@ -271,6 +271,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
 
+	if(TRAIT_RADIMMUNE in inherent_traits)
+		C.dna.remove_mutation(RADIOACTIVE)
+
 	C.mob_biotypes = inherent_biotypes
 
 	regenerate_organs(C,old_species)
