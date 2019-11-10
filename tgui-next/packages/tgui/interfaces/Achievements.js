@@ -83,7 +83,7 @@ export const Achievements = props => {
             <Section key={highscore.name} title={highscore.name}>
               <LabeledList>{ Object.keys(highscore.scores).map(key => {
                 return (
-                  <LabeledList.Item key={key} label={key}>
+                  <LabeledList.Item className="candystripe" key={key} label={key}>
                     {highscore.scores[key]}
                   </LabeledList.Item>);
               })}
