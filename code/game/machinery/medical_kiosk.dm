@@ -140,7 +140,12 @@
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 	scanner_wand = null
 
+/obj/machinery/medical_kiosk/Destroy()
+	qdel(scanner_wand)
+	return ..()
+
 /obj/machinery/medical_kiosk/emag_act(mob/living/emagger)
+	..()
 	if(obj_flags & EMAGGED)
 		return
 	emagger.visible_message("<span class='warning'>[emagger] waves a suspicious card by the [src]'s biometric scanner!</span>",
@@ -153,17 +158,17 @@
 /obj/machinery/medical_kiosk/examine(mob/user)
 	. = ..()
 	if(scanner_wand == null)
-		. += "<span class='notice'>\The [src] is missing it's scanner.</span>"
+		. += "<span class='notice'>\The [src] is missing its scanner.</span>"
 	else
-		. += "<span class='notice'>\The [src] has it's scanner clipped to the side. Alt-Click to remove.</span>"
+		. += "<span class='notice'>\The [src] has its scanner clipped to the side. Alt-Click to remove.</span>"
 
 /obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	var/patient_distance = 0
 	if(!ishuman(user))
-		user.visible_message("<span class='notice'>The biometric scanner only works for living, human-like beings.</span>")
+		to_chat(user,"<span class='notice'>The biometric scanner only works for living, human-like beings.</span>")
 		return
 	patient_distance = get_dist(loc,altPatient)
-	if(patient_distance>5 && !(altPatient == null))
+	if(patient_distance>5)
 		altPatient = null
 		say("Patient out of range. Resetting biometrics.")
 		clearScans()
