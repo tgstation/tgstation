@@ -41,6 +41,13 @@
   &:last-child {
     margin-right: 0;
   }
+
+  .fa, .fas, .far {
+    margin-left: -2px;
+    margin-right: -2px;
+    min-width: 14px;
+    text-align: center;
+  }
 }
 
 .Button--hasContent {
