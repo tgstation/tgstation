@@ -1303,7 +1303,7 @@
 
 		//Gender
 		switch(M.gender)
-			if(MALE,FEMALE)
+			if(MALE,FEMALE,PLURAL)
 				gender_description = "[M.gender]"
 			else
 				gender_description = "<font color='red'><b>[M.gender]</b></font>"
