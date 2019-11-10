@@ -1042,39 +1042,21 @@
 
 
 /datum/reagent/medicine/corazone
-	// Heart attack code will not do damage if corazone is present
-	// because it's SPACE MAGIC ASPIRIN
+	//Corazone no longer stops heart attacks. look into C2 penthrite.
 	name = "Corazone"
-	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
+	description = "A medication used to treat pain, fever, and inflammation."
 	color = "#F5F5F5"
 	self_consuming = TRUE
 
-/datum/reagent/medicine/corazone/on_mob_metabolize(mob/living/M)
+/datum/reagent/medicine/corazone/on_mob_add(mob/living/M)
 	..()
-	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+
 	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 
 /datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
-	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+
 	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
 	..()
-/datum/reagent/medicine/penthrite
-	// Same as corazone. but slightly worse
-	name = "Penthrite"
-	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
-	color = "#F5F5F5"
-	self_consuming = TRUE
-
-/datum/reagent/medicine/penthrite/on_mob_metabolize(mob/living/M)
-	. = ..()
-	//fixed
-	M.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.5 * REM)
-	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
-
-
-/datum/reagent/medicine/penthrite/on_mob_end_metabolize(mob/living/M)
-	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
-	. = ..()
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"
