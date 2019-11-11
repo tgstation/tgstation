@@ -146,23 +146,18 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		return
 	busy = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
+	addtimer(CALLBACK(src, .proc/wash_cycle), 100)
 	for(var/X in contents - beakers)
-		message_admins(" contents")
-		if(istype(X, /obj/item/reagent_containers) && beakers.len)
-			message_admins("istyype x ")
+		if(istype(X, /obj/item/reagent_containers))
 			var/obj/item/reagent_containers/C = X
-			var/i = 1
 			var/list/cached_reagents = C.reagents.reagent_list
+			var/B = beakers.len
 			for(var/datum/reagents/R in cached_reagents)
-				message_admins("[i] [R.type] ")
-				if(beakers[i])
-					message_admins("i m inside beaker[i] ")
-					reagents.trans_id_to(beakers[i],R.type, 100)
-					i++
+				if(B)
+					C.reagents.trans_id_to(beakers[B],R.type, 100)
+					B--
 				else
 					C.reagents.clear_reagents()
-					return
 
 
 	START_PROCESSING(SSfastprocess, src)
@@ -280,7 +275,9 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	else if(bloody_mess)
 		icon_state = "wm_[state_open]_blood"
 	else
-		var/full = contents.len ? 1 : 0
+		var/full = FALSE
+		if(contents.len - beakers.len)
+			full = TRUE
 		icon_state = "wm_[state_open]_[full]"
 	if(panel_open)
 		add_overlay("wm_panel")
@@ -307,7 +304,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			to_chat(user, "<span class='warning'>[src] must be cleaned up first!</span>")
 			return TRUE
 
-		if(contents.len >= max_wash_capacity)
+		if((contents.len - beakers.len) >= max_wash_capacity)
 			to_chat(user, "<span class='warning'>The washing machine is full!</span>")
 			return TRUE
 
@@ -324,10 +321,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
 	. = ..()
-	if(state_open && beakers.len && user.a_intent == INTENT_HARM)
-		for(var/X in beakers)
-			var/atom/movable/AM = X
+	if(panel_open && beakers.len && user.a_intent == INTENT_HARM)
+		for(var/atom/movable/AM in beakers)
 			AM.forceMove(user.loc)
+		beakers = list()
 	if(busy)
 		to_chat(user, "<span class='warning'>[src] is busy!</span>")
 		return
