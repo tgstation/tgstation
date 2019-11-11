@@ -471,7 +471,7 @@
 	name = /datum/reagent/carpet/cyan
 	id = /datum/reagent/carpet/cyan
 	results = list(/datum/reagent/carpet/cyan = 2)
-	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/toxin/cyanide = 1) 
+	required_reagents = list(/datum/reagent/carpet = 1, /datum/reagent/toxin/cyanide = 1)
 	//cyan = cyanide get it huehueuhuehuehheuhe
 
 /datum/chemical_reaction/carpet/green
@@ -707,3 +707,11 @@
 	results = list(/datum/reagent/carbon = 1)
 	required_reagents = list(/datum/reagent/cellulose = 1)
 	required_temp = 512
+
+/datum/chemical_reaction/decoxyenation
+	name = "Decoxygenation"
+	id = /datum/reagent/decoxygen
+	results = list(/datum/reagent/oxygen = 10, /datum/reagent/iron = 3, /datum/reagent/medicine/C2/convermol = 3)
+	required_catalysts = list(/datum/reagent/toxin/plasma = 10)
+	required_reagents = list(/datum/reagent/decoxygen = 1)
+	required_temp = 200

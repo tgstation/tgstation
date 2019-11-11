@@ -1118,7 +1118,7 @@
 
 /datum/reagent/carbondioxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
-		return 0
+		return FALSE
 	var/temp = holder ? holder.chem_temp : T20C
 	O.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
 
@@ -1126,7 +1126,32 @@
 	if(istype(T))
 		var/temp = holder ? holder.chem_temp : T20C
 		T.atmos_spawn_air("co2=[reac_volume/5];TEMP=[temp]")
-	return
+
+/datum/reagent/decoxygen
+	name = "Decoxygen"
+	reagent_state = GAS
+	description = "An highly oxygen dense molecule which rapidly expands liberating oxygen if the pressure and chemical temperature is low enough."
+	color = "#5EECFF" // rgb : 94, 236, 255
+	taste_description = "oxygen"
+
+/datum/reagent/decoxygen/on_mob_life(mob/living/carbon/M)
+	M.Dizzy(1)
+	M.adjustOxyLoss(-1)
+	M.adjustStaminaLoss(-2)
+	..()
+
+/datum/reagent/decoxygen/reaction_obj(obj/O, reac_volume)
+	if((!O) || (!reac_volume) && holder.chem_temp < 100)
+		return FALSE
+	var/turf/open/T = O.loc
+	reaction_turf(T)
+
+/datum/reagent/decoxygen/reaction_turf(turf/open/T, reac_volume)
+	if(istype(T))
+		var/datum/gas_mixture/environment = T.return_air()
+		var/total_moles = environment.total_moles()
+		if(total_moles < 105)
+			T.atmos_spawn_air("o2=[120-total_moles];TEMP=[T20C]")
 
 /datum/reagent/nitrous_oxide
 	name = "Nitrous Oxide"
@@ -1138,7 +1163,7 @@
 
 /datum/reagent/nitrous_oxide/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
-		return 0
+		return FALSE
 	var/temp = holder ? holder.chem_temp : T20C
 	O.atmos_spawn_air("n2o=[reac_volume/5];TEMP=[temp]")
 

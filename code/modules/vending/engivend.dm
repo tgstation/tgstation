@@ -18,7 +18,8 @@
 					/obj/item/electronics/firelock = 10)
 	contraband = list(/obj/item/stock_parts/cell/potato = 3)
 	premium = list(/obj/item/storage/belt/utility = 3,
-				   /obj/item/storage/box/smart_metal_foam = 1)
+				   /obj/item/storage/box/smart_metal_foam = 1,
+				   /obj/item/grenade/chem_grenade/cryo/decoxygen = 10)
 	refill_canister = /obj/item/vending_refill/engivend
 	default_price = 20
 	extra_price = 50

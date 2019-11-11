@@ -581,3 +581,21 @@
 
 	beakers += B1
 	beakers += B2
+
+/obj/item/grenade/chem_grenade/cryo/decoxygen
+	name = "decoxygen grenade"
+	desc = "A grenade that rapidly oxygenates a room."
+	stage = GRENADE_READY
+
+/obj/item/grenade/chem_grenade/cryo/decoxygen/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+
+	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 95)
+	B1.reagents.add_reagent(/datum/reagent/decoxygen, 5)
+	B2.reagents.add_reagent(/datum/reagent/water, 95)
+	B2.reagents.add_reagent(/datum/reagent/decoxygen, 5)
+
+	beakers += B1
+	beakers += B2
