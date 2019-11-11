@@ -30,6 +30,21 @@
 		return held_items[i]
 	return FALSE
 
+/mob/proc/get_active_action()
+	return(get_action_for_held_index(active_hand_index))
+
+/mob/proc/get_action_for_held_index(i)
+	if(i > 0 && i <= held_items.len)
+		return held_actions[i]
+	return FALSE
+
+/mob/proc/put_action_in_hand(datum/action/A, hand_index)
+	if(hand_index == null)
+		return FALSE
+	held_actions[hand_index] = A
+
+/mob/proc/put_action_in_active_hand(datum/action/A)
+	return put_action_in_hand(A, active_hand_index)
 
 //Odd = left. Even = right
 /mob/proc/held_index_to_dir(i)

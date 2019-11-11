@@ -504,6 +504,10 @@
 	if(I)
 		I.attack_self(src)
 		update_inv_hands()
+		return
+	var/datum/action/A = held_actions[active_hand_index]
+	if(A)
+		A.Trigger()
 
 /**
   * Get the notes of this mob

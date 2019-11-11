@@ -125,6 +125,8 @@
 	  * get_active_held_item() instead, because OOP
 	  */
 	var/list/held_items = list()
+	///Actions assigned to hands to use in hand if hand is empty
+	var/list/held_actions = list()
 
 	//HUD things
 

@@ -39,10 +39,14 @@
 		return ..()
 
 /obj/screen/movable/action_button/Click(location,control,params)
-	if (!can_use(usr))
-		return
-
 	var/list/modifiers = params2list(params)
+	if(modifiers["middle"])
+		if(ismob(usr))
+			var/mob/M = usr
+			if(M.get_active_action())
+				return
+			M.put_action_in_active_hand(linked_action)
+			return
 	if(modifiers["shift"])
 		if(locked)
 			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
@@ -78,7 +82,7 @@
 /obj/screen/movable/action_button/hide_toggle/Initialize()
 	. = ..()
 	var/static/list/icon_cache = list()
-	
+
 	var/cache_key = "[hide_icon][hide_state]"
 	hide_appearance = icon_cache[cache_key]
 	if(!hide_appearance)
