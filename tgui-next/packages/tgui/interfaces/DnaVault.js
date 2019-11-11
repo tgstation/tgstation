@@ -1,11 +1,6 @@
-import { toFixed } from 'common/math';
-import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Box, Button, LabeledList, NumberInput, Section, Grid, ProgressBar } from '../components';
-import { createLogger } from '../logging';
-import { getGasLabel } from './common/atmos';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const DnaVault = props => {
   const { state } = props;
