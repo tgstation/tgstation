@@ -245,6 +245,8 @@
 
 /datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
 	..()
+	if(!istype(T))
+		return
 	if(reac_volume>=10)
 		for(var/obj/effect/rune/R in T)
 			qdel(R)
