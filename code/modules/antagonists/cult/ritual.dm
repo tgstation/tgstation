@@ -40,17 +40,22 @@ This file contains the cult dagger and rune list code
 	scribe_rune(user)
 
 /obj/item/melee/cultblade/dagger/proc/scribe_rune(mob/living/user)
+	if(drawing_rune)
+		return
+	drawing_rune = TRUE
+	scribe_rune_attempt(user)
+	drawing_rune = FALSE
+
+/obj/item/melee/cultblade/dagger/proc/scribe_rune_attempt(mob/living/user)
 	var/turf/Turf = get_turf(user)
 	var/chosen_keyword
 	var/obj/effect/rune/rune_to_scribe
 	var/entered_rune_name
 	var/list/shields = list()
 	var/area/A = get_area(src)
-
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!user_antag)
 		return
-
 	if(!check_rune_turf(Turf, user))
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in GLOB.rune_types
