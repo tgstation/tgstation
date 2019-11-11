@@ -16,6 +16,8 @@
 		return
 	for(var/datum/emote/P in key_emotes)
 		if(P.run_emote(src, param, m_type, intentional))
+			var/list/sig_args = list(P, act, m_type, message, intentional)
+			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, sig_args)
 			return
 	if(intentional)
 		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")

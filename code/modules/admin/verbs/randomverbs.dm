@@ -1020,6 +1020,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	dat += "<br><a href='?src=[REF(src)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 
+/client/proc/immerse_player(mob/living/carbon/target, toggle=TRUE)
+	var/already_immersed = target.GetComponent(/datum/component/immersion)
+
+	if(already_immersed && toggle)
+		qdel(already_immersed)
+	else
+		target.AddComponent(/datum/component/immersion)
 
 /client/proc/toggle_hub()
 	set category = "Server"
@@ -1040,7 +1047,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_IMMERSE)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in sortList(punishment_list)
 
@@ -1100,11 +1107,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			plaunch.temp_pod.effectStun = TRUE
 			plaunch.ui_interact(usr)
 			return //We return here because punish_log() is handled by the centcom_podlauncher datum
-
 		if(ADMIN_PUNISHMENT_MAZING)
 			if(!puzzle_imprison(target))
 				to_chat(usr,"<span class='warning'>Imprisonment failed!</span>")
 				return
+		if(ADMIN_PUNISHMENT_IMMERSE)
+			immerse_player(target)
 
 	punish_log(target, punishment)
 

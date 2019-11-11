@@ -383,6 +383,7 @@
 #include "code\datums\components\gps.dm"
 #include "code\datums\components\heirloom.dm"
 #include "code\datums\components\igniter.dm"
+#include "code\datums\components\immersion.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\jousting.dm"
 #include "code\datums\components\knockback.dm"

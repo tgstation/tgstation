@@ -210,6 +210,10 @@
 	#define SPEECH_FORCED 7 */
 #define COMSIG_MOB_DEADSAY "mob_deadsay" // from /mob/say_dead(): (mob/speaker, message)
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT 1
+#define COMSIG_MOB_EMOTE "mob_emote" // from /mob/living/emote(): ()
+	// used to access COMSIG_MOB_SAY argslist
+	#define EMOTE_DATUM 1
+	#define EMOTE_ACT 2
 // /mob/living signals
 #define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_IGNITED "living_ignite"					//from base of mob/living/IgniteMob() (/mob/living)
