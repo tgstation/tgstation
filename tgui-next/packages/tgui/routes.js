@@ -31,6 +31,7 @@ import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
+import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
@@ -193,6 +194,10 @@ const ROUTES = {
   },
   dna_vault: {
     component: () => DnaVault,
+    scrollable: false,
+  },
+  engraved_message: {
+    component: () => EngravedMessage,
     scrollable: false,
   },
   gps: {
