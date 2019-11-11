@@ -63,7 +63,7 @@
 /datum/component/immersion/proc/check_emote(mob/living/carbon/user, list/emote_args)
 	var/datum/emote/emote = emote_args[EMOTE_DATUM]
 
-	if(emote.key == "blink")
+	if(emote.key == "blink" || emote.key == "blink_r")
 		warned_blink = FALSE
 		last_blink = world.time
 
