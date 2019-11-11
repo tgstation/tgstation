@@ -27,15 +27,23 @@
 	var/mob/living/carbon/human/H = A
 	var/damage_force = rand(10,max_damage_force)
 	H.apply_damage(damage_force, BRUTE)
+	obj_integrity -= damage_force 
+	if(obj_integrity <= 0)
+		Destroy()
 	if(damage_force == max_damage_force)
 		H.Paralyze(100)
 		H.adjustStaminaLoss(60)
 		H.throw_at(throw_target, 3, 2)
 		visible_message("<span class='danger'>[src] slams with full force into [H]!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 100, TRUE)
+
 	else
 		H.Paralyze(50)
 		H.adjustStaminaLoss(30)
 		H.throw_at(throw_target, 2, 1)
 		visible_message("<span class='danger'>[src] slams into [H]!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+
+/obj/vehicle/ridden/pioneer_stone/Destroy()
+	STOP_PROCESSING(SSobj,src)
+	return ..()
