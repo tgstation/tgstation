@@ -30,6 +30,7 @@ SUBSYSTEM_DEF(chat)
 		target = GLOB.clients
 
 	//Some macros remain in the string even after parsing and fuck up the eventual output
+	var/original_message = message
 	message = replacetext(message, "\improper", "")
 	message = replacetext(message, "\proper", "")
 	if(handle_whitespace)
