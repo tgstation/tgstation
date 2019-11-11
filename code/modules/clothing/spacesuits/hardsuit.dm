@@ -28,7 +28,7 @@
 	var/hardsuit_speed_suffix = "(fast" //hardsuit (fast)
 	var/armor_eva = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	var/armor_speed = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
-	var/next_hardsuit_mode = EVAMODE //switches between eva and speed
+	var/next_hardsuit_mode = SPEEDMODE //switches between eva and speed
 	/*armor changes between the modes*/
 
 /obj/item/clothing/head/helmet/space/hardsuit/Initialize()
@@ -40,6 +40,7 @@
 		actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 		if(istype(loc, /obj/item/clothing/suit/space/hardsuit)) //this means that if you somehow wear a say syndicate hardsuit helmet and a medical hardsuit, this links those two together which honestly isn't that bad
 			linkedsuit = loc
+			toggle_hardsuit_mode()
 
 /obj/item/clothing/head/helmet/space/hardsuit/update_icon()
 	if(evatoggle)
@@ -132,6 +133,7 @@
 	var/armor_speed = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	/*armor changes between the modes, for hardsuits proper*/
 	var/armor_switch = FALSE //toggles if armor_eva and armor_speed are used
+
 /obj/item/clothing/suit/space/hardsuit/Initialize()
 	if(jetpack && ispath(jetpack))
 		jetpack = new jetpack(src)
@@ -324,7 +326,7 @@
 	if(on || force)
 		to_chat(user, "<span class='notice'>[evamode_string]</span>")
 		name = initial(name)
-		desc = initial(desc)
+		desc = initial(desc).
 		set_light(brightness_on)
 		clothing_flags |= visor_flags
 		flags_cover |= HEADCOVERSEYES | HEADCOVERSMOUTH
