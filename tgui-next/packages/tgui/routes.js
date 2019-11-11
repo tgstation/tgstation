@@ -58,6 +58,7 @@ import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
+import { Holodeck } from './interfaces/Holodeck';
 
 const ROUTES = {
   achievements: {
@@ -202,6 +203,10 @@ const ROUTES = {
   },
   gps: {
     component: () => Gps,
+    scrollable: true,
+  },
+  holodeck: {
+    component: () => Holodeck,
     scrollable: true,
   },
   language_menu: {
