@@ -711,7 +711,7 @@
 /datum/chemical_reaction/decoxyenation
 	name = "Decoxygenation"
 	id = /datum/reagent/decoxygen
-	results = list(/datum/reagent/decoxygen = 1))
+	results = list(/datum/reagent/decoxygen = 1)
 	required_catalysts = list(/datum/reagent/toxin/plasma = 10)
 	required_reagents = list(/datum/reagent/oxygen = 10, /datum/reagent/iron = 3, /datum/reagent/medicine/C2/convermol = 3)
 	required_temp = 200
