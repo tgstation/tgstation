@@ -72,3 +72,55 @@
 //******************************************************
 //SEC BODY CAMS by Surrealistik Oct 2019 ENDS
 //******************************************************
+
+//***********************************************************************
+//** FULP PROPER RADIO CHANNELS FOR BORGS by Surrealistik Nov 2019 BEGINS
+//**---------------------------------------------------------------------
+//** Borgs now have access to appropriate secure radio channels
+//***********************************************************************
+
+
+/mob/living/silicon/robot/modules/medical
+	radio = /obj/item/radio/borg/medical
+
+/obj/item/radio/borg/medical
+	keyslot = new /obj/item/encryptionkey/headset_med
+
+
+/mob/living/silicon/robot/modules/security
+	radio = /obj/item/radio/borg/security
+
+/obj/item/radio/borg/security
+	keyslot = new /obj/item/encryptionkey/headset_sec
+
+
+/mob/living/silicon/robot/modules/miner
+	radio = /obj/item/radio/borg/mining
+
+/obj/item/radio/borg/mining
+	keyslot = new /obj/item/encryptionkey/headset_mining
+
+
+/mob/living/silicon/robot/modules/clown
+	radio = /obj/item/radio/borg/service
+
+/mob/living/silicon/robot/modules/standard
+	radio = /obj/item/radio/borg/service
+
+/mob/living/silicon/robot/modules/janitor
+	radio = /obj/item/radio/borg/service
+
+/mob/living/silicon/robot/modules/peacekeeper
+	radio = /obj/item/radio/borg/service
+
+/mob/living/silicon/robot/modules/butler
+	radio = /obj/item/radio/borg/service
+
+/obj/item/radio/borg/service
+	keyslot = new /obj/item/encryptionkey/headset_service
+
+//***********************************************************************
+//** FULP PROPER RADIO CHANNELS FOR BORGS by Surrealistik Nov 2019 ENDS
+//**---------------------------------------------------------------------
+//** Borgs now have access to appropriate secure radio channels
+//***********************************************************************
