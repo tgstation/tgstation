@@ -101,13 +101,18 @@
 /datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, mouseparams)
 	if(source.a_intent != INTENT_HARM)
 		return
-	to_chat(source, "<span class='warning'>You shoot with your laser eyes!</span>")
 	source.changeNext_move(CLICK_CD_RANGE)
 	var/obj/projectile/beam/laser_eyes/LE = new(source.loc)
 	LE.firer = source
 	LE.def_zone = ran_zone(source.zone_selected)
-	LE.preparePixelProjectile(target, source, mouseparams)
-	LE.fire()
+	source.newtonian_move(get_dir(target, source))
+	var/obj/item/blocker = source.is_eyes_covered()
+	if(blocker)
+		to_chat(source, "<span class='warning'>You shoot your [blocker] with your laser eyes!</span>")
+	else
+		LE.preparePixelProjectile(target, source, mouseparams)
+		to_chat(source, "<span class='warning'>You shoot with your laser eyes!</span>")
+	LE.fire(null, blocker)
 	playsound(source, 'sound/weapons/taser2.ogg', 75, TRUE)
 
 ///Projectile type used by laser eyes
