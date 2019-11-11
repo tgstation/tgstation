@@ -307,7 +307,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.reagents.end_metabolization(C, keep_liverless = TRUE)
 
 	if(TRAIT_RADIMMUNE in inherent_traits)
-		C.dna.remove_mutation(RADIOACTIVE)
+		C.dna.remove_all_mutations() // Radiation immune mobs can't get mutations normally
 
 	if(inherent_factions)
 		for(var/i in inherent_factions)
