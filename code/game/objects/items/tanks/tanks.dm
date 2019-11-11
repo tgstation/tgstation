@@ -131,7 +131,7 @@
 		var/matrix/M = matrix()
 		M.Scale(2, 1.2)
 		animate(H, time = 40, transform = M, easing = SINE_EASING)
-		return MANUAL_SUICIDE_NONLETHAL
+		return MANUAL_SUICIDE
 	else
 		to_chat(user, "<span class='warning'>There isn't enough pressure in [src] to commit suicide with...</span>")
 	return SHAME
