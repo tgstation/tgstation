@@ -47,7 +47,6 @@ import { TankDispenser } from './interfaces/TankDispenser';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
-import { RPD } from './interfaces/RPD';
 
 const ROUTES = {
   achievements: {
@@ -249,10 +248,6 @@ const ROUTES = {
   wires: {
     component: () => Wires,
     scrollable: false,
-  },
-  rpd: {
-    component: () => RPD,
-    scrollable: true,
   },
 };
 

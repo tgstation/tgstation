@@ -205,7 +205,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/datum/pipe_info/first_disposal
 	var/static/datum/pipe_info/first_transit
 	var/mode = BUILD_MODE | PAINT_MODE | DESTROY_MODE | WRENCH_MODE
-	var/locked = FALSE //wheter we can change categories. Useful for the plumber
 
 /obj/item/pipe_dispenser/Initialize()
 	. = ..()
@@ -246,7 +245,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
 		assets.send(user)
 
-		ui = new(user, src, ui_key, "rpd", name, 500, 500, master_ui, state)
+		ui = new(user, src, ui_key, "rpd", name, 300, 550, master_ui, state)
 		ui.open()
 
 /obj/item/pipe_dispenser/ui_data(mob/user)
@@ -258,8 +257,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		"categories" = list(),
 		"selected_color" = paint_color,
 		"paint_colors" = GLOB.pipe_paint_colors,
-		"mode" = mode,
-		"locked" = locked
+		"mode" = mode
 	)
 
 	var/list/recipes
