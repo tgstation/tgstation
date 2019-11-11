@@ -6,6 +6,7 @@
 	armor = list("melee" = 75, "bullet" = 0, "laser" = 25, "energy" = 25, "bomb" = -75, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100) //it is a fucking stone, what do you expect
 	are_legs_exposed = TRUE
 	var/max_damage_force = 25
+	
 	fall_off_if_missing_arms = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 
@@ -15,9 +16,26 @@
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
 	D.vehicle_move_delay = 2
 
+/obj/vehicle/ridden/pioneer_stone/proc/Detect_lavaland()
+	var/turf/current_turf = get_turf(src)
+	var/zlevel = current_turf.z
+	if(zlevel == 5) //pioneer stone works best on lavaland
+		return TRUE
+	return FALSE
+
+/obj/vehicle/ridden/pioneer_stone/proc/Change_move_delay()
+	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+	if(Detect_lavaland())//pioneer stone works best on lavaland
+		D.vehicle_move_delay = 1
+	else
+		D.vehicle_move_delay = 2
+
 /obj/vehicle/ridden/pioneer_stone/Moved()
-	. = ..()
 	playsound(src, 'sound/effects/clang.ogg', 25, TRUE)
+	Change_move_delay()
+	. = ..()
+	
+
 
 /obj/vehicle/ridden/pioneer_stone/Bump(atom/movable/A)
 	. = ..()
@@ -27,7 +45,7 @@
 	var/mob/living/carbon/human/H = A
 	var/damage_force = rand(10,max_damage_force)
 	H.apply_damage(damage_force, BRUTE)
-	obj_integrity -= damage_force 
+	obj_integrity -= damage_force * Detect_lavaland()
 	if(obj_integrity <= 0)
 		Destroy()
 	if(damage_force == max_damage_force)

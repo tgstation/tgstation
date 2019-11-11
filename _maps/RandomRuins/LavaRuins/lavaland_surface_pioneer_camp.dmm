@@ -14,7 +14,7 @@
 /obj/structure/table/greyscale,
 /obj/item/kitchen/rollingpin,
 /turf/open/floor/plating/ashplanet/rocky,
-/area/space)
+/area/ruin/unpowered)
 "dv" = (
 /obj/structure/bed,
 /turf/open/floor/wood,
@@ -115,9 +115,6 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/ashplanet/ash,
 /area/ruin/unpowered)
-"Dq" = (
-/turf/open/floor/plating/ashplanet/rocky,
-/area/space)
 "DM" = (
 /obj/item/pickaxe,
 /turf/open/floor/plating/ashplanet/ash,
@@ -385,7 +382,7 @@ OC
 (9,1,1) = {"
 bx
 jc
-Dq
+Wg
 Wg
 xS
 ZN
