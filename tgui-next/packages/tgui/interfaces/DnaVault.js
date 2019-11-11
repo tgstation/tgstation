@@ -56,8 +56,8 @@ export const DnaVault = props => {
           >
             Applicable Gene Therapy Treatments
           </Box>
-          <Grid width="100%">
-            <Grid.Item width="50%">
+          <Grid>
+            <Grid.Column>
               <Button
                 fluid
                 bold
@@ -65,8 +65,8 @@ export const DnaVault = props => {
                 textAlign="center"
                 onClick={() => act(ref, "gene", {choice: choiceA})}
               />
-            </Grid.Item>
-            <Grid.Item width="50%">
+            </Grid.Column>
+            <Grid.Column>
               <Button
                 fluid
                 bold
@@ -74,7 +74,7 @@ export const DnaVault = props => {
                 textAlign="center"
                 onClick={() => act(ref, "gene", {choice: choiceB})}
               />
-            </Grid.Item>
+            </Grid.Column>
           </Grid>
         </Section>
       )}
