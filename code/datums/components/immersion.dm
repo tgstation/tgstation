@@ -6,7 +6,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
 	var/obj/item/organ/eyes/E
-	var/obj/item/organ/eyes/L
+	var/obj/item/organ/lungs/L
 	var/mob/living/carbon/C
 	var/last_blink
 	var/last_breath
