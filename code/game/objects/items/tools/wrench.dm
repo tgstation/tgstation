@@ -41,6 +41,7 @@
 	force = 2 //MEDICAL
 	throwforce = 4
 	attack_verb = list("healed", "medicaled", "tapped", "poked", "analyzed") //"cobbyed"
+	///var to hold the name of the person who suicided
 	var/suicider
 
 /obj/item/wrench/medical/examine(mob/user)
@@ -59,7 +60,7 @@
 	// Let the sound effect finish playing
 	sleep(20)
 	if(!user)
-			return
+		return
 	for(var/obj/item/W in user)
 		user.dropItemToGround(W)
 	suicider = user.name
