@@ -7,6 +7,10 @@
 	var/holo_range = 4
 
 
+/obj/item/holobed_projector/Destroy()
+	. = ..()
+	turnoff_holobed() //Get rid of the holobed this is projecting
+
 /obj/item/holobed_projector/attack_self(mob/user)
 	. = ..()
 	turnoff_holobed(user)
