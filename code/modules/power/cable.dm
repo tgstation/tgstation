@@ -557,7 +557,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 
 /obj/structure/cable_bridge
 	name = "cable bridge"
-	desc = "A bridge to connect different cable layers, or link terminals to incompatible cable layers"
+	desc = "A bridge to connect different cable layers, or link terminals to incompatible cable layers."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cable_bridge"
 	level = 1 //is underfloor
