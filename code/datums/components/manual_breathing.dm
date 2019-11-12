@@ -2,7 +2,7 @@
 #define INHALE 1
 
 
-/datum/component/immersion
+/datum/component/manual_breathing
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
 	var/obj/item/organ/eyes/E
@@ -16,7 +16,7 @@
 	var/warned_blink = FALSE
 	var/warned_breath = FALSE
 
-/datum/component/immersion/Initialize()
+/datum/component/manual_breathing/Initialize()
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -27,18 +27,18 @@
 	START_PROCESSING(SSprocessing, src)
 	to_chat(C, "<span class='notice'>You suddenly realize you're breathing and blinking manually.</span>")
 
-/datum/component/immersion/Destroy(force, silent)
+/datum/component/manual_breathing/Destroy(force, silent)
 	STOP_PROCESSING(SSprocessing, src)
 	to_chat(C, "<span class='notice'>You revert back to automatic breathing and blinking.</span>")
 	return ..()
 
-/datum/component/immersion/RegisterWithParent()
+/datum/component/manual_breathing/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
 
-/datum/component/immersion/UnregisterFromParent()
+/datum/component/manual_breathing/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_EMOTE)
 
-/datum/component/immersion/process()
+/datum/component/manual_breathing/process()
 	if(E && world.time > (last_blink + (blink_every)))
 		if(!warned_blink)
 			to_chat(C, "<span class='userdanger'>You need to blink!</span>")
@@ -60,7 +60,7 @@
 
 	return
 
-/datum/component/immersion/proc/check_emote(mob/living/carbon/user, list/emote_args)
+/datum/component/manual_breathing/proc/check_emote(mob/living/carbon/user, list/emote_args)
 	var/datum/emote/emote = emote_args[EMOTE_DATUM]
 
 	if(emote.key == "blink" || emote.key == "blink_r")

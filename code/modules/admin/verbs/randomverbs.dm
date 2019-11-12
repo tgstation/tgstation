@@ -1021,12 +1021,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	usr << browse(dat, "window=goals;size=400x400")
 
 proc/immerse_player(mob/living/carbon/target, toggle=TRUE, remove=FALSE)
-	var/already_immersed = target.GetComponent(/datum/component/immersion)
+	var/already_immersed = target.GetComponent(/datum/component/manual_blinking)
 
 	if(already_immersed && (toggle || remove))
 		qdel(already_immersed)
 	else
-		target.AddComponent(/datum/component/immersion)
+		target.AddComponent(/datum/component/manual_blinking)
 
 proc/mass_immerse(remove=FALSE)
 	for(var/M in GLOB.mob_list)
