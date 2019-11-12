@@ -127,10 +127,7 @@
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	if(!QDELETED(H) && air_contents && air_contents.return_pressure() >= 1000)
 		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		addtimer(CALLBACK(H, /mob/living/carbon/.proc/gib, null, null, TRUE, TRUE), 25)
-		var/matrix/M = matrix()
-		M.Scale(2, 1.2)
-		animate(H, time = 40, transform = M, easing = SINE_EASING)
+		H.inflate_gib()
 		return MANUAL_SUICIDE
 	else
 		to_chat(user, "<span class='warning'>There isn't enough pressure in [src] to commit suicide with...</span>")
