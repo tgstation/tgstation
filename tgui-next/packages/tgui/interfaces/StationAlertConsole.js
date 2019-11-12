@@ -14,47 +14,44 @@ export const StationAlertConsole = props => {
     <Fragment>
       <Section title="Fire Alarms">
         <ul>
-          {fire.length > 0 ? (
-            fire.map(alert => (
-              <li key={alert}>
-                {alert}
-              </li>
-            ))
-          ) : (
+          {fire.length === 0 && (
             <li className="color-good">
-              System Nominal
+              Systems Nominal
             </li>
           )}
+          {fire.map(alert => (
+            <li key={alert}>
+              {alert}
+            </li>
+          ))}
         </ul>
       </Section>
       <Section title="Atmospherics Alarms">
         <ul>
-          {atmos.length > 0 ? (
-            atmos.map(alert => (
-              <li key={alert}>
-                {alert}
-              </li>
-            ))
-          ) : (
+          {atmos.length === 0 && (
             <li className="color-good">
-                System Nominal
+              Systems Nominal
             </li>
           )}
+          {atmos.map(alert => (
+            <li key={alert}>
+              {alert}
+            </li>
+          ))}
         </ul>
       </Section>
       <Section title="Power Alarms">
         <ul>
-          {power.length > 0 ? (
-            power.map(alert => (
-              <li key={alert}>
-                {alert}
-              </li>
-            ))
-          ) : (
+          {power.length === 0 && (
             <li className="color-good">
-              System Nominal
+              Systems Nominal
             </li>
           )}
+          {power.map(alert => (
+            <li key={alert}>
+              {alert}
+            </li>
+          ))}
         </ul>
       </Section>
     </Fragment>
