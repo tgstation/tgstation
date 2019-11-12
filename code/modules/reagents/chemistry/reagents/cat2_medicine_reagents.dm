@@ -325,7 +325,7 @@
 /*Suffix: Combo of healing, prob gonna get wack REAL fast*/
 /datum/reagent/medicine/C2/instabitaluri
 	name = "Synthflesh (Instabitaluri)"
-	description = "Has a 100% chance of instantly healing brute and burn damage at the cost of toxicity (75% of damage healed). Touch application only."
+	description = "Has a 100% chance of instantly healing brute and burn damage at the cost of toxicity (33% of damage healed). Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
@@ -337,7 +337,7 @@
 		if(method in list(PATCH, TOUCH))
 			var/harmies = min(Carbies.getBruteLoss(),Carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
 			var/burnies = min(Carbies.getFireLoss(),Carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
-			Carbies.adjustToxLoss((harmies+burnies)*0.66)
+			Carbies.adjustToxLoss((harmies+burnies)*0.33)
 			if(show_message)
 				to_chat(Carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 			SEND_SIGNAL(Carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
