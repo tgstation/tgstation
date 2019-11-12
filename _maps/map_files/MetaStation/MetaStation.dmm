@@ -49431,7 +49431,7 @@
 "cfT" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = MedbayFoyer;
+	id_tag = "MedbayFoyer";
 	name = "Medbay Clinic"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -49451,7 +49451,7 @@
 "cfU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = MedbayFoyer;
+	id_tag = "MedbayFoyer";
 	name = "Medbay Clinic"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -50523,7 +50523,7 @@
 "cio" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = MedbayFoyer;
+	id_tag = "MedbayFoyer";
 	name = "Medbay Intensive Care";
 	req_access_txt = "5"
 	},
@@ -51192,7 +51192,7 @@
 "cjO" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = MedbayFoyer;
+	id_tag = "MedbayFoyer";
 	name = "Medbay Intensive Care";
 	req_access_txt = "5"
 	},
