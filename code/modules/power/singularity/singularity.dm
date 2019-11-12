@@ -43,7 +43,7 @@
 		if(singubeacon.active)
 			target = singubeacon
 			break
-	return
+	AddElement(/datum/element/bsa_blocker)
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
