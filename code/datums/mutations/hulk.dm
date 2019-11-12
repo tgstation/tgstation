@@ -32,6 +32,7 @@
 		return
 	if(target.attack_hulk(owner))
 		if(world.time > (last_scream + scream_delay))
+			last_scream = world.time
 			source.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced="hulk")
 		log_combat(source, target, "punched", "hulk powers")
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
