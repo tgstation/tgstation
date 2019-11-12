@@ -57,7 +57,8 @@
 		weapon = W
 		weapon_orig_force = weapon.force
 		weapon.force = weapon.force / 2
-		icon_state = "cleanbot[on]" + (weapon ? "-armed" : "")
+		icon_state = "cleanbot[on]"
+		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.item_state))
 
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
@@ -88,7 +89,7 @@
 /mob/living/simple_animal/bot/cleanbot/Initialize()
 	. = ..()
 	get_targets()
-	icon_state = "cleanbot[on]" + (weapon ? "-armed" : "")
+	icon_state = "cleanbot[on]"
 
 	var/datum/job/janitor/J = new/datum/job/janitor
 	access_card.access += J.get_access()
@@ -107,12 +108,12 @@
 
 /mob/living/simple_animal/bot/cleanbot/turn_on()
 	..()
-	icon_state = "cleanbot[on]" + (weapon ? "-armed" : "")
+	icon_state = "cleanbot[on]"
 	bot_core.updateUsrDialog()
 
 /mob/living/simple_animal/bot/cleanbot/turn_off()
 	..()
-	icon_state = "cleanbot[on]" + (weapon ? "-armed" : "")
+	icon_state = "cleanbot[on]"
 	bot_core.updateUsrDialog()
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
@@ -290,7 +291,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/A)
 	if(is_cleanable(A))
-		icon_state = "cleanbot-c" + (weapon ? "-armed" : "")
+		icon_state = "cleanbot-c"
 		mode = BOT_CLEANING
 
 		var/turf/T = get_turf(A)
@@ -304,7 +305,7 @@
 			target = null
 
 		mode = BOT_IDLE
-		icon_state = "cleanbot[on]" + (weapon ? "-armed" : "")
+		icon_state = "cleanbot[on]"
 	else if(istype(A, /obj/item) || istype(A, /obj/effect/decal/remains))
 		visible_message("<span class='danger'>[src] sprays hydrofluoric acid at [A]!</span>")
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
