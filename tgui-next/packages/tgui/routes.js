@@ -52,6 +52,7 @@ import { SolarControl } from './interfaces/SolarControl';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { ThermoMachine } from './interfaces/ThermoMachine';
+import { TurbineComputer } from './interfaces/TurbineComputer';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
 
@@ -273,6 +274,10 @@ const ROUTES = {
   },
   thermomachine: {
     component: () => ThermoMachine,
+    scrollable: false,
+  },
+  turbine_computer: {
+    component: () => TurbineComputer,
     scrollable: false,
   },
   vault_controller: {
