@@ -53,11 +53,11 @@
 	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
-	update_icon()
+	update_icon_state()
 	updateinfolinks()
 
 
-/obj/item/paper/update_icon()
+/obj/item/paper/update_icon_state()
 
 	if(resistance_flags & ON_FIRE)
 		icon_state = "paper_onfire"
@@ -185,7 +185,7 @@
 	LAZYCLEARLIST(stamped)
 	cut_overlays()
 	updateinfolinks()
-	update_icon()
+	update_icon_state()
 
 
 /obj/item/paper/proc/parsepencode(t, obj/item/pen/P, mob/user, iscrayon = 0)
@@ -280,7 +280,7 @@
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY><div align='right'style='position:fixed;bottom:0;font-style:bold;'><A href='?src=[REF(src)];help=1'>\[?\]</A></div></HTML>", "window=[name]") // Update the window
-			update_icon()
+			update_icon_state()
 
 
 /obj/item/paper/attackby(obj/item/P, mob/living/carbon/human/user, params)
@@ -371,7 +371,7 @@
 	icon_state = "scrap"
 	slot_flags = null
 
-/obj/item/paper/crumpled/update_icon()
+/obj/item/paper/crumpled/update_icon_state()
 	return
 
 /obj/item/paper/crumpled/bloody

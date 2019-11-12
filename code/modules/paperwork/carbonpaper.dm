@@ -5,7 +5,7 @@
 	var/copied = FALSE
 	var/iscopy = FALSE
 
-/obj/item/paper/carbon/update_icon()
+/obj/item/paper/carbon/update_icon_state()
 	if(iscopy)
 		if(info)
 			icon_state = "cpaper_words"
@@ -40,8 +40,8 @@
 		to_chat(user, "<span class='notice'>You tear off the carbon-copy!</span>")
 		C.copied = TRUE
 		Copy.iscopy = TRUE
-		Copy.update_icon()
-		C.update_icon()
+		Copy.update_icon_state()
+		C.update_icon_state()
 		user.put_in_hands(Copy)
 	else
 		to_chat(user, "<span class='notice'>There are no more carbon copies attached to this paper!</span>")
