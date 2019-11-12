@@ -14,7 +14,7 @@
 		return 0
 
 	if(user.handcuffed)
-		var/obj/O = user.get_item_by_slot(SLOT_HANDCUFFED)
+		var/obj/O = user.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 		if(!istype(O))
 			return 0
 		user.visible_message("<span class='warning'>[user] vomits a glob of acid on [user.p_their()] [O]!</span>", \
@@ -24,7 +24,7 @@
 		used = TRUE
 
 	if(user.wear_suit && user.wear_suit.breakouttime && !used)
-		var/obj/item/clothing/suit/S = user.get_item_by_slot(SLOT_WEAR_SUIT)
+		var/obj/item/clothing/suit/S = user.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 		if(!istype(S))
 			return 0
 		user.visible_message("<span class='warning'>[user] vomits a glob of acid across the front of [user.p_their()] [S]!</span>", \

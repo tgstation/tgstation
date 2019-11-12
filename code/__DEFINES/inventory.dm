@@ -31,14 +31,20 @@
 #define ITEM_SLOT_ID			(1<<8)
 #define ITEM_SLOT_BELT			(1<<9)
 #define ITEM_SLOT_BACK			(1<<10)
-/// this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
-#define ITEM_SLOT_POCKET		(1<<11)
-/// this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
-#define ITEM_SLOT_DENYPOCKET	(1<<12)
-#define ITEM_SLOT_NECK			(1<<13)
-#define ITEM_SLOT_HANDS			(1<<14)
-#define ITEM_SLOT_BACKPACK		(1<<15)
-#define ITEM_SLOT_SUITSTORE		(1<<16)
+#define ITEM_SLOT_DEX_STORAGE	(1<<11)
+#define ITEM_SLOT_NECK			(1<<12)
+#define ITEM_SLOT_HANDS			(1<<13)
+#define ITEM_SLOT_BACKPACK		(1<<14)
+#define ITEM_SLOT_SUITSTORE		(1<<15)
+#define ITEM_SLOT_LPOCKET		(1<<16)
+#define ITEM_SLOT_RPOCKET		(1<<17)
+#define ITEM_SLOT_HANDCUFFED	(1<<18)
+#define ITEM_SLOT_LEGCUFFED		(1<<19)
+
+#define SLOTS_AMT				20 // Keep this up to date!
+
+//SLOT GROUP HELPERS
+#define ITEM_SLOT_POCKETS		(ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 //Make sure to update check_obscured_slots() if you add more.

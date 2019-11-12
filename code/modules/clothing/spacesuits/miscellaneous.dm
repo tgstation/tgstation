@@ -311,7 +311,7 @@ Contains:
 
 /obj/item/clothing/head/helmet/space/hardsuit/carp/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if (slot == SLOT_HEAD)
+	if (slot == ITEM_SLOT_HEAD)
 		user.faction |= "carp"
 
 /obj/item/clothing/head/helmet/space/hardsuit/carp/dropped(mob/living/carbon/human/user)
