@@ -49235,7 +49235,6 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
 "cfH" = (
-/obj/structure/closet/wardrobe/pjs,
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
@@ -49249,6 +49248,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/computer/crew,
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
 "cfI" = (
@@ -49289,7 +49289,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/structure/bed/roller,
+/obj/structure/closet/wardrobe/pjs,
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
 "cfK" = (
@@ -50424,6 +50424,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/bed/roller,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cif" = (
