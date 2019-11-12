@@ -49,6 +49,7 @@ import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
 import { SMES } from './interfaces/SMES';
 import { SolarControl } from './interfaces/SolarControl';
+import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { ThermoMachine } from './interfaces/ThermoMachine';
@@ -263,6 +264,10 @@ const ROUTES = {
   solar_control: {
     component: () => SolarControl,
     scrollable: false,
+  },
+  station_alert: {
+    component: () => StationAlertConsole,
+    scrollable: true,
   },
   suit_storage_unit: {
     component: () => SuitStorageUnit,
