@@ -4,44 +4,77 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "signmaker_med"
 	var/obj/structure/bed/holobed/loaded = null
-	var/projecting = FALSE
 	var/holo_range = 4
 
 
+/obj/item/holobed_projector/attack_self(mob/user)
+	. = ..()
+	turnoff_holobed(user)
+
+/obj/item/holobed_projector/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	var/turf/T = get_turf(target)
+	var/distance = get_dist(T, src)
+	if(distance > holo_range)
+		to_chat(user, "<span class='warning'>[src] can't project that far! (<b>[distance - holo_range]</b> tiles beyond the maximum range of <b>[holo_range]</b>)</span>")
+		return
+	if(!isopenturf(target))
+		return
+	project_holobed(user, get_turf(target))
+
 /obj/item/holobed_projector/examine(mob/user)
 	. = ..()
-	. += "[src] is [projecting ? "projecting" : "isn't projecting"]."
+	. += "[src] is [loaded ? "projecting a holobed" : "isn't projecting a holobed"]."
 
 
 /obj/item/holobed_projector/emp_act(severity)
 	. = ..()
 	if(!severity) //Even a love tap shorts out the bed.
 		return
+
+	if(!loaded)
+		return
+
+	turnoff_holobed()
+
+/obj/item/holobed_projector/proc/turnoff_holobed(mob/user)
+	if(!loaded)
+		return
+
+	if(!user)
+		if(ismob(loc))
+			user = loc
+
+	if(user)
+		to_chat(user, "<span class='notice'>[src] stops projecting [loaded].</span>")
+
+	playsound(get_turf(src), 'sound/machines/chime.ogg', 30, TRUE)
+	new /obj/effect/temp_visual/dir_setting/firing_effect/magic(get_turf(loaded))
+
+	loaded.handle_unbuckling()
 	loaded.visible_message("<span class='warning'>[loaded] suddenly flickers and vanishes!</span>")
 	qdel(loaded)
+	loaded = null
 
 
 /obj/item/holobed_projector/proc/project_holobed(mob/user, atom/location)
-
-	projecting = !projecting //toggle the projection
-
-	if(!projecting)
-		if(!loaded)
-			return
-		new /obj/effect/temp_visual/dir_setting/firing_effect/magic(loaded.loc)
-		qdel(loaded)
-		loaded.visible_message("<span class='notice'>[src] flickers and vanishes as you stop projecting it.</span>")
+	if(!user || !location)
 		return
 
 	if(!loaded)
 		loaded = new(src)
 		loaded.projector = src
-	else
-		loaded.visible_message("<span class='warning'>[src] suddenly flickers and vanishes!</span>")
+		loaded.forceMove(location)
+		user.visible_message("<span class='notice'>[user] projects [loaded].</span>", "<span class='notice'>You project [loaded].</span>")
 
-	loaded.forceMove(location)
+	else if(location != get_turf(loaded))
+		loaded.visible_message("<span class='warning'>[src] suddenly flickers and vanishes!</span>")
+		new /obj/effect/temp_visual/dir_setting/firing_effect/magic(get_turf(loaded))
+		loaded.handle_unbuckling()
+		loaded.forceMove(location)
+
 	new /obj/effect/temp_visual/dir_setting/firing_effect/magic(loaded.loc)
-	user.visible_message("<span class='notice'>[user] projects [loaded].</span>", "<span class='notice'>You project [loaded].</span>")
+	playsound(location, 'sound/machines/chime.ogg', 30, TRUE)
 
 
 /obj/item/holobed_projector/robot //cyborg version
@@ -68,8 +101,22 @@
 	else
 		return ..()
 
-/obj/structure/bed/holobed/post_buckle_mob(mob/living/M)
-	icon_state = "up"
+/obj/structure/bed/holobed/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/holobed_projector))
+		handle_unbuckling(user)
+		return 1
+	else
+		return ..()
+
+/obj/structure/bed/holobed/proc/handle_unbuckling(mob/user)
+	if(has_buckled_mobs())
+		if(buckled_mobs.len > 1 || !user)
+			unbuckle_all_mobs()
+			if(user)
+				user.visible_message("<span class='notice'>[user] unbuckles all creatures from [src].</span>")
+		else
+			user_unbuckle_mob(buckled_mobs[1],user)
+
 
 /* Probably not worth the resources that would need to be expended.
 /obj/structure/bed/holobed/Moved()
