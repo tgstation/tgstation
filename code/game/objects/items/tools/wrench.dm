@@ -40,8 +40,13 @@
 	icon_state = "wrench_medical"
 	force = 2 //MEDICAL
 	throwforce = 4
-
 	attack_verb = list("healed", "medicaled", "tapped", "poked", "analyzed") //"cobbyed"
+	var/suicider
+
+/obj/item/wrench/medical/examine(mob/user)
+	. = ..()
+	if(suicider)
+		. += "<span class='notice'>For some reason, it reminds you of [suicider].</span>"
 
 /obj/item/wrench/medical/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -53,22 +58,12 @@
 
 	// Let the sound effect finish playing
 	sleep(20)
-
 	if(!user)
-		return
-
+			return
 	for(var/obj/item/W in user)
 		user.dropItemToGround(W)
-
-	var/obj/item/wrench/medical/W = new /obj/item/wrench/medical(loc)
-	W.add_fingerprint(user)
-	W.desc += " For some reason, it reminds you of [user.name]."
-
-	if(!user)
-		return
-
+	suicider = user.name
 	user.dust()
-
 	return OXYLOSS
 
 /obj/item/wrench/cyborg
