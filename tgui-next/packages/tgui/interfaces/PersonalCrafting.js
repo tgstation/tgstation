@@ -140,7 +140,7 @@ export const PersonalCrafting = props => {
               label={recipe.category}
               onClick={() => act(ref, 'set_category', {
                 category: recipe.category,
-                subcategory: recipe.firstSubcatName,
+                subcategory: recipe.firstSubcatName, // Backend expects "0" or "" to indicate no subcategory
               })}>
               {() => !recipe.hasSubcats && (
                 <CraftingList
