@@ -49498,7 +49498,7 @@
 /obj/machinery/door/window/northleft{
 	dir = 2;
 	name = "Apothecary Desk";
-	req_access_txt = "5; 33"
+	req_access_txt = "5"
 	},
 /obj/machinery/door/firedoor,
 /obj/item/folder/white{
@@ -53651,7 +53651,7 @@
 /obj/machinery/door/window/eastright{
 	dir = 8;
 	name = "Apothecary Desk";
-	req_access_txt = "5; 59"
+	req_access_txt = "5"
 	},
 /obj/item/folder/white{
 	pixel_x = 4;
