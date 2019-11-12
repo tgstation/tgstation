@@ -358,7 +358,6 @@
 
 /datum/reagent/medicine/C2/penthrite/on_mob_metabolize(mob/living/M)
 	. = ..()
-	//fixed
 	M.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.5 * REM)
 
 /datum/reagent/medicine/C2/penthrite/on_mob_end_metabolize(mob/living/M)
