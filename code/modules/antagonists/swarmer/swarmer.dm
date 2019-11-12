@@ -188,12 +188,12 @@
 	return S.Integrate(src)
 
 /atom/movable/proc/IntegrateAmount()
-	return FALSE
+	return 0
 
 /obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
 	if(custom_materials)
 		if(custom_materials[getmaterialref(/datum/material/iron)] || custom_materials[getmaterialref(/datum/material/glass)])
-			return TRUE
+			return 1
 	return ..()
 
 /obj/item/gun/swarmer_act()//Stops you from eating the entire armory
@@ -414,7 +414,7 @@
 		resources -= fabrication_cost
 	else
 		to_chat(src, "<span class='warning'>You do not have the necessary resources to fabricate this object.</span>")
-		return FALSE
+		return
 	return new fabrication_object(loc)
 
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(atom/movable/target)
