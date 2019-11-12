@@ -10,7 +10,7 @@
 	health_req = 25
 	instability = 40
 	var/scream_delay = 20
-	last_scream = 0
+	var/last_scream = 0
 	
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
