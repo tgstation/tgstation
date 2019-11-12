@@ -1,6 +1,3 @@
-#define SPEEDMODE "speedmode"
-#define EVAMODE "evamode"
-
 	//Baseline hardsuits
 /obj/item/clothing/head/helmet/space/hardsuit
 	name = "hardsuit helmet"
@@ -28,7 +25,6 @@
 	var/hardsuit_speed_suffix = "(fast" //hardsuit (fast)
 	var/armor_eva = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
 	var/armor_speed = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
-	var/next_hardsuit_mode = EVAMODE //switches between eva and speed
 	/*armor changes between the modes*/
 
 /obj/item/clothing/head/helmet/space/hardsuit/Initialize()
@@ -350,29 +346,26 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/head/helmet/space/hardsuit/proc/toggle_hardsuit_mode(mob/user, next_hardsuit_mode) //Helmet Toggles Suit Mode
+/obj/item/clothing/head/helmet/space/hardsuit/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
 	if(linkedsuit)
-		switch(next_hardsuit_mode)
-			if(EVAMODE)
-				linkedsuit.name = initial(linkedsuit.name)
-				linkedsuit.desc = initial(linkedsuit.desc)
-				linkedsuit.slowdown = 1
-				linkedsuit.clothing_flags |= STOPSPRESSUREDAMAGE
-				linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
-				if(linkedsuit.armor_switch)
-					linkedsuit.armor = getArmor(arglist(linkedsuit.armor_speed))
-					armor = getArmor(arglist(linkedsuit.armor_speed)) //for the helmet
-				next_hardsuit_mode = SPEEDMODE
-			if(SPEEDMODE)
-				linkedsuit.name += " [hardsuit_speed_suffix]"
-				linkedsuit.desc = linkedsuit.alt_desc
-				linkedsuit.slowdown = 0
-				linkedsuit.clothing_flags &= ~STOPSPRESSUREDAMAGE
-				linkedsuit.cold_protection &= ~(CHEST | GROIN | LEGS | FEET | ARMS | HANDS)
-				if(linkedsuit.armor_switch)
-					linkedsuit.armor = getArmor(arglist(linkedsuit.armor_eva))
-					armor = getArmor(arglist(armor_eva))
-				next_hardsuit_mode = EVAMODE
+		if(on)
+			linkedsuit.name = initial(linkedsuit.name)
+			linkedsuit.desc = initial(linkedsuit.desc)
+			linkedsuit.slowdown = 1
+			linkedsuit.clothing_flags |= STOPSPRESSUREDAMAGE
+			linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+			if(linkedsuit.armor_switch)
+				linkedsuit.armor = getArmor(arglist(linkedsuit.armor_speed))
+				armor = getArmor(arglist(linkedsuit.armor_speed)) //for the helmet
+		else
+			linkedsuit.name += " [hardsuit_speed_suffix]"
+			linkedsuit.desc = linkedsuit.alt_desc
+			linkedsuit.slowdown = 0
+			linkedsuit.clothing_flags &= ~STOPSPRESSUREDAMAGE
+			linkedsuit.cold_protection &= ~(CHEST | GROIN | LEGS | FEET | ARMS | HANDS)
+			if(linkedsuit.armor_switch)
+				linkedsuit.armor = getArmor(arglist(linkedsuit.armor_eva))
+				armor = getArmor(arglist(armor_eva))
 		linkedsuit.icon_state = "hardsuit[on]-[hardsuit_type]"
 		linkedsuit.update_icon()
 		user.update_inv_wear_suit()
