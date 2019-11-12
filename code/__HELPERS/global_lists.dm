@@ -52,9 +52,10 @@
 
 	// Keybindings (classic)
 	for(var/KB in subtypesof(/datum/keybinding))
-		var/datum/keybinding/instance = new KB
-		if(!instance.name || !instance.key)
+		var/datum/keybinding/keybinding = KB
+		if(!initial(keybinding.key))
 			continue
+		var/datum/keybinding/instance = new keybinding
 		GLOB.keybindings_by_name[instance.name] = instance
 
 		// Classic
