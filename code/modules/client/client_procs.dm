@@ -798,7 +798,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 
 	if(!prefs.hotkeys)
-		winset(src, null, "input.focus=true")
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
 
 	..()
 
