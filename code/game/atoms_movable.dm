@@ -868,6 +868,11 @@
 		return FALSE
 	return TRUE
 
+/// Updates the grab state of the movable
+/// This exists to act as a hook for behaviour
+/atom/movable/proc/setGrabState(newstate)
+	grab_state = newstate
+
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE
 	if(!istype(loc, /turf))
