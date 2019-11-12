@@ -9,6 +9,9 @@
 	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25
 	instability = 40
+	var/scream_delay = 20
+	last_scream = 0
+	
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -28,7 +31,7 @@
 	if(source.a_intent != INTENT_HARM)
 		return
 	if(target.attack_hulk(owner))
-		if(world.time < 20)
+		if(world.time > (last_scream + scream_delay))
 			source.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced="hulk")
 		log_combat(source, target, "punched", "hulk powers")
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
