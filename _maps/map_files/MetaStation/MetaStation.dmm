@@ -50093,11 +50093,6 @@
 "cgZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Medbay";
-	req_access_txt = "5"
-	},
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -50110,16 +50105,17 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
-"cha" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
 	name = "Medbay";
 	req_access_txt = "5"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
+"cha" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/unres,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -50131,6 +50127,12 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyer";
+	name = "Medbay";
+	req_access_txt = "5"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "chb" = (
@@ -50715,6 +50717,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cis" = (
@@ -51926,10 +51929,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"cln" = (
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "clo" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
@@ -51956,12 +51955,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "clr" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -72185,8 +72180,8 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dwy" = (
-/obj/structure/extinguisher_cabinet,
-/turf/closed/wall,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/medical/medbay/central)
 "dwL" = (
 /turf/closed/wall/r_wall,
@@ -74700,6 +74695,17 @@
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/medical/chemistry)
+"nEq" = (
+/obj/machinery/light,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 3
+	},
+/obj/machinery/door/airlock/medical/glass,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "nHj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment{
@@ -76092,6 +76098,15 @@
 	icon_state = "platingdmg2"
 	},
 /area/maintenance/port)
+"vBV" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 3
+	},
+/obj/machinery/door/airlock/medical/glass,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "vDb" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/wood,
@@ -100193,7 +100208,7 @@ cfP
 bXK
 cio
 cjO
-cln
+clo
 cmu
 cnC
 coO
@@ -100963,8 +100978,8 @@ ceB
 cfR
 cgY
 cir
-cjN
-clo
+vBV
+nEq
 cmv
 cnF
 coR
