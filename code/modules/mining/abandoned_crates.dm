@@ -21,6 +21,8 @@
 		code += dig
 		digits -= dig  //there are never matching digits in the answer
 
+/obj/structure/closet/crate/secure/loot/open(mob/living/user)
+
 	var/loot = rand(1,100) //100 different crates with varying chances of spawning
 	switch(loot)
 		if(1 to 5) //5% chance
@@ -141,6 +143,8 @@
 		if(100)
 			new /obj/item/melee/skateboard/hoverboard(src)
 
+			new /obj/item/clothing/head/bearpelt(src)
+	. = ..()
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
