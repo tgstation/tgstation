@@ -797,7 +797,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		// so that the visual focus indicator matches reality.
 		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 
-	if(!prefs.hotkeys)
+	else
 		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
 
 	..()
