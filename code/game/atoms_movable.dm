@@ -132,7 +132,7 @@
 			return FALSE
 		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
 		if(AM == pulling)
-			grab_state = state
+			setGrabState(state)
 			if(istype(AM,/mob/living))
 				var/mob/living/AMob = AM
 				AMob.grabbedby(src)
@@ -143,7 +143,7 @@
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = AM
 	AM.pulledby = src
-	grab_state = state
+	setGrabState(state)
 	if(ismob(AM))
 		var/mob/M = AM
 		log_combat(src, M, "grabbed", addition="passive grab")
@@ -157,7 +157,7 @@
 		pulling.pulledby = null
 		var/mob/living/ex_pulled = pulling
 		pulling = null
-		grab_state = 0
+		setGrabState(0)
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_mobility()// mob gets up if it was lyng down in a chokehold
