@@ -27,6 +27,8 @@
 	category = CATEGORY_CARBON
 
 /datum/keybinding/carbon/select_help_intent/down(client/user)
+	if(iscyborg(user.mob))
+		return FALSE
 	user.mob?.a_intent_change(INTENT_HELP)
 	return TRUE
 
