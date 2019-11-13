@@ -38,13 +38,13 @@
 
 	var/list/stolen_valor
 
-	var/list/officers = list("Captain", "Head of Personnel", "Head of Security")
-	var/list/command = list("Captain" = "Cpt.","Head of Personnel" = "Lt.")
-	var/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" =  "Det.", "Security Officer" = "Officer")
-	var/list/engineering = list("Chief Engineer" = "Chief Engineer", "Station Engineer" = "Engineer", "Atmospherics Technician" = "Technician")
-	var/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.", "Chemist" = "Pharm.D.")
-	var/list/research = list("Research Director" = "Ph.D.", "Roboticist" = "M.S.", "Scientist" = "B.S.")
-	var/list/legal = list("Lawyer" = "Esq.")
+	var/static/list/officers = list("Captain", "Head of Personnel", "Head of Security")
+	var/static/list/command = list("Captain" = "Cpt.","Head of Personnel" = "Lt.")
+	var/static/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" =  "Det.", "Security Officer" = "Officer")
+	var/static/list/engineering = list("Chief Engineer" = "Chief Engineer", "Station Engineer" = "Engineer", "Atmospherics Technician" = "Technician")
+	var/static/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.", "Chemist" = "Pharm.D.")
+	var/static/list/research = list("Research Director" = "Ph.D.", "Roboticist" = "M.S.", "Scientist" = "B.S.")
+	var/static/list/legal = list("Lawyer" = "Esq.")
 
 	var/list/prefixes
 	var/list/suffixes
@@ -128,18 +128,21 @@
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
 /mob/living/simple_animal/bot/cleanbot/Crossed(atom/movable/AM)
+	. = ..()
+
 	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	if(weapon && has_gravity() && ismob(AM))
 		var/mob/living/carbon/C = AM
-		if(!istype(C) || !C)
+		if(!istype(C))
 			return
+
 		weapon.attack(C, src)
 		C.Knockdown(20)
-		if(!(C.mind.assigned_role in stolen_valor))
-			stolen_valor += C.mind.assigned_role
+
+		if(!(C.job in stolen_valor))
+			stolen_valor += C.job
 		update_titles()
 		return
-	..()
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))
@@ -155,7 +158,8 @@
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
 	else if(istype(W, /obj/item/kitchen/knife) && user.a_intent != INTENT_HARM)
 		to_chat(user, "<span class='notice'>You start attaching the [W] to \the [src]...</span>")
-		addtimer(CALLBACK(src, .proc/deputize, W, user), 40)
+		if(do_after(user, 40, target = src))
+			deputize(W, user)
 	else
 		return ..()
 

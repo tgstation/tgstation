@@ -93,7 +93,7 @@
 
 	var/commissioned = FALSE // Will other (noncommissioned) bots salute this bot?
 	var/can_salute = TRUE
-	var/salute_delay = 600 // how long between salutes in deciseconds
+	var/salute_delay = 60 SECONDS
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_PATH_HUD = HUD_LIST_LIST) //Diagnostic HUD views
 
@@ -247,7 +247,7 @@
 	if(!commissioned && can_salute)
 		for(var/mob/living/simple_animal/bot/B in get_hearers_in_view(5, get_turf(src)))
 			if(B.commissioned)
-				src.visible_message("<b>[src]</b> performs an elaborate salute for [B]!")
+				visible_message("<b>[src]</b> performs an elaborate salute for [B]!")
 				can_salute = FALSE
 				addtimer(VARSET_CALLBACK(src, can_salute, TRUE), salute_delay)
 				break
