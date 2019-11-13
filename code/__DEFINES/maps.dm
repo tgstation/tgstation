@@ -86,7 +86,6 @@ require only minor tweaks.
     ZTRAIT_BASETURF = /turf/open/floor/plating/asteroid/snow/ice)
 #define ZTRAITS_ICEMOON_UNDERGROUND list(\
     ZTRAIT_MINING = TRUE, \
-    ZTRAIT_ROCKFALL = TRUE, \
     ZTRAIT_ICE_RUINS_UNDERGROUND = TRUE, \
     ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
     ZTRAIT_UP = 1, \

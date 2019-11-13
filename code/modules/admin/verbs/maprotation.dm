@@ -42,9 +42,13 @@
 	log_admin("[key_name(usr)] is changing the map to [VM.map_name]")
 	if (SSmapping.changemap(VM) == 0)
 		message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")
+
 /client/proc/adminchangeminingmap()
 	set category = "Server"
 	set name = "Change Mining Map"
+	if(SSticker.current_state < GAME_STATE_PREGAME)
+		to_chat(src, "<span class='interface'>Please wait until after the server is done setting up.</span>")
+		return
 	var/chosenmap = input("Choose the next mining map", "Change Mining Map")  as null|anything in GLOB.mining_maps
 	if (!chosenmap)
 		return

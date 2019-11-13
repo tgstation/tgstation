@@ -129,9 +129,6 @@ GLOBAL_VAR_INIT(next_mining_map, "random")
 	if ("minetype" in json)
 		minetype = json["minetype"]
 
-	if (minetype == "random")
-		minetype = pickweightAllowZero(GLOB.mining_maps)
-
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
 	defaulted = FALSE

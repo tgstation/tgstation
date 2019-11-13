@@ -262,6 +262,10 @@ SUBSYSTEM_DEF(mapping)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
+	// pick a random mining map
+	if (config.minetype == "random")
+		config.minetype = pickweightAllowZero(GLOB.mining_maps)
+
 	if(config.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
 	else if (config.minetype == "icemoon")
@@ -269,6 +273,11 @@ SUBSYSTEM_DEF(mapping)
 		LoadGroup(FailedZs, "Ice moon", "map_files/Mining", "Icemoon.dmm", default_traits = ZTRAITS_ICEMOON)
 	else if (!isnull(config.minetype))
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
+
+	// reset the mining map to random so if an admin sets the mining map it isn't stuck to that forever
+	GLOB.next_mining_map = "random"
+	var/datum/map_config/VM = load_map_config()
+	SSmapping.changemap(VM)
 #endif
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
