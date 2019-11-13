@@ -252,3 +252,9 @@ austation end*/
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/suture/medicated(location)
 	return
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> daebb4e401... [READY]Addition of new explosive chems (#47536)

@@ -67,4 +67,13 @@
 	id = /datum/reagent/medicine/C2/syriniver
 	results = list(/datum/reagent/medicine/C2/syriniver = 5)
 	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
+<<<<<<< HEAD
 austation end */
+=======
+
+/datum/chemical_reaction/penthrite
+	name = "Penthrite"
+	id  = /datum/reagent/medicine/C2/penthrite
+	results = list(/datum/reagent/medicine/C2/penthrite = 4)
+	required_reagents = list(/datum/reagent/pentaerythritol = 4, /datum/reagent/acetone = 1,  /datum/reagent/toxin/acid/nitracid = 1)
+>>>>>>> daebb4e401... [READY]Addition of new explosive chems (#47536)

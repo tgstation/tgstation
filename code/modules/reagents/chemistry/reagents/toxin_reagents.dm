@@ -803,6 +803,18 @@
 	. = 1
 	..()
 
+/datum/reagent/toxin/acid/nitracid
+	name = "Nitric acid"
+	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
+	color = "#5050FF"
+	toxpwr = 6
+	acidpwr = 5.0
+
+/datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)
+	M.adjustFireLoss(current_cycle/15, FALSE) //here you go nervar
+	. = TRUE
+	..()
+
 /datum/reagent/toxin/delayed
 	name = "Toxin Microcapsules"
 	description = "Causes heavy toxin damage after a brief time of inactivity."
