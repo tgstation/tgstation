@@ -221,6 +221,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	key_bindings 	= sanitize_islist(key_bindings, list())
 
 	if(!length(key_bindings))
+		key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
+		parent.update_movement_keys()
 		addtimer(CALLBACK(src, .proc/load_default_keybindings, parent), 5 SECONDS)
 
 	return TRUE
