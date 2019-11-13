@@ -38,6 +38,7 @@ import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { Radio } from './interfaces/Radio';
+import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
 import { SMES } from './interfaces/SMES';
@@ -212,6 +213,10 @@ const ROUTES = {
   radio: {
     component: () => Radio,
     scrollable: false,
+  },
+  rpd: {
+    component: () => RapidPipeDispenser,
+    scrollable: true,
   },
   shuttle_manipulator: {
     component: () => ShuttleManipulator,
