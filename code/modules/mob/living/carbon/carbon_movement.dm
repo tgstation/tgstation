@@ -1,13 +1,8 @@
 /mob/living/carbon/movement_delay()
 	. = ..()
 
-	if(!get_leg_ignore()) //ignore the fact we lack legs
-		var/leg_amount = get_num_legs()
-		. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
-		if(!leg_amount)
-			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
-		if(legcuffed)
-			. += legcuffed.slowdown
+	if(!get_leg_ignore() && legcuffed) //ignore the fact we lack legs
+		. += legcuffed.slowdown
 
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
 	if(movement_type & FLYING)
