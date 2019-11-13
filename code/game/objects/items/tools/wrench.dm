@@ -63,7 +63,7 @@
 		return
 	for(var/obj/item/W in user)
 		user.dropItemToGround(W)
-	suicider = user.name
+	suicider = user.real_name
 	user.dust()
 	return OXYLOSS
 
