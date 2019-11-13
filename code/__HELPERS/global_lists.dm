@@ -56,7 +56,7 @@
 		if(!initial(keybinding.hotkey_keys))
 			continue
 		var/datum/keybinding/instance = new keybinding
-		GLOB.keybindings_by_name[instance.name] = instance
+		GLOB.keybindings_by_name[instance.name] += instance
 
 		// Classic
 		if(LAZYLEN(instance.classic_keys))
@@ -67,15 +67,6 @@
 		if(LAZYLEN(instance.hotkey_keys))
 			for(var/bound_key in instance.hotkey_keys)
 				LAZYADD(GLOB.hotkey_keybinding_list_by_key[bound_key], list(instance.name))
-
-	// Sort all the keybindings by their weight
-	// Classic mode first
-	for(var/key in GLOB.classic_keybinding_list_by_key)
-		GLOB.classic_keybinding_list_by_key[key] = sortList(GLOB.classic_keybinding_list_by_key[key])
-
-	// Then hotkey mode
-	for(var/key in GLOB.hotkey_keybinding_list_by_key)
-		GLOB.hotkey_keybinding_list_by_key[key] = sortList(GLOB.hotkey_keybinding_list_by_key[key])
 		
 	GLOB.emote_list = init_emote_list()
 

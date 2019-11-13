@@ -128,7 +128,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			S["facial_style_name"]	>> facial_hairstyle
 			
 	if(current_version < 28)
-		WRITE_FILE(S["key_bindings"], list())
+		WRITE_FILE(S["key_bindings"], null)
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)

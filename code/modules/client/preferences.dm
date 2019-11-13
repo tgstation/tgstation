@@ -139,11 +139,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 /datum/preferences/proc/load_default_keybindings(client/C)
-	if(!C)
+	if(QDELETED(C))
 		return
 	to_chat(C, "Empty keybindings, setting defaults")
 
 	var/choice = tgalert(C, "Would you prefer 'Hotkey' or 'Classic' defaults?", "Setup keybindings", "Hotkey", "Classic")
+	if(QDELETED(C))
+		return
 	hotkeys = (choice == "Hotkey")
 	key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
 	save_preferences()
@@ -734,7 +736,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						for(var/bound_key_index in 2 to length(user_binds[kb.name]))
 							bound_key = user_binds[kb.name][bound_key_index]
 							dat += " | <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a>"
-						if(length(user_binds[kb.name]) <= 2)
+						if(length(user_binds[kb.name]) < MAX_KEYS_PER_KEYBIND)
 							dat += "| <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name]'>Add Secondary</a>"
 						var/list/default_keys = hotkeys ? kb.classic_keys : kb.hotkey_keys
 						if(LAZYLEN(default_keys))
