@@ -6,6 +6,7 @@ import { Box, TitleBar } from './components';
 import { Toast } from './components/Toast';
 import { UI_INTERACTIVE } from './constants';
 import { dragStartHandler, resizeStartHandler } from './drag';
+import { releaseHeldKeys } from './hotkeys';
 import { createLogger } from './logging';
 import { refocusLayout } from './refocus';
 import { getRoute } from './routes';
@@ -37,6 +38,7 @@ export class Layout extends Component {
           onDragStart={dragStartHandler}
           onClose={() => {
             logger.log('pressed close');
+            releaseHeldKeys();
             winset(config.window, 'is-visible', false);
             runCommand(`uiclose ${config.ref}`);
           }} />

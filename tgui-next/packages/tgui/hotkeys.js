@@ -1,10 +1,14 @@
 import { createLogger } from './logging';
+import { callByond } from './byond';
 
 const logger = createLogger('hotkeys');
 
 // Key codes
 export const KEY_TAB = 9;
 export const KEY_ENTER = 13;
+export const KEY_SHIFT = 16;
+export const KEY_CTRL = 17;
+export const KEY_ALT = 18;
 export const KEY_ESCAPE = 27;
 export const KEY_SPACE = 32;
 export const KEY_0 = 48;
@@ -43,38 +47,138 @@ export const KEY_W = 87;
 export const KEY_X = 88;
 export const KEY_Y = 89;
 export const KEY_Z = 90;
-export const KEY_MINUS = 189;
 export const KEY_EQUAL = 187;
+export const KEY_MINUS = 189;
 
-const makeComboString = (ctrlKey, altKey, keyCode) => {
-  const parts = [
-    ctrlKey && 'Ctrl',
-    altKey && 'Alt',
-    '[' + keyCode + ']',
-  ];
-  return parts
-    .filter(value => value)
-    .join('+');
+const MODIFIER_KEYS = [
+  KEY_CTRL,
+  KEY_ALT,
+  KEY_SHIFT,
+];
+
+const NO_PASSTHROUGH_KEYS = [
+  KEY_ESCAPE,
+  KEY_ENTER,
+  KEY_SPACE,
+  KEY_TAB,
+  ...MODIFIER_KEYS,
+];
+
+// Tracks the "pressed" state of keys
+const keyState = {};
+
+const makeComboString = (ctrlKey, altKey, shiftKey, keyCode) => {
+  let str = '';
+  if (ctrlKey) {
+    str += 'Ctrl+';
+  }
+  if (altKey) {
+    str += 'Alt+';
+  }
+  if (shiftKey) {
+    str += 'Shift+';
+  }
+  if (keyCode >= 48 && keyCode <= 90) {
+    str += String.fromCharCode(keyCode);
+  }
+  else {
+    str += '[' + keyCode + ']';
+  }
+  return str;
+};
+
+const getKeyData = e => {
+  const keyCode = window.event ? e.which : e.keyCode;
+  const { ctrlKey, altKey, shiftKey } = e;
+  return {
+    keyCode,
+    ctrlKey,
+    altKey,
+    shiftKey,
+    hasModifierKeys: ctrlKey || altKey || shiftKey,
+    keyString: makeComboString(ctrlKey, altKey, shiftKey, keyCode),
+  };
+};
+
+// Keyboard passthrough logic. This allows you to keep doing things
+// in game while the browser window is focused.
+const handlePassthrough = (e, eventType) => {
+  const { keyCode, keyString, hasModifierKeys } = getKeyData(e);
+  if (e.defaultPrevented) {
+    return;
+  }
+  if (e.target) {
+    const name = e.target.localName;
+    if (name === 'input' || name === 'textarea') {
+      return;
+    }
+  }
+  if (hasModifierKeys) {
+    return;
+  }
+  if (NO_PASSTHROUGH_KEYS.includes(keyCode)) {
+    return;
+  }
+  // Prevent spam of keydown events
+  if (eventType === 'keydown' && keyState[keyCode]) {
+    return;
+  }
+  // Send this keypress to BYOND
+  logger.debug('passthrough', [eventType, keyString]);
+  if (eventType === 'keydown') {
+    return callByond('', { __keydown: keyCode });
+  }
+  if (eventType === 'keyup') {
+    return callByond('', { __keyup: keyCode });
+  }
+};
+
+/**
+ * Cleanup procedure for keyboard passthrough, which should be called
+ * whenever you're unloading tgui.
+ */
+export const releaseHeldKeys = () => {
+  for (let keyCode of Object.keys(keyState)) {
+    if (keyState[keyCode]) {
+      logger.log(`releasing [${keyCode}] key`);
+      keyState[keyCode] = false;
+      callByond('', { __keyup: keyCode });
+    }
+  }
+};
+
+const handleHotKey = (e, eventType, dispatch) => {
+  if (eventType !== 'keyup') {
+    return;
+  }
+  const keyData = getKeyData(e);
+  const { keyCode, hasModifierKeys, keyString } = keyData;
+  // Dispatch a detected hotkey as a store action
+  if (hasModifierKeys && !MODIFIER_KEYS.includes(keyCode)) {
+    logger.log(keyString);
+    dispatch({
+      type: 'hotKey',
+      payload: keyData,
+    });
+  }
 };
 
 // Middleware
 export const hotKeyMiddleware = store => {
   const { dispatch } = store;
-  // Subscribe for hotkey events
-  document.addEventListener('keyup', e => {
-    const { ctrlKey, altKey } = e;
+  // Subscribe to key events
+  document.addEventListener('keydown', e => {
     const keyCode = window.event ? e.which : e.keyCode;
-    // Dispatch them as store actions
-    if (ctrlKey || altKey) {
-      const comboString = makeComboString(ctrlKey, altKey, keyCode);
-      logger.log(comboString);
-      dispatch({
-        type: 'hotKey',
-        payload: { ctrlKey, altKey, keyCode },
-      });
-    }
+    handlePassthrough(e, 'keydown');
+    keyState[keyCode] = true;
   });
-  // Pass through actions (do nothing)
+  document.addEventListener('keyup', e => {
+    const keyCode = window.event ? e.which : e.keyCode;
+    handlePassthrough(e, 'keyup');
+    handleHotKey(e, 'keyup', dispatch);
+    keyState[keyCode] = false;
+  });
+  // Pass through store actions (do nothing)
   return next => action => next(action);
 };
 
@@ -85,8 +189,8 @@ export const hotKeyReducer = (state, action) => {
   if (type === 'hotKey') {
     const { ctrlKey, altKey, keyCode } = payload;
 
+    // Toggle kitchen sink mode
     if (ctrlKey && altKey && keyCode === KEY_EQUAL) {
-      // Toggle kitchen sink mode
       return {
         ...state,
         showKitchenSink: !state.showKitchenSink,
