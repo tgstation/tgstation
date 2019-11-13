@@ -56,7 +56,7 @@
 		if(!initial(keybinding.hotkey_keys))
 			continue
 		var/datum/keybinding/instance = new keybinding
-		GLOB.keybindings_by_name[instance.name] += instance
+		GLOB.keybindings_by_name[instance.name] = instance
 
 		// Classic
 		if(LAZYLEN(instance.classic_keys))
