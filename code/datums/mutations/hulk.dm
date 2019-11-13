@@ -9,7 +9,7 @@
 	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25
 	instability = 40
-	var/scream_delay = 20
+	var/scream_delay = 200
 	var/last_scream = 0
 	
 
