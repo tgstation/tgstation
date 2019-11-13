@@ -797,6 +797,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		// so that the visual focus indicator matches reality.
 		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 
+	else
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
+
 	..()
 
 /client/proc/add_verbs_from_config()
@@ -869,19 +872,20 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	change_view("[x]x[y]")
 
 /client/proc/update_movement_keys()
-	if(prefs && prefs.key_bindings)
-		movement_keys = list()
-		for(var/key in prefs.key_bindings)
-			for(var/kb_name in prefs.key_bindings[key])
-				switch(kb_name)
-					if("North")
-						movement_keys[key] = NORTH
-					if("East")
-						movement_keys[key] = EAST
-					if("West")
-						movement_keys[key] = WEST
-					if("South")
-						movement_keys[key] = SOUTH
+	if(!prefs?.key_bindings)
+		return
+	movement_keys = list()
+	for(var/key in prefs.key_bindings)
+		for(var/kb_name in prefs.key_bindings[key])
+			switch(kb_name)
+				if("North")
+					movement_keys[key] = NORTH
+				if("East")
+					movement_keys[key] = EAST
+				if("West")
+					movement_keys[key] = WEST
+				if("South")
+					movement_keys[key] = SOUTH
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
