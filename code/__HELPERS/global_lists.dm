@@ -53,22 +53,20 @@
 	// Keybindings (classic)
 	for(var/KB in subtypesof(/datum/keybinding))
 		var/datum/keybinding/keybinding = KB
-		if(!initial(keybinding.key))
+		if(!initial(keybinding.hotkey_keys))
 			continue
 		var/datum/keybinding/instance = new keybinding
 		GLOB.keybindings_by_name[instance.name] = instance
 
 		// Classic
-		if(instance.classic_key)
-			if (!(instance.classic_key in GLOB.classic_keybinding_list_by_key))
-				GLOB.classic_keybinding_list_by_key[instance.classic_key] = list()
-			GLOB.classic_keybinding_list_by_key[instance.classic_key] += instance.name
+		if(LAZYLEN(instance.classic_keys))
+			for(var/bound_key in instance.classic_keys)
+				LAZYADD(GLOB.classic_keybinding_list_by_key[bound_key], list(instance.name))
 
 		// Hotkey
-		if(instance.hotkey_key)
-			if (!(instance.hotkey_key in GLOB.hotkey_keybinding_list_by_key))
-				GLOB.hotkey_keybinding_list_by_key[instance.hotkey_key] = list()
-			GLOB.hotkey_keybinding_list_by_key[instance.hotkey_key] += instance.name
+		if(LAZYLEN(instance.hotkey_keys))
+			for(var/bound_key in instance.hotkey_keys)
+				LAZYADD(GLOB.hotkey_keybinding_list_by_key[bound_key], list(instance.name))
 
 	// Sort all the keybindings by their weight
 	// Classic mode first
