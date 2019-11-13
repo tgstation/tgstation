@@ -8,6 +8,9 @@
 @import './atomic.scss';
 @import './components.scss';
 
+// Non-themable styles
+@import '../components/FatalError.scss';
+
 // Miscellaneous bits
 body {
   color: $base-color-text;
