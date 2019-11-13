@@ -292,10 +292,22 @@ over the button.
   - `bottom` (default) - Show tooltip below the button.
   - `left` - Show tooltip on the left of the button.
   - `right` - Show tooltip on the right of the button.
+- `ellipsis: boolean` - If button width is constrained, button text will
+be truncated with an ellipsis. Be careful however, because this prop breaks
+the baseline alignment.
 - `title: string` - A native browser tooltip, which appears when hovering
 over the button.
 - `content/children: any` - Content to render inside the button.
 - `onClick: function` - Called when element is clicked.
+
+### `Button.Checkbox`
+
+A ghetto checkbox, made entirely using existing Button API.
+
+Props:
+
+- See inherited props: [Button](#button)
+- `checked: boolean` - Boolean value, which marks the checkbox as checked.
 
 ### `ColorBox`
 
@@ -432,7 +444,7 @@ Props:
 
 Props:
 
-- See inherited props: [Table.Cell](#table-cell)
+- See inherited props: [Table.Cell](#tablecell)
 - `size: number` (default: 1) - Size of the column relative to other columns.
 
 ### `Icon`
