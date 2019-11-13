@@ -10,8 +10,7 @@
 	var/ExplodeTemp			//Temperature at which reaction explodes
 	var/OptimalpHMin		= 1 // Lowest value of pH determining pH a 1 value for pH based rate reactions (Plateu phase)
 	var/OptimalpHMax		= 14 // Higest value for above
-	var/ReactpHLim			= 0 // How far out pH wil react, giving impurity place (Exponential phase)
-	//var/CatalystFact		= 0 // How much the catalyst affects the reaction (0 = no catalyst) //unimplemented, coming soon
+	var/ReactpHLim			= 0 // How far out pH wil react, giving impurity place (Exponential phase
 	var/CurveSharpT 		= 1.5 // How sharp the temperature exponential curve is (to the power of value)
 	var/CurveSharppH 		= 3 // How sharp the pH exponential curve is (to the power of value)
 	var/ThermicConstant		= 0 //Temperature change per 1u produced
