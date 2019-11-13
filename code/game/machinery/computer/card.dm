@@ -65,7 +65,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 		. += "<span class='notice'>Alt-click to eject the ID card.</span>"
 
 /obj/machinery/computer/card/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/card/id))
+	if(isidcard(I))
 		if(check_access(I) && !inserted_scan_id)
 			if(id_insert(user, I, inserted_scan_id))
 				inserted_scan_id = I
@@ -130,13 +130,26 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			return JOB_MAX_POSITIONS
 	return JOB_DENIED
 
-/obj/machinery/computer/card/proc/id_insert(mob/user, obj/item/card/id/I, target)
-	if(!user.transferItemToLoc(I, src))
+
+/obj/machinery/computer/card/proc/id_insert(mob/user, obj/item/inserting_item, obj/item/target)
+	var/obj/item/card/id/card_to_insert = inserting_item
+	var/holder_item = FALSE
+
+	if(!isidcard(card_to_insert))
+		card_to_insert = inserting_item.RemoveID()
+		holder_item = TRUE
+
+	if(!card_to_insert || !user.transferItemToLoc(card_to_insert, src))
 		return FALSE
+
 	if(target)
-		id_eject(user, target)
-	user.visible_message("<span class='notice'>[user] inserts \the [I] into \the [src].</span>", \
-						"<span class='notice'>You insert \the [I] into \the [src].</span>")
+		if(holder_item && inserting_item.InsertID(target))
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+		else
+			id_eject(user, target)
+
+	user.visible_message("<span class='notice'>[user] inserts \the [card_to_insert] into \the [src].</span>",
+						"<span class='notice'>You insert \the [card_to_insert] into \the [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	updateUsrDialog()
 	return TRUE
@@ -359,11 +372,11 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					inserted_modify_id = null
 					updateUsrDialog()
 					return
-			var/mob/M = usr
-			if(M.get_idcard(TRUE))
-				var/obj/item/card/id/I = M.get_idcard(TRUE)
-				if(id_insert(usr, I, inserted_modify_id))
-					inserted_modify_id = I
+			if(usr.get_id_in_hand())
+				var/obj/item/held_item = usr.get_active_held_item()
+				var/obj/item/card/id/id_to_insert = held_item.GetID()
+				if(id_insert(usr, held_item, inserted_modify_id))
+					inserted_modify_id = id_to_insert
 					updateUsrDialog()
 		if ("inserted_scan_id")
 			if(inserted_scan_id && !usr.get_active_held_item())
@@ -371,11 +384,11 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					inserted_scan_id = null
 					updateUsrDialog()
 					return
-			var/mob/M = usr
-			if(M.get_idcard(TRUE))
-				var/obj/item/card/id/I = M.get_idcard(TRUE)
-				if(id_insert(usr, I, inserted_scan_id))
-					inserted_scan_id = I
+			if(usr.get_id_in_hand())
+				var/obj/item/held_item = usr.get_active_held_item()
+				var/obj/item/card/id/id_to_insert = held_item.GetID()
+				if(id_insert(usr, held_item, inserted_scan_id))
+					inserted_scan_id = id_to_insert
 					updateUsrDialog()
 		if ("auth")
 			if ((!( authenticated ) && (inserted_scan_id || issilicon(usr)) || mode))
@@ -448,7 +461,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 							updateUsrDialog()
 							break
 					if(!jobdatum)
-						to_chat(usr, "<span class='error'>No log exists for this job.</span>")
+						to_chat(usr, "<span class='alert'>No log exists for this job.</span>")
 						updateUsrDialog()
 						return
 					if(inserted_modify_id.registered_account)
@@ -463,7 +476,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				inserted_modify_id.assignment = "Unassigned"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			else
-				to_chat(usr, "<span class='error'>You are not authorized to demote this position.</span>")
+				to_chat(usr, "<span class='alert'>You are not authorized to demote this position.</span>")
 		if ("reg")
 			if (authenticated)
 				var/t2 = inserted_modify_id
@@ -473,7 +486,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						inserted_modify_id.registered_name = newName
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 					else
-						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
+						to_chat(usr, "<span class='alert'>Invalid name entered.</span>")
 						updateUsrDialog()
 						return
 		if ("mode")
@@ -537,7 +550,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					return
 				else
 					SSjob.prioritized_jobs += j
-				to_chat(usr, "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
+				to_chat(usr, "<span class='notice'>[j.title] has been successfully [priority ? "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 		if ("print")

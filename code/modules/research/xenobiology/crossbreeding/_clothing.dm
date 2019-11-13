@@ -51,14 +51,14 @@ Slimecrossing Armor
 	anchored = TRUE
 	max_integrity = 10
 
-/obj/structure/light_prism/Initialize(mapload, var/newcolor)
+/obj/structure/light_prism/Initialize(mapload, newcolor)
 	. = ..()
 	color = newcolor
 	light_color = newcolor
 	set_light(5)
 
 /obj/structure/light_prism/attack_hand(mob/user)
-	to_chat(user, "<span class='notice'>You dispel [src]</span>")
+	to_chat(user, "<span class='notice'>You dispel [src].</span>")
 	qdel(src)
 
 /datum/action/item_action/change_prism_colour

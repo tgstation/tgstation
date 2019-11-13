@@ -209,7 +209,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	cost = 1
 
 /obj/item/stack/pipe_cleaner_coil/cyborg/attack_self(mob/user)
-	var/pipe_cleaner_color = input(user,"Pick a pipe cleaner color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
+	var/pipe_cleaner_color = input(user,"Pick a pipe cleaner color.","Cable Color") in sortList(list("red","yellow","green","blue","pink","orange","cyan","white"))
 	pipe_cleaner_color = pipe_cleaner_color
 	update_icon()
 
@@ -315,7 +315,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // called when pipe_cleaner_coil is click on an installed obj/pipe_cleaner
 // or click on a turf that already contains a "node" pipe_cleaner
-/obj/item/stack/pipe_cleaner_coil/proc/pipe_cleaner_join(obj/structure/pipe_cleaner/C, mob/user, var/showerror = TRUE, forceddir)
+/obj/item/stack/pipe_cleaner_coil/proc/pipe_cleaner_join(obj/structure/pipe_cleaner/C, mob/user, showerror = TRUE, forceddir)
 	var/turf/U = user.loc
 	if(!isturf(U))
 		return

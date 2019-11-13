@@ -23,9 +23,21 @@
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
 
 /datum/component/butchering/proc/onItemAttack(obj/item/source, mob/living/M, mob/living/user)
-	if(user.a_intent == INTENT_HARM && M.stat == DEAD && (M.butcher_results || M.guaranteed_butcher_results)) //can we butcher it?
+	if(user.a_intent != INTENT_HARM)
+		return
+	if(M.stat == DEAD && (M.butcher_results || M.guaranteed_butcher_results)) //can we butcher it?
 		if(butchering_enabled && (can_be_blunt || source.get_sharpness()))
 			INVOKE_ASYNC(src, .proc/startButcher, source, M, user)
+			return COMPONENT_ITEM_NO_ATTACK
+
+	if(ishuman(M) && source.force && source.get_sharpness())
+		var/mob/living/carbon/human/H = M
+		if((H.health <= H.crit_threshold || (user.pulling == H && user.grab_state >= GRAB_NECK) || H.IsSleeping()) && user.zone_selected == BODY_ZONE_HEAD) // Only sleeping, neck grabbed, or crit, can be sliced.
+			if(H.has_status_effect(/datum/status_effect/neck_slice))
+				user.show_message("<span class='warning'>[H]'s neck has already been already cut, you can't make the bleeding any worse!</span>", MSG_VISUAL, \
+								"<span class='warning'>Their neck has already been already cut, you can't make the bleeding any worse!</span>")
+				return COMPONENT_ITEM_NO_ATTACK
+			INVOKE_ASYNC(src, .proc/startNeckSlice, source, H, user)
 			return COMPONENT_ITEM_NO_ATTACK
 
 /datum/component/butchering/proc/startButcher(obj/item/source, mob/living/M, mob/living/user)
@@ -33,6 +45,28 @@
 	playsound(M.loc, butcher_sound, 50, TRUE, -1)
 	if(do_mob(user, M, speed) && M.Adjacent(source))
 		Butcher(user, M)
+
+/datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/H, mob/living/user)
+	user.visible_message("<span class='danger'>[user] is slitting [H]'s throat!</span>", \
+					"<span class='danger'>You start slicing [H]'s throat!</span>", \
+					"<span class='hear'>You hear a cutting noise!</span>", ignored_mobs = H)
+	H.show_message("<span class='userdanger'>Your throat is being slit by [user]!</span>", MSG_VISUAL, \
+					"<span class = 'userdanger'>Something is cutting into your neck!</span>", NONE)
+	log_combat(user, H, "starts slicing the throat of")
+
+	playsound(H.loc, butcher_sound, 50, TRUE, -1)
+	if(do_mob(user, H, CLAMP(500 / source.force, 30, 100)) && H.Adjacent(source))
+		if(H.has_status_effect(/datum/status_effect/neck_slice))
+			user.show_message("<span class='warning'>[H]'s neck has already been already cut, you can't make the bleeding any worse!</span>", MSG_VISUAL, \
+							"<span class='warning'>Their neck has already been already cut, you can't make the bleeding any worse!</span>")
+			return
+
+		H.visible_message("<span class='danger'>[user] slits [H]'s throat!</span>", \
+					"<span class='userdanger'>[user] slits your throat...</span>")
+		log_combat(user, H, "finishes slicing the throat of")
+		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD)
+		H.bleed_rate = CLAMP(H.bleed_rate + 20, 0, 30)
+		H.apply_status_effect(/datum/status_effect/neck_slice)
 
 /datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)
 	var/turf/T = meat.drop_location()

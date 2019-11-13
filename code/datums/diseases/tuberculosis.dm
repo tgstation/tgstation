@@ -26,7 +26,7 @@
 				to_chat(affected_mob, "<span class='danger'>You feel a cold sweat form.</span>")
 		if(4)
 			if(prob(2))
-				to_chat(affected_mob, "<span class='userdanger'>You see four of everything</span>")
+				to_chat(affected_mob, "<span class='userdanger'>You see four of everything!</span>")
 				affected_mob.Dizzy(5)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='danger'>You feel a sharp pain from your lower chest!</span>")
@@ -57,4 +57,3 @@
 				to_chat(affected_mob, "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit", "You feel like taking off some clothes...")]</span>")
 				affected_mob.adjust_bodytemperature(40)
 	return
-
