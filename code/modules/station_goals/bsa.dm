@@ -182,13 +182,9 @@
 
 	var/turf/point = get_front_turf()
 	var/turf/target = get_target_turf()
-	var/targ_x = 1
-	var/targ_y = 1
 	var/atom/movable/blocker
 	for(var/T in getline(get_step(point, dir), target))
 		var/turf/tile = T
-		targ_x = tile.x
-		targ_y = tile.y
 		if(SEND_SIGNAL(tile, COMSIG_ATOM_BSA_BEAM) & COMSIG_ATOM_BLOCKS_BSA_BEAM)
 			blocker = tile
 		else
@@ -198,7 +194,7 @@
 					blocker = stuff
 					break
 		if(blocker) //BYOND's only mechanism for escaping from an inner foreach loop is GOTO. If I did that, this code would GOTO the trash can
-			target = locate(targ_x, targ_y, z) //both get_turf(blocker) and T may be deleted by this point
+			target = tile
 			break
 		else
 			tile.ex_act(EXPLODE_DEVASTATE) //also fucks everything else on the turf
