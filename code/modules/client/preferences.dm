@@ -141,15 +141,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/load_default_keybindings(client/C)
 	if(QDELETED(C))
 		return
-	to_chat(C, "Empty keybindings, setting defaults")
-
-	var/choice = tgalert(C, "Would you prefer 'Hotkey' or 'Classic' defaults?", "Setup keybindings", "Hotkey", "Classic")
-	if(QDELETED(C))
-		return
-	hotkeys = (choice == "Hotkey")
-	key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
-	save_preferences()
+	to_chat(C, "Empty keybindings, setting default to hotkey mode")
+	hotkeys = TRUE
+	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key)
 	C.update_movement_keys()
+	save_preferences()
 
 #define APPEARANCE_CATEGORY_COLUMN "<td valign='top' width='14%'>"
 #define MAX_MUTANT_ROWS 4
