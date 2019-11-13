@@ -319,9 +319,8 @@ BLIND     // can't see anything
 /obj/item/clothing/obj_destruction(damage_flag)
 	if(damage_flag == "bomb" || damage_flag == "melee")
 		var/turf/T = get_turf(src)
-		spawn(1) //so the shred survives potential turf change from the explosion.
-			var/obj/effect/decal/cleanable/shreds/Shreds = new(T)
-			Shreds.desc = "The sad remains of what used to be [name]."
+		//so the shred survives potential turf change from the explosion.
+		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(T, name)), 1)
 		deconstruct(FALSE)
 	else
 		..()
