@@ -1,4 +1,0 @@
-author: "MCterra10"
-delete-after: True
-changes: 
-  - tweak: "Lighting now uses a linear algorithm to calculate falloff instead of an inverse-square algorithm."

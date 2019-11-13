@@ -1,5 +1,0 @@
-author: "AustationBot"
-delete-after: True
-changes: 
-  - rscadd: "Chemfactory machines tgui-next interfaces"
-  - rscadd: "Debug chem synthesizer tgui-next interfaces"
