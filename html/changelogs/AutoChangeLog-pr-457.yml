@@ -1,0 +1,4 @@
+author: "Effectism"
+delete-after: True
+changes: 
+  - rscadd: "Explosive lances can explode when thrown again"
