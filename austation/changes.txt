@@ -16,3 +16,4 @@ Terra:Closets no longer have drag slowdown
 Effectism:Gangs and Gangmageddon gamemodes
 Effectism:Fusion max temperature config
 Effectism:Optimized lighting algorithms from citadel
+Effectism:Elances may explode when thrown again
