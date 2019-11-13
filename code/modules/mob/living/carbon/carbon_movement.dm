@@ -1,6 +1,5 @@
 /mob/living/carbon/movement_delay()
 	. = ..()
-	. += grab_state * 3 //can't go fast while grabbing something.
 
 	if(!get_leg_ignore()) //ignore the fact we lack legs
 		var/leg_amount = get_num_legs()
