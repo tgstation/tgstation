@@ -56,13 +56,13 @@
 		
 		var/shuttles = alert("Do you want to modify the shuttles?", "Map Shuttles", "Yes", "No")
 		if(shuttles == "Yes")
-			for(var/shuttle in VM.shuttles)
-				var/shuttle_name = input(shuttle, "Map Shuttles") as null|text
-				if(shuttle_name)
-					if(!SSmapping.shuttle_templates[shuttle_name])
-						to_chat(usr, "Such shuttle does not exist, using default.")
+			for(var/s in VM.shuttles)
+				var/shuttle = input(s, "Map Shuttles") as null|text
+				if(shuttle)
+					if(!SSmapping.shuttle_templates[shuttle])
+						to_chat(usr, "No such shuttle as [shuttle] exists, using default.")
 						continue
-					VM.shuttles[shuttle] = shuttle_name
+					VM.shuttles[s] = shuttle
 
 		VM.map_path = "custom"
 		VM.map_file = "[map_file]"
