@@ -39,6 +39,9 @@
 		return ..()
 
 /obj/screen/movable/action_button/Click(location,control,params)
+	if(!can_use(usr))
+		return
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["middle"])
 		if(ismob(usr))
