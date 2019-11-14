@@ -1153,24 +1153,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0	//We start at 0.
-	var/gravity = 0
-	gravity = H.has_gravity()
+	var/gravity = H.has_gravity()
 
-	if(!HAS_TRAIT(H, TRAIT_IGNORESLOWDOWN) && gravity)
-		if(H.wear_suit)
-			. += H.wear_suit.slowdown
-		if(H.shoes)
-			. += H.shoes.slowdown
-		if(H.back)
-			. += H.back.slowdown
-		for(var/obj/item/I in H.held_items)
-			if(I.item_flags & SLOWS_WHILE_IN_HAND)
-				. += I.slowdown
-
+	if(!HAS_TRAIT(H, TRAIT_IGNORESLOWDOWN) && gravity > STANDARD_GRAVITY)
 		//Moving in high gravity is very slow (Flying too)
-		if(gravity > STANDARD_GRAVITY)
-			var/grav_force = min(gravity - STANDARD_GRAVITY,3)
-			. += 1 + grav_force
+		var/grav_force = min(gravity - STANDARD_GRAVITY,3)
+		. += 1 + grav_force
 
 	return .
 
