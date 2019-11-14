@@ -46,13 +46,12 @@
 
 		var/obj/shapeshift_holder/S = locate() in M
 		if(M.movement_type & (VENTCRAWLING))
-			var/mob/living/ventcrawlmaybe = shapeshift_type
-			if((S && !S.stored.ventcrawler) || !shapeshift_type.ventcrawler) //you're shapeshifting into something that can't fit into a vent
+			if(!((S && S.stored.ventcrawler) || initial(shapeshift_type.ventcrawler))) //you're shapeshifting into something that can't fit into a vent
 				var/turf/turfyoudieon = get_turf(M)
 				var/obj/machinery/atmospherics/pipe/pipeyoudiein = locate() in turfyoudieon
 				if(!turfyoudieon || !pipeyoudiein) //not sure how this happens but sanity
 					return
-				to_chat(M, "<span class='userdanger'>Shapeshifting inside of [pipeyoudiein] quickly turns you into a bloody mush.</span>")
+				to_chat(M, "<span class='userdanger'>[src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
 				var/list/viable_vents = list() //list of vents and scrubbers in the pipeline
 				for(var/obj/machinery/atmospherics/components/unary/possiblevent in pipeyoudiein.parent.other_atmosmch)
 					if(istype(possiblevent, /obj/machinery/atmospherics/components/unary/vent_pump) || istype(possiblevent, /obj/machinery/atmospherics/components/unary/vent_scrubber))
@@ -60,7 +59,11 @@
 				for(var/i in 1 to 3)
 					if(!viable_vents.len)
 						break
-					new /obj/effect/gibspawner/generic(get_turf(pick_n_take(viable_vents)))
+					if(iscarbon(M))
+						var/mob/living/carbon/C = M
+						new C.gib_type(get_turf(pick_n_take(viable_vents)))
+					else
+						new /obj/effect/gibspawner/generic(get_turf(pick_n_take(viable_vents)))
 				M.remove_ventcrawl()
 				M.death()
 				qdel(M)
