@@ -1,0 +1,10 @@
+name: PR Labeler
+on: [pull_request]
+
+jobs:
+  apply_labels:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: AnturK/labeler@extended
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}

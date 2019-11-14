@@ -1,0 +1,7 @@
+js:
+  type: filesChanged
+  patterns: *.js
+
+refactor:
+  type: title
+  patterns: *refactor*
