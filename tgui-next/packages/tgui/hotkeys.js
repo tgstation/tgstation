@@ -1,5 +1,5 @@
 import { createLogger } from './logging';
-import { callByond } from './byond';
+import { callByond, tridentVersion } from './byond';
 
 const logger = createLogger('hotkeys');
 
@@ -67,7 +67,7 @@ const NO_PASSTHROUGH_KEYS = [
 // Tracks the "pressed" state of keys
 const keyState = {};
 
-const makeComboString = (ctrlKey, altKey, shiftKey, keyCode) => {
+const createHotkeyString = (ctrlKey, altKey, shiftKey, keyCode) => {
   let str = '';
   if (ctrlKey) {
     str += 'Ctrl+';
@@ -87,6 +87,9 @@ const makeComboString = (ctrlKey, altKey, shiftKey, keyCode) => {
   return str;
 };
 
+/**
+ * Parses the event and compiles information about the keypress.
+ */
 const getKeyData = e => {
   const keyCode = window.event ? e.which : e.keyCode;
   const { ctrlKey, altKey, shiftKey } = e;
@@ -96,22 +99,22 @@ const getKeyData = e => {
     altKey,
     shiftKey,
     hasModifierKeys: ctrlKey || altKey || shiftKey,
-    keyString: makeComboString(ctrlKey, altKey, shiftKey, keyCode),
+    keyString: createHotkeyString(ctrlKey, altKey, shiftKey, keyCode),
   };
 };
 
-// Keyboard passthrough logic. This allows you to keep doing things
-// in game while the browser window is focused.
+/**
+ * Keyboard passthrough logic. This allows you to keep doing things
+ * in game while the browser window is focused.
+ */
 const handlePassthrough = (e, eventType) => {
   const { keyCode, keyString, hasModifierKeys } = getKeyData(e);
   if (e.defaultPrevented) {
     return;
   }
-  if (e.target) {
-    const name = e.target.localName;
-    if (name === 'input' || name === 'textarea') {
-      return;
-    }
+  const targetName = e.target && e.target.localName;
+  if (targetName === 'input' || targetName === 'textarea') {
+    return;
   }
   if (hasModifierKeys) {
     return;
@@ -163,21 +166,53 @@ const handleHotKey = (e, eventType, dispatch) => {
   }
 };
 
-// Middleware
-export const hotKeyMiddleware = store => {
-  const { dispatch } = store;
-  // Subscribe to key events
+/**
+ * Subscribe to an event when browser window has been completely
+ * unfocused. Conveniently fires events when the browser window
+ * is closed from the outside.
+ */
+const subscribeToLossOfFocus = listenerFn => {
+  let timeout;
+  document.addEventListener('focusout', () => {
+    timeout = setTimeout(listenerFn);
+  });
+  document.addEventListener('focusin', () => {
+    clearTimeout(timeout);
+  });
+  window.addEventListener('beforeunload', listenerFn);
+};
+
+/**
+ * Subscribe to keydown/keyup events with globally tracked key state.
+ */
+const subscribeToKeyPresses = listenerFn => {
   document.addEventListener('keydown', e => {
     const keyCode = window.event ? e.which : e.keyCode;
-    handlePassthrough(e, 'keydown');
+    listenerFn(e, 'keydown');
     keyState[keyCode] = true;
   });
   document.addEventListener('keyup', e => {
     const keyCode = window.event ? e.which : e.keyCode;
-    handlePassthrough(e, 'keyup');
-    handleHotKey(e, 'keyup', dispatch);
+    listenerFn(e, 'keyup');
     keyState[keyCode] = false;
   });
+};
+
+// Middleware
+export const hotKeyMiddleware = store => {
+  const { dispatch } = store;
+  // IE8: focusin/focusout only available on IE9+
+  if (tridentVersion > 4) {
+    // Subscribe to key events
+    subscribeToKeyPresses((e, eventType) => {
+      handlePassthrough(e, eventType);
+      handleHotKey(e, eventType, dispatch);
+    });
+    // Clean up when browser window completely loses focus
+    subscribeToLossOfFocus(() => {
+      releaseHeldKeys();
+    });
+  }
   // Pass through store actions (do nothing)
   return next => action => next(action);
 };
@@ -185,10 +220,8 @@ export const hotKeyMiddleware = store => {
 // Reducer
 export const hotKeyReducer = (state, action) => {
   const { type, payload } = action;
-
   if (type === 'hotKey') {
     const { ctrlKey, altKey, keyCode } = payload;
-
     // Toggle kitchen sink mode
     if (ctrlKey && altKey && keyCode === KEY_EQUAL) {
       return {
@@ -196,9 +229,7 @@ export const hotKeyReducer = (state, action) => {
         showKitchenSink: !state.showKitchenSink,
       };
     }
-
     return state;
   }
-
   return state;
 };
