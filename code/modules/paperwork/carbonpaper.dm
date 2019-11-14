@@ -7,24 +7,17 @@
 
 /obj/item/paper/carbon/update_icon_state()
 	if(iscopy)
-		if(info)
-			icon_state = "cpaper_words"
-			return
 		icon_state = "cpaper"
-
 	else if(copied)
-		if(info)
-			icon_state = "paper_words"
-			return
 		icon_state = "paper"
 	else
-		if(info)
-			icon_state = "paper_stack_words"
-			return
 		icon_state = "paper_stack"
+	if(info)
+		icon_state = "[icon_state]_words"
+		return
 
 /obj/item/paper/carbon/proc/removecopy(mob/living/user)
-	if(copied == FALSE)
+	if(!copied)
 		var/obj/item/paper/carbon/C = src
 		var/copycontents = C.info
 		var/obj/item/paper/carbon/Copy = new /obj/item/paper/carbon(user.loc)
