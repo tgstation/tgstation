@@ -81,16 +81,18 @@
 	return ..()
 
 /obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	if(!ishuman(user))
+		to_chat(user, "<span class='warning'>[src] is unable to interface with non-humanoids!</span>")
+		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "medical_kiosk", name, 600, 500, master_ui, state)
 		ui.open()
 		scan_active = FALSE
 		icon_state = "kiosk_off"
-	if(ishuman(user))
-		RefreshParts()
-		H = user
-		C = H.get_idcard(TRUE)
+	RefreshParts()
+	H = user
+	C = H.get_idcard(TRUE)
 
 /obj/machinery/medical_kiosk/ui_data(mob/living/carbon/human/user)
 	var/list/data = list()
