@@ -1063,7 +1063,6 @@
 	..()
 	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
 
-
 /datum/reagent/medicine/cordiolis_hepatico
 	name = "Cordiolis Hepatico"
 	description = "A strange, pitch-black reagent that seems to absorb all light. Effects unknown."
