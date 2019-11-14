@@ -89,8 +89,8 @@
 /obj/structure/bed/holobed
 	name = "holo bed"
 	desc = "A bed formed from hard light. Looks surprisingly comfortable."
-	icon = 'icons/obj/rollerbed.dmi'
-	icon_state = "down"
+	icon = 'icons/Fulpicons/holobed.dmi'
+	icon_state = "holobed_unbuckled"
 	anchored = FALSE
 	buildstacktype = null
 	buildstackamount = 0
@@ -121,6 +121,11 @@
 		else
 			user_unbuckle_mob(buckled_mobs[1],user)
 
+/obj/structure/bed/holobed/post_buckle_mob(mob/living/M)
+	icon_state = "holobed_buckled"
+
+/obj/structure/bed/holobed/post_unbuckle_mob(mob/living/M)
+	icon_state = "holobed_unbuckled"
 
 /* Probably not worth the resources that would need to be expended.
 /obj/structure/bed/holobed/Moved()
