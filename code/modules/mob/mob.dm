@@ -811,6 +811,9 @@
 		return FALSE
 	return ..()
 
+/mob/dead/observer/canface()
+	return TRUE
+
 ///Hidden verb to turn east
 /mob/verb/eastface()
 	set hidden = TRUE

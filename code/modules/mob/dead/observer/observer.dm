@@ -84,7 +84,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 		gender = body.gender
 		if(body.mind && body.mind.name)
-			name = body.mind.name
+			if(body.mind.ghostname)
+				name = body.mind.ghostname
+			else
+				name = body.mind.name
 		else
 			if(body.real_name)
 				name = body.real_name
@@ -729,6 +732,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set_ghost_appearance()
 	if(client && client.prefs)
 		deadchat_name = client.prefs.real_name
+		mind.ghostname = client.prefs.real_name
+		name = client.prefs.real_name
 
 /mob/dead/observer/proc/set_ghost_appearance()
 	if((!client) || (!client.prefs))
