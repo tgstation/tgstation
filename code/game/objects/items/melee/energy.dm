@@ -27,7 +27,7 @@
 /obj/item/melee/transforming/energy/add_blood_DNA(list/blood_dna)
 	return FALSE
 
-/obj/item/melee/transforming/energy/is_sharp()
+/obj/item/melee/transforming/energy/get_sharpness()
 	return active * sharpness
 
 /obj/item/melee/transforming/energy/process()
@@ -45,7 +45,7 @@
 			STOP_PROCESSING(SSobj, src)
 			set_light(0)
 
-/obj/item/melee/transforming/energy/is_hot()
+/obj/item/melee/transforming/energy/get_temperature()
 	return active * heat
 
 /obj/item/melee/transforming/energy/ignition_effect(atom/A, mob/user)
@@ -117,7 +117,7 @@
 	sword_color = "red"
 	var/hitcost = 50
 
-/obj/item/melee/transforming/energy/sword/cyborg/attack(mob/M, var/mob/living/silicon/robot/R)
+/obj/item/melee/transforming/energy/sword/cyborg/attack(mob/M, mob/living/silicon/robot/R)
 	if(R.cell)
 		var/obj/item/stock_parts/cell/C = R.cell
 		if(active && !(C.use(hitcost)))
@@ -140,6 +140,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = IS_SHARP
 	light_color = "#40ceff"
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.7 //faster as a saw
 
 /obj/item/melee/transforming/energy/sword/cyborg/saw/cyborg_unequip(mob/user)
 	if(!active)

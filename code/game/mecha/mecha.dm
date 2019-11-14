@@ -24,7 +24,9 @@
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
 	var/equipment_disabled = 0 //disabled due to EMP
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell ///Keeps track of the mech's cell
+	var/obj/item/stock_parts/scanning_module/scanmod ///Keeps track of the mech's scanning module
+	var/obj/item/stock_parts/capacitor/capacitor ///Keeps track of the mech's capacitor
 	var/construction_state = MECHA_LOCKED
 	var/last_message = 0
 	var/add_req_access = 1
@@ -61,6 +63,7 @@
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	var/max_equip = 3
 
+	var/step_silent = FALSE //Used for disabling mech step sounds while using thrusters or pushing off lockers
 	var/stepsound = 'sound/mecha/mechstep.ogg'
 	var/turnsound = 'sound/mecha/mechturn.ogg'
 
@@ -82,7 +85,6 @@
 	var/datum/action/innate/mecha/mech_cycle_equip/cycle_action = new
 	var/datum/action/innate/mecha/mech_toggle_lights/lights_action = new
 	var/datum/action/innate/mecha/mech_view_stats/stats_action = new
-	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
 	var/datum/action/innate/mecha/mech_defense_mode/defense_action = new
 	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
 	var/datum/effect_system/smoke_spread/smoke_system = new //not an action, but trigged by one
@@ -93,7 +95,7 @@
 	var/datum/action/innate/mecha/strafe/strafing_action = new
 
 	//Action vars
-	var/thrusters_active = FALSE
+	var/obj/item/mecha_parts/mecha_equipment/thrusters/active_thrusters
 	var/defense_mode = FALSE
 	var/leg_overload_mode = FALSE
 	var/leg_overload_coeff = 100
@@ -128,6 +130,8 @@
 	smoke_system.set_up(3, src)
 	smoke_system.attach(src)
 	add_cell()
+	add_scanmod()
+	add_capacitor()
 	START_PROCESSING(SSobj, src)
 	GLOB.poi_list |= src
 	log_message("[src.name] created.", LOG_MECHA)
@@ -158,37 +162,25 @@
 			AI = M //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. They can be recovered with an AI card from the wreck.
 		else
 			M.forceMove(loc)
-	if(wreckage)
-		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
-		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-			if(E.salvageable && prob(30))
-				WR.crowbar_salvage += E
-				E.detach(WR) //detaches from src into WR
-				E.equip_ready = 1
-			else
-				E.detach(loc)
-				qdel(E)
-		if(cell)
-			WR.crowbar_salvage += cell
-			cell.forceMove(WR)
-			cell.charge = rand(0, cell.charge)
-		if(internal_tank)
-			WR.crowbar_salvage += internal_tank
-			internal_tank.forceMove(WR)
-	else
-		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-			E.detach(loc)
-			qdel(E)
-		if(cell)
-			qdel(cell)
-		if(internal_tank)
-			qdel(internal_tank)
-		if(AI)
-			AI.gib() //No wreck, no AI to recover
+	for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+		E.detach(loc)
+		qdel(E)
+	if(cell)
+		qdel(cell)
+	if(scanmod)
+		qdel(scanmod)
+	if(capacitor)
+		qdel(capacitor)
+	if(internal_tank)
+		qdel(internal_tank)
+	if(AI)
+		AI.gib() //No wreck, no AI to recover
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
+	scanmod = null
+	capacitor = null
 	internal_tank = null
 	if(loc)
 		loc.assume_air(cabin_air)
@@ -214,15 +206,22 @@
 /obj/mecha/CheckParts(list/parts_list)
 	..()
 	cell = locate(/obj/item/stock_parts/cell) in contents
-	var/obj/item/stock_parts/scanning_module/SM = locate() in contents
-	var/obj/item/stock_parts/capacitor/CP = locate() in contents
-	if(SM)
-		normal_step_energy_drain = 20 - (5 * SM.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+	scanmod = locate(/obj/item/stock_parts/scanning_module) in contents
+	capacitor = locate(/obj/item/stock_parts/capacitor) in contents
+	update_part_values()
+
+/obj/mecha/proc/update_part_values() ///Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.
+	if(scanmod)
+		normal_step_energy_drain = 20 - (5 * scanmod.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
 		step_energy_drain = normal_step_energy_drain
-		qdel(SM)
-	if(CP)
-		armor = armor.modifyRating(energy = (CP.rating * 5)) //Each level of capacitor protects the mech against emp by 5%
-		qdel(CP)
+	else
+		normal_step_energy_drain = 500
+		step_energy_drain = normal_step_energy_drain
+	if(capacitor)
+		armor = armor.modifyRating(energy = (capacitor.rating * 5)) //Each level of capacitor protects the mech against emp by 5%
+	else //because we can still be hit without a cap, even if we can't move
+		armor = armor.setRating(energy = 0)
+
 
 ////////////////////////
 ////// Helpers /////////
@@ -232,12 +231,32 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
+///Adds a cell, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
 /obj/mecha/proc/add_cell(var/obj/item/stock_parts/cell/C=null)
+	QDEL_NULL(cell)
 	if(C)
 		C.forceMove(src)
 		cell = C
 		return
 	cell = new /obj/item/stock_parts/cell/high/plus(src)
+
+///Adds a scanning module, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
+/obj/mecha/proc/add_scanmod(var/obj/item/stock_parts/scanning_module/sm=null)
+	QDEL_NULL(scanmod)
+	if(sm)
+		sm.forceMove(src)
+		scanmod = sm
+		return
+	scanmod = new /obj/item/stock_parts/scanning_module(src)
+
+///Adds a capacitor, for use in Map-spawned mechs, Nuke Ops mechs, and admin-spawned mechs. Mechs built by hand will replace this.
+/obj/mecha/proc/add_capacitor(var/obj/item/stock_parts/capacitor/cap=null)
+	QDEL_NULL(capacitor)
+	if(cap)
+		cap.forceMove(src)
+		capacitor = cap
+		return
+	capacitor = new /obj/item/stock_parts/capacitor(src)
 
 /obj/mecha/proc/add_cabin()
 	cabin_air = new
@@ -496,9 +515,8 @@
 		if(!melee_can_hit || !istype(target, /atom))
 			return
 		target.mech_melee_attack(src)
-		melee_can_hit = 0
-		spawn(melee_cooldown)
-			melee_can_hit = 1
+		melee_can_hit = FALSE
+		addtimer(VARSET_CALLBACK(src, melee_can_hit, TRUE), melee_cooldown)
 
 
 /obj/mecha/proc/range_action(atom/target)
@@ -509,6 +527,11 @@
 ////////  Movement procs  ////////
 //////////////////////////////////
 
+///Plays the mech step sound effect. Split from movement procs so that other mechs (HONK) can override this one specific part.
+/obj/mecha/proc/play_stepsound()
+	if(stepsound)
+		playsound(src,stepsound,40,1)
+
 /obj/mecha/Move(atom/newloc, direct)
 	. = ..()
 	if (internal_tank?.disconnect()) // Something moved us and broke connection
@@ -518,17 +541,22 @@
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
 	. = ..()
 	if(.)
-		return 1
-	if(thrusters_active && movement_dir && use_power(step_energy_drain))
-		return 1
+		return TRUE
 
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180)))
+				step_silent = TRUE
 				if(occupant)
 					to_chat(occupant, "<span class='info'>You push off [backup] to propel yourself.</span>")
-		return 1
+		return TRUE
+
+	if(can_move <= world.time && active_thrusters && movement_dir && active_thrusters.thrust(movement_dir))
+		step_silent = TRUE
+		return TRUE
+
+	return FALSE
 
 /obj/mecha/relaymove(mob/user,direction)
 	if(completely_disabled)
@@ -545,7 +573,9 @@
 			last_message = world.time
 		return 0
 	if(construction_state)
-		occupant_message("<span class='danger'>Maintenance protocols in effect.</span>")
+		if(world.time - last_message > 20)
+			occupant_message("<span class='danger'>Maintenance protocols in effect.</span>")
+			last_message = world.time
 		return
 	return domove(direction)
 
@@ -559,6 +589,16 @@
 	if(zoom_mode)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Unable to move while in zoom mode!</span>")
+			last_message = world.time
+		return 0
+	if(!cell)
+		if(world.time - last_message > 20)
+			occupant_message("<span class='warning'>Missing power cell.</span>")
+			last_message = world.time
+		return 0
+	if(!scanmod || !capacitor)
+		if(world.time - last_message > 20)
+			occupant_message("<span class='warning'>Missing [scanmod? "capacitor" : "scanning module"].</span>")
 			last_message = world.time
 		return 0
 
@@ -587,14 +627,16 @@
 	var/result = step(src,direction)
 	if(strafe)
 		setDir(current_dir)
-	if(result && stepsound)
-		playsound(src,stepsound,40,TRUE)
+	if(result && !step_silent)
+		play_stepsound()
+	step_silent = FALSE
 	return result
 
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
-	if(result && stepsound)
-		playsound(src,stepsound,40,TRUE)
+	if(result && !step_silent)
+		play_stepsound()
+	step_silent = FALSE
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
@@ -727,7 +769,7 @@
 			AI.controlled_mech = null
 			AI.remote_control = null
 			icon_state = initial(icon_state)+"-open"
-			to_chat(AI, "You have been downloaded to a mobile storage device. Wireless connection offline.")
+			to_chat(AI, "<span class='notice'>You have been downloaded to a mobile storage device. Wireless connection offline.</span>")
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) removed from [name] and stored within local memory.")
 
 		if(AI_MECH_HACK) //Called by AIs on the mech
@@ -954,6 +996,7 @@
 	if(!internal_damage)
 		SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
 	GrantActions(brainmob)
+	log_game("[key_name(user)] has put the MMI/posibrain of [key_name(brainmob)] into [src] at [AREACOORD(src)]")
 	return TRUE
 
 /obj/mecha/container_resist(mob/living/user)
@@ -969,6 +1012,19 @@
 /obj/mecha/Exited(atom/movable/M, atom/newloc)
 	if(occupant && occupant == M) // The occupant exited the mech without calling go_out()
 		go_out(TRUE, newloc)
+
+	if(cell && cell == M)
+		cell = null
+		return
+	if(scanmod && scanmod == M)
+		scanmod = null
+		update_part_values()
+		return
+	if(capacitor && capacitor == M)
+		armor = armor.modifyRating(energy = (capacitor.rating * -5)) //lose the energy armor if we lose this cap
+		capacitor = null
+		update_part_values()
+		return
 
 /obj/mecha/proc/go_out(forced, atom/newloc = loc)
 	if(!occupant)

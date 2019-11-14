@@ -9,10 +9,6 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
-	initialize_footstep()
-
-/mob/living/proc/initialize_footstep()
-	AddComponent(/datum/component/footstep)
 
 /mob/living/prepare_huds()
 	..()
@@ -38,14 +34,26 @@
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
 	QDEL_LIST(diseases)
+	for(var/s in ownedSoullinks)
+		var/datum/soullink/S = s
+		S.ownerDies(FALSE)
+		qdel(s) //If the owner is destroy()'d, the soullink is destroy()'d
+	ownedSoullinks = null
+	for(var/s in sharedSoullinks)
+		var/datum/soullink/S = s
+		S.sharerDies(FALSE)
+		S.removeSoulsharer(src) //If a sharer is destroy()'d, they are simply removed
+	sharedSoullinks = null
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels)
-	ZImpactDamage(T, levels)
+	if(!isgroundlessturf(T))
+		ZImpactDamage(T, levels)
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
-	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>")
+	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>", \
+					"<span class='userdanger'>You crash into [T] with a sickening noise!</span>")
 	adjustBruteLoss((levels * 5) ** 1.5)
 	Knockdown(levels * 50)
 
@@ -255,7 +263,9 @@
 
 	if(AM.pulledby)
 		if(!supress_message)
-			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+			AM.visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>", \
+							"<span class='danger'>[src] has pulled you from [AM.pulledby]'s grip.</span>", null, null, src)
+			to_chat(src, "<span class='notice'>You pull [AM] from [AM.pulledby]'s grip!</span>")
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
@@ -277,8 +287,9 @@
 
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
-			M.visible_message("<span class='warning'>[src] grabs [M] passively!</span>", \
-							"<span class='warning'>[src] grabs you passively!</span>")
+			M.visible_message("<span class='warning'>[src] grabs [M] [(zone_selected == "l_arm" || zone_selected == "r_arm" && ishuman(M))? "by their hands":"passively"]!</span>", \
+							"<span class='warning'>[src] grabs you [(zone_selected == "l_arm" || zone_selected == "r_arm" && ishuman(M))? "by your hands":"passively"]!</span>", null, null, src)
+			to_chat(src, "<span class='notice'>You grab [M] [(zone_selected == "l_arm" || zone_selected == "r_arm" && ishuman(M))? "by their hands":"passively"]!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
@@ -366,14 +377,14 @@
 	stop_pulling()
 
 //same as above
-/mob/living/pointed(atom/A as mob|obj|turf in view())
+/mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
 	if(incapacitated())
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_DEATHCOMA))
 		return FALSE
 	if(!..())
 		return FALSE
-	visible_message("<b>[src]</b> points at [A].", "<span class='notice'>You point at [A].</span>")
+	visible_message("<span class='name'>[src]</span> points at [A].", "<span class='notice'>You point at [A].</span>")
 	return TRUE
 
 /mob/living/verb/succumb(whispered as null)
@@ -405,24 +416,6 @@
 //affects them once clothing is factored in. ~Errorage
 /mob/living/proc/calculate_affecting_pressure(pressure)
 	return pressure
-
-/mob/living/proc/adjustBodyTemp(actual, desired, incrementboost)
-	var/temperature = actual
-	var/difference = abs(actual-desired)	//get difference
-	var/increments = difference/10 //find how many increments apart they are
-	var/change = increments*incrementboost	// Get the amount to change by (x per increment)
-
-	// Too cold
-	if(actual < desired)
-		temperature += change
-		if(actual > desired)
-			temperature = desired
-	// Too hot
-	if(actual > desired)
-		temperature -= change
-		if(actual < desired)
-			temperature = desired
-	return temperature
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -501,23 +494,22 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-//proc used to ressuscitate a mob
+//Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
-		fully_heal(admin_revive)
+		fully_heal(admin_revive = admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
 		GLOB.dead_mob_list -= src
 		GLOB.alive_mob_list += src
 		set_suicide(FALSE)
 		stat = UNCONSCIOUS //the mob starts unconscious,
-		blind_eyes(1)
 		updatehealth() //then we check if the mob should wake up.
 		update_mobility()
 		update_sight()
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
-		. = 1
+		. = TRUE
 		if(mind)
 			for(var/S in mind.spell_list)
 				var/obj/effect/proc_holder/spell/spell = S
@@ -534,8 +526,17 @@
 	if(should_update_mobility)
 		update_mobility()
 
+/mob/living/Crossed(atom/movable/AM)
+	. = ..()
+	for(var/i in get_equipped_items())
+		var/obj/item/item = i
+		SEND_SIGNAL(item, COMSIG_ITEM_WEARERCROSSED, AM, src)
+
+
+
 //proc used to completely heal a mob.
-/mob/living/proc/fully_heal(admin_revive = 0)
+//admin_revive = TRUE is used in other procs, for example mob/living/carbon/fully_heal()
+/mob/living/proc/fully_heal(admin_revive = FALSE)
 	restore_blood()
 	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
 	setOxyLoss(0, 0)
@@ -548,7 +549,6 @@
 	set_blindness(0)
 	set_blurriness(0)
 	set_dizziness(0)
-
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
@@ -567,19 +567,26 @@
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
-	. = 1
+	. = TRUE
 	if(health <= HEALTH_THRESHOLD_DEAD)
-		return 0
+		return FALSE
 
 /mob/living/proc/update_damage_overlays()
 	return
 
 /mob/living/Move(atom/newloc, direct)
+	if(lying) 
+		if(direct & EAST)
+			lying = 90
+		if(direct & WEST)
+			lying = 270
+		update_transform()
+		lying_prev = lying
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
 		else
-			return 0
+			return FALSE
 
 	var/old_direction = dir
 	var/turf/T = loc
@@ -719,13 +726,17 @@
 		var/resist_chance = BASE_GRAB_RESIST_CHANCE // see defines/combat.dm
 		resist_chance = max(resist_chance/altered_grab_state-sqrt((getStaminaLoss()+getBruteLoss()/2)*(3-altered_grab_state)), 0) // https://i.imgur.com/6yAT90T.png for sample output values
 		if(prob(resist_chance))
-			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
+			visible_message("<span class='danger'>[src] breaks free of [pulledby]'s grip!</span>", \
+							"<span class='danger'>You break free of [pulledby]'s grip!</span>", null, null, pulledby)
+			to_chat(pulledby, "<span class='warning'>[src] breaks free of your grip!</span>")
 			log_combat(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
 			return FALSE
 		else
 			adjustStaminaLoss(rand(8,15))//8 is from 7.5 rounded up
-			visible_message("<span class='danger'>[src] struggles as they fail to break free of [pulledby]'s grip!</span>")
+			visible_message("<span class='danger'>[src] struggles as they fail to break free of [pulledby]'s grip!</span>", \
+							"<span class='warning'>You struggle as you fail to break free of [pulledby]'s grip!</span>", null, null, pulledby)
+			to_chat(pulledby, "<span class='danger'>[src] struggles as they fail to break free of your grip!</span>")
 		if(moving_resist && client) //we resisted by trying to move
 			client.move_delay = world.time + 20
 	else
@@ -781,8 +792,9 @@
 	if(!what.canStrip(who))
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
-	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
-					"<span class='userdanger'>[src] tries to remove your [what.name].</span>")
+	who.visible_message("<span class='warning'>[src] tries to remove [who]'s [what.name].</span>", \
+					"<span class='userdanger'>[src] tries to remove your [what.name].</span>", null, null, src)
+	to_chat(src, "<span class='danger'>You try to remove [who]'s [what.name]...</span>")
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay))
 		if(what && Adjacent(who))
@@ -822,7 +834,8 @@
 			return
 
 		who.visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>", \
-					"<span class='notice'>[src] tries to put [what] on you.</span>")
+						"<span class='notice'>[src] tries to put [what] on you.</span>", null, null, src)
+		to_chat(src, "<span class='notice'>You try to put [what] on [who]...</span>")
 		if(do_mob(src, who, what.equip_delay_other))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
@@ -878,25 +891,23 @@
 
 /mob/living/proc/can_track(mob/living/user)
 	//basic fast checks go first. When overriding this proc, I recommend calling ..() at the end.
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_TRACK, args) & COMPONENT_CANT_TRACK)
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(!T)
-		return 0
+		return FALSE
 	if(is_centcom_level(T.z)) //dont detect mobs on centcom
-		return 0
+		return FALSE
 	if(is_away_level(T.z))
-		return 0
+		return FALSE
 	if(user != null && src == user)
-		return 0
+		return FALSE
 	if(invisibility || alpha == 0)//cloaked
-		return 0
-	if(digitalcamo || digitalinvis)
-		return 0
-
+		return FALSE
 	// Now, are they viewable by a camera? (This is last because it's the most intensive check)
 	if(!near_camera(src))
-		return 0
-
-	return 1
+		return FALSE
+	return TRUE
 
 //used in datum/reagents/reaction() proc
 /mob/living/proc/get_permeability_protection(list/target_zones)
@@ -905,14 +916,14 @@
 /mob/living/proc/harvest(mob/living/user) //used for extra objects etc. in butchering
 	return
 
-/mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/living/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(be_close && !in_range(M, src))
 		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
-	if(!no_dextery)
+	if(!no_dexterity)
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	return TRUE
@@ -988,7 +999,7 @@
 	var/blocked = getarmor(null, "rad")
 
 	if(amount > RAD_BURN_THRESHOLD)
-		apply_damage((amount-RAD_BURN_THRESHOLD)/RAD_BURN_THRESHOLD, BURN, null, blocked)
+		apply_damage(log(amount)*2, BURN, null, blocked)
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
@@ -1139,7 +1150,6 @@
 	if(!(mobility_flags & MOBILITY_UI))
 		unset_machine()
 	density = !lying
-	var/changed = lying == lying_prev
 	if(lying)
 		if(!lying_prev)
 			fall(!canstand_involuntary)
@@ -1149,9 +1159,6 @@
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
-	if(changed)
-		if(client)
-			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
 
 /mob/living/proc/fall(forced)
@@ -1241,7 +1248,9 @@
 	if(buckled)
 		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
 		return FALSE
-	user.visible_message("<span class='notice'>[user] starts trying to scoop up [src]!</span>")
+	user.visible_message("<span class='warning'>[user] starts trying to scoop up [src]!</span>", \
+					"<span class='danger'>You start trying to scoop up [src]...</span>", null, null, src)
+	to_chat(src, "<span class='userdanger'>[user] starts trying to scoop you up!</span>")
 	if(!do_after(user, 20, target = src))
 		return FALSE
 	mob_pickup(user)

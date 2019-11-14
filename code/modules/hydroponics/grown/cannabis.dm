@@ -22,13 +22,13 @@
 
 /obj/item/seeds/cannabis/rainbow
 	name = "pack of rainbow weed seeds"
-	desc = "These seeds grow into rainbow weed. Groovy."
+	desc = "These seeds grow into rainbow weed. Groovy... and also highly addictive."
 	icon_state = "seed-megacannabis"
 	species = "megacannabis"
 	plantname = "Rainbow Weed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/toxin/mindbreaker = 0.15, /datum/reagent/toxin/lipolicide = 0.35)
+	reagents_add = list(/datum/reagent/colorful_reagent = 0.05, /datum/reagent/medicine/psicodine = 0.03, /datum/reagent/drug/happiness = 0.1, /datum/reagent/toxin/mindbreaker = 0.1, /datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 40
 
 /obj/item/seeds/cannabis/death
@@ -61,22 +61,19 @@
 	species = "ocannabis"
 	plantname = "Omega Weed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/green)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/drug/space_drugs = 0.3,
 						/datum/reagent/toxin/mindbreaker = 0.3,
 						/datum/reagent/mercury = 0.15,
 						/datum/reagent/lithium = 0.15,
 						/datum/reagent/medicine/atropine = 0.15,
-						/datum/reagent/medicine/haloperidol = 0.15,
 						/datum/reagent/drug/methamphetamine = 0.15,
-						/datum/reagent/consumable/capsaicin = 0.15,
-						/datum/reagent/barbers_aid = 0.15,
 						/datum/reagent/drug/bath_salts = 0.15,
-						/datum/reagent/toxin/itching_powder = 0.15,
 						/datum/reagent/drug/crank = 0.15,
 						/datum/reagent/drug/krokodil = 0.15,
-						/datum/reagent/toxin/histamine = 0.15,
-						/datum/reagent/toxin/lipolicide = 0.15)
+						/datum/reagent/toxin/lipolicide = 0.15,
+						/datum/reagent/drug/nicotine = 0.1)
 	rarity = 69
 
 

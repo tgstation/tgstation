@@ -22,7 +22,7 @@ AI MODULES
 	throw_range = 7
 	var/list/laws = list()
 	var/bypass_law_amt_check = 0
-	materials = list(/datum/material/gold = 50)
+	custom_materials = list(/datum/material/gold = 50)
 
 /obj/item/aiModule/examine(var/mob/user as mob)
 	. = ..()
@@ -54,7 +54,7 @@ AI MODULES
 				if(mylaw != "")
 					tot_laws++
 		if(tot_laws > CONFIG_GET(number/silicon_max_law_amount) && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
-			to_chat(user, "<span class='caution'>Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws.</span>")
+			to_chat(user, "<span class='alert'>Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws.</span>")
 			message_admins("[ADMIN_LOOKUPFLW(user)] tried to upload laws to [law_datum.owner ? ADMIN_LOOKUPFLW(law_datum.owner) : "an AI core"] that would exceed the law cap.")
 			overflow = TRUE
 
@@ -161,7 +161,7 @@ AI MODULES
 
 /obj/item/aiModule/supplied/safeguard/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
-		to_chat(user, "No name detected on module, please enter one.")
+		to_chat(user, "<span class='alert'>No name detected on module, please enter one.</span>")
 		return 0
 	..()
 
@@ -187,7 +187,7 @@ AI MODULES
 
 /obj/item/aiModule/zeroth/oneHuman/install(datum/ai_laws/law_datum, mob/user)
 	if(!targetName)
-		to_chat(user, "No name detected on module, please enter one.")
+		to_chat(user, "<span class='alert'>No name detected on module, please enter one.</span>")
 		return 0
 	..()
 
@@ -253,7 +253,7 @@ AI MODULES
 
 /obj/item/aiModule/supplied/freeform/install(datum/ai_laws/law_datum, mob/user)
 	if(laws[1] == "")
-		to_chat(user, "No law detected on module, please create one.")
+		to_chat(user, "<span class='alert'>No law detected on module, please create one.</span>")
 		return 0
 	..()
 

@@ -8,6 +8,8 @@
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/focused
+	antag_hud_type = ANTAG_HUD_CHANGELING
+	antag_hud_name = "changeling"
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
@@ -88,7 +90,6 @@
 		if(team_mode)
 			forge_team_objectives()
 		forge_objectives()
-	remove_clownmut()
 	. = ..()
 
 /datum/antagonist/changeling/on_removal()
@@ -101,13 +102,6 @@
 			B.decoy_override = FALSE
 	remove_changeling_powers()
 	. = ..()
-
-/datum/antagonist/changeling/proc/remove_clownmut()
-	if (owner)
-		var/mob/living/carbon/human/H = owner.current
-		if(istype(H) && owner.assigned_role == "Clown")
-			to_chat(H, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
-			H.dna.remove_mutation(CLOWNMUT)
 
 /datum/antagonist/changeling/proc/reset_properties()
 	changeling_speak = 0
@@ -149,6 +143,15 @@
 		var/datum/action/changeling/S = power
 		if(istype(S) && S.needs_button)
 			S.Grant(owner.current)
+
+///Handles stinging without verbs.
+/datum/antagonist/changeling/proc/stingAtom(mob/living/carbon/ling, atom/A)
+	if(!chosen_sting || A == ling || !istype(ling) || ling.stat)
+		return
+	if(!chosen_sting.try_to_sting(ling, A))
+		return
+	ling.changeNext_move(CLICK_CD_MELEE)
+	return COMSIG_MOB_CANCEL_CLICKON
 
 /datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
 	for(var/P in purchasedpowers)
@@ -232,7 +235,7 @@
 			return TRUE
 	return FALSE
 
-/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, var/verbose=1)
+/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose=1)
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
@@ -295,6 +298,7 @@
 			prof.appearance_list[slot] = I.appearance
 			prof.flags_cover_list[slot] = I.flags_cover
 			prof.item_state_list[slot] = I.item_state
+			prof.mob_overlay_icon_list[slot] = I.mob_overlay_icon
 			prof.exists_list[slot] = 1
 		else
 			continue
@@ -343,7 +347,7 @@
 	if(ishuman(C))
 		add_new_profile(C)
 
-/datum/antagonist/changeling/apply_innate_effects()
+/datum/antagonist/changeling/apply_innate_effects(mob/living/mob_override)
 	//Brains optional.
 	var/mob/living/carbon/C = owner.current
 	if(istype(C))
@@ -351,12 +355,16 @@
 		if(B)
 			B.organ_flags &= ~ORGAN_VITAL
 			B.decoy_override = TRUE
-	update_changeling_icons_added()
-	return
+		RegisterSignal(C, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/stingAtom)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	handle_clown_mutation(M, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 
-/datum/antagonist/changeling/remove_innate_effects()
-	update_changeling_icons_removed()
-	return
+/datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
+	handle_clown_mutation(M, removing = FALSE)
+	UnregisterSignal(owner.current, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 
 
 /datum/antagonist/changeling/greet()
@@ -468,15 +476,6 @@
 			objectives += identity_theft
 		escape_objective_possible = FALSE
 
-/datum/antagonist/changeling/proc/update_changeling_icons_added()
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
-	hud.join_hud(owner.current)
-	set_antag_hud(owner.current, "changeling")
-
-/datum/antagonist/changeling/proc/update_changeling_icons_removed()
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]
-	hud.leave_hud(owner.current)
-	set_antag_hud(owner.current, null)
 
 /datum/antagonist/changeling/admin_add(datum/mind/new_owner,mob/admin)
 	. = ..()
@@ -510,6 +509,7 @@
 	var/list/flags_cover_list = list()
 	var/list/exists_list = list()
 	var/list/item_state_list = list()
+	var/list/mob_overlay_icon_list = list()
 
 	var/underwear
 	var/undershirt
@@ -532,6 +532,7 @@
 	newprofile.underwear = underwear
 	newprofile.undershirt = undershirt
 	newprofile.socks = socks
+	newprofile.mob_overlay_icon_list = mob_overlay_icon_list.Copy()
 
 
 /datum/antagonist/changeling/xenobio

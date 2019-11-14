@@ -111,7 +111,7 @@
 			if(scooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M)||ismonkey(M))
-						M.electrocute_act(5, "[user]", safety = 1)
+						M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
 						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
 						M.update_mobility()
@@ -360,9 +360,11 @@
 	emaggedhitdamage = 0
 
 /obj/item/borg/lollipop/equipped()
+	. = ..()
 	check_amount()
 
 /obj/item/borg/lollipop/dropped()
+	. = ..()
 	check_amount()
 
 /obj/item/borg/lollipop/proc/check_amount()	//Doesn't even use processing ticks.
@@ -408,9 +410,9 @@
 	check_amount()
 
 	if(into_hands)
-		user.visible_message("<span class='notice'>[user] dispenses a treat into the hands of [A].</span>", "<span class='notice'>You dispense a treat into the hands of [A].</span>", "<span class='italics'>You hear a click.</span>")
+		user.visible_message("<span class='notice'>[user] dispenses a treat into the hands of [A].</span>", "<span class='notice'>You dispense a treat into the hands of [A].</span>", "<span class='hear'>You hear a click.</span>")
 	else
-		user.visible_message("<span class='notice'>[user] dispenses a treat.</span>", "<span class='notice'>You dispense a treat.</span>", "<span class='italics'>You hear a click.</span>")
+		user.visible_message("<span class='notice'>[user] dispenses a treat.</span>", "<span class='notice'>You dispense a treat.</span>", "<span class='hear'>You hear a click.</span>")
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	return TRUE
@@ -491,18 +493,18 @@
 /obj/item/ammo_casing/caseless/gumball
 	name = "Gumball"
 	desc = "Why are you seeing this?!"
-	projectile_type = /obj/item/projectile/bullet/reusable/gumball
+	projectile_type = /obj/projectile/bullet/reusable/gumball
 	click_cooldown_override = 2
 
 
-/obj/item/projectile/bullet/reusable/gumball
+/obj/projectile/bullet/reusable/gumball
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
 	ammo_type = /obj/item/reagent_containers/food/snacks/gumball/cyborg
 	nodamage = TRUE
 
-/obj/item/projectile/bullet/reusable/gumball/handle_drop()
+/obj/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
 		var/obj/item/reagent_containers/food/snacks/gumball/S = new ammo_type(T)
@@ -512,10 +514,10 @@
 /obj/item/ammo_casing/caseless/lollipop	//NEEDS RANDOMIZED COLOR LOGIC.
 	name = "Lollipop"
 	desc = "Why are you seeing this?!"
-	projectile_type = /obj/item/projectile/bullet/reusable/lollipop
+	projectile_type = /obj/projectile/bullet/reusable/lollipop
 	click_cooldown_override = 2
 
-/obj/item/projectile/bullet/reusable/lollipop
+/obj/projectile/bullet/reusable/lollipop
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
@@ -523,7 +525,7 @@
 	var/color2 = rgb(0, 0, 0)
 	nodamage = TRUE
 
-/obj/item/projectile/bullet/reusable/lollipop/Initialize()
+/obj/projectile/bullet/reusable/lollipop/Initialize()
 	. = ..()
 	var/obj/item/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
@@ -531,7 +533,7 @@
 	head.color = color2
 	add_overlay(head)
 
-/obj/item/projectile/bullet/reusable/lollipop/handle_drop()
+/obj/projectile/bullet/reusable/lollipop/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
 		var/obj/item/reagent_containers/food/snacks/lollipop/S = new ammo_type(T)
@@ -557,7 +559,7 @@
 	var/projectile_damage_tick_ecost_coefficient = 2	//Lasers get half their damage chopped off, drains 50 power/tick. Note that fields are processed 5 times per second.
 	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
 	var/projectile_tick_speed_ecost = 15
-	var/list/obj/item/projectile/tracked
+	var/list/obj/projectile/tracked
 	var/image/projectile_effect
 	var/field_radius = 3
 	var/active = FALSE
@@ -650,7 +652,7 @@
 /obj/item/borg/projectile_dampen/proc/process_usage()
 	var/usage = 0
 	for(var/I in tracked)
-		var/obj/item/projectile/P = I
+		var/obj/projectile/P = I
 		if(!P.stun && P.nodamage)	//No damage
 			continue
 		usage += projectile_tick_speed_ecost
@@ -671,7 +673,7 @@
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
 		energy += energy_recharge
 
-/obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/item/projectile/P, track_projectile = TRUE)
+/obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/projectile/P, track_projectile = TRUE)
 	if(tracked[P])
 		return
 	if(track_projectile)
@@ -680,7 +682,7 @@
 	P.speed *= projectile_speed_coefficient
 	P.add_overlay(projectile_effect)
 
-/obj/item/borg/projectile_dampen/proc/restore_projectile(obj/item/projectile/P)
+/obj/item/borg/projectile_dampen/proc/restore_projectile(obj/projectile/P)
 	tracked -= P
 	P.damage *= (1/projectile_damage_coefficient)
 	P.speed *= (1/projectile_speed_coefficient)
@@ -698,11 +700,6 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "securearea"
 	sight_mode = BORGXRAY
-
-/obj/item/borg/sight/xray/truesight_lens
-	name = "truesight lens"
-	icon = 'icons/obj/clockwork_objects.dmi'
-	icon_state = "truesight_lens"
 
 /obj/item/borg/sight/thermal
 	name = "\proper thermal vision"
@@ -741,3 +738,204 @@
 /obj/item/borg/sight/hud/sec/Initialize()
 	. = ..()
 	hud = new /obj/item/clothing/glasses/hud/security(src)
+
+
+/**********************************************************************
+						Borg apparatus
+***********************************************************************/
+//These are tools that can hold only specific items. For example, the mediborg gets one that can only hold beakers and bottles.
+
+/obj/item/borg/apparatus/
+	name = "unknown storage apparatus"
+	desc = "This device seems nonfunctional."
+	icon = 'icons/mob/robot_items.dmi'
+	icon_state = "hugmodule"
+	var/obj/item/stored
+	var/list/storable = list()
+
+/obj/item/borg/apparatus/Initialize()
+	. = ..()
+	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
+
+/obj/item/borg/apparatus/Destroy()
+	if(stored)
+		qdel(stored)
+	. = ..()
+
+///If we're safely deconstructed, we put the item neatly onto the ground, rather than deleting it.
+/obj/item/borg/apparatus/proc/safedecon()
+	if(stored)
+		stored.forceMove(get_turf(src))
+		stored = null
+
+/obj/item/borg/apparatus/Exited(atom/A)
+	if(A == stored) //sanity check
+		UnregisterSignal(stored, COMSIG_ATOM_UPDATE_ICON)
+		stored = null
+	update_icon()
+	. = ..()
+
+///A right-click verb, for those not using hotkey mode.
+/obj/item/borg/apparatus/verb/verb_dropHeld()
+	set category = "Object"
+	set name = "Drop"
+
+	if(usr != loc || !stored)
+		return
+	stored.forceMove(get_turf(usr))
+	return
+
+/obj/item/borg/apparatus/attack_self(mob/living/silicon/robot/user)
+	if(!stored)
+		return ..()
+	if(user.client?.keys_held["Alt"])
+		stored.forceMove(get_turf(user))
+		return
+	stored.attack_self(user)
+
+/obj/item/borg/apparatus/pre_attack(atom/A, mob/living/user, params)
+	if(!stored)
+		var/itemcheck = FALSE
+		for(var/i in storable)
+			if(istype(A, i))
+				itemcheck = TRUE
+				break
+		if(itemcheck)
+			var/obj/item/O = A
+			O.forceMove(src)
+			stored = O
+			RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
+			update_icon()
+			return
+	else
+		stored.melee_attack_chain(user, A, params)
+		return
+	. = ..()
+
+/obj/item/borg/apparatus/attackby(obj/item/W, mob/user, params)
+	if(stored)
+		W.melee_attack_chain(user, stored, params)
+		return
+	. = ..()
+
+/////////////////
+//beaker holder//
+/////////////////
+
+/obj/item/borg/apparatus/beaker
+	name = "beaker storage apparatus"
+	desc = "A special apparatus for carrying beakers without spilling the contents. Alt-Z or right-click to drop the beaker."
+	icon_state = "borg_beaker_apparatus"
+	storable = list(/obj/item/reagent_containers/glass/beaker,
+				/obj/item/reagent_containers/glass/bottle)
+
+/obj/item/borg/apparatus/beaker/Initialize()
+	. = ..()
+	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
+	update_icon()
+
+/obj/item/borg/apparatus/beaker/Destroy()
+	if(stored)
+		var/obj/item/reagent_containers/C = stored
+		C.SplashReagents(get_turf(src))
+		qdel(stored)
+	. = ..()
+
+/obj/item/borg/apparatus/beaker/examine()
+	. = ..()
+	if(stored)
+		var/obj/item/reagent_containers/C = stored
+		. += "The apparatus currently has [C] secured, which contains:"
+		if(length(C.reagents.reagent_list))
+			for(var/datum/reagent/R in C.reagents.reagent_list)
+				. += "[R.volume] units of [R.name]"
+		else
+			. += "Nothing."
+
+/obj/item/borg/apparatus/beaker/update_icon()
+	cut_overlays()
+	if(stored)
+		COMPILE_OVERLAYS(stored)
+		stored.pixel_x = 0
+		stored.pixel_y = 0
+		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
+		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		if(istype(stored, /obj/item/reagent_containers/glass/beaker))
+			arm.pixel_y = arm.pixel_y - 3
+		img.plane = FLOAT_PLANE
+		add_overlay(img)
+		add_overlay(arm)
+	else
+		var/image/arm = image("icon"="borg_beaker_apparatus_arm", "layer"=FLOAT_LAYER)
+		arm.pixel_y = arm.pixel_y - 5
+		add_overlay(arm)
+
+/obj/item/borg/apparatus/beaker/attack_self(mob/living/silicon/robot/user)
+	if(stored && !user.client?.keys_held["Alt"] && user.a_intent != "help")
+		var/obj/item/reagent_containers/C = stored
+		C.SplashReagents(get_turf(user))
+		loc.visible_message("<span class='notice'>[user] spills the contents of the [C] all over the floor.</span>")
+		return
+	. = ..()
+
+/obj/item/borg/apparatus/beaker/extra
+	name = "secondary beaker storage apparatus"
+	desc = "A supplementary beaker storage apparatus."
+	
+/obj/item/borg/apparatus/beaker/service
+	name = "beverage storage apparatus"
+	desc = "A special apparatus for carrying drinks without spilling the contents. Alt-Z or right-click to drop the beaker."
+	icon_state = "borg_beaker_apparatus"
+	storable = list(/obj/item/reagent_containers/food/drinks/,
+				/obj/item/reagent_containers/food/condiment)
+
+/obj/item/borg/apparatus/beaker/service/Initialize()
+	. = ..()
+	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
+	update_icon()
+
+////////////////////
+//engi part holder//
+////////////////////
+
+/obj/item/borg/apparatus/circuit
+	name = "circuit manipulation apparatus"
+	desc = "A special apparatus for carrying and manipulating circuit boards. Alt-Z or right-click to drop the stored object."
+	icon_state = "borg_hardware_apparatus"
+	storable = list(/obj/item/circuitboard,
+				/obj/item/electronics)
+
+/obj/item/borg/apparatus/circuit/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/borg/apparatus/circuit/update_icon()
+	cut_overlays()
+	if(stored)
+		COMPILE_OVERLAYS(stored)
+		stored.pixel_x = -3
+		stored.pixel_y = 0
+		var/image/arm
+		if(istype(stored, /obj/item/circuitboard))
+			arm = image("icon"="borg_hardware_apparatus_arm1", "layer"=FLOAT_LAYER)
+		else
+			arm = image("icon"="borg_hardware_apparatus_arm2", "layer"=FLOAT_LAYER)
+		var/image/img = image("icon"=stored, "layer"=FLOAT_LAYER)
+		img.plane = FLOAT_PLANE
+		add_overlay(arm)
+		add_overlay(img)
+	else
+		var/image/arm = image("icon"="borg_hardware_apparatus_arm1", "layer"=FLOAT_LAYER)
+		add_overlay(arm)
+
+/obj/item/borg/apparatus/circuit/examine()
+	. = ..()
+	if(stored)
+		. += "The apparatus currently has [stored] secured."
+
+/obj/item/borg/apparatus/circuit/pre_attack(atom/A, mob/living/user, params)
+	. = ..()
+	if(istype(A, /obj/item/aiModule) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
+		to_chat(user, "<span class='warning'>This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up.</span>")

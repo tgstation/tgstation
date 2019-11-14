@@ -216,7 +216,7 @@
 	desc = "Stores recorder holocalls."
 	icon_state = "holodisk"
 	obj_flags = UNIQUE_RENAME
-	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
+	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	var/datum/holorecord/record
 	//Preset variables
 	var/preset_image_type
@@ -241,10 +241,10 @@
 			record.caller_image = holodiskOriginal.record.caller_image
 			record.entries = holodiskOriginal.record.entries.Copy()
 			record.language = holodiskOriginal.record.language
-			to_chat(user, "You copy the record from [holodiskOriginal] to [src] by connecting the ports!")
+			to_chat(user, "<span class='notice'>You copy the record from [holodiskOriginal] to [src] by connecting the ports!</span>")
 			name = holodiskOriginal.name
 		else
-			to_chat(user, "[holodiskOriginal] has no record on it!")
+			to_chat(user, "<span class='warning'>[holodiskOriginal] has no record on it!</span>")
 	..()
 
 /obj/item/disk/holodisk/proc/build_record()

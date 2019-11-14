@@ -26,7 +26,7 @@
 	var/mob_color //Change the mob's color
 	var/assignedrole
 	var/show_flavour = TRUE
-	var/banType = "lavaland"
+	var/banType = ROLE_LAVALAND
 	var/ghost_usable = TRUE
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
@@ -153,8 +153,8 @@
 	var/backpack_contents = -1
 	var/suit_store = -1
 
-	var/hair_style
-	var/facial_hair_style
+	var/hairstyle
+	var/facial_hairstyle
 	var/skin_tone
 
 /obj/effect/mob_spawn/human/Initialize()
@@ -174,14 +174,14 @@
 	H.underwear = "Nude"
 	H.undershirt = "Nude"
 	H.socks = "Nude"
-	if(hair_style)
-		H.hair_style = hair_style
+	if(hairstyle)
+		H.hairstyle = hairstyle
 	else
-		H.hair_style = random_hair_style(gender)
-	if(facial_hair_style)
-		H.facial_hair_style = facial_hair_style
+		H.hairstyle = random_hairstyle(gender)
+	if(facial_hairstyle)
+		H.facial_hairstyle = facial_hairstyle
 	else
-		H.facial_hair_style = random_facial_hair_style(gender)
+		H.facial_hairstyle = random_facial_hairstyle(gender)
 	if(skin_tone)
 		H.skin_tone = skin_tone
 	else

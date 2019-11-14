@@ -18,7 +18,9 @@
 	return !istype(S, /obj/item/seeds/sample) // Samples can't accept new genes
 
 /datum/plant_gene/proc/Copy()
-	return new type
+	var/datum/plant_gene/G = new type
+	G.mutability_flags = mutability_flags
+	return G
 
 /datum/plant_gene/proc/apply_vars(obj/item/seeds/S) // currently used for fire resist, can prob. be further refactored
 	return
@@ -250,14 +252,14 @@
 /datum/plant_gene/trait/cell_charge/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/power = G.seed.potency*rate
 	if(prob(power))
-		C.electrocute_act(round(power), G, 1, 1)
+		C.electrocute_act(round(power), G, 1, SHOCK_NOGLOVES)
 
 /datum/plant_gene/trait/cell_charge/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		var/power = G.seed.potency*rate
 		if(prob(power))
-			C.electrocute_act(round(power), G, 1, 1)
+			C.electrocute_act(round(power), G, 1, SHOCK_NOGLOVES)
 
 /datum/plant_gene/trait/cell_charge/on_consume(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	if(!G.reagents.total_volume)
@@ -297,22 +299,44 @@
 
 /datum/plant_gene/trait/glow/shadow
 	//makes plant emit slightly purple shadows
-	//adds -potency*(rate*0.2) light power to products
 	name = "Shadow Emission"
 	rate = 0.04
 	glow_color = "#AAD84B"
 
-/datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
-	return -max(S.potency*(rate*0.2), 0.2)
+/datum/plant_gene/trait/glow/white
+	name = "White Bioluminescence"
+	glow_color = "#FFFFFF"
 
 /datum/plant_gene/trait/glow/red
-	name = "Red Electrical Glow"
-	glow_color = LIGHT_COLOR_RED
+	//Colored versions of bioluminescence.
+	name = "Red Bioluminescence"
+	glow_color = "#FF3333"
 
-/datum/plant_gene/trait/glow/berry
-	name = "Strong Bioluminescence"
-	rate = 0.05
-	glow_color = null
+/datum/plant_gene/trait/glow/yellow
+	//not the disgusting glowshroom yellow hopefully
+	name = "Yellow Bioluminescence"
+	glow_color = "#FFFF66"
+
+/datum/plant_gene/trait/glow/green
+	//oh no, now i'm radioactive
+	name = "Green Bioluminescence"
+	glow_color = "#99FF99"
+
+/datum/plant_gene/trait/glow/blue
+	//the best one
+	name = "Blue Bioluminescence"
+	glow_color = "#6699FF"
+
+/datum/plant_gene/trait/glow/purple
+	//did you know that notepad++ doesnt think bioluminescence is a word
+	name = "Purple Bioluminescence"
+	glow_color = "#D966FF"
+
+/datum/plant_gene/trait/glow/pink
+	//gay tide station pride
+	name = "Pink Bioluminescence"
+	glow_color = "#FFB3DA"
+
 
 
 /datum/plant_gene/trait/teleport

@@ -151,19 +151,6 @@
 //////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
 //Need to be granted by the mech type, Not default abilities.
 
-/datum/action/innate/mecha/mech_toggle_thrusters
-	name = "Toggle Thrusters"
-	button_icon_state = "mech_thrusters_off"
-
-/datum/action/innate/mecha/mech_toggle_thrusters/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	if(chassis.get_charge() > 0)
-		chassis.thrusters_active = !chassis.thrusters_active
-		button_icon_state = "mech_thrusters_[chassis.thrusters_active ? "on" : "off"]"
-		chassis.log_message("Toggled thrusters.", LOG_MECHA)
-		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"red"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
-
 /datum/action/innate/mecha/mech_defense_mode
 	name = "Toggle an energy shield that blocks all attacks from the faced direction at a heavy power cost."
 	button_icon_state = "mech_defense_mode_off"
@@ -207,9 +194,8 @@
 	if(chassis.smoke_ready && chassis.smoke>0)
 		chassis.smoke_system.start()
 		chassis.smoke--
-		chassis.smoke_ready = 0
-		spawn(chassis.smoke_cooldown)
-			chassis.smoke_ready = 1
+		chassis.smoke_ready = FALSE
+		addtimer(VARSET_CALLBACK(chassis, smoke_ready, TRUE), chassis.smoke_cooldown)
 
 
 /datum/action/innate/mecha/mech_zoom

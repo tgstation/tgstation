@@ -1,4 +1,3 @@
-GLOBAL_VAR(medibot_unique_id_gen)
 //MEDBOT
 //MEDBOT PATHFINDING
 //MEDBOT ASSEMBLY
@@ -43,7 +42,6 @@ GLOBAL_VAR(medibot_unique_id_gen)
 	//Setting which reagents to use to treat what by default. By id.
 	var/shut_up = 0 //self explanatory :)
 	var/datum/techweb/linked_techweb
-	var/medibot_counter = 0 //we use this to stop multibotting
 
 /mob/living/simple_animal/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
@@ -86,10 +84,6 @@ GLOBAL_VAR(medibot_unique_id_gen)
 	skin = new_skin
 	update_icon()
 	linked_techweb = SSresearch.science_tech
-	if(!GLOB.medibot_unique_id_gen)
-		GLOB.medibot_unique_id_gen = 0
-	medibot_counter = GLOB.medibot_unique_id_gen
-	GLOB.medibot_unique_id_gen++
 
 /mob/living/simple_animal/bot/medbot/update_mobility()
 	. = ..()
@@ -293,6 +287,8 @@ GLOBAL_VAR(medibot_unique_id_gen)
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	. = FALSE
 	//Time to see if they need medical help!
+	if(stationary_mode && !Adjacent(C)) //YOU come to ME, BRO
+		return FALSE
 	if(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_FAKEDEATH)))
 		return FALSE	//welp too late for them!
 
@@ -305,7 +301,7 @@ GLOBAL_VAR(medibot_unique_id_gen)
 	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
 		return TRUE
 
-	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,medibot_counter)) //someone is healing them already sweetie
+	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,tag)) //the early medbot gets the worm (or in this case the patient)
 		return FALSE
 
 	if(ishuman(C))
@@ -410,17 +406,17 @@ GLOBAL_VAR(medibot_unique_id_gen)
 						log_combat(src, patient, "tended the wounds of", "internal tools", "([uppertext(treatment_method)])")
 					C.visible_message("<span class='notice'>[src] tends the wounds of [patient]!</span>", \
 						"<span class='green'>[src] tends your wounds!</span>")
-					ADD_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,medibot_counter)
+					ADD_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,tag)
+					addtimer(TRAIT_CALLBACK_REMOVE(patient, TRAIT_MEDIBOTCOMINGTHROUGH, tag), (30 SECONDS))
 				else
 					tending = FALSE
 			else
 				tending = FALSE
 
+			update_icon()
 			if(!tending)
 				visible_message("[src] places its tools back into itself.")
-			update_icon()
-			soft_reset()
-			REMOVE_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,medibot_counter)
+				soft_reset()
 		else
 			tending = FALSE
 

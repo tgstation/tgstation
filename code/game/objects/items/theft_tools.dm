@@ -134,7 +134,7 @@
 	if(istype(W, /obj/item/hemostat/supermatter))
 		var/obj/item/hemostat/supermatter/tongs = W
 		if (tongs.sliver)
-			to_chat(user, "<span class='notice'>\The [tongs] is already holding a supermatter sliver!</span>")
+			to_chat(user, "<span class='warning'>\The [tongs] is already holding a supermatter sliver!</span>")
 			return FALSE
 		forceMove(tongs)
 		tongs.sliver = src
@@ -156,7 +156,7 @@
 	var/mob/ded = user
 	user.visible_message("<span class='danger'>[ded] reaches out and tries to pick up [src]. [ded.p_their()] body starts to glow and bursts into flames before flashing into dust!</span>",\
 			"<span class='userdanger'>You reach for [src] with your hands. That was dumb.</span>",\
-			"<span class='italics'>Everything suddenly goes silent.</span>")
+			"<span class='hear'>Everything suddenly goes silent.</span>")
 	radiation_pulse(user, 500, 2)
 	playsound(get_turf(user), 'sound/effects/supermatter.ogg', 50, TRUE)
 	ded.dust()
@@ -257,7 +257,7 @@
 	if (user)
 		user.visible_message("<span class='danger'>As [user] touches [AM] with \the [src], both flash into dust and silence fills the room...</span>",\
 			"<span class='userdanger'>You touch [AM] with [src], and everything suddenly goes silent.\n[AM] and [sliver] flash into dust, and soon as you can register this, you do as well.</span>",\
-			"<span class='italics'>Everything suddenly goes silent.</span>")
+			"<span class='hear'>Everything suddenly goes silent.</span>")
 		user.dust()
 	radiation_pulse(src, 500, 2)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)

@@ -18,7 +18,7 @@
 	active_power_usage = 200
 	power_channel = EQUIP
 	max_integrity = 300
-	integrity_failure = 100
+	integrity_failure = 0.33
 	var/obj/item/paper/copy = null	//what's in the copier!
 	var/obj/item/photo/photocopy = null
 	var/obj/item/documents/doccopy = null
@@ -86,8 +86,7 @@
 							c.copy_overlays(copy, TRUE)
 							toner--
 					busy = TRUE
-					sleep(15)
-					busy = FALSE
+					addtimer(CALLBACK(src, .proc/reset_busy), 1.5 SECONDS)
 				else
 					break
 			updateUsrDialog()
@@ -96,8 +95,7 @@
 				if(toner >= 5 && !busy && photocopy)  //Was set to = 0, but if there was say 3 toner left and this ran, you would get -2 which would be weird for ink
 					new /obj/item/photo (loc, photocopy.picture.Copy(greytoggle == "Greyscale"? TRUE : FALSE))
 					busy = TRUE
-					sleep(15)
-					busy = FALSE
+					addtimer(CALLBACK(src, .proc/reset_busy), 1.5 SECONDS)
 				else
 					break
 		else if(doccopy)
@@ -106,8 +104,7 @@
 					new /obj/item/documents/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
 					busy = TRUE
-					sleep(15)
-					busy = FALSE
+					addtimer(CALLBACK(src, .proc/reset_busy), 1.5 SECONDS)
 				else
 					break
 			updateUsrDialog()
@@ -175,8 +172,7 @@
 			photo.pixel_y = rand(-10, 10)
 			toner -= 5	 //AI prints color pictures only, thus they can do it more efficiently
 			busy = TRUE
-			sleep(15)
-			busy = FALSE
+			addtimer(CALLBACK(src, .proc/reset_busy), 1.5 SECONDS)
 		updateUsrDialog()
 	else if(href_list["colortoggle"])
 		if(greytoggle == "Greyscale")
@@ -184,6 +180,10 @@
 		else
 			greytoggle = "Greyscale"
 		updateUsrDialog()
+
+/obj/machinery/photocopier/proc/reset_busy()
+	busy = FALSE
+	updateUsrDialog()
 
 /obj/machinery/photocopier/proc/do_insertion(obj/item/O, mob/user)
 	O.forceMove(src)
@@ -252,10 +252,10 @@
 		return ..()
 
 /obj/machinery/photocopier/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(toner > 0)
-			new /obj/effect/decal/cleanable/oil(get_turf(src))
-			toner = 0
+	. = ..()
+	if(. && toner > 0)
+		new /obj/effect/decal/cleanable/oil(get_turf(src))
+		toner = 0
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.

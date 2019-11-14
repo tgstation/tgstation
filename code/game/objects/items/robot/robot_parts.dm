@@ -97,7 +97,7 @@
 				head = null
 			to_chat(user, "<span class='notice'>You disassemble the cyborg shell.</span>")
 	else
-		to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
+		to_chat(user, "<span class='warning'>There is nothing to remove from the endoskeleton!</span>")
 	update_icon()
 
 /obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
@@ -112,7 +112,7 @@
 		return TRUE
 
 	if(!chest) //can't remove a cell if there's no chest to remove it from.
-		to_chat(user, "<span class='notice'>[src] has no attached torso.</span>")
+		to_chat(user, "<span class='warning'>[src] has no attached torso!</span>")
 		return
 
 	var/obj/item/stock_parts/cell/temp_cell = user.is_holding_item_of_type(/obj/item/stock_parts/cell)
@@ -131,7 +131,7 @@
 			to_chat(user, "<span class='notice'>You remove [chest.cell] from [src].</span>")
 			chest.cell = null
 		else
-			to_chat(user, "<span class='notice'>The power cell slot in [src]'s torso is empty.</span>")
+			to_chat(user, "<span class='warning'>The power cell slot in [src]'s torso is empty!</span>")
 		return
 
 	to_chat(user, "<span class='notice'>You [chest.cell ? "replace [src]'s [chest.cell.name] with [temp_cell]" : "insert [temp_cell] into [src]"].</span>")
@@ -299,9 +299,6 @@
 					O.make_laws()
 
 			SSticker.mode.remove_antag_for_borging(BM.mind)
-			if(!istype(M.laws, /datum/ai_laws/ratvar))
-				remove_servant_of_ratvar(BM, TRUE)
-
 			O.job = "Cyborg"
 
 			O.cell = chest.cell
@@ -324,6 +321,8 @@
 			SSblackbox.record_feedback("amount", "cyborg_birth", 1)
 			forceMove(O)
 			O.robot_suit = src
+
+			log_game("[key_name(user)] has put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell at [AREACOORD(src)]")
 
 			if(!locomotion)
 				O.lockcharge = TRUE
@@ -407,7 +406,7 @@
 	else if(href_list["Master"])
 		forced_ai = select_active_ai(usr)
 		if(!forced_ai)
-			to_chat(usr, "<span class='error'>No active AIs detected.</span>")
+			to_chat(usr, "<span class='alert'>No active AIs detected.</span>")
 
 	else if(href_list["Law"])
 		lawsync = !lawsync

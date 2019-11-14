@@ -273,25 +273,25 @@
   * * Will pass FALSE if the item can not be dropped due to TRAIT_NODROP via doUnEquip()
   * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
 */
-/mob/proc/dropItemToGround(obj/item/I, force = FALSE)
-	. = doUnEquip(I, force, drop_location(), FALSE)
+/mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE)
+	. = doUnEquip(I, force, drop_location(), FALSE, silent = silent)
 	if(. && I) //ensure the item exists and that it was dropped properly.
 		I.pixel_x = rand(-6,6)
 		I.pixel_y = rand(-6,6)
 
 //for when the item will be immediately placed in a loc other than the ground
-/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE)
-	return doUnEquip(I, force, newloc, FALSE)
+/mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE)
+	return doUnEquip(I, force, newloc, FALSE, silent = silent)
 
 //visibly unequips I but it is NOT MOVED AND REMAINS IN SRC
 //item MUST BE FORCEMOVE'D OR QDEL'D
 /mob/proc/temporarilyRemoveItemFromInventory(obj/item/I, force = FALSE, idrop = TRUE)
-	return doUnEquip(I, force, null, TRUE, idrop)
+	return doUnEquip(I, force, null, TRUE, idrop, silent = TRUE)
 
 //DO NOT CALL THIS PROC
 //use one of the above 3 helper procs
 //you may override it, but do not modify the args
-/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE) //Force overrides TRAIT_NODROP for things like wizarditis and admin undress.
+/mob/proc/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE) //Force overrides TRAIT_NODROP for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
 													//Invdrop is used to prevent stuff in pockets dropping. only set to false if it's going to immediately be replaced
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for TRAIT_NODROP.
@@ -315,7 +315,7 @@
 				I.moveToNullspace()
 			else
 				I.forceMove(newloc)
-		I.dropped(src)
+		I.dropped(src, silent)
 	return TRUE
 
 //Outdated but still in use apparently. This should at least be a human proc.

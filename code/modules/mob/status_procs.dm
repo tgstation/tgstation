@@ -23,13 +23,7 @@
 
 ///Blind a mobs eyes by amount
 /mob/proc/blind_eyes(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind = max(eye_blind, amount)
-		if(!old_eye_blind)
-			if(stat == CONSCIOUS || stat == SOFT_CRIT)
-				throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+	adjust_blindness(amount)
 
 /**
   * Adjust a mobs blindness by an amount
@@ -37,49 +31,31 @@
   * Will apply the blind alerts if needed
   */
 /mob/proc/adjust_blindness(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind += amount
-		if(!old_eye_blind)
-			if(stat == CONSCIOUS || stat == SOFT_CRIT)
-				throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else if(eye_blind)
-		var/blind_minimum = 0
-		if((stat != CONSCIOUS && stat != SOFT_CRIT))
-			blind_minimum = 1
-		if(isliving(src))
-			var/mob/living/L = src
-			if(HAS_TRAIT(L, TRAIT_BLIND))
-				blind_minimum = 1
-		eye_blind = max(eye_blind+amount, blind_minimum)
-		if(!eye_blind)
-			clear_alert("blind")
-			clear_fullscreen("blind")
+	var/old_eye_blind = eye_blind
+	eye_blind = max(0, eye_blind + amount)
+	if(!old_eye_blind || !eye_blind && !HAS_TRAIT(src, TRAIT_BLIND))
+		update_blindness()
 /**
   * Force set the blindness of a mob to some level
   */
 /mob/proc/set_blindness(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind = amount
-		if(client && !old_eye_blind)
-			if(stat == CONSCIOUS || stat == SOFT_CRIT)
-				throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else if(eye_blind)
-		var/blind_minimum = 0
-		if(stat != CONSCIOUS && stat != SOFT_CRIT)
-			blind_minimum = 1
-		if(isliving(src))
-			var/mob/living/L = src
-			if(HAS_TRAIT(L, TRAIT_BLIND))
-				blind_minimum = 1
-		eye_blind = blind_minimum
-		if(!eye_blind)
-			clear_alert("blind")
-			clear_fullscreen("blind")
+	var/old_eye_blind = eye_blind
+	eye_blind = max(amount, 0)
+	if(!old_eye_blind || !eye_blind && !HAS_TRAIT(src, TRAIT_BLIND))
+		update_blindness()
 
+/// proc that adds and removes blindness overlays when necessary
+/mob/proc/update_blindness()
+	if(stat == UNCONSCIOUS || HAS_TRAIT(src, TRAIT_BLIND) || eye_blind) // UNCONSCIOUS or has blind trait, or has temporary blindness
+		if(stat == CONSCIOUS || stat == SOFT_CRIT)
+			throw_alert("blind", /obj/screen/alert/blind)
+		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+		// You are blind why should you be able to make out details like color, only shapes near you
+		add_client_colour(/datum/client_colour/monochrome/blind)
+	else // CONSCIOUS no blind trait, no blindness
+		clear_alert("blind")
+		clear_fullscreen("blind")
+		remove_client_colour(/datum/client_colour/monochrome/blind)
 /**
   * Make the mobs vision blurry
   */

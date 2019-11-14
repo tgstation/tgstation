@@ -58,10 +58,10 @@
 
 /obj/item/firing_pin/proc/auth_fail(mob/living/user)
 	if(user)
-		user.show_message(fail_message, 1)
+		user.show_message(fail_message, MSG_VISUAL)
 	if(selfdestruct)
 		if(user)
-			user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", 1)
+			user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", MSG_VISUAL)
 			to_chat(user, "<span class='userdanger'>[gun] explodes!</span>")
 		explosion(get_turf(gun), -1, 0, 2, 3)
 		if(gun)
@@ -220,7 +220,7 @@
 		return
 	gun.desc += "<span class='notice'> This [gun.name] has a license permit cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].</span>"
 	return
-	
+
 
 /obj/item/firing_pin/paywall/gun_remove(mob/living/user)
 	gun.desc = initial(desc)
@@ -246,12 +246,12 @@
 			to_chat(user, "<span class='warning'>ERROR: Invalid amount designated.</span>")
 			return
 		if(!transaction_amount)
-			return	
+			return
 		pin_owner = id
 		owned = TRUE
 		payment_amount = transaction_amount
 		gun_owners += user
-		to_chat(user, "<span class='notice'>You link the card to the firing pin.</span>")		
+		to_chat(user, "<span class='notice'>You link the card to the firing pin.</span>")
 
 /obj/item/firing_pin/paywall/pin_auth(mob/living/user)
 	if(!istype(user))//nice try commie
@@ -266,9 +266,9 @@
 				if(credit_card_details.adjust_money(-payment_amount))
 					pin_owner.registered_account.adjust_money(payment_amount)
 					return TRUE
-				to_chat(user, "<span class='warning'>ERROR: User balance insufficent for successful transaction!</span>")	
-				return FALSE	
-			return TRUE				
+				to_chat(user, "<span class='warning'>ERROR: User balance insufficent for successful transaction!</span>")
+				return FALSE
+			return TRUE
 		if(credit_card_details && !active_prompt)
 			var/license_request = alert(usr, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", "Yes", "No")
 			active_prompt = TRUE

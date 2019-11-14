@@ -26,6 +26,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/unlock_note
 	var/unlock_code
 	var/failsafe_code
+	var/debug = FALSE
 
 	var/list/previous_attempts
 
@@ -150,10 +151,10 @@ GLOBAL_LIST_EMPTY(uplinks)
 				if(I.limited_stock == 0)
 					continue
 				if(I.restricted_roles.len)
-					var/is_inaccessible = 1
+					var/is_inaccessible = TRUE
 					for(var/R in I.restricted_roles)
-						if(R == user.mind.assigned_role)
-							is_inaccessible = 0
+						if(R == user.mind.assigned_role || debug)
+							is_inaccessible = FALSE
 					if(is_inaccessible)
 						continue
 				if(I.restricted_species)
@@ -161,7 +162,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 						var/is_inaccessible = TRUE
 						var/mob/living/carbon/human/H = user
 						for(var/F in I.restricted_species)
-							if(F == H.dna.species.id)
+							if(F == H.dna.species.id || debug)
 								is_inaccessible = FALSE
 								break
 						if(is_inaccessible)
@@ -248,7 +249,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return
 	locked = FALSE
 	interact(null, user)
-	to_chat(user, "The PDA softly beeps.")
+	to_chat(user, "<span class='hear'>The PDA softly beeps.</span>")
 	user << browse(null, "window=pda")
 	master.mode = 0
 	return COMPONENT_STOP_RINGTONE_CHANGE

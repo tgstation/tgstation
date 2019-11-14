@@ -2,9 +2,6 @@
 	set waitfor = FALSE
 	set invisibility = 0
 
-	if(digitalinvis)
-		handle_diginvis() //AI becomes unable to see mob
-
 	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
 		float(on = TRUE)
 
@@ -83,14 +80,6 @@
 /mob/living/proc/handle_diseases()
 	return
 
-/mob/living/proc/handle_diginvis()
-	if(!digitaldisguise)
-		src.digitaldisguise = image(loc = src)
-	src.digitaldisguise.override = 1
-	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
-		AI.client.images |= src.digitaldisguise
-
-
 /mob/living/proc/handle_random_events()
 	return
 
@@ -121,18 +110,13 @@
 
 /mob/living/proc/handle_traits()
 	//Eyes
-	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
-			eye_blind = max(eye_blind-1,0)
-			if(client && !eye_blind)
-				clear_alert("blind")
-				clear_fullscreen("blind")
-		else
-			eye_blind = max(eye_blind-1,1)
+	if(eye_blind)	//blindness, heals slowly over time
+		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
+			adjust_blindness(-3)
+		else if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
+			adjust_blindness(-1)
 	else if(eye_blurry)			//blurry eyes heal slowly
-		eye_blurry = max(eye_blurry-1, 0)
-		if(client)
-			update_eye_blur()
+		adjust_blurriness(-1)
 
 /mob/living/proc/update_damage_hud()
 	return

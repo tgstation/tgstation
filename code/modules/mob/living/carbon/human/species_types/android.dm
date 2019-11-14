@@ -9,7 +9,7 @@
 	damage_overlay_type = "synth"
 	mutanttongue = /obj/item/organ/tongue/robot
 	limbs_id = "synth"
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 /datum/species/android/on_species_gain(mob/living/carbon/C)
 	. = ..()

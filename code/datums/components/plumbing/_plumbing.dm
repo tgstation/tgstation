@@ -54,7 +54,7 @@
 	return TRUE
 ///called from in process(). only calls process_request(), but can be overwritten for children with special behaviour
 /datum/component/plumbing/proc/send_request(dir)
-	process_request(amount = 10, reagent = null, dir = dir)
+	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = null, dir = dir)
 ///check who can give us what we want, and how many each of them will give us
 /datum/component/plumbing/proc/process_request(amount, reagent, dir)
 	var/list/valid_suppliers = list()
@@ -71,12 +71,14 @@
 		give.transfer_to(src, amount / valid_suppliers.len, reagent, net)
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
-	if(!reagents || amount <= 0)
+	if(amount <= 0)
 		return
 
 	if(reagent) //only asked for one type of reagent
-		if(reagent in reagents.reagent_list)
-			return TRUE
+		for(var/A in reagents.reagent_list)
+			var/datum/reagent/R = A
+			if(R.type == reagent)
+				return TRUE
 	else if(reagents.total_volume > 0) //take whatever
 		return TRUE
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
@@ -86,7 +88,7 @@
 	if(reagent)
 		reagents.trans_id_to(target.parent, reagent, amount)
 	else
-		reagents.trans_to(target.parent, amount)
+		reagents.trans_to(target.parent, amount, round_robin = TRUE)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays()
 	var/atom/movable/AM = parent
@@ -140,15 +142,24 @@
 		return
 	update_dir()
 	active = TRUE
+	var/atom/movable/AM = parent
+	for(var/obj/machinery/duct/D in AM.loc)	//Destroy any ducts under us. Ducts also self destruct if placed under a plumbing machine. machines disable when they get moved
+		if(D.anchored)								//that should cover everything
+			D.disconnect_duct()
 
 	if(demand_connects)
 		START_PROCESSING(SSfluids, src)
+
 	for(var/D in GLOB.cardinals)
 		if(D & (demand_connects | supply_connects))
-			for(var/obj/machinery/duct/duct in get_step(parent, D))
-				duct.attempt_connect()
-
-	//TODO: Let plumbers directly plumb into one another without ducts if placed adjacent to each other
+			for(var/atom/movable/A in get_step(parent, D))
+				if(istype(A, /obj/machinery/duct))
+					var/obj/machinery/duct/duct = A
+					duct.attempt_connect()
+				else 
+					var/datum/component/plumbing/P = A.GetComponent(/datum/component/plumbing)
+					if(P)
+						direct_connect(P, D)
 
 /// Toggle our machinery on or off. This is called by a hook from default_unfasten_wrench with anchored as only param, so we dont have to copypaste this on every object that can move
 /datum/component/plumbing/proc/toggle_active(obj/O, new_state)
@@ -182,6 +193,15 @@
 /datum/component/plumbing/proc/get_original_direction(dir)
 	var/atom/movable/AM = parent
 	return turn(dir, dir2angle(AM.dir) - 180)
+//special case in-case we want to connect directly with another machine without a duct
+/datum/component/plumbing/proc/direct_connect(datum/component/plumbing/P, dir)
+	if(!P.active)
+		return
+	var/opposite_dir = turn(dir, 180)
+	if(P.demand_connects & opposite_dir && supply_connects & dir || P.supply_connects & opposite_dir && demand_connects & dir) //make sure we arent connecting two supplies or demands
+		var/datum/ductnet/net = new()
+		net.add_plumber(src, dir)
+		net.add_plumber(P, opposite_dir)
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand

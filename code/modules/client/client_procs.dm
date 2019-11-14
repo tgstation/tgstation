@@ -272,12 +272,16 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		player_details = GLOB.player_details[ckey]
 		player_details.byond_version = full_version
 	else
-		player_details = new
+		player_details = new(ckey)
 		player_details.byond_version = full_version
 		GLOB.player_details[ckey] = player_details
 
 
 	. = ..()	//calls mob.Login()
+	if (length(GLOB.stickybanadminexemptions))
+		GLOB.stickybanadminexemptions -= ckey
+		if (!length(GLOB.stickybanadminexemptions))
+			restore_stickybans()
 
 	if (byond_version >= 512)
 		if (!byond_build || byond_build < 1386)
@@ -299,6 +303,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	if(SSinput.initialized)
 		set_macros()
+		update_movement_keys()
 
 	chatOutput.start() // Starts the chat
 
@@ -461,6 +466,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 			send2irc("Server", "[cheesy_message] (No admins online)")
 
+	player_details.achievements.save()
+	
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
 	GLOB.clients -= src
@@ -790,6 +797,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		// so that the visual focus indicator matches reality.
 		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 
+	else
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
+
 	..()
 
 /client/proc/add_verbs_from_config()
@@ -861,6 +871,22 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	y = CLAMP(y+change, min,max)
 	change_view("[x]x[y]")
 
+/client/proc/update_movement_keys()
+	if(!prefs?.key_bindings)
+		return
+	movement_keys = list()
+	for(var/key in prefs.key_bindings)
+		for(var/kb_name in prefs.key_bindings[key])
+			switch(kb_name)
+				if("North")
+					movement_keys[key] = NORTH
+				if("East")
+					movement_keys[key] = EAST
+				if("West")
+					movement_keys[key] = WEST
+				if("South")
+					movement_keys[key] = SOUTH
+
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
@@ -910,3 +936,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		screen -= S
 		qdel(S)
 	char_render_holders = null
+
+
+/client/proc/give_award(achievement_type, mob/user)
+	return	player_details.achievements.unlock(achievement_type, mob/user)

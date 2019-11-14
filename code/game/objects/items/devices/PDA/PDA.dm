@@ -64,6 +64,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/hidden = FALSE // Is the PDA hidden from the PDA list?
 	var/emped = FALSE
 	var/equipped = FALSE  //used here to determine if this is the first time its been picked up
+	var/allow_emojis = FALSE //if the pda can send emojis and actually have them parsed as such
 
 	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
@@ -146,6 +147,18 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/GetID()
 	return id
 
+/obj/item/pda/RemoveID()
+	return do_remove_id()
+
+/obj/item/pda/InsertID(obj/item/inserting_item)
+	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+	if(!inserting_id)
+		return
+	insert_id(inserting_id)
+	if(id == inserting_id)
+		return TRUE
+	return FALSE
+
 /obj/item/pda/update_icon()
 	cut_overlays()
 	var/mutable_appearance/overlay = new()
@@ -187,10 +200,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pda)
 	assets.send(user)
 
+	var/datum/asset/spritesheet/emoji_s = get_asset_datum(/datum/asset/spritesheet/goonchat)
+	emoji_s.send(user) //Already sent by chat but no harm doing this
+
 	user.set_machine(src)
 
 	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
 	dat += assets.css_tag()
+	dat += emoji_s.css_tag()
 
 	dat += "<a href='byond://?src=[REF(src)];choice=Refresh'>[PDAIMG(refresh)]Refresh</a>"
 
@@ -270,6 +287,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=54'>[PDAIMG(medbot)]Bots Access</a></li>"
 					if (cartridge.access & CART_JANITOR)
 						dat += "<li><a href='byond://?src=[REF(src)];choice=49'>[PDAIMG(bucket)]Custodial Locator</a></li>"
+					if(cartridge.access & CART_MIME)
+						dat += "<li><a href='byond://?src=[REF(src)];choice=55'>[PDAIMG(emoji)]Emoji Guidebook</a></li>"
 					if (istype(cartridge.radio))
 						dat += "<li><a href='byond://?src=[REF(src)];choice=40'>[PDAIMG(signaler)]Signaler System</a></li>"
 					if (cartridge.access & CART_NEWSCASTER)
@@ -584,19 +603,29 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return
 
 /obj/item/pda/proc/remove_id()
-
 	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
+	do_remove_id(usr)
 
-	if (id)
-		usr.put_in_hands(id)
-		to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
-		id = null
-		update_icon()
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_id == src)
-				H.sec_hud_set_ID()
+
+/obj/item/pda/proc/do_remove_id(mob/user)
+	if(!id)
+		return
+	if(user)
+		user.put_in_hands(id)
+		to_chat(user, "<span class='notice'>You remove the ID from the [name].</span>")
+	else
+		id.forceMove(get_turf(src))
+
+	. = id
+	id = null
+	update_icon()
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.wear_id == src)
+			H.sec_hud_set_ID()
+
 
 /obj/item/pda/proc/msg_input(mob/living/U = usr)
 	var/t = stripped_input(U, "Please enter message", name)
@@ -634,7 +663,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		"name" = "[owner]",
 		"job" = "[ownjob]",
 		"message" = message,
-		"targets" = string_targets
+		"targets" = string_targets,
+		"emojis" = allow_emojis,
 	))
 	if (picture)
 		signal.data["photo"] = picture
@@ -646,12 +676,16 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 
 	var/target_text = signal.format_target()
+	if(allow_emojis)
+		message = emoji_parse(message)//already sent- this just shows the sent emoji as one to the sender in the to_chat
+		signal.data["message"] = emoji_parse(signal.data["message"])
+
 	// Log it in our logs
 	tnote += "<i><b>&rarr; To [target_text]:</b></i><br>[signal.format_message()]<br>"
 	// Show it to ghosts
 	var/ghost_message = "<span class='name'>[owner] </span><span class='game say'>PDA Message</span> --> <span class='name'>[target_text]</span>: <span class='message'>[signal.format_message()]</span>"
 	for(var/mob/M in GLOB.player_list)
-		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
+		if(isobserver(M) && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text]")
@@ -687,7 +721,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(signal.data["automated"])
 			reply = "\[Automated Message\]"
 
-		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[signal.format_message()] [reply]")
+		var/inbound_message = signal.format_message()
+		if(signal.data["emojis"] == TRUE)//so will not parse emojis as such from pdas that don't send emojis
+			inbound_message = emoji_parse(inbound_message)
+
+		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]")
 
 	update_icon()
 	add_overlay(icon_alert)
@@ -775,19 +813,27 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if(istype(C))
 				I = C
 
-	if(I && I.registered_name)
+	if(I?.registered_name)
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
-		var/obj/old_id = id
-		id = I
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_id == src)
-				H.sec_hud_set_ID()
-		if(old_id)
-			user.put_in_hands(old_id)
+		insert_id(I, user)
 		update_icon()
 	return TRUE
+
+
+/obj/item/pda/proc/insert_id(obj/item/card/id/inserting_id, mob/user)
+	var/obj/old_id = id
+	id = inserting_id
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human_wearer = loc
+		if(human_wearer.wear_id == src)
+			human_wearer.sec_hud_set_ID()
+	if(old_id)
+		if(user)
+			user.put_in_hands(old_id)
+		else
+			old_id.forceMove(get_turf(src))
+
 
 // access to status display signals
 /obj/item/pda/attackby(obj/item/C, mob/user, params)
@@ -898,7 +944,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	if (ismob(loc))
 		var/mob/M = loc
-		M.show_message("<span class='userdanger'>Your [src] explodes!</span>", 1)
+		M.show_message("<span class='userdanger'>Your [src] explodes!</span>", MSG_VISUAL, "<span class='warning'>You hear a loud *pop*!</span>", MSG_AUDIBLE)
 	else
 		visible_message("<span class='danger'>[src] explodes!</span>", "<span class='warning'>You hear a loud *pop*!</span>")
 
@@ -925,12 +971,39 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 //AI verb and proc for sending PDA messages.
 
+/obj/item/pda/ai/verb/cmd_toggle_pda_receiver()
+	set category = "AI Commands"
+	set name = "PDA - Toggle Sender/Receiver"
+
+	if(usr.stat == DEAD)
+		return //won't work if dead
+	var/mob/living/silicon/S = usr
+	if(istype(S) && !isnull(S.aiPDA))
+		S.aiPDA.toff = !S.aiPDA.toff
+		to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(S.aiPDA.toff ? "Off" : "On")]!</span>")
+	else
+		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
+
+/obj/item/pda/ai/verb/cmd_toggle_pda_silent()
+	set category = "AI Commands"
+	set name = "PDA - Toggle Ringer"
+
+	if(usr.stat == DEAD)
+		return //won't work if dead
+	var/mob/living/silicon/S = usr
+	if(istype(S) && !isnull(S.aiPDA))
+		//0
+		S.aiPDA.silent = !S.aiPDA.silent
+		to_chat(usr, "<span class='notice'>PDA ringer toggled [(S.aiPDA.silent ? "Off" : "On")]!</span>")
+	else
+		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
+
 /mob/living/silicon/proc/cmd_send_pdamesg(mob/user)
 	var/list/plist = list()
 	var/list/namecounts = list()
 
 	if(aiPDA.toff)
-		to_chat(user, "Turn on your receiver in order to send messages.")
+		to_chat(user, "<span class='alert'>Turn on your receiver in order to send messages.</span>")
 		return
 
 	for (var/obj/item/pda/P in get_viewable_pdas())
@@ -959,30 +1032,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	aiPDA.create_message(src, selected)
 
-
-/mob/living/silicon/verb/cmd_toggle_pda_receiver()
-	set category = "AI Commands"
-	set name = "PDA - Toggle Sender/Receiver"
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	if(!isnull(aiPDA))
-		aiPDA.toff = !aiPDA.toff
-		to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(aiPDA.toff ? "Off" : "On")]!</span>")
-	else
-		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
-
-/mob/living/silicon/verb/cmd_toggle_pda_silent()
-	set category = "AI Commands"
-	set name = "PDA - Toggle Ringer"
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	if(!isnull(aiPDA))
-		//0
-		aiPDA.silent = !aiPDA.silent
-		to_chat(usr, "<span class='notice'>PDA ringer toggled [(aiPDA.silent ? "Off" : "On")]!</span>")
-	else
-		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
-
 /mob/living/silicon/proc/cmd_show_message_log(mob/user)
 	if(incapacitated())
 		return
@@ -990,8 +1039,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
 		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	else
-		to_chat(user, "You do not have a PDA. You should make an issue report about this.")
-
+		to_chat(user, "<span class='warning'>You do not have a PDA! You should make an issue report about this.</span>")
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/pda/emp_act(severity)

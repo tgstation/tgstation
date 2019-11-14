@@ -107,8 +107,7 @@
 			usr.put_in_hands(P)
 			updateUsrDialog()
 			icon_state = "[initial(icon_state)]-open"
-			sleep(5)
-			icon_state = initial(icon_state)
+			addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
 
 
 /*
@@ -216,9 +215,9 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 		if(virgin)
 			fillCurrent()
 			virgin = 0
-		cooldown = 1
-		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
-		cooldown = 0
+		cooldown = TRUE
+		// prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
+		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10 SECONDS)
 	else
 		to_chat(user, "<span class='warning'>[src] is jammed, give it a few seconds.</span>")
 	..()

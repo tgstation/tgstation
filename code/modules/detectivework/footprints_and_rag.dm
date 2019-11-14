@@ -1,7 +1,4 @@
 
-/mob
-	var/bloody_hands = 0
-
 /obj/item/clothing/gloves
 	var/transfer_blood = 0
 
@@ -33,7 +30,7 @@
 		var/log_object = "containing [reagentlist]"
 		if(user.a_intent == INTENT_HARM && !C.is_mouth_covered())
 			reagents.trans_to(C, reagents.total_volume, transfered_by = user, method = INGEST)
-			C.visible_message("<span class='danger'>[user] has smothered \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
+			C.visible_message("<span class='danger'>[user] has smothered \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='hear'>You hear some struggling and muffled cries of surprise.</span>")
 			log_combat(user, C, "smothered", src, log_object)
 		else
 			reagents.reaction(C, TOUCH)

@@ -48,7 +48,7 @@
 				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
 			else
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
-			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>")
+			to_chat(user, "<span class='notice'>[trans] unit\s injected. [reagents.total_volume] unit\s remaining in [src].</span>")
 			log_combat(user, M, "injected", src, "([contained])")
 		return TRUE
 	return FALSE
@@ -182,8 +182,8 @@
 	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/salacid
-	name = "salicyclic acid medipen"
-	desc = "A autoinjector containing salicyclic acid, used to treat severe brute damage."
+	name = "salicylic acid medipen"
+	desc = "A autoinjector containing salicylic acid, used to treat severe brute damage."
 	icon_state = "salacid"
 	item_state = "salacid"
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
@@ -217,9 +217,9 @@
 	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession."
 	icon_state = "stimpen"
 	item_state = "stimpen"
-	volume = 57
-	amount_per_transfer_from_this = 57
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5)
+	volume = 60
+	amount_per_transfer_from_this = 60
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5, /datum/reagent/medicine/oxandrolone = 8, /datum/reagent/medicine/sal_acid = 8, /datum/reagent/medicine/morphine = 2)
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"

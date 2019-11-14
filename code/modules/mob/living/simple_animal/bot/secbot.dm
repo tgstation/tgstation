@@ -35,6 +35,7 @@
 	var/weaponscheck = FALSE //If true, arrest people for weapons if they lack access
 	var/check_records = TRUE //Does it check security records?
 	var/arrest_type = FALSE //If true, don't handcuff
+	var/ranged = FALSE //used for EDs
 
 	var/fair_market_price_arrest = 25 // On arrest, charges the violator this much. If they don't have that much in their account, the securitron will beat them instead
 	var/fair_market_price_detain = 5 // Charged each time the violator is stunned on detain
@@ -106,7 +107,7 @@
 	walk_to(src,0)
 	last_found = world.time
 
-/mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, override = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)//shocks only make him angry
+/mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)//shocks only make him angry
 	if(base_speed < initial(base_speed) + 3)
 		base_speed += 3
 		addtimer(VARSET_CALLBACK(src, base_speed, base_speed - 3), 60)
@@ -114,7 +115,6 @@
 		visible_message("<span class='warning'>[src] shakes and speeds up!</span>")
 
 /mob/living/simple_animal/bot/secbot/set_custom_texts()
-
 	text_hack = "You overload [name]'s target identification system."
 	text_dehack = "You reboot [name] and restore the target identification."
 	text_dehack_fail = "[name] refuses to accept your authority!"
@@ -179,16 +179,18 @@ Auto Patrol: []"},
 		mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/secbot/proc/judgement_criteria()
-    var/final = FALSE
-    if(idcheck)
-        final = final|JUDGE_IDCHECK
-    if(check_records)
-        final = final|JUDGE_RECORDCHECK
-    if(weaponscheck)
-        final = final|JUDGE_WEAPONCHECK
-    if(emagged == 2)
-        final = final|JUDGE_EMAGGED
-    return final
+	var/final = FALSE
+	if(idcheck)
+		final |= JUDGE_IDCHECK
+	if(check_records)
+		final |= JUDGE_RECORDCHECK
+	if(weaponscheck)
+		final |= JUDGE_WEAPONCHECK
+	if(emagged == 2)
+		final |= JUDGE_EMAGGED
+	if(ranged)
+		final |= JUDGE_IGNOREMONKEYS
+	return final
 
 /mob/living/simple_animal/bot/secbot/proc/special_retaliate_after_attack(mob/user) //allows special actions to take place after being attacked.
 	return
@@ -220,8 +222,8 @@ Auto Patrol: []"},
 		declare_arrests = FALSE
 		update_icon()
 
-/mob/living/simple_animal/bot/secbot/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj , /obj/item/projectile/beam)||istype(Proj, /obj/item/projectile/bullet))
+/mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
+	if(istype(Proj , /obj/projectile/beam)||istype(Proj, /obj/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
@@ -266,11 +268,11 @@ Auto Patrol: []"},
 		playsound(src, "law", 50, FALSE)
 		back_to_idle()
 
-/mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C, var/harm = FALSE)
+/mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C, harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
-	icon_state = "secbot-c"
-	addtimer(CALLBACK(src, .proc/update_icon), 2)
+	icon_state = "[initial(icon_state)]-c"
+	addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
 	var/threat = 5
 
 	if(harm)
@@ -420,7 +422,10 @@ Auto Patrol: []"},
 			target = C
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
-			playsound(loc, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+			if(ranged)
+				playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
+			else
+				playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
 			INVOKE_ASYNC(src, .proc/handle_automated_action)
@@ -438,16 +443,34 @@ Auto Patrol: []"},
 	walk_to(src,0)
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/Tsec = drop_location()
+	if(ranged)
+		var/obj/item/bot_assembly/ed209/Sa = new (Tsec)
+		Sa.build_step = 1
+		Sa.add_overlay("hs_hole")
+		Sa.created_name = name
+		new /obj/item/assembly/prox_sensor(Tsec)
+		var/obj/item/gun/energy/disabler/G = new (Tsec)
+		G.cell.charge = 0
+		G.update_icon()
+		if(prob(50))
+			new /obj/item/bodypart/l_leg/robot(Tsec)
+			if(prob(25))
+				new /obj/item/bodypart/r_leg/robot(Tsec)
+		if(prob(25))//50% chance for a helmet OR vest
+			if(prob(50))
+				new /obj/item/clothing/head/helmet(Tsec)
+			else
+				new /obj/item/clothing/suit/armor/vest(Tsec)
+	else
+		var/obj/item/bot_assembly/secbot/Sa = new (Tsec)
+		Sa.build_step = 1
+		Sa.add_overlay("hs_hole")
+		Sa.created_name = name
+		new /obj/item/assembly/prox_sensor(Tsec)
+		drop_part(baton_type, Tsec)
 
-	var/obj/item/bot_assembly/secbot/Sa = new (Tsec)
-	Sa.build_step = 1
-	Sa.add_overlay("hs_hole")
-	Sa.created_name = name
-	new /obj/item/assembly/prox_sensor(Tsec)
-	drop_part(baton_type, Tsec)
-
-	if(prob(50))
-		drop_part(robot_arm, Tsec)
+		if(prob(50))
+			drop_part(robot_arm, Tsec)
 
 	do_sparks(3, TRUE, src)
 

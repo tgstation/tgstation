@@ -1616,7 +1616,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dh" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23;
@@ -1832,7 +1832,7 @@
 	},
 /area/awaymission/moonoutpost19/main)
 "dA" = (
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/awaymission/moonoutpost19/main)
 "dB" = (
 /obj/structure/sign/warning/vacuum{
@@ -5403,7 +5403,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/airalarm/unlocked{
 	dir = 8;
 	pixel_x = 23;
@@ -5895,7 +5895,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "mz" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/carpet{
@@ -6685,7 +6685,7 @@
 	req_access_txt = "201"
 	},
 /obj/item/clothing/suit/toggle/labcoat,
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{

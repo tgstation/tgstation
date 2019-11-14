@@ -28,7 +28,8 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	vision_range = 1 // Only attack when target is close
 	wander = FALSE
-	attacktext = "glomps"
+	attack_verb_continuous = "glomps"
+	attack_verb_simple = "glomp"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 
@@ -115,7 +116,7 @@
 	//Morphed is weaker
 	melee_damage_lower = melee_damage_disguised
 	melee_damage_upper = melee_damage_disguised
-	speed = 0
+	set_varspeed(0)
 
 	morph_time = world.time + MORPH_COOLDOWN
 	med_hud_set_health()
@@ -130,7 +131,7 @@
 	form = null
 	alpha = initial(alpha)
 	color = initial(color)
-	animate_movement = initial(animate_movement)
+	animate_movement = SLIDE_STEPS
 	maptext = null
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
@@ -143,7 +144,7 @@
 	//Baseline stats
 	melee_damage_lower = initial(melee_damage_lower)
 	melee_damage_upper = initial(melee_damage_upper)
-	speed = initial(speed)
+	set_varspeed(initial(speed))
 
 	morph_time = world.time + MORPH_COOLDOWN
 	med_hud_set_health()

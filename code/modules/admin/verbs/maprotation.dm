@@ -33,7 +33,7 @@
 			mapname += "\]"
 
 		maprotatechoices[mapname] = VM
-	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in maprotatechoices|"Custom"
+	var/chosenmap = input("Choose a map to change to", "Change Map")  as null|anything in sortList(maprotatechoices)|"Custom"
 	if (!chosenmap)
 		return
 	

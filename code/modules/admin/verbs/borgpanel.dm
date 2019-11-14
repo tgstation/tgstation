@@ -7,7 +7,7 @@
 		return
 
 	if (!istype(borgo, /mob/living/silicon/robot))
-		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in GLOB.silicon_mobs
+		borgo = input("Select a borg", "Select a borg", null, null) as null|anything in sortNames(GLOB.silicon_mobs)
 	if (!istype(borgo, /mob/living/silicon/robot))
 		to_chat(usr, "<span class='warning'>Borg is required for borgpanel</span>")
 
@@ -53,7 +53,7 @@
 	.["upgrades"] = list()
 	for (var/upgradetype in subtypesof(/obj/item/borg/upgrade)-/obj/item/borg/upgrade/hypospray) //hypospray is a dummy parent for hypospray upgrades
 		var/obj/item/borg/upgrade/upgrade = upgradetype
-		if (initial(upgrade.module_type) && !istype(borg.module, initial(upgrade.module_type))) // Upgrade requires a different module
+		if (initial(upgrade.module_type) && !is_type_in_list(borg.module, initial(upgrade.module_type))) // Upgrade requires a different module
 			continue
 		var/installed = FALSE
 		if (locate(upgradetype) in borg)

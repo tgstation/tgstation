@@ -199,7 +199,7 @@
 		set_suicide(TRUE)
 		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='italics'>You hear thrashing.</span>")
+				"<span class='hear'>You hear thrashing.</span>")
 
 		suicide_log()
 
@@ -224,10 +224,10 @@
 		death(FALSE)
 
 /mob/living/proc/suicide_log()
-	log_message("[key_name(src)] committed suicide at [AREACOORD(src)] as [src.type].", LOG_ATTACK)
+	log_message("committed suicide as [src.type]", LOG_ATTACK)
 
 /mob/living/carbon/human/suicide_log()
-	log_message("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].", LOG_ATTACK)
+	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
 
 /mob/living/proc/canSuicide()
 	switch(stat)

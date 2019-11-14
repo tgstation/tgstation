@@ -8,7 +8,7 @@
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 30, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	var/obj/item/showpiece = null
 	var/alert = TRUE
 	var/open = FALSE
@@ -104,13 +104,13 @@
 			to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 			toggle_lock(user)
 		else
-			to_chat(user,  "<span class='warning'>Access denied.</span>")
+			to_chat(user,  "<span class='alert'>Access denied.</span>")
 	else if(W.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP && !broken)
 		if(obj_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=5))
 				return
 
-			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
+			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 			if(W.use_tool(src, user, 40, amount=5, volume=50))
 				obj_integrity = max_integrity
 				update_icon()
@@ -121,19 +121,19 @@
 	else if(!alert && W.tool_behaviour == TOOL_CROWBAR && openable) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
-				to_chat(user, "<span class='notice'>Remove the displayed object first.</span>")
+				to_chat(user, "<span class='warning'>Remove the displayed object first!</span>")
 			else
-				to_chat(user, "<span class='notice'>You remove the destroyed case</span>")
+				to_chat(user, "<span class='notice'>You remove the destroyed case.</span>")
 				qdel(src)
 		else
-			to_chat(user, "<span class='notice'>You start to [open ? "close":"open"] [src].</span>")
+			to_chat(user, "<span class='notice'>You start to [open ? "close":"open"] [src]...</span>")
 			if(W.use_tool(src, user, 20))
 				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 				toggle_lock(user)
 	else if(open && !showpiece)
 		if(user.transferItemToLoc(W, src))
 			showpiece = W
-			to_chat(user, "<span class='notice'>You put [W] on display</span>")
+			to_chat(user, "<span class='notice'>You put [W] on display.</span>")
 			update_icon()
 	else if(istype(W, /obj/item/stack/sheet/glass) && broken)
 		var/obj/item/stack/sheet/glass/G = W
@@ -268,7 +268,7 @@
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
 		if(added_roundstart)
 			is_locked = !is_locked
-			to_chat(user, "You [!is_locked ? "un" : ""]lock the case.")
+			to_chat(user, "<span class='notice'>You [!is_locked ? "un" : ""]lock the case.</span>")
 		else
 			to_chat(user, "<span class='warning'>The lock is stuck shut!</span>")
 		return

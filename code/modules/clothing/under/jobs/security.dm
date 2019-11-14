@@ -205,8 +205,10 @@
 /obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"
 	desc = "It's standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
+	icon = 'icons/obj/clothing/under/security.dmi'
 	icon_state = "prisoner"
 	item_state = "o_suit"
+	mob_overlay_icon = 'icons/mob/clothing/under/security.dmi'
 	has_sensor = LOCKED_SENSORS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
