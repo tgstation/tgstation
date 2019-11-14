@@ -7908,12 +7908,16 @@
 /area/construction/mining/aux_base)
 "atc" = (
 /obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/reagent_containers/food/drinks/bottle/whiskey{
 	pixel_x = 3
 	},
 /obj/item/lighter,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "atd" = (
@@ -8276,11 +8280,11 @@
 /area/lawoffice)
 "aui" = (
 /obj/structure/table/wood,
-/obj/item/camera/detective,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /obj/machinery/light/small,
+/obj/item/camera/detective,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "auj" = (
@@ -27614,7 +27618,7 @@
 /area/crew_quarters/heads/hop)
 "btD" = (
 /obj/structure/table,
-/obj/item/paper_bin{
+/obj/item/paper_bin/carbon{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -29263,18 +29267,18 @@
 /area/crew_quarters/heads/hor)
 "byc" = (
 /obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/stamp/qm,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/stamp/qm,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "byd" = (
