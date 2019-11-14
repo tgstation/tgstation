@@ -50,7 +50,7 @@
 			user.do_attack_animation(src)
 			if (user.name == master)
 				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
-				spawn(10)
+				if(do_after(user, 1 SECONDS, TRUE, src))
 					fold_in()
 					if(user.put_in_hands(card))
 						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
