@@ -14,7 +14,6 @@
 		icon_state = "paper_stack"
 	if(info)
 		icon_state = "[icon_state]_words"
-		return
 
 /obj/item/paper/carbon/proc/removecopy(mob/living/user)
 	if(!copied)
