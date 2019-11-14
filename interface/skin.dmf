@@ -40,11 +40,6 @@ menu "menu"
 		command = "adminhelp"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem
-		name = "&Hotkeys"
-		command = "hotkeys-help"
-		category = "&Help"
-		saved-params = "is-checked"
 
 
 window "mainwindow"
