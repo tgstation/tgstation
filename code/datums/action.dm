@@ -76,6 +76,9 @@
 	if(M)
 		if(M.client)
 			M.client.screen -= button
+		for(var/datum/action/A in M.held_actions)
+			if(A == src)
+				M.put_action_in_hand(null, M.get_held_index_of_action(A))
 		M.actions -= src
 		M.update_action_buttons()
 	owner = null

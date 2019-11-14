@@ -43,7 +43,8 @@
 	if(modifiers["middle"])
 		if(ismob(usr))
 			var/mob/M = usr
-			if(M.get_active_action())
+			if(M.get_active_action() == linked_action)
+				M.put_action_in_active_hand(null)
 				return
 			M.put_action_in_active_hand(linked_action)
 			return

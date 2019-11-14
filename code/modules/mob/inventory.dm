@@ -46,6 +46,9 @@
 /mob/proc/put_action_in_active_hand(datum/action/A)
 	return put_action_in_hand(A, active_hand_index)
 
+/mob/proc/get_held_index_of_action(datum/action/A)
+	return held_actions.Find(A)
+
 //Odd = left. Even = right
 /mob/proc/held_index_to_dir(i)
 	if(!(i % 2))
