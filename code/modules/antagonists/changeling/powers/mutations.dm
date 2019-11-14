@@ -263,7 +263,7 @@
 /obj/item/gun/magic/tentacle/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='warning'>The [name] is not ready yet.</span>")
 
-/obj/item/gun/magic/tentacle/process_chamber()
+/obj/item/gun/magic/tentacle/process_fire()
 	. = ..()
 	if(charges == 0)
 		qdel(src)
