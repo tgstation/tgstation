@@ -1,123 +1,83 @@
 // Base colors
-$white: #ffffff;
-$pink: #ffc0cb;
-$pale-red: #e74242;
-$crimson: #dc143c;
-$red: #b00e0e;
-$dark-red: #9d0808;
-$magenta: #ff00ff;
-$yellow: #9a9d00;
-$bright-yellow: lighten($yellow, 50%);
-$yellow-orange: #be6209;
-$orange: #ffa500;
-$gold: #fdd700;
-$brown: #a52a2a;
-$pale-green: #73e573;
-$green: #2f943c;
-$grass-green: #537d29;
-$dark-green: #397439;
-$violet: #ee82ee;
-$purple: #800080;
-$blue: #0000ff;
-$cyan: #00ffff;
-$royal-blue: #40628a;
-$pale-blue: #8ba5c4;
-$black: #000000;
-$black-gray: #161616;
-$dark-gray: #272727;
-$gray: #363636;
-// i'm sorry these are different, grey is used for some uis like wire
-$grey: #808080;
-$silver: #c0c0c0;
-$light-gray: #999999;
+$color-black: #000000;
+$color-white: #ffffff;
+$color-red: #db2828;
+$color-orange: #f2711c;
+$color-yellow: #fbd608;
+$color-olive: #b5cc18;
+$color-green: #20b142;
+$color-teal: #00b5ad;
+$color-blue: #2185d0;
+$color-violet: #6435c9;
+$color-purple: #a333c8;
+$color-pink: #e03997;
+$color-brown: #a5673f;
+$color-grey: #767676;
 
-// Branding Colors
-$color-normal: $royal-blue;
-$color-good: $grass-green;
-$color-average: $yellow-orange;
-$color-bad: $red;
-$color-highlight: $pale-blue;
+$color-nanotrasen: #40628a;
+$color-primary: #4972a1;
+$color-good: #5baa27;
+$color-average: #f08f11;
+$color-bad: #db2828;
+$color-label: #7e90a7;
 
-// Text
-$text-color-normal: $white;
-$text-color-inverse: $black;
+// Background and foreground color lightness ratios
+$color-bg-lightness: -15%;
+$color-fg-lightness: 5%;
 
-// Background
-$background-color-start: #2a2a2a;
-$background-color-end: #202020;
+@function color-bg($color) {
+  @return scale-color($color, $lightness: $color-bg-lightness);
+}
 
-// Rules (<hr/> etc)
-$rule-color-normal: $royal-blue;
-$rule-color-dark: $dark-gray;
-$rule-size: 2px;
+@function color-fg($color) {
+  @return scale-color($color, $lightness: $color-fg-lightness);
+}
 
-// Titlebar
-$titlebar-color-text: $pale-blue;
-$titlebar-color-button: $pale-blue;
-$titlebar-color-background: $gray;
-$titlebar-color-coreshadow: $black-gray;
-$titlebar-color-shadow: rgba(#000, 0.1);
+// Base page colors
+$base-color-text: #ffffff;
+$base-color-background: #252525;
+$base-color-background-start: adjust-color(
+  $base-color-background,
+  $lightness: 2%);
+$base-color-background-end: adjust-color(
+  $base-color-background,
+  $lightness: -2%);
+$base-border-radius: 2px;
 
-// Resize
-$resize-color: $gray;
-
-// Display
-$display-color-title: $white;
-$display-color-background: rgba(#000, 0.33);
-$display-color-shadow: rgba(#000, 0.5);
-
-// Notice
-$notice-color-first: #bb9b68;
-$notice-color-second: #b1905d;
-$notice-color-border: $dark-gray;
+// TitleBar
+$titlebar-color-text: rgba(255, 255, 255, 0.75);
+$titlebar-color-background: #363636;
+$titlebar-color-shadow-core: #161616;
+$titlebar-color-shadow: rgba(0, 0, 0, 0.1);
 
 // Section
-$section-color-label: $pale-blue;
-$section-color-candystripe: rgba(#000, 0.25);
+$section-color-title: #ffffff;
+$section-color-background: rgba(#000, 0.33);
+$section-color-shadow: rgba(#000, 0.5);
+$section-color-separator: $color-primary;
 
-// Bar
-$bar-color-normal: $color-normal;
-$bar-color-good: $color-good;
-$bar-color-average: $color-average;
-$bar-color-bad: $color-bad;
-$bar-color-border: $royal-blue;
-$bar-color-background: $dark-gray;
+// NoticeBox
+$noticebox-color-first: #bb9b68;
+$noticebox-color-second: #b1905d;
+$noticebox-color-border: #272727;
+
+// ProgressBar
+$progressbar-color-primary: color-bg($color-primary);
+$progressbar-color-background: #272727;
+$progressbar-border-radius: 0;
 
 // Buttons
-$button-color-normal: $royal-blue;
-$button-color-disabled: $light-gray;
-$button-color-selected: $green;
-$button-color-caution: $yellow;
-$button-color-danger: $dark-red;
-$button-color-border: $dark-gray;
-$button-lighten-hover: 15%;
-$button-desaturate-inactive: 50%;
-
-// Input
-$input-color-text: $black;
-$input-color-placeholder: $light-gray;
-$input-color-border: $dark-gray;
-$input-color-background: $white;
+$button-color-normal: color-bg($color-primary);
+$button-color-disabled: #999999;
+$button-color-selected: color-bg($color-green);
+$button-color-caution: color-bg($color-yellow);
+$button-color-danger: color-bg($color-red);
+$button-border-radius: 0;
 
 // Tooltips
-$tooltip-color-border: $dark-gray;
-$tooltip-color-background: $gray;
-
-// Department Colors
-$color-dept-cap: #c06616;
-$color-dept-sec: #e74c3c;
-$color-dept-med: #3498db;
-$color-dept-sci: #9b59b6;
-$color-dept-eng: #f1c40f;
-$color-dept-cargo: #f39c12;
-$color-dept-cent: #00c100;
-$color-dept-other: #c38312;
-
-// Damage type colors
-$color-damage-oxy: #3498db;
-$color-damage-toxin: #2ecc71;
-$color-damage-burn: #e67e22;
-$color-damage-brute: #e74c3c;
+$tooltip-color-background: #333333;
+$tooltip-border-radius: $base-border-radius;
 
 // Inputs
 $input-base-color: #88bfff;
+$input-border-radius: $base-border-radius;

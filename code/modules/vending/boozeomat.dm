@@ -31,7 +31,10 @@
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/grappa = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
-					/obj/item/reagent_containers/food/drinks/bottle/applejack = 5)
+					/obj/item/reagent_containers/food/drinks/bottle/applejack = 5,
+					/obj/item/reagent_containers/food/drinks/bottle/blank = 15,
+					/obj/item/reagent_containers/food/drinks/bottle/blank/small = 15
+					)
 	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12,
 					 /obj/item/reagent_containers/food/drinks/bottle/fernet = 5)
 	premium = list(/obj/item/reagent_containers/glass/bottle/ethanol = 4,

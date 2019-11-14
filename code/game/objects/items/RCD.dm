@@ -58,7 +58,8 @@ RLD
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
-	. = ..()
+	silo_mats = null
+	return ..()
 
 /obj/item/construction/attackby(obj/item/W, mob/user, params)
 	if(iscyborg(user))

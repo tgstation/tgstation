@@ -1,0 +1,5 @@
+author: "SteelSlayer"
+delete-after: True
+changes: 
+  - tweak: "When you suicide using an internals tank, you're character will now inflate, and grow in size before you gib."
+  - code_imp: "Adds a safe_gib argument to the carbon gib proc. Allows you to specifiy if you want to preserve the items on the mob you're gibbing."

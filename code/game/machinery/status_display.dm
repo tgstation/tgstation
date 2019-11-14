@@ -245,7 +245,7 @@
 	else
 		line1 = "CARGO"
 		line2 = SSshuttle.supply.getTimerStr()
-		if(lentext(line2) > CHARS_PER_LINE)
+		if(length(line2) > CHARS_PER_LINE)
 			line2 = "Error"
 	update_display(line1, line2)
 

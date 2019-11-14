@@ -357,13 +357,7 @@
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 		say("Initiating scan...")
 
-		spawn(20)
-			scan_occupant(scanner.occupant, usr, body_only)
-
-			loading = FALSE
-			updateUsrDialog()
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
-
+		addtimer(CALLBACK(src, .proc/do_scan, usr, body_only), 2 SECONDS)
 
 		//No locking an open scanner.
 	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational())
@@ -522,6 +516,13 @@
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
+
+/obj/machinery/computer/cloning/proc/do_scan(mob/user, body_only)
+	scan_occupant(scanner.occupant, user, body_only)
+
+	loading = FALSE
+	updateUsrDialog()
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M, body_only)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)

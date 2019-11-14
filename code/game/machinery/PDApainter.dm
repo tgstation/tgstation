@@ -8,23 +8,24 @@
 	var/obj/item/pda/storedpda = null
 	var/list/colorlist = list()
 
-
-/obj/machinery/pdapainter/update_icon()
-	cut_overlays()
-
+/obj/machinery/pdapainter/update_icon_state()
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 		return
-
-	if(storedpda)
-		add_overlay("[initial(icon_state)]-closed")
 
 	if(powered())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
 
-	return
+/obj/machinery/pdapainter/update_overlays()
+	. = ..()
+
+	if(stat & BROKEN)
+		return
+
+	if(storedpda)
+		. += "[initial(icon_state)]-closed"
 
 /obj/machinery/pdapainter/Initialize()
 	. = ..()

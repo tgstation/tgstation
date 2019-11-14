@@ -35,23 +35,32 @@
 		message_admins("Client [ckey] just attempted to send an invalid keypress. Keymessage was over [MAX_KEYPRESS_COMMANDLENGTH] characters, autokicking due to likely abuse.")
 		QDEL_IN(src, 1)
 		return
+		
+	//Focus Chat failsafe. Overrides movement checks to prevent WASD.
+	if(!prefs.hotkeys && length(_key) == 1 && _key != "Alt" && _key != "Ctrl" && _key != "Shift")
+		winset(src, null, "input.focus=true ; input.text=[url_encode(_key)]")
+		return
 
 	//offset by 1 because the buffer address is 0 indexed because the math was simpler
 	keys_held[current_key_address + 1] = _key
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
 	keys_held[_key] = world.time
 	current_key_address = ((current_key_address + 1) % HELD_KEY_BUFFER_LENGTH)
-	var/movement = SSinput.movement_keys[_key]
+	var/movement = movement_keys[_key]
 	if(!(next_move_dir_sub & movement) && !keys_held["Ctrl"])
 		next_move_dir_add |= movement
 
 	// Client-level keybindings are ones anyone should be able to do at any time
 	// Things like taking screenshots, hitting tab, and adminhelps.
-
-	var/AltMod = keys_held["Alt"] ? "Alt-" : ""
-	var/CtrlMod = keys_held["Ctrl"] ? "Ctrl-" : ""
-	var/ShiftMod = keys_held["Shift"] ? "Shift-" : ""
-	var/full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
+	var/AltMod = keys_held["Alt"] ? "Alt" : ""
+	var/CtrlMod = keys_held["Ctrl"] ? "Ctrl" : ""
+	var/ShiftMod = keys_held["Shift"] ? "Shift" : ""
+	var/full_key
+	switch(_key)
+		if("Alt", "Ctrl", "Shift")
+			full_key = "[AltMod][CtrlMod][ShiftMod]"
+		else
+			full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
 	var/keycount = 0
 	for(var/kb_name in prefs.key_bindings[full_key])
 		keycount++
@@ -59,8 +68,8 @@
 		if(kb.down(src) && keycount >= MAX_COMMANDS_PER_KEY)
 			break
 
-	holder?.key_down(full_key, src)
-	mob.focus?.key_down(full_key, src)
+	holder?.key_down(_key, src)
+	mob.focus?.key_down(_key, src)
 
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
@@ -71,7 +80,7 @@
 		if(keys_held[i] == _key)
 			keys_held[i] = null
 			break
-	var/movement = SSinput.movement_keys[_key]
+	var/movement = movement_keys[_key]
 	if(!(next_move_dir_add & movement))
 		next_move_dir_sub |= movement
 

@@ -31,7 +31,7 @@ export const ChemDispenser = props => {
       <Section
         title="Status"
         buttons={recording && (
-          <Box inline mx={1} color="pale-red">
+          <Box inline mx={1} color="red">
             <Icon name="circle" mr={1} />
             Recording
           </Box>
@@ -157,14 +157,14 @@ export const ChemDispenser = props => {
           </LabeledList.Item>
           <LabeledList.Item
             label="Contents">
-            <Box color="highlight">
+            <Box color="label">
               {(!data.isBeakerLoaded && !recording) && 'N/A'
                 || beakerContents.length === 0 && 'Nothing'}
             </Box>
             {beakerContents.map(chemical => (
               <Box
                 key={chemical.name}
-                color="highlight">
+                color="label">
                 <AnimatedNumber
                   initial={0}
                   value={chemical.volume} />
