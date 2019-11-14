@@ -69,9 +69,9 @@
 		if(diskette)
 			diskette.forceMove(drop_location())
 			diskette = null
-		src.diskette = I
+		diskette = I
 		to_chat(user, "<span class='notice'>You insert [I].</span>")
-		src.updateUsrDialog()
+		updateUsrDialog()
 		return
 	if (istype(I, /obj/item/chromosome))
 		if(LAZYLEN(stored_chromosomes) < max_chromosomes)
