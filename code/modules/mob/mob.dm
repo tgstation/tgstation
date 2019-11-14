@@ -795,7 +795,7 @@
 /mob/proc/canface()
 	if(world.time < client.last_turn)
 		return FALSE
-	if((stat == DEAD || stat == UNCONSCIOUS) && isliving(src))
+	if(stat == DEAD || stat == UNCONSCIOUS)
 		return FALSE
 	if(anchored)
 		return FALSE
@@ -810,6 +810,9 @@
 	if(!(mobility_flags & MOBILITY_MOVE))
 		return FALSE
 	return ..()
+
+/mob/dead/observer/canface()
+	return TRUE
 
 ///Hidden verb to turn east
 /mob/verb/eastface()
