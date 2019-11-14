@@ -1069,12 +1069,12 @@
 	color = "#000000"
 	self_consuming = TRUE
 
-/datum/reagent/medicine/higadrite/on_mob_add(mob/living/M)
+/datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/M)
 	..()
 	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
 
-/datum/reagent/medicine/higadrite/on_mob_end_metabolize(mob/living/M)
+/datum/reagent/medicine/cordiolis_hepatico/on_mob_end_metabolize(mob/living/M)
 	..()
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
 	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
