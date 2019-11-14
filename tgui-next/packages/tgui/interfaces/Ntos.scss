@@ -1,0 +1,35 @@
+.NtosWrapper__header {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  right: 0;
+  height: 28px;
+  line-height: 27px;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-family: Consolas, monospace;
+  font-size: 14px;
+  user-select: none;
+  -ms-user-select: none;
+}
+
+.NtosWrapper__content .Layout__content {
+  margin-top: 28px;
+  font-family: Consolas, monospace;
+  font-size: 14px;
+}
+
+.NtosHeader__left {
+  position: absolute;
+  left: 12px;
+}
+
+.NtosHeader__right {
+  position: absolute;
+  right: 12px;
+}
+
+.NtosHeader__icon {
+  margin-top: -9px;
+  margin-bottom: -6px;
+  vertical-align: middle;
+}

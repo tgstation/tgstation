@@ -1,8 +1,6 @@
-
-import { Fragment } from 'inferno';
+import { map } from 'common/collections';
 import { act } from '../byond';
-import { Button, Section, Table, NoticeBox } from '../components';
-import { map } from 'common/fp';
+import { Button, NoticeBox, Section, Table } from '../components';
 
 export const SmartVend = props => {
   const { state } = props;
@@ -60,4 +58,6 @@ export const SmartVend = props => {
           ))(data.contents)}
         </Table>
       )}
-    </Section>); };
+    </Section>
+  );
+};

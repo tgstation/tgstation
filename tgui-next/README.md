@@ -361,6 +361,10 @@ two flex items as far as possible from each other.
 Props:
 
 - See inherited props: [Box](#box)
+- `spacing: number` - Spacing between flex items, in integer units
+(1 unit - 0.5em). Does not directly relate to a flex css property
+(adds a modifier class under the hood), and only integer numbers are
+supported.
 - `direction: string` - This establishes the main-axis, thus defining the
 direction flex items are placed in the flex container.
   - `row` (default) - left to right.

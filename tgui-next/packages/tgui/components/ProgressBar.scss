@@ -5,6 +5,7 @@
   padding: 0 6px;
   border: 1px solid $progressbar-color-primary;
   border-radius: $progressbar-border-radius;
+  background-color: $progressbar-color-background;
   transition: border-color 500ms;
 }
 

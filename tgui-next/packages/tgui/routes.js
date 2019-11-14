@@ -33,10 +33,12 @@ import { DisposalUnit } from './interfaces/DisposalUnit';
 import { Gps } from './interfaces/Gps';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { Mint } from './interfaces/Mint';
+import { NtosWrapper } from './interfaces/Ntos';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
+import { PowerMonitor } from './interfaces/PowerMonitor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
@@ -194,6 +196,11 @@ const ROUTES = {
     component: () => Mint,
     scrollable: false,
   },
+  ntos_power_monitor: {
+    component: () => PowerMonitor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+  },
   ore_redemption_machine: {
     component: () => OreRedemptionMachine,
     scrollable: true,
@@ -209,6 +216,10 @@ const ROUTES = {
   portable_generator: {
     component: () => PortableGenerator,
     scrollable: false,
+  },
+  power_monitor: {
+    component: () => PowerMonitor,
+    scrollable: true,
   },
   radio: {
     component: () => Radio,

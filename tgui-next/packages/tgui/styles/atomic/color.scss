@@ -3,3 +3,9 @@
     color: $color-value !important;
   }
 }
+
+@each $color-name, $color-value in $color-bg-map {
+  .color-bg-#{$color-name} {
+    background-color: $color-value !important;
+  }
+}

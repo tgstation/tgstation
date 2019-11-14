@@ -9,7 +9,8 @@
   width: auto;
 }
 
-.Table__cell {
+.Table__cell,
+.Table td {
   padding: 0 3px;
 
   &:first-child {

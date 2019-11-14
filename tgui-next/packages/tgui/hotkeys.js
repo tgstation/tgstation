@@ -4,6 +4,7 @@ import { callByond, tridentVersion } from './byond';
 const logger = createLogger('hotkeys');
 
 // Key codes
+export const KEY_BACKSPACE = 8;
 export const KEY_TAB = 9;
 export const KEY_ENTER = 13;
 export const KEY_SHIFT = 16;
@@ -155,10 +156,27 @@ const handleHotKey = (e, eventType, dispatch) => {
     return;
   }
   const keyData = getKeyData(e);
-  const { keyCode, hasModifierKeys, keyString } = keyData;
+  const {
+    ctrlKey,
+    altKey,
+    keyCode,
+    hasModifierKeys,
+    keyString,
+  } = keyData;
   // Dispatch a detected hotkey as a store action
   if (hasModifierKeys && !MODIFIER_KEYS.includes(keyCode)) {
     logger.log(keyString);
+    // Fun stuff
+    if (ctrlKey && altKey && keyCode === KEY_BACKSPACE) {
+      // NOTE: We need to call this in a timeout, because we need a clean
+      // stack in order for this to be a fatal error.
+      setTimeout(() => {
+        throw new Error(
+          "OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle"
+          + " fucko boingo! The code monkeys at our headquarters are"
+          + " working VEWY HAWD to fix this!");
+      });
+    }
     dispatch({
       type: 'hotKey',
       payload: keyData,
