@@ -1158,13 +1158,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	. = 0	//We start at 0.
 	var/gravity = H.has_gravity()
 
-	if(!HAS_TRAIT(H, TRAIT_IGNORESLOWDOWN) && gravity > STANDARD_GRAVITY)
-		//Moving in high gravity is very slow (Flying too)
-		var/grav_force = min(gravity - STANDARD_GRAVITY,3)
-		. += 1 + grav_force
-
-	return .
-
 //////////////////
 // ATTACK PROCS //
 //////////////////
