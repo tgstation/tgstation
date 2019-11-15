@@ -58,6 +58,7 @@
 	playsound(loc, 'sound/effects/pray.ogg', 50, TRUE, -1)
 
 	// Let the sound effect finish playing
+	add_fingerprint(user)
 	sleep(20)
 	if(!user)
 		return
