@@ -8,13 +8,21 @@
 	taste_description = "bitterness"
 	taste_mult = 1.2
 	harmful = TRUE
+	var/antidotum = /datum/reagent/phenol
+	var/isBeingCured = FALSE
 	var/toxpwr = 1.5
 	var/silent_toxin = FALSE //won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present.
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/M)
-	if(toxpwr)
+	isBeingCured = FALSE
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+		if(istype(R, antidotum)) //checks for the antidote
+			isBeingCured = TRUE
+	if(toxpwr && !isBeingCured)
 		M.adjustToxLoss(toxpwr*REM, 0)
 		. = TRUE
+	if(isBeingCured)
+		M.reagents.remove_reagent(src,2) //removes itself twice as fast if the antidote is present
 	..()
 
 /datum/reagent/toxin/amatoxin
