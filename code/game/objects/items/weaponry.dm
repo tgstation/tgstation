@@ -297,6 +297,17 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb = list("stabbed", "ripped", "gored", "impaled")
 	embedding = list("embedded_pain_multiplier" = 8, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_impact_pain_multiplier" = 15) //55 damage+embed on hit
 
+/obj/item/throwing_star/plastic
+	name = "plastic throwing star"
+	desc = "A plastic replica of a ninja's signature weapon. Perfect for the aspiring shinobi. Still looks pretty sharp..."
+	icon_state = "throwingstar"
+	force = 2
+	throwforce = 0
+	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 100, "embedded_fall_chance" = 100)
+	//visible_message("<span class='danger'>[I] sticks itself to [src]'s [L.name]!</span>","<span class='userdanger'>[I] sticks itself to your [L.name]!</span>")
+	custom_materials = list(/datum/material/plastic=500)
+
+
 /obj/item/switchblade
 	name = "switchblade"
 	icon_state = "switchblade"

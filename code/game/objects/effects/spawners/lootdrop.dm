@@ -58,8 +58,8 @@
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
 	loot = list(
-				/obj/item/gun/ballistic/revolver/russian = 5,
-				/obj/item/clothing/head/ushanka = 4,
+				/obj/item/gun/ballistic/revolver/russian = 4,
+				/obj/item/storage/box/toythrown = 4,
 				/obj/item/coin/gold = 1,
 				/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 1,
 				/obj/item/toy/cards/deck = 2

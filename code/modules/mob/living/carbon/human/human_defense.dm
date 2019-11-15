@@ -140,6 +140,15 @@
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
+	if(istype(AM, /obj/item/throwing_star/plastic))
+		I = AM
+		var/obj/item/bodypart/L = pick(bodyparts)
+		L.embedded_objects |= I
+		I.forceMove(src)
+		L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
+		visible_message("<span class='danger'>[I] sticks itself to [src]'s [L.name]!</span>","<span class='userdanger'>[I] sticks itself to your [L.name]!</span>")
+		hitpush = FALSE
+		skipcatch = TRUE
 	else if(I)
 		if(((throwingdatum ? throwingdatum.speed : I.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || I.embedding.embedded_ignore_throwspeed_threshold)
 			if(can_embed(I))
@@ -744,7 +753,10 @@
 		to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name][isdisabled][self_aware ? " has " : " is "][status].</span>")
 
 		for(var/obj/item/I in LB.embedded_objects)
-			to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+			if(istype(I, /obj/item/throwing_star/plastic))
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck on your [LB.name]!</a>")
+			else
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 	for(var/t in missing)
 		to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")

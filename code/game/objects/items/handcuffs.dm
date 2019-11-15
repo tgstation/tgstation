@@ -345,6 +345,13 @@
 		C.Knockdown(knockdown)
 		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
+/obj/item/restraints/legcuffs/bola/toy
+	name = "toy bola"
+	desc = "A bola made of hollow plastic balls and rubber tubing. It doesn't look like it'd be very effective..."
+	icon_state = "bola"
+	breakouttime = 1 //honk
+	slowdown = 4
+
 /obj/item/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."

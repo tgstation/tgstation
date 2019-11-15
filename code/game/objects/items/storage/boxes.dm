@@ -1090,6 +1090,19 @@
 	desc = "A box intended to hold dangerous materials. Looks kind of suspicious, though you're not sure why."
 	icon_state = "syndiebox"
 
+/obj/item/storage/box/toythrown
+	name = "DonkSoft Thrown Weapons Kit"
+	desc = "Set of harmless thrown weapons manufacturered by DonkSoft."
+	icon_state = "syndiebox"
+	
+/obj/item/storage/box/toythrown/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/throwing_star/plastic = 4,
+		/obj/item/restraints/legcuffs/bola/toy = 2,
+		/obj/item/toy/cards/deck = 1)
+	generate_items_inside(items_inside,src)
+	
+
 /obj/item/storage/box/stockparts/deluxe
 	name = "box of deluxe stock parts"
 	desc = "Contains a variety of deluxe stock parts."
