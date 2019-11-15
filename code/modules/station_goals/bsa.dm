@@ -193,7 +193,7 @@
 				if(SEND_SIGNAL(stuff, COMSIG_ATOM_BSA_BEAM) & COMSIG_ATOM_BLOCKS_BSA_BEAM)
 					blocker = stuff
 					break
-		if(blocker) //BYOND's only mechanism for escaping from an inner foreach loop is GOTO. If I did that, this code would GOTO the trash can
+		if(blocker)
 			target = tile
 			break
 		else
