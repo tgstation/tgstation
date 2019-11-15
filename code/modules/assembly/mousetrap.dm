@@ -6,6 +6,8 @@
 	custom_materials = list(/datum/material/iron=100)
 	attachable = TRUE
 	var/armed = FALSE
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 
 /obj/item/assembly/mousetrap/examine(mob/user)
