@@ -72,7 +72,7 @@
 				if(!shuttle)
 					continue
 				if(!SSmapping.shuttle_templates[shuttle])
-					to_chat(usr, "<span class='warning'>No such shuttle as '[shuttle]'' exists, using default.</span>")
+					to_chat(usr, "<span class='warning'>No such shuttle as '[shuttle]' exists, using default.</span>")
 					continue
 				VM.shuttles[s] = shuttle
 
