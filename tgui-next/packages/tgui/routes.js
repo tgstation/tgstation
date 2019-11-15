@@ -51,6 +51,7 @@ import { TankDispenser } from './interfaces/TankDispenser';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
+import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 
 const ROUTES = {
   achievements: {
@@ -204,6 +205,11 @@ const ROUTES = {
   },
   ntos_power_monitor: {
     component: () => PowerMonitor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+  },
+  ntos_supermatter_monitor: {
+    component: () => NtosSupermatterMonitor,
     wrapper: () => NtosWrapper,
     scrollable: true,
   },

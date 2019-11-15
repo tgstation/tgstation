@@ -1,6 +1,6 @@
-import { Section, Button, Table, Icon, Box, ColorBox } from '../components';
-import { act } from '../byond';
 import { Fragment } from 'inferno';
+import { act } from '../byond';
+import { Button, ColorBox, Section, Table } from '../components';
 
 const PROGRAM_ICONS = {
   compconfig: 'cog',
@@ -12,7 +12,7 @@ const PROGRAM_ICONS = {
 };
 
 export const NtosMain = props => {
-  const { state, children } = props;
+  const { state } = props;
   const { config, data } = state;
   const { ref } = config;
   const {
