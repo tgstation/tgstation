@@ -137,25 +137,27 @@ export class PowerMonitor extends Component {
               </Table.Cell>
             </Table.Row>
             {areas.map((area, i) => (
-              <tr key={area.id} className="candystripe">
+              <tr
+                key={area.id}
+                className="Table__row candystripe">
                 <td>
                   {area.name}
                 </td>
-                <td className="text-right text-nowrap">
+                <td className="Table__cell text-right text-nowrap">
                   <AreaCharge
                     charging={area.charging}
                     charge={area.charge} />
                 </td>
-                <td className="text-right text-nowrap">
+                <td className="Table__cell text-right text-nowrap">
                   {area.load}
                 </td>
-                <td className="text-center text-nowrap">
+                <td className="Table__cell text-center text-nowrap">
                   <AreaStatusColorBox status={area.eqp} />
                 </td>
-                <td className="text-center text-nowrap">
+                <td className="Table__cell text-center text-nowrap">
                   <AreaStatusColorBox status={area.lgt} />
                 </td>
-                <td className="text-center text-nowrap">
+                <td className="Table__cell text-center text-nowrap">
                   <AreaStatusColorBox status={area.env} />
                 </td>
               </tr>

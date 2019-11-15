@@ -10,6 +10,8 @@ $border-radius: base.$border-radius !default;
   left: 0;
   right: 0;
   bottom: 0;
+  font-style: normal;
+  font-weight: normal;
 
   &::after {
     position: absolute;

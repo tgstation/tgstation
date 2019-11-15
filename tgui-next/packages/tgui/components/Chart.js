@@ -2,6 +2,7 @@ import { map, zipWith } from 'common/collections';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
 import { pureComponentHooks } from 'common/react';
+import { tridentVersion } from '../byond';
 
 const normalizeData = (data, scale, rangeX, rangeY) => {
   if (data.length === 0) {
@@ -112,6 +113,9 @@ class LineChart extends Component {
 
 LineChart.defaultHooks = pureComponentHooks;
 
+const Stub = props => null;
+
+// IE8: No inline svg support
 export const Chart = {
-  Line: LineChart,
+  Line: tridentVersion <= 4 ? Stub : LineChart,
 };
