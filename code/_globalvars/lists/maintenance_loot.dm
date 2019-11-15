@@ -66,13 +66,6 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/matter_bin = 1,
 		) = 1,
-
-	list(//books
-		/obj/item/book/manual/wiki/engineering_construction = 1,
-		/obj/item/book/manual/wiki/engineering_hacking = 1,
-		/obj/item/book/manual/wiki/grenades = 1,
-		/obj/item/book/manual/wiki/chemistry = 1,
-		) = 1,
 	))
 
 
@@ -122,6 +115,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/assembly/timer = 1,
 		/obj/item/assembly/igniter = 1,
 		/obj/item/assembly/health = 1,
+
 		/obj/item/stack/packageWrap = 1,
 		) = 1,
 
@@ -132,6 +126,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/reagent_containers/glass/beaker = 1,
 		/obj/item/reagent_containers/glass/rag = 1,
+		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
 		) = 1,
 
 	list(//food
@@ -152,10 +147,6 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/effect/spawner/lootdrop/glowstick = 1,
 		/obj/item/clothing/head/hardhat/red = 1,
 		/obj/item/flashlight/flare = 1,
-		) = 1,
-
-	list(//pump-up
-		/obj/item/reagent_containers/hypospray/medipen/pumpup = 1,
 		) = 1,
 	))
 
