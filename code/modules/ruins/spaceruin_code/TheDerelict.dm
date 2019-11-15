@@ -206,3 +206,10 @@
 			M.visible_message("<span class='notice'>[user] teaches [M] by beating [M.p_them()] over the head with [src]!</span>", "<span class='boldnotice'>As [user] hits you with [src], chitters resonate in your mind.</span>", "<span class='hear'>You hear smacking.</span>")
 			M.grant_language(/datum/language/drone)
 		return
+
+/obj/structure/fluff/oldturret
+	name = "broken turret"
+	desc = "An obsolete model of turret, long non-functional."
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "turretCover"
+	density = TRUE

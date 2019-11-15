@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Pirates can no longer retrieve holochips of 0 credits from their data siphon."

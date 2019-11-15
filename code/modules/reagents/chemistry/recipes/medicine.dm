@@ -245,3 +245,5 @@
 		new /obj/item/stack/medical/suture/medicated(location)
 	return
 
+
+
