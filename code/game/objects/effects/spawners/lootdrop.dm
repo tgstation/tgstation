@@ -40,29 +40,28 @@
 				/obj/item/gun/ballistic/automatic/pistol = 8,
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 				/obj/item/gun/ballistic/revolver/mateba,
-				/obj/item/gun/ballistic/automatic/pistol/deagle
+				/obj/item/gun/ballistic/automatic/pistol/deagle,
 				)
 
 /obj/effect/spawner/lootdrop/armory_contraband/metastation
 	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5,
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 				/obj/item/gun/ballistic/revolver/mateba,
-				/obj/item/gun/ballistic/automatic/pistol/deagle,
-				/obj/item/storage/box/syndie_kit/throwing_weapons = 3)
+				/obj/item/gun/ballistic/automatic/pistol/deagle)
 
 /obj/effect/spawner/lootdrop/armory_contraband/donutstation
 	loot = list(/obj/item/grenade/clusterbuster/teargas = 5,
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 				/obj/item/bikehorn/golden,
-				/obj/item/grenade/clusterbuster,
-				/obj/item/storage/box/syndie_kit/throwing_weapons = 3)
+				/obj/item/grenade/clusterbuster)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
 	loot = list(
 				/obj/item/gun/ballistic/revolver/russian = 5,
-				/obj/item/storage/box/syndie_kit/throwing_weapons = 1,
-				/obj/item/toy/cards/deck/syndicate = 2
+				/obj/item/coin/gold = 1,
+				/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 1,
+				/obj/item/toy/cards/deck = 2
 				)
 
 /obj/effect/spawner/lootdrop/grille_or_trash
