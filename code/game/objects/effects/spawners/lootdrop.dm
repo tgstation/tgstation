@@ -40,7 +40,7 @@
 				/obj/item/gun/ballistic/automatic/pistol = 8,
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 				/obj/item/gun/ballistic/revolver/mateba,
-				/obj/item/gun/ballistic/automatic/pistol/deagle,
+				/obj/item/gun/ballistic/automatic/pistol/deagle
 				)
 
 /obj/effect/spawner/lootdrop/armory_contraband/metastation
@@ -59,6 +59,7 @@
 	name = "gambling valuables spawner"
 	loot = list(
 				/obj/item/gun/ballistic/revolver/russian = 5,
+				/obj/item/clothing/head/ushanka = 4,
 				/obj/item/coin/gold = 1,
 				/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 1,
 				/obj/item/toy/cards/deck = 2
