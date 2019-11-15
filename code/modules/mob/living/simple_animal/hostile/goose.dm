@@ -36,6 +36,7 @@
 	var/icon_vomit = "vomit"
 	var/icon_vomit_end = "vomit_end"
 	var/message_cooldown = 0
+	var/choking = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/goose/handle_automated_movement()
 	. = ..()
@@ -57,7 +58,6 @@
 	response_harm_simple = "kick"
 	gold_core_spawnable = NO_SPAWN
 	random_retaliate = FALSE
-	var/choking = FALSE
 	var/vomiting = FALSE
 	var/vomitCoefficient = 1
 	var/vomitTimeBonus = 0
@@ -82,24 +82,29 @@
 	. = ..()
 	. += "<span class='notice'>Somehow, it still looks hungry.</span>"
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/attacked_by(obj/item/O, mob/user)
+/mob/living/simple_animal/hostile/retaliate/goose/attacked_by(obj/item/O, mob/user)
 	. = ..()
 	if(istype(O, /obj/item/reagent_containers/food))
 		feed(O)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/reagent_containers/food/tasty)
-	if (stat == DEAD) // plapatin I swear to god
-		return
-	if (contents.len > GOOSE_SATIATED)
-		if(message_cooldown < world.time)
-			visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
-			message_cooldown = world.time + 5 SECONDS
+/mob/living/simple_animal/hostile/retaliate/goose/proc/feed(obj/item/reagent_containers/food/tasty)
+	if(stat == DEAD) // plapatin I swear to god
 		return
 	if(tasty.custom_materials && tasty.custom_materials[getmaterialref(/datum/material/plastic)]) // dumb goose'll swallow food or drink with plastic in it
 		visible_message("<span class='danger'>[src] starts choking on \the [tasty]! </span>")
 		tasty.forceMove(src)
 		choke(tasty)
 		choking = TRUE
+		return
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/feed(obj/item/reagent_containers/food/tasty)
+	if (stat == DEAD) // plapatin I swear to god
+		return
+	..()
+	if (contents.len > GOOSE_SATIATED)
+		if(message_cooldown < world.time)
+			visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
+			message_cooldown = world.time + 5 SECONDS
 		return
 	if (tasty.foodtype & GROSS)
 		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
@@ -112,7 +117,12 @@
 			visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
 			message_cooldown = world.time + 5 SECONDS
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/choke(obj/item/reagent_containers/food/plastic)
+/mob/living/simple_animal/hostile/retaliate/goose/proc/choke(obj/item/reagent_containers/food/plastic)
+	if(stat == DEAD)
+		return
+	addtimer(CALLBACK(src, .proc/suffocate), 300)
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/choke(obj/item/reagent_containers/food/plastic)
 	if(stat == DEAD)
 		return
 	if(prob(25))
@@ -129,7 +139,7 @@
 		if(prob(20))
 			emote("gasp")
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/suffocate()
+/mob/living/simple_animal/hostile/retaliate/goose/proc/suffocate()
 	if(!choking)
 		return
 	deathmessage = "lets out one final oxygen-depraved honk before they go limp and lifeless.."
