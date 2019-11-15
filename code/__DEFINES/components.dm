@@ -16,8 +16,11 @@
 /// Return value to cancel attaching
 #define ELEMENT_INCOMPATIBLE 1
 
-/// /datum/element flags
+// /datum/element flags
+/// Causes the detach proc to be called when the host object is being deleted 
 #define ELEMENT_DETACH		(1 << 0)
+/// Getting an existing element uses some attach arguments as part of the id
+#define ELEMENT_BESPOKE		(1 << 1)
 
 // How multiple components of the exact same type are handled in the same datum
 /// old component is deleted (default)
