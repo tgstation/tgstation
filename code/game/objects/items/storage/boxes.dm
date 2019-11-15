@@ -1085,6 +1085,11 @@
 		/obj/item/stock_parts/matter_bin = 3)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/box/danger
+	name = "dangerous materials box"
+	desc = "A box intended to hold dangerous materials. Looks kind of suspicious, though you're not sure why."
+	icon_state = "syndiebox"
+
 /obj/item/storage/box/stockparts/deluxe
 	name = "box of deluxe stock parts"
 	desc = "Contains a variety of deluxe stock parts."
