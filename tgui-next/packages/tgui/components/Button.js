@@ -47,7 +47,7 @@ export const Button = props => {
         ellipsis && 'Button--ellipsis',
         (color && typeof color === 'string')
           ? 'Button--color--' + color
-          : 'Button--color--normal',
+          : 'Button--color--default',
         className,
       ])}
       tabIndex={!disabled && '0'}

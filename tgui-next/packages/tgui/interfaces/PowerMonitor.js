@@ -58,7 +58,7 @@ export class PowerMonitor extends Component {
                     value={supply}
                     minValue={0}
                     maxValue={maxValue}
-                    color="green"
+                    color="teal"
                     content={toFixed(supply / 1000) + ' kW'} />
                 </LabeledList.Item>
                 <LabeledList.Item label="Draw">
@@ -66,7 +66,7 @@ export class PowerMonitor extends Component {
                     value={demand}
                     minValue={0}
                     maxValue={maxValue}
-                    color="red"
+                    color="pink"
                     content={toFixed(demand / 1000) + ' kW'} />
                 </LabeledList.Item>
               </LabeledList>
@@ -79,15 +79,15 @@ export class PowerMonitor extends Component {
                 data={supplyData}
                 rangeX={[0, supplyData.length - 1]}
                 rangeY={[0, maxValue]}
-                strokeColor="rgba(32, 177, 66, 1)"
-                fillColor="rgba(32, 177, 66, 0.25)" />
+                strokeColor="rgba(0, 181, 173, 1)"
+                fillColor="rgba(0, 181, 173, 0.25)" />
               <Chart.Line
                 fillPositionedParent
                 data={demandData}
                 rangeX={[0, demandData.length - 1]}
                 rangeY={[0, maxValue]}
-                strokeColor="rgba(219, 40, 40, 1)"
-                fillColor="rgba(219, 40, 40, 0.25)" />
+                strokeColor="rgba(224, 57, 151, 1)"
+                fillColor="rgba(224, 57, 151, 0.25)" />
             </Section>
           </Flex.Item>
         </Flex>

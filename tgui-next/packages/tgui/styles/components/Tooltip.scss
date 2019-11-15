@@ -1,3 +1,9 @@
+@use '../base.scss';
+@use '../functions.scss' as *;
+
+$color-background: #000000 !default;
+$border-radius: base.$border-radius !default;
+
 .Tooltip {
   position: absolute;
   top: 0;
@@ -17,9 +23,9 @@
     text-align: left;
     content: attr(data-tooltip);
     transition: all 150ms;
-    background-color: $tooltip-color-background;
+    background-color: $color-background;
     box-shadow: 1px 1px 15px -1px rgba(0, 0, 0, 0.5);
-    border-radius: $tooltip-border-radius;
+    border-radius: $border-radius;
   }
 
   &:hover::after {

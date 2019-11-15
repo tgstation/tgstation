@@ -24,8 +24,11 @@ export const NtosWrapper = props => {
           refocusLayout();
         }}>
         <Box className="NtosHeader__left">
-          <Box bold inline mr={2}>
+          <Box inline bold mr={2}>
             {PC_stationtime}
+          </Box>
+          <Box inline italic mr={2} opacity={0.33}>
+            NtOS
           </Box>
         </Box>
         <div className="NtosHeader__right">

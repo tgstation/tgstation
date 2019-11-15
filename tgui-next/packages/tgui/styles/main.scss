@@ -1,32 +1,46 @@
-@import './functions.scss';
-@import './variables.scss';
-@import './reset.scss';
+@use 'sass:meta';
+@use './functions.scss' as *;
+@use './base.scss';
+
+// Core styles
+@include meta.load-css('./reset.scss');
 
 // Atomic classes
-@import './atomic/candystripe.scss';
-@import './atomic/text.scss';
+@include meta.load-css('./atomic/candystripe.scss');
+@include meta.load-css('./atomic/color.scss');
+@include meta.load-css('./atomic/text.scss');
 
 // Components
-@import '../components/ColorBox.scss';
-@import '../components/FatalError.scss';
-@import '../components/Flex.scss';
-@import '../components/LabeledList.scss';
-@import '../components/Table.scss';
-@import '../components/Tabs.scss';
+@include meta.load-css('./components/Button.scss');
+@include meta.load-css('./components/ColorBox.scss');
+@include meta.load-css('./components/FatalError.scss');
+@include meta.load-css('./components/Flex.scss');
+@include meta.load-css('./components/Input.scss');
+@include meta.load-css('./components/LabeledList.scss');
+@include meta.load-css('./components/Layout.scss');
+@include meta.load-css('./components/NoticeBox.scss');
+@include meta.load-css('./components/NtosHeader.scss');
+@include meta.load-css('./components/NtosWrapper.scss');
+@include meta.load-css('./components/NumberInput.scss');
+@include meta.load-css('./components/ProgressBar.scss');
+@include meta.load-css('./components/Section.scss');
+@include meta.load-css('./components/Table.scss');
+@include meta.load-css('./components/Tabs.scss');
+@include meta.load-css('./components/TitleBar.scss');
+@include meta.load-css('./components/Tooltip.scss');
 
-// Interfaces
-@import '../interfaces/Ntos.scss';
-
-// Themes
-@import './themes/nanotrasen.scss';
-@import './themable.scss';
-
-.theme-ntos {
-  @import './themes/ntos.scss';
-  @import './themable.scss';
+// Miscellaneous bits
+body {
+  color: base.$color-fg;
+  background-color: base.$color-bg;
+  background-image: linear-gradient(to bottom,
+    base.$color-bg-start 0%,
+    base.$color-bg-end 100%);
 }
 
-.theme-syndicate {
-  @import './themes/syndicate.scss';
-  @import './themable.scss';
+.Layout__content {
+  background-image: url('../assets/bg-nanotrasen.svg');
+  background-size: 70%;
+  background-position: center;
+  background-repeat: no-repeat;
 }

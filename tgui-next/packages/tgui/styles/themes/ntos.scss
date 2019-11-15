@@ -1,57 +1,36 @@
-// Base page colors
-$base-color-text: #ffffff;
-$base-color-background: scale-color($color-nanotrasen, $lightness: -40%);
-$base-color-background-start: adjust-color(
-  $base-color-background,
-  $lightness: 2%);
-$base-color-background-end: adjust-color(
-  $base-color-background,
-  $lightness: -2%);
-$base-border-radius: 2px;
+@use 'sass:color';
+@use 'sass:meta';
 
-// TitleBar
-$titlebar-color-text: rgba(255, 255, 255, 0.75);
-$titlebar-color-background: scale-color($color-nanotrasen, $lightness: -20%);
-$titlebar-color-shadow-core: #161616;
-$titlebar-color-shadow: rgba(0, 0, 0, 0.1);
+@use '../colors.scss' with (
+  $fg-map-keys: (),
+  $bg-map-keys: (),
+);
+@use '../base.scss' with (
+  $color-bg: color.scale(colors.$nanotrasen, $lightness: -45%),
+  $border-radius: 2px,
+);
 
-// Section
-$section-color-title: #ffffff;
-$section-color-background: rgba(#000, 0.33);
-$section-color-shadow: rgba(#000, 0.5);
-$section-color-separator: $color-primary;
-
-// NoticeBox
-$noticebox-color-first: #bb9b68;
-$noticebox-color-second: #b1905d;
-$noticebox-color-border: #272727;
-
-// ProgressBar
-$progressbar-color-primary: color-bg($color-primary);
-$progressbar-color-background: rgba(0, 0, 0, 0.5);
-$progressbar-border-radius: $base-border-radius;
-
-// Buttons
-$button-color-normal: color-bg($color-primary);
-$button-color-disabled: #999999;
-$button-color-selected: color-bg($color-green);
-$button-color-caution: color-bg($color-yellow);
-$button-color-danger: color-bg($color-red);
-$button-border-radius: $base-border-radius;
-
-// Tooltips
-$tooltip-color-background: #000000;
-$tooltip-border-radius: $base-border-radius;
-
-// Inputs
-$input-base-color: #88bfff;
-$input-border-radius: $base-border-radius;
+.theme-ntos {
+  // Components
+  @include meta.load-css('../components/Button.scss', $with: (
+    'border-radius': base.$border-radius,
+  ));
+  @include meta.load-css('../components/Layout.scss');
+  @include meta.load-css('../components/ProgressBar.scss', $with: (
+    'color-background': rgba(0, 0, 0, 0.5),
+    'border-radius': base.$border-radius,
+  ));
+  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('../components/TitleBar.scss', $with: (
+    'color-background': color.scale(colors.$nanotrasen, $lightness: -25%),
+  ));
+}
 
 // Body style
-@at-root #{selector-unify(&, body)} {
-  color: $base-color-text;
-  background-color: $base-color-background;
+body.theme-ntos {
+  color: base.$color-fg;
+  background-color: base.$color-bg;
   background-image: linear-gradient(to bottom,
-    $base-color-background-start 0%,
-    $base-color-background-end 100%);
+    base.$color-bg-start 0%,
+    base.$color-bg-end 100%);
 }

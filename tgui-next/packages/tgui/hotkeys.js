@@ -117,10 +117,7 @@ const handlePassthrough = (e, eventType) => {
   if (targetName === 'input' || targetName === 'textarea') {
     return;
   }
-  if (hasModifierKeys) {
-    return;
-  }
-  if (NO_PASSTHROUGH_KEYS.includes(keyCode)) {
+  if (hasModifierKeys || NO_PASSTHROUGH_KEYS.includes(keyCode)) {
     return;
   }
   // Prevent spam of keydown events
