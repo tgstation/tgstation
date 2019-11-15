@@ -31,7 +31,7 @@
 	mask = /obj/item/clothing/mask/gas/mime
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/frenchberet
-	suit = /obj/item/clothing/suit/suspenders
+	suit = /obj/item/clothing/suit/toggle/suspenders
 	backpack_contents = list(/obj/item/book/mimery=1, /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing=1)
 
 	backpack = /obj/item/storage/backpack/mime
