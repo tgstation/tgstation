@@ -703,3 +703,15 @@
 	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	alternate_worn_layer = UNDER_HEAD_LAYER
+
+/obj/item/clothing/suit/suspenders/blue
+	name = "blue suspenders"
+	desc = "The symbol of hard labor and dirty jobs."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "suspenders_blue"
+
+/obj/item/clothing/suit/suspenders/gray
+	name = "gray suspenders"
+	desc = "The symbol of hard labor and dirty jobs."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "suspenders_gray"
