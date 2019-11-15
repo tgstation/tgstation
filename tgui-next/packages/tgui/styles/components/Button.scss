@@ -7,6 +7,7 @@ $color-disabled: #999999 !default;
 $color-selected: colors.bg(colors.$green) !default;
 $color-caution: colors.bg(colors.$yellow) !default;
 $color-danger: colors.bg(colors.$red) !default;
+$color-transparent-text: rgba(255, 255, 255, 0.5) !default;
 $border-radius: 0 !default;
 $bg-map: colors.$bg-map !default;
 
@@ -55,9 +56,9 @@ $bg-map: colors.$bg-map !default;
   }
 
   .fa, .fas, .far {
-    margin-left: -2px;
-    margin-right: -2px;
-    min-width: 14px;
+    margin-left: -3px;
+    margin-right: -3px;
+    min-width: 16px;
     text-align: center;
   }
 }
@@ -65,10 +66,7 @@ $bg-map: colors.$bg-map !default;
 .Button--hasContent {
   // Add a margin to the icon to keep it separate from the text
   .fa, .fas, .far {
-    margin-left: -2px;
-    margin-right: 4px;
-    min-width: 14px;
-    text-align: center;
+    margin-right: 3px;
   }
 }
 
@@ -105,7 +103,7 @@ $bg-map: colors.$bg-map !default;
 .Button--color--transparent {
   @include button-color(base.$color-bg);
   background-color: rgba(base.$color-bg, 0);
-  color: rgba(255, 255, 255, 0.5);
+  color: $color-transparent-text;
 }
 
 .Button--disabled {

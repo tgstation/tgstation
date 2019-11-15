@@ -13,6 +13,8 @@
 .theme-ntos {
   // Components
   @include meta.load-css('../components/Button.scss', $with: (
+    'color-default': colors.$nanotrasen,
+    'color-transparent-text': rgba(227, 240, 255, 0.75),
     'border-radius': base.$border-radius,
   ));
   @include meta.load-css('../components/Layout.scss');

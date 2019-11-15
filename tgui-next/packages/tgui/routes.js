@@ -33,7 +33,8 @@ import { DisposalUnit } from './interfaces/DisposalUnit';
 import { Gps } from './interfaces/Gps';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { Mint } from './interfaces/Mint';
-import { NtosWrapper } from './interfaces/Ntos';
+import { NtosMain } from './interfaces/NtosMain';
+import { NtosWrapper } from './interfaces/NtosWrapper';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
@@ -195,6 +196,11 @@ const ROUTES = {
   mint: {
     component: () => Mint,
     scrollable: false,
+  },
+  ntos_main: {
+    component: () => NtosMain,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
   },
   ntos_power_monitor: {
     component: () => PowerMonitor,
