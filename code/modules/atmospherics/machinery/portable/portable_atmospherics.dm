@@ -129,6 +129,7 @@
 	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(!(stat & BROKEN))
 			if(connected_port)
+				investigate_log("was disconnected from [connected_port] by [key_name(user)].<br>", INVESTIGATE_ATMOS)
 				disconnect()
 				W.play_tool_sound(src)
 				user.visible_message( \
@@ -151,6 +152,7 @@
 					"<span class='notice'>You fasten [src] to the port.</span>", \
 					"<span class='hear'>You hear a ratchet.</span>")
 				update_icon()
+				investigate_log("was connected to [possible_port] by [key_name(user)].<br>", INVESTIGATE_ATMOS)
 	else
 		return ..()
 
