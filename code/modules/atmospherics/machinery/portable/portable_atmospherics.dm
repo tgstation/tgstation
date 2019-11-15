@@ -124,6 +124,7 @@
 			if(!user.transferItemToLoc(T, src))
 				return
 			to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [T]" : "You insert [T] into [src]"].</span>")
+			investigate_log("had its internal [holding] swapped with [T] by [key_name(user)].<br>", INVESTIGATE_ATMOS)
 			replace_tank(user, FALSE, T)
 			update_icon()
 	else if(W.tool_behaviour == TOOL_WRENCH)
