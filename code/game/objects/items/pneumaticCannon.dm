@@ -293,7 +293,7 @@
 /obj/item/pneumatic_cannon/pie/selfcharge
 	automatic = TRUE
 	selfcharge = TRUE
-	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream/syndicate
+	charge_type = /obj/item/reagent_containers/food/snacks/pie/cream
 	maxWeightClass = 60	//20 pies.
 
 /obj/item/pneumatic_cannon/pie/selfcharge/cyborg

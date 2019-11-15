@@ -7,14 +7,14 @@
 		if(SKILL_LEVEL_NONE)
 			return 0
 		if(SKILL_LEVEL_NOVICE)
-			return 0
+			return 10
 		if(SKILL_LEVEL_APPRENTICE)
-			return 1
+			return 20
 		if(SKILL_LEVEL_JOURNEYMAN)
-			return 2
+			return 30
 		if(SKILL_LEVEL_EXPERT)
-			return 3
+			return 40
 		if(SKILL_LEVEL_MASTER)
-			return 4
+			return 50
 		if(SKILL_LEVEL_LEGENDARY)
-			return 5
+			return 60

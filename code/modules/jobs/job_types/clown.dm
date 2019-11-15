@@ -59,4 +59,5 @@
 	H.dna.add_mutation(CLOWNMUT)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE
-	H.mind.adjust_experience(/datum/skill/pie_throwing, 1000) // clown college
+	if(H.mind)
+		H.mind.adjust_experience(/datum/skill/pie_throwing, 1000) // clown college

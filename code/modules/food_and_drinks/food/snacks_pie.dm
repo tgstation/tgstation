@@ -28,14 +28,12 @@
 	tastes = list("pie" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
 	var/stunning = TRUE
-	var/experience_given = 10
-	var/experience_mod = 1
 
 /obj/item/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!.) //if we're not being caught
 		if(ishuman(throwingdatum.thrower))
-			var/mob/living/carbon/human/H
+			var/mob/living/carbon/human/H = throwingdatum.thrower
 			splat(hit_atom,H)
 		else
 			splat(hit_atom)
@@ -47,31 +45,30 @@
 	new/obj/effect/decal/cleanable/food/pie_smudge(T)
 	if(reagents && reagents.total_volume)
 		reagents.reaction(hit_atom, TOUCH)
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
+		if(L.mind && H)
+			var/experience_given = 15
+			if(HAS_TRAIT(L.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+				experience_given *= 3
+			if(L.GetComponents(/datum/component/creamed))
+				experience_given *= 0.3
+			H.mind.adjust_experience(/datum/skill/pie_throwing, experience_given)
+		if(stunning && H)
+			var/skillmod = H.mind.get_skill_speed_modifier(/datum/skill/pie_throwing)
+			if(skillmod > 30)
+				L.Paralyze(skillmod) //splat!
+			else
+				L.Stun(skillmod) //splish!
+		L.adjust_blurriness(1)
+		L.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
+		playsound(L, "desceration", 50, TRUE)
 	if(is_type_in_typecache(hit_atom, GLOB.creamable))
 		hit_atom.AddComponent(/datum/component/creamed, src)
-	if(!isliving(hit_atom))
-		qdel(src)
-		return
-	var/mob/living/L = hit_atom
-	if(L.mind)
-		if(HAS_TRAIT(L.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-			experience_mod = 3
-		else
-			experience_mod = 1
-		H.mind.adjust_experience(/datum/skill/pie_throwing, experience_given * experience_mod)
-	if(stunning)
-		var/skillmod = H.mind.get_skill_speed_modifier(/datum/skill/pie_throwing)
-		L.Paralyze(skillmod * 10) //splat!
-	L.adjust_blurriness(1)
-	L.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
-	playsound(L, "desceration", 50, TRUE)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/pie/cream/nostun
 	stunning = FALSE
-
-/obj/item/reagent_containers/food/snacks/pie/cream/syndicate
-	experience_given = 2
 
 /obj/item/reagent_containers/food/snacks/pie/berryclafoutis
 	name = "berry clafoutis"
