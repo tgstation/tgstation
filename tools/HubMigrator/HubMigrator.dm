@@ -90,30 +90,75 @@
 
 	var/ach = "achievements" //IMPORTANT : ADD PREFIX HERE IF YOU'RE USING PREFIXED SCHEMA
 
-	var/list/giant_list_of_ckeys = params2list(world.GetScores(null,null,hub_address,hub_password))
-	world << "starting migration script generation"
 	var/outfile = file("hub_migration.sql")
 	fdel(outfile)
 	outfile << "BEGIN;"
+
+	var/perpage = 100
+	var/requested_page = 1
+	var/hub_url = replacetext(hub_address,".","/")
+	var/list/medal_data = list()
+	var/regex/datepart_regex = regex(@"[/\s]")
+	while(1)
+		world << "Fetching page [requested_page]"
+		var/list/result = world.Export("http://www.byond.com/games/[hub_url]?format=text&command=view_medals&per_page=[perpage]&page=[requested_page]")
+		if(!result)
+			return
+		var/data = file2text(result["CONTENT"])
+		var/regex/page_info = regex(@"page = (\d*)")
+		page_info.Find(data)
+		var/recieved_page = text2num(page_info.group[1])
+		if(recieved_page != requested_page) //out of entries
+			break
+		else
+			requested_page++
+		var/regex/R = regex(@'medal/\d+[\s\n]*key = "(.*)"[\s\n]*name = "(.*)"[\s\n]*desc = ".*"[\s\n]*icon = ".*"[\s\n]*earned = "(.*)"',"gm")
+		while(R.Find(data))
+			var/key = ckey(R.group[1])
+			var/medal = R.group[2]
+			var/list/dateparts = splittext(R.group[3],datepart_regex)
+			var/list/out_date = list(dateparts[3],dateparts[1],dateparts[2]) // YYYY/MM/DD
+			if(!valid_medals.Find(medal))
+				continue
+			if(!medal_data[key])
+				medal_data[key] = list()
+			medal_data[key][medal] = out_date.Join("/")
+
+	var/list/giant_list_of_ckeys = params2list(world.GetScores(null,null,hub_address,hub_password))
+	world << "Found [giant_list_of_ckeys.len] as upper scores count."
+
+	var/list/scores_data = list()
+	for(var/score in valid_scores)
+		var/recieved_count = 0
+		while(1)
+			world << "Fetching [score] scores, offset :[recieved_count] of [score]"
+			var/list/batch = params2list(world.GetScores(giant_list_of_ckeys.len,recieved_count,score,hub_address,hub_password))
+			world << "Fetched [batch.len] scores for [score]."
+			recieved_count += batch.len
+			if(!batch.len)
+				break
+			for(var/value in batch)
+				var/key = ckey(value)
+				if(!scores_data[key])
+					scores_data[key] = list()
+				if(isnum(batch[value]))
+					world << "NUMBER"
+					return
+				scores_data[key][score] = batch[value]
+			if(batch.len < 1000) //Out of scores anyway
+				break
+
 	var/i = 1
 	for(var/key in giant_list_of_ckeys)
 		world << "Generating entries for [key] [i]/[giant_list_of_ckeys.len]"
-		var/list/cheevos = params2list(world.GetMedal(null,key,hub_address,hub_password))
-		//throw away old/invalid/unsupported ones
-		cheevos = cheevos & valid_medals
-		var/list/scores = params2list(world.GetScores(key,null,hub_address,hub_password))
-		scores = scores & valid_scores
-		for(var/score in scores)
-			if(isnull(text2num(scores[score])))
-				scores -= score
 		var/keyv = ckey(key) //Checkinf if you don't have any manually entered drop tables; juniors on your hub is good idea.
 		var/list/values = list()
-		for(var/cheevo in cheevos)
-			values += "('[keyv]','[cheevo]',1)"
-		for(var/score in scores)
-			values += "('[keyv]','[score]',[scores[score]])"
+		for(var/cheevo in medal_data[keyv])
+			values += "('[keyv]','[cheevo]',1, '[medal_data[keyv][cheevo]]')"
+		for(var/score in scores_data[keyv])
+			values += "('[keyv]','[score]',[scores_data[keyv][score]],now())"
 		if(values.len)
-			var/list/keyline = list("INSERT INTO [ach](ckey,achievement_key,value) VALUES")
+			var/list/keyline = list("INSERT INTO [ach](ckey,achievement_key,value,last_updated) VALUES")
 			keyline += values.Join(",")
 			keyline += ";"
 			outfile << keyline.Join()
