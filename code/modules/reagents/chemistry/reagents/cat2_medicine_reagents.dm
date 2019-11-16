@@ -345,8 +345,6 @@
 	..()
 	return TRUE
 
-<<<<<<< HEAD
-=======
 /******ORGAN HEALING******/
 /*Suffix: -rite*/
 /datum/reagent/medicine/C2/penthrite
@@ -367,7 +365,6 @@
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
 	. = ..()
 
->>>>>>> b64de90572... Corazone renamed to Higadrite, adds replacement chemical for abductors and fixes heart disease (#47776)
 /******NICHE******/
 //todo
 austation end */

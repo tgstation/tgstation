@@ -1049,17 +1049,6 @@
 	..()
 	return TRUE
 
-<<<<<<< HEAD
-/datum/reagent/medicine/corazone
-	// Heart attack code will not do damage if corazone is present
-	// because it's SPACE MAGIC ASPIRIN
-	name = "Corazone"
-	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks. Can also be used to stabilize livers."
-	color = "#F49797"
-	self_consuming = TRUE
-
-/datum/reagent/medicine/corazone/on_mob_metabolize(mob/living/M)
-=======
 /datum/reagent/medicine/higadrite
 	name = "Higadrite"
 	description = "A medication utilized to treat ailing livers."
@@ -1067,18 +1056,11 @@
 	self_consuming = TRUE
 
 /datum/reagent/medicine/higadrite/on_mob_add(mob/living/M)
->>>>>>> b64de90572... Corazone renamed to Higadrite, adds replacement chemical for abductors and fixes heart disease (#47776)
 	..()
-	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
 	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 
-<<<<<<< HEAD
-/datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
-	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
-=======
 /datum/reagent/medicine/higadrite/on_mob_end_metabolize(mob/living/M)
 	..()
->>>>>>> b64de90572... Corazone renamed to Higadrite, adds replacement chemical for abductors and fixes heart disease (#47776)
 	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
 
 /datum/reagent/medicine/cordiolis_hepatico
