@@ -36,6 +36,7 @@
 		actions_types = list(/datum/action/item_action/toggle_helmet_mode)
 		if(istype(loc, /obj/item/clothing/suit/space/hardsuit)) //this means that if you somehow wear a say syndicate hardsuit helmet and a medical hardsuit, this links those two together which honestly isn't that bad
 			linkedsuit = loc
+			toggle_hardsuit_mode() //adds speed mode suffix and etc.
 
 /obj/item/clothing/head/helmet/space/hardsuit/update_icon()
 	if(evatoggle)
@@ -346,7 +347,7 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/head/helmet/space/hardsuit/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
+/*obj/item/clothing/head/helmet/space/hardsuit/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
 	if(linkedsuit)
 		if(on)
 			linkedsuit.name = initial(linkedsuit.name)
@@ -366,6 +367,31 @@
 			if(linkedsuit.armor_switch)
 				linkedsuit.armor = getArmor(arglist(linkedsuit.armor_eva))
 				armor = getArmor(arglist(armor_eva))
+		linkedsuit.icon_state = "hardsuit[on]-[hardsuit_type]"
+		linkedsuit.update_icon()
+		user.update_inv_wear_suit()
+		user.update_inv_w_uniform() */
+
+/obj/item/clothing/head/helmet/space/hardsuit/proc/toggle_hardsuit_mode(mob/user) //Helmet Toggles Suit Mode
+	if(linkedsuit)
+		if(on == FALSE)
+			linkedsuit.name += " [hardsuit_speed_suffix]"
+			linkedsuit.desc = linkedsuit.alt_desc
+			linkedsuit.slowdown = 0
+			linkedsuit.clothing_flags &= ~STOPSPRESSUREDAMAGE
+			linkedsuit.cold_protection &= ~(CHEST | GROIN | LEGS | FEET | ARMS | HANDS)
+			if(linkedsuit.armor_switch)
+				linkedsuit.armor = getArmor(arglist(linkedsuit.armor_speed))
+				armor = getArmor(arglist(armor_speed)) //for the helmet
+		else
+			linkedsuit.name = initial(linkedsuit.name)
+			linkedsuit.desc = initial(linkedsuit.desc)
+			linkedsuit.slowdown = 1
+			linkedsuit.clothing_flags |= STOPSPRESSUREDAMAGE
+			linkedsuit.cold_protection |= CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+			if(linkedsuit.armor_switch)
+				linkedsuit.armor = getArmor(arglist(linkedsuit.armor_eva))
+				armor = getArmor(arglist(linkedsuit.armor_eva))
 		linkedsuit.icon_state = "hardsuit[on]-[hardsuit_type]"
 		linkedsuit.update_icon()
 		user.update_inv_wear_suit()
