@@ -1,6 +1,7 @@
 //The Medical Kiosk is designed to act as a low access alernative to  a medical analyzer, and doesn't require breaking into medical. Self Diagnose at your heart's content!
 //For a fee that is. Comes in 4 flavors of medical scan.
 
+
 /obj/machinery/medical_kiosk
 	name = "medical kiosk"
 	desc = "A freestanding medical kiosk, which can provide a wide range of medical analysis for diagnosis."
@@ -81,20 +82,9 @@
 	return TRUE
 
 /obj/machinery/medical_kiosk/RefreshParts()
-	//var/A
 	var/obj/item/circuitboard/machine/medical_kiosk/board = circuit
 	if(board)
 		active_price = board.custom_cost
-
-	/*for(var/obj/item/stock_parts/scanning_module/S in component_parts)  //No upgrades for now.
-		A += S.rating
-	if(A >= 3)
-		upgrade_scan_active = TRUE
-		adv_scan_active = TRUE
-		return
-	else if(A >= 2)
-		upgrade_scan_active = TRUE
-		return*/
 	return
 
 /obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, params)
@@ -167,17 +157,15 @@
 	if(!ishuman(user))
 		to_chat(user,"<span class='notice'>The biometric scanner only works for living, human-like beings.</span>")
 		return
-	patient_distance = get_dist(loc,altPatient)
-	if(patient_distance>5)
+	patient_distance = get_dist(src.loc,altPatient)
+	if(altPatient == null)
+		say("Scanner reset.")
+		altPatient = user
+	else if(patient_distance>5)
 		altPatient = null
 		say("Patient out of range. Resetting biometrics.")
 		clearScans()
-	else if(altPatient == null)
-		say("Scanner reset.")
-		//clearScans()
-
-	if(!altPatient)
-		altPatient = user
+		return
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
