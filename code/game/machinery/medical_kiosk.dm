@@ -155,7 +155,7 @@
 /obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	var/patient_distance = 0
 	if(!ishuman(user))
-		to_chat(user,"<span class='notice'>The biometric scanner only works for living, human-like beings.</span>")
+		to_chat(user, "<span class='warning'>[src] is unable to interface with non-humanoids!</span>")
 		if (ui)
 			ui.close()
 		return
@@ -174,7 +174,6 @@
 		ui = new(user, src, ui_key, "medical_kiosk", name, 625, 550, master_ui, state)
 		ui.open()
 		icon_state = "kiosk_off"
-	if(ishuman(user))
 		RefreshParts()
 		H = user
 		C = H.get_idcard(TRUE)
