@@ -233,11 +233,6 @@ SUBSYSTEM_DEF(mapping)
 	station_start = world.maxz + 1
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
-	// Custom maps are removed after station loading so the map files does not persist for no reason.
-	if(config.map_path == "custom")
-		fdel("_maps/custom/[config.map_file]")
-		// And as the file is now removed set the next map to default.
-		load_map_config(default_to_box = TRUE)
  
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
@@ -266,6 +261,12 @@ SUBSYSTEM_DEF(mapping)
 		INIT_ANNOUNCE(msg)
 #undef INIT_ANNOUNCE
 
+	// Custom maps are removed after station loading so the map files does not persist for no reason.
+	if(config.map_path == "custom")
+		fdel("_maps/custom/[config.map_file]")
+		// And as the file is now removed set the next map to default.
+		load_map_config(default_to_box = TRUE)
+	
 GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
