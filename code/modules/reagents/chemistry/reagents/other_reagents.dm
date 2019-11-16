@@ -151,6 +151,7 @@
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),TCMB)
 			G.react(src)
 			qdel(hotspot)
+	//fixed
 	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
 	if(A)
 		A.acid_level = max(A.acid_level - reac_volume*50, 0)
@@ -250,6 +251,37 @@
 		for(var/obj/effect/rune/R in T)
 			qdel(R)
 	T.Bless()
+
+/datum/reagent/hydrogen_peroxide
+	name = "Hydrogen peroxide"
+	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen and oxygen." //intended intended
+	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
+	taste_description = "burning water"
+	var/cooling_temperature = 2
+	glass_icon_state = "glass_clear"
+	glass_name = "glass of oxygenated water"
+	glass_desc = "The father of all refreshments. Surely it tastes great, right?"
+	shot_glass_icon_state = "shotglassclear"
+
+/*
+ *	Water reaction to turf
+ */
+
+/datum/reagent/hydrogen_peroxide/reaction_turf(turf/open/T, reac_volume)
+	if(!istype(T))
+		return
+	if(reac_volume >= 5)
+		T.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
+/*
+ *	Water reaction to a mob
+ */
+
+/datum/reagent/hydrogen_peroxide/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with h2o2 can burn them !
+	if(!istype(M))
+		return
+	if(method == TOUCH)
+		M.adjustFireLoss(2, 0) // burns
+	..()
 
 /datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
@@ -1479,6 +1511,38 @@
 	reagent_state = LIQUID
 	color = "#D35415"
 	taste_description = "chemicals"
+
+/datum/reagent/pentaerythritol
+	name = "Pentaerythritol"
+	description = "Slow down, it ain't no spelling bee!"
+	reagent_state = SOLID
+	color = "#E66FFF"
+	taste_description = "acid"
+
+/datum/reagent/acetaldehyde
+	name = "Acetaldehyde"
+	description = "Similar to plastic. Tastes like dead people."
+	reagent_state = SOLID
+	color = "#EEEEEF"
+	taste_description = "dead people" //made from formaldehyde, ya get da joke ?
+
+/datum/reagent/acetone_oxide
+	name = "Acetone oxide"
+	description = "Enslaved oxygen"
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	taste_description = "acid"
+
+
+/datum/reagent/acetone_oxide/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people kills people!
+	if(!istype(M))
+		return
+	if(method == TOUCH)
+		M.adjustFireLoss(2, FALSE) // burns,
+		M.adjust_fire_stacks((reac_volume / 10))
+	..()
+
+
 
 /datum/reagent/phenol
 	name = "Phenol"

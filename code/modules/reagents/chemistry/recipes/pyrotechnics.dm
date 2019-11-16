@@ -28,7 +28,7 @@
 	name = "Nitroglycerin"
 	id = /datum/reagent/nitroglycerin
 	results = list(/datum/reagent/nitroglycerin = 2)
-	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/toxin/acid/fluacid = 1, /datum/reagent/toxin/acid = 1)
+	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/toxin/acid = 1)
 	strengthdiv = 2
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
@@ -44,12 +44,105 @@
 	required_temp = 474
 	strengthdiv = 2
 
+/datum/chemical_reaction/reagent_explosion/rdx
+	name = "RDX"
+	id = /datum/reagent/rdx
+	results = list(/datum/reagent/rdx= 2)
+	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/acetone_oxide = 1 )
+	required_temp = 404
+	strengthdiv = 8
+
+/datum/chemical_reaction/reagent_explosion/rdx/on_reaction(datum/reagents/holder, created_volume)
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
+		return
+	holder.remove_reagent(/datum/reagent/rdx, created_volume*2)
+	..()
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion
+	name = "Heat RDX explosion"
+	id = "rdx_explosion"
+	required_reagents = list(/datum/reagent/rdx = 1)
+	required_temp = 474
+	strengthdiv = 8
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion2 //makes rdx unique , on its own it is a good bomb, but when combined with liquid electricity it becomes truly destructive
+	name = "Electric RDX explosion"
+	id = "rdx_explosion2"
+	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/consumable/liquidelectricity = 1)
+	strengthdiv = 4
+	modifier = 2
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion2/on_reaction(datum/reagents/holder, created_volume)
+	var/fire_range = round(created_volume/100)
+	var/turf/T = get_turf(holder.my_atom)
+	for(var/turf/turf in range(fire_range,T))
+		new /obj/effect/hotspot(turf)
+	holder.chem_temp = 500
+	..()
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion3
+	name = "Teslium RDX explosion"
+	id = "rdx_explosion3"
+	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/teslium = 1)
+	modifier = 4
+	strengthdiv = 4
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion3/on_reaction(datum/reagents/holder, created_volume)
+	var/fire_range = round(created_volume/50)
+	var/turf/T = get_turf(holder.my_atom)
+	for(var/turf/turf in range(fire_range,T))
+		new /obj/effect/hotspot(turf)
+	holder.chem_temp = 750
+	..()
+
+/datum/chemical_reaction/reagent_explosion/tatp
+	name = "TaTP"
+	id = /datum/reagent/tatp
+	results = list(/datum/reagent/tatp= 1)
+	required_reagents = list(/datum/reagent/acetone_oxide = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/pentaerythritol = 1 )
+	required_temp = 450
+	strengthdiv = 3
+
+/datum/chemical_reaction/reagent_explosion/tatp/New()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo)) //method used by secret sauce.
+
+/datum/chemical_reaction/reagent_explosion/tatp/proc/UpdateInfo()
+	required_temp = 450 + rand(-49,49)  //this gets loaded only on round start
+
+
+/datum/chemical_reaction/reagent_explosion/tatp/on_reaction(datum/reagents/holder, created_volume)
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
+		return
+	holder.remove_reagent(/datum/reagent/tatp, created_volume)
+	..()
+
+/datum/chemical_reaction/reagent_explosion/tatp_explosion
+	name = "TaTP explosion"
+	id = "tatp_explosion"
+	required_reagents = list(/datum/reagent/tatp = 1)
+	required_temp = 550 // this makes making tatp before pyro nades, and extreme pain in the ass to make
+	strengthdiv = 3
+
+/datum/chemical_reaction/reagent_explosion/tatp_explosion/New()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo))
+
+
+/datum/chemical_reaction/reagent_explosion/tatp_explosion/proc/UpdateInfo()
+	required_temp = 550 + rand(-49,49)
+
+
+/datum/chemical_reaction/reagent_explosion/penthrite_explosion
+	name = "Penthrite explosion"
+	id = "penthrite_explosion"
+	required_reagents = list(/datum/reagent/medicine/C2/penthrite = 1, /datum/reagent/phenol = 1, /datum/reagent/acetone_oxide = 1)
+	required_temp = 315
+	strengthdiv = 5
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	name = "Explosion"
 	id = "potassium_explosion"
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/potassium = 1)
-	strengthdiv = 10
+	strengthdiv = 20
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
 	name = "Holy Explosion"
