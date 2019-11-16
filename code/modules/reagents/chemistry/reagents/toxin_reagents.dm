@@ -143,7 +143,7 @@
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_FAT))
-		M.gib()
+		M.inflate_gib()
 	return ..()
 
 /datum/reagent/toxin/carpotoxin

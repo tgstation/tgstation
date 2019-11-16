@@ -21,6 +21,7 @@
 #include "code\game\objects\effects\decals\turfdecal\markings.dm"
 #include "code\game\objects\items\AI_modules.dm"
 #include "code\game\objects\items\crayons.dm"
+#include "code\game\objects\items\twohanded.dm"
 #include "code\game\objects\items\implants\implant_gang.dm"
 #include "code\game\objects\items\implants\implant_mindshield.dm"
 #include "code\game\objects\items\robot\robot_upgrades.dm"

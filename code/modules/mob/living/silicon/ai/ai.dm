@@ -176,7 +176,7 @@
 			return
 		if("1", "2", "3", "4", "5", "6", "7", "8", "9")
 			_key = text2num(_key)
-			if(client.keys_held["Ctrl"]) //do we assign a new hotkey?
+			if(user.keys_held["Ctrl"]) //do we assign a new hotkey?
 				cam_hotkeys[_key] = eyeobj.loc
 				to_chat(src, "Location saved to Camera Group [_key].")
 				return
