@@ -1229,3 +1229,17 @@
 		remove_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE, update=TRUE)
 	else
 		add_movespeed_modifier(MOVESPEED_ID_MOB_GRAB_STATE, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=grab_state*3, blacklisted_movetypes=FLOATING)
+
+/mob/proc/update_equipment_speed_mods()
+	var/speedies = equipped_speed_mods()
+	if(!speedies)
+		remove_movespeed_modifier(MOVESPEED_ID_MOB_EQUIPMENT, update=TRUE)
+	else
+		add_movespeed_modifier(MOVESPEED_ID_MOB_EQUIPMENT, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=speedies, blacklisted_movetypes=FLOATING)
+
+/// Gets the combined speed modification of all worn items
+/// Except base mob type doesnt really wear items
+/mob/proc/equipped_speed_mods()
+	for(var/obj/item/I in held_items)
+		if(I.item_flags & SLOWS_WHILE_IN_HAND)
+			. += I.slowdown
