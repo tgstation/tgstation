@@ -19,7 +19,7 @@
 	~3 txpwr : haloperidol , instabaluri , pentetic acid , atropine
 	~4 txpwr : Anacea , Omnizine , Regen jelly , Penthrite
 	5+ : Snowflake , or if you are feeling really brutal use another toxin as an antidote
-	^Remember these are recommended, you can use diffrent chems but these instances should be justified, like unstable mutagen's antidote is mutadone
+	^Remember these are recommended, you can use diffrent chems but these instances should be justified, like unstable mutagen ->
 
 
 	SNOWFLAKE SUBTYPES:
@@ -51,15 +51,15 @@
 	name = "Unstable mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#00FF00"
-	toxpwr = 0
 	antidotum = /datum/reagent/medicine/mutadone
+	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 0.9
 
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
 		return
-	if(!M.has_dna()) 
+	if(!M.has_dna())
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
@@ -72,8 +72,7 @@
 	..()
 
 /datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/C)
-	if(!isBeingCured)
-		C.apply_effect(5,EFFECT_IRRADIATE,0)
+	C.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
 #define	LIQUID_PLASMA_BP (50+T0C)
@@ -85,7 +84,7 @@
 	specific_heat = SPECIFIC_HEAT_PLASMA
 	taste_mult = 1.5
 	color = "#8228A0"
-	antidotum = /datum/reagent/medicine/atropine
+	antidotum = /datum/reagent/medicine/haloperidol
 	toxpwr = 3
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
@@ -134,8 +133,7 @@
 
 	if(HAS_TRAIT(C, TRAIT_NOBREATH))
 		. = FALSE
-	if(isBeingCured)
-		. = FALSE
+
 	if(.)
 		C.adjustOxyLoss(5, 0)
 		C.losebreath += 2
@@ -179,7 +177,6 @@
 	silent_toxin = TRUE
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
-	antidotum = /datum/reagent/medicine/C2/syriniver syrniver
 	taste_description = "fish"
 
 /datum/reagent/toxin/zombiepowder
@@ -189,16 +186,12 @@
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
-	antidotum = /datum/reagent/medicine/C2/multiver
 	taste_description = "death"
 	var/fakedeath_active = FALSE
 
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
-	if(isBeingCured)
-		REMOVE_TRAIT(L, TRAIT_FAKEDEATH, type)
-	else
-		ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
+	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
 
 /datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
 	L.cure_fakedeath(type)
@@ -212,8 +205,6 @@
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M)
 	..()
-	if(isBeingCured)
-		return FALSE
 	if(fakedeath_active)
 		return TRUE
 	switch(current_cycle)
@@ -232,24 +223,19 @@
 	description = "A strong neurotoxin that slows metabolism to a death-like state, while keeping the patient fully active. Causes toxin buildup if used too long."
 	reagent_state = SOLID
 	color = "#664700" // rgb: 102, 71, 0
-	antidotum = /datum/reagent/medicine/C2/multiver
 	toxpwr = 0.8
 	taste_description = "death"
 
 /datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/L)
 	..()
-	if(isBeingCured)
-		REMOVE_TRAIT(L, TRAIT_FAKEDEATH, type)
-	else
-		ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
+	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
 
 /datum/reagent/toxin/ghoulpowder/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_FAKEDEATH, type)
 	..()
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/M)
-	if(!isBeingCured)
-		M.adjustOxyLoss(1*REM, 0)
+	M.adjustOxyLoss(1*REM, 0)
 	..()
 	. = 1
 
@@ -258,19 +244,16 @@
 	description = "A powerful hallucinogen. Not a thing to be messed with. For some mental patients. it counteracts their symptoms and anchors them to reality."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
-	antidotum = /datum/reagent/carbon
 	taste_description = "sourness"
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M)
-	if(!isBeingCured)
-		M.hallucination += 5
+	M.hallucination += 5
 	return ..()
 
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
 	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 	color = "#49002E" // rgb: 73, 0, 46
-	antidotum = /datum/reagent/carbon
 	toxpwr = 1
 	taste_mult = 1
 
@@ -301,7 +284,6 @@
 	name = "Pest Killer"
 	description = "A harmful toxic mixture to kill pests. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
-	antidotum = /datum/reagent/carbon
 	toxpwr = 1
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -314,14 +296,12 @@
 	name = "Spore Toxin"
 	description = "A natural toxin produced by blob spores that inhibits vision when ingested."
 	color = "#9ACD32"
-	antidotum = /datum/reagent/phenol
 	toxpwr = 1
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/C)
-	if(!isBeingCured)
-		C.damageoverlaytemp = 60
-		C.update_damage_hud()
-		C.blur_eyes(3)
+	C.damageoverlaytemp = 60
+	C.update_damage_hud()
+	C.blur_eyes(3)
 	return ..()
 
 /datum/reagent/toxin/spore_burning
@@ -342,13 +322,10 @@
 	silent_toxin = TRUE
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
-	antidotum = /datum/reagent/medicine/C2/instabitaluri
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M)
-	if(isBeingCured)
-	return
 	switch(current_cycle)
 		if(1 to 10)
 			M.confused += 2
@@ -371,11 +348,8 @@
 	glass_icon_state = "beerglass"
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
-	antidotum = /datum/reagent/consumable/milk
 
 /datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/M)
-	if(isBeingCured)
-		return
 	switch(current_cycle)
 		if(1 to 50)
 			M.Sleeping(40, 0)
@@ -404,15 +378,11 @@
 	description = "A nonlethal poison that inhibits speech in its victim."
 	silent_toxin = TRUE
 	color = "#F0F8FF" // rgb: 240, 248, 255
-	antidotum = /datum/reagent/phenol
 	toxpwr = 0
 	taste_description = "silence"
 
 /datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
-	if(!isBeingCured)
-		M.silent = max(M.silent, 3)
-	else
-		M.silent = 0
+	M.silent = max(M.silent, 3)
 	..()
 
 /datum/reagent/toxin/staminatoxin
@@ -420,14 +390,12 @@
 	description = "A nonlethal poison that causes extreme fatigue and weakness in its victim."
 	silent_toxin = TRUE
 	color = "#6E2828"
-	antidotum = /datum/reagent/atropine
 	data = 13
 	toxpwr = 0
 
 /datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
-	if(!isBeingCured)
-		M.adjustStaminaLoss(REM * data, 0)
-		data = max(data - 1, 3)
+	M.adjustStaminaLoss(REM * data, 0)
+	data = max(data - 1, 3)
 	..()
 	. = 1
 
@@ -437,14 +405,10 @@
 	reagent_state = LIQUID
 	color = "#787878"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
-	antidotum = /datum/reagent/medicine/mutadone
 	toxpwr = 0
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/M)
-	if(!isBeingCured)
-		M.radiation += 4
-	else
-		M.radiation += 1
+	M.radiation += 4
 	..()
 
 /datum/reagent/toxin/histamine
@@ -455,12 +419,9 @@
 	color = "#FA6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
-	antidotum = /datum/reagent/medicine/C2/instabitaluri
 	toxpwr = 0
 
 /datum/reagent/toxin/histamine/on_mob_life(mob/living/carbon/M)
-	if(isBeingCured)
-		return
 	if(prob(50))
 		switch(pick(1, 2, 3, 4))
 			if(1)
@@ -491,12 +452,9 @@
 	reagent_state = LIQUID
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	antidotum = /datum/reagent/medicine/C2/multiver
 	toxpwr = 1
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M)
-	if(isBeingCured)
-		return
 	if(prob(5))
 		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,15))
 		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 1.2)
@@ -508,13 +466,10 @@
 	description = "An exotic poison extracted from highly toxic fauna. Causes scaling amounts of toxin damage and bruising depending and dosage. Often decays into Histamine."
 	reagent_state = LIQUID
 	color = "#F0FFF0"
-	antidotum = /datum/reagent/medicine/C2/penthrite
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M)
-	if(isBeingCured)
-		return
 	toxpwr = 0.2*volume
 	M.adjustBruteLoss((0.3*volume)*REM, 0)
 	. = 1
@@ -530,7 +485,6 @@
 	reagent_state = LIQUID
 	color = "#64916E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	antidotum = /datum/reagent/medicine/epinephrine
 	toxpwr = 0
 
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M)
