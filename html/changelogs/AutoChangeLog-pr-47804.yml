@@ -1,0 +1,5 @@
+author: "Couls"
+delete-after: True
+changes: 
+  - bugfix: "keybindings should now update properly"
+  - tweak: "hotkey mode is the new default preference"
