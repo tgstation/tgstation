@@ -59,6 +59,7 @@ import { TurbineComputer } from './interfaces/TurbineComputer';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
 import { Holodeck } from './interfaces/Holodeck';
+import { SpawnersMenu } from './interfaces/SpawnersMenu';
 
 const ROUTES = {
   achievements: {
@@ -288,6 +289,10 @@ const ROUTES = {
   solar_control: {
     component: () => SolarControl,
     scrollable: false,
+  },
+  spawners_menu: {
+    component: () => SpawnersMenu,
+    scrollable: true,
   },
   station_alert: {
     component: () => StationAlertConsole,
