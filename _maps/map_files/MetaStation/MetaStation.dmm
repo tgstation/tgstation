@@ -50528,11 +50528,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plating,
 /area/engine/atmos)
-"chY" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/port)
 "chZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -75540,14 +75535,6 @@
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
-"rGl" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/science/research)
 "rJv" = (
 /turf/open/floor/plating,
 /area/hallway/primary/port)
@@ -75759,13 +75746,6 @@
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
-"sZP" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "tbC" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -90694,7 +90674,7 @@ aqK
 aqO
 alC
 aGN
-sZP
+ycH
 alC
 eEU
 aob
@@ -90951,7 +90931,7 @@ kMC
 aob
 bPH
 aob
-sZP
+ycH
 alK
 alK
 alK
