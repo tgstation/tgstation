@@ -265,7 +265,7 @@ SUBSYSTEM_DEF(mapping)
 	if(config.map_path == "custom")
 		fdel("_maps/custom/[config.map_file]")
 		// And as the file is now removed set the next map to default.
-		load_map_config(default_to_box = TRUE)
+		next_map_config = load_map_config(default_to_box = TRUE)
 	
 GLOBAL_LIST_EMPTY(the_station_areas)
 
