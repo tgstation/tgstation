@@ -929,7 +929,13 @@
 	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
 		return 1
 
-	tomob.ghostize(0)
+	if(tomob.client)
+		var/mob/dead/observer/ghost = tomob.ghostize(0)
+		ghost.mind = new(ghost.key)
+	else
+		for(var/mob/dead/observer/ghost in GLOB.dead_mob_list)
+			if(tomob.mind == ghost.mind)
+				ghost.mind = new (ghost.key)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.key] in control of [tomob.name].</span>")
 	log_admin("[key_name(usr)] stuffed [frommob.key] into [tomob.name].")
