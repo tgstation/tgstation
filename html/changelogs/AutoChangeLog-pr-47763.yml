@@ -1,0 +1,5 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Dynamic midround rulesets should now respect the repeatable setting."
+  - bugfix: "Dynamic midround/latejoin rulesets now look for enemy roles in the right place."
