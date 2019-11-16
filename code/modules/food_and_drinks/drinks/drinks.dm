@@ -25,14 +25,14 @@
 
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
-		return 0
+		return FALSE
 
 	if(!canconsume(M, user))
-		return 0
+		return FALSE
 
 	if (!is_drainable())
 		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
-		return 0
+		return FALSE
 
 	if(M == user)
 		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", \
@@ -56,7 +56,7 @@
 	reagents.reaction(M, INGEST, fraction)
 	reagents.trans_to(M, gulp_size, transfered_by = user)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
-	return 1
+	return TRUE
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	. = ..()

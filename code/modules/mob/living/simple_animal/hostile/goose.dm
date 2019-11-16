@@ -9,7 +9,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -82,25 +82,26 @@
 	. = ..()
 	. += "<span class='notice'>Somehow, it still looks hungry.</span>"
 
-/mob/living/simple_animal/hostile/retaliate/goose/attacked_by(obj/item/O, mob/user)
+/mob/living/simple_animal/hostile/retaliate/goose/attackby(obj/item/O, mob/user)
 	. = ..()
 	if(istype(O, /obj/item/reagent_containers/food))
 		feed(O)
+		return TRUE
 
 /mob/living/simple_animal/hostile/retaliate/goose/proc/feed(obj/item/reagent_containers/food/tasty)
 	if(stat == DEAD) // plapatin I swear to god
-		return
+		return FALSE
 	if(tasty.custom_materials && tasty.custom_materials[getmaterialref(/datum/material/plastic)]) // dumb goose'll swallow food or drink with plastic in it
-		visible_message("<span class='danger'>[src] starts choking on \the [tasty]! </span>")
+		visible_message("<span class='danger'>[src] hungrily gobbles up but starts choking on \the [tasty]! </span>")
 		tasty.forceMove(src)
 		choke(tasty)
 		choking = TRUE
-		return
+		return TRUE
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/feed(obj/item/reagent_containers/food/tasty)
-	if (stat == DEAD) // plapatin I swear to god
+	. = ..()
+	if(.)
 		return
-	..()
 	if (contents.len > GOOSE_SATIATED)
 		if(message_cooldown < world.time)
 			visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
@@ -132,9 +133,9 @@
 	else
 		addtimer(CALLBACK(src, .proc/suffocate), 300)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/Life()
+/mob/living/simple_animal/hostile/retaliate/goose/Life()
 	. = ..()
-	if(choking && stat)
+	if(choking && !stat)
 		do_jitter_animation(50)
 		if(prob(20))
 			emote("gasp")
