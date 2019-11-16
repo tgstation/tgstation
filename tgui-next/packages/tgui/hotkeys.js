@@ -62,7 +62,8 @@ const NO_PASSTHROUGH_KEYS = [
   KEY_ENTER,
   KEY_SPACE,
   KEY_TAB,
-  ...MODIFIER_KEYS,
+  KEY_CTRL,
+  KEY_SHIFT,
 ];
 
 // Tracks the "pressed" state of keys
@@ -109,7 +110,7 @@ const getKeyData = e => {
  * in game while the browser window is focused.
  */
 const handlePassthrough = (e, eventType) => {
-  const { keyCode, keyString, hasModifierKeys } = getKeyData(e);
+  const { keyCode, keyString, ctrlKey, shiftKey } = getKeyData(e);
   if (e.defaultPrevented) {
     return;
   }
@@ -117,19 +118,20 @@ const handlePassthrough = (e, eventType) => {
   if (targetName === 'input' || targetName === 'textarea') {
     return;
   }
-  if (hasModifierKeys || NO_PASSTHROUGH_KEYS.includes(keyCode)) {
-    return;
-  }
-  // Prevent spam of keydown events
-  if (eventType === 'keydown' && keyState[keyCode]) {
+  // NOTE: We pass through only Alt of all modifier keys, because Alt
+  // modifier (for toggling run/walk) is implemented very shittily
+  // in our codebase. We pass no other modifier keys, because they can
+  // be used internally as tgui hotkeys.
+  if (ctrlKey || shiftKey || NO_PASSTHROUGH_KEYS.includes(keyCode)) {
     return;
   }
   // Send this keypress to BYOND
-  logger.debug('passthrough', [eventType, keyString]);
-  if (eventType === 'keydown') {
+  if (eventType === 'keydown' && !keyState[keyCode]) {
+    logger.debug('passthrough', [eventType, keyString], getKeyData(e));
     return callByond('', { __keydown: keyCode });
   }
-  if (eventType === 'keyup') {
+  if (eventType === 'keyup' && keyState[keyCode]) {
+    logger.debug('passthrough', [eventType, keyString], getKeyData(e));
     return callByond('', { __keyup: keyCode });
   }
 };

@@ -1,7 +1,9 @@
+import { sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { act } from '../byond';
 import { Box, Button, Flex, LabeledList, ProgressBar, Section, Table } from '../components';
-import { getGasLabel } from './common/atmos';
+import { getGasColor, getGasLabel } from '../constants';
 
 const logScale = value => Math.log2(16 + Math.max(0, value)) - 4;
 
@@ -11,7 +13,6 @@ export const NtosSupermatterMonitor = props => {
   const { ref } = config;
   const {
     active,
-    gases = [],
     SM_integrity,
     SM_power,
     SM_ambienttemp,
@@ -22,10 +23,14 @@ export const NtosSupermatterMonitor = props => {
       <SupermatterList state={state} />
     );
   }
+  const gases = flow([
+    gases => gases.filter(gas => gas.amount >= 0.01),
+    sortBy(gas => -gas.amount),
+  ])(data.gases || []);
   const gasMaxAmount = Math.max(1, ...gases.map(gas => gas.amount));
   return (
     <Flex spacing={1}>
-      <Flex.Item width="260px">
+      <Flex.Item width="270px">
         <Section title="Metrics">
           <LabeledList>
             <LabeledList.Item label="Integrity">
@@ -43,9 +48,9 @@ export const NtosSupermatterMonitor = props => {
                 minValue={0}
                 maxValue={5000}
                 ranges={{
-                  good: [-Infinity, 4000],
-                  average: [4000, 5000],
-                  bad: [5000, Infinity],
+                  good: [-Infinity, 5000],
+                  average: [5000, 7000],
+                  bad: [7000, Infinity],
                 }}>
                 {toFixed(SM_power) + ' MeV/cm3'}
               </ProgressBar>
@@ -54,10 +59,10 @@ export const NtosSupermatterMonitor = props => {
               <ProgressBar
                 value={logScale(SM_ambienttemp)}
                 minValue={0}
-                maxValue={logScale(8000)}
+                maxValue={logScale(10000)}
                 ranges={{
-                  teal: [-Infinity, logScale(173)],
-                  good: [logScale(173), logScale(373)],
+                  teal: [-Infinity, logScale(80)],
+                  good: [logScale(80), logScale(373)],
                   average: [logScale(373), logScale(1000)],
                   bad: [logScale(1000), Infinity],
                 }}>
@@ -68,11 +73,11 @@ export const NtosSupermatterMonitor = props => {
               <ProgressBar
                 value={logScale(SM_ambientpressure)}
                 minValue={0}
-                maxValue={logScale(20000)}
+                maxValue={logScale(50000)}
                 ranges={{
-                  good: [logScale(20), logScale(250)],
-                  average: [logScale(5), logScale(800)],
-                  bad: [-Infinity, +Infinity],
+                  good: [logScale(1), logScale(300)],
+                  average: [-Infinity, logScale(1000)],
+                  bad: [logScale(1000), +Infinity],
                 }}>
                 {toFixed(SM_ambientpressure) + ' kPa'}
               </ProgressBar>
@@ -89,27 +94,41 @@ export const NtosSupermatterMonitor = props => {
               content="Back"
               onClick={() => act(ref, 'PRG_clear')} />
           )}>
-          <Box position="relative" height={gases.length * 24 + 'px'}>
-            <Box fillPositionedParent>
-              <LabeledList>
-                {gases.map(gas => (
-                  <LabeledList.Item
-                    key={gas.name}
-                    label={getGasLabel(gas.name)}>
-                    <ProgressBar
-                      value={gas.amount}
-                      minValue={0}
-                      maxValue={gasMaxAmount}>
-                      {toFixed(gas.amount, 2) + '%'}
-                    </ProgressBar>
-                  </LabeledList.Item>
-                ))}
-              </LabeledList>
-            </Box>
-          </Box>
+          <ForcedBox height={gases.length * 24 + 'px'}>
+            <LabeledList>
+              {gases.map(gas => (
+                <LabeledList.Item
+                  key={gas.name}
+                  label={getGasLabel(gas.name)}>
+                  <ProgressBar
+                    color={getGasColor(gas.name)}
+                    value={gas.amount}
+                    minValue={0}
+                    maxValue={gasMaxAmount}>
+                    {toFixed(gas.amount, 2) + '%'}
+                  </ProgressBar>
+                </LabeledList.Item>
+              ))}
+            </LabeledList>
+          </ForcedBox>
         </Section>
       </Flex.Item>
     </Flex>
+  );
+};
+
+/**
+ * A hack to force certain things (like tables) to position correctly
+ * inside bugged things, like Flex in Internet Explorer.
+ */
+const ForcedBox = props => {
+  const { height, children } = props;
+  return (
+    <Box position="relative" height={height}>
+      <Box fillPositionedParent>
+        {children}
+      </Box>
+    </Box>
   );
 };
 

@@ -34,6 +34,7 @@ import { Gps } from './interfaces/Gps';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { Mint } from './interfaces/Mint';
 import { NtosMain } from './interfaces/NtosMain';
+import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
@@ -51,7 +52,6 @@ import { TankDispenser } from './interfaces/TankDispenser';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
-import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 
 const ROUTES = {
   achievements: {

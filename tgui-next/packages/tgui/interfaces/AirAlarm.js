@@ -3,8 +3,8 @@ import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Box, Button, LabeledList, NumberInput, Section } from '../components';
+import { getGasLabel } from '../constants';
 import { createLogger } from '../logging';
-import { getGasLabel } from './common/atmos';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 const logger = createLogger('AirAlarm');
