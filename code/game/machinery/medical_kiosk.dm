@@ -156,6 +156,8 @@
 	var/patient_distance = 0
 	if(!ishuman(user))
 		to_chat(user,"<span class='notice'>The biometric scanner only works for living, human-like beings.</span>")
+		if (ui)
+			ui.close()
 		return
 	patient_distance = get_dist(src.loc,altPatient)
 	if(altPatient == null)
