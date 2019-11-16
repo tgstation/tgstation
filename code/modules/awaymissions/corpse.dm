@@ -101,7 +101,7 @@
 			if(flavour_text != "")
 				output_message += "\n<span class='bold'>[flavour_text]</span>"
 			if(important_info != "")
-				output_message += "\n<span class='danger'>[important_info]</span>"
+				output_message += "\n<span class='userdanger'>[important_info]</span>"
 			to_chat(M, output_message)
 		var/datum/mind/MM = M.mind
 		var/datum/antagonist/A
