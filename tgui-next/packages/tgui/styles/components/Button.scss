@@ -1,3 +1,16 @@
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
+
+$color-default: colors.bg(colors.$primary) !default;
+$color-disabled: #999999 !default;
+$color-selected: colors.bg(colors.$green) !default;
+$color-caution: colors.bg(colors.$yellow) !default;
+$color-danger: colors.bg(colors.$red) !default;
+$color-transparent-text: rgba(255, 255, 255, 0.5) !default;
+$border-radius: 0 !default;
+$bg-map: colors.$bg-map !default;
+
 @mixin button-color($color) {
   // Adapt text color to background luminance to ensure high contast
   $luminance: luminance($color);
@@ -32,7 +45,7 @@
   margin-right: 2px;
   white-space: nowrap;
   outline: 0;
-  border-radius: $button-border-radius;
+  border-radius: $border-radius;
   margin-bottom: 2px;
   // Disable selection in buttons
   user-select: none;
@@ -43,9 +56,9 @@
   }
 
   .fa, .fas, .far {
-    margin-left: -2px;
-    margin-right: -2px;
-    min-width: 14px;
+    margin-left: -3px;
+    margin-right: -3px;
+    min-width: 16px;
     text-align: center;
   }
 }
@@ -53,11 +66,13 @@
 .Button--hasContent {
   // Add a margin to the icon to keep it separate from the text
   .fa, .fas, .far {
-    margin-left: -2px;
-    margin-right: 4px;
-    min-width: 14px;
-    text-align: center;
+    margin-right: 3px;
   }
+}
+
+.Button--ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .Button--fluid {
@@ -67,34 +82,34 @@
   // padding: 3px 6px;
 }
 
-@each $color-name, $color-value in $color-bg-map {
+@each $color-name, $color-value in $bg-map {
   .Button--color--#{$color-name} {
     @include button-color($color-value);
   }
 }
 
-.Button--color--normal {
-  @include button-color($button-color-normal);
+.Button--color--default {
+  @include button-color($color-default);
 }
 
 .Button--color--caution {
-  @include button-color($button-color-caution);
+  @include button-color($color-caution);
 }
 
 .Button--color--danger {
-  @include button-color($button-color-danger);
+  @include button-color($color-danger);
 }
 
 .Button--color--transparent {
-  @include button-color($base-color-background);
-  background-color: rgba($base-color-background, 0);
-  color: rgba(255, 255, 255, 0.5);
+  @include button-color(base.$color-bg);
+  background-color: rgba(base.$color-bg, 0);
+  color: $color-transparent-text;
 }
 
 .Button--disabled {
-  background-color: $button-color-disabled !important;
+  background-color: $color-disabled !important;
 }
 
 .Button--selected {
-  @include button-color($button-color-selected);
+  @include button-color($color-selected);
 }

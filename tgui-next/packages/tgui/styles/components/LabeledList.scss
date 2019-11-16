@@ -1,5 +1,9 @@
 .LabeledList {
   display: table;
+  // IE8: Does not support calc
+  width: 100%;
+  // Compensate for negative margin
+  width: calc(100% + 12px);
   border-collapse: collapse;
   border-spacing: 0;
   margin: -3px -6px;

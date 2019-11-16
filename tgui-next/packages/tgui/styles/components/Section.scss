@@ -1,13 +1,21 @@
+@use 'sass:color';
+@use '../colors.scss';
+
+$color-title: #ffffff !default;
+$color-background: rgba(0, 0, 0, 0.33) !default;
+$color-shadow: rgba(0, 0, 0, 0.5) !default;
+$color-separator: colors.$primary !default;
+
 .Section {
   position: relative;
   margin-bottom: 6px;
   // IE8: Does not support rgba colors
-  background-color: adjust-color(
-    $section-color-background,
+  background-color: color.adjust(
+    $color-background,
     $lightness: 10%,
     $alpha: 1);
-  background-color: $section-color-background;
-  box-shadow: inset 0 0 5px $section-color-shadow;
+  background-color: $color-background;
+  box-shadow: inset 0 0 5px $color-shadow;
   box-sizing: border-box;
 
   &:last-child {
@@ -18,7 +26,7 @@
 .Section__title {
   position: relative;
   padding: 6px;
-  border-bottom: 2px solid $section-color-separator;
+  border-bottom: 2px solid $color-separator;
 }
 
 .Section__titleText {
@@ -30,6 +38,7 @@
   position: absolute;
   display: inline-block;
   right: 6px;
+  margin-top: -1px;
 }
 
 .Section__content {

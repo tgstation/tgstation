@@ -6,6 +6,8 @@
 	anchored = FALSE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+	ui_style = "nanotrasen"
 	ui_x = 500
 	ui_y = 600
 
@@ -13,7 +15,6 @@
 	var/default_timer_set = 90
 	var/minimum_timer_set = 90
 	var/maximum_timer_set = 3600
-	var/ui_style = "nanotrasen"
 
 	var/numeric_input = ""
 	var/timing = FALSE
