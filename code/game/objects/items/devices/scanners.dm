@@ -774,7 +774,7 @@ GENE SCANNER
 	if(istype(O, /obj/machinery/computer/scan_consolenew))
 		var/obj/machinery/computer/scan_consolenew/C = O
 		if(C.stored_research)
-			to_chat(user, "<span class='notice'>[name] database updated.</span>")
+			to_chat(user, "<span class='notice'>[name] linked to central research database.</span>")
 			discovered = C.stored_research.discovered_mutations
 		else
 			to_chat(user,"<span class='warning'>No database to update from.</span>")

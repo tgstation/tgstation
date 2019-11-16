@@ -39,6 +39,7 @@
 					CAT_SOUP,
 					CAT_SPAGHETTI,
 				),
+				CAT_DRINK = CAT_NONE,
 				CAT_CLOTHING = CAT_NONE,
 			)
 
@@ -368,7 +369,7 @@
 			crafting_recipes[R.category][R.subcategory] += list(build_recipe_data(R))
 
 	data["crafting_recipes"] = crafting_recipes
-	return data	
+	return data
 
 
 /datum/component/personal_crafting/ui_act(action, params)
@@ -395,7 +396,10 @@
 			if(!isnull(params["category"]))
 				cur_category = params["category"]
 			if(!isnull(params["subcategory"]))
-				cur_subcategory = params["subcategory"]
+				if(params["subcategory"] == "0")
+					cur_subcategory = ""
+				else
+					cur_subcategory = params["subcategory"]
 			. = TRUE
 
 /datum/component/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)

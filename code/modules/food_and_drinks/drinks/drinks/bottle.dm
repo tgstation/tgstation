@@ -425,6 +425,33 @@
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/ethanol/trappist = 50)
 
+/obj/item/reagent_containers/food/drinks/bottle/hooch
+	name = "hooch bottle"
+	desc = "A bottle of rotgut. Its owner has applied some street wisdom to cleverly disguise it as a brown paper bag."
+	icon_state = "hoochbottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/hooch = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/moonshine
+	name = "moonshine jug"
+	desc = "It is said that the ancient Applalacians used these stoneware jugs to capture lightning in a bottle."
+	icon_state = "moonshinebottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/blank //Don't let players print these from a lathe, bottles should be obtained in mass from the bar only.
+	name = "glass bottle"
+	desc = "This blank bottle is unyieldingly anonymous, offering no clues to it's contents."
+	icon_state = "glassbottle"
+	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
+
+/obj/item/reagent_containers/food/drinks/bottle/blank/update_icon()
+	..()
+	add_overlay("[initial(icon_state)]shine")
+
+/obj/item/reagent_containers/food/drinks/bottle/blank/small
+	name = "small glass bottle"
+	desc = "This small bottle is unyieldingly anonymous, offering no clues to it's contents."
+	icon_state = "glassbottlesmall"
+	volume = 50
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov
@@ -467,19 +494,19 @@
 		to_chat(user, "<span class='info'>You light [src] on fire.</span>")
 		add_overlay(GLOB.fire_overlay)
 		if(!isGlass)
-			spawn(50)
-				if(active)
-					var/counter
-					var/target = src.loc
-					for(counter = 0, counter<2, counter++)
-						if(istype(target, /obj/item/storage))
-							var/obj/item/storage/S = target
-							target = S.loc
-					if(istype(target, /atom))
-						var/atom/A = target
-						SplashReagents(A)
-						A.fire_act()
-					qdel(src)
+			addtimer(CALLBACK(src, .proc/explode), 5 SECONDS)
+
+/obj/item/reagent_containers/food/drinks/bottle/molotov/proc/explode()
+	if(!active)
+		return
+	if(get_turf(src))
+		var/atom/target = loc
+		for(var/i in 1 to 2)
+			if(istype(target, /obj/item/storage))
+				target = target.loc
+		SplashReagents(target)
+		target.fire_act()
+	qdel(src)
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attack_self(mob/user)
 	if(active)

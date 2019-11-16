@@ -81,11 +81,23 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
 		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
-	
+
 	//byond bug ID:2256651
 	if (asset_cache_job && asset_cache_job in completed_asset_jobs)
 		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
 		src << browse("...", "window=asset_cache_browser")
+
+	// Keypress passthrough
+	if(href_list["__keydown"])
+		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
+		if(keycode)
+			keyDown(keycode)
+		return
+	if(href_list["__keyup"])
+		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
+		if(keycode)
+			keyUp(keycode)
+		return
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -797,6 +809,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		// so that the visual focus indicator matches reality.
 		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 
+	else
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
+
 	..()
 
 /client/proc/add_verbs_from_config()
@@ -869,19 +884,20 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	change_view("[x]x[y]")
 
 /client/proc/update_movement_keys()
-	if(prefs && prefs.key_bindings)
-		movement_keys = list()
-		for(var/key in prefs.key_bindings)
-			for(var/kb_name in prefs.key_bindings[key])
-				switch(kb_name)
-					if("North")
-						movement_keys[key] = NORTH
-					if("East")
-						movement_keys[key] = EAST
-					if("West")
-						movement_keys[key] = WEST
-					if("South")
-						movement_keys[key] = SOUTH
+	if(!prefs?.key_bindings)
+		return
+	movement_keys = list()
+	for(var/key in prefs.key_bindings)
+		for(var/kb_name in prefs.key_bindings[key])
+			switch(kb_name)
+				if("North")
+					movement_keys[key] = NORTH
+				if("East")
+					movement_keys[key] = EAST
+				if("West")
+					movement_keys[key] = WEST
+				if("South")
+					movement_keys[key] = SOUTH
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
