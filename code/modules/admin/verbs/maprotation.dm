@@ -63,6 +63,12 @@
 		if(!M)
 			to_chat(src, "<span class='warning'>Map '[map_file]' failed to parse properly.</span>")
 			return
+		
+		if(!M.bounds)
+			to_chat(src, "<span class='warning'>Map '[map_file]' has non-existant bounds.</span>")
+			qdel(M)
+			return
+		
 		qdel(M)
 
 		var/shuttles = alert("Do you want to modify the shuttles?", "Map Shuttles", "Yes", "No")
