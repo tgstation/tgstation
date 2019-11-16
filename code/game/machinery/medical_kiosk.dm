@@ -322,10 +322,10 @@
 	data["addiction_status"] = addict_list
 	data["hallucinating_status"] = hallucination_status
 
-	data["active_status_1"] = scan_active_1 ? 0 : 1 //General Scan Check
-	data["active_status_2"] = scan_active_2 ? 0 : 1	//Symptom Scan Check
-	data["active_status_3"] = scan_active_3 ? 0 : 1	//Radio-Neuro Scan Check
-	data["active_status_4"] = scan_active_4 ? 0 : 1	//Radio-Neuro Scan Check
+	data["active_status_1"] = scan_active_1 ? FALSE : TRUE //General Scan Check
+	data["active_status_2"] = scan_active_2 ? FALSE : TRUE	//Symptom Scan Check
+	data["active_status_3"] = scan_active_3 ? FALSE : TRUE	//Radio-Neuro Scan Check
+	data["active_status_4"] = scan_active_4 ? FALSE : TRUE	//Radio-Neuro Scan Check
 	return data
 
 /obj/machinery/medical_kiosk/ui_act(action,active)
