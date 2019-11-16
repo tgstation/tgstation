@@ -1,27 +1,33 @@
+@use '../base.scss';
+@use '../functions.scss' as *;
+
+$color-background: #000000 !default;
+$border-radius: base.$border-radius !default;
+
 .Tooltip {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  font-style: normal;
+  font-weight: normal;
 
   &::after {
     position: absolute;
     display: block;
     z-index: 2;
-    width: 250px;
     padding: 6px 10px;
     transform: translateX(-50%);
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
-    white-space: normal;
     text-align: left;
     content: attr(data-tooltip);
     transition: all 150ms;
-    background-color: $tooltip-color-background;
+    background-color: $color-background;
     box-shadow: 1px 1px 15px -1px rgba(0, 0, 0, 0.5);
-    border-radius: $tooltip-border-radius;
+    border-radius: $border-radius;
   }
 
   &:hover::after {
@@ -29,6 +35,13 @@
     pointer-events: none;
     visibility: visible;
     opacity: 1;
+  }
+}
+
+.Tooltip--long {
+  &::after {
+    width: 250px;
+    white-space: normal;
   }
 }
 
@@ -50,6 +63,26 @@
 
 .Tooltip--bottom:hover::after {
   transform: translateX(-50%) translateY(8px);
+}
+
+.Tooltip--bottom-left::after {
+  top: 100%;
+  right: 50%;
+  transform: translateX(12px) translateY(-8px);
+}
+
+.Tooltip--bottom-left:hover::after {
+  transform: translateX(12px) translateY(8px);
+}
+
+.Tooltip--bottom-right::after {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-12px) translateY(-8px);
+}
+
+.Tooltip--bottom-right:hover::after {
+  transform: translateX(-12px) translateY(8px);
 }
 
 .Tooltip--left::after {

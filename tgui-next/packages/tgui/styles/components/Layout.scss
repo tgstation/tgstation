@@ -1,3 +1,7 @@
+@use 'sass:color';
+@use '../base.scss';
+@use '../functions.scss' as *;
+
 .Layout__titleBar {
   position: fixed;
   z-index: 1;
@@ -18,26 +22,26 @@
   margin-bottom: -6px;
 
   // Fancy scrollbar
-  scrollbar-base-color: scale-color(
-    $base-color-background,
+  scrollbar-base-color: color.scale(
+    base.$color-bg,
     $lightness: -25%);
-  scrollbar-face-color: scale-color(
-    $base-color-background,
+  scrollbar-face-color: color.scale(
+    base.$color-bg,
     $lightness: 10%);
-  scrollbar-3dlight-color: scale-color(
-    $base-color-background,
+  scrollbar-3dlight-color: color.scale(
+    base.$color-bg,
     $lightness: 0%);
-  scrollbar-highlight-color: scale-color(
-    $base-color-background,
+  scrollbar-highlight-color: color.scale(
+    base.$color-bg,
     $lightness: 0%);
-  scrollbar-track-color: scale-color(
-    $base-color-background,
+  scrollbar-track-color: color.scale(
+    base.$color-bg,
     $lightness: -25%);
-  scrollbar-arrow-color: scale-color(
-    $base-color-background,
+  scrollbar-arrow-color: color.scale(
+    base.$color-bg,
     $lightness: 50%);
-  scrollbar-shadow-color: scale-color(
-    $base-color-background,
+  scrollbar-shadow-color: color.scale(
+    base.$color-bg,
     $lightness: 10%);
 }
 
@@ -52,7 +56,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(lighten($base-color-background, 30%), 0.25);
+  background-color: rgba(lighten(base.$color-bg, 30%), 0.25);
   pointer-events: none;
 }
 
@@ -65,7 +69,7 @@
   height: 40px;
   line-height: 39px;
   padding: 0 12px;
-  background-color: scale-color($base-color-background, $lightness: -50%);
+  background-color: color.scale(base.$color-bg, $lightness: -50%);
   color: rgba(255, 255, 255, 0.8);
 }
 

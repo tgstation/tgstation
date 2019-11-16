@@ -39,6 +39,3 @@ export const compose = (...funcs) => {
   return funcs.reduce((a, b) => (value, ...rest) =>
     a(b(value, ...rest), ...rest));
 };
-
-// TODO: Refactor all code which uses this export
-export { map } from './collections';

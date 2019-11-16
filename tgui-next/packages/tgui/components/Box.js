@@ -83,6 +83,16 @@ const styleMapperByPropName = {
   color: mapColorPropTo('color'),
   textColor: mapColorPropTo('color'),
   backgroundColor: mapColorPropTo('background-color'),
+  // Utility props
+  fillPositionedParent: (style, value) => {
+    if (value) {
+      style['position'] = 'absolute';
+      style['top'] = 0;
+      style['bottom'] = 0;
+      style['left'] = 0;
+      style['right'] = 0;
+    }
+  },
 };
 
 export const computeBoxProps = props => {
@@ -124,6 +134,7 @@ export const Box = props => {
     ...rest
   } = props;
   const color = props.textColor || props.color;
+  const backgroundColor = props.backgroundColor;
   // Render props
   if (typeof children === 'function') {
     return children(computeBoxProps(props));
@@ -136,6 +147,7 @@ export const Box = props => {
     classes([
       className,
       isColorClass(color) && 'color-' + color,
+      isColorClass(backgroundColor) && 'color-bg-' + backgroundColor,
     ]),
     content || children,
     ChildFlags.UnknownChildren,
