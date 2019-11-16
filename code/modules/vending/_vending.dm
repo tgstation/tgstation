@@ -64,6 +64,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	///Last mob to shop with us
 	var/last_shopper
 	var/tilted = FALSE
+	var/tiltable = TRUE
 
 	/**
 	  * List of products this machine sells
@@ -400,7 +401,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				else
 					to_chat(user, "<span class='warning'>There's nothing to restock!</span>")
 			return
-	if(compartmentLoadAccessCheck(user) && user.a_intent != "harm")
+	if(compartmentLoadAccessCheck(user) && user.a_intent != INTENT_HARM)
 		if(canLoadItem(I))
 			loadingAttempt(I,user)
 			updateUsrDialog() //can't put this on the proc above because we spam it below
@@ -425,19 +426,21 @@ GLOBAL_LIST_EMPTY(vending_products)
 				updateUsrDialog()
 	else
 		. = ..()
-		if(I.force && !tilted)
+		if(tiltable && !tilted && I.force)
 			switch(rand(1, 100))
-				if(1 to 4)
+				if(1 to 5)
 					freebie(user, 3)
-				if(5 to 12)
+				if(6 to 15)
 					freebie(user, 2)
-				if(13 to 20)
+				if(16 to 25)
 					freebie(user, 1)
-				if(76 to 100)
+				if(76 to 95)
 					tilt(user)
+				if(96 to 100)
+					tilt(user, crit=TRUE)
 
 /obj/machinery/vending/proc/freebie(mob/fatty, freebies)
-	src.visible_message("<span class='notice'>\The [src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!</span>")
+	visible_message("<span class='notice'>\The [src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!</span>")
 
 	for(var/i=0, i<freebies, i++)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
@@ -453,19 +456,23 @@ GLOBAL_LIST_EMPTY(vending_products)
 			new dump_path(get_turf(src))
 			break
 
-/obj/machinery/vending/proc/tilt(mob/fatty)
-	src.visible_message("<span class='danger'>\The [src] tips over!</span>")
+/obj/machinery/vending/proc/tilt(mob/fatty, crit=FALSE)
+	visible_message("<span class='danger'>\The [src] tips over!</span>")
 	tilted = TRUE
+	layer = ABOVE_MOB_LAYER
 	anchored = FALSE
 
-	for(var/mob/living/L in get_turf(fatty))
-		L.Paralyze(60)
-		L.emote("scream")
-		playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
-		playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
-		L.visible_message("<span class='danger'>[L] is crushed by \the [src]!</span>", \
-			"<span class='userdanger'>You are crushed by \the [src]!</span>")
-		L.apply_damage(95, forced=TRUE, spread_damage=TRUE)
+	if(in_range(fatty, src))
+		for(var/mob/living/L in get_turf(fatty))
+			L.Paralyze(60)
+			L.emote("scream")
+			playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
+			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
+			L.visible_message("<span class='danger'>[L] is crushed by \the [src]!</span>", \
+				"<span class='userdanger'>You are crushed by \the [src]!</span>")
+			L.apply_damage(95, forced=TRUE, spread_damage=TRUE)
+			if(iscarbon(L))
+				L.AddElement(/datum/element/squish, 15 SECONDS)
 
 	var/matrix/M = matrix()
 	M.Turn(pick(90, 270))
@@ -477,6 +484,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	user.visible_message("<span class='notice'>[user] rights /the [src].", \
 		"<span class='notice'>You right \the [src].")
 	tilted = FALSE
+	anchored = TRUE
+	layer = initial(layer)
 
 	var/matrix/M = matrix()
 	M.Turn(0)
