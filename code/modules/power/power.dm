@@ -51,9 +51,9 @@
 	else
 		return 0
 
-/obj/machinery/power/proc/avail()
+/obj/machinery/power/proc/avail(amount)
 	if(powernet)
-		return powernet.avail
+		return amount ? powernet.avail >= amount : powernet.avail
 	else
 		return 0
 
@@ -235,7 +235,7 @@
 		index++
 
 		var/list/connections = working_cable.get_cable_connections(skip_assigned_powernets)
-		
+
 		for(var/obj/structure/cable/cable_entry in connections)
 			if(!cables[cable_entry]) //Since it's an associated list, we can just do an access and check it's null before adding; prevents duplicate entries
 				cables[cable_entry] = TRUE
