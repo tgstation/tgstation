@@ -1150,14 +1150,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	H.hairstyle = "Bald"
 	H.update_hair()
 
-////////////////
-// MOVE SPEED //
-////////////////
-
-/datum/species/proc/movement_delay(mob/living/carbon/human/H)
-	. = 0	//We start at 0.
-	var/gravity = H.has_gravity()
-
 //////////////////
 // ATTACK PROCS //
 //////////////////
