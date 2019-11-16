@@ -12,30 +12,30 @@
     return 1
 
 /obj/item/clothing/head/AED/ui_action_click(mob/user, action)
-  educate()
-
-/obj/item/clothing/head/AED/verb/educate()
-  set src in usr
   if(!src.contents.len)
-    to_chat(usr, "<span class='warning'>There is nothing loaded in the [src]!</span>")
+    to_chat(user, "<span class='warning'>There is nothing loaded in the [src]!</span>")
     return
   for(var/obj/item/education_chip/E in src.contents)
     if(!E.subject)
-      to_chat(usr, "<span class='warning'>The Education Chip doesn't have a subject!</span>")
+      to_chat(user, "<span class='warning'>The Education Chip doesn't have a subject!</span>")
       return
     var/datum/martial_art/MA = new E.subject
-    if(usr.mind.has_martialart(initial(MA.id)))
-      to_chat(usr,"<span class='warning'>You already know [E.subject_name]!</span>")
+    if(user.mind.has_martialart(initial(MA.id)))
+      to_chat(user,"<span class='warning'>You already know [E.subject_name]!</span>")
       return
-    to_chat(usr, "<span class='boldannounce'>Your head whirls with a sudden rush of information as you instantly learn about [E.subject_name]!</span>")
+    to_chat(user, "<span class='boldannounce'>Your head whirls with a sudden rush of information as you instantly learn about [E.subject_name]!</span>")
     if(E.greet)
-      to_chat(usr, "[E.greet]")
-    MA.teach(usr)
-    usr.log_message("learned the subject [E.subject_name] ([MA])", LOG_ATTACK, color="orange")
+      to_chat(user, "[E.greet]")
+    MA.teach(user)
+    user.log_message("learned the subject [E.subject_name] ([MA])", LOG_ATTACK, color="orange")
     if(!E.unlimited)
       qdel(E)
       new /obj/item/education_chip(src)
 
+/obj/item/clothing/head/AED/old
+  name = "Rusty Automatic Education Device"
+  desc = "A battered AED, it seems very old. Simply put the headset on, insert an education chip, and turn it on to instantly learn the contents of said chip."
+  icon_state = "electrode_helmet_old"
 
 ////Education Chips////
 
@@ -55,8 +55,8 @@
 
 /obj/item/education_chip/Initialize()
   . = ..()
-  add_overlay(overlay)
-
+  if(overlay)
+    add_overlay(overlay)
 
 /obj/item/education_chip/cqc
   name = "Close-Quarters-Combat Education Chip"
