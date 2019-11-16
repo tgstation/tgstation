@@ -1,5 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Chopping off all your legs and growing a few dozen arms no longer turns you into the fastest monstrosity this side of the milky way"
-  - bugfix: "Lacking legs/arms no longer slows you down if you're weren't using them to move anyway"

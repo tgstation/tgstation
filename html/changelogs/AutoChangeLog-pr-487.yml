@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an exploit allowing you to adjust the explosion delay of IED's."

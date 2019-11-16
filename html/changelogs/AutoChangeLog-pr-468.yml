@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "The slowdown from grabbing someone no longer applies when you're floating"
