@@ -177,11 +177,11 @@
 	if(hairstyle)
 		H.hairstyle = hairstyle
 	else
-		H.hairstyle = random_hairstyle(gender)
+		H.hairstyle = random_hairstyle(H.gender)
 	if(facial_hairstyle)
 		H.facial_hairstyle = facial_hairstyle
 	else
-		H.facial_hairstyle = random_facial_hairstyle(gender)
+		H.facial_hairstyle = random_facial_hairstyle(H.gender)
 	if(skin_tone)
 		H.skin_tone = skin_tone
 	else
