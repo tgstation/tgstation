@@ -81,14 +81,17 @@
 		var/suicide_message
 
 		if(a_intent == INTENT_DISARM)
-			suicide_message = pick("[src] is attempting to push [p_their()] own head off [p_their()] shoulders! It looks like [p_theyre()] trying to commit suicide.", \
-								"[src] is pushing [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
-								"[src] is ripping [p_their()] own arms off! It looks like [p_theyre()] trying to commit suicide.")//heheh get it?
-		if(a_intent == INTENT_GRAB)
+			suicide_message = "[src] is ripping [p_their()] own arms off! It looks like [p_theyre()] trying to commit suicide." //heheh get it?
+			var/timer = 5
+			for(var/obj/item/bodypart/thing in bodyparts)
+				if(thing.body_part == ARM_LEFT || thing.body_part == ARM_RIGHT)
+					addtimer(CALLBACK(src, /mob/living/carbon/human/.proc/disarm_suicide, thing), timer)
+					timer += 10
+		else if(a_intent == INTENT_GRAB)
 			suicide_message = pick("[src] is attempting to pull [p_their()] own head off! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is aggressively grabbing [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is pulling [p_their()] eyes out of their sockets! It looks like [p_theyre()] trying to commit suicide.")
-		if(a_intent == INTENT_HELP)
+		else if(a_intent == INTENT_HELP)
 			suicide_message = pick("[src] is hugging [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is high-fiving [p_them()]self to death! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is getting too high on life! It looks like [p_theyre()] trying to commit suicide.")
@@ -104,6 +107,11 @@
 
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
+
+/mob/living/carbon/human/proc/disarm_suicide(arm)
+	var/obj/item/bodypart/todrop = arm
+	todrop.drop_limb(FALSE)
+	playsound(src, 'sound/effects/cartoon_pop.ogg', 70)
 
 /mob/living/brain/verb/suicide()
 	set hidden = 1
