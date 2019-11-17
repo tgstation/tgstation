@@ -1020,15 +1020,18 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	dat += "<br><a href='?src=[REF(src)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 
-proc/immerse_player(mob/living/carbon/target, toggle=TRUE, remove=FALSE)
-	var/already_immersed = target.GetComponent(/datum/component/manual_blinking)
+/proc/immerse_player(mob/living/carbon/target, toggle=TRUE, remove=FALSE)
+	var/list/immersion_components = list(/datum/component/manual_breathing, /datum/component/manual_blinking)
 
-	if(already_immersed && (toggle || remove))
-		qdel(already_immersed)
-	else
-		target.AddComponent(/datum/component/manual_blinking)
+	for(var/immersies in immersion_components)
+		var/has_component = target.GetComponent(immersies)
 
-proc/mass_immerse(remove=FALSE)
+		if(has_component && (toggle || remove))
+			qdel(has_component)
+		else
+			target.AddComponent(immersies)
+
+/proc/mass_immerse(remove=FALSE)
 	for(var/M in GLOB.mob_list)
 		if(iscarbon(M))
 			immerse_player(M, toggle=FALSE, remove=remove)

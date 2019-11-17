@@ -1,84 +1,86 @@
-#define EXHALE 0
-#define INHALE 1
-
-
 /datum/component/manual_breathing
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	var/obj/item/organ/eyes/E
 	var/obj/item/organ/lungs/L
-	var/mob/living/carbon/C
-	var/last_blink
+	var/warn_grace = FALSE
+	var/warn_dying = FALSE
 	var/last_breath
-	var/blink_every = 24 SECONDS
-	var/breathe_every = 14 SECONDS
-	var/next_breath_type = INHALE
-	var/warned_blink = FALSE
-	var/warned_breath = FALSE
+	var/check_every = 14 SECONDS
+	var/grace_period = 2 SECONDS
+	var/damage_rate = 1 // organ damage taken per tick
+	var/next_breath_type = /datum/emote/inhale
 
 /datum/component/manual_breathing/Initialize()
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	C = parent
-	E = C.getorganslot(ORGAN_SLOT_EYES)
+	var/mob/living/carbon/C = parent
 	L = C.getorganslot(ORGAN_SLOT_LUNGS)
 
-	START_PROCESSING(SSprocessing, src)
-	to_chat(C, "<span class='notice'>You suddenly realize you're breathing and blinking manually.</span>")
+	if(L)
+		START_PROCESSING(SSdcs, src)
+		to_chat(C, "<span class='notice'>You suddenly realize you're blinking manually.</span>")
 
 /datum/component/manual_breathing/Destroy(force, silent)
-	STOP_PROCESSING(SSprocessing, src)
-	to_chat(C, "<span class='notice'>You revert back to automatic breathing and blinking.</span>")
+	L = null
+	STOP_PROCESSING(SSdcs, src)
+	to_chat(parent, "<span class='notice'>You revert back to automatic blinking.</span>")
 	return ..()
 
 /datum/component/manual_breathing/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
+	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
+	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
 
 /datum/component/manual_breathing/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_EMOTE)
+	UnregisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN)
+	UnregisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN)
 
 /datum/component/manual_breathing/process()
-	if(E && world.time > (last_blink + (blink_every)))
-		if(!warned_blink)
-			to_chat(C, "<span class='userdanger'>You need to blink!</span>")
+	if(!L || !iscarbon(parent))
+		STOP_PROCESSING(SSdcs, src)
+		return
 
-		warned_blink = TRUE
-		E.damage++
+	var/mob/living/carbon/C = parent
 
-		if(prob(4))
-			C.visible_message("<b>[C]'s</b> eyes water!", \
-			"<span class='notice'>Your eyes water painfully!</span>")
+	var/next_text = (next_breath_type == /datum/emote/inhale ? "inhale" : "exhale")
+	if(world.time > (last_breath + check_every + grace_period))
+		if(!warn_dying)
+			to_chat(C, "<span class='userdanger'>You begin to suffocate, you need to [next_text]!</span>")
+			warn_dying = TRUE
 
-	if(L && world.time > (last_breath + (breathe_every)))
-		if(!warned_breath)
-			to_chat(C, "<span class='userdanger'>You need to [next_breath_type ? "inhale" : "exhale"]!</span>")
-
-		warned_breath = TRUE
+		L.applyOrganDamage(damage_rate)
 		C.losebreath += 0.8
-		L.damage += 0.4
+	else if(world.time > (last_breath + check_every))
+		if(!warn_grace)
+			to_chat(C, "<span class='userdanger'>You need to [next_text]!</span>")
+			warn_grace = TRUE
 
-	return
+
+/datum/component/manual_breathing/proc/check_added_organ(mob/who_cares, obj/item/organ/O)
+	var/obj/item/organ/eyes/new_lungs = O
+
+	if(istype(new_lungs,/obj/item/organ/lungs))
+		L = new_lungs
+		START_PROCESSING(SSdcs, src)
+
+/datum/component/manual_breathing/proc/check_removed_organ(mob/who_cares, obj/item/organ/O)
+	var/obj/item/organ/lungs/old_lungs = O
+
+	if(istype(old_lungs, /obj/item/organ/lungs))
+		L = null
+		STOP_PROCESSING(SSdcs, src)
 
 /datum/component/manual_breathing/proc/check_emote(mob/living/carbon/user, list/emote_args)
 	var/datum/emote/emote = emote_args[EMOTE_DATUM]
 
-	if(emote.key == "blink" || emote.key == "blink_r")
-		warned_blink = FALSE
-		last_blink = world.time
+	if(emote.type == next_breath_type)
+		if(next_breath_type == /datum/emote/inhale)
+			next_breath_type = /datum/emote/exhale
+		else
+			next_breath_type = /datum/emote/inhale
 
-	if(emote.key == "inhale" && next_breath_type == INHALE)
-		warned_breath = FALSE
+		warn_grace = FALSE
+		warn_dying = FALSE
 		last_breath = world.time
-		next_breath_type = !next_breath_type
-		C.losebreath -= 1.4 // give them a bit of a refund since losebreath takes so long to wear off
-
-	if(emote.key == "exhale" && next_breath_type == EXHALE)
-		warned_breath = FALSE
-		last_breath = world.time
-		next_breath_type = !next_breath_type
-		C.losebreath -= 1.4
-
-
-#undef INHALE
-#undef EXHALE
