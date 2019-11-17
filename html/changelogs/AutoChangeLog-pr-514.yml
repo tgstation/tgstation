@@ -1,0 +1,9 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - rscadd: "Medical Kiosks now have more functionality available, including showing blood levels, virus information, and cumulative total health."
+  - rscadd: "You now now alt-click a Medical  Kiosk to remove a medical scanner wand, so that you can scan someone else."
+  - rscadd: "Medical Kiosks now use TGUI-next."
+  - tweak: "Now, the information in the medical kiosk is split up between 4 different scan types, General, Symptom based, Neuro/Radiologic, and Chemical Analysis scans."
+  - balance: "Each medical kiosk scan costs a base 10 credits minimum."
+  - bugfix: "Medical Kiosks don't runtime on ghosts and borgs anymore."
