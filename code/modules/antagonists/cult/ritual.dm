@@ -67,6 +67,7 @@ This file contains the cult dagger and rune list code
 	if(initial(rune_to_scribe.req_keyword))
 		chosen_keyword = stripped_input(user, "Enter a keyword for the new rune.", "Words of Power")
 		if(!chosen_keyword)
+			drawing_rune = FALSE
 			scribe_rune(user) //Go back a menu!
 			return
 	Turf = get_turf(user) //we may have moved. adjust as needed...
