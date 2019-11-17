@@ -1,14 +1,21 @@
+@use 'sass:color';
+
+$color-text: rgba(255, 255, 255, 0.75) !default;
+$color-background: #363636 !default;
+$color-shadow-core: #161616 !default;
+$color-shadow: rgba(0, 0, 0, 0.1) !default;
+
 .TitleBar {
-  background-color: $titlebar-color-background;
-  border-bottom: 1px solid $titlebar-color-shadow-core;
-  box-shadow: 0 2px 2px $titlebar-color-shadow;
+  background-color: $color-background;
+  border-bottom: 1px solid $color-shadow-core;
+  box-shadow: 0 2px 2px $color-shadow;
   user-select: none;
   -ms-user-select: none;
 }
 
 .TitleBar__clickable {
-  color: change-color($titlebar-color-text, $alpha: 0.5);
-  background-color: $titlebar-color-background;
+  color: color.change($color-text, $alpha: 0.5);
+  background-color: $color-background;
   transition: color 250ms, background-color 250ms;
 
   &:hover {
@@ -22,7 +29,7 @@
   position: absolute;
   top: 0;
   left: 46px;
-  color: $titlebar-color-text;
+  color: $color-text;
   font-size: 14px;
   line-height: 31px;
   white-space: nowrap;
