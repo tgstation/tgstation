@@ -31,7 +31,9 @@ import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { Gps } from './interfaces/Gps';
+import { KitchenSink } from './interfaces/KitchenSink';
 import { LanguageMenu } from './interfaces/LanguageMenu';
+import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
@@ -193,6 +195,10 @@ const ROUTES = {
   language_menu: {
     component: () => LanguageMenu,
     scrollable: true,
+  },
+  medical_kiosk: {
+    component: () => MedicalKiosk,
+    scrollable: false,
   },
   mint: {
     component: () => Mint,
