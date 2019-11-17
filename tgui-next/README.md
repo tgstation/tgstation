@@ -238,6 +238,8 @@ Props:
 - `height: number` - Box height.
 - `minHeight: number` - Box minimum height.
 - `maxHeight: number` - Box maximum height.
+- `fontSize: number` - Font size.
+- `fontFamily: string` - Font family.
 - `lineHeight: number` - Directly affects the height of text lines.
 Useful for adjusting button height.
 - `inline: boolean` - Forces the `Box` to appear as an `inline-block`,
@@ -253,6 +255,7 @@ all available horizontal space.
 - `opacity: number` - Opacity, from 0 to 1.
 - `bold: boolean` - Make text bold.
 - `italic: boolean` - Make text italic.
+- `nowrap: boolean` - Stops text from wrapping.
 - `textAlign: string` - Align text inside the box.
   - `left` (default)
   - `center`

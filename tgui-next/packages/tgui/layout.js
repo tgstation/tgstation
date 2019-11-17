@@ -4,7 +4,7 @@ import { Component, Fragment } from 'inferno';
 import { runCommand, winset } from './byond';
 import { Box, TitleBar } from './components';
 import { Toast } from './components/Toast';
-import { UI_INTERACTIVE } from './constants';
+import { UI_DISABLED, UI_INTERACTIVE } from './constants';
 import { dragStartHandler, resizeStartHandler } from './drag';
 import { releaseHeldKeys } from './hotkeys';
 import { createLogger } from './logging';
@@ -52,6 +52,10 @@ export class Layout extends Component {
         </WrapperComponent>
       );
     }
+    // Determine when to show dimmer
+    const showDimmer = config.observer
+      ? config.status < UI_DISABLED
+      : config.status < UI_INTERACTIVE;
     return (
       <div className="Layout">
         <TitleBar
@@ -67,7 +71,7 @@ export class Layout extends Component {
             runCommand(`uiclose ${config.ref}`);
           }} />
         {contentElement}
-        {config.status !== UI_INTERACTIVE && (
+        {showDimmer && (
           <div className="Layout__dimmer" />
         )}
         {state.toastText && (
