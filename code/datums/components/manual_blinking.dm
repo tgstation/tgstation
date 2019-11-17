@@ -6,7 +6,7 @@
 	var/warn_dying = FALSE
 	var/last_blink
 	var/check_every = 20 SECONDS
-	var/grace_period = 2 SECONDS
+	var/grace_period = 6 SECONDS
 	var/damage_rate = 1 // organ damage taken per tick
 	var/list/valid_emotes = list(/datum/emote/living/carbon/blink, /datum/emote/living/carbon/blink_r)
 
@@ -19,6 +19,7 @@
 
 	if(E)
 		START_PROCESSING(SSdcs, src)
+		last_blink = world.time
 		to_chat(C, "<span class='notice'>You suddenly realize you're blinking manually.</span>")
 
 /datum/component/manual_blinking/Destroy(force, silent)
@@ -31,11 +32,21 @@
 	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
 	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
+	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/restart)
+	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/pause)
 
 /datum/component/manual_blinking/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_EMOTE)
 	UnregisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN)
 	UnregisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(parent, COMSIG_LIVING_REVIVE)
+	UnregisterSignal(parent, COMSIG_MOB_DEATH)
+
+/datum/component/manual_blinking/proc/restart()
+	START_PROCESSING(SSdcs, src)
+
+/datum/component/manual_blinking/proc/pause()
+	STOP_PROCESSING(SSdcs, src)
 
 /datum/component/manual_blinking/process()
 	if(!E || !iscarbon(parent))
@@ -52,7 +63,8 @@
 		E.applyOrganDamage(damage_rate)
 	else if(world.time > (last_blink + check_every))
 		if(!warn_grace)
-			to_chat(C, "<span class='userdanger'>You need to blink!</span>")
+			to_chat(C, "<span class='danger'>You feel a need to blink!</span>")
+			warn_grace = TRUE
 
 /datum/component/manual_blinking/proc/check_added_organ(mob/who_cares, obj/item/organ/O)
 	var/obj/item/organ/eyes/new_eyes = O
@@ -68,9 +80,7 @@
 		E = null
 		STOP_PROCESSING(SSdcs, src)
 
-/datum/component/manual_blinking/proc/check_emote(mob/living/carbon/user, list/emote_args)
-	var/datum/emote/emote = emote_args[EMOTE_DATUM]
-
+/datum/component/manual_blinking/proc/check_emote(mob/living/carbon/user, datum/emote/emote)
 	if(emote.type in valid_emotes)
 		warn_grace = FALSE
 		warn_dying = FALSE

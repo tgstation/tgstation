@@ -5,8 +5,8 @@
 	var/warn_grace = FALSE
 	var/warn_dying = FALSE
 	var/last_breath
-	var/check_every = 14 SECONDS
-	var/grace_period = 2 SECONDS
+	var/check_every = 12 SECONDS
+	var/grace_period = 6 SECONDS
 	var/damage_rate = 1 // organ damage taken per tick
 	var/next_breath_type = /datum/emote/inhale
 
@@ -19,6 +19,7 @@
 
 	if(L)
 		START_PROCESSING(SSdcs, src)
+		last_breath = world.time
 		to_chat(C, "<span class='notice'>You suddenly realize you're blinking manually.</span>")
 
 /datum/component/manual_breathing/Destroy(force, silent)
@@ -31,11 +32,21 @@
 	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
 	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
 	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
+	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/restart)
+	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/pause)
 
 /datum/component/manual_breathing/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_EMOTE)
 	UnregisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN)
 	UnregisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN)
+	UnregisterSignal(parent, COMSIG_LIVING_REVIVE)
+	UnregisterSignal(parent, COMSIG_MOB_DEATH)
+
+/datum/component/manual_breathing/proc/restart()
+	START_PROCESSING(SSdcs, src)
+
+/datum/component/manual_breathing/proc/pause()
+	STOP_PROCESSING(SSdcs, src)
 
 /datum/component/manual_breathing/process()
 	if(!L || !iscarbon(parent))
@@ -54,9 +65,8 @@
 		C.losebreath += 0.8
 	else if(world.time > (last_breath + check_every))
 		if(!warn_grace)
-			to_chat(C, "<span class='userdanger'>You need to [next_text]!</span>")
+			to_chat(C, "<span class='danger'>You feel a need to [next_text]!</span>")
 			warn_grace = TRUE
-
 
 /datum/component/manual_breathing/proc/check_added_organ(mob/who_cares, obj/item/organ/O)
 	var/obj/item/organ/eyes/new_lungs = O
@@ -72,9 +82,7 @@
 		L = null
 		STOP_PROCESSING(SSdcs, src)
 
-/datum/component/manual_breathing/proc/check_emote(mob/living/carbon/user, list/emote_args)
-	var/datum/emote/emote = emote_args[EMOTE_DATUM]
-
+/datum/component/manual_breathing/proc/check_emote(mob/living/carbon/user, datum/emote/emote)
 	if(emote.type == next_breath_type)
 		if(next_breath_type == /datum/emote/inhale)
 			next_breath_type = /datum/emote/exhale
@@ -84,3 +92,6 @@
 		warn_grace = FALSE
 		warn_dying = FALSE
 		last_breath = world.time
+
+		var/mob/living/carbon/C = parent
+		C.losebreath = max(0, C.losebreath - 0.4)
