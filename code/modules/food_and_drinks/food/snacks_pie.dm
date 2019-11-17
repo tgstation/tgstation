@@ -38,7 +38,7 @@
 		else
 			splat(hit_atom)
 
-/obj/item/reagent_containers/food/snacks/pie/cream/proc/splat(atom/movable/hit_atom, mob/living/carbon/human/H)
+/obj/item/reagent_containers/food/snacks/pie/cream/proc/splat(atom/movable/hit_atom, mob/living/carbon/human/H = null)
 	if(isliving(loc)) //someone caught us!
 		return
 	var/turf/T = get_turf(hit_atom)
@@ -47,16 +47,16 @@
 		reagents.reaction(hit_atom, TOUCH)
 	if(isliving(hit_atom))
 		var/mob/living/L = hit_atom
-		if(L.mind && H)
-			var/experience_given = 15
+		if(L.client && H)
+			var/experience_given = 30
+			if(L.GetComponent(/datum/component/creamed))
+				experience_given *= 0.1
 			if(HAS_TRAIT(L.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 				experience_given *= 3
-			if(L.GetComponents(/datum/component/creamed))
-				experience_given *= 0.3
 			H.mind.adjust_experience(/datum/skill/pie_throwing, experience_given)
 		if(stunning && H)
 			var/skillmod = H.mind.get_skill_speed_modifier(/datum/skill/pie_throwing)
-			if(skillmod > 30)
+			if(skillmod > 25)// journeyman level or higher
 				L.Paralyze(skillmod) //splat!
 			else
 				L.Stun(skillmod) //splish!

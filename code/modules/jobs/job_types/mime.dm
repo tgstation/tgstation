@@ -47,6 +47,7 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = 1
+		H.mind.adjust_experience(/datum/skill/pie_throwing, 500) // mime college
 
 /obj/item/book/mimery
 	name = "Guide to Dank Mimery"
