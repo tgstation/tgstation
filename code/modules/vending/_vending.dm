@@ -65,6 +65,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/last_shopper
 	var/tilted = FALSE
 	var/tiltable = TRUE
+	var/squish_damage = 75
+	var/forcecrit = 0
+	var/list/pinned_mobs = list()
 
 	/**
 	  * List of products this machine sells
@@ -363,6 +366,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	..()
 	if(panel_open)
 		default_unfasten_wrench(user, I, time = 60)
+		for(var/mob/living/carbon/C in pinned_mobs)
+			C.SetAllImmobility(0, TRUE)
 	return TRUE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
@@ -434,9 +439,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 					freebie(user, 2)
 				if(16 to 25)
 					freebie(user, 1)
-				if(76 to 95)
+				if(76 to 90)
 					tilt(user)
-				if(96 to 100)
+				if(91 to 100)
 					tilt(user, crit=TRUE)
 
 /obj/machinery/vending/proc/freebie(mob/fatty, freebies)
@@ -460,19 +465,70 @@ GLOBAL_LIST_EMPTY(vending_products)
 	visible_message("<span class='danger'>\The [src] tips over!</span>")
 	tilted = TRUE
 	layer = ABOVE_MOB_LAYER
-	anchored = FALSE
+
+	var/crit_case
+	if(crit)
+		crit_case = rand(1,5)
+
+	if(forcecrit)
+		crit_case = forcecrit
 
 	if(in_range(fatty, src))
 		for(var/mob/living/L in get_turf(fatty))
+			var/mob/living/carbon/C = L
+
+			if(istype(C))
+				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
+
+				switch(crit_case) // only carbons can have the fun crits
+					if(1) // shatter their legs and bleed 'em
+						crit_rebate = 60
+						C.bleed(150)
+						var/obj/item/bodypart/l_leg/l = C.get_bodypart(BODY_ZONE_L_LEG)
+						if(l)
+							l.receive_damage(brute=200, updating_health=TRUE)
+						var/obj/item/bodypart/r_leg/r = C.get_bodypart(BODY_ZONE_R_LEG)
+						if(r)
+							r.receive_damage(brute=200, updating_health=TRUE)
+						if(l || r)
+							C.visible_message("<span class='danger'>[C]'s legs shatter with a sickening crunch!</span>", \
+								"<span class='userdanger'>Your legs shatter with a sickening crunch!</span>")
+					if(2) // pin them beneath the machine until someone untilts it
+						C.visible_message("<span class='danger'>[L] is pinned underneath \the [src]!</span>", \
+				"<span class='userdanger'>You are pinned down by \the [src]!</span>")
+						C.AllImmobility(99999, TRUE)
+						pinned_mobs += C
+					if(3) // glass candy
+						crit_rebate = 50
+						visible_message("<span class='danger'>Glass shards spill out from \the [src]!</span>")
+						for(var/i = 0, i < 7, i++)
+							var/obj/item/shard/shard = new /obj/item/shard(get_turf(C))
+							shard.embedding = shard.embedding.setRating(embed_chance = 100, embedded_ignore_throwspeed_threshold = TRUE, embedded_impact_pain_multiplier=1,embedded_pain_chance=5)
+							C.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
+							shard.embedding = shard.embedding.setRating(embed_chance = EMBED_CHANCE, embedded_ignore_throwspeed_threshold = FALSE)
+					if(4) // paralyze this binch
+						C.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
+					if(5) // skull squish!
+						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
+						if(O)
+							O.dismember()
+							O.drop_organs()
+							qdel(O)
+							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
+
+				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
+				C.AddElement(/datum/element/squish, 20 SECONDS)
+			else
+				L.apply_damage(squish_damage, forced=TRUE)
+				if(crit_case)
+					L.apply_damage(squish_damage, forced=TRUE) //otherwise just double their fun
+
 			L.Paralyze(60)
 			L.emote("scream")
 			playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
 			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
 			L.visible_message("<span class='danger'>[L] is crushed by \the [src]!</span>", \
 				"<span class='userdanger'>You are crushed by \the [src]!</span>")
-			L.apply_damage(95, forced=TRUE, spread_damage=TRUE)
-			if(iscarbon(L))
-				L.AddElement(/datum/element/squish, 15 SECONDS)
 
 	var/matrix/M = matrix()
 	M.Turn(pick(90, 270))
@@ -483,8 +539,13 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/proc/untilt(mob/user)
 	user.visible_message("<span class='notice'>[user] rights /the [src].", \
 		"<span class='notice'>You right \the [src].")
+
+	for(var/mob/living/carbon/C in pinned_mobs)
+		C.SetAllImmobility(0, TRUE)
+
+	pinned_mobs = list()
+
 	tilted = FALSE
-	anchored = TRUE
 	layer = initial(layer)
 
 	var/matrix/M = matrix()
@@ -1063,6 +1124,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 	return FALSE
 
 /obj/machinery/vending/custom/Destroy()
+	for(var/mob/living/carbon/C in pinned_mobs)
+		C.SetAllImmobility(0, TRUE)
+
 	var/turf/T = get_turf(src)
 	if(T)
 		for(var/obj/item/I in contents)
