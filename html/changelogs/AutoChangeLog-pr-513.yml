@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - admin: "Added an option to set the next map to a custom map."
