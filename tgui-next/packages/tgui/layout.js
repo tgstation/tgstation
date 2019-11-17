@@ -6,6 +6,7 @@ import { Box, TitleBar } from './components';
 import { Toast } from './components/Toast';
 import { UI_INTERACTIVE } from './constants';
 import { dragStartHandler, resizeStartHandler } from './drag';
+import { releaseHeldKeys } from './hotkeys';
 import { createLogger } from './logging';
 import { refocusLayout } from './refocus';
 import { getRoute } from './routes';
@@ -25,10 +26,34 @@ export class Layout extends Component {
     if (!route) {
       return `Component for '${config.interface}' was not found.`;
     }
-    const Component = route.component();
+    const RoutedComponent = route.component();
+    const WrapperComponent = route.wrapper && route.wrapper();
     const { scrollable } = route;
+    // Render content
+    let contentElement = (
+      <div
+        id="Layout__content"
+        className={classes([
+          'Layout__content',
+          scrollable && 'Layout__content--scrollable',
+        ])}>
+        <Box m={1}>
+          <RoutedComponent state={state} dispatch={dispatch} />
+        </Box>
+      </div>
+    );
+    // Wrap into the wrapper component
+    if (WrapperComponent) {
+      contentElement = (
+        <WrapperComponent
+          state={state}
+          dispatch={dispatch}>
+          {contentElement}
+        </WrapperComponent>
+      );
+    }
     return (
-      <Fragment>
+      <div className="Layout">
         <TitleBar
           className="Layout__titleBar"
           title={decodeHtmlEntities(config.title)}
@@ -37,19 +62,11 @@ export class Layout extends Component {
           onDragStart={dragStartHandler}
           onClose={() => {
             logger.log('pressed close');
+            releaseHeldKeys();
             winset(config.window, 'is-visible', false);
             runCommand(`uiclose ${config.ref}`);
           }} />
-        <div
-          id="Layout__content"
-          className={classes([
-            'Layout__content',
-            scrollable && 'Layout__content--scrollable',
-          ])}>
-          <Box m={1}>
-            <Component state={state} dispatch={dispatch} />
-          </Box>
-        </div>
+        {contentElement}
         {config.status !== UI_INTERACTIVE && (
           <div className="Layout__dimmer" />
         )}
@@ -66,7 +83,7 @@ export class Layout extends Component {
               onMousedown={resizeStartHandler(1, 1)} />
           </Fragment>
         )}
-      </Fragment>
+      </div>
     );
   }
 }

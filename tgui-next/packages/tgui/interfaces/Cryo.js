@@ -1,7 +1,7 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { AnimatedNumber, Button, LabeledList, ProgressBar, Section } from '../components';
-import { BeakerContents } from './common/reagents';
+import { BeakerContents } from './common/BeakerContents';
 
 export const Cryo = props => {
   const { state } = props;
