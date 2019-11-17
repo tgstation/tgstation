@@ -55,7 +55,12 @@
 
 /obj/item/education_chip/Initialize()
   . = ..()
+  update_icon()
+
+/obj/item/education_chip/update_overlays()
+  . = ..()
   if(overlay)
+    . += overlay
     add_overlay(overlay)
 
 /obj/item/education_chip/cqc
