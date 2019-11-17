@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - tweak: "The additional effects of the coughing symptom (including its ability to spread viruses) don't trigger in hosts who have the TRAIT_SOOTHED_THROAT trait (which normally keeps you from coughing)."

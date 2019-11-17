@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Nanite public chambers can now swap Cloud IDs on existing nanites."

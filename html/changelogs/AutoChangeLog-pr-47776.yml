@@ -1,6 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes: 
-  - tweak: "As corazone no longer stabilizes the heart, It's been renamed to Higadrite."
-  - bugfix: "Fixes heart disease telling you to utilize corazone, and injecting you with it during its final stages. It now injects Penthrite."
-  - bugfix: "Abductor surgery table injects a replacement chemical for old Corazone."
