@@ -63,9 +63,6 @@
 	RefreshParts()
 	return
 
-<<<<<<< HEAD
-/obj/machinery/medical_kiosk/update_icon()
-=======
 /obj/machinery/medical_kiosk/proc/clearScans() //Called it enough times to be it's own proc
 	scan_active_1 = FALSE
 	scan_active_2 = FALSE
@@ -74,7 +71,6 @@
 	return
 
 /obj/machinery/medical_kiosk/update_icon_state()
->>>>>>> a7021f483d... [READY]Medical Kiosks V3.0. New TGUI Interface, New functionality, some minor fixes. (#47578)
 	if(is_operational())
 		icon_state = "kiosk_off"
 	else
@@ -157,8 +153,6 @@
 		. += "<span class='notice'>\The [src] has its scanner clipped to the side. Alt-Click to remove.</span>"
 
 /obj/machinery/medical_kiosk/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-<<<<<<< HEAD
-=======
 	var/patient_distance = 0
 	if(!ishuman(user))
 		to_chat(user, "<span class='warning'>[src] is unable to interface with non-humanoids!</span>")
@@ -175,16 +169,11 @@
 		clearScans()
 		return
 
->>>>>>> a7021f483d... [READY]Medical Kiosks V3.0. New TGUI Interface, New functionality, some minor fixes. (#47578)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "medical_kiosk", name, 625, 550, master_ui, state)
 		ui.open()
 		icon_state = "kiosk_off"
-<<<<<<< HEAD
-	if(ishuman(user))
-=======
->>>>>>> a7021f483d... [READY]Medical Kiosks V3.0. New TGUI Interface, New functionality, some minor fixes. (#47578)
 		RefreshParts()
 		H = user
 		C = H.get_idcard(TRUE)
