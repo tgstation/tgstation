@@ -21,6 +21,7 @@ $nanotrasen: #384e68;
   ));
   @include meta.load-css('../components/Layout.scss');
   @include meta.load-css('../components/ProgressBar.scss', $with: (
+    'color-default': $nanotrasen,
     'color-background': rgba(0, 0, 0, 0.5),
     'border-radius': base.$border-radius,
   ));
