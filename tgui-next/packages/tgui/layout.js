@@ -28,7 +28,7 @@ export class Layout extends Component {
     }
     const RoutedComponent = route.component();
     const WrapperComponent = route.wrapper && route.wrapper();
-    const { scrollable } = route;
+    const { scrollable, theme } = route;
     // Render content
     let contentElement = (
       <div
@@ -57,36 +57,38 @@ export class Layout extends Component {
       ? config.status < UI_DISABLED
       : config.status < UI_INTERACTIVE;
     return (
-      <div className="Layout">
-        <TitleBar
-          className="Layout__titleBar"
-          title={decodeHtmlEntities(config.title)}
-          status={config.status}
-          fancy={config.fancy}
-          onDragStart={dragStartHandler}
-          onClose={() => {
-            logger.log('pressed close');
-            releaseHeldKeys();
-            winset(config.window, 'is-visible', false);
-            runCommand(`uiclose ${config.ref}`);
-          }} />
-        {contentElement}
-        {showDimmer && (
-          <div className="Layout__dimmer" />
-        )}
-        {state.toastText && (
-          <Toast content={state.toastText} />
-        )}
-        {config.fancy && scrollable && (
-          <Fragment>
-            <div className="Layout__resizeHandle__e"
-              onMousedown={resizeStartHandler(1, 0)} />
-            <div className="Layout__resizeHandle__s"
-              onMousedown={resizeStartHandler(0, 1)} />
-            <div className="Layout__resizeHandle__se"
-              onMousedown={resizeStartHandler(1, 1)} />
-          </Fragment>
-        )}
+      <div className={'theme-' + theme}>
+        <div className="Layout">
+          <TitleBar
+            className="Layout__titleBar"
+            title={decodeHtmlEntities(config.title)}
+            status={config.status}
+            fancy={config.fancy}
+            onDragStart={dragStartHandler}
+            onClose={() => {
+              logger.log('pressed close');
+              releaseHeldKeys();
+              winset(config.window, 'is-visible', false);
+              runCommand(`uiclose ${config.ref}`);
+            }} />
+          {contentElement}
+          {showDimmer && (
+            <div className="Layout__dimmer" />
+          )}
+          {state.toastText && (
+            <Toast content={state.toastText} />
+          )}
+          {config.fancy && scrollable && (
+            <Fragment>
+              <div className="Layout__resizeHandle__e"
+                onMousedown={resizeStartHandler(1, 0)} />
+              <div className="Layout__resizeHandle__s"
+                onMousedown={resizeStartHandler(0, 1)} />
+              <div className="Layout__resizeHandle__se"
+                onMousedown={resizeStartHandler(1, 1)} />
+            </Fragment>
+          )}
+        </div>
       </div>
     );
   }

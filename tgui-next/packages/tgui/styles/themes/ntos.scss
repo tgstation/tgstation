@@ -29,12 +29,3 @@ $nanotrasen: #384e68;
     'color-background': color.scale($nanotrasen, $lightness: -25%),
   ));
 }
-
-// Body style
-body.theme-ntos {
-  color: base.$color-fg;
-  background-color: base.$color-bg;
-  background-image: linear-gradient(to bottom,
-    base.$color-bg-start 0%,
-    base.$color-bg-end 100%);
-}

@@ -31,15 +31,7 @@
 @include meta.load-css('./components/TitleBar.scss');
 @include meta.load-css('./components/Tooltip.scss');
 
-// Miscellaneous bits
-body {
-  color: base.$color-fg;
-  background-color: base.$color-bg;
-  background-image: linear-gradient(to bottom,
-    base.$color-bg-start 0%,
-    base.$color-bg-end 100%);
-}
-
+// NT Theme
 .Layout__content {
   background-image: url('../assets/bg-nanotrasen.svg');
   background-size: 70%;

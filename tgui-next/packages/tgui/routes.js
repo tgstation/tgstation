@@ -31,7 +31,6 @@ import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { Gps } from './interfaces/Gps';
-import { KitchenSink } from './interfaces/KitchenSink';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
@@ -47,7 +46,7 @@ import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
-import { SMES } from './interfaces/SMES';
+import { Smes } from './interfaces/Smes';
 import { SolarControl } from './interfaces/SolarControl';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
@@ -210,16 +209,19 @@ const ROUTES = {
     component: () => NtosMain,
     wrapper: () => NtosWrapper,
     scrollable: true,
+    theme: 'ntos',
   },
   ntos_power_monitor: {
     component: () => PowerMonitor,
     wrapper: () => NtosWrapper,
     scrollable: true,
+    theme: 'ntos',
   },
   ntos_supermatter_monitor: {
     component: () => NtosSupermatterMonitor,
     wrapper: () => NtosWrapper,
     scrollable: true,
+    theme: 'ntos',
   },
   ore_redemption_machine: {
     component: () => OreRedemptionMachine,
@@ -258,7 +260,7 @@ const ROUTES = {
     scrollable: true,
   },
   smes: {
-    component: () => SMES,
+    component: () => Smes,
     scrollable: false,
   },
   solar_control: {
