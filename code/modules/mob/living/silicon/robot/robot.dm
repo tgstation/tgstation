@@ -86,6 +86,7 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	var/static/list/can_ride_typecache = typecacheof(/mob/living/carbon/human)
+	var/launchable = FALSE //flag for if the mob can be launched via spinning
 
 /mob/living/silicon/robot/get_cell()
 	return cell
@@ -1160,7 +1161,12 @@
 		else
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
+	addtimer(CALLBACK(src, /mob/living/silicon/robot/proc/set_launchable), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	. = ..(M, force, check_loc)
+
+/mob/living/silicon/robot/proc/set_launchable()
+	if(buckled_mobs.len)
+		launchable = TRUE
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user, force=FALSE)
 	if(iscarbon(user))
@@ -1168,6 +1174,7 @@
 		if(istype(riding_datum))
 			riding_datum.unequip_buckle_inhands(user)
 			riding_datum.restore_position(user)
+	launchable = FALSE
 	. = ..(user)
 
 /mob/living/silicon/robot/proc/TryConnectToAI()

@@ -47,7 +47,7 @@
 		if(iscyborg(user) && user.has_buckled_mobs())
 			var/mob/living/silicon/robot/R = user
 			var/datum/component/riding/riding_datum = R.GetComponent(/datum/component/riding)
-			if(riding_datum)
+			if(riding_datum && R.launchable)
 				for(var/mob/M in R.buckled_mobs)
 					riding_datum.force_dismount(M)
 			else
