@@ -1161,7 +1161,7 @@
 			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
 	M.visible_message("<span class='boldwarning'>[M] is being loaded onto [src]!</span>")//if you have better flavor text for this by all means change it
-	if(do_after(src, 20, target = M))
+	if(do_after(src, 5, target = M))
 		. = ..(M, force, check_loc)
 
 /mob/living/silicon/robot/unbuckle_mob(mob/user, force=FALSE)
