@@ -123,7 +123,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	var/max_wash_capacity = 5
 	var/list/obj/item/reagent_containers/beakers = list()
 
-
 /obj/machinery/washing_machine/ComponentInitialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
@@ -146,7 +145,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		return
 	busy = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/wash_cycle), 100)
+	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
 	for(var/X in contents - beakers)
 		if(istype(X, /obj/item/reagent_containers))
 			var/obj/item/reagent_containers/C = X
@@ -158,8 +157,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 					B--
 				else
 					C.reagents.clear_reagents()
-
-
 	START_PROCESSING(SSfastprocess, src)
 
 
