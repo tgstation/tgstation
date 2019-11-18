@@ -366,6 +366,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
 	item = /obj/item/storage/box/syndie_kit/throwing_weapons
 	cost = 3
+	illegal_tech = FALSE
 
 /datum/uplink_item/dangerous/shotgun
 	name = "Bulldog Shotgun"

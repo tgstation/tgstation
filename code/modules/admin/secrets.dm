@@ -413,7 +413,7 @@
 						var/obj/item/clothing/under/costume/schoolgirl/I = new seifuku
 						var/olduniform = H.w_uniform
 						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
-						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
+						H.equip_to_slot_or_del(I, ITEM_SLOT_ICLOTHING)
 						qdel(olduniform)
 						if(droptype == "Yes")
 							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
