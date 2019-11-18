@@ -150,17 +150,18 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	for(var/X in contents - beakers)
 		if(istype(X, /obj/item/reagent_containers))
 			var/obj/item/reagent_containers/C = X
-			var/list/cached_reagents = C.reagents.reagent_list
 			var/B = beakers.len
-			for(var/datum/reagents/R in cached_reagents)
+			for(var/R in C.reagents.reagent_list)
 				if(B)
-					C.reagents.trans_id_to(beakers[B],R.type, 100)
+					var/datum/reagents/RR = R
+					C.reagents.trans_id_to(beakers[B], RR.type, 100)
 					B--
 				else
 					C.reagents.clear_reagents()
 
 
 	START_PROCESSING(SSfastprocess, src)
+
 
 /obj/machinery/washing_machine/process()
 	if(!busy)
@@ -287,6 +288,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		var/obj/item/reagent_containers/C = W
 		beakers += C
 		user.transferItemToLoc(C, src)
+		to_chat(user, "<span class='notice'>You insert [C] in the output.</span>")
 		return
 	if(panel_open && !busy && default_unfasten_wrench(user, W))
 		return
@@ -321,12 +323,15 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
 	. = ..()
-	if(panel_open && beakers.len && user.a_intent == INTENT_HARM)
+	if(busy)
+		to_chat(user, "<span class='warning'>[src] is busy!</span>")
+		return
+
+	if(panel_open && beakers.len)
 		for(var/atom/movable/AM in beakers)
 			AM.forceMove(user.loc)
 		beakers = list()
-	if(busy)
-		to_chat(user, "<span class='warning'>[src] is busy!</span>")
+		to_chat(user, "<span class='notice'>You remove the output beakers.</span>")
 		return
 
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
@@ -353,3 +358,14 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	..()
 	density = TRUE //because machinery/open_machine() sets it to 0
 	color_source = null
+
+/obj/machinery/washing_machine/dropContents(list/subset = null)
+	var/turf/T = get_turf(src)
+	for(var/atom/movable/A in (contents - beakers))
+		if(subset && !(A in subset))
+			continue
+		A.forceMove(T)
+		if(isliving(A))
+			var/mob/living/L = A
+			L.update_mobility()
+	occupant = null
