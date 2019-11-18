@@ -1,4 +1,4 @@
-import { Box, Tabs, LabeledList, Section } from '../components';
+import { Box, Tabs, Table, Icon } from '../components';
 
 export const Achievement = props => {
   const {
@@ -78,18 +78,32 @@ export const Achievements = props => {
       ))}
       <Tabs.Tab
         label={"High Scores"}>
-        {data.highscore.map(highscore => {
-          return (
-            <Section key={highscore.name} title={highscore.name}>
-              <LabeledList>{ Object.keys(highscore.scores).map(key => {
-                return (
-                  <LabeledList.Item className="candystripe" key={key} label={key}>
-                    {highscore.scores[key]}
-                  </LabeledList.Item>);
-              })}
-              </LabeledList>
-            </Section>);
-        })}
+        <Tabs vertical>
+          {data.highscore.map(highscore => {
+            return (
+              <Tabs.Tab key={highscore.name} label={highscore.name}>
+                <Table>
+                  <Table.Row className="candystripe">
+                    <Table.Cell color="label" textAlign="center">#</Table.Cell>
+                    <Table.Cell color="label" textAlign="center">Key</Table.Cell>
+                    <Table.Cell color="label" textAlign="center">Score</Table.Cell>
+                  </Table.Row>
+                  { Object.keys(highscore.scores).map((key, index) => {
+                    return (
+                      <Table.Row className="candystripe" key={key} m={2}>
+                        <Table.Cell color="label" textAlign="center">{index+1}</Table.Cell>
+                        <Table.Cell color={key === data.user_ckey ? "green" : null} textAlign="center">
+                          {(index === 0 && <Icon name="crown" color="gold" mr={2} />)}
+                          {key}
+                          {(index === 0 && <Icon name="crown" color="gold" ml={2} />)}
+                        </Table.Cell>
+                        <Table.Cell textAlign="center">{highscore.scores[key]}</Table.Cell>
+                      </Table.Row>);
+                  })}
+                </Table>
+              </Tabs.Tab>);
+          })}
+        </Tabs>
       </Tabs.Tab>
     </Tabs>
   );

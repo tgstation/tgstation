@@ -25,7 +25,7 @@
 /datum/award/proc/get_changed_rows(key, value)
 	if(!hub_id || !key || !name)
 		return
-	return list("ckey" = sanitizeSQL(key),"achievement_key" = sanitizeSQL(hub_id), "value" = sanitizeSQL(value))
+	return list("ckey" = "'[sanitizeSQL(key)]'","achievement_key" = "'[sanitizeSQL(hub_id)]'", "value" = "'[sanitizeSQL(value)]'")
 
 ///Save award value to database, does not validate connection or value
 /datum/award/proc/save_raw_value(key,value)
