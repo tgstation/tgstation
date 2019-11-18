@@ -67,6 +67,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/tiltable = TRUE
 	var/squish_damage = 75
 	var/forcecrit = 0
+	var/num_shards = 7
 	var/list/pinned_mobs = list()
 
 	/**
@@ -480,6 +481,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(istype(C))
 				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
 
+				if(crit_case != 5) // the head asplode case has its own description
+					C.visible_message("<span class='danger'>[C] is crushed by \the [src]!</span>", \
+						"<span class='userdanger'>You are crushed by \the [src]!</span>")
+
 				switch(crit_case) // only carbons can have the fun crits
 					if(1) // shatter their legs and bleed 'em
 						crit_rebate = 60
@@ -494,41 +499,44 @@ GLOBAL_LIST_EMPTY(vending_products)
 							C.visible_message("<span class='danger'>[C]'s legs shatter with a sickening crunch!</span>", \
 								"<span class='userdanger'>Your legs shatter with a sickening crunch!</span>")
 					if(2) // pin them beneath the machine until someone untilts it
-						C.visible_message("<span class='danger'>[L] is pinned underneath \the [src]!</span>", \
-				"<span class='userdanger'>You are pinned down by \the [src]!</span>")
 						C.AllImmobility(99999, TRUE)
 						pinned_mobs += C
+						C.visible_message("<span class='danger'>[C] is pinned underneath \the [src]!</span>", \
+							"<span class='userdanger'>You are pinned down by \the [src]!</span>")
 					if(3) // glass candy
 						crit_rebate = 50
-						visible_message("<span class='danger'>Glass shards spill out from \the [src]!</span>")
-						for(var/i = 0, i < 7, i++)
+						for(var/i = 0, i < num_shards, i++)
 							var/obj/item/shard/shard = new /obj/item/shard(get_turf(C))
 							shard.embedding = shard.embedding.setRating(embed_chance = 100, embedded_ignore_throwspeed_threshold = TRUE, embedded_impact_pain_multiplier=1,embedded_pain_chance=5)
 							C.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
 							shard.embedding = shard.embedding.setRating(embed_chance = EMBED_CHANCE, embedded_ignore_throwspeed_threshold = FALSE)
 					if(4) // paralyze this binch
+						// the new paraplegic gets like 4 lines of losing their legs so skip them
+						visible_message("<span class='danger'>[C]'s spinal cord is obliterated with a sickening crunch!</span>", ignored_mobs = list(C))
 						C.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
 					if(5) // skull squish!
 						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
 						if(O)
+							C.visible_message("<span class='danger'>[O] explodes in a shower of gore beneath \the [src]!</span>", \
+								"<span class='userdanger'>Oh f-</span>")
 							O.dismember()
 							O.drop_organs()
 							qdel(O)
 							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
 
 				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
-				C.AddElement(/datum/element/squish, 20 SECONDS)
+				C.AddElement(/datum/element/squish, 18 SECONDS)
 			else
+				L.visible_message("<span class='danger'>[L] is crushed by \the [src]!</span>", \
+				"<span class='userdanger'>You are crushed by \the [src]!</span>")
 				L.apply_damage(squish_damage, forced=TRUE)
 				if(crit_case)
-					L.apply_damage(squish_damage, forced=TRUE) //otherwise just double their fun
+					L.apply_damage(squish_damage, forced=TRUE)
 
 			L.Paralyze(60)
 			L.emote("scream")
 			playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
 			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
-			L.visible_message("<span class='danger'>[L] is crushed by \the [src]!</span>", \
-				"<span class='userdanger'>You are crushed by \the [src]!</span>")
 
 	var/matrix/M = matrix()
 	M.Turn(pick(90, 270))
