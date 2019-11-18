@@ -50,7 +50,8 @@
 				"<span class='notice'>[flippy_mcgee] attempts to do a flip and falls over, what a doofus!</span>",
 				"<span class='notice'>You attempt to do a flip while still off balance from the last flip and fall down!</span>"
 			)
-			flippy_mcgee.adjustBruteLoss(rand(0, 1))
+			if(prob(50))
+				flippy_mcgee.adjustBruteLoss(1)
 		else
 			flippy_mcgee.visible_message(
 				"<span class='notice'>[flippy_mcgee] stumbles a bit after their flip.</span>",
