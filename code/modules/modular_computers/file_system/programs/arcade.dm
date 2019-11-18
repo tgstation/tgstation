@@ -13,7 +13,7 @@
 
 	var/game_active = TRUE //Checks to see if a game is in progress.
 	var/pause_state = FALSE //This disables buttons in order to prevent multiple actions before the opponent's actions.
-	var/boss_hp = 3
+	var/boss_hp = 45
 	var/boss_mp = 15
 	var/player_hp = 30
 	var/player_mp = 10
