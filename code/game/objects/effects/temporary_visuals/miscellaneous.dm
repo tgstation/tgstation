@@ -462,3 +462,19 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
+/obj/effect/constructing_effect
+	icon_state = ""
+	density = TRUE
+	layer = ABOVE_ALL_MOB_LAYER
+
+/obj/effect/constructing_effect/Initialize(mapload, delay)
+	. = ..()
+	if (delay < 40)
+		flick("constructing_short", src)
+	else
+		flick("constructing_long", src)
+	icon_state = "fullgreen"
+
+/obj/effect/constructing_effect/Destroy()
+	flick("whiteflash",src)
+	. = ..()

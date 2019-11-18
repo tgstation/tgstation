@@ -473,6 +473,8 @@ RLD
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
+	var/delay = rcd_results["delay"] * delay_mod
+	var/obj/effect/constructing_effect/bruh = new(get_turf(A), delay)
 	if(checkResource(rcd_results["cost"], user))
 		if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
 			if(checkResource(rcd_results["cost"], user))
