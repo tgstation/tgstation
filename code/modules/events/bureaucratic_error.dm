@@ -14,10 +14,7 @@
 	var/list/jobs = SSjob.occupations.Copy()
 	jobs -= /datum/job/ai // AI doesnt really support latejoining with more than one total.
 	if(prob(50))	// Only allows latejoining as a single role. Add latejoin AI bluespace pods for fun later.
-		var/datum/job/old_overflow = SSjob.GetJob(SSjob.overflow_role)
-		old_overflow.total_positions = 0
-		var/datum/job/overflow = pick_n_take(jobs)
-		overflow.total_positions = -1	// Infinite, basically overflow without the unwanted effects.
+		SSjob.set_overflow_role(pick_n_take(jobs))	// Setting overflow replaces assistant overflow and ensures we always got a job slot open.
 		for(var/job in jobs)
 			var/datum/job/current = job
 			current.total_positions = 0
