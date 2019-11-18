@@ -296,6 +296,7 @@
 	desc = "A special apparatus for carrying and manipulating engineering components like electronics and wall mounted frames. Alt-Z or right-click to drop the stored object."
 	var/upgraded = FALSE
 	storable = list(/obj/item/wallframe,
+				/obj/item/tank,
 				/obj/item/electronics)
 
 /obj/item/borg/upgrade/circuit_app
