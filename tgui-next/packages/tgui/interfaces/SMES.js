@@ -32,11 +32,11 @@ export const SMES = props => {
     <Fragment>
       <Section title="Stored Energy">
         <ProgressBar
-          value={data.capacityPercent*0.01}
+          value={data.capacityPercent * 0.01}
           ranges={{
-            good: [50, Infinity],
-            average: [15, 50],
-            bad: [-Infinity, 15],
+            good: [0.5, Infinity],
+            average: [0.15, 0.5],
+            bad: [-Infinity, 0.15],
           }} />
       </Section>
       <Section title="Input">

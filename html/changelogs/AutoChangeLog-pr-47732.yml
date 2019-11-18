@@ -1,4 +1,0 @@
-author: "Firecage"
-delete-after: True
-changes: 
-  - bugfix: "Research servers are no longer invisible after a screwdriver is applied."

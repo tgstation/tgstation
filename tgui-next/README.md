@@ -292,10 +292,22 @@ over the button.
   - `bottom` (default) - Show tooltip below the button.
   - `left` - Show tooltip on the left of the button.
   - `right` - Show tooltip on the right of the button.
+- `ellipsis: boolean` - If button width is constrained, button text will
+be truncated with an ellipsis. Be careful however, because this prop breaks
+the baseline alignment.
 - `title: string` - A native browser tooltip, which appears when hovering
 over the button.
 - `content/children: any` - Content to render inside the button.
 - `onClick: function` - Called when element is clicked.
+
+### `Button.Checkbox`
+
+A ghetto checkbox, made entirely using existing Button API.
+
+Props:
+
+- See inherited props: [Button](#button)
+- `checked: boolean` - Boolean value, which marks the checkbox as checked.
 
 ### `ColorBox`
 
@@ -349,6 +361,10 @@ two flex items as far as possible from each other.
 Props:
 
 - See inherited props: [Box](#box)
+- `spacing: number` - Spacing between flex items, in integer units
+(1 unit - 0.5em). Does not directly relate to a flex css property
+(adds a modifier class under the hood), and only integer numbers are
+supported.
 - `direction: string` - This establishes the main-axis, thus defining the
 direction flex items are placed in the flex container.
   - `row` (default) - left to right.
@@ -432,7 +448,7 @@ Props:
 
 Props:
 
-- See inherited props: [Table.Cell](#table-cell)
+- See inherited props: [Table.Cell](#tablecell)
 - `size: number` (default: 1) - Size of the column relative to other columns.
 
 ### `Icon`

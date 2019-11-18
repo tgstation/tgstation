@@ -1049,20 +1049,35 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/corazone
-	//Corazone no longer stops heart attacks. look into C2 penthrite.
-	name = "Corazone"
-	description = "A medication used to treat pain, fever, and inflammation, along with failing livers."
-	color = "#F49797"
+/datum/reagent/medicine/higadrite
+	name = "Higadrite"
+	description = "A medication utilized to treat ailing livers."
+	color = "#FF3542"
 	self_consuming = TRUE
 
-/datum/reagent/medicine/corazone/on_mob_add(mob/living/M)
+/datum/reagent/medicine/higadrite/on_mob_add(mob/living/M)
 	..()
 	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 
-/datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
-	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
+/datum/reagent/medicine/higadrite/on_mob_end_metabolize(mob/living/M)
 	..()
+	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
+
+/datum/reagent/medicine/cordiolis_hepatico
+	name = "Cordiolis Hepatico"
+	description = "A strange, pitch-black reagent that seems to absorb all light. Effects unknown."
+	color = "#000000"
+	self_consuming = TRUE
+
+/datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/M)
+	..()
+	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
+	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+
+/datum/reagent/medicine/cordiolis_hepatico/on_mob_end_metabolize(mob/living/M)
+	..()
+	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"

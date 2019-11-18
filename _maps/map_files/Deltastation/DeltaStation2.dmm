@@ -25243,11 +25243,11 @@
 "aZc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/paper_bin,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/item/paper_bin/carbon,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aZd" = (
@@ -50593,9 +50593,10 @@
 /area/security/detectives_office)
 "bRj" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/paper_bin/carbon,
+/obj/item/pen,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bRk" = (
@@ -54183,7 +54184,7 @@
 /area/crew_quarters/heads/hop)
 "bWR" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin,
+/obj/item/paper_bin/carbon,
 /obj/item/stamp/hop,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)

@@ -1,6 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - rscadd: "RCS Thrusters for mechs can now be printed from an exosuit fabricator after the relevant research has been done. They'll eat up the gas in your mech's air tank, though, so don't go overboard with their use!"
-  - tweak: "Mechs that use built-in thrusters (Dark Gygax, Marauder, etc) will now start with the thrusters enabled. The thruster action button is gone, but you can still toggle them in the View Status popout if you feel the need to. Note that these built-in thrusters are still ion-based, and will not deplete your air supply."
-  - tweak: "Mechs using thrusters to move will no longer make stomp sounds."

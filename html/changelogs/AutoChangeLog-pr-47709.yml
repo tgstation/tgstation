@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "Chat is properly sent to legacy window if goonchat fails to load again."
