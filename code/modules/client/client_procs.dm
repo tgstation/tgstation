@@ -478,8 +478,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 			send2irc("Server", "[cheesy_message] (No admins online)")
 
-	player_details.achievements.save()
-	
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
 	GLOB.clients -= src

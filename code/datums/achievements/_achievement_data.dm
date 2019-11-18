@@ -18,12 +18,15 @@
 	initialized = TRUE
 	load_all_achievements() //So we know which achievements we have unlocked so far.
 
-///Saves any out-of-date achievements to db.
-/datum/achievement_data/proc/save()
+///Gets list of changed rows in MassInsert format
+/datum/achievement_data/proc/get_changed_data()
+	. = list()
 	for(var/T in data)
 		var/datum/award/A = SSachievements.awards[T]
 		if(data[T] != original_cached_data[T])//If our data from before is not the same as now, save it to db.
-			A.save(key,data[T])
+			var/deets = A.get_changed_rows(key,data[T])
+			if(deets)
+				. += list(deets)
 
 /datum/achievement_data/proc/load_all_achievements()
 	set waitfor = FALSE

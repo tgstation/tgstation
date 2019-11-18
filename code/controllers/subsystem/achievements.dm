@@ -37,6 +37,11 @@ SUBSYSTEM_DEF(achievements)
 	save_achievements_to_db()
 	
 /datum/controller/subsystem/achievements/proc/save_achievements_to_db()
-	for(var/i in GLOB.clients)
-		var/client/C = i
-		C.player_details.achievements.save()
+	var/list/cheevos_to_save = list()
+	for(var/ckey in GLOB.player_details)
+		var/datum/player_details/PD = GLOB.player_details[ckey]
+		if(!PD || !PD.achievements)
+			continue
+		cheevos_to_save += PD.achievements.get_changed_data()
+	
+	SSdbcore.MassInsert(format_table_name("achievements"),cheevos_to_save,duplicate_key = TRUE)

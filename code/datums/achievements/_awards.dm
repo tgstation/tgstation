@@ -22,12 +22,10 @@
 	return parse_value(raw_value)
 
 ///This saves the changed data to the hub.
-/datum/award/proc/save(key, value)
-	if(!SSdbcore.Connect())
-		return
+/datum/award/proc/get_changed_rows(key, value)
 	if(!hub_id || !key || !name)
 		return
-	save_raw_value(key,value)
+	return list("ckey" = sanitizeSQL(key),"achievement_key" = sanitizeSQL(hub_id), "value" = sanitizeSQL(value))
 
 ///Save award value to database, does not validate connection or value
 /datum/award/proc/save_raw_value(key,value)
