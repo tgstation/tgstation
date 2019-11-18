@@ -33,7 +33,12 @@ import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
+<<<<<<< HEAD
 import { Holodeck } from './interfaces/Holodeck';
+=======
+import { Keycard_Auth } from './interfaces/Keycard_Auth';
+import { KitchenSink } from './interfaces/KitchenSink';
+>>>>>>> keycard commit
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
@@ -209,9 +214,15 @@ const ROUTES = {
     component: () => Gps,
     scrollable: true,
   },
+<<<<<<< HEAD
   holodeck: {
     component: () => Holodeck,
     scrollable: true,
+=======
+  keycard_auth: {
+    component: () => Keycard_Auth,
+    scrollable: false,
+>>>>>>> keycard commit
   },
   language_menu: {
     component: () => LanguageMenu,
