@@ -35,6 +35,7 @@ import { KitchenSink } from './interfaces/KitchenSink';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
+import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
@@ -206,6 +207,11 @@ const ROUTES = {
   },
   ntos_main: {
     component: () => NtosMain,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+  },
+  ntos_arcade: {
+    component: () => NtosArcade,
     wrapper: () => NtosWrapper,
     scrollable: true,
   },
