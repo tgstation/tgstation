@@ -18,7 +18,7 @@
 
 /obj/vehicle/ridden/pioneer_stone/proc/Change_move_delay()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	var/T = get_turf(src)
+	var/turf/T = get_turf(src)
 	if(is_mining_level(T.z))//pioneer stone works best on lavaland
 		D.vehicle_move_delay = 1
 	else
@@ -33,13 +33,14 @@
 
 /obj/vehicle/ridden/pioneer_stone/Bump(atom/movable/A)
 	. = ..()
-	var/T = get_turf(src)
+	
 	if(!(A.density && has_buckled_mobs())||(!ishuman(A)))
 		return FALSE
 	var/atom/throw_target = get_edge_target_turf(A, dir)
 	var/mob/living/carbon/human/H = A
 	var/damage_force = rand(10,max_damage_force)
 	H.apply_damage(damage_force, BRUTE)
+	var/turf/T = get_turf(src)
 	obj_integrity -= damage_force * is_mining_level(T.z)
 	if(obj_integrity <= 0)
 		Destroy()
