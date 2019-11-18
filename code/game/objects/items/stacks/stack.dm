@@ -413,6 +413,8 @@
 	if(!use(amount, TRUE, FALSE))
 		return FALSE
 	var/obj/item/stack/F = new type(user? user : drop_location(), amount, FALSE)
+	for(var/i in F.custom_materials)
+		custom_materials[i] -= F.custom_materials[i]
 	. = F
 	F.copy_evidences(src)
 	if(user)
