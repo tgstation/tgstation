@@ -8,42 +8,46 @@
 	taste_description = "bitterness"
 	taste_mult = 1.2
 	harmful = TRUE
-	var/antidotum = /datum/reagent/phenol 
+	var/antidote =  /datum/reagent/medicine/epinephrine 
 	var/isBeingCured = FALSE
 	var/toxpwr = 1.5
 	var/silent_toxin = FALSE //won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present.
 
-/* ANTIDOTE RECOMMENDATION
-	~1 txpwr : phenol , multiver , carbon , libital
-	~2 txpwr : syrniver , antihol , potassium , milk , epinepherine
-	~3 txpwr : haloperidol , instabaluri , pentetic acid , atropine
-	~4 txpwr : Anacea , Omnizine , Regen jelly , Penthrite
-	5+ : Snowflake , or if you are feeling really brutal use another toxin as an antidote
+/* ANTIDOTE RECOMMENDATION 
+	if toxpwr has a .5 we round UP
+	Toxin levels are derived from toxpwr or the effect the poison has. 
+	1 level : iron , epinepherine      			-qucik ref: /datum/reagent/medicine/epinephrine   
+	2 level : multiver 							-qucik ref: /datum/reagent/medicine/C2/multiver   
+	3 level : atropine							-qucik ref: /datum/reagent/medicine/atropine      
+	4 level : syrniver 							-qucik ref: /datum/reagent/medicine/C2/syriniver     
+	5 level : penthrite							-qucik ref: /datum/reagent/medicine/C2/penthrite
+	6 level : anacea							-quick ref: /datum/reagent/toxin/anacea
 	^Remember these are recommended, you can use diffrent chems but these instances should be justified, like unstable mutagen ->
-
-
-	SNOWFLAKE SUBTYPES:
-	ACID: hydrogen peroxide , iron , acetone peroxide
 */
-
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/M)
 	isBeingCured = FALSE
 	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if(istype(R, antidotum)) //checks for the antidote
+		if(istype(R, antidote)) //checks for the antidote
 			isBeingCured = TRUE
-	if(toxpwr && !isBeingCured)
+			break
+
+	if(!isBeingCured)
+		on_mob_life_uncured(M)
+	else
+		M.reagents.remove_reagent(src,2 * (toxpwr + 2))
+	..()
+
+/datum/reagent/toxin/proc/on_mob_life_uncured(mob/living/carbon/M) // why does this proc exist? easier and more compact solution than adding a new statment to every on_mob_life 
+	if(toxpwr)
 		M.adjustToxLoss(toxpwr*REM, 0)
 		. = TRUE
-	if(isBeingCured)
-		M.reagents.remove_reagent(src,toxpwr) //removes itself twice as fast if the antidote is present
-		return
 	..()
 
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
 	description = "A powerful poison derived from certain species of mushroom."
 	color = "#792300" // rgb: 121, 35, 0
-	antidotum = /datum/reagent/medicine/atropine
+	antidote = /datum/reagent/medicine/C2/syriniver
 	toxpwr = 2.5
 	taste_description = "mushroom"
 
@@ -51,7 +55,7 @@
 	name = "Unstable mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#00FF00"
-	antidotum = /datum/reagent/medicine/mutadone
+	antidote = /datum/reagent/medicine/mutadone //snowflake
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 0.9
@@ -71,7 +75,7 @@
 		M.domutcheck()
 	..()
 
-/datum/reagent/toxin/mutagen/on_mob_life(mob/living/carbon/C)
+/datum/reagent/toxin/mutagen/on_mob_life_uncured(mob/living/carbon/C)
 	C.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
@@ -84,10 +88,10 @@
 	specific_heat = SPECIFIC_HEAT_PLASMA
 	taste_mult = 1.5
 	color = "#8228A0"
-	antidotum = /datum/reagent/medicine/haloperidol
+	antidote = /datum/reagent/medicine/C2/multiver
 	toxpwr = 3
 
-/datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
+/datum/reagent/toxin/plasma/on_mob_life_uncured(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	C.adjustPlasma(20)
@@ -126,12 +130,12 @@
 	description = "A powerful poison used to stop respiration."
 	color = "#7DC3A0"
 	toxpwr = 0
+	antidote = /datum/reagent/toxin/anacea
 	taste_description = "acid"
 
-/datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/C)
+/datum/reagent/toxin/lexorin/on_mob_life_uncured(mob/living/carbon/C)
 	. = TRUE
-
-	if(HAS_TRAIT(C, TRAIT_NOBREATH))
+	if(HAS_TRAIT(C, TRAIT_NOBREATH) || isBeingCured)
 		. = FALSE
 
 	if(.)
@@ -145,28 +149,30 @@
 	name = "Slime Jelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 	color = "#801E28" // rgb: 128, 30, 40
+	antidote = /datum/reagent/toxin/anacea
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 1.3
 
-/datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/slimejelly/on_mob_life_uncured(mob/living/carbon/M)
 	if(prob(10))
 		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
-		M.adjustToxLoss(rand(20,60)*REM, 0)
+		M.adjustToxLoss(rand(20,60)*REM, 0) //this is definately level 6
 		. = 1
 	else if(prob(40))
 		M.heal_bodypart_damage(5*REM)
 		. = 1
 	..()
 
-/datum/reagent/toxin/minttoxin
+/datum/reagent/toxin/minttoxin 
 	name = "Mint Toxin"
 	description = "Useful for dealing with undesirable customers."
 	color = "#CF3600" // rgb: 207, 54, 0
-	toxpwr = 0
+	toxpwr = 0 
+	antidote = /datum/reagent/toxin/anacea
 	taste_description = "mint"
 
-/datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/minttoxin/on_mob_life_uncured(mob/living/carbon/M)
 	if(HAS_TRAIT(M, TRAIT_FAT))
 		M.inflate_gib()
 	return ..()
@@ -176,6 +182,7 @@
 	description = "A deadly neurotoxin produced by the dreaded spess carp."
 	silent_toxin = TRUE
 	color = "#003333" // rgb: 0, 51, 51
+	antidote = /datum/reagent/medicine/C2/multiver
 	toxpwr = 2
 	taste_description = "fish"
 
@@ -186,6 +193,7 @@
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
+	antidote = /datum/reagent/medicine/epinephrine
 	taste_description = "death"
 	var/fakedeath_active = FALSE
 
@@ -203,7 +211,7 @@
 		fakedeath_active = TRUE
 		L.fakedeath(type)
 
-/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M)
+/datum/reagent/toxin/zombiepowder/on_mob_life_uncured(mob/living/M)
 	..()
 	if(fakedeath_active)
 		return TRUE
@@ -224,6 +232,7 @@
 	reagent_state = SOLID
 	color = "#664700" // rgb: 102, 71, 0
 	toxpwr = 0.8
+	antidote = /datum/reagent/medicine/epinephrine
 	taste_description = "death"
 
 /datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/L)
@@ -234,7 +243,7 @@
 	REMOVE_TRAIT(L, TRAIT_FAKEDEATH, type)
 	..()
 
-/datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/ghoulpowder/on_mob_life_uncured(mob/living/carbon/M)
 	M.adjustOxyLoss(1*REM, 0)
 	..()
 	. = 1
@@ -244,9 +253,10 @@
 	description = "A powerful hallucinogen. Not a thing to be messed with. For some mental patients. it counteracts their symptoms and anchors them to reality."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
+	antidote = /datum/reagent/medicine/C2/multiver
 	taste_description = "sourness"
 
-/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/mindbreaker/on_mob_life_uncured(mob/living/carbon/M)
 	M.hallucination += 5
 	return ..()
 
@@ -296,9 +306,10 @@
 	name = "Spore Toxin"
 	description = "A natural toxin produced by blob spores that inhibits vision when ingested."
 	color = "#9ACD32"
+	antidote = /datum/reagent/iron
 	toxpwr = 1
 
-/datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/C)
+/datum/reagent/toxin/spore/on_mob_life_uncured(mob/living/carbon/C)
 	C.damageoverlaytemp = 60
 	C.update_damage_hud()
 	C.blur_eyes(3)
@@ -308,10 +319,11 @@
 	name = "Burning Spore Toxin"
 	description = "A natural toxin produced by blob spores that induces combustion in its victim."
 	color = "#9ACD32"
+	antidote = /datum/reagent/iron
 	toxpwr = 0.5
 	taste_description = "burning"
 
-/datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/spore_burning/on_mob_life_uncured(mob/living/carbon/M)
 	M.adjust_fire_stacks(2)
 	M.IgniteMob()
 	return ..()
@@ -322,10 +334,11 @@
 	silent_toxin = TRUE
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
+	antidote = /datum/reagent/medicine/atropine
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
-/datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/chloralhydrate/on_mob_life_uncured(mob/living/carbon/M)
 	switch(current_cycle)
 		if(1 to 10)
 			M.confused += 2
@@ -348,8 +361,9 @@
 	glass_icon_state = "beerglass"
 	glass_name = "glass of beer"
 	glass_desc = "A freezing pint of beer."
+	antidote = /datum/reagent/medicine/atropine
 
-/datum/reagent/toxin/fakebeer/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/fakebeer/on_mob_life_uncured(mob/living/carbon/M)
 	switch(current_cycle)
 		if(1 to 50)
 			M.Sleeping(40, 0)
@@ -363,14 +377,16 @@
 	description = "Finely ground coffee beans, used to make coffee."
 	reagent_state = SOLID
 	color = "#5B2E0D" // rgb: 91, 46, 13
-	toxpwr = 0.5
+	toxpwr = 0.5 //so weak just drink water
+	antidote = /datum/reagent/water
 
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
 	description = "Finely shredded tea leaves, used for making tea."
 	reagent_state = SOLID
 	color = "#7F8400" // rgb: 127, 132, 0
-	toxpwr = 0.1
+	toxpwr = 0.1 
+	antidote = /datum/reagent/water
 	taste_description = "green tea"
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
@@ -378,10 +394,11 @@
 	description = "A nonlethal poison that inhibits speech in its victim."
 	silent_toxin = TRUE
 	color = "#F0F8FF" // rgb: 240, 248, 255
+	antidote = /datum/reagent/medicine/C2/multiver
 	toxpwr = 0
 	taste_description = "silence"
 
-/datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/mutetoxin/on_mob_life_uncured(mob/living/carbon/M)
 	M.silent = max(M.silent, 3)
 	..()
 
@@ -391,9 +408,10 @@
 	silent_toxin = TRUE
 	color = "#6E2828"
 	data = 13
+	antidote = /datum/reagent/medicine/C2/multiver
 	toxpwr = 0
 
-/datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/staminatoxin/on_mob_life_uncured(mob/living/carbon/M)
 	M.adjustStaminaLoss(REM * data, 0)
 	data = max(data - 1, 3)
 	..()
@@ -405,9 +423,10 @@
 	reagent_state = LIQUID
 	color = "#787878"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/C2/syriniver
 	toxpwr = 0
 
-/datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/polonium/on_mob_life_uncured(mob/living/carbon/M)
 	M.radiation += 4
 	..()
 
@@ -419,9 +438,10 @@
 	color = "#FA6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+	antidote = /datum/reagent/medicine/atropine
 	toxpwr = 0
 
-/datum/reagent/toxin/histamine/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/histamine/on_mob_life_uncured(mob/living/carbon/M)
 	if(prob(50))
 		switch(pick(1, 2, 3, 4))
 			if(1)
@@ -452,9 +472,10 @@
 	reagent_state = LIQUID
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/epinephrine
 	toxpwr = 1
 
-/datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/formaldehyde/on_mob_life_uncured(mob/living/carbon/M)
 	if(prob(5))
 		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,15))
 		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 1.2)
@@ -467,9 +488,10 @@
 	reagent_state = LIQUID
 	color = "#F0FFF0"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/atropine
 	toxpwr = 0
 
-/datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/venom/on_mob_life_uncured(mob/living/carbon/M)
 	toxpwr = 0.2*volume
 	M.adjustBruteLoss((0.3*volume)*REM, 0)
 	. = 1
@@ -485,9 +507,10 @@
 	reagent_state = LIQUID
 	color = "#64916E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/C2/syriniver
 	toxpwr = 0
 
-/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/fentanyl/on_mob_life_uncured(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM, 150)
 	if(M.toxloss <= 60)
 		M.adjustToxLoss(1*REM, 0)
@@ -504,9 +527,10 @@
 	reagent_state = LIQUID
 	color = "#00B4FF"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/C2/syriniver
 	toxpwr = 1.25
 
-/datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/cyanide/on_mob_life_uncured(mob/living/carbon/M)
 	if(prob(5))
 		M.losebreath += 1
 	if(prob(8))
@@ -521,6 +545,7 @@
 	reagent_state = LIQUID
 	color = "#d6d6d8"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/iron
 	toxpwr = 0.5
 	taste_description = "bad cooking"
 
@@ -531,13 +556,14 @@
 	reagent_state = LIQUID
 	color = "#C8C8C8"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/epinephrine
 	toxpwr = 0
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
 		M.reagents?.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
 
-/datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/itching_powder/on_mob_life_uncured(mob/living/carbon/M)
 	if(prob(15))
 		to_chat(M, "<span class='danger'>You scratch at your head.</span>")
 		M.adjustBruteLoss(0.2*REM, 0)
@@ -563,9 +589,10 @@
 	reagent_state = LIQUID
 	color = "#7F10C0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/toxin/anacea
 	toxpwr = 2.5
 
-/datum/reagent/toxin/initropidril/on_mob_life(mob/living/carbon/C)
+/datum/reagent/toxin/initropidril/on_mob_life_uncured(mob/living/carbon/C)
 	if(prob(25))
 		var/picked_option = rand(1,3)
 		switch(picked_option)
@@ -594,10 +621,11 @@
 	reagent_state = LIQUID
 	color = "#195096"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/toxin/anacea
 	toxpwr = 0
 	taste_mult = 0 // undetectable, I guess?
 
-/datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/pancuronium/on_mob_life_uncured(mob/living/carbon/M)
 	if(current_cycle >= 10)
 		M.Stun(40, 0)
 		. = TRUE
@@ -612,9 +640,10 @@
 	reagent_state = LIQUID
 	color = "#6496FA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/toxin/anacea
 	toxpwr = 0
 
-/datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/sodium_thiopental/on_mob_life_uncured(mob/living/carbon/M)
 	if(current_cycle >= 10)
 		M.Sleeping(40, 0)
 	M.adjustStaminaLoss(10*REM, 0)
@@ -628,9 +657,10 @@
 	reagent_state = LIQUID
 	color = "#7DC3A0"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/atropine
 	toxpwr = 0.5
 
-/datum/reagent/toxin/sulfonal/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/sulfonal/on_mob_life_uncured(mob/living/carbon/M)
 	if(current_cycle >= 22)
 		M.Sleeping(40, 0)
 	return ..()
@@ -642,6 +672,7 @@
 	reagent_state = LIQUID
 	color = "#FFFFFF"
 	toxpwr = 0
+	antidote = /datum/reagent/drug/happiness
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
@@ -658,9 +689,11 @@
 	reagent_state = LIQUID
 	color = "#F0FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/C2/multiver
 	toxpwr = 0
 
-/datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M)
+
+/datum/reagent/toxin/lipolicide/on_mob_life_uncured(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(1*REM, 0)
 	M.adjust_nutrition(-3) // making the chef more valuable, one meme trap at a time
@@ -673,9 +706,10 @@
 	reagent_state = LIQUID
 	color = "#7DC3A0"
 	metabolization_rate = 0.06 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/C2/syriniver
 	toxpwr = 1.75
 
-/datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/coniine/on_mob_life_uncured(mob/living/carbon/M)
 	M.losebreath += 5
 	return ..()
 
@@ -686,10 +720,11 @@
 	color = "#2f6617" //A sickly green color
 	metabolization_rate = REAGENTS_METABOLISM
 	overdose_threshold = 29
+	antidote = /datum/reagent/medicine/C2/syriniver
 	toxpwr = 0
 	taste_description = "vomit"
 
-/datum/reagent/toxin/spewium/on_mob_life(mob/living/carbon/C)
+/datum/reagent/toxin/spewium/on_mob_life_uncured(mob/living/carbon/C)
 	.=..()
 	if(current_cycle >=11 && prob(min(50,current_cycle)))
 		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
@@ -710,9 +745,10 @@
 	reagent_state = LIQUID
 	color = "#191919"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/drug/happiness
 	toxpwr = 1
 
-/datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/curare/on_mob_life_uncured(mob/living/carbon/M)
 	if(current_cycle >= 11)
 		M.Paralyze(60, 0)
 	M.adjustOxyLoss(1*REM, 0)
@@ -726,9 +762,10 @@
 	reagent_state = LIQUID
 	color = "#C8C8C8" //RGB: 200, 200, 200
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/C2/penthrite
 	toxpwr = 0
 
-/datum/reagent/toxin/heparin/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/heparin/on_mob_life_uncured(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.bleed_rate = min(H.bleed_rate + 2, 8)
@@ -744,10 +781,11 @@
 	reagent_state = LIQUID
 	color = "#AC88CA" //RGB: 172, 136, 202
 	metabolization_rate = 0.6 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/C2/penthrite
 	toxpwr = 0.5
 	taste_description = "spinning"
 
-/datum/reagent/toxin/rotatium/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/rotatium/on_mob_life_uncured(mob/living/carbon/M)
 	if(M.hud_used)
 		if(current_cycle >= 20 && current_cycle%20 == 0)
 			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
@@ -770,9 +808,10 @@
 	reagent_state = LIQUID
 	color = "#3C5133"
 	metabolization_rate = 0.08 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/C2/multiver
 	toxpwr = 0.15
 
-/datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/anacea/on_mob_life_uncured(mob/living/carbon/M)
 	var/remove_amt = 5
 	if(holder.has_reagent(/datum/reagent/medicine/calomel) || holder.has_reagent(/datum/reagent/medicine/pen_acid))
 		remove_amt = 0.5
@@ -783,13 +822,14 @@
 //ACID
 
 
-/datum/reagent/toxin/acid
+/datum/reagent/toxin/acid  //acids are snowflakes
 	name = "Sulphuric acid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
+	antidote = /datum/reagent/consumable/sodiumchloride
 	self_consuming = TRUE
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
@@ -823,7 +863,7 @@
 	toxpwr = 2
 	acidpwr = 42.0
 
-/datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/acid/fluacid/on_mob_life_uncured(mob/living/carbon/M)
 	M.adjustFireLoss(current_cycle/10, 0)
 	. = 1
 	..()
@@ -835,8 +875,8 @@
 	toxpwr = 6
 	acidpwr = 5.0
 
-/datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(current_cycle/15, FALSE) //here you go nervar
+/datum/reagent/toxin/acid/nitracid/on_mob_life_uncured(mob/living/carbon/M)
+	M.adjustFireLoss(current_cycle/15, FALSE)
 	. = TRUE
 	..()
 
@@ -846,11 +886,12 @@
 	reagent_state = LIQUID
 	metabolization_rate = 0 //stays in the system until active.
 	var/actual_metaboliztion_rate = REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/atropine
 	toxpwr = 0
 	var/actual_toxpwr = 5
 	var/delay = 30
 
-/datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/delayed/on_mob_life_uncured(mob/living/carbon/M)
 	if(current_cycle > delay)
 		holder.remove_reagent(type, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
@@ -864,6 +905,7 @@
 	description = "A nonlethal neurotoxin that interferes with the victim's ability to gesture."
 	silent_toxin = TRUE
 	color = "#F0F8FF" // rgb: 240, 248, 255
+	antidote = /datum/reagent/medicine/C2/syriniver
 	toxpwr = 0
 	taste_description = "stillness"
 
@@ -878,6 +920,7 @@
 	description = "A strange substance that looks a lot like water. Drinking it is oddly tempting. Oof ouch."
 	silent_toxin = TRUE //no point spamming them even more.
 	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
+	antidote = /datum/reagent/drug/happiness
 	toxpwr = 0
 	taste_description = "bone hurting"
 	overdose_threshold = 50
@@ -885,7 +928,7 @@
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
 	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
-/datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/bonehurtingjuice/on_mob_life_uncured(mob/living/carbon/M)
 	M.adjustStaminaLoss(7.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))
@@ -917,10 +960,11 @@
 	silent_toxin = TRUE
 	color = "#EBFF8E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	antidote = /datum/reagent/medicine/C2/penthrite
 	toxpwr = 0
 	taste_description = "tannin"
 
-/datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/M)
+/datum/reagent/toxin/bungotoxin/on_mob_life_uncured(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_HEART, 3)
 	M.confused = M.dizziness //add a tertiary effect here if this is isn't an effective poison.
 	if(current_cycle >= 12 && prob(8))
