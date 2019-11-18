@@ -378,7 +378,7 @@
 	reagent_state = SOLID
 	color = "#5B2E0D" // rgb: 91, 46, 13
 	toxpwr = 0.5 //so weak just drink water
-	antidote = /datum/reagent/water
+	antidote = /datum/reagent/water 
 
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
@@ -640,7 +640,7 @@
 	reagent_state = LIQUID
 	color = "#6496FA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-	antidote = /datum/reagent/toxin/anacea
+	antidote = /datum/reagent/medicine/epinephrine
 	toxpwr = 0
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life_uncured(mob/living/carbon/M)
@@ -672,7 +672,7 @@
 	reagent_state = LIQUID
 	color = "#FFFFFF"
 	toxpwr = 0
-	antidote = /datum/reagent/drug/happiness
+	antidote = /datum/reagent/medicine/C2/penthrite
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
@@ -745,7 +745,7 @@
 	reagent_state = LIQUID
 	color = "#191919"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
-	antidote = /datum/reagent/drug/happiness
+	antidote = /datum/reagent/medicine/C2/penthrite
 	toxpwr = 1
 
 /datum/reagent/toxin/curare/on_mob_life_uncured(mob/living/carbon/M)
@@ -920,7 +920,7 @@
 	description = "A strange substance that looks a lot like water. Drinking it is oddly tempting. Oof ouch."
 	silent_toxin = TRUE //no point spamming them even more.
 	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
-	antidote = /datum/reagent/drug/happiness
+	antidote = /datum/reagent/medicine/C2/penthrite
 	toxpwr = 0
 	taste_description = "bone hurting"
 	overdose_threshold = 50
