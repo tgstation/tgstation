@@ -24,7 +24,7 @@ export const NtosArcade = props => {
           <LabeledList.Item label="Status">
             {data.Status}
           </LabeledList.Item>
-          <LabeledList.Item label="Earned Ticket">
+          <LabeledList.Item label="Earned Tickets">
             {data.TicketCount}
           </LabeledList.Item>
         </LabeledList>

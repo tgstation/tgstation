@@ -9,6 +9,7 @@ const PROGRAM_ICONS = {
   smmonitor: 'radiation',
   alarmmonitor: 'bell',
   cardmod: 'id-card',
+  arcade: 'gamepad',
 };
 
 export const NtosMain = props => {

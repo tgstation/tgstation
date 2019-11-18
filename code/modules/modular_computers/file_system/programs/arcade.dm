@@ -1,7 +1,6 @@
 /datum/computer_file/program/arcade
 	filename = "arcade"
 	filedesc = "Nanotransen Micro Arcade"
-	ui_header = "smmon_0.gif"
 	program_icon_state = "arcade"
 	extended_desc = "This port of the classic game 'Outbomb Cuban Pete', redesigned to run on tablets, with thrilling graphics and chilling storytelling."
 	requires_ntnet = FALSE
@@ -23,7 +22,7 @@
 /datum/computer_file/program/arcade/proc/game_check(mob/user)
 	sleep(5)
 	if(boss_hp <= 0)
-		heads_up = "You have crushed the forces of evil! Rejoyce!"
+		heads_up = "You have crushed the forces of evil! Rejoice!"
 		playsound(computer.loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		game_active = 0
 		program_icon_state = "arcade_off"
@@ -68,7 +67,7 @@
 		game_check()
 		return
 	else
-		heads_up = "The mean guy slams you for [boss_attackamt]!"
+		heads_up = "The vile force slams you for [boss_attackamt]!"
 		playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		player_hp -= boss_attackamt
 		game_check()
@@ -106,8 +105,8 @@
 			boss_hp -= attackamt
 			sleep(10)
 			game_check()
-			enemy_check()
 			pause_state = FALSE
+			enemy_check()
 			return TRUE
 		if("Heal")
 			var/healamt = 0 //More Spam Prevention.
@@ -122,8 +121,8 @@
 			player_mp -= healcost
 			sleep(10)
 			game_check()
-			enemy_check()
 			pause_state = FALSE
+			enemy_check()
 			return TRUE
 		if("Recharge_Power")
 			var/rechargeamt = 0 //As above.
@@ -135,8 +134,8 @@
 			player_mp += rechargeamt
 			sleep(10)
 			game_check()
-			enemy_check()
 			pause_state = FALSE
+			enemy_check()
 			return TRUE
 		if("Dispense_Tickets")
 			if(!printer)
