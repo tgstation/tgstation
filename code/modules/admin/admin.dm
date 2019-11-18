@@ -472,7 +472,7 @@
 				if("Regular Restart (with delay)")
 					var/delay = input("What delay should the restart have (in seconds)?", "Restart Delay", 5) as num|null
 					if(!delay)
-						delay = 1
+						return FALSE
 					SSticker.Reboot(init_by, "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", delay * 10)
 				if("Hard Restart (No Delay, No Feeback Reason)")
 					to_chat(world, "World reboot - [init_by]")
