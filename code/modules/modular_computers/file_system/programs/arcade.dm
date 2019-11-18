@@ -1,6 +1,6 @@
 /datum/computer_file/program/arcade
 	filename = "arcade"
-	filedesc = "Nanotransen Micro Arcade"
+	filedesc = "Nanotrasen Micro Arcade"
 	program_icon_state = "arcade"
 	extended_desc = "This port of the classic game 'Outbomb Cuban Pete', redesigned to run on tablets, with thrilling graphics and chilling storytelling."
 	requires_ntnet = FALSE
