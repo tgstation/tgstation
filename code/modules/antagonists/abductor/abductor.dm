@@ -5,6 +5,8 @@
 	roundend_category = "abductors"
 	antagpanel_category = "Abductor"
 	job_rank = ROLE_ABDUCTOR
+	antag_hud_type = ANTAG_HUD_ABDUCTOR
+	antag_hud_name = "abductor"
 	show_in_antagpanel = FALSE //should only show subtypes
 	var/datum/team/abductor_team/team
 	var/sub_role
@@ -26,7 +28,7 @@
 	sub_role = "Scientist"
 	outfit = /datum/outfit/abductor/scientist
 	landmark_type = /obj/effect/landmark/abductor/scientist
-	greet_text = "Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve."
+	greet_text = "Use your experimental console and surgical equipment to monitor your agent and experiment upon abducted humans."
 	show_in_antagpanel = TRUE
 
 /datum/antagonist/abductor/create_team(datum/team/abductor_team/new_team)
@@ -40,16 +42,18 @@
 	return team
 
 /datum/antagonist/abductor/on_gain()
-	owner.special_role = "[name] [sub_role]"
-	owner.assigned_role = "[name] [sub_role]"
+	owner.special_role = "[name]"
+	owner.assigned_role = "[name]"
 	objectives += team.objectives
 	finalize_abductor()
+	ADD_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/on_removal()
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [owner.special_role]!</span>")
 	owner.special_role = null
+	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/greet()
@@ -62,6 +66,9 @@
 	//Equip
 	var/mob/living/carbon/human/H = owner.current
 	H.set_species(/datum/species/abductor)
+	var/obj/item/organ/tongue/abductor/T = H.getorganslot(ORGAN_SLOT_TONGUE)
+	T.mothership = "[team.name]"
+
 	H.real_name = "[team.name] [sub_role]"
 	H.equipOutfit(outfit)
 
@@ -71,13 +78,17 @@
 			H.forceMove(LM.loc)
 			break
 
-	update_abductor_icons_added(owner,"abductor")
+	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
-/datum/antagonist/abductor/scientist/finalize_abductor()
-	..()
-	var/mob/living/carbon/human/H = owner.current
-	var/datum/species/abductor/A = H.dna.species
-	A.scientist = TRUE
+/datum/antagonist/abductor/scientist/on_gain()
+	ADD_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, ABDUCTOR_ANTAGONIST)
+	ADD_TRAIT(owner, TRAIT_SURGEON, ABDUCTOR_ANTAGONIST)
+	. = ..()
+
+/datum/antagonist/abductor/scientist/on_removal()
+	REMOVE_TRAIT(owner, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, ABDUCTOR_ANTAGONIST)
+	REMOVE_TRAIT(owner, TRAIT_SURGEON, ABDUCTOR_ANTAGONIST)
+	. = ..()
 
 /datum/antagonist/abductor/admin_add(datum/mind/new_owner,mob/admin)
 	var/list/current_teams = list()
@@ -153,6 +164,8 @@
 	name = "Abductee"
 	roundend_category = "abductees"
 	antagpanel_category = "Abductee"
+	antag_hud_type = ANTAG_HUD_ABDUCTOR
+	antag_hud_name = "abductee"
 
 /datum/antagonist/abductee/on_gain()
 	give_objective()
@@ -172,10 +185,12 @@
 	objectives += O
 
 /datum/antagonist/abductee/apply_innate_effects(mob/living/mob_override)
-	update_abductor_icons_added(mob_override ? mob_override.mind : owner,"abductee")
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 
 /datum/antagonist/abductee/remove_innate_effects(mob/living/mob_override)
-	update_abductor_icons_removed(mob_override ? mob_override.mind : owner)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
 
 
 // LANDMARKS
@@ -202,13 +217,3 @@
 		if(E.team_number == T.team_number)
 			return E.points >= target_amount
 	return FALSE
-
-/datum/antagonist/proc/update_abductor_icons_added(datum/mind/alien_mind,hud_type)
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_ABDUCTOR]
-	hud.join_hud(alien_mind.current)
-	set_antag_hud(alien_mind.current, hud_type)
-
-/datum/antagonist/proc/update_abductor_icons_removed(datum/mind/alien_mind)
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_ABDUCTOR]
-	hud.leave_hud(alien_mind.current)
-	set_antag_hud(alien_mind.current, null)

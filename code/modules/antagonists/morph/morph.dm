@@ -28,7 +28,8 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	vision_range = 1 // Only attack when target is close
 	wander = FALSE
-	attacktext = "glomps"
+	attack_verb_continuous = "glomps"
+	attack_verb_simple = "glomp"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
 
@@ -52,12 +53,11 @@
 
 /mob/living/simple_animal/hostile/morph/examine(mob/user)
 	if(morphed)
-		form.examine(user) // Refactor examine to return desc so it's static? Not sure if worth it
+		. = form.examine(user)
 		if(get_dist(user,src)<=3)
-			to_chat(user, "<span class='warning'>It doesn't look quite right...</span>")
+			. += "<span class='warning'>It doesn't look quite right...</span>"
 	else
-		..()
-	return
+		. = ..()
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_health()
 	if(morphed && !isliving(form))
@@ -116,7 +116,7 @@
 	//Morphed is weaker
 	melee_damage_lower = melee_damage_disguised
 	melee_damage_upper = melee_damage_disguised
-	speed = 0
+	set_varspeed(0)
 
 	morph_time = world.time + MORPH_COOLDOWN
 	med_hud_set_health()
@@ -131,7 +131,7 @@
 	form = null
 	alpha = initial(alpha)
 	color = initial(color)
-	animate_movement = initial(animate_movement)
+	animate_movement = SLIDE_STEPS
 	maptext = null
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
@@ -144,7 +144,7 @@
 	//Baseline stats
 	melee_damage_lower = initial(melee_damage_lower)
 	melee_damage_upper = initial(melee_damage_upper)
-	speed = initial(speed)
+	set_varspeed(initial(speed))
 
 	morph_time = world.time + MORPH_COOLDOWN
 	med_hud_set_health()

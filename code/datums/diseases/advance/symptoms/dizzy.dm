@@ -26,7 +26,7 @@ Bonus
 	severity = 2
 	base_message_chance = 50
 	symptom_delay_min = 15
-	symptom_delay_max = 40
+	symptom_delay_max = 30
 	threshold_desc = "<b>Transmission 6:</b> Also causes druggy vision.<br>\
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
@@ -48,6 +48,7 @@ Bonus
 				to_chat(M, "<span class='warning'>[pick("You feel dizzy.", "Your head spins.")]</span>")
 		else
 			to_chat(M, "<span class='userdanger'>A wave of dizziness washes over you!</span>")
-			M.Dizzy(5)
+			if(M.dizziness <= 70)
+				M.dizziness += 30
 			if(power >= 2)
-				M.set_drugginess(5)
+				M.set_drugginess(40)

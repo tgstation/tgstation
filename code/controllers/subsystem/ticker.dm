@@ -93,6 +93,8 @@ SUBSYSTEM_DEF(ticker)
 				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
 					music += S
 			if(1) //sound.ogg -- common sound
+				if(L[1] == "exclude")
+					continue
 				music += S
 
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
@@ -115,9 +117,20 @@ SUBSYSTEM_DEF(ticker)
 
 
 	if(!GLOB.syndicate_code_phrase)
-		GLOB.syndicate_code_phrase	= generate_code_phrase()
+		GLOB.syndicate_code_phrase	= generate_code_phrase(return_list=TRUE)
+
+		var/codewords = jointext(GLOB.syndicate_code_phrase, "|")
+		var/regex/codeword_match = new("([codewords])", "ig")
+
+		GLOB.syndicate_code_phrase_regex = codeword_match
+
 	if(!GLOB.syndicate_code_response)
-		GLOB.syndicate_code_response = generate_code_phrase()
+		GLOB.syndicate_code_response = generate_code_phrase(return_list=TRUE)
+
+		var/codewords = jointext(GLOB.syndicate_code_response, "|")
+		var/regex/codeword_match = new("([codewords])", "ig")
+
+		GLOB.syndicate_code_response_regex = codeword_match
 
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 	if(CONFIG_GET(flag/randomize_shift_time))
@@ -134,8 +147,7 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
-			if(CONFIG_GET(flag/irc_announce_new_game))
-				world.TgsTargetedChatBroadcast("New round starting on [SSmapping.config.map_name]!", FALSE)
+			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
@@ -144,10 +156,10 @@ SUBSYSTEM_DEF(ticker)
 				//lobby stats for statpanels
 			if(isnull(timeLeft))
 				timeLeft = max(0,start_at - world.time)
-			totalPlayers = 0
+			totalPlayers = LAZYLEN(GLOB.new_player_list)
 			totalPlayersReady = 0
-			for(var/mob/dead/new_player/player in GLOB.player_list)
-				++totalPlayers
+			for(var/i in GLOB.new_player_list)
+				var/mob/dead/new_player/player = i
 				if(player.ready == PLAYER_READY_TO_PLAY)
 					++totalPlayersReady
 
@@ -203,7 +215,7 @@ SUBSYSTEM_DEF(ticker)
 			if(GLOB.secret_force_mode != "secret")
 				var/datum/game_mode/smode = config.pick_mode(GLOB.secret_force_mode)
 				if(!smode.can_start())
-					message_admins("\blue Unable to force secret [GLOB.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
+					message_admins("<span class='notice'>Unable to force secret [GLOB.secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>")
 				else
 					mode = smode
 
@@ -229,7 +241,7 @@ SUBSYSTEM_DEF(ticker)
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup()		//Choose antagonists
 	CHECK_TICK
-	SSjob.DivideOccupations() 				//Distribute jobs
+	can_continue = can_continue && SSjob.DivideOccupations(mode.required_jobs) 				//Distribute jobs
 	CHECK_TICK
 
 	if(!GLOB.Debug2)
@@ -274,14 +286,14 @@ SUBSYSTEM_DEF(ticker)
 	round_start_time = world.time
 	SSdbcore.SetRoundStart()
 
-	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
+	to_chat(world, "<span class='notice'><B>Welcome to [station_name()], enjoy your stay!</B></span>")
 	SEND_SOUND(world, sound('sound/ai/welcome.ogg'))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
 	if(SSevents.holidays)
-		to_chat(world, "<font color='blue'>and...</font>")
+		to_chat(world, "<span class='notice'>and...</span>")
 		for(var/holidayname in SSevents.holidays)
 			var/datum/holiday/holiday = SSevents.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
@@ -331,7 +343,8 @@ SUBSYSTEM_DEF(ticker)
 			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
-	for(var/mob/dead/new_player/player in GLOB.player_list)
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			GLOB.joined_player_list += player.ckey
 			player.create_character(FALSE)
@@ -340,7 +353,8 @@ SUBSYSTEM_DEF(ticker)
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
-	for(var/mob/dead/new_player/P in GLOB.player_list)
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/P = i
 		if(P.new_character && P.new_character.mind)
 			SSticker.minds += P.new_character.mind
 		CHECK_TICK
@@ -348,25 +362,28 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
-	for(var/mob/dead/new_player/N in GLOB.player_list)
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/N = i
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
-			if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
-				SSquirks.AssignQuirks(N.new_character, N.client, TRUE)
+				if(CONFIG_GET(flag/roundstart_traits) && ishuman(N.new_character))
+					SSquirks.AssignQuirks(N.new_character, N.client, TRUE)
 		CHECK_TICK
 	if(captainless)
-		for(var/mob/dead/new_player/N in GLOB.player_list)
+		for(var/i in GLOB.new_player_list)
+			var/mob/dead/new_player/N = i
 			if(N.new_character)
-				to_chat(N, "Captainship not forced on anyone.")
+				to_chat(N, "<span class='notice'>Captainship not forced on anyone.</span>")
 			CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/mob/dead/new_player/player in GLOB.mob_list)
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/player = i
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
@@ -396,11 +413,20 @@ SUBSYSTEM_DEF(ticker)
 			m = pick(memetips)
 
 	if(m)
-		to_chat(world, "<font color='purple'><b>Tip of the round: </b>[html_encode(m)]</font>")
+		to_chat(world, "<span class='purple'><b>Tip of the round: </b>[html_encode(m)]</span>")
 
 /datum/controller/subsystem/ticker/proc/check_queue()
+	if(!queued_players.len)
+		return
 	var/hpc = CONFIG_GET(number/hard_popcap)
-	if(!queued_players.len || !hpc)
+	if(!hpc)
+		listclearnulls(queued_players)
+		for (var/mob/dead/new_player/NP in queued_players)
+			to_chat(NP, "<span class='userdanger'>The alive players limit has been released!<br><a href='?src=[REF(NP)];late_join=override'>[html_encode(">>Join Game<<")]</a></span>")
+			SEND_SOUND(NP, sound('sound/misc/notice1.ogg'))
+			NP.LateChoices()
+		queued_players.len = 0
+		queue_delay = 0
 		return
 
 	queue_delay++
@@ -408,6 +434,7 @@ SUBSYSTEM_DEF(ticker)
 
 	switch(queue_delay)
 		if(5) //every 5 ticks check if there is a slot available
+			listclearnulls(queued_players)
 			if(living_player_count() < hpc)
 				if(next_in_line && next_in_line.client)
 					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a></span>")
@@ -542,7 +569,8 @@ SUBSYSTEM_DEF(ticker)
 
 //Everyone who wanted to be an observer gets made one now
 /datum/controller/subsystem/ticker/proc/create_observers()
-	for(var/mob/dead/new_player/player in GLOB.player_list)
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_OBSERVE && player.mind)
 			//Break chain since this has a sleep input in it
 			addtimer(CALLBACK(player, /mob/dead/new_player.proc/make_me_an_observer), 1)
@@ -620,7 +648,8 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg',
-		'sound/roundend/gondolabridge.ogg'\
+		'sound/roundend/scrunglartiy.ogg',
+		'sound/roundend/petersondisappointed.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

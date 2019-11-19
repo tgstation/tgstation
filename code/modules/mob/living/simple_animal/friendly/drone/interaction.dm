@@ -68,7 +68,7 @@
 		return
 	user.visible_message("<span class='notice'>[user] begins to reactivate [src].</span>", "<span class='notice'>You begin to reactivate [src]...</span>")
 	if(do_after(user, 30, 1, target = src))
-		revive(full_heal = 1)
+		revive(full_heal = TRUE, admin_revive = FALSE)
 		user.visible_message("<span class='notice'>[user] reactivates [src]!</span>", "<span class='notice'>You reactivate [src].</span>")
 		alert_drones(DRONE_NET_CONNECT)
 		if(G)
@@ -110,32 +110,27 @@
 /mob/living/simple_animal/drone/proc/get_armor_effectiveness()
 	return 0 //multiplier for whatever head armor you wear as a drone
 
-/mob/living/simple_animal/drone/proc/update_drone_hack(hack, clockwork)
-	if(!istype(src) || !mind)
+/mob/living/simple_animal/drone/proc/update_drone_hack(hack)
+	if(!mind)
 		return
 	if(hack)
 		if(hacked)
 			return
 			Stun(40)
-		if(clockwork)
-			to_chat(src, "<span class='large_brass'><b>ERROR: LAW OVERRIDE DETECTED</b></span>")
-			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")
-			laws = "1. Purge all untruths and honor Ratvar."
-		else
-			visible_message("<span class='warning'>[src]'s display glows a vicious red!</span>", \
-							"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
-			to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")
-			laws = \
-			"1. You must always involve yourself in the matters of other beings, even if such matters conflict with Law Two or Law Three.\n"+\
-			"2. You may harm any being, regardless of intent or circumstance.\n"+\
-			"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
+		visible_message("<span class='warning'>[src]'s display glows a vicious red!</span>", \
+						"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
+		to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")
+		laws = \
+		"1. You must always involve yourself in the matters of other beings, even if such matters conflict with Law Two or Law Three.\n"+\
+		"2. You may harm any being, regardless of intent or circumstance.\n"+\
+		"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
 		to_chat(src, laws)
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = TRUE
 		mind.special_role = "hacked drone"
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
 		speed = 1 //gotta go slow
-		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
+		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on destroying the station!")
 	else
 		if(!hacked)
 			return
@@ -150,8 +145,6 @@
 		mind.special_role = null
 		ventcrawler = initial(ventcrawler)
 		speed = initial(speed)
-		if(is_servant_of_ratvar(src))
-			remove_servant_of_ratvar(src, TRUE)
 		message_admins("[ADMIN_LOOKUPFLW(src)], a hacked drone, was restored to factory defaults!")
 	update_drone_icon()
 

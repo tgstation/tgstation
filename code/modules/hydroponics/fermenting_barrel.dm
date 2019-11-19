@@ -5,19 +5,19 @@
 	icon_state = "barrel"
 	density = TRUE
 	anchored = FALSE
-	container_type = DRAINABLE | AMOUNT_VISIBLE
 	pressure_resistance = 2 * ONE_ATMOSPHERE
 	max_integrity = 300
 	var/open = FALSE
 	var/speed_multiplier = 1 //How fast it distills. Defaults to 100% (1.0). Lower is better.
 
 /obj/structure/fermenting_barrel/Initialize()
-	create_reagents(300) //Bluespace beakers, but without the portability or efficiency in circuits.
+	// Bluespace beakers, but without the portability or efficiency in circuits.
+	create_reagents(300, DRAINABLE | AMOUNT_VISIBLE)
 	. = ..()
 
 /obj/structure/fermenting_barrel/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>It is currently [open?"open, letting you pour liquids in.":"closed, letting you draw liquids from the tap."]</span>")
+	. += "<span class='notice'>It is currently [open?"open, letting you pour liquids in.":"closed, letting you draw liquids from the tap."]</span>"
 
 /obj/structure/fermenting_barrel/proc/makeWine(obj/item/reagent_containers/food/snacks/grown/fruit)
 	if(fruit.reagents)
@@ -34,7 +34,7 @@
 			data["tastes"] = list(fruit.wine_flavor = 1)
 		else
 			data["tastes"] = list(fruit.tastes[1] = 1)
-		reagents.add_reagent("fruit_wine", amount, data)
+		reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, amount, data)
 	qdel(fruit)
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 
@@ -56,10 +56,12 @@
 /obj/structure/fermenting_barrel/attack_hand(mob/user)
 	open = !open
 	if(open)
-		container_type = REFILLABLE | AMOUNT_VISIBLE
+		DISABLE_BITFIELD(reagents.flags, DRAINABLE)
+		ENABLE_BITFIELD(reagents.flags, REFILLABLE)
 		to_chat(user, "<span class='notice'>You open [src], letting you fill it.</span>")
 	else
-		container_type = DRAINABLE | AMOUNT_VISIBLE
+		ENABLE_BITFIELD(reagents.flags, DRAINABLE)
+		DISABLE_BITFIELD(reagents.flags, REFILLABLE)
 		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
 	update_icon()
 

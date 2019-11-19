@@ -9,10 +9,13 @@
 	integrity_failure = 0
 	can_weld_shut = 0
 	cutting_tool = /obj/item/wirecutters
-	open_sound = "rustle"
 	material_drop = /obj/item/stack/sheet/cardboard
 	delivery_icon = "deliverybox"
 	anchorable = FALSE
+	open_sound = 'sound/machines/cardboard_box.ogg'
+	close_sound = 'sound/machines/cardboard_box.ogg'
+	open_sound_volume = 35
+	close_sound_volume = 35
 	var/move_speed_multiplier = 1
 	var/move_delay = FALSE
 	var/egged = 0
@@ -66,6 +69,20 @@
 	resistance_flags = NONE
 	move_speed_multiplier = 2
 	cutting_tool = /obj/item/weldingtool
-	open_sound = 'sound/machines/click.ogg'
+	open_sound = 'sound/machines/crate_open.ogg'
+	close_sound = 'sound/machines/crate_close.ogg'
+	open_sound_volume = 35
+	close_sound_volume = 50
 	material_drop = /obj/item/stack/sheet/plasteel
 #undef SNAKE_SPAM_TICKS
+
+/obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
+	if(!istype(user) || opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
+		return
+	move_delay = TRUE
+	var/oldloc = loc
+	step(src, direction)
+	if(oldloc != loc)
+		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
+	else
+		move_delay = FALSE

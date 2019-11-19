@@ -8,6 +8,10 @@
 	var/friend_initialized = FALSE
 
 /datum/brain_trauma/special/imaginary_friend/on_gain()
+	var/mob/living/M = owner
+	if(M.stat == DEAD || !M.client)
+		qdel(src)
+		return
 	..()
 	make_friend()
 	get_ghost()
@@ -43,7 +47,7 @@
 
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s imaginary friend?", ROLE_PAI, null, null, 75, friend)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner]'s imaginary friend?", ROLE_PAI, null, null, 75, friend, POLL_IGNORE_IMAGINARYFRIEND)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		friend.key = C.key
@@ -74,25 +78,33 @@
 
 /mob/camera/imaginary_friend/Login()
 	..()
-	to_chat(src, "<span class='notice'><b>You are the imaginary friend of [owner]!</b></span>")
-	to_chat(src, "<span class='notice'>You are absolutely loyal to your friend, no matter what.</span>")
-	to_chat(src, "<span class='notice'>You cannot directly influence the world around you, but you can see what [owner] cannot.</span>")
+	greet()
 	Show()
+
+/mob/camera/imaginary_friend/proc/greet()
+		to_chat(src, "<span class='notice'><b>You are the imaginary friend of [owner]!</b></span>")
+		to_chat(src, "<span class='notice'>You are absolutely loyal to your friend, no matter what.</span>")
+		to_chat(src, "<span class='notice'>You cannot directly influence the world around you, but you can see what [owner] cannot.</span>")
 
 /mob/camera/imaginary_friend/Initialize(mapload, _trauma)
 	. = ..()
-	var/gender = pick(MALE, FEMALE)
-	real_name = random_unique_name(gender)
-	name = real_name
+
 	trauma = _trauma
 	owner = trauma.owner
 	copy_known_languages_from(owner, TRUE)
-	human_image = get_flat_human_icon(null, pick(SSjob.occupations))
+
+	setup_friend()
 
 	join = new
 	join.Grant(src)
 	hide = new
 	hide.Grant(src)
+
+/mob/camera/imaginary_friend/proc/setup_friend()
+	var/gender = pick(MALE, FEMALE)
+	real_name = random_unique_name(gender)
+	name = real_name
+	human_image = get_flat_human_icon(null, pick(SSjob.occupations))
 
 /mob/camera/imaginary_friend/proc/Show()
 	if(!client) //nobody home
@@ -124,15 +136,15 @@
 		client.images.Remove(human_image)
 	return ..()
 
-/mob/camera/imaginary_friend/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/camera/imaginary_friend/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if (!message)
 		return
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "You cannot send IC messages (muted).")
+			to_chat(src, "<span class='boldwarning'>You cannot send IC messages (muted).</span>")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (!(ignore_spam || forced) && src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	friend_talk(message)
@@ -219,3 +231,41 @@
 	I.hidden = !I.hidden
 	I.Show()
 	update_status()
+
+//down here is the trapped mind
+//like imaginary friend but a lot less imagination and more like mind prison//
+
+/datum/brain_trauma/special/imaginary_friend/trapped_owner
+	name = "Trapped Victim"
+	desc = "Patient appears to be targeted by an invisible entity."
+	gain_text = ""
+	lose_text = ""
+	random_gain = FALSE
+
+/datum/brain_trauma/special/imaginary_friend/trapped_owner/make_friend()
+	friend = new /mob/camera/imaginary_friend/trapped(get_turf(owner), src)
+
+/datum/brain_trauma/special/imaginary_friend/trapped_owner/reroll_friend() //no rerolling- it's just the last owner's hell
+	if(friend.client) //reconnected
+		return
+	friend_initialized = FALSE
+	QDEL_NULL(friend)
+	qdel(src)
+
+/datum/brain_trauma/special/imaginary_friend/trapped_owner/get_ghost() //no randoms
+	return
+
+/mob/camera/imaginary_friend/trapped
+	name = "figment of imagination?"
+	real_name = "figment of imagination?"
+	desc = "The previous host of this body."
+
+/mob/camera/imaginary_friend/trapped/greet()
+	to_chat(src, "<span class='notice'><b>You have managed to hold on as a figment of the new host's imagination!</b></span>")
+	to_chat(src, "<span class='notice'>All hope is lost for you, but at least you may interact with your host. You do not have to be loyal to them.</span>")
+	to_chat(src, "<span class='notice'>You cannot directly influence the world around you, but you can see what the host cannot.</span>")
+
+/mob/camera/imaginary_friend/trapped/setup_friend()
+	real_name = "[owner.real_name]?"
+	name = real_name
+	human_image = icon('icons/mob/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")

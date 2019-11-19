@@ -13,10 +13,15 @@
 	climb_time = 10 //real fast, because let's be honest stepping into or onto a crate is easy
 	climb_stun = 0 //climbing onto crates isn't hard, guys
 	delivery_icon = "deliverycrate"
+	open_sound = 'sound/machines/crate_open.ogg'
+	close_sound = 'sound/machines/crate_close.ogg'
+	open_sound_volume = 35
+	close_sound_volume = 50
+	drag_slowdown = 0
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
-/obj/structure/closet/crate/New()
-	..()
+/obj/structure/closet/crate/Initialize()
+	. = ..()
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
 	update_icon()
@@ -49,14 +54,14 @@
 	. = ..()
 	if(. && manifest)
 		to_chat(user, "<span class='notice'>The manifest is torn off [src].</span>")
-		playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
+		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))
 		manifest = null
 		update_icon()
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
-	playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
+	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 
 	manifest.forceMove(loc)
 	if(ishuman(user))
@@ -72,6 +77,10 @@
 	max_integrity = 70
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 5
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound_volume = 25
+	close_sound_volume = 50
 
 /obj/structure/closet/crate/internals
 	desc = "An internals crate."
@@ -93,6 +102,27 @@
 	name = "freezer"
 	icon_state = "freezer"
 
+//Snowflake organ freezer code
+//Order is important, since we check source, we need to do the check whenever we have all the organs in the crate
+
+/obj/structure/closet/crate/freezer/open()
+	recursive_organ_check(src)
+	..()
+
+/obj/structure/closet/crate/freezer/close()
+	..()
+	recursive_organ_check(src)
+
+/obj/structure/closet/crate/freezer/Destroy()
+	recursive_organ_check(src)
+	..()
+
+/obj/structure/closet/crate/freezer/Initialize()
+	. = ..()
+	recursive_organ_check(src)
+
+
+
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"
 	desc = "A freezer containing packs of blood."
@@ -107,6 +137,7 @@
 	new /obj/item/reagent_containers/blood/OMinus(src)
 	new /obj/item/reagent_containers/blood/OPlus(src)
 	new /obj/item/reagent_containers/blood/lizard(src)
+	new /obj/item/reagent_containers/blood/ethereal(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)
 

@@ -9,7 +9,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
-	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=2500)
 	var/on = TRUE
 	var/code = 2
 	var/frequency = FREQ_ELECTROPACK
@@ -38,7 +38,7 @@
 
 /obj/item/electropack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/clothing/head/helmet))
-		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
+		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user)
 		A.icon = 'icons/obj/assemblies.dmi'
 
 		if(!user.transferItemToLoc(W, A))
@@ -53,8 +53,6 @@
 
 		user.put_in_hands(A)
 		A.add_fingerprint(user)
-		if(item_flags & NODROP)
-			A.item_flags |= NODROP
 	else
 		return ..()
 
@@ -106,8 +104,7 @@
 		if(shock_cooldown != 0)
 			return
 		shock_cooldown = 1
-		spawn(100)
-			shock_cooldown = 0
+		addtimer(VARSET_CALLBACK(src, shock_cooldown, 0), 100)
 		var/mob/living/L = loc
 		step(L, pick(GLOB.cardinals))
 

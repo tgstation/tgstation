@@ -28,7 +28,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!isabductor(user))
+	if(!HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING) && !HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
 		if(do_after(user,100, target = src))
 			TeleporterSend()
@@ -43,12 +43,15 @@
 		dat += "Collected Samples : [points] <br>"
 		dat += "Gear Credits: [credits] <br>"
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
-		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton (2 Credits)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=mind_device'>Mental Interface Device (2 Credits)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=chem_dispenser'>Reagent Synthesizer (2 Credits)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=shrink_ray'>Shrink Ray Blaster (2 Credits)</a><br>"
 		dat += "<a href='?src=[REF(src)];dispense=helmet'>Agent Helmet</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=vest'>Agent Vest</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=silencer'>Radio Silencer</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=tool'>Science Tool</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=mind_device'>Mental Interface Device</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=tongue'>Superlingual Matrix</a><br>"
 	else
 		dat += "<span class='bad'>NO EXPERIMENT MACHINE DETECTED</span> <br>"
 
@@ -75,7 +78,7 @@
 
 		dat+="<br>"
 		dat += "<a href='?src=[REF(src)];select_disguise=1'>Select Agent Vest Disguise</a><br>"
-		dat += "<a href='?src=[REF(src)];toggle_vest=1'>[vest.item_flags & NODROP ? "Unlock" : "Lock"] Vest</a><br>"
+		dat += "<a href='?src=[REF(src)];toggle_vest=1'>[HAS_TRAIT_FROM(vest, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT) ? "Unlock" : "Lock"] Vest</a><br>"
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
@@ -112,6 +115,12 @@
 				Dispense(/obj/item/clothing/suit/armor/abductor/vest)
 			if("mind_device")
 				Dispense(/obj/item/abductor/mind_device,cost=2)
+			if("chem_dispenser")
+				Dispense(/obj/item/abductor_machine_beacon/chem_dispenser,cost=2)
+			if("tongue")
+				Dispense(/obj/item/organ/tongue/abductor)
+			if("shrink_ray")
+				Dispense(/obj/item/gun/energy/shrink_ray,cost=2)
 	updateUsrDialog()
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
@@ -126,8 +135,20 @@
 	if(vest)
 		vest.flip_mode()
 
-/obj/machinery/abductor/console/proc/SelectDisguise(remote = 0)
-	var/entry_name = input( "Choose Disguise", "Disguise") as null|anything in disguises
+/obj/machinery/abductor/console/proc/SelectDisguise(remote = FALSE)
+	var/list/disguises2 = list()
+	for(var/name in disguises)
+		var/datum/icon_snapshot/snap = disguises[name]
+		var/image/dummy = image(snap.icon, src, snap.icon_state)
+		dummy.overlays = snap.overlays
+		disguises2[name] = dummy
+
+	var/entry_name
+	if(remote)
+		entry_name = show_radial_menu(usr, camera.eyeobj, disguises2, tooltips = TRUE)
+	else
+		entry_name = show_radial_menu(usr, src, disguises2, require_near = TRUE, tooltips = TRUE)
+
 	var/datum/icon_snapshot/chosen = disguises[entry_name]
 	if(chosen && vest && (remote || in_range(usr,src)))
 		vest.SetDisguise(chosen)
@@ -166,8 +187,8 @@
 			c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
-	if(istype(target.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
-		say("Subject wearing specialized protective headgear, unable to get a proper scan!")
+	if(target.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		say("Subject wearing specialized protective tinfoil gear, unable to get a proper scan!")
 		return
 	var/datum/icon_snapshot/entry = new
 	entry.name = target.name

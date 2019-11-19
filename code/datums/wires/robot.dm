@@ -23,7 +23,7 @@
 	status += "The intelligence link display shows [R.connected_ai ? R.connected_ai.name : "NULL"]."
 	status += "The camera light is [!isnull(R.builtInCamera) && R.builtInCamera.status ? "on" : "off"]."
 	status += "The lockdown indicator is [R.lockcharge ? "on" : "off"]."
-	status += "The reset module hardware light is [R.has_module() ? "on" : "off"]."
+	status += "There is a star symbol above the [get_color_of_wire(WIRE_RESET_MODULE)] wire."
 	return status
 
 /datum/wires/robot/on_pulse(wire, user)
@@ -47,17 +47,17 @@
 		if(WIRE_CAMERA) // Pulse to disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
 				R.builtInCamera.toggle_cam(usr, 0)
-				R.visible_message("[R]'s camera lens focuses loudly.", "Your camera lens focuses loudly.")
+				R.visible_message("<span class='notice'>[R]'s camera lens focuses loudly.</span>", "<span class='notice'>Your camera lens focuses loudly.</span>")
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
-				R.visible_message("[R] gently chimes.", "LawSync protocol engaged.")
+				R.visible_message("<span class='notice'>[R] gently chimes.</span>", "<span class='notice'>LawSync protocol engaged.</span>")
 				R.lawsync()
 				R.show_laws()
 		if(WIRE_LOCKDOWN)
 			R.SetLockdown(!R.lockcharge) // Toggle
 		if(WIRE_RESET_MODULE)
 			if(R.has_module())
-				R.visible_message("[R]'s module servos twitch.", "Your module display flickers.")
+				R.visible_message("<span class='notice'>[R]'s module servos twitch.</span>", "<span class='notice'>Your module display flickers.</span>")
 
 /datum/wires/robot/on_cut(wire, mend)
 	var/mob/living/silicon/robot/R = holder
@@ -78,7 +78,7 @@
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
 				R.builtInCamera.status = mend
 				R.builtInCamera.toggle_cam(usr, 0)
-				R.visible_message("[R]'s camera lens focuses loudly.", "Your camera lens focuses loudly.")
+				R.visible_message("<span class='notice'>[R]'s camera lens focuses loudly.</span>", "<span class='notice'>Your camera lens focuses loudly.</span>")
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)
 		if(WIRE_RESET_MODULE)

@@ -16,17 +16,17 @@
 	switch(consoleStatus)
 		if (SP_LINKED)
 			linked = TRUE
-			playsound(src,'sound/machines/twobeep.ogg',50,0)
+			playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
 		if (SP_READY)
 			ready = TRUE
 		if (SP_LAUNCH)
 			launched = TRUE
-			playsound(src,'sound/machines/triple_beep.ogg',50,0)
-			playsound(src,'sound/machines/warning-buzzer.ogg',50,0)
+			playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
+			playsound(src,'sound/machines/warning-buzzer.ogg',50,FALSE)
 			addtimer(CALLBACK(src, .proc/endLaunch), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
 		if (SP_UNLINK)
 			linked = FALSE
-			playsound(src,'sound/machines/synth_no.ogg',50,0)
+			playsound(src,'sound/machines/synth_no.ogg',50,FALSE)
 		if (SP_UNREADY)
 			ready = FALSE
 	update_icon()
@@ -45,11 +45,11 @@
 	update_status()
 
 /obj/item/supplypod_beacon/examine(user)
-	..()
+	. = ..()
 	if(!express_console)
-		to_chat(user, "<span class='notice'>[src] is not currently linked to a Express Supply console.</span>")
+		. += "<span class='notice'>[src] is not currently linked to an Express Supply console.</span>"
 	else
-		to_chat(user, "<span class='notice'>Alt-click to unlink it from the Express Supply console.</span>")
+		. += "<span class='notice'>Alt-click to unlink it from the Express Supply console.</span>"
 
 /obj/item/supplypod_beacon/Destroy()
 	if(express_console)
@@ -61,7 +61,7 @@
 		express_console.beacon = null
 		express_console = null
 	update_status(SP_UNLINK)
-	update_status(SP_UNREADY) 
+	update_status(SP_UNREADY)
 
 /obj/item/supplypod_beacon/proc/link_console(obj/machinery/computer/cargo/express/C, mob/living/user)
 	if (C.beacon)//if new console has a beacon, then...
@@ -81,7 +81,7 @@
 	if (express_console)
 		unlink_console()
 	else
-		to_chat(user, "<span class='notice'>There is no linked console!</span>")
+		to_chat(user, "<span class='alert'>There is no linked console.</span>")
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console
@@ -91,5 +91,5 @@
 		if(new_beacon_name)
 			name += " ([tag])"
 		return
-	else	
+	else
 		return ..()

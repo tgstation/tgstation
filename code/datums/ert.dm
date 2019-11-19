@@ -53,3 +53,21 @@
 	rename_team = "Inquisition"
 	mission = "Destroy any traces of paranormal activity aboard the station."
 	polldesc = "a Nanotrasen paranormal response team"
+
+/datum/ert/janitor
+	roles = list(/datum/antagonist/ert/janitor, /datum/antagonist/ert/janitor/heavy)
+	leader_role = /datum/antagonist/ert/janitor/heavy
+	teamsize = 4
+	opendoors = FALSE
+	rename_team = "Janitor"
+	mission = "Clean up EVERYTHING."
+	polldesc = "a Nanotrasen Janitorial Response Team"
+
+/datum/ert/intern
+	roles = list(/datum/antagonist/ert/intern)
+	leader_role = /datum/antagonist/ert/intern/leader
+	teamsize = 7
+	opendoors = FALSE
+	rename_team = "Horde of Interns"
+	mission = "Assist in conflict resolution."
+	polldesc = "an unpaid internship opportunity with Nanotrasen"

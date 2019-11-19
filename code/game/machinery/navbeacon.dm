@@ -72,10 +72,10 @@
 // hide the object if turf is intact
 /obj/machinery/navbeacon/hide(intact)
 	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
-	updateicon()
+	update_icon()
 
 // update the icon_state
-/obj/machinery/navbeacon/proc/updateicon()
+/obj/machinery/navbeacon/update_icon_state()
 	var/state="navbeacon[open]"
 
 	if(invisibility)
@@ -92,9 +92,9 @@
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		open = !open
 
-		user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "<span class='notice'>You [open ? "open" : "close"] the beacon's cover.</span>")
+		user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the beacon's cover.</span>", "<span class='notice'>You [open ? "open" : "close"] the beacon's cover.</span>")
 
-		updateicon()
+		update_icon()
 
 	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/pda))
 		if(open)

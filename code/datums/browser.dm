@@ -15,7 +15,7 @@
 	var/content = ""
 
 
-/datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null)
+/datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
 
 	user = nuser
 	window_id = nwindow_id
@@ -39,8 +39,16 @@
 	//title_image = ntitle_image
 
 /datum/browser/proc/add_stylesheet(name, file)
-	stylesheets["[ckey(name)].css"] = file
-	register_asset("[ckey(name)].css", file)
+	if (istype(name, /datum/asset/spritesheet))
+		var/datum/asset/spritesheet/sheet = name
+		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
+	else
+		var/asset_name = "[name].css"
+
+		stylesheets[asset_name] = file
+
+		if (!SSassets.cache[asset_name])
+			register_asset(asset_name, file)
 
 /datum/browser/proc/add_script(name, file)
 	scripts["[ckey(name)].js"] = file
@@ -182,7 +190,7 @@
 	var/selectedbutton = 0
 	var/stealfocus
 
-/datum/browser/modal/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null, StealFocus = 1, Timeout = 6000)
+/datum/browser/modal/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null, StealFocus = 1, Timeout = 6000)
 	..()
 	stealfocus = StealFocus
 	if (!StealFocus)
@@ -194,7 +202,7 @@
 	.=..()
 	opentime = 0
 
-/datum/browser/modal/open()
+/datum/browser/modal/open(use_onclose)
 	set waitfor = 0
 	opentime = world.time
 
@@ -274,7 +282,7 @@
 	opentime = 0
 	close()
 
-/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox", width, height, slidecolor)
+/proc/presentpicker(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox", width, height, slidecolor)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
@@ -287,7 +295,7 @@
 	if (A.selectedbutton)
 		return list("button" = A.selectedbutton, "values" = A.valueslist)
 
-/proc/input_bitfield(var/mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor, allowed_edit_list = null)
+/proc/input_bitfield(mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor, allowed_edit_list = null)
 	if (!User || !(bitfield in GLOB.bitfields))
 		return
 	var/list/pickerlist = list()
@@ -398,7 +406,7 @@
 	opentime = 0
 	close()
 
-/proc/presentpreflikepicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/settings, width, height, slidecolor)
+/proc/presentpreflikepicker(mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/settings, width, height, slidecolor)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
@@ -463,4 +471,3 @@
 	// so just reset the user mob's machine var
 	if(src && src.mob)
 		src.mob.unset_machine()
-	return

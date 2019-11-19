@@ -1,11 +1,13 @@
-/obj/effect/proc_holder/changeling/linglink
+/datum/action/changeling/linglink
 	name = "Hivemind Link"
-	desc = "Link your victim's mind into the hivemind for personal interrogation."
+	desc = "We link our victim's mind into the hivemind for personal interrogation."
+	helptext = "If we find a human mad enough to support our cause, this can be a helpful tool to stay in touch."
+	button_icon_state = "hivemind_link"
 	chemical_cost = 0
 	dna_cost = 0
 	req_human = 1
 
-/obj/effect/proc_holder/changeling/linglink/can_sting(mob/living/carbon/user)
+/datum/action/changeling/linglink/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -34,7 +36,7 @@
 		return
 	return changeling.can_absorb_dna(target)
 
-/obj/effect/proc_holder/changeling/linglink/sting_action(mob/user)
+/datum/action/changeling/linglink/sting_action(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/mob/living/carbon/human/target = user.pulling
 	changeling.islinking = 1
@@ -53,9 +55,9 @@
 					if(M.lingcheck() == LINGHIVE_LING)
 						to_chat(M, "<span class='changeling'>We can sense a foreign presence in the hivemind...</span>")
 				target.mind.linglink = 1
-				target.say(":g AAAAARRRRGGGGGHHHHH!!")
-				to_chat(target, "<span class='changeling bold'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>")
-				target.reagents.add_reagent("salbutamol", 40) // So they don't choke to death while you interrogate them
+				target.say("[MODE_TOKEN_CHANGELING] AAAAARRRRGGGGGHHHHH!!")
+				to_chat(target, "<span class='changeling bold'>You can now communicate in the changeling hivemind, say \"[MODE_TOKEN_CHANGELING] message\" to communicate!</span>")
+				target.reagents.add_reagent(/datum/reagent/medicine/salbutamol, 40) // So they don't choke to death while you interrogate them
 				sleep(1800)
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]", "[i]"))
 		if(!do_mob(user, target, 20))
@@ -66,5 +68,5 @@
 
 	changeling.islinking = 0
 	target.mind.linglink = 0
-	to_chat(user, "<span class='notice'>You cannot sustain the connection any longer, your victim fades from the hivemind</span>")
+	to_chat(user, "<span class='notice'>You cannot sustain the connection any longer, your victim fades from the hivemind!</span>")
 	to_chat(target, "<span class='userdanger'>The link cannot be sustained any longer, your connection to the hivemind has faded!</span>")

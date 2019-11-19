@@ -24,8 +24,8 @@ FLOOR SAFES
 	var/maxspace = 24	//the maximum combined w_class of stuff in the safe
 	var/explosion_count = 0	//Tough, but breakable
 
-/obj/structure/safe/New()
-	..()
+/obj/structure/safe/Initialize()
+	. = ..()
 	tumbler_1_pos = rand(0, 71)
 	tumbler_1_open = rand(0, 71)
 
@@ -52,9 +52,9 @@ FLOOR SAFES
 		return 1
 	if(user && canhear)
 		if(tumbler_1_pos == tumbler_1_open)
-			to_chat(user, "<span class='italics'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>")
+			to_chat(user, "<span class='hear'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>")
 		if(tumbler_2_pos == tumbler_2_open)
-			to_chat(user, "<span class='italics'>You hear a [pick("tink", "krink", "plink")] from [src].</span>")
+			to_chat(user, "<span class='hear'>You hear a [pick("tink", "krink", "plink")] from [src].</span>")
 	if(tumbler_1_pos == tumbler_1_open && tumbler_2_pos == tumbler_2_open)
 		if(user)
 			visible_message("<i><b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
@@ -96,7 +96,7 @@ FLOOR SAFES
 		return
 	var/mob/living/carbon/human/user = usr
 
-	if(!user.canUseTopic(src))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 
 	var/canhear = FALSE
@@ -119,11 +119,11 @@ FLOOR SAFES
 		if(dial == tumbler_1_pos + 1 || dial == tumbler_1_pos - 71)
 			tumbler_1_pos = decrement(tumbler_1_pos)
 			if(canhear)
-				to_chat(user, "<span class='italics'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>")
+				to_chat(user, "<span class='hear'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>")
 			if(tumbler_1_pos == tumbler_2_pos + 37 || tumbler_1_pos == tumbler_2_pos - 35)
 				tumbler_2_pos = decrement(tumbler_2_pos)
 				if(canhear)
-					to_chat(user, "<span class='italics'>You hear a [pick("click", "chink", "clink")] from [src].</span>")
+					to_chat(user, "<span class='hear'>You hear a [pick("click", "chink", "clink")] from [src].</span>")
 			check_unlocked(user, canhear)
 		updateUsrDialog()
 		return
@@ -133,11 +133,11 @@ FLOOR SAFES
 		if(dial == tumbler_1_pos - 1 || dial == tumbler_1_pos + 71)
 			tumbler_1_pos = increment(tumbler_1_pos)
 			if(canhear)
-				to_chat(user, "<span class='italics'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>")
+				to_chat(user, "<span class='hear'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>")
 			if(tumbler_1_pos == tumbler_2_pos - 37 || tumbler_1_pos == tumbler_2_pos + 35)
 				tumbler_2_pos = increment(tumbler_2_pos)
 				if(canhear)
-					to_chat(user, "<span class='italics'>You hear a [pick("click", "chink", "clink")] from [src].</span>")
+					to_chat(user, "<span class='hear'>You hear a [pick("click", "chink", "clink")] from [src].</span>")
 			check_unlocked(user, canhear)
 		updateUsrDialog()
 		return

@@ -3,8 +3,8 @@
 	name = "Fungal tuberculosis"
 	max_stages = 5
 	spread_text = "Airborne"
-	cure_text = "Spaceacillin & salbutamol"
-	cures = list("spaceacillin", "salbutamol")
+	cure_text = "Spaceacillin & Convermol"
+	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/medicine/C2/convermol)
 	agent = "Fungal Tubercle bacillus Cosmosis"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 5//like hell are you getting out of hell
@@ -26,7 +26,7 @@
 				to_chat(affected_mob, "<span class='danger'>You feel a cold sweat form.</span>")
 		if(4)
 			if(prob(2))
-				to_chat(affected_mob, "<span class='userdanger'>You see four of everything</span>")
+				to_chat(affected_mob, "<span class='userdanger'>You see four of everything!</span>")
 				affected_mob.Dizzy(5)
 			if(prob(2))
 				to_chat(affected_mob, "<span class='danger'>You feel a sharp pain from your lower chest!</span>")
@@ -52,9 +52,8 @@
 			if(prob(3))
 				to_chat(affected_mob, "<span class='warning'><i>[pick("Your stomach silently rumbles...", "Your stomach seizes up and falls limp, muscles dead and lifeless.", "You could eat a crayon")]</i></span>")
 				affected_mob.overeatduration = max(affected_mob.overeatduration - 100, 0)
-				affected_mob.nutrition = max(affected_mob.nutrition - 100, 0)
+				affected_mob.adjust_nutrition(-100)
 			if(prob(15))
 				to_chat(affected_mob, "<span class='danger'>[pick("You feel uncomfortably hot...", "You feel like unzipping your jumpsuit", "You feel like taking off some clothes...")]</span>")
 				affected_mob.adjust_bodytemperature(40)
 	return
-

@@ -1,4 +1,5 @@
 /obj/machinery/atmospherics/pipe
+	damage_deflection = 12
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/volume = 0
 
@@ -32,14 +33,6 @@
 		parent = new
 		parent.build_pipeline(src)
 
-/obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
-	if(nodes[1] && nodes[2])
-		icon_state = "intact[invisibility ? "-f" : "" ]"
-	else
-		var/have_node1 = nodes[1] ? TRUE : FALSE
-		var/have_node2 = nodes[2] ? TRUE : FALSE
-		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
-
 /obj/machinery/atmospherics/pipe/atmosinit()
 	var/turf/T = loc			// hide if turf is not intact
 	hide(T.intact)
@@ -59,6 +52,9 @@
 /obj/machinery/atmospherics/pipe/return_air()
 	return parent.air
 
+/obj/machinery/atmospherics/pipe/return_analyzable_air()
+	return parent.air
+
 /obj/machinery/atmospherics/pipe/remove_air(amount)
 	return parent.air.remove(amount)
 
@@ -69,9 +65,6 @@
 		meter.setAttachLayer(piping_layer)
 	else
 		return ..()
-
-/obj/machinery/atmospherics/pipe/analyzer_act(mob/living/user, obj/item/I)
-	atmosanalyzer_scan(parent.air, user, src)
 
 /obj/machinery/atmospherics/pipe/returnPipenet()
 	return parent
@@ -93,6 +86,13 @@
 			qdel(meter)
 	. = ..()
 
+/obj/machinery/atmospherics/pipe/update_icon()
+	. = ..()
+	update_alpha()
+
+/obj/machinery/atmospherics/pipe/proc/update_alpha()
+	alpha = invisibility ? 64 : 255
+
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
 	for(var/i in 1 to device_type)
 		if(nodes[i])
@@ -101,11 +101,6 @@
 
 /obj/machinery/atmospherics/pipe/returnPipenets()
 	. = list(parent)
-
-/obj/machinery/atmospherics/pipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 12)
-		return 0
-	. = ..()
 
 /obj/machinery/atmospherics/pipe/proc/paint(paint_color)
 	add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)

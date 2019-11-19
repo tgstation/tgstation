@@ -31,7 +31,7 @@
 	message_admins("[key_name_admin(src)] has started answering [ADMIN_LOOKUPFLW(M)]'s prayer.")
 	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text|null
 
-	if (!msg)
+	if(!msg)
 		message_admins("[key_name_admin(src)] decided not to answer [ADMIN_LOOKUPFLW(M)]'s prayer")
 		return
 	if(usr)
@@ -65,7 +65,7 @@
 		return
 
 	if (!sender)
-		sender = input("Who is the message from?", "Sender") as null|anything in list("CentCom","Syndicate")
+		sender = input("Who is the message from?", "Sender") as null|anything in list(RADIO_CHANNEL_CENTCOM,RADIO_CHANNEL_SYNDICATE)
 		if(!sender)
 			return
 
@@ -77,11 +77,11 @@
 
 	log_directed_talk(mob, H, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(H)]'s [sender] message with: \"[input]\"")
-	to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"].  Message as follows[sender == "Syndicate" ? ", agent." : ":"] <span class='bold'>[input].</span> Message ends.\"")
+	to_chat(H, "<span class='hear'>You hear something crackle in your ears for a moment before a voice speaks. \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"]. Message as follows[sender == "Syndicate" ? ", agent." : ":"] <b>[input].</b> Message ends.\"</span>")
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Headset Message") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_mod_antag_rep(client/C in GLOB.clients, var/operation)
+/client/proc/cmd_admin_mod_antag_rep(client/C in GLOB.clients, operation)
 	set category = "Special Verbs"
 	set name = "Modify Antagonist Reputation"
 
@@ -296,9 +296,9 @@
 				continue	//we have a live body we are tied to
 			candidates += M.ckey
 		if(candidates.len)
-			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in candidates
+			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in sortKey(candidates)
 		else
-			to_chat(usr, "<font color='red'>Error: create_xeno(): no suitable candidates.</font>")
+			to_chat(usr, "<span class='danger'>Error: create_xeno(): no suitable candidates.</span>")
 	if(!istext(ckey))
 		return 0
 
@@ -419,7 +419,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(record_found)//If they have a record we can determine a few things.
 		new_character.real_name = record_found.fields["name"]
-		new_character.gender = record_found.fields["sex"]
+		new_character.gender = record_found.fields["gender"]
 		new_character.age = record_found.fields["age"]
 		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
 	else
@@ -517,10 +517,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("Admin [key_name_admin(usr)] has added a new AI law - [input]")
 
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
-	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
+	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
 
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
-	ion.announceEvent = announce_ion_laws
+	ion.announceChance = announce_ion_laws
 	ion.ionMessage = input
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Custom AI Law") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -537,7 +537,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!istype(M))
 		alert("Cannot revive a ghost")
 		return
-	M.revive(full_heal = 1, admin_revive = 1)
+	M.revive(full_heal = TRUE, admin_revive = TRUE)
 
 	log_admin("[key_name(usr)] healed / revived [key_name(M)]")
 	var/msg = "<span class='danger'>Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(M)]!</span>"
@@ -593,31 +593,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	admin_delete(A)
-
-/client/proc/admin_delete(datum/D)
-	var/atom/A = D
-	var/coords = ""
-	var/jmp_coords = ""
-	if(istype(A))
-		var/turf/T = get_turf(A)
-		if(T)
-			coords = "at [COORD(T)]"
-			jmp_coords = "at [ADMIN_COORDJMP(T)]"
-		else
-			jmp_coords = coords = "in nullspace"
-
-	if (alert(src, "Are you sure you want to delete:\n[D]\n[coords]?", "Confirmation", "Yes", "No") == "Yes")
-		log_admin("[key_name(usr)] deleted [D] [coords]")
-		message_admins("[key_name_admin(usr)] deleted [D] [jmp_coords]")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		if(isturf(D))
-			var/turf/T = D
-			T.ScrapeAway()
-		else
-			vv_update_display(D, "deleted", VV_MSG_DELETED)
-			qdel(D)
-			if(!QDELETED(D))
-				vv_update_display(D, "deleted", "")
 
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
@@ -872,183 +847,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_VERBOSEJMP(N)].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Nuke", "[N.timing]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
-
-/client/proc/create_outfits()
-	set category = "Debug"
-	set name = "Create Custom Outfit"
-
-	if(!check_rights(R_DEBUG))
-		return
-
-	holder.create_outfit()
-
-/datum/admins/proc/create_outfit()
-	var/list/uniforms = typesof(/obj/item/clothing/under)
-	var/list/suits = typesof(/obj/item/clothing/suit)
-	var/list/gloves = typesof(/obj/item/clothing/gloves)
-	var/list/shoes = typesof(/obj/item/clothing/shoes)
-	var/list/headwear = typesof(/obj/item/clothing/head)
-	var/list/glasses = typesof(/obj/item/clothing/glasses)
-	var/list/masks = typesof(/obj/item/clothing/mask)
-	var/list/ids = typesof(/obj/item/card/id)
-
-	var/uniform_select = "<select name=\"outfit_uniform\"><option value=\"\">None</option>"
-	for(var/path in uniforms)
-		uniform_select += "<option value=\"[path]\">[path]</option>"
-	uniform_select += "</select>"
-
-	var/suit_select = "<select name=\"outfit_suit\"><option value=\"\">None</option>"
-	for(var/path in suits)
-		suit_select += "<option value=\"[path]\">[path]</option>"
-	suit_select += "</select>"
-
-	var/gloves_select = "<select name=\"outfit_gloves\"><option value=\"\">None</option>"
-	for(var/path in gloves)
-		gloves_select += "<option value=\"[path]\">[path]</option>"
-	gloves_select += "</select>"
-
-	var/shoes_select = "<select name=\"outfit_shoes\"><option value=\"\">None</option>"
-	for(var/path in shoes)
-		shoes_select += "<option value=\"[path]\">[path]</option>"
-	shoes_select += "</select>"
-
-	var/head_select = "<select name=\"outfit_head\"><option value=\"\">None</option>"
-	for(var/path in headwear)
-		head_select += "<option value=\"[path]\">[path]</option>"
-	head_select += "</select>"
-
-	var/glasses_select = "<select name=\"outfit_glasses\"><option value=\"\">None</option>"
-	for(var/path in glasses)
-		glasses_select += "<option value=\"[path]\">[path]</option>"
-	glasses_select += "</select>"
-
-	var/mask_select = "<select name=\"outfit_mask\"><option value=\"\">None</option>"
-	for(var/path in masks)
-		mask_select += "<option value=\"[path]\">[path]</option>"
-	mask_select += "</select>"
-
-	var/id_select = "<select name=\"outfit_id\"><option value=\"\">None</option>"
-	for(var/path in ids)
-		id_select += "<option value=\"[path]\">[path]</option>"
-	id_select += "</select>"
-
-	var/dat = {"
-	<html><head><title>Create Outfit</title></head><body>
-	<form name="outfit" action="byond://?src=[REF(src)];[HrefToken()]" method="get">
-	<input type="hidden" name="src" value="[REF(src)]">
-	[HrefTokenFormField()]
-	<input type="hidden" name="create_outfit" value="1">
-	<table>
-		<tr>
-			<th>Name:</th>
-			<td>
-				<input type="text" name="outfit_name" value="Custom Outfit">
-			</td>
-		</tr>
-		<tr>
-			<th>Uniform:</th>
-			<td>
-			   [uniform_select]
-			</td>
-		</tr>
-		<tr>
-			<th>Suit:</th>
-			<td>
-				[suit_select]
-			</td>
-		</tr>
-		<tr>
-			<th>Back:</th>
-			<td>
-				<input type="text" name="outfit_back" value="">
-			</td>
-		</tr>
-		<tr>
-			<th>Belt:</th>
-			<td>
-				<input type="text" name="outfit_belt" value="">
-			</td>
-		</tr>
-		<tr>
-			<th>Gloves:</th>
-			<td>
-				[gloves_select]
-			</td>
-		</tr>
-		<tr>
-			<th>Shoes:</th>
-			<td>
-				[shoes_select]
-			</td>
-		</tr>
-		<tr>
-			<th>Head:</th>
-			<td>
-				[head_select]
-			</td>
-		</tr>
-		<tr>
-			<th>Mask:</th>
-			<td>
-				[mask_select]
-			</td>
-		</tr>
-		<tr>
-			<th>Ears:</th>
-			<td>
-				<input type="text" name="outfit_ears" value="">
-			</td>
-		</tr>
-		<tr>
-			<th>Glasses:</th>
-			<td>
-				[glasses_select]
-			</td>
-		</tr>
-		<tr>
-			<th>ID:</th>
-			<td>
-				[id_select]
-			</td>
-		</tr>
-		<tr>
-			<th>Left Pocket:</th>
-			<td>
-				<input type="text" name="outfit_l_pocket" value="">
-			</td>
-		</tr>
-		<tr>
-			<th>Right Pocket:</th>
-			<td>
-				<input type="text" name="outfit_r_pocket" value="">
-			</td>
-		</tr>
-		<tr>
-			<th>Suit Store:</th>
-			<td>
-				<input type="text" name="outfit_s_store" value="">
-			</td>
-		</tr>
-		<tr>
-			<th>Right Hand:</th>
-			<td>
-				<input type="text" name="outfit_r_hand" value="">
-			</td>
-		</tr>
-		<tr>
-			<th>Left Hand:</th>
-			<td>
-				<input type="text" name="outfit_l_hand" value="">
-			</td>
-		</tr>
-	</table>
-	<br>
-	<input type="submit" value="Save">
-	</form></body></html>
-	"}
-	usr << browse(dat, "window=dressup;size=550x600")
-
 /client/proc/toggle_combo_hud()
 	set category = "Admin"
 	set name = "Toggle Combo HUD"
@@ -1083,13 +881,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/datum/atom_hud/A = GLOB.huds[ANTAG_HUD_TRAITOR]
 	return A.hudusers[mob]
 
-/client/proc/open_shuttle_manipulator()
-	set category = "Admin"
-	set name = "Shuttle Manipulator"
-	set desc = "Opens the shuttle manipulator UI."
-
-	for(var/obj/machinery/shuttle_manipulator/M in GLOB.machines)
-		M.ui_interact(usr)
 
 /client/proc/run_weather()
 	set category = "Fun"
@@ -1099,15 +890,14 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!holder)
 		return
 
-	var/weather_type = input("Choose a weather", "Weather")  as null|anything in subtypesof(/datum/weather)
+	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sortList(subtypesof(/datum/weather), /proc/cmp_typepaths_asc)
 	if(!weather_type)
 		return
 
-	var/z_level = input("Z-Level to target? Leave blank to target current Z-Level.", "Z-Level")  as num|null
+	var/turf/T = get_turf(mob)
+	var/z_level = input("Z-Level to target?", "Z-Level", T?.z) as num|null
 	if(!isnum(z_level))
-		if(!src.mob)
-			return
-		z_level = src.mob.z
+		return
 
 	SSweather.run_weather(weather_type, z_level)
 
@@ -1128,7 +918,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		new /obj/item/organ/zombie_infection/nodamage(H)
 
 	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
@@ -1178,8 +969,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		if(!M)
 			continue
 
-		M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
-		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, 1, -1)
+		M.audible_message("<span class='hear'>...wabbajack...wabbajack...</span>")
+		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, TRUE, -1)
 
 		wabbajack(M)
 
@@ -1243,7 +1034,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggled Hub Visibility", "[GLOB.hub_visibility ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/smite(mob/living/carbon/human/target as mob)
+/client/proc/smite(mob/living/target as mob)
 	set name = "Smite"
 	set category = "Fun"
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
@@ -1251,7 +1042,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING)
 
-	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
+	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in sortList(punishment_list)
 
 	if(QDELETED(target) || !punishment)
 		return
@@ -1261,10 +1052,12 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			var/turf/T = get_step(get_step(target, NORTH), NORTH)
 			T.Beam(target, icon_state="lightning[rand(1,12)]", time = 5)
 			target.adjustFireLoss(75)
-			target.electrocution_animation(40)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				H.electrocution_animation(40)
 			to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>")
 		if(ADMIN_PUNISHMENT_BRAINDAMAGE)
-			target.adjustBrainLoss(199, 199)
+			target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 199, 199)
 		if(ADMIN_PUNISHMENT_GIB)
 			target.gib(FALSE)
 		if(ADMIN_PUNISHMENT_BSA)
@@ -1315,7 +1108,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	punish_log(target, punishment)
 
-/client/proc/punish_log(var/whom, var/punishment)
+/client/proc/punish_log(whom, punishment)
 	var/msg = "[key_name_admin(usr)] punished [key_name_admin(whom)] with [punishment]."
 	message_admins(msg)
 	admin_ticket_log(whom, msg)
@@ -1350,55 +1143,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(C.mob)]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
-
-/obj/effect/temp_visual/fireball
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "fireball"
-	name = "fireball"
-	desc = "Get out of the way!"
-	layer = FLY_LAYER
-	randomdir = FALSE
-	duration = 9
-	pixel_z = 270
-
-/obj/effect/temp_visual/fireball/Initialize()
-	. = ..()
-	animate(src, pixel_z = 0, time = duration)
-
-/obj/effect/temp_visual/target
-	icon = 'icons/mob/actions/actions_items.dmi'
-	icon_state = "sniper_zoom"
-	layer = BELOW_MOB_LAYER
-	light_range = 2
-	duration = 9
-
-/obj/effect/temp_visual/target/ex_act()
-	return
-
-/obj/effect/temp_visual/target/Initialize(mapload, list/flame_hit)
-	. = ..()
-	INVOKE_ASYNC(src, .proc/fall, flame_hit)
-
-/obj/effect/temp_visual/target/proc/fall(list/flame_hit)
-	var/turf/T = get_turf(src)
-	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
-	new /obj/effect/temp_visual/fireball(T)
-	sleep(duration)
-	if(ismineralturf(T))
-		var/turf/closed/mineral/M = T
-		M.gets_drilled()
-	playsound(T, "explosion", 80, 1)
-	new /obj/effect/hotspot(T)
-	T.hotspot_expose(700, 50, 1)
-	for(var/mob/living/L in T.contents)
-		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
-			continue
-		if(islist(flame_hit) && !flame_hit[L])
-			L.adjustFireLoss(40)
-			to_chat(L, "<span class='userdanger'>You're hit by the drake's fire breath!</span>")
-			flame_hit[L] = TRUE
-		else
-			L.adjustFireLoss(10) //if we've already hit them, do way less damage
 
 /datum/admins/proc/cmd_show_exp_panel(client/C)
 	if(!check_rights(R_ADMIN))
@@ -1438,3 +1182,47 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	else
 		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
 		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")
+
+/// Allow admin to add or remove traits of datum
+/datum/admins/proc/modify_traits(datum/D)
+	if(!D)
+		return
+
+	var/add_or_remove = input("Remove/Add?", "Trait Remove/Add") as null|anything in list("Add","Remove")
+	if(!add_or_remove)
+		return
+	var/list/availible_traits = list()
+
+	switch(add_or_remove)
+		if("Add")
+			for(var/key in GLOB.traits_by_type)
+				if(istype(D,key))
+					availible_traits += GLOB.traits_by_type[key]
+		if("Remove")
+			if(!GLOB.trait_name_map)
+				GLOB.trait_name_map = generate_trait_name_map()
+			for(var/trait in D.status_traits)
+				var/name = GLOB.trait_name_map[trait] || trait
+				availible_traits[name] = trait
+
+	var/chosen_trait = input("Select trait to modify", "Trait") as null|anything in sortList(availible_traits)
+	if(!chosen_trait)
+		return
+	chosen_trait = availible_traits[chosen_trait]
+
+	var/source = "adminabuse"
+	switch(add_or_remove)
+		if("Add") //Not doing source choosing here intentionally to make this bit faster to use, you can always vv it.
+			ADD_TRAIT(D,chosen_trait,source)
+		if("Remove")
+			var/specific = input("All or specific source ?", "Trait Remove/Add") as null|anything in list("All","Specific")
+			if(!specific)
+				return
+			switch(specific)
+				if("All")
+					source = null
+				if("Specific")
+					source = input("Source to be removed","Trait Remove/Add") as null|anything in sortList(D.status_traits[chosen_trait])
+					if(!source)
+						return
+			REMOVE_TRAIT(D,chosen_trait,source)

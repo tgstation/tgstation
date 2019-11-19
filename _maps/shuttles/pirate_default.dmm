@@ -11,7 +11,6 @@
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
@@ -90,6 +89,40 @@
 /area/shuttle/pirate)
 "aj" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pirate)
+"ak" = (
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/freezer{
+	locked = 0;
+	name = "fridge"
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/fancy/donut_box,
+/obj/item/reagent_containers/food/snacks/cookie,
+/obj/item/reagent_containers/food/snacks/cookie{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "al" = (
 /obj/machinery/loot_locator,
@@ -333,10 +366,8 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "aH" = (
@@ -391,7 +422,7 @@
 	specialfunctions = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -413,17 +444,13 @@
 "aQ" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 1;
-	faction = list("pirate");
-	icon_state = "standard_lethal";
-	mode = 1
+	faction = list("pirate")
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/pirate)
 "aR" = (
 /obj/machinery/porta_turret/syndicate/energy{
-	faction = list("pirate");
-	icon_state = "standard_lethal";
-	mode = 1
+	faction = list("pirate")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
@@ -524,8 +551,8 @@
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
 	},
-/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bl" = (
@@ -622,38 +649,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
-"bw" = (
-/obj/machinery/airalarm/all_access{
-	dir = 4;
-	pixel_x = -24
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet/freezer{
-	locked = 0;
-	name = "fridge"
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/storage/box/donkpockets,
-/obj/item/storage/fancy/donut_box,
-/obj/item/reagent_containers/food/snacks/cookie,
-/obj/item/reagent_containers/food/snacks/cookie{
-	pixel_x = -6;
-	pixel_y = -6
-	},
-/obj/item/reagent_containers/food/snacks/chocolatebar,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/shuttle/pirate)
 "bx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -714,7 +709,9 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "bH" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat/all_access{
+	onstation = 0
+	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -775,18 +772,16 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/pirate)
 "bO" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/apc{
+	aidisabled = 1;
 	dir = 1;
 	name = "Pirate Corvette APC";
-	pixel_y = 24;
-	req_access = null
+	pixel_y = 23
 	},
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bP" = (
@@ -797,19 +792,14 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bQ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/terminal{
 	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
 	},
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical{
@@ -827,6 +817,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "bZ" = (
@@ -847,21 +838,15 @@
 	dir = 1
 	},
 /obj/docking_port/mobile/pirate{
-	callTime = 100;
-	dheight = 0;
-	dir = 1;
 	dwidth = 11;
 	height = 16;
-	id = "pirateship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Pirate Ship";
 	port_direction = 2;
-	preferred_direction = 1;
 	width = 17
 	},
 /obj/docking_port/stationary{
-	dir = 1;
 	dwidth = 11;
 	height = 16;
 	id = "pirateship_home";
@@ -873,14 +858,12 @@
 "df" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 4;
-	faction = list("pirate");
-	icon_state = "standard_lethal";
-	mode = 1
+	faction = list("pirate")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
 "dy" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -968,13 +951,13 @@
 	id = "piratebridge"
 	},
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "ez" = (
 /obj/structure/window/reinforced,
 /obj/structure/frame/machine,
-/obj/item/stack/cable_coil/cut/red,
+/obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "eA" = (
@@ -1072,9 +1055,7 @@
 "wR" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 8;
-	faction = list("pirate");
-	icon_state = "standard_lethal";
-	mode = 1
+	faction = list("pirate")
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate)
@@ -1207,7 +1188,7 @@ eA
 aa
 ap
 aw
-bw
+ak
 bF
 aj
 aj

@@ -29,6 +29,7 @@
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
+	var/list/area/areas = list()
 
 	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
@@ -37,6 +38,7 @@
 	for(var/L in turfs)
 		var/turf/B = L
 		atoms += B
+		areas |= B.loc
 		for(var/A in B)
 			atoms += A
 			if(istype(A, /obj/structure/cable))
@@ -48,6 +50,7 @@
 		var/turf/T = L
 		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
 
+	SSmapping.reg_in_areas_in_z(areas)
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
@@ -67,7 +70,7 @@
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()
 	smooth_zlevel(world.maxz)
-	log_game("Z-level [name] loaded at at [x],[y],[world.maxz]")
+	log_game("Z-level [name] loaded at [x],[y],[world.maxz]")
 
 	return level
 
@@ -80,6 +83,13 @@
 		return
 	if(T.y+height > world.maxy)
 		return
+
+	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),
+							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
+	for(var/L in border)
+		var/turf/turf_to_disable = L
+		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
+		turf_to_disable.atmos_adjacent_turfs?.Cut()
 
 	// Accept cached maps, but don't save them automatically - we don't want
 	// ruins clogging up memory for the whole round.
@@ -97,7 +107,7 @@
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()
 
-	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
+	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	return bounds
 
 /datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
@@ -111,6 +121,6 @@
 
 //for your ever biggening badminnery kevinz000
 //❤ - Cyberboss
-/proc/load_new_z_level(var/file, var/name)
+/proc/load_new_z_level(file, name)
 	var/datum/map_template/template = new(file, name)
 	template.load_new_z()

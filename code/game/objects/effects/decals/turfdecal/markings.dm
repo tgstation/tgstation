@@ -150,3 +150,33 @@
 
 /obj/effect/turf_decal/plaque
 	icon_state = "plaque"
+
+/obj/effect/turf_decal/raven_ship_sign
+	icon_state = "RAVEN2"
+
+/obj/effect/turf_decal/raven/one
+	icon_state = "RAVEN1"
+
+/obj/effect/turf_decal/raven/two
+	icon_state = "RAVEN2"
+
+/obj/effect/turf_decal/raven/three
+	icon_state = "RAVEN3"
+
+/obj/effect/turf_decal/raven/four
+	icon_state = "RAVEN4"
+
+/obj/effect/turf_decal/raven/five
+	icon_state = "RAVEN5"
+
+/obj/effect/turf_decal/raven/six
+	icon_state = "RAVEN6"
+
+/obj/effect/turf_decal/raven/seven
+	icon_state = "RAVEN7"
+
+/obj/effect/turf_decal/raven/eight
+	icon_state = "RAVEN8"
+
+/obj/effect/turf_decal/raven/nine
+	icon_state = "RAVEN9"

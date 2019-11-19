@@ -34,24 +34,27 @@
 
 	use_power(50)
 	on = !( on )
-	icon_state = "igniter[on]"
+	update_icon()
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
 	if (src.on && !(stat & NOPOWER) )
 		var/turf/location = src.loc
 		if (isturf(location))
-			location.hotspot_expose(700,10,1)
+			location.hotspot_expose(1000,500,1)
 	return 1
 
 /obj/machinery/igniter/Initialize()
 	. = ..()
 	icon_state = "igniter[on]"
 
-/obj/machinery/igniter/power_change()
-	if(!( stat & NOPOWER) )
-		icon_state = "igniter[src.on]"
-	else
+/obj/machinery/igniter/update_icon_state()
+	if(stat & NOPOWER)
 		icon_state = "igniter0"
+	else
+		icon_state = "igniter[on]"
+
+/obj/machinery/igniter/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	id = "[idnum][id]"
 
 // Wall mounted remote-control igniter.
 
@@ -64,7 +67,6 @@
 	var/id = null
 	var/disable = 0
 	var/last_spark = 0
-	var/base_state = "migniter"
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/machinery/sparker/toxmix
@@ -80,29 +82,28 @@
 	QDEL_NULL(spark_system)
 	return ..()
 
-/obj/machinery/sparker/power_change()
-	if ( powered() && disable == 0 )
-		stat &= ~NOPOWER
-		icon_state = "[base_state]"
-//		src.sd_SetLuminosity(2)
+/obj/machinery/sparker/update_icon_state()
+	if(disable)
+		icon_state = "[initial(icon_state)]-d"
+	else if(powered())
+		icon_state = "[initial(icon_state)]"
 	else
-		stat |= ~NOPOWER
-		icon_state = "[base_state]-p"
-//		src.sd_SetLuminosity(0)
+		icon_state = "[initial(icon_state)]-p"
+
+/obj/machinery/sparker/powered()
+	if(!disable)
+		return FALSE
+	return ..()
 
 /obj/machinery/sparker/attackby(obj/item/W, mob/user, params)
 	if (W.tool_behaviour == TOOL_SCREWDRIVER)
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
-			user.visible_message("[user] has disabled \the [src]!", "<span class='notice'>You disable the connection to \the [src].</span>")
-			icon_state = "[base_state]-d"
+			user.visible_message("<span class='notice'>[user] has disabled \the [src]!</span>", "<span class='notice'>You disable the connection to \the [src].</span>")
 		if (!src.disable)
-			user.visible_message("[user] has reconnected \the [src]!", "<span class='notice'>You fix the connection to \the [src].</span>")
-			if(src.powered())
-				icon_state = "[base_state]"
-			else
-				icon_state = "[base_state]-p"
+			user.visible_message("<span class='notice'>[user] has reconnected \the [src]!</span>", "<span class='notice'>You fix the connection to \the [src].</span>")
+		update_icon()
 	else
 		return ..()
 
@@ -120,7 +121,7 @@
 		return
 
 
-	flick("[base_state]-spark", src)
+	flick("[initial(icon_state)]-spark", src)
 	spark_system.start()
 	last_spark = world.time
 	use_power(1000)

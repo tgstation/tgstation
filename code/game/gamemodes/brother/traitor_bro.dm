@@ -45,7 +45,12 @@
 			bro.restricted_roles = restricted_jobs
 			log_game("[key_name(bro)] has been selected as a Brother")
 		pre_brother_teams += team
-	return ..()
+	. = ..()
+	if(.)	//To ensure the game mode is going ahead
+		for(var/teams in pre_brother_teams)
+			for(var/antag in teams)
+				GLOB.pre_setup_antags += antag
+	return
 
 /datum/game_mode/traitor/bros/post_setup()
 	for(var/datum/team/brother_team/team in pre_brother_teams)
@@ -53,19 +58,10 @@
 		team.forge_brother_objectives()
 		for(var/datum/mind/M in team.members)
 			M.add_antag_datum(/datum/antagonist/brother, team)
+			GLOB.pre_setup_antags -= M
 		team.update_name()
 	brother_teams += pre_brother_teams
 	return ..()
 
 /datum/game_mode/traitor/bros/generate_report()
 	return "It's Syndicate recruiting season. Be alert for potential Syndicate infiltrators, but also watch out for disgruntled employees trying to defect. Unlike Nanotrasen, the Syndicate prides itself in teamwork and will only recruit pairs that share a brotherly trust."
-
-/datum/game_mode/proc/update_brother_icons_added(datum/mind/brother_mind)
-	var/datum/atom_hud/antag/brotherhud = GLOB.huds[ANTAG_HUD_BROTHER]
-	brotherhud.join_hud(brother_mind.current)
-	set_antag_hud(brother_mind.current, "brother")
-
-/datum/game_mode/proc/update_brother_icons_removed(datum/mind/brother_mind)
-	var/datum/atom_hud/antag/brotherhud = GLOB.huds[ANTAG_HUD_BROTHER]
-	brotherhud.leave_hud(brother_mind.current)
-	set_antag_hud(brother_mind.current, null)

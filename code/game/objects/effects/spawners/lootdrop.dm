@@ -14,6 +14,8 @@
 		var/loot_spawned = 0
 		while((lootcount-loot_spawned) && loot.len)
 			var/lootspawn = pickweight(loot)
+			while(islist(lootspawn))
+				lootspawn = pickweight(lootspawn)
 			if(!lootdoubles)
 				loot.Remove(lootspawn)
 
@@ -37,23 +39,32 @@
 	loot = list(
 				/obj/item/gun/ballistic/automatic/pistol = 8,
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
-				/obj/item/gun/ballistic/revolver/mateba,
-				/obj/item/gun/ballistic/automatic/pistol/deagle
+				/obj/item/gun/ballistic/automatic/pistol/deagle,
+				/obj/item/gun/ballistic/revolver/mateba
 				)
 
 /obj/effect/spawner/lootdrop/armory_contraband/metastation
 	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5,
 				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
-				/obj/item/gun/ballistic/revolver/mateba,
 				/obj/item/gun/ballistic/automatic/pistol/deagle,
+				/obj/item/storage/box/syndie_kit/throwing_weapons = 3,
+				/obj/item/gun/ballistic/revolver/mateba)
+
+/obj/effect/spawner/lootdrop/armory_contraband/donutstation
+	loot = list(/obj/item/grenade/clusterbuster/teargas = 5,
+				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
+				/obj/item/bikehorn/golden,
+				/obj/item/grenade/clusterbuster,
 				/obj/item/storage/box/syndie_kit/throwing_weapons = 3)
 
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
 	loot = list(
 				/obj/item/gun/ballistic/revolver/russian = 5,
-				/obj/item/storage/box/syndie_kit/throwing_weapons = 1,
-				/obj/item/toy/cards/deck/syndicate = 2
+				/obj/item/clothing/head/ushanka = 3,
+				/obj/item/storage/box/syndie_kit/throwing_weapons,
+				/obj/item/coin/gold,
+				/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 				)
 
 /obj/effect/spawner/lootdrop/grille_or_trash
@@ -108,6 +119,34 @@
 	loot = GLOB.maintenance_loot
 	. = ..()
 
+/obj/effect/spawner/lootdrop/maintenance/two
+	name = "2 x maintenance loot spawner"
+	lootcount = 2
+
+/obj/effect/spawner/lootdrop/maintenance/three
+	name = "3 x maintenance loot spawner"
+	lootcount = 3
+
+/obj/effect/spawner/lootdrop/maintenance/four
+	name = "4 x maintenance loot spawner"
+	lootcount = 4
+
+/obj/effect/spawner/lootdrop/maintenance/five
+	name = "5 x maintenance loot spawner"
+	lootcount = 5
+
+/obj/effect/spawner/lootdrop/maintenance/six
+	name = "6 x maintenance loot spawner"
+	lootcount = 6
+
+/obj/effect/spawner/lootdrop/maintenance/seven
+	name = "7 x maintenance loot spawner"
+	lootcount = 7
+
+/obj/effect/spawner/lootdrop/maintenance/eight
+	name = "8 x maintenance loot spawner"
+	lootcount = 8
+
 /obj/effect/spawner/lootdrop/crate_spawner
 	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
 	lootdoubles = FALSE
@@ -126,7 +165,7 @@
 		/obj/item/organ/heart/gland/chem = 5,
 		/obj/item/organ/heart/gland/mindshock = 5,
 		/obj/item/organ/heart/gland/plasma = 7,
-		/obj/item/organ/heart/gland/pop = 5,
+		/obj/item/organ/heart/gland/transform = 5,
 		/obj/item/organ/heart/gland/slime = 4,
 		/obj/item/organ/heart/gland/spiderman = 5,
 		/obj/item/organ/heart/gland/ventcrawling = 1,
@@ -215,16 +254,15 @@
 				)
 
 // Tech storage circuit board spawners
-// For these, make sure that lootcount equals the number of list items
 
 /obj/effect/spawner/lootdrop/techstorage
 	name = "generic circuit board spawner"
 	lootdoubles = FALSE
 	fan_out_items = TRUE
+	lootcount = INFINITY
 
 /obj/effect/spawner/lootdrop/techstorage/service
 	name = "service circuit board spawner"
-	lootcount = 10
 	loot = list(
 				/obj/item/circuitboard/computer/arcade/battle,
 				/obj/item/circuitboard/computer/arcade/orion_trail,
@@ -240,7 +278,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/rnd
 	name = "RnD circuit board spawner"
-	lootcount = 12
 	loot = list(
 				/obj/item/circuitboard/computer/aifixer,
 				/obj/item/circuitboard/machine/rdserver,
@@ -258,7 +295,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/security
 	name = "security circuit board spawner"
-	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/secure_data,
 				/obj/item/circuitboard/computer/security,
@@ -267,7 +303,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/engineering
 	name = "engineering circuit board spawner"
-	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/atmos_alert,
 				/obj/item/circuitboard/computer/stationalert,
@@ -276,7 +311,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/tcomms
 	name = "tcomms circuit board spawner"
-	lootcount = 9
 	loot = list(
 				/obj/item/circuitboard/computer/message_monitor,
 				/obj/item/circuitboard/machine/telecomms/broadcaster,
@@ -291,7 +325,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/medical
 	name = "medical circuit board spawner"
-	lootcount = 9
 	loot = list(
 				/obj/item/circuitboard/computer/cloning,
 				/obj/item/circuitboard/machine/clonepod,
@@ -306,7 +339,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/AI
 	name = "secure AI circuit board spawner"
-	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/aiupload,
 				/obj/item/circuitboard/computer/borgupload,
@@ -315,7 +347,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/command
 	name = "secure command circuit board spawner"
-	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/crew,
 				/obj/item/circuitboard/computer/communications,
@@ -324,9 +355,48 @@
 
 /obj/effect/spawner/lootdrop/techstorage/RnD_secure
 	name = "secure RnD circuit board spawner"
-	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/mecha_control,
 				/obj/item/circuitboard/computer/apc_control,
 				/obj/item/circuitboard/computer/robotics
 				)
+
+//finds the probabilities of items spawning from a loot spawner's loot pool
+/obj/item/loot_table_maker
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "random_loot"
+	var/spawner_to_test = /obj/effect/spawner/lootdrop/maintenance //what lootdrop spawner to use the loot pool of
+	var/loot_count = 180 //180 is about how much maint loot spawns per map as of 11/14/2019
+	//result outputs
+	var/list/spawned_table //list of all items "spawned" and how many
+	var/list/stat_table //list of all items "spawned" and their occurrance probability
+
+/obj/item/loot_table_maker/Initialize()
+	. = ..()
+	make_table()
+
+/obj/item/loot_table_maker/attack_self(mob/user)
+	to_chat(user, "Loot pool re-rolled.")
+	make_table()
+
+/obj/item/loot_table_maker/proc/make_table()
+	spawned_table = list()
+	stat_table = list()
+	var/obj/effect/spawner/lootdrop/spawner_to_table = new spawner_to_test
+	var/lootpool = spawner_to_table.loot
+	qdel(spawner_to_table)
+	for(var/i in 1 to loot_count)
+		var/loot_spawn = pick_loot(lootpool)
+		if(!(loot_spawn in spawned_table))
+			spawned_table[loot_spawn] = 1
+		else
+			spawned_table[loot_spawn] += 1
+	stat_table += spawned_table
+	for(var/item in stat_table)
+		stat_table[item] /= loot_count
+
+/obj/item/loot_table_maker/proc/pick_loot(lootpool) //selects path from loot table and returns it
+	var/lootspawn = pickweight(lootpool)
+	while(islist(lootspawn))
+		lootspawn = pickweight(lootspawn)
+	return lootspawn

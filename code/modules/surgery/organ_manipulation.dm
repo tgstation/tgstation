@@ -1,5 +1,5 @@
 /datum/surgery/organ_manipulation
-	name = "organ manipulation"
+	name = "Organ manipulation"
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_real_bodypart = 1
@@ -26,7 +26,7 @@
 		)
 
 /datum/surgery/organ_manipulation/alien
-	name = "alien organ manipulation"
+	name = "Alien organ manipulation"
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	target_mobtypes = list(/mob/living/carbon/alien/humanoid)
 	steps = list(
@@ -39,9 +39,11 @@
 		)
 
 /datum/surgery/organ_manipulation/mechanic
-	name = "prosthesis organ manipulation"
+	name = "Prosthesis organ manipulation"
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_bodypart_type = BODYPART_ROBOTIC
+	lying_required = FALSE
+	self_operable = TRUE
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
@@ -67,7 +69,7 @@
 	name = "manipulate organs"
 	repeatable = 1
 	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
-	var/implements_extract = list(/obj/item/hemostat = 100, TOOL_CROWBAR = 55)
+	var/implements_extract = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 55)
 	var/current_type
 	var/obj/item/organ/I = null
 
@@ -79,28 +81,29 @@
 	I = null
 	if(istype(tool, /obj/item/organ_storage))
 		if(!tool.contents.len)
-			to_chat(user, "<span class='notice'>There is nothing inside [tool]!</span>")
+			to_chat(user, "<span class='warning'>There is nothing inside [tool]!</span>")
 			return -1
 		I = tool.contents[1]
 		if(!isorgan(I))
-			to_chat(user, "<span class='notice'>You cannot put [I] into [target]'s [parse_zone(target_zone)]!</span>")
+			to_chat(user, "<span class='warning'>You cannot put [I] into [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 		tool = I
 	if(isorgan(tool))
 		current_type = "insert"
 		I = tool
 		if(target_zone != I.zone || target.getorganslot(I.slot))
-			to_chat(user, "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
+			to_chat(user, "<span class='warning'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 
-		user.visible_message("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].",
-			"<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>")
+		display_results(user, target, "<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>",
+			"<span class='notice'>[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].</span>",
+			"<span class='notice'>[user] begins to insert something into [target]'s [parse_zone(target_zone)].</span>")
 
 	else if(implement_type in implements_extract)
 		current_type = "extract"
 		var/list/organs = target.getorganszone(target_zone)
 		if(!organs.len)
-			to_chat(user, "<span class='notice'>There are no removable organs in [target]'s [parse_zone(target_zone)]!</span>")
+			to_chat(user, "<span class='warning'>There are no removable organs in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 		else
 			for(var/obj/item/organ/O in organs)
@@ -108,13 +111,14 @@
 				organs -= O
 				organs[O.name] = O
 
-			I = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
+			I = input("Remove which organ?", "Surgery", null, null) as null|anything in sortList(organs)
 			if(I && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				I = organs[I]
 				if(!I)
 					return -1
-				user.visible_message("[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",
-					"<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>")
+				display_results(user, target, "<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>",
+					"<span class='notice'>[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].</span>",
+					"<span class='notice'>[user] begins to extract something from [target]'s [parse_zone(target_zone)].</span>")
 			else
 				return -1
 
@@ -134,17 +138,20 @@
 			I = tool
 		user.temporarilyRemoveItemFromInventory(I, TRUE)
 		I.Insert(target)
-		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
-			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
+		display_results(user, target, "<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>",
+			"<span class='notice'>[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!</span>",
+			"<span class='notice'>[user] inserts something into [target]'s [parse_zone(target_zone)]!</span>")
 
 	else if(current_type == "extract")
 		if(I && I.owner == target)
-			user.visible_message("[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")
+			display_results(user, target, "<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>",
+				"<span class='notice'>[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!</span>",
+				"<span class='notice'>[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!</span>")
 			log_combat(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
 			I.Remove(target)
 			I.forceMove(get_turf(target))
 		else
-			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
-				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")
+			display_results(user, target, "<span class='warning'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>",
+				"<span class='notice'>[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!</span>",
+				"<span class='notice'>[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!</span>")
 	return 0

@@ -195,12 +195,27 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
+!/.vscode/extensions.json
 tools/MapAtmosFixer/MapAtmosFixer/obj/*
 tools/MapAtmosFixer/MapAtmosFixer/bin/*
 
 #GitHub Atom
 .atom-build.json
 
+#KDevelop and Kate
+*.kdev4*
+*.kate-swp
+
 #extra map stuff
 /_maps/**/backup/
 /_maps/templates.dm
+
+#dmdoc default folder
+/dmdoc
+# Ignore custom music and title screens (amend as appropriate)
+/config/jukebox_music/sounds/*
+!/config/jukebox_music/sounds/exclude
+/config/title_music/sounds/*
+!/config/title_music/sounds/exclude
+/config/title_screens/images/*
+!/config/title_screens/images/exclude

@@ -8,7 +8,7 @@
 
 
 /mob/living/proc/CanContractDisease(datum/disease/D)
-	if(stat == DEAD)
+	if(stat == DEAD && !D.process_dead)
 		return FALSE
 
 	if(D.GetDiseaseID() in disease_resistances)
@@ -17,13 +17,9 @@
 	if(HasDisease(D))
 		return FALSE
 
-	var/can_infect = FALSE
-	for(var/host_type in D.infectable_biotypes)
-		if(host_type in mob_biotypes)
-			can_infect = TRUE
-			break
-	if(!can_infect)
+	if(!(D.infectable_biotypes & mob_biotypes))
 		return FALSE
+
 
 	if(!(type in D.viable_mobtypes))
 		return FALSE
@@ -79,8 +75,8 @@
 				if(isobj(H.wear_suit))
 					Cl = H.wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
-				if(passed && isobj(SLOT_W_UNIFORM))
-					Cl = SLOT_W_UNIFORM
+				if(passed && isobj(ITEM_SLOT_ICLOTHING))
+					Cl = ITEM_SLOT_ICLOTHING
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
@@ -117,7 +113,7 @@
 /mob/living/carbon/AirborneContractDisease(datum/disease/D, force_spread)
 	if(internal)
 		return
-	if(has_trait(TRAIT_NOBREATH))
+	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return
 	..()
 
@@ -137,7 +133,7 @@
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
 	if(dna)
-		if(has_trait(TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
+		if(HAS_TRAIT(src, TRAIT_VIRUSIMMUNE) && !D.bypasses_immunity)
 			return FALSE
 
 	for(var/thing in D.required_organs)

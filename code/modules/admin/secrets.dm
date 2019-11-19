@@ -18,7 +18,6 @@
 			<BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=clear_virus'>Cure all diseases currently in existence</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=list_bombers'>Bombing List</A><BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=check_antagonist'>Show current traitors and objectives</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=list_signalers'>Show last [length(GLOB.lastsignalers)] signalers</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=list_lawchanges'>Show last [length(GLOB.lawchanges)] law changes</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=showailaws'>Show AI Laws</A><BR>
@@ -66,11 +65,6 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=customportal'>Spawn a custom portal storm</A><BR>
-			<BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=flipmovement'>Flip client movement directions</A><BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=randommovement'>Randomize client movement directions</A><BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=custommovement'>Set each movement direction manually</A><BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=resetmovement'>Reset movement directions to default</A><BR>
 			<BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
@@ -126,15 +120,15 @@
 			log_admin("[key_name(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].", 1)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the thunderdome to default with delete_mobs==[delete_mobs].</span>")
 
-			var/area/thunderdome = locate(/area/tdome/arena)
+			var/area/thunderdome = GLOB.areas_by_type[/area/tdome/arena]
 			if(delete_mobs == "Yes")
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
 			for(var/obj/obj in thunderdome)
-				if(!istype(obj, /obj/machinery/camera))
+				if(!istype(obj, /obj/machinery/camera) && !istype(obj, /obj/effect/abstract/proximity_checker))
 					qdel(obj) //Clear objects
 
-			var/area/template = locate(/area/tdome/arena_source)
+			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
 			template.copy_contents_to(thunderdome)
 
 		if("clear_virus")
@@ -241,7 +235,7 @@
 				message_admins("[key_name_admin(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 				log_admin("[key_name(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 			else
-				to_chat(usr, "<span class='admin'>There is no arrivals shuttle</span>")
+				to_chat(usr, "<span class='admin'>There is no arrivals shuttle.</span>")
 		if("showailaws")
 			if(!check_rights(R_ADMIN))
 				return
@@ -268,7 +262,8 @@
 				return
 			var/dat = "<B>Showing DNA from blood.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
 			dat += "</table>"
@@ -278,7 +273,8 @@
 				return
 			var/dat = "<B>Showing Fingerprints.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
 			dat += "</table>"
@@ -288,9 +284,9 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Monkeyize All Humans"))
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
-				spawn(0)
-					H.monkeyize()
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
+				INVOKE_ASYNC(H, /mob/living/carbon.proc/monkeyize)
 			ok = 1
 
 		if("allspecies")
@@ -302,7 +298,8 @@
 				log_admin("[key_name(usr)] turned all humans into [result]", 1)
 				message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
 				var/newtype = GLOB.species_list[result]
-				for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+				for(var/i in GLOB.human_list)
+					var/mob/living/carbon/human/H = i
 					H.set_species(newtype)
 
 		if("tripleAI")
@@ -348,7 +345,7 @@
 			for(var/mob/living/H in GLOB.player_list)
 				if(!(ishuman(H)||istype(H, /mob/living/silicon/)))
 					continue
-				if(H.stat == DEAD || !H.client || !H.mind || ispAI(H))
+				if(H.stat == DEAD || !H.mind || ispAI(H))
 					continue
 				if(is_special_character(H))
 					continue
@@ -395,7 +392,8 @@
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Chinese Cartoons"))
 			message_admins("[key_name_admin(usr)] made everything kawaii.")
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/H = i
 				SEND_SOUND(H, sound('sound/ai/animes.ogg'))
 
 				if(H.dna.species.id == "human")
@@ -404,23 +402,23 @@
 						var/obj/item/organ/tail/cat/tail = new
 						ears.Insert(H, drop_if_replaced=FALSE)
 						tail.Insert(H, drop_if_replaced=FALSE)
-					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san")) //John Robust -> Robust-kun
+					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san"), "[PLURAL]" = list("san")) //John Robust -> Robust-kun
 					var/list/names = splittext(H.real_name," ")
 					var/forename = names.len > 1 ? names[2] : names[1]
 					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
 					H.update_mutant_bodyparts()
 					if(animetype == "Yes")
-						var/seifuku = pick(typesof(/obj/item/clothing/under/schoolgirl))
-						var/obj/item/clothing/under/schoolgirl/I = new seifuku
+						var/seifuku = pick(typesof(/obj/item/clothing/under/costume/schoolgirl))
+						var/obj/item/clothing/under/costume/schoolgirl/I = new seifuku
 						var/olduniform = H.w_uniform
 						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
-						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
+						H.equip_to_slot_or_del(I, ITEM_SLOT_ICLOTHING)
 						qdel(olduniform)
 						if(droptype == "Yes")
-							I.item_flags |= NODROP
+							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
 				else
-					to_chat(H, "You're not kawaii enough for this.")
+					to_chat(H, "<span class='warning'>You're not kawaii enough for this!</span>")
 
 		if("whiteout")
 			if(!check_rights(R_FUN))
@@ -441,12 +439,14 @@
 				if("Make Your Own")
 					AdminCreateVirus(usr.client)
 				if("Random")
-					E = new /datum/round_event/disease_outbreak()
+					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
+					E = DC.runEvent()
 				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in typesof(/datum/disease)
-					E = new /datum/round_event/disease_outbreak{}()
-					var/datum/round_event/disease_outbreak/DO = E
+					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease, /proc/cmp_typepaths_asc))
+					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
+					var/datum/round_event/disease_outbreak/DO = DC.runEvent()
 					DO.virus_type = virus
+					E = DO
 
 		if("retardify")
 			if(!check_rights(R_FUN))
@@ -454,7 +454,7 @@
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Braindamage"))
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>")
-				H.adjustBrainLoss(60, 80)
+				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60, 80)
 			message_admins("[key_name_admin(usr)] made everybody retarded")
 
 		if("eagles")//SCRAW
@@ -529,8 +529,9 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Dwarf Beards"))
-			for(var/mob/living/carbon/human/B in GLOB.carbon_list)
-				B.facial_hair_style = "Dward Beard"
+			for(var/i in GLOB.human_list)
+				var/mob/living/carbon/human/B = i
+				B.facial_hairstyle = "Dward Beard"
 				B.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")
 
@@ -594,60 +595,6 @@
 				purrbation.")
 			log_admin("[key_name(usr)] has removed everyone from purrbation.")
 
-		if("flipmovement")
-			if(!check_rights(R_FUN))
-				return
-			if(alert("Flip all movement controls?","Confirm","Yes","Cancel") == "Cancel")
-				return
-			var/list/movement_keys = SSinput.movement_keys
-			for(var/i in 1 to movement_keys.len)
-				var/key = movement_keys[i]
-				movement_keys[key] = turn(movement_keys[key], 180)
-			message_admins("[key_name_admin(usr)] has flipped all movement directions.")
-			log_admin("[key_name(usr)] has flipped all movement directions.")
-
-		if("randommovement")
-			if(!check_rights(R_FUN))
-				return
-			if(alert("Randomize all movement controls?","Confirm","Yes","Cancel") == "Cancel")
-				return
-			var/list/movement_keys = SSinput.movement_keys
-			for(var/i in 1 to movement_keys.len)
-				var/key = movement_keys[i]
-				movement_keys[key] = turn(movement_keys[key], 45 * rand(1, 8))
-			message_admins("[key_name_admin(usr)] has randomized all movement directions.")
-			log_admin("[key_name(usr)] has randomized all movement directions.")
-
-		if("custommovement")
-			if(!check_rights(R_FUN))
-				return
-			if(alert("Are you sure you want to change every movement key?","Confirm","Yes","Cancel") == "Cancel")
-				return
-			var/list/movement_keys = SSinput.movement_keys
-			var/list/new_movement = list()
-			for(var/i in 1 to movement_keys.len)
-				var/key = movement_keys[i]
-
-				var/msg = "Please input the new movement direction when the user presses [key]. Ex. northeast"
-				var/title = "New direction for [key]"
-				var/new_direction = text2dir(input(usr, msg, title) as text|null)
-				if(!new_direction)
-					new_direction = movement_keys[key]
-
-				new_movement[key] = new_direction
-			SSinput.movement_keys = new_movement
-			message_admins("[key_name_admin(usr)] has configured all movement directions.")
-			log_admin("[key_name(usr)] has configured all movement directions.")
-
-		if("resetmovement")
-			if(!check_rights(R_FUN))
-				return
-			if(alert("Are you sure you want to reset movement keys to default?","Confirm","Yes","Cancel") == "Cancel")
-				return
-			SSinput.setup_default_movement_keys()
-			message_admins("[key_name_admin(usr)] has reset all movement keys.")
-			log_admin("[key_name(usr)] has reset all movement keys.")
-
 		if("customportal")
 			if(!check_rights(R_FUN))
 				return
@@ -677,7 +624,7 @@
 				var/list/prefs = settings["mainsettings"]
 
 				if (prefs["amount"]["value"] < 1 || prefs["portalnum"]["value"] < 1)
-					to_chat(usr, "Number of portals and mobs to spawn must be at least 1")
+					to_chat(usr, "<span class='warning'>Number of portals and mobs to spawn must be at least 1.</span>")
 					return
 
 				var/mob/pathToSpawn = prefs["typepath"]["value"]
@@ -685,7 +632,7 @@
 					pathToSpawn = text2path(pathToSpawn)
 
 				if (!ispath(pathToSpawn))
-					to_chat(usr, "Invalid path [pathToSpawn]")
+					to_chat(usr, "<span class='notice'>Invalid path [pathToSpawn].</span>")
 					return
 
 				var/list/candidates = list()
@@ -722,8 +669,14 @@
 	if(E)
 		E.processing = FALSE
 		if(E.announceWhen>0)
-			if(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
-				E.announceWhen = -1
+			switch(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel"))
+				if("Yes")
+					E.announceChance = 100
+				if("Cancel")
+					E.kill()
+					return
+				if("No")
+					E.announceChance = 0
 		E.processing = TRUE
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")
@@ -754,4 +707,4 @@
 			H.equipOutfit(humanoutfit)
 	var/turf/T = get_step(loc, SOUTHWEST)
 	flick_overlay_static(portal_appearance, T, 15)
-	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), 1)
+	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)

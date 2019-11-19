@@ -8,95 +8,146 @@
 	status_flags = CANPUSH
 
 	var/icon_living = ""
-	var/icon_dead = "" //icon when the animal is dead. Don't use animated icons for this.
-	var/icon_gib = null	//We only try to show a gibbing animation if this exists.
+	///Icon when the animal is dead. Don't use animated icons for this.
+	var/icon_dead = ""
+	///We only try to show a gibbing animation if this exists.
+	var/icon_gib = null
+	///Flip the sprite upside down on death. Mostly here for things lacking custom dead sprites.
+	var/flip_on_death = FALSE
 
 	var/list/speak = list()
-	var/list/speak_emote = list()//	Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
+	///Emotes while speaking IE: Ian [emote], [text] -- Ian barks, "WOOF!". Spoken text is generated from the speak variable.
+	var/list/speak_emote = list()
 	var/speak_chance = 0
-	var/list/emote_hear = list()	//Hearable emotes
-	var/list/emote_see = list()		//Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
+	///Hearable emotes
+	var/list/emote_hear = list()
+	///Unlike speak_emote, the list of things in this variable only show by themselves with no spoken text. IE: Ian barks, Ian yaps
+	var/list/emote_see = list()
 
 	var/turns_per_move = 1
 	var/turns_since_move = 0
-	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
-	var/wander = 1	// Does the mob wander around when idle?
-	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
+	///Use this to temporarely stop random movement or to if you write special movement code for animals.
+	var/stop_automated_movement = 0
+	///Does the mob wander around when idle?
+	var/wander = 1
+	///When set to 1 this stops the animal from moving when someone is pulling it.
+	var/stop_automated_movement_when_pulled = 1
 
-	//Interaction
-	var/response_help   = "pokes"
-	var/response_disarm = "shoves"
-	var/response_harm   = "hits"
+	///When someone interacts with the simple animal.
+	///Help-intent verb in present continuous tense.
+	var/response_help_continuous = "pokes"
+	///Help-intent verb in present simple tense.
+	var/response_help_simple = "poke"
+	///Disarm-intent verb in present continuous tense.
+	var/response_disarm_continuous = "shoves"
+	///Disarm-intent verb in present simple tense.
+	var/response_disarm_simple = "shove"
+	///Harm-intent verb in present continuous tense.
+	var/response_harm_continuous = "hits"
+	///Harm-intent verb in present simple tense.
+	var/response_harm_simple = "hit"
 	var/harm_intent_damage = 3
-	var/force_threshold = 0 //Minimum force required to deal any damage
+	///Minimum force required to deal any damage.
+	var/force_threshold = 0
 
-	//Temperature effect
+	///Temperature effect.
 	var/minbodytemp = 250
 	var/maxbodytemp = 350
 
-	//Healable by medical stacks? Defaults to yes.
+	///Healable by medical stacks? Defaults to yes.
 	var/healable = 1
 
-	//Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
-	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0) //Leaving something at 0 means it's off - has no maximum
-	var/unsuitable_atmos_damage = 2	//This damage is taken when atmos doesn't fit all the requirements above
+	///Atmos effect - Yes, you can make creatures that require plasma or co2 to survive. N2O is a trace gas and handled separately, hence why it isn't here. It'd be hard to add it. Hard and me don't mix (Yes, yes make all the dick jokes you want with that.) - Errorage
+	///Leaving something at 0 means it's off - has no maximum.
+	var/list/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	///This damage is taken when atmos doesn't fit all the requirements above.
+	var/unsuitable_atmos_damage = 2
 
-	//LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
+	///LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly.
 	var/melee_damage_lower = 0
 	var/melee_damage_upper = 0
-	var/obj_damage = 0 //how much damage this simple animal does to objects, if any
-	var/armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
-	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
-	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
-	var/attacktext = "attacks"
+	///how much damage this simple animal does to objects, if any.
+	var/obj_damage = 0
+	///How much armour they ignore, as a flat reduction from the targets armour value.
+	var/armour_penetration = 0
+	///Damage type of a simple mob's melee attack, should it do damage.
+	var/melee_damage_type = BRUTE
+	/// 1 for full damage , 0 for none , -1 for 1:1 heal from that source.
+	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	///Attacking verb in present continuous tense.
+	var/attack_verb_continuous = "attacks"
+	///Attacking verb in present simple tense.
+	var/attack_verb_simple = "attack"
 	var/attack_sound = null
-	var/friendly = "nuzzles" //If the mob does no damage with it's attack
-	var/environment_smash = ENVIRONMENT_SMASH_NONE //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
+	///Attacking, but without damage, verb in present continuous tense.
+	var/friendly_verb_continuous = "nuzzles"
+	///Attacking, but without damage, verb in present simple tense.
+	var/friendly_verb_simple = "nuzzle"
+	///Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls.
+	var/environment_smash = ENVIRONMENT_SMASH_NONE
 
-	var/speed = 1 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
+	///LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster.
+	var/speed = 1
 
-	//Hot simple_animal baby making vars
+	///Hot simple_animal baby making vars.
 	var/list/childtype = null
 	var/next_scan_time = 0
-	var/animal_species //Sorry, no spider+corgi buttbabies.
+	///Sorry, no spider+corgi buttbabies.
+	var/animal_species
 
-	//simple_animal access
-	var/obj/item/card/id/access_card = null	//innate access uses an internal ID card
-	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
-	var/gold_core_spawnable = NO_SPAWN //If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood
+	///Simple_animal access.
+	///Innate access uses an internal ID card.
+	var/obj/item/card/id/access_card = null
+	///In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against.
+	var/buffed = 0
+	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
+	var/gold_core_spawnable = NO_SPAWN
 
-	var/mob/living/simple_animal/hostile/spawner/nest
+	var/datum/component/spawner/nest
 
-	var/sentience_type = SENTIENCE_ORGANIC // Sentience type, for slime potions
+	///Sentience type, for slime potions.
+	var/sentience_type = SENTIENCE_ORGANIC
 
-	var/list/loot = list() //list of things spawned at mob's loc when it dies
-	var/del_on_death = 0 //causes mob to be deleted on death, useful for mobs that spawn lootable corpses
+	///List of things spawned at mob's loc when it dies.
+	var/list/loot = list()
+	///Causes mob to be deleted on death, useful for mobs that spawn lootable corpses.
+	var/del_on_death = 0
 	var/deathmessage = ""
-	var/death_sound = null //The sound played on death
 
 	var/allow_movement_on_non_turfs = FALSE
 
-	var/attacked_sound = "punch" //Played when someone punches the creature
+	///Played when someone punches the creature.
+	var/attacked_sound = "punch"
 
-	var/dextrous = FALSE //If the creature has, and can use, hands
+	///If the creature has, and can use, hands.
+	var/dextrous = FALSE
 	var/dextrous_hud_type = /datum/hud/dextrous
-	var/datum/personal_crafting/handcrafting
 
-	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players)
+	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players).
+	var/AIStatus = AI_ON
+	///once we have become sentient, we can never go back.
+	var/can_have_ai = TRUE
 
-	var/shouldwakeup = FALSE //convenience var for forcibly waking up an idling AI on next check.
+	///convenience var for forcibly waking up an idling AI on next check.
+	var/shouldwakeup = FALSE
 
-	//domestication
-	var/tame = 0
+	///Domestication.
+	var/tame = FALSE
+	///What the mob eats, typically used for taming or animal husbandry.
+	var/list/food_type
+	///Starting success chance for taming.
+	var/tame_chance
+	///Added success chance after every failed tame attempt.
+	var/bonus_tame_chance
 
-	var/my_z // I don't want to confuse this with client registered_z
-
-	var/do_footstep = FALSE
+	///I don't want to confuse this with client registered_z.
+	var/my_z
+	///What kind of footstep this mob should have. Null if it shouldn't have any.
+	var/footstep_type
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals[AIStatus] += src
-	handcrafting = new()
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
 	if(!real_name)
@@ -104,6 +155,8 @@
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
 	update_simplemob_varspeed()
+	if(dextrous)
+		AddComponent(/datum/component/personal_crafting)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src
@@ -120,9 +173,29 @@
 
 	return ..()
 
-/mob/living/simple_animal/initialize_footstep()
-	if(do_footstep)
+/mob/living/simple_animal/attackby(obj/item/O, mob/user, params)
+	if(!is_type_in_list(O, food_type))
 		..()
+		return
+	else
+		user.visible_message("<span class='notice'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>You hand-feed [O] to [src].</span>")
+		qdel(O)
+		if(tame)
+			return
+		if (prob(tame_chance)) //note: lack of feedback message is deliberate, keep them guessing!
+			tame = TRUE
+			tamed()
+		else
+			tame_chance += bonus_tame_chance
+
+///Extra effects to add when the mob is tamed, such as adding a riding component
+/mob/living/simple_animal/proc/tamed()
+	return
+
+/mob/living/simple_animal/examine(mob/user)
+	. = ..()
+	if(stat == DEAD)
+		. += "<span class='deadsay'>Upon closer examination, [p_they()] appear[p_s()] to be dead.</span>"
 
 /mob/living/simple_animal/updatehealth()
 	..()
@@ -137,7 +210,8 @@
 		else
 			stat = CONSCIOUS
 	med_hud_set_status()
-
+	if(footstep_type)
+		AddComponent(/datum/component/footstep, footstep_type)
 
 /mob/living/simple_animal/handle_status_effects()
 	..()
@@ -261,10 +335,15 @@
 		adjustHealth(unsuitable_atmos_damage)
 
 /mob/living/simple_animal/gib()
-	if(butcher_results)
+	if(butcher_results || guaranteed_butcher_results)
+		var/list/butcher = list()
+		if(butcher_results)
+			butcher += butcher_results
+		if(guaranteed_butcher_results)
+			butcher += guaranteed_butcher_results
 		var/atom/Tsec = drop_location()
-		for(var/path in butcher_results)
-			for(var/i in 1 to butcher_results[path])
+		for(var/path in butcher)
+			for(var/i in 1 to butcher[path])
 				new path(Tsec)
 	..()
 
@@ -280,10 +359,7 @@
 /mob/living/simple_animal/emote(act, m_type=1, message = null, intentional = FALSE)
 	if(stat)
 		return
-	if(act == "scream")
-		message = "makes a loud and pained whimper." //ugly hack to stop animals screaming when crushed :P
-		act = "me"
-	..(act, m_type, message)
+	. = ..()
 
 /mob/living/simple_animal/proc/set_varspeed(var_value)
 	speed = var_value
@@ -314,9 +390,7 @@
 	if(dextrous)
 		drop_all_held_items()
 	if(!gibbed)
-		if(death_sound)
-			playsound(get_turf(src),death_sound, 200, 1)
-		if(deathmessage || !del_on_death)
+		if(deathsound || deathmessage || !del_on_death)
 			emote("deathgasp")
 	if(del_on_death)
 		..()
@@ -327,8 +401,9 @@
 	else
 		health = 0
 		icon_state = icon_dead
+		if(flip_on_death)
+			transform = transform.Turn(180)
 		density = FALSE
-		set_resting(TRUE)
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
@@ -357,21 +432,21 @@
 /mob/living/simple_animal/ExtinguishMob()
 	return
 
-/mob/living/simple_animal/revive(full_heal = 0, admin_revive = 0)
+/mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(..()) //successfully ressuscitated from death
 		icon = initial(icon)
 		icon_state = icon_living
 		density = initial(density)
 		mobility_flags = MOBILITY_FLAGS_DEFAULT
 		update_mobility()
-		. = 1
+		. = TRUE
 		setMovetype(initial(movement_type))
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
 		return
 	next_scan_time = world.time + 400
-	var/alone = 1
+	var/alone = TRUE
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in view(7, src))
@@ -382,7 +457,7 @@
 		else if(istype(M, animal_species))
 			if(M.ckey)
 				continue
-			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
+			else if(!istype(M, childtype) && M.gender == MALE && !(M.flags_1 & HOLOGRAM_1)) //Better safe than sorry ;_;
 				partner = M
 
 		else if(isliving(M) && !faction_check_mob(M)) //shyness check. we're not shy in front of things that share a faction with us.
@@ -394,14 +469,14 @@
 		if(target)
 			return new childspawn(target)
 
-/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(be_close && !in_range(M, src))
 		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
-	if(!(no_dextery || dextrous))
+	if(!(no_dexterity || dextrous))
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
 	return TRUE
@@ -429,15 +504,18 @@
 			mobility_flags = MOBILITY_FLAGS_DEFAULT
 		else
 			mobility_flags = NONE
+	if(!(mobility_flags & MOBILITY_MOVE))
+		walk(src, 0) //stop mid walk
+
 	update_transform()
 	update_action_buttons_icon()
 
 /mob/living/simple_animal/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
-	var/changed = 0
+	var/changed = FALSE
 
 	if(resize != RESIZE_DEFAULT_SIZE)
-		changed++
+		changed = TRUE
 		ntransform.Scale(resize)
 		resize = RESIZE_DEFAULT_SIZE
 
@@ -446,6 +524,7 @@
 
 /mob/living/simple_animal/proc/sentience_act() //Called when a simple animal gains sentience via gold slime potion
 	toggle_ai(AI_OFF) // To prevent any weirdness.
+	can_have_ai = FALSE
 
 /mob/living/simple_animal/update_sight()
 	if(!client)
@@ -468,10 +547,6 @@
 
 /mob/living/simple_animal/get_idcard(hand_first)
 	return access_card
-
-/mob/living/simple_animal/OpenCraftingMenu()
-	if(dextrous)
-		handcrafting.ui_interact(src)
 
 /mob/living/simple_animal/can_hold_items()
 	return dextrous
@@ -505,7 +580,7 @@
 		if(istype(held_item, /obj/item/twohanded))
 			var/obj/item/twohanded/T = held_item
 			if(T.wielded == 1)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [T.name].</span>")
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [T].</span>")
 				return
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
@@ -540,7 +615,7 @@
 //ANIMAL RIDING
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
-	GET_COMPONENT(riding_datum, /datum/component/riding)
+	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 	if(riding_datum)
 		if(user.incapacitated())
 			return
@@ -551,7 +626,9 @@
 		return ..()
 
 /mob/living/simple_animal/relaymove(mob/user, direction)
-	GET_COMPONENT(riding_datum, /datum/component/riding)
+	if (stat == DEAD)
+		return
+	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
 	if(tame && riding_datum)
 		riding_datum.handle_ride(user, direction)
 
@@ -560,6 +637,8 @@
 	LoadComponent(/datum/component/riding)
 
 /mob/living/simple_animal/proc/toggle_ai(togglestatus)
+	if(!can_have_ai && (togglestatus != AI_OFF))
+		return
 	if (AIStatus != togglestatus)
 		if (togglestatus > 0 && togglestatus < 5)
 			if (togglestatus == AI_Z_OFF || AIStatus == AI_Z_OFF)

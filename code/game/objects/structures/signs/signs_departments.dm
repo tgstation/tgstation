@@ -30,6 +30,11 @@
 	desc = "A sign labelling an area where evacuation procedures take place."
 	icon_state = "evac"
 
+/obj/structure/sign/departments/drop
+	name = "\improper DROP PODS"
+	desc = "A sign labelling an area where drop pod loading procedures take place."
+	icon_state = "drop"
+
 /obj/structure/sign/departments/custodian
 	name = "\improper CUSTODIAN"
 	desc = "A sign labelling an area where the custodian works."
@@ -67,3 +72,16 @@
 
 /obj/structure/sign/departments/medbay/alt
 	icon_state = "bluecross2"
+
+/obj/structure/sign/departments/mait
+	name = "\improper MAINTENANCE TUNNEL"
+	desc = "A sign labelling an area where the departments of the station are linked together."
+	icon_state = "mait1"
+
+/obj/structure/sign/departments/mait/alt
+	icon_state = "mait2"
+
+/obj/structure/sign/departments/nanites
+	name = "\improper NANITE LAB"
+	desc = "A sign labelling an area where testing and development of nanites is performed."
+	icon_state = "nanites"

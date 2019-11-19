@@ -2,6 +2,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	new/datum/stack_recipe("grille", /obj/structure/grille, 2, time = 10, one_per_turf = TRUE, on_floor = FALSE), \
 	new/datum/stack_recipe("table frame", /obj/structure/table_frame, 2, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("scooter frame", /obj/item/scooter_frame, 10, time = 25, one_per_turf = 0), \
+	new/datum/stack_recipe("linen bin", /obj/structure/bedsheetbin/empty, 2, time = 5, one_per_turf = 0), \
 	))
 
 /obj/item/stack/rods
@@ -16,10 +17,11 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=1000)
+	custom_materials = list(/datum/material/iron=1000)
+	mats_per_stack = 1000
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
-	hitsound = 'sound/weapons/grenadelaunch.ogg'
+	hitsound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	novariants = TRUE
 
 /obj/item/stack/rods/suicide_act(mob/living/carbon/user)
@@ -28,10 +30,12 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/Initialize(mapload, new_amount, merge = TRUE)
 	. = ..()
-
-	recipes = GLOB.rod_recipes
 	update_icon()
 
+/obj/item/stack/rods/get_main_recipes()
+	. = ..()
+	. += GLOB.rod_recipes
+	
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()
 	if((amount <= 5) && (amount > 0))
@@ -47,9 +51,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 		if(W.use_tool(src, user, 0, volume=40))
 			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			user.visible_message("[user.name] shaped [src] into metal with [W].", \
+			user.visible_message("<span class='notice'>[user.name] shaped [src] into metal with [W].</span>", \
 						 "<span class='notice'>You shape [src] into metal with [W].</span>", \
-						 "<span class='italics'>You hear welding.</span>")
+						 "<span class='hear'>You hear welding.</span>")
 			var/obj/item/stack/rods/R = src
 			src = null
 			var/replace = (user.get_inactive_held_item()==R)
@@ -70,7 +74,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 		return ..()
 
 /obj/item/stack/rods/cyborg
-	materials = list()
+	custom_materials = null
 	is_cyborg = 1
 	cost = 250
 

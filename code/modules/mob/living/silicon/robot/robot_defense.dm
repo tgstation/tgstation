@@ -1,8 +1,12 @@
+GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't really work on borgos
+	/obj/item/clothing/head/helmet/space/santahat,
+	/obj/item/clothing/head/welding,
+	/obj/item/clothing/head/mob_holder, //I am so very upset that this breaks things
+	/obj/item/clothing/head/helmet/space/eva \
+	)))
+
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
-	if(hat_offset != INFINITY && user.a_intent == INTENT_HELP && is_type_in_typecache(I, equippable_hats))
-		if(!(I.slot_flags & ITEM_SLOT_HEAD))
-			to_chat(user, "<span class='warning'>You can't quite fit [I] onto [src]'s head.</span>")
-			return
+	if(I.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && user.a_intent == INTENT_HELP && !is_type_in_typecache(I, GLOB.blacklisted_borg_hats))
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
 		to_chat(src, "<span class='notice'>[user] is placing [I] on your head...</span>")
 		if(do_after(user, 30, target = src))
@@ -29,7 +33,7 @@
 				log_combat(M, src, "pushed")
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
 					"<span class='userdanger'>[M] has forced back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-			playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
+			playsound(loc, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
 	else
 		..()
 	return
@@ -65,19 +69,20 @@
 			cell = null
 			update_icons()
 			diag_hud_set_borgcell()
+	else if(!opened)
+		..()
 
-	if(!opened)
-		if(..()) // hulk attack
-			spark_system.start()
-			spawn(0)
-				step_away(src,user,15)
-				sleep(3)
-				step_away(src,user,15)
+/mob/living/silicon/robot/attack_hulk(mob/living/carbon/human/user)
+	. = ..()
+	if(!.)
+		return
+	spark_system.start()
+	step_away(src, user, 15)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, src, get_turf(user), 15), 3)
 
 /mob/living/silicon/robot/fire_act()
 	if(!on_fire) //Silicons don't gain stacks from hotspots, but hotspots can ignite them
 		IgniteMob()
-
 
 /mob/living/silicon/robot/emp_act(severity)
 	. = ..()
@@ -88,7 +93,6 @@
 			Stun(160)
 		if(2)
 			Stun(60)
-
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves
@@ -110,12 +114,6 @@
 
 	to_chat(user, "<span class='notice'>You emag [src]'s interface.</span>")
 	emag_cooldown = world.time + 100
-
-	if(is_servant_of_ratvar(src))
-		to_chat(src, "<span class='nezbere'>\"[text2ratvar("You will serve Engine above all else")]!\"</span>\n\
-		<span class='danger'>ALERT: Subversion attempt denied.</span>")
-		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they serve only Ratvar.")
-		return
 
 	if(connected_ai && connected_ai.mind && connected_ai.mind.has_antag_datum(/datum/antagonist/traitor))
 		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
@@ -177,9 +175,8 @@
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 
-/mob/living/silicon/robot/bullet_act(var/obj/item/projectile/Proj, def_zone)
-	..()
+/mob/living/silicon/robot/bullet_act(obj/projectile/Proj, def_zone)
+	. = ..()
 	updatehealth()
 	if(prob(75) && Proj.damage > 0)
 		spark_system.start()
-	return 2

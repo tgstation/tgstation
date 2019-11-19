@@ -8,14 +8,14 @@
 	var/unres_sides = 0 //unrestricted sides, or sides of the airlock that will open regardless of access
 
 /obj/item/electronics/airlock/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Has a neat <i>selection menu</i> for modifying airlock access levels.</span>")
+	. = ..()
+	. += "<span class='notice'>Has a neat <i>selection menu</i> for modifying airlock access levels.</span>"
 
 /obj/item/electronics/airlock/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "airlock_electronics", name, 975, 420, master_ui, state)
+		ui = new(user, src, ui_key, "airlock_electronics", name, 420, 485, master_ui, state)
 		ui.open()
 
 /obj/item/electronics/airlock/ui_data()
@@ -44,9 +44,12 @@
 	if(..())
 		return
 	switch(action)
-		if("clear")
+		if("clear_all")
 			accesses = list()
 			one_access = 0
+			. = TRUE
+		if("grant_all")
+			accesses = get_all_accesses()
 			. = TRUE
 		if("one_access")
 			one_access = !one_access

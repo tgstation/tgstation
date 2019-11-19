@@ -10,44 +10,34 @@
 
 
 /turf/open/hotspot_expose(exposed_temperature, exposed_volume, soh)
-	var/datum/gas_mixture/air_contents = return_air()
-	if(!air_contents)
-		return 0
+	var/list/air_gases = air?.gases
+	if(!air_gases)
+		return
 
-	var/oxy = air_contents.gases[/datum/gas/oxygen] ? air_contents.gases[/datum/gas/oxygen][MOLES] : 0
-	var/tox = air_contents.gases[/datum/gas/plasma] ? air_contents.gases[/datum/gas/plasma][MOLES] : 0
-	var/trit = air_contents.gases[/datum/gas/tritium] ? air_contents.gases[/datum/gas/tritium][MOLES] : 0
+	. = air_gases[/datum/gas/oxygen]
+	var/oxy = . ? .[MOLES] : 0
+	if (oxy < 0.5)
+		return
+	. = air_gases[/datum/gas/plasma]
+	var/tox = . ? .[MOLES] : 0
+	. = air_gases[/datum/gas/tritium]
+	var/trit = . ? .[MOLES] : 0
 	if(active_hotspot)
 		if(soh)
-			if((tox > 0.5 || trit > 0.5) && oxy > 0.5)
+			if(tox > 0.5 || trit > 0.5)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
-		return 1
-
-	var/igniting = 0
+		return
 
 	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (tox > 0.5 || trit > 0.5))
-		igniting = 1
 
-	if(igniting)
-		if(oxy < 0.5)
-			return 0
-
-		active_hotspot = new /obj/effect/hotspot(src)
-		active_hotspot.temperature = exposed_temperature
-		active_hotspot.volume = exposed_volume*25
+		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
-	else
-		var/datum/gas_mixture/heating = air_contents.remove_ratio(exposed_volume/air_contents.volume)
-		heating.temperature = exposed_temperature
-		heating.react()
-		assume_air(heating)
-	return igniting
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile
 /obj/effect/hotspot
@@ -66,9 +56,13 @@
 	var/bypassing = FALSE
 	var/visual_update_tick = 0
 
-/obj/effect/hotspot/Initialize()
+/obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
 	. = ..()
 	SSair.hotspots += src
+	if(!isnull(starting_volume))
+		volume = starting_volume
+	if(!isnull(starting_temperature))
+		temperature = starting_temperature
 	perform_exposure()
 	setDir(pick(GLOB.cardinals))
 	air_update_turf()
@@ -80,22 +74,19 @@
 
 	location.active_hotspot = src
 
-	if(volume > CELL_VOLUME*0.95)
-		bypassing = TRUE
-	else
-		bypassing = FALSE
+	bypassing = !just_spawned && (volume > CELL_VOLUME*0.95)
 
 	if(bypassing)
-		if(!just_spawned)
-			volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
-			temperature = location.air.temperature
+		volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
+		temperature = location.air.temperature
 	else
 		var/datum/gas_mixture/affected = location.air.remove_ratio(volume/location.air.volume)
-		affected.temperature = temperature
-		affected.react(src)
-		temperature = affected.temperature
-		volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
-		location.assume_air(affected)
+		if(affected) //in case volume is 0
+			affected.temperature = temperature
+			affected.react(src)
+			temperature = affected.temperature
+			volume = affected.reaction_results["fire"]*FIRE_GROWTH_RATE
+			location.assume_air(affected)
 
 	for(var/A in location)
 		var/atom/AT = A
@@ -198,7 +189,7 @@
 			var/radiated_temperature = location.air.temperature*FIRE_SPREAD_RADIOSITY_SCALE
 			for(var/t in location.atmos_adjacent_turfs)
 				var/turf/open/T = t
-				if(T.active_hotspot)
+				if(!T.active_hotspot)
 					T.hotspot_expose(radiated_temperature, CELL_VOLUME/4)
 
 	else

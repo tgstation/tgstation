@@ -8,8 +8,6 @@
 /area/shuttle/escape)
 "c" = (
 /obj/docking_port/mobile/emergency{
-	dheight = 0;
-	dir = 4;
 	dwidth = 1;
 	height = 10;
 	name = "Oh Hi Mark";
@@ -133,7 +131,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "v" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "w" = (

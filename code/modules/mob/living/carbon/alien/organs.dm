@@ -26,7 +26,7 @@
 
 /obj/item/organ/alien/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("sacid", 10)
+	S.reagents.add_reagent(/datum/reagent/toxin/acid, 10)
 	return S
 
 
@@ -45,7 +45,7 @@
 
 /obj/item/organ/alien/plasmavessel/prepare_eat()
 	var/obj/S = ..()
-	S.reagents.add_reagent("plasma", storedPlasma/10)
+	S.reagents.add_reagent(/datum/reagent/toxin/plasma, storedPlasma/10)
 	return S
 
 /obj/item/organ/alien/plasmavessel/large
@@ -117,9 +117,11 @@
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
 	..()
 	M.faction |= ROLE_ALIEN
+	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
 
 /obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
 	M.faction -= ROLE_ALIEN
+	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
 	..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.

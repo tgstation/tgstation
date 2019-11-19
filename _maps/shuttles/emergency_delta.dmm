@@ -56,19 +56,19 @@
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
 	name = "emergency lifejacket"
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
 /obj/item/clothing/mask/breath{
@@ -232,14 +232,14 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = -3
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -497,30 +497,16 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aQ" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aR" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/escape)
-"aS" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -544,9 +530,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Escape Shuttle Infirmary"
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aW" = (
@@ -554,13 +538,12 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	dheight = 0;
 	dwidth = 11;
 	height = 18;
 	name = "Delta emergency shuttle";
-	width = 30;
+	port_direction = 4;
 	preferred_direction = 2;
-	port_direction = 4
+	width = 30
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -621,9 +604,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/closet/crate/medical{
-	name = "medical crate"
-	},
+/obj/structure/closet/crate/medical,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -783,9 +764,7 @@
 	name = "Cockpit";
 	req_access_txt = "19"
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bv" = (
@@ -949,9 +928,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Emergency Recovery Airlock"
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bS" = (
@@ -1092,7 +1069,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cf" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -1126,7 +1103,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "ch" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -1168,7 +1145,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "cl" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1907,7 +1884,7 @@ aB
 aG
 aJ
 aN
-aS
+aQ
 aP
 aZ
 bd

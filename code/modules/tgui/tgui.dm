@@ -8,32 +8,40 @@
   * tgui datum (represents a UI).
  **/
 /datum/tgui
-	var/mob/user // The mob who opened/is using the UI.
-	var/datum/src_object // The object which owns the UI.
-	var/title // The title of te UI.
-	var/ui_key // The ui_key of the UI. This allows multiple UIs for one src_object.
-	var/window_id // The window_id for browse() and onclose().
-	var/width = 0 // The window width.
-	var/height = 0 // The window height
-	var/window_options = list( // Extra options to winset().
-	  "focus" = FALSE,
-	  "titlebar" = TRUE,
-	  "can_resize" = TRUE,
-	  "can_minimize" = TRUE,
-	  "can_maximize" = FALSE,
-	  "can_close" = TRUE,
-	  "auto_format" = FALSE
-	)
-	var/style = "nanotrasen" // The style to be used for this UI.
-	var/interface // The interface (template) to be used for this UI.
-	var/autoupdate = TRUE // Update the UI every MC tick.
-	var/initialized = FALSE // If the UI has been initialized yet.
-	var/list/initial_data // The data (and datastructure) used to initialize the UI.
-	var/status = UI_INTERACTIVE // The status/visibility of the UI.
-	var/datum/ui_state/state = null // Topic state used to determine status/interactability.
-	var/datum/tgui/master_ui // The parent UI.
-	var/list/datum/tgui/children = list() // Children of this UI.
-	var/titlebar = TRUE
+	/// The mob who opened/is using the UI.
+	var/mob/user
+	/// The object which owns the UI.
+	var/datum/src_object
+	/// The title of te UI.
+	var/title
+	/// The ui_key of the UI. This allows multiple UIs for one src_object.
+	var/ui_key
+	/// The window_id for browse() and onclose().
+	var/window_id
+	/// The window width.
+	var/width = 0
+	/// The window height
+	var/height = 0
+	/// The style to be used for this UI.
+	var/style = "nanotrasen"
+	/// The interface (template) to be used for this UI.
+	var/interface
+	/// Update the UI every MC tick.
+	var/autoupdate = TRUE
+	/// If the UI has been initialized yet.
+	var/initialized = FALSE
+	/// The data (and datastructure) used to initialize the UI.
+	var/list/initial_data
+	/// The static data used to initialize the UI.
+	var/list/initial_static_data
+	/// The status/visibility of the UI.
+	var/status = UI_INTERACTIVE
+	/// Topic state used to determine status/interactability.
+	var/datum/ui_state/state = null
+	/// The parent UI.
+	var/datum/tgui/master_ui
+	/// Children of this UI.
+	var/list/datum/tgui/children = list()
 	var/custom_browser_id = FALSE
 	var/ui_screen = "home"
 
@@ -58,7 +66,7 @@
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
-	src.window_id = browser_id ? browser_id : "[REF(src_object)]-[ui_key]"
+	src.window_id = browser_id ? browser_id : "[REF(src_object)]-[ui_key]" // DO NOT replace with \ref here. src_object could potentially be tagged
 	src.custom_browser_id = browser_id ? TRUE : FALSE
 
 	set_interface(interface)
@@ -75,7 +83,7 @@
 		master_ui.children += src
 	src.state = state
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/tgui)
+	var/datum/asset/assets = get_asset_datum(/datum/asset/group/tgui)
 	assets.send(user)
 
  /**
@@ -87,21 +95,47 @@
 	if(!user.client)
 		return // Bail if there is no client.
 
-	update_status(push = 0) // Update the window status.
+	update_status(push = FALSE) // Update the window status.
 	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
 
-	if(!initial_data)
-		set_initial_data(src_object.ui_data(user)) // Get the UI data.
-
-	var/window_size = ""
+	var/window_size
 	if(width && height) // If we have a width and height, use them.
 		window_size = "size=[width]x[height];"
+	else
+		window_size = ""
 
-	var/debugable = check_rights_for(user.client, R_DEBUG)
-	user << browse(get_html(debugable), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
+	// Remove titlebar and resize handles for a fancy window
+	var/have_title_bar
+	if(user.client.prefs.tgui_fancy)
+		have_title_bar = "titlebar=0;can_resize=0;"
+	else
+		have_title_bar = "titlebar=1;can_resize=1;"
+
+	// Generate page html
+	var/html
+	html = SStgui.basehtml
+	// Allow the src object to override the html if needed
+	html = src_object.ui_base_html(html)
+	// Replace template tokens with important UI data
+	// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+	// be tagged, so this is an effective unwrap
+	html = replacetextEx(html, "\[ref]", "\ref[src]")
+	html = replacetextEx(html, "\[style]", style)
+
+	// Open the window.
+	user << browse(html, "window=[window_id];can_minimize=0;auto_format=0;[window_size][have_title_bar]")
 	if (!custom_browser_id)
-		winset(user, window_id, "on-close=\"uiclose [REF(src)]\"") // Instruct the client to signal UI when the window is closed.
+		// Instruct the client to signal UI when the window is closed.
+		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+		// be tagged, so this is an effective unwrap
+		winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
+
+	if(!initial_data)
+		initial_data = src_object.ui_data(user)
+	if(!initial_static_data)
+		initial_static_data = src_object.ui_static_data(user)
+
 	SStgui.on_open(src)
 
  /**
@@ -113,11 +147,13 @@
   * optional template string The name of the new interface.
   * optional data list The new initial data.
  **/
-/datum/tgui/proc/reinitialize(interface, list/data)
+/datum/tgui/proc/reinitialize(interface, list/data, list/static_data)
 	if(interface)
 		set_interface(interface) // Set a new interface.
 	if(data)
-		set_initial_data(data) // Replace the initial_data.
+		initial_data = data
+	if(static_data)
+		initial_static_data = static_data
 	open()
 
  /**
@@ -135,16 +171,6 @@
 	state = null
 	master_ui = null
 	qdel(src)
-
- /**
-  * public
-  *
-  * Sets the browse() window options for this UI.
-  *
-  * required window_options list The window options to set.
- **/
-/datum/tgui/proc/set_window_options(list/window_options)
-	src.window_options = window_options
 
  /**
   * public
@@ -173,69 +199,8 @@
   *
   * required state bool Enable/disable auto-updating.
  **/
-/datum/tgui/proc/set_autoupdate(state = 1)
+/datum/tgui/proc/set_autoupdate(state = TRUE)
 	autoupdate = state
-
- /**
-  * private
-  *
-  * Set the data to initialize the UI with.
-  * The datastructure cannot be changed by subsequent updates.
-  *
-  * optional data list The data/datastructure to initialize the UI with.
- **/
-/datum/tgui/proc/set_initial_data(list/data)
-	initial_data = data
-
- /**
-  * private
-  *
-  * Generate HTML for this UI.
-  *
-  * optional bool inline If the JSON should be inlined into the HTML (for debugging).
-  *
-  * return string UI HTML output.
- **/
-/datum/tgui/proc/get_html(var/inline)
-	var/html
-	// Poplate HTML with JSON if we're supposed to inline.
-	if(inline)
-		html = replacetextEx(SStgui.basehtml, "{}", get_json(initial_data))
-	else
-		html = SStgui.basehtml
-	html = replacetextEx(html, "\[ref]", "[REF(src)]")
-	html = replacetextEx(html, "\[style]", style)
-	return html
-
- /**
-  * private
-  *
-  * Get the config data/datastructure to initialize the UI with.
-  *
-  * return list The config data.
- **/
-/datum/tgui/proc/get_config_data()
-	var/list/config_data = list(
-			"title"     = title,
-			"status"    = status,
-			"screen"	= ui_screen,
-			"style"     = style,
-			"interface" = interface,
-			"fancy"     = user.client.prefs.tgui_fancy,
-			"locked"    = user.client.prefs.tgui_lock && !custom_browser_id,
-			"window"    = window_id,
-			"ref"       = "[REF(src)]",
-			"user"      = list(
-				"name"  = user.name,
-				"ref"   = "[REF(user)]"
-			),
-			"srcObject" = list(
-				"name" = "[src_object]",
-				"ref"  = "[REF(src_object)]"
-			),
-			"titlebar" = titlebar
-		)
-	return config_data
 
  /**
   * private
@@ -245,12 +210,26 @@
   *
   * return string The packaged JSON.
  **/
-/datum/tgui/proc/get_json(list/data)
+/datum/tgui/proc/get_json(list/data, list/static_data)
 	var/list/json_data = list()
 
-	json_data["config"] = get_config_data()
+	json_data["config"] = list(
+		"title" = title,
+		"status" = status,
+		"screen" = ui_screen,
+		"style" = style,
+		"interface" = interface,
+		"fancy" = user.client.prefs.tgui_fancy,
+		"locked" = user.client.prefs.tgui_lock && !custom_browser_id,
+		"window" = window_id,
+		// Intentional \ref usage; tgui datums can't/shouldn't be tagged so this is an effective unwrap
+		"ref" = "\ref[src]"
+	)
+	
 	if(!isnull(data))
 		json_data["data"] = data
+	if(!isnull(static_data))
+		json_data["static_data"] = static_data
 
 	// Generate the JSON.
 	var/json = json_encode(json_data)
@@ -275,12 +254,17 @@
 
 	switch(action)
 		if("tgui:initialize")
-			user << output(url_encode(get_json(initial_data)), "[custom_browser_id ? window_id : "[window_id].browser"]:initialize")
+			user << output(url_encode(get_json(initial_data, initial_static_data)), "[custom_browser_id ? window_id : "[window_id].browser"]:initialize")
 			initialized = TRUE
 		if("tgui:view")
 			if(params["screen"])
 				ui_screen = params["screen"]
 			SStgui.update_uis(src_object)
+		if("tgui:log")
+			// Force window to show frills on fatal errors
+			if(params["fatal"])
+				winset(user, window_id, "titlebar=1;can-resize=1;size=600x600")
+			log_message(params["log"])
 		if("tgui:link")
 			user << link(params["url"])
 		if("tgui:fancy")
@@ -288,7 +272,7 @@
 		if("tgui:nofrills")
 			user.client.prefs.tgui_fancy = FALSE
 		else
-			update_status(push = 0) // Update the window state.
+			update_status(push = FALSE) // Update the window state.
 			if(src_object.ui_act(action, params, src, state)) // Call ui_act() on the src_object.
 				SStgui.update_uis(src_object) // Update if the object requested it.
 
@@ -300,7 +284,7 @@
   *
   * optional force bool If the UI should be forced to update.
  **/
-/datum/tgui/process(force = 0)
+/datum/tgui/process(force = FALSE)
 	var/datum/host = src_object.ui_host(user)
 	if(!src_object || !host || !user) // If the object or user died (or something else), abort.
 		close()
@@ -309,7 +293,7 @@
 	if(status && (force || autoupdate))
 		update() // Update the UI if the status and update settings allow it.
 	else
-		update_status(push = 1) // Otherwise only update status.
+		update_status(push = TRUE) // Otherwise only update status.
 
  /**
   * private
@@ -319,15 +303,15 @@
   * required data list The data to send.
   * optional force bool If the update should be sent regardless of state.
  **/
-/datum/tgui/proc/push_data(data, force = 0)
-	update_status(push = 0) // Update the window state.
+/datum/tgui/proc/push_data(data, static_data, force = FALSE)
+	update_status(push = FALSE) // Update the window state.
 	if(!initialized)
 		return // Cannot update UI if it is not set up yet.
 	if(status <= UI_DISABLED && !force)
 		return // Cannot update UI, we have no visibility.
 
 	// Send the new JSON to the update() Javascript function.
-	user << output(url_encode(get_json(data)), "[custom_browser_id ? window_id : "[window_id].browser"]:update")
+	user << output(url_encode(get_json(data, static_data)), "[custom_browser_id ? window_id : "[window_id].browser"]:update")
 
  /**
   * private
@@ -347,7 +331,7 @@
   *
   * optional push bool Push an update to the UI (an update is always sent for UI_DISABLED).
  **/
-/datum/tgui/proc/update_status(push = 0)
+/datum/tgui/proc/update_status(push = FALSE)
 	var/status = src_object.ui_status(user, state)
 	if(master_ui)
 		status = min(status, master_ui.status)
@@ -364,7 +348,7 @@
   * required status int The status to set (UI_CLOSE/UI_DISABLED/UI_UPDATE/UI_INTERACTIVE).
   * optional push bool Push an update to the UI (an update is always sent for UI_DISABLED).
  **/
-/datum/tgui/proc/set_status(status, push = 0)
+/datum/tgui/proc/set_status(status, push = FALSE)
 	if(src.status != status) // Only update if status has changed.
 		if(src.status == UI_DISABLED)
 			src.status = status
@@ -373,7 +357,7 @@
 		else
 			src.status = status
 			if(status == UI_DISABLED || push) // Update if the UI just because disabled, or a push is requested.
-				push_data(null, force = 1)
+				push_data(null, force = TRUE)
 
-/datum/tgui/proc/set_titlebar(value)
-	titlebar = value
+/datum/tgui/proc/log_message(message)
+	log_tgui("[user] ([user.ckey]) using \"[title]\":\n[message]")

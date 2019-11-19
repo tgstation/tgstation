@@ -5,11 +5,11 @@
 	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
 
 /turf/open/floor/mech_bay_recharge_floor/break_tile()
-	ScrapeAway()
+	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
 /turf/open/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
@@ -29,6 +29,15 @@
 	. = ..()
 	recharging_turf = get_step(loc, dir)
 
+/obj/machinery/mech_bay_recharge_port/Destroy()
+	if (recharge_console && recharge_console.recharge_port == src)
+		recharge_console.recharge_port = null
+	return ..()
+
+/obj/machinery/mech_bay_recharge_port/setDir(new_dir)
+	. = ..()
+	recharging_turf = get_step(loc, dir)
+
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
 	var/MC
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -36,9 +45,9 @@
 	max_charge = MC * 25
 
 /obj/machinery/mech_bay_recharge_port/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Base recharge rate at <b>[max_charge]J</b> per cycle.<span>")
+		. += "<span class='notice'>The status display reads: Base recharge rate at <b>[max_charge]J</b> per cycle.</span>"
 
 /obj/machinery/mech_bay_recharge_port/process()
 	if(stat & NOPOWER || !recharge_console)
@@ -77,13 +86,15 @@
 	icon_screen = "recharge_comp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/mech_bay_power_console
+	ui_x = 400
+	ui_y = 170
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "mech_bay_power_console", "Mech Bay Power Control Console", 400, 170, master_ui, state)
+		ui = new(user, src, ui_key, "mech_bay_power_console", "Mech Bay Power Control Console", ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/mech_bay_power_console/ui_act(action, params)
@@ -103,7 +114,6 @@
 			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.obj_integrity, "maxhealth" = recharge_port.recharging_mech.max_integrity, "cell" = null)
 			if(recharge_port.recharging_mech.cell && !QDELETED(recharge_port.recharging_mech.cell))
 				data["recharge_port"]["mech"]["cell"] = list(
-				"critfail" = recharge_port.recharging_mech.cell.crit_fail,
 				"charge" = recharge_port.recharging_mech.cell.charge,
 				"maxcharge" = recharge_port.recharging_mech.cell.maxcharge
 				)
@@ -136,3 +146,8 @@
 /obj/machinery/computer/mech_bay_power_console/Initialize()
 	. = ..()
 	reconnect()
+
+/obj/machinery/computer/mech_bay_power_console/Destroy()
+	if (recharge_port && recharge_port.recharge_console == src)
+		recharge_port.recharge_console = null
+	return ..()

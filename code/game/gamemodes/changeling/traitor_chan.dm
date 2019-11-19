@@ -9,14 +9,12 @@
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
 	reroll_friendly = 1
+	announce_span = "Traitors and Changelings"
+	announce_text = "There are alien creatures on the station along with some syndicate operatives out for their own gain! Do not let the changelings or the traitors succeed!"
 
 	var/list/possible_changelings = list()
 	var/list/changelings = list()
 	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
-
-/datum/game_mode/traitor/changeling/announce()
-	to_chat(world, "<B>The current game mode is - Traitor+Changeling!</B>")
-	to_chat(world, "<B>There are alien creatures on the station along with some syndicate operatives out for their own gain! Do not let the changelings or the traitors succeed!</B>")
 
 /datum/game_mode/traitor/changeling/can_start()
 	if(!..())
@@ -53,13 +51,18 @@
 			changeling.special_role = ROLE_CHANGELING
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs
-		return ..()
+		. = ..()
+		if(.)	//To ensure the game mode is going ahead
+			for(var/antag in changelings)
+				GLOB.pre_setup_antags += antag
+		return
 	else
-		return 0
+		return FALSE
 
 /datum/game_mode/traitor/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)
 		changeling.add_antag_datum(/datum/antagonist/changeling)
+		GLOB.pre_setup_antags -= changeling
 	return ..()
 
 /datum/game_mode/traitor/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
@@ -70,7 +73,7 @@
 		return
 	if(changelings.len <= (changelingcap - 2) || prob(100 / (csc * 4)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
-			if(!jobban_isbanned(character, ROLE_CHANGELING) && !QDELETED(character) && !jobban_isbanned(character, ROLE_SYNDICATE) && !QDELETED(character))
+			if(!is_banned_from(character.ckey, list(ROLE_CHANGELING, ROLE_SYNDICATE)) && !QDELETED(character))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changeling()

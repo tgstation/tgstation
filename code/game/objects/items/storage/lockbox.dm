@@ -15,7 +15,7 @@
 
 /obj/item/storage/lockbox/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 14
 	STR.max_items = 4
@@ -99,17 +99,16 @@
 
 /obj/item/storage/lockbox/medal/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_items = 10
 	STR.max_combined_w_class = 20
-	STR.can_hold = typecacheof(list(/obj/item/clothing/accessory/medal))
+	STR.set_holdable(list(/obj/item/clothing/accessory/medal))
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
-	..()
-	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-	if(!locked)
-		to_chat(user, "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>")
+	. = ..()
+	if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+		. += "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>"
 
 /obj/item/storage/lockbox/medal/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
@@ -169,6 +168,14 @@
 
 /obj/item/storage/lockbox/medal/cargo/PopulateContents()
 		new /obj/item/clothing/accessory/medal/ribbon/cargo(src)
+
+/obj/item/storage/lockbox/medal/service
+	name = "service award box"
+	desc = "A locked box used to store awards to be given to members of the service department."
+	req_access = list(ACCESS_HOP)
+
+/obj/item/storage/lockbox/medal/service/PopulateContents()
+		new /obj/item/clothing/accessory/medal/silver/excellence(src)
 
 /obj/item/storage/lockbox/medal/sci
 	name = "science medal box"

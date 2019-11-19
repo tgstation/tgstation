@@ -120,10 +120,8 @@ Possible to do for anyone motivated enough:
 	return ..()
 
 /obj/machinery/holopad/power_change()
-	if (powered())
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
+	. = ..()
+	if (!powered())
 		if(replay_mode)
 			replay_stop()
 		if(record_mode)
@@ -143,9 +141,9 @@ Possible to do for anyone motivated enough:
 	holo_range = holograph_range
 
 /obj/machinery/holopad/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Current projection range: <b>[holo_range]</b> units.<span>")
+		. += "<span class='notice'>The status display reads: Current projection range: <b>[holo_range]</b> units.</span>"
 
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
@@ -162,11 +160,11 @@ Possible to do for anyone motivated enough:
 
 	if(istype(P,/obj/item/disk/holodisk))
 		if(disk)
-			to_chat(user,"<span class='notice'>There's already a disk inside [src]</span>")
+			to_chat(user,"<span class='warning'>There's already a disk inside [src]!</span>")
 			return
 		if (!user.transferItemToLoc(P,src))
 			return
-		to_chat(user,"<span class='notice'>You insert [P] into [src]</span>")
+		to_chat(user,"<span class='notice'>You insert [P] into [src].</span>")
 		disk = P
 		updateDialog()
 		return
@@ -271,7 +269,7 @@ Possible to do for anyone motivated enough:
 					LAZYADD(callnames[A], I)
 			callnames -= get_area(src)
 
-			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in callnames
+			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in sortNames(callnames)
 			if(QDELETED(usr) || !result || outgoing_call)
 				return
 
@@ -281,13 +279,13 @@ Possible to do for anyone motivated enough:
 				new /datum/holocall(usr, src, callnames[result])
 
 	else if(href_list["connectcall"])
-		var/datum/holocall/call_to_connect = locate(href_list["connectcall"])
+		var/datum/holocall/call_to_connect = locate(href_list["connectcall"]) in holo_calls
 		if(!QDELETED(call_to_connect))
 			call_to_connect.Answer(src)
 		temp = ""
 
 	else if(href_list["disconnectcall"])
-		var/datum/holocall/call_to_disconnect = locate(href_list["disconnectcall"])
+		var/datum/holocall/call_to_disconnect = locate(href_list["disconnectcall"]) in holo_calls
 		if(!QDELETED(call_to_disconnect))
 			call_to_disconnect.Disconnect(src)
 		temp = ""
@@ -440,7 +438,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		set_light(0)
 	update_icon()
 
-/obj/machinery/holopad/update_icon()
+/obj/machinery/holopad/update_icon_state()
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	if(ringing)
 		icon_state = "holopad_ringing"
@@ -449,7 +447,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	else
 		icon_state = "holopad0"
 
-/obj/machinery/holopad/proc/set_holo(mob/living/user, var/obj/effect/overlay/holo_pad_hologram/h)
+/obj/machinery/holopad/proc/set_holo(mob/living/user, obj/effect/overlay/holo_pad_hologram/h)
 	LAZYSET(masters, user, h)
 	LAZYSET(holorays, user, new /obj/effect/overlay/holoray(loc))
 	var/mob/living/silicon/ai/AI = user
@@ -640,7 +638,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 			if(replay_holo)
 				replay_holo.say(message)
 		if(HOLORECORD_SOUND)
-			playsound(src,entry[2],50,1)
+			playsound(src,entry[2],50,TRUE)
 		if(HOLORECORD_DELAY)
 			addtimer(CALLBACK(src,.proc/replay_entry,entry_number+1),entry[2])
 			return

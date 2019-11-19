@@ -13,13 +13,15 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=75)
+	custom_materials = list(/datum/material/iron=75)
 	attack_verb = list("stabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 	tool_behaviour = TOOL_SCREWDRIVER
 	toolspeed = 1
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
+	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
 	var/random_color = TRUE //if the screwdriver uses random coloring
 	var/static/list/screwdriver_colors = list(
 		"blue" = rgb(24, 97, 213),
@@ -75,21 +77,12 @@
 		return ..()
 	if(user.zone_selected != BODY_ZONE_PRECISE_EYES && user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
-	if(user.has_trait(TRAIT_PACIFISM))
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [M]!</span>")
 		return
-	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		M = user
 	return eyestab(M,user)
-
-/obj/item/screwdriver/brass
-	name = "brass screwdriver"
-	desc = "A screwdriver made of brass. The handle feels freezing cold."
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	icon_state = "screwdriver_brass"
-	item_state = "screwdriver_brass"
-	toolspeed = 0.5
-	random_color = FALSE
 
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
@@ -106,12 +99,12 @@
 
 /obj/item/screwdriver/power
 	name = "hand drill"
-	desc = "A simple powered hand drill. It's fitted with a screw bit."
+	desc = "A simple powered hand drill."
 	icon_state = "drill_screw"
 	item_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25) //done for balance reasons, making them high value for research, but harder to get
+	custom_materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25) //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 8
@@ -120,22 +113,38 @@
 	attack_verb = list("drilled", "screwed", "jabbed","whacked")
 	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
-	toolspeed = 0.25
+	toolspeed = 0.7
 	random_color = FALSE
 
+/obj/item/screwdriver/power/examine()
+	. = ..()
+	. += " It's fitted with a [tool_behaviour == TOOL_SCREWDRIVER ? "screw" : "bolt"] bit."
+
 /obj/item/screwdriver/power/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(tool_behaviour == TOOL_SCREWDRIVER)
+		user.visible_message("<span class='suicide'>[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	else
+		user.visible_message("<span class='suicide'>[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(loc, 'sound/items/drill_use.ogg', 50, TRUE, -1)
 	return(BRUTELOSS)
 
 /obj/item/screwdriver/power/attack_self(mob/user)
-	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
-	var/obj/item/wrench/power/b_drill = new /obj/item/wrench/power(drop_location())
-	to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
-	qdel(src)
-	user.put_in_active_hand(b_drill)
+	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
+	if(tool_behaviour == TOOL_SCREWDRIVER)
+		tool_behaviour = TOOL_WRENCH
+		to_chat(user, "<span class='notice'>You attach the bolt bit to [src].</span>")
+		icon_state = "drill_bolt"
+	else
+		tool_behaviour = TOOL_SCREWDRIVER
+		to_chat(user, "<span class='notice'>You attach the screw bit to [src].</span>")
+		icon_state = "drill_screw"
 
 /obj/item/screwdriver/cyborg
-	name = "powered screwdriver"
-	desc = "An electrical screwdriver, designed to be both precise and quick."
+	name = "automated screwdriver"
+	desc = "A powerful automated screwdriver, designed to be both precise and quick."
+	icon = 'icons/obj/items_cyborg.dmi'
+	icon_state = "screwdriver_cyborg"
+	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5
+	random_color = FALSE

@@ -8,12 +8,6 @@
 #define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
 #define CULT_POLL_WAIT 2400
 
-/proc/get_area(atom/A)
-	if(isarea(A))
-		return A
-	var/turf/T = get_turf(A)
-	return T ? T.loc : null
-
 /proc/get_area_name(atom/X, format_text = FALSE)
 	var/area/A = isarea(X) ? X : get_area(X)
 	if(!A)
@@ -165,6 +159,43 @@
 		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
+/** recursive_organ_check
+  * inputs: O (object to start with)
+  * outputs:
+  * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
+  *				 within 'O', toggling their frozen flag. This check excludes items held within other safe organ
+  *				 storage units, so that only the lowest level of container dictates whether we do or don't decompose
+  */
+/proc/recursive_organ_check(atom/O)
+
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/index = 1
+	var/obj/item/organ/found_organ
+
+	while(index <= length(processing_list))
+
+		var/atom/A = processing_list[index]
+
+		if(istype(A, /obj/item/organ))
+			found_organ = A
+			found_organ.organ_flags ^= ORGAN_FROZEN
+
+		else if(istype(A, /mob/living/carbon))
+			var/mob/living/carbon/Q = A
+			for(var/organ in Q.internal_organs)
+				found_organ = organ
+				found_organ.organ_flags ^= ORGAN_FROZEN
+
+		for(var/atom/B in A)	//objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
+			if(!processed_list[B] && !istype(B, /obj/structure/closet/crate/freezer) && !istype(B, /obj/structure/closet/secure_closet/freezer))
+				processing_list+= B
+
+		index++
+		processed_list[A] = A
+
+	return
+
 // Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
 //No need for a recursive limit either
 /proc/recursive_mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
@@ -290,22 +321,6 @@
 		return 0
 
 
-/proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
-	//returns only NORTH, SOUTH, EAST, or WEST
-	var/dx = finish.x - start.x
-	var/dy = finish.y - start.y
-	if(abs(dy) > abs (dx)) //slope is above 1:1 (move horizontally in a tie)
-		if(dy > 0)
-			return get_step(start, SOUTH)
-		else
-			return get_step(start, NORTH)
-	else
-		if(dx > 0)
-			return get_step(start, WEST)
-		else
-			return get_step(start, EAST)
-
-
 /proc/try_move_adjacent(atom/movable/AM)
 	var/turf/T = get_turf(AM)
 	for(var/direction in GLOB.cardinals)
@@ -330,6 +345,19 @@
 		else if(isliving(M.current))
 			return M.current.stat != DEAD
 	return FALSE
+
+/**
+  * Exiled check
+  *
+  * Checks if the current body of the mind has an exile implant and is currently in
+  * an away mission. Returns FALSE if any of those conditions aren't met.
+  */
+/proc/considered_exiled(datum/mind/M)
+	if(!ishuman(M?.current))
+		return FALSE
+	for(var/obj/item/implant/I in M.current.implants)
+		if(istype(I, /obj/item/implant/exile && M.current.onAwayMission()))
+			return TRUE
 
 /proc/considered_afk(datum/mind/M)
 	return !M || !M.current || !M.current.client || M.current.client.is_afk()
@@ -360,7 +388,7 @@
 			viewing += M.client
 	flick_overlay(I, viewing, duration)
 
-/proc/get_active_player_count(var/alive_check = 0, var/afk_check = 0, var/human_check = 0)
+/proc/get_active_player_count(alive_check = 0, afk_check = 0, human_check = 0)
 	// Get active players who are playing in the round
 	var/active_players = 0
 	for(var/i = 1; i <= GLOB.player_list.len; i++)
@@ -433,7 +461,7 @@
 			if(!gametypeCheck.age_check(M.client))
 				continue
 		if(jobbanType)
-			if(jobban_isbanned(M, jobbanType) || QDELETED(M) || jobban_isbanned(M, ROLE_SYNDICATE) || QDELETED(M))
+			if(is_banned_from(M.ckey, list(jobbanType, ROLE_SYNDICATE)) || QDELETED(M))
 				continue
 
 		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow)
@@ -465,8 +493,6 @@
 			++i
 	return L
 
-/proc/poll_helper(var/mob/living/M)
-
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)
 		return
@@ -494,24 +520,25 @@
 	if(!C || (!C.prefs.windowflashing && !ignorepref))
 		return
 	winset(C, "mainwindow", "flash=5")
-	
+
 //Recursively checks if an item is inside a given type, even through layers of storage. Returns the atom if it finds it.
 /proc/recursive_loc_check(atom/movable/target, type)
 	var/atom/A = target
+	if(istype(A, type))
+		return A
+
 	while(!istype(A.loc, type))
 		if(!A.loc)
 			return
 		A = A.loc
-	return A
 
-/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
+	return A.loc
+
+/proc/AnnounceArrival(mob/living/carbon/human/character, rank)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
 	var/area/A = get_area(character)
-	var/message = "<span class='game deadsay'><span class='name'>\
-		[character.real_name]</span> ([rank]) has arrived at the station at \
-		<span class='name'>[A.name]</span>.</span>"
-	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	deadchat_broadcast(" has arrived at the station at <span class='name'>[A.name]</span>.", "<span class='game'><span class='name'>[character.real_name]</span> ([rank])", follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if((!GLOB.announcement_systems.len) || (!character.mind))
 		return
 	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
@@ -539,3 +566,45 @@
 	var/pressure = environment.return_pressure()
 	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
 		. = TRUE
+
+/proc/ispipewire(item)
+	var/static/list/pire_wire = list(
+		/obj/machinery/atmospherics,
+		/obj/structure/disposalpipe,
+		/obj/structure/cable
+	)
+	return (is_type_in_list(item, pire_wire))
+
+// Find a obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
+/proc/find_obstruction_free_location(range, atom/center, area/specific_area)
+	var/list/turfs = RANGE_TURFS(range, center)
+	var/list/possible_loc = list()
+
+	for(var/turf/found_turf in turfs)
+		var/area/turf_area = get_area(found_turf)
+
+		// We check if both the turf is a floor, and that it's actually in the area.
+		// We also want a location that's clear of any obstructions.
+		if (specific_area)
+			if (!istype(turf_area, specific_area))
+				continue
+
+		if (!isspaceturf(found_turf))
+			if (!is_blocked_turf(found_turf))
+				possible_loc.Add(found_turf)
+
+	// Need at least one free location.
+	if (possible_loc.len < 1)
+		return FALSE
+
+	return pick(possible_loc)
+
+/proc/power_fail(duration_min, duration_max)
+	for(var/P in GLOB.apcs_list)
+		var/obj/machinery/power/apc/C = P
+		if(C.cell && SSmapping.level_trait(C.z, ZTRAIT_STATION))
+			var/area/A = C.area
+			if(GLOB.typecache_powerfailure_safe_areas[A.type])
+				continue
+
+			C.energy_fail(rand(duration_min,duration_max))

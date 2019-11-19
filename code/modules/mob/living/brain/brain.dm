@@ -6,6 +6,7 @@
 	stat = DEAD //we start dead by default
 	see_invisible = SEE_INVISIBLE_LIVING
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM) //for mechas
+	speech_span = SPAN_ROBOT
 
 /mob/living/brain/Initialize()
 	. = ..()
@@ -96,3 +97,15 @@
 			client.mouse_pointer_icon = M.mouse_pointer
 	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
 		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
+
+/mob/living/brain/proc/get_traumas()
+	. = list()
+	if(istype(loc, /obj/item/organ/brain))
+		var/obj/item/organ/brain/B = loc
+		. = B.traumas
+
+/mob/living/brain/get_policy_keywords()
+	. = ..()
+
+	if(container)
+		. += "[container.type]"

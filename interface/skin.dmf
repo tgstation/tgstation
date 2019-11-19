@@ -1,21 +1,22 @@
 macro "default"
 
+
 menu "menu"
-	elem 
+	elem
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&File"
@@ -25,23 +26,18 @@ menu "menu"
 		command = ".reconnect"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quit\tAlt-F4"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Admin Help\tF1"
 		command = "adminhelp"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem 
-		name = "&Hotkeys"
-		command = "hotkeys-help"
 		category = "&Help"
 		saved-params = "is-checked"
 
@@ -55,7 +51,7 @@ window "mainwindow"
 		anchor2 = none
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
-		icon = 'icons\\ss13_64.png'
+		icon = 'icons\\tg_32.png'
 		macro = "default"
 		menu = "menu"
 	elem "split"
@@ -249,6 +245,34 @@ window "outputwindow"
 		anchor2 = 100,100
 		is-default = true
 		saved-params = ""
+
+window "preferences_window"
+	elem "preferences_window"
+		type = MAIN
+		pos = 372,0
+		size = 1280x1000
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		is-visible = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		statusbar = false
+	elem "preferences_browser"
+		type = BROWSER
+		pos = 0,0
+		size = 960x1000
+		anchor1 = 0,0
+		anchor2 = 75,100
+		background-color = none
+		saved-params = ""
+	elem "character_preview_map"
+		type = MAP
+		pos = 960,0
+		size = 320x1000
+		anchor1 = 75,0
+		anchor2 = 100,100
+		right-click = true
+		saved-params = "zoom;letterbox;zoom-mode"
 
 window "statwindow"
 	elem "statwindow"

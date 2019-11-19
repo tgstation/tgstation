@@ -27,7 +27,7 @@
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
 
-	var/bullet_bounce_sound = 'sound/weapons/bulletremove.ogg' //sound played when a shell casing is ejected ontop of the turf.
+	var/bullet_bounce_sound = 'sound/weapons/gun/general/mag_bullet_remove.ogg' //sound played when a shell casing is ejected ontop of the turf.
 	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
 							//IE if the turf is supposed to be water, set TRUE.
 
@@ -39,7 +39,7 @@
 		return FALSE
 	. = ..()
 
-/turf/Initialize()
+/turf/Initialize(mapload)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
@@ -62,11 +62,20 @@
 		add_overlay(/obj/effect/fullbright)
 
 	if(requires_activation)
-		CalculateAdjacentTurfs()
+		CALCULATE_ADJACENT_TURFS(src)
 		SSair.add_to_active(src)
 
 	if (light_power && light_range)
 		update_light()
+
+	var/turf/T = SSmapping.get_turf_above(src)
+	if(T)
+		T.multiz_turf_new(src, DOWN)
+		SEND_SIGNAL(T, COMSIG_TURF_MULTIZ_NEW, src, DOWN)
+	T = SSmapping.get_turf_below(src)
+	if(T)
+		T.multiz_turf_new(src, UP)
+		SEND_SIGNAL(T, COMSIG_TURF_MULTIZ_NEW, src, UP)
 
 	if (opacity)
 		has_opaque_atom = TRUE
@@ -76,13 +85,19 @@
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
-	CalculateAdjacentTurfs()
+	CALCULATE_ADJACENT_TURFS(src)
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
+	var/turf/T = SSmapping.get_turf_above(src)
+	if(T)
+		T.multiz_turf_del(src, DOWN)
+	T = SSmapping.get_turf_below(src)
+	if(T)
+		T.multiz_turf_del(src, UP)
 	if(force)
 		..()
 		//this will completely wipe turf state
@@ -105,13 +120,69 @@
 		return
 	user.Move_Pulled(src)
 
+/turf/proc/multiz_turf_del(turf/T, dir)
+
+/turf/proc/multiz_turf_new(turf/T, dir)
+
+//zPassIn doesn't necessarily pass an atom!
+//direction is direction of travel of air
+/turf/proc/zPassIn(atom/movable/A, direction, turf/source)
+	return FALSE
+
+//direction is direction of travel of air
+/turf/proc/zPassOut(atom/movable/A, direction, turf/destination)
+	return FALSE
+
+//direction is direction of travel of air
+/turf/proc/zAirIn(direction, turf/source)
+	return FALSE
+
+//direction is direction of travel of air
+/turf/proc/zAirOut(direction, turf/source)
+	return FALSE
+
+/turf/proc/zImpact(atom/movable/A, levels = 1, turf/prev_turf)
+	var/flags = NONE
+	var/mov_name = A.name
+	for(var/i in contents)
+		var/atom/thing = i
+		flags |= thing.intercept_zImpact(A, levels)
+		if(flags & FALL_STOP_INTERCEPTING)
+			break
+	if(prev_turf && !(flags & FALL_NO_MESSAGE))
+		prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
+	if(flags & FALL_INTERCEPTED)
+		return
+	if(zFall(A, ++levels, src))
+		return FALSE
+	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
+	A.onZImpact(src, levels)
+	return TRUE
+
+/turf/proc/can_zFall(atom/movable/A, levels = 1, turf/target)
+	return zPassOut(A, DOWN, target) && target.zPassIn(A, DOWN, src)
+
+/turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
+	var/turf/target = get_step_multiz(src, DOWN)
+	if(!target || (!isobj(A) && !ismob(A)))
+		return FALSE
+	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target, DOWN)))
+		return FALSE
+	A.zfalling = TRUE
+	A.forceMove(target)
+	A.zfalling = FALSE
+	target.zImpact(A, levels, src)
+	return TRUE
+
 /turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
 	if(C.loaded)
-		for(var/obj/structure/cable/LC in src)
+		for(var/obj/structure/pipe_cleaner/LC in src)
 			if(!LC.d1 || !LC.d2)
 				LC.handlecable(C, user)
 				return
 		C.loaded.place_turf(src, user)
+		if(C.wiring_gui_menu)
+			C.wiringGuiUpdate(user)
 		C.is_empty(user)
 
 /turf/attackby(obj/item/C, mob/user, params)
@@ -119,9 +190,13 @@
 		return TRUE
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
+		coil.place_turf(src, user)
+		return TRUE
+	else if(can_have_cabling() && istype(C, /obj/item/stack/pipe_cleaner_coil))
+		var/obj/item/stack/pipe_cleaner_coil/coil = C
+		for(var/obj/structure/pipe_cleaner/LC in src)
 			if(!LC.d1 || !LC.d2)
-				LC.attackby(C,user)
+				LC.attackby(C, user)
 				return
 		coil.place_turf(src, user)
 		return TRUE
@@ -141,31 +216,42 @@
 	stack_trace("Non movable passed to turf CanPass : [mover]")
 	return FALSE
 
+//There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
 /turf/Enter(atom/movable/mover, atom/oldloc)
 	// Do not call ..()
 	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
-	if(!CanPass(mover, src))
-		firstbump = src
-	else
+	var/canPassSelf = CanPass(mover, src)
+	if(canPassSelf || CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
 		for(var/i in contents)
+			if(QDELETED(mover))
+				return FALSE		//We were deleted, do not attempt to proceed with movement.
 			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
 				continue
 			var/atom/movable/thing = i
-			if(thing.Cross(mover))
-				continue
-			if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
-				firstbump = thing
+			if(!thing.Cross(mover))
+				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
+					return FALSE
+				if(CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
+					mover.Bump(thing)
+					continue
+				else
+					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
+						firstbump = thing
+	if(QDELETED(mover))					//Mover deleted from Cross/CanPass/Bump, do not proceed.
+		return FALSE
+	if(!canPassSelf)	//Even if mover is unstoppable they need to bump us.
+		firstbump = src
 	if(firstbump)
 		mover.Bump(firstbump)
-		return FALSE
+		return CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE)
 	return TRUE
 
 /turf/Exit(atom/movable/mover, atom/newloc)
 	. = ..()
-	if(!.)
+	if(!. || QDELETED(mover))
 		return FALSE
 	for(var/i in contents)
 		if(i == mover)
@@ -174,7 +260,10 @@
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_1 & ON_BORDER_1)
 				mover.Bump(thing)
-			return FALSE
+			if(!CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
+				return FALSE
+		if(QDELETED(mover))
+			return FALSE		//We were deleted.
 
 /turf/Entered(atom/movable/AM)
 	..()
@@ -193,6 +282,8 @@
 		var/obj/O = AM
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
+	if(!AM.zfalling)
+		zFall(AM)
 
 /turf/proc/is_plasteel_floor()
 	return FALSE
@@ -317,7 +408,7 @@
 				continue
 			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.singularity_act()
-	ScrapeAway()
+	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)
 
 /turf/proc/can_have_cabling()
@@ -371,35 +462,27 @@
 		if(ismob(A) || .)
 			A.narsie_act()
 
-/turf/ratvar_act(force, ignore_mobs, probability = 40)
-	. = (prob(probability) || force)
-	for(var/I in src)
-		var/atom/A = I
-		if(ignore_mobs && ismob(A))
-			continue
-		if(ismob(A) || .)
-			A.ratvar_act()
-
 /turf/proc/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = icon
 	underlay_appearance.icon_state = icon_state
 	underlay_appearance.dir = adjacency_dir
 	return TRUE
 
-/turf/proc/add_blueprints(atom/movable/AM)
+/turf/proc/add_blueprints(var/atom/movable/AM)
 	var/image/I = new
 	I.appearance = AM.appearance
 	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
 	I.loc = src
 	I.setDir(AM.dir)
 	I.alpha = 128
-
 	LAZYADD(blueprint_data, I)
-
 
 /turf/proc/add_blueprints_preround(atom/movable/AM)
 	if(!SSticker.HasRoundStarted())
-		add_blueprints(AM)
+		if(AM.layer == WIRE_LAYER)	//wires connect to adjacent positions after its parent init, meaning we need to wait (in this case, until smoothing) to take its image
+			SSicon_smooth.blueprint_queue += AM
+		else
+			add_blueprints(AM)
 
 /turf/proc/is_transition_turf()
 	return
@@ -426,13 +509,10 @@
 	return
 
 /turf/handle_fall(mob/faller, forced)
-	if(isliving(faller))
-		var/mob/living/L = faller
-		L.lying = pick(90, 270)
 	if(!forced)
 		return
 	if(has_gravity(src))
-		playsound(src, "bodyfall", 50, 1)
+		playsound(src, "bodyfall", 50, TRUE)
 	faller.drop_all_held_items()
 
 /turf/proc/photograph(limit=20)
@@ -452,16 +532,24 @@
 /turf/AllowDrop()
 	return TRUE
 
-/turf/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
+/turf/proc/add_vomit_floor(mob/living/M, toxvomit = NONE)
+
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src, M.get_static_viruses())
-	// If the vomit combined, apply toxicity and reagents to the old vomit
+
+	//if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(V))
 		V = locate() in src
-	// Make toxins vomit look different
-	if(toxvomit)
+	if(!V)
+		return
+	// Make toxins and blazaam vomit look different
+	if(toxvomit == VOMIT_PURPLE)
+		V.icon_state = "vomitpurp_[pick(1,4)]"
+	else if (toxvomit == VOMIT_TOXIC)
 		V.icon_state = "vomittox_[pick(1,4)]"
-	if(M.reagents)
-		clear_reagents_to_vomit_pool(M,V)
+	if (iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.reagents)
+			clear_reagents_to_vomit_pool(C,V)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
 	M.reagents.trans_to(V, M.reagents.total_volume / 10, transfered_by = M)
@@ -469,9 +557,14 @@
 		if(istype(R, /datum/reagent/consumable))
 			var/datum/reagent/consumable/nutri_check = R
 			if(nutri_check.nutriment_factor >0)
-				M.reagents.remove_reagent(R.id,R.volume)
+				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
 /turf/proc/Melt()
-	return ScrapeAway()
+	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+
+/turf/bullet_act(obj/projectile/P)
+	. = ..()
+	if(. != BULLET_ACT_FORCE_PIERCE)
+		. =  BULLET_ACT_TURF

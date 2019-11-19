@@ -67,16 +67,16 @@
 
 /obj/item/implant/explosive/proc/timed_explosion()
 	imp_in.visible_message("<span class='warning'>[imp_in] starts beeping ominously!</span>")
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
+	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
 	if(imp_in && !imp_in.stat)
 		imp_in.visible_message("<span class='warning'>[imp_in] doubles over in pain!</span>")
 		imp_in.Paralyze(140)
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
+	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
+	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
-	playsound(loc, 'sound/items/timer.ogg', 30, 0)
+	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	sleep(delay*0.25)
 	explosion(src,heavy,medium,weak,weak, flame_range = weak)
 	if(imp_in)
@@ -111,10 +111,14 @@
 
 
 /obj/item/implanter/explosive
-	name = "implanter (explosive)"
+	name = "implanter (microbomb)"
 	imp_type = /obj/item/implant/explosive
 
 /obj/item/implantcase/explosive
 	name = "implant case - 'Explosive'"
 	desc = "A glass case containing an explosive implant."
 	imp_type = /obj/item/implant/explosive
+
+/obj/item/implanter/explosive_macro
+	name = "implanter (macrobomb)"
+	imp_type = /obj/item/implant/explosive/macro

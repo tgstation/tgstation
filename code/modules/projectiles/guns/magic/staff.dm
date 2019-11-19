@@ -41,9 +41,11 @@
 	max_charges = 10
 	recharge_rate = 2
 	no_den_usage = 1
-	var/allowed_projectile_types = list(/obj/item/projectile/magic/change, /obj/item/projectile/magic/animate, /obj/item/projectile/magic/resurrection,
-	/obj/item/projectile/magic/death, /obj/item/projectile/magic/teleport, /obj/item/projectile/magic/door, /obj/item/projectile/magic/aoe/fireball,
-	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage, /obj/item/projectile/magic/locker)
+	var/allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/projectile/magic/resurrection,
+	/obj/projectile/magic/death, /obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball,
+	/obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage, /obj/projectile/magic/locker, /obj/projectile/magic/flying,
+	/obj/projectile/magic/bounty, /obj/projectile/magic/antimagic, /obj/projectile/magic/fetch, /obj/projectile/magic/sapping,
+	/obj/projectile/magic/necropotence, /obj/projectile/magic, /obj/projectile/temp/chill, /obj/projectile/magic/wipe)
 
 /obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
@@ -105,4 +107,36 @@
 	max_charges = 6
 	recharge_rate = 4
 
+//yes, they don't have sounds. they're admin staves, and their projectiles will play the chaos bolt sound anyway so why bother?
 
+/obj/item/gun/magic/staff/flying
+	name = "staff of flying"
+	desc = "An artefact that spits bolts of graceful magic that can make something fly."
+	fire_sound = 'sound/magic/staff_healing.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/flying
+	icon_state = "staffofflight"
+	item_state = "staffofflight"
+
+/obj/item/gun/magic/staff/sapping
+	name = "staff of sapping"
+	desc = "An artefact that spits bolts of sapping magic that can make something sad."
+	fire_sound = 'sound/magic/staff_change.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/sapping
+	icon_state = "staffofsapping"
+	item_state = "staffofsapping"
+
+/obj/item/gun/magic/staff/necropotence
+	name = "staff of necropotence"
+	desc = "An artefact that spits bolts of death magic that can repurpose the soul."
+	fire_sound = 'sound/magic/staff_change.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/necropotence
+	icon_state = "staffofnecropotence"
+	item_state = "staffofnecropotence"
+
+/obj/item/gun/magic/staff/wipe
+	name = "staff of possession"
+	desc = "An artefact that spits bolts of mind-unlocking magic that can let ghosts invade the victim's mind."
+	fire_sound = 'sound/magic/staff_change.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/wipe
+	icon_state = "staffofwipe"
+	item_state = "staffofwipe"

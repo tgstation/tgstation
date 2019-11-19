@@ -3,11 +3,11 @@
 
 /datum/reagent/toxin
 	name = "Toxin"
-	id = "toxin"
 	description = "A toxic chemical."
 	color = "#CF3600" // rgb: 207, 54, 0
 	taste_description = "bitterness"
 	taste_mult = 1.2
+	harmful = TRUE
 	var/toxpwr = 1.5
 	var/silent_toxin = FALSE //won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present.
 
@@ -19,7 +19,6 @@
 
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
-	id = "amatoxin"
 	description = "A powerful poison derived from certain species of mushroom."
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 2.5
@@ -27,7 +26,6 @@
 
 /datum/reagent/toxin/mutagen
 	name = "Unstable mutagen"
-	id = "mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#00FF00"
 	toxpwr = 0
@@ -42,9 +40,9 @@
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
 		if(prob(98))
-			M.randmutb()
+			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 		else
-			M.randmutg()
+			M.easy_randmut(POSITIVE)
 		M.updateappearance()
 		M.domutcheck()
 	..()
@@ -53,9 +51,10 @@
 	C.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
+#define	LIQUID_PLASMA_BP (50+T0C)
+
 /datum/reagent/toxin/plasma
 	name = "Plasma"
-	id = "plasma"
 	description = "Plasma in its liquid form."
 	taste_description = "bitterness"
 	specific_heat = SPECIFIC_HEAT_PLASMA
@@ -64,22 +63,32 @@
 	toxpwr = 3
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
-	if(holder.has_reagent("epinephrine"))
-		holder.remove_reagent("epinephrine", 2*REM)
+	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2*REM)
 	C.adjustPlasma(20)
 	return ..()
+
+/datum/reagent/toxin/plasma/on_temp_change()
+	if(holder.chem_temp < LIQUID_PLASMA_BP)
+		return
+	if(holder.my_atom)
+		var/atom/A = holder.my_atom
+		A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
+		holder.del_reagent(type)
 
 /datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)
 	if((!O) || (!reac_volume))
 		return 0
 	var/temp = holder ? holder.chem_temp : T20C
-	O.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
+	if(temp >= LIQUID_PLASMA_BP)
+		O.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
 
 /datum/reagent/toxin/plasma/reaction_turf(turf/open/T, reac_volume)
-	if(istype(T))
-		var/temp = holder ? holder.chem_temp : T20C
+	if(!istype(T))
+		return
+	var/temp = holder ? holder.chem_temp : T20C
+	if(temp >= LIQUID_PLASMA_BP)
 		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[temp]")
-	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
 	if(method == TOUCH || method == VAPOR)
@@ -89,7 +98,6 @@
 
 /datum/reagent/toxin/lexorin
 	name = "Lexorin"
-	id = "lexorin"
 	description = "A powerful poison used to stop respiration."
 	color = "#7DC3A0"
 	toxpwr = 0
@@ -98,7 +106,7 @@
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/carbon/C)
 	. = TRUE
 
-	if(C.has_trait(TRAIT_NOBREATH))
+	if(HAS_TRAIT(C, TRAIT_NOBREATH))
 		. = FALSE
 
 	if(.)
@@ -110,7 +118,6 @@
 
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
-	id = "slimejelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 	color = "#801E28" // rgb: 128, 30, 40
 	toxpwr = 0
@@ -129,20 +136,18 @@
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
-	id = "minttoxin"
 	description = "Useful for dealing with undesirable customers."
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
 	taste_description = "mint"
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M)
-	if(M.has_trait(TRAIT_FAT))
-		M.gib()
+	if(HAS_TRAIT(M, TRAIT_FAT))
+		M.inflate_gib()
 	return ..()
 
 /datum/reagent/toxin/carpotoxin
 	name = "Carpotoxin"
-	id = "carpotoxin"
 	description = "A deadly neurotoxin produced by the dreaded spess carp."
 	silent_toxin = TRUE
 	color = "#003333" // rgb: 0, 51, 51
@@ -151,42 +156,57 @@
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
-	id = "zombiepowder"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	silent_toxin = TRUE
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
 	taste_description = "death"
+	var/fakedeath_active = FALSE
 
-/datum/reagent/toxin/zombiepowder/on_mob_add(mob/living/L)
+/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
-	L.fakedeath(id)
+	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
 
-/datum/reagent/toxin/zombiepowder/on_mob_delete(mob/living/L)
-	L.cure_fakedeath(id)
+/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
+	L.cure_fakedeath(type)
 	..()
 
-/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
-	M.adjustOxyLoss(0.5*REM, 0)
+/datum/reagent/toxin/zombiepowder/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
+	L.adjustOxyLoss(0.5*REM, 0)
+	if(method == INGEST)
+		fakedeath_active = TRUE
+		L.fakedeath(type)
+
+/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M)
 	..()
-	. = 1
+	if(fakedeath_active)
+		return TRUE
+	switch(current_cycle)
+		if(1 to 5)
+			M.confused += 1
+			M.drowsyness += 1
+			M.slurring += 3
+		if(5 to 8)
+			M.adjustStaminaLoss(40, 0)
+		if(9 to INFINITY)
+			fakedeath_active = TRUE
+			M.fakedeath(type)
 
 /datum/reagent/toxin/ghoulpowder
 	name = "Ghoul Powder"
-	id = "ghoulpowder"
 	description = "A strong neurotoxin that slows metabolism to a death-like state, while keeping the patient fully active. Causes toxin buildup if used too long."
 	reagent_state = SOLID
 	color = "#664700" // rgb: 102, 71, 0
 	toxpwr = 0.8
 	taste_description = "death"
 
-/datum/reagent/toxin/ghoulpowder/on_mob_add(mob/living/L)
+/datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_trait(TRAIT_FAKEDEATH, id)
+	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
 
-/datum/reagent/toxin/ghoulpowder/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_FAKEDEATH, id)
+/datum/reagent/toxin/ghoulpowder/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_FAKEDEATH, type)
 	..()
 
 /datum/reagent/toxin/ghoulpowder/on_mob_life(mob/living/carbon/M)
@@ -196,7 +216,6 @@
 
 /datum/reagent/toxin/mindbreaker
 	name = "Mindbreaker Toxin"
-	id = "mindbreaker"
 	description = "A powerful hallucinogen. Not a thing to be messed with. For some mental patients. it counteracts their symptoms and anchors them to reality."
 	color = "#B31008" // rgb: 139, 166, 233
 	toxpwr = 0
@@ -208,7 +227,6 @@
 
 /datum/reagent/toxin/plantbgone
 	name = "Plant-B-Gone"
-	id = "plantbgone"
 	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 	color = "#49002E" // rgb: 73, 0, 46
 	toxpwr = 1
@@ -234,26 +252,23 @@
 
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
-	id = "weedkiller"
 	description = "A harmful toxic mixture to kill weeds. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 
 /datum/reagent/toxin/pestkiller
 	name = "Pest Killer"
-	id = "pestkiller"
 	description = "A harmful toxic mixture to kill pests. Do not ingest!"
 	color = "#4B004B" // rgb: 75, 0, 75
 	toxpwr = 1
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	..()
-	if(MOB_BUG in M.mob_biotypes)
+	if(M.mob_biotypes & MOB_BUG)
 		var/damage = min(round(0.4*reac_volume, 0.1),10)
 		M.adjustToxLoss(damage)
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
-	id = "spore"
 	description = "A natural toxin produced by blob spores that inhibits vision when ingested."
 	color = "#9ACD32"
 	toxpwr = 1
@@ -266,7 +281,6 @@
 
 /datum/reagent/toxin/spore_burning
 	name = "Burning Spore Toxin"
-	id = "spore_burning"
 	description = "A natural toxin produced by blob spores that induces combustion in its victim."
 	color = "#9ACD32"
 	toxpwr = 0.5
@@ -279,7 +293,6 @@
 
 /datum/reagent/toxin/chloralhydrate
 	name = "Chloral Hydrate"
-	id = "chloralhydrate"
 	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
 	silent_toxin = TRUE
 	reagent_state = SOLID
@@ -301,28 +314,8 @@
 			. = 1
 	..()
 
-/datum/reagent/toxin/chloralhydratedelayed //sedates half as quickly and does not cause toxloss. same name/desc so it doesn't give away sleepypens
-	name = "Chloral Hydrate"
-	id = "chloralhydratedelayed"
-	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
-	silent_toxin = TRUE
-	reagent_state = SOLID
-	color = "#000067" // rgb: 0, 0, 103
-	toxpwr = 0
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
-
-/datum/reagent/toxin/chloralhydratedelayed/on_mob_life(mob/living/carbon/M)
-	switch(current_cycle)
-		if(10 to 20)
-			M.confused += 1
-			M.drowsyness += 1
-		if(20 to INFINITY)
-			M.Sleeping(40, 0)
-	..()
-
 /datum/reagent/toxin/fakebeer	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
-	id = "fakebeer"
 	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -342,7 +335,6 @@
 
 /datum/reagent/toxin/coffeepowder
 	name = "Coffee Grounds"
-	id = "coffeepowder"
 	description = "Finely ground coffee beans, used to make coffee."
 	reagent_state = SOLID
 	color = "#5B2E0D" // rgb: 91, 46, 13
@@ -350,15 +342,14 @@
 
 /datum/reagent/toxin/teapowder
 	name = "Ground Tea Leaves"
-	id = "teapowder"
 	description = "Finely shredded tea leaves, used for making tea."
 	reagent_state = SOLID
 	color = "#7F8400" // rgb: 127, 132, 0
-	toxpwr = 0.5
+	toxpwr = 0.1
+	taste_description = "green tea"
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder.
 	name = "Mute Toxin"
-	id = "mutetoxin"
 	description = "A nonlethal poison that inhibits speech in its victim."
 	silent_toxin = TRUE
 	color = "#F0F8FF" // rgb: 240, 248, 255
@@ -371,7 +362,6 @@
 
 /datum/reagent/toxin/staminatoxin
 	name = "Tirizene"
-	id = "tirizene"
 	description = "A nonlethal poison that causes extreme fatigue and weakness in its victim."
 	silent_toxin = TRUE
 	color = "#6E2828"
@@ -386,7 +376,6 @@
 
 /datum/reagent/toxin/polonium
 	name = "Polonium"
-	id = "polonium"
 	description = "An extremely radioactive material in liquid form. Ingestion results in fatal irradiation."
 	reagent_state = LIQUID
 	color = "#787878"
@@ -399,7 +388,6 @@
 
 /datum/reagent/toxin/histamine
 	name = "Histamine"
-	id = "histamine"
 	description = "Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incredibly lethal."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
@@ -420,21 +408,20 @@
 				M.emote("sneeze")
 			if(4)
 				if(prob(75))
-					to_chat(M, "You scratch at an itch.")
+					to_chat(M, "<span class='danger'>You scratch at an itch.</span>")
 					M.adjustBruteLoss(2*REM, 0)
 					. = 1
 	..()
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M)
 	M.adjustOxyLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustToxLoss(2*REM, 0)
 	..()
 	. = 1
 
 /datum/reagent/toxin/formaldehyde
 	name = "Formaldehyde"
-	id = "formaldehyde"
 	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
@@ -444,14 +431,13 @@
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
-		holder.add_reagent("histamine", pick(5,15))
-		holder.remove_reagent("formaldehyde", 1.2)
+		holder.add_reagent(/datum/reagent/toxin/histamine, pick(5,15))
+		holder.remove_reagent(/datum/reagent/toxin/formaldehyde, 1.2)
 	else
 		return ..()
 
 /datum/reagent/toxin/venom
 	name = "Venom"
-	id = "venom"
 	description = "An exotic poison extracted from highly toxic fauna. Causes scaling amounts of toxin damage and bruising depending and dosage. Often decays into Histamine."
 	reagent_state = LIQUID
 	color = "#F0FFF0"
@@ -463,14 +449,13 @@
 	M.adjustBruteLoss((0.3*volume)*REM, 0)
 	. = 1
 	if(prob(15))
-		M.reagents.add_reagent("histamine", pick(5,10))
-		M.reagents.remove_reagent("venom", 1.1)
+		M.reagents.add_reagent(/datum/reagent/toxin/histamine, pick(5,10))
+		M.reagents.remove_reagent(/datum/reagent/toxin/venom, 1.1)
 	else
 		..()
 
 /datum/reagent/toxin/fentanyl
 	name = "Fentanyl"
-	id = "fentanyl"
 	description = "Fentanyl will inhibit brain function and cause toxin damage before eventually knocking out its victim."
 	reagent_state = LIQUID
 	color = "#64916E"
@@ -478,9 +463,11 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M)
-	M.adjustBrainLoss(3*REM, 150)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM, 150)
 	if(M.toxloss <= 60)
 		M.adjustToxLoss(1*REM, 0)
+	if(current_cycle >= 4)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle >= 18)
 		M.Sleeping(40, 0)
 	..()
@@ -488,7 +475,6 @@
 
 /datum/reagent/toxin/cyanide
 	name = "Cyanide"
-	id = "cyanide"
 	description = "An infamous poison known for its use in assassination. Causes small amounts of toxin damage with a small chance of oxygen damage or a stun."
 	reagent_state = LIQUID
 	color = "#00B4FF"
@@ -499,14 +485,13 @@
 	if(prob(5))
 		M.losebreath += 1
 	if(prob(8))
-		to_chat(M, "You feel horrendously weak!")
+		to_chat(M, "<span class='danger'>You feel horrendously weak!</span>")
 		M.Stun(40, 0)
 		M.adjustToxLoss(2*REM, 0)
 	return ..()
 
 /datum/reagent/toxin/bad_food
 	name = "Bad Food"
-	id = "bad_food"
 	description = "The result of some abomination of cookery, food so bad it's toxic."
 	reagent_state = LIQUID
 	color = "#d6d6d8"
@@ -516,7 +501,6 @@
 
 /datum/reagent/toxin/itching_powder
 	name = "Itching Powder"
-	id = "itching_powder"
 	description = "A powder that induces itching upon contact with the skin. Causes the victim to scratch at their itches and has a very low chance to decay into Histamine."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
@@ -526,30 +510,29 @@
 
 /datum/reagent/toxin/itching_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
-		M.reagents.add_reagent("itching_powder", reac_volume)
+		M.reagents?.add_reagent(/datum/reagent/toxin/itching_powder, reac_volume)
 
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
-		to_chat(M, "You scratch at your head.")
+		to_chat(M, "<span class='danger'>You scratch at your head.</span>")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(15))
-		to_chat(M, "You scratch at your leg.")
+		to_chat(M, "<span class='danger'>You scratch at your leg.</span>")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(15))
-		to_chat(M, "You scratch at your arm.")
+		to_chat(M, "<span class='danger'>You scratch at your arm.</span>")
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
 	if(prob(3))
-		M.reagents.add_reagent("histamine",rand(1,3))
-		M.reagents.remove_reagent("itching_powder",1.2)
+		M.reagents.add_reagent(/datum/reagent/toxin/histamine,rand(1,3))
+		M.reagents.remove_reagent(/datum/reagent/toxin/itching_powder,1.2)
 		return
 	..()
 
 /datum/reagent/toxin/initropidril
 	name = "Initropidril"
-	id = "initropidril"
 	description = "A powerful poison with insidious effects. It can cause stuns, lethal breathing failure, and cardiac arrest."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
@@ -581,7 +564,6 @@
 
 /datum/reagent/toxin/pancuronium
 	name = "Pancuronium"
-	id = "pancuronium"
 	description = "An undetectable toxin that swiftly incapacitates its victim. May also cause breathing failure."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
@@ -600,7 +582,6 @@
 
 /datum/reagent/toxin/sodium_thiopental
 	name = "Sodium Thiopental"
-	id = "sodium_thiopental"
 	description = "Sodium Thiopental induces heavy weakness in its target as well as unconsciousness."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
@@ -617,7 +598,6 @@
 
 /datum/reagent/toxin/sulfonal
 	name = "Sulfonal"
-	id = "sulfonal"
 	description = "A stealthy poison that deals minor toxin damage and eventually puts the target to sleep."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
@@ -632,7 +612,6 @@
 
 /datum/reagent/toxin/amanitin
 	name = "Amanitin"
-	id = "amanitin"
 	description = "A very powerful delayed toxin. Upon full metabolization, a massive amount of toxin damage will be dealt depending on how long it has been in the victim's bloodstream."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
@@ -648,7 +627,6 @@
 
 /datum/reagent/toxin/lipolicide
 	name = "Lipolicide"
-	id = "lipolicide"
 	description = "A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. Deadly to those without nutriment in their body."
 	silent_toxin = TRUE
 	taste_description = "mothballs"
@@ -660,13 +638,12 @@
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(1*REM, 0)
-	M.nutrition = max(M.nutrition - 3, 0) // making the chef more valuable, one meme trap at a time
+	M.adjust_nutrition(-3) // making the chef more valuable, one meme trap at a time
 	M.overeatduration = 0
 	return ..()
 
 /datum/reagent/toxin/coniine
 	name = "Coniine"
-	id = "coniine"
 	description = "Coniine metabolizes extremely slowly, but deals high amounts of toxin damage and stops breathing."
 	reagent_state = LIQUID
 	color = "#7DC3A0"
@@ -679,7 +656,6 @@
 
 /datum/reagent/toxin/spewium
 	name = "Spewium"
-	id = "spewium"
 	description = "A powerful emetic, causes uncontrollable vomiting.  May result in vomiting organs at high doses."
 	reagent_state = LIQUID
 	color = "#2f6617" //A sickly green color
@@ -694,7 +670,7 @@
 		C.vomit(10, prob(10), prob(50), rand(0,4), TRUE, prob(30))
 		for(var/datum/reagent/toxin/R in C.reagents.reagent_list)
 			if(R != src)
-				C.reagents.remove_reagent(R.id,1)
+				C.reagents.remove_reagent(R.type,1)
 
 /datum/reagent/toxin/spewium/overdose_process(mob/living/carbon/C)
 	. = ..()
@@ -705,7 +681,6 @@
 
 /datum/reagent/toxin/curare
 	name = "Curare"
-	id = "curare"
 	description = "Causes slight toxin damage followed by chain-stunning and oxygen damage."
 	reagent_state = LIQUID
 	color = "#191919"
@@ -721,7 +696,6 @@
 
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
 	name = "Heparin"
-	id = "heparin"
 	description = "A powerful anticoagulant. Victims will bleed uncontrollably and suffer scaling bruising."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
@@ -740,7 +714,6 @@
 
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
 	name = "Rotatium"
-	id = "rotatium"
 	description = "A constantly swirling, oddly colourful fluid. Causes the consumer's sense of direction and hand-eye coordination to become wild."
 	silent_toxin = TRUE
 	reagent_state = LIQUID
@@ -759,53 +732,15 @@
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING)
 	return ..()
 
-/datum/reagent/toxin/rotatium/on_mob_delete(mob/living/M)
+/datum/reagent/toxin/rotatium/on_mob_end_metabolize(mob/living/M)
 	if(M && M.hud_used)
 		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
 		for(var/whole_screen in screens)
 			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
-
-/datum/reagent/toxin/skewium
-	name = "Skewium"
-	id = "skewium"
-	description = "A strange, dull coloured liquid that appears to warp back and forth inside its container. Causes any consumer to experience a visual phenomena similar to said warping."
-	silent_toxin = TRUE
-	reagent_state = LIQUID
-	color = "#ADBDCD"
-	metabolization_rate = 0.8 * REAGENTS_METABOLISM
-	toxpwr = 0.25
-	taste_description = "skewing"
-
-/datum/reagent/toxin/skewium/on_mob_life(mob/living/carbon/M)
-	if(M.hud_used)
-		if(current_cycle >= 5 && current_cycle % 3 == 0)
-			var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
-			var/matrix/skew = matrix()
-			var/intensity = 8
-			skew.set_skew(rand(-intensity,intensity), rand(-intensity,intensity))
-			var/matrix/newmatrix = skew
-
-			if(prob(33)) // 1/3rd of the time, let's make it stack with the previous matrix! Mwhahahaha!
-				var/obj/screen/plane_master/PM = M.hud_used.plane_masters["[GAME_PLANE]"]
-				newmatrix = skew * PM.transform
-
-			for(var/whole_screen in screens)
-				animate(whole_screen, transform = newmatrix, time = 5, easing = QUAD_EASING, loop = -1)
-				animate(transform = -newmatrix, time = 5, easing = QUAD_EASING)
-	return ..()
-
-/datum/reagent/toxin/skewium/on_mob_delete(mob/living/M)
-	if(M && M.hud_used)
-		var/list/screens = list(M.hud_used.plane_masters["[FLOOR_PLANE]"], M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
-		for(var/whole_screen in screens)
-			animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
-	..()
-
 
 /datum/reagent/toxin/anacea
 	name = "Anacea"
-	id = "anacea"
 	description = "A toxin that quickly purges medicines and metabolizes very slowly."
 	reagent_state = LIQUID
 	color = "#3C5133"
@@ -814,10 +749,10 @@
 
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/carbon/M)
 	var/remove_amt = 5
-	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid"))
+	if(holder.has_reagent(/datum/reagent/medicine/calomel) || holder.has_reagent(/datum/reagent/medicine/pen_acid))
 		remove_amt = 0.5
 	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
-		M.reagents.remove_reagent(R.id,remove_amt)
+		M.reagents.remove_reagent(R.type,remove_amt)
 	return ..()
 
 //ACID
@@ -825,7 +760,6 @@
 
 /datum/reagent/toxin/acid
 	name = "Sulphuric acid"
-	id = "sacid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1
@@ -859,7 +793,6 @@
 
 /datum/reagent/toxin/acid/fluacid
 	name = "Fluorosulfuric acid"
-	id = "facid"
 	description = "Fluorosulfuric acid is an extremely corrosive chemical substance."
 	color = "#5050FF"
 	toxpwr = 2
@@ -870,9 +803,20 @@
 	. = 1
 	..()
 
+/datum/reagent/toxin/acid/nitracid
+	name = "Nitric acid"
+	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
+	color = "#5050FF"
+	toxpwr = 6
+	acidpwr = 5.0
+
+/datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)
+	M.adjustFireLoss(current_cycle/15, FALSE) //here you go nervar
+	. = TRUE
+	..()
+
 /datum/reagent/toxin/delayed
 	name = "Toxin Microcapsules"
-	id = "delayed_toxin"
 	description = "Causes heavy toxin damage after a brief time of inactivity."
 	reagent_state = LIQUID
 	metabolization_rate = 0 //stays in the system until active.
@@ -883,7 +827,7 @@
 
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/M)
 	if(current_cycle > delay)
-		holder.remove_reagent(id, actual_metaboliztion_rate * M.metabolism_efficiency)
+		holder.remove_reagent(type, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
 		if(prob(10))
 			M.Paralyze(20, 0)
@@ -892,78 +836,70 @@
 
 /datum/reagent/toxin/mimesbane
 	name = "Mime's Bane"
-	id = "mimesbane"
 	description = "A nonlethal neurotoxin that interferes with the victim's ability to gesture."
 	silent_toxin = TRUE
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "stillness"
 
-/datum/reagent/toxin/mimesbane/on_mob_add(mob/living/L)
-	L.add_trait(TRAIT_EMOTEMUTE, id)
+/datum/reagent/toxin/mimesbane/on_mob_metabolize(mob/living/L)
+	ADD_TRAIT(L, TRAIT_EMOTEMUTE, type)
 
-/datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_EMOTEMUTE, id)
+/datum/reagent/toxin/mimesbane/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_EMOTEMUTE, type)
 
 /datum/reagent/toxin/bonehurtingjuice //oof ouch
 	name = "Bone Hurting Juice"
-	id = "bonehurtingjuice"
 	description = "A strange substance that looks a lot like water. Drinking it is oddly tempting. Oof ouch."
 	silent_toxin = TRUE //no point spamming them even more.
 	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
 	toxpwr = 0
 	taste_description = "bone hurting"
 	overdose_threshold = 50
-	metabolization_rate = 2
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
-	M.say("oof ouch my bones", forced = "bonehurtingjuice")
+	M.say("oof ouch my bones", forced = /datum/reagent/toxin/bonehurtingjuice)
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(15, 0)
-	if(M.dna.species.type == /datum/species/skeleton || M.dna.species.type == /datum/species/plasmaman)
-		M.adjustBruteLoss(0.5, 0)
+	M.adjustStaminaLoss(7.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))
 			if(1)
-				var/list/possible_says = list("oof.", "ouch!", "my bones.", "oof ouch.", "oof ouch my bones.")
-				M.say(pick(possible_says), forced = "bonehurtingjuice")
+				M.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
 			if(2)
-				var/list/possible_mes = list("oofs softly.", "looks like their bones hurt.", "grimaces, as though their bones hurt.")
-				M.say("*custom " + pick(possible_mes), forced = "bonehurtingjuice")
+				M.emote("me", 1, pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
 			if(3)
 				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
 	return ..()
 
 /datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/M)
 	if(prob(4) && iscarbon(M)) //big oof
-		var/selected_part
-		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
-			if(1)
-				selected_part = BODY_ZONE_L_ARM
-			if(2)
-				selected_part = BODY_ZONE_R_ARM
-			if(3)
-				selected_part = BODY_ZONE_L_LEG
-			if(4)
-				selected_part = BODY_ZONE_R_LEG
+		var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
-		if(M.dna.species.type != /datum/species/skeleton && M.dna.species.type != /datum/species/plasmaman) //We're so sorry skeletons, you're so misunderstood
-			if(bp)
-				bp.receive_damage(0, 0, 200)
-				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
-				M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
-				M.say("OOF!!", forced = "bonehurtingjuice")
-			else //SUCH A LUST FOR REVENGE!!!
-				to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
-				M.say("Why are we still here, just to suffer?", forced = "bonehurtingjuice")
-		else //you just want to socialize
-			if(bp)
-				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
-				M.visible_message("<span class='warning'>[M] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
-				M.say("OOF!!", forced="bonehurtingjuice")
-				bp.receive_damage(200, 0, 0) //But I don't think we should
-			else
-				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
-				M.emote("sigh")
+		if(bp)
+			playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+			M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
+			M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
+			bp.receive_damage(0, 0, 200)
+		else //SUCH A LUST FOR REVENGE!!!
+			to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
+			M.say("Why are we still here, just to suffer?", forced = /datum/reagent/toxin/bonehurtingjuice)
 	return ..()
+
+/datum/reagent/toxin/bungotoxin
+	name = "Bungotoxin"
+	description = "A horrible cardiotoxin that protects the humble bungo pit."
+	silent_toxin = TRUE
+	color = "#EBFF8E"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	toxpwr = 0
+	taste_description = "tannin"
+
+/datum/reagent/toxin/bungotoxin/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 3)
+	M.confused = M.dizziness //add a tertiary effect here if this is isn't an effective poison.
+	if(current_cycle >= 12 && prob(8))
+		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
+		to_chat(M, "<span class='notice'>[tox_message]</span>")
+	. = 1
+	..()

@@ -10,9 +10,10 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
-	var/id = 0
 	max_integrity = 150
-	integrity_failure = 50
+	integrity_failure = 0.33
+
+	var/id = 0
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH // actual dir
@@ -28,6 +29,9 @@
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
 	return ..()
+
+/obj/machinery/power/solar/should_have_node()
+	return TRUE
 
 //set the control of the panel to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/solar/proc/set_control(obj/machinery/power/solar_control/SC)
@@ -56,11 +60,11 @@
 	update_icon()
 
 /obj/machinery/power/solar/crowbar_act(mob/user, obj/item/I)
-	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-	user.visible_message("[user] begins to take the glass off [src].", "<span class='notice'>You begin to take the glass off [src]...</span>")
+	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	user.visible_message("<span class='notice'>[user] begins to take the glass off [src].</span>", "<span class='notice'>You begin to take the glass off [src]...</span>")
 	if(I.use_tool(src, user, 50))
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-		user.visible_message("[user] takes the glass off [src].", "<span class='notice'>You take the glass off [src].</span>")
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		user.visible_message("<span class='notice'>[user] takes the glass off [src].</span>", "<span class='notice'>You take the glass off [src].</span>")
 		deconstruct(TRUE)
 	return TRUE
 
@@ -68,19 +72,18 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
-				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, 1)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, TRUE)
 			else
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
+				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
 
 
 /obj/machinery/power/solar/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
-		stat |= BROKEN
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		unset_control()
-		update_icon()
 
 /obj/machinery/power/solar/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -90,7 +93,7 @@
 				S.forceMove(loc)
 				S.give_glass(stat & BROKEN)
 		else
-			playsound(src, "shatter", 70, 1)
+			playsound(src, "shatter", 70, TRUE)
 			new /obj/item/shard(src.loc)
 			new /obj/item/shard(src.loc)
 	qdel(src)
@@ -138,7 +141,7 @@
 			unset_control()
 
 
-/obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
+/obj/machinery/power/solar/fake/New(turf/loc, obj/item/solar_assembly/S)
 	..(loc, S, 0)
 
 /obj/machinery/power/solar/fake/process()
@@ -206,10 +209,10 @@
 			return
 		anchored = !anchored
 		if(anchored)
-			user.visible_message("[user] wrenches the solar assembly into place.", "<span class='notice'>You wrench the solar assembly into place.</span>")
+			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>", "<span class='notice'>You wrench the solar assembly into place.</span>")
 			W.play_tool_sound(src, 75)
 		else
-			user.visible_message("[user] unwrenches the solar assembly from its place.", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
+			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from its place.</span>", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
 			W.play_tool_sound(src, 75)
 		return 1
 
@@ -220,8 +223,8 @@
 		var/obj/item/stack/sheet/S = W
 		if(S.use(2))
 			glass_type = W.type
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			user.visible_message("[user] places the glass on the solar assembly.", "<span class='notice'>You place the glass on the solar assembly.</span>")
+			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>", "<span class='notice'>You place the glass on the solar assembly.</span>")
 			if(tracker)
 				new /obj/machinery/power/tracker(get_turf(src), src)
 			else
@@ -237,13 +240,13 @@
 				return
 			tracker = 1
 			qdel(W)
-			user.visible_message("[user] inserts the electronics into the solar assembly.", "<span class='notice'>You insert the electronics into the solar assembly.</span>")
+			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>", "<span class='notice'>You insert the electronics into the solar assembly.</span>")
 			return 1
 	else
 		if(W.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
 			tracker = 0
-			user.visible_message("[user] takes out the electronics from the solar assembly.", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
+			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
 			return 1
 	return ..()
 
@@ -260,7 +263,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 250
 	max_integrity = 200
-	integrity_failure = 100
+	integrity_failure = 0.5
 	var/icon_screen = "solar"
 	var/icon_keyboard = "power_key"
 	var/id = 0
@@ -342,7 +345,7 @@
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "solar_control", name, 500, 400, master_ui, state)
+		ui = new(user, src, ui_key, "solar_control", name, 380, 230, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/solar_control/ui_data()
@@ -363,39 +366,47 @@
 /obj/machinery/power/solar_control/ui_act(action, params)
 	if(..())
 		return
-	switch(action)
-		if("angle")
-			var/adjust = text2num(params["adjust"])
-			if(adjust)
-				currentdir = CLAMP((360 + adjust + currentdir) % 360, 0, 359)
-				targetdir = currentdir
-				set_panels(currentdir)
-				. = TRUE
-		if("rate")
-			var/adjust = text2num(params["adjust"])
-			if(adjust)
-				trackrate = CLAMP(trackrate + adjust, -7200, 7200)
-				if(trackrate)
-					nexttime = world.time + 36000 / abs(trackrate)
-				. = TRUE
-		if("tracking")
-			var/mode = text2num(params["mode"])
-			track = mode
-			if(mode == 2 && connected_tracker)
-				connected_tracker.set_angle(SSsun.angle)
-				set_panels(currentdir)
-			else if(mode == 1)
-				targetdir = currentdir
-				if(trackrate)
-					nexttime = world.time + 36000 / abs(trackrate)
-				set_panels(targetdir)
-			. = TRUE
-		if("refresh")
-			search_for_connected()
-			if(connected_tracker && track == 2)
-				connected_tracker.set_angle(SSsun.angle)
+	if(action == "angle")
+		var/adjust = text2num(params["adjust"])
+		var/value = text2num(params["value"])
+		if(adjust)
+			value = currentdir + adjust
+		if(value != null)
+			currentdir = CLAMP((360 + value) % 360, 0, 359)
+			targetdir = currentdir
 			set_panels(currentdir)
-			. = TRUE
+			return TRUE
+		return FALSE
+	if(action == "rate")
+		var/adjust = text2num(params["adjust"])
+		var/value = text2num(params["value"])
+		if(adjust)
+			value = trackrate + adjust
+		if(value != null)
+			trackrate = CLAMP(value, -7200, 7200)
+			if(trackrate)
+				nexttime = world.time + 36000 / abs(trackrate)
+			return TRUE
+		return FALSE
+	if(action == "tracking")
+		var/mode = text2num(params["mode"])
+		track = mode
+		if(mode == 2 && connected_tracker)
+			connected_tracker.set_angle(SSsun.angle)
+			set_panels(currentdir)
+		else if(mode == 1)
+			targetdir = currentdir
+			if(trackrate)
+				nexttime = world.time + 36000 / abs(trackrate)
+			set_panels(targetdir)
+		return TRUE
+	if(action == "refresh")
+		search_for_connected()
+		if(connected_tracker && track == 2)
+			connected_tracker.set_angle(SSsun.angle)
+		set_panels(currentdir)
+		return TRUE
+	return FALSE
 
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
@@ -432,17 +443,16 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(stat & BROKEN)
-				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 			else
-				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, 1)
+				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/machinery/power/solar_control/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
-		stat |= BROKEN
-		update_icon()
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
@@ -456,9 +466,9 @@
 			connected_tracker.unset_control()
 
 	if(track==1 && trackrate) //manual tracking and set a rotation speed
-		if(nexttime <= world.time) //every time we need to increase/decrease the angle by 1�...
+		if(nexttime <= world.time) //every time we need to increase/decrease the angle by 1°...
 			targetdir = (targetdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
-			nexttime += 36000/abs(trackrate) //reset the counter for the next 1�
+			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
 
 //rotates the panel to the passed angle
 /obj/machinery/power/solar_control/proc/set_panels(currentdir)
@@ -471,9 +481,6 @@
 	update_icon()
 
 
-/obj/machinery/power/solar_control/power_change()
-	..()
-	update_icon()
 
 
 

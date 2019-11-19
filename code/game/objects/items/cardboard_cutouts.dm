@@ -23,7 +23,7 @@
 	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
-	playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	push_over()
 
 /obj/item/cardboard_cutout/proc/push_over()
@@ -52,28 +52,27 @@
 	if(I.item_flags & NOBLUDGEON)
 		return
 	if(!I.force)
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
 	else if(I.hitsound)
-		playsound(loc, I.hitsound, get_clamped_volume(), 1, -1)
+		playsound(loc, I.hitsound, get_clamped_volume(), TRUE, -1)
 
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit \
-			[src] with [I]!</span>", "<span class='danger'>You hit [src] \
-			with [I]!</span>")
-
+		user.visible_message("<span class='danger'>[user] hits [src] with [I]!</span>", \
+			"<span class='danger'>You hit [src] with [I]!</span>")
 		if(prob(I.force))
 			push_over()
 
-/obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
-	if(istype(P, /obj/item/projectile/bullet/reusable))
+/obj/item/cardboard_cutout/bullet_act(obj/projectile/P)
+	if(istype(P, /obj/projectile/bullet/reusable))
 		P.on_hit(src, 0)
-	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
-	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
+	visible_message("<span class='danger'>[src] is hit by [P]!</span>")
+	playsound(src, 'sound/weapons/slice.ogg', 50, TRUE)
 	if(prob(P.damage))
 		push_over()
+	return BULLET_ACT_HIT
 
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
 	if(!crayon || !user)
@@ -86,8 +85,8 @@
 	if(crayon.is_capped)
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
-	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
-	if(!new_appearance || !crayon || !user.canUseTopic(src))
+	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in sortList(possible_appearances)
+	if(!new_appearance || !crayon || !user.canUseTopic(src, BE_CLOSE))
 		return
 	if(!do_after(user, 10, FALSE, src, TRUE))
 		return

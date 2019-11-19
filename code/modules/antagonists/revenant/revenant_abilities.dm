@@ -13,7 +13,7 @@
 			to_chat(src, "<span class='revenwarning'>[A]'s soul is dead and empty.</span>" )
 		else if(in_range(src, A))
 			Harvest(A)
-	
+
 
 //Harvest; activated by clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
@@ -25,8 +25,9 @@
 	if(!target.stat)
 		to_chat(src, "<span class='revennotice'>[target.p_their(TRUE)] soul is too strong to harvest.</span>")
 		if(prob(10))
-			to_chat(target, "You feel as if you are being watched.")
+			to_chat(target, "<span class='revennotice'>You feel as if you are being watched.</span>")
 		return
+	face_atom(target)
 	draining = TRUE
 	essence_drained += rand(15, 20)
 	to_chat(src, "<span class='revennotice'>You search for the soul of [target].</span>")
@@ -67,7 +68,7 @@
 				if(target.anti_magic_check(FALSE, TRUE))
 					to_chat(src, "<span class='revenminor'>Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!</span>")
 					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
-											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
+											   "<span class='revenwarning'>Violet lights, dancing in your vision, receding--</span>")
 					draining = FALSE
 					return
 				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
@@ -106,36 +107,16 @@
 	action_background_icon_state = "bg_revenant"
 
 //Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob
-/obj/effect/proc_holder/spell/targeted/revenant_transmit
-	name = "Transmit"
-	desc = "Telepathically transmits a message to the target."
+/obj/effect/proc_holder/spell/targeted/telepathy/revenant
+	name = "Revenant Transmit"
 	panel = "Revenant Abilities"
-	charge_max = 0
-	clothes_req = 0
-	range = 7
-	include_user = 0
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_icon_state = "r_transmit"
 	action_background_icon_state = "bg_revenant"
-
-/obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
-	for(var/mob/living/M in targets)
-		var/msg = stripped_input(usr, "What do you wish to tell [M]?", null, "")
-		if(!msg)
-			charge_counter = charge_max
-			return
-		log_directed_talk(user, M, msg, LOG_SAY, "revenant whisper")
-		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
-		if(!M.anti_magic_check(FALSE, TRUE)) //hear no evil
-			to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
-		for(var/ded in GLOB.dead_mob_list)
-			if(!isobserver(ded))
-				continue
-			var/follow_rev = FOLLOW_LINK(ded, user)
-			var/follow_whispee = FOLLOW_LINK(ded, M)
-			to_chat(ded, "[follow_rev] <span class='revenboldnotice'>[user] Revenant Transmit:</span> <span class='revennotice'>\"[msg]\" to</span> [follow_whispee] <span class='name'>[M]</span>")
-
-
+	notice = "revennotice"
+	boldnotice = "revenboldnotice"
+	holy_check = TRUE
+	tinfoil_check = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0
@@ -149,8 +130,8 @@
 	var/unlock_amount = 100 //How much essence it costs to unlock
 	var/cast_amount = 50 //How much essence it costs to use
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/New()
-	..()
+/obj/effect/proc_holder/spell/aoe_turf/revenant/Initialize()
+	. = ..()
 	if(locked)
 		name = "[initial(name)] ([unlock_amount]SE)"
 	else
@@ -235,9 +216,9 @@
 			continue
 		L.Beam(M,icon_state="purple_lightning",time=5)
 		if(!M.anti_magic_check(FALSE, TRUE))
-			M.electrocute_act(shock_damage, L, safety=TRUE)
+			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 		do_sparks(4, FALSE, M)
-		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+		playsound(M, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile
@@ -274,7 +255,7 @@
 	if(T.type == /turf/closed/wall/r_wall && prob(10))
 		new /obj/effect/temp_visual/revenant(T)
 		T.ChangeTurf(/turf/closed/wall/r_wall/rust)
-	for(var/obj/effect/decal/cleanable/salt/salt in T)
+	for(var/obj/effect/decal/cleanable/food/salt/salt in T)
 		new /obj/effect/temp_visual/revenant(T)
 		qdel(salt)
 	for(var/obj/structure/closet/closet in T.contents)
@@ -333,7 +314,7 @@
 			if(!istype(thing, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
 				thing.emp_act(EMP_HEAVY)
 	for(var/mob/living/silicon/robot/S in T) //Only works on cyborgs, not AI
-		playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
+		playsound(S, 'sound/machines/warning-buzzer.ogg', 50, TRUE)
 		new /obj/effect/temp_visual/revenant(S.loc)
 		S.spark_system.start()
 		S.emp_act(EMP_HEAVY)
@@ -375,7 +356,7 @@
 					to_chat(H, "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
 			else
 				if(mob.reagents)
-					mob.reagents.add_reagent("plasma", 5)
+					mob.reagents.add_reagent(/datum/reagent/toxin/plasma, 5)
 		else
 			mob.adjustToxLoss(5)
 	for(var/obj/structure/spacevine/vine in T) //Fucking with botanists, the ability.

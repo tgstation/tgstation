@@ -14,9 +14,9 @@
 "e" = (
 /obj/machinery/porta_turret/syndicate{
 	desc = "A ballistic machine gun auto-turret that fires bluespace bullets.";
-	lethal_projectile = /obj/item/projectile/magic/teleport;
+	lethal_projectile = /obj/projectile/magic/teleport;
 	name = "displacement turret";
-	stun_projectile = /obj/item/projectile/magic/teleport
+	stun_projectile = /obj/projectile/magic/teleport
 	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
@@ -77,7 +77,7 @@
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "p" = (
 /obj/structure/table/glass,
-/obj/item/stack/cable_coil/blue,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"
 	},
@@ -169,7 +169,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "E" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "F" = (
@@ -194,16 +194,22 @@
 /turf/open/floor/plasteel/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "J" = (
-/turf/closed/mineral/random,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/unpowered/no_grav)
 "K" = (
-/turf/open/floor/plasteel/stairs/left,
+/turf/open/floor/plasteel/stairs/right{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/ruin/unpowered/no_grav)
-"L" = (
-/turf/open/floor/plasteel/stairs/medium,
+"U" = (
+/turf/open/floor/plasteel/stairs/medium{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/ruin/unpowered/no_grav)
-"M" = (
-/turf/open/floor/plasteel/stairs/right,
+"X" = (
+/turf/open/floor/plasteel/stairs/left{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
@@ -788,7 +794,7 @@ B
 B
 B
 d
-K
+X
 b
 b
 b
@@ -816,7 +822,7 @@ B
 B
 B
 I
-L
+U
 b
 b
 b
@@ -844,7 +850,7 @@ c
 d
 c
 d
-M
+K
 b
 b
 b

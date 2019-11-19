@@ -20,7 +20,7 @@
 
 /datum/nanite_program/triggered/adrenaline
 	name = "Adrenaline Burst"
-	desc = "The nanites cause a burst of adrenaline when triggered, waking the host from stuns and temporarily increasing their speed."
+	desc = "The nanites cause a burst of adrenaline when triggered, allowing the user to push their body past its normal limits."
 	trigger_cost = 25
 	trigger_cooldown = 1200
 	rogue_types = list(/datum/nanite_program/toxic, /datum/nanite_program/nerve_decay)
@@ -29,11 +29,8 @@
 	if(!..())
 		return
 	to_chat(host_mob, "<span class='notice'>You feel a sudden surge of energy!</span>")
-	host_mob.SetAllImmobility(0)
-	host_mob.adjustStaminaLoss(-75)
 	host_mob.set_resting(FALSE)
-	host_mob.update_mobility()
-	host_mob.reagents.add_reagent("stimulants", 1.5)
+	host_mob.reagents.add_reagent(/datum/reagent/medicine/badstims, 3)
 
 /datum/nanite_program/hardening
 	name = "Dermal Hardening"
@@ -104,11 +101,11 @@
 
 /datum/nanite_program/conductive/enable_passive_effect()
 	. = ..()
-	host_mob.add_trait(TRAIT_SHOCKIMMUNE, "nanites")
+	ADD_TRAIT(host_mob, TRAIT_SHOCKIMMUNE, "nanites")
 
 /datum/nanite_program/conductive/disable_passive_effect()
 	. = ..()
-	host_mob.remove_trait(TRAIT_SHOCKIMMUNE, "nanites")
+	REMOVE_TRAIT(host_mob, TRAIT_SHOCKIMMUNE, "nanites")
 
 /datum/nanite_program/mindshield
 	name = "Mental Barrier"
@@ -118,11 +115,11 @@
 
 /datum/nanite_program/mindshield/enable_passive_effect()
 	. = ..()
-	if(!host_mob.mind.has_antag_datum(/datum/antagonist/rev) && !is_hivemember(host_mob)) //won't work if on a rev, to avoid having implanted revs. same applies for hivemind members.
-		host_mob.add_trait(TRAIT_MINDSHIELD, "nanites")
+	if(!host_mob.mind.has_antag_datum(/datum/antagonist/rev, TRUE)) //won't work if on a rev, to avoid having implanted revs.
+		ADD_TRAIT(host_mob, TRAIT_MINDSHIELD, "nanites")
 		host_mob.sec_hud_set_implants()
 
 /datum/nanite_program/mindshield/disable_passive_effect()
 	. = ..()
-	host_mob.remove_trait(TRAIT_MINDSHIELD, "nanites")
+	REMOVE_TRAIT(host_mob, TRAIT_MINDSHIELD, "nanites")
 	host_mob.sec_hud_set_implants()

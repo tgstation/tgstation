@@ -1,15 +1,3 @@
-/mob/living/carbon/movement_delay()
-	. = ..()
-	. += grab_state * 3 //can't go fast while grabbing something.
-
-	if(!get_leg_ignore()) //ignore the fact we lack legs
-		var/leg_amount = get_num_legs()
-		. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
-		if(!leg_amount)
-			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
-		if(legcuffed)
-			. += legcuffed.slowdown
-
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
 	if(movement_type & FLYING)
 		return 0
@@ -34,10 +22,10 @@
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
-	if(. && (movement_type & FLOATING)) //floating is easy
-		if(has_trait(TRAIT_NOHUNGER))
-			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
+	if(. && !(movement_type & FLOATING)) //floating is easy
+		if(HAS_TRAIT(src, TRAIT_NOHUNGER))
+			set_nutrition(NUTRITION_LEVEL_FED - 1)	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
-			nutrition -= HUNGER_FACTOR/10
+			adjust_nutrition(-(HUNGER_FACTOR/10))
 			if(m_intent == MOVE_INTENT_RUN)
-				nutrition -= HUNGER_FACTOR/10
+				adjust_nutrition(-(HUNGER_FACTOR/10))

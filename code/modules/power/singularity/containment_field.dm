@@ -11,14 +11,21 @@
 	use_power = NO_POWER_USE
 	interaction_flags_atom = NONE
 	interaction_flags_machine = NONE
+	CanAtmosPass = ATMOS_PASS_NO
 	light_range = 4
 	layer = ABOVE_OBJ_LAYER
 	var/obj/machinery/field/generator/FG1 = null
 	var/obj/machinery/field/generator/FG2 = null
 
+/obj/machinery/field/containment/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
+
 /obj/machinery/field/containment/Destroy()
 	FG1.fields -= src
 	FG2.fields -= src
+	CanAtmosPass = ATMOS_PASS_YES
+	air_update_turf(TRUE)
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -36,9 +43,9 @@
 /obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BURN)
-			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/empulse.ogg', 75, 1)
+			playsound(loc, 'sound/effects/empulse.ogg', 75, TRUE)
 
 /obj/machinery/field/containment/blob_act(obj/structure/blob/B)
 	return FALSE
@@ -117,7 +124,7 @@
 		user.take_overall_damage(0, shock_damage)
 		user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
 		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
-		"<span class='italics'>You hear an electrical crack.</span>")
+		"<span class='hear'>You hear an electrical crack.</span>")
 
 	user.updatehealth()
 	bump_field(user)

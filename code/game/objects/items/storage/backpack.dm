@@ -23,14 +23,10 @@
 
 /obj/item/storage/backpack/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 21
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_items = 21
-
-/obj/item/storage/backpack/examine(mob/user)
-	..()
-	clothing_resistance_flag_examine_message(user)
 
 /*
  * Backpack Types
@@ -38,7 +34,7 @@
 
 /obj/item/storage/backpack/old/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 12
 
 /obj/item/storage/backpack/holding
@@ -53,7 +49,7 @@
 
 /obj/item/storage/backpack/holding/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_big_nesting = TRUE
 	STR.max_w_class = WEIGHT_CLASS_GIGANTIC
 	STR.max_combined_w_class = 35
@@ -63,31 +59,49 @@
 	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(20)
-	playsound(src, "rustle", 50, 1, -5)
+	playsound(src, "rustle", 50, TRUE, -5)
 	qdel(user)
-	return
 
 /obj/item/storage/backpack/holding/singularity_act(current_size)
 	var/dist = max((current_size - 2),1)
 	explosion(src.loc,(dist),(dist*2),(dist*4))
-	return
 
 /obj/item/storage/backpack/santabag
 	name = "Santa's Gift Bag"
-	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
+	desc = "Space Santa uses this to deliver presents to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
 	w_class = WEIGHT_CLASS_BULKY
 
+/obj/item/storage/backpack/santabag/Initialize()
+	. = ..()
+	regenerate_presents()
+
 /obj/item/storage/backpack/santabag/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 60
 
 /obj/item/storage/backpack/santabag/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit...</span>")
 	return (OXYLOSS)
+
+/obj/item/storage/backpack/santabag/proc/regenerate_presents()
+	addtimer(CALLBACK(src, .proc/regenerate_presents), rand(30 SECONDS, 60 SECONDS))
+
+	var/mob/M = get(loc, /mob)
+	if(!istype(M))
+		return
+	if(HAS_TRAIT(M, TRAIT_CANNOT_OPEN_PRESENTS))
+		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+		var/turf/floor = get_turf(src)
+		var/obj/item/I = new /obj/item/a_gift/anything(floor)
+		if(STR.can_be_inserted(I, stop_messages=TRUE))
+			STR.handle_item_insertion(I, prevent_warning=TRUE)
+		else
+			qdel(I)
+
 
 /obj/item/storage/backpack/cultpack
 	name = "trophy rack"
@@ -198,12 +212,13 @@
 	name = "satchel"
 	desc = "A trendy looking satchel."
 	icon_state = "satchel-norm"
-	species_exception = list(/datum/species/angel) //satchels can be equipped since they are on the side, not back
+	item_state = "satchel-norm"
 
 /obj/item/storage/backpack/satchel/leather
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
+	item_state = "satchel"
 
 /obj/item/storage/backpack/satchel/leather/withwallet/PopulateContents()
 	new /obj/item/storage/wallet/random(src)
@@ -215,14 +230,14 @@
 	name = "industrial satchel"
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
-	item_state = "engiepack"
+	item_state = "satchel-eng"
 	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/satchel/med
 	name = "medical satchel"
 	desc = "A sterile satchel used in medical departments."
 	icon_state = "satchel-med"
-	item_state = "medicalpack"
+	item_state = "satchel-med"
 
 /obj/item/storage/backpack/satchel/vir
 	name = "virologist satchel"
@@ -258,76 +273,62 @@
 	name = "security satchel"
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
-	item_state = "securitypack"
+	item_state = "satchel-sec"
 
 /obj/item/storage/backpack/satchel/explorer
 	name = "explorer satchel"
 	desc = "A robust satchel for stashing your loot."
 	icon_state = "satchel-explorer"
-	item_state = "securitypack"
+	item_state = "satchel-explorer"
 
 /obj/item/storage/backpack/satchel/cap
 	name = "captain's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
-	item_state = "captainpack"
+	item_state = "satchel-cap"
 
 /obj/item/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
+	item_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 	level = 1
-	component_type = /datum/component/storage/concrete/secret_satchel
-
-/obj/item/storage/backpack/satchel/flat/Initialize()
-	. = ..()
-	SSpersistence.new_secret_satchels += src
 
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 15
-	STR.cant_hold = typecacheof(list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks
+	STR.set_holdable(null, list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/hide(intact)
 	if(intact)
-		invisibility = INVISIBILITY_MAXIMUM
+		invisibility = INVISIBILITY_OBSERVER
 		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
 		icon_state = "[initial(icon_state)]2"
+		ADD_TRAIT(src, TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
 	else
 		invisibility = initial(invisibility)
 		anchored = FALSE
 		icon_state = initial(icon_state)
+		REMOVE_TRAIT(src, TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
+	var/datum/supply_pack/costumes_toys/randomised/contraband/C = new
+	for(var/i in 1 to 2)
+		var/ctype = pick(C.contains)
+		new ctype(src)
+
+	qdel(C)
+
+/obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/crowbar(src)
 
-/obj/item/storage/backpack/satchel/flat/Destroy()
-	SSpersistence.new_secret_satchels -= src
-	return ..()
-
-/obj/item/storage/backpack/satchel/flat/secret
-	var/list/reward_one_of_these = list() //Intended for map editing
-	var/list/reward_all_of_these = list() //use paths!
-	var/revealed = FALSE
-
-/obj/item/storage/backpack/satchel/flat/secret/Initialize()
-	. = ..()
-
-	if(isfloorturf(loc) && !isplatingturf(loc))
-		hide(1)
-
-/obj/item/storage/backpack/satchel/flat/secret/hide(intact)
 	..()
-	if(!intact && !revealed)
-		if(reward_one_of_these.len > 0)
-			var/reward = pick(reward_one_of_these)
-			new reward(src)
-		for(var/R in reward_all_of_these)
-			new R(src)
-		revealed = TRUE
+
+/obj/item/storage/backpack/satchel/flat/empty/PopulateContents()
+	return
 
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"
@@ -338,7 +339,7 @@
 
 /obj/item/storage/backpack/duffelbag/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 30
 
 /obj/item/storage/backpack/duffelbag/captain
@@ -407,7 +408,7 @@
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil/random(src)
+	new /obj/item/stack/cable_coil(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
 
@@ -434,7 +435,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.silent = TRUE
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman
@@ -443,7 +444,7 @@
 	item_state = "duffel-syndieammo"
 
 /obj/item/storage/backpack/duffelbag/syndie/hitman/PopulateContents()
-	new /obj/item/clothing/under/lawyer/blacksuit(src)
+	new /obj/item/clothing/under/suit/black(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
@@ -482,24 +483,49 @@
 	item_state = "duffel-syndieammo"
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun
-	desc = "A large duffel bag, packed to the brim with Bulldog shotgun ammo."
+	desc = "A large duffel bag, packed to the brim with Bulldog shotgun magazines."
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/shotgun/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/ammo_box/magazine/m12g/stun(src)
+	new /obj/item/ammo_box/magazine/m12g/slug(src)
 	new /obj/item/ammo_box/magazine/m12g/slug(src)
 	new /obj/item/ammo_box/magazine/m12g/dragon(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/smg
-	desc = "A large duffel bag, packed to the brim with C20r magazines."
+	desc = "A large duffel bag, packed to the brim with C-20r magazines."
 
 /obj/item/storage/backpack/duffelbag/syndie/ammo/smg/PopulateContents()
 	for(var/i in 1 to 9)
 		new /obj/item/ammo_box/magazine/smgm45(src)
 
+/obj/item/storage/backpack/duffelbag/syndie/ammo/dark_gygax
+	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
+
+/obj/item/storage/backpack/duffelbag/syndie/ammo/dark_gygax/PopulateContents()
+	new /obj/item/mecha_ammo/incendiary(src)
+	new /obj/item/mecha_ammo/incendiary(src)
+	new /obj/item/mecha_ammo/incendiary(src)
+	new /obj/item/mecha_ammo/flashbang(src)
+	new /obj/item/mecha_ammo/flashbang(src)
+	new /obj/item/mecha_ammo/flashbang(src)
+
+/obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
+	desc = "A large duffel bag, packed to the brim with various exosuit ammo."
+
+/obj/item/storage/backpack/duffelbag/syndie/ammo/mauler/PopulateContents()
+	new /obj/item/mecha_ammo/lmg(src)
+	new /obj/item/mecha_ammo/lmg(src)
+	new /obj/item/mecha_ammo/lmg(src)
+	new /obj/item/mecha_ammo/scattershot(src)
+	new /obj/item/mecha_ammo/scattershot(src)
+	new /obj/item/mecha_ammo/scattershot(src)
+	new /obj/item/mecha_ammo/missiles_he(src)
+	new /obj/item/mecha_ammo/missiles_he(src)
+	new /obj/item/mecha_ammo/missiles_he(src)
+
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
-	desc = "A large duffel bag containing a C20r, some magazines, and a cheap looking suppressor."
+	desc = "A large duffel bag containing a C-20r, some magazines, and a cheap looking suppressor."
 
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle/PopulateContents()
 	new /obj/item/ammo_box/magazine/smgm45(src)
@@ -508,25 +534,16 @@
 	new /obj/item/suppressor/specialoffer(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
-	desc = "A large duffel bag containing a Bulldog, several drums, and a collapsed hardsuit."
+	desc = "A large duffel bag containing a Bulldog, some drums, and a pair of thermal imaging glasses."
 
 /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle/PopulateContents()
+	new /obj/item/gun/ballistic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/gun/ballistic/automatic/shotgun/bulldog(src)
-	new /obj/item/ammo_box/magazine/m12g/stun(src)
+	new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
-	desc = "A large duffel bag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
-
-/obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
-	new /obj/item/clothing/shoes/magboots/syndie(src)
-	new /obj/item/storage/firstaid/tactical(src)
-	new /obj/item/gun/ballistic/automatic/l6_saw/toy(src)
-	new /obj/item/ammo_box/foambox/riot(src)
-
-/obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
-	desc = "A large duffel bag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
+	desc = "A large duffel bag containing a medical equipment, a Donksoft LMG, a big jumbo box of riot darts, and a knock-off pair of magboots."
 
 /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
@@ -535,7 +552,7 @@
 	new /obj/item/ammo_box/foambox/riot(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle
-	desc = "A large duffel bag containing a deadly chemicals, a chemical spray, chemical grenade, a Donksoft assault rifle, riot grade darts, a minature syringe gun, and a box of syringes."
+	desc = "A large duffel bag containing deadly chemicals, a handheld chem sprayer, Bioterror foam grenade, a Donksoft assault rifle, box of riot grade darts, a dart pistol, and a box of syringes."
 
 /obj/item/storage/backpack/duffelbag/syndie/med/bioterrorbundle/PopulateContents()
 	new /obj/item/reagent_containers/spray/chemsprayer/bioterror(src)
@@ -550,14 +567,14 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/c4/PopulateContents()
 	for(var/i in 1 to 10)
-		new /obj/item/grenade/plastic/c4(src)
+		new /obj/item/grenade/c4(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/x4/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/grenade/plastic/x4(src)
+		new /obj/item/grenade/c4/x4(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter
-	desc = "A large duffel bag containing New Russian pyro backpack sprayer, a pistol, a pipebomb, fireproof hardsuit, ammo, and other equipment."
+	desc = "A large duffel bag containing a New Russian pyro backpack sprayer, Elite hardsuit, a Stechkin APS pistol, minibomb, ammo, and other equipment."
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter/PopulateContents()
 	new /obj/item/clothing/under/syndicate/soviet(src)
@@ -567,19 +584,19 @@
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka(src)
-	new /obj/item/reagent_containers/syringe/stimulants(src)
+	new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
 	new /obj/item/grenade/syndieminibomb(src)
 
 // For ClownOps.
 /obj/item/storage/backpack/duffelbag/clown/syndie/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	slowdown = 0
 	STR.silent = TRUE
 
 /obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
 	new /obj/item/pda/clown(src)
-	new /obj/item/clothing/under/rank/clown(src)
+	new /obj/item/clothing/under/rank/civilian/clown(src)
 	new /obj/item/clothing/shoes/clown_shoes(src)
 	new /obj/item/clothing/mask/gas/clown_hat(src)
 	new /obj/item/bikehorn(src)

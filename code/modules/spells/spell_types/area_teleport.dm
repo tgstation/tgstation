@@ -8,6 +8,8 @@
 	var/sound1 = 'sound/weapons/zapbang.ogg'
 	var/sound2 = 'sound/weapons/zapbang.ogg'
 
+	var/say_destination = TRUE
+
 /obj/effect/proc_holder/spell/targeted/area_teleport/perform(list/targets, recharge = 1,mob/living/user = usr)
 	var/thearea = before_cast(targets)
 	if(!thearea || !cast_check(1))
@@ -33,7 +35,7 @@
 	return thearea
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets,area/thearea,mob/user = usr)
-	playsound(get_turf(user), sound1, 50,1)
+	playsound(get_turf(user), sound1, 50,TRUE)
 	for(var/mob/living/target in targets)
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
@@ -47,7 +49,7 @@
 					L+=T
 
 		if(!L.len)
-			to_chat(usr, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
+			to_chat(usr, "<span class='warning'>The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.</span>")
 			return
 
 		if(target && target.buckled)
@@ -58,7 +60,7 @@
 		var/success = FALSE
 		while(tempL.len)
 			attempt = pick(tempL)
-			target.Move(attempt)
+			do_teleport(target, attempt, channel = TELEPORT_CHANNEL_MAGIC)
 			if(get_turf(target) == attempt)
 				success = TRUE
 				break
@@ -66,23 +68,25 @@
 				tempL.Remove(attempt)
 
 		if(!success)
-			target.forceMove(L)
-			playsound(get_turf(user), sound2, 50,1)
+			do_teleport(target, L, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+			playsound(get_turf(user), sound2, 50,TRUE)
 
-	return
-
-/obj/effect/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null,mob/living/user = usr)
 	if(!invocation_area || !chosenarea)
 		..()
 	else
+		var/words
+		if(say_destination)
+			words = "[invocation] [uppertext(chosenarea.name)]"
+		else
+			words = "[invocation]"
+
 		switch(invocation_type)
 			if("shout")
-				user.say("[invocation] [uppertext(chosenarea.name)]", forced = "spell")
+				user.say(words, forced = "spell")
 				if(user.gender==MALE)
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
 				else
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
+					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
 			if("whisper")
-				user.whisper("[invocation] [uppertext(chosenarea.name)]", forced = "spell")
-
-	return
+				user.whisper(words, forced = "spell")

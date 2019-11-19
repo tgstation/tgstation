@@ -49,10 +49,10 @@
 		else
 			padloc = "(UNKNOWN)"
 		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		send_speech(message, 7, T, "robot", get_spans(), language)
+		send_speech(message, 7, T, "robot", message_language = language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
-		to_chat(src, "No holopad connected.")
+		to_chat(src, "<span class='alert'>No holopad connected.</span>")
 
 
 // Make sure that the code compiles with AI_VOX undefined
@@ -96,12 +96,12 @@
 		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
 
-	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
-
-	last_announcement = message
+	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text|null
 
 	if(!message || announcing_vox > world.time)
 		return
+
+	last_announcement = message
 
 	if(incapacitated())
 		return
@@ -150,7 +150,7 @@
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in GLOB.player_list)
-				if(M.client && M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
+				if(M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
 						SEND_SOUND(M, voice)
@@ -161,10 +161,3 @@
 
 #undef VOX_DELAY
 #endif
-
-/mob/living/silicon/ai/could_speak_in_language(datum/language/dt)
-	if(is_servant_of_ratvar(src))
-		// Ratvarian AIs can only speak Ratvarian
-		. = ispath(dt, /datum/language/ratvar)
-	else
-		. = ..()

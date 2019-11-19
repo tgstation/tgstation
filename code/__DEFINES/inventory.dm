@@ -1,12 +1,18 @@
 /*ALL DEFINES RELATED TO INVENTORY OBJECTS, MANAGEMENT, ETC, GO HERE*/
 
 //ITEM INVENTORY WEIGHT, FOR w_class
-#define WEIGHT_CLASS_TINY     1 //Usually items smaller then a human hand, ex: Playing Cards, Lighter, Scalpel, Coins/Money
-#define WEIGHT_CLASS_SMALL    2 //Pockets can hold small and tiny items, ex: Flashlight, Multitool, Grenades, GPS Device
-#define WEIGHT_CLASS_NORMAL   3 //Standard backpacks can carry tiny, small & normal items, ex: Fire extinguisher, Stunbaton, Gas Mask, Metal Sheets
-#define WEIGHT_CLASS_BULKY    4 //Items that can be weilded or equipped but not stored in an inventory, ex: Defibrillator, Backpack, Space Suits
-#define WEIGHT_CLASS_HUGE     5 //Usually represents objects that require two hands to operate, ex: Shotgun, Two Handed Melee Weapons
-#define WEIGHT_CLASS_GIGANTIC 6 //Essentially means it cannot be picked up or placed in an inventory, ex: Mech Parts, Safe
+/// Usually items smaller then a human hand, (e.g. playing cards, lighter, scalpel, coins/holochips)
+#define WEIGHT_CLASS_TINY     1
+/// Pockets can hold small and tiny items, (e.g. flashlight, multitool, grenades, GPS device)
+#define WEIGHT_CLASS_SMALL    2
+/// Standard backpacks can carry tiny, small & normal items, (e.g. fire extinguisher, stun baton, gas mask, metal sheets)
+#define WEIGHT_CLASS_NORMAL   3
+/// Items that can be weilded or equipped but not stored in an inventory, (e.g. defibrillator, backpack, space suits)
+#define WEIGHT_CLASS_BULKY    4
+/// Usually represents objects that require two hands to operate, (e.g. shotgun, two-handed melee weapons)
+#define WEIGHT_CLASS_HUGE     5
+/// Essentially means it cannot be picked up or placed in an inventory, (e.g. mech parts, safe)
+#define WEIGHT_CLASS_GIGANTIC 6
 
 //Inventory depth: limits how many nested storage items you can access directly.
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
@@ -25,68 +31,23 @@
 #define ITEM_SLOT_ID			(1<<8)
 #define ITEM_SLOT_BELT			(1<<9)
 #define ITEM_SLOT_BACK			(1<<10)
-#define ITEM_SLOT_POCKET		(1<<11) // this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
-#define ITEM_SLOT_DENYPOCKET	(1<<12) // this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
-#define ITEM_SLOT_NECK			(1<<13)
+#define ITEM_SLOT_DEX_STORAGE	(1<<11)
+#define ITEM_SLOT_NECK			(1<<12)
+#define ITEM_SLOT_HANDS			(1<<13)
+#define ITEM_SLOT_BACKPACK		(1<<14)
+#define ITEM_SLOT_SUITSTORE		(1<<15)
+#define ITEM_SLOT_LPOCKET		(1<<16)
+#define ITEM_SLOT_RPOCKET		(1<<17)
+#define ITEM_SLOT_HANDCUFFED	(1<<18)
+#define ITEM_SLOT_LEGCUFFED		(1<<19)
 
-//SLOTS
-#define SLOT_BACK			1
-#define SLOT_WEAR_MASK		2
-#define SLOT_HANDCUFFED		3
-#define SLOT_HANDS			4 //wherever you provide a slot for hands you provide SLOT_HANDS
-								//SLOT_HANDS as a slot will pick ANY available hand
-#define SLOT_BELT			5
-#define SLOT_WEAR_ID		6
-#define SLOT_EARS			7
-#define SLOT_GLASSES		8
-#define SLOT_GLOVES			9
-#define SLOT_NECK			10
-#define SLOT_HEAD			11
-#define SLOT_SHOES			12
-#define SLOT_WEAR_SUIT		13
-#define SLOT_W_UNIFORM		14
-#define SLOT_L_STORE		15
-#define SLOT_R_STORE		16
-#define SLOT_S_STORE		17
-#define SLOT_IN_BACKPACK	18
-#define SLOT_LEGCUFFED		19
-#define SLOT_GENERC_DEXTROUS_STORAGE	20
+#define SLOTS_AMT				20 // Keep this up to date!
 
-#define SLOTS_AMT			20 // Keep this up to date!
-
-//I hate that this has to exist
-/proc/slotdefine2slotbit(slotdefine) //Keep this up to date with the value of SLOT BITMASKS and SLOTS (the two define sections above)
-	. = 0
-	switch(slotdefine)
-		if(SLOT_BACK)
-			. = ITEM_SLOT_BACK
-		if(SLOT_WEAR_MASK)
-			. = ITEM_SLOT_MASK
-		if(SLOT_NECK)
-			. = ITEM_SLOT_NECK
-		if(SLOT_BELT)
-			. = ITEM_SLOT_BELT
-		if(SLOT_WEAR_ID)
-			. = ITEM_SLOT_ID
-		if(SLOT_EARS)
-			. = ITEM_SLOT_EARS
-		if(SLOT_GLASSES)
-			. = ITEM_SLOT_EYES
-		if(SLOT_GLOVES)
-			. = ITEM_SLOT_GLOVES
-		if(SLOT_HEAD)
-			. = ITEM_SLOT_HEAD
-		if(SLOT_SHOES)
-			. = ITEM_SLOT_FEET
-		if(SLOT_WEAR_SUIT)
-			. = ITEM_SLOT_OCLOTHING
-		if(SLOT_W_UNIFORM)
-			. = ITEM_SLOT_ICLOTHING
-		if(SLOT_L_STORE, SLOT_R_STORE)
-			. = ITEM_SLOT_POCKET
-
+//SLOT GROUP HELPERS
+#define ITEM_SLOT_POCKETS		(ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
+//Make sure to update check_obscured_slots() if you add more.
 #define HIDEGLOVES		(1<<0)
 #define HIDESUITSTORAGE	(1<<1)
 #define HIDEJUMPSUIT	(1<<2)	//these first four are only used in exterior suits
@@ -118,6 +79,10 @@
 #define NECK		(1<<11)
 #define FULL_BODY	(~0)
 
+//defines for the index of hands
+#define LEFT_HANDS 1
+#define RIGHT_HANDS 2
+
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 #define NO_FEMALE_UNIFORM			0
 #define FEMALE_UNIFORM_FULL			1
@@ -142,6 +107,7 @@
 #define HEADCOVERSEYES		(1<<2)		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		(1<<3)		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		(1<<4)
+#define PEPPERPROOF			(1<<5)	//protects against pepperspray
 
 #define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully

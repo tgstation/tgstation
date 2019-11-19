@@ -9,10 +9,11 @@
 	ammo_x_offset = 3
 	flight_x_offset = 15
 	flight_y_offset = 10
+	dual_wield_spread = 60
 
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"
-	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: stun and kill."
+	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: disable and kill."
 	icon_state = "mini"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_SMALL
@@ -20,15 +21,13 @@
 	ammo_x_offset = 2
 	charge_sections = 3
 	can_flashlight = FALSE // Can't attach or detach the flashlight, and override it's icon update
+	gunlight_state = "mini-light"
+	flight_x_offset = 19
+	flight_y_offset = 13
 
 /obj/item/gun/energy/e_gun/mini/Initialize()
 	gun_light = new /obj/item/flashlight/seclite(src)
 	return ..()
-
-/obj/item/gun/energy/e_gun/mini/update_icon()
-	..()
-	if(gun_light && gun_light.on)
-		add_overlay("mini-light")
 
 /obj/item/gun/energy/e_gun/stun
 	name = "tactical energy gun"
@@ -53,9 +52,10 @@
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
+	cell_type = /obj/item/stock_parts/cell{charge = 1200; maxcharge = 1200}
 	icon_state = "hoslaser"
 	force = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos)
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
@@ -95,10 +95,11 @@
 	item_state = "nucgun"
 	charge_delay = 5
 	pin = null
-	can_charge = 0
+	can_charge = FALSE
 	ammo_x_offset = 1
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
+	var/reactor_overloaded
 	var/fail_tick = 0
 	var/fail_chance = 0
 
@@ -123,7 +124,7 @@
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
 				M.rad_act(80)
-				crit_fail = 1
+				reactor_overloaded = TRUE
 				to_chat(M, "<span class='userdanger'>Your [name]'s reactor overloads!</span>")
 
 /obj/item/gun/energy/e_gun/nuclear/emp_act(severity)
@@ -134,7 +135,7 @@
 
 /obj/item/gun/energy/e_gun/nuclear/update_icon()
 	..()
-	if(crit_fail)
+	if(reactor_overloaded)
 		add_overlay("[icon_state]_fail_3")
 	else
 		switch(fail_tick)

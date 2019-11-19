@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	var/cache_b  = LIGHTING_SOFT_THRESHOLD
 	var/cache_mx = 0
 
-/datum/lighting_corner/New(var/turf/new_turf, var/diagonal)
+/datum/lighting_corner/New(turf/new_turf, diagonal)
 	. = ..()
 	masters = list()
 	masters[new_turf] = turn(diagonal, 180)
@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 			active = TRUE
 
 // God that was a mess, now to do the rest of the corner code! Hooray!
-/datum/lighting_corner/proc/update_lumcount(var/delta_r, var/delta_g, var/delta_b)
+/datum/lighting_corner/proc/update_lumcount(delta_r, delta_g, delta_b)
 
 	if ((abs(delta_r)+abs(delta_g)+abs(delta_b)) == 0)
 		return
@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 
 	if (!needs_update)
 		needs_update = TRUE
-		GLOB.lighting_update_corners += src
+		SSlighting.corners_queue += src
 
 /datum/lighting_corner/proc/update_objects()
 	// Cache these values a head of time so 4 individual lighting objects don't all calculate them individually.
@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 		if (T.lighting_object)
 			if (!T.lighting_object.needs_update)
 				T.lighting_object.needs_update = TRUE
-				GLOB.lighting_update_objects += T.lighting_object
+				SSlighting.objects_queue += T.lighting_object
 
 
 /datum/lighting_corner/dummy/New()

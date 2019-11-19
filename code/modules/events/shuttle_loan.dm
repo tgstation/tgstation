@@ -184,7 +184,7 @@
 					pack.generate(pick_n_take(empty_shuttle_turfs))
 
 				for(var/i in 1 to 5)
-					var/decal = pick(/obj/effect/decal/cleanable/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
+					var/decal = pick(/obj/effect/decal/cleanable/food/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
 					new decal(pick_n_take(empty_shuttle_turfs))
 			if(PIZZA_DELIVERY)
 				var/naughtypizza = list(/obj/item/pizzabox/bomb,/obj/item/pizzabox/margherita/robo) //oh look another blaklist, for pizza nonetheless!
@@ -239,7 +239,7 @@
 //items that appear only in shuttle loan events
 
 /obj/item/storage/belt/fannypack/yellow/bee_terrorist/PopulateContents()
-	new /obj/item/grenade/plastic/c4 (src)
+	new /obj/item/grenade/c4 (src)
 	new /obj/item/reagent_containers/pill/cyanide(src)
 	new /obj/item/grenade/chem_grenade/facid(src)
 

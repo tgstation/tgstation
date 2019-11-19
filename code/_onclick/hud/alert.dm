@@ -213,6 +213,22 @@ or something covering your eyes."
 	desc = "Whoa man, you're tripping balls! Careful you don't get addicted... if you aren't already."
 	icon_state = "high"
 
+/obj/screen/alert/hypnosis
+	name = "Hypnosis"
+	desc = "Something's hypnotizing you, but you're not really sure about what."
+	icon_state = "hypnosis"
+	var/phrase
+
+/obj/screen/alert/mind_control
+	name = "Mind Control"
+	desc = "Your mind has been hijacked! Click to view the mind control command."
+	icon_state = "mind_control"
+	var/command
+
+/obj/screen/alert/mind_control/Click()
+	var/mob/living/L = usr
+	to_chat(L, "<span class='mind_control'>[command]</span>")
+
 /obj/screen/alert/drunk //Not implemented
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
@@ -399,48 +415,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	animate(src, transform = final, time = 5, loop = 0)
 
 
-
-// CLOCKCULT
-/obj/screen/alert/clockwork
-	alerttooltipstyle = "clockcult"
-
-/obj/screen/alert/clockwork/infodump
-	name = "Global Records"
-	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
-	icon_state = "clockinfo"
-
-/obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
-	if(GLOB.ratvar_awakens)
-		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
-	else
-		var/servants = 0
-		var/list/textlist = list()
-		for(var/mob/living/L in GLOB.alive_mob_list)
-			if(is_servant_of_ratvar(L))
-				servants++
-		var/datum/antagonist/clockcult/C = mob_viewer.mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
-		if(C && C.clock_team)
-			textlist += "[C.clock_team.eminence ? "There is an Eminence." : "<b>There is no Eminence! Get one ASAP!</b>"]<br>"
-		textlist += "There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>"
-		for(var/i in GLOB.scripture_states)
-			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
-				textlist += "[i] Scripture: <b>[GLOB.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
-		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-		if(G)
-			var/time_info = G.get_arrival_time(FALSE)
-			var/time_name
-			if(G.seconds_until_activation)
-				time_name = "until the Ark activates"
-			else if(G.grace_period)
-				time_name = "of grace period remaining"
-			else if(G.progress_in_seconds)
-				time_name = "until the Ark finishes summoning"
-			if(time_info)
-				textlist += "<b>[time_info / 60] minutes</b> [time_name].<br>"
-		textlist += "<b>[DisplayPower(get_clockwork_power())] / [DisplayPower(MAX_CLOCKWORK_POWER)]</b> power available for use."
-		desc = textlist.Join()
-	..()
-
 //GUARDIANS
 
 /obj/screen/alert/cancharge
@@ -478,6 +452,13 @@ Recharging stations are available in robotics, the dormitory bathrooms, and the 
 	name = "Low Charge"
 	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "lowcell"
+
+//Ethereal
+
+/obj/screen/alert/etherealcharge
+	name = "Low Blood Charge"
+	desc = "Your blood's electric charge is running low, find a source of charge for your blood. Use a recharging station found in robotics or the dormitory bathrooms, or eat some Ethereal-friendly food."
+	icon_state = "etherealcharge"
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /obj/screen/alert/hacked
@@ -625,9 +606,6 @@ so as to remain in compliance with the most up-to-date laws."
 		alert.screen_loc = .
 		mymob.client.screen |= alert
 	return 1
-
-/mob
-	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
 
 /obj/screen/alert/Click(location, control, params)
 	if(!usr || !usr.client)

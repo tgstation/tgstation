@@ -28,7 +28,7 @@
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	GLOB.poi_list += src
-	AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_POST_THROW = CALLBACK(src, .proc/move_gracefully)))
+	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, .proc/move_gracefully)
 
 /obj/item/his_grace/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
@@ -51,23 +51,23 @@
 	return
 
 /obj/item/his_grace/examine(mob/user)
-	..()
+	. = ..()
 	if(awakened)
 		switch(bloodthirst)
 			if(HIS_GRACE_SATIATED to HIS_GRACE_PECKISH)
-				to_chat(user, "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>")
+				. += "<span class='his_grace'>[src] isn't very hungry. Not yet.</span>"
 			if(HIS_GRACE_PECKISH to HIS_GRACE_HUNGRY)
-				to_chat(user, "<span class='his_grace'>[src] would like a snack.</span>")
+				. += "<span class='his_grace'>[src] would like a snack.</span>"
 			if(HIS_GRACE_HUNGRY to HIS_GRACE_FAMISHED)
-				to_chat(user, "<span class='his_grace'>[src] is quite hungry now.</span>")
+				. += "<span class='his_grace'>[src] is quite hungry now.</span>"
 			if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
-				to_chat(user, "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>")
+				. += "<span class='his_grace'>[src] is openly salivating at the sight of you. Be careful.</span>"
 			if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
-				to_chat(user, "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>")
+				. += "<span class='his_grace bold'>You walk a fine line. [src] is very close to devouring you.</span>"
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
-				to_chat(user, "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>")
+				. += "<span class='his_grace bold'>[src] is shaking violently and staring directly at you.</span>"
 	else
-		to_chat(user, "<span class='his_grace'>[src] is latched closed.</span>")
+		. += "<span class='his_grace'>[src] is latched closed.</span>"
 
 /obj/item/his_grace/relaymove(mob/living/user) //Allows changelings, etc. to climb out of Him after they revive, provided He isn't active
 	if(!awakened)
@@ -90,10 +90,10 @@
 				do_attack_animation(master, null, src)
 				master.emote("scream")
 				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
-				item_flags &= ~NODROP
+				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 				master.Paralyze(60)
 				master.adjustBruteLoss(master.maxHealth)
-				playsound(master, 'sound/effects/splat.ogg', 100, 0)
+				playsound(master, 'sound/effects/splat.ogg', 100, FALSE)
 			else
 				master.apply_status_effect(STATUS_EFFECT_HISGRACE)
 		return
@@ -114,8 +114,8 @@
 		if(!L.stat)
 			L.visible_message("<span class='warning'>[src] lunges at [L]!</span>", "<span class='his_grace big bold'>[src] lunges at you!</span>")
 			do_attack_animation(L, null, src)
-			playsound(L, 'sound/weapons/smash.ogg', 50, 1)
-			playsound(L, 'sound/misc/desceration-01.ogg', 50, 1)
+			playsound(L, 'sound/weapons/smash.ogg', 50, TRUE)
+			playsound(L, 'sound/misc/desceration-01.ogg', 50, TRUE)
 			L.adjustBruteLoss(force)
 			adjust_bloodthirst(-5) //Don't stop attacking they're right there!
 		else
@@ -160,7 +160,7 @@
 		return
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still, His latch snapping shut.</span>")
-	playsound(loc, 'sound/weapons/batonextend.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/batonextend.ogg', 100, TRUE)
 	name = initial(name)
 	desc = initial(desc)
 	icon_state = initial(icon_state)
@@ -177,8 +177,8 @@
 	var/victims = 0
 	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='his_grace big bold'>[src] consumes you!</span>")
 	meal.adjustBruteLoss(200)
-	playsound(meal, 'sound/misc/desceration-02.ogg', 75, 1)
-	playsound(src, 'sound/items/eatfood.ogg', 100, 1)
+	playsound(meal, 'sound/misc/desceration-02.ogg', 75, TRUE)
+	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
 	meal.forceMove(src)
 	force_bonus += HIS_GRACE_FORCE_BONUS
 	prev_bloodthirst = bloodthirst
@@ -202,20 +202,20 @@
 	update_stats()
 
 /obj/item/his_grace/proc/update_stats()
-	item_flags &= ~NODROP
+	REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
 	switch(bloodthirst)
 		if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
 			if(HIS_GRACE_CONSUME_OWNER > prev_bloodthirst)
 				master.visible_message("<span class='userdanger'>[src] enters a frenzy!</span>")
 		if(HIS_GRACE_STARVING to HIS_GRACE_CONSUME_OWNER)
-			item_flags |= NODROP
+			ADD_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 			if(HIS_GRACE_STARVING > prev_bloodthirst)
 				master.visible_message("<span class='boldwarning'>[src] is starving!</span>", "<span class='his_grace big'>[src]'s bloodlust overcomes you. [src] must be fed, or you will become His meal.\
 				[force_bonus < 15 ? " And still, His power grows.":""]</span>")
 				force_bonus = max(force_bonus, 15)
 		if(HIS_GRACE_FAMISHED to HIS_GRACE_STARVING)
-			item_flags |= NODROP
+			ADD_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 			if(HIS_GRACE_FAMISHED > prev_bloodthirst)
 				master.visible_message("<span class='warning'>[src] is very hungry!</span>", "<span class='his_grace big'>Spines sink into your hand. [src] must feed immediately.\
 				[force_bonus < 10 ? " His power grows.":""]</span>")

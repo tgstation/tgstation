@@ -1,5 +1,3 @@
-
-
 /atom/movable
 	var/can_buckle = 0
 	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying = buckle_lying if != -1
@@ -15,7 +13,7 @@
 		return
 	if(can_buckle && has_buckled_mobs())
 		if(buckled_mobs.len > 1)
-			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in buckled_mobs
+			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
 			if(user_unbuckle_mob(unbuckled,user))
 				return 1
 		else
@@ -24,9 +22,12 @@
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
+	return mouse_buckle_handling(M, user)
+
+/atom/movable/proc/mouse_buckle_handling(mob/living/M, mob/living/user)
 	if(can_buckle && istype(M) && istype(user))
 		if(user_buckle_mob(M, user))
-			return 1
+			return TRUE
 
 /atom/movable/proc/has_buckled_mobs()
 	if(!buckled_mobs)
@@ -56,8 +57,12 @@
 		M.buckling = null
 		return FALSE
 
-	if(M.pulledby && buckle_prevents_pull)
-		M.pulledby.stop_pulling()
+	if(M.pulledby)
+		if(buckle_prevents_pull)
+			M.pulledby.stop_pulling()
+		else if(isliving(M.pulledby))
+			var/mob/living/L = M.pulledby
+			L.reset_pull_offsets(M, TRUE)
 
 	if(!check_loc && M.loc != loc)
 		M.forceMove(loc)
@@ -114,28 +119,27 @@
 	. = buckle_mob(M, check_loc = check_loc)
 	if(.)
 		if(M == user)
-			M.visible_message(\
-				"<span class='notice'>[M] buckles [M.p_them()]self to [src].</span>",\
+			M.visible_message("<span class='notice'>[M] buckles [M.p_them()]self to [src].</span>",\
 				"<span class='notice'>You buckle yourself to [src].</span>",\
-				"<span class='italics'>You hear metal clanking.</span>")
+				"<span class='hear'>You hear metal clanking.</span>")
 		else
-			M.visible_message(\
-				"<span class='warning'>[user] buckles [M] to [src]!</span>",\
+			M.visible_message("<span class='warning'>[user] buckles [M] to [src]!</span>",\
 				"<span class='warning'>[user] buckles you to [src]!</span>",\
-				"<span class='italics'>You hear metal clanking.</span>")
+				"<span class='hear'>You hear metal clanking.</span>")
 
 /atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	var/mob/living/M = unbuckle_mob(buckled_mob)
 	if(M)
 		if(M != user)
-			M.visible_message(\
-				"<span class='notice'>[user] unbuckles [M] from [src].</span>",\
+			M.visible_message("<span class='notice'>[user] unbuckles [M] from [src].</span>",\
 				"<span class='notice'>[user] unbuckles you from [src].</span>",\
-				"<span class='italics'>You hear metal clanking.</span>")
+				"<span class='hear'>You hear metal clanking.</span>")
 		else
-			M.visible_message(\
-				"<span class='notice'>[M] unbuckles [M.p_them()]self from [src].</span>",\
+			M.visible_message("<span class='notice'>[M] unbuckles [M.p_them()]self from [src].</span>",\
 				"<span class='notice'>You unbuckle yourself from [src].</span>",\
-				"<span class='italics'>You hear metal clanking.</span>")
+				"<span class='hear'>You hear metal clanking.</span>")
 		add_fingerprint(user)
+		if(isliving(M.pulledby))
+			var/mob/living/L = M.pulledby
+			L.set_pull_offsets(M, L.grab_state)
 	return M

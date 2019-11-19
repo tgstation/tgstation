@@ -9,6 +9,8 @@
 	var/datum/action/innate/cult/mastervote/vote = new
 	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
+	antag_hud_type = ANTAG_HUD_CULT
+	antag_hud_name = "cult"
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
@@ -58,7 +60,6 @@
 	if(give_equipment)
 		equip_cultist(TRUE)
 	SSticker.mode.cult += owner // Only add after they've been given objectives
-	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
 
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
@@ -69,9 +70,6 @@
 	var/mob/living/carbon/H = owner.current
 	if(!istype(H))
 		return
-	if (owner.assigned_role == "Clown")
-		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		H.dna.remove_mutation(CLOWNMUT)
 	. += cult_give_item(/obj/item/melee/cultblade/dagger, H)
 	if(metal)
 		. += cult_give_item(/obj/item/stack/sheet/runed_metal/ten, H)
@@ -80,9 +78,9 @@
 
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
 	var/list/slots = list(
-		"backpack" = SLOT_IN_BACKPACK,
-		"left pocket" = SLOT_L_STORE,
-		"right pocket" = SLOT_R_STORE
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"left pocket" = ITEM_SLOT_LPOCKET,
+		"right pocket" = ITEM_SLOT_RPOCKET
 	)
 
 	var/T = new item_path(mob)
@@ -102,6 +100,8 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
+	add_antag_hud(antag_hud_type, antag_hud_name, current)
+	handle_clown_mutation(current, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	current.faction |= "cult"
 	current.grant_language(/datum/language/narsie)
 	if(!cult_team.cult_master)
@@ -120,6 +120,8 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
+	remove_antag_hud(antag_hud_type, current)
+	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "cult"
 	current.remove_language(/datum/language/narsie)
 	vote.Remove(current)
@@ -130,11 +132,12 @@
 		var/mob/living/carbon/human/H = current
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		H.remove_trait(CULT_EYES)
+		REMOVE_TRAIT(H, CULT_EYES, null)
+		H.remove_overlay(HALO_LAYER)
 		H.update_body()
+
 /datum/antagonist/cult/on_removal()
 	SSticker.mode.cult -= owner
-	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>", null, null, null, owner.current)
 		to_chat(owner.current, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant.</span>")
@@ -158,14 +161,21 @@
 	. = ..()
 	.["Dagger"] = CALLBACK(src,.proc/admin_give_dagger)
 	.["Dagger and Metal"] = CALLBACK(src,.proc/admin_give_metal)
+	.["Remove Dagger and Metal"] = CALLBACK(src, .proc/admin_take_all)
 
 /datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
-	if(!equip_cultist(FALSE))
+	if(!equip_cultist(metal=FALSE))
 		to_chat(admin, "<span class='danger'>Spawning dagger failed!</span>")
 
 /datum/antagonist/cult/proc/admin_give_metal(mob/admin)
-	if (!equip_cultist(TRUE))
+	if (!equip_cultist(metal=TRUE))
 		to_chat(admin, "<span class='danger'>Spawning runed metal failed!</span>")
+
+/datum/antagonist/cult/proc/admin_take_all(mob/admin)
+	var/mob/living/current = owner.current
+	for(var/o in current.GetAllContents())
+		if(istype(o, /obj/item/melee/cultblade/dagger) || istype(o, /obj/item/stack/sheet/runed_metal))
+			qdel(o)
 
 /datum/antagonist/cult/master
 	ignore_implant = TRUE
@@ -205,6 +215,7 @@
 		cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			cult_team.ascend(current)
+
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
@@ -220,9 +231,9 @@
 		var/mob/living/carbon/human/H = current
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		H.remove_trait(CULT_EYES)
-		H.cut_overlays()
-		H.regenerate_icons()
+		REMOVE_TRAIT(H, CULT_EYES, null)
+		H.remove_overlay(HALO_LAYER)
+		H.update_body()
 
 /datum/team/cult
 	name = "Cult"
@@ -254,7 +265,7 @@
 		for(var/datum/mind/B in members)
 			if(B.current)
 				SEND_SOUND(B.current, 'sound/hallucinations/i_see_you2.ogg')
-				to_chat(B.current, "<span class='cultlarge'>The veil weakens as your cult grows, your eyes begin to glow...")
+				to_chat(B.current, "<span class='cultlarge'>The veil weakens as your cult grows, your eyes begin to glow...</span>")
 				addtimer(CALLBACK(src, .proc/rise, B.current), 200)
 		cult_risen = TRUE
 
@@ -262,7 +273,7 @@
 		for(var/datum/mind/B in members)
 			if(B.current)
 				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
-				to_chat(B.current, "<span class='cultlarge'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")
+				to_chat(B.current, "<span class='cultlarge'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!</span>")
 				addtimer(CALLBACK(src, .proc/ascend, B.current), 200)
 		cult_ascendent = TRUE
 
@@ -272,7 +283,7 @@
 		var/mob/living/carbon/human/H = cultist
 		H.eye_color = "f00"
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		H.add_trait(CULT_EYES)
+		ADD_TRAIT(H, CULT_EYES, CULT_TRAIT)
 		H.update_body()
 
 /datum/team/cult/proc/ascend(cultist)
@@ -280,7 +291,9 @@
 		var/mob/living/carbon/human/H = cultist
 		new /obj/effect/temp_visual/cult/sparks(get_turf(H), H.dir)
 		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
-		H.add_overlay(mutable_appearance('icons/effects/32x64.dmi', istate, -BODY_FRONT_LAYER))
+		var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', istate, -HALO_LAYER)
+		H.overlays_standing[HALO_LAYER] = new_halo_overlay
+		H.apply_overlay(HALO_LAYER)
 
 /datum/team/cult/proc/setup_objectives()
 	//SAC OBJECTIVE , todo: move this to objective internals

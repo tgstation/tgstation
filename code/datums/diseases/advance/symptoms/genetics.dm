@@ -16,23 +16,37 @@ Bonus
 */
 
 /datum/symptom/genetic_mutation
-	name = "Deoxyribonucleic Acid Saboteur"
-	desc = "The virus bonds with the DNA of the host, causing damaging mutations until removed."
+	name = "Dormant DNA Activator"
+	desc = "The virus bonds with the DNA of the host, activating random dormant mutations within their DNA. When the virus is cured, the host's genetic alterations are undone."
 	stealth = -2
 	resistance = -3
 	stage_speed = 0
 	transmittable = -3
 	level = 6
 	severity = 4
-	var/list/possible_mutations
-	var/archived_dna = null
 	base_message_chance = 50
-	symptom_delay_min = 60
-	symptom_delay_max = 120
+	symptom_delay_min = 30
+	symptom_delay_max = 60
+	var/excludemuts = NONE
 	var/no_reset = FALSE
-	threshold_desc = "<b>Resistance 8:</b> Causes two harmful mutations at once.<br>\
-					  <b>Stage Speed 10:</b> Increases mutation frequency.<br>\
-					  <b>Stealth 5:</b> The mutations persist even if the virus is cured."
+	var/mutadone_proof = NONE
+	threshold_desc = "<b>Resistance 8:</b> The negative and mildly negative mutations caused by the virus are mutadone-proof (but will still be undone when the virus is cured if the resistance 14 threshold is not met).<br>\
+					  <b>Resistance 14:</b> The host's genetic alterations are not undone when the virus is cured.<br>\
+					  <b>Stage Speed 10:</b> The virus activates dormant mutations at a much faster rate.<br>\
+					  <b>Stealth 5:</b> Only activates negative mutations in hosts."
+
+/datum/symptom/genetic_mutation/Start(datum/disease/advance/A)
+	if(!..())
+		return
+	if(A.properties["stealth"] >= 5) //only give them bad mutations
+		excludemuts = POSITIVE
+	if(A.properties["stage_rate"] >= 10) //activate dormant mutations more often at around 1.5x the pace
+		symptom_delay_min = 20		
+		symptom_delay_max = 40
+	if(A.properties["resistance"] >= 8) //mutadone won't save you now
+		mutadone_proof = (NEGATIVE | MINOR_NEGATIVE)
+	if(A.properties["resistance"] >= 14) //one does not simply escape Nurgle's grasp
+		no_reset = TRUE
 
 /datum/symptom/genetic_mutation/Activate(datum/disease/advance/A)
 	if(!..())
@@ -43,36 +57,12 @@ Bonus
 	switch(A.stage)
 		if(4, 5)
 			to_chat(C, "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>")
-			C.dna.remove_mutation_group(possible_mutations)
-			for(var/i in 1 to power)
-				C.randmut(possible_mutations)
+			C.easy_randmut((NEGATIVE | MINOR_NEGATIVE | POSITIVE) - excludemuts, TRUE, TRUE, TRUE, mutadone_proof)
 
-// Archive their DNA before they were infected.
-/datum/symptom/genetic_mutation/Start(datum/disease/advance/A)
-	if(!..())
-		return
-	if(A.properties["stealth"] >= 5) //don't restore dna after curing
-		no_reset = TRUE
-	if(A.properties["stage_rate"] >= 10) //mutate more often
-		symptom_delay_min = 20
-		symptom_delay_max = 60
-	if(A.properties["resistance"] >= 8) //mutate twice
-		power = 2
-	possible_mutations = (GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT]
-	var/mob/living/carbon/M = A.affected_mob
-	if(M)
-		if(!M.has_dna())
-			return
-		archived_dna = M.dna.struc_enzymes
-
-// Give them back their old DNA when cured.
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
 	if(!..())
 		return
 	if(!no_reset)
 		var/mob/living/carbon/M = A.affected_mob
-		if(M && archived_dna)
-			if(!M.has_dna())
-				return
-			M.dna.struc_enzymes = archived_dna
-			M.domutcheck()
+		if(M.has_dna())
+			M.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA), FALSE)

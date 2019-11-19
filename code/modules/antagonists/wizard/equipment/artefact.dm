@@ -41,7 +41,7 @@
 	var/spawn_amt_left = 20
 	var/spawn_fast = 0
 
-/obj/effect/rend/New(loc, var/spawn_type, var/spawn_amt, var/desc, var/spawn_fast)
+/obj/effect/rend/New(loc, spawn_type, spawn_amt, desc, spawn_fast)
 	src.spawn_path = spawn_type
 	src.spawn_amt_left = spawn_amt
 	src.desc = desc
@@ -89,6 +89,15 @@
 	rend_desc = "Gently wafting with the sounds of endless laughter."
 	icon_state = "clownrender"
 
+/obj/item/veilrender/honkrender/honkhulkrender
+	name = "superior honk render"
+	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus. This one gleams with a special light."
+	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown/clownhulk
+	spawn_amt = 5
+	activate_descriptor = "depression"
+	rend_desc = "Gently wafting with the sounds of mirthful grunting."
+	icon_state = "clownrender"
+
 ////TEAR IN REALITY
 
 /obj/singularity/wizard
@@ -113,7 +122,7 @@
 /obj/singularity/wizard/attack_tk(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		GET_COMPONENT_FROM(insaneinthemembrane, /datum/component/mood, C)
+		var/datum/component/mood/insaneinthemembrane = C.GetComponent(/datum/component/mood)
 		if(insaneinthemembrane.sanity < 15)
 			return //they've already seen it and are about to die, or are just too insane to care
 		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
@@ -136,7 +145,7 @@
 
 /obj/item/scrying
 	name = "scrying orb"
-	desc = "An incandescent orb of otherworldly energy, staring into it gives you vision beyond mortal means."
+	desc = "An incandescent orb of otherworldly energy, merely holding it gives you vision and hearing beyond mortal means, and staring into it lets you see the entire universe."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state ="bluespace"
 	throw_speed = 3
@@ -146,18 +155,38 @@
 	force = 15
 	hitsound = 'sound/items/welder2.ogg'
 
-	var/xray_granted = FALSE
+	var/mob/current_owner
 
-/obj/item/scrying/equipped(mob/user)
-	if(!xray_granted && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(!(H.dna.check_mutation(XRAY)))
-			H.dna.add_mutation(XRAY)
-			xray_granted = TRUE
+/obj/item/scrying/Initialize(mapload)
 	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/scrying/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/scrying/process()
+	var/mob/holder = get(loc, /mob)
+	if(current_owner && current_owner != holder)
+
+		to_chat(current_owner, "<span class='notice'>Your otherworldly vision fades...</span>")
+
+		REMOVE_TRAIT(current_owner, TRAIT_SIXTHSENSE, SCRYING_ORB)
+		REMOVE_TRAIT(current_owner, TRAIT_XRAY_VISION, SCRYING_ORB)
+		current_owner.update_sight()
+
+		current_owner = null
+
+	if(!current_owner && holder)
+		current_owner = holder
+
+		to_chat(current_owner, "<span class='notice'>You can see...everything!</span>")
+
+		ADD_TRAIT(current_owner, TRAIT_SIXTHSENSE, SCRYING_ORB)
+		ADD_TRAIT(current_owner, TRAIT_XRAY_VISION, SCRYING_ORB)
+		current_owner.update_sight()
 
 /obj/item/scrying/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>You can see...everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 
@@ -188,12 +217,12 @@
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
 		return
-	
+
 	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
 		if(ghost.mind && ghost.mind.current == M && ghost.client)  //the dead mobs list can contain clientless mobs
 			ghost.reenter_corpse()
 			break
-	
+
 	if(!M.mind || !M.client)
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
@@ -204,7 +233,7 @@
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
-	M.revive(full_heal = 1, admin_revive = 1)
+	M.revive(full_heal = TRUE, admin_revive = TRUE)
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
 	to_chat(M, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
@@ -234,12 +263,12 @@
 		H.dropItemToGround(I)
 
 	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
-	H.equip_to_slot_or_del(new hat(H), SLOT_HEAD)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new hat(H), ITEM_SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/costume/roman(H), ITEM_SLOT_ICLOTHING)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), ITEM_SLOT_FEET)
 	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
-	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), ITEM_SLOT_BACK)
 
 
 /obj/item/voodoo
@@ -260,8 +289,8 @@
 
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
-		if(I.is_hot())
-			to_chat(target, "<span class='userdanger'>You suddenly feel very hot</span>")
+		if(I.get_temperature())
+			to_chat(target, "<span class='userdanger'>You suddenly feel very hot!</span>")
 			target.adjust_bodytemperature(50)
 			GiveHint(target)
 		else if(is_pointed(I))
@@ -290,7 +319,7 @@
 
 /obj/item/voodoo/attack_self(mob/user)
 	if(!target && possible.len)
-		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
+		target = input(user, "Select your victim!", "Voodoo") as null|anything in sortNames(possible)
 		return
 
 	if(user.zone_selected == BODY_ZONE_CHEST)
@@ -342,10 +371,10 @@
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
 	if(prob(50) || force)
 		var/way = dir2text(get_dir(victim,get_turf(src)))
-		to_chat(victim, "<span class='notice'>You feel a dark presence from [way]</span>")
+		to_chat(victim, "<span class='notice'>You feel a dark presence from [way].</span>")
 	if(prob(20) || force)
 		var/area/A = get_area(src)
-		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
+		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name].</span>")
 
 /obj/item/voodoo/suicide_act(mob/living/carbon/user)
     user.visible_message("<span class='suicide'>[user] links the voodoo doll to [user.p_them()]self and sits on it, infinitely crushing [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -393,7 +422,7 @@
 	on_cooldown = TRUE
 	last_user = user
 	var/turf/T = get_turf(user)
-	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
+	playsound(T,'sound/magic/warpwhistle.ogg', 200, TRUE)
 	user.mobility_flags &= ~MOBILITY_MOVE
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
@@ -409,7 +438,7 @@
 	while(breakout < 50)
 		var/turf/potential_T = find_safe_turf()
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
-			user.forceMove(potential_T)
+			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
 			user.mobility_flags &= ~MOBILITY_MOVE
 			T = potential_T
 			break
@@ -420,8 +449,7 @@
 	if(interrupted(user))
 		return
 	on_cooldown = 2
-	sleep(40)
-	on_cooldown = 0
+	addtimer(VARSET_CALLBACK(src, on_cooldown, 0), 4 SECONDS)
 
 /obj/item/warpwhistle/Destroy()
 	if(on_cooldown == 1 && last_user) //Flute got dunked somewhere in the teleport

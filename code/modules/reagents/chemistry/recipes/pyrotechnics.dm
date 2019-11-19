@@ -15,7 +15,8 @@
 	if(lastkey)
 		var/mob/toucher = get_mob_by_key(lastkey)
 		touch_msg = "[ADMIN_LOOKUPFLW(toucher)]"
-	message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
+	if(!istype(holder.my_atom, /obj/machinery/plumbing)) //excludes standard plumbing equipment from spamming admins with this shit
+		message_admins("Reagent explosion reaction occurred at [ADMIN_VERBOSEJMP(T)][inside_msg]. Last Fingerprint: [touch_msg].")
 	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(modifier + round(created_volume/strengthdiv, 1), T, 0, 0)
@@ -25,44 +26,137 @@
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin
 	name = "Nitroglycerin"
-	id = "nitroglycerin"
-	results = list("nitroglycerin" = 2)
-	required_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
+	id = /datum/reagent/nitroglycerin
+	results = list(/datum/reagent/nitroglycerin = 2)
+	required_reagents = list(/datum/reagent/glycerol = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/toxin/acid = 1)
 	strengthdiv = 2
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent("nitroglycerin", created_volume*2)
+	holder.remove_reagent(/datum/reagent/nitroglycerin, created_volume*2)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin_explosion
 	name = "Nitroglycerin explosion"
 	id = "nitroglycerin_explosion"
-	required_reagents = list("nitroglycerin" = 1)
+	required_reagents = list(/datum/reagent/nitroglycerin = 1)
 	required_temp = 474
 	strengthdiv = 2
 
+/datum/chemical_reaction/reagent_explosion/rdx
+	name = "RDX"
+	id = /datum/reagent/rdx
+	results = list(/datum/reagent/rdx= 2)
+	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/acetone_oxide = 1 )
+	required_temp = 404
+	strengthdiv = 8
+
+/datum/chemical_reaction/reagent_explosion/rdx/on_reaction(datum/reagents/holder, created_volume)
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
+		return
+	holder.remove_reagent(/datum/reagent/rdx, created_volume*2)
+	..()
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion
+	name = "Heat RDX explosion"
+	id = "rdx_explosion"
+	required_reagents = list(/datum/reagent/rdx = 1)
+	required_temp = 474
+	strengthdiv = 8
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion2 //makes rdx unique , on its own it is a good bomb, but when combined with liquid electricity it becomes truly destructive
+	name = "Electric RDX explosion"
+	id = "rdx_explosion2"
+	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/consumable/liquidelectricity = 1)
+	strengthdiv = 4
+	modifier = 2
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion2/on_reaction(datum/reagents/holder, created_volume)
+	var/fire_range = round(created_volume/100)
+	var/turf/T = get_turf(holder.my_atom)
+	for(var/turf/turf in range(fire_range,T))
+		new /obj/effect/hotspot(turf)
+	holder.chem_temp = 500
+	..()
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion3
+	name = "Teslium RDX explosion"
+	id = "rdx_explosion3"
+	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/teslium = 1)
+	modifier = 4
+	strengthdiv = 4
+
+/datum/chemical_reaction/reagent_explosion/rdx_explosion3/on_reaction(datum/reagents/holder, created_volume)
+	var/fire_range = round(created_volume/50)
+	var/turf/T = get_turf(holder.my_atom)
+	for(var/turf/turf in range(fire_range,T))
+		new /obj/effect/hotspot(turf)
+	holder.chem_temp = 750
+	..()
+
+/datum/chemical_reaction/reagent_explosion/tatp
+	name = "TaTP"
+	id = /datum/reagent/tatp
+	results = list(/datum/reagent/tatp= 1)
+	required_reagents = list(/datum/reagent/acetone_oxide = 1, /datum/reagent/toxin/acid/nitracid = 1, /datum/reagent/pentaerythritol = 1 )
+	required_temp = 450
+	strengthdiv = 3
+
+/datum/chemical_reaction/reagent_explosion/tatp/New()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo)) //method used by secret sauce.
+
+/datum/chemical_reaction/reagent_explosion/tatp/proc/UpdateInfo()
+	required_temp = 450 + rand(-49,49)  //this gets loaded only on round start
+
+
+/datum/chemical_reaction/reagent_explosion/tatp/on_reaction(datum/reagents/holder, created_volume)
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
+		return
+	holder.remove_reagent(/datum/reagent/tatp, created_volume)
+	..()
+
+/datum/chemical_reaction/reagent_explosion/tatp_explosion
+	name = "TaTP explosion"
+	id = "tatp_explosion"
+	required_reagents = list(/datum/reagent/tatp = 1)
+	required_temp = 550 // this makes making tatp before pyro nades, and extreme pain in the ass to make
+	strengthdiv = 3
+
+/datum/chemical_reaction/reagent_explosion/tatp_explosion/New()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo))
+
+
+/datum/chemical_reaction/reagent_explosion/tatp_explosion/proc/UpdateInfo()
+	required_temp = 550 + rand(-49,49)
+
+
+/datum/chemical_reaction/reagent_explosion/penthrite_explosion
+	name = "Penthrite explosion"
+	id = "penthrite_explosion"
+	required_reagents = list(/datum/reagent/medicine/C2/penthrite = 1, /datum/reagent/phenol = 1, /datum/reagent/acetone_oxide = 1)
+	required_temp = 315
+	strengthdiv = 5
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	name = "Explosion"
 	id = "potassium_explosion"
-	required_reagents = list("water" = 1, "potassium" = 1)
-	strengthdiv = 10
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/potassium = 1)
+	strengthdiv = 20
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
 	name = "Holy Explosion"
 	id = "holyboom"
-	required_reagents = list("holywater" = 1, "potassium" = 1)
+	required_reagents = list(/datum/reagent/water/holywater = 1, /datum/reagent/potassium = 1)
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
 	if(created_volume >= 150)
-		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, 0, round(created_volume/48))
+		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, FALSE, round(created_volume/48))
 		strengthdiv = 8
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
 			var/deity
-			if(SSreligion.deity)
-				deity = SSreligion.deity
+			if(GLOB.deity)
+				deity = GLOB.deity
 			else
 				deity = "Christ"
 			to_chat(R, "<span class='userdanger'>The power of [deity] compels you!</span>")
@@ -79,35 +173,35 @@
 	..()
 
 
-/datum/chemical_reaction/blackpowder
-	name = "Black Powder"
-	id = "blackpowder"
-	results = list("blackpowder" = 3)
-	required_reagents = list("saltpetre" = 1, "charcoal" = 1, "sulfur" = 1)
+/datum/chemical_reaction/gunpowder
+	name = "Gunpowder"
+	id = /datum/reagent/gunpowder
+	results = list(/datum/reagent/gunpowder = 3)
+	required_reagents = list(/datum/reagent/saltpetre = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/sulfur = 1)
 
-/datum/chemical_reaction/reagent_explosion/blackpowder_explosion
-	name = "Black Powder Kaboom"
-	id = "blackpowder_explosion"
-	required_reagents = list("blackpowder" = 1)
+/datum/chemical_reaction/reagent_explosion/gunpowder_explosion
+	name = "Gunpowder Kaboom"
+	id = "gunpowder_explosion"
+	required_reagents = list(/datum/reagent/gunpowder = 1)
 	required_temp = 474
 	strengthdiv = 6
 	modifier = 1
-	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
+	mix_message = "<span class='boldannounce'>Sparks start flying around the gunpowder!</span>"
 
-/datum/chemical_reaction/reagent_explosion/blackpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
+/datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
 	sleep(rand(50,100))
 	..()
 
 /datum/chemical_reaction/thermite
 	name = "Thermite"
-	id = "thermite"
-	results = list("thermite" = 3)
-	required_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
+	id = /datum/reagent/thermite
+	results = list(/datum/reagent/thermite = 3)
+	required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/iron = 1, /datum/reagent/oxygen = 1)
 
 /datum/chemical_reaction/emp_pulse
 	name = "EMP Pulse"
 	id = "emp_pulse"
-	required_reagents = list("uranium" = 1, "iron" = 1) // Yes, laugh, it's the best recipe I could think of that makes a little bit of sense
+	required_reagents = list(/datum/reagent/uranium = 1, /datum/reagent/iron = 1) // Yes, laugh, it's the best recipe I could think of that makes a little bit of sense
 
 /datum/chemical_reaction/emp_pulse/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -120,7 +214,7 @@
 /datum/chemical_reaction/beesplosion
 	name = "Bee Explosion"
 	id = "beesplosion"
-	required_reagents = list("honey" = 1, "strange_reagent" = 1, "radium" = 1)
+	required_reagents = list(/datum/reagent/consumable/honey = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/uranium/radium = 1)
 
 /datum/chemical_reaction/beesplosion/on_reaction(datum/reagents/holder, created_volume)
 	var/location = holder.my_atom.drop_location()
@@ -129,9 +223,8 @@
 	else
 		playsound(location,'sound/creatures/bee.ogg', 100, TRUE)
 		var/list/beeagents = list()
-		for(var/X in holder.reagent_list)
-			var/datum/reagent/R = X
-			if(required_reagents[R.id])
+		for(var/R in holder.reagent_list)
+			if(required_reagents[R])
 				continue
 			beeagents += R
 		var/bee_amount = round(created_volume * 0.2)
@@ -142,16 +235,16 @@
 
 
 /datum/chemical_reaction/stabilizing_agent
-	name = "stabilizing_agent"
-	id = "stabilizing_agent"
-	results = list("stabilizing_agent" = 3)
-	required_reagents = list("iron" = 1, "oxygen" = 1, "hydrogen" = 1)
+	name = /datum/reagent/stabilizing_agent
+	id = /datum/reagent/stabilizing_agent
+	results = list(/datum/reagent/stabilizing_agent = 3)
+	required_reagents = list(/datum/reagent/iron = 1, /datum/reagent/oxygen = 1, /datum/reagent/hydrogen = 1)
 
 /datum/chemical_reaction/clf3
 	name = "Chlorine Trifluoride"
-	id = "clf3"
-	results = list("clf3" = 4)
-	required_reagents = list("chlorine" = 1, "fluorine" = 3)
+	id = /datum/reagent/clf3
+	results = list(/datum/reagent/clf3 = 4)
+	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 3)
 	required_temp = 424
 
 /datum/chemical_reaction/clf3/on_reaction(datum/reagents/holder, created_volume)
@@ -164,7 +257,7 @@
 	name = "Meth explosion"
 	id = "methboom1"
 	required_temp = 380 //slightly above the meth mix time.
-	required_reagents = list("methamphetamine" = 1)
+	required_reagents = list(/datum/reagent/drug/methamphetamine = 1)
 	strengthdiv = 6
 	modifier = 1
 	mob_react = FALSE
@@ -178,19 +271,19 @@
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/methboom2
 	id = "methboom2"
-	required_reagents = list("diethylamine" = 1, "iodine" = 1, "phosphorus" = 1, "hydrogen" = 1) //diethylamine is often left over from mixing the ephedrine.
+	required_reagents = list(/datum/reagent/diethylamine = 1, /datum/reagent/iodine = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1) //diethylamine is often left over from mixing the ephedrine.
 	required_temp = 300 //room temperature, chilling it even a little will prevent the explosion
 
 /datum/chemical_reaction/sorium
 	name = "Sorium"
-	id = "sorium"
-	results = list("sorium" = 4)
-	required_reagents = list("mercury" = 1, "oxygen" = 1, "nitrogen" = 1, "carbon" = 1)
+	id = /datum/reagent/sorium
+	results = list(/datum/reagent/sorium = 4)
+	required_reagents = list(/datum/reagent/mercury = 1, /datum/reagent/oxygen = 1, /datum/reagent/nitrogen = 1, /datum/reagent/carbon = 1)
 
 /datum/chemical_reaction/sorium/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent("sorium", created_volume*4)
+	holder.remove_reagent(/datum/reagent/sorium, created_volume*4)
 	var/turf/T = get_turf(holder.my_atom)
 	var/range = CLAMP(sqrt(created_volume*4), 1, 6)
 	goonchem_vortex(T, 1, range)
@@ -198,7 +291,7 @@
 /datum/chemical_reaction/sorium_vortex
 	name = "sorium_vortex"
 	id = "sorium_vortex"
-	required_reagents = list("sorium" = 1)
+	required_reagents = list(/datum/reagent/sorium = 1)
 	required_temp = 474
 
 /datum/chemical_reaction/sorium_vortex/on_reaction(datum/reagents/holder, created_volume)
@@ -208,14 +301,14 @@
 
 /datum/chemical_reaction/liquid_dark_matter
 	name = "Liquid Dark Matter"
-	id = "liquid_dark_matter"
-	results = list("liquid_dark_matter" = 3)
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "carbon" = 1)
+	id = /datum/reagent/liquid_dark_matter
+	results = list(/datum/reagent/liquid_dark_matter = 3)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/carbon = 1)
 
 /datum/chemical_reaction/liquid_dark_matter/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent("liquid_dark_matter", created_volume*3)
+	holder.remove_reagent(/datum/reagent/liquid_dark_matter, created_volume*3)
 	var/turf/T = get_turf(holder.my_atom)
 	var/range = CLAMP(sqrt(created_volume*3), 1, 6)
 	goonchem_vortex(T, 0, range)
@@ -223,7 +316,7 @@
 /datum/chemical_reaction/ldm_vortex
 	name = "LDM Vortex"
 	id = "ldm_vortex"
-	required_reagents = list("liquid_dark_matter" = 1)
+	required_reagents = list(/datum/reagent/liquid_dark_matter = 1)
 	required_temp = 474
 
 /datum/chemical_reaction/ldm_vortex/on_reaction(datum/reagents/holder, created_volume)
@@ -233,12 +326,12 @@
 
 /datum/chemical_reaction/flash_powder
 	name = "Flash powder"
-	id = "flash_powder"
-	results = list("flash_powder" = 3)
-	required_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1 )
+	id = /datum/reagent/flash_powder
+	results = list(/datum/reagent/flash_powder = 3)
+	required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/potassium = 1, /datum/reagent/sulfur = 1 )
 
 /datum/chemical_reaction/flash_powder/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
 	var/location = get_turf(holder.my_atom)
 	do_sparks(2, TRUE, location)
@@ -246,18 +339,18 @@
 	if(isatom(holder.my_atom))
 		var/atom/A = holder.my_atom
 		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
-		if(C.flash_act())
+	for(var/mob/living/C in get_hearers_in_view(range, location))
+		if(C.flash_act(affect_silicon = TRUE))
 			if(get_dist(C, location) < 4)
 				C.Paralyze(60)
 			else
 				C.Stun(100)
-	holder.remove_reagent("flash_powder", created_volume*3)
+	holder.remove_reagent(/datum/reagent/flash_powder, created_volume*3)
 
 /datum/chemical_reaction/flash_powder_flash
 	name = "Flash powder activation"
 	id = "flash_powder_flash"
-	required_reagents = list("flash_powder" = 1)
+	required_reagents = list(/datum/reagent/flash_powder = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/flash_powder_flash/on_reaction(datum/reagents/holder, created_volume)
@@ -267,28 +360,28 @@
 	if(isatom(holder.my_atom))
 		var/atom/A = holder.my_atom
 		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
-	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
-		if(C.flash_act())
+	for(var/mob/living/C in get_hearers_in_view(range, location))
+		if(C.flash_act(affect_silicon = TRUE))
 			if(get_dist(C, location) < 4)
 				C.Paralyze(60)
 			else
 				C.Stun(100)
 
 /datum/chemical_reaction/smoke_powder
-	name = "smoke_powder"
-	id = "smoke_powder"
-	results = list("smoke_powder" = 3)
-	required_reagents = list("potassium" = 1, "sugar" = 1, "phosphorus" = 1)
+	name = /datum/reagent/smoke_powder
+	id = /datum/reagent/smoke_powder
+	results = list(/datum/reagent/smoke_powder = 3)
+	required_reagents = list(/datum/reagent/potassium = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/phosphorus = 1)
 
 /datum/chemical_reaction/smoke_powder/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent("smoke_powder", created_volume*3)
+	holder.remove_reagent(/datum/reagent/smoke_powder, created_volume*3)
 	var/smoke_radius = round(sqrt(created_volume * 1.5), 1)
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if(S)
 		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
@@ -298,7 +391,7 @@
 /datum/chemical_reaction/smoke_powder_smoke
 	name = "smoke_powder_smoke"
 	id = "smoke_powder_smoke"
-	required_reagents = list("smoke_powder" = 1)
+	required_reagents = list(/datum/reagent/smoke_powder = 1)
 	required_temp = 374
 	mob_react = FALSE
 
@@ -307,7 +400,7 @@
 	var/smoke_radius = round(sqrt(created_volume / 2), 1)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	S.attach(location)
-	playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	if(S)
 		S.set_up(holder, smoke_radius, location, 0)
 		S.start()
@@ -315,40 +408,40 @@
 		holder.clear_reagents()
 
 /datum/chemical_reaction/sonic_powder
-	name = "sonic_powder"
-	id = "sonic_powder"
-	results = list("sonic_powder" = 3)
-	required_reagents = list("oxygen" = 1, "cola" = 1, "phosphorus" = 1)
+	name = /datum/reagent/sonic_powder
+	id = /datum/reagent/sonic_powder
+	results = list(/datum/reagent/sonic_powder = 3)
+	required_reagents = list(/datum/reagent/oxygen = 1, /datum/reagent/consumable/space_cola = 1, /datum/reagent/phosphorus = 1)
 
 /datum/chemical_reaction/sonic_powder/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent("sonic_powder", created_volume*3)
+	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume*3)
 	var/location = get_turf(holder.my_atom)
-	playsound(location, 'sound/effects/bang.ogg', 25, 1)
+	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
 		C.soundbang_act(1, 100, rand(0, 5))
 
 /datum/chemical_reaction/sonic_powder_deafen
 	name = "sonic_powder_deafen"
 	id = "sonic_powder_deafen"
-	required_reagents = list("sonic_powder" = 1)
+	required_reagents = list(/datum/reagent/sonic_powder = 1)
 	required_temp = 374
 
 /datum/chemical_reaction/sonic_powder_deafen/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
-	playsound(location, 'sound/effects/bang.ogg', 25, 1)
+	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
 		C.soundbang_act(1, 100, rand(0, 5))
 
 /datum/chemical_reaction/phlogiston
-	name = "phlogiston"
-	id = "phlogiston"
-	results = list("phlogiston" = 3)
-	required_reagents = list("phosphorus" = 1, "sacid" = 1, "stable_plasma" = 1)
+	name = /datum/reagent/phlogiston
+	id = /datum/reagent/phlogiston
+	results = list(/datum/reagent/phlogiston = 3)
+	required_reagents = list(/datum/reagent/phosphorus = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/stable_plasma = 1)
 
 /datum/chemical_reaction/phlogiston/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent("stabilizing_agent"))
+	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
 	var/turf/open/T = get_turf(holder.my_atom)
 	if(istype(T))
@@ -358,15 +451,15 @@
 
 /datum/chemical_reaction/napalm
 	name = "Napalm"
-	id = "napalm"
-	results = list("napalm" = 3)
-	required_reagents = list("oil" = 1, "welding_fuel" = 1, "ethanol" = 1 )
+	id = /datum/reagent/napalm
+	results = list(/datum/reagent/napalm = 3)
+	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/fuel = 1, /datum/reagent/consumable/ethanol = 1 )
 
 /datum/chemical_reaction/cryostylane
-	name = "cryostylane"
-	id = "cryostylane"
-	results = list("cryostylane" = 3)
-	required_reagents = list("water" = 1, "stable_plasma" = 1, "nitrogen" = 1)
+	name = /datum/reagent/cryostylane
+	id = /datum/reagent/cryostylane
+	results = list(/datum/reagent/cryostylane = 3)
+	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/stable_plasma = 1, /datum/reagent/nitrogen = 1)
 
 /datum/chemical_reaction/cryostylane/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // cools the fuck down
@@ -375,8 +468,8 @@
 /datum/chemical_reaction/cryostylane_oxygen
 	name = "ephemeral cryostylane reaction"
 	id = "cryostylane_oxygen"
-	results = list("cryostylane" = 1)
-	required_reagents = list("cryostylane" = 1, "oxygen" = 1)
+	results = list(/datum/reagent/cryostylane = 1)
+	required_reagents = list(/datum/reagent/cryostylane = 1, /datum/reagent/oxygen = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/cryostylane_oxygen/on_reaction(datum/reagents/holder, created_volume)
@@ -385,18 +478,18 @@
 /datum/chemical_reaction/pyrosium_oxygen
 	name = "ephemeral pyrosium reaction"
 	id = "pyrosium_oxygen"
-	results = list("pyrosium" = 1)
-	required_reagents = list("pyrosium" = 1, "oxygen" = 1)
+	results = list(/datum/reagent/pyrosium = 1)
+	required_reagents = list(/datum/reagent/pyrosium = 1, /datum/reagent/oxygen = 1)
 	mob_react = FALSE
 
 /datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp += 10*created_volume
 
 /datum/chemical_reaction/pyrosium
-	name = "pyrosium"
-	id = "pyrosium"
-	results = list("pyrosium" = 3)
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "phosphorus" = 1)
+	name = /datum/reagent/pyrosium
+	id = /datum/reagent/pyrosium
+	results = list(/datum/reagent/pyrosium = 3)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/uranium/radium = 1, /datum/reagent/phosphorus = 1)
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // also cools the fuck down
@@ -404,23 +497,23 @@
 
 /datum/chemical_reaction/teslium
 	name = "Teslium"
-	id = "teslium"
-	results = list("teslium" = 3)
-	required_reagents = list("stable_plasma" = 1, "silver" = 1, "blackpowder" = 1)
+	id = /datum/reagent/teslium
+	results = list(/datum/reagent/teslium = 3)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/silver = 1, /datum/reagent/gunpowder = 1)
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
 
 /datum/chemical_reaction/energized_jelly
 	name = "Energized Jelly"
-	id = "energized_jelly"
-	results = list("energized_jelly" = 2)
-	required_reagents = list("slimejelly" = 1, "teslium" = 1)
+	id = /datum/reagent/teslium/energized_jelly
+	results = list(/datum/reagent/teslium/energized_jelly = 2)
+	required_reagents = list(/datum/reagent/toxin/slimejelly = 1, /datum/reagent/teslium = 1)
 	mix_message = "<span class='danger'>The slime jelly starts glowing intermittently.</span>"
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning
 	name = "Teslium Destabilization"
 	id = "teslium_lightning"
-	required_reagents = list("teslium" = 1, "water" = 1)
+	required_reagents = list(/datum/reagent/teslium = 1, /datum/reagent/water = 1)
 	strengthdiv = 100
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
@@ -434,34 +527,34 @@
 	sleep(5)
 	if(created_volume >= 75)
 		tesla_zap(holder.my_atom, 7, T1, tesla_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 		sleep(15)
 	if(created_volume >= 40)
 		tesla_zap(holder.my_atom, 7, T2, tesla_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 		sleep(15)
 	if(created_volume >= 10)			//10 units minimum for lightning, 40 units for secondary blast, 75 units for tertiary blast.
 		tesla_zap(holder.my_atom, 7, T3, tesla_flags)
-		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, 1)
+		playsound(holder.my_atom, 'sound/machines/defib_zap.ogg', 50, TRUE)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/teslium_lightning/heat
 	id = "teslium_lightning2"
 	required_temp = 474
-	required_reagents = list("teslium" = 1)
+	required_reagents = list(/datum/reagent/teslium = 1)
 
 /datum/chemical_reaction/reagent_explosion/nitrous_oxide
 	name = "N2O explosion"
 	id = "n2o_explosion"
-	required_reagents = list("nitrous_oxide" = 1)
+	required_reagents = list(/datum/reagent/nitrous_oxide = 1)
 	strengthdiv = 7
 	required_temp = 575
 	modifier = 1
 
 /datum/chemical_reaction/firefighting_foam
 	name = "Firefighting Foam"
-	id = "firefighting_foam"
-	results = list("firefighting_foam" = 3)
-	required_reagents = list("stabilizing_agent" = 1,"fluorosurfactant" = 1,"carbon" = 1)
+	id = /datum/reagent/firefighting_foam
+	results = list(/datum/reagent/firefighting_foam = 3)
+	required_reagents = list(/datum/reagent/stabilizing_agent = 1,/datum/reagent/fluorosurfactant = 1,/datum/reagent/carbon = 1)
 	required_temp = 200
 	is_cold_recipe = 1

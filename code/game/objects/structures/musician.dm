@@ -33,7 +33,7 @@
 // note is a number from 1-7 for A-G
 // acc is either "b", "n", or "#"
 // oct is 1-8 (or 9 for C)
-/datum/song/proc/playnote(note, acc as text, oct)
+/datum/song/proc/playnote(mob/user, note, acc as text, oct)
 	// handle accidental -> B<>C of E<>F
 	if(acc == "b" && (note == 3 || note == 6)) // C or F
 		if(note == 3)
@@ -67,14 +67,17 @@
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
 		LAZYCLEARLIST(hearing_mobs)
 		for(var/mob/M in get_hearers_in_view(15, source))
-			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
-				continue
 			LAZYADD(hearing_mobs, M)
 		last_hearcheck = world.time
 
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
+		if(HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
+			var/mob/living/L = M
+			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
+		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+			continue
 		M.playsound_local(source, null, 100, falloff = 5, S = music_played)
 
 /datum/song/proc/updateDialog(mob/user)
@@ -104,12 +107,12 @@
 						playing = FALSE
 						hearing_mobs = null
 						return
-					if(!lentext(note))
+					if(!length(note))
 						continue
 					var/cur_note = text2ascii(note) - 96
 					if(cur_note < 1 || cur_note > 7)
 						continue
-					for(var/i=2 to lentext(note))
+					for(var/i=2 to length(note))
 						var/ni = copytext(note,i,i+1)
 						if(!text2num(ni))
 							if(ni == "#" || ni == "b" || ni == "n")
@@ -127,7 +130,7 @@
 							cur_acc[cur_note] = "b"
 						else if(prob(75))
 							cur_acc[cur_note] = "n"
-					playnote(cur_note, cur_acc[cur_note], cur_oct[cur_note])
+					playnote(user, cur_note, cur_acc[cur_note], cur_oct[cur_note])
 				if(notes.len >= 2 && text2num(notes[2]))
 					sleep(sanitize_tempo(tempo / text2num(notes[2])))
 				else
@@ -209,7 +212,7 @@
 			lines.Cut(MUSIC_MAXLINES + 1)
 		var/linenum = 1
 		for(var/l in lines)
-			if(lentext(l) > MUSIC_MAXLINECHARS)
+			if(length(l) > MUSIC_MAXLINECHARS)
 				to_chat(usr, "Line [linenum] too long!")
 				lines.Remove(l)
 			else
@@ -236,13 +239,13 @@
 			if(!usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 				return
 
-			if(lentext(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
+			if(length(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
 				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
 				if(!usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 					return
 				if(cont == "no")
 					break
-		while(lentext(t) > MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
+		while(length(t) > MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
 		ParseSong(t)
 
 	else if(href_list["help"])
@@ -265,8 +268,7 @@
 
 	else if(href_list["play"])
 		playing = TRUE
-		spawn()
-			playsong(usr)
+		INVOKE_ASYNC(src, .proc/playsong, usr)
 
 	else if(href_list["newline"])
 		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
@@ -274,7 +276,7 @@
 			return
 		if(lines.len > MUSIC_MAXLINES)
 			return
-		if(lentext(newline) > MUSIC_MAXLINECHARS)
+		if(length(newline) > MUSIC_MAXLINECHARS)
 			newline = copytext(newline, 1, MUSIC_MAXLINECHARS)
 		lines.Add(newline)
 
@@ -289,7 +291,7 @@
 		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
 		if(!content || !usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 			return
-		if(lentext(content) > MUSIC_MAXLINECHARS)
+		if(length(content) > MUSIC_MAXLINECHARS)
 			content = copytext(content, 1, MUSIC_MAXLINECHARS)
 		if(num > lines.len || num < 1)
 			return
@@ -333,8 +335,8 @@
 /obj/structure/piano/unanchored
 	anchored = FALSE
 
-/obj/structure/piano/New()
-	..()
+/obj/structure/piano/Initialize()
+	. = ..()
 	song = new("piano", src)
 
 	if(prob(50) && icon_state == initial(icon_state))
@@ -379,5 +381,6 @@
 	song.interact(user)
 
 /obj/structure/piano/wrench_act(mob/living/user, obj/item/I)
+	..()
 	default_unfasten_wrench(user, I, 40)
 	return TRUE

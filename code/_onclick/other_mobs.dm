@@ -16,16 +16,10 @@
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
-
-	var/override = 0
-
-	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(src, A, proximity)
-
-	if(override)
+	//This signal is needed to prevent gloves of the north star + hulk.
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity) & COMPONENT_NO_ATTACK_HAND)
 		return
-
-	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
+	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity)
 	A.attack_hand(src)
 
 //Return TRUE to cancel other attack hand effects that respect it.
@@ -78,7 +72,7 @@
 	return FALSE
 
 /*
-/mob/living/carbon/human/RestrainedClickOn(var/atom/A) ---carbons will handle this
+/mob/living/carbon/human/RestrainedClickOn(atom/A) ---carbons will handle this
 	return
 */
 
@@ -91,9 +85,6 @@
 		var/obj/item/clothing/gloves/G = gloves
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
 			return
-
-	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_ranged_attack(src, A, mouseparams)
 
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)
@@ -147,14 +138,17 @@
 		if(prob(75))
 			ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
 			ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
-							"<span class='userdanger'>[name] bites [ML]!</span>")
+							"<span class='userdanger'>[name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, name)
+			to_chat(name, "<span class='danger'>You bite [ML]!</span>")
 			if(armor >= 2)
 				return
 			for(var/thing in diseases)
 				var/datum/disease/D = thing
 				ML.ForceContractDisease(D)
 		else
-			ML.visible_message("<span class='danger'>[src] has attempted to bite [ML]!</span>")
+			ML.visible_message("<span class='danger'>[src]'s bite misses [ML]!</span>", \
+							"<span class='danger'>You avoid [src]'s bite!</span>", "<span class='hear'>You hear jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, src)
+			to_chat(src, "<span class='danger'>Your bite misses [ML]!</span>")
 
 /*
 	Aliens

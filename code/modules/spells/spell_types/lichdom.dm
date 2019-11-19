@@ -26,7 +26,10 @@
 		if(iscarbon(M))
 			hand_items = list(M.get_active_held_item(),M.get_inactive_held_item())
 		if(!hand_items.len)
-			to_chat(M, "<span class='caution'>You must hold an item you wish to make your phylactery...</span>")
+			to_chat(M, "<span class='warning'>You must hold an item you wish to make your phylactery!</span>")
+			return
+		if(!M.mind.hasSoul)
+			to_chat(user, "<span class='warning'>You do not possess a soul!</span>")
 			return
 
 		var/obj/item/marked_item
@@ -34,7 +37,7 @@
 		for(var/obj/item/item in hand_items)
 			// I ensouled the nuke disk once. But it's probably a really
 			// mean tactic, so probably should discourage it.
-			if((item.item_flags & ABSTRACT) || (item.item_flags & NODROP) || SEND_SIGNAL(item, COMSIG_ITEM_IMBUE_SOUL, user))
+			if((item.item_flags & ABSTRACT) || HAS_TRAIT(item, TRAIT_NODROP) || SEND_SIGNAL(item, COMSIG_ITEM_IMBUE_SOUL, user))
 				continue
 			marked_item = item
 			to_chat(M, "<span class='warning'>You begin to focus your very being into [item]...</span>")
@@ -57,15 +60,16 @@
 		new /obj/item/phylactery(marked_item, M.mind)
 
 		to_chat(M, "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>")
+		M.mind.hasSoul = FALSE
 		M.set_species(/datum/species/skeleton)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.dropItemToGround(H.w_uniform)
 			H.dropItemToGround(H.wear_suit)
 			H.dropItemToGround(H.head)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), SLOT_WEAR_SUIT)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), SLOT_HEAD)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), SLOT_W_UNIFORM)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), ITEM_SLOT_OCLOTHING)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), ITEM_SLOT_HEAD)
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), ITEM_SLOT_ICLOTHING)
 
 		// you only get one phylactery.
 		M.mind.RemoveSpell(src)
@@ -124,10 +128,10 @@
 	var/mob/old_body = mind.current
 	var/mob/living/carbon/human/lich = new(item_turf)
 
-	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), SLOT_SHOES)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), SLOT_W_UNIFORM)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), SLOT_WEAR_SUIT)
-	lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), SLOT_HEAD)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), ITEM_SLOT_FEET)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), ITEM_SLOT_ICLOTHING)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(lich), ITEM_SLOT_OCLOTHING)
+	lich.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(lich), ITEM_SLOT_HEAD)
 
 	lich.real_name = mind.name
 	mind.transfer_to(lich)

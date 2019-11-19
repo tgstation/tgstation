@@ -5,15 +5,17 @@
 // effectout: effect to show right after teleportation
 // asoundin: soundfile to play before teleportation
 // asoundout: soundfile to play after teleportation
-// force_teleport: if false, teleport will use Move() proc (dense objects will prevent teleportation)
+// forceMove: if false, teleport will use Move() proc (dense objects will prevent teleportation)
 // no_effects: disable the default effectin/effectout of sparks
-/proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, force_teleport=TRUE, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE)
+// forced: whether or not to ignore no_teleport
+/proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, forceMove = TRUE, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
 	// teleporting most effects just deletes them
 	var/static/list/delete_atoms = typecacheof(list(
 		/obj/effect,
 		)) - typecacheof(list(
 		/obj/effect/dummy/chameleon,
 		/obj/effect/wisp,
+		/obj/effect/mob_spawn,
 		))
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)
@@ -23,25 +25,37 @@
 	// if the precision is not specified, default to 0, but apply BoH penalties
 	if (isnull(precision))
 		precision = 0
-		if(istype(teleatom, /obj/item/storage/backpack/holding))
-			precision = rand(1,100)
 
-		var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding)
-		var/list/bagholding = typecache_filter_list(teleatom.GetAllContents(), bag_cache)
-		if(bagholding.len)
-			precision = max(rand(1,100)*bagholding.len,100)
-			if(isliving(teleatom))
-				var/mob/living/MM = teleatom
-				to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
+	switch(channel)
+		if(TELEPORT_CHANNEL_BLUESPACE)
+			if(istype(teleatom, /obj/item/storage/backpack/holding))
+				precision = rand(1,100)
 
-	// if effects are not specified and not explicitly disabled, sparks
-	if ((!effectin || !effectout) && !no_effects)
-		var/datum/effect_system/spark_spread/sparks = new
-		sparks.set_up(5, 1, teleatom)
-		if (!effectin)
-			effectin = sparks
-		if (!effectout)
-			effectout = sparks
+			var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding)
+			var/list/bagholding = typecache_filter_list(teleatom.GetAllContents(), bag_cache)
+			if(bagholding.len)
+				precision = max(rand(1,100)*bagholding.len,100)
+				if(isliving(teleatom))
+					var/mob/living/MM = teleatom
+					to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
+
+			// if effects are not specified and not explicitly disabled, sparks
+			if ((!effectin || !effectout) && !no_effects)
+				var/datum/effect_system/spark_spread/sparks = new
+				sparks.set_up(5, 1, teleatom)
+				if (!effectin)
+					effectin = sparks
+				if (!effectout)
+					effectout = sparks
+		if(TELEPORT_CHANNEL_QUANTUM)
+			// if effects are not specified and not explicitly disabled, rainbow sparks
+			if ((!effectin || !effectout) && !no_effects)
+				var/datum/effect_system/spark_spread/quantum/sparks = new
+				sparks.set_up(5, 1, teleatom)
+				if (!effectin)
+					effectin = sparks
+				if (!effectout)
+					effectout = sparks
 
 	// perform the teleport
 	var/turf/curturf = get_turf(teleatom)
@@ -51,11 +65,15 @@
 		return FALSE
 
 	var/area/A = get_area(curturf)
-	if(A.noteleport)
+	var/area/B = get_area(destturf)
+	if(!forced && (HAS_TRAIT(teleatom, TRAIT_NO_TELEPORT) || A.noteleport || B.noteleport))
+		return FALSE
+
+	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, curturf, destturf))
 		return FALSE
 
 	tele_play_specials(teleatom, curturf, effectin, asoundin)
-	var/success = force_teleport ? teleatom.forceMove(destturf) : teleatom.Move(destturf)
+	var/success = forceMove ? teleatom.forceMove(destturf) : teleatom.Move(destturf)
 	if (success)
 		log_game("[key_name(teleatom)] has teleported from [loc_name(curturf)] to [loc_name(destturf)]")
 		tele_play_specials(teleatom, destturf, effectout, asoundout)
@@ -71,7 +89,7 @@
 /proc/tele_play_specials(atom/movable/teleatom, atom/location, datum/effect_system/effect, sound)
 	if (location && !isobserver(teleatom))
 		if (sound)
-			playsound(location, sound, 60, 1)
+			playsound(location, sound, 60, TRUE)
 		if (effect)
 			effect.attach(location)
 			effect.start()

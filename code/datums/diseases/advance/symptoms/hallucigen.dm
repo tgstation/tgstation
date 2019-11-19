@@ -18,7 +18,7 @@ Bonus
 /datum/symptom/hallucigen
 	name = "Hallucigen"
 	desc = "The virus stimulates the brain, causing occasional hallucinations."
-	stealth = -2
+	stealth = -1
 	resistance = -3
 	stage_speed = -3
 	transmittable = -1
@@ -29,7 +29,7 @@ Bonus
 	symptom_delay_max = 90
 	var/fake_healthy = FALSE
 	threshold_desc = "<b>Stage Speed 7:</b> Increases the amount of hallucinations.<br>\
-					  <b>Stealth 4:</b> The virus mimics positive symptoms.."
+					  <b>Stealth 4:</b> The virus mimics positive symptoms."
 
 /datum/symptom/hallucigen/Start(datum/disease/advance/A)
 	if(!..())
@@ -61,5 +61,8 @@ Bonus
 					to_chat(M, "<span class='notice'>[pick(healthy_messages)]</span>")
 		else
 			if(prob(base_message_chance))
-				to_chat(M, "<span class='userdanger'>[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]</span>")
+				if(!fake_healthy)
+					to_chat(M, "<span class='userdanger'>[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]</span>")
+				else
+					to_chat(M, "<span class='notice'>[pick(healthy_messages)]</span>")
 			M.hallucination += (45 * power)

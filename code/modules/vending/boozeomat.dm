@@ -30,10 +30,16 @@
 					/obj/item/reagent_containers/food/drinks/bottle/hcider = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/grappa = 5,
-					/obj/item/reagent_containers/food/drinks/bottle/sake = 5)
+					/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
+					/obj/item/reagent_containers/food/drinks/bottle/applejack = 5,
+					/obj/item/reagent_containers/food/drinks/bottle/blank = 15,
+					/obj/item/reagent_containers/food/drinks/bottle/blank/small = 15
+					)
 	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12,
-					  /obj/item/reagent_containers/food/drinks/bottle/fernet = 5)
-	premium = list(/obj/item/reagent_containers/glass/bottle/ethanol = 4)
+					 /obj/item/reagent_containers/food/drinks/bottle/fernet = 5)
+	premium = list(/obj/item/reagent_containers/glass/bottle/ethanol = 4,
+				   /obj/item/reagent_containers/food/drinks/bottle/champagne = 5,
+				   /obj/item/reagent_containers/food/drinks/bottle/trappist = 5)
 
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"

@@ -1,4 +1,4 @@
-The enclosed images folder holds the image files used as the title screen for the game. All common formats such as PNG, JPG, and GIF are supported.
+The enclosed /images folder holds the image files used as the title screen for the game. All common formats such as PNG, JPG, and GIF are supported.
 Byond's DMI format is also supported, but if you use a DMI only include one image per file and do not give it an icon_state (the text label below the image).
 
 Keep in mind that the area a title screen fills is a 480px square so you should scale/crop source images to these dimensions first.
@@ -23,11 +23,8 @@ Common titles are in the rotation to be displayed all the time. Any name that do
 
 An example of a common title name is "clown".
 
-The common title screen named "default" is special. It is only used if no other titles are available. You can overwrite "default" safely, but you 
-should have a title named "default" somewhere in your DMI file if you don't have any other common titles. Because default only runs in the 
-absence of other titles, if you want it to also appear in the general rotation you must rename it.
-
-The common title screen named "blank.png" is also special. It is only used to fill space while the real title screen loads. You should leave this file alone.
+The common title screen named "default" is special. It is only used if no other titles are available. Because default only runs in the 
+absence of other titles, if you want it to also appear in the general rotation you must name it something else.
 
 
 Map Titles:

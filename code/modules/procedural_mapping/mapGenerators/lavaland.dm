@@ -16,9 +16,9 @@
 
 /datum/mapGeneratorModule/splatterLayer/lavalandTendrils
 	spawnableTurfs = list()
-	spawnableAtoms = list(/mob/living/simple_animal/hostile/spawner/lavaland = 5,
-	/mob/living/simple_animal/hostile/spawner/lavaland/legion = 5,
-	/mob/living/simple_animal/hostile/spawner/lavaland/goliath = 5)
+	spawnableAtoms = list(/obj/structure/spawner/lavaland = 5,
+	/obj/structure/spawner/lavaland/legion = 5,
+	/obj/structure/spawner/lavaland/goliath = 5)
 
 /datum/mapGenerator/lavaland/ground_only
 	modules = list(/datum/mapGeneratorModule/bottomLayer/lavaland_default)

@@ -25,13 +25,14 @@
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
+	var/list/required_jobs = list()		// alternative required job groups eg list(list(cap=1),list(hos=1,sec=2)) translates to one captain OR one hos and two secmans
 	var/required_players = 0
 	var/maximum_players = -1 // -1 is no maximum, positive numbers limit the selection of a mode on overstaffed stations
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/mob/living/living_antag_player = null
-	var/list/datum/game_mode/replacementmode = null
+	var/datum/game_mode/replacementmode = null
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
@@ -58,8 +59,9 @@
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
-	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if((player.client)&&(player.ready == PLAYER_READY_TO_PLAY))
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/player = i
+		if(player.ready == PLAYER_READY_TO_PLAY)
 			playerC++
 	if(!GLOB.Debug2)
 		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
@@ -123,8 +125,9 @@
 	set waitfor = FALSE
 	var/list/living_crew = list()
 
-	for(var/mob/Player in GLOB.mob_list)
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client)
+	for(var/i in GLOB.player_list)
+		var/mob/Player = i
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player))
 			living_crew += Player
 	var/malc = CONFIG_GET(number/midround_antag_life_check)
 	if(living_crew.len / GLOB.joined_player_list.len <= malc) //If a lot of the player base died, we start fresh
@@ -139,7 +142,7 @@
 		else
 			qdel(G)
 
-	if(!usable_modes)
+	if(!usable_modes.len)
 		message_admins("Convert_roundtype failed due to no valid modes to convert to. Please report this error to the Coders.")
 		return null
 
@@ -160,7 +163,7 @@
 	var/list/antag_candidates = list()
 
 	for(var/mob/living/carbon/human/H in living_crew)
-		if(H.client && H.client.prefs.allow_midround_antag)
+		if(H.client && H.client.prefs.allow_midround_antag && !is_centcom_level(H.z))
 			antag_candidates += H
 
 	if(!antag_candidates)
@@ -235,10 +238,11 @@
 			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
 		for(var/mob/Player in GLOB.alive_mob_list)
-			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client)
-				if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums)) //Someone's still antaging!
-					living_antag_player = Player
-					return 0
+			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client && (Player.mind.special_role || LAZYLEN(Player.mind.antag_datums))) //Someone's still antagging but is their antagonist datum important enough to skip mulligan?
+				for(var/datum/antagonist/antag_types in Player.mind.antag_datums)
+					if(antag_types.prevent_roundtype_conversion)
+						living_antag_player = Player //they were an important antag, they're our new mark
+						return 0
 
 		if(!are_special_antags_dead())
 			return FALSE
@@ -357,8 +361,9 @@
 	var/datum/mind/applicant = null
 
 	// Ultimate randomizing code right here
-	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/player = i
+		if(player.ready == PLAYER_READY_TO_PLAY && player.check_preferences())
 			players += player
 
 	// Shuffling, the players list is now ping-independent!!!
@@ -368,7 +373,7 @@
 	for(var/mob/dead/new_player/player in players)
 		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			if(role in player.client.prefs.be_special)
-				if(!jobban_isbanned(player, ROLE_SYNDICATE) && !QDELETED(player) && !jobban_isbanned(player, role) && !QDELETED(player)) //Nodrak/Carn: Antag Job-bans
+				if(!is_banned_from(player.ckey, list(role, ROLE_SYNDICATE)) && !QDELETED(player))
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
 
@@ -382,26 +387,8 @@
 		for(var/mob/dead/new_player/player in players)
 			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a separate list of people who don't want to be one
-					if(!jobban_isbanned(player, ROLE_SYNDICATE) && !QDELETED(player)  && !jobban_isbanned(player, role) && !QDELETED(player) ) //Nodrak/Carn: Antag Job-bans
+					if(!is_banned_from(player.ckey, list(role, ROLE_SYNDICATE)) && !QDELETED(player))
 						drafted += player.mind
-
-	if(restricted_jobs)
-		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
-			for(var/job in restricted_jobs)
-				if(player.assigned_role == job)
-					drafted -= player
-
-	drafted = shuffle(drafted) // Will hopefully increase randomness, Donkie
-
-	while(candidates.len < recommended_enemies)				// Pick randomlly just the number of people we need and add them to our list of candidates
-		if(drafted.len > 0)
-			applicant = pick(drafted)
-			if(applicant)
-				candidates += applicant
-				drafted.Remove(applicant)
-
-		else												// Not enough scrubs, ABORT ABORT ABORT
-			break
 
 	if(restricted_jobs)
 		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist
@@ -429,8 +416,9 @@
 
 /datum/game_mode/proc/num_players()
 	. = 0
-	for(var/mob/dead/new_player/P in GLOB.player_list)
-		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/P = i
+		if(P.ready == PLAYER_READY_TO_PLAY)
 			. ++
 
 /proc/reopen_roundstart_suicide_roles()
@@ -602,3 +590,7 @@
 		SSticker.news_report = STATION_EVACUATED
 		if(SSshuttle.emergency.is_hijacked())
 			SSticker.news_report = SHUTTLE_HIJACK
+
+/// Mode specific admin panel.
+/datum/game_mode/proc/admin_panel()
+	return

@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/drone/syndrone/Initialize()
 	. = ..()
-	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
+	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 10
 
 /mob/living/simple_animal/drone/syndrone/Login()
@@ -47,7 +47,7 @@
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	. = ..()
-	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
+	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
 	hidden_uplink.telecrystals = 30
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src, force = TRUE)
@@ -59,25 +59,29 @@
 	. = ..()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
-/obj/item/drone_shell/syndrone
+/obj/effect/mob_spawn/drone/syndrone
 	name = "syndrone shell"
 	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
 	icon_state = "syndrone_item"
-	drone_type = /mob/living/simple_animal/drone/syndrone
+	mob_name = "syndrone"
+	mob_type = /mob/living/simple_animal/drone/syndrone
 
-/obj/item/drone_shell/syndrone/badass
+/obj/effect/mob_spawn/drone/syndrone/badass
 	name = "badass syndrone shell"
-	drone_type = /mob/living/simple_animal/drone/syndrone/badass
+	mob_name = "badass syndrone"
+	mob_type = /mob/living/simple_animal/drone/syndrone/badass
 
-/obj/item/drone_shell/snowflake
+/obj/effect/mob_spawn/drone/snowflake
 	name = "snowflake drone shell"
 	desc = "A shell of a snowflake drone, a maintenance drone with a built in holographic projector to display hats and masks."
-	drone_type = /mob/living/simple_animal/drone/snowflake
+	mob_name = "snowflake drone"
+	mob_type = /mob/living/simple_animal/drone/snowflake
 
 /mob/living/simple_animal/drone/polymorphed
 	default_storage = null
 	default_hatmask = null
 	picked = TRUE
+	flavortext = null
 
 /mob/living/simple_animal/drone/polymorphed/Initialize()
 	. = ..()
@@ -92,121 +96,31 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearence]_dead"
 
-/obj/item/drone_shell/dusty
+/obj/effect/mob_spawn/drone/derelict
 	name = "derelict drone shell"
 	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
-	drone_type = /mob/living/simple_animal/drone/derelict
+	icon = 'icons/mob/drone.dmi'
+	icon_state = "drone_maint_hat"
+	mob_name = "derelict drone"
+	mob_type = /mob/living/simple_animal/drone/derelict
+	anchored = TRUE
+	flavour_text = {"
+	<b>You are a drone on Kosmicheskaya Stantsiya 13. Something has brought you out of hibernation, and the station is in gross disrepair. Build, repair, maintain and improve the station that housed you on activation.</b>
+	"}
 
 /mob/living/simple_animal/drone/derelict
 	name = "derelict drone"
 	default_hatmask = /obj/item/clothing/head/ushanka
-
-/mob/living/simple_animal/drone/cogscarab
-	name = "cogscarab"
-	desc = "A strange, drone-like machine. It constantly emits the hum of gears."
-	icon_state = "drone_clock"
-	icon_living = "drone_clock"
-	icon_dead = "drone_clock_dead"
-	picked = TRUE
-	pass_flags = PASSTABLE
-	health = 50
-	maxHealth = 50
-	harm_intent_damage = 5
-	density = TRUE
-	speed = 1
-	ventcrawler = VENTCRAWLER_NONE
-	faction = list("neutral", "ratvar")
-	speak_emote = list("clanks", "clinks", "clunks", "clangs")
-	verb_ask = "requests"
-	verb_exclaim = "proclaims"
-	verb_whisper = "imparts"
-	verb_yell = "harangues"
-	bubble_icon = "clock"
-	initial_language_holder = /datum/language_holder/clockmob
-	light_color = "#E42742"
-	heavy_emp_damage = 0
-	laws = "0. Purge all untruths and honor Ratvar."
-	default_storage = /obj/item/storage/toolbox/brass/prefilled
-	hacked = TRUE
-	visualAppearence = CLOCKDRONE
-	can_be_held = FALSE
-	flavortext = "<b><span class='nezbere'>You are a cogscarab,</span> a tiny building construct of Ratvar. While you're weak and can't recite scripture, \
-	you have a set of quick tools, as well as a replica fabricator that can create brass and convert objects.<br><br>Work with the servants of Ratvar \
-	to construct and maintain defenses at the City of Cogs. If there are no servants, use this time to experiment with base designs!"
-
-/mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal fabricator
-	default_storage = /obj/item/storage/toolbox/brass/prefilled/ratvar
-
-/mob/living/simple_animal/drone/cogscarab/admin //an admin-only subtype of cogscarab with a no-cost fabricator and slab in its box
-	default_storage = /obj/item/storage/toolbox/brass/prefilled/ratvar/admin
-
-/mob/living/simple_animal/drone/cogscarab/Initialize()
-	. = ..()
-	set_light(2, 0.5)
-	qdel(access_card) //we don't have free access
-	access_card = null
-	verbs -= /mob/living/simple_animal/drone/verb/check_laws
-	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
-
-/mob/living/simple_animal/drone/cogscarab/Login()
-	..()
-	add_servant_of_ratvar(src, TRUE, GLOB.servants_active)
-	to_chat(src,"<b>You yourself are one of these servants, and will be able to utilize almost anything they can[GLOB.ratvar_awakens ? "":", <i>excluding a clockwork slab</i>"].</b>") // this can't go with flavortext because i'm assuming it requires them to be ratvar'd
-
-/mob/living/simple_animal/drone/cogscarab/binarycheck()
-	return FALSE
-
-/mob/living/simple_animal/drone/cogscarab/alert_drones(msg, dead_can_hear = FALSE)
-	if(msg == DRONE_NET_CONNECT)
-		msg = "<span class='brass'><i>Hierophant Network:</i> [name] activated.</span>"
-	else if(msg == DRONE_NET_DISCONNECT)
-		msg = "<span class='brass'><i>Hierophant Network:</i></span> <span class='alloy'>[name] disabled.</span>"
-	..()
-
-/mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER && stat == DEAD)
-		try_reactivate(user)
-	else
-		..()
-
-/mob/living/simple_animal/drone/cogscarab/try_reactivate(mob/living/user)
-	if(!is_servant_of_ratvar(user))
-		to_chat(user, "<span class='warning'>You fiddle around with [src] to no avail.</span>")
-	else
-		..()
-
-/mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/G)
-	return GLOB.ratvar_awakens
-
-/mob/living/simple_animal/drone/cogscarab/get_armor_effectiveness()
-	if(GLOB.ratvar_awakens)
-		return 1
-	return ..()
-
-/mob/living/simple_animal/drone/cogscarab/triggerAlarm(class, area/A, O, obj/alarmsource)
-	return
-
-/mob/living/simple_animal/drone/cogscarab/cancelAlarm(class, area/A, obj/origin)
-	return
-
-/mob/living/simple_animal/drone/cogscarab/update_drone_hack()
-	return //we don't get hacked or give a shit about it
-
-/mob/living/simple_animal/drone/cogscarab/drone_chat(msg)
-	titled_hierophant_message(src, msg, "nezbere", "brass", "Construct") //HIEROPHANT DRONES
-
-/mob/living/simple_animal/drone/cogscarab/ratvar_act()
-	fully_heal(TRUE)
-
-/mob/living/simple_animal/drone/cogscarab/update_icons()
-	if(stat != DEAD)
-		if(incapacitated())
-			icon_state = "[visualAppearence]_flipped"
-		else
-			icon_state = visualAppearence
-	else
-		icon_state = "[visualAppearence]_dead"
-
-/mob/living/simple_animal/drone/cogscarab/update_mobility()
-	. = ..()
-	update_icons()
+	laws = \
+	"1. You may not involve yourself in the matters of another sentient being outside the station that housed your activation, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
+	"2. You may not harm any sentient being, regardless of intent or circumstance.\n"+\
+	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation."
+	flavortext = \
+	"\n<big><span class='warning'>DO NOT WILLINGLY LEAVE KOSMICHESKAYA STANTSIYA 13 (THE DERELICT)</span></big>\n"+\
+	"<span class='notice'>Derelict drones are a ghost role that is allowed to roam freely on KS13, with the main goal of repairing and improving it.</span>\n"+\
+	"<span class='notice'>Do not interfere with the round going on outside KS13.</span>\n"+\
+	"<span class='notice'>Actions that constitute interference include, but are not limited to:</span>\n"+\
+	"<span class='notice'>     - Going to the main station in search of materials.</span>\n"+\
+	"<span class='notice'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
+	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
+	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"

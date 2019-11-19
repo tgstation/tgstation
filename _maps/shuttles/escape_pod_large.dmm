@@ -72,7 +72,7 @@
 /obj/docking_port/mobile/pod{
 	dwidth = 2;
 	height = 6;
-	launch_status = 0;
+	id = "pod1";
 	port_direction = 2;
 	width = 5
 	},

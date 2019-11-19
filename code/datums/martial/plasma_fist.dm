@@ -4,6 +4,7 @@
 
 /datum/martial_art/plasma_fist
 	name = "Plasma Fist"
+	id = MARTIALART_PLASMAFIST
 	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
 
 
@@ -22,18 +23,9 @@
 		return 1
 	return 0
 
-/datum/martial_art/plasma_fist/proc/TornadoAnimate(mob/living/carbon/human/A)
-	set waitfor = FALSE
-	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
-		if(!A)
-			break
-		A.setDir(i)
-		playsound(A.loc, 'sound/weapons/punch1.ogg', 15, 1, -1)
-		sleep(1)
-
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.say("TORNADO SWEEP!", forced="plasma fist")
-	TornadoAnimate(A)
+	dance_rotate(A, CALLBACK(GLOBAL_PROC, .proc/playsound, A.loc, 'sound/weapons/punch1.ogg', 15, TRUE, -1))
 	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
 	var/list/turfs = list()
 	for(var/turf/T in range(1,A))
@@ -43,9 +35,10 @@
 	return
 
 /datum/martial_art/plasma_fist/proc/Throwback(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	D.visible_message("<span class='danger'>[A] has hit [D] with Plasma Punch!</span>", \
-								"<span class='userdanger'>[A] has hit [D] with Plasma Punch!</span>")
-	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
+	D.visible_message("<span class='danger'>[A] hits [D] with Plasma Punch!</span>", \
+					"<span class='userdanger'>You're hit with a Plasma Punch by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
+	to_chat(A, "<span class='danger'>You hit [D] with Plasma Punch!</span>")
+	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
 	D.throw_at(throw_target, 200, 4,A)
 	A.say("HYAH!", forced="plasma fist")
@@ -54,10 +47,11 @@
 
 /datum/martial_art/plasma_fist/proc/Plasma(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
-	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, 1, -1)
+	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 	A.say("PLASMA FIST!", forced="plasma fist")
-	D.visible_message("<span class='danger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>", \
-								"<span class='userdanger'>[A] has hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
+	D.visible_message("<span class='danger'>[A] hits [D] with THE PLASMA FIST TECHNIQUE!</span>", \
+					"<span class='userdanger'>You're suddenly hit with THE PLASMA FIST TECHNIQUE by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
+	to_chat(A, "<span class='danger'>You hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
 	D.gib()
 	log_combat(A, D, "gibbed (Plasma Fist)")
 	return
@@ -65,23 +59,20 @@
 /datum/martial_art/plasma_fist/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
 	if(check_streak(A,D))
-		return 1
-	basic_hit(A,D)
-	return 1
+		return TRUE
+	return FALSE
 
 /datum/martial_art/plasma_fist/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("D",D)
 	if(check_streak(A,D))
-		return 1
-	basic_hit(A,D)
-	return 1
+		return TRUE
+	return FALSE
 
 /datum/martial_art/plasma_fist/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("G",D)
 	if(check_streak(A,D))
-		return 1
-	basic_hit(A,D)
-	return 1
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/plasma_fist_help()
 	set name = "Recall Teachings"

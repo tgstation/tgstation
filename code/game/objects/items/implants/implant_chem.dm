@@ -2,7 +2,6 @@
 	name = "chem implant"
 	desc = "Injects things."
 	icon_state = "reagents"
-	container_type = OPENCONTAINER
 	activated = FALSE
 
 /obj/item/implant/chem/get_data()
@@ -23,7 +22,7 @@
 
 /obj/item/implant/chem/Initialize()
 	. = ..()
-	create_reagents(50)
+	create_reagents(50, OPENCONTAINER)
 	GLOB.tracked_chem_implants += src
 
 /obj/item/implant/chem/Destroy()
@@ -47,9 +46,9 @@
 	else
 		injectamount = cause
 	reagents.trans_to(R, injectamount)
-	to_chat(R, "<span class='italics'>You hear a faint beep.</span>")
+	to_chat(R, "<span class='hear'>You hear a faint beep.</span>")
 	if(!reagents.total_volume)
-		to_chat(R, "<span class='italics'>You hear a faint click from your chest.</span>")
+		to_chat(R, "<span class='hear'>You hear a faint click from your chest.</span>")
 		qdel(src)
 
 

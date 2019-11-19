@@ -32,10 +32,10 @@
 	if(!IsAvailable())
 		return
 	var/turf/T = get_turf(target)
-	if(target in view(user.client.view, get_turf(user)))
+	if(target in view(user.client.view, user))
 		var/obj/spot1 = new phaseout(get_turf(user), user.dir)
 		user.forceMove(T)
-		playsound(T, dash_sound, 25, 1)
+		playsound(T, dash_sound, 25, TRUE)
 		var/obj/spot2 = new phasein(get_turf(user), user.dir)
 		spot1.Beam(spot2,beam_effect,time=20)
 		current_charges--
@@ -46,5 +46,5 @@
 	current_charges = CLAMP(current_charges + 1, 0, max_charges)
 	holder.update_action_buttons_icon()
 	if(recharge_sound)
-		playsound(dashing_item, recharge_sound, 50, 1)
+		playsound(dashing_item, recharge_sound, 50, TRUE)
 	to_chat(holder, "<span class='notice'>[src] now has [current_charges]/[max_charges] charges.</span>")

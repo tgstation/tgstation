@@ -1,5 +1,7 @@
 #define PRINTER_TIMEOUT 10
 
+
+
 /obj/machinery/computer/bounty
 	name = "Nanotrasen bounty console"
 	desc = "Used to check and claim bounties offered by Nanotrasen"
@@ -21,12 +23,14 @@
 /obj/item/paper/bounty_printout/Initialize()
 	. = ..()
 	info = "<h2>Nanotrasen Cargo Bounties</h2></br>"
+	update_icon()
+
 	for(var/datum/bounty/B in GLOB.bounties_list)
 		if(B.claimed)
 			continue
-		info += "<h3>[B.name]</h3>"
-		info += "<ul><li>Reward: [B.reward_string()]</li>"
-		info += "<li>Completed: [B.completion_string()]</li></ul>"
+		info += {"<h3>[B.name]</h3>
+		<ul><li>Reward: [B.reward_string()]</li>
+		<li>Completed: [B.completion_string()]</li></ul>"}
 
 /obj/machinery/computer/bounty/ui_interact(mob/user)
 	. = ..()
@@ -34,40 +38,38 @@
 	if(!GLOB.bounties_list.len)
 		setup_bounties()
 
-	var/dat = ""
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	dat += "<a href='?src=[REF(src)];refresh=1'>Refresh</a>"
-	dat += "<a href='?src=[REF(src)];refresh=1;choice=Print'>Print Paper</a>"
-	dat += "<p>Credits: <b>[D.account_balance]</b></p>"
-	dat += {"<table style="text-align:center;" border="1" cellspacing="0" width="100%">"}
-	dat += "<tr><th>Name</th><th>Description</th><th>Reward</th><th>Completion</th><th>Status</th></tr>"
+	var/list/dat = list({"<a href='?src=[REF(src)];refresh=1'>Refresh</a>
+	<a href='?src=[REF(src)];refresh=1;choice=Print'>Print Paper</a>
+	<p>Credits: <b>[D.account_balance]</b></p>
+	<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+	<tr><th>Name</th><th>Description</th><th>Reward</th><th>Completion</th><th>Status</th></tr>"})
 	for(var/datum/bounty/B in GLOB.bounties_list)
-		var/background
-		if(B.can_claim())
-			background = "'background-color:#4F7529;'"
-		else if(B.claimed)
-			background = "'background-color:#294675;'"
+		if(B.claimed)
+			dat += "<tr style='background-color:#294675;'>"
+		else if(B.can_claim())
+			dat += "<tr style='background-color:#4F7529;'>"
 		else
-			background = "'background-color:#990000;'"
-		dat += "<tr style=[background]>"
+			dat += "<tr style='background-color:#990000;'>"
+
 		if(B.high_priority)
-			dat += text("<td><b>[]</b></td>", B.name)
-			dat += text("<td><b>High Priority:</b> []</td>", B.description)
-			dat += text("<td><b>[]</b></td>", B.reward_string())
+			dat += {"<td><b>[B.name]</b></td>
+			<td><b>High Priority:</b> [B.description]</td>
+			<td><b>[B.reward_string()]</b></td>"}
 		else
-			dat += text("<td>[]</td>", B.name)
-			dat += text("<td>[]</td>", B.description)
-			dat += text("<td>[]</td>", B.reward_string())
-		dat += text("<td>[]</td>", B.completion_string())
-		if(B.can_claim())
-			dat += text("<td><A href='?src=[REF(src)];refresh=1;choice=Claim;d_rec=[REF(B)]'>Claim</a></td>")
-		else if(B.claimed)
-			dat += text("<td>Claimed</td>")
+			dat += {"<td>[B.name]</td>
+			<td>[B.description]</td>
+			<td>[B.reward_string()]</td>"}
+		dat += "<td>[B.completion_string()]</td>"
+		if(B.claimed)
+			dat += "<td>Claimed</td>"
+		else if(B.can_claim())
+			dat += "<td><A href='?src=[REF(src)];refresh=1;choice=Claim;d_rec=[REF(B)]'>Claim</a></td>"
 		else
-			dat += text("<td>Unclaimed</td>")
+			dat += "<td>Unclaimed</td>"
 		dat += "</tr>"
 	dat += "</table>"
-
+	dat = dat.Join()
 	var/datum/browser/popup = new(user, "bounties", "Nanotrasen Bounties", 700, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -84,12 +86,11 @@
 				print_paper()
 
 		if("Claim")
-			var/datum/bounty/B = locate(href_list["d_rec"])
-			if(B in GLOB.bounties_list)
+			var/datum/bounty/B = locate(href_list["d_rec"]) in GLOB.bounties_list
+			if(B)
 				B.claim()
 
 	if(href_list["refresh"])
-		playsound(src, "terminal_type", 25, 0)
+		playsound(src, "terminal_type", 25, FALSE)
 
 	updateUsrDialog()
-

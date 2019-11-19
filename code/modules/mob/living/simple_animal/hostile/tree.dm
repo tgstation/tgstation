@@ -9,9 +9,11 @@
 	gender = NEUTER
 	speak_chance = 0
 	turns_per_move = 5
-	response_help = "brushes"
-	response_disarm = "pushes"
-	response_harm = "hits"
+	response_help_continuous = "brushes"
+	response_help_simple = "brush"
+	response_disarm_continuous = "pushes"
+	response_disarm_simple = "push"
+	faction = list("hostile")
 	speed = 1
 	maxHealth = 250
 	health = 250
@@ -22,7 +24,8 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 8
 	melee_damage_upper = 12
-	attacktext = "bites"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	speak_emote = list("pines")
 	emote_taunt = list("growls")
@@ -33,7 +36,6 @@
 	minbodytemp = 0
 	maxbodytemp = 1200
 
-	faction = list("hostile")
 	deathmessage = "is hacked into pieces!"
 	loot = list(/obj/item/stack/sheet/mineral/wood)
 	gold_core_spawnable = HOSTILE_SPAWN
@@ -69,3 +71,4 @@
 	icon_gib = "festivus_pole"
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")
+	faction = list()

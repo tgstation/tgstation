@@ -19,13 +19,13 @@
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
-/obj/item/mop/New()
-	..()
+/obj/item/mop/Initialize()
+	. = ..()
 	create_reagents(mopcap)
 
 
 /obj/item/mop/proc/clean(turf/A)
-	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
+	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
 		SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
@@ -49,7 +49,7 @@
 		return
 
 	if(T)
-		user.visible_message("[user] begins to clean \the [T] with [src].", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
+		user.visible_message("<span class='notice'>[user] begins to clean \the [T] with [src].</span>", "<span class='notice'>You begin to clean \the [T] with [src]...</span>")
 
 		if(do_after(user, src.mopspeed, target = T))
 			to_chat(user, "<span class='notice'>You finish mopping.</span>")
@@ -89,7 +89,7 @@
 	mopspeed = 8
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
 	var/refill_rate = 1 //Rate per process() tick mop refills itself
-	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
+	var/refill_reagent = /datum/reagent/water //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
 
 /obj/item/mop/advanced/New()
 	..()
@@ -102,7 +102,7 @@
 	else
 		STOP_PROCESSING(SSobj,src)
 	to_chat(user, "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>")
-	playsound(user, 'sound/machines/click.ogg', 30, 1)
+	playsound(user, 'sound/machines/click.ogg', 30, TRUE)
 
 /obj/item/mop/advanced/process()
 
@@ -110,8 +110,8 @@
 		reagents.add_reagent(refill_reagent, refill_rate)
 
 /obj/item/mop/advanced/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>")
+	. = ..()
+	. += "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>"
 
 /obj/item/mop/advanced/Destroy()
 	if(refill_enabled)

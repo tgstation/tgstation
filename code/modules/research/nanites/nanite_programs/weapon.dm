@@ -51,7 +51,7 @@
 
 /datum/nanite_program/aggressive_replication/active_effect()
 	var/extra_regen = round(nanites.nanite_volume / 200, 0.1)
-	nanites.adjust_nanites(extra_regen)
+	nanites.adjust_nanites(null, extra_regen)
 	host_mob.adjustBruteLoss(extra_regen / 2, TRUE)
 
 /datum/nanite_program/meltdown
@@ -161,40 +161,55 @@
 /datum/nanite_program/cryo/active_effect()
 	host_mob.adjust_bodytemperature(-rand(15,25), 50)
 
-/datum/nanite_program/mind_control
+/datum/nanite_program/triggered/comm/mind_control
 	name = "Mind Control"
-	desc = "The nanites imprint an absolute directive onto the host's brain while they're active."
-	use_rate = 3
+	desc = "The nanites imprint an absolute directive onto the host's brain for one minute when triggered."
+	trigger_cost = 30
+	trigger_cooldown = 1800
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
-	extra_settings = list("Directive")
-	var/cooldown = 0 //avoids spam when nanites are running low
+	extra_settings = list(NES_DIRECTIVE,NES_COMM_CODE)
 	var/directive = "..."
 
-/datum/nanite_program/mind_control/set_extra_setting(user, setting)
-	if(setting == "Directive")
-		var/new_directive = stripped_input(user, "Choose the directive to imprint with mind control.", "Directive", directive, MAX_MESSAGE_LEN)
+/datum/nanite_program/triggered/comm/mind_control/set_extra_setting(user, setting)
+	if(setting == NES_DIRECTIVE)
+		var/new_directive = stripped_input(user, "Choose the directive to imprint with mind control.", NES_DIRECTIVE, directive, MAX_MESSAGE_LEN)
 		if(!new_directive)
 			return
 		directive = new_directive
+	if(setting == NES_COMM_CODE)
+		var/new_code = input(user, "Set the communication code (1-9999) or set to 0 to disable external signals.", name, null) as null|num
+		if(isnull(new_code))
+			return
+		comm_code = CLAMP(round(new_code, 1), 0, 9999)
 
-/datum/nanite_program/mind_control/get_extra_setting(setting)
-	if(setting == "Directive")
+/datum/nanite_program/triggered/comm/mind_control/get_extra_setting(setting)
+	if(setting == NES_DIRECTIVE)
 		return directive
+	if(setting == NES_COMM_CODE)
+		return comm_code
 
-/datum/nanite_program/mind_control/copy_extra_settings_to(datum/nanite_program/mind_control/target)
+/datum/nanite_program/triggered/comm/mind_control/copy_extra_settings_to(datum/nanite_program/triggered/comm/mind_control/target)
 	target.directive = directive
+	target.comm_code = comm_code
 
-/datum/nanite_program/mind_control/enable_passive_effect()
-	if(world.time < cooldown)
+/datum/nanite_program/triggered/comm/mind_control/trigger(comm_message)
+	if(!..())
 		return
-	. = ..()
-	brainwash(host_mob, directive)
+	if(host_mob.stat == DEAD)
+		return
+	var/sent_directive = comm_message
+	if(!comm_message)
+		sent_directive = directive
+	brainwash(host_mob, sent_directive)
 	log_game("A mind control nanite program brainwashed [key_name(host_mob)] with the objective '[directive]'.")
+	addtimer(CALLBACK(src, .proc/end_brainwashing), 600)
 
-/datum/nanite_program/mind_control/disable_passive_effect()
-	. = ..()
+/datum/nanite_program/triggered/comm/mind_control/proc/end_brainwashing()
 	if(host_mob.mind && host_mob.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		host_mob.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	log_game("[key_name(host_mob)] is no longer brainwashed by nanites.")
-	cooldown = world.time + 450
+	
+/datum/nanite_program/triggered/comm/mind_control/disable_passive_effect()
+	. = ..()
+	end_brainwashing()

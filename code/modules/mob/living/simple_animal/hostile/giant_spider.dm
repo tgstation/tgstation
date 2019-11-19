@@ -6,7 +6,7 @@
 
 /mob/living/simple_animal/hostile/poison
 	var/poison_per_bite = 5
-	var/poison_type = "toxin"
+	var/poison_type = /datum/reagent/toxin
 
 /mob/living/simple_animal/hostile/poison/AttackingTarget()
 	. = ..()
@@ -22,16 +22,17 @@
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
+	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	speak_emote = list("chitters")
 	emote_hear = list("chitters")
 	speak_chance = 5
 	turns_per_move = 5
-	see_in_dark = 10
+	see_in_dark = 4
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/reagent_containers/food/snacks/spiderleg = 8)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "hits"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
 	maxHealth = 200
 	health = 200
 	obj_damage = 60
@@ -42,17 +43,16 @@
 	pass_flags = PASSTABLE
 	move_to_delay = 6
 	ventcrawler = VENTCRAWLER_ALWAYS
-	attacktext = "bites"
+	attack_verb_continuous = "bites"
+	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	unique_name = 1
 	gold_core_spawnable = HOSTILE_SPAWN
-	see_in_dark = 4
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	footstep_type = FOOTSTEP_MOB_CLAW
 	var/playable_spider = FALSE
 	var/datum/action/innate/spider/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
-
-	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Initialize()
 	. = ..()
@@ -72,8 +72,10 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	..()
 	if(directive)
-		to_chat(src, "<span class='notice'>Your mother left you a directive! Follow it at all costs.</span>")
+		to_chat(src, "<span class='spider'>Your mother left you a directive! Follow it at all costs.</span>")
 		to_chat(src, "<span class='spider'><b>[directive]</b></span>")
+		if(mind)
+			mind.store_memory("<span class='spider'><b>[directive]</b></span>")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
 	. = ..()
@@ -88,9 +90,11 @@
 	if(spider_ask == "No" || !src || QDELETED(src))
 		return 1
 	if(key)
-		to_chat(user, "<span class='notice'>Someone else already took this spider.</span>")
+		to_chat(user, "<span class='warning'>Someone else already took this spider!</span>")
 		return 1
 	key = user.key
+	if(directive)
+		log_game("[key_name(src)] took control of [name] with the objective: '[directive]'.")
 	return 1
 
 //nursemaids - these create webs and eggs
@@ -112,6 +116,7 @@
 	var/datum/action/innate/spider/lay_eggs/lay_eggs
 	var/datum/action/innate/spider/set_directive/set_directive
 	var/static/list/consumed_mobs = list() //the tags of mobs that have been consumed by nurse spiders to lay eggs
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/Initialize()
 	. = ..()
@@ -126,6 +131,26 @@
 	RemoveAbility(wrap)
 	QDEL_NULL(lay_eggs)
 	QDEL_NULL(set_directive)
+	return ..()
+
+//broodmothers are the queen of the spiders, can send messages to all them and web faster. That rare round where you get a queen spider and turn your 'for honor' players into 'r6siege' players will be a fun one.
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife
+	name = "broodmother"
+	desc = "Furry and black, it makes you shudder to look at it. This one has scintillating green eyes. Might also be hiding a real knife somewhere."
+	icon_state = "midwife"
+	icon_living = "midwife"
+	icon_dead = "midwife_dead"
+	maxHealth = 40
+	health = 40
+	var/datum/action/innate/spider/comm/letmetalkpls
+
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Initialize()
+	. = ..()
+	letmetalkpls = new
+	letmetalkpls.Grant(src)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Destroy()
+	QDEL_NULL(letmetalkpls)
 	return ..()
 
 //hunters have the most poison and move the fastest, so they can find prey
@@ -154,7 +179,7 @@
 	melee_damage_upper = 1
 	poison_per_bite = 12
 	move_to_delay = 4
-	poison_type = "venom" //all in venom, glass cannon. you bite 5 times and they are DEFINITELY dead, but 40 health and you are extremely obvious. Ambush, maybe?
+	poison_type = /datum/reagent/toxin/venom //all in venom, glass cannon. you bite 5 times and they are DEFINITELY dead, but 40 health and you are extremely obvious. Ambush, maybe?
 	speed = 1
 	gold_core_spawnable = NO_SPAWN
 
@@ -175,42 +200,24 @@
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
+	var/slowed_by_webs = FALSE
 
-/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/movement_delay()
-	var/turf/T = get_turf(src)
-	if(locate(/obj/structure/spider/stickyweb) in T)
-		speed = 2
-	else
-		speed = 7
+/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/Moved(atom/oldloc, dir)
 	. = ..()
-
-//midwives are the queen of the spiders, can send messages to all them and web faster. That rare round where you get a queen spider and turn your 'for honor' players into 'r6siege' players will be a fun one.
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife
-	name = "midwife"
-	desc = "Furry and black, it makes you shudder to look at it. This one has scintillating green eyes."
-	icon_state = "midwife"
-	icon_living = "midwife"
-	icon_dead = "midwife_dead"
-	maxHealth = 40
-	health = 40
-	var/datum/action/innate/spider/comm/letmetalkpls
-	gold_core_spawnable = NO_SPAWN
-
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Initialize()
-	. = ..()
-	letmetalkpls = new
-	letmetalkpls.Grant(src)
-
-/mob/living/simple_animal/hostile/poison/giant_spider/nurse/midwife/Destroy()
-	QDEL_NULL(letmetalkpls)
-	return ..()
+	if(slowed_by_webs)
+		if(!(locate(/obj/structure/spider/stickyweb) in loc))
+			remove_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB)
+			slowed_by_webs = FALSE
+	else if(locate(/obj/structure/spider/stickyweb) in loc)
+		add_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB, priority=100, multiplicative_slowdown=3)
+		slowed_by_webs = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
 	name = "giant ice spider"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	poison_type = "frostoil"
+	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
 
@@ -219,16 +226,15 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	poison_type = "frostoil"
+	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
-	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/ice
 	name = "giant ice spider"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	poison_type = "frostoil"
+	poison_type = /datum/reagent/consumable/frostoil
 	color = rgb(114,228,250)
 	gold_core_spawnable = NO_SPAWN
 
@@ -238,20 +244,21 @@
 	if(AIStatus == AI_IDLE)
 		//1% chance to skitter madly away
 		if(!busy && prob(1))
-			stop_automated_movement = 1
+			stop_automated_movement = TRUE
 			Goto(pick(urange(20, src, 1)), move_to_delay)
-			spawn(50)
-				stop_automated_movement = 0
-				walk(src,0)
+			addtimer(CALLBACK(src, .proc/do_action), 5 SECONDS)
 		return 1
 
+/mob/living/simple_animal/hostile/poison/giant_spider/proc/do_action()
+	stop_automated_movement = FALSE
+	walk(src,0)
+
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/proc/GiveUp(C)
-	spawn(100)
-		if(busy == MOVING_TO_TARGET)
-			if(cocoon_target == C && get_dist(src,cocoon_target) > 1)
-				cocoon_target = null
-			busy = FALSE
-			stop_automated_movement = 0
+	if(busy == MOVING_TO_TARGET)
+		if(cocoon_target == C && get_dist(src,cocoon_target) > 1)
+			cocoon_target = null
+		busy = FALSE
+		stop_automated_movement = FALSE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/handle_automated_action()
 	if(..())
@@ -264,7 +271,7 @@
 					busy = MOVING_TO_TARGET
 					Goto(C, move_to_delay)
 					//give up if we can't reach them after 10 seconds
-					GiveUp(C)
+					addtimer(CALLBACK(src, .proc/GiveUp, C), 10 SECONDS)
 					return
 
 			//second, spin a sticky spiderweb on this tile
@@ -288,7 +295,7 @@
 							stop_automated_movement = 1
 							Goto(O, move_to_delay)
 							//give up if we can't reach them after 10 seconds
-							GiveUp(O)
+							addtimer(CALLBACK(src, .proc/GiveUp, O), 10 SECONDS)
 
 		else if(busy == MOVING_TO_TARGET && cocoon_target)
 			if(get_dist(src, cocoon_target) <= 1)
@@ -481,11 +488,23 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "directive"
 
+/datum/action/innate/spider/set_directive/IsAvailable()
+	if(..())
+		if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider))
+			return FALSE
+		var/mob/living/simple_animal/hostile/poison/giant_spider/S = owner
+		if(S.playable_spider)
+			return FALSE
+		return TRUE
+
 /datum/action/innate/spider/set_directive/Activate()
 	if(!istype(owner, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
 		return
 	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/S = owner
-	S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]")
+	if(!S.playable_spider)
+		S.directive = stripped_input(S, "Enter the new directive", "Create directive", "[S.directive]")
+		message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[S.directive]'.")
+		log_game("[key_name(owner)] set its directive to: '[S.directive]'.")
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Login()
 	. = ..()

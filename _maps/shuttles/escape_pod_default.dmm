@@ -19,10 +19,7 @@
 	name = "Escape Pod Airlock"
 	},
 /obj/docking_port/mobile/pod{
-	port_direction = 2;
-	dwidth = 1;
-	width = 3;
-	height = 4
+	port_direction = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)

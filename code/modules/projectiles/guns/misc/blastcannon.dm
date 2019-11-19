@@ -99,35 +99,35 @@
 	var/medium = power * 0.5
 	var/light = power
 	user.visible_message("<span class='danger'>[user] opens [bomb] on [user.p_their()] [name] and fires a blast wave at [target]!</span>","<span class='danger'>You open [bomb] on your [name] and fire a blast wave at [target]!</span>")
-	playsound(user, "explosion", 100, 1)
+	playsound(user, "explosion", 100, TRUE)
 	var/turf/starting = get_turf(user)
 	var/turf/targturf = get_turf(target)
 	message_admins("Blast wave fired from [ADMIN_VERBOSEJMP(starting)] at [ADMIN_VERBOSEJMP(targturf)] ([target.name]) by [ADMIN_LOOKUPFLW(user)] with power [heavy]/[medium]/[light].")
 	log_game("Blast wave fired from [AREACOORD(starting)] at [AREACOORD(targturf)] ([target.name]) by [key_name(user)] with power [heavy]/[medium]/[light].")
-	var/obj/item/projectile/blastwave/BW = new(loc, heavy, medium, light)
+	var/obj/projectile/blastwave/BW = new(loc, heavy, medium, light)
 	BW.hugbox = hugbox
 	BW.preparePixelProjectile(target, get_turf(src), params, 0)
 	BW.fire()
 
-/obj/item/projectile/blastwave
+/obj/projectile/blastwave
 	name = "blast wave"
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
-	forcedodge = TRUE
+	movement_type = FLYING | UNSTOPPABLE
 	var/heavyr = 0
 	var/mediumr = 0
 	var/lightr = 0
 	var/hugbox = TRUE
 	range = 150
 
-/obj/item/projectile/blastwave/Initialize(mapload, _h, _m, _l)
+/obj/projectile/blastwave/Initialize(mapload, _h, _m, _l)
 	heavyr = _h
 	mediumr = _m
 	lightr = _l
 	return ..()
 
-/obj/item/projectile/blastwave/Range()
+/obj/projectile/blastwave/Range()
 	..()
 	var/amount_destruction = EXPLODE_NONE
 	var/wallbreak_chance = 0
@@ -156,5 +156,5 @@
 	mediumr = max(mediumr - 1, 0)
 	lightr = max(lightr - 1, 0)
 
-/obj/item/projectile/blastwave/ex_act()
+/obj/projectile/blastwave/ex_act()
 	return

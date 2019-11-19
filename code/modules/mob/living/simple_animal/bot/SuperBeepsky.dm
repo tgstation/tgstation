@@ -5,10 +5,10 @@
 	icon_state = "grievous"
 	health = 150
 	maxHealth = 150
-	baton_type = /obj/item/melee/transforming/energy/sword
+	baton_type = /obj/item/melee/transforming/energy/sword/saber
 	base_speed = 4 //he's a fast fucker
-	var/obj/item/weapon
 	var/block_chance = 50
+	weapon_force = 30
 
 
 /mob/living/simple_animal/bot/secbot/grievous/toy //A toy version of general beepsky!
@@ -17,22 +17,22 @@
 	health = 50
 	maxHealth = 50
 	baton_type = /obj/item/toy/sword
+	weapon_force = 0
 
-/mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/item/projectile/P)
-	visible_message("[src] deflects [P] with its energy swords!")
+/mob/living/simple_animal/bot/secbot/grievous/bullet_act(obj/projectile/P)
+	visible_message("<span class='warning'>[src] deflects [P] with its energy swords!</span>")
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE)
-	return FALSE
+	return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/bot/secbot/grievous/Crossed(atom/movable/AM)
 	..()
 	if(ismob(AM) && AM == target)
-		visible_message("[src] flails his swords and cuts [AM]!")
+		visible_message("<span class='warning'>[src] flails his swords and cuts [AM]!</span>")
 		playsound(src,'sound/effects/beepskyspinsabre.ogg',100,TRUE,-1)
 		stun_attack(AM)
 
 /mob/living/simple_animal/bot/secbot/grievous/Initialize()
 	. = ..()
-	weapon = new baton_type(src)
 	weapon.attack_self(src)
 
 /mob/living/simple_animal/bot/secbot/grievous/Destroy()
@@ -43,7 +43,7 @@
 	if(mode != BOT_HUNT)
 		return
 	if(prob(block_chance))
-		visible_message("[src] deflects [user]'s attack with his energy swords!")
+		visible_message("<span class='warning'>[src] deflects [user]'s attack with his energy swords!</span>")
 		playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 		return TRUE
 
@@ -51,7 +51,7 @@
 	weapon.attack(C, src)
 	playsound(src, 'sound/weapons/blade1.ogg', 50, TRUE, -1)
 	if(C.stat == DEAD)
-		addtimer(CALLBACK(src, .proc/update_icon), 2)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 2)
 		back_to_idle()
 
 
@@ -118,7 +118,7 @@
 			speak("Level [threatlevel] infraction alert!")
 			playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
 			playsound(src,'sound/weapons/saberon.ogg',50,TRUE,-1)
-			visible_message("[src] ignites his energy swords!")
+			visible_message("<span class='warning'>[src] ignites his energy swords!</span>")
 			icon_state = "grievous-c"
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT

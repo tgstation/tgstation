@@ -12,7 +12,7 @@
 	icon_dead = "watermelon-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/watermelon/holy)
-	reagents_add = list("water" = 0.2, "vitamin" = 0.04, "nutriment" = 0.2)
+	reagents_add = list(/datum/reagent/water = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.2)
 
 /obj/item/seeds/watermelon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -33,7 +33,7 @@
 	filling_color = "#008000"
 	bitesize_mod = 3
 	foodtype = FRUIT
-	juice_results = list("watermelonjuice" = 0)
+	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
 	wine_power = 40
 
 // Holymelon
@@ -44,8 +44,9 @@
 	species = "holymelon"
 	plantname = "Holy Melon Vines"
 	product = /obj/item/reagent_containers/food/snacks/grown/holymelon
+	genes = list(/datum/plant_gene/trait/glow/yellow)
 	mutatelist = list()
-	reagents_add = list("holywater" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/water/holywater = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon
@@ -60,4 +61,16 @@
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE) //deliver us from evil o melon god
+	var/uses = 1
+	if(seed)
+		uses = round(seed.potency / 20)
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, ITEM_SLOT_HANDS, uses, TRUE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire)) //deliver us from evil o melon god
+
+/obj/item/reagent_containers/food/snacks/grown/holymelon/proc/block_magic(mob/user, major)
+	if(major)
+		to_chat(user, "<span class='warning'>[src] hums slightly, and seems to decay a bit.</span>")
+
+/obj/item/reagent_containers/food/snacks/grown/holymelon/proc/expire(mob/user)
+	to_chat(user, "<span class='warning'>[src] rapidly turns into ash!</span>")
+	qdel(src)
+	new /obj/effect/decal/cleanable/ash(drop_location())

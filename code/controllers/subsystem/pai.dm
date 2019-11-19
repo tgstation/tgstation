@@ -27,8 +27,6 @@ SUBSYSTEM_DEF(pai)
 
 			card.setPersonality(pai)
 
-			SSticker.mode.update_cult_icons_removed(card.pai.mind)
-
 			candidates -= candidate
 			usr << browse(null, "window=findPai")
 
@@ -39,19 +37,19 @@ SUBSYSTEM_DEF(pai)
 
 		switch(option)
 			if("name")
-				t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
+				t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text|null
 				if(t)
-					candidate.name = copytext(sanitize(t),1,MAX_NAME_LEN)
+					candidate.name = copytext(sanitize_name(t),1,MAX_NAME_LEN)
 			if("desc")
-				t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
+				t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message|null
 				if(t)
 					candidate.description = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if("role")
-				t = input("Enter a role for your pAI", "pAI Role", candidate.role) as text
+				t = input("Enter a role for your pAI", "pAI Role", candidate.role) as text|null
 				if(t)
 					candidate.role = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if("ooc")
-				t = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
+				t = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message|null
 				if(t)
 					candidate.comments = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if("save")
@@ -144,7 +142,7 @@ SUBSYSTEM_DEF(pai)
 	if(!ghost_spam)
 		ghost_spam = TRUE
 		for(var/mob/dead/observer/G in GLOB.player_list)
-			if(!G.key || !G.client)
+			if(!G.key)
 				continue
 			if(!(ROLE_PAI in G.client.prefs.be_special))
 				continue

@@ -24,6 +24,9 @@
 	icon_screen = "holocontrol"
 	idle_power_usage = 10
 	active_power_usage = 50
+	ui_x = 400
+	ui_y = 500
+
 	var/area/holodeck/linked
 	var/area/holodeck/program
 	var/area/holodeck/last_program
@@ -59,9 +62,7 @@
 		return
 	var/area/AS = get_area(src)
 	if(istype(AS, /area/holodeck))
-		log_world("### MAPPING ERROR")
-		log_world("Holodeck computer cannot be in a holodeck.")
-		log_world("This would cause circular power dependency.")
+		log_mapping("Holodeck computer cannot be in a holodeck, This would cause circular power dependency.")
 		qdel(src)
 		return
 	else
@@ -83,7 +84,7 @@
 /obj/machinery/computer/holodeck/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "holodeck", name, 400, 500, master_ui, state)
+		ui = new(user, src, ui_key, "holodeck", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/holodeck/ui_data(mob/user)
@@ -107,14 +108,27 @@
 			var/program_to_load = text2path(params["type"])
 			if(!ispath(program_to_load))
 				return FALSE
+			var/valid = FALSE
+			var/list/checked = program_cache.Copy()
+			if(obj_flags & EMAGGED)
+				checked |= emag_programs
+			for(var/prog in checked)
+				var/list/P = prog
+				if(P["type"] == program_to_load)
+					valid = TRUE
+					break
+			if(!valid)
+				return FALSE
+
 			var/area/A = locate(program_to_load) in GLOB.sortedAreas
 			if(A)
 				load_program(A)
 		if("safety")
-			obj_flags ^= EMAGGED
-			if((obj_flags & EMAGGED) && program && emag_programs[program.name])
+			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED)
+			obj_flags ^= EMAGGED
+			say("Safeties restored. Restarting...")
 
 /obj/machinery/computer/holodeck/process()
 	if(damaged && prob(10))
@@ -136,7 +150,7 @@
 			if(prob(30))
 				do_sparks(2, 1, T)
 			T.ex_act(EXPLODE_LIGHT)
-			T.hotspot_expose(700,25,1)
+			T.hotspot_expose(1000,500,1)
 
 	if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
@@ -154,10 +168,10 @@
 	if(!LAZYLEN(emag_programs))
 		to_chat(user, "[src] does not seem to have a card swipe port. It must be an inferior model.")
 		return
-	playsound(src, "sparks", 75, 1)
+	playsound(src, "sparks", 75, TRUE)
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
-	to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
+	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
 	log_game("[key_name(user)] emagged the Holodeck Control Console")
 	nerf(!(obj_flags & EMAGGED))
 
@@ -287,7 +301,7 @@
 			silent = FALSE					// otherwise make sure they are dropped
 
 	if(!silent)
-		visible_message("[O] fades away!")
+		visible_message("<span class='notice'>[O] fades away!</span>")
 	qdel(O)
 
 #undef HOLODECK_CD

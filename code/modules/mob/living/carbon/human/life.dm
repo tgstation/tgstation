@@ -28,21 +28,25 @@
 	if (QDELETED(src))
 		return 0
 
-	if(.) //not dead
-		handle_active_genes()
+	if(!IS_IN_STASIS(src))
+		if(.) //not dead
 
-	if(stat != DEAD)
-		//heart attack stuff
-		handle_heart()
+			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
+				HM.on_life()
 
-	if(stat != DEAD)
-		//Stuff jammed in your limbs hurts
-		handle_embedded_objects()
+		if(stat != DEAD)
+			//heart attack stuff
+			handle_heart()
+			handle_liver()
+
+		if(stat != DEAD)
+			//Stuff jammed in your limbs hurts
+			handle_embedded_objects()
+
+		dna.species.spec_life(src) // for mutantraces
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
-
-	dna.species.spec_life(src) // for mutantraces
 
 	if(stat != DEAD)
 		return 1
@@ -58,18 +62,11 @@
 
 
 /mob/living/carbon/human/handle_traits()
-	if(eye_blind)			//blindness, heals slowly over time
-		if(has_trait(TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
-			adjust_blindness(-3)
-		else
-			adjust_blindness(-1)
-	else if(eye_blurry)			//blurry eyes heal slowly
-		adjust_blurriness(-1)
-
-	if (getBrainLoss() >= 60)
+	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 60)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
+	return ..()
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
@@ -86,7 +83,7 @@
 	if(!L)
 		if(health >= crit_threshold)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
-		else if(!has_trait(TRAIT_NOCRITDAMAGE))
+		else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		failed_last_breath = 1
@@ -306,12 +303,8 @@
 					clear_alert("embeddedobject")
 					SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
-/mob/living/carbon/human/proc/handle_active_genes()
-	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_life(src)
-
 /mob/living/carbon/human/proc/handle_heart()
-	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
+	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)
 
 	if(!undergoing_cardiac_arrest())
 		return
@@ -321,9 +314,6 @@
 		Unconscious(80)
 	// Tissues die without blood circulation
 	adjustBruteLoss(2)
-
-
-
 
 #undef THERMAL_PROTECTION_HEAD
 #undef THERMAL_PROTECTION_CHEST

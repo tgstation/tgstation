@@ -66,19 +66,19 @@
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
 	name = "emergency lifejacket"
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
 /obj/item/clothing/mask/breath{
@@ -402,9 +402,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "O" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/airlock/shuttle{
 	name = "Arrival Shuttle Airlock"
 	},
@@ -430,7 +428,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "R" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},

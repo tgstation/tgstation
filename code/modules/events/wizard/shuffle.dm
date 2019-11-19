@@ -27,7 +27,7 @@
 	for(var/mob/living/carbon/human/H in mobs)
 		if(!moblocs)
 			break //locs aren't always unique, so this may come into play
-		do_teleport(H, moblocs[moblocs.len])
+		do_teleport(H, moblocs[moblocs.len], channel = TELEPORT_CHANNEL_MAGIC)
 		moblocs.len -= 1
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)

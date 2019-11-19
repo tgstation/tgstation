@@ -4,9 +4,9 @@
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
 	density = TRUE
-	layer = BELOW_OBJ_LAYER
-	var/moving = 0
+	var/moving = FALSE
 	var/datum/gas_mixture/air_contents = new()
+	var/occupied_icon_state = "pod_occupied"
 
 
 /obj/structure/transit_tube_pod/Initialize()
@@ -23,16 +23,16 @@
 
 /obj/structure/transit_tube_pod/update_icon()
 	if(contents.len)
-		icon_state = "pod_occupied"
+		icon_state = occupied_icon_state
 	else
-		icon_state = "pod"
+		icon_state = initial(icon_state)
 
 /obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)
 		if(!moving)
 			I.play_tool_sound(src)
 			if(contents.len)
-				user.visible_message("[user] empties \the [src].", "<span class='notice'>You empty \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] empties \the [src].</span>", "<span class='notice'>You empty \the [src].</span>")
 				empty_pod()
 			else
 				deconstruct(TRUE, user)
@@ -45,7 +45,7 @@
 		if(user)
 			location = user.loc
 			add_fingerprint(user)
-			user.visible_message("[user] removes [src].", "<span class='notice'>You remove [src].</span>")
+			user.visible_message("<span class='notice'>[user] removes [src].</span>", "<span class='notice'>You remove [src].</span>")
 		var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(location)
 		transfer_fingerprints_to(R)
 		R.setDir(dir)
@@ -74,7 +74,7 @@
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		to_chat(user, "<span class='notice'>You start trying to escape from the pod...</span>")
-		if(do_after(user, 600, target = src))
+		if(do_after(user, 1 MINUTES, target = src))
 			to_chat(user, "<span class='notice'>You manage to open the pod.</span>")
 			empty_pod()
 
@@ -87,7 +87,7 @@
 
 /obj/structure/transit_tube_pod/Process_Spacemove()
 	if(moving) //No drifting while moving in the tubes
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -96,7 +96,7 @@
 	if(moving)
 		return
 
-	moving = 1
+	moving = TRUE
 
 	var/obj/structure/transit_tube/current_tube = null
 	var/next_dir
@@ -144,13 +144,19 @@
 			break
 
 	density = TRUE
-	moving = 0
+	moving = FALSE
 
 	var/obj/structure/transit_tube/TT = locate(/obj/structure/transit_tube) in loc
 	if(!TT || (!(dir in TT.tube_dirs) && !(turn(dir,180) in TT.tube_dirs)))	//landed on a turf without transit tube or not in our direction
-		deconstruct(FALSE)	//we automatically deconstruct the pod
+		outside_tube()
+
+/obj/structure/transit_tube_pod/proc/outside_tube()
+	deconstruct(FALSE)//we automatically deconstruct the pod
 
 /obj/structure/transit_tube_pod/return_air()
+	return air_contents
+
+/obj/structure/transit_tube_pod/return_analyzable_air()
 	return air_contents
 
 /obj/structure/transit_tube_pod/assume_air(datum/gas_mixture/giver)
@@ -184,3 +190,14 @@
 
 /obj/structure/transit_tube_pod/return_temperature()
 	return air_contents.temperature
+
+//special pod made by the dispenser, it fizzles away when reaching a station.
+
+/obj/structure/transit_tube_pod/dispensed
+	name = "temporary transit tube pod"
+	desc = "Hits the skrrrt (tube station), then hits the dirt (nonexistence). You know how it is."
+	icon_state = "temppod"
+	occupied_icon_state = "temppod_occupied"
+
+/obj/structure/transit_tube_pod/dispensed/outside_tube()
+	qdel(src)

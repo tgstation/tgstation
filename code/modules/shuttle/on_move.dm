@@ -131,7 +131,7 @@ All ShuttleMove procs go here
 	var/range = throw_force * 10
 	range = CEILING(rand(range-(range*0.1), range+(range*0.1)), 10)/10
 	var/speed = range/5
-	safe_throw_at(target, range, speed)
+	safe_throw_at(target, range, speed, force = MOVE_FORCE_EXTREMELY_STRONG)
 
 /////////////////////////////////////////////////////////////////////////////////////
 
@@ -286,10 +286,10 @@ All ShuttleMove procs go here
 
 /obj/item/storage/pod/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	// If the pod was launched, the storage will always open. The CentCom check
-	// ignores the movement of the shuttle from the staging area on CentCom to
+	// If the pod was launched, the storage will always open. The reserved_level check
+	// ignores the movement of the shuttle from the transit level to
 	// the station as it is loaded in.
-	if (oldT && !is_centcom_level(oldT.z))
+	if (oldT && !is_reserved_level(oldT.z))
 		unlocked = TRUE
 
 /************************************Mob move procs************************************/
@@ -340,11 +340,17 @@ All ShuttleMove procs go here
 	. = ..()
 	update()
 
+/obj/structure/cable/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	cut_cable_from_powernet(FALSE)
+
 /obj/structure/cable/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/turf/T = loc
 	if(level==1)
 		hide(T.intact)
+	connect_wire(TRUE)
+	propogate_if_no_network()
 
 /obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()

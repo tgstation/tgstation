@@ -42,7 +42,7 @@
 	lose_text = "<span class='notice'>You feel smart again.</span>"
 
 /datum/brain_trauma/mild/dumbness/on_gain()
-	owner.add_trait(TRAIT_DUMB, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "dumb", /datum/mood_event/oblivious)
 	..()
 
@@ -55,7 +55,7 @@
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
-	owner.remove_trait(TRAIT_DUMB, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_DUMB, TRAUMA_TRAIT)
 	owner.derpspeech = 0
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "dumb")
 	..()
@@ -64,27 +64,21 @@
 	name = "Speech Impediment"
 	desc = "Patient is unable to form coherent sentences."
 	scan_desc = "communication disorder"
-	gain_text = "" //mutation will handle the text
-	lose_text = ""
+	gain_text = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
+	lose_text = "<span class='danger'>Your mind feels more clear.</span>"
 
 /datum/brain_trauma/mild/speech_impediment/on_gain()
-	owner.dna.add_mutation(UNINTELLIGIBLE)
-	..()
-
-//no fiddling with genetics to get out of this one
-/datum/brain_trauma/mild/speech_impediment/on_life()
-	if(!(GLOB.mutations_list[UNINTELLIGIBLE] in owner.dna.mutations))
-		on_gain()
+	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/mild/speech_impediment/on_lose()
-	owner.dna.remove_mutation(UNINTELLIGIBLE)
+	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/mild/concussion
 	name = "Concussion"
 	desc = "Patient's brain is concussed."
-	scan_desc = "a concussion"
+	scan_desc = "concussion"
 	gain_text = "<span class='warning'>Your head hurts!</span>"
 	lose_text = "<span class='notice'>The pressure inside your head starts fading.</span>"
 
@@ -163,54 +157,108 @@
 	gain_text = "<span class='warning'>Your muscles feel oddly faint.</span>"
 	lose_text = "<span class='notice'>You feel in control of your muscles again.</span>"
 
-/datum/brain_trauma/mild/muscle_spasms/on_life()
-	if(prob(7))
-		switch(rand(1,5))
-			if(1)
-				if((owner.mobility_flags & MOBILITY_MOVE) && !isspaceturf(owner.loc))
-					to_chat(owner, "<span class='warning'>Your leg spasms!</span>")
-					step(owner, pick(GLOB.cardinals))
-			if(2)
-				if(owner.incapacitated())
-					return
-				var/obj/item/I = owner.get_active_held_item()
-				if(I)
-					to_chat(owner, "<span class='warning'>Your fingers spasm!</span>")
-					owner.log_message("used [I] due to a Muscle Spasm", LOG_ATTACK)
-					I.attack_self(owner)
-			if(3)
-				var/prev_intent = owner.a_intent
-				owner.a_intent = INTENT_HARM
-
-				var/range = 1
-				if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
-					range = 7
-
-				var/list/mob/living/targets = list()
-				for(var/mob/M in oview(owner, range))
-					if(isliving(M))
-						targets += M
-				if(LAZYLEN(targets))
-					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
-					owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
-					owner.ClickOn(pick(targets))
-				owner.a_intent = prev_intent
-			if(4)
-				var/prev_intent = owner.a_intent
-				owner.a_intent = INTENT_HARM
-				to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
-				owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
-				owner.ClickOn(owner)
-				owner.a_intent = prev_intent
-			if(5)
-				if(owner.incapacitated())
-					return
-				var/obj/item/I = owner.get_active_held_item()
-				var/list/turf/targets = list()
-				for(var/turf/T in oview(owner, 3))
-					targets += T
-				if(LAZYLEN(targets) && I)
-					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
-					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
-					owner.throw_item(pick(targets))
+/datum/brain_trauma/mild/muscle_spasms/on_gain()
+	owner.apply_status_effect(STATUS_EFFECT_SPASMS)
 	..()
+
+/datum/brain_trauma/mild/muscle_spasms/on_lose()
+	owner.remove_status_effect(STATUS_EFFECT_SPASMS)
+	..()
+
+/datum/brain_trauma/mild/nervous_cough
+	name = "Nervous Cough"
+	desc = "Patient feels a constant need to cough."
+	scan_desc = "nervous cough"
+	gain_text = "<span class='warning'>Your throat itches incessantly...</span>"
+	lose_text = "<span class='notice'>Your throat stops itching.</span>"
+
+/datum/brain_trauma/mild/nervous_cough/on_life()
+	if(prob(12) && !HAS_TRAIT(owner, TRAIT_SOOTHED_THROAT))
+		if(prob(5))
+			to_chat(owner, "<span notice='warning'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
+			owner.Immobilize(20)
+			owner.emote("cough")
+			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 6)
+			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 12)
+		owner.emote("cough")
+	..()
+
+/datum/brain_trauma/mild/expressive_aphasia
+	name = "Expressive Aphasia"
+	desc = "Patient is affected by partial loss of speech leading to a reduced vocabulary."
+	scan_desc = "inability to form complex sentences"
+	gain_text = "<span class='warning'>You lose your grasp on complex words.</span>"
+	lose_text = "<span class='notice'>You feel your vocabulary returning to normal again.</span>"
+
+	var/static/list/common_words = world.file2list("strings/1000_most_common.txt")
+
+/datum/brain_trauma/mild/expressive_aphasia/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message)
+		var/list/message_split = splittext(message, " ")
+		var/list/new_message = list()
+
+		for(var/word in message_split)
+			var/suffix = copytext(word,-1)
+
+			// Check if we have a suffix and break it out of the word
+			if(suffix in list("." , "," , ";" , "!" , ":" , "?"))
+				word = copytext(word,1,-1)
+			else
+				suffix = ""
+
+			word = html_decode(word)
+
+			if(lowertext(word) in common_words)
+				new_message += word + suffix
+			else
+				if(prob(30) && message_split.len > 2)
+					new_message += pick("uh","erm")
+					break
+				else
+					var/list/charlist = string2charlist(word) // Stupid shit code
+					shuffle_inplace(charlist)
+					charlist.len = round(charlist.len * 0.5,1)
+					new_message += html_encode(jointext(charlist,"")) + suffix
+
+		message = jointext(new_message, " ")
+
+	speech_args[SPEECH_MESSAGE] = trim(message)
+
+/datum/brain_trauma/mild/mind_echo
+	name = "Mind Echo"
+	desc = "Patient's language neurons do not terminate properly, causing previous speech patterns to occasionally resurface spontaneously."
+	scan_desc = "looping neural pattern"
+	gain_text = "<span class='warning'>You feel a faint echo of your thoughts...</span>"
+	lose_text = "<span class='notice'>The faint echo fades away.</span>"
+	var/list/hear_dejavu = list()
+	var/list/speak_dejavu = list()
+
+/datum/brain_trauma/mild/mind_echo/handle_hearing(datum/source, list/hearing_args)
+	if(owner == hearing_args[HEARING_SPEAKER])
+		return
+	if(hear_dejavu.len >= 5)
+		if(prob(25))
+			var/deja_vu = pick_n_take(hear_dejavu)
+			var/static/regex/quoted_spoken_message = regex("\".+\"", "gi")
+			hearing_args[HEARING_MESSAGE] = quoted_spoken_message.Replace(hearing_args[HEARING_MESSAGE], "\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
+			return
+	if(hear_dejavu.len >= 15)
+		if(prob(50))
+			popleft(hear_dejavu) //Remove the oldest
+			hear_dejavu += hearing_args[HEARING_RAW_MESSAGE]
+	else
+		hear_dejavu += hearing_args[HEARING_RAW_MESSAGE]
+
+/datum/brain_trauma/mild/mind_echo/handle_speech(datum/source, list/speech_args)
+	if(speak_dejavu.len >= 5)
+		if(prob(25))
+			var/deja_vu = pick_n_take(speak_dejavu)
+			speech_args[SPEECH_MESSAGE] = deja_vu
+			return
+	if(speak_dejavu.len >= 15)
+		if(prob(50))
+			popleft(speak_dejavu) //Remove the oldest
+			speak_dejavu += speech_args[SPEECH_MESSAGE]
+	else
+		speak_dejavu += speech_args[SPEECH_MESSAGE]

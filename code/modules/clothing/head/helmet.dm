@@ -3,14 +3,13 @@
 	desc = "Standard Security gear. Protects the head from impacts."
 	icon_state = "helmet"
 	item_state = "helmet"
-	armor = list("melee" = 35, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	flags_inv = HIDEEARS
+	armor = list("melee" = 35, "bullet" = 30, "laser" = 30,"energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 60
-	resistance_flags = NONE
+	clothing_flags = SNUG_FIT
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
 
@@ -25,18 +24,14 @@
 	if(attached_light)
 		alight = new(src)
 
-/obj/item/clothing/head/helmet/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
-
 /obj/item/clothing/head/helmet/examine(mob/user)
-	..()
+	. = ..()
 	if(attached_light)
-		to_chat(user, "It has \a [attached_light] [can_flashlight ? "" : "permanently "]mounted on it.")
+		. += "It has \a [attached_light] [can_flashlight ? "" : "permanently "]mounted on it."
 		if(can_flashlight)
-			to_chat(user, "<span class='info'>[attached_light] looks like it can be <b>unscrewed</b> from [src].</span>")
+			. += "<span class='info'>[attached_light] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_flashlight)
-		to_chat(user, "It has a mounting point for a <b>seclite</b>.")
+		. += "It has a mounting point for a <b>seclite</b>."
 
 /obj/item/clothing/head/helmet/Destroy()
 	QDEL_NULL(attached_light)
@@ -84,8 +79,11 @@
 	tint = 2
 
 /obj/item/clothing/head/helmet/blueshirt
+	name = "blue helmet"
+	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
 	icon_state = "blueshift"
 	item_state = "blueshift"
+	custom_premium_price = 450
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -95,14 +93,14 @@
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
-	armor = list("melee" = 45, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 	flags_inv = HIDEEARS|HIDEFACE
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEFACE
 	toggle_cooldown = 0
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)
@@ -114,7 +112,7 @@
 			flags_inv ^= visor_flags_inv
 			flags_cover ^= visor_flags_cover
 			icon_state = "[initial(icon_state)][up ? "up" : ""]"
-			to_chat(user, "[up ? alt_toggle_message : toggle_message] \the [src]")
+			to_chat(user, "<span class='notice'>[up ? alt_toggle_message : toggle_message] \the [src].</span>")
 
 			user.update_inv_head()
 			if(iscarbon(user))
@@ -150,7 +148,7 @@
 	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
 	icon_state = "swatsyndie"
 	item_state = "swatsyndie"
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 30, "bomb" = 50, "bio" = 90, "rad" = 20, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 40, "bomb" = 50, "bio" = 90, "rad" = 20, "fire" = 50, "acid" = 50)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -158,6 +156,12 @@
 	clothing_flags = STOPSPRESSUREDAMAGE
 	strip_delay = 80
 	dog_fashion = null
+
+/obj/item/clothing/head/helmet/police
+	name = "police officer's hat"
+	desc = "A police officer's Hat. This hat emphasizes that you are THE LAW."
+	icon_state = "policehelm"
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
@@ -171,7 +175,7 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 25,"energy" = 10, "bomb" = 25, "bio" = 10, "rad" = 0, "fire" = 50, "acid" = 50)
+	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 90)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -239,7 +243,7 @@
 	desc = "A classic metal helmet."
 	icon_state = "knight_green"
 	item_state = "knight_green"
-	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
@@ -263,23 +267,50 @@
 	icon_state = "knight_red"
 	item_state = "knight_red"
 
+/obj/item/clothing/head/helmet/knight/greyscale
+	name = "knight helmet"
+	desc = "A classic medieval helmet, if you hold it upside down you could see that it's actually a bucket."
+	icon_state = "knight_greyscale"
+	item_state = "knight_greyscale"
+	armor = list("melee" = 35, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR//Can change color and add prefix
+
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = HEADCOVERSEYES
-	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 10, "bio" = 5, "rad" = 20, "fire" = 40, "acid" = 20)
+	armor = list("melee" = 35, "bullet" = 25, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	icon_state = "skull"
 	item_state = "skull"
 	strip_delay = 100
 
 /obj/item/clothing/head/helmet/durathread
-	name = "makeshift helmet"
-	desc = "A hardhat with strips of leather and durathread for additional blunt protection."
+	name = "durathread helmet"
+	desc = "A helmet made from durathread and leather."
 	icon_state = "durathread"
 	item_state = "durathread"
-	armor = list("melee" = 25, "bullet" = 10, "laser" = 20,"energy" = 10, "bomb" = 30, "bio" = 15, "rad" = 20, "fire" = 100, "acid" = 50)
+	resistance_flags = FLAMMABLE
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 30, "energy" = 40, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 50)
 	strip_delay = 60
+
+/obj/item/clothing/head/helmet/rus_helmet
+	name = "russian helmet"
+	desc = "It can hold a bottle of vodka."
+	icon_state = "rus_helmet"
+	item_state = "rus_helmet"
+	armor = list("melee" = 25, "bullet" = 30, "laser" = 0, "energy" = 10, "bomb" = 10, "bio" = 0, "rad" = 20, "fire" = 20, "acid" = 50)
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/helmet
+
+/obj/item/clothing/head/helmet/rus_ushanka
+	name = "battle ushanka"
+	desc = "100% bear."
+	icon_state = "rus_ushanka"
+	item_state = "rus_ushanka"
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 30, "bomb" = 20, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 50)
 
 //LightToggle
 
@@ -322,7 +353,7 @@
 	return ..()
 
 /obj/item/clothing/head/helmet/screwdriver_act(mob/living/user, obj/item/I)
-	..()
+	. = ..()
 	if(can_flashlight && attached_light) //if it has a light but can_flashlight is false, the light is permanently attached.
 		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You unscrew [attached_light] from [src].</span>")

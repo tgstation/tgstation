@@ -1,8 +1,6 @@
-/mob/living/Life(seconds, times_fired)
+/mob/living/proc/Life(seconds, times_fired)
+	set waitfor = FALSE
 	set invisibility = 0
-
-	if(digitalinvis)
-		handle_diginvis() //AI becomes unable to see mob
 
 	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
 		float(on = TRUE)
@@ -33,43 +31,41 @@
 		return
 	if(!loc)
 		return
-	var/datum/gas_mixture/environment = loc.return_air()
 
-	if(stat != DEAD)
-		//Mutations and radiation
-		handle_mutations_and_radiation()
+	if(!IS_IN_STASIS(src))
 
-	if(stat != DEAD)
-		//Breathing, if applicable
-		handle_breathing(times_fired)
+		if(stat != DEAD)
+			//Mutations and radiation
+			handle_mutations_and_radiation()
 
-	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+		if(stat != DEAD)
+			//Breathing, if applicable
+			handle_breathing(times_fired)
 
-	if (QDELETED(src)) // diseases can qdel the mob via transformations
-		return
+		handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
-	if(stat != DEAD)
-		//Random events (vomiting etc)
-		handle_random_events()
+		if (QDELETED(src)) // diseases can qdel the mob via transformations
+			return
 
-	//Handle temperature/pressure differences between body and environment
-	if(environment)
-		handle_environment(environment)
+		if(stat != DEAD)
+			//Random events (vomiting etc)
+			handle_random_events()
+
+		//Handle temperature/pressure differences between body and environment
+		var/datum/gas_mixture/environment = loc.return_air()
+		if(environment)
+			handle_environment(environment)
+
+		handle_gravity()
+
+		if(stat != DEAD)
+			handle_traits() // eye, ear, brain damages
+			handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	handle_fire()
 
-	//stuff in the stomach
-	handle_stomach()
-
-	handle_gravity()
-
 	if(machine)
 		machine.check_eye(src)
-
-	if(stat != DEAD)
-		handle_traits() // eye, ear, brain damages
-	if(stat != DEAD)
-		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	if(stat != DEAD)
 		return 1
@@ -83,14 +79,6 @@
 
 /mob/living/proc/handle_diseases()
 	return
-
-/mob/living/proc/handle_diginvis()
-	if(!digitaldisguise)
-		src.digitaldisguise = image(loc = src)
-	src.digitaldisguise.override = 1
-	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
-		AI.client.images |= src.digitaldisguise
-
 
 /mob/living/proc/handle_random_events()
 	return
@@ -113,10 +101,7 @@
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return TRUE
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 10, 1)
-
-/mob/living/proc/handle_stomach()
-	return
+	location.hotspot_expose(700, 50, 1)
 
 //this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
@@ -125,18 +110,13 @@
 
 /mob/living/proc/handle_traits()
 	//Eyes
-	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(has_trait(TRAIT_BLIND)))
-			eye_blind = max(eye_blind-1,0)
-			if(client && !eye_blind)
-				clear_alert("blind")
-				clear_fullscreen("blind")
-		else
-			eye_blind = max(eye_blind-1,1)
+	if(eye_blind)	//blindness, heals slowly over time
+		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
+			adjust_blindness(-3)
+		else if(!stat && !(HAS_TRAIT(src, TRAIT_BLIND)))
+			adjust_blindness(-1)
 	else if(eye_blurry)			//blurry eyes heal slowly
-		eye_blurry = max(eye_blurry-1, 0)
-		if(client && !eye_blurry)
-			clear_fullscreen("blurry")
+		adjust_blurriness(-1)
 
 /mob/living/proc/update_damage_hud()
 	return

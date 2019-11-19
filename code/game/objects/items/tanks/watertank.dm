@@ -5,6 +5,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
+	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
@@ -18,7 +20,7 @@
 
 /obj/item/watertank/Initialize()
 	. = ..()
-	create_reagents(volume)
+	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
 
 /obj/item/watertank/ui_action_click(mob/user)
@@ -58,7 +60,7 @@
 
 /obj/item/watertank/equipped(mob/user, slot)
 	..()
-	if(slot != SLOT_BACK)
+	if(slot != ITEM_SLOT_BACK)
 		remove_noz()
 
 /obj/item/watertank/proc/remove_noz()
@@ -113,7 +115,6 @@
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
-	container_type = OPENCONTAINER
 	slot_flags = 0
 
 	var/obj/item/watertank/tank
@@ -150,7 +151,7 @@
 
 /obj/item/watertank/janitor/Initialize()
 	. = ..()
-	reagents.add_reagent("cleaner", 500)
+	reagents.add_reagent(/datum/reagent/space_cleaner, 500)
 
 /obj/item/reagent_containers/spray/mister/janitor
 	name = "janitor spray nozzle"
@@ -162,6 +163,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
+	current_range = 5
+	spray_range = 5
 
 /obj/item/watertank/janitor/make_noz()
 	return new /obj/item/reagent_containers/spray/mister/janitor(src)
@@ -186,7 +189,7 @@
 
 /obj/item/watertank/atmos/Initialize()
 	. = ..()
-	reagents.add_reagent("water", 200)
+	reagents.add_reagent(/datum/reagent/water, 200)
 
 /obj/item/watertank/atmos/make_noz()
 	return new /obj/item/extinguisher/mini/nozzle(src)
@@ -231,7 +234,7 @@
 /obj/item/extinguisher/mini/nozzle/doMove(atom/destination)
 	if(destination && (destination != tank.loc || !ismob(destination)))
 		if(loc != tank)
-			to_chat(tank.loc, "<span class='notice'>The nozzle snaps back onto the tank!</span>")
+			to_chat(tank.loc, "<span class='notice'>The nozzle snaps back onto the tank.</span>")
 		destination = tank
 	..()
 
@@ -240,17 +243,17 @@
 		if(EXTINGUISHER)
 			nozzle_mode = RESIN_LAUNCHER
 			tank.icon_state = "waterbackpackatmos_1"
-			to_chat(user, "Swapped to resin launcher")
+			to_chat(user, "<span class='notice'>Swapped to resin launcher.</span>")
 			return
 		if(RESIN_LAUNCHER)
 			nozzle_mode = RESIN_FOAM
 			tank.icon_state = "waterbackpackatmos_2"
-			to_chat(user, "Swapped to resin foamer")
+			to_chat(user, "<span class='notice'>Swapped to resin foamer.</span>")
 			return
 		if(RESIN_FOAM)
 			nozzle_mode = EXTINGUISHER
 			tank.icon_state = "waterbackpackatmos_0"
-			to_chat(user, "Swapped to water extinguisher")
+			to_chat(user, "<span class='notice'>Swapped to water extinguisher.</span>")
 			return
 	return
 
@@ -275,14 +278,12 @@
 		R.remove_any(100)
 		var/obj/effect/resin_container/A = new (get_turf(src))
 		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
-		playsound(src,'sound/items/syringeproj.ogg',40,1)
+		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		for(var/a=0, a<5, a++)
 			step_towards(A, target)
 			sleep(2)
 		A.Smoke()
-		spawn(100)
-			if(src)
-				resin_cooldown = FALSE
+		addtimer(VARSET_CALLBACK(src, resin_cooldown, FALSE), 10 SECONDS)
 		return
 	if(nozzle_mode == RESIN_FOAM)
 		if(!Adj|| !isturf(target))
@@ -295,11 +296,13 @@
 			var/obj/effect/particle_effect/foam/metal/resin/F = new (get_turf(target))
 			F.amount = 0
 			metal_synthesis_cooldown++
-			spawn(100)
-				metal_synthesis_cooldown--
+			addtimer(CALLBACK(src, .proc/reduce_metal_synth_cooldown), 10 SECONDS)
 		else
 			to_chat(user, "<span class='warning'>Resin foam mix is still being synthesized...</span>")
 			return
+
+/obj/item/extinguisher/mini/nozzle/proc/reduce_metal_synth_cooldown()
+	metal_synthesis_cooldown--
 
 /obj/effect/resin_container
 	name = "resin container"
@@ -313,7 +316,7 @@
 /obj/effect/resin_container/proc/Smoke()
 	var/obj/effect/particle_effect/foam/metal/resin/S = new /obj/effect/particle_effect/foam/metal/resin(get_turf(loc))
 	S.amount = 4
-	playsound(src,'sound/effects/bamf.ogg',100,1)
+	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
 
 #undef EXTINGUISHER
@@ -324,8 +327,10 @@
 	name = "backpack chemical injector"
 	desc = "A chemical autoinjector that can be carried on your back."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "waterbackpackatmos"
-	item_state = "waterbackpackatmos"
+	icon_state = "waterbackpackchem"
+	item_state = "waterbackpackchem"
+	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
@@ -336,22 +341,24 @@
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
+	fill_icon_thresholds = list(0, 15, 60)
+	fill_icon_state = "backpack"
 
 /obj/item/reagent_containers/chemtank/ui_action_click()
 	toggle_injection()
 
 /obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
-	if(slot == SLOT_BACK)
+	if(slot == ITEM_SLOT_BACK)
 		return 1
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr
 	if(!istype(user))
 		return
-	if (user.get_item_by_slot(SLOT_BACK) != src)
+	if (user.get_item_by_slot(ITEM_SLOT_BACK) != src)
 		to_chat(user, "<span class='warning'>The chemtank needs to be on your back before you can activate it!</span>")
 		return
 	if(on)
@@ -360,24 +367,6 @@
 		turn_on()
 
 //Todo : cache these.
-/obj/item/reagent_containers/chemtank/proc/update_filling()
-	cut_overlays()
-
-	if(reagents.total_volume)
-		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "backpack-10")
-
-		var/percent = round((reagents.total_volume / volume) * 100)
-		switch(percent)
-			if(0 to 15)
-				filling.icon_state = "backpack-10"
-			if(16 to 60)
-				filling.icon_state = "backpack50"
-			if(61 to INFINITY)
-				filling.icon_state = "backpack100"
-
-		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling)
-
 /obj/item/reagent_containers/chemtank/worn_overlays(var/isinhands = FALSE) //apply chemcolor and level
 	. = list()
 	//inhands + reagent_filling
@@ -423,34 +412,34 @@
 	var/used_amount = injection_amount/usage_ratio
 	reagents.reaction(user, INJECT,injection_amount,0)
 	reagents.trans_to(user,used_amount,multiplier=usage_ratio)
-	update_filling()
+	update_icon()
 	user.update_inv_back() //for overlays update
 
 //Operator backpack spray
 /obj/item/watertank/op
 	name = "backpack water tank"
 	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
-	icon_state = "waterbackpackjani"
-	item_state = "waterbackpackjani"
+	icon_state = "waterbackpackop"
+	item_state = "waterbackpackop"
 	w_class = WEIGHT_CLASS_NORMAL
 	volume = 2000
 	slowdown = 0
 
 /obj/item/watertank/op/Initialize()
 	. = ..()
-	reagents.add_reagent("mutagen",350)
-	reagents.add_reagent("napalm",125)
-	reagents.add_reagent("welding_fuel",125)
-	reagents.add_reagent("clf3",300)
-	reagents.add_reagent("cryptobiolin",350)
-	reagents.add_reagent("plasma",250)
-	reagents.add_reagent("condensedcapsaicin",500)
+	reagents.add_reagent(/datum/reagent/toxin/mutagen,350)
+	reagents.add_reagent(/datum/reagent/napalm,125)
+	reagents.add_reagent(/datum/reagent/fuel,125)
+	reagents.add_reagent(/datum/reagent/clf3,300)
+	reagents.add_reagent(/datum/reagent/cryptobiolin,350)
+	reagents.add_reagent(/datum/reagent/toxin/plasma,250)
+	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin,500)
 
 /obj/item/reagent_containers/spray/mister/op
 	desc = "A mister nozzle attached to several extended water tanks. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "misterjani"
-	item_state = "misterjani"
+	icon_state = "misterop"
+	item_state = "misterop"
 	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY

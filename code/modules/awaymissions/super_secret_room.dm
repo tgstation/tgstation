@@ -80,7 +80,7 @@
 		if(1000)
 			SpeakPeace(list("The ends exists somewhere beyond meaningful milestones.", "There will be no more messages until then.", "You disgust me."))
 		if(5643)
-			SSmedals.UnlockMedal(MEDAL_TIMEWASTE, user.client)
+			user.client.give_award(/datum/award/achievement/misc/time_waste, user)
 			var/obj/item/reagent_containers/food/drinks/trophy/gold_cup/never_ends = new(get_turf(user))
 			never_ends.name = "Overextending The Joke: First Place"
 			never_ends.desc = "And so we are left alone with our regrets."
@@ -95,8 +95,8 @@
 /obj/structure/speaking_tile/attack_paw(mob/user)
 	return interact(user)
 
-/obj/structure/speaking_tile/attack_hulk(mob/user, does_attack_animation = 0)
-	return interact(user)
+/obj/structure/speaking_tile/attack_hulk(mob/user)
+	return
 
 /obj/structure/speaking_tile/attack_larva(mob/user)
 	return interact(user)
@@ -122,12 +122,12 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "rupee"
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_GLASS = 500)
+	custom_materials = list(/datum/material/glass = 500)
 
-/obj/item/rupee/New()
+/obj/item/rupee/Initialize()
+	. = ..()
 	var/newcolor = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-	..()
 
 /obj/item/rupee/Crossed(mob/M)
 	if(!istype(M))
@@ -139,7 +139,7 @@
 	..()
 
 /obj/item/rupee/equipped(mob/user, slot)
-	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, 1, -1)
+	playsound(get_turf(loc), 'sound/misc/server-ready.ogg', 50, TRUE, -1)
 	..()
 
 /obj/effect/landmark/error

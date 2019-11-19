@@ -10,9 +10,9 @@
 	mutanteyes = /obj/item/organ/eyes/dullahan
 	mutanttongue = /obj/item/organ/tongue/dullahan
 	mutantears = /obj/item/organ/ears/dullahan
-	blacklisted = TRUE
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 
 	var/obj/item/dullahan_relay/myhead
 
@@ -64,21 +64,21 @@
 
 /obj/item/organ/brain/dullahan
 	decoy_override = TRUE
-	vital = FALSE
+	organ_flags = 0
 
 /obj/item/organ/tongue/dullahan
 	zone = "abstract"
+	modifies_speech = TRUE
 
-/obj/item/organ/tongue/dullahan/TongueSpeech(var/message)
+/obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		if(H.dna.species.id == "dullahan")
 			var/datum/species/dullahan/D = H.dna.species
 			if(isobj(D.myhead.loc))
 				var/obj/O = D.myhead.loc
-				O.say(message)
-	message = ""
-	return message
+				O.say(speech_args[SPEECH_MESSAGE])
+	speech_args[SPEECH_MESSAGE] = ""
 
 /obj/item/organ/ears/dullahan
 	zone = "abstract"

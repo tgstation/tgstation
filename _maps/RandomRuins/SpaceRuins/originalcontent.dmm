@@ -912,6 +912,10 @@
 	},
 /turf/open/indestructible/paper,
 /area/ruin/powered)
+"Ns" = (
+/obj/item/paper/secretrecipe,
+/turf/open/indestructible/paper,
+/area/ruin/powered)
 
 (1,1,1) = {"
 aa
@@ -2246,7 +2250,7 @@ ap
 az
 af
 al
-aA
+Ns
 bW
 ca
 af

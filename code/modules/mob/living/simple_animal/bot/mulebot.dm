@@ -14,7 +14,7 @@
 	icon_state = "mulebot0"
 	density = TRUE
 	move_resist = MOVE_FORCE_STRONG
-	animate_movement = 1
+	animate_movement = FORWARD_STEPS
 	health = 50
 	maxHealth = 50
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
@@ -23,7 +23,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	radio_key = /obj/item/encryptionkey/headset_cargo
-	radio_channel = "Supply"
+	radio_channel = RADIO_CHANNEL_SUPPLY
 
 	bot_type = MULE_BOT
 	model = "MULE"
@@ -33,6 +33,7 @@
 
 	path_image_color = "#7F5200"
 
+	var/base_icon = "mulebot"
 	var/atom/movable/load = null
 	var/mob/living/passenger = null
 	var/turf/target				// this is turf to navigate to (location of beacon)
@@ -48,8 +49,11 @@
 	var/obj/item/stock_parts/cell/cell
 	var/bloodiness = 0
 
-/mob/living/simple_animal/bot/mulebot/Initialize()
+/mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
+	if(prob(0.666) && mapload)
+		new /mob/living/simple_animal/bot/mulebot/paranormal(get_turf(src))
+		qdel(src)
 	wires = new /datum/wires/mulebot(src)
 	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
 	access_card.access = J.get_access()
@@ -74,9 +78,9 @@
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
 	if(paicard)
-		bot_name = "\improper MULEbot ([new_id])"
+		bot_name = "[initial(name)] ([new_id])"
 	else
-		name = "\improper MULEbot ([new_id])"
+		name = "[initial(name)] ([new_id])"
 
 /mob/living/simple_animal/bot/mulebot/bot_reset()
 	..()
@@ -91,13 +95,13 @@
 		if(!user.transferItemToLoc(I, src))
 			return
 		cell = I
-		visible_message("[user] inserts a cell into [src].",
+		visible_message("<span class='notice'>[user] inserts a cell into [src].</span>",
 						"<span class='notice'>You insert the new cell into [src].</span>")
 	else if(I.tool_behaviour == TOOL_CROWBAR && open && cell)
 		cell.add_fingerprint(usr)
 		cell.forceMove(loc)
 		cell = null
-		visible_message("[user] crowbars out the power cell from [src].",
+		visible_message("<span class='notice'>[user] crowbars out the power cell from [src].</span>",
 						"<span class='notice'>You pry the powercell out of [src].</span>")
 	else if(is_wire_tool(I) && open)
 		return attack_hand(user)
@@ -121,13 +125,13 @@
 		locked = !locked
 		to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] [src]'s controls!</span>")
 	flick("mulebot-emagged", src)
-	playsound(src, "sparks", 100, 0)
+	playsound(src, "sparks", 100, FALSE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon()
 	if(open)
-		icon_state="mulebot-hatch"
+		icon_state="[base_icon]-hatch"
 	else
-		icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
+		icon_state = "[base_icon][wires.is_cut(WIRE_AVOIDANCE)]"
 	cut_overlays()
 	if(load && !ismob(load))//buckling handles the mob offsets
 		load.pixel_y = initial(load.pixel_y) + 9
@@ -148,8 +152,9 @@
 			wires.cut_random()
 	return
 
-/mob/living/simple_animal/bot/mulebot/bullet_act(obj/item/projectile/Proj)
-	if(..())
+/mob/living/simple_animal/bot/mulebot/bullet_act(obj/projectile/Proj)
+	. = ..()
+	if(.)
 		if(prob(50) && !isnull(load))
 			unload(0)
 		if(prob(25))
@@ -216,7 +221,7 @@
 			bot_control(action, usr) // Kill this later.
 			. = TRUE
 
-/mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, pda = 0)
+/mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, pda = FALSE)
 	if(pda && wires.is_cut(WIRE_RX)) // MULE wireless is controlled by wires.
 		return
 
@@ -314,14 +319,14 @@
 /mob/living/simple_animal/bot/mulebot/proc/buzz(type)
 	switch(type)
 		if(SIGH)
-			audible_message("[src] makes a sighing buzz.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			audible_message("<span class='hear'>[src] makes a sighing buzz.</span>")
+			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		if(ANNOYED)
-			audible_message("[src] makes an annoyed buzzing sound.", "<span class='italics'>You hear an electronic buzzing sound.</span>")
-			playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
+			audible_message("<span class='hear'>[src] makes an annoyed buzzing sound.</span>")
+			playsound(loc, 'sound/machines/buzz-two.ogg', 50, FALSE)
 		if(DELIGHT)
-			audible_message("[src] makes a delighted ping!", "<span class='italics'>You hear a ping.</span>")
-			playsound(loc, 'sound/machines/ping.ogg', 50, 0)
+			audible_message("<span class='hear'>[src] makes a delighted ping!</span>")
+			playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
 
 
 // mousedrop a crate to load the bot
@@ -329,10 +334,13 @@
 /mob/living/simple_animal/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
 	var/mob/living/L = user
 
+	if (!istype(L))
+		return
+
 	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
 		return
 
-	if(!istype(AM))
+	if(!istype(AM) || isdead(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
 		return
 
 	load(AM)
@@ -447,10 +455,8 @@
 			process_bot()
 			num_steps--
 			if(mode != BOT_IDLE)
-				spawn(0)
-					for(var/i=num_steps,i>0,i--)
-						sleep(2)
-						process_bot()
+				var/process_timer = addtimer(CALLBACK(src, .proc/process_bot), 2, TIMER_LOOP|TIMER_STOPPABLE)
+				addtimer(CALLBACK(GLOBAL_PROC, /proc/deltimer, process_timer), (num_steps*2) + 1)
 
 /mob/living/simple_animal/bot/mulebot/proc/process_bot()
 	if(!on || client)
@@ -514,11 +520,7 @@
 							buzz(SIGH)
 							mode = BOT_WAIT_FOR_NAV
 							blockcount = 0
-							spawn(20)
-								calc_path(avoid=next)
-								if(path.len > 0)
-									buzz(DELIGHT)
-								mode = BOT_BLOCKED
+							addtimer(CALLBACK(src, .proc/process_blocked, next), 2 SECONDS)
 							return
 						return
 				else
@@ -531,18 +533,26 @@
 
 		if(BOT_NAV)	// calculate new path
 			mode = BOT_WAIT_FOR_NAV
-			spawn(0)
-				calc_path()
+			INVOKE_ASYNC(src, .proc/process_nav)
 
-				if(path.len > 0)
-					blockcount = 0
-					mode = BOT_BLOCKED
-					buzz(DELIGHT)
+/mob/living/simple_animal/bot/mulebot/proc/process_blocked(turf/next)
+	calc_path(avoid=next)
+	if(path.len > 0)
+		buzz(DELIGHT)
+	mode = BOT_BLOCKED
 
-				else
-					buzz(SIGH)
+/mob/living/simple_animal/bot/mulebot/proc/process_nav()
+	calc_path()
 
-					mode = BOT_NO_ROUTE
+	if(path.len > 0)
+		blockcount = 0
+		mode = BOT_BLOCKED
+		buzz(DELIGHT)
+
+	else
+		buzz(SIGH)
+
+		mode = BOT_NO_ROUTE
 
 // calculates a path to the current destination
 // given an optional turf to avoid
@@ -572,26 +582,28 @@
 /mob/living/simple_animal/bot/mulebot/proc/start_home()
 	if(!on)
 		return
-	spawn(0)
-		set_destination(home_destination)
-		mode = BOT_BLOCKED
+	INVOKE_ASYNC(src, .proc/do_start_home)
 	update_icon()
+
+/mob/living/simple_animal/bot/mulebot/proc/do_start_home()
+	set_destination(home_destination)
+	mode = BOT_BLOCKED
 
 // called when bot reaches current target
 /mob/living/simple_animal/bot/mulebot/proc/at_target()
 	if(!reached_target)
-		radio_channel = "Supply" //Supply channel
-		audible_message("[src] makes a chiming sound!", "<span class='italics'>You hear a chime.</span>")
-		playsound(loc, 'sound/machines/chime.ogg', 50, 0)
+		radio_channel = RADIO_CHANNEL_SUPPLY //Supply channel
+		audible_message("<span class='hear'>[src] makes a chiming sound!</span>")
+		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE)
 		reached_target = 1
 
 		if(pathset) //The AI called us here, so notify it of our arrival.
 			loaddir = dir //The MULE will attempt to load a crate in whatever direction the MULE is "facing".
 			if(calling_ai)
 				to_chat(calling_ai, "<span class='notice'>[icon2html(src, calling_ai)] [src] wirelessly plays a chiming sound!</span>")
-				playsound(calling_ai, 'sound/machines/chime.ogg',40, 0)
+				playsound(calling_ai, 'sound/machines/chime.ogg',40, FALSE)
 				calling_ai = null
-				radio_channel = "AI Private" //Report on AI Private instead if the AI is controlling us.
+				radio_channel = RADIO_CHANNEL_AI_PRIVATE //Report on AI Private instead if the AI is controlling us.
 
 		if(load)		// if loaded, unload at target
 			if(report_delivery)
@@ -643,7 +655,7 @@
 	log_combat(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!</span>")
-	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
+	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
 
 	var/damage = rand(5,15)
 	H.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD, run_armor_check(BODY_ZONE_HEAD, "melee"))
@@ -732,7 +744,92 @@
 
 /mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/paicard/card)
 	if(..())
-		visible_message("[src] safeties are locked on.")
+		visible_message("<span class='notice'>[src] safeties are locked on.</span>")
+
+/mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
+	name = "paranormal MULEbot"
+	desc = "A Multiple Utility Load Effector bot. It only seems to accept paranormal forces, and for this reason is fucking useless."
+	icon_state = "paranormalmulebot0"
+	base_icon = "paranormalmulebot"
+	var/static/mutable_appearance/ghost_overlay
+	var/ghost_rider = FALSE
+
+/mob/living/simple_animal/bot/mulebot/paranormal/MouseDrop_T(atom/movable/AM, mob/user)
+	var/mob/living/L = user
+
+	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
+		return
+
+	if(!istype(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob)) //allows ghosts!
+		return
+
+	load(AM)
+
+/mob/living/simple_animal/bot/mulebot/paranormal/load(atom/movable/AM)
+	if(load ||  AM.anchored)
+		return
+
+	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
+		return
+
+	if(!istype(AM, /mob/dead/observer) && !wires.is_cut(WIRE_LOADCHECK))
+		buzz(SIGH)
+		return	// if not hacked, only allow ghosts to be loaded
+
+	var/obj/structure/closet/crate/CRATE
+	if(istype(AM, /obj/structure/closet/crate))
+		CRATE = AM
+	if(CRATE) // if it's a crate, close before loading
+		CRATE.close()
+
+	if(isobj(AM))
+		var/obj/O = AM
+		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+			buzz(SIGH)
+			return
+
+	if(isliving(AM))
+		if(!load_mob(AM))
+			return
+	else
+		AM.forceMove(src)
+
+	load = AM
+	mode = BOT_IDLE
+	update_icon()
+	if(istype(AM, /mob/dead/observer))
+		ghost_rider = TRUE
+		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/ghostmoved)
+
+/mob/living/simple_animal/bot/mulebot/paranormal/update_icon()
+	if(load && isobserver(load) && isnull(ghost_overlay))//there are issues with adding a ghost as an overlay, and this prevents metagaming to see who is dead
+		ghost_rider = TRUE
+		visible_message("<span class='warning'>A ghostly figure appears on [src]!</span>")
+		ghost_overlay = ghost_overlay || mutable_appearance('icons/mob/mob.dmi')
+		ghost_overlay.icon_state = "ghost"
+		ghost_overlay.pixel_y = 9
+		add_overlay(ghost_overlay)
+	if(open)
+		icon_state="[base_icon]-hatch"
+	else
+		icon_state = "[base_icon][wires.is_cut(WIRE_AVOIDANCE)]"
+	if(!ghost_rider)
+		cut_overlays()
+	if(load && !ismob(load))//buckling handles the mob offsets
+		load.pixel_y = initial(load.pixel_y) + 9
+		if(load.layer < layer)
+			load.layer = layer + 0.01
+		add_overlay(load)
+	return
+
+/mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved(atom/movable/AM, OldLoc, Dir, Forced)
+	visible_message("<span class='notice'>The ghostly figure vanishes...</span>")
+	UnregisterSignal(AM, COMSIG_MOVABLE_MOVED)
+	ghost_rider = FALSE
+	cut_overlays()
+	QDEL_NULL(ghost_overlay)
+	unload(0)
+	update_icon()
 
 #undef SIGH
 #undef ANNOYED

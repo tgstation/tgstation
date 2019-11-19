@@ -1,5 +1,5 @@
 /*****************Marker Beacons**************************/
-GLOBAL_LIST_INIT(marker_beacon_colors, list(
+GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 "Random" = FALSE, //not a true color, will pick a random color
 "Burgundy" = LIGHT_COLOR_FLARE,
 "Bronze" = LIGHT_COLOR_ORANGE,
@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 "Indigo" = LIGHT_COLOR_DARK_BLUE,
 "Purple" = LIGHT_COLOR_PURPLE,
 "Violet" = LIGHT_COLOR_LAVENDER,
-"Fuchsia" = LIGHT_COLOR_PINK))
+"Fuchsia" = LIGHT_COLOR_PINK)))
 
 /obj/item/stack/marker_beacon
 	name = "marker beacon"
@@ -36,9 +36,9 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	update_icon()
 
 /obj/item/stack/marker_beacon/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Use in-hand to place a [singular_name].</span>")
-	to_chat(user, "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>")
+	. = ..()
+	. += "<span class='notice'>Use in-hand to place a [singular_name].\n"+\
+	"Alt-click to select a color. Current color is [picked_color].</span>"
 
 /obj/item/stack/marker_beacon/update_icon()
 	icon_state = "[initial(icon_state)][lowertext(picked_color)]"
@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 		return
 	if(use(1))
 		to_chat(user, "<span class='notice'>You activate and anchor [amount ? "a":"the"] [singular_name] in place.</span>")
-		playsound(user, 'sound/machines/click.ogg', 50, 1)
+		playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 		var/obj/structure/marker_beacon/M = new(user.loc, picked_color)
 		transfer_fingerprints_to(M)
 
@@ -93,8 +93,8 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	qdel(src)
 
 /obj/structure/marker_beacon/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to select a color. Current color is [picked_color].</span>"
 
 /obj/structure/marker_beacon/update_icon()
 	while(!picked_color || !GLOB.marker_beacon_colors[picked_color])
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 		M.update_icon()
 		transfer_fingerprints_to(M)
 		if(user.put_in_hands(M, TRUE)) //delete the beacon if it fails
-			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			qdel(src) //otherwise delete us
 
 /obj/structure/marker_beacon/attackby(obj/item/I, mob/user, params)
@@ -122,10 +122,17 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 		to_chat(user, "<span class='notice'>You start picking [src] up...</span>")
 		if(do_after(user, remove_speed, target = src) && M.amount + 1 <= M.max_amount)
 			M.add(1)
-			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			qdel(src)
-	else
-		return ..()
+			return
+	if(istype(I, /obj/item/light_eater))
+		var/obj/effect/decal/cleanable/ash/A = new /obj/effect/decal/cleanable/ash(drop_location())
+		A.desc += "\nLooks like this used to be \a [src] some time ago."
+		visible_message("<span class='danger'>[src] is disintegrated by [I]!</span>")
+		playsound(src, 'sound/items/welder.ogg', 50, TRUE)
+		qdel(src)
+		return
+	return ..()
 
 /obj/structure/marker_beacon/AltClick(mob/living/user)
 	..()

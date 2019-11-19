@@ -15,16 +15,20 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/effect/mob_spawn,
 		/obj/effect/hierophant,
 		/obj/structure/receiving_pad,
-		/obj/effect/clockwork/spatial_gateway,
-		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
 		/obj/item/warp_cube,
-		/obj/machinery/rnd/production/protolathe, //print tracking beacons, send shuttle
+		/obj/machinery/rnd/production, //print tracking beacons, send shuttle
 		/obj/machinery/autolathe, //same
-		/obj/item/projectile/beam/wormhole,
+		/obj/projectile/beam/wormhole,
 		/obj/effect/portal,
 		/obj/item/shared_storage,
 		/obj/structure/extraction_point,
 		/obj/machinery/syndicatebomb,
+		/obj/item/hilbertshotel,
+		/obj/item/swapper,
+		/obj/docking_port,
+		/obj/machinery/launchpad,
+		/obj/machinery/disposal,
+		/obj/structure/disposalpipe,
 		/obj/item/hilbertshotel
 	)))
 
@@ -59,7 +63,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		for(var/trf in shuttle_area)
 			var/turf/T = trf
 			for(var/a in T.GetAllContents())
-				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
+				if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types) && !istype(a, /obj/docking_port))
 					return FALSE
 	return TRUE
 
@@ -78,6 +82,9 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		sell()
 
 /obj/docking_port/mobile/supply/proc/buy()
+	var/list/obj/miscboxes = list() //miscboxes are combo boxes that contain all small_item orders grouped
+	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
+	var/list/misc_contents = list() //list of lists of items that each box will contain
 	if(!SSshuttle.shoppinglist.len)
 		return
 
@@ -115,12 +122,41 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
 
-		SO.generate(pick_n_take(empty_turfs))
+		if(SO.pack.small_item) //small_item means it gets piled in the miscbox
+			if(SO.paying_account)
+				if(!miscboxes.len || !miscboxes[D.account_holder]) //if there's no miscbox for this person
+					miscboxes[D.account_holder] = new /obj/structure/closet/crate/secure/owned(pick_n_take(empty_turfs), SO.paying_account)
+					miscboxes[D.account_holder].name = "small items crate - purchased by [D.account_holder]"
+					misc_contents[D.account_holder] = list()
+				for (var/item in SO.pack.contains)
+					misc_contents[D.account_holder] += item
+				misc_order_num[D.account_holder] = "[misc_order_num[D.account_holder]]#[SO.id]  "
+			else //No private payment, so we just stuff it all into a generic crate
+				if(!miscboxes.len || !miscboxes["Cargo"])
+					miscboxes["Cargo"] = new /obj/structure/closet/crate/secure(pick_n_take(empty_turfs))
+					miscboxes["Cargo"].name = "small items crate"
+					misc_contents["Cargo"] = list()
+					miscboxes["Cargo"].req_access = list()
+				for (var/item in SO.pack.contains)
+					misc_contents["Cargo"] += item
+					//new item(miscboxes["Cargo"])
+				if(SO.pack.access)
+					miscboxes["Cargo"].req_access += SO.pack.access
+				misc_order_num["Cargo"] = "[misc_order_num["Cargo"]]#[SO.id]  "
+		else
+			SO.generate(pick_n_take(empty_turfs))
+
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
 		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
 			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
 		purchases++
+
+	for(var/I in miscboxes)
+		var/datum/supply_order/SO = new/datum/supply_order()
+		SO.id = misc_order_num[I]
+		SO.generateCombo(miscboxes[I], I, misc_contents[I])
+		qdel(SO)
 
 	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)

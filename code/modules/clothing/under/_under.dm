@@ -1,10 +1,14 @@
 /obj/item/clothing/under
-	icon = 'icons/obj/clothing/uniforms.dmi'
 	name = "under"
+	icon = 'icons/obj/clothing/under/default.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/default.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.9
 	slot_flags = ITEM_SLOT_ICLOTHING
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
+	drop_sound = 'sound/items/handling/cloth_drop.ogg'
+	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = HAS_SENSORS // For the crew computer
 	var/random_sensor = TRUE
@@ -15,13 +19,14 @@
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
+	var/freshly_laundered = FALSE
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		if(damaged_clothes)
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
-		IF_HAS_BLOOD_DNA(src)
+		if(HAS_BLOOD_DNA(src))
 			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
 		if(accessory_overlay)
 			. += accessory_overlay
@@ -44,12 +49,19 @@
 	if(has_sensor > NO_SENSORS)
 		has_sensor = BROKEN_SENSORS
 
-/obj/item/clothing/under/New()
+/obj/item/clothing/under/Initialize()
+	. = ..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
-	adjusted = NORMAL_STYLE
-	..()
+
+/obj/item/clothing/under/emp_act()
+	. = ..()
+	if(has_sensor > NO_SENSORS)
+		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
+		if(ismob(loc))
+			var/mob/M = loc
+			to_chat(M,"<span class='warning'>The sensors on the [src] change rapidly!</span>")
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
@@ -65,7 +77,11 @@
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(attached_accessory && slot != SLOT_HANDS && ishuman(user))
+	if(slot == ITEM_SLOT_ICLOTHING && freshly_laundered)
+		freshly_laundered = FALSE
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
+
+	if(attached_accessory && slot != ITEM_SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		attached_accessory.on_uniform_equip(src, user)
 		if(attached_accessory.above_suit)
@@ -101,10 +117,8 @@
 			if(user && notifyAttach)
 				to_chat(user, "<span class='notice'>You attach [I] to [src].</span>")
 
-			var/accessory_color = attached_accessory.item_color
-			if(!accessory_color)
-				accessory_color = attached_accessory.icon_state
-			accessory_overlay = mutable_appearance('icons/mob/accessories.dmi', "[accessory_color]")
+			var/accessory_color = attached_accessory.icon_state
+			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "[accessory_color]")
 			accessory_overlay.alpha = attached_accessory.alpha
 			accessory_overlay.color = attached_accessory.color
 
@@ -136,23 +150,28 @@
 
 
 /obj/item/clothing/under/examine(mob/user)
-	..()
+	. = ..()
+	if(freshly_laundered)
+		. += "It looks fresh and clean."
 	if(can_adjust)
 		if(adjusted == ALT_STYLE)
-			to_chat(user, "Alt-click on [src] to wear it normally.")
+			. += "Alt-click on [src] to wear it normally."
 		else
-			to_chat(user, "Alt-click on [src] to wear it casually.")
+			. += "Alt-click on [src] to wear it casually."
 	if (has_sensor == BROKEN_SENSORS)
-		to_chat(user, "Its sensors appear to be shorted out.")
+		. += "Its sensors appear to be shorted out."
 	else if(has_sensor > NO_SENSORS)
 		switch(sensor_mode)
 			if(SENSOR_OFF)
-				to_chat(user, "Its sensors appear to be disabled.")
+				. += "Its sensors appear to be disabled."
 			if(SENSOR_LIVING)
-				to_chat(user, "Its binary life sensors appear to be enabled.")
+				. += "Its binary life sensors appear to be enabled."
 			if(SENSOR_VITALS)
-				to_chat(user, "Its vital tracker appears to be enabled.")
+				. += "Its vital tracker appears to be enabled."
 			if(SENSOR_COORDS)
-				to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
+				. += "Its vital tracker and tracking beacon appear to be enabled."
 	if(attached_accessory)
-		to_chat(user, "\A [attached_accessory] is attached to it.")
+		. += "\A [attached_accessory] is attached to it."
+
+/obj/item/clothing/under/rank
+	dying_key = DYE_REGISTRY_UNDER

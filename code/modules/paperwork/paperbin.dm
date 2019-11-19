@@ -118,11 +118,11 @@
 		return ..()
 
 /obj/item/paper_bin/examine(mob/user)
-	..()
+	. = ..()
 	if(total_paper)
-		to_chat(user, "It contains " + (total_paper > 1 ? "[total_paper] papers" : " one paper")+".")
+		. += "It contains [total_paper > 1 ? "[total_paper] papers" : " one paper"]."
 	else
-		to_chat(user, "It doesn't contain anything.")
+		. += "It doesn't contain anything."
 
 
 /obj/item/paper_bin/update_icon()
@@ -156,7 +156,7 @@
 	qdel(src)
 
 /obj/item/paper_bin/bundlenatural/attackby(obj/item/W, mob/user)
-	if(W.is_sharp())
+	if(W.get_sharpness())
 		to_chat(user, "<span class='notice'>You snip \the [src], spilling paper everywhere.</span>")
 		var/turf/T = get_turf(src.loc)
 		while(total_paper > 0)
@@ -172,3 +172,9 @@
 		qdel(src)
 	else
 		..()
+
+/obj/item/paper_bin/carbon
+	name = "carbon paper bin"
+	desc = "Contains all the paper you'll ever need, in duplicate!"
+	icon_state = "paper_bin_carbon"
+	papertype = /obj/item/paper/carbon

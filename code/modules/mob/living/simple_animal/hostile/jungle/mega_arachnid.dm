@@ -7,7 +7,7 @@
 	icon_state = "arachnid"
 	icon_living = "arachnid"
 	icon_dead = "arachnid_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
+	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	maxHealth = 300
@@ -20,11 +20,11 @@
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	ranged_cooldown_time = 60
-	projectiletype = /obj/item/projectile/mega_arachnid
+	projectiletype = /obj/projectile/mega_arachnid
 	projectilesound = 'sound/weapons/pierce.ogg'
 	alpha = 50
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_CLAW
 
 /mob/living/simple_animal/hostile/jungle/mega_arachnid/Life()
 	..()
@@ -48,13 +48,13 @@
 	..()
 	alpha = 50
 
-/obj/item/projectile/mega_arachnid
+/obj/projectile/mega_arachnid
 	name = "flesh snare"
-	nodamage = 1
+	nodamage = TRUE
 	damage = 0
 	icon_state = "tentacle_end"
 
-/obj/item/projectile/mega_arachnid/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/mega_arachnid/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target) && blocked < 100)
 		var/obj/item/restraints/legcuffs/beartrap/mega_arachnid/B = new /obj/item/restraints/legcuffs/beartrap/mega_arachnid(get_turf(target))
 		B.Crossed(target)

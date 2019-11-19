@@ -5,9 +5,9 @@
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
 
-/obj/item/clothing/suit/hooded/New()
+/obj/item/clothing/suit/hooded/Initialize()
+	. = ..()
 	MakeHood()
-	..()
 
 /obj/item/clothing/suit/hooded/Destroy()
 	. = ..()
@@ -24,11 +24,11 @@
 	ToggleHood()
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
-	if(slot == SLOT_WEAR_SUIT)
+	if(slot == ITEM_SLOT_OCLOTHING)
 		return 1
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
-	if(slot != SLOT_WEAR_SUIT)
+	if(slot != ITEM_SLOT_OCLOTHING)
 		RemoveHood()
 	..()
 
@@ -59,7 +59,7 @@
 			if(H.head)
 				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
-			else if(H.equip_to_slot_if_possible(hood,SLOT_HEAD,0,0,1))
+			else if(H.equip_to_slot_if_possible(hood,ITEM_SLOT_HEAD,0,0,1))
 				suittoggled = TRUE
 				src.icon_state = "[initial(icon_state)]_t"
 				H.update_inv_wear_suit()
@@ -71,6 +71,7 @@
 
 /obj/item/clothing/head/hooded
 	var/obj/item/clothing/suit/hooded/suit
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/hooded/Destroy()
 	suit = null
@@ -83,7 +84,7 @@
 
 /obj/item/clothing/head/hooded/equipped(mob/user, slot)
 	..()
-	if(slot != SLOT_HEAD)
+	if(slot != ITEM_SLOT_HEAD)
 		if(suit)
 			suit.RemoveHood()
 		else
@@ -120,8 +121,8 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
-	..()
-	to_chat(user, "Alt-click on [src] to toggle the [togglename].")
+	. = ..()
+	. += "Alt-click on [src] to toggle the [togglename]."
 
 //Hardsuit toggle code
 /obj/item/clothing/suit/space/hardsuit/Initialize()
@@ -155,7 +156,7 @@
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	if(!helmettype)
 		return
-	if(slot != SLOT_WEAR_SUIT)
+	if(slot != ITEM_SLOT_OCLOTHING)
 		RemoveHelmet()
 	..()
 
@@ -170,7 +171,7 @@
 		H.transferItemToLoc(helmet, src, TRUE)
 		H.update_inv_wear_suit()
 		to_chat(H, "<span class='notice'>The helmet on the hardsuit disengages.</span>")
-		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	else
 		helmet.forceMove(src)
 
@@ -192,10 +193,10 @@
 			if(H.head)
 				to_chat(H, "<span class='warning'>You're already wearing something on your head!</span>")
 				return
-			else if(H.equip_to_slot_if_possible(helmet,SLOT_HEAD,0,0,1))
+			else if(H.equip_to_slot_if_possible(helmet,ITEM_SLOT_HEAD,0,0,1))
 				to_chat(H, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
 				suittoggled = TRUE
 				H.update_inv_wear_suit()
-				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
+				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 	else
 		RemoveHelmet()

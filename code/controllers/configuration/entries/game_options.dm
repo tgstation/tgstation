@@ -35,10 +35,6 @@
 /datum/config_entry/keyed_list/midround_antag/ValidateListEntry(key_name, key_value)
 	return key_name in config.modes
 
-/datum/config_entry/keyed_list/policy
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_TEXT
-
 /datum/config_entry/number/damage_multiplier
 	config_entry_value = 1
 	integer = FALSE
@@ -74,22 +70,27 @@
 
 /datum/config_entry/number/traitor_scaling_coeff	//how much does the amount of players get divided by to determine traitors
 	config_entry_value = 6
+	integer = FALSE
 	min_val = 1
 
 /datum/config_entry/number/brother_scaling_coeff	//how many players per brother team
 	config_entry_value = 25
+	integer = FALSE
 	min_val = 1
 
 /datum/config_entry/number/changeling_scaling_coeff	//how much does the amount of players get divided by to determine changelings
 	config_entry_value = 6
+	integer = FALSE
 	min_val = 1
 
 /datum/config_entry/number/security_scaling_coeff	//how much does the amount of players get divided by to determine open security officer positions
 	config_entry_value = 8
+	integer = FALSE
 	min_val = 1
 
 /datum/config_entry/number/abductor_scaling_coeff	//how many players per abductor team
 	config_entry_value = 15
+	integer = FALSE
 	min_val = 1
 
 /datum/config_entry/number/traitor_objectives_amount
@@ -114,18 +115,22 @@
 
 /datum/config_entry/number/antag_rep_maximum
 	config_entry_value = 200
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/default_antag_tickets
 	config_entry_value = 100
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/max_tickets_per_roll
 	config_entry_value = 100
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/midround_antag_time_check	// How late (in minutes you want the midround antag system to stay on, setting this to 0 will disable the system)
 	config_entry_value = 60
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/midround_antag_life_check	// A ratio of how many people need to be alive in order for the round not to immediately end in midround antagonist
@@ -136,11 +141,16 @@
 
 /datum/config_entry/number/shuttle_refuel_delay
 	config_entry_value = 12000
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/flag/show_game_type_odds	//if set this allows players to see the odds of each roundtype on the get revision screen
 
 /datum/config_entry/keyed_list/roundstart_races	//races you can play as from the get go.
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/keyed_list/roundstart_no_hard_check // Species contained in this list will not cause existing characters with no-longer-roundstart species set to be resetted to the human race.
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 
@@ -156,6 +166,7 @@
 
 /datum/config_entry/number/arrivals_shuttle_dock_window	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
 	config_entry_value = 55
+	integer = FALSE
 	min_val = 30
 
 /datum/config_entry/flag/arrivals_shuttle_require_undocked	//Require the arrivals shuttle to be undocked before latejoiners can join
@@ -186,6 +197,7 @@
 
 /datum/config_entry/number/revival_brain_life
 	config_entry_value = -1
+	integer = FALSE
 	min_val = -1
 
 /datum/config_entry/flag/ooc_during_round
@@ -227,14 +239,16 @@
 		update_mob_config_movespeeds()
 
 /datum/config_entry/number/movedelay/run_delay
+	integer = FALSE
 
 /datum/config_entry/number/movedelay/walk_delay
+	integer = FALSE
 
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
 	deprecated_by = /datum/config_entry/keyed_list/multiplicative_movespeed
 	abstract_type = /datum/config_entry/number/outdated_movedelay
-
+	integer = FALSE
 	var/movedelay_type
 
 /datum/config_entry/number/outdated_movedelay/DeprecationUpdate(value)
@@ -254,10 +268,13 @@
 	movedelay_type = /mob/living/simple_animal
 /////////////////////////////////////////////////
 
+/datum/config_entry/flag/virtual_reality	//Will virtual reality be loaded
+
 /datum/config_entry/flag/roundstart_away	//Will random away mission be loaded.
 
 /datum/config_entry/number/gateway_delay	//How long the gateway takes before it activates. Default is half an hour. Only matters if roundstart_away is enabled.
 	config_entry_value = 18000
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/flag/ghost_interaction
@@ -287,6 +304,9 @@
 	value_mode = VALUE_MODE_NUM
 	splitter = ","
 
+/datum/config_entry/number/max_law_len
+	config_entry_value = 1024
+
 /datum/config_entry/number/overflow_cap
 	config_entry_value = -1
 	min_val = -1
@@ -299,10 +319,12 @@
 
 /datum/config_entry/number/lavaland_budget
 	config_entry_value = 60
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/space_budget
 	config_entry_value = 16
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/flag/allow_random_events	// Enables random events mid-round when set
@@ -356,3 +378,5 @@
 /datum/config_entry/number/monkeycap
 	config_entry_value = 64
 	min_val = 0
+
+/datum/config_entry/flag/dynamic_config_enabled

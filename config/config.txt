@@ -46,9 +46,6 @@ ADMIN_LEGACY_SYSTEM
 ##If enabled, each time admins are loaded ranks the database will be updated with the current ranks and their flags
 #LOAD_LEGACY_RANKS_ONLY
 
-## Comment this out if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
-BAN_LEGACY_SYSTEM
-
 ## Comment this out to stop locally connected clients from being given the almost full access !localhost! admin rank
 ENABLE_LOCALHOST_RANK
 
@@ -137,6 +134,12 @@ LOG_MANIFEST
 ## log mecha actions
 # LOG_MECHA
 
+## log virus and actions
+LOG_VIRUS
+
+## log cloning actions
+LOG_CLONING
+
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
 
@@ -161,8 +164,11 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
 
-## allow players to initate a mode-change start
+## allow players to initiate a mode-change vote
 #ALLOW_VOTE_MODE
+
+## allow players to initiate a map-change vote
+#ALLOW_VOTE_MAP
 
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
@@ -322,6 +328,9 @@ HARD_POPCAP_MESSAGE The server is currently serving a high number of users, You 
 ## Message for extreme cap
 EXTREME_POPCAP_MESSAGE The server is currently serving a high number of users, find alternative servers.
 
+## Uncomment to allow BYOND subscribers to bypassing server connection population cap. (Living player population cap still applies.)
+BYOND_MEMBER_BYPASS_POPCAP
+
 ## Notify admins when a new player connects for the first x days a player's been around. (0 for first connection only, -1 for never)
 ##	Requres database
 NOTIFY_NEW_PLAYER_AGE 0
@@ -337,6 +346,9 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ## Deny all new connections by ckeys we haven't seen before (exempts admins and only denies the connection if the database is enabled and connected)
 ##	Requires database
 #PANIC_BUNKER
+
+## The message the Panic Bunker gives when someone is rejected by it
+#PANIC_BUNKER_MESSAGE Sorry, but the server is currently not accepting connections from never before seen players.
 
 ## If panic bunker is on and a player is rejected (see above), attempt to send them to this connected server (see below) instead.
 ##	You probably want this to be the same as CROSS_SERVER_ADDRESS
@@ -362,9 +374,9 @@ ANNOUNCE_ADMIN_LOGOUT
 MAPROTATION
 
 ## Map voting
-## Allows players to vote for their preffered map
+## Allows players to vote with their preffered map setting
 ## When it's set to zero, the map will be randomly picked each round
-ALLOW_MAP_VOTING 1
+PREFERENCE_MAP_VOTING 1
 
 ## Map rotate chance delta
 ## This is the chance of map rotation factored to the round length.
@@ -379,6 +391,19 @@ AUTOADMIN_RANK Game Master
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN
 
+
+## Uncomment to automatically deadmin players when the game starts.
+#AUTO_DEADMIN_PLAYERS
+
+## Uncomment to automatically deadmin antagonists when they gain the role.
+#AUTO_DEADMIN_ANTAGONISTS
+
+## Uncomment to automatically deadmin specific role sets when a player joins the game.
+#AUTO_DEADMIN_HEADS
+#AUTO_DEADMIN_SECURITY
+#AUTO_DEADMIN_SILICONS
+
+
 ## CLIENT VERSION CONTROL
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
@@ -389,6 +414,8 @@ AUTOADMIN_RANK Game Master
 #CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
 CLIENT_ERROR_VERSION 511
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
+## The minimum build needed for joining the server, if using 512, a good minimum build would be 1421 as that disables the Middle Mouse Button exploit.
+CLIENT_ERROR_BUILD 1421
 
 ## TOPIC RATE LIMITING
 ## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.
@@ -420,8 +447,16 @@ MINUTE_CLICK_LIMIT 400
 ##How long to wait between messaging admins about occurences of a unique error
 #ERROR_MSG_DELAY 50
 
-## Send a message to IRC when starting a new game
-#IRC_ANNOUNCE_NEW_GAME
+
+## Chat Announce Options
+## Various messages to be sent to game chats
+## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4
+## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
+## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
+
+## Send a message with the station name starting a new game. Also required for the notify function
+#CHAT_ANNOUNCE_NEW_GAME
+
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 DEBUG_ADMIN_HREFS
@@ -453,8 +488,14 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 #ROUNDS_UNTIL_HARD_RESTART 10
 
 
-##Default screen resolution, in tiles.
-##	By default, this is 15x15, which gets simplified to 7 by BYOND, as it is a 1:1 screen ratio.
-##	For reference, Goonstation uses a resolution of 21x15 for it's widescreen mode.
+##Default view size, in tiles.
+##	By default, this is 15x15, which gets simplified to 7 by byond
+##  15x15 would be the standard square view. 21x15 is what goonstation uses for widescreen.
+##  Setting this to something different from DEFAULT_VIEW_SQUARE will enable widescreen toggles
 ##	Do note that changing this value will affect the title screen. The title screen will have to be updated manually if this is changed.
 DEFAULT_VIEW 15x15
+
+##Default view size, in tiles. Should *always* be square.
+## The alternative square viewport size if you're using a widescreen view size
+## You probably shouldn't ever be changing this, but it's here if you want to.
+DEFAULT_VIEW_SQUARE 15x15

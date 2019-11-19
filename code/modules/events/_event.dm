@@ -18,7 +18,6 @@
 	var/holidayID = ""				//string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
 									//anything with a (non-null) holidayID which does not match holiday, cannot run.
 	var/wizardevent = FALSE
-	var/random = FALSE				//If the event has occured randomly, or if it was forced by an admin or in-game occurance
 	var/alert_observers = TRUE		//should we let the ghosts and admins know this event is firing
 									//should be disabled on events that fire a lot
 
@@ -37,7 +36,7 @@
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
-/datum/round_event_control/proc/canSpawnEvent(var/players_amt, var/gamemode)
+/datum/round_event_control/proc/canSpawnEvent(players_amt, gamemode)
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time-SSticker.round_start_time)
@@ -84,7 +83,7 @@
 		log_admin_private("[key_name(usr)] cancelled event [name].")
 		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
 
-/datum/round_event_control/proc/runEvent()
+/datum/round_event_control/proc/runEvent(random = FALSE)
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
@@ -94,7 +93,8 @@
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	if(random)
 		log_game("Random Event triggering: [name] ([typepath])")
-
+	if (alert_observers)
+		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>") //STOP ASSUMING IT'S BADMINS!
 	return E
 
 //Special admins setup
@@ -106,13 +106,13 @@
 	var/datum/round_event_control/control
 
 	var/startWhen		= 0	//When in the lifetime to call start().
-	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to -1 if announcement should not be shown.
+	var/announceWhen	= 0	//When in the lifetime to call announce(). If you don't want it to announce use announceChance, below.
+	var/announceChance	= 100 // Probability of announcing, used in prob(), 0 to 100, default 100. Used in ion storms currently.
 	var/endWhen			= 0	//When in the lifetime the event should end.
 
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
 	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
 	var/fakeable = TRUE		//Can be faked by fake news event.
-	var/atom/atom_of_interest = null //Used for ghosts to follow the event when it starts, if possible
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -130,15 +130,13 @@
 /datum/round_event/proc/start()
 	return
 
-//Called after start()
-//Lets the ghosts know that the event has started, and provides a follow link to a mob if possible
+//Called after something followable has been spawned by an event
+//Provides ghosts a follow link to an atom if possible
 //Only called once.
-/datum/round_event/proc/announce_to_ghosts()
+/datum/round_event/proc/announce_to_ghosts(atom/atom_of_interest)
 	if(control.alert_observers)
 		if (atom_of_interest)
-			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=atom_of_interest, action=NOTIFY_ORBIT, header="Event Triggered")
-		else 
-			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!", header="Event Triggered")
+			notify_ghosts("[control.name] has an object of interest: [atom_of_interest]!", source=atom_of_interest, action=NOTIFY_ORBIT, header="Something's Interesting!")
 	return
 
 //Called when the tick is equal to the announceWhen variable.
@@ -174,11 +172,9 @@
 	if(activeFor == startWhen)
 		processing = FALSE
 		start()
-		if (!istype(src, /datum/round_event/ghost_role))
-			announce_to_ghosts() //Ghost roles handle announcing after the roles have been properly spawned from the try_spawn() proc
 		processing = TRUE
 
-	if(activeFor == announceWhen)
+	if(activeFor == announceWhen && prob(announceChance))
 		processing = FALSE
 		announce(FALSE)
 		processing = TRUE

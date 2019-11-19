@@ -28,18 +28,13 @@
 /obj/machinery/transformer/examine(mob/user)
 	. = ..()
 	if(cooldown && (issilicon(user) || isobserver(user)))
-		to_chat(user, "It will be ready in [DisplayTimeText(cooldown_timer - world.time)].")
+		. += "It will be ready in [DisplayTimeText(cooldown_timer - world.time)]."
 
 /obj/machinery/transformer/Destroy()
 	QDEL_NULL(countdown)
 	. = ..()
 
-/obj/machinery/transformer/power_change()
-	..()
-	update_icon()
-
-/obj/machinery/transformer/update_icon()
-	..()
+/obj/machinery/transformer/update_icon_state()
 	if(stat & (BROKEN|NOPOWER) || cooldown == 1)
 		icon_state = "separator-AO0"
 	else
@@ -79,7 +74,7 @@
 		return
 
 	if(!transform_dead && H.stat == DEAD)
-		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	// Activate the cooldown
@@ -87,7 +82,7 @@
 	cooldown_timer = world.time + cooldown_duration
 	update_icon()
 
-	playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/welder.ogg', 50, TRUE)
 	H.emote("scream") // It is painful
 	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
 
@@ -107,7 +102,7 @@
 	addtimer(CALLBACK(src, .proc/unlock_new_robot, R), 50)
 
 /obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/R)
-	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+	playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
 	sleep(30)
 	if(R)
 		R.SetLockdown(0)

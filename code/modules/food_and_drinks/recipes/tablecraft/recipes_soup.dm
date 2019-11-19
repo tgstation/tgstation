@@ -236,3 +236,48 @@
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/beet/red
 	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/onionsoup
+	name = "French onion soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/grown/onion = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/onion
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/bisque
+	name = "Bisque"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/meat/crab = 1,
+		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/bisque
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/bungocurry
+	name = "Bungo Curry"
+	reqs = list(
+		/datum/reagent/water = 5,
+		/datum/reagent/consumable/cream = 5,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/reagent_containers/food/snacks/grown/bungofruit = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/bungocurry
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/electron
+	name = "Electron Soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/sodiumchloride = 5,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/electron
+	subcategory = CAT_SOUP

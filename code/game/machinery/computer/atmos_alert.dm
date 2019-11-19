@@ -2,6 +2,8 @@
 	name = "atmospheric alert console"
 	desc = "Used to monitor the station's air alarms."
 	circuit = /obj/item/circuitboard/computer/atmos_alert
+	ui_x = 350
+	ui_y = 300
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
 	var/list/priority_alarms = list()
@@ -23,7 +25,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_alert", name, 350, 300, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_alert", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/atmos_alert/ui_data(mob/user)
@@ -45,11 +47,11 @@
 		if("clear")
 			var/zone = params["zone"]
 			if(zone in priority_alarms)
-				to_chat(usr, "Priority alarm for [zone] cleared.")
+				to_chat(usr, "<span class='notice'>Priority alarm for [zone] cleared.</span>")
 				priority_alarms -= zone
 				. = TRUE
 			if(zone in minor_alarms)
-				to_chat(usr, "Minor alarm for [zone] cleared.")
+				to_chat(usr, "<span class='notice'>Minor alarm for [zone] cleared.</span>")
 				minor_alarms -= zone
 				. = TRUE
 	update_icon()
@@ -78,11 +80,11 @@
 	update_icon()
 	return
 
-/obj/machinery/computer/atmos_alert/update_icon()
-	..()
+/obj/machinery/computer/atmos_alert/update_overlays()
+	. = ..()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(priority_alarms.len)
-		add_overlay("alert:2")
+		. += "alert:2"
 	else if(minor_alarms.len)
-		add_overlay("alert:1")
+		. += "alert:1"

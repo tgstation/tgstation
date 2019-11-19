@@ -5,11 +5,16 @@
 /datum/mood_event/smoked
 	description = "<span class='nicegreen'>I have had a smoke recently.</span>\n"
 	mood_change = 2
-	timeout = 3600
+	timeout = 6 MINUTES
 
+/datum/mood_event/wrong_brand
+	description = "<span class='warning'>I hate that brand of cigarettes.</span>\n"
+	mood_change = -2
+	timeout = 6 MINUTES
+	
 /datum/mood_event/overdose
 	mood_change = -8
-	timeout = 3000
+	timeout = 5 MINUTES
 
 /datum/mood_event/overdose/add_effects(drug_name)
 	description = "<span class='warning'>I think I took a bit too much of that [drug_name]</span>\n"
@@ -45,9 +50,31 @@
 /datum/mood_event/happiness_drug_good_od
 	description = "<span class='nicegreen'>YES! YES!! YES!!!</span>\n"
 	mood_change = 100
-	timeout = 300
+	timeout = 30 SECONDS
+	special_screen_obj = "mood_happiness_good"
 
 /datum/mood_event/happiness_drug_bad_od
 	description = "<span class='boldwarning'>NO! NO!! NO!!!</span>\n"
 	mood_change = -100
-	timeout = 300
+	timeout = 30 SECONDS
+	special_screen_obj = "mood_happiness_bad"
+
+/datum/mood_event/narcotic_medium
+	description = "<span class='nicegreen'>I feel comfortably numb.</span>\n"
+	mood_change = 4
+	timeout = 3 MINUTES
+
+/datum/mood_event/narcotic_heavy
+	description = "<span class='nicegreen'>I feel like I'm wrapped in cotton!</span>\n"
+	mood_change = 9
+	timeout = 3 MINUTES
+
+/datum/mood_event/stimulant_medium
+	description = "<span class='nicegreen'>I have so much energy and I feel like I could do anything.</span>\n"
+	mood_change = 4
+	timeout = 3 MINUTES
+
+/datum/mood_event/stimulant_heavy
+	description = "<span class='nicegreen'>Eh ah AAAAH! HA HA HA HA HAA! Uuuh.</span>\n"
+	mood_change = 6
+	timeout = 3 MINUTES

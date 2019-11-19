@@ -22,6 +22,7 @@
 	var/heartbroken = FALSE
 	var/vowbroken = FALSE
 	var/young = FALSE
+	var/divine = FALSE
 	var/mood_message
 	var/list/love_message
 	var/list/partner_message
@@ -107,24 +108,35 @@
 	if(stuffed || grenade)
 		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 		if(grenade && !grenade.active)
-			if(istype(grenade, /obj/item/grenade/chem_grenade))
-				var/obj/item/grenade/chem_grenade/G = grenade
-				if(G.nadeassembly) //We're activated through different methods
-					return
 			log_game("[key_name(user)] activated a hidden grenade in [src].")
 			grenade.preprime(user, msg = FALSE, volume = 10)
 	else
 		to_chat(user, "<span class='notice'>You try to pet [src], but it has no stuffing. Aww...</span>")
 
 /obj/item/toy/plush/attackby(obj/item/I, mob/living/user, params)
-	if(I.is_sharp())
+	if(I.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
 				to_chat(user, "<span class='warning'>You already murdered it!</span>")
 				return
-			user.visible_message("<span class='notice'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
-			I.play_tool_sound(src)
-			stuffed = FALSE
+			if(!divine)
+				user.visible_message("<span class='notice'>[user] tears out the stuffing from [src]!</span>", "<span class='notice'>You rip a bunch of the stuffing from [src]. Murderer.</span>")
+				I.play_tool_sound(src)
+				stuffed = FALSE
+			else
+				to_chat(user, "<span class='notice'>What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence.</span>")
+				if(iscarbon(user))
+					var/mob/living/carbon/C = user
+					if(C.drunkenness < 50)
+						C.drunkenness = min(C.drunkenness + 20, 50)
+				var/turf/current_location = get_turf(user)
+				var/area/current_area = current_location.loc //copied from hand tele code
+				if(current_location && current_area && current_area.noteleport)
+					to_chat(user, "<span class='notice'>There is no escape. No recall or intervention can work in this place.</span>")
+				else
+					to_chat(user, "<span class='notice'>There is no escape. Although recall or intervention can work in this place, attempting to flee from [src]'s immense power would be futile.</span>")
+				user.visible_message("<span class='notice'>[user] lays down their weapons and begs for [src]'s mercy!</span>", "<span class='notice'>You lay down your weapons and beg for [src]'s mercy.</span>")
+				user.drop_all_held_items()
 		else
 			to_chat(user, "<span class='notice'>You remove the grenade from [src].</span>")
 			user.put_in_hands(grenade)
@@ -158,19 +170,19 @@
 
 	//we are not catholic
 	if(young == TRUE || Kisser.young == TRUE)
-		user.show_message("<span class='notice'>[src] plays tag with [Kisser].</span>", 1,
-			"<span class='notice'>They're happy.</span>", 0)
+		user.show_message("<span class='notice'>[src] plays tag with [Kisser].</span>", MSG_VISUAL,
+			"<span class='notice'>They're happy.</span>", NONE)
 		Kisser.cheer_up()
 		cheer_up()
 
 	//never again
 	else if(Kisser in scorned)
 		//message, visible, alternate message, neither visible nor audible
-		user.show_message("<span class='notice'>[src] rejects the advances of [Kisser]!</span>", 1,
-			"<span class='notice'>That didn't feel like it worked.</span>", 0)
+		user.show_message("<span class='notice'>[src] rejects the advances of [Kisser]!</span>", MSG_VISUAL,
+			"<span class='notice'>That didn't feel like it worked.</span>", NONE)
 	else if(src in Kisser.scorned)
-		user.show_message("<span class='notice'>[Kisser] realises who [src] is and turns away.</span>", 1,
-			"<span class='notice'>That didn't feel like it worked.</span>", 0)
+		user.show_message("<span class='notice'>[Kisser] realises who [src] is and turns away.</span>", MSG_VISUAL,
+			"<span class='notice'>That didn't feel like it worked.</span>", NONE)
 
 	//first comes love
 	else if(Kisser.lover != src && Kisser.partner != src)	//cannot be lovers or married
@@ -190,8 +202,8 @@
 			new_lover(Kisser)
 			Kisser.new_lover(src)
 		else
-			user.show_message("<span class='notice'>[src] rejects the advances of [Kisser], maybe next time?</span>", 1,
-								"<span class='notice'>That didn't feel like it worked, this time.</span>", 0)
+			user.show_message("<span class='notice'>[src] rejects the advances of [Kisser], maybe next time?</span>", MSG_VISUAL,
+								"<span class='notice'>That didn't feel like it worked, this time.</span>", NONE)
 
 	//then comes marriage
 	else if(Kisser.lover == src && Kisser.partner != src)	//need to be lovers (assumes loving is a two way street) but not married (also assumes similar)
@@ -215,7 +227,7 @@
 
 	//then oh fuck something unexpected happened
 	else
-		user.show_message("<span class='warning'>[Kisser] and [src] don't know what to do with one another.</span>", 0)
+		user.show_message("<span class='warning'>[Kisser] and [src] don't know what to do with one another.</span>", NONE)
 
 /obj/item/toy/plush/proc/heartbreak(obj/item/toy/plush/Brutus)
 	if(lover != Brutus)
@@ -372,16 +384,17 @@
 	squeak_override = list('sound/weapons/bite.ogg'=1)
 
 /obj/item/toy/plush/bubbleplush
-	name = "bubblegum plushie"
+	name = "\improper Bubblegum plushie"
 	desc = "The friendly red demon that gives good miners gifts."
 	icon_state = "bubbleplush"
-	attack_verb = list("rends")
+	attack_verb = list("rent")
 	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
 
 /obj/item/toy/plush/plushvar
-	name = "ratvar plushie"
+	name = "\improper Ratvar plushie"
 	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
 	icon_state = "plushvar"
+	divine = TRUE
 	var/obj/item/toy/plush/narplush/clash_target
 	gender = MALE	//he's a boy, right?
 
@@ -468,8 +481,8 @@
 	name = "\improper Nar'Sie plushie"
 	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
+	divine = TRUE
 	var/clashing
-	var/is_invoker = TRUE
 	gender = FEMALE	//it's canon if the toy is
 
 /obj/item/toy/plush/narplush/Moved()
@@ -477,10 +490,6 @@
 	var/obj/item/toy/plush/plushvar/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
-
-/obj/item/toy/plush/narplush/hugbox
-	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy? <b>It looks sad.</b>"
-	is_invoker = FALSE
 
 /obj/item/toy/plush/lizardplushie
 	name = "lizard plushie"
@@ -524,3 +533,12 @@
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/edit_complainer)
+
+/obj/item/toy/plush/beeplushie
+	name = "bee plushie"
+	desc = "A cute toy that resembles an even cuter bee."
+	icon_state = "plushie_h"
+	item_state = "plushie_h"
+	attack_verb = list("stung")
+	gender = FEMALE
+	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)

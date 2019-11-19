@@ -1,4 +1,4 @@
-/obj/item/projectile/energy/net
+/obj/projectile/energy/net
 	name = "energy netting"
 	icon_state = "e_netting"
 	damage = 10
@@ -6,18 +6,18 @@
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
 
-/obj/item/projectile/energy/net/Initialize()
+/obj/projectile/energy/net/Initialize()
 	. = ..()
 	SpinAnimation()
 
-/obj/item/projectile/energy/net/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/energy/net/on_hit(atom/target, blocked = FALSE)
 	if(isliving(target))
 		var/turf/Tloc = get_turf(target)
 		if(!locate(/obj/effect/nettingportal) in Tloc)
 			new /obj/effect/nettingportal(Tloc)
 	..()
 
-/obj/item/projectile/energy/net/on_range()
+/obj/projectile/energy/net/on_range()
 	do_sparks(1, TRUE, src)
 	..()
 
@@ -42,10 +42,10 @@
 /obj/effect/nettingportal/proc/pop(teletarget)
 	if(teletarget)
 		for(var/mob/living/L in get_turf(src))
-			do_teleport(L, teletarget, 2)//teleport what's in the tile to the beacon
+			do_teleport(L, teletarget, 2, channel = TELEPORT_CHANNEL_BLUESPACE)//teleport what's in the tile to the beacon
 	else
 		for(var/mob/living/L in get_turf(src))
-			do_teleport(L, L, 15) //Otherwise it just warps you off somewhere.
+			do_teleport(L, L, 15, channel = TELEPORT_CHANNEL_BLUESPACE) //Otherwise it just warps you off somewhere.
 
 	qdel(src)
 
@@ -55,15 +55,14 @@
 /obj/effect/nettingportal/singularity_pull()
 	return
 
-/obj/item/projectile/energy/trap
+/obj/projectile/energy/trap
 	name = "energy snare"
 	icon_state = "e_snare"
-	nodamage = 1
-	paralyze = 20
+	nodamage = TRUE
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 4
 
-/obj/item/projectile/energy/trap/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/energy/trap/on_hit(atom/target, blocked = FALSE)
 	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - drop a trap
 		new/obj/item/restraints/legcuffs/beartrap/energy(get_turf(loc))
 	else if(iscarbon(target))
@@ -71,19 +70,19 @@
 		B.Crossed(target)
 	..()
 
-/obj/item/projectile/energy/trap/on_range()
+/obj/projectile/energy/trap/on_range()
 	new /obj/item/restraints/legcuffs/beartrap/energy(loc)
 	..()
 
-/obj/item/projectile/energy/trap/cyborg
+/obj/projectile/energy/trap/cyborg
 	name = "Energy Bola"
 	icon_state = "e_snare"
-	nodamage = 1
+	nodamage = TRUE
 	paralyze = 0
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
 
-/obj/item/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = FALSE)
 	if(!ismob(target) || blocked >= 100)
 		do_sparks(1, TRUE, src)
 		qdel(src)
@@ -93,6 +92,6 @@
 	QDEL_IN(src, 10)
 	..()
 
-/obj/item/projectile/energy/trap/cyborg/on_range()
+/obj/projectile/energy/trap/cyborg/on_range()
 	do_sparks(1, TRUE, src)
 	qdel(src)

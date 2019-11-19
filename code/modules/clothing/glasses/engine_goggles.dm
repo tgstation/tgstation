@@ -8,7 +8,7 @@
 
 /obj/item/clothing/glasses/meson/engine
 	name = "engineering scanner goggles"
-	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode let's you see objects contaminated by radiation."
+	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode lets you see objects contaminated by radiation."
 	icon_state = "trayson-meson"
 	item_state = "trayson-meson"
 	actions_types = list(/datum/action/item_action/toggle_mode)
@@ -123,7 +123,7 @@
 	item_state = icon_state
 	if(isliving(loc))
 		var/mob/living/user = loc
-		if(user.get_item_by_slot(SLOT_GLASSES) == src)
+		if(user.get_item_by_slot(ITEM_SLOT_EYES) == src)
 			user.update_inv_glasses()
 		else
 			user.update_inv_hands()

@@ -12,7 +12,7 @@
 /datum/bounty/reagent/applies_to(obj/O)
 	if(!istype(O, /obj/item/reagent_containers))
 		return FALSE
-	if(!O.reagents || !O.reagents.has_reagent(wanted_reagent.id))
+	if(!O.reagents || !O.reagents.has_reagent(wanted_reagent.type))
 		return FALSE
 	if(O.flags_1 & HOLOGRAM_1)
 		return FALSE
@@ -21,7 +21,7 @@
 /datum/bounty/reagent/ship(obj/O)
 	if(!applies_to(O))
 		return
-	shipped_volume += O.reagents.get_reagent_amount(wanted_reagent.id)
+	shipped_volume += O.reagents.get_reagent_amount(wanted_reagent.type)
 	if(shipped_volume > required_volume)
 		shipped_volume = required_volume
 
@@ -29,13 +29,13 @@
 	if(!istype(other_bounty, /datum/bounty/reagent))
 		return TRUE
 	var/datum/bounty/reagent/R = other_bounty
-	return wanted_reagent.id != R.wanted_reagent.id
+	return wanted_reagent.type != R.wanted_reagent.type
 
 /datum/bounty/reagent/simple_drink
 	name = "Simple Drink"
 	reward = 1500
 
-datum/bounty/reagent/simple_drink/New()
+/datum/bounty/reagent/simple_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/consumable/ethanol/antifreeze,\
@@ -91,7 +91,7 @@ datum/bounty/reagent/simple_drink/New()
 	name = "Complex Drink"
 	reward = 4000
 
-datum/bounty/reagent/complex_drink/New()
+/datum/bounty/reagent/complex_drink/New()
 	// Don't worry about making this comprehensive. It doesn't matter if some drinks are skipped.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/consumable/ethanol/atomicbomb,\
@@ -113,7 +113,7 @@ datum/bounty/reagent/complex_drink/New()
 		/datum/reagent/consumable/ethanol/peppermint_patty,\
 		/datum/reagent/consumable/ethanol/aloe,\
 		/datum/reagent/consumable/pumpkin_latte)
-		
+
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
@@ -125,18 +125,18 @@ datum/bounty/reagent/complex_drink/New()
 	reward = 4000
 	required_volume = 30
 
-datum/bounty/reagent/chemical_simple/New()
+/datum/bounty/reagent/chemical_simple/New()
 	// Chemicals that can be mixed by a single skilled Chemist.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/leporazine,\
 		/datum/reagent/medicine/clonexadone,\
 		/datum/reagent/medicine/mine_salve,\
-		/datum/reagent/medicine/perfluorodecalin,\
+		/datum/reagent/medicine/C2/convermol,\
 		/datum/reagent/medicine/ephedrine,\
 		/datum/reagent/medicine/diphenhydramine,\
 		/datum/reagent/drug/space_drugs,\
 		/datum/reagent/drug/crank,\
-		/datum/reagent/blackpowder,\
+		/datum/reagent/gunpowder,\
 		/datum/reagent/napalm,\
 		/datum/reagent/firefighting_foam,\
 		/datum/reagent/consumable/mayonnaise,\
@@ -163,7 +163,7 @@ datum/bounty/reagent/chemical_simple/New()
 	reward = 6000
 	required_volume = 20
 
-datum/bounty/reagent/chemical_complex/New()
+/datum/bounty/reagent/chemical_complex/New()
 	// Reagents that require interaction with multiple departments or are a pain to mix. Lower required_volume since acquiring 30u of some is unrealistic
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/pyroxadone,\
@@ -175,7 +175,6 @@ datum/bounty/reagent/chemical_complex/New()
 		/datum/reagent/consumable/frostoil,\
 		/datum/reagent/toxin/slimejelly,\
 		/datum/reagent/teslium/energized_jelly,\
-		/datum/reagent/toxin/skewium,\
 		/datum/reagent/toxin/mimesbane,\
 		/datum/reagent/medicine/strange_reagent,\
 		/datum/reagent/nitroglycerin,\
@@ -189,3 +188,71 @@ datum/bounty/reagent/chemical_complex/New()
 	name = wanted_reagent.name
 	description = "CentCom is paying premium for the chemical [name]. Ship a container of it to be rewarded."
 	reward += rand(0, 5) * 750 //6000 to 9750 credits
+
+/datum/bounty/pill
+	/// quantity of the pills needed, this value acts as minimum, gets randomized on new()
+	var/required_ammount = 80
+	/// counter for pills sent
+	var/shipped_ammount = 0
+	/// reagent requested
+	var/datum/reagent/wanted_reagent
+	/// minimum volume of chemical needed, gets randomized on new()
+	var/wanted_vol = 30
+
+/datum/bounty/pill/completion_string()
+	return {"[shipped_ammount]/[required_ammount] pills"}
+
+/datum/bounty/pill/can_claim()
+	return ..() && shipped_ammount >= required_ammount
+
+/datum/bounty/pill/applies_to(obj/O)
+	if(!istype(O, /obj/item/reagent_containers/pill))
+		return FALSE
+	if(O?.reagents.get_reagent_amount(wanted_reagent.type) >= wanted_vol)
+		return TRUE
+	return FALSE
+
+/datum/bounty/pill/ship(obj/O)
+	if(!applies_to(O))
+		return
+	shipped_ammount += 1
+	if(shipped_ammount > required_ammount)
+		shipped_ammount = required_ammount
+
+/datum/bounty/pill/compatible_with(other_bounty)
+	if(!istype(other_bounty, /datum/bounty/pill/simple_pill))
+		return TRUE
+	var/datum/bounty/pill/simple_pill/P = other_bounty
+	return (wanted_reagent.type == P.wanted_reagent.type) && (wanted_vol == P.wanted_vol)
+
+/datum/bounty/pill/simple_pill
+	name = "Simple Pill"
+	reward = 10000
+
+/datum/bounty/pill/simple_pill/New()
+	//reagent that are possible to be chem factory'd
+	var/static/list/possible_reagents = list(\
+		/datum/reagent/medicine/spaceacillin,\
+		/datum/reagent/medicine/C2/instabitaluri,\
+		/datum/reagent/medicine/pen_acid,\
+		/datum/reagent/medicine/atropine,\
+		/datum/reagent/medicine/cryoxadone,\
+		/datum/reagent/medicine/salbutamol,\
+		/datum/reagent/medicine/rhigoxane,\
+		/datum/reagent/medicine/trophazole,\
+		/datum/reagent/drug/methamphetamine,\
+		/datum/reagent/drug/crank,\
+		/datum/reagent/nitrous_oxide,\
+		/datum/reagent/barbers_aid,\
+		/datum/reagent/pax,\
+		/datum/reagent/flash_powder,\
+		/datum/reagent/phlogiston,\
+		/datum/reagent/firefighting_foam)
+
+	var/datum/reagent/reagent_type = pick(possible_reagents)
+	wanted_reagent = new reagent_type
+	name = "[wanted_reagent.name] pills"
+	required_ammount += rand(1,60)
+	wanted_vol += rand(1,20)
+	description = "CentCom requires [required_ammount] of [name] containing at least [wanted_vol] each. Ship a container of it to be rewarded."
+	reward += rand(1, 5) * 3000

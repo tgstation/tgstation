@@ -8,6 +8,8 @@
 	name = "portable air pump"
 	icon_state = "psiphon:0"
 	density = TRUE
+	ui_x = 420
+	ui_y = 415
 
 	var/on = FALSE
 	var/direction = PUMP_OUT
@@ -84,7 +86,7 @@
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "portable_pump", name, 420, 415, master_ui, state)
+		ui = new(user, src, ui_key, "portable_pump", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/pump/ui_data()

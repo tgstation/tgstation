@@ -6,24 +6,15 @@
 	{{/each}}
 </ui-display>
 <ui-display title='Points'>
-	<ui-section label='ID'>
-		<ui-button action="handle_id">{{data.id ? data.id_name : "-------------"}}</ui-button>
+	<ui-section label='Unclaimed points'>
+		<span>{{data.unclaimed_points}}</span>
+		<ui-button action="claim_points" state={{data.unclaimed_points ? null : 'disabled'}}>Claim points</ui-button>
 	</ui-section>
-	{{#if data.id}}
-		<ui-section label='Points collected'>
-			<span>{{data.points}}</span>
-		</ui-section>
-		<ui-section label='Goal'>
-			<span>{{data.goal}}</span>
-		</ui-section>
-		<ui-section label='Unclaimed points'>
-			<span>{{data.unclaimed_points}}</span>
-			<ui-button action="claim_points" state={{data.unclaimed_points ? null : 'disabled'}}>Claim points</ui-button>
-		</ui-section>
-	{{/if}}
 </ui-display>
 <ui-display>
-	<center>
+	<span>Points: {{data.id_points}}</span>
+	<ui-section label='Status'>
+		<span>{{data.status_info}}</span>
 		<ui-button action="move_shuttle" state={{data.can_go_home ? null : 'disabled'}}>Move shuttle</ui-button>
-	</center>
+	</ui-section>
 </ui-display>

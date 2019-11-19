@@ -16,6 +16,9 @@
 			handle_feeding()
 		if(!stat) // Slimes in stasis don't lose nutrition, don't change mood and don't respond to speech
 			handle_nutrition()
+			if(QDELETED(src)) // Stop if the slime split during handle_nutrition()
+				return
+			reagents.remove_all(0.5 * REAGENTS_METABOLISM * reagents.reagent_list.len) //Slimes are such snowflakes
 			handle_targets()
 			if (!ckey)
 				handle_mood()
@@ -41,7 +44,7 @@
 	AIproc = 1
 
 	while(AIproc && stat != DEAD && (attacked || hungry || rabid || buckled))
-		if(buckled) // can't eat AND have this little process at the same time
+		if(!(mobility_flags & MOBILITY_MOVE)) //also covers buckling. Not sure why buckled is in the while condition if we're going to immediately break, honestly
 			break
 
 		if(!Target || client)
@@ -61,22 +64,20 @@
 				break
 
 			if(Target in view(1,src))
-				if(issilicon(Target))
+				if(!CanFeedon(Target)) //If they're not able to be fed upon, ignore them.
 					if(!Atkcool)
-						Atkcool = 1
-						spawn(45)
-							Atkcool = 0
+						Atkcool = TRUE
+						addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
 
 						if(Target.Adjacent(src))
 							Target.attack_slime(src)
-					return
+					break
 				if((Target.mobility_flags & MOBILITY_STAND) && prob(80))
 
 					if(Target.client && Target.health >= 20)
 						if(!Atkcool)
-							Atkcool = 1
-							spawn(45)
-								Atkcool = 0
+							Atkcool = TRUE
+							addtimer(VARSET_CALLBACK(src, Atkcool, FALSE), 4.5 SECONDS)
 
 							if(Target.Adjacent(src))
 								Target.attack_slime(src)
@@ -98,7 +99,7 @@
 				AIproc = 0
 				break
 
-		var/sleeptime = movement_delay()
+		var/sleeptime = cached_multiplicative_slowdown
 		if(sleeptime <= 0)
 			sleeptime = 1
 
@@ -239,19 +240,19 @@
 /mob/living/simple_animal/slime/proc/handle_nutrition()
 
 	if(docile) //God as my witness, I will never go hungry again
-		nutrition = 700
+		set_nutrition(700) //fuck you for using the base nutrition var
 		return
 
 	if(prob(15))
-		nutrition -= 1 + is_adult
+		adjust_nutrition(-(1 + is_adult))
 
 	if(nutrition <= 0)
-		nutrition = 0
+		set_nutrition(0)
 		if(prob(75))
 			adjustBruteLoss(rand(0,5))
 
 	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
-		nutrition -= 20
+		adjust_nutrition(-20)
 		amount_grown++
 		update_action_buttons_icon()
 
@@ -262,7 +263,7 @@
 			Evolve()
 
 /mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = 0)
-	nutrition = min((nutrition + nutrition_to_add), get_max_nutrition())
+	set_nutrition(min((nutrition + nutrition_to_add), get_max_nutrition()))
 	if(nutrition >= get_grow_nutrition())
 		if(powerlevel<10)
 			if(prob(30-powerlevel*2))
@@ -276,11 +277,10 @@
 
 
 /mob/living/simple_animal/slime/proc/handle_targets()
+	update_mobility()
 	if(Tempstun)
 		if(!buckled) // not while they're eating!
 			mobility_flags &= ~MOBILITY_MOVE
-	else
-		mobility_flags |= MOBILITY_MOVE
 
 	if(attacked > 50)
 		attacked = 50
@@ -349,11 +349,6 @@
 
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
-
-					if(ishuman(L)) //Ignore slime(wo)men
-						var/mob/living/carbon/human/H = L
-						if(src.type in H.dna.species.ignored_by)
-							continue
 
 					if(locate(/mob/living/simple_animal/slime) in L.buckled_mobs) // Only one slime can latch on at a time.
 						continue
@@ -600,7 +595,8 @@
 				phrases += "[M]... friend..."
 				if (nutrition < get_hunger_nutrition())
 					phrases += "[M]... feed me..."
-			say (pick(phrases))
+			if(!stat)
+				say (pick(phrases))
 
 /mob/living/simple_animal/slime/proc/get_max_nutrition() // Can't go above it
 	if (is_adult)

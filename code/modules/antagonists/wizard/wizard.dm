@@ -3,11 +3,12 @@
 	roundend_category = "wizards/witches"
 	antagpanel_category = "Wizard"
 	job_rank = ROLE_WIZARD
+	antag_hud_type = ANTAG_HUD_WIZ
+	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
 	var/give_objectives = TRUE
 	var/strip = TRUE //strip before equipping
 	var/allow_rename = TRUE
-	var/hud_version = "wizard"
 	var/datum/team/wizard/wiz_team //Only created if wizard summons apprentices
 	var/move_to_lair = TRUE
 	var/outfit_type = /datum/outfit/wizard
@@ -49,7 +50,7 @@
 	wiz_team = new(owner)
 	wiz_team.name = "[owner.current.real_name] team"
 	wiz_team.master_wizard = src
-	update_wiz_icons_added(owner.current)
+	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
 /datum/antagonist/wizard/proc/send_to_lair()
 	if(!owner || !owner.current)
@@ -143,7 +144,7 @@
 	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	var/mob/living/wiz_mob = owner.current
-	var/newname = copytext(sanitize(input(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
+	var/newname = copytext(sanitize_name(input(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
 
 	if (!newname)
 		newname = randomname
@@ -152,12 +153,12 @@
 
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_wiz_icons_added(M, wiz_team ? TRUE : FALSE) //Don't bother showing the icon if you're solo wizard
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	M.faction |= ROLE_WIZARD
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_wiz_icons_removed(M)
+	remove_antag_hud(antag_hud_type, M)
 	M.faction -= ROLE_WIZARD
 
 
@@ -170,7 +171,7 @@
 
 /datum/antagonist/wizard/apprentice
 	name = "Wizard Apprentice"
-	hud_version = "apprentice"
+	antag_hud_name = "apprentice"
 	var/datum/mind/master
 	var/school = APPRENTICE_DESTRUCTION
 	outfit_type = /datum/outfit/wizard/apprentice
@@ -201,12 +202,12 @@
 		if(APPRENTICE_BLUESPACE)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
-			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned reality bending mobility spells. You are able to cast teleport and ethereal jaunt.")
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned reality-bending mobility spells. You are able to cast teleport and ethereal jaunt.")
 		if(APPRENTICE_HEALING)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/charge(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall(null))
 			H.put_in_hands(new /obj/item/gun/magic/staff/healing(H))
-			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned livesaving survival spells. You are able to cast charge and forcewall.")
+			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned life-saving survival spells. You are able to cast charge and forcewall.")
 		if(APPRENTICE_ROBELESS)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
@@ -235,37 +236,27 @@
 	if(!istype(master_mob) || !istype(H))
 		return
 	if(master_mob.ears)
-		H.equip_to_slot_or_del(new master_mob.ears.type, SLOT_EARS)
+		H.equip_to_slot_or_del(new master_mob.ears.type, ITEM_SLOT_EARS)
 	if(master_mob.w_uniform)
-		H.equip_to_slot_or_del(new master_mob.w_uniform.type, SLOT_W_UNIFORM)
+		H.equip_to_slot_or_del(new master_mob.w_uniform.type, ITEM_SLOT_ICLOTHING)
 	if(master_mob.shoes)
-		H.equip_to_slot_or_del(new master_mob.shoes.type, SLOT_SHOES)
+		H.equip_to_slot_or_del(new master_mob.shoes.type, ITEM_SLOT_FEET)
 	if(master_mob.wear_suit)
-		H.equip_to_slot_or_del(new master_mob.wear_suit.type, SLOT_WEAR_SUIT)
+		H.equip_to_slot_or_del(new master_mob.wear_suit.type, ITEM_SLOT_OCLOTHING)
 	if(master_mob.head)
-		H.equip_to_slot_or_del(new master_mob.head.type, SLOT_HEAD)
+		H.equip_to_slot_or_del(new master_mob.head.type, ITEM_SLOT_HEAD)
 	if(master_mob.back)
-		H.equip_to_slot_or_del(new master_mob.back.type, SLOT_BACK)
+		H.equip_to_slot_or_del(new master_mob.back.type, ITEM_SLOT_BACK)
 
 	//Operation: Fuck off and scare people
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
-/datum/antagonist/wizard/proc/update_wiz_icons_added(mob/living/wiz,join = TRUE)
-	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]
-	wizhud.join_hud(wiz)
-	set_antag_hud(wiz, hud_version)
-
-/datum/antagonist/wizard/proc/update_wiz_icons_removed(mob/living/wiz)
-	var/datum/atom_hud/antag/wizhud = GLOB.huds[ANTAG_HUD_WIZ]
-	wizhud.leave_hud(wiz)
-	set_antag_hud(wiz, null)
-
-
 /datum/antagonist/wizard/academy
 	name = "Academy Teacher"
 	outfit_type = /datum/outfit/wizard/academy
+	move_to_lair = FALSE
 
 /datum/antagonist/wizard/academy/equip_wizard()
 	. = ..()

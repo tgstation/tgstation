@@ -8,7 +8,7 @@
 	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"
 	id = "handdrill"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3500, MAT_SILVER = 1500, MAT_TITANIUM = 2500)
+	materials = list(/datum/material/iron = 3500, /datum/material/silver = 1500, /datum/material/titanium = 2500)
 	build_path = /obj/item/screwdriver/power
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
@@ -19,7 +19,7 @@
 	id = "jawsoflife" // added one more requirment since the Jaws of Life are a bit OP
 	build_path = /obj/item/crowbar/power
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4500, MAT_SILVER = 2500, MAT_TITANIUM = 3500)
+	materials = list(/datum/material/iron = 4500, /datum/material/silver = 2500, /datum/material/titanium = 3500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -28,10 +28,52 @@
 	desc = "An experimental welder capable of self-fuel generation."
 	id = "exwelder"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500, /datum/material/plasma = 1500, /datum/material/uranium = 200)
 	build_path = /obj/item/weldingtool/experimental
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+
+/datum/design/rcd_loaded
+	name = "Rapid Construction Device"
+	desc = "A tool that can construct and deconstruct walls, airlocks and floors on the fly."
+	id = "rcd_loaded"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 60000, /datum/material/glass = 5000)  // costs more than what it did in the autolathe, this one comes loaded.
+	build_path = /obj/item/construction/rcd/loaded
+	category = list("Tool Designs")
+	departmental_flags =  DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
+
+
+/datum/design/rcd_upgrade/frames
+	name = "RCD frames designs upgrade"
+	desc = "Adds the computer frame and machine frame to the RCD."
+	id = "rcd_upgrade_frames"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 1500, /datum/material/titanium = 2000)
+	build_path = /obj/item/rcd_upgrade/frames
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rcd_upgrade/simple_circuits
+	name = "RCD simple circuits designs upgrade"
+	desc = "Adds the simple circuits to the RCD."
+	id = "rcd_upgrade_simple_circuits"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 1500, /datum/material/titanium = 2000)
+	build_path = /obj/item/rcd_upgrade/simple_circuits
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/rcd_upgrade/silo_link
+	name = "Advanced RCD silo link upgrade"
+	desc = "Adds the silo dirrect link to the RCD."
+	id = "rcd_upgrade_silo_link"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2500, /datum/material/silver = 2500, /datum/material/titanium = 2500, /datum/material/bluespace = 2500)
+	build_path = /obj/item/rcd_upgrade/silo_link
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /////////////////////////////////////////
 //////////////Alien Tools////////////////
@@ -43,7 +85,7 @@
 	id = "alien_wrench"
 	build_path = /obj/item/wrench/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -53,7 +95,7 @@
 	id = "alien_wirecutters"
 	build_path = /obj/item/wirecutters/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -63,7 +105,7 @@
 	id = "alien_screwdriver"
 	build_path = /obj/item/screwdriver/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -73,7 +115,7 @@
 	id = "alien_crowbar"
 	build_path = /obj/item/crowbar/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -83,7 +125,7 @@
 	id = "alien_welder"
 	build_path = /obj/item/weldingtool/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -93,7 +135,7 @@
 	id = "alien_multitool"
 	build_path = /obj/item/multitool/abductor
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_SILVER = 2500, MAT_PLASMA = 5000, MAT_TITANIUM = 2000, MAT_DIAMOND = 2000)
+	materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 5000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
@@ -107,7 +149,7 @@
 	id = "alien_scalpel"
 	build_path = /obj/item/scalpel/alien
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	materials = list(/datum/material/iron = 2000, /datum/material/silver = 1500, /datum/material/plasma = 500, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -117,7 +159,7 @@
 	id = "alien_hemostat"
 	build_path = /obj/item/hemostat/alien
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	materials = list(/datum/material/iron = 2000, /datum/material/silver = 1500, /datum/material/plasma = 500, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -127,7 +169,7 @@
 	id = "alien_retractor"
 	build_path = /obj/item/retractor/alien
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	materials = list(/datum/material/iron = 2000, /datum/material/silver = 1500, /datum/material/plasma = 500, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -137,7 +179,7 @@
 	id = "alien_saw"
 	build_path = /obj/item/circular_saw/alien
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
+	materials = list(/datum/material/iron = 10000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -147,7 +189,7 @@
 	id = "alien_drill"
 	build_path = /obj/item/surgicaldrill/alien
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
+	materials = list(/datum/material/iron = 10000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -157,6 +199,6 @@
 	id = "alien_cautery"
 	build_path = /obj/item/cautery/alien
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	materials = list(/datum/material/iron = 2000, /datum/material/silver = 1500, /datum/material/plasma = 500, /datum/material/titanium = 1500)
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL

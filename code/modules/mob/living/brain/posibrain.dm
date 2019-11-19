@@ -36,7 +36,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
 	if(newlymade || GLOB.posibrain_notify_cooldown <= world.time)
-		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_POSIBRAIN, notify_suiciders = FALSE)
+		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, notify_volume = 75, enter_link = "<a href=?src=[REF(src)];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_POSIBRAIN, notify_suiciders = FALSE)
 		if(!newlymade)
 			GLOB.posibrain_notify_cooldown = world.time + askDelay
 
@@ -85,7 +85,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain/proc/activate(mob/user)
 	if(QDELETED(brainmob))
 		return
-	if(is_occupied() || jobban_isbanned(user,"posibrain") || QDELETED(brainmob) || QDELETED(src) || QDELETED(user))
+	if(is_occupied() || is_banned_from(user.ckey, ROLE_POSIBRAIN) || QDELETED(brainmob) || QDELETED(src) || QDELETED(user))
 		return
 	if(user.suiciding) //if they suicided, they're out forever.
 		to_chat(user, "<span class='warning'>[src] fizzles slightly. Sadly it doesn't take those who suicided!</span>")
@@ -140,18 +140,15 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 /obj/item/mmi/posibrain/examine(mob/user)
 	. = ..()
-	var/msg
 	if(brainmob && brainmob.key)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
 				if(!brainmob.client)
-					msg = "It appears to be in stand-by mode." //afk
+					. += "It appears to be in stand-by mode." //afk
 			if(DEAD)
-				msg = "<span class='deadsay'>It appears to be completely inactive.</span>"
+				. += "<span class='deadsay'>It appears to be completely inactive.</span>"
 	else
-		msg = "[dead_message]"
-
-	to_chat(user, msg)
+		. += "[dead_message]"
 
 /obj/item/mmi/posibrain/Initialize()
 	. = ..()

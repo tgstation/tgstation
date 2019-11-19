@@ -154,8 +154,7 @@
 /area/ruin/powered/beach)
 "aF" = (
 /obj/machinery/vending/boozeomat{
-	set_obj_flags = "EMAGGED";
-	req_access_txt = "0"
+	set_obj_flags = "EMAGGED"
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -165,7 +164,6 @@
 	dir = 1
 	},
 /obj/item/book/manual/wiki/barman_recipes,
-/obj/item/book/granter/action/drink_fling,
 /obj/item/reagent_containers/food/drinks/shaker,
 /obj/item/reagent_containers/glass/rag,
 /turf/open/floor/wood,
@@ -243,7 +241,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aX" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aY" = (
@@ -304,7 +302,7 @@
 	},
 /obj/item/bikehorn/airhorn,
 /obj/structure/table/wood,
-/obj/item/storage/firstaid,
+/obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/brute,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -481,12 +479,16 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
+"jP" = (
+/obj/item/toy/seashell,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/powered/beach)
 "lF" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/pod/dark{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered/beach)
 "lM" = (
@@ -565,6 +567,11 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
+"zO" = (
+/obj/structure/flora/ausbushes/leafybush,
+/obj/item/toy/seashell,
+/turf/open/floor/plating/beach/sand,
+/area/ruin/powered/beach)
 "Bl" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/light{
@@ -597,6 +604,10 @@
 /obj/effect/turf_decal/sand,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/beach)
+"Ml" = (
+/obj/item/toy/seashell,
+/turf/open/floor/plating/beach/coastline_t,
+/area/ruin/powered/beach)
 "QS" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/light{
@@ -609,7 +620,7 @@
 	dir = 8
 	},
 /turf/open/floor/pod/dark{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered/beach)
 "VO" = (
@@ -709,7 +720,7 @@ wY
 VO
 lM
 bW
-ad
+zO
 bQ
 bT
 bW
@@ -742,7 +753,7 @@ mh
 mh
 bW
 ap
-bR
+Ml
 bT
 bU
 ct
@@ -1094,7 +1105,7 @@ ar
 bE
 ar
 ar
-bR
+Ml
 bT
 bU
 bU
@@ -1364,7 +1375,7 @@ aa
 aa
 bW
 bW
-ar
+jP
 ap
 ar
 ar
@@ -1413,7 +1424,7 @@ ar
 ar
 ar
 ar
-ar
+jP
 bS
 bT
 bU

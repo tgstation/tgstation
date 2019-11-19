@@ -13,7 +13,7 @@
 	layer = ABOVE_MOB_LAYER
 	var/view_range = 10
 	var/cooldown = 0
-	var/projectile_type = /obj/item/projectile/bullet/manned_turret
+	var/projectile_type = /obj/projectile/bullet/manned_turret
 	var/rate_of_fire = 1
 	var/number_of_shots = 40
 	var/cooldown_duration = 90
@@ -30,7 +30,7 @@
 //BUCKLE HOOKS
 
 /obj/machinery/manned_turret/unbuckle_mob(mob/living/buckled_mob,force = FALSE)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
+	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	for(var/obj/item/I in buckled_mob.held_items)
 		if(istype(I, /obj/item/gun_control))
 			qdel(I)
@@ -62,7 +62,7 @@
 	M.pixel_y = 14
 	layer = ABOVE_MOB_LAYER
 	setDir(SOUTH)
-	playsound(src,'sound/mecha/mechmove01.ogg', 50, 1)
+	playsound(src,'sound/mecha/mechmove01.ogg', 50, TRUE)
 	anchored = TRUE
 	if(M.client)
 		M.client.change_view(view_range)
@@ -132,7 +132,7 @@
 	if(world.time < cooldown)
 		if(!warned && world.time > (cooldown - cooldown_duration + rate_of_fire*number_of_shots)) // To capture the window where one is done firing
 			warned = TRUE
-			playsound(src, 'sound/weapons/sear.ogg', 100, 1)
+			playsound(src, 'sound/weapons/sear.ogg', 100, TRUE)
 		return
 	else
 		cooldown = world.time + cooldown_duration
@@ -151,11 +151,11 @@
 	var/turf/targets_from = get_turf(src)
 	if(QDELETED(target))
 		target = target_turf
-	var/obj/item/projectile/P = new projectile_type(targets_from)
+	var/obj/projectile/P = new projectile_type(targets_from)
 	P.starting = targets_from
 	P.firer = user
 	P.original = target
-	playsound(src, 'sound/weapons/gunshot_smg.ogg', 75, 1)
+	playsound(src, 'sound/weapons/gun/smg/shot.ogg', 75, TRUE)
 	P.xo = target.x - targets_from.x
 	P.yo = target.y - targets_from.y
 	P.Angle = calculated_projectile_vars[1] + rand(-9, 9)
@@ -166,7 +166,7 @@
 /obj/machinery/manned_turret/ultimate  // Admin-only proof of concept for autoclicker automatics
 	name = "Infinity Gun"
 	view_range = 12
-	projectile_type = /obj/item/projectile/bullet/manned_turret
+	projectile_type = /obj/projectile/bullet/manned_turret
 
 /obj/machinery/manned_turret/ultimate/checkfire(atom/targeted_atom, mob/user)
 	target = targeted_atom
@@ -180,12 +180,13 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	item_flags = ABSTRACT | NODROP | NOBLUDGEON | DROPDEL
+	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/manned_turret/turret
 
 /obj/item/gun_control/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	turret = loc
 	if(!istype(turret))
 		return INITIALIZE_HINT_QDEL

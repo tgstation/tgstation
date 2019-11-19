@@ -12,10 +12,11 @@
 	maxbodytemp = INFINITY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
-	response_help  = "pokes"
-	response_disarm = "shoos"
-	response_harm   = "splats"
+	mob_biotypes = MOB_ORGANIC|MOB_BUG
+	response_disarm_continuous = "shoos"
+	response_disarm_simple = "shoo"
+	response_harm_continuous = "splats"
+	response_harm_simple = "splat"
 	speak_emote = list("chitters")
 	density = FALSE
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -38,7 +39,12 @@
 			var/mob/living/A = AM
 			if(A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
 				if(prob(squish_chance))
-					A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src].</span>")
+					if(ishuman(A))
+						var/mob/living/carbon/human/H = A
+						if(HAS_TRAIT(H, TRAIT_PACIFISM))
+							H.visible_message("<span class='notice'>[src] avoids getting crushed.</span>", "<span class='warning'>You avoid crushing [src]!</span>")
+							return
+					A.visible_message("<span class='notice'>[A] crushes [src].</span>", "<span class='notice'>You crushed [src].</span>")
 					adjustBruteLoss(1) //kills a normal cockroach
 				else
 					visible_message("<span class='notice'>[src] avoids getting crushed.</span>")

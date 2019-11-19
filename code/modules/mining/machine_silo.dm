@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/material_container,
-		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE, MAT_PLASTIC),
+		list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace, /datum/material/plastic),
 		INFINITY,
 		FALSE,
 		/obj/item/stack,
@@ -34,13 +34,15 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/datum/component/remote_materials/mats = C
 		mats.disconnect_from(src)
 
-	GET_COMPONENT(materials, /datum/component/material_container)
+	connected = null
+
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
 	return ..()
 
 /obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	// stolen from /datum/component/material_container/proc/OnAttackBy
 	if(user.a_intent != INTENT_HELP)
 		return
@@ -49,7 +51,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	if(!istype(I) || (I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION))
 		to_chat(user, "<span class='warning'>[M] won't accept [I]!</span>")
 		return
-	var/item_mats = I.materials & materials.materials
+	var/item_mats = I.custom_materials & materials.materials
 	if(!length(item_mats))
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [M].</span>")
 		return
@@ -71,19 +73,21 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	popup.open()
 
 /obj/machinery/ore_silo/proc/generate_ui()
-	GET_COMPONENT(materials, /datum/component/material_container)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
 	var/any = FALSE
 	for(var/M in materials.materials)
-		var/datum/material/mat = materials.materials[M]
-		var/sheets = round(mat.amount) / MINERAL_MATERIAL_AMOUNT
+		var/datum/material/mat = M
+		var/amount = materials.materials[M]
+		var/sheets = round(amount) / MINERAL_MATERIAL_AMOUNT
+		var/ref = REF(M)
 		if (sheets)
 			if (sheets >= 1)
-				ui += "<a href='?src=[REF(src)];ejectsheet=[mat.id];eject_amt=1'>Eject</a>"
+				ui += "<a href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</a>"
 			else
 				ui += "<span class='linkOff'>Eject</span>"
 			if (sheets >= 20)
-				ui += "<a href='?src=[REF(src)];ejectsheet=[mat.id];eject_amt=20'>20x</a>"
+				ui += "<a href='?src=[REF(src)];ejectsheet=[ref];eject_amt=20'>20x</a>"
 			else
 				ui += "<span class='linkOff'>20x</span>"
 			ui += "<b>[mat.name]</b>: [sheets] sheets<br>"
@@ -148,8 +152,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		updateUsrDialog()
 		return TRUE
 	else if(href_list["ejectsheet"])
-		var/eject_sheet = href_list["ejectsheet"]
-		GET_COMPONENT(materials, /datum/component/material_container)
+		var/datum/material/eject_sheet = locate(href_list["ejectsheet"])
+		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/count = materials.retrieve_sheets(text2num(href_list["eject_amt"]), eject_sheet, drop_location())
 		var/list/matlist = list()
 		matlist[eject_sheet] = MINERAL_MATERIAL_AMOUNT
@@ -161,6 +165,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		return TRUE
 
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
+	. = ..()
 	if (istype(I))
 		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
 		I.buffer = src
@@ -171,7 +176,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		return
 	var/datum/ore_silo_log/entry = new(M, action, amount, noun, mats)
 
-	var/list/logs = GLOB.silo_access_logs[REF(src)]
+	var/list/datum/ore_silo_log/logs = GLOB.silo_access_logs[REF(src)]
 	if(!LAZYLEN(logs))
 		GLOB.silo_access_logs[REF(src)] = logs = list(entry)
 	else if(!logs[1].merge(entry))
@@ -181,8 +186,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	flick("silo_active", src)
 
 /obj/machinery/ore_silo/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>[src] can be linked to techfabs, circuit printers and protolathes with a multitool.</span>")
+	. = ..()
+	. += "<span class='notice'>[src] can be linked to techfabs, circuit printers and protolathes with a multitool.</span>"
 
 /datum/ore_silo_log
 	var/name  // for VV

@@ -1,7 +1,7 @@
 #define CHARS_PER_LINE 5
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
-#define FONT_STYLE "Arial Black"
+#define FONT_STYLE "Small Fonts"
 #define MAX_TIMER 9000
 
 #define PRESET_SHORT 1200
@@ -36,6 +36,9 @@
 
 	maptext_height = 26
 	maptext_width = 32
+	maptext_y = -1
+	ui_x = 300
+	ui_y = 138 
 
 /obj/machinery/door_timer/Initialize()
 	. = ..()
@@ -59,7 +62,7 @@
 				targets += C
 
 	if(!targets.len)
-		stat |= BROKEN
+		obj_break()
 	update_icon()
 
 
@@ -74,12 +77,6 @@
 		if(world.time - activation_time >= timer_duration)
 			timer_end() // open doors, reset timer, clear status screen
 		update_icon()
-
-// has the door power sitatuation changed, if so update icon.
-/obj/machinery/door_timer/power_change()
-	..()
-	update_icon()
-
 
 // open/closedoor checks if door_timer has power, if so it checks if the
 // linked door is open/closed (by density) then opens it/closes it.
@@ -149,7 +146,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "brig_timer", name, 300, 200, master_ui, state)
+		ui = new(user, src, ui_key, "brig_timer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 //icon update function
@@ -168,7 +165,7 @@
 	if(timing)
 		var/disp1 = id
 		var/time_left = time_left(seconds = TRUE)
-		var/disp2 = "[add_zero(num2text((time_left / 60) % 60),2)]~[add_zero(num2text(time_left % 60), 2)]"
+		var/disp2 = "[add_zero(num2text((time_left / 60) % 60),2)]:[add_zero(num2text(time_left % 60), 2)]"
 		if(length(disp2) > CHARS_PER_LINE)
 			disp2 = "Error"
 		update_display(disp1, disp2)
@@ -189,6 +186,8 @@
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display
 // Stolen from status_display
 /obj/machinery/door_timer/proc/update_display(line1, line2)
+	line1 = uppertext(line1)
+	line2 = uppertext(line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 	if(maptext != new_text)
 		maptext = new_text

@@ -145,8 +145,9 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	var/list/easy_add_list_strict_types = list(/datum/bounty/reagent/simple_drink = 1,
 											/datum/bounty/reagent/complex_drink = 1,
 											/datum/bounty/reagent/chemical_simple = 1,
-											/datum/bounty/reagent/chemical_complex = 1)
-											
+											/datum/bounty/reagent/chemical_complex = 1,
+											/datum/bounty/pill/simple_pill = 1)
+
 	for(var/the_strict_type in easy_add_list_strict_types)
 		for(var/i in 1 to easy_add_list_strict_types[the_strict_type])
 			try_add_bounty(new the_strict_type)
@@ -168,6 +169,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	var/list/low_priority_strict_type_list = list( /datum/bounty/item/alien_organs,
 													/datum/bounty/item/syndicate_documents,
 													/datum/bounty/item/adamantine,
+													/datum/bounty/item/trash,
 													/datum/bounty/more_bounties)
 
 	for(var/low_priority_bounty in low_priority_strict_type_list)
@@ -180,4 +182,3 @@ GLOBAL_LIST_EMPTY(bounties_list)
 		if(B.claimed)
 			++count
 	return count
-

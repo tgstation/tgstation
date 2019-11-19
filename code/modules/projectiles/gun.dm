@@ -9,7 +9,7 @@
 	item_state = "gun"
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 5
 	throw_speed = 3
@@ -18,9 +18,14 @@
 	item_flags = NEEDS_PERMIT
 	attack_verb = list("struck", "hit", "bashed")
 
-	var/fire_sound = "gunshot"
+	var/fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	var/vary_fire_sound = TRUE
+	var/fire_sound_volume = 50
+	var/dry_fire_sound = 'sound/weapons/gun/general/dry_fire.ogg'
 	var/suppressed = null					//whether or not a message is displayed when fired
 	var/can_suppress = FALSE
+	var/suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	var/suppressed_volume = 60
 	var/can_unsuppress = TRUE
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = TRUE
@@ -33,6 +38,7 @@
 	var/firing_burst = 0				//Prevent the weapon from firing again while already firing
 	var/semicd = 0						//cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
+	var/dual_wield_spread = 24			//additional spread when dual wielding
 	var/spread = 0						//Spread induced by the gun itself.
 	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
 
@@ -45,6 +51,7 @@
 	var/obj/item/flashlight/seclite/gun_light
 	var/mutable_appearance/flashlight_overlay
 	var/datum/action/item_action/toggle_gunlight/alight
+	var/gunlight_state = "flight"
 
 	var/can_bayonet = FALSE //if a bayonet can be added or removed if it already has one.
 	var/obj/item/kitchen/knife/bayonet
@@ -64,6 +71,9 @@
 	var/zoom_out_amt = 0
 	var/datum/action/toggle_scope_zoom/azoom
 
+	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
+	var/pb_knockback = 0
+
 /obj/item/gun/Initialize()
 	. = ..()
 	if(pin)
@@ -73,11 +83,16 @@
 	build_zooming()
 
 /obj/item/gun/Destroy()
-	QDEL_NULL(pin)
-	QDEL_NULL(gun_light)
-	QDEL_NULL(bayonet)
-	QDEL_NULL(chambered)
-	QDEL_NULL(azoom)
+	if(isobj(pin)) //Can still be the initial path, then we skip
+		QDEL_NULL(pin)
+	if(gun_light)
+		QDEL_NULL(gun_light)
+	if(bayonet)
+		QDEL_NULL(bayonet)
+	if(chambered) //Not all guns are chambered (EMP'ed energy guns etc)
+		QDEL_NULL(chambered)
+	if(azoom)
+		QDEL_NULL(azoom)
 	return ..()
 
 /obj/item/gun/handle_atom_del(atom/A)
@@ -98,29 +113,29 @@
 	if(G)
 		G.forceMove(loc)
 		QDEL_NULL(G.pin)
-		visible_message("[G] can now fit a new pin, but the old one was destroyed in the process.", null, null, 3)
+		visible_message("<span class='notice'>[G] can now fit a new pin, but the old one was destroyed in the process.</span>", null, null, 3)
 		qdel(src)
 
 /obj/item/gun/examine(mob/user)
-	..()
+	. = ..()
 	if(pin)
-		to_chat(user, "It has \a [pin] installed.")
+		. += "It has \a [pin] installed."
 	else
-		to_chat(user, "It doesn't have a <b>firing pin</b> installed, and won't fire.")
+		. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
 
 	if(gun_light)
-		to_chat(user, "It has \a [gun_light] [can_flashlight ? "" : "permanently "]mounted on it.")
+		. += "It has \a [gun_light] [can_flashlight ? "" : "permanently "]mounted on it."
 		if(can_flashlight) //if it has a light and this is false, the light is permanent.
-			to_chat(user, "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>")
+			. += "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_flashlight)
-		to_chat(user, "It has a mounting point for a <b>seclite</b>.")
+		. += "It has a mounting point for a <b>seclite</b>."
 
 	if(bayonet)
-		to_chat(user, "It has \a [bayonet] [can_bayonet ? "" : "permanently "]affixed to it.")
+		. += "It has \a [bayonet] [can_bayonet ? "" : "permanently "]affixed to it."
 		if(can_bayonet) //if it has a bayonet and this is false, the bayonet is permanent.
-			to_chat(user, "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>")
+			. += "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>"
 	else if(can_bayonet)
-		to_chat(user, "It has a <b>bayonet</b> lug on it.")
+		. += "It has a <b>bayonet</b> lug on it."
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
@@ -138,7 +153,7 @@
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='danger'>*click*</span>")
-	playsound(src, "gun_dry_fire", 30, TRUE)
+	playsound(src, dry_fire_sound, 30, TRUE)
 
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -146,14 +161,23 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(suppressed)
-		playsound(user, fire_sound, 10, TRUE)
+		playsound(user, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE)
 	else
-		playsound(user, fire_sound, 50, TRUE)
+		playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(message)
 			if(pointblank)
-				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", \
+								"<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", \
+								"<span class='hear'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE, pbtarget)
+				to_chat(pbtarget, "<span class='userdanger'>[user] fires [src] point blank at you!</span>")
+				if(pb_knockback > 0)
+					var/atom/throw_target = get_edge_target_turf(pbtarget, user.dir)
+					pbtarget.throw_at(throw_target, pb_knockback, 2)
+
 			else
-				user.visible_message("<span class='danger'>[user] fires [src]!</span>", null, null, COMBAT_MESSAGE_RANGE)
+				user.visible_message("<span class='danger'>[user] fires [src]!</span>", \
+								"<span class='danger'>You fire [src]!</span>", \
+								"<span class='hear'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE)
 
 /obj/item/gun/emp_act(severity)
 	. = ..()
@@ -180,30 +204,28 @@
 		if(!can_trigger_gun(L))
 			return
 
-	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
-		shoot_with_empty_chamber(user)
-		return
-
 	if(flag)
 		if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 			handle_suicide(user, target, params)
 			return
 
+	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
+		shoot_with_empty_chamber(user)
+		return
 
 	//Exclude lasertag guns from the TRAIT_CLUMSY check.
 	if(clumsy_check)
 		if(istype(user))
-			if (user.has_trait(TRAIT_CLUMSY) && prob(40))
+			if (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
 				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
 				var/shot_leg = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 				process_fire(user, user, FALSE, params, shot_leg)
 				user.dropItemToGround(src, TRUE)
 				return
-
-	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
-		to_chat(user, "<span class='userdanger'>You need both hands free to fire [src]!</span>")
+	var/obj/item/bodypart/other_hand = user.has_hand_for_held_index(user.get_inactive_hand_index()) //returns non-disabled inactive hands 
+	if(weapon_weight == WEAPON_HEAVY && (user.get_inactive_held_item() || !other_hand))
+		to_chat(user, "<span class='warning'>You need two hands to fire \the [src]!</span>")
 		return
-
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
@@ -213,11 +235,11 @@
 			if(G == src || G.weapon_weight >= WEAPON_MEDIUM)
 				continue
 			else if(G.can_trigger_gun(user))
-				bonus_spread += 24 * G.weapon_weight
+				bonus_spread += dual_wield_spread
 				loop_counter++
 				addtimer(CALLBACK(G, /obj/item/gun.proc/process_fire, target, user, TRUE, params, null, bonus_spread), loop_counter)
 
-	process_fire(target, user, TRUE, params, null, bonus_spread)
+	return process_fire(target, user, TRUE, params, null, bonus_spread)
 
 
 
@@ -249,16 +271,16 @@
 			firing_burst = FALSE
 			return FALSE
 	if(chambered && chambered.BB)
-		if(user.has_trait(TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
+		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 			if(chambered.harmful) // Is the bullet chambered harmful?
-				to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+				to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
 				return
 		if(randomspread)
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
 		else //Smart spread
 			sprd = round((((rand_spr/burst_size) * iteration) - (0.5 + (rand_spr * 0.25))) * (randomized_gun_spread + randomized_bonus_spread))
-
-		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd))
+		before_firing(target,user)
+		if(!chambered.fire_casing(target, user, params, ,suppressed, zone_override, sprd, src))
 			shoot_with_empty_chamber(user)
 			firing_burst = FALSE
 			return FALSE
@@ -288,7 +310,7 @@
 	var/rand_spr = rand()
 	if(spread)
 		randomized_gun_spread =	rand(0,spread)
-	if(user.has_trait(TRAIT_POOR_AIM)) //nice shootin' tex
+	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
 		bonus_spread += 25
 	var/randomized_bonus_spread = rand(0, bonus_spread)
 
@@ -298,12 +320,13 @@
 			addtimer(CALLBACK(src, .proc/process_burst, user, target, message, params, zone_override, sprd, randomized_gun_spread, randomized_bonus_spread, rand_spr, i), fire_delay * (i - 1))
 	else
 		if(chambered)
-			if(user.has_trait(TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
+			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
 				if(chambered.harmful) // Is the bullet chambered harmful?
-					to_chat(user, "<span class='notice'> [src] is lethally chambered! You don't want to risk harming anyone...</span>")
+					to_chat(user, "<span class='warning'>[src] is lethally chambered! You don't want to risk harming anyone...</span>")
 					return
 			sprd = round((rand() - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (randomized_gun_spread + randomized_bonus_spread))
-			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd))
+			before_firing(target,user)
+			if(!chambered.fire_casing(target, user, params, , suppressed, zone_override, sprd, src))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -392,7 +415,7 @@
 		return
 	if((can_flashlight && gun_light) && (can_bayonet && bayonet)) //give them a choice instead of removing both
 		var/list/possible_items = list(gun_light, bayonet)
-		var/obj/item/item_to_remove = input(user, "Select an attachment to remove", "Attachment Removal") as null|obj in possible_items
+		var/obj/item/item_to_remove = input(user, "Select an attachment to remove", "Attachment Removal") as null|obj in sortNames(possible_items)
 		if(!item_to_remove || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return
 		return remove_gun_attachment(user, I, item_to_remove)
@@ -460,13 +483,14 @@
 		else
 			set_light(0)
 		cut_overlays(flashlight_overlay, TRUE)
-		var/state = "flight[gun_light.on? "_on":""]"	//Generic state.
+		var/state = "[gunlight_state][gun_light.on? "_on":""]"	//Generic state.
 		if(gun_light.icon_state in icon_states('icons/obj/guns/flashlights.dmi'))	//Snowflake state?
 			state = gun_light.icon_state
 		flashlight_overlay = mutable_appearance('icons/obj/guns/flashlights.dmi', state)
 		flashlight_overlay.pixel_x = flight_x_offset
 		flashlight_overlay.pixel_y = flight_y_offset
 		add_overlay(flashlight_overlay, TRUE)
+		add_overlay(knife_overlay, TRUE)
 	else
 		set_light(0)
 		cut_overlays(flashlight_overlay, TRUE)
@@ -476,8 +500,15 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
+/obj/item/gun/pickup(mob/user)
+	..()
+	if(azoom)
+		azoom.Grant(user)
+
 /obj/item/gun/dropped(mob/user)
 	. = ..()
+	if(azoom)
+		azoom.Remove(user)
 	if(zoomed)
 		zoom(user,FALSE)
 
@@ -513,12 +544,16 @@
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
 
-	process_fire(target, user, TRUE, params)
+	process_fire(target, user, TRUE, params, BODY_ZONE_HEAD)
 
 /obj/item/gun/proc/unlock() //used in summon guns and as a convience for admins
 	if(pin)
 		qdel(pin)
 	pin = new /obj/item/firing_pin
+
+//Happens before the actual projectile creation
+/obj/item/gun/proc/before_firing(atom/target,mob/user)
+	return
 
 /////////////
 // ZOOMING //

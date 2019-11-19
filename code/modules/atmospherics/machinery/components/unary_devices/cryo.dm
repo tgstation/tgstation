@@ -10,10 +10,12 @@
 	layer = ABOVE_WINDOW_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
+	ui_x = 400
+	ui_y = 550
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 
-	var/autoeject = FALSE
+	var/autoeject = TRUE
 	var/volume = 100
 
 	var/efficiency = 1
@@ -27,7 +29,7 @@
 
 	var/obj/item/radio/radio
 	var/radio_key = /obj/item/encryptionkey/headset_med
-	var/radio_channel = "Medical"
+	var/radio_channel = RADIO_CHANNEL_MEDICAL
 
 	var/running_anim = FALSE
 
@@ -48,6 +50,12 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
+	var/oldoccupant = occupant
+	. = ..() // Parent proc takes care of removing occupant if necessary
+	if (AM == oldoccupant)
+		update_icon()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()
 	..(dir, dir)
 
@@ -63,9 +71,9 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user) //this is leaving out everything but efficiency since they follow the same idea of "better beaker, better results"
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.</span>"
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	QDEL_NULL(radio)
@@ -89,6 +97,7 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
+
 	cut_overlays()
 
 	if(panel_open)
@@ -179,10 +188,11 @@
 		on = FALSE
 		update_icon()
 		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-		radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
+		var/msg = "Patient fully restored."
 		if(autoeject) // Eject if configured.
-			radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
+			msg += " Auto ejecting patient now."
 			open_machine()
+		radio.talk_into(src, msg, radio_channel)
 		return
 
 	var/datum/gas_mixture/air1 = airs[1]
@@ -235,10 +245,6 @@
 		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
 		air1.garbage_collect()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
@@ -247,17 +253,18 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE)
 	if(!state_open && !panel_open)
 		on = FALSE
-		..()
 	for(var/mob/M in contents) //only drop mobs
 		M.forceMove(get_turf(src))
 		if(isliving(M))
 			var/mob/living/L = M
 			L.update_mobility()
 	occupant = null
-	update_icon()
+	flick("pod-open-anim", src)
+	..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
+		flick("pod-close-anim", src)
 		..(user)
 		return occupant
 
@@ -266,7 +273,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the glass of [src]!</span>", \
 		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a thump from [src].</span>")
+		"<span class='hear'>You hear a thump from [src].</span>")
 	if(do_after(user, breakout_time, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
@@ -275,14 +282,14 @@
 		open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
-	..()
+	. = ..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Someone's inside [src]!")
+			. += "Someone's inside [src]!"
 		else
-			to_chat(user, "You can barely make out a form floating in [src].")
+			. += "You can barely make out a form floating in [src]."
 	else
-		to_chat(user, "[src] seems empty.")
+		. += "[src] seems empty."
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
 	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -292,7 +299,7 @@
 		if(L.incapacitated())
 			close_machine(target)
 	else
-		user.visible_message("<b>[user]</b> starts shoving [target] inside [src].", "<span class='notice'>You start shoving [target] inside [src].</span>")
+		user.visible_message("<span class='notice'>[user] starts shoving [target] inside [src].</span>", "<span class='notice'>You start shoving [target] inside [src].</span>")
 		if (do_after(user, 25, target=target))
 			close_machine(target)
 
@@ -305,7 +312,7 @@
 		if(!user.transferItemToLoc(I, src))
 			return
 		beaker = I
-		user.visible_message("[user] places [I] in [src].", \
+		user.visible_message("<span class='notice'>[user] places [I] in [src].</span>", \
 							"<span class='notice'>You place [I] in [src].</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
@@ -317,8 +324,8 @@
 		update_icon()
 		return
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, "<span class='notice'>You can't access the maintenance panel while the pod is " \
-		+ (on ? "active" : (occupant ? "full" : "open")) + ".</span>")
+		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
+		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
 		return
 	return ..()
 
@@ -326,7 +333,7 @@
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "cryo", name, 400, 550, master_ui, state)
+		ui = new(user, src, ui_key, "cryo", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
@@ -388,6 +395,7 @@
 				on = FALSE
 			else if(!state_open)
 				on = TRUE
+			update_icon()
 			. = TRUE
 		if("door")
 			if(state_open)
@@ -405,7 +413,20 @@
 					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE
-	update_icon()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && !state_open)
+		on = !on
+		update_icon()
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		if(state_open)
+			close_machine()
+		else
+			open_machine()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return // we don't see the pipe network while inside cryo.

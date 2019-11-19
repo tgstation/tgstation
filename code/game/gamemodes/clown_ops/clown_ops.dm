@@ -37,7 +37,7 @@
 	l_pocket = /obj/item/pinpointer/nuke/syndicate
 	r_pocket = /obj/item/bikehorn
 	id = /obj/item/card/id/syndicate
-	backpack_contents = list(/obj/item/storage/box/syndie=1,\
+	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
 		/obj/item/kitchen/knife/combat/survival,
 		/obj/item/reagent_containers/spray/waterflower/lube)
 	implants = list(/obj/item/implant/sad_trombone)
@@ -56,5 +56,6 @@
 /datum/outfit/syndicate/clownop/leader
 	name = "Clown Operative Leader - Basic"
 	id = /obj/item/card/id/syndicate/nuke_leader
+	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	r_hand = /obj/item/nuclear_challenge/clownops
 	command_radio = TRUE

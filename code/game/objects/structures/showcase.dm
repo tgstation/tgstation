@@ -64,7 +64,7 @@
 
 /obj/structure/showcase/mecha/ripley
 	name = "construction mech exhibit"
-	desc = "A stand with an retired construction mech bolted to it. The clamps are rated at 9300PSI. It seems to be falling apart."
+	desc = "A stand with a retired construction mech bolted to it. The clamps are rated at 9300PSI. It seems to be falling apart."
 	icon = 'icons/mecha/mecha.dmi'
 	icon_state = "firefighter"
 
@@ -131,12 +131,12 @@
 //Feedback is given in examine because showcases can basically have any sprite assigned to them
 
 /obj/structure/showcase/examine(mob/user)
-	..()
+	. = ..()
 
 	switch(deconstruction_state)
 		if(SHOWCASE_CONSTRUCTED)
-			to_chat(user, "The showcase is fully constructed.")
+			. += "The showcase is fully constructed."
 		if(SHOWCASE_SCREWDRIVERED)
-			to_chat(user, "The showcase has its screws loosened.")
+			. += "The showcase has its screws loosened."
 		else
-			to_chat(user, "If you see this, something is wrong.")
+			. += "If you see this, something is wrong."

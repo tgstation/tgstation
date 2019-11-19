@@ -12,7 +12,12 @@
 /mob/camera/aiEye/remote/holo/setLoc()
 	. = ..()
 	var/obj/machinery/holopad/H = origin
-	H.move_hologram(eye_user, loc)
+	H?.move_hologram(eye_user, loc)
+
+/obj/machinery/holopad/remove_eye_control(mob/living/user)
+	if(user.client)
+		user.reset_perspective(null)
+	user.remote_control = null
 
 //this datum manages it's own references
 
@@ -53,11 +58,6 @@
 //cleans up ALL references :)
 /datum/holocall/Destroy()
 	QDEL_NULL(hangup)
-
-	var/user_good = !QDELETED(user)
-	if(user_good)
-		user.reset_perspective()
-		user.remote_control = null
 
 	if(!QDELETED(eye))
 		QDEL_NULL(eye)
@@ -216,7 +216,7 @@
 	desc = "Stores recorder holocalls."
 	icon_state = "holodisk"
 	obj_flags = UNIQUE_RENAME
-	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
+	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	var/datum/holorecord/record
 	//Preset variables
 	var/preset_image_type
@@ -241,10 +241,10 @@
 			record.caller_image = holodiskOriginal.record.caller_image
 			record.entries = holodiskOriginal.record.entries.Copy()
 			record.language = holodiskOriginal.record.language
-			to_chat(user, "You copy the record from [holodiskOriginal] to [src] by connecting the ports!")
+			to_chat(user, "<span class='notice'>You copy the record from [holodiskOriginal] to [src] by connecting the ports!</span>")
 			name = holodiskOriginal.name
 		else
-			to_chat(user, "[holodiskOriginal] has no record on it!")
+			to_chat(user, "<span class='warning'>[holodiskOriginal] has no record on it!</span>")
 	..()
 
 /obj/item/disk/holodisk/proc/build_record()
@@ -331,6 +331,21 @@
 	DELAY 20"}
 
 /datum/preset_holoimage/engineer
+	outfit_type = /datum/outfit/job/engineer
+
+/datum/preset_holoimage/engineer/rig
+	outfit_type = /datum/outfit/job/engineer/gloved/rig
+
+/datum/preset_holoimage/engineer/ce
+	outfit_type = /datum/outfit/job/ce
+
+/datum/preset_holoimage/engineer/ce/rig
+	outfit_type = /datum/outfit/job/engineer/gloved/rig
+
+/datum/preset_holoimage/engineer/atmos
+	outfit_type = /datum/outfit/job/atmos
+
+/datum/preset_holoimage/engineer/atmos/rig
 	outfit_type = /datum/outfit/job/engineer/gloved/rig
 
 /datum/preset_holoimage/researcher
@@ -350,3 +365,49 @@
 
 /datum/preset_holoimage/clown
 	outfit_type = /datum/outfit/job/clown
+
+/obj/item/disk/holodisk/donutstation/whiteship
+	name = "Blackbox Print-out #DS024"
+	desc = "A holodisk containing the last viable recording of DS024's blackbox."
+	preset_image_type = /datum/preset_holoimage/engineer/ce
+	preset_record_text = {"
+	NAME Geysr Shorthalt
+	SAY Engine renovations complete and the ships been loaded. We all ready?
+	DELAY 25
+	PRESET /datum/preset_holoimage/engineer
+	NAME Jacob Ullman
+	SAY Lets blow this popsicle stand of a station.
+	DELAY 20
+	PRESET /datum/preset_holoimage/engineer/atmos
+	NAME Lindsey Cuffler
+	SAY Uh, sir? Shouldn't we call for a secondary shuttle? The bluespace drive on this thing made an awfully weird noise when we jumped here..
+	DELAY 30
+	PRESET /datum/preset_holoimage/engineer/ce
+	NAME Geysr Shorthalt
+	SAY Pah! Ship techie at the dock said to give it a good few kicks if it started acting up, let me just..
+	DELAY 25
+	SOUND punch
+	SOUND sparks
+	DELAY 10
+	SOUND punch
+	SOUND sparks
+	DELAY 10
+	SOUND punch
+	SOUND sparks
+	SOUND warpspeed
+	DELAY 15
+	PRESET /datum/preset_holoimage/engineer/atmos
+	NAME Lindsey Cuffler
+	SAY Uhh.. is it supposed to be doing that??
+	DELAY 15
+	PRESET /datum/preset_holoimage/engineer/ce
+	NAME Geysr Shorthalt
+	SAY See? Working as intended. Now, are we all ready?
+	DELAY 10
+	PRESET /datum/preset_holoimage/engineer
+	NAME Jacob Ullman
+	SAY Is it supposed to be glowing like that?
+	DELAY 20
+	SOUND explosion
+
+	"}

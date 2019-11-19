@@ -6,7 +6,6 @@
 ******************************************/
 
 //DEBUG STUFF
-var triggerError = attachErrorHandler('chatDebug', true);
 var escaper = encodeURIComponent || escape;
 var decoder = decodeURIComponent || unescape;
 window.onerror = function(msg, url, line, col, error) {
@@ -35,6 +34,7 @@ var opts = {
 	'wasd': false, //Is the user in wasd mode?
 	'priorChatHeight': 0, //Thing for height-resizing detection
 	'restarting': false, //Is the round restarting?
+	'darkmode':false, //Are we using darkmode? If not WHY ARE YOU LIVING IN 2009???
 
 	//Options menu
 	'selectedSubLoop': null, //Contains the interval loop for closing the selected sub menu
@@ -65,12 +65,15 @@ var opts = {
 	'volumeUpdateDelay': 5000, //Time from when the volume updates to data being sent to the server
 	'volumeUpdating': false, //True if volume update function set to fire
 	'updatedVolume': 0, //The volume level that is sent to the server
+	'musicStartAt': 0, //The position the music starts playing
+	'musicEndAt': 0, //The position the music... stops playing... if null, doesn't apply (so the music runs through)
 	
 	'defaultMusicVolume': 25,
 
 	'messageCombining': true,
 
 };
+var replaceRegexes = {};
 
 function clamp(val, min, max) {
 	return Math.max(min, Math.min(val, max))
@@ -169,6 +172,15 @@ function byondDecode(message) {
 		message = unescape(message);
 	}
 	return message;
+}
+
+function replaceRegex() {
+	var selectedRegex = replaceRegexes[$(this).attr('replaceRegex')];
+	if (selectedRegex) {
+		var replacedText = $(this).html().replace(selectedRegex[0], selectedRegex[1]);
+		$(this).html(replacedText);
+	}
+	$(this).removeAttr('replaceRegex');
 }
 
 //Actually turns the highlight term match into appropriate html
@@ -364,6 +376,7 @@ function output(message, flag) {
 				badge = $('<span/>', {'class': 'r', 'text': 2});
 			}
 			lastmessages.html(message);
+			lastmessages.find('[replaceRegex]').each(replaceRegex);
 			lastmessages.append(badge);
 			badge.animate({
 				"font-size": "0.9em"
@@ -385,6 +398,8 @@ function output(message, flag) {
 			entry.className += ' hidden';
 			entry.setAttribute('data-filter', filteredOut);
 		}
+
+		$(entry).find('[replaceRegex]').each(replaceRegex);
 
 		$last_message = trimmed_message;
 		$messages[0].appendChild(entry);
@@ -430,7 +445,7 @@ function setCookie(cname, cvalue, exdays) {
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
 	var expires = 'expires='+d.toUTCString();
-	document.cookie = cname + '=' + cvalue + '; ' + expires;
+	document.cookie = cname + '=' + cvalue + '; ' + expires + "; path=/";
 }
 
 function getCookie(cname) {
@@ -452,6 +467,19 @@ function toHex(n) {
 	if (isNaN(n)) return "00";
 	n = Math.max(0,Math.min(n,255));
 	return "0123456789ABCDEF".charAt((n-n%16)/16) + "0123456789ABCDEF".charAt(n%16);
+}
+
+function swap() { //Swap to darkmode
+	if (opts.darkmode){
+		document.getElementById("sheetofstyles").href = "browserOutput_white.css";
+		opts.darkmode = false;
+		runByond('?_src_=chat&proc=swaptolightmode');
+	} else {
+		document.getElementById("sheetofstyles").href = "browserOutput.css";
+		opts.darkmode = true;
+		runByond('?_src_=chat&proc=swaptodarkmode');
+	}
+	setCookie('darkmode', (opts.darkmode ? 'true' : 'false'), 365);
 }
 
 function handleClientData(ckey, ip, compid) {
@@ -531,18 +559,10 @@ function ehjaxCallback(data) {
 				handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
 			}
 			sendVolumeUpdate();
-		} else if (data.firebug) {
-			if (data.trigger) {
-				internalOutput('<span class="internal boldnshit">Loading firebug console, triggered by '+data.trigger+'...</span>', 'internal');
-			} else {
-				internalOutput('<span class="internal boldnshit">Loading firebug console...</span>', 'internal');
-			}
-			var firebugEl = document.createElement('script');
-			firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
-			document.body.appendChild(firebugEl);
 		} else if (data.adminMusic) {
 			if (typeof data.adminMusic === 'string') {
 				var adminMusic = byondDecode(data.adminMusic);
+				var bindLoadedData = false;
 				adminMusic = adminMusic.match(/https?:\/\/\S+/) || '';
 				if (data.musicRate) {
 					var newRate = Number(data.musicRate);
@@ -552,8 +572,31 @@ function ehjaxCallback(data) {
 				} else {
 					$('#adminMusic').prop('defaultPlaybackRate', 1.0);
 				}
+				if (data.musicSeek) {
+					opts.musicStartAt = Number(data.musicSeek) || 0;
+					bindLoadedData = true;
+				} else {
+					opts.musicStartAt = 0;
+				}
+				if (data.musicHalt) {
+					opts.musicEndAt = Number(data.musicHalt) || null;
+					bindLoadedData = true;
+				}
+				if (bindLoadedData) {
+					$('#adminMusic').one('loadeddata', adminMusicLoadedData);
+				}
 				$('#adminMusic').prop('src', adminMusic);
 				$('#adminMusic').trigger("play");
+			}
+		} else if (data.syncRegex) {
+			for (var i in data.syncRegex) {
+
+				var regexData = data.syncRegex[i];
+				var regexName = regexData[0];
+				var regexFlags = regexData[1];
+				var regexReplaced = regexData[2];
+
+				replaceRegexes[i] = [new RegExp(regexName, regexFlags), regexReplaced];
 			}
 		}
 	}
@@ -582,6 +625,27 @@ function sendVolumeUpdate() {
 	opts.volumeUpdating = false;
 	if(opts.updatedVolume) {
 		runByond('?_src_=chat&proc=setMusicVolume&param[volume]='+opts.updatedVolume);
+	}
+}
+
+function adminMusicEndCheck(event) {
+	if (opts.musicEndAt) {
+		if ($('#adminMusic').prop('currentTime') >= opts.musicEndAt) {
+			$('#adminMusic').off(event);
+			$('#adminMusic').trigger('pause');
+			$('#adminMusic').prop('src', '');
+		}
+	} else {
+		$('#adminMusic').off(event);
+	}
+}
+
+function adminMusicLoadedData(event) {
+	if (opts.musicStartAt && ($('#adminMusic').prop('duration') === Infinity || (opts.musicStartAt <= $('#adminMusic').prop('duration'))) ) {
+		$('#adminMusic').prop('currentTime', opts.musicStartAt);
+	}
+	if (opts.musicEndAt) {
+		$('#adminMusic').on('timeupdate', adminMusicEndCheck);
 	}
 }
 
@@ -663,22 +727,26 @@ $(function() {
 	*
 	******************************************/
 	var savedConfig = {
-		'sfontSize': getCookie('fontsize'),
-		'slineHeight': getCookie('lineheight'),
+		fontsize: getCookie('fontsize'),
+		lineheight: getCookie('lineheight'),
 		'spingDisabled': getCookie('pingdisabled'),
 		'shighlightTerms': getCookie('highlightterms'),
 		'shighlightColor': getCookie('highlightcolor'),
 		'smusicVolume': getCookie('musicVolume'),
 		'smessagecombining': getCookie('messagecombining'),
+		'sdarkmode': getCookie('darkmode'),
 	};
 
-	if (savedConfig.sfontSize) {
-		$messages.css('font-size', savedConfig.sfontSize);
-		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>', 'internal');
+	if (savedConfig.fontsize) {
+		$messages.css('font-size', savedConfig.fontsize);
+		internalOutput('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.fontsize+'</span>', 'internal');
 	}
-	if (savedConfig.slineHeight) {
-		$("body").css('line-height', savedConfig.slineHeight);
-		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.slineHeight+'</span>', 'internal');
+	if (savedConfig.lineheight) {
+		$("body").css('line-height', savedConfig.lineheight);
+		internalOutput('<span class="internal boldnshit">Loaded line height setting of: '+savedConfig.lineheight+'</span>', 'internal');
+	}
+	if(savedConfig.sdarkmode == 'true'){
+		swap();
 	}
 	if (savedConfig.spingDisabled) {
 		if (savedConfig.spingDisabled == 'true') {
@@ -724,8 +792,6 @@ $(function() {
 			opts.messageCombining = true;
 		}
 	}
-
-
 	(function() {
 		var dataCookie = getCookie('connData');
 		if (dataCookie) {
@@ -892,7 +958,9 @@ $(function() {
 	$('#toggleOptions').click(function(e) {
 		handleToggleClick($subOptions, $(this));
 	});
-
+	$('#darkmodetoggle').click(function(e) {
+		swap();
+	});
 	$('#toggleAudio').click(function(e) {
 		handleToggleClick($subAudio, $(this));
 	});
@@ -906,41 +974,31 @@ $(function() {
 	});
 
 	$('#decreaseFont').click(function(e) {
-		var fontSize = parseInt($messages.css('font-size'));
-		fontSize = fontSize - 1 + 'px';
-		$messages.css({'font-size': fontSize});
-		setCookie('fontsize', fontSize, 365);
-		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
+		savedConfig.fontsize = Math.max(parseInt(savedConfig.fontsize || 13) - 1, 1) + 'px';
+		$messages.css({'font-size': savedConfig.fontsize});
+		setCookie('fontsize', savedConfig.fontsize, 365);
+		internalOutput('<span class="internal boldnshit">Font size set to '+savedConfig.fontsize+'</span>', 'internal');
 	});
 
 	$('#increaseFont').click(function(e) {
-		var fontSize = parseInt($messages.css('font-size'));
-		fontSize = fontSize + 1 + 'px';
-		$messages.css({'font-size': fontSize});
-		setCookie('fontsize', fontSize, 365);
-		internalOutput('<span class="internal boldnshit">Font size set to '+fontSize+'</span>', 'internal');
+		savedConfig.fontsize = (parseInt(savedConfig.fontsize || 13) + 1) + 'px';
+		$messages.css({'font-size': savedConfig.fontsize});
+		setCookie('fontsize', savedConfig.fontsize, 365);
+		internalOutput('<span class="internal boldnshit">Font size set to '+savedConfig.fontsize+'</span>', 'internal');
 	});
 
 	$('#decreaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont
-		lineheightvar -= 0.1;
-		lineheightvar = lineheightvar.toFixed(1)
-		$("body").css({'line-height': lineheightvar});
-		setCookie('lineheight', lineheightvar, 365);
-		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
+		savedConfig.lineheight = Math.max(parseFloat(savedConfig.lineheight || 1.2) - 0.1, 0.1).toFixed(1);
+		$("body").css({'line-height': savedConfig.lineheight});
+		setCookie('lineheight', savedConfig.lineheight, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+savedConfig.lineheight+'</span>', 'internal');
 	});
 
 	$('#increaseLineHeight').click(function(e) {
-		var Heightline = parseFloat($("body").css('line-height'));
-		var Sizefont = parseFloat($("body").css('font-size'));
-		var lineheightvar = Heightline / Sizefont
-		lineheightvar += 0.1;
-		lineheightvar = lineheightvar.toFixed(1)
-		$("body").css({'line-height': lineheightvar});
-		setCookie('lineheight', lineheightvar, 365);
-		internalOutput('<span class="internal boldnshit">Line height set to '+lineheightvar+'</span>', 'internal');
+		savedConfig.lineheight = (parseFloat(savedConfig.lineheight || 1.2) + 0.1).toFixed(1);
+		$("body").css({'line-height': savedConfig.lineheight});
+		setCookie('lineheight', savedConfig.lineheight, 365);
+		internalOutput('<span class="internal boldnshit">Line height set to '+savedConfig.lineheight+'</span>', 'internal');
 	});
 
 	$('#togglePing').click(function(e) {
@@ -958,13 +1016,13 @@ $(function() {
 		// Requires IE 10+ to issue download commands. Just opening a popup
 		// window will cause Ctrl+S to save a blank page, ignoring innerHTML.
 		if (!window.Blob) {
-			output('<span class="big red">This function is only supported on IE 10+. Upgrade if possible.</span>', 'internal');
+			output('<span class="big red">This function is only supported on IE 10 and up. Upgrade if possible.</span>', 'internal');
 			return;
 		}
 
 		$.ajax({
 			type: 'GET',
-			url: 'browserOutput.css',
+			url: 'browserOutput_white.css',
 			success: function(styleData) {
 				var blob = new Blob(['<head><title>Chat Log</title><style>', styleData, '</style></head><body>', $messages.html(), '</body>']);
 

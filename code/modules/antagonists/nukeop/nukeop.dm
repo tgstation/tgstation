@@ -3,6 +3,8 @@
 	roundend_category = "syndicate operatives" //just in case
 	antagpanel_category = "NukeOp"
 	job_rank = ROLE_OPERATIVE
+	antag_hud_type = ANTAG_HUD_OPS
+	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
@@ -10,23 +12,16 @@
 	var/nukeop_outfit = /datum/outfit/syndicate
 	can_hijack = HIJACK_HIJACKER //Alternative way to wipe out the station.
 
-/datum/antagonist/nukeop/proc/update_synd_icons_added(mob/living/M)
-	var/datum/atom_hud/antag/opshud = GLOB.huds[ANTAG_HUD_OPS]
-	opshud.join_hud(M)
-	set_antag_hud(M, "synd")
-
-/datum/antagonist/nukeop/proc/update_synd_icons_removed(mob/living/M)
-	var/datum/atom_hud/antag/opshud = GLOB.huds[ANTAG_HUD_OPS]
-	opshud.leave_hud(M)
-	set_antag_hud(M, null)
 
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_synd_icons_added(M)
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_synd_icons_removed(M)
+	remove_antag_hud(antag_hud_type, M)
+	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
@@ -42,7 +37,6 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
 	to_chat(owner, "<span class='notice'>You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!</span>")
 	owner.announce_objectives()
-	return
 
 /datum/antagonist/nukeop/on_gain()
 	give_alias()
@@ -52,6 +46,13 @@
 	memorize_code()
 	if(send_to_spawnpoint)
 		move_to_spawnpoint()
+		// grant extra TC for the people who start in the nukie base ie. not the lone op
+		var/extra_tc = CEILING(GLOB.joined_player_list.len/5, 5)
+		var/datum/component/uplink/U = owner.find_syndicate_uplink()
+		if (U)
+			U.telecrystals += extra_tc
+
+
 
 /datum/antagonist/nukeop/get_team()
 	return nuke_team
@@ -74,9 +75,16 @@
 
 /datum/antagonist/nukeop/proc/give_alias()
 	if(nuke_team && nuke_team.syndicate_name)
-		var/number = 1
-		number = nuke_team.members.Find(owner)
-		owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
+		var/mob/living/carbon/human/H = owner.current
+		if(istype(H)) // Reinforcements get a real name
+			var/chosen_name = H.dna.species.random_name(H.gender,0,nuke_team.syndicate_name)
+			H.fully_replace_character_name(H.real_name,chosen_name)
+		else
+			var/number = 1
+			number = nuke_team.members.Find(owner)
+			owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
+
+
 
 /datum/antagonist/nukeop/proc/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
@@ -233,6 +241,7 @@
 	var/obj/machinery/nuclearbomb/tracked_nuke
 	var/core_objective = /datum/objective/nuclear
 	var/memorized_code
+	var/list/team_discounts
 
 /datum/team/nuclear/New()
 	..()

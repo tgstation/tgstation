@@ -45,6 +45,8 @@
 		return
 	if(!(src in owner.internal_organs))
 		Remove(owner)
+	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
+		return
 	if (causes_damage && !iszombie(owner) && owner.stat != DEAD)
 		owner.adjustToxLoss(1)
 		if (prob(10))
@@ -80,17 +82,17 @@
 	//Fully heal the zombie's damage the first time they rise
 	owner.setToxLoss(0, 0)
 	owner.setOxyLoss(0, 0)
-	owner.heal_overall_damage(INFINITY, INFINITY, INFINITY, FALSE, FALSE, TRUE)
+	owner.heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE)
 
-	if(!owner.revive())
+	if(!owner.revive(full_heal = FALSE, admin_revive = FALSE))
 		return
 
 	owner.grab_ghost()
 	owner.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!</span>", "<span class='alien'>You HUNGER!</span>")
-	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
+	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 	owner.do_jitter_animation(living_transformation_time)
 	owner.Stun(living_transformation_time)
-	to_chat(owner, "<span class='alertalien'>You are now a zombie!</span>")
+	to_chat(owner, "<span class='alertalien'>You are now a zombie! Do not seek to be cured, do not help any non-zombies in any way, do not harm your zombie brethren and spread the disease by killing others. You are a creature of hunger and violence.</span>")
 
 /obj/item/organ/zombie_infection/nodamage
 	causes_damage = FALSE

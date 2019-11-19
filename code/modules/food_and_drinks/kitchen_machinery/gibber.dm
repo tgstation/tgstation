@@ -21,22 +21,22 @@
 	add_overlay("grjam")
 
 /obj/machinery/gibber/RefreshParts()
-	var/gib_time = 40
+	gibtime = 40
+	meat_produced = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		gib_time -= 5 * M.rating
-		gibtime = gib_time
+		gibtime -= 5 * M.rating
 		if(M.rating >= 2)
 			ignore_clothing = TRUE
 
 /obj/machinery/gibber/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.<span>")
+		. += "<span class='notice'>The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.</span>"
 		for(var/obj/item/stock_parts/manipulator/M in component_parts)
 			if(M.rating >= 2)
-				to_chat(user, "<span class='notice'>Gibber has been upgraded to process inorganic materials.<span>")
+				. += "<span class='notice'>Gibber has been upgraded to process inorganic materials.</span>"
 
 /obj/machinery/gibber/update_icon()
 	cut_overlays()
@@ -71,13 +71,13 @@
 		return
 
 	if(!anchored)
-		to_chat(user, "<span class='notice'>[src] cannot be used unless bolted to the ground.</span>")
+		to_chat(user, "<span class='warning'>[src] cannot be used unless bolted to the ground!</span>")
 		return
 
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
-			to_chat(user, "<span class='danger'>This item is not suitable for the gibber!</span>")
+			to_chat(user, "<span class='warning'>This item is not suitable for the gibber!</span>")
 			return
 		var/mob/living/carbon/C = L
 		if(C.buckled ||C.has_buckled_mobs())
@@ -86,8 +86,8 @@
 
 		if(!ignore_clothing)
 			for(var/obj/item/I in C.held_items + C.get_equipped_items())
-				if(!(I.item_flags & NODROP))
-					to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
+				if(!HAS_TRAIT(I, TRAIT_NODROP))
+					to_chat(user, "<span class='warning'>Subject may not have abiotic items on!</span>")
 					return
 
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
@@ -139,11 +139,11 @@
 	if(src.operating)
 		return
 	if(!src.occupant)
-		visible_message("<span class='italics'>You hear a loud metallic grinding sound.</span>")
+		audible_message("<span class='hear'>You hear a loud metallic grinding sound.</span>")
 		return
 	use_power(1000)
-	visible_message("<span class='italics'>You hear a loud squelchy grinding sound.</span>")
-	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+	audible_message("<span class='hear'>You hear a loud squelchy grinding sound.</span>")
+	playsound(src.loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
 	update_icon()
 
@@ -178,13 +178,17 @@
 			typeofskin = /obj/item/stack/sheet/animalhide/monkey
 		else if(isalien(C))
 			typeofskin = /obj/item/stack/sheet/animalhide/xeno
-
+	var/occupant_volume
+	if(occupant?.reagents)
+		occupant_volume = occupant.reagents.total_volume
 	for (var/i=1 to meat_produced)
 		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		newmeat.name = "[sourcename] [newmeat.name]"
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
-			newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
+			newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, sourcenutriment / meat_produced) // Thehehe. Fat guys go first
+			if(occupant_volume)
+				occupant.reagents.trans_to(newmeat, occupant_volume / meat_produced, remove_blacklisted = TRUE)
 			if(sourcejob)
 				newmeat.subjectjob = sourcejob
 		allmeat[i] = newmeat
@@ -199,7 +203,7 @@
 	addtimer(CALLBACK(src, .proc/make_meat, skin, allmeat, meat_produced, gibtype, diseases), gibtime)
 
 /obj/machinery/gibber/proc/make_meat(obj/item/stack/sheet/animalhide/skin, list/obj/item/reagent_containers/food/snacks/meat/slab/allmeat, meat_produced, gibtype, list/datum/disease/diseases)
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
 	operating = FALSE
 	var/turf/T = get_turf(src)
 	var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T

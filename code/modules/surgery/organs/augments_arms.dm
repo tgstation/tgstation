@@ -3,7 +3,7 @@
 	desc = "You shouldn't see this! Adminhelp and report this as an issue on github!"
 	zone = BODY_ZONE_R_ARM
 	icon_state = "implant-toolkit"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 
 	var/list/items_list = list()
@@ -38,8 +38,8 @@
 		transform = matrix(-1, 0, 0, 0, 1, 0)
 
 /obj/item/organ/cyberimp/arm/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.</span>")
+	. = ..()
+	. += "<span class='info'>[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.</span>"
 
 /obj/item/organ/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -73,7 +73,7 @@
 
 	owner.visible_message("<span class='notice'>[owner] retracts [holder] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='notice'>[holder] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
-		"<span class='italics'>You hear a short mechanical noise.</span>")
+		"<span class='hear'>You hear a short mechanical noise.</span>")
 
 	if(istype(holder, /obj/item/assembly/flash/armimplant))
 		var/obj/item/assembly/flash/F = holder
@@ -81,7 +81,7 @@
 
 	owner.transferItemToLoc(holder, src, TRUE)
 	holder = null
-	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
+	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/organ/cyberimp/arm/proc/Extend(var/obj/item/item)
 	if(!(item in src))
@@ -89,39 +89,42 @@
 
 	holder = item
 
-	holder.item_flags |= NODROP
+	ADD_TRAIT(holder, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
-	holder.materials = null
+	holder.set_custom_materials(null)
 
 	if(istype(holder, /obj/item/assembly/flash/armimplant))
 		var/obj/item/assembly/flash/F = holder
 		F.set_light(7)
 
-	var/obj/item/arm_item = owner.get_active_held_item()
-
-	if(arm_item)
-		if(!owner.dropItemToGround(arm_item))
-			to_chat(owner, "<span class='warning'>Your [arm_item] interferes with [src]!</span>")
+	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
+	var/hand = owner.get_empty_held_index_for_side(side)
+	if(hand)
+		owner.put_in_hand(holder, hand)
+	else
+		var/list/hand_items = owner.get_held_items_for_side(side, all = TRUE)
+		var/success = FALSE
+		var/list/failure_message = list()
+		for(var/i in 1 to hand_items.len) //Can't just use *in* here.
+			var/I = hand_items[i]
+			if(!owner.dropItemToGround(I))
+				failure_message += "<span class='warning'>Your [I] interferes with [src]!</span>"
+				continue
+			to_chat(owner, "<span class='notice'>You drop [I] to activate [src]!</span>")
+			success = owner.put_in_hand(holder, owner.get_empty_held_index_for_side(side))
+			break
+		if(!success)
+			for(var/i in failure_message)
+				to_chat(owner, i)
 			return
-		else
-			to_chat(owner, "<span class='notice'>You drop [arm_item] to activate [src]!</span>")
-
-	var/result = (zone == BODY_ZONE_R_ARM ? owner.put_in_r_hand(holder) : owner.put_in_l_hand(holder))
-	if(!result)
-		to_chat(owner, "<span class='warning'>Your [name] fails to activate!</span>")
-		return
-
-	// Activate the hand that now holds our item.
-	owner.swap_hand(result)//... or the 1st hand if the index gets lost somehow
-
 	owner.visible_message("<span class='notice'>[owner] extends [holder] from [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='notice'>You extend [holder] from your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
-		"<span class='italics'>You hear a short mechanical noise.</span>")
-	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, 1)
+		"<span class='hear'>You hear a short mechanical noise.</span>")
+	playsound(get_turf(owner), 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/organ/cyberimp/arm/ui_action_click()
-	if(crit_fail || (!holder && !contents.len))
+	if((organ_flags & ORGAN_FAILING) || (!holder && !contents.len))
 		to_chat(owner, "<span class='warning'>The implant doesn't respond. It seems to be broken...</span>")
 		return
 
@@ -129,11 +132,14 @@
 		holder = null
 		if(contents.len == 1)
 			Extend(contents[1])
-		else // TODO: make it similar to borg's storage-like module selection
-			var/obj/item/choise = input("Activate which item?", "Arm Implant", null, null) as null|anything in items_list
-			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !holder && istype(choise) && (choise in contents))
-				// This monster sanity check is a nice example of how bad input() is.
-				Extend(choise)
+		else
+			var/list/choice_list = list()
+			for(var/obj/item/I in items_list)
+				choice_list[I] = image(I)
+			var/obj/item/choice = show_radial_menu(owner, owner, choice_list)
+			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !holder && (choice in contents))
+				// This monster sanity check is a nice example of how bad input is.
+				Extend(choice)
 	else
 		Retract()
 
@@ -142,15 +148,15 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(prob(30/severity) && owner && !crit_fail)
+	if(prob(30/severity) && owner && !(organ_flags & ORGAN_FAILING))
 		Retract()
 		owner.visible_message("<span class='danger'>A loud bang comes from [owner]\'s [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm!</span>")
-		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, 1)
+		playsound(get_turf(owner), 'sound/weapons/flashbang.ogg', 100, TRUE)
 		to_chat(owner, "<span class='userdanger'>You feel an explosion erupt inside your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm as your implant breaks!</span>")
 		owner.adjust_fire_stacks(20)
 		owner.IgniteMob()
 		owner.adjustFireLoss(25)
-		crit_fail = 1
+		organ_flags |= ORGAN_FAILING
 
 
 /obj/item/organ/cyberimp/arm/gun/laser
@@ -174,7 +180,7 @@
 
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
-	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contains all necessary tools."
+	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contain advanced versions of every tool."
 	contents = newlist(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
 		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/multitool/cyborg)
 

@@ -1,5 +1,5 @@
 /obj/item/chameleon
-	name = "chameleon-projector"
+	name = "chameleon projector"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield0"
 	flags_1 = CONDUCT_1
@@ -16,8 +16,8 @@
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_appearance = null
 
-/obj/item/chameleon/New()
-	..()
+/obj/item/chameleon/Initialize()
+	. = ..()
 	var/obj/item/cigbutt/butt = /obj/item/cigbutt
 	saved_appearance = initial(butt.appearance)
 
@@ -49,10 +49,14 @@
 		return
 	if(istype(target, /obj/structure/falsewall))
 		return
+	if(target.alpha != 255)
+		return
+	if(target.invisibility != 0)
+		return
 	if(iseffect(target))
 		if(!(istype(target, /obj/effect/decal))) //be a footprint
 			return
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, TRUE, -6)
 	to_chat(user, "<span class='notice'>Scanned [target].</span>")
 	var/obj/temp = new/obj()
 	temp.appearance = target.appearance
@@ -70,13 +74,13 @@
 		return
 	if(active_dummy)
 		eject_all()
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, TRUE, -6)
 		qdel(active_dummy)
 		active_dummy = null
 		to_chat(user, "<span class='notice'>You deactivate \the [src].</span>")
 		new /obj/effect/temp_visual/emp/pulse(get_turf(src))
 	else
-		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
+		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, TRUE, -6)
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(user.drop_location())
 		C.activate(user, saved_appearance, src)
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")
@@ -86,7 +90,7 @@
 /obj/item/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)
 		for(var/mob/M in active_dummy)
-			to_chat(M, "<span class='danger'>Your chameleon-projector deactivates.</span>")
+			to_chat(M, "<span class='danger'>Your chameleon projector deactivates.</span>")
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
@@ -95,8 +99,8 @@
 		if(delete_dummy)
 			qdel(active_dummy)
 		active_dummy = null
-		can_use = 0
-		spawn(50) can_use = 1
+		can_use = FALSE
+		addtimer(VARSET_CALLBACK(src, can_use, TRUE), 5 SECONDS)
 
 /obj/item/chameleon/proc/eject_all()
 	for(var/atom/movable/A in active_dummy)
@@ -116,7 +120,7 @@
 	appearance = saved_appearance
 	if(istype(M.buckled, /obj/vehicle))
 		var/obj/vehicle/V = M.buckled
-		GET_COMPONENT_FROM(VRD, /datum/component/riding, V)
+		var/datum/component/riding/VRD = V.GetComponent(/datum/component/riding)
 		if(VRD)
 			VRD.force_dismount(M)
 		else
@@ -146,7 +150,7 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
-	..()
+	. = ..()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)

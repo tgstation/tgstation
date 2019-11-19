@@ -19,7 +19,7 @@
 			// messenging the client
 			malfhacked(malfhack)
 
-		if(!eyeobj || QDELETED(eyeobj) || !eyeobj.loc)
+		if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 			view_core()
 
 		if(machine)
@@ -28,11 +28,15 @@
 		// Handle power damage (oxy)
 		if(aiRestorePowerRoutine)
 			// Lost power
-			adjustOxyLoss(1)
+			if (!battery)
+				to_chat(src, "<span class='warning'>Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable.</span>")
+				adjustOxyLoss(200)
+			else
+				battery --
 		else
 			// Gain Power
-			if(getOxyLoss())
-				adjustOxyLoss(-1)
+			if (battery < 200)
+				battery ++
 
 		if(!lacks_power())
 			var/area/home = get_area(src)
@@ -54,10 +58,6 @@
 			return FALSE
 		if(POWER_REQ_ALL)
 			return !T || !A || ((!A.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
-		if(POWER_REQ_CLOCKCULT)
-			for(var/obj/effect/clockwork/sigil/transmission/ST in range(src, SIGIL_ACCESS_RANGE))
-				return FALSE
-			return !T || !A || (!istype(T, /turf/open/floor/clockwork) && (!A.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
@@ -76,7 +76,6 @@
 			return
 		else if(stat == UNCONSCIOUS)
 			stat = CONSCIOUS
-			adjust_blindness(-1)
 	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()
@@ -95,7 +94,7 @@
 
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
-	to_chat(src, "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.")
+	to_chat(src, "<span class='notice'>Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.</span>")
 	end_multicam()
 	sleep(50)
 	var/turf/T = get_turf(src)
@@ -104,16 +103,16 @@
 		if(!isspaceturf(T))
 			ai_restore_power()
 			return
-	to_chat(src, "Fault confirmed: missing external power. Shutting down main control system to save power.")
+	to_chat(src, "<span class='notice'>Fault confirmed: missing external power. Shutting down main control system to save power.</span>")
 	sleep(20)
-	to_chat(src, "Emergency control system online. Verifying connection to power network.")
+	to_chat(src, "<span class='notice'>Emergency control system online. Verifying connection to power network.</span>")
 	sleep(50)
 	T = get_turf(src)
 	if(isspaceturf(T))
-		to_chat(src, "Unable to verify! No power connection detected!")
+		to_chat(src, "<span class='alert'>Unable to verify! No power connection detected!</span>")
 		aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
 		return
-	to_chat(src, "Connection verified. Searching for APC in power network.")
+	to_chat(src, "<span class='notice'>Connection verified. Searching for APC in power network.</span>")
 	sleep(50)
 	var/obj/machinery/power/apc/theAPC = null
 
@@ -129,9 +128,9 @@
 		if (!theAPC)
 			switch(PRP)
 				if(1)
-					to_chat(src, "Unable to locate APC!")
+					to_chat(src, "<span class='alert'>Unable to locate APC!</span>")
 				else
-					to_chat(src, "Lost connection with the APC!")
+					to_chat(src, "<span class='alert'>Lost connection with the APC!</span>")
 			aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
 			return
 		if(AIarea.power_equip)
@@ -140,15 +139,15 @@
 				return
 		switch(PRP)
 			if (1)
-				to_chat(src, "APC located. Optimizing route to APC to avoid needless power waste.")
+				to_chat(src, "<span class='notice'>APC located. Optimizing route to APC to avoid needless power waste.</span>")
 			if (2)
-				to_chat(src, "Best route identified. Hacking offline APC power port.")
+				to_chat(src, "<span class='notice'>Best route identified. Hacking offline APC power port.</span>")
 			if (3)
-				to_chat(src, "Power port upload access confirmed. Loading control program into APC power port software.")
+				to_chat(src, "<span class='notice'>Power port upload access confirmed. Loading control program into APC power port software.</span>")
 			if (4)
-				to_chat(src, "Transfer complete. Forcing APC to execute program.")
+				to_chat(src, "<span class='notice'>Transfer complete. Forcing APC to execute program.</span>")
 				sleep(50)
-				to_chat(src, "Receiving control information from APC.")
+				to_chat(src, "<span class='notice'>Receiving control information from APC.</span>")
 				sleep(2)
 				apc_override = 1
 				theAPC.ui_interact(src, state = GLOB.conscious_state)
@@ -160,9 +159,9 @@
 /mob/living/silicon/ai/proc/ai_restore_power()
 	if(aiRestorePowerRoutine)
 		if(aiRestorePowerRoutine == POWER_RESTORATION_APC_FOUND)
-			to_chat(src, "Alert cancelled. Power has been restored.")
+			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored.</span>")
 		else
-			to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
+			to_chat(src, "<span class='notice'>Alert cancelled. Power has been restored without our assistance.</span>")
 		aiRestorePowerRoutine = POWER_RESTORATION_OFF
 		set_blindness(0)
 		update_sight()
@@ -172,7 +171,7 @@
 	aiRestorePowerRoutine = POWER_RESTORATION_START
 	blind_eyes(1)
 	update_sight()
-	to_chat(src, "You've lost power!")
+	to_chat(src, "<span class='alert'>You've lost power!</span>")
 	addtimer(CALLBACK(src, .proc/start_RestorePowerRoutine), 20)
 
 #undef POWER_RESTORATION_OFF

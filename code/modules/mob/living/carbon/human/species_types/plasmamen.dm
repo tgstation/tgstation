@@ -5,22 +5,22 @@
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
 	species_traits = list(NOBLOOD,NOTRANSSTING)
-	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER)
-	inherent_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER,TRAIT_ALWAYS_CLEAN)
+	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
 	mutantliver = /obj/item/organ/liver/plasmaman
 	mutantstomach = /obj/item/organ/stomach/plasmaman
-	dangerous_existence = 1 //So so much
-	blacklisted = 1 //See above
 	burnmod = 1.5
 	heatmod = 1.5
+	brutemod = 1.5
 	breathid = "tox"
-	speedmod = 1
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
 	disliked_food = FRUIT
 	liked_food = VEGETABLES
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
+	outfit_important_for_life = /datum/outfit/plasmaman
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -55,18 +55,76 @@
 	. = ..()
 
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/current_job = J.title
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
+	switch(current_job)
+		if("Chaplain")
+			O = new /datum/outfit/plasmaman/chaplain
+
+		if("Curator")
+			O = new /datum/outfit/plasmaman/curator
+
+		if("Janitor")
+			O = new /datum/outfit/plasmaman/janitor
+
+		if("Botanist")
+			O = new /datum/outfit/plasmaman/botany
+
+		if("Bartender", "Lawyer")
+			O = new /datum/outfit/plasmaman/bar
+
+		if("Cook")
+			O = new /datum/outfit/plasmaman/chef
+
+		if("Security Officer")
+			O = new /datum/outfit/plasmaman/security
+
+		if("Detective")
+			O = new /datum/outfit/plasmaman/detective
+
+		if("Warden")
+			O = new /datum/outfit/plasmaman/warden
+
+		if("Cargo Technician", "Quartermaster")
+			O = new /datum/outfit/plasmaman/cargo
+
+		if("Shaft Miner")
+			O = new /datum/outfit/plasmaman/mining
+
+		if("Medical Doctor")
+			O = new /datum/outfit/plasmaman/medical
+
+		if("Chemist")
+			O = new /datum/outfit/plasmaman/chemist
+
+		if("Geneticist")
+			O = new /datum/outfit/plasmaman/genetics
+
+		if("Roboticist")
+			O = new /datum/outfit/plasmaman/robotics
+
+		if("Virologist")
+			O = new /datum/outfit/plasmaman/viro
+
+		if("Scientist")
+			O = new /datum/outfit/plasmaman/science
+
+		if("Station Engineer")
+			O = new /datum/outfit/plasmaman/engineering
+
+		if("Atmospheric Technician")
+			O = new /datum/outfit/plasmaman/atmospherics
+
+		if("Mime")
+			O = new /datum/outfit/plasmaman/mime
+
+		if("Clown")
+			O = new /datum/outfit/plasmaman/clown
+
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
 	return 0
-
-/datum/species/plasmaman/qualifies_for_rank(rank, list/features)
-	if(rank in GLOB.security_positions)
-		return 0
-	if(rank == "Clown" || rank == "Mime")//No funny bussiness
-		return 0
-	return ..()
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)
@@ -78,3 +136,39 @@
 		randname += " [lastname]"
 
 	return randname
+
+/datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	. = ..()
+	if(chem.type == /datum/reagent/consumable/milk)
+		if(chem.volume > 10)
+			H.reagents.remove_reagent(chem.type, chem.volume - 10)
+			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
+		H.heal_bodypart_damage(1.5,0, 0)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
+		return TRUE
+	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
+		H.adjustStaminaLoss(7.5, 0)
+		H.adjustBruteLoss(0.5, 0)
+		if(prob(20))
+			switch(rand(1, 3))
+				if(1)
+					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
+				if(2)
+					H.emote("me", 1, pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
+				if(3)
+					to_chat(H, "<span class='warning'>Your bones hurt!</span>")
+		if(chem.overdosed)
+			if(prob(4) && iscarbon(H)) //big oof
+				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
+				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
+				if(bp)
+					playsound(H, get_sfx("desceration"), 50, TRUE, -1) //You just want to socialize
+					H.visible_message("<span class='warning'>[H] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
+					H.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
+					bp.receive_damage(200, 0, 0) //But I don't think we should
+				else
+					to_chat(H, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
+					H.emote("sigh")
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
+		return TRUE
+		

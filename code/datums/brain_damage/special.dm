@@ -22,6 +22,14 @@
 		else
 			speak("neutral", prob(25))
 
+/datum/brain_trauma/special/godwoken/on_gain()
+	ADD_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
+	..()
+
+/datum/brain_trauma/special/godwoken/on_lose()
+	REMOVE_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
+	..()
+
 /datum/brain_trauma/special/godwoken/proc/speak(type, include_owner = FALSE)
 	var/message
 	switch(type)
@@ -36,7 +44,7 @@
 		else
 			message = pick_list_replacements(BRAIN_DAMAGE_FILE, "god_neutral")
 
-	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 5)
+	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 5)
 	voice_of_god(message, owner, list("colossus","yell"), 2.5, include_owner, FALSE)
 
 /datum/brain_trauma/special/bluespace_prophet
@@ -134,3 +142,166 @@
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
 	name = "Chemical Violent Psychosis"
+	clonable = FALSE
+
+/datum/brain_trauma/special/tenacity
+	name = "Tenacity"
+	desc = "Patient is psychologically unaffected by pain and injuries, and can remain standing far longer than a normal person."
+	scan_desc = "traumatic neuropathy"
+	gain_text = "<span class='warning'>You suddenly stop feeling pain.</span>"
+	lose_text = "<span class='warning'>You realize you can feel pain again.</span>"
+
+/datum/brain_trauma/special/tenacity/on_gain()
+	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
+	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
+	..()
+
+/datum/brain_trauma/special/tenacity/on_lose()
+	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
+	..()
+
+/datum/brain_trauma/special/death_whispers
+	name = "Functional Cerebral Necrosis"
+	desc = "Patient's brain is stuck in a functional near-death state, causing occasional moments of lucid hallucinations, which are often interpreted as the voices of the dead."
+	scan_desc = "chronic functional necrosis"
+	gain_text = "<span class='warning'>You feel dead inside.</span>"
+	lose_text = "<span class='notice'>You feel alive again.</span>"
+	var/active = FALSE
+
+/datum/brain_trauma/special/death_whispers/on_life()
+	..()
+	if(!active && prob(2))
+		whispering()
+
+/datum/brain_trauma/special/death_whispers/on_lose()
+	if(active)
+		cease_whispering()
+	..()
+
+/datum/brain_trauma/special/death_whispers/proc/whispering()
+	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
+	active = TRUE
+	addtimer(CALLBACK(src, .proc/cease_whispering), rand(50, 300))
+
+/datum/brain_trauma/special/death_whispers/proc/cease_whispering()
+	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
+	active = FALSE
+
+/datum/brain_trauma/special/existential_crisis
+	name = "Existential Crisis"
+	desc = "Patient's hold on reality becomes faint, causing occasional bouts of non-existence."
+	scan_desc = "existential crisis"
+	gain_text = "<span class='notice'>You feel less real.</span>"
+	lose_text = "<span class='warning'>You feel more substantial again.</span>"
+	var/obj/effect/abstract/sync_holder/veil/veil
+	var/next_crisis = 0
+
+/datum/brain_trauma/special/existential_crisis/on_life()
+	..()
+	if(!veil && world.time > next_crisis && prob(3))
+		if(isturf(owner.loc))
+			fade_out()
+
+/datum/brain_trauma/special/existential_crisis/on_lose()
+	if(veil)
+		fade_in()
+	..()
+
+/datum/brain_trauma/special/existential_crisis/proc/fade_out()
+	if(veil)
+		return
+	var/duration = rand(50, 450)
+	veil = new(owner.drop_location())
+	to_chat(owner, "<span class='warning'>[pick("You stop thinking for a moment. Therefore you are not.",\
+												"To be or not to be...",\
+												"Why exist?",\
+												"You stop keeping it real.",\
+												"Your grip on existence slips.",\
+												"Do you even exist?",\
+												"You simply fade away.")]</span>")
+	owner.forceMove(veil)
+	SEND_SIGNAL(owner, COMSIG_MOVABLE_SECLUDED_LOCATION)
+	for(var/thing in owner)
+		var/atom/movable/AM = thing
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
+	next_crisis = world.time + 600
+	addtimer(CALLBACK(src, .proc/fade_in), duration)
+
+/datum/brain_trauma/special/existential_crisis/proc/fade_in()
+	QDEL_NULL(veil)
+	to_chat(owner, "<span class='notice'>You fade back into reality.</span>")
+	next_crisis = world.time + 600
+
+//base sync holder is in desynchronizer.dm
+/obj/effect/abstract/sync_holder/veil
+	name = "non-existence"
+	desc = "Existence is just a state of mind."
+
+/datum/brain_trauma/special/beepsky
+	name = "Criminal"
+	desc = "Patient seems to be a criminal."
+	scan_desc = "criminal mind"
+	gain_text = "<span class='warning'>Justice is coming for you.</span>"
+	lose_text = "<span class='notice'>You were absolved for your crimes.</span>"
+	clonable = FALSE
+	random_gain = FALSE
+	var/obj/effect/hallucination/simple/securitron/beepsky
+
+/datum/brain_trauma/special/beepsky/on_gain()
+	create_securitron()
+	..()
+
+/datum/brain_trauma/special/beepsky/proc/create_securitron()
+	var/turf/where = locate(owner.x + pick(-12, 12), owner.y + pick(-12, 12), owner.z)
+	beepsky = new(where, owner)
+	beepsky.victim = owner
+
+/datum/brain_trauma/special/beepsky/on_lose()
+	QDEL_NULL(beepsky)
+	..()
+
+/datum/brain_trauma/special/beepsky/on_life()
+	if(QDELETED(beepsky) || !beepsky.loc || beepsky.z != owner.z)
+		QDEL_NULL(beepsky)
+		if(prob(30))
+			create_securitron()
+		else
+			return
+	if(get_dist(owner, beepsky) >= 10 && prob(20))
+		QDEL_NULL(beepsky)
+		create_securitron()
+	if(owner.stat != CONSCIOUS)
+		if(prob(20))
+			owner.playsound_local(beepsky, 'sound/voice/beepsky/iamthelaw.ogg', 50)
+		return
+	if(get_dist(owner, beepsky) <= 1)
+		owner.playsound_local(owner, 'sound/weapons/egloves.ogg', 50)
+		owner.visible_message("<span class='warning'>[owner]'s body jerks as if it was shocked.</span>", "<span class='userdanger'>You feel the fist of the LAW.</span>")
+		owner.take_bodypart_damage(0,0,rand(40, 70))
+		QDEL_NULL(beepsky)
+	if(prob(20) && get_dist(owner, beepsky) <= 8)
+		owner.playsound_local(beepsky, 'sound/voice/beepsky/criminal.ogg', 40)
+	..()
+
+/obj/effect/hallucination/simple/securitron
+	name = "Securitron"
+	desc = "The LAW is coming."
+	image_icon = 'icons/mob/aibots.dmi'
+	image_state = "secbot-c"
+	var/victim
+
+/obj/effect/hallucination/simple/securitron/New()
+	name = pick ( "officer Beepsky", "officer Johnson", "officer Pingsky")
+	START_PROCESSING(SSfastprocess,src)
+	..()
+
+/obj/effect/hallucination/simple/securitron/process()
+	if(prob(60))
+		forceMove(get_step_towards(src, victim))
+		if(prob(5))
+			to_chat(victim, "<span class='name'>[name]</span> exclaims, \"<span class='robotic'>Level 10 infraction alert!\"</span>")
+
+/obj/effect/hallucination/simple/securitron/Destroy()
+	STOP_PROCESSING(SSfastprocess,src)
+	return ..()

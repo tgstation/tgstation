@@ -1,11 +1,17 @@
 #define STARTING_PAYCHECKS 5
 
-#define PAYCHECK_ASSISTANT 5
-#define PAYCHECK_MINIMAL 5
-#define PAYCHECK_EASY 20
-#define PAYCHECK_MEDIUM 50
-#define PAYCHECK_HARD 100
-#define PAYCHECK_COMMAND 200
+///these defines are the % of budget they get on payday
+#define PAYCHECK_ASSISTANT 1
+#define PAYCHECK_MINIMAL 1
+#define PAYCHECK_EASY 2
+#define PAYCHECK_MEDIUM 3
+#define PAYCHECK_HARD 4
+#define PAYCHECK_COMMAND 10
+
+#define MAX_GRANT_CIV 2500
+#define MAX_GRANT_ENG 3000
+#define MAX_GRANT_SCI 5000
+#define MAX_GRANT_SECMEDSRV 3000
 
 #define ACCOUNT_CIV "CIV"
 #define ACCOUNT_CIV_NAME "Civil Budget"

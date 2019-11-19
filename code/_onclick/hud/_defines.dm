@@ -86,6 +86,7 @@
 #define ui_crafting	"EAST-4:22,SOUTH:5"
 #define ui_building "EAST-4:22,SOUTH:21"
 #define ui_language_menu "EAST-4:6,SOUTH:21"
+#define ui_skill_menu "EAST-4:22,SOUTH:5"
 
 #define ui_borg_pull "EAST-2:26,SOUTH+1:7"
 #define ui_borg_radio "EAST-1:28,SOUTH+1:7"
@@ -118,6 +119,9 @@
 #define ui_construct_pull "EAST,CENTER-2:15"
 #define ui_construct_health "EAST,CENTER:15"  //same as borgs and humans
 
+//slimes
+#define ui_slime_health "EAST,CENTER:15"  //same as borgs, constructs and humans
+
 // AI
 
 #define ui_ai_core "SOUTH:6,WEST"
@@ -137,6 +141,22 @@
 #define ui_ai_sensor "SOUTH:6,WEST+14"
 #define ui_ai_multicam "SOUTH+1:6,WEST+13"
 #define ui_ai_add_multicam "SOUTH+1:6,WEST+14"
+
+// pAI
+
+#define ui_pai_software "SOUTH:6,WEST"
+#define ui_pai_shell "SOUTH:6,WEST+1"
+#define ui_pai_chassis "SOUTH:6,WEST+2"
+#define ui_pai_rest "SOUTH:6,WEST+3"
+#define ui_pai_light "SOUTH:6,WEST+4"
+#define ui_pai_newscaster "SOUTH:6,WEST+5"
+#define ui_pai_host_monitor "SOUTH:6,WEST+6"
+#define ui_pai_crew_manifest "SOUTH:6,WEST+7"
+#define ui_pai_state_laws "SOUTH:6,WEST+8"
+#define ui_pai_pda_send "SOUTH:6,WEST+9"
+#define ui_pai_pda_log "SOUTH:6,WEST+10"
+#define ui_pai_take_picture "SOUTH:6,WEST+12"
+#define ui_pai_view_images "SOUTH:6,WEST+13"
 
 //Pop-up inventory
 #define ui_shoes "WEST+1:8,SOUTH:5"

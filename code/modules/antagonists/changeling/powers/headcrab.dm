@@ -1,15 +1,17 @@
-/obj/effect/proc_holder/changeling/headcrab
+/datum/action/changeling/headcrab
 	name = "Last Resort"
-	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel."
+	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel that can plant our likeness in a new host. Costs 20 chemicals."
 	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
+	button_icon_state = "last_resort"
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1
 
-/obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
+/datum/action/changeling/headcrab/sting_action(mob/user)
 	set waitfor = FALSE
 	if(alert("Are we sure we wish to kill ourself and create a headslug?",,"Yes", "No") == "No")
 		return
+	..()
 	var/datum/mind/M = user.mind
 	var/list/organs = user.getorganszone(BODY_ZONE_HEAD, 1)
 
@@ -18,10 +20,11 @@
 
 	explosion(get_turf(user), 0, 0, 2, 0, TRUE)
 	for(var/mob/living/carbon/human/H in range(2,user))
+		var/obj/item/organ/eyes/eyes = H.getorganslot(ORGAN_SLOT_EYES)
 		to_chat(H, "<span class='userdanger'>You are blinded by a shower of blood!</span>")
 		H.Stun(20)
 		H.blur_eyes(20)
-		H.adjust_eye_damage(5)
+		eyes?.applyOrganDamage(5)
 		H.confused += 3
 	for(var/mob/living/silicon/S in range(2,user))
 		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")

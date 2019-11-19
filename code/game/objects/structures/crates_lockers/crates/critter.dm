@@ -8,10 +8,14 @@
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
 	delivery_icon = "deliverybox"
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound_volume = 25
+	close_sound_volume = 50
 	var/obj/item/tank/internals/emergency_oxygen/tank
 
-/obj/structure/closet/crate/critter/New()
-	..()
+/obj/structure/closet/crate/critter/Initialize()
+	. = ..()
 	tank = new
 
 /obj/structure/closet/crate/critter/Destroy()
@@ -36,3 +40,9 @@
 		return tank.air_contents
 	else
 		return loc.return_air()
+
+/obj/structure/closet/crate/critter/return_analyzable_air()
+	if(tank)
+		return tank.return_analyzable_air()
+	else
+		return null

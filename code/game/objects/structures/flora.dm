@@ -14,13 +14,13 @@
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
 	if(log_amount && (!(flags_1 & NODECONSTRUCT_1)))
-		if(W.sharpness && W.force > 0)
+		if(W.get_sharpness() && W.force > 0)
 			if(W.hitsound)
-				playsound(get_turf(src), W.hitsound, 100, 0, 0)
-			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "You hear the sound of sawing.")
+				playsound(get_turf(src), W.hitsound, 100, FALSE, FALSE)
+			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "<span class='hear'>You hear the sound of sawing.</span>")
 			if(do_after(user, 1000/W.force, target = src)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
-				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "You hear the sound of a tree falling.")
-				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , 0, 0)
+				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "<span class='hear'>You hear the sound of a tree falling.</span>")
+				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
 				for(var/i=1 to log_amount)
 					new /obj/item/grown/log/tree(get_turf(src))
 
@@ -63,7 +63,13 @@
 	icon_state = "pinepresents"
 	desc = "A wondrous decorated Christmas tree. It has presents!"
 	var/gift_type = /obj/item/a_gift/anything
-	var/list/ckeys_that_took = list()
+	var/unlimited = FALSE
+	var/static/list/took_presents //shared between all xmas trees
+
+/obj/structure/flora/tree/pine/xmas/presents/Initialize()
+	. = ..()
+	if(!took_presents)
+		took_presents = list()
 
 /obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user)
 	. = ..()
@@ -72,13 +78,20 @@
 	if(!user.ckey)
 		return
 
-	if(ckeys_that_took[user.ckey])
+	if(took_presents[user.ckey] && !unlimited)
 		to_chat(user, "<span class='warning'>There are no presents with your name on.</span>")
 		return
 	to_chat(user, "<span class='warning'>After a bit of rummaging, you locate a gift with your name on it!</span>")
-	ckeys_that_took[user.ckey] = TRUE
+
+	if(!unlimited)
+		took_presents[user.ckey] = TRUE
+
 	var/obj/item/G = new gift_type(src)
 	user.put_in_hands(G)
+
+/obj/structure/flora/tree/pine/xmas/presents/unlimited
+	desc = "A wonderous decorated Christmas tree. It has a seemly endless supply of presents!"
+	unlimited = TRUE
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
@@ -296,22 +309,15 @@
 	layer = ABOVE_MOB_LAYER
 	w_class = WEIGHT_CLASS_HUGE
 	force = 10
+	force_wielded = 10
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4
 
-
-/obj/item/twohanded/required/kirbyplants/equipped(mob/living/user)
-	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
-	I.copy_overlays(src)
-	I.override = 1
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
-	I.layer = ABOVE_MOB_LAYER
-	..()
-
-/obj/item/twohanded/required/kirbyplants/dropped(mob/living/user)
-	..()
-	user.remove_alt_appearance("sneaking_mission")
+/obj/item/twohanded/required/kirbyplants/Initialize()
+	. = ..()
+	AddComponent(/datum/component/tactical)
+	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 500), 0)
 
 /obj/item/twohanded/required/kirbyplants/random
 	icon = 'icons/obj/flora/_flora.dmi'
@@ -387,9 +393,8 @@
 //Jungle rocks
 
 /obj/structure/flora/rock/jungle
-	icon_state = "pile of rocks"
-	desc = "A pile of rocks."
 	icon_state = "rock"
+	desc = "A pile of rocks."
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
 

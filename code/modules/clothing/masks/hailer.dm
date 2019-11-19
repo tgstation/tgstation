@@ -12,8 +12,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
-	flags_cover = MASKCOVERSMOUTH
-	visor_flags_cover = MASKCOVERSMOUTH
+	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	var/aggressiveness = 2
 	var/cooldown_special
 	var/recent_uses = 0
@@ -29,6 +29,12 @@
 	aggressiveness = 3
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR
 	visor_flags_inv = 0
+
+/obj/item/clothing/mask/gas/sechailer/swat/spacepol
+	name = "spacepol mask"
+	desc = "A close-fitting tactical mask created in cooperation with a certain megacorporation, comes with an especially aggressive Compli-o-nator 3000."
+	icon_state = "spacepol"
+	item_state = "spacepol"
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
 	name = "security hailer"
@@ -56,6 +62,7 @@
 	return TRUE
 
 /obj/item/clothing/mask/gas/sechailer/wirecutter_act(mob/living/user, obj/item/I)
+	..()
 	if(aggressiveness != 4)
 		to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
 		aggressiveness = 4
@@ -180,6 +187,6 @@
 					phrase_sound = "dredd"
 
 		usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
-		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
+		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, FALSE, 4)
 		cooldown = world.time
 		cooldown_special = world.time

@@ -1,22 +1,17 @@
-.jobs
-{
-	width: 400px;
-	margin: 0 auto;
+.job {
+  display: block;
+  width: 173px;
 }
 
-.jobsColumn
-{
-	float: left;
-	width: 200px;
-	text-align: center;
+.command {
+  font-weight: bold;
 }
 
-.commandPosition
-{
-	font-weight: bold;
+.priority {
+  color: #00ff00;
+  font-weight: bold;
 }
 
-.otherPosition
-{
-	
+.nopositions {
+  font-style: italic;
 }

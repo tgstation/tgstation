@@ -3,19 +3,21 @@
 
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate."
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. Alt-Click to change the transfer rate."
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-	var/mob/living/carbon/attached = null
+	var/mob/living/carbon/attached
 	var/mode = IV_INJECTING
-	var/obj/item/reagent_containers/beaker = null
+	var/dripfeed = FALSE
+	var/obj/item/reagent_containers/beaker
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
-									/obj/item/reagent_containers/glass))
+									/obj/item/reagent_containers/glass,
+									/obj/item/reagent_containers/chem_pack))
 
-/obj/machinery/iv_drip/Initialize()
+/obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -24,7 +26,7 @@
 	QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/iv_drip/update_icon()
+/obj/machinery/iv_drip/update_icon_state()
 	if(attached)
 		if(mode)
 			icon_state = "injecting"
@@ -36,13 +38,14 @@
 		else
 			icon_state = "donateidle"
 
-	cut_overlays()
+/obj/machinery/iv_drip/update_overlays()
+	. = ..()
 
 	if(beaker)
 		if(attached)
-			add_overlay("beakeractive")
+			. += "beakeractive"
 		else
-			add_overlay("beakeridle")
+			. += "beakeridle"
 		if(beaker.reagents.total_volume)
 			var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/iv_drip.dmi', "reagent")
 
@@ -63,8 +66,8 @@
 				if(91 to INFINITY)
 					filling_overlay.icon_state = "reagent100"
 
-			filling_overlay.color = list("#0000", "#0000", "#0000", "#000f", mix_color_from_reagents(beaker.reagents.reagent_list))
-			add_overlay(filling_overlay)
+			filling_overlay.color = mix_color_from_reagents(beaker.reagents.reagent_list)
+			. += filling_overlay
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
 	. = ..()
@@ -130,12 +133,12 @@
 		if(mode)
 			if(beaker.reagents.total_volume)
 				var/transfer_amount = 5
+				if (dripfeed)
+					transfer_amount = 1
 				if(istype(beaker, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
-					transfer_amount = 10
-				var/fraction = min(transfer_amount/beaker.reagents.total_volume, 1) //the fraction that is transfered of the total volume
-				beaker.reagents.reaction(attached, INJECT, fraction, FALSE) //make reagents reacts, but don't spam messages
-				beaker.reagents.trans_to(attached, transfer_amount)
+					transfer_amount *= 2
+				beaker.reagents.trans_to(attached, transfer_amount, method = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 				update_icon()
 
 		// Take blood
@@ -145,13 +148,13 @@
 			// If the beaker is full, ping
 			if(!amount)
 				if(prob(5))
-					visible_message("[src] pings.")
+					visible_message("<span class='hear'>[src] pings.</span>")
 				return
 
 			// If the human is losing too much blood, beep.
 			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
-				visible_message("[src] beeps loudly.")
-				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+				visible_message("<span class='hear'>[src] beeps loudly.</span>")
+				playsound(loc, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 			attached.transfer_blood_to(beaker, amount)
 			update_icon()
 
@@ -162,7 +165,7 @@
 	if(!ishuman(user))
 		return
 	if(attached)
-		visible_message("[attached] is detached from [src]")
+		visible_message("<span class='notice'>[attached] is detached from [src].</span>")
 		attached = null
 		update_icon()
 		return
@@ -170,6 +173,16 @@
 		eject_beaker(user)
 	else
 		toggle_mode()
+
+/obj/machinery/iv_drip/AltClick(mob/living/user)
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return
+	if(dripfeed)
+		dripfeed = FALSE
+		to_chat(usr, "<span class='notice'>You loosen the valve to speed up the [src].</span>")
+	else
+		dripfeed = TRUE
+		to_chat(usr, "<span class='notice'>You tighten the valve to slowly drip-feed the contents of [src].</span>")
 
 /obj/machinery/iv_drip/verb/eject_beaker()
 	set category = "Object"
@@ -182,7 +195,6 @@
 
 	if(usr.incapacitated())
 		return
-
 	if(beaker)
 		beaker.forceMove(drop_location())
 		beaker = null
@@ -199,27 +211,44 @@
 
 	if(usr.incapacitated())
 		return
-
 	mode = !mode
-	to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
+	to_chat(usr, "<span class='notice'>The IV drip is now [mode ? "injecting" : "taking blood"].</span>")
 	update_icon()
 
 /obj/machinery/iv_drip/examine(mob/user)
-	..()
+	. = ..()
 	if(get_dist(user, src) > 2)
 		return
 
-	to_chat(user, "The IV drip is [mode ? "injecting" : "taking blood"].")
+	. += "[src] is [mode ? "injecting" : "taking blood"]."
 
 	if(beaker)
 		if(beaker.reagents && beaker.reagents.reagent_list.len)
-			to_chat(user, "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>")
+			. += "<span class='notice'>Attached is \a [beaker] with [beaker.reagents.total_volume] units of liquid.</span>"
 		else
-			to_chat(user, "<span class='notice'>Attached is an empty [beaker.name].</span>")
+			. += "<span class='notice'>Attached is an empty [beaker.name].</span>"
 	else
-		to_chat(user, "<span class='notice'>No chemicals are attached.</span>")
+		. += "<span class='notice'>No chemicals are attached.</span>"
 
-	to_chat(user, "<span class='notice'>[attached ? attached : "No one"] is attached.</span>")
+	. += "<span class='notice'>[attached ? attached : "No one"] is attached.</span>"
 
+
+/obj/machinery/iv_drip/saline
+	name = "saline drip"
+	desc = "An all-you-can-drip saline canister designed to supply a hospital without running out, with a scary looking pump rigged to inject saline into containers, but filling people directly might be a bad idea."
+	icon_state = "saline"
+	density = TRUE
+
+/obj/machinery/iv_drip/saline/Initialize(mapload)
+    . = ..()
+    beaker = new /obj/item/reagent_containers/glass/saline(src)
+
+/obj/machinery/iv_drip/saline/update_icon()
+    return
+
+/obj/machinery/iv_drip/saline/eject_beaker()
+    return
+/obj/machinery/iv_drip/saline/toggle_mode()
+	return
 #undef IV_TAKING
 #undef IV_INJECTING

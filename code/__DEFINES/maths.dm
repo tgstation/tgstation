@@ -30,7 +30,11 @@
 // round() acts like floor(x, 1) by default but can't handle other values
 #define FLOOR(x, y) ( round((x) / (y)) * (y) )
 
+#if DM_VERSION < 513
 #define CLAMP(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
+#else
+#define CLAMP(CLVALUE,CLMIN,CLMAX) clamp(CLVALUE, CLMIN, CLMAX)
+#endif
 
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) ( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) )
@@ -39,7 +43,11 @@
 #define MODULUS(x, y) ( (x) - (y) * round((x) / (y)) )
 
 // Tangent
+#if DM_VERSION < 513
 #define TAN(x) (sin(x) / cos(x))
+#else
+#define TAN(x) tan(x)
+#endif
 
 // Cotangent
 #define COT(x) (1 / TAN(x))
@@ -74,7 +82,7 @@
 #define ISINRANGE(val, min, max) (min <= val && val <= max)
 
 // Same as above, exclusive.
-#define ISINRANGE_EX(val, min, max) (min < val && val > max)
+#define ISINRANGE_EX(val, min, max) (min < val && val < max)
 
 #define ISINTEGER(x) (round(x) == x)
 
@@ -106,6 +114,9 @@
 #define TODEGREES(radians) ((radians) * 57.2957795)
 
 #define TORADIANS(degrees) ((degrees) * 0.0174532925)
+
+/// Gets shift x that would be required the bitflag (1<<x)
+#define TOBITSHIFT(bit) ( log(2, bit) )
 
 // Will filter out extra rotations and negative rotations
 // E.g: 540 becomes 180. -180 becomes 180.
@@ -201,4 +212,10 @@
 
 	return list(region_x1 & region_x2, region_y1 & region_y2)
 
+#define EXP_DISTRIBUTION(desired_mean) ( -(1/(1/desired_mean)) * log(rand(1, 1000) * 0.001) )
+
+#define LORENTZ_DISTRIBUTION(x, s) ( s*TAN(TODEGREES(PI*(rand()-0.5))) + x )
+#define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-y)/s)) + 1/2 )
+
+#define RULE_OF_THREE(a, b, x) ((a*x)/b)
 // )

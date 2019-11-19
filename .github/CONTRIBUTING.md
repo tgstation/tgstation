@@ -243,6 +243,8 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Queries must never specify the database, be it in code, or in text files in the repo.
 
+* Primary keys are inherently immutable and you must never do anything to change the primary key of a row or entity. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids or out of order ids will save you from this policy.
+
 ### Mapping Standards
 * TGM Format & Map Merge
 	* All new maps submitted to the repo through a pull request must be in TGM format (unless there is a valid reason present to have it in the default BYOND format.) This is done using the [Map Merge](https://github.com/tgstation/tgstation/wiki/Map-Merger) utility included in the repo to convert the file to TGM format.
@@ -255,6 +257,12 @@ This prevents nesting levels from getting deeper then they need to be.
 	* Please attempt to clean out any dirty variables that may be contained within items you alter through var-editing. For example, due to how DM functions, changing the `pixel_x` variable from 23 to 0 will leave a dirty record in the map's code of `pixel_x = 0`. Likewise this can happen when changing an item's icon to something else and then back. This can lead to some issues where an item's icon has changed within the code, but becomes broken on the map due to it still attempting to use the old entry.
 	* Areas should not be var-edited on a map to change it's name or attributes. All areas of a single type and it's altered instances are considered the same area within the code, and editing their variables on a map can lead to issues with powernets and event subsystems which are difficult to debug.
 
+### User Interfaces
+* All new player-facing user interfaces must use TGUI-next; TGUI is deprecated. 
+* Raw HTML is permitted for admin and debug UIs.
+* Documentation for TGUI-next can be found at: 
+	* [tgui-next/README.md](../tgui-next/README.md)
+	* [tgui-next/tutorial-and-examples.md](../tgui-next/docs/tutorial-and-examples.md)
 
 ### Other Notes
 * Code should be modular where possible; if you are working on a new addition, then strongly consider putting it in its own file unless it makes sense to put it with similar ones (i.e. a new tool would go in the "tools.dm" file)
@@ -391,6 +399,10 @@ There is no strict process when it comes to merging pull requests. Pull requests
 * If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to support or object to any changes being made, which will likely hold more weight, as you're the one who added the feature. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
 
 * Please explain why you are submitting the pull request, and how you think your change will be beneficial to the game. Failure to do so will be grounds for rejecting the PR.
+
+* If your pull request is not finished make sure it is at least testable in a live environment. Pull requests that do not at least meet this requirement will be closed. You may request a maintainer reopen the pull request when you're ready, or make a new one.
+
+* While we have no issue helping contributors (and especially new contributors) bring reasonably sized contributions up to standards via the pull request review process, larger contributions are expected to pass a higher bar of completeness and code quality *before* you open a pull request. Maintainers may close such pull requests that are deemed to be substantially flawed. You should take some time to discuss with maintainers or other contributors on how to improve the changes.
 
 ## Porting features/sprites/sounds/tools from other codebases
 

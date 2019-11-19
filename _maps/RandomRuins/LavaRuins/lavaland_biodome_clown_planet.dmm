@@ -113,7 +113,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "ax" = (
-/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
@@ -246,9 +246,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "aE" = (
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -355,7 +353,7 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -546,7 +544,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "ba" = (
-/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -618,7 +616,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -825,7 +823,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bC" = (
@@ -865,14 +863,12 @@
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "bF" = (
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bH" = (
@@ -881,7 +877,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bI" = (
@@ -942,7 +938,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bP" = (
@@ -970,8 +966,8 @@
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bT" = (
-/obj/item/slime_extract/rainbow,
 /obj/structure/table/glass,
+/obj/item/reagent_containers/spray/waterflower/superlube,
 /turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "bU" = (
@@ -989,7 +985,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bY" = (
@@ -999,7 +995,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "bZ" = (
@@ -1008,7 +1004,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "ca" = (
@@ -1018,7 +1014,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "cc" = (
@@ -1202,7 +1198,7 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "dO" = (
@@ -1211,13 +1207,13 @@
 	icon_state = "bananium";
 	name = "bananium floor";
 	sound = 'sound/effects/clownstep1.ogg';
-	wet = 8
+	wet = 16
 	},
 /area/ruin/powered/clownplanet)
 "eX" = (
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/explored)
 "gX" = (
@@ -1243,11 +1239,11 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/explored)
 "Hj" = (
-/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
@@ -1280,7 +1276,7 @@
 /obj/structure/disposalpipe/trunk,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered/clownplanet)
 "Mv" = (
@@ -1302,14 +1298,14 @@
 	},
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered/clownplanet)
 "Xm" = (
 /obj/item/clothing/head/cone,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/lavaland/surface/outdoors/explored)
 "XO" = (
@@ -1327,7 +1323,7 @@
 /obj/machinery/light/small,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered/clownplanet)
 

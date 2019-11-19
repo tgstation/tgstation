@@ -6,28 +6,21 @@
 	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/circuitboard/computer/mecha_control
 	var/list/located = list()
-	var/screen = 0
-	var/stored_data
 
 /obj/machinery/computer/mecha/ui_interact(mob/user)
 	. = ..()
-	var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
-	if(screen == 0)
-		dat += "<h3>Tracking beacons data</h3>"
-		var/list/trackerlist = list()
-		for(var/obj/mecha/MC in GLOB.mechas_list)
-			trackerlist += MC.trackers
-		for(var/obj/item/mecha_parts/mecha_tracking/TR in trackerlist)
-			var/answer = TR.get_mecha_info()
-			if(answer)
-				dat += {"<hr>[answer]<br/>
-						  <a href='?src=[REF(src)];send_message=[REF(TR)]'>Send message</a><br/>
+	var/dat = {"<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body><br>
+				<h3>Tracking beacons data</h3>"}
+	var/list/trackerlist = list()
+	for(var/obj/mecha/MC in GLOB.mechas_list)
+		trackerlist += MC.trackers
+	for(var/obj/item/mecha_parts/mecha_tracking/TR in trackerlist)
+		var/answer = TR.get_mecha_info()
+		if(answer)
+			dat += {"<hr>[answer]<br/><br>
+						<a href='?src=[REF(src)];send_message=[REF(TR)]'>Send Message</a> | [TR.recharging?"Recharging EMP Pulse...<br>":"<a style='color: #f00;' href='?src=[REF(src)];shock=[REF(TR)]'>(EMP Pulse)</a><br>"]"}
 
-	if(screen==1)
-		dat += {"<h3>Log contents</h3>"
-		<a href='?src=[REF(src)];return=1'>Return</a><hr>"
-		[stored_data]"}
-
+	dat += "<hr>"
 	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><BR>"
 	dat += "</body></html>"
 
@@ -37,19 +30,20 @@
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	if(..())
 		return
-	var/datum/topic_input/afilter = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("send_message")
+		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["send_message"])
+		if (!istype(MT))
+			return
 		var/message = stripped_input(usr,"Input message","Transmit message")
 		var/obj/mecha/M = MT.in_mecha()
 		if(trim(message) && M)
 			M.occupant_message(message)
 		return
 	if(href_list["shock"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("shock")
-		MT.shock()
-	if(href_list["return"])
-		screen = 0
+		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["shock"])
+		if (istype(MT))
+			MT.shock()
+
 	updateUsrDialog()
 	return
 
@@ -60,22 +54,23 @@
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
 	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
+	var/recharging = 0
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())
 		return 0
 	var/obj/mecha/M = src.loc
 	var/cell_charge = M.get_charge()
-	var/answer = {"<b>Name:</b> [M.name]
-<b>Integrity:</b> [M.obj_integrity/M.max_integrity*100]%
-<b>Cell charge:</b> [isnull(cell_charge)?"Not found":"[M.cell.percent()]%"]
-<b>Airtank:</b> [M.return_pressure()]kPa
-<b>Pilot:</b> [M.occupant||"None"]
-<b>Location:</b> [get_area(M)||"Unknown"]
-<b>Active equipment:</b> [M.selected||"None"] "}
+	var/answer = {"<b>Name:</b> [M.name]<br>
+<b>Integrity:</b> [round((M.obj_integrity/M.max_integrity*100), 0.01)]%<br>
+<b>Cell Charge:</b> [isnull(cell_charge)?"Not Found":"[M.cell.percent()]%"]<br>
+<b>Airtank:</b> [M.internal_tank?"[round(M.return_pressure(), 0.01)]":"Not Equipped"] kPa<br>
+<b>Pilot:</b> [M.occupant||"None"]<br>
+<b>Location:</b> [get_area_name(M, TRUE)||"Unknown"]<br>
+<b>Active Equipment:</b> [M.selected||"None"]"}
 	if(istype(M, /obj/mecha/working/ripley))
 		var/obj/mecha/working/ripley/RM = M
-		answer += "<b>Used cargo space:</b> [RM.cargo.len/RM.cargo_capacity*100]%<br>"
+		answer += "<br><b>Used Cargo Space:</b> [round((RM.cargo.len/RM.cargo_capacity*100), 0.01)]%"
 
 	return answer
 
@@ -91,16 +86,28 @@
 			M.trackers -= src
 	return ..()
 
+/obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/mecha/M)
+	if(!..())
+		return
+	M.trackers += src
+	M.diag_hud_set_mechtracking()
+
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
 	if(ismecha(loc))
 		return loc
 	return 0
 
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
+	if(recharging)
+		return
 	var/obj/mecha/M = in_mecha()
 	if(M)
-		M.emp_act(EMP_LIGHT)
-	qdel(src)
+		M.emp_act(EMP_HEAVY)
+		addtimer(CALLBACK(src, /obj/item/mecha_parts/mecha_tracking/proc/recharge), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		recharging = 1
+
+/obj/item/mecha_parts/mecha_tracking/proc/recharge()
+	recharging = 0
 
 /obj/item/mecha_parts/mecha_tracking/ai_control
 	name = "exosuit AI control beacon"

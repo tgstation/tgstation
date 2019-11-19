@@ -6,9 +6,10 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
 	max_integrity = 250
-	integrity_failure = 100
+	integrity_failure = 0.4
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
+	damage_deflection = 10
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
@@ -34,19 +35,25 @@
 	else
 		bulb = new(src)
 
+/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	id = "[idnum][id]"
+
 /obj/machinery/flasher/Destroy()
 	QDEL_NULL(bulb)
 	return ..()
 
-/obj/machinery/flasher/power_change()
-	if (powered() && anchored && bulb)
-		stat &= ~NOPOWER
-		if(bulb.crit_fail)
+/obj/machinery/flasher/powered()
+	if(!anchored || !bulb)
+		return FALSE
+	return ..()
+
+/obj/machinery/flasher/update_icon_state()
+	if (powered())
+		if(bulb.burnt_out)
 			icon_state = "[base_state]1-p"
 		else
 			icon_state = "[base_state]1"
 	else
-		stat |= NOPOWER
 		icon_state = "[base_state]1-p"
 
 //Don't want to render prison breaks impossible
@@ -54,9 +61,9 @@
 	add_fingerprint(user)
 	if (W.tool_behaviour == TOOL_WIRECUTTER)
 		if (bulb)
-			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
+			user.visible_message("<span class='notice'>[user] begins to disconnect [src]'s flashbulb.</span>", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			if(W.use_tool(src, user, 30, volume=50) && bulb)
-				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
+				user.visible_message("<span class='notice'>[user] has disconnected [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.forceMove(loc)
 				bulb = null
 				power_change()
@@ -65,7 +72,7 @@
 		if (!bulb)
 			if(!user.transferItemToLoc(W, src))
 				return
-			user.visible_message("[user] installs [W] into [src].", "<span class='notice'>You install [W] into [src].</span>")
+			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
 			bulb = W
 			power_change()
 		else
@@ -87,23 +94,18 @@
 	if (anchored)
 		return flash()
 
-/obj/machinery/flasher/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 10) //any melee attack below 10 dmg does nothing
-		return 0
-	. = ..()
-
 /obj/machinery/flasher/proc/flash()
 	if (!powered() || !bulb)
 		return
 
-	if (bulb.crit_fail || (last_flash && world.time < src.last_flash + 150))
+	if (bulb.burnt_out || (last_flash && world.time < src.last_flash + 150))
 		return
 
 	if(!bulb.flash_recharge(30)) //Bulb can burn out if it's used too often too fast
 		power_change()
 		return
 
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, TRUE)
 	flick("[base_state]_flash", src)
 	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 	last_flash = world.time
@@ -133,12 +135,10 @@
 			power_change()
 
 /obj/machinery/flasher/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!(stat & BROKEN))
-			stat |= BROKEN
-			if(bulb)
-				bulb.burn_out()
-				power_change()
+	. = ..()
+	if(. && bulb)
+		bulb.burn_out()
+		power_change()
 
 /obj/machinery/flasher/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -149,7 +149,7 @@
 			var/obj/item/wallframe/flasher/F = new(get_turf(src))
 			transfer_fingerprints_to(F)
 			F.id = id
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		else
 			new /obj/item/stack/sheet/metal (loc, 2)
 	qdel(src)
@@ -196,8 +196,8 @@
 	var/id = null
 
 /obj/item/wallframe/flasher/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
+	. = ..()
+	. += "<span class='notice'>Its channel ID is '[id]'.</span>"
 
 /obj/item/wallframe/flasher/after_attach(var/obj/O)
 	..()

@@ -4,7 +4,8 @@
 	melee_damage_lower = 7
 	melee_damage_upper = 7
 	attack_sound = 'sound/items/welder.ogg'
-	attacktext = "ignites"
+	attack_verb_continuous = "ignites"
+	attack_verb_simple = "ignite"
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	range = 7
 	playstyle_string = "<span class='holoparasite'>As a <b>chaos</b> type, you have only light damage resistance, but will ignite any enemy you bump into. In addition, your melee attacks will cause human targets to see everyone as you.</span>"

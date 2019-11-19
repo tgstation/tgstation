@@ -22,32 +22,6 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
-//Chaplain
-/obj/item/clothing/suit/nun
-	name = "nun robe"
-	desc = "Maximum piety in this star system."
-	icon_state = "nun"
-	item_state = "nun"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	flags_inv = HIDESHOES|HIDEJUMPSUIT
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-
-/obj/item/clothing/suit/studentuni
-	name = "student robe"
-	desc = "The uniform of a bygone institute of learning."
-	icon_state = "studentuni"
-	item_state = "studentuni"
-	body_parts_covered = ARMS|CHEST
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-
-/obj/item/clothing/suit/witchhunter
-	name = "witchunter garb"
-	desc = "This worn outfit saw much use back in the day."
-	icon_state = "witchhunter"
-	item_state = "witchhunter"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-
 //Chef
 /obj/item/clothing/suit/toggle/chef
 	name = "chef's apron"
@@ -78,7 +52,7 @@
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 35, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 
@@ -91,6 +65,12 @@
 	desc = "A hard-boiled private investigator's grey trenchcoat."
 	icon_state = "greydet"
 	item_state = "greydet"
+
+/obj/item/clothing/suit/det_suit/noir
+	name = "noir suit coat"
+	desc = "A dapper private investigator's grey suit coat."
+	icon_state = "detsuit"
+	item_state = "detsuit"
 
 //Engineering
 /obj/item/clothing/suit/hazardvest
@@ -171,6 +151,25 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
 	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip)
-	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 35, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
+
+
+//Robotocist
+
+/obj/item/clothing/suit/hooded/techpriest
+	name = "techpriest robes"
+	desc = "For those who REALLY love their toasters."
+	icon_state = "techpriest"
+	item_state = "techpriest"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	hoodtype = /obj/item/clothing/head/hooded/techpriest
+	
+/obj/item/clothing/head/hooded/techpriest
+	name = "techpriest's hood"
+	desc = "A hood for those who REALLY love their toasters."
+	icon_state = "techpriesthood"
+	item_state = "techpriesthood"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS

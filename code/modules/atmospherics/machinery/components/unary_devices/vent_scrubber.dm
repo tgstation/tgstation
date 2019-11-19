@@ -2,9 +2,10 @@
 #define SCRUBBING	1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber
+	icon_state = "scrub_map-2"
+
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it."
-	icon_state = "scrub_map"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 60
@@ -28,16 +29,6 @@
 
 	pipe_state = "scrubber"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1
-	piping_layer = PIPING_LAYER_MIN
-	pixel_x = -PIPING_LAYER_P_X
-	pixel_y = -PIPING_LAYER_P_Y
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/layer3
-	piping_layer = PIPING_LAYER_MAX
-	pixel_x = PIPING_LAYER_P_X
-	pixel_y = PIPING_LAYER_P_Y
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
 	if(!id_tag)
@@ -47,20 +38,6 @@
 		if(istext(f))
 			filter_types -= f
 			filter_types += gas_id2path(f)
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on
-	on = TRUE
-	icon_state = "scrub_map_on"
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1
-	piping_layer = PIPING_LAYER_MIN
-	pixel_x = -PIPING_LAYER_P_X
-	pixel_y = -PIPING_LAYER_P_Y
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3
-	piping_layer = PIPING_LAYER_MAX
-	pixel_x = PIPING_LAYER_P_X
-	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/A = get_area(src)
@@ -92,7 +69,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
+		var/image/cap = getpipeimage(icon, "scrub_cap", initialize_directions, piping_layer = piping_layer)
+		add_overlay(cap)
 
 	if(welded)
 		icon_state = "scrub_welded"
@@ -118,7 +96,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
 	if(!radio_connection)
 		return FALSE
-	
+
 	var/list/f_types = list()
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
@@ -207,7 +185,7 @@
 			air_contents.merge(filtered_out)
 			tile.assume_air(removed)
 			tile.air_update_turf()
-	
+
 	else //Just siphoning all air
 
 		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
@@ -240,7 +218,7 @@
 	if(!is_operational() || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
 
-	var/mob/signal_sender = signal.data["user"]
+	var/atom/signal_sender = signal.data["user"]
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
@@ -281,23 +259,26 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
-	..()
+	. = ..()
 	update_icon_nopipes()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(!I.tool_start_check(user, amount=0))
 		return TRUE
 	to_chat(user, "<span class='notice'>Now welding the scrubber.</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		if(!welded)
-			user.visible_message("[user] welds the scrubber shut.","You weld the scrubber shut.", "You hear welding.")
+			user.visible_message("<span class='notice'>[user] welds the scrubber shut.</span>","<span class='notice'>You weld the scrubber shut.</span>", "<span class='hear'>You hear welding.</span>")
 			welded = TRUE
 		else
-			user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
+			user.visible_message("<span class='notice'>[user] unwelds the scrubber.</span>", "<span class='notice'>You unweld the scrubber.</span>", "<span class='hear'>You hear welding.</span>")
 			welded = FALSE
 		update_icon()
 		pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 		pipe_vision_img.plane = ABOVE_HUD_PLANE
+		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		add_fingerprint(user)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
@@ -305,11 +286,11 @@
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
-		
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/examine(mob/user)
-	..()
+	. = ..()
 	if(welded)
-		to_chat(user, "It seems welded shut.")
+		. += "It seems welded shut."
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded
@@ -317,14 +298,33 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/attack_alien(mob/user)
 	if(!welded || !(do_after(user, 20, target = src)))
 		return
-	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the scrubber.", "You hear loud scraping noises.")
+	user.visible_message("<span class='warning'>[user] furiously claws at [src]!</span>", "<span class='notice'>You manage to clear away the stuff blocking the scrubber.</span>", "<span class='hear'>You hear loud scraping noises.</span>")
 	welded = FALSE
 	update_icon()
 	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 	pipe_vision_img.plane = ABOVE_HUD_PLANE
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
 
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1
+	piping_layer = 1
+	icon_state = "scrub_map-1"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer3
+	piping_layer = 3
+	icon_state = "scrub_map-3"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on
+	on = TRUE
+	icon_state = "scrub_map_on-2"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1
+	piping_layer = 1
+	icon_state = "scrub_map_on-1"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3
+	piping_layer = 3
+	icon_state = "scrub_map_on-3"
 
 #undef SIPHONING
 #undef SCRUBBING

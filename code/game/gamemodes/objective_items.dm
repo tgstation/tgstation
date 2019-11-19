@@ -77,14 +77,14 @@
 	return !N.fake
 
 /datum/objective_item/steal/reflector
-	name = "a reflector vest."
-	targetitem = /obj/item/clothing/suit/armor/laserproof
+	name = "a reflector trenchcoat."
+	targetitem = /obj/item/clothing/suit/hooded/ablative
 	difficulty = 3
 	excludefromjob = list("Head of Security", "Warden")
 
 /datum/objective_item/steal/reactive
 	name = "the reactive teleport armor."
-	targetitem = /obj/item/clothing/suit/armor/reactive
+	targetitem = /obj/item/clothing/suit/armor/reactive/teleport
 	difficulty = 5
 	excludefromjob = list("Research Director")
 

@@ -1,3 +1,8 @@
+/area/awaymission/vr/murderdome
+	name = "Murderdome"
+	icon_state = "awaycontent8"
+	pacifist = FALSE
+
 /obj/structure/window/reinforced/fulltile/indestructable
 	name = "robust window"
 	flags_1 = PREVENT_CLICK_UNDER_1 | NODECONSTRUCT_1
@@ -34,8 +39,3 @@
 	if(!QDELETED(src))
 		new /obj/structure/barricade/security/murderdome(get_turf(src))
 		qdel(src)
-
-/area/awaymission/vr/murderdome
-	name = "Murderdome"
-	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED

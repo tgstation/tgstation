@@ -6,7 +6,7 @@
 /obj/machinery/power/emitter/energycannon/magical
 	name = "wabbajack statue"
 	desc = "Who am I? What is my purpose in life? What do I mean by who am I?"
-	projectile_type = /obj/item/projectile/magic/change
+	projectile_type = /obj/projectile/magic/change
 	icon = 'icons/obj/machines/magic_emitter.dmi'
 	icon_state = "wabbajack_statue"
 	icon_state_on = "wabbajack_statue_on"
@@ -76,7 +76,7 @@
 			break
 
 	if(!our_statue)
-		name = "inert [name]"
+		name = "inert [initial(name)]"
 		return
 	else
 		name = initial(name)
@@ -130,30 +130,30 @@
 /obj/structure/table/abductor/wabbajack/right
 	desc = "It wakes so you may sleep."
 
-// Bar staff, GODMODE mobs that just want to make sure people have drinks
+// Bar staff, GODMODE mobs(as long as they stay in the shuttle) that just want to make sure people have drinks
 // and a good time.
 
 /mob/living/simple_animal/drone/snowflake/bardrone
 	name = "Bardrone"
-	desc = "A barkeeping drone, an indestructible robot built to tend bars."
+	desc = "A barkeeping drone, a robot built to tend bars."
 	hacked = TRUE
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
-	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
 	. = ..()
 	access_card.access |= ACCESS_CENT_BAR
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
+	check_barstaff_godmode()
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid
 	gold_core_spawnable = NO_SPAWN
 	name = "Barmaid"
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE
-	status_flags = GODMODE
 	unique_name = FALSE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
@@ -165,11 +165,19 @@
 	var/datum/job/captain/C = new /datum/job/captain
 	access_card.access = C.get_access()
 	access_card.access |= ACCESS_CENT_BAR
-	access_card.item_flags |= NODROP
+	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/check_barstaff_godmode)
+	check_barstaff_godmode()
 
 /mob/living/simple_animal/hostile/alien/maid/barmaid/Destroy()
 	qdel(access_card)
 	. = ..()
+
+/mob/living/simple_animal/proc/check_barstaff_godmode()
+	if(istype(get_area(loc), /area/shuttle/escape))
+		status_flags |= GODMODE
+	else
+		status_flags &= ~GODMODE
 
 // Bar table, a wooden table that kicks you in a direction if you're not
 // barstaff (defined as someone who was a roundstart bartender or someone
@@ -187,7 +195,7 @@
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
 		M.Paralyze(40)
-		M.throw_at(throwtarget, 5, 1,src)
+		M.throw_at(throwtarget, 5, 1)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
 		. = ..()
@@ -206,7 +214,7 @@
 //Luxury Shuttle Blockers
 
 /obj/effect/forcefield/luxury_shuttle
-	name = "Luxury shuttle ticket booth"
+	name = "luxury shuttle ticket booth"
 	desc = "A forceful money collector."
 	timeleft = 0
 	var/threshold = 500
@@ -228,6 +236,28 @@
 /obj/effect/forcefield/luxury_shuttle/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
+
+	var/datum/bank_account/account
+	if(istype(AM.pulling, /obj/item/card/id))
+		var/obj/item/card/id/I = AM.pulling
+		if(I.registered_account)
+			account = I.registered_account
+		else if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
+			to_chat(AM, "<span class='notice'>This ID card doesn't have an owner associated with it!</span>")
+			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
+	else if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		if(H.get_bank_account())
+			account = H.get_bank_account()
+
+	if(account)
+		if(account.account_balance < threshold - payees[AM])
+			account.adjust_money(-account.account_balance)
+			payees[AM] += account.account_balance
+		else
+			var/money_owed = threshold - payees[AM]
+			account.adjust_money(-money_owed)
+			payees[AM] += money_owed
 
 	var/list/counted_money = list()
 
@@ -262,32 +292,42 @@
 		payees[AM] += H.credits
 		counted_money += H
 
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if(H.get_bank_account())
-			var/datum/bank_account/account = H.get_bank_account()
+	if(payees[AM] < threshold)
+		var/armless
+		if(!ishuman(AM) && !istype(AM, /mob/living/simple_animal/slime))
+			armless = TRUE
+		else
+			var/mob/living/carbon/human/H = AM
+			if(!H.get_bodypart(BODY_ZONE_L_ARM) && !H.get_bodypart(BODY_ZONE_R_ARM))
+				armless = TRUE
 
-			if(account.account_balance < threshold)
-				payees[AM] += account.account_balance
-				account.adjust_money(-account.account_balance)
-			else
-				var/money_owed = threshold - payees[AM]
-				payees[AM] += money_owed
-				account.adjust_money(-money_owed)
+		if(armless)
+			if(!AM.pulling || !iscash(AM.pulling) && !istype(AM.pulling, /obj/item/card/id))
+				if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
+					to_chat(AM, "<span class='notice'>Try pulling a valid ID, space cash, holochip or coin into \the [src]!</span>")
+					check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
 	if(payees[AM] >= threshold)
 		for(var/obj/I in counted_money)
 			qdel(I)
 		payees[AM] -= threshold
-		say("<span class='robot'>Welcome aboard, [AM]!</span>")
-		approved_passengers += AM
 
-		if(payees[AM] > 0 && ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			if(H.get_bank_account())
-				var/datum/bank_account/account = H.get_bank_account()
-				account.adjust_money(payees[AM])
-				payees[AM] -= payees[AM]
+		var/change = FALSE
+		if(payees[AM] > 0)
+			change = TRUE
+			var/obj/item/holochip/HC
+			HC.credits = payees[AM]
+			if(istype(AM, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = AM
+				if(!H.put_in_hands(new HC))
+					AM.pulling = HC
+			else
+				new HC(AM.loc)
+				AM.pulling = HC
+			payees[AM] -= payees[AM]
+
+		say("<span class='robot'>Welcome aboard, [AM]![change ? " Here is your change." : ""]</span>")
+		approved_passengers += AM
 
 		check_times -= AM
 		return
@@ -295,7 +335,7 @@
 		for(var/obj/I in counted_money)
 			qdel(I)
 		if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
-			say("<span class='robot'>$[payees[AM]] received, [AM]. You need $[threshold-payees[AM]] more.</span>")
+			to_chat(AM, "<span class='notice'>$[payees[AM]] received. You need $[threshold-payees[AM]] more.</span>")
 			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 		return ..()
 	else

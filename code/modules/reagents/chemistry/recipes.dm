@@ -20,7 +20,7 @@
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
-/datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon")
+/datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon", random = TRUE)
 	if(holder && holder.my_atom)
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
@@ -36,40 +36,41 @@
 		message_admins(message, 0, 1)
 		log_game("[reaction_name] chemical mob spawn reaction occuring at [AREACOORD(T)] carried by [key_name(M)] with last fingerprint [A.fingerprintslast? A.fingerprintslast : "N/A"]")
 
-		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, TRUE)
 
 		for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
 			C.flash_act()
 
 		for(var/i in 1 to amount_to_spawn)
-			var/mob/living/simple_animal/S = create_random_mob(get_turf(holder.my_atom), mob_class)
+			var/mob/living/simple_animal/S
+			if(random)
+				S = create_random_mob(get_turf(holder.my_atom), mob_class)
+			else
+				S = new mob_class(get_turf(holder.my_atom))//Spawn our specific mob_class
 			S.faction |= mob_faction
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(S, pick(NORTH,SOUTH,EAST,WEST))
 
-/datum/chemical_reaction/proc/goonchem_vortex(turf/T, setting_type, range)
+///Simulates a vortex that moves nearby movable atoms towards or away from the turf T. Range also determines the strength of the effect. High values cause nearby objects to be thrown.
+/proc/goonchem_vortex(turf/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
-		if(iseffect(X))
+		if(X.anchored)
 			continue
-		if(!X.anchored)
-			var/distance = get_dist(X, T)
-			var/moving_power = max(range - distance, 1)
-			if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
-				if(setting_type)
-					var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
-					X.throw_at(throw_target, moving_power, 1)
-				else
-					X.throw_at(T, moving_power, 1)
+		if(iseffect(X) || iscameramob(X) || isdead(X))
+			continue
+		var/distance = get_dist(X, T)
+		var/moving_power = max(range - distance, 1)
+		if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
+			if(setting_type)
+				var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
+				X.throw_at(throw_target, moving_power, 1)
 			else
-				spawn(0) //so everything moves at the same time.
-					if(setting_type)
-						for(var/i = 0, i < moving_power, i++)
-							sleep(2)
-							if(!step_away(X, T))
-								break
-					else
-						for(var/i = 0, i < moving_power, i++)
-							sleep(2)
-							if(!step_towards(X, T))
-								break
+				X.throw_at(T, moving_power, 1)
+		else
+			if(setting_type)
+				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So this is fine.
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, X, T), 2)
+			else
+				if(step_towards(X, T) && moving_power > 1)
+					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_towards, X, T), 2)

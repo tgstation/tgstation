@@ -11,9 +11,8 @@
 "ad" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "ae" = (
@@ -36,9 +35,8 @@
 "ah" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "ai" = (
@@ -103,7 +101,7 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "at" = (
-/mob/living/simple_animal/hostile/spawner/skeleton,
+/obj/structure/spawner/skeleton,
 /turf/open/floor/plating/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -164,7 +162,7 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "aB" = (
-/mob/living/simple_animal/hostile/spawner/skeleton,
+/obj/structure/spawner/skeleton,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -239,7 +237,6 @@
 /area/awaymission/caves/BMP_asteroid/level_three)
 "aM" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 1;
 	id = "minedeep"
 	},
@@ -266,7 +263,6 @@
 /area/awaymission/caves/BMP_asteroid/level_three)
 "aP" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 1;
 	id = "dungeon";
 	name = "rusty ladder"
@@ -316,9 +312,8 @@
 /obj/effect/forcefield/cult,
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "aW" = (
@@ -374,7 +369,7 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "be" = (
-/mob/living/simple_animal/hostile/spawner/mining/goliath,
+/obj/structure/spawner/mining/goliath,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -504,7 +499,7 @@
 /area/awaymission/caves/BMP_asteroid/level_three)
 "bw" = (
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/spawner/skeleton,
+/obj/structure/spawner/skeleton,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -563,7 +558,6 @@
 /area/awaymission/caves/BMP_asteroid/level_four)
 "bF" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 2;
 	id = "dungeon";
 	name = "rusty ladder"
@@ -580,7 +574,7 @@
 /area/awaymission/caves/BMP_asteroid/level_four)
 "bH" = (
 /obj/effect/decal/remains/human,
-/obj/item/clothing/under/patriotsuit,
+/obj/item/clothing/under/misc/patriotsuit,
 /turf/open/floor/plating/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -605,9 +599,8 @@
 "bM" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid)
 "bN" = (
@@ -616,9 +609,8 @@
 "bO" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "bP" = (
@@ -734,7 +726,6 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "ce" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 1;
 	id = "mineintro"
 	},
@@ -930,7 +921,7 @@
 /turf/closed/wall,
 /area/awaymission/caves/BMP_asteroid/level_two)
 "cL" = (
-/mob/living/simple_animal/hostile/spawner/mining/basilisk,
+/obj/structure/spawner/mining/basilisk,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -1122,7 +1113,6 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dj" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 2;
 	id = "minedeep"
 	},
@@ -1642,7 +1632,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/caves/listeningpost)
 "fb" = (
-/mob/living/simple_animal/hostile/spawner/mining/hivelord,
+/obj/structure/spawner/mining/hivelord,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -1905,8 +1895,8 @@
 /area/awaymission/caves/BMP_asteroid)
 "fQ" = (
 /turf/open/floor/plasteel/elevatorshaft{
-	name = "elevator flooring";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	name = "elevator flooring"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "fR" = (
@@ -1930,8 +1920,8 @@
 "fU" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/elevatorshaft{
-	name = "elevator flooring";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	name = "elevator flooring"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "fW" = (
@@ -1966,7 +1956,6 @@
 /area/awaymission/caves/BMP_asteroid)
 "ga" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 2;
 	id = "mineintro"
 	},
@@ -2127,11 +2116,13 @@
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gC" = (
-/obj/mecha/working/ripley/mining,
+/obj/mecha/working/ripley/mining{
+	ruin_mecha = 1
+	},
 /turf/open/floor/plasteel/recharge_floor,
 /area/awaymission/caves/BMP_asteroid)
 "gD" = (
-/mob/living/simple_animal/hostile/spawner/mining/hivelord,
+/obj/structure/spawner/mining/hivelord,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2204,7 +2195,7 @@
 	},
 /area/awaymission/caves/BMP_asteroid)
 "gQ" = (
-/mob/living/simple_animal/hostile/spawner/mining/basilisk,
+/obj/structure/spawner/mining/basilisk,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -2257,9 +2248,8 @@
 /obj/effect/baseturf_helper/lava,
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "gZ" = (

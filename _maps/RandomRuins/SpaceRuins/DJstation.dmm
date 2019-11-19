@@ -54,45 +54,31 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "an" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/smes/magical{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
 	name = "power storage unit"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ao" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ap" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
 	pixel_y = -24
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "aq" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/item/storage/box/lights/mixed,
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
-/turf/open/floor/plating,
-/area/ruin/space/djstation)
-"ar" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "as" = (
@@ -188,10 +174,8 @@
 "aH" = (
 /obj/structure/table,
 /obj/item/radio/intercom{
-	broadcasting = 0;
 	dir = 8;
 	freerange = 1;
-	listening = 1;
 	name = "Pirate Radio Listening Channel"
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -324,7 +308,7 @@
 	dir = 1
 	},
 /obj/structure/rack,
-/obj/item/clothing/under/soviet,
+/obj/item/clothing/under/costume/soviet,
 /obj/item/clothing/head/ushanka,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/space/djstation)
@@ -594,7 +578,7 @@ ah
 aj
 an
 ao
-ar
+ao
 at
 aw
 aw

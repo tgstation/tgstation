@@ -5,19 +5,23 @@
 	anchored = TRUE
 
 /obj/effect/particle_effect/expl_particles/Initialize()
-	. = ..()
-	QDEL_IN(src, 15)
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/particle_effect/expl_particles/LateInitialize()
+	var/direct = pick(GLOB.alldirs)
+	var/steps_amt = pick(1;25,2;50,3,4;200)
+	for(var/j in 1 to steps_amt)
+		step(src, direct)
+		sleep(1)
+	qdel(src)
 
 /datum/effect_system/expl_particles
 	number = 10
 
 /datum/effect_system/expl_particles/start()
 	for(var/i in 1 to number)
-		var/obj/effect/particle_effect/expl_particles/expl = new /obj/effect/particle_effect/expl_particles(location)
-		var/direct = pick(GLOB.alldirs)
-		var/steps_amt = pick(1;25,2;50,3,4;200)
-		for(var/j in 1 to steps_amt)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, expl, direct), j)
+		new /obj/effect/particle_effect/expl_particles(location)
 
 /obj/effect/explosion
 	name = "fire"

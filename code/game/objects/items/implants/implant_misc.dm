@@ -26,7 +26,7 @@
 				<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
 				<HR>
 				<b>Implant Details:</b> Subjects injected with implant can activate an injection of medical cocktails.<BR>
-				<b>Function:</b> Removes stuns, increases speed, and has a mild healing effect.<BR>
+				<b>Function:</b> Pushes the body past the normal limits, assisting in escape from sticky situations.<BR>
 				<b>Integrity:</b> Implant can only be used three times before reserves are depleted."}
 	return dat
 
@@ -34,20 +34,14 @@
 	. = ..()
 	uses--
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
-	imp_in.SetStun(0)
-	imp_in.SetKnockdown(0)
-	imp_in.SetUnconscious(0)
-	imp_in.SetParalyzed(0)
-	imp_in.SetImmobilized(0)
-	imp_in.adjustStaminaLoss(-75)
 	imp_in.set_resting(FALSE)
-	imp_in.update_mobility()
-
-	imp_in.reagents.add_reagent("synaptizine", 10)
-	imp_in.reagents.add_reagent("omnizine", 10)
-	imp_in.reagents.add_reagent("stimulants", 10)
+	imp_in.reagents.add_reagent(/datum/reagent/medicine/badstims, 6)
 	if(!uses)
 		qdel(src)
+
+/obj/item/implanter/adrenalin
+	name = "implanter (adrenalin)"
+	imp_type = /obj/item/implant/adrenalin
 
 
 /obj/item/implant/emp
@@ -62,6 +56,10 @@
 	empulse(imp_in, 3, 5)
 	if(!uses)
 		qdel(src)
+
+/obj/item/implanter/emp
+	name = "implanter (EMP)"
+	imp_type = /obj/item/implant/emp
 
 
 //Health Tracker Implant

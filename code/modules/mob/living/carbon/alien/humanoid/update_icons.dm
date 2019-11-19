@@ -7,7 +7,7 @@
 	var/asleep = IsSleeping()
 	if(stat == DEAD)
 		//If we mostly took damage from fire
-		if(fireloss > 125)
+		if(getFireLoss() > 125)
 			icon_state = "alien[caste]_husked"
 		else
 			icon_state = "alien[caste]_dead"

@@ -12,7 +12,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/apple)
-	reagents_add = list("vitamin" = 0.02, "nutriment" = 0.2, "water" = 0.04)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.2, /datum/reagent/water = 0.04)
 
 /obj/item/reagent_containers/food/snacks/grown/pineapple
 	seed = /obj/item/seeds/pineapple

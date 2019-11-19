@@ -11,10 +11,13 @@
 	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
-	var/range = MELEE //bitFflags
+	///Bitflag. Determines the range of the equipment.
+	var/range = MECHA_MELEE
 	var/salvageable = 1
+	var/detachable = TRUE // Set to FALSE for built-in equipment that cannot be removed
 	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
 	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
+	var/destroy_sound = 'sound/mecha/critdestr.ogg'
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)
@@ -35,14 +38,24 @@
 		if(chassis.selected == src)
 			chassis.selected = null
 		src.update_chassis_page()
-		chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
 		log_message("[src] is destroyed.", LOG_MECHA)
-		SEND_SOUND(chassis.occupant, sound(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon) ? 'sound/mecha/weapdestr.ogg' : 'sound/mecha/critdestr.ogg', volume=50))
+		if(chassis.occupant)
+			chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
+			chassis.occupant.playsound_local(chassis, destroy_sound, 50)
+		if(!detachable) //If we're a built-in nondetachable equipment, let's lock up the slot that we were in.
+			chassis.max_equip--
 		chassis = null
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/proc/critfail()
-	log_message("Critical failure", LOG_MECHA, color="red")
+/obj/item/mecha_parts/mecha_equipment/try_attach_part(mob/user, obj/mecha/M)
+	if(can_attach(M))
+		if(!user.temporarilyRemoveItemFromInventory(src))
+			return FALSE
+		attach(M)
+		user.visible_message("<span class='notice'>[user] attaches [src] to [M].</span>", "<span class='notice'>You attach [src] to [M].</span>")
+		return TRUE
+	to_chat(user, "<span class='warning'>You are unable to attach [src] to [M]!</span>")
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
 	if(!chassis)
@@ -58,10 +71,10 @@
 	return txt
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_ranged()//add a distance restricted equipment. Why not?
-	return range&RANGED
+	return range&MECHA_RANGED
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_melee()
-	return range&MELEE
+	return range&MECHA_MELEE
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/action_checks(atom/target)
@@ -71,9 +84,12 @@
 		return 0
 	if(!equip_ready)
 		return 0
-	if(crit_fail)
-		return 0
 	if(energy_drain && !chassis.has_charge(energy_drain))
+		return 0
+	if(chassis.is_currently_ejecting)
+		return 0
+	if(chassis.equipment_disabled)
+		to_chat(chassis.occupant, "<span=warn>Error -- Equipment control unit is unresponsive.</span>")
 		return 0
 	return 1
 
@@ -113,8 +129,6 @@
 	chassis = M
 	forceMove(M)
 	log_message("[src] initialized.", LOG_MECHA)
-	if(!M.selected && selectable)
-		M.selected = src
 	update_chassis_page()
 	return
 

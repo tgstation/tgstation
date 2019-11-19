@@ -1,8 +1,7 @@
-/obj/item/projectile/energy
+/obj/projectile/energy
 	name = "energy"
 	icon_state = "spark"
 	damage = 0
 	damage_type = BURN
 	flag = "energy"
-	is_reflectable = TRUE
-
+	reflectable = REFLECT_NORMAL

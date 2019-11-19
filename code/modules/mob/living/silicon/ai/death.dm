@@ -15,6 +15,8 @@
 	cameraFollow = null
 
 	anchored = FALSE //unbolt floorbolts
+	move_resist = MOVE_FORCE_NORMAL
+
 	if(eyeobj)
 		eyeobj.setLoc(get_turf(src))
 		set_eyeobj_visible(FALSE)
@@ -26,8 +28,7 @@
 	ShutOffDoomsdayDevice()
 
 	if(explosive)
-		spawn(10)
-			explosion(src.loc, 3, 6, 12, 15)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, loc, 3, 6, 12, 15), 1 SECONDS)
 
 	if(src.key)
 		for(var/each in GLOB.ai_status_displays) //change status

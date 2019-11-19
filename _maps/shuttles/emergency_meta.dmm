@@ -101,19 +101,19 @@
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
 	name = "emergency lifejacket"
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
 /obj/item/clothing/mask/breath{
@@ -182,7 +182,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ax" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -216,7 +216,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aC" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aE" = (
@@ -232,7 +232,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -293,7 +293,6 @@
 	pixel_y = 8
 	},
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -310,7 +309,6 @@
 /area/shuttle/escape)
 "aS" = (
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -400,9 +398,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bl" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/stasis,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bm" = (
@@ -454,14 +450,14 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = -3
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -540,7 +536,6 @@
 	pixel_y = 2
 	},
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -589,7 +584,6 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
@@ -664,9 +658,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bP" = (
-/obj/structure/closet/crate/medical{
-	name = "medical crate"
-	},
+/obj/structure/closet/crate/medical,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -691,7 +683,6 @@
 /area/shuttle/escape)
 "bQ" = (
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -749,19 +740,19 @@
 	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
 	name = "emergency lifejacket"
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
-/obj/item/tank/internals/emergency_oxygen/double{
+/obj/item/tank/internals/emergency_oxygen{
 	pixel_x = 3
 	},
 /obj/item/clothing/mask/breath{

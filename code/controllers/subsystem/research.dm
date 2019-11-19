@@ -122,7 +122,7 @@ SUBSYSTEM_DEF(research)
 			continue
 		TN = new path
 		if(returned[initial(TN.id)])
-			stack_trace("WARNING: Techweb node ID clash with ID [initial(TN.id)] detected!")
+			stack_trace("WARNING: Techweb node ID clash with ID [initial(TN.id)] detected! Path: [path]")
 			errored_datums[TN] = initial(TN.id)
 			continue
 		returned[initial(TN.id)] = TN
@@ -132,10 +132,12 @@ SUBSYSTEM_DEF(research)
 		var/datum/techweb_node/TN = techweb_nodes[id]
 		TN.Initialize()
 	techweb_nodes = returned
-	verify_techweb_nodes()				//Verify all nodes have ids and such.
+	if (!verify_techweb_nodes())	//Verify all nodes have ids and such.
+		stack_trace("Invalid techweb nodes detected")
 	calculate_techweb_nodes()
 	calculate_techweb_boost_list()
-	verify_techweb_nodes()		//Verify nodes and designs have been crosslinked properly.
+	if (!verify_techweb_nodes())		//Verify nodes and designs have been crosslinked properly.
+		CRASH("Invalid techweb nodes detected")
 
 /datum/controller/subsystem/research/proc/initialize_all_techweb_designs(clearall = FALSE)
 	if(islist(techweb_designs) && clearall)
@@ -150,52 +152,67 @@ SUBSYSTEM_DEF(research)
 			continue
 		DN = new path
 		if(returned[initial(DN.id)])
-			stack_trace("WARNING: Design ID clash with ID [initial(DN.id)] detected!")
+			stack_trace("WARNING: Design ID clash with ID [initial(DN.id)] detected! Path: [path]")
 			errored_datums[DN] = initial(DN.id)
 			continue
+		DN.InitializeMaterials() //Initialize the materials in the design
 		returned[initial(DN.id)] = DN
 	techweb_designs = returned
 	verify_techweb_designs()
 
+
 /datum/controller/subsystem/research/proc/verify_techweb_nodes()
+	. = TRUE
 	for(var/n in techweb_nodes)
 		var/datum/techweb_node/N = techweb_nodes[n]
 		if(!istype(N))
 			WARNING("Invalid research node with ID [n] detected and removed.")
 			techweb_nodes -= n
 			research_node_id_error(n)
+			. = FALSE
 		for(var/p in N.prereq_ids)
 			var/datum/techweb_node/P = techweb_nodes[p]
 			if(!istype(P))
 				WARNING("Invalid research prerequisite node with ID [p] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.prereq_ids  -= p
 				research_node_id_error(p)
+				. = FALSE
 		for(var/d in N.design_ids)
 			var/datum/design/D = techweb_designs[d]
 			if(!istype(D))
 				WARNING("Invalid research design with ID [d] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.design_ids -= d
 				design_id_error(d)
+				. = FALSE
 		for(var/u in N.unlock_ids)
 			var/datum/techweb_node/U = techweb_nodes[u]
 			if(!istype(U))
 				WARNING("Invalid research unlock node with ID [u] detected in node [N.display_name]\[[N.id]\] removed.")
 				N.unlock_ids -= u
 				research_node_id_error(u)
+				. = FALSE
 		for(var/p in N.boost_item_paths)
 			if(!ispath(p))
 				N.boost_item_paths -= p
+				WARNING("[p] is not a valid path.")
 				node_boost_error(N.id, "[p] is not a valid path.")
+				. = FALSE
 			var/list/points = N.boost_item_paths[p]
 			if(islist(points))
 				for(var/i in points)
 					if(!isnum(points[i]))
+						WARNING("[points[i]] is not a valid number.")
 						node_boost_error(N.id, "[points[i]] is not a valid number.")
+						. = FALSE
 					else if(!point_types[i])
+						WARNING("[i] is not a valid point type.")
 						node_boost_error(N.id, "[i] is not a valid point type.")
+						. = FALSE
 			else if(!isnull(points))
 				N.boost_item_paths -= p
 				node_boost_error(N.id, "No valid list.")
+				WARNING("No valid list.")
+				. = FALSE
 		CHECK_TICK
 
 /datum/controller/subsystem/research/proc/verify_techweb_designs()

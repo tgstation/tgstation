@@ -2,7 +2,7 @@
 //////////     SLIME CROSSBREEDS    //////////
 //////////////////////////////////////////////
 // A system of combining two extract types. //
-// Performed by feeding a slime 20 of an    //
+// Performed by feeding a slime 10 of an    //
 // extract color.                           //
 //////////////////////////////////////////////
 /*==========================================*\
@@ -31,11 +31,17 @@ To add a crossbreed:
 	icon_state = "base"
 	var/colour = "null"
 	var/effect = "null"
+	var/effect_desc = "null"
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
+
+/obj/item/slimecross/examine(mob/user)
+	. = ..()
+	if(effect_desc)
+		. += "<span class='notice'>[effect_desc]</span>"
 
 /obj/item/slimecross/Initialize()
 	. = ..()
@@ -90,12 +96,11 @@ To add a crossbreed:
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "base"
 	var/del_on_empty = TRUE
-	container_type = INJECTABLE | DRAWABLE
 	var/list/list_reagents
 
 /obj/item/slimecrossbeaker/Initialize()
 	. = ..()
-	create_reagents(50)
+	create_reagents(50, INJECTABLE | DRAWABLE)
 	if(list_reagents)
 		for(var/reagent in list_reagents)
 			reagents.add_reagent(reagent, list_reagents[reagent])
@@ -115,24 +120,27 @@ To add a crossbreed:
 	name = "blood extract"
 	desc = "A sphere of liquid blood, somehow managing to stay together."
 	color = "#FF0000"
-	list_reagents = list("blood" = 50)
+	list_reagents = list(/datum/reagent/blood = 50)
 
 /obj/item/slimecrossbeaker/pax //5u synthpax.
 	name = "peace-inducing extract"
 	desc = "A small blob of synthetic pax."
 	color = "#FFCCCC"
-	list_reagents = list("synthpax" = 5)
+	list_reagents = list(/datum/reagent/pax/peaceborg = 5)
 
 /obj/item/slimecrossbeaker/omnizine //15u omnizine.
 	name = "healing extract"
 	desc = "A gelatinous extract of pure omnizine."
 	color = "#FF00FF"
-	list_reagents = list("omnizine" = 15)
+	list_reagents = list(/datum/reagent/medicine/omnizine = 15)
 
 /obj/item/slimecrossbeaker/autoinjector //As with the above, but automatically injects whomever it is used on with contents.
-	container_type = DRAWABLE //Cannot be refilled, since it's basically an autoinjector!
 	var/ignore_flags = FALSE
 	var/self_use_only = FALSE
+
+/obj/item/slimecrossbeaker/autoinjector/Initialize()
+	. = ..()
+	reagents.flags = DRAWABLE // Cannot be refilled, since it's basically an autoinjector!
 
 /obj/item/slimecrossbeaker/autoinjector/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
@@ -158,7 +166,7 @@ To add a crossbreed:
 	name = "mending solution"
 	desc = "A strange glob of sweet-smelling semifluid, which seems to stick to skin rather easily."
 	color = "#FF00FF"
-	list_reagents = list("regen_jelly" = 20)
+	list_reagents = list(/datum/reagent/medicine/regen_jelly = 20)
 
 /obj/item/slimecrossbeaker/autoinjector/slimejelly //Primarily for slimepeople, but you do you.
 	self_use_only = TRUE
@@ -166,17 +174,20 @@ To add a crossbreed:
 	name = "slime jelly bubble"
 	desc = "A sphere of slime jelly. It seems to stick to your skin, but avoids other surfaces."
 	color = "#00FF00"
-	list_reagents = list("slimejelly" = 50)
+	list_reagents = list(/datum/reagent/toxin/slimejelly = 50)
 
 /obj/item/slimecrossbeaker/autoinjector/peaceandlove
-	container_type = null //It won't be *that* easy to get your hands on pax.
 	name = "peaceful distillation"
 	desc = "A light pink gooey sphere. Simply touching it makes you a little dizzy."
 	color = "#DDAAAA"
-	list_reagents = list("synthpax" = 10, "space_drugs" = 15) //Peace, dudes
+	list_reagents = list(/datum/reagent/pax/peaceborg = 10, /datum/reagent/drug/space_drugs = 15) //Peace, dudes
+
+/obj/item/slimecrossbeaker/autoinjector/peaceandlove/Initialize()
+	. = ..()
+	reagents.flags = NONE // It won't be *that* easy to get your hands on pax.
 
 /obj/item/slimecrossbeaker/autoinjector/slimestimulant
 	name = "invigorating gel"
 	desc = "A bubbling purple mixture, designed to heal and boost movement."
 	color = "#FF00FF"
-	list_reagents = list("regen_jelly" = 30, "methamphetamine" = 9)
+	list_reagents = list(/datum/reagent/medicine/regen_jelly = 30, /datum/reagent/drug/methamphetamine = 9)

@@ -13,17 +13,23 @@
 /code/game/objects/effects/temporary_visuals/ @ChangelingRain
 /code/modules/reagents/chemistry/reagents/blob_reagents.dm @ChangelingRain
 
+# Cobby
+/code/modules/reagents/ @ExcessiveUseOfCobblestone
+/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
+/code/modules/surgery/ @ExcessiveUseOfCobblestone
+/code/game/objects/items/storage/firstaid.dm @ExcessiveUseOfCobblestone
+/code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone
+/code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone
+
 # Cyberboss
 
 /code/__DATASTRUCTURES/globals.dm @Cyberboss
-/code/__DEFINES/components.dm @Cyberboss
 /code/__DEFINES/server_tools.config.dm @Cyberboss
 /code/__DEFINES/server_tools.dm @Cyberboss
 /code/controllers/subsystem/atoms.dm @Cyberboss
 /code/controllers/subsystem/mapping.dm @Cyberboss
 /code/controllers/globals.dm @Cyberboss
 /code/datums/helper_datums/getrev.dm @Cyberboss
-/code/datums/components/ @Cyberboss
 /code/datums/map_config.dm @Cyberboss
 /code/datums/forced_movement.dm @Cyberboss
 /code/datums/holocall.dm @Cyberboss
@@ -65,6 +71,22 @@
 /icons/ @ShizCalev
 /sound/ @ShizCalev
 
+# stylemistake
+
+/tgui @stylemistake
+/tgui-next @stylemistake
+
+# Qustinnus
+/code/datums/components/mood.dm @Qustinnus
+/code/datums/mood_events/ @Qustinnus
+/code/__DEFINES/mobs.dm @Qustinnus
+
 # Multiple Owners
 
+/code/__DEFINES/components.dm @Cyberboss @ninjanomnom
 /code/controllers/subsystem/air.dm @duncathan @MrStonedOne
+/code/datums/components/ @Cyberboss @ninjanomnom
+
+
+#SIC SEMPER TYRANNIS
+/code/modules/hydroponics/grown/citrus.dm @optimumtact

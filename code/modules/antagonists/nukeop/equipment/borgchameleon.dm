@@ -14,15 +14,25 @@
 	var/activationCost = 300
 	var/activationUpkeep = 50
 	var/disguise = "engineer"
-	var/datum/component/mobhook // need this to deal with unregistration properly
+	var/mob/listeningTo
+	var/static/list/signalCache = list( // list here all signals that should break the camouflage
+			COMSIG_PARENT_ATTACKBY,
+			COMSIG_ATOM_ATTACK_HAND,
+			COMSIG_MOVABLE_IMPACT_ZONE,
+			COMSIG_ATOM_BULLET_ACT,
+			COMSIG_ATOM_EX_ACT,
+			COMSIG_ATOM_FIRE_ACT,
+			COMSIG_ATOM_EMP_ACT,
+			)
 	var/mob/living/silicon/robot/user // needed for process()
+	var/animation_playing = FALSE
 
 /obj/item/borg_chameleon/Initialize()
 	. = ..()
 	friendlyName = pick(GLOB.ai_names)
 
 /obj/item/borg_chameleon/Destroy()
-	QDEL_NULL(mobhook)
+	listeningTo = null
 	return ..()
 
 /obj/item/borg_chameleon/dropped(mob/user)
@@ -44,12 +54,16 @@
 
 /obj/item/borg_chameleon/proc/toggle(mob/living/silicon/robot/user)
 	if(active)
-		playsound(src, 'sound/effects/pop.ogg', 100, 1, -6)
+		playsound(src, 'sound/effects/pop.ogg', 100, TRUE, -6)
 		to_chat(user, "<span class='notice'>You deactivate \the [src].</span>")
 		deactivate(user)
 	else
+		if(animation_playing)
+			to_chat(user, "<span class='notice'>\the [src] is recharging.</span>")
+			return
+		animation_playing = TRUE
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")
-		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, 1, -6)
+		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, TRUE, -6)
 		var/start = user.filters.len
 		var/X,Y,rsq,i,f
 		for(i=1, i<=7, ++i)
@@ -64,7 +78,7 @@
 			animate(f, offset=f:offset, time=0, loop=3, flags=ANIMATION_PARALLEL)
 			animate(offset=f:offset-1, time=rand()*20+10)
 		if (do_after(user, 50, target=user) && user.cell.use(activationCost))
-			playsound(src, 'sound/effects/bamf.ogg', 100, 1, -6)
+			playsound(src, 'sound/effects/bamf.ogg', 100, TRUE, -6)
 			to_chat(user, "<span class='notice'>You are now disguised as the Nanotrasen engineering borg \"[friendlyName]\".</span>")
 			activate(user)
 		else
@@ -74,6 +88,7 @@
 				f = user.filters[start+i]
 				animate(f)
 		user.filters = null
+		animation_playing = FALSE
 
 /obj/item/borg_chameleon/process()
 	if (user)
@@ -88,28 +103,26 @@
 	savedName = user.name
 	user.name = friendlyName
 	user.module.cyborg_base_icon = disguise
+	user.bubble_icon = "robot"
 	active = TRUE
-	if (mobhook && mobhook.parent != user)
-		QDEL_NULL(mobhook)
-	if (!mobhook)
-		var/callback = CALLBACK(src, .proc/disrupt, user) // push user into the callback so that it's guaranteed to be the first arg
-		mobhook = user.AddComponent(/datum/component/redirect, list( // list here all signals that should break the camouflage
-			COMSIG_PARENT_ATTACKBY = callback,
-			COMSIG_ATOM_ATTACK_HAND = callback,
-			COMSIG_MOVABLE_IMPACT_ZONE = callback,
-			COMSIG_ATOM_BULLET_ACT = callback,
-			COMSIG_ATOM_EX_ACT = callback,
-			COMSIG_ATOM_FIRE_ACT = callback,
-			COMSIG_ATOM_EMP_ACT = callback,
-			))
 	user.update_icons()
+
+	if(listeningTo == user)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, signalCache)
+	RegisterSignal(user, signalCache, .proc/disrupt)
+	listeningTo = user
 
 /obj/item/borg_chameleon/proc/deactivate(mob/living/silicon/robot/user)
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(mobhook)
+	if(listeningTo)
+		UnregisterSignal(listeningTo, signalCache)
+		listeningTo = null
 	do_sparks(5, FALSE, user)
 	user.name = savedName
 	user.module.cyborg_base_icon = initial(user.module.cyborg_base_icon)
+	user.bubble_icon = "syndibot"
 	active = FALSE
 	user.update_icons()
 	src.user = user

@@ -57,6 +57,12 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape/meteor)
+"u" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid,
+/area/shuttle/escape/meteor)
 "L" = (
 /obj/docking_port/mobile/emergency{
 	dwidth = 20;
@@ -1398,7 +1404,7 @@ b
 b
 b
 l
-d
+u
 d
 d
 d
@@ -1440,7 +1446,7 @@ b
 b
 b
 l
-d
+u
 d
 d
 d
@@ -1482,7 +1488,7 @@ b
 b
 b
 l
-d
+u
 d
 d
 d
@@ -1524,7 +1530,7 @@ b
 b
 b
 l
-d
+u
 d
 d
 d
@@ -1566,7 +1572,7 @@ b
 b
 b
 l
-d
+u
 d
 d
 d
@@ -1608,7 +1614,7 @@ b
 b
 b
 l
-d
+u
 d
 d
 d

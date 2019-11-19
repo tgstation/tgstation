@@ -22,20 +22,17 @@
 	precision_coeff = 0
 	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
-	for(var/obj/item/stock_parts/manipulator/P in component_parts)
-		precision_coeff = P.rating
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
+		precision_coeff = M.rating
 	for(var/obj/item/stock_parts/micro_laser/P in component_parts)
 		damage_coeff = P.rating
 
 /obj/machinery/dna_scannernew/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Radiation pulse accuracy increased by factor <b>[precision_coeff**2]</b>.<br>Radiation pulse damage decreased by factor <b>[damage_coeff**2]</b>.<span>")
-		if(scan_level >= 3)
-			to_chat(user, "<span class='notice'>Scanner has been upgraded to support autoprocessing.<span>")
+		. += "<span class='notice'>The status display reads: Radiation pulse accuracy increased by factor <b>[precision_coeff**2]</b>.<br>Radiation pulse damage decreased by factor <b>[damage_coeff**2]</b>.</span>"
 
-/obj/machinery/dna_scannernew/update_icon()
-
+/obj/machinery/dna_scannernew/update_icon_state()
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpowered"
@@ -52,10 +49,6 @@
 
 	//running
 	icon_state = initial(icon_state)+ (state_open ? "_open" : "")
-
-/obj/machinery/dna_scannernew/power_change()
-	..()
-	update_icon()
 
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user)
 	if(panel_open)
@@ -80,7 +73,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
@@ -101,13 +94,6 @@
 		return FALSE
 
 	..(user)
-
-	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
-	if(istype(mob_occupant))
-		if(locate_computer(/obj/machinery/computer/cloning))
-			if(!mob_occupant.suiciding && !(mob_occupant.has_trait(TRAIT_NOCLONE)) && !mob_occupant.hellbound)
-				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
 	// DNA manipulators cannot operate on severed heads or brains
 	if(iscarbon(occupant))

@@ -14,7 +14,7 @@
 	wreckage = /obj/structure/mecha_wreckage/honker
 	add_req_access = 0
 	max_equip = 3
-	var/squeak = 0
+	var/squeak = TRUE
 
 /obj/mecha/combat/honker/get_stats_part()
 	var/integrity = obj_integrity/max_integrity*100
@@ -104,6 +104,14 @@
 						<a href='?src=[REF(src)];play_sound=airhorn2'>Air Horn</a>
 						<a href='?src=[REF(src)];play_sound=carhorn'>Car Horn</a>
 						<a href='?src=[REF(src)];play_sound=party_horn'>Party Horn</a>
+						<a href='?src=[REF(src)];play_sound=reee'>Reee</a>
+						<a href='?src=[REF(src)];play_sound=weeoo1'>Siren</a>
+						<a href='?src=[REF(src)];play_sound=hiss1'>Hissing Creature</a>
+						<a href='?src=[REF(src)];play_sound=armbomb'>Armed Grenade</a>
+						<a href='?src=[REF(src)];play_sound=saberon'>Energy Sword</a>
+						<a href='?src=[REF(src)];play_sound=airlock_alien_prying'>Airlock Prying</a>
+						<a href='?src=[REF(src)];play_sound=lightningbolt'>Lightning Bolt</a>
+						<a href='?src=[REF(src)];play_sound=explosionfar'>Distant Explosion</a>
 						</div>
 						</div>
 						"}
@@ -120,17 +128,10 @@
 	output += "</div>"
 	return output
 
-
-
-/obj/mecha/combat/honker/mechstep(direction)
-	var/result = step(src,direction)
-	if(result)
-		if(!squeak)
-			playsound(src, "clownstep", 70, 1)
-			squeak = 1
-		else
-			squeak = 0
-	return result
+/obj/mecha/combat/honker/play_stepsound()
+	if(squeak)
+		playsound(src, "clownstep", 70, 1)
+	squeak = !squeak
 
 /obj/mecha/combat/honker/Topic(href, href_list)
 	..()
@@ -146,6 +147,22 @@
 				playsound(src, 'sound/items/carhorn.ogg', 80) //soundfile has lower than average volume
 			if("party_horn")
 				playsound(src, 'sound/items/party_horn.ogg', 50)
+			if("reee")
+				playsound(src, 'sound/effects/reee.ogg', 50)
+			if("weeoo1")
+				playsound(src, 'sound/items/weeoo1.ogg', 50)
+			if("hiss1")
+				playsound(src, 'sound/voice/hiss1.ogg', 50)
+			if("armbomb")
+				playsound(src, 'sound/weapons/armbomb.ogg', 50)
+			if("saberon")
+				playsound(src, 'sound/weapons/saberon.ogg', 50)
+			if("airlock_alien_prying")
+				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50)
+			if("lightningbolt")
+				playsound(src, 'sound/magic/lightningbolt.ogg', 50)
+			if("explosionfar")
+				playsound(src, 'sound/effects/explosionfar.ogg', 50)
 	return
 
 /proc/rand_hex_color()

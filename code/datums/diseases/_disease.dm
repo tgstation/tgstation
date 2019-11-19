@@ -30,7 +30,7 @@
 	var/list/required_organs = list()
 	var/needs_all_cures = TRUE
 	var/list/strain_data = list() //dna_spread special bullshit
-	var/list/infectable_biotypes = list(MOB_ORGANIC) //if the disease can spread on organics, synthetics, or undead
+	var/infectable_biotypes = MOB_ORGANIC //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
 
@@ -55,6 +55,13 @@
 	D.after_add()
 	infectee.med_hud_set_status()
 
+	var/turf/source_turf = get_turf(infectee)
+	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
+
+//Return a string for admin logging uses, should describe the disease in detail
+/datum/disease/proc/admin_details()
+	return "[src.name] : [src.type]"
+
 /datum/disease/proc/stage_act()
 	var/cure = has_cure()
 
@@ -65,15 +72,17 @@
 
 	if(!cure)
 		if(prob(stage_prob))
-			stage = min(stage + 1,max_stages)
+			update_stage(min(stage + 1,max_stages))
 	else
 		if(prob(cure_chance))
-			stage = max(stage - 1, 1)
+			update_stage(max(stage - 1, 1))
 
 	if(disease_flags & CURABLE)
 		if(cure && prob(cure_chance))
 			cure()
 
+/datum/disease/proc/update_stage(new_stage)
+	stage = new_stage
 
 /datum/disease/proc/has_cure()
 	if(!(disease_flags & CURABLE))
@@ -94,7 +103,7 @@
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return
 
-	if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
+	if(affected_mob.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
 		return
 
 	var/spread_range = 2
@@ -128,7 +137,7 @@
 	qdel(src)
 
 /datum/disease/proc/IsSame(datum/disease/D)
-	if(istype(src, D.type))
+	if(istype(D, type))
 		return TRUE
 	return FALSE
 
@@ -160,8 +169,8 @@
 	affected_mob.diseases -= src		//remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
-	
-//Use this to compare severities	
+
+//Use this to compare severities
 /proc/get_disease_severity_value(severity)
 	switch(severity)
 		if(DISEASE_SEVERITY_POSITIVE)

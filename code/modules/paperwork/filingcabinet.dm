@@ -102,13 +102,12 @@
 	if(href_list["retrieve"])
 		usr << browse("", "window=filingcabinet") // Close the menu
 
-		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
-		if(istype(P) && P.loc == src && in_range(src, usr))
+		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
+		if(istype(P) && in_range(src, usr))
 			usr.put_in_hands(P)
 			updateUsrDialog()
 			icon_state = "[initial(icon_state)]-open"
-			sleep(5)
-			icon_state = initial(icon_state)
+			addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
 
 
 /*
@@ -125,7 +124,7 @@
 				continue
 			var/obj/item/paper/P = new /obj/item/paper(src)
 			P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
-			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
+			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nGender: [G.fields["gender"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
 			P.info += "<BR>\n<CENTER><B>Security Data</B></CENTER><BR>\nCriminal Status: [S.fields["criminal"]]<BR>\n<BR>\nMinor Crimes: [S.fields["mi_crim"]]<BR>\nDetails: [S.fields["mi_crim_d"]]<BR>\n<BR>\nMajor Crimes: [S.fields["ma_crim"]]<BR>\nDetails: [S.fields["ma_crim_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[S.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 			var/counter = 1
 			while(S.fields["com_[counter]"])
@@ -158,7 +157,7 @@
 				continue
 			var/obj/item/paper/P = new /obj/item/paper(src)
 			P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
-			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
+			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nGender: [G.fields["gender"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
 			P.info += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: [M.fields["blood_type"]]<BR>\nDNA: [M.fields["b_dna"]]<BR>\n<BR>\nMinor Disabilities: [M.fields["mi_dis"]]<BR>\nDetails: [M.fields["mi_dis_d"]]<BR>\n<BR>\nMajor Disabilities: [M.fields["ma_dis"]]<BR>\nDetails: [M.fields["ma_dis_d"]]<BR>\n<BR>\nAllergies: [M.fields["alg"]]<BR>\nDetails: [M.fields["alg_d"]]<BR>\n<BR>\nCurrent Diseases: [M.fields["cdi"]] (per disease info placed in log/comment section)<BR>\nDetails: [M.fields["cdi_d"]]<BR>\n<BR>\nImportant Notes:<BR>\n\t[M.fields["notes"]]<BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
 			var/counter = 1
 			while(M.fields["com_[counter]"])
@@ -216,9 +215,9 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 		if(virgin)
 			fillCurrent()
 			virgin = 0
-		cooldown = 1
-		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
-		cooldown = 0
+		cooldown = TRUE
+		// prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
+		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10 SECONDS)
 	else
 		to_chat(user, "<span class='warning'>[src] is jammed, give it a few seconds.</span>")
 	..()

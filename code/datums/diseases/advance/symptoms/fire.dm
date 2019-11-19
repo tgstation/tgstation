@@ -19,9 +19,9 @@ Bonus
 
 	name = "Spontaneous Combustion"
 	desc = "The virus turns fat into an extremely flammable compound, and raises the body's temperature, making the host burst into flames spontaneously."
-	stealth = 1
+	stealth = -1
 	resistance = -4
-	stage_speed = -4
+	stage_speed = -3
 	transmittable = -4
 	level = 6
 	severity = 5
@@ -112,9 +112,9 @@ Bonus
 	symptom_delay_max = 90
 	var/chems = FALSE
 	var/explosion_power = 1
-	threshold_desc = "<b>Resistance 9:</b> Doubles the intensity of the effect, but reduces its frequency.<br>\
-					  <b>Stage Speed 8:</b> Increases explosion radius when the host is wet.<br>\
-					  <b>Transmission 8:</b> Additionally synthesizes chlorine trifluoride and napalm inside the host."
+	threshold_desc = "<b>Resistance 9:</b> Doubles the intensity of the immolation effect, but reduces the frequency of all of this symptom's effects.<br>\
+					  <b>Stage Speed 8:</b> Increases explosion radius and explosion damage to the host when the host is wet.<br>\
+					  <b>Transmission 8:</b> Additionally synthesizes chlorine trifluoride and napalm inside the host. More chemicals are synthesized if the resistance 9 threshold has been met."
 
 /datum/symptom/alkali/Start(datum/disease/advance/A)
 	if(!..())
@@ -137,26 +137,28 @@ Bonus
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='warning'>[pick("Your veins boil.", "You feel hot.", "You smell meat cooking.")]</span>")
 		if(4)
+			if(M.fire_stacks < 0)
+				M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
+				explosion(get_turf(M),-1,(-1 + explosion_power),(2 * explosion_power))
 			Alkali_fire_stage_4(M, A)
 			M.IgniteMob()
 			to_chat(M, "<span class='userdanger'>Your sweat bursts into flames!</span>")
 			M.emote("scream")
 		if(5)
+			if(M.fire_stacks < 0)
+				M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
+				explosion(get_turf(M),-1,(-1 + explosion_power),(2 * explosion_power))
 			Alkali_fire_stage_5(M, A)
 			M.IgniteMob()
 			to_chat(M, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
 			M.emote("scream")
-			if(M.fire_stacks < 0)
-				M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
-				explosion(get_turf(M),0,0,2 * explosion_power)
-				Alkali_fire_stage_5(M, A)
 
 /datum/symptom/alkali/proc/Alkali_fire_stage_4(mob/living/M, datum/disease/advance/A)
 	var/get_stacks = 6 * power
 	M.adjust_fire_stacks(get_stacks)
 	M.take_overall_damage(burn = get_stacks / 2, required_status = BODYPART_ORGANIC)
 	if(chems)
-		M.reagents.add_reagent("clf3", 2 * power)
+		M.reagents.add_reagent(/datum/reagent/clf3, 2 * power)
 	return 1
 
 /datum/symptom/alkali/proc/Alkali_fire_stage_5(mob/living/M, datum/disease/advance/A)
@@ -164,5 +166,5 @@ Bonus
 	M.adjust_fire_stacks(get_stacks)
 	M.take_overall_damage(burn = get_stacks, required_status = BODYPART_ORGANIC)
 	if(chems)
-		M.reagents.add_reagent_list(list("napalm" = 4 * power, "clf3" = 4 * power))
+		M.reagents.add_reagent_list(list(/datum/reagent/napalm = 4 * power, /datum/reagent/clf3 = 4 * power))
 	return 1

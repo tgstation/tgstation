@@ -11,7 +11,7 @@
 	growthstages = 5
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/nettle/death)
-	reagents_add = list("sacid" = 0.5)
+	reagents_add = list(/datum/reagent/toxin/acid = 0.5)
 
 /obj/item/seeds/nettle/death
 	name = "pack of death-nettle seeds"
@@ -25,7 +25,7 @@
 	yield = 2
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/stinging)
 	mutatelist = list()
-	reagents_add = list("facid" = 0.5, "sacid" = 0.5)
+	reagents_add = list(/datum/reagent/toxin/acid/fluacid = 0.5, /datum/reagent/toxin/acid = 0.5)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/nettle // "snack"
@@ -56,7 +56,7 @@
 	var/mob/living/carbon/C = user
 	if(C.gloves)
 		return FALSE
-	if(C.has_trait(TRAIT_PIERCEIMMUNE))
+	if(HAS_TRAIT(C, TRAIT_PIERCEIMMUNE))
 		return FALSE
 	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
 	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
@@ -73,7 +73,7 @@
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else
-		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
+		to_chat(usr, "<span class='warning'>All the leaves have fallen off the nettle from violent whacking.</span>")
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/basic

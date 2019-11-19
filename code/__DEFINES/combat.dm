@@ -5,19 +5,20 @@
 //Damage defines //TODO: merge these down to reduce on defines
 #define BRUTE		"brute"
 #define BURN		"fire"
-#define TOX			"tox"
-#define OXY			"oxy"
+#define TOX			"toxin"
+#define OXY			"oxygen"
 #define CLONE		"clone"
 #define STAMINA 	"stamina"
 #define BRAIN		"brain"
 
 //bitflag damage defines used for suicide_act
-#define BRUTELOSS 		(1<<0)
-#define FIRELOSS 		(1<<1)
-#define TOXLOSS 		(1<<2)
-#define OXYLOSS 		(1<<3)
-#define SHAME 			(1<<4)
-#define MANUAL_SUICIDE	(1<<5)	//suicide_act will do the actual killing.
+#define BRUTELOSS 	            	(1<<0)
+#define FIRELOSS 	            	(1<<1)
+#define TOXLOSS 	            	(1<<2)
+#define OXYLOSS 	            	(1<<3)
+#define SHAME 			            (1<<4)
+#define MANUAL_SUICIDE          	(1<<5)	//suicide_act will do the actual killing.
+#define MANUAL_SUICIDE_NONLETHAL	(1<<6)  //when the suicide is conditionally lethal
 
 #define EFFECT_STUN			"stun"
 #define EFFECT_KNOCKDOWN	"knockdown"
@@ -67,6 +68,9 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
+//Grab breakout odds
+#define BASE_GRAB_RESIST_CHANCE 	30
+
 //slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
 #define SOFTCRIT_ADD_SLOWDOWN 2
 //slowdown when crawling
@@ -84,6 +88,7 @@
 #define ATTACK_EFFECT_KICK		"kick"
 #define ATTACK_EFFECT_SMASH		"smash"
 #define ATTACK_EFFECT_CLAW		"claw"
+#define ATTACK_EFFECT_SLASH		"slash"
 #define ATTACK_EFFECT_DISARM	"disarm"
 #define ATTACK_EFFECT_BITE		"bite"
 #define ATTACK_EFFECT_MECHFIRE	"mech_fire"
@@ -102,6 +107,21 @@
 
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
+#define DEFAULT_MESSAGE_RANGE 7
+
+//Shove knockdown lengths (deciseconds)
+#define SHOVE_KNOCKDOWN_SOLID 30
+#define SHOVE_KNOCKDOWN_HUMAN 30
+#define SHOVE_KNOCKDOWN_TABLE 30
+#define SHOVE_KNOCKDOWN_COLLATERAL 10
+#define SHOVE_CHAIN_PARALYZE 40
+//Shove slowdown
+#define SHOVE_SLOWDOWN_LENGTH 30
+#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+//Shove disarming item list
+GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
+	/obj/item/gun)))
+
 
 //Combat object defines
 
@@ -124,6 +144,36 @@
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+//Gun bolt types
+///Gun has a bolt, it stays closed while not cycling. The gun must be racked to have a bullet chambered when a mag is inserted.
+///  Example: c20, shotguns, m90
+#define BOLT_TYPE_STANDARD 1
+///Gun has a bolt, it is open when ready to fire. The gun can never have a chambered bullet with no magazine, but the bolt stays ready when a mag is removed.
+///  Example: Some SMGs, the L6
+#define BOLT_TYPE_OPEN 2
+///Gun has no moving bolt mechanism, it cannot be racked. Also dumps the entire contents when emptied instead of a magazine.
+///  Example: Break action shotguns, revolvers
+#define BOLT_TYPE_NO_BOLT 3
+///Gun has a bolt, it locks back when empty. It can be released to chamber a round if a magazine is in.
+///  Example: Pistols with a slide lock, some SMGs
+#define BOLT_TYPE_LOCKING 4
+//Sawn off nerfs
+///accuracy penalty of sawn off guns
+#define SAWN_OFF_ACC_PENALTY 25
+///added recoil of sawn off guns
+#define SAWN_OFF_RECOIL 1
+
+//ammo box sprite defines
+///ammo box will always use provided icon state
+#define AMMO_BOX_ONE_SPRITE 0
+///ammo box will have a different state for each bullet; <icon_state>-<bullets left>
+#define AMMO_BOX_PER_BULLET 1
+///ammo box will have a different state for full and empty; <icon_state>-max_ammo and <icon_state>-0
+#define AMMO_BOX_FULL_EMPTY 2
+
+//Projectile Reflect
+#define REFLECT_NORMAL 				(1<<0)
+#define REFLECT_FAKEPROJECTILE		(1<<1)
 
 //Object/Item sharpness
 #define IS_BLUNT			0
@@ -145,6 +195,7 @@
 #define EXPLODE_DEVASTATE 1
 #define EXPLODE_HEAVY 2
 #define EXPLODE_LIGHT 3
+#define EXPLODE_GIB_THRESHOLD 50	//ex_act() with EXPLODE_DEVASTATE severity will gib mobs with less than this much bomb armor
 
 #define EMP_HEAVY 1
 #define EMP_LIGHT 2
@@ -170,3 +221,9 @@
 
 //We will round to this value in damage calculations.
 #define DAMAGE_PRECISION 0.1
+
+//bullet_act() return values
+#define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
+#define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.

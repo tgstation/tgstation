@@ -19,28 +19,30 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
 	item_state = "sheet-glass"
-	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/glass
-	grind_results = list("silicon" = 20)
+	grind_results = list(/datum/reagent/silicon = 20)
+	material_type = /datum/material/glass
 	point_value = 1
+	tableVariant = /obj/structure/table/glass
 
 /obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
 /obj/item/stack/sheet/glass/cyborg
-	materials = list()
+	custom_materials = null
 	is_cyborg = 1
 	cost = 500
 
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
 
-/obj/item/stack/sheet/glass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.glass_recipes
-	return ..()
+/obj/item/stack/sheet/glass/get_main_recipes()
+	. = ..()
+	. += GLOB.glass_recipes
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -83,18 +85,19 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	singular_name = "plasma glass sheet"
 	icon_state = "sheet-pglass"
 	item_state = "sheet-pglass"
-	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmaglass
-	grind_results = list("silicon" = 20, "plasma" = 10)
+	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
+	material_flags = MATERIAL_NO_EFFECTS
 
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
 
-/obj/item/stack/sheet/plasmaglass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.pglass_recipes
-	return ..()
+/obj/item/stack/sheet/plasmaglass/get_main_recipes()
+	. = ..()
+	. += GLOB.pglass_recipes
 
 /obj/item/stack/sheet/plasmaglass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -134,11 +137,11 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
 	item_state = "sheet-rglass"
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
-	grind_results = list("silicon" = 20, "iron" = 10)
+	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
 	point_value = 4
 
 /obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
@@ -146,7 +149,7 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	..()
 
 /obj/item/stack/sheet/rglass/cyborg
-	materials = list()
+	custom_materials = null
 	var/datum/robot_energy_storage/glasource
 	var/metcost = 250
 	var/glacost = 500
@@ -155,16 +158,18 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	return min(round(source.energy / metcost), round(glasource.energy / glacost))
 
 /obj/item/stack/sheet/rglass/cyborg/use(used, transfer = FALSE) // Requires special checks, because it uses two storages
-	source.use_charge(used * metcost)
-	glasource.use_charge(used * glacost)
+	if(get_amount(used)) //ensure we still have enough energy if called in a do_after chain
+		source.use_charge(used * metcost)
+		glasource.use_charge(used * glacost)
+		return TRUE
 
 /obj/item/stack/sheet/rglass/cyborg/add(amount)
 	source.add_charge(amount * metcost)
 	glasource.add_charge(amount * glacost)
 
-/obj/item/stack/sheet/rglass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.reinforced_glass_recipes
-	return ..()
+/obj/item/stack/sheet/rglass/get_main_recipes()
+	. = ..()
+	. += GLOB.reinforced_glass_recipes
 
 GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/plasma/reinforced/unanchored, time = 0, on_floor = TRUE, window_checks = TRUE), \
@@ -177,16 +182,17 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-prglass"
 	item_state = "sheet-prglass"
-	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS=MINERAL_MATERIAL_AMOUNT, MAT_METAL = MINERAL_MATERIAL_AMOUNT * 0.5,)
+	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT, /datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.5,)
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
+	material_flags = MATERIAL_NO_EFFECTS
 	merge_type = /obj/item/stack/sheet/plasmarglass
-	grind_results = list("silicon" = 20, "plasma" = 10, "iron" = 10)
+	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 	point_value = 23
 
-/obj/item/stack/sheet/plasmarglass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.prglass_recipes
-	return ..()
+/obj/item/stack/sheet/plasmarglass/get_main_recipes()
+	. = ..()
+	. += GLOB.prglass_recipes
 
 GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	new/datum/stack_recipe("shuttle window", /obj/structure/window/shuttle/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE)
@@ -198,17 +204,17 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	singular_name = "titanium glass sheet"
 	icon_state = "sheet-titaniumglass"
 	item_state = "sheet-titaniumglass"
-	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/titaniumglass
 
-/obj/item/stack/sheet/titaniumglass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.titaniumglass_recipes
-	return ..()
+/obj/item/stack/sheet/titaniumglass/get_main_recipes()
+	. = ..()
+	. += GLOB.titaniumglass_recipes
 
 GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
-	new/datum/stack_recipe("plastitanium window", /obj/structure/window/plastitanium/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE)
+	new/datum/stack_recipe("plastitanium window", /obj/structure/window/plasma/reinforced/plastitanium/unanchored, 2, time = 0, on_floor = TRUE, window_checks = TRUE)
 	))
 
 /obj/item/stack/sheet/plastitaniumglass
@@ -217,14 +223,15 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	singular_name = "plastitanium glass sheet"
 	icon_state = "sheet-plastitaniumglass"
 	item_state = "sheet-plastitaniumglass"
-	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_PLASMA=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
+	material_flags = MATERIAL_NO_EFFECTS
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
 
-/obj/item/stack/sheet/plastitaniumglass/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.plastitaniumglass_recipes
-	return ..()
+/obj/item/stack/sheet/plastitaniumglass/get_main_recipes()
+	. = ..()
+	. += GLOB.plastitaniumglass_recipes
 
 /obj/item/shard
 	name = "shard"
@@ -237,7 +244,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	item_state = "shard-glass"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	resistance_flags = ACID_PROOF
@@ -245,6 +252,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	max_integrity = 40
 	sharpness = IS_SHARP
 	var/icon_prefix
+	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
 
 
 /obj/item/shard/suicide_act(mob/user)
@@ -270,6 +278,17 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if (icon_prefix)
 		icon_state = "[icon_prefix][icon_state]"
 
+	var/turf/T = get_turf(src)
+	if(T && is_station_level(T.z))
+		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
+
+/obj/item/shard/Destroy()
+	. = ..()
+
+	var/turf/T = get_turf(src)
+	if(T && is_station_level(T.z))
+		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
+
 /obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
 	. = ..()
 	if(!proximity || !(src in user))
@@ -281,12 +300,12 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !H.has_trait(TRAIT_PIERCEIMMUNE)) // golems, etc
+		if(!H.gloves && !HAS_TRAIT(H, TRAIT_PIERCEIMMUNE)) // golems, etc
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			H.apply_damage(force*0.5, BRUTE, hit_hand)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
-		if(!M.has_trait(TRAIT_PIERCEIMMUNE))
+		if(!HAS_TRAIT(M, TRAIT_PIERCEIMMUNE))
 			to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 			M.apply_damage(force*0.5, BRUTE, hit_hand)
 
@@ -298,24 +317,22 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		return ..()
 
 /obj/item/shard/welder_act(mob/living/user, obj/item/I)
+	..()
 	if(I.use_tool(src, user, 0, volume=50))
-		var/obj/item/stack/sheet/glass/NG = new (user.loc)
-		for(var/obj/item/stack/sheet/glass/G in user.loc)
+		var/obj/item/stack/sheet/NG = new weld_material(user.loc)
+		for(var/obj/item/stack/sheet/G in user.loc)
 			if(G == NG)
 				continue
 			if(G.amount >= G.max_amount)
 				continue
 			G.attackby(NG, user)
-		to_chat(user, "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>")
+		to_chat(user, "<span class='notice'>You add the newly-formed [NG.name] to the stack. It now contains [NG.amount] sheet\s.</span>")
 		qdel(src)
 	return TRUE
 
 /obj/item/shard/Crossed(mob/living/L)
 	if(istype(L) && has_gravity(loc))
-		if(L.has_trait(TRAIT_LIGHT_STEP))
-			playsound(loc, 'sound/effects/glass_step.ogg', 30, 1)
-		else
-			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
+		playsound(loc, 'sound/effects/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 	return ..()
 
 /obj/item/shard/plasma
@@ -324,5 +341,6 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	force = 6
 	throwforce = 11
 	icon_state = "plasmalarge"
-	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	icon_prefix = "plasma"
+	weld_material = /obj/item/stack/sheet/plasmaglass

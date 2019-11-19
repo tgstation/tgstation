@@ -41,10 +41,6 @@ The console is located at computer/gulag_teleporter.dm
 		linked_reclaimer.linked_teleporter = null
 	return ..()
 
-/obj/machinery/gulag_teleporter/power_change()
-	..()
-	update_icon()
-
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	. = ..()
 	if(locked)
@@ -68,7 +64,7 @@ The console is located at computer/gulag_teleporter.dm
 
 	return ..()
 
-/obj/machinery/gulag_teleporter/update_icon()
+/obj/machinery/gulag_teleporter/update_icon_state()
 	icon_state = initial(icon_state) + (state_open ? "_open" : "")
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
@@ -105,7 +101,7 @@ The console is located at computer/gulag_teleporter.dm
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 		"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a metallic creaking from [src].</span>")
+		"<span class='hear'>You hear a metallic creaking from [src].</span>")
 	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
@@ -136,16 +132,17 @@ The console is located at computer/gulag_teleporter.dm
 		linked_reclaimer.stored_items[occupant] = list()
 	var/mob/living/mob_occupant = occupant
 	for(var/obj/item/W in mob_occupant)
-		if(!is_type_in_typecache(W, telegulag_required_items) && mob_occupant.temporarilyRemoveItemFromInventory(W))
-			if(istype(W, /obj/item/restraints/handcuffs))
-				W.forceMove(get_turf(src))
-				continue
-			if(linked_reclaimer)
-				linked_reclaimer.stored_items[mob_occupant] += W
-				linked_reclaimer.contents += W
-				W.forceMove(linked_reclaimer)
-			else
-				W.forceMove(src)
+		if(!is_type_in_typecache(W, telegulag_required_items))
+			if(mob_occupant.temporarilyRemoveItemFromInventory(W))
+				if(istype(W, /obj/item/restraints/handcuffs))
+					W.forceMove(get_turf(src))
+					continue
+				if(linked_reclaimer)
+					linked_reclaimer.stored_items[mob_occupant] += W
+					linked_reclaimer.contents += W
+					W.forceMove(linked_reclaimer)
+				else
+					W.forceMove(src)
 
 /obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
 	if(!ishuman(occupant))
@@ -177,3 +174,4 @@ The console is located at computer/gulag_teleporter.dm
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "light_on-w"
 	resistance_flags = INDESTRUCTIBLE
+	anchored = TRUE

@@ -16,7 +16,7 @@
 	icon_dead = "potato-dead"
 	genes = list(/datum/plant_gene/trait/battery)
 	mutatelist = list(/obj/item/seeds/potato/sweet)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/potato
 	seed = /obj/item/seeds/potato
@@ -26,8 +26,8 @@
 	filling_color = "#E9967A"
 	bitesize = 100
 	foodtype = VEGETABLES
-	juice_results = list("potato" = 0)
-	distill_reagent = "vodka"
+	juice_results = list(/datum/reagent/consumable/potato_juice = 0)
+	distill_reagent = /datum/reagent/consumable/ethanol/vodka
 
 /obj/item/reagent_containers/food/snacks/grown/potato/wedges
 	name = "potato wedges"
@@ -38,7 +38,7 @@
 
 
 /obj/item/reagent_containers/food/snacks/grown/potato/attackby(obj/item/W, mob/user, params)
-	if(W.is_sharp())
+	if(W.get_sharpness())
 		to_chat(user, "<span class='notice'>You cut the potato into wedges with [W].</span>")
 		var/obj/item/reagent_containers/food/snacks/grown/potato/wedges/Wedges = new /obj/item/reagent_containers/food/snacks/grown/potato/wedges
 		remove_item_from_storage(user)
@@ -57,11 +57,11 @@
 	plantname = "Sweet Potato Plants"
 	product = /obj/item/reagent_containers/food/snacks/grown/potato/sweet
 	mutatelist = list()
-	reagents_add = list("vitamin" = 0.1, "sugar" = 0.1, "nutriment" = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/potato/sweet
 	seed = /obj/item/seeds/potato/sweet
 	name = "sweet potato"
 	desc = "It's sweet."
 	icon_state = "sweetpotato"
-	distill_reagent = "sbiten"
+	distill_reagent = /datum/reagent/consumable/ethanol/sbiten

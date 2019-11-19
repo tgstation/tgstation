@@ -8,11 +8,13 @@
 	level = 5
 	severity = 0
 
-/datum/symptom/undead_adaptation/Start(datum/disease/advance/A)
-	if(!..())
-		return
+/datum/symptom/undead_adaptation/OnAdd(datum/disease/advance/A)
 	A.process_dead = TRUE
 	A.infectable_biotypes |= MOB_UNDEAD
+
+/datum/symptom/undead_adaptation/OnRemove(datum/disease/advance/A)
+	A.process_dead = FALSE
+	A.infectable_biotypes &= ~MOB_UNDEAD
 
 /datum/symptom/inorganic_adaptation
 	name = "Inorganic Biology"
@@ -24,7 +26,9 @@
 	level = 5
 	severity = 0
 
-/datum/symptom/inorganic_adaptation/Start(datum/disease/advance/A)
-	if(!..())
-		return
-	A.infectable_biotypes |= MOB_INORGANIC
+/datum/symptom/inorganic_adaptation/OnAdd(datum/disease/advance/A)
+	A.infectable_biotypes |= MOB_MINERAL //Mineral covers plasmamen and golems.
+
+/datum/symptom/inorganic_adaptation/OnRemove(datum/disease/advance/A)
+	A.infectable_biotypes &= ~MOB_MINERAL
+
