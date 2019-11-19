@@ -94,8 +94,11 @@
 	if(G.stat == DEAD)
 		return
 	var/turf/T = get_turf(G)
-	if (!istype(T, /turf/open/floor/plating/asteroid))
-		to_chat(G, "<span class='warning'>You can only burrow in and out of mining turfs!</span>")
+	if (!istype(T, /turf/open/floor/plating/asteroid) || !do_after(G, 30, target = T))
+		to_chat(G, "<span class='warning'>You can only burrow in and out of mining turfs and must stay still!</span>")
+		return
+	if (get_dist(G, T) != 0)
+		to_chat(G, "<span class='warning'>Action cancelled, as you moved while reappearing.</span>")
 		return
 	if(G.is_burrowed)
 		holder = G.loc
