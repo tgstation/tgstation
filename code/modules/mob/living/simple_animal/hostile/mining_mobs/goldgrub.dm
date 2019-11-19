@@ -141,7 +141,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/death(gibbed)
 	barf_contents()
-	..()
+	return ..()
 	
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/barf_contents()
 	visible_message("<span class='danger'>[src] spits out its consumed ores!</span>")
