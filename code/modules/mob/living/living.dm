@@ -755,7 +755,8 @@
 /mob/living/proc/get_visible_name()
 	return name
 
-/mob/living/update_gravity(has_gravity,override = 0)
+/mob/living/update_gravity(has_gravity, override)
+	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
 	if(has_gravity)
