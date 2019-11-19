@@ -1,0 +1,6 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Held items that slow you down now affect all mobs instead of just humanoids"
+  - bugfix: "Equipment with slowdown now affects you from any slot instead of just suits, shoes, and back slots"
+  - balance: "Items that slow you down no longer only apply when there's gravity, they now apply any time you aren't floating. This means your inconvenient suit will slow you down in 0 gravity as long as you're using magboots"
