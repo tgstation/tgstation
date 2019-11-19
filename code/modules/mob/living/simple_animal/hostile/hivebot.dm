@@ -138,7 +138,7 @@
 			do_sparks(3, TRUE, fixable)
 			to_chat(src, "<span class='warning'>Repairs complete.</span>")
 		return
-	. = ..()
+	return ..()
 	
 /datum/action/innate/hivebot
 	background_icon_state = "bg_default"

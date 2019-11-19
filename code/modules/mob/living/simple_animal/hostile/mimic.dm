@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	if(src == target)
 		toggle_open()
 		return
-	. = ..()
+	return ..()
 	
 /mob/living/simple_animal/hostile/mimic/xenobio/attack_hand(mob/living/carbon/human/M)
 	. = ..()
@@ -306,7 +306,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	// Put loot in crate
 	for(var/atom/movable/AM in src)
 		AM.forceMove(C)
-	..()
+	return ..()
 			
 /mob/living/simple_animal/hostile/mimic/xenobio/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /obj/structure/closet))
