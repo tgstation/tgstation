@@ -1,4 +1,4 @@
-//make any object into a landmine or tripwire
+//for having one object make another do something when the first receives a signal
 
 #define COMSIG_TRAP_ACTIVATE "activate_trap" //sent to traps to activate them
 #define COMSIG_TRAP_LINK "link_trap" //a trap sent this will store ref of parent of component sending it in linked_datums
@@ -25,11 +25,10 @@
 
 /datum/component/trap/proc/activate()
 	//override with custom behavior
-
 	obj_activation_callback?.Invoke()
 	if(isatom(parent))
 		var/atom/A = parent
-		A.visible_message("The [A] activates!") //debug message
+		A.visible_message("The [A] activates!") //debug message, todo: remove
 	//todo: playsound, etc
 
 /datum/component/trap/proc/trap_link(datum/component/source)
@@ -37,10 +36,6 @@
 	
 /datum/component/trap/proc/trap_unlink(datum/component/source)
 	linked_datums -= source.parent
-
-/datum/component/trap/proc/activate_linked_datums()
-	for(var/datum/target in linked_datums)
-		SEND_SIGNAL(target, COMSIG_TRAP_ACTIVATE)
 
 /datum/component/trap/Destroy()
 	for(var/datum/target_datum in linked_datums)
@@ -50,9 +45,12 @@
 //triggers
 /datum/component/trap/trigger/activate()
 	//override with custom behavior
-	
 	activate_linked_datums()
 	. = ..()
+
+/datum/component/trap/trigger/proc/activate_linked_datums()
+	for(var/datum/target in linked_datums)
+		SEND_SIGNAL(target, COMSIG_TRAP_ACTIVATE)
 
 //example feature implementation for assessing sanity of component's organization, remove for final version
 
