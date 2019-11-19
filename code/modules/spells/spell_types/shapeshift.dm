@@ -45,34 +45,28 @@
 			shapeshift_type = animal_list[shapeshift_type]
 
 		var/obj/shapeshift_holder/S = locate() in M
+		if(S)
+			M = Restore(M)
+		else
+			M = Shapeshift(M)
 		if(M.movement_type & (VENTCRAWLING))
-			if((S && !S.stored.ventcrawler) || !initial(shapeshift_type.ventcrawler)) //you're shapeshifting into something that can't fit into a vent
+			if(!M.ventcrawler) //you're shapeshifting into something that can't fit into a vent
 				var/turf/turfyoudieon = get_turf(M)
 				var/obj/machinery/atmospherics/pipe/pipeyoudiein = locate() in turfyoudieon
 				if(!turfyoudieon || !pipeyoudiein) //not sure how this happens but sanity
 					return
-				to_chat(M, "<span class='userdanger'>[src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
-				var/list/viable_vents = list() //list of vents and scrubbers in the pipeline
-				for(var/obj/machinery/atmospherics/components/unary/possiblevent in pipeyoudiein.parent.other_atmosmch)
-					if(istype(possiblevent, /obj/machinery/atmospherics/components/unary/vent_pump) || istype(possiblevent, /obj/machinery/atmospherics/components/unary/vent_scrubber))
-						viable_vents += possiblevent
-				for(var/i in 1 to 3)
-					if(!viable_vents.len)
-						break
-					if(iscarbon(M))
-						var/mob/living/carbon/C = M
-						new C.gib_type(get_turf(pick_n_take(viable_vents)))
-					else
-						new /obj/effect/gibspawner/generic(get_turf(pick_n_take(viable_vents)))
-				M.remove_ventcrawl()
+				to_chat(M, "<span class='userdanger'>Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
+				for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(M)))
+					if(possiblevent.parents.len && possiblevent.parents[1] == pipeyoudiein.parent)
+						if(isalien(M))
+							new /obj/effect/gibspawner/xeno(get_turf(possiblevent))
+						else if(ishuman(M))
+							new /obj/effect/gibspawner/human(get_turf(possiblevent))
+						else
+							new /obj/effect/gibspawner/generic(get_turf(possiblevent))
 				M.death()
 				qdel(M)
 				return
-		if(S)
-			Restore(M)
-		else
-			Shapeshift(M)
-
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Shapeshift(mob/living/caster)
 	var/obj/shapeshift_holder/H = locate() in caster
@@ -85,12 +79,14 @@
 
 	clothes_req = FALSE
 	human_req = FALSE
+	return shape
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Restore(mob/living/shape)
 	var/obj/shapeshift_holder/H = locate() in shape
 	if(!H)
 		return
 
+	. =  H.stored
 	H.restore()
 
 	clothes_req = initial(clothes_req)
@@ -173,7 +169,7 @@
 /obj/shapeshift_holder/proc/restore(death=FALSE)
 	restoring = TRUE
 	qdel(slink)
-	stored.forceMove(get_turf(src))
+	stored.forceMove(shape.loc)
 	stored.notransform = FALSE
 	if(shape.mind)
 		shape.mind.transfer_to(stored)
