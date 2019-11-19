@@ -193,7 +193,7 @@
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
-	antidote = /datum/reagent/medicine/epinephrine
+	antidote = /datum/reagent/iron
 	taste_description = "death"
 	var/fakedeath_active = FALSE
 
@@ -232,7 +232,7 @@
 	reagent_state = SOLID
 	color = "#664700" // rgb: 102, 71, 0
 	toxpwr = 0.8
-	antidote = /datum/reagent/medicine/epinephrine
+	antidote = /datum/reagent/iron
 	taste_description = "death"
 
 /datum/reagent/toxin/ghoulpowder/on_mob_metabolize(mob/living/L)
@@ -829,7 +829,7 @@
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
-	antidote = /datum/reagent/consumable/sodiumchloride
+	antidote = /datum/reagent/iron || /datum/reagent/medicine/epinephrine
 	self_consuming = TRUE
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
