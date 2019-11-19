@@ -51133,7 +51133,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/engine/engineering)
 "ioj" = (
 /obj/effect/turf_decal/stripes/line{
