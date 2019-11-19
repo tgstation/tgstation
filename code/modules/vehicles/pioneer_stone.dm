@@ -19,7 +19,7 @@
 /obj/vehicle/ridden/pioneer_stone/proc/Change_move_delay()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	var/turf/T = get_turf(src)
-	if(is_mining_level(T.z))//pioneer stone works best on lavaland
+	if(is_mining_level(T.z)) //pioneer stone works best on lavaland
 		D.vehicle_move_delay = 1
 	else
 		D.vehicle_move_delay = 2
