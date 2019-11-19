@@ -1,0 +1,4 @@
+author: "mrhugo13"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer put megafauna into bluespace body bags."
