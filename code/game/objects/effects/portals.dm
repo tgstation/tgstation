@@ -132,7 +132,7 @@
 			LAZYREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
 		atmos_destination = null
 
-/obj/effect/portal/Destroy()				//Calls on_portal_destroy(destroyed portal, location of destroyed portal)
+/obj/effect/portal/Destroy()
 	GLOB.portals -= src
 	unlink_atmos()
 	if(hardlinked && !QDELETED(linked))
@@ -236,3 +236,4 @@
 
 /obj/effect/portal/permanent/one_way/destroy
 	keep = FALSE
+
