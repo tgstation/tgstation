@@ -166,9 +166,9 @@
 				return
 
 			if(P.tool_behaviour == TOOL_WRENCH && !circuit.needs_anchored)
-				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing \the [name]...</span>")
+				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [src]...</span>")
 				if(P.use_tool(src, user, 40, volume=75))
-					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure \the [name].</span>")
+					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
 					setAnchored(!anchored)
 				return
 
