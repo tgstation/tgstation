@@ -24,7 +24,7 @@
 		used = TRUE
 
 	if(user.legcuffed)
-		var/obj/O = user.get_item_by_slot(SLOT_LEGCUFFED)
+		var/obj/O = user.get_item_by_slot(ITEM_SLOT_LEGCUFFED)
 		if(!istype(O))
 			return FALSE
 		user.visible_message("<span class='warning'>[user] vomits a glob of acid on [user.p_their()] [O]!</span>", \
