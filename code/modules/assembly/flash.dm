@@ -276,7 +276,7 @@
 				user.visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>", "<span class='danger'>You hypno-flash [M]!</span>")
 
 			if(!hypnosis)
-				to_chat(M, "<span class='notice'>The light makes you feel oddly relaxed...</span>")
+				to_chat(M, "<span class='hypnophrase'>The light makes you feel oddly relaxed...</span>")
 				M.confused += min(M.confused + 10, 20)
 				M.dizziness += min(M.dizziness + 10, 20)
 				M.drowsyness += min(M.drowsyness + 10, 20)
