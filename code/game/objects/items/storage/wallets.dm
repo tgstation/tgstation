@@ -1,7 +1,7 @@
 /obj/item/storage/wallet
 	name = "wallet"
 	desc = "It can hold a few small and personal things."
-	icon = 'austation/icons/obj/storage.dmi' // austation -- use old (new?) wallet sprites
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "wallet"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
