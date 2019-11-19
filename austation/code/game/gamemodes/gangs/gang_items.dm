@@ -495,12 +495,12 @@
 	outerwear.armor = list(melee = 20, bullet = 35, laser = 10, energy = 10, bomb = 30, bio = 0, rad = 0, fire = 30, acid = 30)
 	outerwear.body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	outerwear.desc += " Tailored for the [G.name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
-	H.equip_to_slot_or_del(new uniform(H), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(outerwear, SLOT_WEAR_SUIT)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new uniform(H), ITEM_SLOT_ICLOTHING)
+	H.equip_to_slot_or_del(outerwear,  ITEM_SLOT_OCLOTHING)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), ITEM_SLOT_FEET)
 	H.put_in_l_hand(new /obj/item/gun/ballistic/automatic/surplus(H))
-	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m10mm/rifle(H), SLOT_L_STORE)
-	H.equip_to_slot_or_del(new /obj/item/switchblade(H), SLOT_R_STORE)
+	H.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m10mm/rifle(H), ITEM_SLOT_LPOCKET)
+	H.equip_to_slot_or_del(new /obj/item/switchblade(H), ITEM_SLOT_RPOCKET)
 	var/equip = SSjob.EquipRank(H, "Assistant", 1)
 	H = equip
 	do_sparks(4, TRUE, src)

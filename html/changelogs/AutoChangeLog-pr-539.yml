@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - bugfix: "The sonic jackhammers description now no longer states that it could destroy walls, which in fact it couldn't since quite some time."

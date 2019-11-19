@@ -179,7 +179,7 @@
 		character.key = spoo.key
 		character.mind.add_antag_datum(/datum/antagonist/vigilante)
 		character.put_in_l_hand(new /obj/item/flashlight/flare/torch(character))
-		character.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/alt(character), SLOT_WEAR_SUIT)
+		character.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/alt(character), ITEM_SLOT_OCLOTHING)
 	addtimer(CALLBACK(src, .proc/vigilante_vengeance), rand(12 MINUTES, 17 MINUTES))
 
 /obj/item/soap/vigilante
