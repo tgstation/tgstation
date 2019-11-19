@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Pockets are no longer a valid slot for slowdown"
