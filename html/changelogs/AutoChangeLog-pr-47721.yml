@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "Two steps have been cut out from the augmentation surgery, making it much less tedious/time-intensive to perform a full-augging on someone. The new sequence of tool usages that you should perform on someone after you've started an augmentation surgery on them is: scalpel -> hemostat -> retractor -> robotic limb."
