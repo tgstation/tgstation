@@ -420,6 +420,7 @@
 #include "code\datums\components\tactical.dm"
 #include "code\datums\components\tether.dm"
 #include "code\datums\components\thermite.dm"
+#include "code\datums\components\traps.dm"
 #include "code\datums\components\uplink.dm"
 #include "code\datums\components\waddling.dm"
 #include "code\datums\components\wearertargeting.dm"
