@@ -1,0 +1,5 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Gravity slowdown applies to all mobs instead of just humanoids"
+  - tweak: "If you're floating in high gravity somehow you're no longer slowed down"
