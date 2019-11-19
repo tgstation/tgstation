@@ -46,7 +46,7 @@
 
 		var/obj/shapeshift_holder/S = locate() in M
 		if(M.movement_type & (VENTCRAWLING))
-			if(!((S && S.stored.ventcrawler) || initial(shapeshift_type.ventcrawler))) //you're shapeshifting into something that can't fit into a vent
+			if(!((S?.stored.ventcrawler) || initial(shapeshift_type.ventcrawler))) //you're shapeshifting into something that can't fit into a vent
 				var/turf/turfyoudieon = get_turf(M)
 				var/obj/machinery/atmospherics/pipe/pipeyoudiein = locate() in turfyoudieon
 				if(!turfyoudieon || !pipeyoudiein) //not sure how this happens but sanity
