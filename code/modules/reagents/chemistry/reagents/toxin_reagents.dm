@@ -821,7 +821,6 @@
 
 //ACID
 
-
 /datum/reagent/toxin/acid  //acids are snowflakes
 	name = "Sulphuric acid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
@@ -829,7 +828,7 @@
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 	taste_description = "acid"
-	antidote = /datum/reagent/iron || /datum/reagent/medicine/epinephrine
+	antidote =  /datum/reagent/medicine/epinephrine
 	self_consuming = TRUE
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
