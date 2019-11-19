@@ -13,10 +13,13 @@ export const Mint = props => {
         title="Materials"
         buttons={(data.processing ? (
           <Button
+            icon="times"
             content="Stop"
+            selected
             onClick={() => act(ref, 'stoppress')} />
         ) : (
           <Button
+            icon="power-off"
             content="Start"
             onClick={() => act(ref, 'startpress')} />
         ))}>
@@ -29,6 +32,7 @@ export const Mint = props => {
                 buttons={(
                   <Button
                     content="Select"
+                    icon={data.chosen_material === material.material ? "check-square" : "square"}
                     selected={data.chosen_material === material.material}
                     onClick={() => act(ref, 'changematerial', {
                       material_name: material.material,

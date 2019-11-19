@@ -20,7 +20,7 @@ export const StationAlertConsole = props => {
             </li>
           )}
           {fire.map(alert => (
-            <li key={alert}>
+            <li key={alert} className="color-average">
               {alert}
             </li>
           ))}
@@ -34,7 +34,7 @@ export const StationAlertConsole = props => {
             </li>
           )}
           {atmos.map(alert => (
-            <li key={alert}>
+            <li key={alert} className="color-average">
               {alert}
             </li>
           ))}
@@ -48,7 +48,7 @@ export const StationAlertConsole = props => {
             </li>
           )}
           {power.map(alert => (
-            <li key={alert}>
+            <li key={alert} className="color-average">
               {alert}
             </li>
           ))}

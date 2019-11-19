@@ -49,8 +49,10 @@ import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
 import { SMES } from './interfaces/SMES';
 import { SolarControl } from './interfaces/SolarControl';
+import { SpaceHeater } from './interfaces/SpaceHeater';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
+import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
@@ -265,12 +267,20 @@ const ROUTES = {
     component: () => SolarControl,
     scrollable: false,
   },
+  space_heater: {
+    component: () => SpaceHeater,
+    scrollable: false,
+  },
   station_alert: {
     component: () => StationAlertConsole,
     scrollable: true,
   },
   suit_storage_unit: {
     component: () => SuitStorageUnit,
+    scrollable: false,
+  },
+  tanks: {
+    component: () => Tank,
     scrollable: false,
   },
   tank_dispenser: {
