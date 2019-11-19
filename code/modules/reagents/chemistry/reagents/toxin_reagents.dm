@@ -41,7 +41,7 @@
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr*REM, 0)
 		. = TRUE
-	..()
+
 
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
