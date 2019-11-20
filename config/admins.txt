@@ -137,3 +137,4 @@ shizcalev = Game Master
 NicBR = Game Master
 LoserWasTaken = Game Master
 Fikou = Game Master
+Skoglol = Game Master

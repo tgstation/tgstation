@@ -132,7 +132,7 @@
 			return FALSE
 		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
 		if(AM == pulling)
-			grab_state = state
+			setGrabState(state)
 			if(istype(AM,/mob/living))
 				var/mob/living/AMob = AM
 				AMob.grabbedby(src)
@@ -143,7 +143,7 @@
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = AM
 	AM.pulledby = src
-	grab_state = state
+	setGrabState(state)
 	if(ismob(AM))
 		var/mob/M = AM
 		log_combat(src, M, "grabbed", addition="passive grab")
@@ -157,7 +157,7 @@
 		pulling.pulledby = null
 		var/mob/living/ex_pulled = pulling
 		pulling = null
-		grab_state = 0
+		setGrabState(0)
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_mobility()// mob gets up if it was lyng down in a chokehold
@@ -545,7 +545,7 @@
 
 	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
 	if (thrower && thrower.last_move && thrower.client && thrower.client.move_delay >= world.time + world.tick_lag*2)
-		var/user_momentum = thrower.movement_delay()
+		var/user_momentum = thrower.cached_multiplicative_slowdown
 		if (!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
 			user_momentum = world.tick_lag
 
@@ -867,6 +867,11 @@
 	if(force < (move_resist * MOVE_FORCE_PULL_RATIO))
 		return FALSE
 	return TRUE
+
+/// Updates the grab state of the movable
+/// This exists to act as a hook for behaviour
+/atom/movable/proc/setGrabState(newstate)
+	grab_state = newstate
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE

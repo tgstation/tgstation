@@ -1,0 +1,7 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Keybound emotes now count as intentional. This means emotes that don't play a sound when you type the emote also don't play a sound when you use the keybinding."
+  - bugfix: "Emotes can no longer be stacked on one key."
+  - tweak: "Emotes have been given cooldowns. Each emote has their own cooldown so you can still do your flip and scream."
+  - tweak: "You can fall over if you try to flip too much."

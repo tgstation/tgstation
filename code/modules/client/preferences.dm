@@ -27,7 +27,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/UI_style = null
 	var/buttons_locked = FALSE
-	var/hotkeys = FALSE
+	var/hotkeys = TRUE
 
 	// Custom Keybindings
 	var/list/key_bindings = list()
@@ -128,7 +128,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
-	key_bindings = deepCopyList(GLOB.keybinding_list_by_key) // give them default keybinds too
+	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
+	C.update_movement_keys()
 	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
@@ -695,14 +696,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			var/list/user_binds = list()
 			for (var/key in key_bindings)
 				for(var/kb_name in key_bindings[key])
-					user_binds[kb_name] = key
+					user_binds[kb_name] += list(key)
 
 			var/list/kb_categories = list()
 			// Group keybinds by category
 			for (var/name in GLOB.keybindings_by_name)
 				var/datum/keybinding/kb = GLOB.keybindings_by_name[name]
-				if (!(kb.category in kb_categories))
-					kb_categories[kb.category] = list()
 				kb_categories[kb.category] += list(kb)
 
 			dat += "<style>label { display: inline-block; width: 200px; }</style><body>"
@@ -711,11 +710,24 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h3>[category]</h3>"
 				for (var/i in kb_categories[category])
 					var/datum/keybinding/kb = i
-					var/bound_key = user_binds[kb.name]
-					bound_key = (bound_key) ? bound_key : "Unbound"
-
-					dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key] Default: ( [kb.key] )</a>"
-					dat += "<br>"
+					if(!length(user_binds[kb.name]))
+						dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=["Unbound"]'>Unbound</a>"
+						var/list/default_keys = hotkeys ? kb.hotkey_keys : kb.classic_keys
+						if(LAZYLEN(default_keys))
+							dat += "| Default: [default_keys.Join(", ")]"
+						dat += "<br>"
+					else
+						var/bound_key = user_binds[kb.name][1]
+						dat += "<label>[kb.full_name]</label> <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a>"
+						for(var/bound_key_index in 2 to length(user_binds[kb.name]))
+							bound_key = user_binds[kb.name][bound_key_index]
+							dat += " | <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a>"
+						if(length(user_binds[kb.name]) < MAX_KEYS_PER_KEYBIND)
+							dat += "| <a href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name]'>Add Secondary</a>"
+						var/list/default_keys = hotkeys ? kb.classic_keys : kb.hotkey_keys
+						if(LAZYLEN(default_keys))
+							dat += "| Default: [default_keys.Join(", ")]"
+						dat += "<br>"
 
 			dat += "<br><br>"
 			dat += "<a href ='?_src_=prefs;preference=keybindings_reset'>\[Reset to default\]</a>"
@@ -742,14 +754,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/HTML = {"
 	<div id='focus' style="outline: 0;" tabindex=0>Keybinding: [kb.full_name]<br>[kb.description]<br><br><b>Press any key to change<br>Press ESC to clear</b></div>
 	<script>
+	var deedDone = false;
 	document.onkeyup = function(e) {
-		var shift = e.shiftKey ? 1 : 0;
+		if(deedDone){ return; }
 		var alt = e.altKey ? 1 : 0;
 		var ctrl = e.ctrlKey ? 1 : 0;
+		var shift = e.shiftKey ? 1 : 0;
 		var numpad = (95 < e.keyCode && e.keyCode < 112) ? 1 : 0;
 		var escPressed = e.keyCode == 27 ? 1 : 0;
-		var url = 'byond://?_src_=prefs;preference=keybindings_set;keybinding=[kb.name];old_key=[old_key];clear_key='+escPressed+';key='+e.key+';shift='+shift+';alt='+alt+';ctrl='+ctrl+';numpad='+numpad+';key_code='+e.keyCode;
+		var url = 'byond://?_src_=prefs;preference=keybindings_set;keybinding=[kb.name];old_key=[old_key];clear_key='+escPressed+';key='+e.key+';alt='+alt+';ctrl='+ctrl+';shift='+shift+';numpad='+numpad+';key_code='+e.keyCode;
 		window.location=url;
+		deedDone = true;
 	}
 	document.getElementById('focus').focus();
 	</script>
@@ -1512,49 +1527,39 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/clear_key = text2num(href_list["clear_key"])
 					var/old_key = href_list["old_key"]
 					if(clear_key)
-						if(old_key != "Unbound") // if it was already set
+						if(key_bindings[old_key])
 							key_bindings[old_key] -= kb_name
-							key_bindings["Unbound"] += list(kb_name)
+							if(!length(key_bindings[old_key]))
+								key_bindings -= old_key
 						user << browse(null, "window=capturekeypress")
 						save_preferences()
 						ShowChoices(user)
 						return
 
-					var/key = href_list["key"]
-					var/numpad = text2num(href_list["numpad"])
-					var/AltMod = text2num(href_list["alt"]) ? "Alt-" : ""
-					var/CtrlMod = text2num(href_list["ctrl"]) ? "Ctrl-" : ""
-					var/ShiftMod = text2num(href_list["shift"]) ? "Shift-" : ""
+					var/new_key = uppertext(href_list["key"])
+					var/AltMod = text2num(href_list["alt"]) ? "Alt" : ""
+					var/CtrlMod = text2num(href_list["ctrl"]) ? "Ctrl" : ""
+					var/ShiftMod = text2num(href_list["shift"]) ? "Shift" : ""
+					var/numpad = text2num(href_list["numpad"]) ? "Numpad" : ""
 					// var/key_code = text2num(href_list["key_code"])
 
-					var/new_key = uppertext(key)
+					if(GLOB._kbMap[new_key])
+						new_key = GLOB._kbMap[new_key]
 
-					// This is a mapping from JS keys to Byond - ref: https://keycode.info/
-					var/static/list/_kbMap = list(
-						"UP" = "North",
-						"RIGHT" = "East",
-						"DOWN" = "South",
-						"LEFT" = "West",
-						"INSERT" = "Insert",
-						"HOME" = "Northwest",
-						"PAGEUP" = "Northeast",
-						"DEL" = "Delete",
-						"END" = "Southwest",
-						"PAGEDOWN" = "Southeast",
-						"SPACEBAR" = "Space",
-						"ALT" = "Alt",
-						"SHIFT" = "Shift",
-						"CONTROL" = "Ctrl"
-					)
-					new_key = _kbMap[new_key] ? _kbMap[new_key] : new_key
-
-					if (numpad)
-						new_key = "Numpad[new_key]"
-
-					var/full_key = "[AltMod][CtrlMod][ShiftMod][new_key]"
-					if(!key_bindings[old_key])
-						key_bindings[old_key] = list()
-					key_bindings[old_key] -= kb_name
+					var/full_key
+					switch(new_key)
+						if("Alt")
+							full_key = "[new_key][CtrlMod][ShiftMod]"
+						if("Ctrl")
+							full_key = "[AltMod][new_key][ShiftMod]"
+						if("Shift")
+							full_key = "[AltMod][CtrlMod][new_key]"
+						else
+							full_key = "[AltMod][CtrlMod][ShiftMod][numpad][new_key]"
+					if(key_bindings[old_key])
+						key_bindings[old_key] -= kb_name
+						if(!length(key_bindings[old_key]))
+							key_bindings -= old_key
 					key_bindings[full_key] += list(kb_name)
 					key_bindings[full_key] = sortList(key_bindings[full_key])
 
@@ -1563,7 +1568,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					save_preferences()
 
 				if("keybindings_reset")
-					key_bindings = deepCopyList(GLOB.keybinding_list_by_key)
+					var/choice = tgalert(user, "Would you prefer 'hotkey' or 'classic' defaults?", "Setup keybindings", "Hotkey", "Classic", "Cancel")
+					if(choice == "Cancel")
+						ShowChoices(user)
+						return
+					hotkeys = (choice == "Hotkey")
+					key_bindings = (hotkeys) ? deepCopyList(GLOB.hotkey_keybinding_list_by_key) : deepCopyList(GLOB.classic_keybinding_list_by_key)
+					user.client.update_movement_keys()
 
 				if("action_buttons")
 					buttons_locked = !buttons_locked

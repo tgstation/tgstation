@@ -25310,6 +25310,10 @@
 /area/crew_quarters/fitness/recreation)
 "bqb" = (
 /obj/structure/table/wood,
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
 /obj/item/reagent_containers/food/drinks/bottle/whiskey{
 	pixel_x = 3
 	},
@@ -29963,7 +29967,7 @@
 /area/crew_quarters/heads/hor)
 "bBh" = (
 /obj/structure/table,
-/obj/item/paper_bin{
+/obj/item/paper_bin/carbon{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -30422,12 +30426,12 @@
 /area/maintenance/port/aft)
 "bCk" = (
 /obj/structure/table,
-/obj/item/paper_bin{
+/obj/structure/cable,
+/obj/item/paper_bin/carbon{
 	pixel_x = -3;
 	pixel_y = 7
 	},
 /obj/item/stamp/hop,
-/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bCl" = (
@@ -37342,7 +37346,7 @@
 /area/maintenance/starboard)
 "bTY" = (
 /obj/machinery/power/apc{
-	areastring = "/area/medical/patients_rooms/room_a";
+	areastring = "/area/medical/surgery/room_b";
 	dir = 4;
 	name = "Surgery B APC";
 	pixel_x = 24

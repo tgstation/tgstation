@@ -54,12 +54,12 @@
 /obj/item/radio/intercom{
 	pixel_x = 27
 	},
-/obj/item/paper_bin{
-	layer = 2.9
-	},
 /obj/machinery/button/ticket_machine{
 	pixel_x = 28;
 	pixel_y = -12
+	},
+/obj/item/paper_bin/carbon{
+	layer = 2.9
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
@@ -11824,7 +11824,7 @@
 "aEn" = (
 /obj/structure/table/wood,
 /obj/item/pen,
-/obj/item/paper_bin{
+/obj/item/paper_bin/carbon{
 	layer = 2.9
 	},
 /turf/open/floor/carpet,
@@ -22590,9 +22590,6 @@
 	departmentType = 2;
 	pixel_x = -30
 	},
-/obj/item/paper_bin{
-	layer = 2.9
-	},
 /obj/item/pen,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -22600,6 +22597,9 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
+	},
+/obj/item/paper_bin/carbon{
+	layer = 2.9
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
@@ -51129,7 +51129,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/engine/engineering)
 "ioj" = (
 /obj/effect/turf_decal/stripes/line{

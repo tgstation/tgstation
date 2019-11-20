@@ -23,18 +23,9 @@
 		return 1
 	return 0
 
-/datum/martial_art/plasma_fist/proc/TornadoAnimate(mob/living/carbon/human/A)
-	set waitfor = FALSE
-	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
-		if(!A)
-			break
-		A.setDir(i)
-		playsound(A.loc, 'sound/weapons/punch1.ogg', 15, TRUE, -1)
-		sleep(1)
-
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.say("TORNADO SWEEP!", forced="plasma fist")
-	TornadoAnimate(A)
+	dance_rotate(A, CALLBACK(GLOBAL_PROC, .proc/playsound, A.loc, 'sound/weapons/punch1.ogg', 15, TRUE, -1))
 	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
 	var/list/turfs = list()
 	for(var/turf/T in range(1,A))
