@@ -50621,7 +50621,7 @@
 /area/security/checkpoint/science/research)
 "chq" = (
 /obj/structure/cable,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/security/checkpoint/science/research)
 "chr" = (
 /obj/machinery/door/airlock/maintenance{
