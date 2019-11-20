@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Ghosting, suiciding, DNR and admins reassigning control now properly removes your mind. Resolves some issues with admins respawning ghosts, and prevents stuff like wand of healing bringing back the mind of suicides."

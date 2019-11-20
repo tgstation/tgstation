@@ -1,5 +1,0 @@
-author: "MrPerson"
-delete-after: True
-changes: 
-  - rscadd: "If you shoot the supermatter crystal with bluespace artillery, you're gonna have a bad time."
-  - bugfix: "Bluespace artillery will blow its targets up properly instead of doing nothing."

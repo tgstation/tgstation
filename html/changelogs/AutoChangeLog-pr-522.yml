@@ -1,4 +1,0 @@
-author: "Thebleh"
-delete-after: True
-changes: 
-  - bugfix: "Radio implant no longer prevents the headset from sending messages"
