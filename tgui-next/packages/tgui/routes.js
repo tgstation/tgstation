@@ -34,9 +34,13 @@ import { DnaVault } from './interfaces/DnaVault';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Holodeck } from './interfaces/Holodeck';
 =======
 import { Keycard_Auth } from './interfaces/Keycard_Auth';
+=======
+import { KeycardAuth } from './interfaces/KeycardAuth';
+>>>>>>> Keycard Authenticator UI
 import { KitchenSink } from './interfaces/KitchenSink';
 >>>>>>> keycard commit
 import { LanguageMenu } from './interfaces/LanguageMenu';
@@ -220,7 +224,7 @@ const ROUTES = {
     scrollable: true,
 =======
   keycard_auth: {
-    component: () => Keycard_Auth,
+    component: () => KeycardAuth,
     scrollable: false,
 >>>>>>> keycard commit
   },
