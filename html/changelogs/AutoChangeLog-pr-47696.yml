@@ -1,7 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes: 
-  - rscadd: "Fancy drink bottles can now be crafted."
-  - rscadd: "Blank drink bottles are now available in the booze-o-mat."
-  - rscadd: "Hooch & moonshine have their own bottles."
-  - tweak: "moonshine is now clear, rather than brown."

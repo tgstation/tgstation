@@ -59,16 +59,16 @@
 /area/solar/port/fore)
 "aam" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin{
+/obj/machinery/button/ticket_machine{
+	pixel_x = 32
+	},
+/obj/item/paper_bin/carbon{
 	pixel_x = -2;
 	pixel_y = 4
 	},
 /obj/item/stamp/hop{
 	pixel_x = -4;
 	pixel_y = 4
-	},
-/obj/machinery/button/ticket_machine{
-	pixel_x = 32
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
@@ -13343,7 +13343,7 @@
 /area/security/detectives_office)
 "aCv" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin{
+/obj/item/paper_bin/carbon{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -19902,13 +19902,13 @@
 /area/quartermaster/qm)
 "aRN" = (
 /obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
+	},
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)

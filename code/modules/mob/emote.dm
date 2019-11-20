@@ -7,18 +7,22 @@
 		param = copytext(act, custom_param + 1, length(act) + 1)
 		act = copytext(act, 1, custom_param)
 
-
 	var/list/key_emotes = GLOB.emote_list[act]
 
 	if(!length(key_emotes))
 		if(intentional)
 			to_chat(src, "<span class='notice'>'[act]' emote does not exist. Say *help for a list.</span>")
-		return
+		return FALSE
+	var/silenced = FALSE
 	for(var/datum/emote/P in key_emotes)
+		if(!P.check_cooldown(src, intentional))
+			silenced = TRUE
+			continue
 		if(P.run_emote(src, param, m_type, intentional))
-			return
-	if(intentional)
+			return TRUE
+	if(intentional && !silenced)
 		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
+	return FALSE
 
 /datum/emote/flip
 	key = "flip"
@@ -31,6 +35,28 @@
 	. = ..()
 	if(.)
 		user.SpinAnimation(7,1)
+
+/datum/emote/flip/check_cooldown(mob/user, intentional)
+	. = ..()
+	if(.)
+		return
+	if(!can_run_emote(user, intentional=intentional))
+		return
+	if(isliving(user))
+		var/mob/living/flippy_mcgee = user
+		if(prob(20))
+			flippy_mcgee.Knockdown(1 SECONDS)
+			flippy_mcgee.visible_message(
+				"<span class='notice'>[flippy_mcgee] attempts to do a flip and falls over, what a doofus!</span>",
+				"<span class='notice'>You attempt to do a flip while still off balance from the last flip and fall down!</span>"
+			)
+			if(prob(50))
+				flippy_mcgee.adjustBruteLoss(1)
+		else
+			flippy_mcgee.visible_message(
+				"<span class='notice'>[flippy_mcgee] stumbles a bit after their flip.</span>",
+				"<span class='notice'>You stumble a bit from still being off balance from your last flip.</span>"
+			)
 
 /datum/emote/spin
 	key = "spin"

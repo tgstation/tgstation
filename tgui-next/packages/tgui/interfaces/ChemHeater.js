@@ -2,7 +2,7 @@ import { round, toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section } from '../components';
-import { BeakerContents } from './common/reagents';
+import { BeakerContents } from './common/BeakerContents';
 
 export const ChemHeater = props => {
   const { state } = props;

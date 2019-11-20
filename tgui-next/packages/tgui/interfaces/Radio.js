@@ -1,4 +1,4 @@
-import { map } from 'common/fp';
+import { map } from 'common/collections';
 import { toFixed } from 'common/math';
 import { act } from '../byond';
 import { Box, Button, LabeledList, NumberInput, Section } from '../components';

@@ -346,12 +346,12 @@
 
 /******ORGAN HEALING******/
 /*Suffix: -rite*/
-	//replaces corazone's heart stabilization
 /datum/reagent/medicine/C2/penthrite
 	name = "Penthrite"
 	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
 	color = "#F5F5F5"
 	self_consuming = TRUE
+
 /datum/reagent/medicine/C2/penthrite/on_mob_add(mob/living/M)
 	. = ..()
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)

@@ -19,6 +19,7 @@ export const Button = props => {
     selected,
     tooltip,
     tooltipPosition,
+    ellipsis,
     content,
     children,
     onclick,
@@ -43,9 +44,10 @@ export const Button = props => {
         disabled && 'Button--disabled',
         selected && 'Button--selected',
         hasContent && 'Button--hasContent',
+        ellipsis && 'Button--ellipsis',
         (color && typeof color === 'string')
           ? 'Button--color--' + color
-          : 'Button--color--normal',
+          : 'Button--color--default',
         className,
       ])}
       tabIndex={!disabled && '0'}
@@ -89,3 +91,16 @@ export const Button = props => {
 };
 
 Button.defaultHooks = pureComponentHooks;
+
+export const ButtonCheckbox = props => {
+  const { checked, ...rest } = props;
+  return (
+    <Button
+      color="transparent"
+      icon={checked ? 'check-square-o' : 'square-o'}
+      selected={checked}
+      {...rest} />
+  );
+};
+
+Button.Checkbox = ButtonCheckbox;
