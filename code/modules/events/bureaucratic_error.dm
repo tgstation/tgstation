@@ -13,8 +13,11 @@
 /datum/round_event/bureaucratic_error/start()
 	var/list/jobs = SSjob.occupations.Copy()
 	jobs -= /datum/job/ai // AI doesnt really support latejoining with more than one total.
-	if(prob(50))	// Only allows latejoining as a single role. Add latejoin AI bluespace pods for fun later.
-		SSjob.set_overflow_role(pick_n_take(jobs))	// Setting overflow replaces assistant overflow and ensures we always got a job slot open.
+	if(prob(33))	// Only allows latejoining as a single role. Add latejoin AI bluespace pods for fun later.
+		var/datum/job/overflow = pick_n_take(jobs)
+		overflow.minimal_player_age = 0
+		overflow.exp_requirements = 0
+		SSjob.set_overflow_role(overflow.title)	// Ensures everyone can join as this role. Assistant will still be open.
 		for(var/job in jobs)
 			var/datum/job/current = job
 			current.total_positions = 0
