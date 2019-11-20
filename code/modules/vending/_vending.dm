@@ -367,8 +367,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	..()
 	if(panel_open)
 		default_unfasten_wrench(user, I, time = 60)
-		for(var/mob/living/carbon/C in pinned_mobs)
-			C.SetAllImmobility(0, TRUE)
+		unbuckle_all_mobs(TRUE)
 	return TRUE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
@@ -499,8 +498,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 							C.visible_message("<span class='danger'>[C]'s legs shatter with a sickening crunch!</span>", \
 								"<span class='userdanger'>Your legs shatter with a sickening crunch!</span>")
 					if(2) // pin them beneath the machine until someone untilts it
-						C.AllImmobility(99999, TRUE)
-						pinned_mobs += C
+						forceMove(get_turf(C))
+						buckle_mob(C, force=TRUE)
 						C.visible_message("<span class='danger'>[C] is pinned underneath \the [src]!</span>", \
 							"<span class='userdanger'>You are pinned down by \the [src]!</span>")
 					if(3) // glass candy
@@ -540,25 +539,23 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	var/matrix/M = matrix()
 	M.Turn(pick(90, 270))
-	src.transform = M
+	transform = M
 
-	src.throw_at(get_turf(fatty), 2, 2, spin=FALSE)
+	if(get_turf(fatty) != get_turf(src))
+		throw_at(get_turf(fatty), 2, 2, spin=FALSE)
 
 /obj/machinery/vending/proc/untilt(mob/user)
 	user.visible_message("<span class='notice'>[user] rights /the [src].", \
 		"<span class='notice'>You right \the [src].")
 
-	for(var/mob/living/carbon/C in pinned_mobs)
-		C.SetAllImmobility(0, TRUE)
-
-	pinned_mobs = list()
+	unbuckle_all_mobs(TRUE)
 
 	tilted = FALSE
 	layer = initial(layer)
 
 	var/matrix/M = matrix()
 	M.Turn(0)
-	src.transform = M
+	transform = M
 
 /obj/machinery/vending/proc/loadingAttempt(obj/item/I, mob/user)
 	. = TRUE
@@ -570,6 +567,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 		vending_machine_input[format_text(I.name)] = 1
 	to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
 	loaded_items++
+
+/obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
+	if(!force)
+		return
+	. = ..()
 
 /**
   * Is the passed in user allowed to load this vending machines compartments
@@ -1132,9 +1134,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	return FALSE
 
 /obj/machinery/vending/custom/Destroy()
-	for(var/mob/living/carbon/C in pinned_mobs)
-		C.SetAllImmobility(0, TRUE)
-
+	unbuckle_all_mobs(TRUE)
 	var/turf/T = get_turf(src)
 	if(T)
 		for(var/obj/item/I in contents)
