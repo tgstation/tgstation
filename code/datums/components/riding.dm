@@ -77,7 +77,7 @@
 		M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
 		"<span class='warning'>You're thrown clear of [AM]!</span>")
 		M.throw_at(target, 14, 5, AM)
-		M.Paralyze(60)
+		M.Knockdown(3 SECONDS)
 
 /datum/component/riding/proc/handle_vehicle_offsets()
 	var/atom/movable/AM = parent
