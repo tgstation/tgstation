@@ -438,6 +438,96 @@
 	for(var/i in 1 to 6)
 		new /obj/item/reagent_containers/food/snacks/donkpocket(src)
 
+/obj/item/storage/box/donkpockets/donkpocketspicy
+	name = "box of spicy-flavoured donk-pockets"
+	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
+	icon_state = "donkpocketboxspicy"
+	illustration=null
+
+/obj/item/storage/box/donkpockets/donkpocketspicy/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donkpocket))
+
+/obj/item/storage/box/donkpockets/donkpocketspicy/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/food/snacks/donkpocket/spicy(src)
+
+/obj/item/storage/box/donkpockets/donkpocketteriyaki
+	name = "box of teriyaki-flavoured donk-pockets"
+	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
+	icon_state = "donkpocketboxteriyaki"
+	illustration=null
+
+/obj/item/storage/box/donkpockets/donkpocketteriyaki/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donkpocket))
+
+/obj/item/storage/box/donkpockets/donkpocketteriyaki/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki(src)
+
+/obj/item/storage/box/donkpockets/donkpocketpizza
+	name = "box of pizza-flavoured donk-pockets"
+	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
+	icon_state = "donkpocketboxpizza"
+	illustration=null
+
+/obj/item/storage/box/donkpockets/donkpocketpizza/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donkpocket))
+
+/obj/item/storage/box/donkpockets/donkpocketpizza/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/food/snacks/donkpocket/pizza(src)
+
+/obj/item/storage/box/donkpockets/donkpocketgondola
+	name = "box of gondola-flavoured donk-pockets"
+	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
+	icon_state = "donkpocketboxgondola"
+	illustration=null
+
+/obj/item/storage/box/donkpockets/donkpocketgondola/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donkpocket))
+
+/obj/item/storage/box/donkpockets/donkpocketgondola/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/food/snacks/donkpocket/gondola(src)
+
+/obj/item/storage/box/donkpockets/donkpocketberry
+	name = "box of berry-flavoured donk-pockets"
+	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
+	icon_state = "donkpocketboxberry"
+	illustration=null
+
+/obj/item/storage/box/donkpockets/donkpocketberry/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donkpocket))
+
+/obj/item/storage/box/donkpockets/donkpocketberry/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/food/snacks/donkpocket/berry(src)
+
+/obj/item/storage/box/donkpockets/donkpockethonk
+	name = "box of bannana-flavoured donk-pockets"
+	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
+	icon_state = "donkpocketboxbannana"
+	illustration=null
+
+/obj/item/storage/box/donkpockets/donkpockethonk/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donkpocket))
+
+/obj/item/storage/box/donkpockets/donkpockethonk/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/food/snacks/donkpocket/honk(src)
+
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
