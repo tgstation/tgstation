@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		list(//medical chems
 			/obj/item/reagent_containers/glass/bottle/multiver = 1,
 			/obj/item/reagent_containers/syringe/convermol = 1,
-			) = 1, 
+			) = 1,
 		list(//drinks
 			/obj/item/reagent_containers/food/drinks/bottle/vodka = 1,
 			/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,
@@ -213,6 +213,14 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 	list(//food
 		/obj/item/reagent_containers/food/snacks/canned/peaches/maint = 1,
 		/obj/item/storage/box/donkpockets = 1,
+		list(//Donk varities
+			/obj/item/storage/box/donkpockets/donkpocketspicy = 1,
+			/obj/item/storage/box/donkpockets/donkpocketteriyaki = 1,
+			/obj/item/storage/box/donkpockets/donkpocketpizza = 1,
+			/obj/item/storage/box/donkpockets/donkpocketgondola= 1,
+			/obj/item/storage/box/donkpockets/donkpocketberry = 1,
+			/obj/item/storage/box/donkpockets/donkpockethonk = 1,
+		) = 1,
 		/obj/item/reagent_containers/food/snacks/monkeycube = 1,
 		) = 1,
 
