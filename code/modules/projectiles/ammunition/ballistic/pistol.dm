@@ -54,3 +54,4 @@
 	name = "0.9mm bullet casing"
 	desc = "A... 0.9mm bullet casing? What?"
 	projectile_type = /obj/projectile/glockroachbullet
+	
