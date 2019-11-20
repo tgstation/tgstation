@@ -732,7 +732,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if(close_other) //increase the odds
 			for(var/i in 1 to 5)
 				message_pool.Add("<span class='warning'>You feel a tiny prick!</span>")
-		var/obj/item/storage/equipped_backpack = other.get_item_by_slot(SLOT_BACK)
+		var/obj/item/storage/equipped_backpack = other.get_item_by_slot(ITEM_SLOT_BACK)
 		if(istype(equipped_backpack))
 			for(var/i in 1 to 5) //increase the odds
 				message_pool.Add("<span class='notice'>[other] puts the [pick(\

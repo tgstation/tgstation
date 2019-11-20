@@ -93,6 +93,16 @@
 /datum/holiday/valentines/getStationPrefix()
 	return pick("Love","Amore","Single","Smootch","Hug")
 
+/// Garbage DAYYYYY
+/// Huh?.... NOOOO
+/// *GUNSHOT*
+/// AHHHGHHHHHHH
+/datum/holiday/garbageday
+	name = GARBAGEDAY
+	begin_day = 17
+	end_day = 17
+	begin_month = JUNE
+
 /datum/holiday/birthday
 	name = "Birthday of Space Station 13"
 	begin_day = 16

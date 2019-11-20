@@ -8,7 +8,7 @@
   pocket_storage_component_path = /datum/component/storage/concrete/pockets/tiny/AED
 
 /obj/item/clothing/head/AED/item_action_slot_check(slot)
-  if(slot == SLOT_HEAD)
+  if(slot == ITEM_SLOT_HEAD)
     return 1
 
 /obj/item/clothing/head/AED/ui_action_click(mob/user, action)
