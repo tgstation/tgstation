@@ -1,6 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Dynamic: Scaling now even more accurate."
-  - admin: "Dynamic: Fixed false positive configuration warning."
-  - bugfix: "Dynamic: Roundstart revs should work again."

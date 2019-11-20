@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "fixes duct networks in the > 50 glitching out when unwrenching"

@@ -5,15 +5,26 @@
 	desc = "Contains all the luck you'll ever need."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
+	var/list/special_die = list(
+				/obj/item/dice/d1,
+				/obj/item/dice/d2,
+				/obj/item/dice/fudge,
+				/obj/item/dice/d6/space,
+				/obj/item/dice/d00,
+				/obj/item/dice/eightbd20,
+				/obj/item/dice/fourdd6,
+				/obj/item/dice/d100
+				)
 
 /obj/item/storage/pill_bottle/dice/PopulateContents()
-	new /obj/effect/spawner/lootdrop/special_die(src)
 	new /obj/item/dice/d4(src)
 	new /obj/item/dice/d6(src)
 	new /obj/item/dice/d8(src)
 	new /obj/item/dice/d10(src)
 	new /obj/item/dice/d12(src)
 	new /obj/item/dice/d20(src)
+	var/picked = pick(special_die)
+	new picked(src)
 
 /obj/item/storage/pill_bottle/dice/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
