@@ -470,11 +470,13 @@
 /obj/effect/constructing_effect/Initialize(mapload, delay)
 	. = ..()
 	if (delay < 40)
-		flick("constructing_short", src)
+		icon_state = "constructing_short"
 	else
-		flick("constructing_long", src)
-	icon_state = "fullgreen"
+		icon_state = "constructing_long"
+	
+/obj/effect/constructing_effect/proc/flash()
+	add_overlay("constructing_flash")
+	addtimer(CALLBACK(src, .proc/end), 3)
 
-/obj/effect/constructing_effect/Destroy()
-	flick("whiteflash",src)
-	. = ..()
+/obj/effect/constructing_effect/proc/end()
+	qdel(src)

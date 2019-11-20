@@ -479,10 +479,12 @@ RLD
 		if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
 			if(checkResource(rcd_results["cost"], user))
 				if(A.rcd_act(user, src, rcd_results["mode"]))
+				bruh.flash()
 					useResource(rcd_results["cost"], user)
 					activate()
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					return TRUE
+	bruh.flash()
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
