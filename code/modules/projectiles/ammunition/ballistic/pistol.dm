@@ -47,11 +47,3 @@
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
 	projectile_type = /obj/projectile/bullet/a50AE
-
-// i'm just seperating this with a comment for the sake of consistency
-
-/obj/item/ammo_casing/glockroach // see glockroach.dm
-	name = "0.9mm bullet casing"
-	desc = "A... 0.9mm bullet casing? What?"
-	projectile_type = /obj/projectile/glockroachbullet
-	

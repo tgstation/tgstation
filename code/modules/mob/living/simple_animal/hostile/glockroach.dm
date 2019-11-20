@@ -2,6 +2,11 @@
 	damage = 10 //same damage as a hivebot
 	damage_type = BRUTE
 
+/obj/item/ammo_casing/glockroach
+	name = "0.9mm bullet casing"
+	desc = "A... 0.9mm bullet casing? What?"
+	projectile_type = /obj/projectile/glockroachbullet
+
 /mob/living/simple_animal/hostile/glockroach //copypasted from cockroach.dm so i could use the shooting code in hostile.dm
 	name = "glockroach"
 	desc = "HOLY SHIT, THAT COCKROACH HAS A GUN!"
