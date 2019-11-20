@@ -93,11 +93,11 @@
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
-/obj/machinery/telecomms/message_server/update_icon()
-	..()
-	cut_overlays()
+/obj/machinery/telecomms/message_server/update_overlays()
+	. = ..()
+	
 	if(calibrating)
-		add_overlay("message_server_calibrate")
+		. += "message_server_calibrate"
 
 
 // Root messaging signal datum

@@ -25243,11 +25243,11 @@
 "aZc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/paper_bin,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/item/paper_bin/carbon,
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
 "aZd" = (
@@ -50593,9 +50593,10 @@
 /area/security/detectives_office)
 "bRj" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/paper_bin/carbon,
+/obj/item/pen,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bRk" = (
@@ -54183,7 +54184,7 @@
 /area/crew_quarters/heads/hop)
 "bWR" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin,
+/obj/item/paper_bin/carbon,
 /obj/item/stamp/hop,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
@@ -82801,12 +82802,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/item/gps,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cXw" = (
-/obj/structure/table,
-/obj/item/gps,
-/obj/item/assembly/flash/handheld,
 /obj/machinery/status_display/evac{
 	pixel_y = -32
 	},
@@ -82814,6 +82813,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/lapvend,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cXx" = (
@@ -82822,6 +82822,7 @@
 /obj/item/pen,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/purple,
+/obj/item/assembly/flash/handheld,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cXy" = (
@@ -94955,11 +94956,13 @@
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dur" = (
-/obj/machinery/mecha_part_fabricator,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/mecha_part_fabricator/maint{
+	name = "forgotten exosuit fabricator"
+	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
 "dus" = (
@@ -98588,7 +98591,6 @@
 	dir = 4
 	},
 /obj/machinery/vending/wallmed{
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/white,

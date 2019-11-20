@@ -90,9 +90,9 @@
 
 /datum/component/nanites/Destroy()
 	STOP_PROCESSING(SSnanites, src)
-	set_nanite_bar(TRUE)
 	QDEL_LIST(programs)
 	if(host_mob)
+		set_nanite_bar(TRUE)
 		host_mob.hud_set_nanite_indicator()
 	host_mob = null
 	return ..()
@@ -146,7 +146,7 @@
 				sync(null, cloud_copy)
 				return
 	//Without cloud syncing nanites can accumulate errors and/or defects
-	if(prob(8))
+	if(prob(8) && programs.len)
 		var/datum/nanite_program/NP = pick(programs)
 		NP.software_error()
 
@@ -278,7 +278,7 @@
 
 /datum/component/nanites/proc/add_research()
 	var/research_value = NANITE_BASE_RESEARCH
-	if(!ishuman(host_mob))	
+	if(!ishuman(host_mob))
 		if(!iscarbon(host_mob))
 			research_value *= 0.4
 		else
@@ -288,7 +288,7 @@
 	if(host_mob.stat == DEAD)
 		research_value *= 0.75
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_NANITES = research_value))
-	
+
 /datum/component/nanites/proc/nanite_scan(datum/source, mob/user, full_scan)
 	if(!full_scan)
 		if(!stealth)

@@ -803,8 +803,8 @@ GLOBAL_LIST_EMPTY(vending_products)
   * * user - the user to shock
   * * prb - probability the shock happens
   */
-/obj/machinery/vending/proc/shock(mob/user, prb)
-	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
+/obj/machinery/vending/proc/shock(mob/living/user, prb)
+	if(!istype(user) || stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE

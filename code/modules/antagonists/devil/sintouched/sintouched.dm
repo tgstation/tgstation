@@ -10,6 +10,8 @@
 	name = "sintouched"
 	roundend_category = "sintouched"
 	antagpanel_category = "Devil"
+	antag_hud_type = ANTAG_HUD_SINTOUCHED
+	antag_hud_name = "sintouched"
 	var/sin
 
 	var/static/list/sins = list(SIN_ACEDIA,SIN_GLUTTONY,SIN_GREED,SIN_SLOTH,SIN_WRATH,SIN_ENVY,SIN_PRIDE)
@@ -57,22 +59,13 @@
 	. = ..()
 
 /datum/antagonist/sintouched/apply_innate_effects(mob/living/mob_override)
-	. = ..()
-	add_hud()
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 
 /datum/antagonist/sintouched/remove_innate_effects(mob/living/mob_override)
-	remove_hud()
-	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
 
-/datum/antagonist/sintouched/proc/add_hud()
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_SINTOUCHED]
-	hud.join_hud(owner.current)
-	set_antag_hud(owner.current, "sintouched")
-
-/datum/antagonist/sintouched/proc/remove_hud()
-	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_SINTOUCHED]
-	hud.leave_hud(owner.current)
-	set_antag_hud(owner.current, null)
 
 #undef SIN_ACEDIA
 #undef SIN_ENVY

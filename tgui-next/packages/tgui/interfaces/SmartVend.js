@@ -1,8 +1,6 @@
-
-import { Fragment } from 'inferno';
+import { map } from 'common/collections';
 import { act } from '../byond';
-import { Button, Section, Table, NoticeBox } from '../components';
-import { map } from 'common/fp';
+import { Button, NoticeBox, Section, Table } from '../components';
 
 export const SmartVend = props => {
   const { state } = props;
@@ -19,34 +17,47 @@ export const SmartVend = props => {
         </Button>
       )}>
       {data.contents.length === 0 ? (
-        <NoticeBox>Unfortunately, this {data.name} is empty.</NoticeBox>
+        <NoticeBox>
+          Unfortunately, this {data.name} is empty.
+        </NoticeBox>
       ) : (
-        <Table style={{ width: '100%' }}>
-          <Table.Row>
-            <Table.Cell>Item</Table.Cell>
-            <Table.Cell>Quantity</Table.Cell>
-            <Table.Cell>{data.verb ? data.verb : "Dispense"}</Table.Cell>
+        <Table>
+          <Table.Row header>
+            <Table.Cell>
+              Item
+            </Table.Cell>
+            <Table.Cell collapsing />
+            <Table.Cell collapsing textAlign="center">
+              {data.verb ? data.verb : 'Dispense'}
+            </Table.Cell>
           </Table.Row>
-          {map((value, key) => {
-            return (
-              <Table.Row key={key}>
-                <Table.Cell>{value.name}</Table.Cell>
-                <Table.Cell>{value.amount}</Table.Cell>
-                <Table.Cell>
-                  <Button
-                    disabled={value.amount < 1}
-                    onClick={() => act(ref, 'Release', {name: value.name, amount: 1})}>
-                    One
-                  </Button>
-                  <Button
-                    disabled={value.amount <= 1}
-                    onClick={() => act(ref, 'Release', {name: value.name})}>
-                    Many
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-            );
-          })(data.contents)}
+          {map((value, key) => (
+            <Table.Row key={key}>
+              <Table.Cell>
+                {value.name}
+              </Table.Cell>
+              <Table.Cell collapsing textAlign="right">
+                {value.amount}
+              </Table.Cell>
+              <Table.Cell collapsing>
+                <Button
+                  content="One"
+                  disabled={value.amount < 1}
+                  onClick={() => act(ref, 'Release', {
+                    name: value.name,
+                    amount: 1,
+                  })} />
+                <Button
+                  content="Many"
+                  disabled={value.amount <= 1}
+                  onClick={() => act(ref, 'Release', {
+                    name: value.name,
+                  })} />
+              </Table.Cell>
+            </Table.Row>
+          ))(data.contents)}
         </Table>
       )}
-    </Section>); };
+    </Section>
+  );
+};
