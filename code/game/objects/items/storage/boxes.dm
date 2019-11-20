@@ -514,7 +514,7 @@
 		new /obj/item/reagent_containers/food/snacks/donkpocket/berry(src)
 
 /obj/item/storage/box/donkpockets/donkpockethonk
-	name = "box of bannana-flavoured donk-pockets"
+	name = "box of banana-flavoured donk-pockets"
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketboxbanana"
 	illustration=null
