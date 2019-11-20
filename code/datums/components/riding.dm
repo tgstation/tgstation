@@ -246,7 +246,7 @@
 /datum/component/riding/human/force_dismount(mob/living/user)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
-	user.Paralyze(60)
+	user.Paralyze(60) // austation -- keep borg stuns
 	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>", \
 						"<span class='warning'>[AM] pushes you off of [AM.p_them()]!</span>")
 
