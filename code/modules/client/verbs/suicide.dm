@@ -75,18 +75,15 @@
 					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
 				death(FALSE)
+				ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 				return
 
 		var/suicide_message
 
 		if(a_intent == INTENT_DISARM)
-			suicide_message = "[src] is ripping [p_their()] own arms off! It looks like [p_theyre()] trying to commit suicide." //heheh get it?
-			var/timer = 5
-			for(var/obj/item/bodypart/thing in bodyparts)
-				if(thing.body_part == ARM_LEFT || thing.body_part == ARM_RIGHT)
-					addtimer(CALLBACK(src, /mob/living/carbon/human/.proc/disarm_suicide, thing), timer)
-					timer += 10
+			disarm_suicide()	// Snowflake suicide for a tired joke.
+			return	//above proc handles logging and death
 		else if(a_intent == INTENT_GRAB)
 			suicide_message = pick("[src] is attempting to pull [p_their()] own head off! It looks like [p_theyre()] trying to commit suicide.", \
 									"[src] is aggressively grabbing [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
@@ -107,11 +104,7 @@
 
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
-
-/mob/living/carbon/human/proc/disarm_suicide(arm)
-	var/obj/item/bodypart/todrop = arm
-	todrop.drop_limb(FALSE)
-	playsound(src, 'sound/effects/cartoon_pop.ogg', 70)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/brain/verb/suicide()
 	set hidden = 1
@@ -128,6 +121,7 @@
 		suicide_log()
 
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/carbon/monkey/verb/suicide()
 	set hidden = 1
@@ -145,6 +139,7 @@
 
 		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/ai/verb/suicide()
 	set hidden = 1
@@ -163,6 +158,7 @@
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/robot/verb/suicide()
 	set hidden = 1
@@ -181,6 +177,7 @@
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/silicon/pai/verb/suicide()
 	set hidden = 1
@@ -193,6 +190,7 @@
 		suicide_log()
 
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 	else
 		to_chat(src, "Aborting suicide attempt.")
 
@@ -214,6 +212,7 @@
 		//put em at -175
 		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/simple_animal/verb/suicide()
 	set hidden = 1
@@ -230,6 +229,7 @@
 		suicide_log()
 
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/proc/suicide_log()
 	log_message("committed suicide as [src.type]", LOG_ATTACK)
