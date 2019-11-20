@@ -175,3 +175,9 @@
 
 /turf/open/lava/smooth/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/lava/smooth/jungle
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	baseturfs = /turf/open/lava/smooth/jungle
+	icon = 'icons/turf/floors/hotmud.dmi'
