@@ -50620,16 +50620,6 @@
 /turf/closed/wall/r_wall,
 /area/security/checkpoint/science/research)
 "chq" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
 /obj/structure/cable,
 /turf/closed/wall,
 /area/security/checkpoint/science/research)
