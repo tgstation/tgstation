@@ -47350,10 +47350,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "caC" = (
-/obj/structure/table,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
 /obj/machinery/light_switch{
 	pixel_x = -27;
 	pixel_y = 6
@@ -47370,6 +47366,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/security/science,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/science/research)
 "caD" = (
@@ -47410,11 +47407,11 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/science/research)
 "caE" = (
-/obj/structure/table,
 /obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
+/obj/structure/table,
 /obj/item/pen,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -47426,6 +47423,9 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/machinery/recharger{
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/science/research)
@@ -49418,6 +49418,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/filingcabinet,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/science/research)
 "ceW" = (
@@ -50062,12 +50063,6 @@
 /turf/open/floor/plasteel,
 /area/science/research)
 "cgj" = (
-/obj/machinery/power/apc{
-	areastring = "/area/security/checkpoint/science/research";
-	dir = 8;
-	name = "Security Post - Research Division APC";
-	pixel_x = -25
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -50076,10 +50071,10 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/science/research)
 "cgk" = (
-/obj/structure/closet/secure_closet/security/science,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -50087,7 +50082,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/science/research)
 "cgl" = (
-/obj/structure/filingcabinet,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
@@ -50626,11 +50620,6 @@
 /turf/closed/wall/r_wall,
 /area/security/checkpoint/science/research)
 "chq" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Post - Research Division";
-	req_access_txt = "63"
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -50642,7 +50631,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/closed/wall,
 /area/security/checkpoint/science/research)
 "chr" = (
 /obj/machinery/door/airlock/maintenance{
@@ -51249,12 +51238,14 @@
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "ciK" = (
-/obj/effect/turf_decal/bot,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
+/turf/closed/wall/r_wall,
 /area/science/research)
 "ciL" = (
 /turf/open/floor/plating,
@@ -51268,7 +51259,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/maintenance/starboard/secondary)
 "ciN" = (
 /obj/structure/chair/stool,
@@ -51814,6 +51805,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "ckf" = (
@@ -51834,32 +51826,25 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
-/area/science/research)
-"ckh" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/closet/firecloset,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/white,
 /area/science/research)
-"cki" = (
-/obj/item/storage/toolbox/emergency,
-/obj/item/clothing/mask/gas,
-/turf/open/floor/plating,
-/area/maintenance/starboard/secondary)
-"ckj" = (
-/obj/machinery/light/small,
-/obj/item/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000
+"ckh" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Post - Research Division";
+	req_access_txt = "63"
 	},
-/turf/open/floor/plating,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/checkpoint/science/research)
+"cki" = (
+/turf/open/floor/plasteel,
 /area/maintenance/starboard/secondary)
 "ckk" = (
 /obj/structure/disposalpipe/segment,
@@ -51867,11 +51852,11 @@
 /obj/item/flashlight,
 /obj/effect/landmark/blobstart,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/maintenance/starboard/secondary)
 "ckl" = (
-/obj/item/stack/packageWrap,
-/turf/open/floor/plating,
+/obj/structure/closet/l3closet/scientist,
+/turf/open/floor/plasteel,
 /area/maintenance/starboard/secondary)
 "ckm" = (
 /obj/machinery/firealarm{
@@ -52480,26 +52465,21 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/white,
-/area/science/research)
-"clI" = (
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/structure/closet/firecloset,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/white,
 /area/science/research)
-"clJ" = (
-/obj/structure/plasticflaps/opaque,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	freq = 1400;
-	location = "Research Division"
+"clI" = (
+/obj/structure/closet/firecloset,
+/obj/machinery/light/small{
+	dir = 8
 	},
-/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/secondary)
+"clJ" = (
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/secondary)
 "clK" = (
@@ -52507,13 +52487,12 @@
 /area/maintenance/aft)
 "clL" = (
 /obj/structure/disposalpipe/segment,
-/obj/item/storage/box/lights/mixed,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/maintenance/starboard/secondary)
 "clN" = (
 /obj/machinery/microwave{
@@ -52882,14 +52861,9 @@
 /turf/open/floor/plasteel/dark,
 /area/aisat)
 "cmL" = (
-/obj/machinery/door/window/westleft{
-	dir = 2;
-	name = "Research Division Deliveries";
-	req_access_txt = "47"
-	},
-/obj/effect/turf_decal/delivery,
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel,
-/area/science/research)
+/area/maintenance/starboard/secondary)
 "cmM" = (
 /obj/machinery/door/airlock{
 	name = "Research Emergency Storage";
@@ -53607,14 +53581,14 @@
 	c_tag = "Research Division Hallway - Central";
 	network = list("ss13","rd")
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "coc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
-	},
-/obj/machinery/light{
-	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -71875,7 +71849,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/maintenance/starboard/secondary)
 "diI" = (
 /obj/item/twohanded/required/kirbyplants/random,
@@ -73415,6 +73389,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"exJ" = (
+/obj/structure/plasticflaps/opaque,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=2";
+	freq = 1400;
+	location = "Research Division"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/secondary)
 "eyv" = (
 /obj/structure/grille/broken,
 /obj/structure/lattice,
@@ -74137,6 +74120,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/janitor)
+"iCK" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency,
+/obj/item/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000
+	},
+/obj/item/clothing/mask/gas,
+/obj/item/storage/box/lights/mixed,
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/secondary)
 "iGO" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -75090,10 +75084,6 @@
 /obj/machinery/vending/modularpc,
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"ogE" = (
-/obj/structure/closet/firecloset,
-/turf/open/floor/plating,
-/area/maintenance/starboard/secondary)
 "ojg" = (
 /turf/closed/wall,
 /area/science/misc_lab/range)
@@ -75585,6 +75575,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"qZe" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Post - Research Division";
+	req_access_txt = "63"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel,
+/area/security/checkpoint/science/research)
 "qZf" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -76509,6 +76507,10 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/medical/apothecary)
+"xmF" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/plasteel,
+/area/maintenance/starboard/secondary)
 "xop" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 4
@@ -76541,8 +76543,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "xvg" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
+/obj/item/cigbutt,
+/turf/open/floor/plasteel,
 /area/maintenance/starboard/secondary)
 "xwG" = (
 /obj/machinery/door/airlock/maintenance{
@@ -76582,6 +76584,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"xGD" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/westleft{
+	dir = 2;
+	name = "Research Division Deliveries";
+	req_access_txt = "47"
+	},
+/turf/open/floor/plasteel,
+/area/science/research)
 "xHr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -107168,7 +107179,7 @@ bZo
 cck
 cdP
 bZo
-bZo
+ckh
 chp
 ciJ
 ckg
@@ -107428,8 +107439,8 @@ ceV
 cgj
 chq
 ciK
-ckh
-clI
+cgo
+cgo
 bZn
 cob
 cpp
@@ -107684,10 +107695,10 @@ cdR
 ceW
 cgk
 chp
-cgo
-cgo
-cgo
-cgo
+clI
+xmF
+exJ
+xGD
 coc
 cpn
 cqG
@@ -107940,11 +107951,11 @@ ccn
 cdS
 ceX
 cgl
-bZo
+qZe
 xvg
 cki
-clJ
-cmL
+cki
+cgo
 ccd
 cdM
 cqH
@@ -108198,9 +108209,9 @@ bZo
 bZo
 bZo
 bZo
-nbv
-ckj
-dwL
+cmL
+cki
+iCK
 cgo
 cod
 cpp
@@ -108712,8 +108723,8 @@ bSS
 ceZ
 cgn
 ovj
-ogE
 ckl
+clJ
 diH
 cgo
 cof
