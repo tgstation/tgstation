@@ -48,7 +48,8 @@
 	if(isliving(hit_atom))
 		var/mob/living/L = hit_atom
 		if(L.client && H)
-			var/experience_given = 30
+			L.AddComponent(/datum/component/creamed, src)
+			var/experience_given = 30//moved to component
 			if(L.GetComponent(/datum/component/creamed))
 				experience_given *= 0.1
 			if(HAS_TRAIT(L.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
@@ -63,7 +64,7 @@
 		L.adjust_blurriness(1)
 		L.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(L, "desceration", 50, TRUE)
-	if(is_type_in_typecache(hit_atom, GLOB.creamable))
+	else if(is_type_in_typecache(hit_atom, GLOB.creamable))
 		hit_atom.AddComponent(/datum/component/creamed, src)
 	qdel(src)
 

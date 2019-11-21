@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 	var/mutable_appearance/creamface
 
-/datum/component/creamed/Initialize()
+/datum/component/creamed/Initialize(_thrower)//
 	if(!is_type_in_typecache(parent, GLOB.creamable))
 		return COMPONENT_INCOMPATIBLE
 
@@ -36,6 +36,14 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 	var/atom/A = parent
 	A.add_overlay(creamface)
+	//
+	if(_thrower)
+		thrower = _thrower
+	var/experience_given = 30
+				experience_given *= 0.1
+			if(HAS_TRAIT(L.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
+				experience_given *= 3
+			H.mind.adjust_experience(/datum/skill/pie_throwing, experience_given)
 
 /datum/component/creamed/Destroy(force, silent)
 	var/atom/A = parent
@@ -53,9 +61,9 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 
 /datum/component/creamed/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_COMPONENT_CLEAN_ACT, 
+		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_COMPONENT_CLEAN_FACE_ACT))
-	
+
 ///Callback to remove pieface
 /datum/component/creamed/proc/clean_up(datum/source, strength)
 	if(strength >= CLEAN_WEAK)
