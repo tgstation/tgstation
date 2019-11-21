@@ -121,6 +121,8 @@
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
+	if(weapon && emagged == 2)
+		weapon.force = weapon_orig_force
 	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
 	target = null
 	oldloc = null
@@ -167,9 +169,10 @@
 
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
-	if(weapon)
-		weapon.force = weapon_orig_force
+
 	if(emagged == 2)
+		if(weapon)
+			weapon.force = weapon_orig_force
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
