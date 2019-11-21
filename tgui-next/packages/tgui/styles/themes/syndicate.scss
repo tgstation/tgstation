@@ -24,6 +24,9 @@
     'color-caution': #be6209,
     'color-danger': #9a9d00,
   ));
+  @include meta.load-css('../components/Input.scss', $with: (
+    'border-color': colors.$primary,
+  ));
   @include meta.load-css('../components/Layout.scss');
   @include meta.load-css('../components/NoticeBox.scss', $with: (
     'color-first': #750000,
@@ -36,20 +39,11 @@
   @include meta.load-css('../components/TitleBar.scss', $with: (
     'color-background': #910101,
   ));
+  @include meta.load-css('../components/Tooltip.scss', $with: (
+    'color-background': #4a0202,
+  ));
 
   .Layout__content {
     background-image: url('../../assets/bg-syndicate.svg');
-    background-size: 70%;
-    background-position: center;
-    background-repeat: no-repeat;
   }
-}
-
-// Body style
-body.theme-syndicate {
-  color: base.$color-fg;
-  background-color: base.$color-bg;
-  background-image: linear-gradient(to bottom,
-    base.$color-bg-start 0%,
-    base.$color-bg-end 100%);
 }

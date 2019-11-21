@@ -2,6 +2,19 @@
 @use '../base.scss';
 @use '../functions.scss' as *;
 
+.Layout {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: base.$color-fg;
+  background-color: base.$color-bg;
+  background-image: linear-gradient(to bottom,
+    base.$color-bg-start 0%,
+    base.$color-bg-end 100%);
+}
+
 .Layout__titleBar {
   position: fixed;
   z-index: 1;

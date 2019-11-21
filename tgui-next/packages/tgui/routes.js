@@ -30,13 +30,16 @@ import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
+import { DnaVault } from './interfaces/DnaVault';
+import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
-import { KitchenSink } from './interfaces/KitchenSink';
+import { Holodeck } from './interfaces/Holodeck';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosMain } from './interfaces/NtosMain';
+import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
 import { OperatingComputer } from './interfaces/OperatingComputer';
@@ -48,13 +51,17 @@ import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
-import { SMES } from './interfaces/SMES';
+import { Smes } from './interfaces/Smes';
+import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { SolarControl } from './interfaces/SolarControl';
+import { SpaceHeater } from './interfaces/SpaceHeater';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
+import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
+import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
 
@@ -191,8 +198,20 @@ const ROUTES = {
     component: () => DisposalUnit,
     scrollable: false,
   },
+  dna_vault: {
+    component: () => DnaVault,
+    scrollable: false,
+  },
+  engraved_message: {
+    component: () => EngravedMessage,
+    scrollable: false,
+  },
   gps: {
     component: () => Gps,
+    scrollable: true,
+  },
+  holodeck: {
+    component: () => Holodeck,
     scrollable: true,
   },
   language_menu: {
@@ -211,6 +230,13 @@ const ROUTES = {
     component: () => NtosMain,
     wrapper: () => NtosWrapper,
     scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_net_downloader: {
+    component: () => NtosNetDownloader,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
   },
   ntos_arcade: {
     component: () => NtosArcade,
@@ -221,11 +247,13 @@ const ROUTES = {
     component: () => PowerMonitor,
     wrapper: () => NtosWrapper,
     scrollable: true,
+    theme: 'ntos',
   },
   ntos_supermatter_monitor: {
     component: () => NtosSupermatterMonitor,
     wrapper: () => NtosWrapper,
     scrollable: true,
+    theme: 'ntos',
   },
   ore_redemption_machine: {
     component: () => OreRedemptionMachine,
@@ -264,12 +292,20 @@ const ROUTES = {
     scrollable: true,
   },
   smes: {
-    component: () => SMES,
+    component: () => Smes,
     scrollable: false,
   },
   solar_control: {
     component: () => SolarControl,
     scrollable: false,
+  },
+  space_heater: {
+    component: () => SpaceHeater,
+    scrollable: false,
+  },
+  spawners_menu: {
+    component: () => SpawnersMenu,
+    scrollable: true,
   },
   station_alert: {
     component: () => StationAlertConsole,
@@ -277,6 +313,10 @@ const ROUTES = {
   },
   suit_storage_unit: {
     component: () => SuitStorageUnit,
+    scrollable: false,
+  },
+  tanks: {
+    component: () => Tank,
     scrollable: false,
   },
   tank_dispenser: {
@@ -290,6 +330,11 @@ const ROUTES = {
   turbine_computer: {
     component: () => TurbineComputer,
     scrollable: false,
+  },
+  uplink: {
+    component: () => Uplink,
+    scrollable: true,
+    theme: 'syndicate',
   },
   vault_controller: {
     component: () => VaultController,
