@@ -30,6 +30,8 @@ import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
+import { DnaVault } from './interfaces/DnaVault';
+import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
 import { KitchenSink } from './interfaces/KitchenSink';
 import { LanguageMenu } from './interfaces/LanguageMenu';
@@ -56,6 +58,8 @@ import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
+import { Holodeck } from './interfaces/Holodeck';
+import { SpawnersMenu } from './interfaces/SpawnersMenu';
 
 const ROUTES = {
   achievements: {
@@ -190,8 +194,20 @@ const ROUTES = {
     component: () => DisposalUnit,
     scrollable: false,
   },
+  dna_vault: {
+    component: () => DnaVault,
+    scrollable: false,
+  },
+  engraved_message: {
+    component: () => EngravedMessage,
+    scrollable: false,
+  },
   gps: {
     component: () => Gps,
+    scrollable: true,
+  },
+  holodeck: {
+    component: () => Holodeck,
     scrollable: true,
   },
   language_menu: {
@@ -264,6 +280,10 @@ const ROUTES = {
   solar_control: {
     component: () => SolarControl,
     scrollable: false,
+  },
+  spawners_menu: {
+    component: () => SpawnersMenu,
+    scrollable: true,
   },
   station_alert: {
     component: () => StationAlertConsole,

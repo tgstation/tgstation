@@ -104,9 +104,9 @@
 	mob_name = "derelict drone"
 	mob_type = /mob/living/simple_animal/drone/derelict
 	anchored = TRUE
-	flavour_text = {"
-	<b>You are a drone on Kosmicheskaya Stantsiya 13. Something has brought you out of hibernation, and the station is in gross disrepair. Build, repair, maintain and improve the station that housed you on activation.</b>
-	"}
+	short_desc = "You are a drone on Kosmicheskaya Stantsiya 13."
+	flavour_text = "Something has brought you out of hibernation, and the station is in gross disrepair."
+	important_info = "Build, repair, maintain and improve the station that housed you on activation."
 
 /mob/living/simple_animal/drone/derelict
 	name = "derelict drone"
