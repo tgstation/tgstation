@@ -285,6 +285,14 @@ const ROUTES = {
     component: () => TurbineComputer,
     scrollable: false,
   },
+<<<<<<< HEAD
+=======
+  uplink: {
+    component: () => Uplink,
+    scrollable: true,
+    theme: 'syndicate',
+  },
+>>>>>>> c33601c03c... Merge pull request #47917 from actioninja/uplink-fix
   vault_controller: {
     component: () => VaultController,
     scrollable: false,
