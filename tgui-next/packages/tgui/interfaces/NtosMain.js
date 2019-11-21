@@ -9,13 +9,10 @@ const PROGRAM_ICONS = {
   smmonitor: 'radiation',
   alarmmonitor: 'bell',
   cardmod: 'id-card',
-<<<<<<< HEAD
   arcade: 'gamepad',
-=======
   ntnrc_client: 'comment-alt',
   nttransfer: 'exchange-alt',
   powermonitor: 'plug',
->>>>>>> upstream/master
 };
 
 export const NtosMain = props => {

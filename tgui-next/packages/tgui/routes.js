@@ -242,6 +242,7 @@ const ROUTES = {
     component: () => NtosArcade,
     wrapper: () => NtosWrapper,
     scrollable: true,
+    theme: 'ntos',
   },
   ntos_power_monitor: {
     component: () => PowerMonitor,
