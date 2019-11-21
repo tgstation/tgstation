@@ -266,11 +266,25 @@
 /obj/machinery/hydroponics/update_icon()
 	//Refreshes the icon
 	cut_overlays()
+
+	if(self_sustaining)
+		if(istype(src, /obj/machinery/hydroponics/soil))
+			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
+		else
+			add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "gaia_blessing"))
+		set_light(3)
 	update_icon_hoses()
 
 	if(myseed)
 		update_icon_plant()
 		update_icon_lights()
+
+	if(!self_sustaining)
+		if(myseed && myseed.get_gene(/datum/plant_gene/trait/glow))
+			var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
+			set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
+		else
+			set_light(0)
 
 	return
 
