@@ -81,7 +81,7 @@
 
 /obj/item/instrument/banjo
 	name = "banjo"
-	desc = "A 'Mura' brand banjo. It's pretty much just a drum with a neck and strings."
+	desc = "A banjo. It's pretty much just a drum with a neck and strings."
 	icon_state = "banjo"
 	item_state = "banjo"
 	instrumentExt = "ogg"
