@@ -36,17 +36,24 @@ import { Gps } from './interfaces/Gps';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Holodeck } from './interfaces/Holodeck';
 =======
 import { Keycard_Auth } from './interfaces/Keycard_Auth';
 =======
 =======
+=======
+import { Holodeck } from './interfaces/Holodeck';
+>>>>>>> Rebuilds TGUI
 import { ImplantChair } from './interfaces/ImplantChair';
 >>>>>>> Also adds the Implant Chair UI. Why not.
 import { KeycardAuth } from './interfaces/KeycardAuth';
 >>>>>>> Keycard Authenticator UI
 import { KitchenSink } from './interfaces/KitchenSink';
+<<<<<<< HEAD
 >>>>>>> keycard commit
+=======
+>>>>>>> Rebuilds TGUI
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
@@ -76,6 +83,11 @@ import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
+<<<<<<< HEAD
+=======
+
+import { SpawnersMenu } from './interfaces/SpawnersMenu';
+>>>>>>> Rebuilds TGUI
 
 const ROUTES = {
   achievements: {
@@ -224,11 +236,18 @@ const ROUTES = {
   },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   holodeck: {
     component: () => Holodeck,
     scrollable: true,
 =======
 =======
+=======
+  holodeck: {
+    component: () => Holodeck,
+    scrollable: true,
+  },
+>>>>>>> Rebuilds TGUI
   implantchair: {
     component: () => ImplantChair,
     scrollable: false,
@@ -237,7 +256,10 @@ const ROUTES = {
   keycard_auth: {
     component: () => KeycardAuth,
     scrollable: false,
+<<<<<<< HEAD
 >>>>>>> keycard commit
+=======
+>>>>>>> Rebuilds TGUI
   },
   language_menu: {
     component: () => LanguageMenu,
