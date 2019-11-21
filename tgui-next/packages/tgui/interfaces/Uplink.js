@@ -131,10 +131,10 @@ export class Uplink extends Component {
         ) : (
           <Tabs vertical>
             {categories.map(category => {
-              const {
-                items = [],
-                name,
-              } = category;
+              const { name, items } = category;
+              if (items === null) {
+                return;
+              }
               return (
                 <Tabs.Tab
                   key={name}
