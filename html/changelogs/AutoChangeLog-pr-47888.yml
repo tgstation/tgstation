@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - bugfix: "Splitting a stack of mats no longer double-decreases the material unit count of the parent stack."

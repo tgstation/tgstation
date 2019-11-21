@@ -23,14 +23,14 @@ export const NtosWrapper = props => {
         onMouseDown={() => {
           refocusLayout();
         }}>
-        <Box className="NtosHeader__left">
+        <div className="NtosHeader__left">
           <Box inline bold mr={2}>
             {PC_stationtime}
           </Box>
           <Box inline italic mr={2} opacity={0.33}>
             NtOS
           </Box>
-        </Box>
+        </div>
         <div className="NtosHeader__right">
           {PC_programheaders.map(header => (
             <Box key={header.icon} inline mr={1}>
