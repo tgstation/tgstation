@@ -1,6 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - rscadd: "New NtOS Net Downloader interface."
-  - tweak: "UIs will not be greyed out if you're a ghost, for better observing experience."
-  - bugfix: "Fix the sheet progress bar in Portable Generator."

@@ -1,5 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "Uplinks have the syndicate theme again"
-  - bugfix: "Traitor uplinks now render again when traitors don't have any species or role"
