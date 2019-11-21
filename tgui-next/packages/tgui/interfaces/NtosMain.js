@@ -9,6 +9,9 @@ const PROGRAM_ICONS = {
   smmonitor: 'radiation',
   alarmmonitor: 'bell',
   cardmod: 'id-card',
+  ntnrc_client: 'comment-alt',
+  nttransfer: 'exchange-alt',
+  powermonitor: 'plug',
 };
 
 export const NtosMain = props => {

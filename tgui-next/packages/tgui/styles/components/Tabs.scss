@@ -23,7 +23,8 @@
   }
 
   .Tabs__tab {
-    display: block;
+    // Force display block because Button theme overrides it via cascading.
+    display: block !important;
     margin-right: 0;
     margin-bottom: 0;
     padding: 1px 9px 0px 6px;
