@@ -17,7 +17,7 @@ export const ProgressBar = props => {
     // Cycle through ranges in key order to determine progressbar color.
     for (let rangeName of Object.keys(ranges)) {
       const range = ranges[rangeName];
-      if (range && value >= range[0] && value <= range[1]) {
+      if (range && scaledValue >= range[0] && scaledValue <= range[1]) {
         color = rangeName;
         break;
       }
