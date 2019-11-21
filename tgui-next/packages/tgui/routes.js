@@ -31,7 +31,11 @@ import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { Gps } from './interfaces/Gps';
+<<<<<<< HEAD
 import { KitchenSink } from './interfaces/KitchenSink';
+=======
+import { Holodeck } from './interfaces/Holodeck';
+>>>>>>> f87db2b114... tgui-next: Tank, spaceheater and some touchups (#47887)
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
@@ -47,10 +51,17 @@ import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
+<<<<<<< HEAD
 import { SMES } from './interfaces/SMES';
+=======
+import { Smes } from './interfaces/Smes';
+import { SpawnersMenu } from './interfaces/SpawnersMenu';
+>>>>>>> f87db2b114... tgui-next: Tank, spaceheater and some touchups (#47887)
 import { SolarControl } from './interfaces/SolarControl';
+import { SpaceHeater } from './interfaces/SpaceHeater';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
+import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
@@ -265,12 +276,27 @@ const ROUTES = {
     component: () => SolarControl,
     scrollable: false,
   },
+<<<<<<< HEAD
+=======
+  space_heater: {
+    component: () => SpaceHeater,
+    scrollable: false,
+  },
+  spawners_menu: {
+    component: () => SpawnersMenu,
+    scrollable: true,
+  },
+>>>>>>> f87db2b114... tgui-next: Tank, spaceheater and some touchups (#47887)
   station_alert: {
     component: () => StationAlertConsole,
     scrollable: true,
   },
   suit_storage_unit: {
     component: () => SuitStorageUnit,
+    scrollable: false,
+  },
+  tanks: {
+    component: () => Tank,
     scrollable: false,
   },
   tank_dispenser: {
