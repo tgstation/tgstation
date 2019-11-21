@@ -27,7 +27,7 @@
 	var/unwrenchable = 1
 	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpollinate one plant
 	var/using_irrigation = FALSE //If the tray is connected to other trays via irrigation hoses
-	var/self_sufficiency_req = 20 //Required total dose to make a self-sufficient hydro tray. 1:1 with adminoriazine.
+	var/self_sufficiency_req = 20 //Required total dose to make a self-sufficient hydro tray. 1:1 with adminordrazine.
 	var/self_sufficiency_progress = 0
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
 
