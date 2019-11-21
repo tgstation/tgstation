@@ -52229,9 +52229,6 @@
 	},
 /turf/open/floor/grass,
 /area/hydroponics/garden)
-"vOY" = (
-/turf/closed/wall/r_wall,
-/area/maintenance/aft)
 "vPE" = (
 /obj/item/assembly/signaler{
 	pixel_y = 8
@@ -94173,7 +94170,7 @@ cgj
 rGg
 rGg
 chp
-vOY
+mtK
 clp
 mSR
 cnf

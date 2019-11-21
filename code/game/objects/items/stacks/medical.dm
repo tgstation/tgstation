@@ -15,6 +15,7 @@
 	var/self_delay = 50
 	var/other_delay = 0
 	var/repeating = FALSE
+	var/experience_given = 1
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 	. = ..()
@@ -36,6 +37,7 @@
 			return
 
 	if(heal(M, user))
+		user?.mind.adjust_experience(/datum/skill/medical, experience_given)
 		log_combat(user, M, "healed", src.name)
 		use(1)
 		if(repeating && amount > 0)
@@ -49,15 +51,22 @@
 	if(!affecting) //Missing limb?
 		to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
 		return
-	if(affecting.status == BODYPART_ORGANIC) //Limb must be organic to be healed - RR
-		if(affecting.brute_dam && brute || affecting.burn_dam && burn)
-			user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
-			if(affecting.heal_damage(brute, burn))
-				C.update_damage_overlays()
-			return TRUE
-		to_chat(user, "<span class='warning'>[C]'s [affecting.name] can not be healed with \the [src]!</span>")
+	if(affecting.status != BODYPART_ORGANIC) //Limb must be organic to be healed - RR
+		to_chat(user, "<span class='warning'>\The [src] won't work on a robotic limb!</span>")
 		return
-	to_chat(user, "<span class='warning'>\The [src] won't work on a robotic limb!</span>")
+	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
+		user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
+		var/brute2heal = brute
+		var/burn2heal = burn
+		if(user?.mind.get_skill_speed_modifier(/datum/skill/medical))
+			var/skillmods = user.mind.get_skill_speed_modifier(/datum/skill/medical)
+			brute2heal *= (2-skillmods)
+			burn2heal *= (2-skillmods)
+		if(affecting.heal_damage(brute2heal, burn2heal))
+			C.update_damage_overlays()
+		return TRUE
+	to_chat(user, "<span class='warning'>[C]'s [affecting.name] can not be healed with \the [src]!</span>")
+
 
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
@@ -278,4 +287,3 @@
 
 	The interesting limb targeting mechanic is retained and i still believe they will be a viable choice, especially when healing others in the field.
 	 */
-
