@@ -469,11 +469,14 @@
 
 /obj/effect/constructing_effect/Initialize(mapload, delay)
 	. = ..()
-	if (delay < 40)
-		icon_state = "constructing_short"
-	else
-		icon_state = "constructing_long"
-	
+	icon_state = "constructing"
+	if (delay < 10)
+		icon_state += "_shortest"
+	else if (delay < 20)
+		icon_state += "_shorter"
+	else if (delay < 37)
+		icon_state += "_short"
+
 /obj/effect/constructing_effect/proc/flash()
 	add_overlay("constructing_flash")
 	addtimer(CALLBACK(src, .proc/end), 3)
