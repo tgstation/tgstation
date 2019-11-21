@@ -128,7 +128,7 @@ export const resizeMoveHandler = event => {
 };
 
 export const resizeEndHandler = event => {
-  logger.log('resize end');
+  logger.log('resize end', [dragState.currentSize.x, dragState.currentSize.y]);
   resizeHandler(event);
   document.removeEventListener('mousemove', resizeMoveHandler);
   document.removeEventListener('mouseup', resizeEndHandler);
@@ -140,19 +140,25 @@ const resizeHandler = event => {
     return;
   }
   event.preventDefault();
-  let x = dragState.initialWindowSize.x
-    + (event.screenX
-      - window.screenX
-      + dragState.dragPointOffset.x
-      + 1)
-    * dragState.resizeMatrix.x;
-  let y = dragState.initialWindowSize.y
-    + (event.screenY
-      - window.screenY
-      + dragState.dragPointOffset.y
-      + 1)
-    * dragState.resizeMatrix.y;
+  dragState.currentSize = {
+    x: (
+      dragState.initialWindowSize.x
+      + (event.screenX
+        - window.screenX
+        + dragState.dragPointOffset.x
+        + 1)
+      * dragState.resizeMatrix.x
+    ),
+    y: (
+      dragState.initialWindowSize.y
+      + (event.screenY
+        - window.screenY
+        + dragState.dragPointOffset.y
+        + 1)
+      * dragState.resizeMatrix.y
+    ),
+  };
   winset(dragState.windowRef, 'size',
     // Sane window size values
-    Math.max(x, 250) + ',' + Math.max(y, 120));
+    Math.max(dragState.currentSize.x, 250) + ',' + Math.max(dragState.currentSize.y, 120));
 };
