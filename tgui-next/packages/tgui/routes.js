@@ -35,10 +35,14 @@ import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Holodeck } from './interfaces/Holodeck';
 =======
 import { Keycard_Auth } from './interfaces/Keycard_Auth';
 =======
+=======
+import { ImplantChair } from './interfaces/ImplantChair';
+>>>>>>> Also adds the Implant Chair UI. Why not.
 import { KeycardAuth } from './interfaces/KeycardAuth';
 >>>>>>> Keycard Authenticator UI
 import { KitchenSink } from './interfaces/KitchenSink';
@@ -219,10 +223,17 @@ const ROUTES = {
     scrollable: true,
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
   holodeck: {
     component: () => Holodeck,
     scrollable: true,
 =======
+=======
+  implantchair: {
+    component: () => ImplantChair,
+    scrollable: false,
+  },
+>>>>>>> Also adds the Implant Chair UI. Why not.
   keycard_auth: {
     component: () => KeycardAuth,
     scrollable: false,
