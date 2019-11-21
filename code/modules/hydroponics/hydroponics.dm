@@ -264,7 +264,7 @@
 	return
 
 /obj/machinery/hydroponics/update_icon()
-	//Refreshes the icon
+	//Refreshes the icon and sets the luminosity
 	cut_overlays()
 
 	if(self_sustaining)
