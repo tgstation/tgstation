@@ -279,8 +279,8 @@
 	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 30, "bomb" = 20, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 50)
 
 /obj/item/clothing/suit/armor/vest/constable
-	name = "constable emergency suit"
-	desc = "Used in extremly cold fronts, made out of real bears."
+	name = "constable emergency vest"
+	desc = "An emergency only hazard vest that protects from cuts and strabs."
 	icon_state = "constable-hazard-vest"
 	item_state = "constable-hazard-vest"
 	body_parts_covered = CHEST|GROIN
