@@ -464,7 +464,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
 		l.rad_act(rads)
 
-	power -= min(((power/500)**3) * powerloss_inhibitor, (power - 100) * powerloss_inhibitor)
+	power =  max(power - min(((power/500)**3) * powerloss_inhibitor, (power - 100) * powerloss_inhibitor),1)
 
 	if(power > POWER_PENALTY_THRESHOLD || damage > damage_penalty_point)
 
