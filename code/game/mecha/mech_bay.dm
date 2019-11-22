@@ -151,4 +151,3 @@
 	if (recharge_port && recharge_port.recharge_console == src)
 		recharge_port.recharge_console = null
 	return ..()
-	
