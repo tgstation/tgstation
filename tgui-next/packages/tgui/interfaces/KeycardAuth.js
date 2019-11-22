@@ -40,7 +40,7 @@ export const KeycardAuth = props => {
                   icon="wrench"
                   fluid
                   onClick={() => act(ref, 'emergency_maint')}
-                  content="Emergency Maintainence Access" />
+                  content="Emergency Maintenance Access" />
                 <Button
                   icon="meteor"
                   fluid
