@@ -596,7 +596,18 @@
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
+	butchering.butchering_enabled = on
 
+	if(on)
+		hitsound = 'sound/weapons/chainsawhit.ogg'
+	else
+		hitsound = "swing_hit"
+
+	if(src == user.get_active_held_item()) //update inhands
+		user.update_inv_hands()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/twohanded/required/chainsaw/get_dismemberment_chance()
 	if(wielded)
@@ -618,7 +629,7 @@
 	force = on ? force_on : initial(force)
 	throwforce = on ? force_on : initial(force)
 	icon_state = "energy_chainsaw_[on ? "on" : "off"]"
-
+	
 /obj/item/twohanded/required/chainsaw/energy/attack(mob/living/target)
 	..()
 	target.Knockdown(4)
