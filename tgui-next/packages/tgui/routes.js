@@ -35,6 +35,7 @@ import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
 import { Holodeck } from './interfaces/Holodeck';
 import { LanguageMenu } from './interfaces/LanguageMenu';
+import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
 import { NtosMain } from './interfaces/NtosMain';
@@ -216,6 +217,10 @@ const ROUTES = {
   language_menu: {
     component: () => LanguageMenu,
     scrollable: true,
+  },
+  mech_bay_power_console: {
+    component: () => MechBayPowerConsole,
+    scrollable: false,
   },
   medical_kiosk: {
     component: () => MedicalKiosk,
