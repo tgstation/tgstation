@@ -618,10 +618,10 @@
 	name = "energy chainsaw"
 	desc = "As awesome as both an energy sword and chainsaw combined."
 	icon_state = "energy_chainsaw_off"
-	force_on = 50
+	force_on = 32
 	armour_penetration = 100
 	var/knockdown = 1
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/twohanded/required/chainsaw/energy/attack_self(mob/user)
 	on = !on
