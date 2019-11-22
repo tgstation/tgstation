@@ -596,22 +596,33 @@
 	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 	var/datum/component/butchering/butchering = src.GetComponent(/datum/component/butchering)
-	butchering.butchering_enabled = on
 
-	if(on)
-		hitsound = 'sound/weapons/chainsawhit.ogg'
-	else
-		hitsound = "swing_hit"
-
-	if(src == user.get_active_held_item()) //update inhands
-		user.update_inv_hands()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 /obj/item/twohanded/required/chainsaw/get_dismemberment_chance()
 	if(wielded)
 		. = ..()
+
+// ENERGY CHAINSAW!!
+/obj/item/twohanded/required/chainsaw/energy
+	name = "energy chainsaw"
+	desc = "As awesome as both an energy sword and chainsaw combined."
+	icon_state = "energy_chainsaw_off"
+	force_on = 50
+	armour_penetration = 100
+	var/knockdown = 1
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/twohanded/required/chainsaw/energy/attack_self(mob/user)
+	on = !on
+	to_chat(user, "As you pull the starting cord dangling from [src], [on ? "a neon red blade extends from the base!" : "the blade of light disappears back into the base."]")
+	force = on ? force_on : initial(force)
+	throwforce = on ? force_on : initial(force)
+	icon_state = "energy_chainsaw_[on ? "on" : "off"]"
+
+/obj/item/twohanded/required/chainsaw/energy/attack(mob/living/target)
+	..()
+	target.Knockdown(4)
+
 
 /obj/item/twohanded/required/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
