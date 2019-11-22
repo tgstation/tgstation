@@ -277,3 +277,11 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor = list("melee" = 25, "bullet" = 20, "laser" = 20, "energy" = 30, "bomb" = 20, "bio" = 50, "rad" = 20, "fire" = -10, "acid" = 50)
+
+/obj/item/clothing/suit/armor/vest/constable
+	name = "constable emergency suit"
+	desc = "Used in extremly cold fronts, made out of real bears."
+	icon_state = "constable-hazard-vest"
+	item_state = "constable-hazard-vest"
+	body_parts_covered = CHEST|GROIN
+	armor = list("melee" = 45, "bullet" = 5, "laser" = 5, "energy" = 30, "bomb" = 30, "bio" = 50, "rad" = 30, "fire" = 40, "acid" = 50)

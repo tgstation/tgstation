@@ -76,6 +76,7 @@
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
+
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
 	if(safety)
 		safety = FALSE
@@ -190,3 +191,20 @@
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, FALSE, 4)
 		cooldown = world.time
 		cooldown_special = world.time
+
+/obj/item/clothing/mask/whistle
+	name = "police whistle"
+	desc = "A police whistle for when you need to make sure the criminals hear you."
+	icon_state = "whistle"
+	item_state = "whistle"
+	custom_premium_price = 25
+	actions_types = list(/datum/action/item_action/halt)
+
+/obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)
+	whistle()
+
+/obj/item/clothing/mask/whistle/verb/whistle()
+	if(cooldown < world.time - 30)
+		usr.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
+		playsound(src.loc, "sound/voice/complionator/stfu.ogg", 100, FALSE, 4) //placeholder
+		cooldown = world.time

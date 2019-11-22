@@ -29,6 +29,12 @@
 					/obj/item/clothing/under/rank/security/officer/grey = 3,
 					/obj/item/clothing/under/pants/khaki = 3,
 					/obj/item/clothing/under/rank/security/officer/blueshirt = 3)
+	contraband = list(/obj/item/clothing/under/rank/security/constable = 1,
+					  /obj/item/clothing/head/helmet/constable = 1,
+					  /obj/item/clothing/suit/armor/vest/constable = 1,
+					  /obj/item/clothing/gloves/color/white = 1,
+					  /obj/item/clothing/mask/whistle = 1,
+					  /obj/item/melee/classic_baton/telescopic = 1)
 	premium = list(/obj/item/clothing/under/rank/security/officer/formal = 3,
 					/obj/item/clothing/suit/security/officer = 3,
 					/obj/item/clothing/head/beret/sec/navyofficer = 3)

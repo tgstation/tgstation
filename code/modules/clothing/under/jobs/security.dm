@@ -191,6 +191,14 @@
 	item_state = "hosblueclothes"
 	alt_covers_chest = TRUE
 
+/obj/item/clothing/under/rank/security/constable
+	name = "constable outfit"
+	desc = "A british looking outfit."
+	icon_state = "constable"
+	item_state = "constable"
+	can_adjust = FALSE
+	custom_premium_price = 90
+
 /*
  *Spacepol
  */

@@ -172,6 +172,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_premium_price = 200
 
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
