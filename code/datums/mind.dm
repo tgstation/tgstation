@@ -32,6 +32,7 @@
 /datum/mind
 	var/key
 	var/name				//replaces mob/var/original_name
+	var/ghostname			//replaces name for observers name if set
 	var/mob/living/current
 	var/active = 0
 

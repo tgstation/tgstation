@@ -142,7 +142,6 @@
 
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
-
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
 		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
 			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
@@ -150,7 +149,6 @@
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
 		to_chat(src, "<span class='warning'>You can't bring yourself to use a ranged weapon!</span>")
 		return FALSE
-	return .
 
 /mob/living/carbon/human/proc/get_bank_account()
 	RETURN_TYPE(/datum/bank_account)

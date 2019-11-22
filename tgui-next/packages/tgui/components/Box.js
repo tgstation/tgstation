@@ -64,6 +64,7 @@ const styleMapperByPropName = {
   minHeight: mapUnitPropTo('min-height'),
   maxHeight: mapUnitPropTo('max-height'),
   fontSize: mapUnitPropTo('font-size'),
+  fontFamily: mapRawPropTo('font-family'),
   lineHeight: mapUnitPropTo('line-height'),
   opacity: mapRawPropTo('opacity'),
   textAlign: mapRawPropTo('text-align'),
@@ -71,6 +72,7 @@ const styleMapperByPropName = {
   inline: mapBooleanPropTo('display', 'inline-block'),
   bold: mapBooleanPropTo('font-weight', 'bold'),
   italic: mapBooleanPropTo('font-style', 'italic'),
+  nowrap: mapBooleanPropTo('white-space', 'nowrap'),
   // Margins
   m: mapDirectionalUnitPropTo('margin', ['top', 'bottom', 'left', 'right']),
   mx: mapDirectionalUnitPropTo('margin', ['left', 'right']),
@@ -83,6 +85,16 @@ const styleMapperByPropName = {
   color: mapColorPropTo('color'),
   textColor: mapColorPropTo('color'),
   backgroundColor: mapColorPropTo('background-color'),
+  // Utility props
+  fillPositionedParent: (style, value) => {
+    if (value) {
+      style['position'] = 'absolute';
+      style['top'] = 0;
+      style['bottom'] = 0;
+      style['left'] = 0;
+      style['right'] = 0;
+    }
+  },
 };
 
 export const computeBoxProps = props => {
@@ -124,6 +136,7 @@ export const Box = props => {
     ...rest
   } = props;
   const color = props.textColor || props.color;
+  const backgroundColor = props.backgroundColor;
   // Render props
   if (typeof children === 'function') {
     return children(computeBoxProps(props));
@@ -136,6 +149,7 @@ export const Box = props => {
     classes([
       className,
       isColorClass(color) && 'color-' + color,
+      isColorClass(backgroundColor) && 'color-bg-' + backgroundColor,
     ]),
     content || children,
     ChildFlags.UnknownChildren,
@@ -143,3 +157,22 @@ export const Box = props => {
 };
 
 Box.defaultHooks = pureComponentHooks;
+
+/**
+ * A hack to force certain things (like tables) to position correctly
+ * inside bugged things, like Flex in Internet Explorer.
+ */
+const ForcedBox = props => {
+  const { children, ...rest } = props;
+  return (
+    <Box position="relative" {...rest}>
+      <Box fillPositionedParent>
+        {children}
+      </Box>
+    </Box>
+  );
+};
+
+ForcedBox.defaultHooks = pureComponentHooks;
+
+Box.Forced = ForcedBox;

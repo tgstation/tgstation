@@ -346,6 +346,9 @@
 		qdel(pick(traumas))
 
 /obj/item/organ/brain/proc/cure_all_traumas(resilience = TRAUMA_RESILIENCE_BASIC)
+	var/amount_cured = 0
 	var/list/traumas = get_traumas_type(resilience = resilience)
 	for(var/X in traumas)
 		qdel(X)
+		amount_cured++
+	return amount_cured
