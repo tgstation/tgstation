@@ -454,24 +454,6 @@
 	else
 		..()
 
-/datum/reagent/toxin/fentanyl
-	name = "Fentanyl"
-	description = "Fentanyl will inhibit brain function and cause toxin damage before eventually knocking out its victim."
-	reagent_state = LIQUID
-	color = "#64916E"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	toxpwr = 0
-
-/datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM, 150)
-	if(M.toxloss <= 60)
-		M.adjustToxLoss(1*REM, 0)
-	if(current_cycle >= 4)
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
-	if(current_cycle >= 18)
-		M.Sleeping(40, 0)
-	..()
-	return TRUE
 
 /datum/reagent/toxin/cyanide
 	name = "Cyanide"

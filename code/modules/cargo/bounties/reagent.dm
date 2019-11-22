@@ -147,7 +147,7 @@
 		/datum/reagent/medicine/atropine,\
 		/datum/reagent/drug/aranesp,\
 		/datum/reagent/drug/krokodil,\
-		/datum/reagent/drug/methamphetamine,\
+		/datum/reagent/drug/amphetamine/methamphetamine,\
 		/datum/reagent/teslium,\
 		/datum/reagent/toxin/anacea,\
 		/datum/reagent/pax)
@@ -240,7 +240,7 @@
 		/datum/reagent/medicine/salbutamol,\
 		/datum/reagent/medicine/rhigoxane,\
 		/datum/reagent/medicine/trophazole,\
-		/datum/reagent/drug/methamphetamine,\
+		/datum/reagent/drug/amphetamine/methamphetamine,\
 		/datum/reagent/drug/crank,\
 		/datum/reagent/nitrous_oxide,\
 		/datum/reagent/barbers_aid,\

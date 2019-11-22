@@ -6,13 +6,13 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1, /datum/reagent/silver = 1)
 	required_temp = 420
 
-/datum/chemical_reaction/fentanyl
+/* /datum/chemical_reaction/fentanyl   
 	name = /datum/reagent/toxin/fentanyl
 	id = /datum/reagent/toxin/fentanyl
 	results = list(/datum/reagent/toxin/fentanyl = 1)
 	required_reagents = list(/datum/reagent/drug/space_drugs = 1)
 	required_temp = 674
-
+*/
 /datum/chemical_reaction/cyanide
 	name = "Cyanide"
 	id = /datum/reagent/toxin/cyanide
@@ -80,7 +80,7 @@
 	name = "Zombie Powder"
 	id = /datum/reagent/toxin/zombiepowder
 	results = list(/datum/reagent/toxin/zombiepowder = 2)
-	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5, /datum/reagent/medicine/morphine = 5, /datum/reagent/copper = 5)
+	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5, /datum/reagent/medicine/opioid/morphine = 5, /datum/reagent/copper = 5)
 
 /datum/chemical_reaction/ghoulpowder
 	name = "Ghoul Powder"
@@ -105,7 +105,7 @@
 	name = "Rotatium"
 	id = "Rotatium"
 	results = list(/datum/reagent/toxin/rotatium = 3)
-	required_reagents = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/teslium = 1, /datum/reagent/toxin/fentanyl = 1)
+	required_reagents = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/teslium = 1, /datum/reagent/medicine/opioid/fentanyl = 1)
 	mix_message = "<span class='danger'>After sparks, fire, and the smell of mindbreaker, the mix is constantly spinning with no stop in sight.</span>"
 
 /datum/chemical_reaction/anacea

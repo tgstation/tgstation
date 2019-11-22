@@ -190,4 +190,4 @@ To add a crossbreed:
 	name = "invigorating gel"
 	desc = "A bubbling purple mixture, designed to heal and boost movement."
 	color = "#FF00FF"
-	list_reagents = list(/datum/reagent/medicine/regen_jelly = 30, /datum/reagent/drug/methamphetamine = 9)
+	list_reagents = list(/datum/reagent/medicine/regen_jelly = 30, /datum/reagent/drug/amphetamine/methamphetamine = 9)

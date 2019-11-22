@@ -195,8 +195,8 @@
 
 /datum/chemical_reaction/morphine
 	name = "Morphine"
-	id = /datum/reagent/medicine/morphine
-	results = list(/datum/reagent/medicine/morphine = 2)
+	id = /datum/reagent/medicine/opioid/dimorphine
+	results = list(/datum/reagent/medicine/opioid/dimorphine = 2)
 	required_reagents = list(/datum/reagent/carbon = 2, /datum/reagent/hydrogen = 2, /datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1)
 	required_temp = 480
 

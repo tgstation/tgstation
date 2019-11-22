@@ -68,7 +68,7 @@
 						/datum/reagent/mercury = 0.15,
 						/datum/reagent/lithium = 0.15,
 						/datum/reagent/medicine/atropine = 0.15,
-						/datum/reagent/drug/methamphetamine = 0.15,
+						/datum/reagent/drug/amphetamine/methamphetamine = 0.15,
 						/datum/reagent/drug/bath_salts = 0.15,
 						/datum/reagent/drug/crank = 0.15,
 						/datum/reagent/drug/krokodil = 0.15,

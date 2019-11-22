@@ -17,14 +17,14 @@
 	name = "Krokodil"
 	id = /datum/reagent/drug/krokodil
 	results = list(/datum/reagent/drug/krokodil = 6)
-	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/medicine/morphine = 1, /datum/reagent/space_cleaner = 1, /datum/reagent/potassium = 1, /datum/reagent/phosphorus = 1, /datum/reagent/fuel = 1)
+	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/medicine/opioid/morphine = 1, /datum/reagent/space_cleaner = 1, /datum/reagent/potassium = 1, /datum/reagent/phosphorus = 1, /datum/reagent/fuel = 1)
 	mix_message = "The mixture dries into a pale blue powder."
 	required_temp = 380
 
 /datum/chemical_reaction/methamphetamine
-	name = /datum/reagent/drug/methamphetamine
-	id = /datum/reagent/drug/methamphetamine
-	results = list(/datum/reagent/drug/methamphetamine = 4)
+	name = /datum/reagent/drug/amphetamine/methamphetamine
+	id = /datum/reagent/drug/amphetamine/methamphetamine
+	results = list(/datum/reagent/drug/amphetamine/methamphetamine = 4)
 	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/iodine = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1)
 	required_temp = 374
 
@@ -39,7 +39,7 @@
 	name = /datum/reagent/drug/aranesp
 	id = /datum/reagent/drug/aranesp
 	results = list(/datum/reagent/drug/aranesp = 3)
-	required_reagents = list(/datum/reagent/medicine/epinephrine = 1, /datum/reagent/medicine/atropine = 1, /datum/reagent/medicine/morphine = 1)
+	required_reagents = list(/datum/reagent/medicine/epinephrine = 1, /datum/reagent/medicine/atropine = 1, /datum/reagent/medicine/opioid/morphine = 1)
 
 /datum/chemical_reaction/happiness
 	name = "Happiness"

@@ -520,76 +520,164 @@
 	M.reagents.remove_reagent(/datum/reagent/toxin/histamine,3)
 	..()
 
-/datum/reagent/medicine/morphine
+//Opioids!
+/datum/reagent/medicine/opioid
+	name = "Opium"
+	description = "whitish unrefined substance, has a painkilling and sleep inducing effect"
+	reagent_state = LIQUID
+	color = "#A9FBFB"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 30
+	addiction_threshold = 25
+	var/opioid_power = 1
+
+/datum/reagent/medicine/opioid/on_mob_life(mob/living/carbon/M)
+	var/opioid_effect_rate = opioid_power * volume
+	if(current_cycle >= 5 / opioid_effect_rate)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name)
+	switch(current_cycle)
+		if(0 to 26 / opioid_effect_rate )
+			to_chat(M, "<span class='warning'>You start to feel tired...</span>" )
+		if(27 / opioid_effect_rate to 53 / opioid_effect_rate)
+			M.drowsyness += 1 * opioid_effect_rate
+		if(54 / opioid_effect_rate to INFINITY)
+			M.Sleeping(40 * opioid_effect_rate, 0)
+			. = 1
+	..()
+
+/datum/reagent/medicine/opioid/addiction_act_stage1(mob/living/M)
+	if(prob(33))
+		M.drop_all_held_items()
+		M.Jitter(2 * opioid_power)
+	..()
+
+/datum/reagent/medicine/opioid/addiction_act_stage2(mob/living/M)
+	if(prob(33))
+		M.drop_all_held_items()
+		M.adjustToxLoss(1*REM * opioid_power, 0)
+		. = 1
+		M.Dizzy(3 * opioid_power)
+		M.Jitter(3 * opioid_power)
+	..()
+
+/datum/reagent/medicine/opioid/addiction_act_stage3(mob/living/M)
+	if(prob(33))
+		M.drop_all_held_items()
+		M.adjustToxLoss(2*REM * opioid_power, 0)
+		. = 1
+		M.Dizzy(4 * opioid_power)
+		M.Jitter(4 * opioid_power)
+	..()
+
+/datum/reagent/medicine/opioid/addiction_act_stage4(mob/living/M)
+	if(prob(33))
+		M.drop_all_held_items()
+		M.adjustToxLoss(3*REM * opioid_power, 0)
+		. = 1
+		M.Dizzy(5 * opioid_power)
+		M.Jitter(5 * opioid_power)
+	..()
+
+/datum/reagent/medicine/opioid/morphine
 	name = "Morphine"
-	description = "A painkiller that allows the patient to move at full speed even in bulky objects. Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
+	description = "A painkiller that allows the patient to move at full speed even in bulky objects. Extracted from poppies .Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
 	reagent_state = LIQUID
 	color = "#A9FBFB"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	addiction_threshold = 25
+	opioid_power = 0.75
 
-/datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/L)
+/datum/reagent/medicine/opioid/morphine/on_mob_metabolize(mob/living/L)
 	..()
 	L.ignore_slowdown(type)
 
-/datum/reagent/medicine/morphine/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/medicine/opioid/morphine/on_mob_end_metabolize(mob/living/L)
 	L.unignore_slowdown(type)
 	..()
 
-/datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/M)
-	if(current_cycle >= 5)
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name)
-	switch(current_cycle)
-		if(11)
-			to_chat(M, "<span class='warning'>You start to feel tired...</span>" )
-		if(12 to 24)
-			M.drowsyness += 1
-		if(24 to INFINITY)
-			M.Sleeping(40, 0)
-			. = 1
-	..()
-
-/datum/reagent/medicine/morphine/overdose_process(mob/living/M)
+/datum/reagent/medicine/opioid/morphine/overdose_process(mob/living/M)
 	if(prob(33))
 		M.drop_all_held_items()
-		M.Dizzy(2)
-		M.Jitter(2)
+		M.Dizzy(2 * opioid_power)
+		M.Jitter(2 * opioid_power)
 	..()
 
-/datum/reagent/medicine/morphine/addiction_act_stage1(mob/living/M)
-	if(prob(33))
-		M.drop_all_held_items()
-		M.Jitter(2)
+
+/datum/reagent/medicine/opioid/dimorphine
+	name = "Dimorphine"
+	description = "Opioid commonly known as heroin. Was created as a replacment for morphine, a lot more addictive but also able to be synthesized in labs. Overdose effects are harsher than morphine"
+	reagent_state = LIQUID
+	color = "#A9FBFB"
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	overdose_threshold = 15
+	addiction_threshold = 10
+	opioid_power = 1.5
+
+/datum/reagent/medicine/opioid/morphine/on_mob_metabolize(mob/living/L)
+	..()
+	L.ignore_slowdown(type)
+
+/datum/reagent/medicine/opioid/morphine/on_mob_end_metabolize(mob/living/L)
+	L.unignore_slowdown(type)
 	..()
 
-/datum/reagent/medicine/morphine/addiction_act_stage2(mob/living/M)
-	if(prob(33))
+/datum/reagent/medicine/opioid/dimorphine/on_mob_life(mob/living/carbon/M)
+	M.set_drugginess(20)
+	M.Jitter(4)
+	..()
+
+/datum/reagent/medicine/opioid/dimorphine/overdose_process(mob/living/M)
+	if(prob(66))
 		M.drop_all_held_items()
+		M.Dizzy(2 * opioid_power)
+		M.Jitter(2 * opioid_power)
+		M.adjustOrganLoss(opioid_power,ORGAN_SLOT_HEART)
+	..()
+
+/datum/reagent/medicine/opioid/codeine
+	name = "Codeine"
+	description = "Weak opioid commonly used to treat minor discomforts, can be addicting. It's overdose effects are not as deadly as other drugs. It is very hard to overdose"
+	reagent_state = LIQUID
+	color = "#A9FBFB"
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	overdose_threshold = 75
+	addiction_threshold = 100
+	opioid_power = 0.1
+
+/datum/reagent/medicine/opioid/codeine/overdose_process(mob/living/M)
+	if(prob(16))
+		M.drop_all_held_items()
+		M.Dizzy( opioid_power)
+		M.Jitter(opioid_power)
+	..()
+
+/datum/reagent/medicine/opioid/fentanyl
+	name = "Fentanyl"
+	description = "An extremely powerful opioid , be careful when using it! When overdosed it causes toxin damage, "
+	reagent_state = LIQUID
+	color = "#64916E"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 5
+	addiction_threshold = 4
+	opioid_power = 56.25 // fentanyl is 75 * morphine, so 75 * 7.5 = 56.25
+
+/datum/reagent/medicine/opioid/dimorphine/on_mob_life(mob/living/carbon/M)
+	if(volume < overdose_threshold)
+		..()
+	else 
+		return
+
+/datum/reagent/medicine/opioid/fentanyl/overdose_process(mob/living/M)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM, 150)
+	if(M.toxloss <= 60)
 		M.adjustToxLoss(1*REM, 0)
-		. = 1
-		M.Dizzy(3)
-		M.Jitter(3)
+	if(current_cycle >= 4)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
+	if(current_cycle >= 18)
+		M.Sleeping(40, 0)
 	..()
-
-/datum/reagent/medicine/morphine/addiction_act_stage3(mob/living/M)
-	if(prob(33))
-		M.drop_all_held_items()
-		M.adjustToxLoss(2*REM, 0)
-		. = 1
-		M.Dizzy(4)
-		M.Jitter(4)
-	..()
-
-/datum/reagent/medicine/morphine/addiction_act_stage4(mob/living/M)
-	if(prob(33))
-		M.drop_all_held_items()
-		M.adjustToxLoss(3*REM, 0)
-		. = 1
-		M.Dizzy(5)
-		M.Jitter(5)
-	..()
-
+	
 /datum/reagent/medicine/oculine
 	name = "Oculine"
 	description = "Quickly restores eye damage, cures nearsightedness, and has a chance to restore vision to the blind."

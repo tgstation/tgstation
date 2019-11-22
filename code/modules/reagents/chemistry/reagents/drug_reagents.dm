@@ -163,42 +163,48 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/methamphetamine
-	name = "Methamphetamine"
-	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
+
+//Amphetaminates!
+/datum/reagent/drug/amphetamine
+	name = "Amphetamine"
+	description = "Drug used to treat certain neurotical conditions, less dangerous than methampphetamine , but also less potent. Metabolizes slower than other "
 	reagent_state = LIQUID
 	color = "#FAFAFA"
-	overdose_threshold = 20
-	addiction_threshold = 10
-	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	overdose_threshold = 40
+	addiction_threshold = 20
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	var/amphetamine_power = 1
+	var/modifier = 5
 
-/datum/reagent/drug/methamphetamine/on_mob_metabolize(mob/living/L)
+/datum/reagent/drug/amphetamine/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(type, update=TRUE, priority=101, multiplicative_slowdown=-amphetamine_power, blacklisted_movetypes=(FLYING|FLOATING))
 
-/datum/reagent/drug/methamphetamine/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/drug/amphetamine/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
 	..()
 
-/datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
+/datum/reagent/drug/amphetamine/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-	M.AdjustStun(-40, FALSE)
-	M.AdjustKnockdown(-40, FALSE)
-	M.AdjustUnconscious(-40, FALSE)
-	M.AdjustParalyzed(-40, FALSE)
-	M.AdjustImmobilized(-40, FALSE)
-	M.adjustStaminaLoss(-2, 0)
-	M.Jitter(2)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1,4))
-	if(prob(5))
-		M.emote(pick("twitch", "shiver"))
+	M.AdjustStun(-10 * amphetamine_power, FALSE)
+	M.AdjustKnockdown(-10 * amphetamine_power, FALSE)
+	M.AdjustUnconscious(-10 * amphetamine_power, FALSE)
+	M.AdjustParalyzed(-10 * amphetamine_power, FALSE)
+	M.AdjustImmobilized(-10 * amphetamine_power, FALSE)
+	M.adjustStaminaLoss(-0.5 * amphetamine_power, 0)
+	M.Jitter(amphetamine_power)
+	if(amphetamine_power > 1)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1,4))
+		if(prob(5))
+			M.emote(pick("twitch", "shiver"))
+	M.amphetamization = volume * amphetamine_power 
 	..()
 	. = 1
 
-/datum/reagent/drug/methamphetamine/overdose_process(mob/living/M)
+/datum/reagent/drug/amphetamine/overdose_process(mob/living/M)
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i in 1 to 4)
 			step(M, pick(GLOB.cardinals))
@@ -212,40 +218,62 @@
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
 	. = 1
 
-/datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
-	M.Jitter(5)
-	if(prob(20))
+/datum/reagent/drug/amphetamine/addiction_act_stage1(mob/living/M)
+	M.Jitter(2*amphetamine_power)
+	if(prob(10*amphetamine_power))
 		M.emote(pick("twitch","drool","moan"))
 	..()
 
-/datum/reagent/drug/methamphetamine/addiction_act_stage2(mob/living/M)
-	M.Jitter(10)
-	M.Dizzy(10)
-	if(prob(30))
+/datum/reagent/drug/amphetamine/addiction_act_stage2(mob/living/M)
+	M.Jitter(5*amphetamine_power)
+	M.Dizzy(5*amphetamine_power)
+	if(prob(15*amphetamine_power))
 		M.emote(pick("twitch","drool","moan"))
 	..()
 
-/datum/reagent/drug/methamphetamine/addiction_act_stage3(mob/living/M)
+/datum/reagent/drug/amphetamine/addiction_act_stage3(mob/living/M)
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 4, i++)
 			step(M, pick(GLOB.cardinals))
-	M.Jitter(15)
-	M.Dizzy(15)
-	if(prob(40))
+	M.Jitter(10*amphetamine_power)
+	M.Dizzy(10*amphetamine_power)
+	if(prob(20*amphetamine_power))
 		M.emote(pick("twitch","drool","moan"))
 	..()
 
-/datum/reagent/drug/methamphetamine/addiction_act_stage4(mob/living/carbon/human/M)
+/datum/reagent/drug/amphetamine/addiction_act_stage4(mob/living/carbon/human/M)
 	if((M.mobility_flags & MOBILITY_MOVE) && !ismovableatom(M.loc))
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinals))
-	M.Jitter(20)
-	M.Dizzy(20)
-	M.adjustToxLoss(5, 0)
-	if(prob(50))
+	M.Jitter(10*amphetamine_power)
+	M.Dizzy(15*amphetamine_power)
+	M.adjustToxLoss(2.5*amphetamine_power, 0)
+	if(prob(25*amphetamine_power))
 		M.emote(pick("twitch","drool","moan"))
 	..()
 	. = 1
+
+/datum/reagent/drug/amphetamine/methamphetamine
+	name = "Methamphetamine"
+	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
+	reagent_state = LIQUID
+	color = "#FAFAFA"
+	overdose_threshold = 20
+	addiction_threshold = 10
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	amphetamine_power = 4
+	modifier = 10
+
+/datum/reagent/drug/amphetamine/adderal
+	name = "Adderal"
+	description = "Weak Amphetaminate, when applied in low doses it increases point creation in scientists, higher doeses lead to addiction , brain damage and general organ failure"
+	reagent_state = LIQUID
+	color = "#FAFAFA"
+	overdose_threshold = 40
+	addiction_threshold = 20
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	amphetamine_power = 0.5
+	modifier = 0
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"

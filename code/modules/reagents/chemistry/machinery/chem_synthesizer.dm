@@ -11,7 +11,7 @@
 	ui_y = 330
 
 	var/static/list/shortcuts = list(
-		"meth" = /datum/reagent/drug/methamphetamine
+		"meth" = /datum/reagent/drug/amphetamine/methamphetamine
 	)
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
