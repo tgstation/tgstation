@@ -60,14 +60,12 @@
 					ourpipeline = pipenets
 
 				to_chat(M, "<span class='userdanger'>Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
+				var/gibtype = /obj/effect/gibspawner/generic
+				if(isalien(M))
+					gibtype = /obj/effect/gibspawner/xeno
 				for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(M)))
 					if(possiblevent.parents.len && possiblevent.parents[1] == ourpipeline)
-						if(isalien(M))
-							new /obj/effect/gibspawner/xeno(get_turf(possiblevent))
-						else if(ishuman(M))
-							new /obj/effect/gibspawner/human(get_turf(possiblevent))
-						else
-							new /obj/effect/gibspawner/generic(get_turf(possiblevent))
+						new gibtype(get_turf(possiblevent))
 						playsound(possiblevent, 'sound/effects/reee.ogg', 75, TRUE)
 				priority_announce("We detected a pipe blockage around [get_area(get_turf(M))], please dispatch someone to investigate.", "Central Command")
 				M.death()
