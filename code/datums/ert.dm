@@ -71,3 +71,14 @@
 	rename_team = "Horde of Interns"
 	mission = "Assist in conflict resolution."
 	polldesc = "an unpaid internship opportunity with Nanotrasen"
+
+/datum/ert/doomguy
+	roles = list(/datum/antagonist/ert/doomguy)
+	leader_role = /datum/antagonist/ert/doomguy
+	teamsize = 1
+	opendoors = TRUE
+	rename_team = "The Juggernaut"
+	mission = "Send them straight back to Hell."
+	polldesc = "a biologically-enhanced Nanotrasen supersoldier"
+
+
