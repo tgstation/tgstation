@@ -345,7 +345,7 @@
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	mask = /obj/item/clothing/mask/gas/sechailer
 	belt = /obj/item/storage/belt/military
-	back = /obj/item/gun/energy/pulse/destroyer
+	back = /obj/item/gun/ballistic/shotgun/doublebarrel
 	l_pocket = /obj/item/twohanded/required/chainsaw/energy
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
 	id = /obj/item/card/id/ert
