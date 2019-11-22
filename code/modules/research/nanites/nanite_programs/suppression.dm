@@ -1,15 +1,14 @@
 //Programs that are generally useful for population control and non-harmful suppression.
 
-/datum/nanite_program/triggered/sleepy
+/datum/nanite_program/sleepy
 	name = "Sleep Induction"
 	desc = "The nanites cause rapid narcolepsy when triggered."
+	can_trigger = TRUE
 	trigger_cost = 15
 	trigger_cooldown = 1200
 	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
 
-/datum/nanite_program/triggered/sleepy/trigger()
-	if(!..())
-		return
+/datum/nanite_program/sleepy/on_trigger(comm_message)
 	to_chat(host_mob, "<span class='warning'>You start to feel very sleepy...</span>")
 	host_mob.drowsyness += 20
 	addtimer(CALLBACK(host_mob, /mob/living.proc/Sleeping, 200), rand(60,200))
@@ -31,29 +30,27 @@
 	. = ..()
 	to_chat(host_mob, "<span class='notice'>Your muscles relax, and you can move again.</span>")
 
-/datum/nanite_program/triggered/shocking
+/datum/nanite_program/shocking
 	name = "Electric Shock"
 	desc = "The nanites shock the host when triggered. Destroys a large amount of nanites!"
+	can_trigger = TRUE
 	trigger_cost = 10
 	trigger_cooldown = 300
 	program_flags = NANITE_SHOCK_IMMUNE
 	rogue_types = list(/datum/nanite_program/toxic)
 
-/datum/nanite_program/triggered/shocking/trigger()
-	if(!..())
-		return
+/datum/nanite_program/shocking/on_trigger(comm_message)
 	host_mob.electrocute_act(rand(5,10), "shock nanites", 1, SHOCK_NOGLOVES)
 
-/datum/nanite_program/triggered/stun
+/datum/nanite_program/stun
 	name = "Neural Shock"
 	desc = "The nanites pulse the host's nerves when triggered, inapacitating them for a short period."
+	can_trigger = TRUE
 	trigger_cost = 4
 	trigger_cooldown = 300
-	rogue_types = list(/datum/nanite_program/triggered/shocking, /datum/nanite_program/nerve_decay)
+	rogue_types = list(/datum/nanite_program/shocking, /datum/nanite_program/nerve_decay)
 
-/datum/nanite_program/triggered/stun/trigger()
-	if(!..())
-		return
+/datum/nanite_program/stun/on_trigger(comm_message)
 	playsound(host_mob, "sparks", 75, TRUE, -1)
 	host_mob.Paralyze(80)
 
@@ -115,18 +112,19 @@
 	host_mob.cure_fakedeath("nanites")
 
 //Can receive transmissions from a nanite communication remote for customized messages
-/datum/nanite_program/triggered/comm
+/datum/nanite_program/comm
+	can_trigger = TRUE
 	var/comm_code = 0
 	var/comm_message = ""
 
-/datum/nanite_program/triggered/comm/proc/receive_comm_signal(signal_comm_code, comm_message, comm_source)
+/datum/nanite_program/comm/proc/receive_comm_signal(signal_comm_code, comm_message, comm_source)
 	if(!activated || !comm_code)
 		return
 	if(signal_comm_code == comm_code)
 		host_mob.investigate_log("'s [name] nanite program was messaged by [comm_source] with comm code [signal_comm_code] and message '[comm_message]'.", INVESTIGATE_NANITES)
 		trigger(comm_message)
 
-/datum/nanite_program/triggered/comm/speech
+/datum/nanite_program/comm/speech
 	name = "Forced Speech"
 	desc = "The nanites force the host to say a pre-programmed sentence when triggered."
 	unique = FALSE
@@ -137,7 +135,7 @@
 	extra_settings = list(NES_SENTENCE,NES_COMM_CODE)
 	var/sentence = ""
 
-/datum/nanite_program/triggered/comm/speech/set_extra_setting(user, setting)
+/datum/nanite_program/comm/speech/set_extra_setting(user, setting)
 	if(setting == NES_SENTENCE)
 		var/new_sentence = stripped_input(user, "Choose the sentence that the host will be forced to say.", NES_SENTENCE, sentence, MAX_MESSAGE_LEN)
 		if(!new_sentence)
@@ -151,19 +149,17 @@
 			return
 		comm_code = CLAMP(round(new_code, 1), 0, 9999)
 
-/datum/nanite_program/triggered/comm/speech/get_extra_setting(setting)
+/datum/nanite_program/comm/speech/get_extra_setting(setting)
 	if(setting == NES_SENTENCE)
 		return sentence
 	if(setting == NES_COMM_CODE)
 		return comm_code
 
-/datum/nanite_program/triggered/comm/speech/copy_extra_settings_to(datum/nanite_program/triggered/comm/speech/target)
+/datum/nanite_program/comm/speech/copy_extra_settings_to(datum/nanite_program/comm/speech/target)
 	target.sentence = sentence
 	target.comm_code = comm_code
 
-/datum/nanite_program/triggered/comm/speech/trigger(comm_message)
-	if(!..())
-		return
+/datum/nanite_program/comm/speech/on_trigger(comm_message)
 	var/sent_message = comm_message
 	if(!comm_message)
 		sent_message = sentence
@@ -172,7 +168,7 @@
 	to_chat(host_mob, "<span class='warning'>You feel compelled to speak...</span>")
 	host_mob.say(sent_message, forced = "nanite speech")
 
-/datum/nanite_program/triggered/comm/voice
+/datum/nanite_program/comm/voice
 	name = "Skull Echo"
 	desc = "The nanites echo a synthesized message inside the host's skull."
 	unique = FALSE
@@ -183,7 +179,7 @@
 	extra_settings = list(NES_MESSAGE,NES_COMM_CODE)
 	var/message = ""
 
-/datum/nanite_program/triggered/comm/voice/set_extra_setting(user, setting)
+/datum/nanite_program/comm/voice/set_extra_setting(user, setting)
 	if(setting == NES_MESSAGE)
 		var/new_message = stripped_input(user, "Choose the message sent to the host.", NES_MESSAGE, message, MAX_MESSAGE_LEN)
 		if(!new_message)
@@ -195,19 +191,17 @@
 			return
 		comm_code = CLAMP(round(new_code, 1), 0, 9999)
 
-/datum/nanite_program/triggered/comm/voice/get_extra_setting(setting)
+/datum/nanite_program/comm/voice/get_extra_setting(setting)
 	if(setting == NES_MESSAGE)
 		return message
 	if(setting == NES_COMM_CODE)
 		return comm_code
 
-/datum/nanite_program/triggered/comm/voice/copy_extra_settings_to(datum/nanite_program/triggered/comm/voice/target)
+/datum/nanite_program/comm/voice/copy_extra_settings_to(datum/nanite_program/comm/voice/target)
 	target.message = message
 	target.comm_code = comm_code
 
-/datum/nanite_program/triggered/comm/voice/trigger(comm_message)
-	if(!..())
-		return
+/datum/nanite_program/comm/voice/on_trigger(comm_message)
 	var/sent_message = comm_message
 	if(!comm_message)
 		sent_message = message
@@ -215,7 +209,7 @@
 		return
 	to_chat(host_mob, "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'>[sent_message]</span>\"")
 
-/datum/nanite_program/triggered/comm/hallucination
+/datum/nanite_program/comm/hallucination
 	name = "Hallucination"
 	desc = "The nanites make the host hallucinate something when triggered."
 	trigger_cost = 4
@@ -226,10 +220,7 @@
 	var/hal_type
 	var/hal_details
 
-/datum/nanite_program/triggered/comm/hallucination/trigger(comm_message)
-	if(!..())
-		return
-
+/datum/nanite_program/comm/hallucination/on_trigger(comm_message)
 	if(comm_message && (hal_type != NES_MESSAGE)) //Triggered via comm remote, but not set to a message hallucination
 		return
 	var/sent_message = comm_message //Comm remotes can send custom hallucination messages for the chat hallucination
@@ -264,7 +255,7 @@
 			if("Plasma Flood")
 				new /datum/hallucination/fake_flood(C, TRUE)
 
-/datum/nanite_program/triggered/comm/hallucination/set_extra_setting(user, setting)
+/datum/nanite_program/comm/hallucination/set_extra_setting(user, setting)
 	if(setting == NES_COMM_CODE)
 		var/new_code = input(user, "(Only for Message) Set the communication code (1-9999) or set to 0 to disable external signals.", name, null) as null|num
 		if(isnull(new_code))
@@ -346,7 +337,7 @@
 			if("Plasma Flood")
 				hal_type = "Plasma Flood"
 
-/datum/nanite_program/triggered/comm/hallucination/get_extra_setting(setting)
+/datum/nanite_program/comm/hallucination/get_extra_setting(setting)
 	if(setting == NES_HALLUCINATION_TYPE)
 		if(!hal_type)
 			return "Random"
@@ -355,7 +346,7 @@
 	if(setting == NES_COMM_CODE)
 		return comm_code
 
-/datum/nanite_program/triggered/comm/hallucination/copy_extra_settings_to(datum/nanite_program/triggered/comm/hallucination/target)
+/datum/nanite_program/comm/hallucination/copy_extra_settings_to(datum/nanite_program/comm/hallucination/target)
 	target.hal_type = hal_type
 	target.hal_details = hal_details
 	target.comm_code = comm_code
