@@ -867,7 +867,7 @@
 	max_charges = 1
 	current_charges = 1
 	recharge_delay = 100
-	armor = list("melee" = 90, "bullet" = 90, "laser" = 70, "energy" = 70, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 200, "bullet" = 200, "laser" = 200, "energy" = 200, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/doomguy
@@ -879,7 +879,7 @@
 	icon_state = "doomguy"
 	item_state = "doomguy"
 	hardsuit_type = "syndi"
-	armor = list("melee" = 90, "bullet" = 90, "laser" = 70, "energy" = 70, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 200, "bullet" = 200, "laser" = 200, "energy" = 200, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
