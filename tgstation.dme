@@ -2654,7 +2654,6 @@
 #include "code\modules\research\nanites\nanite_chamber.dm"
 #include "code\modules\research\nanites\nanite_chamber_computer.dm"
 #include "code\modules\research\nanites\nanite_cloud_controller.dm"
-#include "code\modules\research\nanites\nanite_hijacker.dm"
 #include "code\modules\research\nanites\nanite_misc_items.dm"
 #include "code\modules\research\nanites\nanite_program_hub.dm"
 #include "code\modules\research\nanites\nanite_programmer.dm"
