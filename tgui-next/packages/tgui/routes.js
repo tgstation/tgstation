@@ -191,8 +191,8 @@ const ROUTES = {
     scrollable: true,
   },
   mech_bay_power_console: {
-	component: () => MechBayPowerConsole,
-	scrollable: false,
+    component: () => MechBayPowerConsole,
+    scrollable: false,
   },
   mint: {
     component: () => Mint,
