@@ -38,6 +38,7 @@ import { ImplantChair } from './interfaces/ImplantChair';
 import { KeycardAuth } from './interfaces/KeycardAuth';
 import { KitchenSink } from './interfaces/KitchenSink';
 import { LanguageMenu } from './interfaces/LanguageMenu';
+import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
 import { NtosMain } from './interfaces/NtosMain';
@@ -227,6 +228,10 @@ const ROUTES = {
   language_menu: {
     component: () => LanguageMenu,
     scrollable: true,
+  },
+  mech_bay_power_console: {
+    component: () => MechBayPowerConsole,
+    scrollable: false,
   },
   medical_kiosk: {
     component: () => MedicalKiosk,
