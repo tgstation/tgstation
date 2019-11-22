@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Nanite timers have been changed into four separate timers: Restart Timer, Shutdown Timer, Trigger Repeat, and Trigger Delay. See the wiki or github for more information."
+  - tweak: "Stasis now prevents nanites from processing and syncing."

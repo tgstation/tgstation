@@ -8,11 +8,13 @@ export const computeFlexProps = props => {
     wrap,
     align,
     justify,
+    spacing = 0,
     ...rest
   } = props;
   return {
     className: classes([
       'Flex',
+      spacing > 0 && 'Flex--spacing--' + spacing,
       className,
     ]),
     style: {

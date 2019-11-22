@@ -18,12 +18,32 @@ const validateTabs = tabs => {
 export class Tabs extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      activeTabKey: null,
+    };
+  }
+
+  getActiveTab() {
+    const { state, props } = this;
     const tabs = normalizeChildren(props.children);
     validateTabs(tabs);
-    const firstTab = tabs[0];
-    const firstTabKey = firstTab && (firstTab.key || firstTab.props.label);
-    this.state = {
-      activeTabKey: props.activeTab || firstTabKey || null,
+    // Get active tab
+    let activeTabKey = props.activeTab || state.activeTabKey;
+    // Verify that active tab exists
+    let activeTab = tabs
+      .find(tab => {
+        const key = tab.key || tab.props.label;
+        return key === activeTabKey;
+      });
+    // Set first tab as the active tab
+    if (!activeTab) {
+      activeTab = tabs[0];
+      activeTabKey = activeTab && (activeTab.key || activeTab.props.label);
+    }
+    return {
+      tabs,
+      activeTab,
+      activeTabKey,
     };
   }
 
@@ -35,15 +55,11 @@ export class Tabs extends Component {
       children,
       ...rest
     } = props;
-    const tabs = normalizeChildren(children);
-    validateTabs(tabs);
-    // Find the active tab
-    const activeTabKey = props.activeTab || state.activeTabKey;
-    const activeTab = tabs
-      .find(tab => {
-        const key = tab.key || tab.props.label;
-        return key === activeTabKey;
-      });
+    const {
+      tabs,
+      activeTab,
+      activeTabKey,
+    } = this.getActiveTab();
     // Retrieve tab content
     let content = null;
     if (activeTab) {
@@ -80,7 +96,7 @@ export class Tabs extends Component {
                 className={classes([
                   'Tabs__tab',
                   active && 'Tabs__tab--active',
-                  highlight && !active && 'color-bright-yellow',
+                  highlight && !active && 'color-yellow',
                   className,
                 ])}
                 selected={active}

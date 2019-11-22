@@ -1,0 +1,4 @@
+author: "Firecage"
+delete-after: True
+changes: 
+  - bugfix: "Adds back slot icons for the Particle Acceleration Rifle, Surplus Rifle, Mosin Nagant(which can now be worn on the back as well), and Compact Combat Shotgun. Also updates the back slot icons for the Riot Shotgun and Combat Shotgun."

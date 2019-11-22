@@ -141,12 +141,19 @@
 /turf/proc/zAirOut(direction, turf/source)
 	return FALSE
 
-/turf/proc/zImpact(atom/movable/A, levels = 1)
+/turf/proc/zImpact(atom/movable/A, levels = 1, turf/prev_turf)
+	var/flags = NONE
+	var/mov_name = A.name
 	for(var/i in contents)
 		var/atom/thing = i
-		if(thing.intercept_zImpact(A, levels))
-			return FALSE
-	if(zFall(A, ++levels))
+		flags |= thing.intercept_zImpact(A, levels)
+		if(flags & FALL_STOP_INTERCEPTING)
+			break
+	if(prev_turf && !(flags & FALL_NO_MESSAGE))
+		prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
+	if(flags & FALL_INTERCEPTED)
+		return
+	if(zFall(A, ++levels, src))
 		return FALSE
 	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
 	A.onZImpact(src, levels)
@@ -161,11 +168,10 @@
 		return FALSE
 	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target, DOWN)))
 		return FALSE
-	A.visible_message("<span class='danger'>[A] falls through [src]!</span>")
 	A.zfalling = TRUE
 	A.forceMove(target)
 	A.zfalling = FALSE
-	target.zImpact(A, levels)
+	target.zImpact(A, levels, src)
 	return TRUE
 
 /turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)

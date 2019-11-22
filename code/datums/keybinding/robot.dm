@@ -4,7 +4,7 @@
 
 
 /datum/keybinding/robot/moduleone
-	key = "1"
+	hotkey_keys = list("1")
 	name = "module_one"
 	full_name = "Toggle module 1"
 	description = "Equips or unequips the first module"
@@ -17,7 +17,7 @@
 	return TRUE
 
 /datum/keybinding/robot/moduletwo
-	key = "2"
+	hotkey_keys = list("2")
 	name = "module_two"
 	full_name = "Toggle module 2"
 	description = "Equips or unequips the second module"
@@ -30,7 +30,7 @@
 	return TRUE
 
 /datum/keybinding/robot/modulethree
-	key = "3"
+	hotkey_keys = list("3")
 	name = "module_three"
 	full_name = "Toggle module 3"
 	description = "Equips or unequips the third module"
@@ -43,7 +43,7 @@
 	return TRUE
 
 /datum/keybinding/robot/intent_cycle
-	key = "4"
+	hotkey_keys = list("4")
 	name = "cycle_intent"
 	full_name = "Cycle intent left"
 	description = "Cycles the intent left"
@@ -56,7 +56,7 @@
 	return TRUE
 	
 /datum/keybinding/robot/unequip_module
-	key = "Q"
+	hotkey_keys = list("Q")
 	name = "unequip_module"
 	full_name = "Unequip module"
 	description = "Unequips the active module"
