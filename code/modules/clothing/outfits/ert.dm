@@ -333,3 +333,29 @@
 	suit_store = /obj/item/gun/ballistic/rifle/boltaction
 	r_hand = /obj/item/megaphone
 	head = /obj/item/clothing/head/intern
+
+/datum/outfit/doomguy
+	name = "The Juggernaut"
+
+	uniform = /obj/item/clothing/under/rank/centcom/officer
+	suit = /obj/item/clothing/suit/space/hardsuit/shielded/doomguy
+	shoes = /obj/item/clothing/shoes/jackboots/fast
+	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
+	ears = /obj/item/radio/headset/headset_cent/alt
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	mask = /obj/item/clothing/mask/gas/sechailer
+	belt = /obj/item/storage/belt/military
+	back = /obj/item/gun/energy/pulse/destroyer
+	l_pocket = /obj/item/twohanded/required/chainsaw/energy
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
+	id = /obj/item/card/id/ert
+
+/datum/outfit/doomguy/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/W = H.wear_id
+	W.access = get_ert_access("commander")
+	W.assignment = name
+	W.registered_name = H.real_name
+	W.update_label()
