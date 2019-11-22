@@ -1,12 +1,9 @@
 /* eslint-disable react/prefer-stateless-function */
-import { toFixed } from 'common/math';
 import { decodeHtmlEntities } from 'common/string';
 import { Fragment, Component } from 'inferno';
 import { act } from '../byond';
 import { Box, Button, LabeledList, NumberInput, Section, Tabs, Table, Input } from '../components';
-import { map } from 'common/fp';
 import { createLogger } from '../logging';
-import { classes } from 'common/react';
 
 const logger = createLogger("uplink");
 
@@ -83,9 +80,12 @@ export class Uplink extends Component {
           <table className="Table">
             {categories.map(category => {
               const {
-                items = [],
+                items,
                 name,
               } = category;
+              if (items === null) {
+                return;
+              }
               return (
                 <Fragment key={name}>
                   {items.map(item => {
