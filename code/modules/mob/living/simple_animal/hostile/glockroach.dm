@@ -28,7 +28,7 @@
 	response_harm_simple = "splat"
 	speak_emote = list("chitters")
 	density = FALSE
-	ventcrawler = FALSE //a ventcrawling mob with a gun is probably a bad idea
+	ventcrawler = VENTCRAWLER_ALWAYS
 	gold_core_spawnable = HOSTILE_SPAWN
 	verb_say = "chitters"
 	verb_ask = "chitters inquisitively"
