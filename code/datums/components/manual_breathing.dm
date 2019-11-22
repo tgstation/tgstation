@@ -8,7 +8,7 @@
 	var/check_every = 12 SECONDS
 	var/grace_period = 6 SECONDS
 	var/damage_rate = 1 // organ damage taken per tick
-	var/next_breath_type = /datum/emote/inhale
+	var/datum/emote/next_breath_type = /datum/emote/inhale
 
 /datum/component/manual_breathing/Initialize()
 	if(!iscarbon(parent))
@@ -20,12 +20,12 @@
 	if(L)
 		START_PROCESSING(SSdcs, src)
 		last_breath = world.time
-		to_chat(C, "<span class='notice'>You suddenly realize you're blinking manually.</span>")
+		to_chat(C, "<span class='notice'>You suddenly realize you're breathing manually.</span>")
 
 /datum/component/manual_breathing/Destroy(force, silent)
 	L = null
 	STOP_PROCESSING(SSdcs, src)
-	to_chat(parent, "<span class='notice'>You revert back to automatic blinking.</span>")
+	to_chat(parent, "<span class='notice'>You revert back to automatic breathing.</span>")
 	return ..()
 
 /datum/component/manual_breathing/RegisterWithParent()
@@ -49,13 +49,9 @@
 	STOP_PROCESSING(SSdcs, src)
 
 /datum/component/manual_breathing/process()
-	if(!L || !iscarbon(parent))
-		STOP_PROCESSING(SSdcs, src)
-		return
-
 	var/mob/living/carbon/C = parent
 
-	var/next_text = (next_breath_type == /datum/emote/inhale ? "inhale" : "exhale")
+	var/next_text = initial(next_breath_type.key)
 	if(world.time > (last_breath + check_every + grace_period))
 		if(!warn_dying)
 			to_chat(C, "<span class='userdanger'>You begin to suffocate, you need to [next_text]!</span>")
