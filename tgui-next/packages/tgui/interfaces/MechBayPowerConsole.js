@@ -4,7 +4,8 @@ import { AnimatedNumber, ProgressBar, Section, Button, NoticeBox } from '../comp
 
 export const MechBayPowerConsole = props => {
   const { state } = props;
-  const { data } = state;
+  const { data, config } = state;
+  const { ref } = config;
   return (
     <Fragment>
       <Section
