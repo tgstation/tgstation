@@ -1,5 +1,5 @@
 #define GOOSE_SATIATED 50
-
+#define MAX_FOOD_TO_EAT 10
 /mob/living/simple_animal/hostile/retaliate/goose
 	name = "goose"
 	desc = "It's loose"
@@ -36,6 +36,7 @@
 	var/icon_vomit = "vomit"
 	var/icon_vomit_end = "vomit_end"
 	var/message_cooldown = 0
+	var/eatcount = 0
 	var/choking = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/goose/Initialize()
@@ -45,8 +46,12 @@
 /mob/living/simple_animal/hostile/retaliate/goose/proc/goosement(atom/movable/AM, OldLoc, Dir, Forced)
 	if(stat == DEAD)
 		return
+	eatcount = 0
 	for(var/obj/item/tasty in get_turf(src))
-		feed(tasty)
+		if(feed(tasty))
+			eatcount++
+			if(eatcount >= MAX_FOOD_TO_EAT)
+				break
 	if(prob(5) && random_retaliate)
 		Retaliate()		
 
