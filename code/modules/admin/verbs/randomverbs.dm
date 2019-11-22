@@ -1028,7 +1028,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 		if(has_component && (toggle || remove))
 			qdel(has_component)
-		else
+		else if(!toggle && remove)
 			target.AddComponent(immersies)
 
 /proc/mass_immerse(remove=FALSE)
