@@ -160,6 +160,12 @@
 	icon_state = "badminka"
 	list_reagents = list(/datum/reagent/consumable/ethanol/vodka = 100)
 
+/obj/item/reagent_containers/food/drinks/bottle/vodka/special
+	name = "Strange vodka"
+	desc = "It's an odd mixture of an extremely strong alcohol, apparently originating in ancient Russia many, many years ago. It has a label -- '3,000% Alcohol, 2% Experimental Drugs!'"
+	icon_state = "badminka"
+	list_reagents = list(/datum/reagent/medicine/adminordrazine/strangevodka = 2, /datum/reagent/medicine/omnizine = 48, /datum/reagent/consumable/ethanol/vodka = 50)
+
 /obj/item/reagent_containers/food/drinks/bottle/tequila
 	name = "Caccavo guaranteed quality tequila"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
