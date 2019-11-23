@@ -20,7 +20,7 @@
 
 /obj/item/clothing/glasses/regular/spy/equipped(mob/user, slot)
 	. = ..()
-	if(slot != SLOT_GLASSES)
+	if(slot != ITEM_SLOT_EYES)
 		user.client.close_popup("spypopup")
 
 /obj/item/clothing/glasses/regular/spy/dropped(mob/user)
@@ -29,13 +29,22 @@
 
 /obj/item/clothing/glasses/regular/spy/verb/activate_remote_view()
 	//yada yada check to see if the glasses are in their eye slot
-	show_to_user(usr)
+	if(ishuman(usr))
+		var/mob/living/carbon/human/user = usr
+		if(user.glasses == src)
+			show_to_user(user)
+
+/obj/item/clothing/glasses/regular/spy/Destroy()
+	if(linked_bug)
+		linked_bug.linked_glasses = null
+	. = ..()
+	
 
 /obj/item/spy_bug
 	name = "pocket protector"
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "pocketprotector"
-	desc = "an advanced holographic projection in the shape of a pocket protector featuring technology similar to a chameleon projector. it has a built in 360 degree camera for all your nefarious needs. Simply hitting an object with it will cause it's projection to change. Microphone not included."
+	desc = "an advanced peice of espionage equipment in the shape of a pocket protector. it has a built in 360 degree camera for all your nefarious needs. Microphone not included."
 	var/obj/item/clothing/glasses/regular/spy/linked_glasses
 	var/obj/screen/cam_view
 	var/obj/screen/plane_master/lighting/popupmaster 
@@ -61,8 +70,13 @@
 	//if there's ever a way to make planesmasters omnipresent, then this wouldn't be needed.
 
 /obj/item/spy_bug/Destroy()
-	. = ..()
+	if(linked_glasses)
+		linked_glasses.linked_bug = null
+	
+	qdel(cam_view)
+	qdel(popupmaster)
 	qdel(tracker)
+	. = ..()
 
 /obj/item/spy_bug/proc/update_view()//this doesn't do anything too crazy, just updates the vis_contents of its screen obj
 	cam_view.vis_contents.Cut()
@@ -72,10 +86,26 @@
 //it needs to be linked, hence a kit.
 /obj/item/storage/box/rxglasses/spyglasskit
 	name = "spyglass kit"
-	desc = "this box contains <b>cool</b> nerd glasses; with built-in displays to view a linked camera."
+	desc = "this box contains <i>cool</i> nerd glasses; with built-in displays to view a linked camera."
+
+/obj/item/paper/fluff/nerddocs
+	name = "Espionage For Dummies"
+	color = "#FFFF00"
+	desc = "An eye gougingly yellow pamphlet with a badly designed image of a detective on it. the subtext says \" The Latest way to violate privacy guidelines!\" "
+	info = @{"
+
+Thank you for your purchase of the Nerd Co SpySpeks <small>tm</small>, this paper will be your quick-start guide to violating the privacy of your crewmates in three easy steps!<br><br>Step One: Nerd Co SpySpeks <small>tm</small> upon your face. <br>
+Step Two: Place the included "ProfitProtektor <small>tm</small>" camera assembly in a place of your choosing - make sure to make heavy use of it's inconspicous design!
+
+Step Three: Press the "Activate Remote View" Button on the side of your SpySpeks <small>tm</small> to open a movable camera display in the corner of your vision, it's just that easy!<br><br><br><center><b>TROUBLESHOOTING</b><br></center>
+My SpySpeks <small>tm</small> Make a shrill beep while attempting to use!
+
+A shrill beep coming from your SpySpeks means that they can't connect to the included ProfitProtektor <small>tm</small>, please make sure your ProfitProtektor is still active, and functional!
+	"}
 
 /obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
 	var/obj/item/spy_bug/newbug = new(src)
 	var/obj/item/clothing/glasses/regular/spy/newglasses = new(src)
 	newbug.linked_glasses = newglasses
 	newglasses.linked_bug = newbug
+	new /obj/item/paper/fluff/nerddocs(src)

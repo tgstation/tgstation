@@ -7,13 +7,13 @@
 	var/del_on_map_removal = TRUE//this could probably be changed to be a proc, for conditional removal. for now, this works.
 
 /client/proc/clear_map(var/map_to_clear)//not really needed most of the time, as the client's screen list gets reset on relog. any of the buttons are going to get caught by garbage collection anyway. they're effectively qdel'd.
-	if(!map_to_clear|| !(map_to_clear in screen_maps))
+	if(!screen_maps[map_to_clear])
 		return FALSE
 	for(var/obj/screen/x in screen_maps[map_to_clear])
 		screen_maps[map_to_clear] -= x
 		if(x.del_on_map_removal)
 			qdel(x)
-	screen_maps-= map_to_clear
+	screen_maps -= map_to_clear
 
 /client/proc/clear_all_maps()
 	for(var/x in screen_maps)
@@ -24,7 +24,7 @@
 	handle_popup_close(popup)
 
 /client/verb/handle_popup_close(window_id as text) //when the popup closes in any way (player or proc call) it calls this.
-	set hidden = 1
+	set hidden = TRUE
 	clear_map("[window_id]_map")
 
 /client/proc/create_popup(var/name, var/ratiox = 100, var/ratioy=100) //ratio is how many pixels by how many pixels. keep it simple
