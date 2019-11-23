@@ -8,6 +8,7 @@
 "h" = (/obj/structure/grille/broken,/obj/effect/decal/cleanable/glass,/turf/open/floor/plating,/area/ruin/unpowered)
 "i" = (/obj/structure/sign/poster/random,/turf/closed/wall,/area/ruin/unpowered)
 "j" = (/obj/structure/sign/barsign,/turf/closed/wall,/area/ruin/unpowered)
+"k" = (/obj/machinery/power/apc{name = "Booze-Stained APC"; pixel_x = 0; pixel_y = -9; step_y = 0},/turf/closed/wall,/area/ruin/unpowered)
 "l" = (/turf/closed/wall/rust,/area/ruin/unpowered)
 "m" = (/obj/structure/table,/obj/machinery/chem_dispenser/drinks/beer,/turf/open/floor/plasteel/cafeteria,/area/ruin/unpowered)
 "n" = (/obj/machinery/vending/boozeomat,/turf/open/floor/plasteel/cafeteria,/area/ruin/unpowered)
@@ -53,7 +54,7 @@ aaaaaaaaaaaaaaaaaaaa
 aaeaaaabaaaaaabaaaaa
 aaaaacaaaadaabbaaaaa
 aaaaaaaaaaabaabaaaca
-aabaaffghijffffllaba
+aabaaffghijfffkllaba
 aabbblmnopqorsstfbba
 aaabaloouvowrxsyiaba
 aaaaafzAAAABfsCsfbba
