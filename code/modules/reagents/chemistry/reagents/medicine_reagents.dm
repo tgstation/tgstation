@@ -82,7 +82,7 @@
 	name = "Strange Vodka"
 	description = "An ancient mixture of extremely strong and rare reagents. Has the power to rapidly repair any and all wounds, at the cost of getting the user very, very drunk."
 	taste_description = "the motherland"
-	var/boozepwr = 200
+	var/boozepwr = 20000
 
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
