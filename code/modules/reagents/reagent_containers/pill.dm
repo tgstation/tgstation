@@ -222,7 +222,7 @@
 	name = "happiness pill"
 	desc = "It has a creepy smiling face on it."
 	icon_state = "pill_happy"
-	list_reagents = list(/datum/reagent/drug/happiness = 10)
+	list_reagents = list(/datum/reagent/drug/ecstasy = 10)
 
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"

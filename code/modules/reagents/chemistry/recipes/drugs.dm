@@ -41,10 +41,10 @@
 	results = list(/datum/reagent/drug/aranesp = 3)
 	required_reagents = list(/datum/reagent/medicine/epinephrine = 1, /datum/reagent/medicine/atropine = 1, /datum/reagent/medicine/opioid/morphine = 1)
 
-/datum/chemical_reaction/happiness
-	name = "Happiness"
-	id = /datum/reagent/drug/happiness
-	results = list(/datum/reagent/drug/happiness = 4)
+/datum/chemical_reaction/ecstasy
+	name = "Ecstasy"
+	id = /datum/reagent/drug/ecstasy
+	results = list(/datum/reagent/drug/ecstasy= 4)
 	required_reagents = list(/datum/reagent/nitrous_oxide = 2, /datum/reagent/medicine/epinephrine = 1, /datum/reagent/consumable/ethanol = 1)
 	required_catalysts = list(/datum/reagent/toxin/plasma = 5)
 

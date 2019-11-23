@@ -195,8 +195,7 @@
 	M.AdjustParalyzed(-10 * amphetamine_power, FALSE)
 	M.AdjustImmobilized(-10 * amphetamine_power, FALSE)
 	M.adjustStaminaLoss(-0.5 * amphetamine_power, 0)
-	M.Jitter(amphetamine_power)
-	if(amphetamine_power > 1)
+	if(amphetamine_power > 35)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1,4))
 		if(prob(5))
 			M.emote(pick("twitch", "shiver"))
@@ -274,6 +273,20 @@
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	amphetamine_power = 0.5
 	modifier = 0
+
+/datum/reagent/drug/amphetamine/gojuice
+	name = "Go Juice"
+	description = "Fizzy and sweet juice. Commercially promoted to every security force. Isnt considered a drug under space law , even tho it is jam filled with amphetamines. Extremely addictive"
+	reagent_state = LIQUID
+	color = "#e38e44"
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	overdose_threshold = 10
+	addiction_threshold = 5
+	amphetamine_power = 6
+	modifier = 0
+
+/datum/reagent/drug/amphetamine/gojuice/overdose_process(mob/living/M)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, pick(1, 1.2, 1.4, 1.6, 1.8, 2))
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"
@@ -393,25 +406,25 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/happiness
-	name = "Happiness"
+/datum/reagent/drug/ecstasy
+	name = "Ecstasy"
 	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
 	reagent_state = LIQUID
 	color = "#FFF378"
 	addiction_threshold = 10
 	overdose_threshold = 20
 
-/datum/reagent/drug/happiness/on_mob_metabolize(mob/living/L)
+/datum/reagent/drug/ecstasy/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_FEARLESS, type)
 	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug)
 
-/datum/reagent/drug/happiness/on_mob_delete(mob/living/L)
+/datum/reagent/drug/ecstasy/on_mob_delete(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_FEARLESS, type)
 	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "happiness_drug")
 	..()
 
-/datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/M)
+/datum/reagent/drug/ecstasy/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = 0
 	M.confused = 0
 	M.disgust = 0
@@ -419,7 +432,7 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/happiness/overdose_process(mob/living/M)
+/datum/reagent/drug/ecstasy/overdose_process(mob/living/M)
 	if(prob(30))
 		var/reaction = rand(1,3)
 		switch(reaction)
@@ -436,7 +449,7 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/happiness/addiction_act_stage1(mob/living/M)// all work and no play makes jack a dull boy
+/datum/reagent/drug/ecstasy/addiction_act_stage1(mob/living/M)// all work and no play makes jack a dull boy
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(min(mood.sanity, SANITY_DISTURBED))
 	M.Jitter(5)
@@ -444,7 +457,7 @@
 		M.emote(pick("twitch","laugh","frown"))
 	..()
 
-/datum/reagent/drug/happiness/addiction_act_stage2(mob/living/M)
+/datum/reagent/drug/ecstasy/addiction_act_stage2(mob/living/M)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(min(mood.sanity, SANITY_UNSTABLE))
 	M.Jitter(10)
@@ -452,7 +465,7 @@
 		M.emote(pick("twitch","laugh","frown"))
 	..()
 
-/datum/reagent/drug/happiness/addiction_act_stage3(mob/living/M)
+/datum/reagent/drug/ecstasy/addiction_act_stage3(mob/living/M)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(min(mood.sanity, SANITY_CRAZY))
 	M.Jitter(15)
@@ -460,7 +473,7 @@
 		M.emote(pick("twitch","laugh","frown"))
 	..()
 
-/datum/reagent/drug/happiness/addiction_act_stage4(mob/living/carbon/human/M)
+/datum/reagent/drug/ecstasy/addiction_act_stage4(mob/living/carbon/human/M)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.setSanity(SANITY_INSANE)
 	M.Jitter(20)
@@ -511,3 +524,5 @@
 	if(prob(15))
 		M.adjustToxLoss(2, 0)
 	..()
+
+

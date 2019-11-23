@@ -57,7 +57,7 @@
 										/datum/reagent/medicine/leporazine, /datum/reagent/toxin/mindbreaker, /datum/reagent/medicine/higadrite
 									),
 									list(	// level 8
-										/datum/reagent/pax, /datum/reagent/drug/happiness, /datum/reagent/medicine/ephedrine
+										/datum/reagent/pax, /datum/reagent/drug/ecstasy, /datum/reagent/medicine/ephedrine
 									),
 									list(	// level 9
 										/datum/reagent/toxin/lipolicide, /datum/reagent/medicine/sal_acid
