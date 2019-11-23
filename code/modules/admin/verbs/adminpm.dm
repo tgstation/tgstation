@@ -86,7 +86,7 @@
 
 
 	if(external)
-		if(!externalreplyamount)	//to prevent people from spamming irc
+		if(!externalreplyamount)	//to prevent people from spamming irc/discord
 			return
 		if(!msg)
 			msg = input(src,"Message:", "Private message to Administrator") as message|null
@@ -215,34 +215,34 @@
 		else
 			adminhelp(reply)													//sender has left, adminhelp instead
 
-#define IRC_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
-/proc/IrcPm(target,msg,sender)
+#define TGS_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
+/proc/TgsPm(target,msg,sender)
 	target = ckey(target)
 	var/client/C = GLOB.directory[target]
 
 	var/datum/admin_help/ticket = C ? C.current_ticket : GLOB.ahelp_tickets.CKey2ActiveTicket(target)
 	var/compliant_msg = trim(lowertext(msg))
-	var/irc_tagged = "[sender](IRC)"
+	var/tgs_tagged = "[sender](TGS/External)"
 	var/list/splits = splittext(compliant_msg, " ")
 	if(splits.len && splits[1] == "ticket")
 		if(splits.len < 2)
-			return IRC_AHELP_USAGE
+			return TGS_AHELP_USAGE
 		switch(splits[2])
 			if("close")
 				if(ticket)
-					ticket.Close(irc_tagged)
+					ticket.Close(tgs_tagged)
 					return "Ticket #[ticket.id] successfully closed"
 			if("resolve")
 				if(ticket)
-					ticket.Resolve(irc_tagged)
+					ticket.Resolve(tgs_tagged)
 					return "Ticket #[ticket.id] successfully resolved"
 			if("icissue")
 				if(ticket)
-					ticket.ICIssue(irc_tagged)
+					ticket.ICIssue(tgs_tagged)
 					return "Ticket #[ticket.id] successfully marked as IC issue"
 			if("reject")
 				if(ticket)
-					ticket.Reject(irc_tagged)
+					ticket.Reject(tgs_tagged)
 					return "Ticket #[ticket.id] successfully rejected"
 			if("reopen")
 				if(ticket)
@@ -251,7 +251,7 @@
 				if(!isnull(fail))
 					fail = text2num(splits[3])
 				if(isnull(fail))
-					return "Error: No/Invalid ticket id specified. [IRC_AHELP_USAGE]"
+					return "Error: No/Invalid ticket id specified. [TGS_AHELP_USAGE]"
 				var/datum/admin_help/AH = GLOB.ahelp_tickets.TicketByID(fail)
 				if(!AH)
 					return "Error: Ticket #[fail] not found"
@@ -273,17 +273,17 @@
 					. += "#[AH.id]"
 				return
 			else
-				return IRC_AHELP_USAGE
+				return TGS_AHELP_USAGE
 		return "Error: Ticket could not be found"
 
 	var/static/stealthkey
-	var/adminname = CONFIG_GET(flag/show_irc_name) ? irc_tagged : "Administrator"
+	var/adminname = CONFIG_GET(flag/show_irc_name) ? tgs_tagged : "Administrator"
 
 	if(!C)
 		return "Error: No client"
 
 	if(!stealthkey)
-		stealthkey = GenIrcStealthKey()
+		stealthkey = GenTgsStealthKey()
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)
@@ -297,7 +297,7 @@
 	to_chat(C, "<span class='adminsay'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</span>")
 	to_chat(C, "<span class='adminsay'><i>Click on the administrator's name to reply.</i></span>")
 
-	admin_ticket_log(C, "<font color='purple'>PM From [irc_tagged]: [msg]</font>")
+	admin_ticket_log(C, "<font color='purple'>PM From [tgs_tagged]: [msg]</font>")
 
 	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound
@@ -307,7 +307,7 @@
 
 	return "Message Successful"
 
-/proc/GenIrcStealthKey()
+/proc/GenTgsStealthKey()
 	var/num = (rand(0,1000))
 	var/i = 0
 	while(i == 0)
