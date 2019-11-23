@@ -132,6 +132,10 @@
 	mood_change = 3
 	timeout = 5 MINUTES
 
+/datum/mood_event/baptised
+	description = "<span class='nicegreen'>My soul is saved!</span>\n"
+	mood_change = 1
+
 /datum/mood_event/clownshoes
 	description = "<span class='nicegreen'>The shoes are a clown's legacy, I never want to take them off!</span>\n"
 	mood_change = 5
@@ -165,11 +169,11 @@
 	description = "<span class='nicegreen'>The bottle landing like that was satisfying.</span>\n"
 	mood_change = 2
 	timeout = 3 MINUTES
-  
+
 /datum/mood_event/hope_lavaland
 	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
 	mood_change = 5
-  
+
 /datum/mood_event/nanite_happiness
 	description = "<span class='nicegreen robot'>+++++++HAPPINESS ENHANCEMENT+++++++</span>\n"
 	mood_change = 7

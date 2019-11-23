@@ -209,6 +209,9 @@
 	if (contractType == CONTRACT_REVIVE)
 		to_chat(user, "<span class='warning'>You are already alive, this contract would do nothing.</span>")
 		return 0
+	if(HAS_TRAIT(user, TRAIT_BAPTISED))
+		to_chat(user, "<span class='warning'>Your soul has already been saved!</span>")
+		return 0
 	else
 		to_chat(user, "<span class='notice'>You quickly scrawl your name on the contract.</span>")
 		if(fulfillContract(target.current, blood)<=0)

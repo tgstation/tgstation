@@ -1088,6 +1088,7 @@
 #include "code\game\objects\structures\headpike.dm"
 #include "code\game\objects\structures\hivebot.dm"
 #include "code\game\objects\structures\holosign.dm"
+#include "code\game\objects\structures\holywaterfont.dm"
 #include "code\game\objects\structures\janicart.dm"
 #include "code\game\objects\structures\kitchen_spike.dm"
 #include "code\game\objects\structures\ladders.dm"
