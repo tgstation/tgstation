@@ -24,7 +24,7 @@
 		"<span class='notice'>[user] begins to make an incision in [target]'s heart.</span>",
 		"<span class='notice'>[user] begins to make an incision in [target]'s heart.</span>")
 
-/datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if (!(NOBLOOD in H.dna.species.species_traits))
@@ -33,7 +33,7 @@
 				"")
 			H.bleed_rate += 10
 			H.adjustBruteLoss(10)
-	return TRUE
+	return ..(default_display_results = FALSE)
 
 /datum/surgery_step/incise_heart/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
@@ -56,7 +56,7 @@
 			"<span class='notice'>[user] begins to graft something onto [target]'s heart!</span>",
 			"<span class='notice'>[user] begins to graft something onto [target]'s heart!</span>")
 
-/datum/surgery_step/coronary_bypass/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/coronary_bypass/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	target.setOrganLoss(ORGAN_SLOT_HEART, 60)
 	var/obj/item/organ/heart/heart = target.getorganslot(ORGAN_SLOT_HEART)
 	if(heart)	//slightly worrying if we lost our heart mid-operation, but that's life
@@ -64,7 +64,7 @@
 	display_results(user, target, "<span class='notice'>You successfully graft a bypass onto [target]'s heart.</span>",
 			"<span class='notice'>[user] finishes grafting something onto [target]'s heart.</span>",
 			"<span class='notice'>[user] finishes grafting something onto [target]'s heart.</span>")
-	return TRUE
+	return ..(default_display_results = FALSE)
 
 /datum/surgery_step/coronary_bypass/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))

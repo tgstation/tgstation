@@ -39,17 +39,5 @@
 
   .Layout__content {
     background-image: url('../../assets/bg-syndicate.svg');
-    background-size: 70%;
-    background-position: center;
-    background-repeat: no-repeat;
   }
-}
-
-// Body style
-body.theme-syndicate {
-  color: base.$color-fg;
-  background-color: base.$color-bg;
-  background-image: linear-gradient(to bottom,
-    base.$color-bg-start 0%,
-    base.$color-bg-end 100%);
 }

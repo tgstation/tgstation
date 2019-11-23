@@ -94,7 +94,7 @@ export const NtosSupermatterMonitor = props => {
               content="Back"
               onClick={() => act(ref, 'PRG_clear')} />
           )}>
-          <ForcedBox height={gases.length * 24 + 'px'}>
+          <Box.Forced height={gases.length * 24 + 'px'}>
             <LabeledList>
               {gases.map(gas => (
                 <LabeledList.Item
@@ -110,25 +110,10 @@ export const NtosSupermatterMonitor = props => {
                 </LabeledList.Item>
               ))}
             </LabeledList>
-          </ForcedBox>
+          </Box.Forced>
         </Section>
       </Flex.Item>
     </Flex>
-  );
-};
-
-/**
- * A hack to force certain things (like tables) to position correctly
- * inside bugged things, like Flex in Internet Explorer.
- */
-const ForcedBox = props => {
-  const { height, children } = props;
-  return (
-    <Box position="relative" height={height}>
-      <Box fillPositionedParent>
-        {children}
-      </Box>
-    </Box>
   );
 };
 
