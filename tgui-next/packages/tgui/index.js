@@ -1,4 +1,7 @@
-import 'core-js/stable';
+import 'core-js/es';
+import 'core-js/web/immediate';
+import 'core-js/web/queue-microtask';
+import 'core-js/web/timers';
 import 'regenerator-runtime/runtime';
 import './polyfills';
 
@@ -44,7 +47,7 @@ const renderLayout = () => {
         handedOverToOldTgui = true;
         // Unsubscribe from updates
         window.update = window.initialize = () => {};
-        // Load old TGUI using redirection method for IE8
+        // IE8: Use a redirection method
         if (tridentVersion <= 4) {
           setTimeout(() => {
             location.href = 'tgui-fallback.html?ref=' + window.__ref__;
@@ -97,11 +100,25 @@ const renderLayout = () => {
 
 // Parse JSON and report all abnormal JSON strings coming from BYOND
 const parseStateJson = json => {
+  let reviver = (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (value.__number__) {
+        return parseFloat(value.__number__);
+      }
+    }
+    return value;
+  };
+  // IE8: No reviver for you!
+  // See: https://stackoverflow.com/questions/1288962
+  if (tridentVersion <= 4) {
+    reviver = undefined;
+  }
   try {
-    return JSON.parse(json);
+    return JSON.parse(json, reviver);
   }
   catch (err) {
-    logger.error('JSON parsing error: ' + err.message + '\n' + json);
+    logger.log(err);
+    logger.log('What we got:', json);
     throw err;
   }
 };
@@ -140,16 +157,10 @@ const setupApp = () => {
   loadCSS('font-awesome.css');
 };
 
-// Wait for DOM to properly load on IE8
-if (tridentVersion <= 4) {
-  if (document.readyState !== 'loading') {
-    setupApp();
-  }
-  else {
-    document.addEventListener('DOMContentLoaded', setupApp);
-  }
+// IE8: Wait for DOM to properly load
+if (tridentVersion <= 4 && document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupApp);
 }
-// Load right away on all other browsers
 else {
   setupApp();
 }

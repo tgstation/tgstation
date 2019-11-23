@@ -3,6 +3,16 @@ const path = require('path');
 const BuildNotifierPlugin = require('webpack-build-notifier');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
+const SASS_FUNCTIONS = {
+  // Power function polyfill
+  'math-pow($number, $exp)': (number, exp) => {
+    const sass = require('sass');
+    return new sass.types.Number(Math.pow(
+      number.getValue(),
+      exp.getValue()));
+  },
+};
+
 module.exports = (env = {}, argv) => {
   const config = {
     mode: argv.mode === 'production' ? 'production' : 'development',
@@ -10,6 +20,8 @@ module.exports = (env = {}, argv) => {
     entry: {
       tgui: [
         path.resolve(__dirname, './styles/main.scss'),
+        path.resolve(__dirname, './styles/themes/ntos.scss'),
+        path.resolve(__dirname, './styles/themes/syndicate.scss'),
         path.resolve(__dirname, './index.js'),
       ],
     },
@@ -48,6 +60,7 @@ module.exports = (env = {}, argv) => {
                   '@babel/plugin-transform-jscript',
                   'babel-plugin-inferno',
                   'babel-plugin-transform-remove-console',
+                  'common/string.babel-plugin.cjs',
                 ],
               },
             },
@@ -68,22 +81,11 @@ module.exports = (env = {}, argv) => {
             },
             {
               loader: 'sass-loader',
-              options: {},
-            },
-          ],
-        },
-        {
-          test: /\.css$/,
-          use: [
-            {
-              loader: ExtractCssChunks.loader,
               options: {
-                hot: argv.hot,
+                sassOptions: {
+                  functions: SASS_FUNCTIONS,
+                },
               },
-            },
-            {
-              loader: 'css-loader',
-              options: {},
             },
           ],
         },

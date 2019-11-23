@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - tweak: "Alt clicking will no longer show turf contents for items inside bags etc."
