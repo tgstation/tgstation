@@ -1,0 +1,72 @@
+"a" = (/turf/open/space/basic,/area/space)
+"b" = (/obj/structure/lattice,/turf/open/space/basic,/area/space)
+"c" = (/obj/item/stack/rods,/turf/open/space/basic,/area/space)
+"d" = (/obj/structure/reagent_dispensers/beerkeg,/turf/open/space/basic,/area/space)
+"e" = (/obj/item/broken_bottle,/turf/open/space/basic,/area/space)
+"f" = (/turf/closed/wall,/area/ruin/unpowered)
+"g" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/ruin/unpowered)
+"h" = (/obj/structure/grille/broken,/obj/effect/decal/cleanable/glass,/turf/open/floor/plating,/area/ruin/unpowered)
+"i" = (/obj/structure/sign/poster/random,/turf/closed/wall,/area/ruin/unpowered)
+"j" = (/obj/structure/sign/barsign,/turf/closed/wall,/area/ruin/unpowered)
+"l" = (/turf/closed/wall/rust,/area/ruin/unpowered)
+"m" = (/obj/structure/table,/obj/machinery/chem_dispenser/drinks/beer,/turf/open/floor/plasteel/cafeteria,/area/ruin/unpowered)
+"n" = (/obj/machinery/vending/boozeomat,/turf/open/floor/plasteel/cafeteria,/area/ruin/unpowered)
+"o" = (/turf/open/floor/plasteel/cafeteria,/area/ruin/unpowered)
+"p" = (/obj/structure/closet/secure_closet/bar,/turf/open/floor/plasteel/cafeteria,/area/ruin/unpowered)
+"q" = (/obj/effect/decal/remains/human,/obj/item/gun/ballistic/shotgun/doublebarrel,/turf/open/floor/plasteel/cafeteria,/area/ruin/unpowered)
+"r" = (/obj/machinery/door/airlock/freezer,/turf/open/floor/plasteel/freezer,/area/ruin/unpowered)
+"s" = (/turf/open/floor/plasteel/freezer,/area/ruin/unpowered)
+"t" = (/obj/structure/closet/crate/freezer,/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/floor/plasteel/freezer,/area/ruin/unpowered)
+"u" = (/obj/item/ammo_casing/shotgun/beanbag,/turf/open/floor/plasteel/cafeteria,/area/ruin/unpowered)
+"v" = (/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel/cafeteria,/area/ruin/unpowered)
+"w" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/cafeteria,/area/ruin/unpowered)
+"x" = (/obj/effect/decal/cleanable/food/egg_smudge,/turf/open/floor/plasteel/freezer,/area/ruin/unpowered)
+"y" = (/obj/structure/kitchenspike,/turf/open/floor/plasteel/freezer,/area/ruin/unpowered)
+"z" = (/obj/machinery/door/window/southleft,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"A" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"B" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/food/drinks/bottle/vodka/special,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"C" = (/obj/effect/decal/cleanable/blood/gibs/old,/turf/open/floor/plasteel/freezer,/area/ruin/unpowered)
+"D" = (/obj/effect/decal/remains/human,/obj/item/gun/ballistic/revolver/russian,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"E" = (/obj/effect/spawner/structure/window/reinforced,/turf/closed/wall,/area/ruin/unpowered)
+"F" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"G" = (/obj/item/chair/stool/bar,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"H" = (/obj/structure/chair/stool/bar,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"I" = (/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"J" = (/obj/structure/closet/secure_closet/freezer/fridge,/turf/open/floor/plasteel/freezer,/area/ruin/unpowered)
+"K" = (/obj/structure/grille,/turf/open/floor/plating,/area/ruin/unpowered)
+"L" = (/obj/item/reagent_containers/food/drinks/beer/light,/turf/open/space/basic,/area/space)
+"M" = (/obj/machinery/atmospherics/components/unary/vent_pump,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"N" = (/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"O" = (/obj/machinery/light/broken{dir = 4},/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"P" = (/obj/item/chair/stool/bar,/turf/open/space/basic,/area/space)
+"Q" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/open/space/basic,/area/space)
+"R" = (/obj/item/ammo_casing/shotgun/beanbag,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"S" = (/obj/structure/girder,/turf/open/floor/plating,/area/ruin/unpowered)
+"T" = (/obj/machinery/atmospherics/pipe/simple,/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"U" = (/obj/machinery/light/broken,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"V" = (/obj/structure/reagent_dispensers/water_cooler,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"W" = (/obj/machinery/vending/cigarette,/turf/open/floor/plasteel/checker,/area/ruin/unpowered)
+"X" = (/obj/machinery/atmospherics/pipe/simple,/turf/open/floor/plating,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aaeaaaabaaaaaabaaaaa
+aaaaacaaaadaabbaaaaa
+aaaaaaaaaaabaabaaaca
+aabaaffghijffffllaba
+aabbblmnopqorsstfbba
+aaabaloouvowrxsyiaba
+aaaaafzAAAABfsCsfbba
+aaabaEFGHIHOfsJJfabb
+aaabbKMNDRFIfSfflaaa
+aaLaahTIIUVWfabaaaaa
+aaaaaSXhKliflabbaaaa
+aaaaaaaaabaaaaaaaaaa
+aaabaaaabbaaaaaaaaca
+aaaaaaPaabbaaaaaaaaa
+aaaaaaaaaaaaaaabaaaa
+aaaacaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaQaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+"}
