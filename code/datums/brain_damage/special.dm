@@ -305,3 +305,122 @@
 /obj/effect/hallucination/simple/securitron/Destroy()
 	STOP_PROCESSING(SSfastprocess,src)
 	return ..()
+
+/datum/brain_trauma/special/photo_friend
+	name = "Techno-Brain Virus"
+	desc = "Patient made friends with Capone."
+	scan_desc = "spectrally-connected mind"
+	gain_text = "<span class='warning'>You feel like you're being watched...</span>"
+	lose_text = "<span class='notice'>You feel alone again.</span>"
+	clonable = FALSE
+	random_gain = FALSE
+
+	var/obj/effect/hallucination/simple/capone/capone
+	var/obj/item/camera/brain/brain_cam // it's like a little birdhouse in ur soul except it's a camera in ur brain :D
+	var/obj/item/pda/owner_pda
+
+	var/last_snap
+	var/min_snap_delay = 60 SECONDS
+	var/capone_appear_delay
+
+/datum/brain_trauma/special/photo_friend/on_gain()
+	for(var/obj/item/pda/P in GLOB.PDAs)
+		if(P.owner == owner.real_name)
+			owner_pda = P
+			break
+	if(!owner_pda || owner_pda.toff)
+		testing("Owner has no linked PDA open to messages")
+		QDEL_NULL(src)
+		return
+
+	brain_cam = new(owner)
+	last_snap = world.time + 120 SECONDS // give them 2 minutes without getting harassed by pix
+	capone_appear_delay = world.time + 180 SECONDS // give them 3 minutes before capone shows up in person
+	..()
+
+/datum/brain_trauma/special/photo_friend/on_lose()
+	QDEL_NULL(brain_cam)
+	QDEL_NULL(capone)
+	..()
+
+/datum/brain_trauma/special/photo_friend/proc/send_snap()
+	var/pic_size = rand(2, 4)
+	var/datum/picture/selfie = brain_cam.captureimage(target=owner, user=owner, size_x=pic_size, size_y=pic_size)
+	var/list/messages = list(":)", "hey friend, lookin good!", "hey pal, arent we cute??", "look at the 2 of us... so nice tgthr...", "feelin cute, mite delete latr")
+
+	var/datum/signal/subspace/messaging/pda/signal = new(owner, list(
+		"name" = "???",
+		"job" = "???",
+		"message" = pick(messages),
+		"targets" = list("[owner_pda.owner] ([owner_pda.ownjob])"),
+		"automated" = 1,
+		"photo" = selfie
+	))
+
+	signal.send_to_receivers()
+
+/datum/brain_trauma/special/photo_friend/proc/create_capone()
+	if(world.time < capone_appear_delay)
+		return
+
+	var/list/turfs = list()
+	for(var/obj/structure/window/W in orange(owner, 6))
+		var/w_dist = get_dist(owner, W)
+		for(var/turf/open/O in orange(W, 1))
+			if(O in turfs)
+				continue
+			if(O.density)
+				continue
+			if(get_dist(owner, O) <= w_dist)
+				continue
+			if(locate(/obj/structure/window) in O.contents)
+				continue
+			turfs += O
+
+	if(turfs.len == 0)
+		return 
+
+	var/turf/open/where = pick(turfs)
+	capone = new(where, owner)
+	capone.victim = owner
+
+/datum/brain_trauma/special/photo_friend/on_life()
+	if((world.time > last_snap + min_snap_delay) && prob(2))
+		QDEL_NULL(capone)
+		send_snap()
+
+	if(QDELETED(capone) || !capone.loc || capone.z != owner.z)
+		QDEL_NULL(capone)
+		create_capone()
+		return
+
+	if(get_dist(owner, capone) >= 9 && prob(10))
+		QDEL_NULL(capone)
+		create_capone()
+
+	if(get_dist(owner, capone) <= 3)
+		//2do: some other effect for this
+		QDEL_NULL(capone)
+
+	if(prob(5))
+		QDEL_NULL(capone)
+
+	..()
+
+/obj/effect/hallucination/simple/capone
+	name = "Your Best Friend"
+	desc = "Good to see you again!"
+	image_icon = 'icons/mob/human_face.dmi'
+	image_state = "lips_spray_face"
+	var/victim
+
+/obj/effect/hallucination/simple/capone/New()
+	START_PROCESSING(SSprocessing,src)
+	..()
+
+/obj/effect/hallucination/simple/capone/process()
+	setDir(get_dir(src, victim)) //doesnt actually do anything rn
+
+/obj/effect/hallucination/simple/capone/Destroy()
+	STOP_PROCESSING(SSprocessing,src)
+	return ..()
