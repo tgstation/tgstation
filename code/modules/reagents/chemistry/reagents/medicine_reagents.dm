@@ -78,6 +78,12 @@
 	description = "Rare and experimental particles, that apparently swap the user's body with one from an alternate dimension where it's completely healthy."
 	taste_description = "science"
 
+/datum/reagent/medicine/adminordrazine/strangevodka
+	name = "Strange Vodka"
+	description = "An ancient mixture of extremely strong and rare reagents. Has the power to rapidly repair any and all wounds, at the cost of getting the user very, very drunk."
+	taste_description = "the motherland"
+	var/boozepwr = 200
+
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
 	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."
