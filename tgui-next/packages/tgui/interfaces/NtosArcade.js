@@ -11,6 +11,10 @@ export const NtosArcade = props => {
     <Section title="Outbomb Cuban Pete Ultra"
       textAlign="center">
       <Box>
+        <Section>
+          <img
+            src={data.BossID} />
+        </Section>
         <LabeledList>
           <LabeledList.Item label="Boss Health">
             {data.Hitpoints}
@@ -22,9 +26,12 @@ export const NtosArcade = props => {
             {data.PlayerMP}
           </LabeledList.Item>
           <LabeledList.Item label="Status">
-            {data.Status}
+            <Section>
+              {data.Status}
+            </Section>
           </LabeledList.Item>
-          <LabeledList.Item label="Earned Tickets">
+          <LabeledList.Item label="Earned Tickets"
+            color={data.TicketCount >= 1 ? "good" : "normal"}>
             {data.TicketCount}
           </LabeledList.Item>
         </LabeledList>

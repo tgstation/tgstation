@@ -18,6 +18,7 @@
 	var/player_mp = 10
 	var/ticket_count = 0
 	var/heads_up = "Nanotrasen says, winners make us money."//Shows the active display text for the app
+	var/boss_id = 1
 
 /datum/computer_file/program/arcade/proc/game_check(mob/user)
 	sleep(5)
@@ -76,6 +77,8 @@
 
 /datum/computer_file/program/arcade/ui_data(mob/user)
 	var/list/data = get_header_data()
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/arcade)
+	assets.send(user)
 
 	data["Hitpoints"] = boss_hp
 	data["PlayerHitpoints"] = player_hp
@@ -85,6 +88,7 @@
 	data["GameActive"] = game_active
 	data["PauseState"] = pause_state
 	data["Status"] = heads_up
+	data["BossID"] = "boss[boss_id]"
 	return data
 
 /datum/computer_file/program/arcade/ui_act(action, params, mob/user)
@@ -161,5 +165,6 @@
 			player_mp = 10
 			heads_up = "GAME START"
 			program_icon_state = "arcade"
+			boss_id = rand(1,3)
 			if(istype(computer))
 				computer.update_icon()
