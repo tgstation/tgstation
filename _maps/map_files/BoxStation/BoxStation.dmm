@@ -18603,6 +18603,11 @@
 	c_tag = "Chapel South";
 	dir = 8
 	},
+/obj/structure/holywaterfont{
+	dir = 4;
+	icon_state = "holywaterfont";
+	pixel_x = 13
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "aVW" = (
@@ -49475,6 +49480,13 @@
 	},
 /turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
+"fjU" = (
+/obj/structure/holywaterfont{
+	dir = 8;
+	pixel_x = -13
+	},
+/turf/open/floor/plasteel/dark,
+/area/chapel/main)
 "flc" = (
 /obj/item/assembly/prox_sensor{
 	pixel_x = -4;
@@ -98483,7 +98495,7 @@ aFz
 aRR
 aTe
 aUG
-aFz
+fjU
 aRS
 aXW
 baz
@@ -99499,7 +99511,7 @@ aAz
 asB
 ozs
 aEh
-aFz
+fjU
 aHk
 aFz
 aFz

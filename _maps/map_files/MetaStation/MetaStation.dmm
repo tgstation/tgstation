@@ -74873,6 +74873,17 @@
 "nbv" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
+"ncE" = (
+/obj/structure/holywaterfont{
+	dir = 4;
+	icon_state = "holywaterfont";
+	pixel_x = 11;
+	pixel_y = 16
+	},
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/chapel/main)
 "nde" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -101035,7 +101046,7 @@ cLa
 cMP
 cNG
 cNC
-cOS
+ncE
 cPr
 cOS
 cQk
