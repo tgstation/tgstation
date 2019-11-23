@@ -236,17 +236,17 @@
 	if(!istype(master_mob) || !istype(H))
 		return
 	if(master_mob.ears)
-		H.equip_to_slot_or_del(new master_mob.ears.type, SLOT_EARS)
+		H.equip_to_slot_or_del(new master_mob.ears.type, ITEM_SLOT_EARS)
 	if(master_mob.w_uniform)
-		H.equip_to_slot_or_del(new master_mob.w_uniform.type, SLOT_W_UNIFORM)
+		H.equip_to_slot_or_del(new master_mob.w_uniform.type, ITEM_SLOT_ICLOTHING)
 	if(master_mob.shoes)
-		H.equip_to_slot_or_del(new master_mob.shoes.type, SLOT_SHOES)
+		H.equip_to_slot_or_del(new master_mob.shoes.type, ITEM_SLOT_FEET)
 	if(master_mob.wear_suit)
-		H.equip_to_slot_or_del(new master_mob.wear_suit.type, SLOT_WEAR_SUIT)
+		H.equip_to_slot_or_del(new master_mob.wear_suit.type, ITEM_SLOT_OCLOTHING)
 	if(master_mob.head)
-		H.equip_to_slot_or_del(new master_mob.head.type, SLOT_HEAD)
+		H.equip_to_slot_or_del(new master_mob.head.type, ITEM_SLOT_HEAD)
 	if(master_mob.back)
-		H.equip_to_slot_or_del(new master_mob.back.type, SLOT_BACK)
+		H.equip_to_slot_or_del(new master_mob.back.type, ITEM_SLOT_BACK)
 
 	//Operation: Fuck off and scare people
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(null))

@@ -68,9 +68,9 @@
 	if (!forced)
 		var/job_check = 0
 		if (enemy_roles.len > 0)
-			for (var/mob/M in living_players)
-				if (M.stat == DEAD)
-					continue // Dead players cannot count as opponents
+			for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
+				if (M.stat == DEAD || !M.client)
+					continue // Dead/disconnected players cannot count as opponents
 				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
 					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 

@@ -1,4 +1,4 @@
-import { fastMap, map, sortBy } from 'common/collections';
+import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { vec } from 'common/vector';
@@ -6,9 +6,7 @@ import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
 
-const coordsToVec = coords => vec(fastMap(
-  coords.split(', '),
-  x => parseInt(x, 10)));
+const coordsToVec = coords => vec(map(parseFloat)(coords.split(', ')));
 
 export const Gps = props => {
   const { state } = props;

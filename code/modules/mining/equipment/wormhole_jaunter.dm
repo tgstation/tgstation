@@ -58,7 +58,7 @@
 	var/mob/M = loc
 	if(istype(M))
 		var/triggered = FALSE
-		if(M.get_item_by_slot(SLOT_BELT) == src)
+		if(M.get_item_by_slot(ITEM_SLOT_BELT) == src)
 			if(power == 1)
 				triggered = TRUE
 			else if(power == 2 && prob(50))
@@ -70,7 +70,7 @@
 			activate(M)
 
 /obj/item/wormhole_jaunter/proc/chasm_react(mob/user)
-	if(user.get_item_by_slot(SLOT_BELT) == src)
+	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
 		to_chat(user, "<span class='notice'>Your [name] activates, saving you from the chasm!</span>")
 		SSblackbox.record_feedback("tally", "jaunter", 1, "Chasm") // chasm automatic activation
 		activate(user, FALSE)

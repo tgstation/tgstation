@@ -187,10 +187,10 @@
 	results = list(/datum/reagent/medicine/regen_jelly = 2)
 	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/toxin/slimejelly = 1)
 
-/datum/chemical_reaction/corazone
-	name = "Corazone"
-	id = /datum/reagent/medicine/corazone
-	results = list(/datum/reagent/medicine/corazone = 3)
+/datum/chemical_reaction/higadrite
+	name = "Higadrite"
+	id = /datum/reagent/medicine/higadrite
+	results = list(/datum/reagent/medicine/higadrite = 3)
 	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/lithium = 1)
 
 /datum/chemical_reaction/morphine
@@ -244,4 +244,6 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/suture/medicated(location)
 	return
+
+
 

@@ -37,7 +37,7 @@ to translate concepts between old and new tgui, read this
 
 You will need these programs to start developing in tgui:
 
-- [Node v12.10+](https://nodejs.org/en/download/current/)
+- [Node v12.13+](https://nodejs.org/en/download/)
 - [Yarn v1.19+](https://yarnpkg.com/en/docs/install)
 - [MSys2](https://www.msys2.org/) (optional)
 
@@ -175,11 +175,11 @@ Props:
 first appears. If you set initial to `0` for example, number will always
 animate starting from `0`, and if omitted, it will not play an initial
 animation.
-- `format: function` - Output formatter.
+- `format: value => value` - Output formatter.
   - Example: `value => Math.round(value)`.
-- `children: function` - Pull a raw number to animate more complex things
-deeper in the DOM tree.
-  - Example: `value => <Icon rotation={value} />`
+- `children: (formattedValue, rawValue) => any` - Pull the animated number to
+animate more complex things deeper in the DOM tree.
+  - Example: `(_, value) => <Icon rotation={value} />`
 
 ### `BlockQuote`
 
@@ -238,6 +238,8 @@ Props:
 - `height: number` - Box height.
 - `minHeight: number` - Box minimum height.
 - `maxHeight: number` - Box maximum height.
+- `fontSize: number` - Font size.
+- `fontFamily: string` - Font family.
 - `lineHeight: number` - Directly affects the height of text lines.
 Useful for adjusting button height.
 - `inline: boolean` - Forces the `Box` to appear as an `inline-block`,
@@ -253,6 +255,7 @@ all available horizontal space.
 - `opacity: number` - Opacity, from 0 to 1.
 - `bold: boolean` - Make text bold.
 - `italic: boolean` - Make text italic.
+- `nowrap: boolean` - Stops text from wrapping.
 - `textAlign: string` - Align text inside the box.
   - `left` (default)
   - `center`
@@ -292,10 +295,43 @@ over the button.
   - `bottom` (default) - Show tooltip below the button.
   - `left` - Show tooltip on the left of the button.
   - `right` - Show tooltip on the right of the button.
+- `ellipsis: boolean` - If button width is constrained, button text will
+be truncated with an ellipsis. Be careful however, because this prop breaks
+the baseline alignment.
 - `title: string` - A native browser tooltip, which appears when hovering
 over the button.
 - `content/children: any` - Content to render inside the button.
 - `onClick: function` - Called when element is clicked.
+
+### `Button.Checkbox`
+
+A ghetto checkbox, made entirely using existing Button API.
+
+Props:
+
+- See inherited props: [Button](#button)
+- `checked: boolean` - Boolean value, which marks the checkbox as checked.
+
+### `ColorBox`
+
+Displays a 1-character wide colored square. Can be used as a status indicator,
+or for visually representing a color.
+
+If you want to set a background color on an element, use a plain
+[Box](#box) instead.
+
+Props:
+
+- See inherited props: [Box](#box)
+- `color: string` - Color of the box.
+
+### `Dimmer`
+
+Dims surrounding area to emphasize content placed inside.
+
+Props:
+
+- See inherited props: [Box](#box)
 
 ### `Flex`
 
@@ -328,6 +364,10 @@ two flex items as far as possible from each other.
 Props:
 
 - See inherited props: [Box](#box)
+- `spacing: number` - Spacing between flex items, in integer units
+(1 unit - 0.5em). Does not directly relate to a flex css property
+(adds a modifier class under the hood), and only integer numbers are
+supported.
 - `direction: string` - This establishes the main-axis, thus defining the
 direction flex items are placed in the flex container.
   - `row` (default) - left to right.
@@ -411,7 +451,7 @@ Props:
 
 Props:
 
-- See inherited props: [Table.Cell](#table-cell)
+- See inherited props: [Table.Cell](#tablecell)
 - `size: number` (default: 1) - Size of the column relative to other columns.
 
 ### `Icon`

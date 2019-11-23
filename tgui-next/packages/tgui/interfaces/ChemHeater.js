@@ -2,9 +2,10 @@ import { round, toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section } from '../components';
+import { BeakerContents } from './common/BeakerContents';
 
 export const ChemHeater = props => {
-  const { state, dispatch } = props;
+  const { state } = props;
   const { ref } = state.config;
   const {
     targetTemp,
@@ -66,16 +67,9 @@ export const ChemHeater = props => {
               onClick={() => act(ref, 'eject')} />
           </Fragment>
         )}>
-        {!isBeakerLoaded && (
-          <Box color="label" content="No beaker loaded." />
-        ) || beakerContents.length === 0 && (
-          <Box color="label" content="Beaker is empty." />
-        )}
-        {beakerContents.map(chemical => (
-          <Box key={chemical.name} color="label">
-            {chemical.volume} units of {chemical.name}
-          </Box>
-        ))}
+        <BeakerContents
+          beakerLoaded={isBeakerLoaded}
+          beakerContents={beakerContents} />
       </Section>
     </Fragment>
   );
