@@ -26168,9 +26168,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
 "beM" = (
@@ -26852,6 +26849,9 @@
 	},
 /obj/structure/cable,
 /obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
 "bgz" = (
@@ -26864,7 +26864,7 @@
 	pixel_y = -8;
 	req_access_txt = "1"
 	},
-/obj/structure/chair/office,
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/customs)
 "bgA" = (
@@ -27946,11 +27946,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor{
-	name = "Arrivals Security Checkpoint";
-	req_access_txt = "1"
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "biB" = (
@@ -32457,8 +32452,10 @@
 	},
 /area/maintenance/port)
 "bsr" = (
-/turf/open/floor/plating,
-/area/crew_quarters/toilet/auxiliary)
+/obj/structure/cable,
+/obj/structure/chair/office,
+/turf/open/floor/plasteel,
+/area/security/checkpoint/customs)
 "bss" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -76527,6 +76524,10 @@
 	},
 /obj/structure/cable,
 /obj/machinery/computer/shuttle/mining/common,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/security/checkpoint/customs)
 "xAp" = (
@@ -91679,7 +91680,7 @@ aip
 doJ
 bbK
 bda
-beM
+bsr
 bgz
 biA
 bjX
@@ -94009,7 +94010,7 @@ bCS
 pDa
 bQN
 dih
-bsr
+bvW
 bLe
 bMF
 apz
