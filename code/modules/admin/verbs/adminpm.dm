@@ -1,5 +1,4 @@
-#define IRCREPLYCOUNT 2
-
+#define EXTERNALREPLYCOUNT 2
 
 //allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
 /client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
@@ -74,20 +73,20 @@
 		return
 
 	var/client/recipient
-	var/irc = 0
+	var/external = 0
 	if(istext(whom))
 		if(cmptext(copytext(whom,1,2),"@"))
 			whom = findStealthKey(whom)
 		if(whom == "IRCKEY")
-			irc = 1
+			external = 1
 		else
 			recipient = GLOB.directory[whom]
 	else if(istype(whom, /client))
 		recipient = whom
 
 
-	if(irc)
-		if(!ircreplyamount)	//to prevent people from spamming irc
+	if(external)
+		if(!externalreplyamount)	//to prevent people from spamming irc
 			return
 		if(!msg)
 			msg = input(src,"Message:", "Private message to Administrator") as message|null
@@ -95,7 +94,7 @@
 		if(!msg)
 			return
 		if(holder)
-			to_chat(src, "<span class='danger'>Error: Use the admin IRC channel, nerd.</span>")
+			to_chat(src, "<span class='danger'>Error: Use the admin IRC/Discord channel, nerd.</span>")
 			return
 
 
@@ -132,7 +131,7 @@
 		return
 
 	//clean the message if it's not sent by a high-rank admin
-	if(!check_rights(R_SERVER|R_DEBUG,0)||irc)//no sending html to the poor bots
+	if(!check_rights(R_SERVER|R_DEBUG,0)||external)//no sending html to the poor bots
 		msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
 		if(!msg)
 			return
@@ -144,11 +143,11 @@
 
 	var/keywordparsedmsg = keywords_lookup(msg)
 
-	if(irc)
+	if(external)
 		to_chat(src, "<span class='notice'>PM to-<b>Admins</b>: <span class='linkify'>[rawmsg]</span></span>")
-		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>IRC</i>: [keywordparsedmsg]</font>")
-		ircreplyamount--
-		send2irc("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
+		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>External</i>: [keywordparsedmsg]</font>")
+		externalreplyamount--
+		send2tgs("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
 	else
 		if(recipient.holder)
 			if(holder)	//both are admins
@@ -194,10 +193,10 @@
 				to_chat(src, "<span class='danger'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</span>")
 				return
 
-	if(irc)
-		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")
+	if(external)
+		log_admin_private("PM: [key_name(src)]->External: [rawmsg]")
 		for(var/client/X in GLOB.admins)
-			to_chat(X, "<span class='notice'><B>PM: [key_name(src, X, 0)]-&gt;IRC:</B> [keywordparsedmsg]</span>")
+			to_chat(X, "<span class='notice'><B>PM: [key_name(src, X, 0)]-&gt;External:</B> [keywordparsedmsg]</span>")
 	else
 		window_flash(recipient, ignorepref = TRUE)
 		log_admin_private("PM: [key_name(src)]->[key_name(recipient)]: [rawmsg]")
@@ -290,8 +289,8 @@
 	if(!msg)
 		return "Error: No message"
 
-	message_admins("IRC message from [sender] to [key_name_admin(C)] : [msg]")
-	log_admin_private("IRC PM: [sender] -> [key_name(C)] : [msg]")
+	message_admins("External message from [sender] to [key_name_admin(C)] : [msg]")
+	log_admin_private("External PM: [sender] -> [key_name(C)] : [msg]")
 	msg = emoji_parse(msg)
 
 	to_chat(C, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
@@ -304,7 +303,7 @@
 	//always play non-admin recipients the adminhelp sound
 	SEND_SOUND(C, 'sound/effects/adminhelp.ogg')
 
-	C.ircreplyamount = IRCREPLYCOUNT
+	C.externalreplyamount = EXTERNALREPLYCOUNT
 
 	return "Message Successful"
 
@@ -321,4 +320,4 @@
 	GLOB.stealthminID["IRCKEY"] = stealth
 	return	stealth
 
-#undef IRCREPLYCOUNT
+#undef EXTERNALREPLYCOUNT
