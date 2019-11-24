@@ -553,7 +553,7 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/go_juice
 	name = "Go Juice"
-	desc = "Pure energy! Pure POWER!"
+	desc = "Pure energy! Pure POWER! Do not question it's legality it was produced in NT authorized gulag!"
 	icon_state = "go_juice"
 	list_reagents = list(/datum/reagent/drug/amphetamine/gojuice = 30 , /datum/reagent/consumable/sodawater = 20 )
 	foodtype = SUGAR | JUNKFOOD
