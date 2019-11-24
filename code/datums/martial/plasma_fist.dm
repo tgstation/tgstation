@@ -117,7 +117,7 @@
 
 
 /obj/effect/temp_visual/plasma_soul
-	name = "plasma"
+	name = "plasma energy"
 	desc = "Leftover energy brought out from The Plasma Fist."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "plasmasoul"
@@ -134,7 +134,7 @@
 
 /obj/effect/temp_visual/plasma_soul/Destroy()
 	if(!beam_target)
-		explosion(get_turf(src), 1, 2, 4) //what a single power level contributes to the explosion size of Apotheosis
+		visible_message("<span class='notice'>[src] fades away...</span>")
 	. = ..()
 
 /obj/effect/ebeam/plasma_fist
