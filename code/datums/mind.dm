@@ -32,6 +32,7 @@
 /datum/mind
 	var/key
 	var/name				//replaces mob/var/original_name
+	var/ghostname			//replaces name for observers name if set
 	var/mob/living/current
 	var/active = 0
 
@@ -178,7 +179,7 @@
 	msg += "<span class='info'>*---------*\n<EM>Your skills</EM></span>\n<span class='notice'>"
 	for(var/i in shown_skills)
 		var/datum/skill/S = i
-		msg += "[i] - [SSskills.level_names[known_skills[S.name]]]\n"
+		msg += "[i] - [SSskills.level_names[known_skills[S]]]\n"
 	msg += "</span>"
 	to_chat(user, msg)
 

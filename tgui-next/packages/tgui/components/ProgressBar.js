@@ -10,11 +10,11 @@ export const ProgressBar = props => {
     content,
     children,
   } = props;
-  let { color } = props;
   const scaledValue = (value - minValue) / (maxValue - minValue);
   const hasContent = content !== undefined || children !== undefined;
+  let { color } = props;
+  // Cycle through ranges in key order to determine progressbar color.
   if (!color) {
-    // Cycle through ranges in key order to determine progressbar color.
     for (let rangeName of Object.keys(ranges)) {
       const range = ranges[rangeName];
       if (range && value >= range[0] && value <= range[1]) {
@@ -23,11 +23,15 @@ export const ProgressBar = props => {
       }
     }
   }
+  // Default color
+  if (!color) {
+    color = 'default';
+  }
   return (
     <div
       className={classes([
         'ProgressBar',
-        color && 'ProgressBar--color--' + color,
+        'ProgressBar--color--' + color,
       ])}>
       <div
         className="ProgressBar__fill"

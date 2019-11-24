@@ -109,21 +109,21 @@
 		add_fingerprint(usr)
 	updateUsrDialog()
 
-/obj/machinery/computer/aifixer/update_icon()
-	..()
+/obj/machinery/computer/aifixer/update_overlays()
+	. = ..()
 	if(stat & (NOPOWER|BROKEN))
 		return
+	
+	if(active)
+		. += "ai-fixer-on"
+	if (occupier)
+		switch (occupier.stat)
+			if (0)
+				. += "ai-fixer-full"
+			if (2)
+				. += "ai-fixer-404"
 	else
-		if(active)
-			add_overlay("ai-fixer-on")
-		if (occupier)
-			switch (occupier.stat)
-				if (0)
-					add_overlay("ai-fixer-full")
-				if (2)
-					add_overlay("ai-fixer-404")
-		else
-			add_overlay("ai-fixer-empty")
+		. += "ai-fixer-empty"
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())

@@ -42,8 +42,8 @@
 	name = "incinerator chamber gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_INCINERATOR
 
-/obj/machinery/air_sensor/update_icon()
-		icon_state = "gsensor[on]"
+/obj/machinery/air_sensor/update_icon_state()
+	icon_state = "gsensor[on]"
 
 /obj/machinery/air_sensor/process_atmos()
 	if(on)

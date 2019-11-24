@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "Learning to bake cakes doesn't break the entire crafting ui anymore"

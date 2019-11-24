@@ -32,15 +32,27 @@ var ref = location.search.replace('?ref=', '');
 document.getElementById('data').setAttribute('data-ref', ref);
 // Early global error handling
 window.onerror = function (msg, url, line, col, error) {
-  var logString = msg + ' (' + url + ' line ' + line + ')'
-    + '\nUser Agent: ' + navigator.userAgent;
-  // Print to the page
-  // NOTE: document.write() only works on IE8.
-  document.write(logString);
+  // Proper stacktrace
+  var stack = error && error.stack;
+  // Ghetto stacktrace
+  if (!stack) {
+    stack = msg + '\n   at ' + url + ':' + line;
+    if (col) {
+      stack += ':' + col;
+    }
+  }
+  // Append user agent info
+  stack += '\n\nUser Agent: ' + navigator.userAgent;
+  // Print error to the page
+  document.write(stack);
   // Send to the backend
   location.href = 'byond://?src=' + ref
-    + '&action=tgui:log&error=true'
-    + '&log=' + encodeURIComponent(logString);
+    + '&action=tgui:log&fatal=1'
+    + '&log=' + encodeURIComponent(stack);
+  // Short-circuit further updates
+  window.update = window.initialize = function () {};
+  // Prevent default action
+  return true;
 };
 </script>
 <script defer src='tgui.js'></script>

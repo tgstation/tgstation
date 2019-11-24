@@ -44,21 +44,21 @@ export const ChemFilter = props => {
     right = [],
   } = data;
   return (
-    <Grid style={{ width: "100%" }}>
-      <Grid.Item style={{ width: "50%" }}>
+    <Grid>
+      <Grid.Column>
         <ChemFilterPane
           title="Left"
           list={left}
           state={state}
         />
-      </Grid.Item>
-      <Grid.Item style={{ width: "50%" }}>
+      </Grid.Column>
+      <Grid.Column>
         <ChemFilterPane
           title="Right"
           list={right}
           state={state}
         />
-      </Grid.Item>
+      </Grid.Column>
     </Grid>
   );
 };

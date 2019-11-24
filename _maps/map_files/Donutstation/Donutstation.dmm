@@ -13561,6 +13561,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/machinery/lapvend,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aKW" = (
@@ -21027,8 +21028,7 @@
 	},
 /obj/structure/table/glass,
 /obj/item/storage/box/masks{
-	pixel_x = 4;
-	pixel_z = 0
+	pixel_x = 4
 	},
 /obj/item/storage/box/gloves{
 	pixel_x = -4
@@ -25310,6 +25310,10 @@
 /area/crew_quarters/fitness/recreation)
 "bqb" = (
 /obj/structure/table/wood,
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 7
+	},
 /obj/item/reagent_containers/food/drinks/bottle/whiskey{
 	pixel_x = 3
 	},
@@ -29963,7 +29967,7 @@
 /area/crew_quarters/heads/hor)
 "bBh" = (
 /obj/structure/table,
-/obj/item/paper_bin{
+/obj/item/paper_bin/carbon{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -30422,12 +30426,12 @@
 /area/maintenance/port/aft)
 "bCk" = (
 /obj/structure/table,
-/obj/item/paper_bin{
+/obj/structure/cable,
+/obj/item/paper_bin/carbon{
 	pixel_x = -3;
 	pixel_y = 7
 	},
 /obj/item/stamp/hop,
-/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bCl" = (
@@ -31067,8 +31071,7 @@
 	areastring = "/area/quartermaster/sorting";
 	dir = 8;
 	name = "Delivery Office APC";
-	pixel_x = -25;
-	pixel_y = 0
+	pixel_x = -25
 	},
 /obj/structure/cable,
 /obj/machinery/light{
@@ -31585,7 +31588,6 @@
 	dir = 8
 	},
 /obj/machinery/door/window/westleft{
-	dir = 8;
 	name = "Cargo Packages";
 	req_access_txt = "55"
 	},
@@ -34218,12 +34220,12 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "bLC" = (
-/obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/structure/table,
 /obj/item/paicard,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
@@ -36468,11 +36470,11 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "bRL" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/landmark/start/assistant,
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "bRM" = (
@@ -37344,7 +37346,7 @@
 /area/maintenance/starboard)
 "bTY" = (
 /obj/machinery/power/apc{
-	areastring = "/area/medical/patients_rooms/room_a";
+	areastring = "/area/medical/surgery/room_b";
 	dir = 4;
 	name = "Surgery B APC";
 	pixel_x = 24
@@ -47224,6 +47226,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/tools)
+"qHa" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/machinery/vending/modularpc,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "qHu" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical{
@@ -48554,8 +48566,7 @@
 /obj/machinery/power/apc{
 	areastring = "/area/ai_monitored/turret_protected/ai_upload";
 	name = "AI Upload APC";
-	pixel_x = -25;
-	pixel_y = 0
+	pixel_x = -25
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -78794,7 +78805,7 @@ auo
 aCh
 avn
 aKP
-aKV
+qHa
 bro
 asP
 aih

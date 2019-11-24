@@ -451,7 +451,7 @@
 	if (!usr.client.holder)
 		return
 
-	var/list/options = list("Regular Restart", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
+	var/list/options = list("Regular Restart", "Regular Restart (with delay)", "Hard Restart (No Delay/Feeback Reason)", "Hardest Restart (No actions, just reboot)")
 	if(world.TgsAvailable())
 		options += "Server Restart (Kill and restart DD)";
 
@@ -469,6 +469,11 @@
 			switch(result)
 				if("Regular Restart")
 					SSticker.Reboot(init_by, "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", 10)
+				if("Regular Restart (with delay)")
+					var/delay = input("What delay should the restart have (in seconds)?", "Restart Delay", 5) as num|null
+					if(!delay)
+						return FALSE
+					SSticker.Reboot(init_by, "admin reboot - by [usr.key] [usr.client.holder.fakekey ? "(stealth)" : ""]", delay * 10)
 				if("Hard Restart (No Delay, No Feeback Reason)")
 					to_chat(world, "World reboot - [init_by]")
 					world.Reboot()
@@ -906,16 +911,16 @@
 			qdel(C)
 	return kicked_client_names
 
-//returns 1 to let the dragdrop code know we are trapping this event
-//returns 0 if we don't plan to trap the event
+//returns TRUE to let the dragdrop code know we are trapping this event
+//returns FALSE if we don't plan to trap the event
 /datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
 	if (!check_rights(R_VAREDIT,0) || !check_rights(R_SPAWN|R_DEBUG,0))
-		return 0
+		return FALSE
 
 	if (!frommob.ckey)
-		return 0
+		return FALSE
 
 	var/question = ""
 	if (tomob.ckey)
@@ -924,12 +929,18 @@
 
 	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
 	if (ask != "Yes")
-		return 1
+		return TRUE
 
 	if (!frommob || !tomob) //make sure the mobs don't go away while we waited for a response
-		return 1
+		return TRUE
 
-	tomob.ghostize(0)
+	// Disassociates observer mind from the body mind
+	if(tomob.client)
+		tomob.ghostize(FALSE)
+	else
+		for(var/mob/dead/observer/ghost in GLOB.dead_mob_list)
+			if(tomob.mind == ghost.mind)
+				ghost.mind = null
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.key] in control of [tomob.name].</span>")
 	log_admin("[key_name(usr)] stuffed [frommob.key] into [tomob.name].")
@@ -938,7 +949,7 @@
 	tomob.ckey = frommob.ckey
 	qdel(frommob)
 
-	return 1
+	return TRUE
 
 /client/proc/adminGreet(logout)
 	if(SSticker.HasRoundStarted())

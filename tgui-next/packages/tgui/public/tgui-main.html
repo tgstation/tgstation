@@ -11,17 +11,35 @@
 window.__inception__ = new Date().getTime();
 // Make window ref global
 window.__ref__ = document.getElementById('data').getAttribute('data-ref');
-// Early global error handling
+// Global error handling
 window.onerror = function (msg, url, line, col, error) {
-  var logString = msg + ' (' + url + ' line ' + line + ')'
-    + '\nUser Agent: ' + navigator.userAgent;
-  // Print to the page
-  // NOTE: document.write() only works on IE8.
-  document.write(logString);
+  // Proper stacktrace
+  var stack = error && error.stack;
+  // Ghetto stacktrace
+  if (!stack) {
+    stack = msg + '\n   at ' + url + ':' + line;
+    if (col) {
+      stack += ':' + col;
+    }
+  }
+  // Append user agent info
+  stack += '\n\nUser Agent: ' + navigator.userAgent;
+  // Print error to the page
+  var errorRoot = document.getElementById('FatalError');
+  var errorStack = document.getElementById('FatalError__stack');
+  if (errorRoot) {
+    errorRoot.className = 'FatalError';
+    errorStack.textContent = stack;
+  }
   // Send to the backend
   location.href = 'byond://?src=' + window.__ref__
-    + '&action=tgui:log&error=true'
-    + '&log=' + encodeURIComponent(logString);
+    + '&action=tgui:log&fatal=1'
+    + '&log=' + encodeURIComponent(stack);
+  // Short-circuit further updates
+  window.__updateQueue__ = [];
+  window.update = window.initialize = function () {};
+  // Prevent default action
+  return true;
 };
 // Early initialization
 window.__updateQueue__ = [];
@@ -47,13 +65,51 @@ location.href = 'byond://?src=' + window.__ref__
 <script type="text/javascript" defer src="tgui.bundle.js"></script>
 
 </head>
-<body class="theme-[style]">
+<body>
 
-<!-- New TGUI container -->
+<!-- tgui container -->
 <div id="react-root"></div>
 
-<!-- Old TGUI container -->
+<!-- Old tgui container -->
 <div id="container" class="container"></div>
+
+<!-- Fatal error container -->
+<div id="FatalError" style="display: none">
+<div class="FatalError__logo">
+          _____            _____                  _______                  _____
+         /\    \          /\    \                /::\    \                /\    \
+        /::\____\        /::\    \              /::::\    \              /::\    \
+       /::::|   |        \:::\    \            /::::::\    \            /::::\    \
+      /:::::|   |         \:::\    \          /::::::::\    \          /::::::\    \
+     /::::::|   |          \:::\    \        /:::/~~\:::\    \        /:::/\:::\    \
+    /:::/|::|   |           \:::\    \      /:::/    \:::\    \      /:::/__\:::\    \
+   /:::/ |::|   |           /::::\    \    /:::/    / \:::\    \     \:::\   \:::\    \
+  /:::/  |::|   | _____    /::::::\    \  /:::/____/   \:::\____\  ___\:::\   \:::\    \
+ /:::/   |::|   |/\    \  /:::/\:::\    \|:::|    |     |:::|    |/\   \:::\   \:::\    \
+/:: /    |::|   /::\____\/:::/  \:::\____\:::|____|     |:::|    /::\   \:::\   \:::\____\
+\::/    /|::|  /:::/    /:::/    \::/    /\:::\    \   /:::/    /\:::\   \:::\   \::/    /
+ \/____/ |::| /:::/    /:::/    / \/____/  \:::\    \ /:::/    /  \:::\   \:::\   \/____/
+         |::|/:::/    /:::/    /            \:::\    /:::/    /    \:::\   \:::\    \
+         |::::::/    /:::/    /              \:::\__/:::/    /      \:::\   \:::\____\
+         |:::::/    /\::/    /                \::::::::/    /        \:::\  /:::/    /
+         |::::/    /  \/____/                  \::::::/    /          \:::\/:::/    /
+         /:::/    /                             \::::/    /            \::::::/    /
+        /:::/    /                               \::/____/              \::::/    /
+        \::/    /                                                        \::/    /
+         \/____/                                                          \/____/
+</div>
+<marquee class="FatalError__header">
+A fatal exception has occurred at 002B:C562F1B7 in TGUI.
+The current application will be terminated.
+Please remain calm, get to the nearest NTNet workstation
+and send the copy of the following stack trace to:
+www.github.com/tgstation/tgstation. Thank you for your cooperation.
+</marquee>
+<div id="FatalError__stack" class="FatalError__stack"></div>
+<div class="FatalError__footer">
+Nanotrasen (c) 2525-2559
+</div>
+</div>
 
 <noscript>
   <div class="NoticeBox">

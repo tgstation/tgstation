@@ -274,6 +274,7 @@
 					/obj/item/clothing/under/rank/civilian/chef = 1,
 					/obj/item/clothing/under/rank/civilian/chef/skirt = 2,
 					/obj/item/clothing/head/chefhat = 1,
+					/obj/item/clothing/under/rank/civilian/cookjorts = 2,
 					/obj/item/clothing/shoes/cookflops = 2,
 					/obj/item/reagent_containers/glass/rag = 1,
 					/obj/item/clothing/shoes/sneakers/brown/digitigrade = 1,
