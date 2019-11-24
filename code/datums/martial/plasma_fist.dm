@@ -6,30 +6,30 @@
 	name = "Plasma Fist"
 	id = MARTIALART_PLASMAFIST
 	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
-	var/plasma_power = 1
+	var/plasma_power = 1 //starts at a 1, 2, 4 explosion.
 
 
 /datum/martial_art/plasma_fist/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,TORNADO_COMBO))
 		if(A == D)//helps using apotheosis
-			return 0
+			return FALSE
 		streak = ""
 		Tornado(A,D)
-		return 1
+		return TRUE
 	if(findtext(streak,THROWBACK_COMBO))
 		if(A == D)//helps using apotheosis
-			return 0
+			return FALSE
 		streak = ""
 		Throwback(A,D)
-		return 1
+		return TRUE
 	if(findtext(streak,PLASMA_COMBO))
 		streak = ""
 		if(A == D)
 			Apotheosis(A,D)
 		else
 			Plasma(A,D)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.say("TORNADO SWEEP!", forced="plasma fist")
@@ -128,8 +128,8 @@
 	. = ..()
 	beam_target = _beam_target
 	if(beam_target)
-		var/obj/effect/ebeam/beam = Beam(beam_target, "plasmabeam", time= 3 SECONDS, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/plasma_fist)
-		animate(beam, alpha = 0, time = 3 SECONDS)
+		var/datum/beam/beam = Beam(beam_target, "plasmabeam", time= 3 SECONDS, maxdistance=INFINITY, beam_type=/obj/effect/ebeam/plasma_fist)
+		animate(beam.visuals, alpha = 0, time = 3 SECONDS)
 	animate(src, alpha = 0, transform = matrix()*0.5, time = 3 SECONDS)
 
 /obj/effect/temp_visual/plasma_soul/Destroy()
