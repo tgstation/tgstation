@@ -71,7 +71,7 @@
 		flash_color(A, flash_color = "#9C00FF", flash_time = 3 SECONDS)
 		animate(A, color = oldcolor, time = 3 SECONDS)
 	else
-		to_chat(A, "<span class='warning'>You cannot power up your </span><span class='notice'>Apotheosis</span><span class='warning'> anymore!</span>")
+		to_chat(A, "<span class='warning'>You cannot power up your </span><span class='notice'>Apotheosis</span><span class='warning'> any more!</span>")
 		new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and then explodes instead of storing it inside of you.
 	log_combat(A, D, "gibbed (Plasma Fist)")
 	return
