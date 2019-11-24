@@ -46801,7 +46801,6 @@
 /turf/closed/wall,
 /area/security/checkpoint/medical)
 "cak" = (
-/obj/machinery/medical_kiosk,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -47648,10 +47647,6 @@
 /obj/machinery/holopad,
 /obj/effect/landmark/start/medical_doctor,
 /obj/structure/cable,
-/turf/open/floor/plasteel/white,
-/area/medical/storage)
-"cbO" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cbP" = (
@@ -50631,22 +50626,6 @@
 /area/medical/medbay/central)
 "cir" = (
 /obj/machinery/atmospherics/pipe/manifold/supply,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
-"cis" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -75773,6 +75752,9 @@
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
+"tay" = (
+/turf/closed/wall,
+/area/medical/medbay/central)
 "tbC" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -100225,7 +100207,7 @@ cbP
 cdv
 cez
 bXK
-bXK
+tay
 cio
 cjO
 cln
@@ -100483,7 +100465,7 @@ bXL
 bXL
 bXL
 cbR
-cis
+cip
 cjQ
 clo
 cmv
@@ -100740,7 +100722,7 @@ cdw
 ceA
 cfQ
 cgX
-cis
+cip
 cjQ
 clo
 cmv
@@ -101254,7 +101236,7 @@ cbS
 cbS
 bXL
 dwy
-cis
+cip
 cdy
 clp
 cmu
