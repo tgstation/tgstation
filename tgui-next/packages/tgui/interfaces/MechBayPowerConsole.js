@@ -1,11 +1,13 @@
-import { Fragment } from 'inferno';
-import { act, ref } from '../byond';
-import { AnimatedNumber, ProgressBar, Section, Button, NoticeBox, LabeledList } from '../components';
+import { act } from '../byond';
+import { AnimatedNumber, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 
 export const MechBayPowerConsole = props => {
   const { state } = props;
   const { data, config } = state;
   const { ref } = config;
+  const { recharge_port } = data;
+  const mech = recharge_port && recharge_port.mech;
+  const cell = mech && mech.cell;
   return (
     <Section
       title="Mech status"
@@ -17,42 +19,42 @@ export const MechBayPowerConsole = props => {
           onClick={() => act(ref, "reconnect")} />)}>
       <LabeledList>
         <LabeledList.Item label="Integrity">
-          {data.recharge_port ? (
-            data.recharge_port.mech ? (
-              <ProgressBar
-                ranges={{
-                  green: [0.7, 1],
-                  yellow: [0.3, 0.7],
-                  red: [0, 0.3]}}
-                value={data.recharge_port.mech.health}
-                minValue={0}
-                maxValue={data.recharge_port.mech.maxhealth} />
-            ) : (
-              <NoticeBox>No mech detected.</NoticeBox>)
-          ) : (
-            <NoticeBox>No power port detected. Please re-sync.</NoticeBox>)}
+          {!recharge_port && (
+            <NoticeBox>No power port detected. Please re-sync.</NoticeBox>
+          ) || !mech && (
+            <NoticeBox>No mech detected.</NoticeBox>
+          ) || (
+            <ProgressBar
+              ranges={{
+                good: [mech.maxhealth * 0.7, Infinity],
+                average: [mech.maxhealth * 0.3, mech.maxhealth * 0.7],
+                bad: [-Infinity, mech.maxhealth * 0.3],
+              }}
+              value={mech.health}
+              minValue={0}
+              maxValue={mech.maxhealth} />
+          )}
         </LabeledList.Item>
         <LabeledList.Item label="Power">
-          {data.recharge_port ? (
-            data.recharge_port.mech ? (
-              data.recharge_port.mech.cell ? (
-                <ProgressBar
-                  ranges={{
-                    green: [0.7, 1],
-                    yellow: [0.3, 0.7],
-                    red: [0, 0.3]}}
-                  value={data.recharge_port.mech.cell.charge}
-                  minValue={0}
-                  maxValue={data.recharge_port.mech.cell.charge}>
-                  <AnimatedNumber value={data.recharge_port.mech.cell.charge} />
-                  /{data.recharge_port.mech.cell.maxcharge}
-                </ProgressBar>
-              ) : (
-                <NoticeBox>No cell is installed.</NoticeBox>)
-            ) : (
-              <NoticeBox>No mech detected.</NoticeBox>)
-          ) : (
+          {!recharge_port && (
             <NoticeBox>No power port detected. Please re-sync.</NoticeBox>
+          ) || !mech && (
+            <NoticeBox>No mech detected.</NoticeBox>
+          ) || !cell && (
+            <NoticeBox>No cell is installed.</NoticeBox>
+          ) || (
+            <ProgressBar
+              ranges={{
+                good: [cell.maxcharge * 0.7, Infinity],
+                average: [cell.maxcharge * 0.3, cell.maxcharge * 0.7],
+                bad: [-Infinity, cell.maxcharge * 0.3],
+              }}
+              value={cell.charge}
+              minValue={0}
+              maxValue={cell.maxcharge}>
+              <AnimatedNumber value={cell.charge} />
+              {' / ' + cell.maxcharge}
+            </ProgressBar>
           )}
         </LabeledList.Item>
       </LabeledList>
