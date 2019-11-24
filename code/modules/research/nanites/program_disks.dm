@@ -130,8 +130,4 @@
 	program_type = /datum/nanite_program/pacifying
 
 /obj/item/disk/nanite_program/stun
-<<<<<<< HEAD
-	program_type = /datum/nanite_program/triggered/stun
-=======
 	program_type = /datum/nanite_program/stun
->>>>>>> cec90df582... Nanite timer rework and general code improvements (#47745)
