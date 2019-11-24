@@ -271,6 +271,12 @@
 		return
 	p_orange.link_portal(p_blue)
 	p_blue.link_portal(p_orange)
+	log_game("[src] ([REF(src)]) linked portals between [AREACOORD(p_orange)] and [AREACOORD(p_blue)]")
+
+/obj/item/gun/energy/wormhole_projector/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
+	. = ..()
+	if(.) // it fired
+		log_game("[key_name(user)] fired a [src] ([REF(src)]) in [AREACOORD(src)]")
 
 /obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/projectile/beam/wormhole/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal(target, 300, null, FALSE, null, atmos_link)
@@ -282,6 +288,7 @@
 	else
 		qdel(p_blue)
 		p_blue = P
+	log_game("[src] ([REF(src)]) created a portal at [AREACOORD(P)]")
 	crosslink()
 
 /* 3d printer 'pseudo guns' for borgs */

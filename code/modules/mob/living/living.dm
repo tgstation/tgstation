@@ -367,6 +367,7 @@
 /mob/living/stop_pulling()
 	if(ismob(pulling))
 		reset_pull_offsets(pulling)
+		log_game("[key_name(src)] stopped pulling [pulling] in [AREACOORD(src)]")
 	..()
 	update_pull_movespeed()
 	update_pull_hud_icon()
