@@ -601,7 +601,6 @@
 		M.drop_all_held_items()
 		M.Dizzy(2 * opioid_power)
 		M.Jitter(2 * opioid_power)
-		M.losebreath()
 	..()
 
 
@@ -634,7 +633,6 @@
 		M.Dizzy(2 * opioid_power)
 		M.Jitter(2 * opioid_power)
 		M.adjustOrganLoss(opioid_power,ORGAN_SLOT_HEART)
-		M.losebreath()
 	..()
 
 /datum/reagent/medicine/opioid/codeine
@@ -678,7 +676,6 @@
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle >= 18)
 		M.Sleeping(40, 0)
-		M.losebreath()
 	..()
 	
 /datum/reagent/medicine/oculine

@@ -14,7 +14,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
-	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
+	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily ,/obj/item/seeds/poppy/papaversomniferum )
 	reagents_add = list(/datum/reagent/medicine/C2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/poppy
@@ -100,6 +100,30 @@
 	desc = "A beautiful blue flower."
 	icon_state = "geranium"
 	filling_color = "#008B8B"
+
+//papaver somniferum
+/obj/item/seeds/poppy/papaversomniferum
+	name = "pack of papaver somniferum seeds"
+	desc = "These seeds grow into papaver somniferum flowers ."
+	icon_state = "seed-papaver"
+	species = "papaver"
+	plantname = "Papaver somniferum"
+	product = /obj/item/reagent_containers/food/snacks/grown/poppy/papaversomniferum
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	icon_grow = "papaver-grow"
+	icon_dead = "poppy-dead"
+	mutatelist = list()
+	reagents_add = list(/datum/reagent/medicine/opioid = 0.4, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
+	rarity = 15
+
+/obj/item/reagent_containers/food/snacks/grown/poppy/papaversomniferum
+	seed = /obj/item/seeds/poppy/papaversomniferum
+	name = "Papaver somniferum"
+	desc = "You can extract opium from this, remember that scots will kill for it"
+	icon_state = "papaversomniferum"
+	filling_color = "#E6E6FA"
+	bitesize_mod = 2
+	distill_reagent = /datum/reagent/medicine/opioid/morphine
 
 // Harebell
 /obj/item/seeds/harebell

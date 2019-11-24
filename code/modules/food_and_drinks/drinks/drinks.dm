@@ -551,6 +551,13 @@
 	list_reagents = list(/datum/reagent/consumable/grey_bull = 20)
 	foodtype = SUGAR | JUNKFOOD
 
+/obj/item/reagent_containers/food/drinks/soda_cans/go_juice
+	name = "Go Juice"
+	desc = "Pure energy! Pure POWER!"
+	icon_state = "go_juice"
+	list_reagents = list(/datum/reagent/drug/amphetamine/gojuice = 10 , /datum/reagent/consumable/sodawater = 40 )
+	foodtype = SUGAR | JUNKFOOD
+
 /obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy
 	name = "Monkey Energy"
 	desc = "Unleash the ape!"
