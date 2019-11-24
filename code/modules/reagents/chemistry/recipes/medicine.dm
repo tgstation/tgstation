@@ -227,12 +227,12 @@
 	results = list(/datum/reagent/medicine/trophazole = 4)
 	required_reagents = list(/datum/reagent/copper = 1, /datum/reagent/acetone = 2,  /datum/reagent/phosphorus = 1)
 
-/datum/chemical_reaction/granibitaluri
-	name = "Granibitaluri"
-	id = /datum/reagent/medicine/granibitaluri
-	results = list(/datum/reagent/medicine/granibitaluri = 1)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/space_cleaner/sterilizine = 1) //haha guys totally not some sort of saline reference!
-	required_temp = 373
+/datum/chemical_reaction/acetaminophen
+	name = "Acetaminophen"
+	id = /datum/reagent/medicine/acetaminophen
+	results = list(/datum/reagent/medicine/acetaminophen = 3)
+	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/phenol = 1, /datum/reagent/nitrogen = 1)
+	required_catalysts = list(/datum/reagent/iron = 5) //crude approximation of how it's actually made
 
 /datum/chemical_reaction/medsuture
 	name = "Medicated Suture"

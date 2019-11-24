@@ -196,15 +196,15 @@
 
 /obj/item/reagent_containers/glass/beaker/large/libital
 	name = "libital reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/libital = 10,/datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/C2/libital = 10,/datum/reagent/medicine/acetaminophen = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/aiuri
 	name = "aiuri reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 10, /datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 10, /datum/reagent/medicine/acetaminophen = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/multiver
 	name = "multiver reserve tank (diluted)"
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 10, /datum/reagent/medicine/granibitaluri = 40)
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 10, /datum/reagent/medicine/acetaminophen = 40)
 
 /obj/item/reagent_containers/glass/beaker/large/epinephrine
 	name = "epinephrine reserve tank (diluted)"
