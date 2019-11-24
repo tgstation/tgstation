@@ -555,8 +555,9 @@
 	name = "Go Juice"
 	desc = "Pure energy! Pure POWER!"
 	icon_state = "go_juice"
-	list_reagents = list(/datum/reagent/drug/amphetamine/gojuice = 10 , /datum/reagent/consumable/sodawater = 40 )
+	list_reagents = list(/datum/reagent/drug/amphetamine/gojuice = 30 , /datum/reagent/consumable/sodawater = 20 )
 	foodtype = SUGAR | JUNKFOOD
+	custom_premium_price = 500
 
 /obj/item/reagent_containers/food/drinks/soda_cans/monkey_energy
 	name = "Monkey Energy"
