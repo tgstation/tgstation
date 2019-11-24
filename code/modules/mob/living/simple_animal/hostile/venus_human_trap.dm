@@ -21,8 +21,7 @@
 	anchors += locate(x+2,y-2,z)
 
 	for(var/turf/T in anchors)
-		var/datum/beam/B = Beam(T, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
-		B.sleep_time = 10 //these shouldn't move, so let's slow down updates to 1 second (any slower and the deletion of the vines would be too slow)
+		Beam(T, "vine", time=INFINITY, beam_type=/obj/effect/ebeam/vine)
 	addtimer(CALLBACK(src, .proc/bear_fruit), growth_time)
 
 /obj/structure/alien/resin/flower_bud_enemy/proc/bear_fruit()
@@ -87,7 +86,7 @@
 			if(L.stat == DEAD)
 				var/datum/beam/B = grasping[L]
 				if(B)
-					B.End()
+					qdel(B)
 				grasping -= L
 
 			//Can attack+pull multiple times per cycle

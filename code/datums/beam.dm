@@ -2,79 +2,35 @@
 /datum/beam
 	var/atom/origin = null
 	var/atom/target = null
-	var/list/elements = list()
+	var/turf/origin_turf
+	var/list/elements = list() //list of beams
 	var/icon/base_icon = null
 	var/icon
 	var/icon_state = "" //icon state of the main segments of the beam
-	var/max_distance = 0
-	var/sleep_time = 3
-	var/finished = 0
-	var/target_oldloc = null
-	var/origin_oldloc = null
-	var/static_beam = 0
 	var/beam_type = /obj/effect/ebeam //must be subtype
-	var/timing_id = null
-	var/recalculating = FALSE
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_sleep_time=3)
+/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,btype = /obj/effect/ebeam)
 	origin = beam_origin
-	origin_oldloc =	get_turf(origin)
 	target = beam_target
-	target_oldloc = get_turf(target)
-	sleep_time = beam_sleep_time
-	if(origin_oldloc == origin && target_oldloc == target)
-		static_beam = 1
-	max_distance = maxdistance
+	origin_turf = get_turf(origin)
 	base_icon = new(beam_icon,beam_icon_state)
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
 	if(time < INFINITY)
-		addtimer(CALLBACK(src,.proc/End), time)
+		QDEL_IN(src, time)
 
 /datum/beam/proc/Start()
 	Draw()
-	recalculate_in(sleep_time)
+	RegisterSignal(origin, COMSIG_MOVABLE_MOVED, .proc/redrawing)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/redrawing)
 
-/datum/beam/proc/recalculate()
-	if(recalculating)
-		recalculate_in(sleep_time)
-		return
-	recalculating = TRUE
-	timing_id = null
-	if(origin && target && get_dist(origin,target)<max_distance && origin.z == target.z)
-		var/origin_turf = get_turf(origin)
-		var/target_turf = get_turf(target)
-		if(!static_beam && (origin_turf != origin_oldloc || target_turf != target_oldloc))
-			origin_oldloc = origin_turf //so we don't keep checking against their initial positions, leading to endless Reset()+Draw() calls
-			target_oldloc = target_turf
-			Reset()
-			Draw()
-		after_calculate()
-		recalculating = FALSE
-	else
-		End()
+/datum/beam/proc/redrawing(atom/movable/mover, atom/oldloc, direction)
+	Reset()
+	Draw()
 
 /datum/beam/proc/afterDraw()
 	return
-
-/datum/beam/proc/recalculate_in(time)
-	if(timing_id)
-		deltimer(timing_id)
-	timing_id = addtimer(CALLBACK(src, .proc/recalculate), time, TIMER_STOPPABLE)
-
-/datum/beam/proc/after_calculate()
-	if((sleep_time == null) || finished)	//Does not automatically recalculate.
-		return
-	if(isnull(timing_id))
-		timing_id = addtimer(CALLBACK(src, .proc/recalculate), sleep_time, TIMER_STOPPABLE)
-
-/datum/beam/proc/End(destroy_self = TRUE)
-	finished = TRUE
-	if(!isnull(timing_id))
-		deltimer(timing_id)
-	if(!QDELETED(src) && destroy_self)
-		qdel(src)
 
 /datum/beam/proc/Reset()
 	for(var/obj/effect/ebeam/B in elements)
@@ -83,6 +39,8 @@
 
 /datum/beam/Destroy()
 	Reset()
+	UnregisterSignal(origin, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 	target = null
 	origin = null
 	return ..()
@@ -99,9 +57,9 @@
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
-		if(QDELETED(src) || finished)
+		if(QDELETED(src))
 			break
-		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
+		var/obj/effect/ebeam/X = new beam_type(origin_turf)
 		X.owner = src
 		elements += X
 
@@ -157,7 +115,7 @@
 /obj/effect/ebeam/singularity_act()
 	return
 
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time)
+/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50,beam_type=/obj/effect/ebeam)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,beam_type)
 	INVOKE_ASYNC(newbeam, /datum/beam/.proc/Start)
 	return newbeam
