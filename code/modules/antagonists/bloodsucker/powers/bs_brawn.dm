@@ -134,7 +134,7 @@
 	var/mob/living/carbon/user_C = owner
 	//message_admins("DEBUG3: attempt_cast() [name] / [user_C.handcuffed] ")
 	if(user_C.handcuffed)
-		var/obj/O = user_C.get_item_by_slot(SLOT_HANDCUFFED)
+		var/obj/O = user_C.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 		if(istype(O))
 			//user_C.visible_message("<span class='warning'>[user_C] attempts to remove [O]!</span>", \
 			//					 "<span class='warning'>You snap [O] like it's nothing!</span>")
@@ -146,7 +146,7 @@
 	if (ishuman(owner))
 		var/mob/living/carbon/human/user_H = owner
 		if(user_H.wear_suit && user_H.wear_suit.breakouttime)
-			var/obj/item/clothing/suit/S = user_H.get_item_by_slot(SLOT_WEAR_SUIT)
+			var/obj/item/clothing/suit/S = user_H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
 			if(istype(S))
 				user_C.visible_message("<span class='warning'>[user_C] attempts to remove [S]!</span>", \
 						 			"<span class='warning'>You rip through [S] like it's nothing!</span>")
@@ -156,7 +156,7 @@
 
 	// Destroy Leg Cuffs
 	if(user_C.legcuffed)
-		var/obj/O = user_C.get_item_by_slot(SLOT_LEGCUFFED)
+		var/obj/O = user_C.get_item_by_slot(ITEM_SLOT_LEGCUFFED)
 		if(istype(O))
 			//user_C.visible_message("<span class='warning'>[user_C] attempts to remove [O]!</span>", \
 			//					 "<span class='warning'>You snap [O] like it's nothing!</span>")
