@@ -18,12 +18,13 @@
 	var/player_mp = 10
 	var/ticket_count = 0
 	var/heads_up = "Nanotrasen says, winners make us money."//Shows the active display text for the app
+	var/boss_name = "Cuban Pete's Minion"
 	var/boss_id = 1
 
 /datum/computer_file/program/arcade/proc/game_check(mob/user)
 	sleep(5)
 	if(boss_hp <= 0)
-		heads_up = "You have crushed the forces of evil! Rejoice!"
+		heads_up = "You have crushed [boss_name]! Rejoice!"
 		playsound(computer.loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		game_active = 0
 		program_icon_state = "arcade_off"
@@ -47,7 +48,7 @@
 	var/boss_attackamt = 0 //Spam protection from boss attacks as well.
 	var/boss_mpamt = 0
 	var/bossheal = 0
-	if(pause_state == FALSE)
+	if(pause_state == TRUE)
 		boss_attackamt = rand(3,6)
 		boss_mpamt = rand (2,4)
 		bossheal = rand (4,6)
@@ -58,37 +59,42 @@
 		playsound(computer.loc, 'sound/arcade/steal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		player_mp -= boss_mpamt
 		boss_mp += boss_mpamt
+		pause_state = FALSE
 		game_check()
 		return
 	else if(boss_mp > 5 && boss_hp <12)
-		heads_up = "The evil guy heals for [bossheal] health!"
+		heads_up = "[boss_name] heals for [bossheal] health!"
 		playsound(computer.loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		boss_hp += bossheal
 		boss_mp -= boss_mpamt
+		pause_state = FALSE
 		game_check()
 		return
 	else
-		heads_up = "The vile force slams you for [boss_attackamt]!"
+		heads_up = "[boss_name] slams you for [boss_attackamt]!"
 		playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		player_hp -= boss_attackamt
+		pause_state = FALSE
 		game_check()
 		return
 	return
 
-/datum/computer_file/program/arcade/ui_data(mob/user)
-	var/list/data = get_header_data()
+/datum/computer_file/program/arcade/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
+	. = ..()
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/arcade)
 	assets.send(user)
+
+/datum/computer_file/program/arcade/ui_data(mob/user)
+	var/list/data = get_header_data()
 
 	data["Hitpoints"] = boss_hp
 	data["PlayerHitpoints"] = player_hp
 	data["PlayerMP"] = player_mp
 	data["TicketCount"] = ticket_count
-	data["Name"] = "[user.name] the guy"
 	data["GameActive"] = game_active
 	data["PauseState"] = pause_state
 	data["Status"] = heads_up
-	data["BossID"] = "boss[boss_id]"
+	data["BossID"] = "boss[boss_id].gif"
 	return data
 
 /datum/computer_file/program/arcade/ui_act(action, params, mob/user)
@@ -109,7 +115,6 @@
 			boss_hp -= attackamt
 			sleep(10)
 			game_check()
-			pause_state = FALSE
 			enemy_check()
 			return TRUE
 		if("Heal")
@@ -125,7 +130,6 @@
 			player_mp -= healcost
 			sleep(10)
 			game_check()
-			pause_state = FALSE
 			enemy_check()
 			return TRUE
 		if("Recharge_Power")
@@ -138,7 +142,6 @@
 			player_mp += rechargeamt
 			sleep(10)
 			game_check()
-			pause_state = FALSE
 			enemy_check()
 			return TRUE
 		if("Dispense_Tickets")
@@ -163,8 +166,9 @@
 			boss_hp = 45
 			player_hp = 30
 			player_mp = 10
-			heads_up = "GAME START"
+			heads_up = "You stand before [boss_name]! Prepare for battle!"
 			program_icon_state = "arcade"
-			boss_id = rand(1,3)
+			boss_id = rand(1,5)
+			pause_state = FALSE
 			if(istype(computer))
 				computer.update_icon()
