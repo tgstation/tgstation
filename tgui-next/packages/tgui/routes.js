@@ -56,6 +56,7 @@ import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
+import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
 import { Holodeck } from './interfaces/Holodeck';
@@ -313,6 +314,10 @@ const ROUTES = {
   turbine_computer: {
     component: () => TurbineComputer,
     scrollable: false,
+  },
+  uplink: {
+    component: () => Uplink,
+    scrollable: true,
   },
   vault_controller: {
     component: () => VaultController,
