@@ -76,7 +76,7 @@
 	material_drop = /obj/item/stack/sheet/plasteel
 #undef SNAKE_SPAM_TICKS
 
-/obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
+/obj/structure/closet/cardboard/metal/relaymove(mob/living/user, direction)
 	if(!istype(user) || opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
 		return
 	move_delay = TRUE
