@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Reattached limbs will no longer take on the appearance of the new owner. Better keep an eye on the surgeon."

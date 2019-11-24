@@ -110,7 +110,6 @@ const getKeyData = e => {
  * in game while the browser window is focused.
  */
 const handlePassthrough = (e, eventType) => {
-  const { keyCode, keyString, ctrlKey, shiftKey } = getKeyData(e);
   if (e.defaultPrevented) {
     return;
   }
@@ -118,6 +117,8 @@ const handlePassthrough = (e, eventType) => {
   if (targetName === 'input' || targetName === 'textarea') {
     return;
   }
+  const keyData = getKeyData(e);
+  const { keyCode, ctrlKey, shiftKey } = keyData;
   // NOTE: We pass through only Alt of all modifier keys, because Alt
   // modifier (for toggling run/walk) is implemented very shittily
   // in our codebase. We pass no other modifier keys, because they can
@@ -127,11 +128,11 @@ const handlePassthrough = (e, eventType) => {
   }
   // Send this keypress to BYOND
   if (eventType === 'keydown' && !keyState[keyCode]) {
-    logger.debug('passthrough', [eventType, keyString], getKeyData(e));
+    logger.debug('passthrough', eventType, keyData);
     return callByond('', { __keydown: keyCode });
   }
   if (eventType === 'keyup' && keyState[keyCode]) {
-    logger.debug('passthrough', [eventType, keyString], getKeyData(e));
+    logger.debug('passthrough', eventType, keyData);
     return callByond('', { __keyup: keyCode });
   }
 };

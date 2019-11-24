@@ -38,7 +38,6 @@
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
 		assets.send(user)
 		ui = new(user, src, ui_key, "ntos_main", "NtOS Main menu", 400, 500, master_ui, state)
-		ui.set_style("ntos")
 		ui.open()
 		ui.set_autoupdate(state = 1)
 
