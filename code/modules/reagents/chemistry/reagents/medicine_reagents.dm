@@ -532,7 +532,7 @@
 	var/opioid_power = 0.25
 
 /datum/reagent/medicine/opioid/on_mob_life(mob/living/carbon/M)
-	var/opioid_effect_rate = (opioid_power * volume)/3
+	var/opioid_effect_rate = opioid_power * volume
 	
 	if(current_cycle >= 5 / opioid_effect_rate)
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name)
