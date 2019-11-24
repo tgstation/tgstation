@@ -78,11 +78,27 @@
 
 /datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.say("APOTHEOSIS!!", forced="plasma fist")
+	A.set_species(/datum/species/plasmaman)
+	A.dna.species.species_traits += TRAIT_BOMBIMMUNE //hey you get something out of it
+	A.unequip_everything()
+	A.underwear = "Nude"
+	A.undershirt = "Nude"
+	A.socks = "Nude"
+	A.update_body()
 	var/turf/boomspot = get_turf(A)
+
+	A.apply_damage(rand(50,70), BRUTE)
+	A.Stun(6 SECONDS) //stops them from comboing apotheosis twice (lol)
+	addtimer(CALLBACK(src,.proc/Apotheosis_end, A), 6 SECONDS)
 	playsound(boomspot, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 	explosion(boomspot,plasma_power,plasma_power*2,plasma_power*4,ignorecap = TRUE)
 	log_combat(A, A, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
 
+/datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/carbon/human/dying)
+	if(dying.stat == DEAD)
+		return
+	to_chat(dying, "<span class='userdanger'>Your body gives in.</span>")
+	dying.death()
 
 /datum/martial_art/plasma_fist/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)
