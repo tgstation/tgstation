@@ -136,22 +136,24 @@
 	..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1)
+	var/ratio = can_shoot() ? CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1) : 0
+				// Sets the ratio to 0 if the gun doesn't have enough charge to fire, or if it's power cell is removed.
+				// TG issues #5361 & #47908
 	if(ratio == old_ratio && !force_update)
 		return
 	old_ratio = ratio
 	cut_overlays()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
 	var/itemState = null
 	if(!initial(item_state))
 		itemState = icon_state
 	if (modifystate)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		add_overlay("[icon_state]_[shot.select_name]")
 		iconState += "_[shot.select_name]"
 		if(itemState)
 			itemState += "[shot.select_name]"
-	if(cell.charge < shot.e_cost)
+	if(ratio == 0)
 		add_overlay("[icon_state]_empty")
 	else
 		if(!shaded_charge)
