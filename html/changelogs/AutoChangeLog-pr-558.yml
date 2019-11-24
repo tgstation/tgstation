@@ -1,5 +1,0 @@
-author: "Skillby"
-delete-after: True
-changes: 
-  - rscadd: "Medical Skill: Improves the amount healed per suture/mesh as well as increases surgery speed."
-  - balance: "advanced surgeries provide more XP"
