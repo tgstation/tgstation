@@ -474,7 +474,7 @@ rules:
 
   ## ES6
   ## ----------------------------------------
-	## Require braces around arrow function bodies
+  ## Require braces around arrow function bodies
   # arrow-body-style: error
   ## Require parentheses around arrow function arguments
   arrow-parens: [error, as-needed]
