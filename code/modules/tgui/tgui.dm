@@ -221,8 +221,10 @@
 		"interface" = interface,
 		"fancy" = user.client.prefs.tgui_fancy,
 		"locked" = user.client.prefs.tgui_lock && !custom_browser_id,
+		"observer" = isobserver(user),
 		"window" = window_id,
-		// Intentional \ref usage; tgui datums can't/shouldn't be tagged so this is an effective unwrap
+		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+		// be tagged, so this is an effective unwrap
 		"ref" = "\ref[src]"
 	)
 	
@@ -335,7 +337,6 @@
 	var/status = src_object.ui_status(user, state)
 	if(master_ui)
 		status = min(status, master_ui.status)
-
 	set_status(status, push)
 	if(status == UI_CLOSE)
 		close()

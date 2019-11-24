@@ -1,8 +1,8 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section} from '../components';
+import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 
-export const SMES = props => {
+export const Smes = props => {
   const { state } = props;
   const { config, data } = state;
   const { ref } = config;
@@ -52,7 +52,11 @@ export const SMES = props => {
               </Button>
             }>
             <Box color={inputState}>
-              {data.capacityPercent >= 100 ? "Fully Charged" : data.inputting ? "Charging" : "Not Charging"}
+              {data.capacityPercent >= 100
+                ? 'Fully Charged'
+                : data.inputting
+                  ? 'Charging'
+                  : 'Not Charging'}
             </Box>
           </LabeledList.Item>
           <LabeledList.Item label="Target Input">
@@ -96,7 +100,11 @@ export const SMES = props => {
               </Button>
             }>
             <Box color={outputState}>
-              {data.outputting ? "Sending" : data.charge > 0 ? "Not Sending" : "No Charge"}
+              {data.outputting
+                ? 'Sending'
+                : data.charge > 0
+                  ? 'Not Sending'
+                  : 'No Charge'}
             </Box>
           </LabeledList.Item>
           <LabeledList.Item label="Target Output">

@@ -10,8 +10,20 @@
   text-align: right;
 }
 
+.text-baseline {
+  text-align: baseline;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
 .text-nowrap {
   white-space: nowrap;
+}
+
+.text-pre {
+  white-space: pre;
 }
 
 .text-bold {
@@ -20,4 +32,8 @@
 
 .text-italic {
   font-style: italic;
+}
+
+.text-underline {
+  text-decoration: underline;
 }
