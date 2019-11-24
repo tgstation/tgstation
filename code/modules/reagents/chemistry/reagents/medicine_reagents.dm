@@ -523,7 +523,7 @@
 //Opioids!
 /datum/reagent/medicine/opioid
 	name = "Opium"
-	description = "whitish unrefined substance, has a painkilling and sleep inducing effect"
+	description = "A whitish unrefined substance, has a painkilling and sleep inducing effect."
 	reagent_state = LIQUID
 	color = "#A9FBFB"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -580,7 +580,7 @@
 
 /datum/reagent/medicine/opioid/morphine
 	name = "Morphine"
-	description = "A painkiller that allows the patient to move at full speed even in bulky objects. Extracted from poppies .Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
+	description = "A painkiller extracted from poppies that allows the patient to move at full speed even in bulky objects. Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
 	reagent_state = LIQUID
 	color = "#A9FBFB"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -606,7 +606,7 @@
 
 /datum/reagent/medicine/opioid/dimorphine
 	name = "Dimorphine"
-	description = "Opioid commonly known as heroin. Was created as a replacment for morphine, a lot more addictive but also able to be synthesized in labs. Overdose effects are harsher than morphine"
+	description = "Synthetic morphine, also known as heroin. Far more addictive and dangerous than morphine, but easier to synthesize in a lab."
 	reagent_state = LIQUID
 	color = "#A9FBFB"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
@@ -637,7 +637,7 @@
 
 /datum/reagent/medicine/opioid/codeine
 	name = "Codeine"
-	description = "Weak opioid commonly used to treat minor discomforts, can be addicting. It's overdose effects are not as deadly as other drugs. It is very hard to overdose"
+	description = "Weak opioid commonly used to treat minor discomforts, can be addictive. Difficult to overdose on, with less dangerous effects than other opioids.."
 	reagent_state = LIQUID
 	color = "#A9FBFB"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
@@ -654,7 +654,7 @@
 
 /datum/reagent/medicine/opioid/fentanyl
 	name = "Fentanyl"
-	description = "An extremely powerful opioid , be careful when using it! When overdosed it causes toxin damage, "
+	description = "An extremely powerful opioid, be careful when using it! When overdosed causes a plethora of extremely dangerous side effects."
 	reagent_state = LIQUID
 	color = "#64916E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -662,7 +662,7 @@
 	addiction_threshold = 4
 	opioid_power = 56.25 // fentanyl is 75 * morphine, so 75 * 7.5 = 56.25
 
-/datum/reagent/medicine/opioid/dimorphine/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/opioid/fentanyl/on_mob_life(mob/living/carbon/M)
 	if(volume < overdose_threshold)
 		..()
 	else 

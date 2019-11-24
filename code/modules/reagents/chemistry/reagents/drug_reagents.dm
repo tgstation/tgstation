@@ -167,7 +167,7 @@
 //Amphetaminates!
 /datum/reagent/drug/amphetamine
 	name = "Amphetamine"
-	description = "Drug used to treat certain neurotical conditions, less dangerous than methampphetamine , but also less potent. Metabolizes slower than other "
+	description = "Drug used to treat certain neurological conditions, less dangerous than methamphetamine , but also less potent. Metabolizes slower than other amphetamines."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 40
@@ -265,7 +265,7 @@
 
 /datum/reagent/drug/amphetamine/adderal
 	name = "Adderal"
-	description = "Weak Amphetaminate, when applied in low doses it increases point creation in scientists, higher doeses lead to addiction , brain damage and general organ failure"
+	description = "Weak Amphetamine, low doses increase focus and efficiency, high doses result in addiction, brain damage, and organ failure."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 40
@@ -276,7 +276,7 @@
 
 /datum/reagent/drug/amphetamine/gojuice
 	name = "Go Juice"
-	description = "Fizzy and sweet juice. Commercially promoted to every security force. Isnt considered a drug under space law , even tho it is jam filled with amphetamines. Extremely addictive"
+	description = "Fizzy and sweet juice. Commercially promoted to every security force. Is not considered a drug under space law , even though it is jam filled with amphetamines. Extremely addictive."
 	reagent_state = LIQUID
 	color = "#829929"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
@@ -525,5 +525,4 @@
 	if(prob(15))
 		M.adjustToxLoss(2, 0)
 	..()
-
 

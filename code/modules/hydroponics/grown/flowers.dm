@@ -104,7 +104,7 @@
 //papaver somniferum
 /obj/item/seeds/poppy/papaversomniferum
 	name = "pack of papaver somniferum seeds"
-	desc = "These seeds grow into papaver somniferum flowers ."
+	desc = "These seeds grow into papaver somniferum flowers."
 	icon_state = "seed-papaver"
 	species = "papaver"
 	plantname = "Papaver somniferum"
@@ -119,7 +119,7 @@
 /obj/item/reagent_containers/food/snacks/grown/poppy/papaversomniferum
 	seed = /obj/item/seeds/poppy/papaversomniferum
 	name = "Papaver somniferum"
-	desc = "You can extract opium from this, remember that scots will kill for it"
+	desc = "You can extract opium from this, remember that Scots will kill for it."
 	icon_state = "papaversomniferum"
 	filling_color = "#E6E6FA"
 	bitesize_mod = 2
