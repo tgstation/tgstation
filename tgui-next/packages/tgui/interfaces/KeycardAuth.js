@@ -1,12 +1,11 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section, Tabs } from '../components';
+import { Box, Button, Section } from '../components';
 
 export const KeycardAuth = props => {
   const { state } = props;
   const { config, data } = state;
   const { ref } = config;
-
   return (
     <Section>
       <Box>
@@ -16,7 +15,7 @@ export const KeycardAuth = props => {
       </Box>
       <Box>
         {data.waiting === 0 && (
-          <Fragment>  
+          <Fragment>
             {!!data.auth_required && (
               <Button
                 icon="check-square"

@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, LabeledList, Section, Icon } from '../components';
+import { Button, Icon, LabeledList, Section } from '../components';
 
 export const ImplantChair = props => {
   const { state } = props;
