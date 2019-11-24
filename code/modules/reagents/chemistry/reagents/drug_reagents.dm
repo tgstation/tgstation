@@ -178,10 +178,12 @@
 
 /datum/reagent/drug/amphetamine/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=101, multiplicative_slowdown=-amphetamine_power, blacklisted_movetypes=(FLYING|FLOATING))
+	if(volume * amphetamine_power  > 27)
+		L.add_movespeed_modifier(type, update=TRUE, priority=101, multiplicative_slowdown=-amphetamine_power, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/drug/amphetamine/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(type)
+	if(type)
+		L.remove_movespeed_modifier(type)
 	..()
 
 /datum/reagent/drug/amphetamine/on_mob_life(mob/living/carbon/M)
@@ -254,7 +256,7 @@
 
 /datum/reagent/drug/amphetamine/methamphetamine
 	name = "Methamphetamine"
-	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
+	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage."
 	reagent_state = LIQUID
 	color = "#FAFAFA"
 	overdose_threshold = 20
@@ -280,14 +282,26 @@
 	reagent_state = LIQUID
 	color = "#829929"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
-	overdose_threshold = 10
-	addiction_threshold = 5
+	overdose_threshold = 5
+	addiction_threshold = 2.5
 	amphetamine_power = 6
 	modifier = 0
 
-/datum/reagent/drug/amphetamine/gojuice/overdose_process(mob/living/M)
+/datum/reagent/drug/amphetamine/gojuice/on_mob_life(mob/living/M)
 	if(prob(25))
-		M.adjustOrganLoss(ORGAN_SLOT_HEART, pick(1, 1.2, 1.4, 1.6, 1.8, 2))
+		M.adjustOrganLoss(ORGAN_SLOT_HEART, pick(0.2, 0.4, 0.6, 0.8, 0.9, 1))
+
+/datum/reagent/drug/amphetamine/gojuice/overdose_process(mob/living/M)
+	if(prob(33))	
+		M.adjustOrganLoss(ORGAN_SLOT_HEART, pick(2, 2.4, 2.8, 3.2, 3.6, 4))
+	if(prob(33))	
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, pick(2, 2.4, 2.8, 3.2, 3.6, 4))
+	if(prob(33))	
+		M.adjustOrganLoss(ORGAN_SLOT_LUNGS, pick(2, 2.4, 2.8, 3.2, 3.6, 4))
+	M.Jitter(10)
+	M.Dizzy(10)
+	
+		
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"

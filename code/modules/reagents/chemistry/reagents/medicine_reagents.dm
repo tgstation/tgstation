@@ -532,16 +532,18 @@
 	var/opioid_power = 0.25
 
 /datum/reagent/medicine/opioid/on_mob_life(mob/living/carbon/M)
-	var/opioid_effect_rate = opioid_power * volume
+	var/opioid_effect_rate = (opioid_power * volume)/3
+	
 	if(current_cycle >= 5 / opioid_effect_rate)
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name)
 	switch(current_cycle)
 		if(0 to 26 / opioid_effect_rate )
 			to_chat(M, "<span class='warning'>You start to feel tired...</span>" )
-		if(27 / opioid_effect_rate to 53 / opioid_effect_rate)
-			M.drowsyness += 1 * opioid_effect_rate
+		if(27 / opioid_effect_rate to 53 / opioid_power)
+			M.drowsyness += opioid_power
+			to_chat(M, "<span class='warning'>Everything becomes cloudy...</span>" )
 		if(54 / opioid_effect_rate to INFINITY)
-			M.Sleeping(40 * opioid_effect_rate, 0)
+			M.Sleeping(opioid_effect_rate, 0)
 			. = 1
 	..()
 
@@ -654,19 +656,17 @@
 
 /datum/reagent/medicine/opioid/fentanyl
 	name = "Fentanyl"
-	description = "An extremely powerful opioid, be careful when using it! When overdosed causes a plethora of extremely dangerous side effects."
+	description = "An extremely powerful opioid, be careful when using it! When overdosed causes a plethora of extremely dangerous side effects. It passes blood brain barrier extremely quickly"
 	reagent_state = LIQUID
 	color = "#64916E"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 2 * REAGENTS_METABOLISM // fast
 	overdose_threshold = 5
 	addiction_threshold = 4
-	opioid_power = 56.25 // fentanyl is 75 * morphine, so 75 * 7.5 = 56.25
+	opioid_power = 55 // fentanyl is 75 * morphine, so 75 * 7.5 = 56.25 so i rounded it to 55 for ease 
 
-/datum/reagent/medicine/opioid/fentanyl/on_mob_life(mob/living/carbon/M)
-	if(volume < overdose_threshold)
-		..()
-	else 
-		return
+datum/reagent/medicine/opioid/fentanyl/on_mob_life(mob/living/carbon/M)
+	..()
+	
 
 /datum/reagent/medicine/opioid/fentanyl/overdose_process(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM, 150)
@@ -674,8 +674,6 @@
 		M.adjustToxLoss(1*REM, 0)
 	if(current_cycle >= 4)
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
-	if(current_cycle >= 18)
-		M.Sleeping(40, 0)
 	..()
 	
 /datum/reagent/medicine/oculine
