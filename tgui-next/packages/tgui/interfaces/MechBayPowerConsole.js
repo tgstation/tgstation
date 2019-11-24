@@ -16,7 +16,8 @@ export const MechBayPowerConsole = props => {
         <Button
           icon="sync"
           content="Sync"
-          onClick={() => act(ref, "reconnect")} />)}>
+          onClick={() => act(ref, "reconnect")} />
+      )}>
       <LabeledList>
         <LabeledList.Item label="Integrity">
           {!recharge_port && (
@@ -25,14 +26,12 @@ export const MechBayPowerConsole = props => {
             <NoticeBox>No mech detected.</NoticeBox>
           ) || (
             <ProgressBar
+              value={mech.health / mech.maxhealth}
               ranges={{
-                good: [mech.maxhealth * 0.7, Infinity],
-                average: [mech.maxhealth * 0.3, mech.maxhealth * 0.7],
-                bad: [-Infinity, mech.maxhealth * 0.3],
-              }}
-              value={mech.health}
-              minValue={0}
-              maxValue={mech.maxhealth} />
+                good: [0.7, Infinity],
+                average: [0.3, 0.7],
+                bad: [-Infinity, 0.3],
+              }} />
           )}
         </LabeledList.Item>
         <LabeledList.Item label="Power">
@@ -44,14 +43,12 @@ export const MechBayPowerConsole = props => {
             <NoticeBox>No cell is installed.</NoticeBox>
           ) || (
             <ProgressBar
+              value={cell.charge / cell.maxcharge}
               ranges={{
-                good: [cell.maxcharge * 0.7, Infinity],
-                average: [cell.maxcharge * 0.3, cell.maxcharge * 0.7],
-                bad: [-Infinity, cell.maxcharge * 0.3],
-              }}
-              value={cell.charge}
-              minValue={0}
-              maxValue={cell.maxcharge}>
+                good: [0.7, Infinity],
+                average: [0.3, 0.7],
+                bad: [-Infinity, 0.3],
+              }}>
               <AnimatedNumber value={cell.charge} />
               {' / ' + cell.maxcharge}
             </ProgressBar>
