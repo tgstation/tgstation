@@ -15,7 +15,7 @@
 		"<span class='notice'>[user] begins to alter [target]'s appearance.</span>",
 		"<span class='notice'>[user] begins to make an incision in [target]'s face.</span>")
 
-/datum/surgery_step/reshape_face/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/reshape_face/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(HAS_TRAIT_FROM(target, TRAIT_DISFIGURED, TRAIT_GENERIC))
 		REMOVE_TRAIT(target, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		display_results(user, target, "<span class='notice'>You successfully restore [target]'s appearance.</span>",
@@ -42,7 +42,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.sec_hud_set_ID()
-	return TRUE
+	return ..(default_display_results = FALSE)
 
 /datum/surgery_step/reshape_face/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='warning'>You screw up, leaving [target]'s appearance disfigured!</span>",

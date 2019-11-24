@@ -37346,7 +37346,7 @@
 /area/maintenance/starboard)
 "bTY" = (
 /obj/machinery/power/apc{
-	areastring = "/area/medical/patients_rooms/room_a";
+	areastring = "/area/medical/surgery/room_b";
 	dir = 4;
 	name = "Surgery B APC";
 	pixel_x = 24

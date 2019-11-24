@@ -191,7 +191,7 @@
 
 /datum/outfit/contractor_partner/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
-	var/obj/item/clothing/mask/cigarette/syndicate/cig = H.get_item_by_slot(SLOT_WEAR_MASK)
+	var/obj/item/clothing/mask/cigarette/syndicate/cig = H.get_item_by_slot(ITEM_SLOT_MASK)
 
 	// pre-light their cig
 	cig.light()

@@ -390,7 +390,6 @@
 
 	if(client && stat == CONSCIOUS && parrot_state != icon_living)
 		icon_state = icon_living
-		//Because the most appropriate place to set icon_state is movement_delay(), clearly
 
 //-----SLEEPING
 	if(parrot_state == PARROT_PERCH)

@@ -402,7 +402,7 @@
 	var/repair_rate = 0
 
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
-	if(istype(O, /obj/item/organ) || istype (O, /obj/item/bodypart))
+	if(isorgan(O) || isbodypart(O))
 		return TRUE
 	return FALSE
 
@@ -410,8 +410,9 @@
 	. = ..()
 	if(!.)	//if the item loads, clear can_decompose
 		return
-	var/obj/item/organ/organ = O
-	organ.organ_flags |= ORGAN_FROZEN
+	if(isorgan(O))
+		var/obj/item/organ/organ = O
+		organ.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)

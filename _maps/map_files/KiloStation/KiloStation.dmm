@@ -15140,8 +15140,8 @@
 "axm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
-	name = "Teleport Access";
-	req_access_txt = "17;19"
+	name = "Teleporter Access";
+	req_one_access_txt = "17;19"
 	},
 /turf/open/floor/plasteel/dark,
 /area/teleporter)
@@ -42746,7 +42746,7 @@
 "bkW" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "teleshutter";
-	name = "Teleport Access Shutter"
+	name = "Teleporter Access Shutter"
 	},
 /obj/effect/turf_decal/caution/stand_clear,
 /turf/open/floor/plasteel/dark,
@@ -62442,7 +62442,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/command{
-	name = "Teleport Access";
+	name = "Teleporter Access";
 	req_one_access_txt = "17;19"
 	},
 /turf/open/floor/plasteel/dark,
@@ -63302,7 +63302,7 @@
 "bOZ" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "command maintenance";
-	req_access_txt = "17;19"
+	req_one_access_txt = "17;19"
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,

@@ -1,4 +1,4 @@
-import { map } from 'common/fp';
+import { map } from 'common/collections';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { AnimatedNumber, Box, Button, LabeledList, Section, Tabs } from '../components';

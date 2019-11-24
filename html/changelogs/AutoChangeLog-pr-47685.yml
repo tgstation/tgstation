@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - rscadd: "Added generic living mob HUD, which contains health and pull indicators."
+  - rscadd: "Added pull indicator for Revenant, Lavaland Elite, Slime and Guardian."
