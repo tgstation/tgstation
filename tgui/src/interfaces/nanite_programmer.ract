@@ -28,9 +28,12 @@
       </ui-section>
 
       <ui-section label='Settings'>
-        <ui-button icon='pencil' action='set_activation_delay'></ui-button> Activation Delay: {{data.activation_delay}} <br>
-        <ui-button icon='pencil' action='set_timer'></ui-button> Timer: {{data.timer}} <br>
-        <ui-button icon='pencil' action='set_timer_type'></ui-button> Timer Type: {{data.timer_type}} <br>
+        <ui-button icon='pencil' action='set_restart_timer'></ui-button> Restart Timer: {{data.timer_restart}} seconds<br>
+        <ui-button icon='pencil' action='set_shutdown_timer'></ui-button> Shutdown Timer: {{data.timer_shutdown}} seconds<br>
+        {{#if data.can_trigger}}
+          <ui-button icon='pencil' action='set_trigger_timer'></ui-button> Trigger Repeat Timer: {{data.timer_trigger}} seconds<br>
+          <ui-button icon='pencil' action='set_timer_trigger_delay'></ui-button> Trigger Delay: {{data.timer_trigger_delay}} seconds<br>
+        {{/if}}
       </ui-section>
 
       <ui-section label='Codes'>
