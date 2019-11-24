@@ -24,6 +24,7 @@
 	ammo_x_offset = 3
 	ammo_y_offset = 3
 	modifystate = FALSE
+	charge_sections = 1
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
@@ -69,9 +70,6 @@
 	var/zooming_angle
 	var/current_zoom_x = 0
 	var/current_zoom_y = 0
-
-	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
-	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
 
 	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
 	var/mob/listeningTo
@@ -147,14 +145,6 @@
 	zooming_angle = 0
 	current_zoom_x = 0
 	current_zoom_y = 0
-
-/obj/item/gun/energy/beam_rifle/update_icon()
-	cut_overlays()
-	var/obj/item/ammo_casing/energy/primary_ammo = ammo_type[1]
-	if(!QDELETED(cell) && (cell.charge >= primary_ammo.e_cost))
-		add_overlay(charged_overlay)
-	else
-		add_overlay(drained_overlay)
 
 /obj/item/gun/energy/beam_rifle/attack_self(mob/user)
 	projectile_setting_pierce = !projectile_setting_pierce
