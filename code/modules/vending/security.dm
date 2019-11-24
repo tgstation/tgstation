@@ -14,12 +14,13 @@
 					/obj/item/flashlight/seclite = 4,
 					/obj/item/restraints/legcuffs/bola/energy = 7)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,
-					  /obj/item/storage/fancy/donut_box = 2)
+					  /obj/item/storage/fancy/donut_box = 2,
+					  /obj/item/reagent_containers/food/drinks/soda_cans/go_juice = 2)
 	premium = list(/obj/item/storage/belt/security/webbing = 5,
 				   /obj/item/coin/antagtoken = 1,
 				   /obj/item/clothing/head/helmet/blueshirt = 1,
-				   /obj/item/clothing/suit/armor/vest/blueshirt = 1,
-				   /obj/item/reagent_containers/food/drinks/soda_cans/go_juice = 2)
+				   /obj/item/clothing/suit/armor/vest/blueshirt = 1
+				   )
 	refill_canister = /obj/item/vending_refill/security
 	default_price = 100
 	extra_price = 150
