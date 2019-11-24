@@ -27,50 +27,55 @@
 						{{#if can_trigger}}
 							<ui-section label='Trigger Cost'>{{trigger_cost}}</ui-section>
 							<ui-section label='Trigger Cooldown'>{{trigger_cooldown}} seconds</ui-section>
+              {{#if timer_trigger_delay}}
+                <ui-section label='Trigger Delay'>{{timer_trigger_delay}} seconds</ui-section>
+              {{/if}}
+              {{#if timer_trigger}}
+                <ui-section label='Trigger Repeat Timer'>{{timer_trigger}} seconds</ui-section>
+              {{/if}}
 						{{/if}}
-						{{#if data.scan_level >= 3}}
-							{{#if activation_delay}}
-								<ui-section label='Activation Delay'>{{activation_delay}}</ui-section>
-							{{/if}}
-							{{#if timer}}
-								<ui-section label='Timer'>{{timer}}</ui-section>
-								<ui-section label='Timer Type'>{{timer_type}}</ui-section>
-							{{/if}}
-							{{#if has_extra_settings}}
-								{{#each extra_settings}}
-								  <ui-section label='{{name}}'>{{value}}</ui-section>
-								{{/each}}
-                {{#if has_rules}}
-                  <ui-section label='Rules'>
-                    {{#each rules}}
-                      {{display}} <br>
-                    {{/each}}
-                  </ui-section>
-                {{/if}}
-							{{/if}}
-							{{#if data.scan_level >= 4}}
-								{{#if activation_code}}
-									<ui-section label='Activation Code'>{{activation_code}}</ui-section>
-								{{/if}}
-								{{#if deactivation_code}}
-									<ui-section label='Deactivation Code'>{{deactivation_code}}</ui-section>
-								{{/if}}
-								{{#if kill_code}}
-									<ui-section label='Kill Code'>{{kill_code}}</ui-section>
-								{{/if}}
-								{{#if trigger_code}}
-									<ui-section label='Trigger Code'>{{trigger_code}}</ui-section>
-								{{/if}}
-								{{#if has_rules}}
-									<ui-section label='Rules'>
-										{{#each rules}}
-											{{display}}<br>
-										{{/each}}
-									</ui-section>
-								{{/if}}
-							{{/if}}
+						{{#if timer_restart}}
+							<ui-section label='Restart Timer'>{{timer_restart}} seconds</ui-section>
+            {{/if}}
+            {{#if timer_shutdown}}
+							<ui-section label='Shutdown Timer'>{{timer_shutdown}} seconds</ui-section>
 						{{/if}}
-					{{/if}}
+          {{/if}}
+          {{#if data.scan_level >= 3}}
+            {{#if has_extra_settings}}
+              {{#each extra_settings}}
+                <ui-section label='{{name}}'>{{value}}</ui-section>
+              {{/each}}
+            {{/if}}
+            {{#if has_rules}}
+              <ui-section label='Rules'>
+                {{#each rules}}
+                  {{display}} <br>
+                {{/each}}
+              </ui-section>
+            {{/if}}
+          {{/if}}
+            {{#if data.scan_level >= 4}}
+              {{#if activation_code}}
+                <ui-section label='Activation Code'>{{activation_code}}</ui-section>
+              {{/if}}
+              {{#if deactivation_code}}
+                <ui-section label='Deactivation Code'>{{deactivation_code}}</ui-section>
+              {{/if}}
+              {{#if kill_code}}
+                <ui-section label='Kill Code'>{{kill_code}}</ui-section>
+              {{/if}}
+              {{#if trigger_code}}
+                <ui-section label='Trigger Code'>{{trigger_code}}</ui-section>
+              {{/if}}
+              {{#if has_rules}}
+                <ui-section label='Rules'>
+                  {{#each rules}}
+                    {{display}}<br>
+                  {{/each}}
+                </ui-section>
+              {{/if}}
+            {{/if}}
 					</ui-display>
 				{{/each}}
 			</ui-display>
