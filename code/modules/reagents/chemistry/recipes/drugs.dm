@@ -28,6 +28,20 @@
 	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/iodine = 1, /datum/reagent/phosphorus = 1, /datum/reagent/hydrogen = 1)
 	required_temp = 374
 
+/datum/chemical_reaction/adderal
+	name = /datum/reagent/drug/amphetamine/adderal
+	id = /datum/reagent/drug/amphetamine/adderal
+	results = list(/datum/reagent/drug/amphetamine/adderal = 4)
+	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/iodine = 1, /datum/reagent/consumable/sodiumchloride = 1, /datum/reagent/medicine/neurine = 1)
+	required_temp = 574
+
+/datum/chemical_reaction/gojuice
+	name = /datum/reagent/drug/amphetamine/gojuice
+	id = /datum/reagent/drug/amphetamine/gojuice
+	results = list(/datum/reagent/drug/amphetamine/gojuice = 2)
+	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/drug/crank = 1, /datum/reagent/drug/amphetamine/methamphetamine = 1,)
+	required_temp = 574
+
 /datum/chemical_reaction/bath_salts
 	name = /datum/reagent/drug/bath_salts
 	id = /datum/reagent/drug/bath_salts

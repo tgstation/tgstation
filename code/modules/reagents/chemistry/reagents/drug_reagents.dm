@@ -278,7 +278,7 @@
 	name = "Go Juice"
 	description = "Fizzy and sweet juice. Commercially promoted to every security force. Isnt considered a drug under space law , even tho it is jam filled with amphetamines. Extremely addictive"
 	reagent_state = LIQUID
-	color = "#e38e44"
+	color = "#829929"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 10
 	addiction_threshold = 5
@@ -286,7 +286,8 @@
 	modifier = 0
 
 /datum/reagent/drug/amphetamine/gojuice/overdose_process(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_HEART, pick(1, 1.2, 1.4, 1.6, 1.8, 2))
+	if(prob(25))
+		M.adjustOrganLoss(ORGAN_SLOT_HEART, pick(1, 1.2, 1.4, 1.6, 1.8, 2))
 
 /datum/reagent/drug/bath_salts
 	name = "Bath Salts"

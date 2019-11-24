@@ -529,7 +529,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	addiction_threshold = 25
-	var/opioid_power = 1
+	var/opioid_power = 0.25
 
 /datum/reagent/medicine/opioid/on_mob_life(mob/living/carbon/M)
 	var/opioid_effect_rate = opioid_power * volume
@@ -545,13 +545,13 @@
 			. = 1
 	..()
 
-/datum/reagent/medicine/opioid/addiction_act_stage1(mob/living/M)
+/datum/reagent/medicine/opioid/addiction_act_stage1(mob/living/carbon/M)
 	if(prob(33))
 		M.drop_all_held_items()
 		M.Jitter(2 * opioid_power)
 	..()
 
-/datum/reagent/medicine/opioid/addiction_act_stage2(mob/living/M)
+/datum/reagent/medicine/opioid/addiction_act_stage2(mob/living/carbon/M)
 	if(prob(33))
 		M.drop_all_held_items()
 		M.adjustToxLoss(1*REM * opioid_power, 0)
@@ -560,7 +560,7 @@
 		M.Jitter(3 * opioid_power)
 	..()
 
-/datum/reagent/medicine/opioid/addiction_act_stage3(mob/living/M)
+/datum/reagent/medicine/opioid/addiction_act_stage3(mob/living/carbon/M)
 	if(prob(33))
 		M.drop_all_held_items()
 		M.adjustToxLoss(2*REM * opioid_power, 0)
@@ -569,7 +569,7 @@
 		M.Jitter(4 * opioid_power)
 	..()
 
-/datum/reagent/medicine/opioid/addiction_act_stage4(mob/living/M)
+/datum/reagent/medicine/opioid/addiction_act_stage4(mob/living/carbon/M)
 	if(prob(33))
 		M.drop_all_held_items()
 		M.adjustToxLoss(3*REM * opioid_power, 0)
@@ -588,19 +588,20 @@
 	addiction_threshold = 25
 	opioid_power = 0.75
 
-/datum/reagent/medicine/opioid/morphine/on_mob_metabolize(mob/living/L)
+/datum/reagent/medicine/opioid/morphine/on_mob_metabolize(mob/living/carbon/M)
 	..()
-	L.ignore_slowdown(type)
+	M.ignore_slowdown(type)
 
-/datum/reagent/medicine/opioid/morphine/on_mob_end_metabolize(mob/living/L)
-	L.unignore_slowdown(type)
+/datum/reagent/medicine/opioid/morphine/on_mob_end_metabolize(mob/living/carbon/M)
+	M.unignore_slowdown(type)
 	..()
 
-/datum/reagent/medicine/opioid/morphine/overdose_process(mob/living/M)
+/datum/reagent/medicine/opioid/morphine/overdose_process(mob/living/carbon/M)
 	if(prob(33))
 		M.drop_all_held_items()
 		M.Dizzy(2 * opioid_power)
 		M.Jitter(2 * opioid_power)
+		M.losebreath()
 	..()
 
 
@@ -614,12 +615,12 @@
 	addiction_threshold = 10
 	opioid_power = 1.5
 
-/datum/reagent/medicine/opioid/morphine/on_mob_metabolize(mob/living/L)
+/datum/reagent/medicine/opioid/morphine/on_mob_metabolize(mob/living/carbon/M)
 	..()
-	L.ignore_slowdown(type)
+	M.ignore_slowdown(type)
 
-/datum/reagent/medicine/opioid/morphine/on_mob_end_metabolize(mob/living/L)
-	L.unignore_slowdown(type)
+/datum/reagent/medicine/opioid/morphine/on_mob_end_metabolize(mob/living/carbon/M)
+	M.unignore_slowdown(type)
 	..()
 
 /datum/reagent/medicine/opioid/dimorphine/on_mob_life(mob/living/carbon/M)
@@ -627,12 +628,13 @@
 	M.Jitter(4)
 	..()
 
-/datum/reagent/medicine/opioid/dimorphine/overdose_process(mob/living/M)
+/datum/reagent/medicine/opioid/dimorphine/overdose_process(mob/living/carbon/M)
 	if(prob(66))
 		M.drop_all_held_items()
 		M.Dizzy(2 * opioid_power)
 		M.Jitter(2 * opioid_power)
 		M.adjustOrganLoss(opioid_power,ORGAN_SLOT_HEART)
+		M.losebreath()
 	..()
 
 /datum/reagent/medicine/opioid/codeine
@@ -642,10 +644,10 @@
 	color = "#A9FBFB"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	overdose_threshold = 75
-	addiction_threshold = 100
+	addiction_threshold = 50
 	opioid_power = 0.1
 
-/datum/reagent/medicine/opioid/codeine/overdose_process(mob/living/M)
+/datum/reagent/medicine/opioid/codeine/overdose_process(mob/living/carbon/M)
 	if(prob(16))
 		M.drop_all_held_items()
 		M.Dizzy( opioid_power)
@@ -668,7 +670,7 @@
 	else 
 		return
 
-/datum/reagent/medicine/opioid/fentanyl/overdose_process(mob/living/M)
+/datum/reagent/medicine/opioid/fentanyl/overdose_process(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM, 150)
 	if(M.toxloss <= 60)
 		M.adjustToxLoss(1*REM, 0)
@@ -676,6 +678,7 @@
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle >= 18)
 		M.Sleeping(40, 0)
+		M.losebreath()
 	..()
 	
 /datum/reagent/medicine/oculine
