@@ -53,6 +53,7 @@ import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
+import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
 import { Smes } from './interfaces/Smes';
@@ -212,6 +213,10 @@ const ROUTES = {
   },
   gps: {
     component: () => Gps,
+    scrollable: true,
+  },
+  gulag_item_reclaimer: {
+    component: () => GulagItemReclaimer,
     scrollable: true,
   },
   holodeck: {
