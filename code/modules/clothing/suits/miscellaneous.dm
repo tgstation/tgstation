@@ -648,9 +648,9 @@
 	H.remove_hud_from(user)
 
 /obj/item/clothing/head/hooded/ablative/IsReflect(def_zone)
-	if(!(def_zone in BODY_ZONE_HEAD)) //If not shot where ablative is covering you, you don't get the reflection bonus!
+	if(def_zone != BODY_ZONE_HEAD) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return FALSE
-	if (prob(hit_reflect_chance))
+	if(prob(hit_reflect_chance))
 		return TRUE
 
 /obj/item/clothing/suit/hooded/ablative
@@ -672,7 +672,7 @@
 /obj/item/clothing/suit/hooded/ablative/IsReflect(def_zone)
 	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return FALSE
-	if (prob(hit_reflect_chance))
+	if(prob(hit_reflect_chance))
 		return TRUE
 
 /obj/item/clothing/head/hooded/winterhood/miner
