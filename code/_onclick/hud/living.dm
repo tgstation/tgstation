@@ -1,7 +1,7 @@
-/datum/hud/lavaland_elite
-	ui_style = 'icons/mob/screen_elite.dmi'
+/datum/hud/living
+	ui_style = 'icons/mob/screen_gen.dmi'
 
-/datum/hud/lavaland_elite/New(mob/living/simple_animal/hostile/asteroid/elite)
+/datum/hud/living/New(mob/living/owner)
 	..()
 
 	pull_icon = new /obj/screen/pull()
@@ -11,6 +11,6 @@
 	pull_icon.hud = src
 	static_inventory += pull_icon
 
-	healths = new /obj/screen/healths/lavaland_elite()
+	healths = new /obj/screen/healths/living()
 	healths.hud = src
 	infodisplay += healths
