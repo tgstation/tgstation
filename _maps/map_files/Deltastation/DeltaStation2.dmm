@@ -249,7 +249,9 @@
 /area/construction/mining/aux_base)
 "abe" = (
 /obj/effect/turf_decal/delivery,
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/effect/turf_decal/stripes/end{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "abf" = (
@@ -272,7 +274,10 @@
 	pixel_x = -23
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 9
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
@@ -1571,7 +1576,6 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Fore";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
 	width = 35
 	},
 /turf/open/space/basic,
@@ -114437,6 +114441,15 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"hjC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "hrP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -115973,6 +115986,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"qzS" = (
+/obj/docking_port/stationary{
+	dwidth = 3;
+	height = 5;
+	id = "commonmining_home";
+	name = "SS13: Common Mining Dock";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 7
+	},
+/turf/open/space/basic,
+/area/space)
 "qKq" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -116561,6 +116585,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
+"uYa" = (
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "uYS" = (
 /obj/machinery/door/airlock/atmos/glass/critical{
 	heat_proof = 1;
@@ -116696,6 +116731,19 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"wav" = (
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "waK" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -116919,6 +116967,11 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"xAW" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/computer/shuttle/mining/common,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "xDZ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -148936,8 +148989,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+qYo
+qYo
 aad
 aad
 aaa
@@ -149192,8 +149245,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aaO
+aaO
 aaO
 aaO
 abf
@@ -149448,10 +149501,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaO
+qzS
+uYa
+hjC
+wav
 abe
 abp
 abC
@@ -149706,10 +149759,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aaO
-abe
+aaO
+aaO
+xAW
 abq
 abD
 abD
@@ -149964,7 +150017,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+qYo
 aaO
 aaO
 abf
@@ -150221,8 +150274,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+qYo
+qYo
 aad
 aad
 aaa
