@@ -281,7 +281,7 @@
 	description = "Fizzy and sweet juice. Commercially promoted to every security force. Is not considered a drug under space law , even though it is jam filled with amphetamines. Extremely addictive."
 	reagent_state = LIQUID
 	color = "#829929"
-	metabolization_rate = 2 * REAGENTS_METABOLISM
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 5
 	addiction_threshold = 2.5
 	amphetamine_power = 6
