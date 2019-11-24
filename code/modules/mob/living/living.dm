@@ -493,6 +493,37 @@
 	update_stat()
 	med_hud_set_health()
 	med_hud_set_status()
+	update_health_hud()
+
+/mob/living/update_health_hud()
+	if(hud_used?.healths)
+		var/severity = 0
+		var/healthpercent = (health/maxHealth) * 100
+		switch(healthpercent)
+			if(100 to INFINITY)
+				hud_used.healths.icon_state = "health0"
+			if(80 to 100)
+				hud_used.healths.icon_state = "health1"
+				severity = 1
+			if(60 to 80)
+				hud_used.healths.icon_state = "health2"
+				severity = 2
+			if(40 to 60)
+				hud_used.healths.icon_state = "health3"
+				severity = 3
+			if(20 to 40)
+				hud_used.healths.icon_state = "health4"
+				severity = 4
+			if(1 to 20)
+				hud_used.healths.icon_state = "health5"
+				severity = 5
+			else
+				hud_used.healths.icon_state = "health7"
+				severity = 6
+		if(severity > 0)
+			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+		else
+			clear_fullscreen("brute")
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
