@@ -16,13 +16,19 @@ export const NtosArcade = props => {
             src={data.BossID} />
         </Section>
         <LabeledList>
-          <LabeledList.Item label="Boss Health">
+          <LabeledList.Item 
+            color={(data.Hitpoints <= 5) ? "bad" : data.Hitpoints >= 30 ? "good" : "average"}
+            label="Boss Health">
             {data.Hitpoints}
           </LabeledList.Item>
-          <LabeledList.Item label="Player Health">
+          <LabeledList.Item 
+            color={(data.PlayerHitpoints <= 10) ? "bad" : data.Hitpoints >= 20 ? "good" : "average"}
+            label="Player Health">
             {data.PlayerHitpoints}
           </LabeledList.Item>
-          <LabeledList.Item label="Player Magic">
+          <LabeledList.Item 
+            color="purple"
+            label="Player Magic">
             {data.PlayerMP}
           </LabeledList.Item>
           <LabeledList.Item label="Status">
@@ -38,18 +44,21 @@ export const NtosArcade = props => {
         <Button
           icon="fist-raised"
           tooltip="Go in for the kill!"
+          tooltipPosition="top"
           disabled={data.GameActive === 0 || data.PauseState === 1}
           onClick={() => act(ref, 'Attack')}
           content="Attack!" />
         <Button
           icon="band-aid"
           tooltip="Heal yourself!"
+          tooltipPosition="top"
           disabled={data.GameActive === 0 || data.PauseState === 1}
           onClick={() => act(ref, 'Heal')}
           content="Heal!" />
         <Button
           icon="magic"
           tooltip="Recharge your magic!"
+          tooltipPosition="top"
           disabled={data.GameActive === 0 || data.PauseState === 1}
           onClick={() => act(ref, 'Recharge_Power')}
           content="Recharge!" />
@@ -58,12 +67,14 @@ export const NtosArcade = props => {
         <Button
           icon="sync-alt"
           tooltip="One more game couldn't hurt."
+          tooltipPosition="top"
           disabled={data.GameActive === 1}
           onClick={() => act(ref, 'Start_Game')}
           content="Begin Game?" />
         <Button
           icon="ticket-alt"
           tooltip="Redeem your arcade tickets! (Claim at your local Arcade Computer for Prizes!)"
+          tooltipPosition="top"
           disabled={data.GameActive === 1}
           onClick={() => act(ref, 'Dispense_Tickets')}
           content="Claim Tickets" />

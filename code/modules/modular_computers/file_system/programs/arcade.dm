@@ -26,7 +26,7 @@
 	if(boss_hp <= 0)
 		heads_up = "You have crushed [boss_name]! Rejoice!"
 		playsound(computer.loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		game_active = 0
+		game_active = FALSE
 		program_icon_state = "arcade_off"
 		if(istype(computer))
 			computer.update_icon()
@@ -36,7 +36,7 @@
 	else if(player_hp <= 0 || player_mp <= 0)
 		heads_up = "You have been defeated... how will the station survive?"
 		playsound(computer.loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		game_active = 0
+		game_active = FALSE
 		program_icon_state = "arcade_off"
 		if(istype(computer))
 			computer.update_icon()
@@ -52,7 +52,7 @@
 		boss_attackamt = rand(3,6)
 		boss_mpamt = rand (2,4)
 		bossheal = rand (4,6)
-	if(game_active == 0)
+	if(game_active == FALSE)
 		return
 	if (boss_mp <= 5)
 		heads_up = "[boss_mpamt] magic power has been stolen from you!"
@@ -162,7 +162,7 @@
 					to_chat(user, "<span class='notice'>You don't have any stored tickets!</span>")
 				return TRUE
 		if("Start_Game")
-			game_active = 1
+			game_active = TRUE
 			boss_hp = 45
 			player_hp = 30
 			player_mp = 10
