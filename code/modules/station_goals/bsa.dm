@@ -181,7 +181,7 @@
 	var/turf/point = get_front_turf()
 	for(var/turf/T in getline(get_step(point,dir),get_target_turf()))
 		T.ex_act(EXPLODE_DEVASTATE)
-	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50,maxdistance = world.maxx) //ZZZAP
+	point.Beam(get_target_turf(),icon_state="bsa_beam",time=50) //ZZZAP
 	new /obj/effect/temp_visual/bsa_splash(point, dir)
 
 	message_admins("[ADMIN_LOOKUPFLW(user)] has launched an artillery strike targeting [ADMIN_VERBOSEJMP(bullseye)].")

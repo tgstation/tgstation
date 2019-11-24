@@ -111,7 +111,7 @@
 								continue grasping
 					if(prob(grasp_chance))
 						to_chat(L, "<span class='userdanger'>\The [src] has you entangled!</span>")
-						grasping[L] = Beam(L, "vine", time=INFINITY, maxdistance=5, beam_type=/obj/effect/ebeam/vine)
+						grasping[L] = Beam(L, "vine", time=INFINITY, beam_type=/obj/effect/ebeam/vine)
 						tethers += list(L.AddComponent(/datum/component/tether, src, grasp_range+1, /obj/effect/ebeam/vine), AddComponent(/datum/component/tether, L, grasp_range+1, /obj/effect/ebeam/vine))
 						break //only take 1 new victim per cycle
 
@@ -124,7 +124,7 @@
 			if(O.density)
 				return
 	var/dist = get_dist(src,the_target)
-	Beam(the_target, "vine", time=dist*2, maxdistance=dist+2, beam_type=/obj/effect/ebeam/vine)
+	Beam(the_target, "vine", time=dist*2, beam_type=/obj/effect/ebeam/vine)
 	the_target.attack_animal(src)
 
 
