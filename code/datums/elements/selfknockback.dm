@@ -25,14 +25,14 @@ clamping the Knockback_Force value below. */
 	UnregisterSignal(source, list(COMSIG_ITEM_AFTERATTACK, COMSIG_PROJECTILE_FIRE))
 
 /datum/element/selfknockback/proc/Get_Knockback_Force(default_force)
-	if(override_throw_val > 0)
-		return round(override_throw_val, 1)
+	if(override_throw_val)
+		return override_throw_val
 	else
 		return default_force
 
 /datum/element/selfknockback/proc/Get_Knockback_Speed(default_speed)
-	if(override_speed_val > 0)
-		return round(override_speed_val, 1)
+	if(override_speed_val)
+		return override_speed_val
 	else
 		return default_speed
 
