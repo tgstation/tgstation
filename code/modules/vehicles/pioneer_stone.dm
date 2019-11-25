@@ -41,7 +41,7 @@
 	var/damage_force = rand(10,max_damage_force)
 	H.apply_damage(damage_force, BRUTE)
 	var/turf/T = get_turf(src)
-	obj_integrity -= damage_force * is_mining_level(T.z)
+	obj_integrity -= damage_force * !is_mining_level(T.z)
 	if(obj_integrity <= 0)
 		Destroy()
 	if(damage_force == max_damage_force)
