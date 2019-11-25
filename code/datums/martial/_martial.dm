@@ -9,6 +9,7 @@
 	var/help_verb
 	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 	var/smashes_tables = FALSE //If the martial art smashes tables when performing table slams and head smashes
+	var/mob/living/carbon/human/owner = null
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return FALSE
@@ -48,6 +49,7 @@
 	if(help_verb)
 		H.verbs += help_verb
 	H.mind.martial_art = src
+	owner = H
 	return TRUE
 
 /datum/martial_art/proc/store(datum/martial_art/M,mob/living/carbon/human/H)
@@ -60,6 +62,7 @@
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(!istype(H) || !H.mind || H.mind.martial_art != src)
 		return
+	owner = null
 	on_remove(H)
 	if(base)
 		base.teach(H)

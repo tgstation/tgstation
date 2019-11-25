@@ -1451,6 +1451,29 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	armor_block = min(90,armor_block) //cap damage reduction at 90%
 	var/Iforce = I.force //to avoid runtimes on the forcesay checks at the bottom. Some items might delete themselves if you drop them. (stunning yourself, ninja swords)
 
+	if(H.mind && H.mind.martial_art && istype(H.mind.martial_art, /datum/martial_art/monk))
+		var/datum/martial_art/monk/M = H.mind.martial_art
+		var/defense_roll = M.defense_roll(0)
+		if(defense_roll)
+			var/dmg_to_deal = I.force
+			if(defense_roll == 2)
+				dmg_to_deal *= 2
+				H.send_item_attack_message(I, user, critical = TRUE)
+			else
+				H.send_item_attack_message(I, user)
+			apply_damage(dmg_to_deal, I.damtype, blocked = armor_block)
+			if(I.damtype == BRUTE)
+				if(prob(33))
+					I.add_mob_blood(src)
+					var/turf/location = get_turf(src)
+					H.add_splatter_floor(location)
+					if(get_dist(user, src) <= 1)
+						user.add_mob_blood(src)
+			return TRUE
+		else
+			H.visible_message("<span class='danger'>[H] dodges the [I]!</span>",\
+			"<span class='userdanger'>[H] dodges the [I]!</span>", null, COMBAT_MESSAGE_RANGE)
+			return FALSE
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
 
