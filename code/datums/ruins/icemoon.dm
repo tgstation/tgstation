@@ -4,6 +4,8 @@
 	prefix = "_maps/RandomRuins/IceRuins/"
 	allow_duplicates = FALSE
 
+// above ground only
+
 /datum/map_template/ruin/icemoon/seed_vault
 	name = "Seed Vault"
 	id = "seed-vault"
@@ -18,6 +20,26 @@
 	description = "Turns out that keeping your abductees unconscious is really important. Who knew?"
 	suffix = "icemoon_surface_ufo_crash.dmm"
 	cost = 5
+
+// above and below ground together
+
+/datum/map_template/ruin/icemoon/mining_site
+	name = "Mining Site"
+	id = "miningsite"
+	description = "Ruins of a site where people once mined with primitive tools for ore."
+	suffix = "icemoon_surface_mining_site.dmm"
+	always_place = TRUE // we need a ladder up and down don't we?
+	always_spawn_with = list(/datum/map_template/ruin/icemoon/underground/mining_site_below = PLACE_BELOW)
+	cost = 5
+
+/datum/map_template/ruin/icemoon/underground/mining_site_below
+	name = "Mining Site Underground"
+	id = "miningsite-underground"
+	description = "Who knew ladders could be so useful?"
+	suffix = "icemoon_underground_mining_site.dmm"
+	unpickable = TRUE
+
+// below ground only
 
 /datum/map_template/ruin/icemoon/underground
 	name = "underground ruin"
