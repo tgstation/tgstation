@@ -387,7 +387,7 @@
 	name = "Neurotoxin"
 	id = /datum/reagent/consumable/ethanol/neurotoxin
 	results = list(/datum/reagent/consumable/ethanol/neurotoxin = 2)
-	required_reagents = list(/datum/reagent/consumable/ethanol/gargle_blaster = 1, /datum/reagent/medicine/opioid/morphine = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/gargle_blaster = 1, /datum/reagent/drug/opioid/morphine = 1)
 
 /datum/chemical_reaction/snowwhite
 	name = "Snow White"

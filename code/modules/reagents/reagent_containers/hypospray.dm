@@ -165,7 +165,7 @@
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
 	icon_state = "morphen"
 	item_state = "morphen"
-	list_reagents = list(/datum/reagent/medicine/opioid/morphine = 10)
+	list_reagents = list(/datum/reagent/drug/opioid/morphine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/oxandrolone
 	name = "oxandrolone medipen"
@@ -219,7 +219,7 @@
 	item_state = "stimpen"
 	volume = 60
 	amount_per_transfer_from_this = 60
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5, /datum/reagent/medicine/oxandrolone = 8, /datum/reagent/medicine/sal_acid = 8, /datum/reagent/medicine/opioid/morphine = 2)
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/leporazine = 15, /datum/reagent/medicine/epinephrine = 10, /datum/reagent/medicine/lavaland_extract = 2, /datum/reagent/medicine/omnizine = 5, /datum/reagent/medicine/oxandrolone = 8, /datum/reagent/medicine/sal_acid = 8, /datum/reagent/drug/opioid/morphine = 2)
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"

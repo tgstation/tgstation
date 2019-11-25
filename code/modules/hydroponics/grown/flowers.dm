@@ -113,7 +113,7 @@
 	icon_grow = "papaver-grow"
 	icon_dead = "poppy-dead"
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/medicine/opioid = 0.4, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
+	reagents_add = list(/datum/reagent/drug/opioid = 0.4, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/poppy/papaversomniferum
@@ -123,7 +123,7 @@
 	icon_state = "papaversomniferum"
 	filling_color = "#E6E6FA"
 	bitesize_mod = 2
-	distill_reagent = /datum/reagent/medicine/opioid/morphine
+	distill_reagent = /datum/reagent/drug/opioid/morphine
 
 // Harebell
 /obj/item/seeds/harebell

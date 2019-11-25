@@ -39,7 +39,7 @@
 	name = "morphine bottle"
 	desc = "A small bottle of morphine."
 	icon = 'icons/obj/chemical.dmi'
-	list_reagents = list(/datum/reagent/medicine/opioid/morphine = 30)
+	list_reagents = list(/datum/reagent/drug/opioid/morphine = 30)
 
 /obj/item/reagent_containers/glass/bottle/chloralhydrate
 	name = "chloral hydrate bottle"
@@ -117,7 +117,7 @@
 
 /obj/item/reagent_containers/glass/bottle/traitor/Initialize()
 	. = ..()
-	extra_reagent = pick(/datum/reagent/toxin/polonium, /datum/reagent/toxin/histamine, /datum/reagent/toxin/formaldehyde, /datum/reagent/toxin/venom, /datum/reagent/medicine/opioid/fentanyl, /datum/reagent/toxin/cyanide)
+	extra_reagent = pick(/datum/reagent/toxin/polonium, /datum/reagent/toxin/histamine, /datum/reagent/toxin/formaldehyde, /datum/reagent/toxin/venom, /datum/reagent/drug/opioid/fentanyl, /datum/reagent/toxin/cyanide)
 	reagents.add_reagent(extra_reagent, 3)
 
 /obj/item/reagent_containers/glass/bottle/polonium
@@ -138,7 +138,7 @@
 /obj/item/reagent_containers/glass/bottle/fentanyl
 	name = "fentanyl bottle"
 	desc = "A small bottle. Contains Fentanyl."
-	list_reagents = list(/datum/reagent/medicine/opioid/fentanyl = 30)
+	list_reagents = list(/datum/reagent/drug/opioid/fentanyl = 30)
 
 /obj/item/reagent_containers/glass/bottle/formaldehyde
 	name = "formaldehyde bottle"

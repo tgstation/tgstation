@@ -193,35 +193,6 @@
 	results = list(/datum/reagent/medicine/higadrite = 3)
 	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/lithium = 1)
 
-/datum/chemical_reaction/dimorphine
-	name = "DImorphine"
-	id = /datum/reagent/medicine/opioid/dimorphine
-	results = list(/datum/reagent/medicine/opioid/dimorphine = 2)
-	required_reagents = list(/datum/reagent/carbon = 2, /datum/reagent/hydrogen = 2, /datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1)
-	required_temp = 480
-
-/datum/chemical_reaction/morphine
-	name = "Morphine"
-	id = /datum/reagent/medicine/opioid/morphine
-	results = list(/datum/reagent/medicine/opioid/morphine = 2)
-	required_reagents = list(/datum/reagent/medicine/opioid = 2)
-	required_catalysts = list(/datum/reagent/acetone = 5 , /datum/reagent/water = 15 , /datum/reagent/consumable/ethanol = 5)
-
-/datum/chemical_reaction/fentanyl
-	name = "Fentanyl"
-	id = /datum/reagent/medicine/opioid/fentanyl
-	results = list(/datum/reagent/medicine/opioid/fentanyl = 4)
-	required_reagents = list(/datum/reagent/medicine/opioid/dimorphine = 1 , /datum/reagent/drug/space_drugs = 2)
-	required_temp = 675
-
-/datum/chemical_reaction/codeine
-	name = "Codeine"
-	id = /datum/reagent/medicine/opioid/codeine
-	results = list(/datum/reagent/medicine/opioid/codeine = 2)
-	required_reagents = list(/datum/reagent/medicine/opioid = 1 , /datum/reagent/medicine/mannitol = 2)
-	required_catalysts = list(/datum/reagent/water = 25)
-	required_temp = 775
-
 /datum/chemical_reaction/modafinil
 	name = "Modafinil"
 	id = /datum/reagent/medicine/modafinil

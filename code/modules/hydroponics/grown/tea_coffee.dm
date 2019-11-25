@@ -91,4 +91,4 @@
 	name = "coffee robusta beans"
 	desc = "Increases robustness by 37 percent!"
 	icon_state = "coffee_robusta"
-	grind_results = list(/datum/reagent/toxin/coffeepowder = 0, /datum/reagent/medicine/opioid/morphine = 0)
+	grind_results = list(/datum/reagent/toxin/coffeepowder = 0, /datum/reagent/drug/opioid/morphine = 0)

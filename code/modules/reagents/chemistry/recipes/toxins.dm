@@ -73,7 +73,7 @@
 	name = "Zombie Powder"
 	id = /datum/reagent/toxin/zombiepowder
 	results = list(/datum/reagent/toxin/zombiepowder = 2)
-	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5, /datum/reagent/medicine/opioid/morphine = 5, /datum/reagent/copper = 5)
+	required_reagents = list(/datum/reagent/toxin/carpotoxin = 5, /datum/reagent/drug/opioid/morphine = 5, /datum/reagent/copper = 5)
 
 /datum/chemical_reaction/ghoulpowder
 	name = "Ghoul Powder"
@@ -98,7 +98,7 @@
 	name = "Rotatium"
 	id = "Rotatium"
 	results = list(/datum/reagent/toxin/rotatium = 3)
-	required_reagents = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/teslium = 1, /datum/reagent/medicine/opioid/fentanyl = 1)
+	required_reagents = list(/datum/reagent/toxin/mindbreaker = 1, /datum/reagent/teslium = 1, /datum/reagent/drug/opioid/fentanyl = 1)
 	mix_message = "<span class='danger'>After sparks, fire, and the smell of mindbreaker, the mix is constantly spinning with no stop in sight.</span>"
 
 /datum/chemical_reaction/anacea
