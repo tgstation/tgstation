@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Adds 2 new forms of suspenders, for purchase at the clothesmate."
+  - rscadd: "Adds the Mystic Robe, for purchase at the autodrobe."
+  - tweak: "Suspenders can now be toggled to have an X or a Y back."
