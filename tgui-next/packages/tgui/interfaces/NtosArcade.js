@@ -11,7 +11,7 @@ export const NtosArcade = props => {
     <Section title="Outbomb Cuban Pete Ultra"
       textAlign="center">
       <Box>
-        <Grid position="relative">
+        <Grid>
           <Grid.Column size={2}>
             <Box my={1} mx={1} />
             <LabeledList>
@@ -46,7 +46,7 @@ export const NtosArcade = props => {
               </LabeledList.Item>
             </LabeledList>
             <Box my={1} mx={4} />
-            <Section backgroundColor="#1b3622">
+            <Section backgroundColor={(data.PauseState === 1) ? "#1b3622" : "#471915"}>
               {data.Status}
             </Section>
           </Grid.Column>
@@ -58,7 +58,10 @@ export const NtosArcade = props => {
               HP
             </ProgressBar>
             <Box my={1} mx={1} />
-            <Section>
+            <Section
+              inline
+              width={26}
+              textAlign="center">
               <img
                 src={data.BossID} />
             </Section> 

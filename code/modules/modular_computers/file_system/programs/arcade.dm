@@ -71,7 +71,7 @@
 		game_check()
 		return
 	else
-		heads_up = "[boss_name] slams you for [boss_attackamt]!"
+		heads_up = "[boss_name] attacks you for [boss_attackamt] damage!"
 		playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		player_hp -= boss_attackamt
 		pause_state = FALSE
