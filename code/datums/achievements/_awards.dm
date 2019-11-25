@@ -27,15 +27,6 @@
 		return
 	return list("ckey" = "'[sanitizeSQL(key)]'","achievement_key" = "'[sanitizeSQL(hub_id)]'", "value" = "'[sanitizeSQL(value)]'")
 
-///Save award value to database, does not validate connection or value
-/datum/award/proc/save_raw_value(key,value)
-	var/sanev = sanitizeSQL(value)
-	var/datum/DBQuery/Q = SSdbcore.NewQuery("INSERT INTO [format_table_name("achievements")] (ckey, achievement_key, value, last_updated) VALUES ('[sanitizeSQL(key)]', '[sanitizeSQL(hub_id)]', '[sanev]', now()) ON DUPLICATE KEY UPDATE value = '[sanev]', last_updated = now()")
-	if(!Q.warn_execute())
-		qdel(Q)
-		return
-	qdel(Q)
-
 ///Get raw numerical achievement value from the database
 /datum/award/proc/get_raw_value(key)
 	var/datum/DBQuery/Q = SSdbcore.NewQuery("SELECT value FROM [format_table_name("achievements")] WHERE ckey = '[sanitizeSQL(key)]' AND achievement_key = '[sanitizeSQL(hub_id)]'")
