@@ -87,6 +87,7 @@ export class Input extends Component {
       onChange,
       value,
       maxLength,
+      placeholder,
       ...boxProps
     } = props;
     // Box props
@@ -109,6 +110,7 @@ export class Input extends Component {
         <input
           ref={this.inputRef}
           className="Input__input"
+          placeholder={placeholder}
           onInput={this.handleInput}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
