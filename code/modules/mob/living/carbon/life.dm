@@ -415,7 +415,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 91-100: Dangerously toxic - swift death
 */
 #define BALLMER_POINTS 5
-#define ADDERAL_POINTS 10
+
 GLOBAL_LIST_INIT(ballmer_good_msg, list("Hey guys, what if we rolled out a bluespace wiring system so mice can't destroy the powergrid anymore?",
 										"Hear me out here. What if, and this is just a theory, we made R&D controllable from our PDAs?",
 										"I'm thinking we should roll out a git repository for our research under the AGPLv3 license so that we can share it among the other stations freely.",
@@ -567,40 +567,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 		if(drunkenness >= 101)
 			adjustToxLoss(2) //Let's be honest you shouldn't be alive by now
-
-	if(amphetamization) //Amphetamines have effect now!
-		if(amphetamization >= 1)
-			if(prob(5))
-				Dizzy(1)
-
-		if(mind && (mind.assigned_role == "Scientist" || mind.assigned_role == "Research Director"))
-			if(SSresearch.science_tech)
-				if(amphetamization > 2.5)
-					var/adderalpwr = 4 - amphetamization //dose your amphetamine/adderal/meth well!
-					SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = ADDERAL_POINTS * adderalpwr)) 
-
-		if(amphetamization > 10)
-			blur_eyes(1)
-
-		if(amphetamization > 20)
-			blur_eyes(5)
-			if(prob(3))
-				confused += 30
-		
-		if(amphetamization > 40)
-			Dizzy(25)
-
-		if(amphetamization > 50)
-			if(prob(33))
-				adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
-				vomit()
-		
-		if(amphetamization > 60) //You OD'd HARD
-			if(prob(25))
-				vomit() //consider this a blessing
-			else
-				adjustToxLoss(2)
-				adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature

@@ -187,21 +187,23 @@
 	..()
 
 /datum/reagent/drug/amphetamine/on_mob_life(mob/living/carbon/M)
-	var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
-	if(prob(5))
-		to_chat(M, "<span class='notice'>[high_message]</span>")
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-	M.AdjustStun(-10 * amphetamine_power, FALSE)
-	M.AdjustKnockdown(-10 * amphetamine_power, FALSE)
-	M.AdjustUnconscious(-10 * amphetamine_power, FALSE)
-	M.AdjustParalyzed(-10 * amphetamine_power, FALSE)
-	M.AdjustImmobilized(-10 * amphetamine_power, FALSE)
-	M.adjustStaminaLoss(-0.5 * amphetamine_power, 0)
-	if(amphetamine_power > 35)
+	var/amphetamine_power_effect = volume * amphetamine_power + modifier
+	if(amphetamine_power_effect > 10)
+		var/high_message = pick("You feel hyper.", "You feel like you need to go faster.", "You feel like you can run the world.")
+		if(prob(5))
+			to_chat(M, "<span class='notice'>[high_message]</span>")
+		M.AdjustStun(-10 * amphetamine_power, FALSE)
+		M.AdjustKnockdown(-10 * amphetamine_power, FALSE)
+		M.AdjustUnconscious(-10 * amphetamine_power, FALSE)
+		M.AdjustParalyzed(-10 * amphetamine_power, FALSE)
+		M.AdjustImmobilized(-10 * amphetamine_power, FALSE)
+		M.adjustStaminaLoss(-0.5 * amphetamine_power, 0)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
+	if(amphetamine_power_effect > 35)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1,4))
 		if(prob(5))
 			M.emote(pick("twitch", "shiver"))
-	M.amphetamization = volume * amphetamine_power 
+	
 	..()
 	. = 1
 
@@ -275,6 +277,14 @@
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	amphetamine_power = 0.5
 	modifier = 0
+	var/adderal_point_gen = 10
+/datum/reagent/drug/amphetamine/gojuice/on_mob_life(mob/living/M)
+	..()
+	if(M.mind && (M.mind.assigned_role == "Scientist" || M.mind.assigned_role == "Research Director"))
+			if(SSresearch.science_tech)
+				if(amphetamine_power_effect > 4.7)
+					var/adderalpwr = 6.3 - amphetamine_power_effect //dose your amphetamine/adderal/meth well!
+					SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = ADDERAL_POINTS * adderalpwr)) 	
 
 /datum/reagent/drug/amphetamine/gojuice
 	name = "Go Juice"
@@ -285,7 +295,7 @@
 	overdose_threshold = 5
 	addiction_threshold = 2.5
 	amphetamine_power = 6
-	modifier = 0
+	modifier = 10
 
 /datum/reagent/drug/amphetamine/gojuice/on_mob_life(mob/living/M)
 	if(prob(25))
