@@ -4,12 +4,10 @@
 	var/override_throw_val
 	var/override_speed_val
 
-/*
-Adds the ability to put recoil on various things, throwing the user back proportional to the force and speed set.
+/* Adds the ability to put recoil on various things, throwing the user back proportional to the force and speed set.
 Important note: Force/Throw_Amount, is how far you want to throw a user. By default, it is calculated based on damage below.
 Speed_Amount, is a measure of how long it will take a user to get thrown to the target. By default, it is calculated by
-clamping the Knockback_Force value below.
-*/
+clamping the Knockback_Force value below. */
 /datum/element/selfknockback/Attach(datum/target, throw_amount, speed_amount)
 	. = ..()
 	if(isitem(target))
