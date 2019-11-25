@@ -127,7 +127,7 @@
 
 /mob/living/simple_animal/drone/derelict/Initialize()
 	..()
-	AddComponent(/datum/component/stationstuck, TRUE, "Your emergency station return device activates, sending you back to KS13!", "01010111<br>01001001<br>01010000<br>01000101<br>WARNING: Dereliction of KS13 detected. Self destruct activated.")
+	AddComponent(/datum/component/stationstuck, TRUE, "Your emergency station return device activates, sending you back to KS13!", "01000110 01010101 01000011 01001011 00100000 01011001 01001111 01010101<br>WARNING: Dereliction of KS13 detected. Self destruct activated.")
 
 
 
