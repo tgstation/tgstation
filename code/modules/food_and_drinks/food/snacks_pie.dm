@@ -45,27 +45,8 @@
 	new/obj/effect/decal/cleanable/food/pie_smudge(T)
 	if(reagents && reagents.total_volume)
 		reagents.reaction(hit_atom, TOUCH)
-	if(isliving(hit_atom))
-		var/mob/living/L = hit_atom
-		if(L.client && H)
-			L.AddComponent(/datum/component/creamed, src)
-			var/experience_given = 30//moved to component
-			if(L.GetComponent(/datum/component/creamed))
-				experience_given *= 0.1
-			if(HAS_TRAIT(L.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-				experience_given *= 3
-			H.mind.adjust_experience(/datum/skill/pie_throwing, experience_given)
-		if(stunning && H)
-			var/skillmod = H.mind.get_skill_speed_modifier(/datum/skill/pie_throwing)
-			if(skillmod > 25)// journeyman level or higher
-				L.Paralyze(skillmod) //splat!
-			else
-				L.Stun(skillmod) //splish!
-		L.adjust_blurriness(1)
-		L.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
-		playsound(L, "desceration", 50, TRUE)
-	else if(is_type_in_typecache(hit_atom, GLOB.creamable))
-		hit_atom.AddComponent(/datum/component/creamed, src)
+	if(is_type_in_typecache(hit_atom, GLOB.creamable))
+		hit_atom.AddComponent(/datum/component/creamed, H, stunning)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/pie/cream/nostun
