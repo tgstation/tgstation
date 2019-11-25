@@ -34110,7 +34110,7 @@
 /area/medical/medbay/central)
 "bHb" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
-/obj/item/reagent_containers/glass/beaker/instabitaluri,
+/obj/item/reagent_containers/glass/beaker/syniphen,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
