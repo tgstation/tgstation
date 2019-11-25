@@ -58,4 +58,3 @@ clamping the Knockback_Force value below. */
 	var/atom/movable/knockback_target = P.firer
 	var/move_target = get_edge_target_turf(knockback_target, angle2dir(P.original_angle+180))
 	knockback_target.throw_at(move_target, knockback_force, knockback_speed)
-	
