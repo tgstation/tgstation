@@ -378,13 +378,10 @@
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
-	if(incapacitated())
-		return FALSE
-	if(HAS_TRAIT(src, TRAIT_DEATHCOMA))
-		return FALSE
 	if(!..())
 		return FALSE
-	visible_message("<span class='name'>[src]</span> points at [A].", "<span class='notice'>You point at [A].</span>")
+	var/paramfudge = "\the [A]"
+	src.emote("point [paramfudge]")
 	return TRUE
 
 /mob/living/verb/succumb(whispered as null)

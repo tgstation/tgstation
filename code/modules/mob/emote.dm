@@ -1,11 +1,11 @@
 //The code execution of the emote datum is located at code/datums/emotes.dm
 /mob/proc/emote(act, m_type = null, message = null, intentional = FALSE)
-	act = lowertext(act)
 	var/param = message
 	var/custom_param = findchar(act, " ")
 	if(custom_param)
 		param = copytext(act, custom_param + 1, length(act) + 1)
 		act = copytext(act, 1, custom_param)
+	act = lowertext(act)
 
 	var/list/key_emotes = GLOB.emote_list[act]
 

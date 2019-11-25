@@ -155,5 +155,5 @@
 
 	if(isliving(user))
 		var/mob/living/L = user
-		if(HAS_TRAIT(L, TRAIT_EMOTEMUTE))
+		if(HAS_TRAIT(L, TRAIT_EMOTEMUTE) || HAS_TRAIT(src, TRAIT_DEATHCOMA))
 			return FALSE
