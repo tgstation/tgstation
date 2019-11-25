@@ -34,6 +34,9 @@ import { DnaVault } from './interfaces/DnaVault';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
 import { Holodeck } from './interfaces/Holodeck';
+import { ImplantChair } from './interfaces/ImplantChair';
+import { KeycardAuth } from './interfaces/KeycardAuth';
+import { KitchenSink } from './interfaces/KitchenSink';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
@@ -212,6 +215,14 @@ const ROUTES = {
   holodeck: {
     component: () => Holodeck,
     scrollable: true,
+  },
+  implantchair: {
+    component: () => ImplantChair,
+    scrollable: false,
+  },
+  keycard_auth: {
+    component: () => KeycardAuth,
+    scrollable: false,
   },
   language_menu: {
     component: () => LanguageMenu,
