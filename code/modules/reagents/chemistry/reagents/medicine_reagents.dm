@@ -1305,7 +1305,7 @@
 	. = 1
 
 /datum/reagent/medicine/granibitaluri
-	name = "Granibitaluri"
+	name = "Granibitaluri" //achieve "GRANular" amounts of C2
 	description = "A mild painkiller useful as an additive alongside more potent medicines. Speeds up the healing of small wounds and burns, but is ineffective at treating severe injuries. Extremely large doses are toxic, and may eventually cause liver failure."
 	color = "#E0E0E0"
 	reagent_state = LIQUID
