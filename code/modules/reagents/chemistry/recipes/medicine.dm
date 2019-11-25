@@ -56,6 +56,12 @@
 	results = list(/datum/reagent/medicine/mine_salve = 15)
 	required_reagents = list(/datum/reagent/toxin/plasma = 5, /datum/reagent/iron = 5, /datum/reagent/consumable/sugar = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
 
+/datum/chemical_reaction/instabitaluri
+	name = "Synthflesh (Instabitaluri)"
+	id = /datum/reagent/medicine/C2/instabitaluri
+	results = list(/datum/reagent/medicine/C2/instabitaluri = 3)
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/libital = 1)
+
 /datum/chemical_reaction/calomel
 	name = "Calomel"
 	id = /datum/reagent/medicine/calomel
@@ -221,12 +227,12 @@
 	results = list(/datum/reagent/medicine/trophazole = 4)
 	required_reagents = list(/datum/reagent/copper = 1, /datum/reagent/acetone = 2,  /datum/reagent/phosphorus = 1)
 
-/datum/chemical_reaction/acetaminophen
-	name = "Acetaminophen"
-	id = /datum/reagent/medicine/acetaminophen
-	results = list(/datum/reagent/medicine/acetaminophen = 3)
+/datum/chemical_reaction/granibitaluri
+	name = "Granibitaluri"
+	id = /datum/reagent/medicine/granibitaluri
+	results = list(/datum/reagent/medicine/granibitaluri = 3)
 	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/phenol = 1, /datum/reagent/nitrogen = 1)
-	required_catalysts = list(/datum/reagent/iron = 5) //crude approximation of how it's actually made
+	required_catalysts = list(/datum/reagent/iron = 5)
 
 /datum/chemical_reaction/medsuture
 	name = "Medicated Suture"

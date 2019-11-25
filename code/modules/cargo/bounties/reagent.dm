@@ -233,7 +233,7 @@
 	//reagent that are possible to be chem factory'd
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/spaceacillin,\
-		/datum/reagent/medicine/C2/syniphen,\
+		/datum/reagent/medicine/C2/instabitaluri,\
 		/datum/reagent/medicine/pen_acid,\
 		/datum/reagent/medicine/atropine,\
 		/datum/reagent/medicine/cryoxadone,\

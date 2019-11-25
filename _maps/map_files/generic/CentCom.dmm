@@ -17435,9 +17435,9 @@
 /obj/machinery/iv_drip,
 /obj/item/roller,
 /obj/item/storage/firstaid/regular,
-/obj/item/reagent_containers/medigel/syniphen,
-/obj/item/reagent_containers/medigel/syniphen,
-/obj/item/reagent_containers/medigel/syniphen,
+/obj/item/reagent_containers/medigel/instabitaluri,
+/obj/item/reagent_containers/medigel/instabitaluri,
+/obj/item/reagent_containers/medigel/instabitaluri,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Qj" = (

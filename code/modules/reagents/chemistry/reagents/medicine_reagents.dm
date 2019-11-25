@@ -1304,22 +1304,22 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/acetaminophen
-	name = "Acetaminophen"
+/datum/reagent/medicine/granibitaluri
+	name = "Granibitaluri"
 	description = "A mild painkiller useful as an additive alongside more potent medicines. Speeds up the healing of small wounds and burns, but is ineffective at treating severe injuries. Extremely large doses are toxic, and may eventually cause liver failure."
 	color = "#E0E0E0"
 	reagent_state = LIQUID
 	overdose_threshold = 50
 	metabolization_rate = 0.2 //same as C2s
 
-/datum/reagent/medicine/acetaminophen/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M)
 	var/healamount = min(-0.5 + round(0.01 * (M.getBruteLoss() + M.getFireLoss()), 0.1), 0) //base of 0.5 healing per cycle and loses 0.1 healing for every 10 combined brute/burn damage you have
 	M.adjustBruteLoss(healamount * REM, 0)
 	M.adjustFireLoss(healamount * REM, 0)
 	..()
 	. = TRUE
 
-/datum/reagent/medicine/acetaminophen/overdose_process(mob/living/M)
+/datum/reagent/medicine/granibitaluri/overdose_process(mob/living/M)
 	. = TRUE
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.2 * REM)
 	M.adjustToxLoss(0.2 * REM, 0) //Only really deadly if you eat over 100u
