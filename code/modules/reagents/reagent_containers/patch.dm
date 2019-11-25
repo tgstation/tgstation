@@ -39,8 +39,8 @@
 	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 1, /datum/reagent/medicine/acetaminophen = 9)
 	icon_state = "bandaid_burn"
 
-/obj/item/reagent_containers/pill/patch/instabitaluri
-	name = "instabitaluri patch"
+/obj/item/reagent_containers/pill/patch/syniphen
+	name = "syniphen patch"
 	desc = "Helps with brute and burn injuries."
-	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 20)
+	list_reagents = list(/datum/reagent/medicine/C2/syniphen = 20)
 	icon_state = "bandaid_both"

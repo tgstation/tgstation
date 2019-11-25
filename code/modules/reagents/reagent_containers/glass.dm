@@ -210,8 +210,8 @@
 	name = "epinephrine reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
 
-/obj/item/reagent_containers/glass/beaker/instabitaluri
-	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 50)
+/obj/item/reagent_containers/glass/beaker/syniphen
+	list_reagents = list(/datum/reagent/medicine/C2/syniphen = 50)
 
 /obj/item/reagent_containers/glass/bucket
 	name = "bucket"

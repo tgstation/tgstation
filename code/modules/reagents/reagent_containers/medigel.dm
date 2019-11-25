@@ -78,11 +78,11 @@
 	icon_state = "burngel"
 	list_reagents = list(/datum/reagent/medicine/C2/aiuri = 20, /datum/reagent/medicine/acetaminophen = 40)
 
-/obj/item/reagent_containers/medigel/instabitaluri
-	name = "medical gel (instabitaluri)"
-	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains instabitaluri, a brute and burn healing agent."
+/obj/item/reagent_containers/medigel/syniphen
+	name = "medical gel (syniphen)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains syniphen, a brute and burn healing agent."
 	icon_state = "synthgel"
-	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 60)
+	list_reagents = list(/datum/reagent/medicine/C2/syniphen = 60)
 	custom_price = 80
 
 /obj/item/reagent_containers/medigel/sterilizine

@@ -322,14 +322,14 @@
 
 #undef issyrinormusc
 /******COMBOS******/
-/*Suffix: Combo of healing, prob gonna get wack REAL fast*/
-/datum/reagent/medicine/C2/instabitaluri
-	name = "Synthflesh (Instabitaluri)"
+/*Suffix: -phen*/
+/datum/reagent/medicine/C2/syniphen
+	name = "Synthflesh (Syniphen)"
 	description = "Has a 100% chance of instantly healing brute and burn damage at the cost of toxicity (75% of damage healed). Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
-/datum/reagent/medicine/C2/instabitaluri/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
+/datum/reagent/medicine/C2/syniphen/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
 		var/mob/living/carbon/Carbies = M
 		if (Carbies.stat == DEAD)

@@ -73,3 +73,11 @@
 	id  = /datum/reagent/medicine/C2/penthrite
 	results = list(/datum/reagent/medicine/C2/penthrite = 4)
 	required_reagents = list(/datum/reagent/pentaerythritol = 4, /datum/reagent/acetone = 1,  /datum/reagent/toxin/acid/nitracid = 1)
+
+/*****COMBOS*****/
+
+/datum/chemical_reaction/syniphen
+	name = "Synthflesh (Syniphen)"
+	id = /datum/reagent/medicine/C2/syniphen
+	results = list(/datum/reagent/medicine/C2/syniphen = 3)
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/libital = 1)
