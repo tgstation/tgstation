@@ -1,6 +1,6 @@
 import { act } from '../byond';
 import { Component, Fragment } from 'inferno';
-import { Box, Button, Chart, ColorBox, Flex, Icon, LabeledList, ProgressBar, Section, Table } from '../components';
+import { Box, Button, ColorBox, Icon, LabeledList, ProgressBar, Section, AnimatedNumber, Grid } from '../components';
 
 export const NtosArcade = props => {
   const { state } = props;
@@ -11,36 +11,61 @@ export const NtosArcade = props => {
     <Section title="Outbomb Cuban Pete Ultra"
       textAlign="center">
       <Box>
-        <Section>
-          <img
-            src={data.BossID} />
-        </Section>
-        <LabeledList>
-          <LabeledList.Item 
-            color={(data.Hitpoints <= 5) ? "bad" : data.Hitpoints >= 30 ? "good" : "average"}
-            label="Boss Health">
-            {data.Hitpoints}
-          </LabeledList.Item>
-          <LabeledList.Item 
-            color={(data.PlayerHitpoints <= 10) ? "bad" : data.Hitpoints >= 20 ? "good" : "average"}
-            label="Player Health">
-            {data.PlayerHitpoints}
-          </LabeledList.Item>
-          <LabeledList.Item 
-            color="purple"
-            label="Player Magic">
-            {data.PlayerMP}
-          </LabeledList.Item>
-          <LabeledList.Item label="Status">
-            <Section>
+        <Grid position="relative">
+          <Grid.Column size={2}>
+            <Box my={1} mx={1} />
+            <LabeledList>
+              <LabeledList.Item 
+                label="Player Health">
+                <ProgressBar
+                  value={data.PlayerHitpoints}
+                  minValue={0}
+                  maxValue={30}
+                  ranges={{
+                    yellow: [31, Infinity],
+                    good: [20, 31],
+                    average: [10, 20],
+                    bad: [-Infinity, 10],
+                  }}>
+                  {data.PlayerHitpoints}HP
+                </ProgressBar>
+              </LabeledList.Item>
+              <LabeledList.Item 
+                label="Player Magic">
+                <ProgressBar
+                  value={data.PlayerMP}
+                  minValue={0}
+                  maxValue={10}
+                  ranges={{
+                    pink: [11, Infinity],
+                    purple: [3, 11],
+                    bad: [-Infinity, 3],
+                  }}>
+                  {data.PlayerMP}MP
+                </ProgressBar>
+              </LabeledList.Item>
+            </LabeledList>
+            <Box my={1} mx={4} />
+            <Section backgroundColor="#1b3622">
               {data.Status}
             </Section>
-          </LabeledList.Item>
-          <LabeledList.Item label="Earned Tickets"
-            color={data.TicketCount >= 1 ? "good" : "normal"}>
-            {data.TicketCount}
-          </LabeledList.Item>
-        </LabeledList>
+          </Grid.Column>
+          <Grid.Column>
+            <ProgressBar
+              value={data.Hitpoints/45}
+              color={(data.Hitpoints <= 5) ? "bad" : data.Hitpoints >= 30 ? "good" : "average"}>
+              <AnimatedNumber value={data.Hitpoints} />
+              HP
+            </ProgressBar>
+            <Box my={1} mx={1} />
+            <Section>
+              <img
+                src={data.BossID} />
+            </Section> 
+            
+          </Grid.Column>
+        </Grid>
+        <Box my={1} mx={4} />
         <Button
           icon="fist-raised"
           tooltip="Go in for the kill!"
@@ -78,6 +103,10 @@ export const NtosArcade = props => {
           disabled={data.GameActive === 1}
           onClick={() => act(ref, 'Dispense_Tickets')}
           content="Claim Tickets" />
+      </Box>
+      <Box color={data.TicketCount >= 1 ? "good" : "normal"}>
+			Earned Tickets: 
+        {data.TicketCount}
       </Box>
     </Section>
   );

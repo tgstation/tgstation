@@ -7,8 +7,8 @@
 	network_destination = "arcade network"
 	size = 6
 	tgui_id = "ntos_arcade"
-	ui_x = 600
-	ui_y = 400
+	ui_x = 450
+	ui_y = 350
 
 	var/game_active = TRUE //Checks to see if a game is in progress.
 	var/pause_state = FALSE //This disables buttons in order to prevent multiple actions before the opponent's actions.
@@ -168,7 +168,7 @@
 			player_mp = 10
 			heads_up = "You stand before [boss_name]! Prepare for battle!"
 			program_icon_state = "arcade"
-			boss_id = rand(1,5)
+			boss_id = rand(1,6)
 			pause_state = FALSE
 			if(istype(computer))
 				computer.update_icon()
