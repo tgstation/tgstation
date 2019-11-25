@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Mechs can now go down (stairs)"
+  - bugfix: "Mechs can't push (non-anchored) objects and mobs with move resistance greater than \"very strong\" anymore."

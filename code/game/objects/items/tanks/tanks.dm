@@ -36,9 +36,10 @@
 			if(!H.wear_mask)
 				to_chat(H, "<span class='warning'>You need a mask!</span>")
 				return
-			if(H.wear_mask.mask_adjusted)
+			var/is_clothing = isclothing(H.wear_mask)
+			if(is_clothing && H.wear_mask.mask_adjusted)
 				H.wear_mask.adjustmask(H)
-			if(!(H.wear_mask.clothing_flags & MASKINTERNALS))
+			if(!is_clothing || !(H.wear_mask.clothing_flags & MASKINTERNALS))
 				to_chat(H, "<span class='warning'>[H.wear_mask] can't use [src]!</span>")
 				return
 
