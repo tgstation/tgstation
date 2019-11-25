@@ -22,7 +22,7 @@ export const NtosArcade = props => {
                   minValue={0}
                   maxValue={30}
                   ranges={{
-                    yellow: [31, Infinity],
+                    olive: [31, Infinity],
                     good: [20, 31],
                     average: [10, 20],
                     bad: [-Infinity, 10],
@@ -37,8 +37,8 @@ export const NtosArcade = props => {
                   minValue={0}
                   maxValue={10}
                   ranges={{
-                    pink: [11, Infinity],
-                    purple: [3, 11],
+                    purple: [11, Infinity],
+                    violet: [3, 11],
                     bad: [-Infinity, 3],
                   }}>
                   {data.PlayerMP}MP
