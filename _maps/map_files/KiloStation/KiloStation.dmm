@@ -13696,7 +13696,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/clothing/suit/suspenders,
+/obj/item/clothing/suit/toggle/suspenders,
 /obj/item/clothing/head/papersack/smiley,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
