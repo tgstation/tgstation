@@ -278,13 +278,15 @@
 	amphetamine_power = 0.5
 	modifier = 0
 	var/adderal_point_gen = 10
-/datum/reagent/drug/amphetamine/gojuice/on_mob_life(mob/living/M)
-	..()
+
+/datum/reagent/drug/amphetamine/adderal/on_mob_life(mob/living/M)
+	var/amphetamine_power_effect = volume * amphetamine_power
 	if(M.mind && (M.mind.assigned_role == "Scientist" || M.mind.assigned_role == "Research Director"))
-			if(SSresearch.science_tech)
-				if(amphetamine_power_effect > 4.7)
-					var/adderalpwr = 6.3 - amphetamine_power_effect //dose your amphetamine/adderal/meth well!
-					SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = ADDERAL_POINTS * adderalpwr)) 	
+		if(SSresearch.science_tech)
+			if(amphetamine_power_effect > 4.7)
+				var/adderalpwr = 6.3 - amphetamine_power_effect //dose your amphetamine/adderal/meth well!
+				SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = adderal_point_gen * adderalpwr)) 	
+	..()
 
 /datum/reagent/drug/amphetamine/gojuice
 	name = "Go Juice"
