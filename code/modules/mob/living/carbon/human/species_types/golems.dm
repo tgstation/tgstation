@@ -12,7 +12,7 @@
 	punchdamagelow = 5
 	punchdamagehigh = 14
 	punchstunthreshold = 11 //about 40% chance to stun
-	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
+	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
 	nojumpsuit = 1
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	sexes = 1
@@ -717,7 +717,7 @@
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	..()
 
-/obj/structure/cloth_pile/proc/revive()
+/obj/structure/cloth_pile/proc/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(QDELETED(src) || QDELETED(cloth_golem)) //QDELETED also checks for null, so if no cloth golem is set this won't runtime
 		return
 	if(cloth_golem.suiciding || cloth_golem.hellbound)
@@ -935,16 +935,36 @@
 /datum/species/golem/bone/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	. = ..()
 	if(chem.type == /datum/reagent/consumable/milk)
-		if(chem.volume >= 6)
-			H.reagents.remove_reagent(chem.type, chem.volume - 5)
+		if(chem.volume > 10)
+			H.reagents.remove_reagent(chem.type, chem.volume - 10)
 			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
 		H.heal_bodypart_damage(1.5,0, 0)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
-
 	if(chem.type == /datum/reagent/toxin/bonehurtingjuice)
+		H.adjustStaminaLoss(7.5, 0)
 		H.adjustBruteLoss(0.5, 0)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM)
+		if(prob(20))
+			switch(rand(1, 3))
+				if(1)
+					H.say(pick("oof.", "ouch.", "my bones.", "oof ouch.", "oof ouch my bones."), forced = /datum/reagent/toxin/bonehurtingjuice)
+				if(2)
+					H.emote("me", 1, pick("oofs silently.", "looks like their bones hurt.", "grimaces, as though their bones hurt."))
+				if(3)
+					to_chat(H, "<span class='warning'>Your bones hurt!</span>")
+		if(chem.overdosed)
+			if(prob(4) && iscarbon(H)) //big oof
+				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
+				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
+				if(bp)
+					playsound(H, get_sfx("desceration"), 50, TRUE, -1) //You just want to socialize
+					H.visible_message("<span class='warning'>[H] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
+					H.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
+					bp.receive_damage(200, 0, 0) //But I don't think we should
+				else
+					to_chat(H, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
+					H.emote("sigh")
+		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
 
 /datum/action/innate/bonechill
@@ -959,7 +979,7 @@
 
 /datum/action/innate/bonechill/Activate()
 	if(world.time < last_use + cooldown)
-		to_chat("<span class='notice'>You aren't ready yet to rattle your bones again</span>")
+		to_chat("<span class='warning'>You aren't ready yet to rattle your bones again!</span>")
 		return
 	owner.visible_message("<span class='warning'>[owner] rattles [owner.p_their()] bones harrowingly.</span>", "<span class='notice'>You rattle your bones</span>")
 	last_use = world.time
@@ -1052,9 +1072,9 @@
 
 /datum/species/golem/capitalist/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.equip_to_slot_or_del(new /obj/item/clothing/head/that (), SLOT_HEAD)
-	C.equip_to_slot_or_del(new /obj/item/clothing/glasses/monocle (), SLOT_GLASSES)
-	C.revive(full_heal = TRUE)
+	C.equip_to_slot_or_del(new /obj/item/clothing/head/that (), ITEM_SLOT_HEAD)
+	C.equip_to_slot_or_del(new /obj/item/clothing/glasses/monocle (), ITEM_SLOT_EYES)
+	C.revive(full_heal = TRUE, admin_revive = FALSE)
 
 	SEND_SOUND(C, sound('sound/misc/capitialism.ogg'))
 	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
@@ -1095,8 +1115,8 @@
 
 /datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka (), SLOT_HEAD)
-	C.revive(full_heal = TRUE)
+	C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka (), ITEM_SLOT_HEAD)
+	C.revive(full_heal = TRUE, admin_revive = FALSE)
 
 	SEND_SOUND(C, sound('sound/misc/Russian_Anthem_chorus.ogg'))
 	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())

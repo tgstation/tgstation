@@ -29,7 +29,7 @@ Regenerative extracts:
 		user.visible_message("<span class='notice'>[user] crushes the [src] over [user.p_them()]self, the milky goo quickly regenerating all of [user.p_their()] injuries!</span>",
 			"<span class='notice'>You squeeze the [src], and it bursts in your hand, splashing you with milky goo which quickly regenerates your injuries!</span>")
 	core_effect_before(H, user)
-	H.revive(full_heal = 1)
+	H.revive(full_heal = TRUE, admin_revive = FALSE)
 	core_effect(H, user)
 	playsound(target, 'sound/effects/splat.ogg', 40, TRUE)
 	qdel(src)
@@ -95,10 +95,10 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/darkpurple/core_effect(mob/living/target, mob/user)
 	var/equipped = 0
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/purple(null), SLOT_SHOES)
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(null), SLOT_W_UNIFORM)
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/purple(null), SLOT_GLOVES)
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/head/soft/purple(null), SLOT_HEAD)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/purple(null), ITEM_SLOT_FEET)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(null), ITEM_SLOT_ICLOTHING)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/purple(null), ITEM_SLOT_GLOVES)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/head/soft/purple(null), ITEM_SLOT_HEAD)
 	if(equipped > 0)
 		target.visible_message("<span class='notice'>The milky goo congeals into clothing!</span>")
 
@@ -111,13 +111,13 @@ Regenerative extracts:
 		return
 	var/mob/living/carbon/human/H = target
 	var/fireproofed = FALSE
-	if(H.get_item_by_slot(SLOT_WEAR_SUIT))
+	if(H.get_item_by_slot(ITEM_SLOT_OCLOTHING))
 		fireproofed = TRUE
-		var/obj/item/clothing/C = H.get_item_by_slot(SLOT_WEAR_SUIT)
+		var/obj/item/clothing/C = H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 		fireproof(C)
-	if(H.get_item_by_slot(SLOT_HEAD))
+	if(H.get_item_by_slot(ITEM_SLOT_HEAD))
 		fireproofed = TRUE
-		var/obj/item/clothing/C = H.get_item_by_slot(SLOT_HEAD)
+		var/obj/item/clothing/C = H.get_item_by_slot(ITEM_SLOT_HEAD)
 		fireproof(C)
 	if(fireproofed)
 		target.visible_message("<span class='notice'>Some of [target]'s clothing gets coated in the goo, and turns blue!</span>")
@@ -258,7 +258,7 @@ Regenerative extracts:
 	if(target == user)
 		return
 	var/mob/living/U = user
-	U.revive(full_heal = 1)
+	U.revive(full_heal = TRUE, admin_revive = FALSE)
 	to_chat(U, "<span class='notice'>Some of the milky goo sprays onto you, as well!</span>")
 
 /obj/item/slimecross/regenerative/adamantine

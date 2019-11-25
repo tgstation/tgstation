@@ -26,6 +26,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/unlock_note
 	var/unlock_code
 	var/failsafe_code
+	var/compact_mode = FALSE
+	var/debug = FALSE
 
 	var/list/previous_attempts
 
@@ -127,7 +129,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	active = TRUE
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "uplink", name, 450, 750, master_ui, state)
+		ui = new(user, src, ui_key, "uplink", name, 720, 480, master_ui, state)
 		ui.set_autoupdate(FALSE) // This UI is only ever opened by one person, and never is updated outside of user input.
 		ui.set_style("syndicate")
 		ui.open()
@@ -138,39 +140,43 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/list/data = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
+	data["compact_mode"] = compact_mode
 
+	return data
+
+/datum/component/uplink/ui_static_data(mob/user)
+	var/list/data = list()
 	data["categories"] = list()
 	for(var/category in uplink_items)
 		var/list/cat = list(
 			"name" = category,
 			"items" = (category == selected_cat ? list() : null))
-		if(category == selected_cat)
-			for(var/item in uplink_items[category])
-				var/datum/uplink_item/I = uplink_items[category][item]
-				if(I.limited_stock == 0)
+		for(var/item in uplink_items[category])
+			var/datum/uplink_item/I = uplink_items[category][item]
+			if(I.limited_stock == 0)
+				continue
+			if(I.restricted_roles.len)
+				var/is_inaccessible = TRUE
+				for(var/R in I.restricted_roles)
+					if(R == user.mind.assigned_role || debug)
+						is_inaccessible = FALSE
+				if(is_inaccessible)
 					continue
-				if(I.restricted_roles.len)
-					var/is_inaccessible = 1
-					for(var/R in I.restricted_roles)
-						if(R == user.mind.assigned_role)
-							is_inaccessible = 0
+			if(I.restricted_species)
+				if(ishuman(user))
+					var/is_inaccessible = TRUE
+					var/mob/living/carbon/human/H = user
+					for(var/F in I.restricted_species)
+						if(F == H.dna.species.id || debug)
+							is_inaccessible = FALSE
+							break
 					if(is_inaccessible)
 						continue
-				if(I.restricted_species)
-					if(ishuman(user))
-						var/is_inaccessible = TRUE
-						var/mob/living/carbon/human/H = user
-						for(var/F in I.restricted_species)
-							if(F == H.dna.species.id)
-								is_inaccessible = FALSE
-								break
-						if(is_inaccessible)
-							continue
-				cat["items"] += list(list(
-					"name" = I.name,
-					"cost" = I.cost,
-					"desc" = I.desc,
-				))
+			cat["items"] += list(list(
+				"name" = I.name,
+				"cost" = I.cost,
+				"desc" = I.desc,
+			))
 		data["categories"] += list(cat)
 	return data
 
@@ -198,6 +204,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 			SStgui.close_uis(src)
 		if("select")
 			selected_cat = params["category"]
+		if("compact_toggle")
+			compact_mode = !compact_mode
 	return TRUE
 
 /datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/U)
@@ -248,7 +256,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 		return
 	locked = FALSE
 	interact(null, user)
-	to_chat(user, "The PDA softly beeps.")
+	to_chat(user, "<span class='hear'>The PDA softly beeps.</span>")
 	user << browse(null, "window=pda")
 	master.mode = 0
 	return COMPONENT_STOP_RINGTONE_CHANGE

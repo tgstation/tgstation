@@ -19,7 +19,7 @@ Slimecrossing Armor
 
 /obj/item/clothing/mask/nobreath/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == SLOT_WEAR_MASK)
+	if(slot == ITEM_SLOT_MASK)
 		ADD_TRAIT(user, TRAIT_NOBREATH, "breathmask_[REF(src)]")
 		user.failed_last_breath = FALSE
 		user.clear_alert("not_enough_oxy")
@@ -39,7 +39,7 @@ Slimecrossing Armor
 	var/glasses_color = "#FFFFFF"
 
 /obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
-	if(slot == SLOT_GLASSES)
+	if(slot == ITEM_SLOT_EYES)
 		return TRUE
 
 /obj/structure/light_prism
@@ -58,7 +58,7 @@ Slimecrossing Armor
 	set_light(5)
 
 /obj/structure/light_prism/attack_hand(mob/user)
-	to_chat(user, "<span class='notice'>You dispel [src]</span>")
+	to_chat(user, "<span class='notice'>You dispel [src].</span>")
 	qdel(src)
 
 /datum/action/item_action/change_prism_colour
@@ -111,7 +111,7 @@ Slimecrossing Armor
 
 /obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == SLOT_HEAD)
+	if(slot == ITEM_SLOT_HEAD)
 		ADD_TRAIT(user, TRAIT_PACIFISM, "peaceflower_[REF(src)]")
 
 /obj/item/clothing/head/peaceflower/dropped(mob/living/carbon/human/user)

@@ -1,10 +1,16 @@
 // simple is_type and similar inline helpers
 
+#if DM_VERSION < 513
 #define islist(L) (istype(L, /list))
+#endif
 
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
 
+#if DM_VERSION < 513
 #define ismovableatom(A) (istype(A, /atom/movable))
+#else
+#define ismovableatom(A) ismovable(A)
+#endif
 
 #define isatom(A) (isloc(A))
 
@@ -156,6 +162,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
 #define isitem(A) (istype(A, /obj/item))
+
+#define isidcard(I) (istype(I, /obj/item/card/id))
 
 #define isstructure(A) (istype(A, /obj/structure))
 

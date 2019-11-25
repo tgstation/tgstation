@@ -8,10 +8,15 @@ export const computeFlexProps = props => {
     wrap,
     align,
     justify,
+    spacing = 0,
     ...rest
   } = props;
   return {
-    className: classes('Flex', className),
+    className: classes([
+      'Flex',
+      spacing > 0 && 'Flex--spacing--' + spacing,
+      className,
+    ]),
     style: {
       ...rest.style,
       'flex-direction': direction,
@@ -38,7 +43,10 @@ export const computeFlexItemProps = props => {
     ...rest
   } = props;
   return {
-    className: classes('Flex__item', className),
+    className: classes([
+      'Flex__item',
+      className,
+    ]),
     style: {
       ...rest.style,
       'flex-grow': grow,

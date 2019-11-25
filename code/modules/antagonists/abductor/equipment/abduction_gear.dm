@@ -56,7 +56,7 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
-	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to activate the vest if he's actually wearing it.
+	if(slot == ITEM_SLOT_OCLOTHING) //we only give the mob the ability to activate the vest if he's actually wearing it.
 		return TRUE
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
@@ -640,7 +640,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/radio/headset/abductor/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
@@ -673,7 +673,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(viable)
 		playsound(src, 'sound/effects/phasein.ogg', 50, TRUE)
 		var/new_machine = new spawned_machine(loc)
-		visible_message("<span class='notice'>[new_machine] warps on top of the beacon!")
+		visible_message("<span class='notice'>[new_machine] warps on top of the beacon!</span>")
 		qdel(src)
 	else
 		playsound(src, 'sound/machines/buzz-two.ogg', 50)
@@ -799,7 +799,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "bed"
 	can_buckle = 1
 
-	var/static/list/injected_reagents = list(/datum/reagent/medicine/corazone)
+	var/static/list/injected_reagents = list(/datum/reagent/medicine/cordiolis_hepatico)
 
 /obj/structure/table/optable/abductor/Crossed(atom/movable/AM)
 	. = ..()

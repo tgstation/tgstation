@@ -35,6 +35,12 @@
 /obj/item/proc/GetID()
 	return null
 
+/obj/item/proc/RemoveID()
+	return null
+
+/obj/item/proc/InsertID()
+	return FALSE
+
 /obj/proc/text2access(access_text)
 	. = list()
 	if(!access_text)
@@ -96,6 +102,10 @@
 		if("Thunderdome Overseer")
 			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_THUNDER)
 		if("CentCom Official")
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING)
+		if("CentCom Intern")
+			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING)
+		if("CentCom Head Intern")
 			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING)
 		if("Medical Officer")
 			return list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_MEDICAL)

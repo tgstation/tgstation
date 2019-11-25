@@ -9,6 +9,7 @@
 	ammo_x_offset = 3
 	flight_x_offset = 15
 	flight_y_offset = 10
+	dual_wield_spread = 60
 
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"
@@ -20,15 +21,13 @@
 	ammo_x_offset = 2
 	charge_sections = 3
 	can_flashlight = FALSE // Can't attach or detach the flashlight, and override it's icon update
+	gunlight_state = "mini-light"
+	flight_x_offset = 19
+	flight_y_offset = 13
 
 /obj/item/gun/energy/e_gun/mini/Initialize()
 	gun_light = new /obj/item/flashlight/seclite(src)
 	return ..()
-
-/obj/item/gun/energy/e_gun/mini/update_icon()
-	..()
-	if(gun_light && gun_light.on)
-		add_overlay("mini-light")
 
 /obj/item/gun/energy/e_gun/stun
 	name = "tactical energy gun"

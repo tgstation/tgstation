@@ -174,7 +174,7 @@
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(ismovableatom(target))
 		if(istype(target, /obj/effect/decal/cleanable))
-			visible_message("<span class='notice'>[src] cleans up \the [target].")
+			visible_message("<span class='notice'>[src] cleans up \the [target].</span>")
 			qdel(target)
 			return TRUE
 		var/atom/movable/M = target

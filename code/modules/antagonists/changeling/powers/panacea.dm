@@ -1,6 +1,6 @@
 /datum/action/changeling/panacea
 	name = "Anatomic Panacea"
-	desc = "Expels impurifications from our form; curing diseases, removing parasites, sobering us, purging toxins and radiation, and resetting our genetic code completely. Costs 20 chemicals."
+	desc = "Expels impurifications from our form; curing diseases, removing parasites, sobering us, purging toxins and radiation, curing traumas and brain damage, and resetting our genetic code completely. Costs 20 chemicals."
 	helptext = "Can be used while unconscious."
 	button_icon_state = "panacea"
 	chemical_cost = 20
@@ -30,6 +30,10 @@
 	user.reagents.add_reagent(/datum/reagent/medicine/pen_acid, 20)
 	user.reagents.add_reagent(/datum/reagent/medicine/antihol, 10)
 	user.reagents.add_reagent(/datum/reagent/medicine/mannitol, 25)
+
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 
 	if(isliving(user))
 		var/mob/living/L = user

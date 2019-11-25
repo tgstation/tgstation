@@ -5,6 +5,10 @@
 	var/list/post_logout_callbacks = list()
 	var/list/played_names = list() //List of names this key played under this round
 	var/byond_version = "Unknown"
+	var/datum/achievement_data/achievements
+
+/datum/player_details/New(key)
+	achievements = new(key)
 
 /proc/log_played_names(ckey, ...)
 	if(!ckey)

@@ -5,6 +5,8 @@
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
 	pressure_resistance = 10
 
+	hud_type = /datum/hud/living
+
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
 	var/lastattackerckey = null
@@ -118,3 +120,6 @@
 	var/list/disease_resistances = list()
 
 	var/slowed_by_drag = TRUE //Whether the mob is slowed down when dragging another prone mob
+
+	var/list/ownedSoullinks //soullinks we are the owner of
+	var/list/sharedSoullinks //soullinks we are a/the sharer of

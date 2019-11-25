@@ -111,7 +111,7 @@
 				organs -= O
 				organs[O.name] = O
 
-			I = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
+			I = input("Remove which organ?", "Surgery", null, null) as null|anything in sortList(organs)
 			if(I && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				I = organs[I]
 				if(!I)
@@ -126,7 +126,7 @@
 		to_chat(user, "<span class='warning'>[tool] was bitten by someone! It's too damaged to use!</span>")
 		return -1
 
-/datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(current_type == "insert")
 		if(istype(tool, /obj/item/organ_storage))
 			I = tool.contents[1]

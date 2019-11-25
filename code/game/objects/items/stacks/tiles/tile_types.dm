@@ -77,6 +77,15 @@
 	turf_type = /turf/open/floor/grass
 	resistance_flags = FLAMMABLE
 
+//Fairygrass
+/obj/item/stack/tile/fairygrass
+	name = "fairygrass tile"
+	singular_name = "fairygrass floor tile"
+	desc = "A patch of odd, glowing blue grass."
+	icon_state = "tile_fairygrass"
+	item_state = "tile-fairygrass"
+	turf_type = /turf/open/floor/grass/fairy
+	resistance_flags = FLAMMABLE
 
 //Wood
 /obj/item/stack/tile/wood
@@ -317,3 +326,11 @@
 	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125
+
+/obj/item/stack/tile/plastic
+	name = "plastic tile"
+	singular_name = "plastic floor tile"
+	desc = "A tile of cheap, flimsy plastic flooring."
+	icon_state = "tile_plastic"
+	custom_materials = list(/datum/material/plastic=500)
+	turf_type = /turf/open/floor/plastic

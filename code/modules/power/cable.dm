@@ -210,9 +210,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	else
 		return 0
 
-/obj/structure/cable/proc/avail()
+/obj/structure/cable/proc/avail(amount)
 	if(powernet)
-		return powernet.avail
+		return amount ? powernet.avail >= amount : powernet.avail
 	else
 		return 0
 
@@ -555,14 +555,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	custom_materials = list()
 	cost = 1
 
-/obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
-	var/picked = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
-	cable_color = picked
-	update_icon()
-
 /obj/structure/cable_bridge
 	name = "cable bridge"
-	desc = "A bridge to connect different cable layers, or link terminals to incompatible cable layers"
+	desc = "A bridge to connect different cable layers, or link terminals to incompatible cable layers."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cable_bridge"
 	level = 1 //is underfloor

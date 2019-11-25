@@ -78,6 +78,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	icon_state = "darkmatter"
 	density = TRUE
 	anchored = TRUE
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/uid = 1
 	var/static/gl_uid = 1
 	light_range = 4
@@ -177,6 +178,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	investigate_log("has been created.", INVESTIGATE_SUPERMATTER)
 	if(is_main_engine)
 		GLOB.main_supermatter_engine = src
+
+	AddElement(/datum/element/bsa_blocker)
+	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
 
 	soundloop = new(list(src), TRUE)
 
@@ -304,6 +308,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/obj/singularity/energy_ball/E = new(T)
 			E.energy = power
 		qdel(src)
+
+//this is here to eat arguments
+/obj/machinery/power/supermatter_crystal/proc/call_explode()
+	explode()
 
 /obj/machinery/power/supermatter_crystal/process_atmos()
 	var/turf/T = loc
@@ -685,7 +693,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	Consume(AM)
 
 /obj/machinery/power/supermatter_crystal/intercept_zImpact(atom/movable/AM, levels)
+	. = ..()
 	Bumped(AM)
+	. |= FALL_STOP_INTERCEPTING | FALL_INTERCEPTED
 
 /obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/AM)
 	if(isliving(AM))
@@ -721,9 +731,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)
 	return
-
-/obj/machinery/power/supermatter_crystal/prevent_content_explosion()
-	return TRUE
 
 /obj/machinery/power/supermatter_crystal/engine
 	is_main_engine = TRUE

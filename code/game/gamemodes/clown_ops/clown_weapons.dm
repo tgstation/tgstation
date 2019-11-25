@@ -91,7 +91,7 @@
 /obj/item/melee/transforming/energy/sword/bananium/attackby(obj/item/I, mob/living/user, params)
 	if((world.time > next_trombone_allowed) && istype(I, /obj/item/melee/transforming/energy/sword/bananium))
 		next_trombone_allowed = world.time + 50
-		to_chat(user, "You slap the two swords together. Sadly, they do not seem to fit.")
+		to_chat(user, "<span class='warning'>You slap the two swords together. Sadly, they do not seem to fit!</span>")
 		playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 		return TRUE
 	return ..()
@@ -179,7 +179,7 @@
 	bomb = new /obj/item/grenade/syndieminibomb(src)
 	bomb.det_time = det_time
 	if(iscarbon(loc))
-		to_chat(loc, "[src] begins to beep.")
+		to_chat(loc, "<span class='danger'>[src] begins to beep.</span>")
 		var/mob/living/carbon/C = loc
 		C.throw_mode_on()
 	bomb.preprime(loc, null, FALSE)
@@ -213,7 +213,7 @@
 		if(!istype(M.wear_mask, /obj/item/clothing/mask/gas/clown_hat) && !istype(M.wear_mask, /obj/item/clothing/mask/gas/mime) )
 			if(!M.wear_mask || M.dropItemToGround(M.wear_mask))
 				var/obj/item/clothing/mask/fakemoustache/sticky/the_stash = new /obj/item/clothing/mask/fakemoustache/sticky()
-				M.equip_to_slot_or_del(the_stash, SLOT_WEAR_MASK, TRUE, TRUE, TRUE, TRUE)
+				M.equip_to_slot_or_del(the_stash, ITEM_SLOT_MASK, TRUE, TRUE, TRUE, TRUE)
 
 /obj/item/clothing/mask/fakemoustache/sticky
 	var/unstick_time = 600
@@ -271,16 +271,7 @@
 	operation_req_access = list(ACCESS_SYNDICATE)
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
-	max_equip = 3
-
-/obj/mecha/combat/honker/dark/GrantActions(mob/living/user, human_occupant = 0)
-	..()
-	thrusters_action.Grant(user, src)
-
-
-/obj/mecha/combat/honker/dark/RemoveActions(mob/living/user, human_occupant = 0)
-	..()
-	thrusters_action.Remove(user)
+	max_equip = 4
 
 /obj/mecha/combat/honker/dark/add_cell(obj/item/stock_parts/cell/C)
 	if(C)
@@ -291,7 +282,9 @@
 
 /obj/mecha/combat/honker/dark/loaded/Initialize()
 	. = ..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker()
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana()//Needed more offensive weapons.
 	ME.attach(src)

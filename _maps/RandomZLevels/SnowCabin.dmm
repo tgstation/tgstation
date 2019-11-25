@@ -2506,7 +2506,7 @@
 "gD" = (
 /turf/open/chasm{
 	color = "#000000";
-	desc = "<span class='neovgre'>Leave this place, insect.</span>";
+	desc = "<span class='boldwarning'>Leave this place, insect.</span>";
 	name = "Abyss"
 	},
 /area/awaymission/cabin/caves/mountain)
@@ -2562,7 +2562,7 @@
 /area/awaymission/cabin/caves/mountain)
 "gI" = (
 /obj/structure/signpost/salvation{
-	desc = "<span class='neovgre_small'>Come closer, insect.</span>";
+	desc = "<span class='danger'>Come closer, insect.</span>";
 	icon = 'icons/mob/nest.dmi';
 	icon_state = "nether";
 	max_integrity = 99999;
@@ -2995,7 +2995,7 @@
 "hJ" = (
 /obj/item/storage/book/bible{
 	deity_name = "Netherworld";
-	desc = "<span class='shadowling'>Suffering and pain waits for you.<br> Death will not be your end for, with every step you take, your soul moves closer to me.<br> Your darkest fears will soon be realized. <br>There is nowhere to run, for I am <b>everywhere.</b> </span>";
+	desc = "<span class='danger'>Suffering and pain waits for you.<br> Death will not be your end for, with every step you take, your soul moves closer to me.<br> Your darkest fears will soon be realized. <br>There is nowhere to run, for I am <b>everywhere.</b> </span>";
 	icon_state = "tome";
 	name = "Void Tome"
 	},

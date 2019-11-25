@@ -516,6 +516,7 @@
 							ME2.name = "used slime extract"
 							ME2.desc = "This extract has been used up."
 
+			my_atom?.on_reagent_change(REACT_REAGENTS)
 			selected_reaction.on_reaction(src, multiplier)
 			reaction_occurred = 1
 
@@ -566,6 +567,8 @@
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		del_reagent(R.type)
+	if(my_atom)
+		my_atom.on_reagent_change(CLEAR_REAGENTS)
 	return 0
 
 /datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)

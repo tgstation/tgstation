@@ -152,12 +152,14 @@
 /obj/item/clothing/under/rank/civilian/lawyer/female
 	name = "female black suit"
 	icon_state = "black_suit_fem"
-	item_state = "bl_suit"
+	item_state = "black_suit_fem"
+	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
 
 /obj/item/clothing/under/rank/civilian/lawyer/female/skirt
 	name = "female black suitskirt"
 	icon_state = "black_suit_fem_skirt"
-	item_state = "bl_suit"
+	item_state = "black_suit_fem_skirt"
+	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/civilian/lawyer/red
@@ -226,3 +228,8 @@
 	name = "red galaxy suit"
 	icon_state = "lawyer_galaxy_red"
 	item_state = "r_suit"
+
+/obj/item/clothing/under/rank/civilian/cookjorts
+	name = "grilling shorts"
+	desc = "For when all you want in life is to grill for god's sake!"
+	icon_state = "cookjorts"

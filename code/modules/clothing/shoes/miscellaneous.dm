@@ -83,7 +83,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		if(enabled_waddle)
 			waddle = user.AddComponent(/datum/component/waddling)
 		if(user.mind && user.mind.assigned_role == "Clown")
@@ -277,7 +277,7 @@
 /obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
-	if(!istype(user.get_item_by_slot(SLOT_SHOES), /obj/item/clothing/shoes/wheelys))
+	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
 		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
 		return
 	if(!(W.is_occupant(user)))
@@ -352,7 +352,7 @@
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in occupants)
 			occupant.forceMove(user.drop_location())
 			user.visible_message("<span class='warning'>[user] recoils as something slithers out of [src].</span>", "<span class='userdanger'>You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>")
@@ -367,12 +367,12 @@
 	if(user.stat || !(user.mobility_flags & MOBILITY_USE) || user.restrained() || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
 		return
 	if(occupants.len >= max_occupants)
-		to_chat(user, "<span class='notice'>[src] are full!</span>")
+		to_chat(user, "<span class='warning'>[src] are full!</span>")
 		return
 	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
 		occupants += target
 		target.forceMove(src)
-		to_chat(user, "<span class='notice'>[target] slithers into [src]</span>")
+		to_chat(user, "<span class='notice'>[target] slithers into [src].</span>")
 
 /obj/item/clothing/shoes/cowboy/container_resist(mob/living/user)
 	if(!do_after(user, 10, target = user))
@@ -414,3 +414,8 @@
 	loot = list(
 		/obj/item/clothing/shoes/cowboy/lizard = 7,
 		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1)
+		
+/obj/item/clothing/shoes/cookflops
+	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"
+	name = "grilling sandals"
+	icon_state = "cookflops"

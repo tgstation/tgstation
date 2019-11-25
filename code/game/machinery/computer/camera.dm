@@ -56,7 +56,9 @@
 	return ..()
 
 /obj/machinery/computer/security/interact(mob/user)
-	if(stat)
+	if (stat)
+		return
+	if (ismob(user) && !isliving(user)) // ghosts don't need cameras
 		return
 	if (!network)
 		user.unset_machine()
@@ -209,11 +211,10 @@
 	circuit = null
 	light_power = 0
 
-/obj/machinery/computer/security/telescreen/update_icon()
+/obj/machinery/computer/security/telescreen/update_icon_state()
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
-	return
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
