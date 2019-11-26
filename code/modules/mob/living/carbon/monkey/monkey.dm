@@ -62,7 +62,7 @@
 	. = ..()
 	remove_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE)
 	var/amount
-	if(reagents.has_reagent(/datum/reagent/drug/opioid/morphine) || reagents.has_reagent(/datum/reagent/drug/opioid/dimorphine))
+	if(reagents.has_reagent(/datum/reagent/drug/opioid/morphine) || reagents.has_reagent(/datum/reagent/drug/opioid/diamorphine))
 		amount = -1
 	if(reagents.has_reagent(/datum/reagent/consumable/nuka_cola))
 		amount = -1

@@ -42,10 +42,10 @@
 	required_reagents = list(/datum/reagent/medicine/ephedrine = 1, /datum/reagent/drug/crank = 1, /datum/reagent/drug/amphetamine/methamphetamine = 1,)
 	required_temp = 574
 
-/datum/chemical_reaction/dimorphine
+/datum/chemical_reaction/diamorphine
 	name = "DImorphine"
-	id = /datum/reagent/drug/opioid/dimorphine
-	results = list(/datum/reagent/drug/opioid/dimorphine = 2)
+	id = /datum/reagent/drug/opioid/diamorphine
+	results = list(/datum/reagent/drug/opioid/diamorphine = 2)
 	required_reagents = list(/datum/reagent/carbon = 2, /datum/reagent/hydrogen = 2, /datum/reagent/consumable/ethanol = 1, /datum/reagent/oxygen = 1)
 	required_temp = 480
 
@@ -60,7 +60,7 @@
 	name = "Fentanyl"
 	id = /datum/reagent/drug/opioid/fentanyl
 	results = list(/datum/reagent/drug/opioid/fentanyl = 4)
-	required_reagents = list(/datum/reagent/drug/opioid/dimorphine = 1 , /datum/reagent/drug/space_drugs = 2)
+	required_reagents = list(/datum/reagent/drug/opioid/diamorphine = 1 , /datum/reagent/drug/space_drugs = 2)
 	required_temp = 675
 
 /datum/chemical_reaction/codeine
@@ -83,7 +83,7 @@
 	name = /datum/reagent/drug/aranesp
 	id = /datum/reagent/drug/aranesp
 	results = list(/datum/reagent/drug/aranesp = 3)
-	required_reagents = list(/datum/reagent/medicine/epinephrine = 1, /datum/reagent/medicine/atropine = 1, /datum/reagent/drug/opioid/morphine = 1)
+	required_reagents = list(/datum/reagent/medicine/epinephrine = 1, /datum/reagent/medicine/atropine = 1, /datum/reagent/drug/opioid/diamorphine = 1)
 
 /datum/chemical_reaction/ecstasy
 	name = "Ecstasy"

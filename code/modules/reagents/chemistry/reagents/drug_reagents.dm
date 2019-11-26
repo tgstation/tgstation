@@ -400,7 +400,7 @@
 	..()
 
 
-/datum/reagent/drug/opioid/dimorphine
+/datum/reagent/drug/opioid/diamorphine
 	name = "Dimorphine"
 	description = "Synthetic morphine, also known as heroin. Far more addictive and dangerous than morphine, but easier to synthesize in a lab."
 	reagent_state = LIQUID
@@ -418,12 +418,12 @@
 	M.unignore_slowdown(type)
 	..()
 
-/datum/reagent/drug/opioid/dimorphine/on_mob_life(mob/living/carbon/M)
+/datum/reagent/drug/opioid/diamorphine/on_mob_life(mob/living/carbon/M)
 	M.set_drugginess(20)
 	M.Jitter(4)
 	..()
 
-/datum/reagent/drug/opioid/dimorphine/overdose_process(mob/living/carbon/M)
+/datum/reagent/drug/opioid/diamorphine/overdose_process(mob/living/carbon/M)
 	if(prob(66))
 		M.drop_all_held_items()
 		M.Dizzy(2 * opioid_power)
