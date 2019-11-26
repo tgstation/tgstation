@@ -134,7 +134,3 @@
 	set desc = "See all of your achievements!"
 
 	player_details.achievements.ui_interact(usr)
-
-
-/mob/verb/gimme_jackpot()
-	client.give_award(/datum/award/achievement/misc/time_waste,src)
