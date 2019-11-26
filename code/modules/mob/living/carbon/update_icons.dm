@@ -210,6 +210,11 @@
 /mob/living/carbon/update_body()
 	update_body_parts()
 
+/mob/living/carbon/proc/assign_bodypart_ownership()
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		BP.original_owner = src
+
 /mob/living/carbon/proc/update_body_parts()
 	//CHECK FOR UPDATE
 	var/oldkey = icon_render_key
