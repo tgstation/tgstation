@@ -15,7 +15,7 @@ export const OreBox = props => {
       >
         <BlockQuote mb={1}>
           If you are wearing a mining stachel on your belt or in a pocket and dragging the box,
-          all ores will be places in here.<br />
+          all ores will be placed in here.<br />
           Gibtonite is not accepted.
         </BlockQuote>
         <Box>
