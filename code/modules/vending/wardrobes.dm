@@ -419,3 +419,16 @@
 	payment_department = ACCOUNT_MED
 /obj/item/vending_refill/wardrobe/viro_wardrobe
 	machine_name = "ViroDrobe"
+
+/obj/machinery/vending/wardrobe/explo_wardrobe
+	name = "ExploDrobe"
+	desc = "A machine full of clothing for the most intrepid explorers."
+	icon_state = "explodrobe"
+	product_ads = "Don't take on space unprepared! Perfect for your next voyage into the inky unknown!"
+	vend_reply = "Thank you for using the ExploDrobe!"
+	products = list(/obj/item/clothing/under/rank/exploration/space_explorer = 2,
+					/obj/item/clothing/shoes/workboots/explorer = 2)
+	refill_canister = /obj/item/vending_refill/wardrobe/explo_wardrobe
+	payment_department = ACCOUNT_EXP
+/obj/item/vending_refill/wardrobe/explo_wardrobe
+	machine_name = "ExploDrobe"

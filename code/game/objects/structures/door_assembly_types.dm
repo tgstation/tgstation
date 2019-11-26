@@ -155,6 +155,13 @@
 	glass_type = /obj/machinery/door/airlock/virology/glass
 	airlock_type = /obj/machinery/door/airlock/virology
 
+/obj/structure/door_assembly/door_assembly_exploration
+	name = "exploration airlock assembly"
+	icon = 'icons/obj/doors/airlocks/station/exploration.dmi'
+	base_name = "exploration airlock"
+	glass_type = /obj/machinery/door/airlock/exploration/glass
+	airlock_type = /obj/machinery/door/airlock/exploration
+
 /obj/structure/door_assembly/door_assembly_centcom
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'

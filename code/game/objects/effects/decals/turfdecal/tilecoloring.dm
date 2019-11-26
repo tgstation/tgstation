@@ -38,6 +38,10 @@
 	color = "#D4D4D4"
 	alpha = 50
 
+/obj/effect/turf_decal/tile/orange
+	name = "orange corner"
+	color = "#CC3300"
+
 /obj/effect/turf_decal/trimline
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
@@ -235,4 +239,28 @@
 	icon_state = "trimline_corner_fill"
 
 /obj/effect/turf_decal/trimline/neutral/filled/end
+	icon_state = "trimline_end_fill"
+
+/obj/effect/turf_decal/trimline/orange
+	color = "#CC3300"
+
+/obj/effect/turf_decal/trimline/orange/line
+	icon_state = "trimline"
+
+/obj/effect/turf_decal/trimline/orange/corner
+	icon_state = "trimline_corner"
+
+/obj/effect/turf_decal/trimline/orange/end
+	icon_state = "trimline_end"
+
+/obj/effect/turf_decal/trimline/orange/filled
+	icon_state = "trimline_box_fill"
+
+/obj/effect/turf_decal/trimline/orange/filled/line
+	icon_state = "trimline_fill"
+
+/obj/effect/turf_decal/trimline/orange/filled/corner
+	icon_state = "trimline_corner_fill"
+
+/obj/effect/turf_decal/trimline/orange/filled/end
 	icon_state = "trimline_end_fill"

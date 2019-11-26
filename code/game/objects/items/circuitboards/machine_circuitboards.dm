@@ -1170,3 +1170,10 @@
 		/obj/item/stock_parts/manipulator = /obj/item/stock_parts/manipulator/femto,
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra,
 		/obj/item/stock_parts/scanning_module = /obj/item/stock_parts/scanning_module/triphasic)
+
+//Exploration
+
+/obj/item/circuitboard/machine/protolathe/department/exploration
+	name = "Departmental Protolathe (Machine Board) - Exploration"
+	icon_state = "exploration"
+	build_path = /obj/machinery/rnd/production/protolathe/department/exploration

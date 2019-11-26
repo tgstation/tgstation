@@ -159,6 +159,11 @@
 	icon_state = "explorer"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/shoes/workboots/explorer
+	name = "explorer boots"
+	desc = "High quality boots made for the station, and beyond. (Note- not space proof)."
+	icon_state = "jackboots"
+
 /obj/item/clothing/shoes/cult
 	name = "\improper Nar'Sien invoker boots"
 	desc = "A pair of boots worn by the followers of Nar'Sie."
