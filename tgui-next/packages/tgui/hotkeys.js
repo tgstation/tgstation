@@ -219,13 +219,17 @@ const subscribeToKeyPresses = listenerFn => {
 // Middleware
 export const hotKeyMiddleware = store => {
   const { dispatch } = store;
+  // Subscribe to key events
+  subscribeToKeyPresses((e, eventType) => {
+    // IE8: Can't determine the focused element, so by extension it passes
+    // keypresses when inputs are focused.
+    if (tridentVersion > 4) {
+      handlePassthrough(e, eventType);
+    }
+    handleHotKey(e, eventType, dispatch);
+  });
   // IE8: focusin/focusout only available on IE9+
   if (tridentVersion > 4) {
-    // Subscribe to key events
-    subscribeToKeyPresses((e, eventType) => {
-      handlePassthrough(e, eventType);
-      handleHotKey(e, eventType, dispatch);
-    });
     // Clean up when browser window completely loses focus
     subscribeToLossOfFocus(() => {
       releaseHeldKeys();

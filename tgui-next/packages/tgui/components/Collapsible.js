@@ -1,15 +1,13 @@
-import { classes } from 'common/react';
-import { Component, Fragment } from 'inferno';
+import { Component } from 'inferno';
 import { Box } from './Box';
-import { Icon } from './Icon';
+import { Button } from './Button';
 
 export class Collapsible extends Component {
-
   constructor(props) {
     super(props);
-    const { open = false } = props;
+    const { open } = props;
     this.state = {
-      open,
+      open: open || false,
     };
   }
 
@@ -21,56 +19,33 @@ export class Collapsible extends Component {
       color = "default",
       title,
       buttons,
-      onClick,
-      ...boxProps
-    } = props;
-    // Box props
-    const {
-      className,
       ...rest
-    } = boxProps;
+    } = props;
     return (
-      <Fragment>
-        <table
-          style={{
-            "width": "100%",
-          }}
-        >
-          <tr>
-            <td>
-              <Box
-                mb={open ? 0 : 1}
-                className={classes([
-                  "Button",
-                  "Button--fluid",
-                  "Button--color--" + color,
-                  className,
-                ])}
-                onClick={e => this.setState({open: !open})}
-                {...rest}
-              >
-                <Box
-                  inline
-                  mr={1}
-                >
-                  <Icon name={this.state.open ? "chevron-down" : "chevron-right"} />
-                </Box>
-                {title}
-              </Box>
-            </td>
-            {buttons && (
-              <td
-                style={{
-                  "width": "0.01%",
-                }}
-              >
-                {buttons}
-              </td>
-            )}
-          </tr>
-        </table>
-        {open && children}
-      </Fragment>
+      <Box mb={1}>
+        <div className="Table">
+          <div className="Table__cell">
+            <Button
+              fluid
+              color={color}
+              icon={open ? 'chevron-down' : 'chevron-right'}
+              onClick={() => this.setState({ open: !open })}
+              {...rest}>
+              {title}
+            </Button>
+          </div>
+          {buttons && (
+            <div className="Table__cell Table__cell--collapsing">
+              {buttons}
+            </div>
+          )}
+        </div>
+        {open && (
+          <Box mt={1}>
+            {children}
+          </Box>
+        )}
+      </Box>
     );
   }
 }
