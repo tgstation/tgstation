@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "Announcements in dark mode are no longer solid black and borderline unreadable"
