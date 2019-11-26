@@ -464,7 +464,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
 		l.rad_act(rads)
 
-	power =  max(power - min(((power/500)**3) * powerloss_inhibitor, abs((power - 100) * powerloss_inhibitor)),1)
+	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
+	//Use of the second function improves the power gain imparted by using co2
+	power =  max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor),1)
 
 	if(power > POWER_PENALTY_THRESHOLD || damage > damage_penalty_point)
 
