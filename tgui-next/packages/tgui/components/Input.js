@@ -1,9 +1,7 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
-import { tridentVersion } from '../byond';
 
-/* eslint-disable react/destructuring-assignment */
 export class Input extends Component {
   constructor() {
     super();
@@ -63,9 +61,6 @@ export class Input extends Component {
         </div>
         <input
           ref={this.inputRef}
-          // IE8: Hack to prevent inferno from "writing" to the type
-          // IE8 This prop was read only after creation in IE8
-          type={tridentVersion <= 4 ? undefined : 'text'}
           className="Input__input"
           onInput={e => {
             this.setEditing(true);
