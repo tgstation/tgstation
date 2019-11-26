@@ -163,4 +163,4 @@
 			keyline += ";"
 			outfile << keyline.Join()
 		i++
-	outfile << "END;"
+	outfile << "END"
