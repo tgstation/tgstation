@@ -1,6 +1,6 @@
 import { act } from '../byond';
 import { Fragment } from 'inferno';
-import { BlockQuote, Box, Table, Button, Section, NoticeBox } from '../components';
+import { Box, Table, Button, Section } from '../components';
 import { toTitleCase } from 'common/string';
 
 export const OreBox = props => {
@@ -41,7 +41,7 @@ export const OreBox = props => {
           ))}
         </Table>
       </Section>
-      <Section title="Ore Box" >
+      <Section>
         <Box>
           All ores will be placed in here when you are wearing a mining stachel
           on your belt or in a pocket while dragging the ore box.<br />
