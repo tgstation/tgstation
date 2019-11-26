@@ -11,7 +11,7 @@
 /datum/award/score/blood_miner_score
 	name = "Blood-Drunk Miners Killed"
 	desc = "You've killed HOW many?"
-	hub_id = BUBBLEGUM_SCORE
+	hub_id = MINER_SCORE
 
 /datum/award/score/bubblegum_score
 	name = "Bubblegums Killed"
@@ -31,7 +31,7 @@
 /datum/award/score/hierophant_score
 	name = "Hierophants Killed"
 	desc = "You've killed HOW many?"	
-	hub_id = LEGION_SCORE
+	hub_id = HIEROPHANT_SCORE
 
 /datum/award/score/legion_score
 	name = "Legions Killed"
