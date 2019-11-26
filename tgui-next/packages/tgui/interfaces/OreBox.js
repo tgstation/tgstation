@@ -1,6 +1,6 @@
 import { act } from '../byond';
 import { Fragment } from 'inferno';
-import { BlockQuote, Box, Table, Button, Section } from '../components';
+import { BlockQuote, Box, Table, Button, Section, NoticeBox } from '../components';
 import { toTitleCase } from 'common/string';
 
 export const OreBox = props => {
@@ -11,37 +11,42 @@ export const OreBox = props => {
   return (
     <Fragment>
       <Section
-        title="Ore Box"
-      >
-        <BlockQuote mb={1}>
-          If you are wearing a mining stachel on your belt or in a pocket and dragging the box,
-          all ores will be placed in here.<br />
-          Gibtonite is not accepted.
-        </BlockQuote>
-        <Box>
-          <Box inline color="label" mr={1}>
-            Remove all ores from the box
-          </Box>
+        title="Ores"
+        buttons={(
           <Button
             content="Empty"
             onClick={() => act(ref, 'removeall')} />
-        </Box>
-      </Section>
-      <Section title="Ores">
+        )}
+      >
         <Table>
+          <Table.Row bold>
+            <Table.Cell bold>
+              Ore
+            </Table.Cell>
+            <Table.Cell bold textAlign="right">
+              Amount
+            </Table.Cell>
+          </Table.Row>
           {materials.map(material => (
             <Table.Row key={material.type}>
               <Table.Cell>
                 {toTitleCase(material.name)}
               </Table.Cell>
-              <Table.Cell collapsing textAlign="right">
+              <Table.Cell textAlign="right">
                 <Box mr={2} color="label" inline>
-                  {material.amount} Ore
+                  {material.amount}
                 </Box>
               </Table.Cell>
             </Table.Row>
           ))}
         </Table>
+      </Section>
+      <Section title="Ore Box" >
+        <Box>
+          All ores will be placed in here when you are wearing a mining stachel
+          on your belt or in a pocket while dragging the ore box.<br />
+          Gibtonite is not accepted.
+        </Box>
       </Section>
     </Fragment>
   );
