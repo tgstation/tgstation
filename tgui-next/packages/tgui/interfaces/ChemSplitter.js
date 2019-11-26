@@ -1,12 +1,9 @@
-import { act } from '../byond';
-import { LabeledList, Section } from '../components';
-import { NumberInput } from '../components/NumberInput';
 import { toFixed } from 'common/math';
+import { useBackend } from '../backend';
+import { LabeledList, NumberInput, Section } from '../components';
 
 export const ChemSplitter = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     straight,
     side,
@@ -25,8 +22,10 @@ export const ChemSplitter = props => {
             format={value => toFixed(value, 2)}
             step={0.05}
             stepPixelSize={4}
-            onChange={(e, value) => act(ref, "set_amount", {target: "straight", amount: value})}
-          />
+            onChange={(e, value) => act('set_amount', {
+              target: 'straight',
+              amount: value,
+            })} />
         </LabeledList.Item>
         <LabeledList.Item label="Side">
           <NumberInput
@@ -38,8 +37,10 @@ export const ChemSplitter = props => {
             format={value => toFixed(value, 2)}
             step={0.05}
             stepPixelSize={4}
-            onChange={(e, value) => act(ref, "set_amount", {target: "side", amount: value})}
-          />
+            onChange={(e, value) => act('set_amount', {
+              target: 'side',
+              amount: value,
+            })} />
         </LabeledList.Item>
       </LabeledList>
     </Section>

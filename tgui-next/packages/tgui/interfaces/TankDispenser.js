@@ -1,10 +1,8 @@
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Button, LabeledList, Section } from '../components';
 
 export const TankDispenser = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   return (
     <Section>
       <LabeledList>
@@ -15,23 +13,19 @@ export const TankDispenser = props => {
               icon={data.plasma ? "square" : "square-o"}
               content="Dispense"
               disabled={!data.plasma}
-              onClick={() => act(ref, "plasma")}
-            />
-          )}
-        >
+              onClick={() => act('plasma')} />
+          )}>
           {data.plasma}
         </LabeledList.Item>
         <LabeledList.Item
           label="Oxygen"
           buttons={(
             <Button
-              icon={data.oxygen ? "square" : "square-o"}
+              icon={data.oxygen ? 'square' : 'square-o'}
               content="Dispense"
               disabled={!data.oxygen}
-              onClick={() => act(ref, "oxygen")}
-            />
-          )}
-        >
+              onClick={() => act('oxygen')} />
+          )}>
           {data.oxygen}
         </LabeledList.Item>
       </LabeledList>

@@ -1,7 +1,7 @@
 import { decodeHtmlEntities } from 'common/string';
 import { Component, Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, Input, LabeledList, Section, Table, Tabs } from '../components';
+import { Box, Button, Input, Section, Table, Tabs } from '../components';
 
 // It's a class because we need to store state in the form of the current
 // hovered item, and current search terms
@@ -97,7 +97,7 @@ export class Uplink extends Component {
               return (
                 <Tabs.Tab
                   key={name}
-                  label={name}>
+                  label={`${name} (${items.length})`}>
                   {() => (
                     <ItemList
                       compact={compact_mode}

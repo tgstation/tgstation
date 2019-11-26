@@ -223,17 +223,35 @@ class KitchenSinkTabs extends Component {
 }
 
 const KitchenSinkTooltip = props => {
+  const positions = [
+    'top',
+    'left',
+    'right',
+    'bottom',
+    'bottom-left',
+    'bottom-right',
+  ];
   return (
     <Box>
-      <Box inline position="relative" mr={1}>
-        Box (hover me).
-        <Tooltip
-          content="Tooltip text."
-          position="right" />
+      <Box>
+        <Box inline position="relative" mr={1}>
+          Box (hover me).
+          <Tooltip content="Tooltip text." />
+        </Box>
+        <Button
+          tooltip="Tooltip text."
+          content="Button" />
       </Box>
-      <Button
-        tooltip="Tooltip text."
-        content="Button" />
+      <Box mt={1}>
+        {positions.map(position => (
+          <Button
+            key={position}
+            color="transparent"
+            tooltip="Tooltip text."
+            tooltipPosition={position}
+            content={position} />
+        ))}
+      </Box>
     </Box>
   );
 };

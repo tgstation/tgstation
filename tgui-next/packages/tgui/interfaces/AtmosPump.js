@@ -1,10 +1,8 @@
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 
 export const AtmosPump = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   return (
     <Section>
       <LabeledList>
@@ -13,7 +11,7 @@ export const AtmosPump = props => {
             icon={data.on ? 'power-off' : 'times'}
             content={data.on ? 'On' : 'Off'}
             selected={data.on}
-            onClick={() => act(ref, 'power')} />
+            onClick={() => act('power')} />
         </LabeledList.Item>
         {data.max_rate ? (
           <LabeledList.Item label="Transfer Rate">
@@ -24,7 +22,7 @@ export const AtmosPump = props => {
               unit="L/s"
               minValue={0}
               maxValue={200}
-              onChange={(e, value) => act(ref, 'rate', {
+              onChange={(e, value) => act('rate', {
                 rate: value,
               })} />
             <Button
@@ -32,7 +30,7 @@ export const AtmosPump = props => {
               icon="plus"
               content="Max"
               disabled={data.rate === data.max_rate}
-              onClick={() => act(ref, 'rate', {
+              onClick={() => act('rate', {
                 rate: 'max',
               })} />
           </LabeledList.Item>
@@ -46,7 +44,7 @@ export const AtmosPump = props => {
               minValue={0}
               maxValue={4500}
               step={10}
-              onChange={(e, value) => act(ref, 'pressure', {
+              onChange={(e, value) => act('pressure', {
                 pressure: value,
               })} />
             <Button
@@ -54,7 +52,7 @@ export const AtmosPump = props => {
               icon="plus"
               content="Max"
               disabled={data.pressure === data.max_pressure}
-              onClick={() => act(ref, 'pressure', {
+              onClick={() => act('pressure', {
                 pressure: 'max',
               })} />
           </LabeledList.Item>
