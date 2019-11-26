@@ -6,6 +6,7 @@
 	name = "Plasma Fist"
 	id = MARTIALART_PLASMAFIST
 	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
+	var/nobomb = FALSE
 	var/plasma_power = 1 //starts at a 1, 2, 4 explosion.
 
 
@@ -24,7 +25,7 @@
 		return TRUE
 	if(findtext(streak,PLASMA_COMBO))
 		streak = ""
-		if(A == D)
+		if(A == D && !nobomb)
 			Apotheosis(A,D)
 		else
 			Plasma(A,D)
@@ -62,17 +63,18 @@
 	to_chat(A, "<span class='danger'>You hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
 	var/turf/Dturf = get_turf(D)
 	D.gib()
-	if(plasma_power < 12)
-		plasma_power++
-		to_chat(A, "<span class='nicegreen'>Power increasing! Your </span><span class='notice'>Apotheosis</span><span class='nicegreen'> is now at power level [plasma_power]!</span>")
-		new /obj/effect/temp_visual/plasma_soul(Dturf, A)
-		var/oldcolor = A.color
-		A.color = "#9C00FF"
-		flash_color(A, flash_color = "#9C00FF", flash_time = 3 SECONDS)
-		animate(A, color = oldcolor, time = 3 SECONDS)
-	else
-		to_chat(A, "<span class='warning'>You cannot power up your </span><span class='notice'>Apotheosis</span><span class='warning'> any more!</span>")
-		new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and then explodes instead of storing it inside of you.
+	if(!nobomb)
+		if(plasma_power < 12)
+			plasma_power++
+			to_chat(A, "<span class='nicegreen'>Power increasing! Your </span><span class='notice'>Apotheosis</span><span class='nicegreen'> is now at power level [plasma_power]!</span>")
+			new /obj/effect/temp_visual/plasma_soul(Dturf, A)
+			var/oldcolor = A.color
+			A.color = "#9C00FF"
+			flash_color(A, flash_color = "#9C00FF", flash_time = 3 SECONDS)
+			animate(A, color = oldcolor, time = 3 SECONDS)
+		else
+			to_chat(A, "<span class='warning'>You cannot power up your </span><span class='notice'>Apotheosis</span><span class='warning'> any more!</span>")
+			new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and then explodes instead of storing it inside of you.
 	log_combat(A, D, "gibbed (Plasma Fist)")
 	return
 
@@ -128,8 +130,9 @@
 	to_chat(usr, "<b><i>You clench your fists and have a flashback of knowledge...</i></b>")
 	to_chat(usr, "<span class='notice'>Tornado Sweep</span>: Harm Harm Disarm. Repulses opponent and everyone back.")
 	to_chat(usr, "<span class='notice'>Throwback</span>: Disarm Harm Disarm. Throws the opponent and an item at them.")
-	to_chat(usr, "<span class='notice'>The Plasma Fist</span>: Harm Disarm Disarm Disarm Harm. Instantly gibs an opponent. Each kill with this grows your <span class='notice'>Apotheosis</span> explosion size.")
-	to_chat(usr, "<span class='notice'>Apotheosis</span>: Use <span class='notice'>The Plasma Fist</span> on yourself. Sends you away in a glorious explosion.")
+	to_chat(usr, "<span class='notice'>The Plasma Fist</span>: Harm Disarm Disarm Disarm Harm. Instantly gibs an opponent.[nobomb ? "" : " Each kill with this grows your <span class='notice'>Apotheosis</span> explosion size."]")
+	if(!nobomb)
+		to_chat(usr, "<span class='notice'>Apotheosis</span>: Use <span class='notice'>The Plasma Fist</span> on yourself. Sends you away in a glorious explosion.")
 
 
 /obj/effect/temp_visual/plasma_soul
@@ -157,3 +160,7 @@
 	name = "plasma"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	desc = "Flowing energy."
+
+/datum/martial_art/plasma_fist/nobomb
+	name = "Weakened Plasma Fist"
+	nobomb = TRUE
