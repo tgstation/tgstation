@@ -1,7 +1,7 @@
-import { Component, Fragment } from "inferno";
 import { classes } from 'common/react';
+import { Component, Fragment } from 'inferno';
 import { Box } from './Box';
-import { Icon } from "./Icon";
+import { Icon } from './Icon';
 
 export class Collapsible extends Component {
 
@@ -9,7 +9,7 @@ export class Collapsible extends Component {
     super(props);
     const { open = false } = props;
     this.state = {
-      open: open,
+      open,
     };
   }
 
