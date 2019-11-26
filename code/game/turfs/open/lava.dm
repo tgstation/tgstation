@@ -177,6 +177,8 @@
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/lava/smooth/jungle
+	name = "boiling mud"
+	desc = "A pool of bubbling slurry with steam coming off of it. Looks dangerous!"
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/jungle
