@@ -574,6 +574,7 @@
 	setCloneLoss(0, 0)
 	remove_CC(FALSE)
 	set_disgust(0)
+	losebreath = 0
 	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = BODYTEMP_NORMAL
