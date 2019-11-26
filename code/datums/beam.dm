@@ -2,7 +2,6 @@
 /datum/beam
 	var/atom/origin = null
 	var/atom/target = null
-	var/turf/origin_turf
 	var/list/elements = list() //list of beams
 	var/icon/base_icon = null
 	var/icon
@@ -12,7 +11,6 @@
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,btype = /obj/effect/ebeam)
 	origin = beam_origin
 	target = beam_target
-	origin_turf = get_turf(origin)
 	base_icon = new(beam_icon,beam_icon_state)
 	icon = beam_icon
 	icon_state = beam_icon_state
@@ -48,6 +46,7 @@
 /datum/beam/proc/Draw()
 	var/Angle = round(Get_Angle(origin,target))
 	var/matrix/rot_matrix = matrix()
+	var/turf/origin_turf = get_turf(origin)
 	rot_matrix.Turn(Angle)
 
 	//Translation vector for origin and target
