@@ -213,13 +213,20 @@
 		return !C.silent
 
 /datum/emote/living/laugh/get_sound(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.mind?.miming)
+		return
+	switch(H.dna.species.id)
+		if("human")
 			if(user.gender == FEMALE)
 				return 'sound/voice/human/womanlaugh.ogg'
 			else
 				return pick('sound/voice/human/manlaugh1.ogg', 'sound/voice/human/manlaugh2.ogg')
+		if("felinid")
+			if(user.gender == FEMALE)
+				return pick('sound/voice/felinid/nyahaha1.ogg', 'sound/voice/felinid/nyahaha2.ogg', 'sound/voice/felinid/nyaha.ogg', 'sound/voice/felinid/nyahehe.ogg')
 
 /datum/emote/living/look
 	key = "look"
