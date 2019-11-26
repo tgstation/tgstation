@@ -8,7 +8,7 @@
 	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
 	var/nobomb = FALSE
 	var/plasma_power = 1 //starts at a 1, 2, 4 explosion.
-
+	var/plasma_cap = 12 //max size explosion level
 
 /datum/martial_art/plasma_fist/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,TORNADO_COMBO))
@@ -63,20 +63,24 @@
 	to_chat(A, "<span class='danger'>You hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
 	var/turf/Dturf = get_turf(D)
 	D.gib()
-	if(!nobomb)
-		if(plasma_power < 12)
-			plasma_power++
-			to_chat(A, "<span class='nicegreen'>Power increasing! Your </span><span class='notice'>Apotheosis</span><span class='nicegreen'> is now at power level [plasma_power]!</span>")
-			new /obj/effect/temp_visual/plasma_soul(Dturf, A)
-			var/oldcolor = A.color
-			A.color = "#9C00FF"
-			flash_color(A, flash_color = "#9C00FF", flash_time = 3 SECONDS)
-			animate(A, color = oldcolor, time = 3 SECONDS)
-		else
-			to_chat(A, "<span class='warning'>You cannot power up your </span><span class='notice'>Apotheosis</span><span class='warning'> any more!</span>")
-			new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and then explodes instead of storing it inside of you.
 	log_combat(A, D, "gibbed (Plasma Fist)")
-	return
+	if(nobomb)
+		return
+	if(!isliving(target) || !target.mind)
+		to_chat(A, "<span class='warning'>You cannot power up your </span><span class='notice'>Apotheosis</span><span class='warning'> off of this!</span>")
+		return
+	else if(plasma_power >= plasma_cap)
+		to_chat(A, "<span class='warning'>You cannot power up your </span><span class='notice'>Apotheosis</span><span class='warning'> any more!</span>")
+		new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and poofs.
+	else
+		plasma_power++
+		to_chat(A, "<span class='nicegreen'>Power increasing! Your </span><span class='notice'>Apotheosis</span><span class='nicegreen'> is now at power level [plasma_power]!</span>")
+		new /obj/effect/temp_visual/plasma_soul(Dturf, A)
+		var/oldcolor = A.color
+		A.color = "#9C00FF"
+		flash_color(A, flash_color = "#9C00FF", flash_time = 3 SECONDS)
+		animate(A, color = oldcolor, time = 3 SECONDS)
+	
 
 /datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	A.say("APOTHEOSIS!!", forced="plasma fist")
@@ -91,10 +95,10 @@
 
 	A.apply_damage(rand(50,70), BRUTE)
 	A.Stun(6 SECONDS) //stops them from comboing apotheosis twice (lol)
+	log_combat(A, A, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
 	addtimer(CALLBACK(src,.proc/Apotheosis_end, A), 6 SECONDS)
 	playsound(boomspot, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 	explosion(boomspot,plasma_power,plasma_power*2,plasma_power*4,ignorecap = TRUE)
-	log_combat(A, A, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/carbon/human/dying)
 	if(dying.stat == DEAD)
