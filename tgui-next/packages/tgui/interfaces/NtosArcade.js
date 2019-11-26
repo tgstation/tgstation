@@ -1,21 +1,19 @@
 import { act } from '../byond';
-import { Component, Fragment } from 'inferno';
-import { Box, Button, ColorBox, Icon, LabeledList, ProgressBar, Section, AnimatedNumber, Grid } from '../components';
+import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section } from '../components';
 
 export const NtosArcade = props => {
   const { state } = props;
   const { config, data } = state;
   const { ref } = config;
- 
   return (
     <Section title="Outbomb Cuban Pete Ultra"
       textAlign="center">
       <Box>
         <Grid>
           <Grid.Column size={2}>
-            <Box my={1} mx={1} />
+            <Box m={1} />
             <LabeledList>
-              <LabeledList.Item 
+              <LabeledList.Item
                 label="Player Health">
                 <ProgressBar
                   value={data.PlayerHitpoints}
@@ -30,7 +28,7 @@ export const NtosArcade = props => {
                   {data.PlayerHitpoints}HP
                 </ProgressBar>
               </LabeledList.Item>
-              <LabeledList.Item 
+              <LabeledList.Item
                 label="Player Magic">
                 <ProgressBar
                   value={data.PlayerMP}
@@ -62,10 +60,8 @@ export const NtosArcade = props => {
               inline
               width={26}
               textAlign="center">
-              <img
-                src={data.BossID} />
-            </Section> 
-            
+              <img src={data.BossID} />
+            </Section>
           </Grid.Column>
         </Grid>
         <Box my={1} mx={4} />
@@ -108,8 +104,7 @@ export const NtosArcade = props => {
           content="Claim Tickets" />
       </Box>
       <Box color={data.TicketCount >= 1 ? "good" : "normal"}>
-			Earned Tickets: 
-        {data.TicketCount}
+			Earned Tickets: {data.TicketCount}
       </Box>
     </Section>
   );
