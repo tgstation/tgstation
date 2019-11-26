@@ -513,7 +513,7 @@
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in sortList(list("Lavaland Miner", "Asteroid Miner"))
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in sortList(list("Lavaland Miner", "Asteroid Miner", "Spider Miner", "Hover Miner"))
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -521,6 +521,12 @@
 			cyborg_base_icon = "miner"
 		if("Asteroid Miner")
 			cyborg_base_icon = "minerOLD"
+			special_light_key = "miner"
+		if("Spider Miner")
+			cyborg_base_icon = "spidermin"
+		if("Hover Miner")
+			cyborg_base_icon = "canmin"
+			hat_offset = INFINITY //large blinking light ontop of head = difficulty wearing hats.
 	return ..()
 
 /obj/item/robot_module/miner/rebuild_modules()
