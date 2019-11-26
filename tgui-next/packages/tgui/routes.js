@@ -48,6 +48,7 @@ import { NtosWrapper } from './interfaces/NtosWrapper';
 import { NuclearBomb } from './interfaces/NuclearBomb';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
+import { OreBox } from './interfaces/OreBox';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PowerMonitor } from './interfaces/PowerMonitor';
@@ -284,6 +285,10 @@ const ROUTES = {
   },
   ore_redemption_machine: {
     component: () => OreRedemptionMachine,
+    scrollable: true,
+  },
+  ore_box: {
+    component: () => OreBox,
     scrollable: true,
   },
   operating_computer: {
