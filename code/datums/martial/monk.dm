@@ -84,8 +84,10 @@
 
 /datum/martial_art/monk/process(mob/living/carbon/human/H)
 	..()
+	if(purity_of_body)
+		ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, H)
 	if(diamond_body)
-		ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, TRAIT_TOXIMMUNE)
+		ADD_TRAIT(H, TRAIT_TOXIMMUNE, H)
 
 /datum/martial_art/monk/proc/do_level_up()
 	if(current_level % 4 == 0)
