@@ -1461,7 +1461,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.send_item_attack_message(I, user, critical = TRUE)
 			else
 				H.send_item_attack_message(I, user)
-			apply_damage(dmg_to_deal, I.damtype, blocked = armor_block)
+			H.apply_damage(dmg_to_deal, I.damtype, blocked = armor_block)
 			if(I.damtype == BRUTE)
 				if(prob(33))
 					I.add_mob_blood(src)
