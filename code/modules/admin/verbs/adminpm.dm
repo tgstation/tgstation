@@ -188,16 +188,7 @@
 
 				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
 				if(CONFIG_GET(flag/popup_admin_pm))
-					spawn()	//so we don't hold the caller proc up
-						var/sender = src
-						var/sendername = key
-						var/reply = input(recipient, msg,"Admin PM from-[sendername]", "") as message|null		//show message and await a reply
-						if(recipient && reply)
-							if(sender)
-								recipient.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
-							else
-								adminhelp(reply)													//sender has left, adminhelp instead
-						return
+					INVOKE_ASYNC(src, .proc/popup_admin_pm, recipient, msg)
 
 			else		//neither are admins
 				to_chat(src, "<span class='danger'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</span>")
@@ -215,7 +206,15 @@
 			if(X.key!=key && X.key!=recipient.key)	//check client/X is an admin and isn't the sender or recipient
 				to_chat(X, "<span class='notice'><B>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> [keywordparsedmsg]</span>" )
 
-
+/client/proc/popup_admin_pm(client/recipient, msg)
+	var/sender = src
+	var/sendername = key
+	var/reply = input(recipient, msg,"Admin PM from-[sendername]", "") as message|null		//show message and await a reply
+	if(recipient && reply)
+		if(sender)
+			recipient.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
+		else
+			adminhelp(reply)													//sender has left, adminhelp instead
 
 #define IRC_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
 /proc/IrcPm(target,msg,sender)

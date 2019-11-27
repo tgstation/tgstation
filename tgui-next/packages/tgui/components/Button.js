@@ -19,6 +19,7 @@ export const Button = props => {
     selected,
     tooltip,
     tooltipPosition,
+    ellipsis,
     content,
     children,
     onclick,
@@ -33,8 +34,8 @@ export const Button = props => {
       + "Please use a camelCase 'onClick' instead and read: "
       + "https://infernojs.org/docs/guides/event-handling");
   }
-  // NOTE: Lowercase "onclick" and unselectable are used internally for
-  // compatibility with IE8. Do not change it!
+  // IE8: Use a lowercase "onclick" because synthetic events are fucked.
+  // IE8: Use an "unselectable" prop because "user-select" doesn't work.
   return (
     <Box as="span"
       className={classes([
@@ -43,26 +44,28 @@ export const Button = props => {
         disabled && 'Button--disabled',
         selected && 'Button--selected',
         hasContent && 'Button--hasContent',
+        ellipsis && 'Button--ellipsis',
         (color && typeof color === 'string')
           ? 'Button--color--' + color
-          : 'Button--color--normal',
+          : 'Button--color--default',
         className,
       ])}
       tabIndex={!disabled && '0'}
       unselectable={tridentVersion <= 4}
       onclick={e => {
-        if (disabled || !onClick) {
-          return;
-        }
         refocusLayout();
-        onClick(e);
+        if (!disabled && onClick) {
+          onClick(e);
+        }
       }}
       onKeyDown={e => {
         const keyCode = window.event ? e.which : e.keyCode;
         // Simulate a click when pressing space or enter.
         if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
           e.preventDefault();
-          onClick(e);
+          if (!disabled && onClick) {
+            onClick(e);
+          }
           return;
         }
         // Refocus layout on pressing escape.
@@ -88,3 +91,16 @@ export const Button = props => {
 };
 
 Button.defaultHooks = pureComponentHooks;
+
+export const ButtonCheckbox = props => {
+  const { checked, ...rest } = props;
+  return (
+    <Button
+      color="transparent"
+      icon={checked ? 'check-square-o' : 'square-o'}
+      selected={checked}
+      {...rest} />
+  );
+};
+
+Button.Checkbox = ButtonCheckbox;

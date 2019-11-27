@@ -16,24 +16,57 @@ import { Cargo, CargoExpress } from './interfaces/Cargo';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemAcclimator } from './interfaces/ChemAcclimator';
+import { ChemDebugSynthesizer } from './interfaces/ChemDebugSynthesizer';
 import { ChemDispenser } from './interfaces/ChemDispenser';
+import { ChemFilter } from './interfaces/ChemFilter';
 import { ChemHeater } from './interfaces/ChemHeater';
 import { ChemMaster } from './interfaces/ChemMaster';
+import { ChemPress } from './interfaces/ChemPress';
+import { ChemSplitter } from './interfaces/ChemSplitter';
+import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
 import { CodexGigas } from './interfaces/CodexGigas';
+import { ComputerFabricator } from './interfaces/ComputerFabricator';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DisposalUnit } from './interfaces/DisposalUnit';
-import { KitchenSink } from './interfaces/KitchenSink';
+import { DnaVault } from './interfaces/DnaVault';
+import { EngravedMessage } from './interfaces/EngravedMessage';
+import { Gps } from './interfaces/Gps';
+import { Holodeck } from './interfaces/Holodeck';
+import { ImplantChair } from './interfaces/ImplantChair';
+import { KeycardAuth } from './interfaces/KeycardAuth';
 import { LanguageMenu } from './interfaces/LanguageMenu';
+import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
+import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
+import { NtosArcade } from './interfaces/NtosArcade';
+import { NtosMain } from './interfaces/NtosMain';
+import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
+import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
+import { NtosWrapper } from './interfaces/NtosWrapper';
+import { NuclearBomb } from './interfaces/NuclearBomb';
 import { OperatingComputer } from './interfaces/OperatingComputer';
+import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
+import { PowerMonitor } from './interfaces/PowerMonitor';
+import { Radio } from './interfaces/Radio';
+import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
+import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
-import { SMES } from './interfaces/SMES';
+import { Smes } from './interfaces/Smes';
+import { SolarControl } from './interfaces/SolarControl';
+import { SpaceHeater } from './interfaces/SpaceHeater';
+import { SpawnersMenu } from './interfaces/SpawnersMenu';
+import { StationAlertConsole } from './interfaces/StationAlertConsole';
+import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
+import { Tank } from './interfaces/Tank';
+import { TankDispenser } from './interfaces/TankDispenser';
 import { ThermoMachine } from './interfaces/ThermoMachine';
+import { TurbineComputer } from './interfaces/TurbineComputer';
+import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
 
@@ -118,6 +151,10 @@ const ROUTES = {
     component: () => ChemDispenser,
     scrollable: true,
   },
+  chemical_filter: {
+    component: () => ChemFilter,
+    scrollable: true,
+  },
   chem_heater: {
     component: () => ChemHeater,
     scrollable: true,
@@ -126,8 +163,28 @@ const ROUTES = {
     component: () => ChemMaster,
     scrollable: true,
   },
+  chem_press: {
+    component: () => ChemPress,
+    scrollable: false,
+  },
+  chem_splitter: {
+    component: () => ChemSplitter,
+    scrollable: false,
+  },
+  chem_synthesizer: {
+    component: () => ChemDebugSynthesizer,
+    scrollable: false,
+  },
+  synthesizer: {
+    component: () => ChemSynthesizer,
+    scrollable: false,
+  },
   codex_gigas: {
     component: () => CodexGigas,
+    scrollable: false,
+  },
+  computer_fabricator: {
+    component: () => ComputerFabricator,
     scrollable: false,
   },
   crayon: {
@@ -146,13 +203,88 @@ const ROUTES = {
     component: () => DisposalUnit,
     scrollable: false,
   },
+  dna_vault: {
+    component: () => DnaVault,
+    scrollable: false,
+  },
+  engraved_message: {
+    component: () => EngravedMessage,
+    scrollable: false,
+  },
+  gps: {
+    component: () => Gps,
+    scrollable: true,
+  },
+  gulag_item_reclaimer: {
+    component: () => GulagItemReclaimer,
+    scrollable: true,
+  },
+  holodeck: {
+    component: () => Holodeck,
+    scrollable: true,
+  },
+  implantchair: {
+    component: () => ImplantChair,
+    scrollable: false,
+  },
+  keycard_auth: {
+    component: () => KeycardAuth,
+    scrollable: false,
+  },
   language_menu: {
     component: () => LanguageMenu,
     scrollable: true,
   },
+  mech_bay_power_console: {
+    component: () => MechBayPowerConsole,
+    scrollable: false,
+  },
+  medical_kiosk: {
+    component: () => MedicalKiosk,
+    scrollable: false,
+  },
   mint: {
     component: () => Mint,
     scrollable: false,
+  },
+  ntos_main: {
+    component: () => NtosMain,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_net_downloader: {
+    component: () => NtosNetDownloader,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_arcade: {
+    component: () => NtosArcade,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'ntos',
+  },
+  ntos_power_monitor: {
+    component: () => PowerMonitor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_supermatter_monitor: {
+    component: () => NtosSupermatterMonitor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  nuclear_bomb: {
+    component: () => NuclearBomb,
+    scrollable: false,
+    theme: 'retro',
+  },
+  ore_redemption_machine: {
+    component: () => OreRedemptionMachine,
+    scrollable: true,
   },
   operating_computer: {
     component: () => OperatingComputer,
@@ -166,6 +298,18 @@ const ROUTES = {
     component: () => PortableGenerator,
     scrollable: false,
   },
+  power_monitor: {
+    component: () => PowerMonitor,
+    scrollable: true,
+  },
+  radio: {
+    component: () => Radio,
+    scrollable: false,
+  },
+  rpd: {
+    component: () => RapidPipeDispenser,
+    scrollable: true,
+  },
   shuttle_manipulator: {
     component: () => ShuttleManipulator,
     scrollable: true,
@@ -175,12 +319,49 @@ const ROUTES = {
     scrollable: true,
   },
   smes: {
-    component: () => SMES,
+    component: () => Smes,
+    scrollable: false,
+  },
+  solar_control: {
+    component: () => SolarControl,
+    scrollable: false,
+  },
+  space_heater: {
+    component: () => SpaceHeater,
+    scrollable: false,
+  },
+  spawners_menu: {
+    component: () => SpawnersMenu,
+    scrollable: true,
+  },
+  station_alert: {
+    component: () => StationAlertConsole,
+    scrollable: true,
+  },
+  suit_storage_unit: {
+    component: () => SuitStorageUnit,
+    scrollable: false,
+  },
+  tanks: {
+    component: () => Tank,
+    scrollable: false,
+  },
+  tank_dispenser: {
+    component: () => TankDispenser,
     scrollable: false,
   },
   thermomachine: {
     component: () => ThermoMachine,
     scrollable: false,
+  },
+  turbine_computer: {
+    component: () => TurbineComputer,
+    scrollable: false,
+  },
+  uplink: {
+    component: () => Uplink,
+    scrollable: true,
+    theme: 'syndicate',
   },
   vault_controller: {
     component: () => VaultController,
@@ -193,12 +374,15 @@ const ROUTES = {
 };
 
 export const getRoute = state => {
-  // Show a kitchen sink
-  if (state.showKitchenSink) {
-    return {
-      component: () => KitchenSink,
-      scrollable: true,
-    };
+  if (process.env.NODE_ENV !== 'production') {
+    // Show a kitchen sink
+    if (state.showKitchenSink) {
+      const { KitchenSink } = require('./interfaces/KitchenSink');
+      return {
+        component: () => KitchenSink,
+        scrollable: true,
+      };
+    }
   }
   // Refer to the routing table
   return ROUTES[state.config && state.config.interface];

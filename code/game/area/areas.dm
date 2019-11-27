@@ -65,8 +65,6 @@
 
 	var/parallax_movedir = 0
 
-	var/global/global_uid = 0
-	var/uid
 	var/list/ambientsounds = GENERIC
 	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
@@ -134,7 +132,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Initialize()
 	icon_state = ""
 	layer = AREA_LAYER
-	uid = ++global_uid
 	map_name = name // Save the initial (the name set in the map) name of the area.
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
@@ -625,51 +622,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE
 
-/**
-  * Returns true if this atom has gravity for the passed in turf
-  *
-  * Sends signals COMSIG_ATOM_HAS_GRAVITY and COMSIG_TURF_HAS_GRAVITY, both can force gravity with
-  * the forced gravity var
-  *
-  * Gravity situations:
-  * * No gravity if you're not in a turf
-  * * No gravity if this atom is in is a space turf
-  * * Gravity if the area it's in always has gravity
-  * * Gravity if there's a gravity generator on the z level
-  * * Gravity if the Z level has an SSMappingTrait for ZTRAIT_GRAVITY
-  * * otherwise no gravity
-  */
-/atom/proc/has_gravity(turf/T)
-	if(!T || !isturf(T))
-		T = get_turf(src)
-
-	if(!T)
-		return 0
-
-	var/list/forced_gravity = list()
-	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
-	if(!forced_gravity.len)
-		SEND_SIGNAL(T, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
-	if(forced_gravity.len)
-		var/max_grav
-		for(var/i in forced_gravity)
-			max_grav = max(max_grav, i)
-		return max_grav
-
-	if(isspaceturf(T)) // Turf never has gravity
-		return 0
-
-	var/area/A = get_area(T)
-	if(A.has_gravity) // Areas which always has gravity
-		return A.has_gravity
-	else
-		// There's a gravity generator on our z level
-		if(GLOB.gravity_generators["[T.z]"])
-			var/max_grav = 0
-			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
-				max_grav = max(G.setting,max_grav)
-			return max_grav
-	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
 /**
   * Setup an area (with the given name)
   *

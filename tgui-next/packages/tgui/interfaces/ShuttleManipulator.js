@@ -1,7 +1,7 @@
+import { map } from 'common/collections';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Button, LabeledList, Section, Tabs } from '../components';
-import { map } from 'common/fp';
 
 export const ShuttleManipulator = props => {
   const { state } = props;

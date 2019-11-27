@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - tweak: "Janitors once again start out with the holosign projectors. Holobarrier projectors now locked behind tech, printed at service lathe."
-  - bugfix: "Janitor holobarriers no longer block things, only conscious and running carbons."

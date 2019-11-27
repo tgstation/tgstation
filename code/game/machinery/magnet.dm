@@ -49,7 +49,7 @@
 	update_icon()
 
 // update the icon_state
-/obj/machinery/magnetic_module/update_icon()
+/obj/machinery/magnetic_module/update_icon_state()
 	var/state="floor_magnet"
 	var/onstate=""
 	if(!on)

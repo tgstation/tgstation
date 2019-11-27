@@ -99,8 +99,7 @@
 	if(!has_cover)
 		INVOKE_ASYNC(src, .proc/popUp)
 
-/obj/machinery/porta_turret/update_icon()
-	cut_overlays()
+/obj/machinery/porta_turret/update_icon_state()
 	if(!anchored)
 		icon_state = "turretCover"
 		return
@@ -118,7 +117,6 @@
 				icon_state = "[base_icon_state]_off"
 		else
 			icon_state = "[base_icon_state]_unpowered"
-
 
 /obj/machinery/porta_turret/proc/setup(obj/item/gun/turret_gun)
 	if(stored_gun)
@@ -294,8 +292,9 @@
 	controllock = TRUE
 	on = FALSE //turns off the turret temporarily
 	update_icon()
-	sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-	on = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	//6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
+	addtimer(VARSET_CALLBACK(src, on, TRUE), 6 SECONDS)
+	//turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -943,8 +942,7 @@
 		aTurret.setState(enabled, lethal, shoot_cyborgs)
 	update_icon()
 
-/obj/machinery/turretid/update_icon()
-	..()
+/obj/machinery/turretid/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "control_off"
 	else if (enabled)

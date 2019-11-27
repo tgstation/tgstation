@@ -66,9 +66,7 @@
 	target.sent_code = sent_code
 	target.delay = delay
 
-/datum/nanite_program/sensor/repeat/trigger()
-	if(!..())
-		return
+/datum/nanite_program/sensor/repeat/on_trigger(comm_message)
 	addtimer(CALLBACK(src, .proc/send_code), delay)
 
 /datum/nanite_program/sensor/relay_repeat
@@ -112,9 +110,7 @@
 	target.delay = delay
 	target.relay_channel = relay_channel
 
-/datum/nanite_program/sensor/relay_repeat/trigger()
-	if(!..())
-		return
+/datum/nanite_program/sensor/relay_repeat/on_trigger(comm_message)
 	addtimer(CALLBACK(src, .proc/send_code), delay)
 
 /datum/nanite_program/sensor/relay_repeat/send_code()
@@ -430,15 +426,15 @@
 		if(hearing_args[HEARING_RAW_MESSAGE] == sentence)
 			send_code()
 
-/datum/nanite_program/sensor/race
-	name = "Race Sensor"
-	desc = "When triggered, the nanites scan the host to determine their race and output a signal depending on the conditions set in the settings."
+/datum/nanite_program/sensor/species
+	name = "Species Sensor"
+	desc = "When triggered, the nanites scan the host to determine their species and output a signal depending on the conditions set in the settings."
 	can_trigger = TRUE
 	trigger_cost = 0
 	trigger_cooldown = 5
 
 	extra_settings = list(NES_SENT_CODE,NES_RACE,NES_MODE)
-	var/race_type = "Human"
+	var/species_type = "Human"
 	var/mode = "Is"
 	var/list/static/allowed_species = list(
     	"Human" = /datum/species/human,
@@ -451,60 +447,57 @@
 		"Jelly" = /datum/species/jelly
 	)
 
-/datum/nanite_program/sensor/race/set_extra_setting(user, setting)
+/datum/nanite_program/sensor/species/set_extra_setting(user, setting)
 	if(setting == NES_SENT_CODE)
 		var/new_code = input(user, "Set the sent code (1-9999):", name, null) as null|num
 		if(isnull(new_code))
 			return
 		sent_code = CLAMP(round(new_code, 1), 1, 9999)
 	if(setting == NES_RACE)
-		var/list/race_types = list()
+		var/list/species_types = list()
 		for(var/name in allowed_species)
-			race_types += name
-		race_types += "Other"
-		var/new_race_type = input("Choose the race", name) as null|anything in sortList(race_types)
-		if(!new_race_type)
+			species_types += name
+		species_types += "Other"
+		var/new_species_type = input("Choose the species", name) as null|anything in sortList(species_types)
+		if(!new_species_type)
 			return
-		race_type = new_race_type
+		species_type = new_species_type
 	if(setting == NES_MODE)
 		mode = mode == "Is" ? "Is Not" : "Is"
 
 
-/datum/nanite_program/sensor/race/get_extra_setting(setting)
+/datum/nanite_program/sensor/species/get_extra_setting(setting)
 	if(setting == NES_SENT_CODE)
 		return sent_code
 	if(setting == NES_RACE)
-		return race_type
+		return species_type
 	if(setting == NES_MODE)
 		return mode
 
-/datum/nanite_program/sensor/race/copy_extra_settings_to(datum/nanite_program/sensor/race/target)
+/datum/nanite_program/sensor/species/copy_extra_settings_to(datum/nanite_program/sensor/species/target)
 	target.sent_code = sent_code
-	target.race_type = race_type
+	target.species_type = species_type
 	target.mode = mode
 
-/datum/nanite_program/sensor/race/trigger()
-	if(!..())
-		return
-
-	var/species = allowed_species[race_type]
-	var/race_match = FALSE
+/datum/nanite_program/sensor/species/on_trigger(comm_message)
+	var/species = allowed_species[species_type]
+	var/species_match = FALSE
 
 	if(species)
 		if(is_species(host_mob, species))
-			race_match = TRUE
+			species_match = TRUE
 	else	//this is the check for the "Other" option
-		race_match = TRUE
+		species_match = TRUE
 		for(var/name in allowed_species)
 			var/species_other = allowed_species[name]
 			if(is_species(host_mob, species_other))
-				race_match = FALSE
+				species_match = FALSE
 				break
 
 	switch(mode)
 		if("Is")
-			if(race_match)
+			if(species_match)
 				send_code()
 		if("Is Not")
-			if(!race_match)
+			if(!species_match)
 				send_code()
