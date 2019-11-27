@@ -45,20 +45,19 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return I.attack(src, user)
 
-
 /obj/item/proc/attack(mob/living/M, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)
 		return
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user)
 	if(item_flags & NOBLUDGEON)
 		return
-
 	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
+
 		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = user
-			if(istype(H.mind.martial_art, /datum/martial_art/monk))
+			if(HAS_TRAIT(H, MONK_TRAIT))
 				to_chat(user, "<span class='warning'>Your vows as a Monk prevent you from using [src] in combat!</span>")
 				return
 	if(!force)
@@ -74,7 +73,6 @@
 
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
-
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
