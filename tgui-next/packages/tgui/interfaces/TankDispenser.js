@@ -10,7 +10,7 @@ export const TankDispenser = props => {
           label="Plasma"
           buttons={(
             <Button
-              icon={data.plasma ? "square" : "square-o"}
+              icon={data.plasma ? 'square' : 'square-o'}
               content="Dispense"
               disabled={!data.plasma}
               onClick={() => act('plasma')} />

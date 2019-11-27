@@ -24,7 +24,7 @@ export const ShuttleManipulator = props => {
                       content="JMP"
                       key={shuttle.id}
                       onClick={() => act('jump_to', {
-                        type: "mobile",
+                        type: 'mobile',
                         id: shuttle.id,
                       })} />
                   </Table.Cell>
