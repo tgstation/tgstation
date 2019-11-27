@@ -110,7 +110,7 @@
 			stunning_fist.max_uses = 7
 			wholeness_of_body.Grant(owner)
 			wholeness_of_body.martial = src
-			available_actions = list(stunning_fist, wholeness_of_body)
+			available_actions = list (stunning_fist) += (wholeness_of_body)
 		if(8)
 			to_chat(owner, "<span class = 'danger'>You move from one downed target to the next quickly.</span>")
 			cleave_level = 1
@@ -134,7 +134,7 @@
 			to_chat(owner, "<span class = 'danger'>You have practiced the Quivering Palm technique enough to use it in combat.</span>")
 			quivering_palm.Grant(owner)
 			quivering_palm.martial = src
-			available_actions = list(stunning_fist, wholeness_of_body, quivering_palm)
+			available_actions = list (stunning_fist) += (wholeness_of_body) += (quivering_palm)
 		if(16)
 			to_chat(owner, "<span class = 'danger'>Your Ki has fully developed, and can be used to nullify armor.</span>")
 			ki_level = 100
