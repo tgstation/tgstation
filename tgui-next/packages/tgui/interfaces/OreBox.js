@@ -1,7 +1,7 @@
-import { act } from '../byond';
-import { Fragment } from 'inferno';
-import { Box, Table, Button, Section } from '../components';
 import { toTitleCase } from 'common/string';
+import { Fragment } from 'inferno';
+import { act } from '../byond';
+import { Box, Button, Section, Table } from '../components';
 
 export const OreBox = props => {
   const { state } = props;
@@ -16,14 +16,13 @@ export const OreBox = props => {
           <Button
             content="Empty"
             onClick={() => act(ref, 'removeall')} />
-        )}
-      >
+        )}>
         <Table>
-          <Table.Row bold>
-            <Table.Cell bold>
+          <Table.Row header>
+            <Table.Cell>
               Ore
             </Table.Cell>
-            <Table.Cell bold textAlign="right">
+            <Table.Cell collapsing textAlign="right">
               Amount
             </Table.Cell>
           </Table.Row>
@@ -32,8 +31,8 @@ export const OreBox = props => {
               <Table.Cell>
                 {toTitleCase(material.name)}
               </Table.Cell>
-              <Table.Cell textAlign="right">
-                <Box mr={2} color="label" inline>
+              <Table.Cell collapsing textAlign="right">
+                <Box color="label" inline>
                   {material.amount}
                 </Box>
               </Table.Cell>
