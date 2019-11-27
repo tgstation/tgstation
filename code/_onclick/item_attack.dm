@@ -51,13 +51,13 @@
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK, M, user)
 	if(item_flags & NOBLUDGEON)
 		return
-	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
-		return
-
+	if(force)
+		if(HAS_TRAIT(user, TRAIT_PACIFISM))
+			to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
+			return
 		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = user
-			if(HAS_TRAIT(H, MONK_TRAIT))
+			if(istype(H.mind.martial_art, /datum/martial_art/monk))
 				to_chat(user, "<span class='warning'>Your vows as a Monk prevent you from using [src] in combat!</span>")
 				return
 	if(!force)
