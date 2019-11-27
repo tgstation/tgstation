@@ -1652,6 +1652,7 @@
 #include "code\modules\clothing\under\jobs\centcom.dm"
 #include "code\modules\clothing\under\jobs\command.dm"
 #include "code\modules\clothing\under\jobs\engineering.dm"
+#include "code\modules\clothing\under\jobs\exploration.dm"
 #include "code\modules\clothing\under\jobs\medical.dm"
 #include "code\modules\clothing\under\jobs\rnd.dm"
 #include "code\modules\clothing\under\jobs\security.dm"
