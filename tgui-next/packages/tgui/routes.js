@@ -62,6 +62,7 @@ import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { ScannerGate } from './interfaces/ScannerGate';
 import { SmartVend } from './interfaces/SmartVend';
 import { Smes } from './interfaces/Smes';
 import { SolarControl } from './interfaces/SolarControl';
@@ -343,6 +344,10 @@ const ROUTES = {
   },
   rpd: {
     component: () => RapidPipeDispenser,
+    scrollable: true,
+  },
+  scanner_gate: {
+    component: () => ScannerGate,
     scrollable: true,
   },
   shuttle_manipulator: {

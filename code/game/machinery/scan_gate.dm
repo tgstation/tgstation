@@ -15,15 +15,15 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/scanner_gate
-	ui_x = 600
-	ui_y = 400
+	ui_x = 400
+	ui_y = 300
 
 	var/scanline_timer
 	var/next_beep = 0 //avoids spam
 	var/locked = FALSE
 	var/scangate_mode = SCANGATE_NONE
 	var/disease_threshold = DISEASE_SEVERITY_MINOR
-	var/nanite_cloud = 0
+	var/nanite_cloud = 1
 	var/datum/species/detect_species = /datum/species/human
 	var/reverse = FALSE //If true, signals if the scan returns false
 	var/detect_nutrition = NUTRITION_LEVEL_FAT
@@ -146,7 +146,8 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/scanner_gate/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/scanner_gate/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "scanner_gate", name, ui_x, ui_y, master_ui, state)
@@ -154,6 +155,7 @@
 
 /obj/machinery/scanner_gate/ui_data()
 	var/list/data = list()
+	data["locked"] = locked
 	data["scan_mode"] = scangate_mode
 	data["reverse"] = reverse
 	data["nanite_cloud"] = nanite_cloud
@@ -167,50 +169,51 @@
 		return
 	switch(action)
 		if("set_mode")
-			var/new_mode = input("Choose the scan mode","Scan Mode") as null|anything in sortList(list(SCANGATE_NONE,
-																								SCANGATE_MINDSHIELD,
-																								SCANGATE_NANITES,
-																								SCANGATE_DISEASE,
-																								SCANGATE_GUNS,
-																								SCANGATE_WANTED,
-																								SCANGATE_SPECIES,
-																								SCANGATE_NUTRITION))
+			var/new_mode = params["new_mode"]
 			if(new_mode)
 				scangate_mode = new_mode
 			. = TRUE
 		if("toggle_reverse")
 			reverse = !reverse
 			. = TRUE
+		if("toggle_lock")
+			if(allowed(usr))
+				locked = !locked
+			. = TRUE
 		if("set_disease_threshold")
-			var/new_threshold = input("Set disease threshold","Scan Mode") as null|anything in sortList(list(DISEASE_SEVERITY_POSITIVE,
-																								DISEASE_SEVERITY_NONTHREAT,
-																								DISEASE_SEVERITY_MINOR,
-																								DISEASE_SEVERITY_MEDIUM,
-																								DISEASE_SEVERITY_HARMFUL,
-																								DISEASE_SEVERITY_DANGEROUS,
-																								DISEASE_SEVERITY_BIOHAZARD))
-			if(new_threshold)
+			var/new_threshold = params["new_threshold"]
+			var/threshold_list = list(
+				DISEASE_SEVERITY_POSITIVE,
+				DISEASE_SEVERITY_NONTHREAT,
+				DISEASE_SEVERITY_MINOR,
+				DISEASE_SEVERITY_MEDIUM,
+				DISEASE_SEVERITY_HARMFUL,
+				DISEASE_SEVERITY_DANGEROUS,
+				DISEASE_SEVERITY_BIOHAZARD
+			)
+			if(new_threshold && new_threshold in threshold_list)
 				disease_threshold = new_threshold
 			. = TRUE
 		if("set_nanite_cloud")
-			var/new_cloud = input("Set target nanite cloud","Scan Mode", nanite_cloud) as null|num
-			if(!isnull(new_cloud))
-				nanite_cloud = CLAMP(round(new_cloud, 1), 1, 100)
+			var/new_cloud = text2num(params["new_cloud"])
+			nanite_cloud = CLAMP(round(new_cloud, 1), 1, 100)
 			. = TRUE
 		//Some species are not scannable, like abductors (too unknown), androids (too artificial) or skeletons (too magic)
 		if("set_target_species")
-			var/new_species = input("Set target species","Scan Mode") as null|anything in sortList(list("Human",
-																								"Lizardperson",
-																								"Flyperson",
-																								"Felinid",
-																								"Plasmaman",
-																								"Mothmen",
-																								"Jellyperson",
-																								"Podperson",
-																								"Golem",
-																								"Zombie",
-																								))
-			if(new_species)
+			var/new_species = params["new_species"]
+			var/species_list = list(
+				"Human",
+				"Lizardperson",
+				"Flyperson",
+				"Felinid",
+				"Plasmaman",
+				"Mothman",
+				"Jellyperson",
+				"Podperson",
+				"Golem",
+				"High-Functioning Zombie"
+			)
+			if(new_species && new_species in species_list)
 				switch(new_species)
 					if("Human")
 						detect_species = /datum/species/human
@@ -222,7 +225,7 @@
 						detect_species = /datum/species/human/felinid
 					if("Plasmaman")
 						detect_species = /datum/species/plasmaman
-					if("Mothmen")
+					if("Mothman")
 						detect_species = /datum/species/moth
 					if("Jellyperson")
 						detect_species = /datum/species/jelly
@@ -230,13 +233,16 @@
 						detect_species = /datum/species/pod
 					if("Golem")
 						detect_species = /datum/species/golem
-					if("Zombie")
+					if("High-Functioning Zombie")
 						detect_species = /datum/species/zombie
 			. = TRUE
 		if("set_target_nutrition")
-			var/new_nutrition = input("Set target nutrition level","Scan Mode") as null|anything in sortList(list("Starving",
-																											"Obese"))
-			if(new_nutrition)
+			var/new_nutrition = params["new_nutrition"]
+			var/nutrition_list = list(	
+				"Starving",
+  				"Obese"
+			)
+			if(new_nutrition && new_nutrition in nutrition_list)
 				switch(new_nutrition)
 					if("Starving")
 						detect_nutrition = NUTRITION_LEVEL_STARVING
