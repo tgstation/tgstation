@@ -34,6 +34,8 @@
 #define COMPONENT_DUPE_UNIQUE			2
 /// old component is given the initialization args of the new
 #define COMPONENT_DUPE_UNIQUE_PASSARGS	4
+/// each component of the same type is consulted as to whether the duplicate should be allowed
+#define COMPONENT_DUPE_SELECTIVE		5
 
 // All signals. Format:
 // When the signal is called: (signal arguments)
