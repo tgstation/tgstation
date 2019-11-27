@@ -82,10 +82,10 @@
 	REMOVE_TRAIT(H, TRAIT_NOGUNS, MONK_TRAIT)
 	STOP_PROCESSING(SSfastprocess, src)
 
-/datum/martial_art/monk/process()
+/datum/martial_art/monk/process(mob/living/carbon/human/H)
 	..()
 	if(diamond_body)
-		owner.reagents.remove_all_type(/datum/reagent/toxin, 30)
+		ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, TRAIT_TOXIMMUNE)
 
 /datum/martial_art/monk/proc/do_level_up()
 	if(current_level % 4 == 0)
