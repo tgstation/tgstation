@@ -18,6 +18,8 @@
 	///Holds a reference string to the mob, decides how much of a gamer you are.
 	var/suicide_mob
 	var/hearing_range = 1
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] eats \the [src]! If it is signaled, [user.p_they()] will die!</span>")

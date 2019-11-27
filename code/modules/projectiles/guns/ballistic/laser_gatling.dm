@@ -33,7 +33,7 @@
 /obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
-			if(user.get_item_by_slot(SLOT_BACK) == src)
+			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
 				armed = 1
 				if(!user.put_in_hands(gun))
 					armed = 0

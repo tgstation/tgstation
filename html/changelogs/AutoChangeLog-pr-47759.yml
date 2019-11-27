@@ -1,5 +1,0 @@
-author: "Firecage"
-delete-after: True
-changes: 
-  - bugfix: "The charge overlays of m1911 pulse pistols, scatter shot laser rifles, and instakill rifles now works as intended."
-  - bugfix: "The mini flashlight overlay of the mini energy gun now works properly."

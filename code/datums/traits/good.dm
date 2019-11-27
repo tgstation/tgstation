@@ -72,8 +72,8 @@ datum/quirk/fan_clown
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/accessory/fan_clown_pin/B = new(get_turf(H))
 	var/list/slots = list (
-		"backpack" = SLOT_IN_BACKPACK,
-		"hands" = SLOT_HANDS,
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS,
 	)
 	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
 
@@ -90,8 +90,8 @@ datum/quirk/fan_mime
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/accessory/fan_mime_pin/B = new(get_turf(H))
 	var/list/slots = list (
-		"backpack" = SLOT_IN_BACKPACK,
-		"hands" = SLOT_HANDS,
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS,
 	)
 	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
 
@@ -148,8 +148,8 @@ datum/quirk/fan_mime
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/choice_beacon/music/B = new(get_turf(H))
 	var/list/slots = list (
-		"backpack" = SLOT_IN_BACKPACK,
-		"hands" = SLOT_HANDS,
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS,
 	)
 	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
 
@@ -182,8 +182,8 @@ datum/quirk/fan_mime
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/storage/photo_album/photo_album = new(get_turf(H))
 	var/list/album_slots = list (
-		"backpack" = SLOT_IN_BACKPACK,
-		"hands" = SLOT_HANDS
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS
 	)
 	H.equip_in_one_of_slots(photo_album, album_slots , qdel_on_fail = TRUE)
 	photo_album.persistence_id = "personal_[H.mind.key]" // this is a persistent album, the ID is tied to the account's key to avoid tampering
@@ -191,11 +191,11 @@ datum/quirk/fan_mime
 	photo_album.name = "[H.real_name]'s photo album"
 	var/obj/item/camera/camera = new(get_turf(H))
 	var/list/camera_slots = list (
-		"neck" = SLOT_NECK,
-		"left pocket" = SLOT_L_STORE,
-		"right pocket" = SLOT_R_STORE,
-		"backpack" = SLOT_IN_BACKPACK,
-		"hands" = SLOT_HANDS
+		"neck" = ITEM_SLOT_NECK,
+		"left pocket" = ITEM_SLOT_LPOCKET,
+		"right pocket" = ITEM_SLOT_RPOCKET,
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS
 	)
 	H.equip_in_one_of_slots(camera, camera_slots , qdel_on_fail = TRUE)
 	H.regenerate_icons()
@@ -225,8 +225,8 @@ datum/quirk/fan_mime
 
 /datum/quirk/spiritual/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.equip_to_slot_or_del(new /obj/item/storage/fancy/candle_box(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/storage/box/matches(H), SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/fancy/candle_box(H), ITEM_SLOT_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/box/matches(H), ITEM_SLOT_BACKPACK)
 
 /datum/quirk/tagger
 	name = "Tagger"
@@ -241,7 +241,7 @@ datum/quirk/fan_mime
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/toy/crayon/spraycan/spraycan = new(get_turf(H))
 	H.put_in_hands(spraycan)
-	H.equip_to_slot(spraycan, SLOT_IN_BACKPACK)
+	H.equip_to_slot(spraycan, ITEM_SLOT_BACKPACK)
 	H.regenerate_icons()
 
 /datum/quirk/voracious

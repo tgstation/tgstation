@@ -7,13 +7,18 @@
 				<ui-section label='Program Name'>{{data.disk.name}}</ui-section>
 				<ui-section label='Description'>{{data.disk.desc}}</ui-section>
 				<ui-section label='Activation Status'>{{data.disk.activated ? "Active" : "Inactive" }}</ui-section>
-				{{#if data.disk.activation_delay}}
-					<ui-section label='Activation Delay'>{{data.disk.activation_delay}}</ui-section>
-				{{/if}}
-				{{#if data.disk.timer}}
-					<ui-section label='Timer'>{{data.disk.timer}}</ui-section>
-					<ui-section label='Timer Type '>{{data.disk.timer_type}}</ui-section>
-				{{/if}}
+        {{#if data.disk.timer_trigger_delay}}
+          <ui-section label='Trigger Delay'>{{data.disk.timer_trigger_delay}} seconds</ui-section>
+        {{/if}}
+        {{#if data.disk.timer_trigger}}
+          <ui-section label='Trigger Repeat Timer'>{{data.disk.timer_trigger}} seconds</ui-section>
+        {{/if}}
+        {{#if data.disk.timer_restart}}
+          <ui-section label='Restart Timer'>{{data.disk.timer_restart}} seconds</ui-section>
+        {{/if}}
+        {{#if data.disk.timer_shutdown}}
+          <ui-section label='Shutdown Timer'>{{data.disk.timer_shutdown}} seconds</ui-section>
+        {{/if}}
 				{{#if data.disk.activation_code}}
 					<ui-section label='Activation Code'>{{data.disk.activation_code}}</ui-section>
 				{{/if}}
@@ -72,16 +77,22 @@
 						<ui-section label='Activation Status'>{{activated ? "Active" : "Inactive" }}</ui-section>
 						<ui-section label='Nanites Consumed'>{{use_rate}}/s</ui-section>
 						{{#if can_trigger}}
-							<ui-section label='Trigger Cost'>{{trigger_cost}}/s</ui-section>
-							<ui-section label='Trigger Cooldown'>{{trigger_cooldown}}/s</ui-section>
+							<ui-section label='Trigger Cost'>{{trigger_cost}}</ui-section>
+							<ui-section label='Trigger Cooldown'>{{trigger_cooldown}} seconds</ui-section>
+              {{#if timer_trigger_delay}}
+                <ui-section label='Trigger Delay'>{{timer_trigger_delay}} seconds</ui-section>
+              {{/if}}
+              {{#if timer_trigger}}
+                <ui-section label='Trigger Repeat Timer'>{{timer_trigger}} seconds</ui-section>
+              {{/if}}
 						{{/if}}
-						{{#if activation_delay}}
-							<ui-section label='Activation Delay'>{{activation_delay}}</ui-section>
+						{{#if timer_restart}}
+							<ui-section label='Restart Timer'>{{timer_restart}} seconds</ui-section>
+            {{/if}}
+            {{#if timer_shutdown}}
+							<ui-section label='Shutdown Timer'>{{timer_shutdown}} seconds</ui-section>
 						{{/if}}
-						{{#if timer}}
-							<ui-section label='Timer'>{{timer}}</ui-section>
-							<ui-section label='Timer Type '>{{timer_type}}</ui-section>
-						{{/if}}
+            
 						{{#if activation_code}}
 							<ui-section label='Activation Code'>{{activation_code}}</ui-section>
 						{{/if}}

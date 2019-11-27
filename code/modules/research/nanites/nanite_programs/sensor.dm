@@ -66,9 +66,7 @@
 	target.sent_code = sent_code
 	target.delay = delay
 
-/datum/nanite_program/sensor/repeat/trigger()
-	if(!..())
-		return
+/datum/nanite_program/sensor/repeat/on_trigger(comm_message)
 	addtimer(CALLBACK(src, .proc/send_code), delay)
 
 /datum/nanite_program/sensor/relay_repeat
@@ -112,9 +110,7 @@
 	target.delay = delay
 	target.relay_channel = relay_channel
 
-/datum/nanite_program/sensor/relay_repeat/trigger()
-	if(!..())
-		return
+/datum/nanite_program/sensor/relay_repeat/on_trigger(comm_message)
 	addtimer(CALLBACK(src, .proc/send_code), delay)
 
 /datum/nanite_program/sensor/relay_repeat/send_code()
@@ -483,10 +479,7 @@
 	target.species_type = species_type
 	target.mode = mode
 
-/datum/nanite_program/sensor/species/trigger()
-	if(!..())
-		return
-
+/datum/nanite_program/sensor/species/on_trigger(comm_message)
 	var/species = allowed_species[species_type]
 	var/species_match = FALSE
 
