@@ -1,4 +1,0 @@
-author: "AustationBot"
-delete-after: True
-changes: 
-  - rscadd: "The Keycard Authentication Device and Implanter Chairs now have TGUI-Next interfaces."
