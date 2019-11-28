@@ -131,6 +131,8 @@
 	#define COMPONENT_NO_ATTACK_HAND 1							//works on all 3.
 //This signal return value bitflags can be found in __DEFINES/misc.dm
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"	//called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
+#define COMSIG_ATOM_START_PULL "movable_start_pull"	//called on a movable (NOT living) when someone starts pulling it (atom/movable/puller, state, force)
+#define COMSIG_LIVING_START_PULL "living_start_pull"	//called on /living when someone starts pulling it (atom/movable/puller, state, force)
 
 /////////////////
 
@@ -302,6 +304,9 @@
 
 // /obj/item/pen signals
 #define COMSIG_PEN_ROTATED "pen_rotated"						//called after rotation in /obj/item/pen/attack_self(): (rotation, mob/living/carbon/user)
+
+// /obj/item/gun signals
+#define COMSIG_MOB_FIRED_GUN "mob_fired_gun"					//called in /obj/item/gun/process_fire (user, target, params, zone_override)
 
 // /obj/projectile signals (sent to the firer)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
