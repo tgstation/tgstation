@@ -11,9 +11,16 @@
 
 		for(var/turf/check in get_affected_turfs(central_turf,1))
 			var/area/new_area = get_area(check)
-			if(!(istype(new_area, allowed_areas)) || check.flags_1 & NO_RUINS_1)
+			if(check.flags_1 & NO_RUINS_1)
 				valid = FALSE
-				break
+			else
+				for(var/type in allowed_areas)
+					if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
+						valid = TRUE
+						break
+					valid = FALSE // so if the list isn't empty but it wasn't an area we checked then it's false
+				if(!valid)
+					break
 
 		if(!valid)
 			continue
@@ -52,7 +59,7 @@
 	return center
 
 
-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins)
+/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = list(/area/space), list/potentialRuins)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")
 		return
@@ -96,7 +103,7 @@
 				break
 		else //Otherwise just pick random one
 			current_pick = pickweight(ruins_availible)
-		
+
 		var/placement_tries = forced_turf ? 1 : PLACEMENT_TRIES //Only try once if we target specific turf
 		var/failed_to_place = TRUE
 		var/target_z = 0
@@ -169,5 +176,5 @@
 		for(var/datum/map_template/ruin/R in ruins_availible)
 			if(R.cost > budget)
 				ruins_availible -= R
-	
+
 	log_world("Ruin loader finished with [budget] left to spend.")

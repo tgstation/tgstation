@@ -4,13 +4,13 @@
 /area/template_noop)
 "b" = (
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "c" = (
 /obj/structure/sign/mining/survival{
 	pixel_y = -32
 	},
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "d" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/ruin/powered)
@@ -20,7 +20,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "f" = (
 /obj/structure/fans,
 /turf/open/floor/pod/dark,
@@ -40,11 +40,11 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "j" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "k" = (
 /obj/machinery/sleeper/survival_pod,
 /turf/open/floor/pod/dark,
@@ -66,14 +66,14 @@
 "n" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "o" = (
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/asteroid/goliath/beast{
 	health = 0
 	},
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "p" = (
 /obj/structure/table/survival_pod,
 /obj/item/kitchen/knife/combat/survival,
@@ -100,7 +100,7 @@
 "s" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "t" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 1
@@ -114,27 +114,27 @@
 	},
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "v" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "w" = (
 /obj/structure/sign/mining/survival{
 	pixel_y = 32
 	},
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "x" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "y" = (
 /obj/structure/sign/mining{
 	pixel_y = 32
@@ -143,18 +143,18 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "z" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 "A" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/underground/explored)
 
 (1,1,1) = {"
 a

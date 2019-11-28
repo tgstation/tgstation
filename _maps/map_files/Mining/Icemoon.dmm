@@ -2828,10 +2828,6 @@
 /obj/machinery/recharger,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
-"Pk" = (
-/obj/structure/ladder,
-/turf/open/floor/plating/asteroid/snow,
-/area/icemoon/surface/outdoors)
 "Pl" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -20561,7 +20557,7 @@ YK
 YK
 YK
 YK
-Pk
+YK
 YK
 YK
 YK

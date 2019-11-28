@@ -150,6 +150,7 @@
 
 /area/icemoon/underground
 	name = "Icemoon Caves"
+	outdoors = TRUE
 	always_unpowered = TRUE
 	requires_power = TRUE
 	poweralm = FALSE
@@ -161,7 +162,6 @@
 /area/icemoon/underground/unexplored // mobs and megafauna and ruins spawn here
 	name = "Icemoon Caves"
 	icon_state = "unexplored"
-	outdoors = TRUE
 	tunnel_allowed = TRUE
 	mob_spawn_allowed = TRUE
 	megafauna_spawn_allowed = TRUE

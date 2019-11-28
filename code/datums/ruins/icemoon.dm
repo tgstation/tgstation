@@ -30,7 +30,6 @@
 	suffix = "icemoon_surface_mining_site.dmm"
 	always_place = TRUE // we need a ladder up and down don't we?
 	always_spawn_with = list(/datum/map_template/ruin/icemoon/underground/mining_site_below = PLACE_BELOW)
-	cost = 5
 
 /datum/map_template/ruin/icemoon/underground/mining_site_below
 	name = "Mining Site Underground"

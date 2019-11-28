@@ -9,6 +9,10 @@
 /obj/structure/ladder,
 /turf/open/floor/plating/asteroid/snow,
 /area/icemoon/surface/outdoors)
+"E" = (
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner,
+/turf/open/floor/plating/asteroid/snow,
+/area/icemoon/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -29,7 +33,7 @@ a
 a
 a
 a
-b
+a
 "}
 (2,1,1) = {"
 a
@@ -50,7 +54,7 @@ a
 a
 a
 a
-b
+a
 "}
 (3,1,1) = {"
 a
@@ -71,7 +75,7 @@ a
 a
 a
 a
-b
+a
 "}
 (4,1,1) = {"
 a
@@ -92,7 +96,7 @@ a
 a
 a
 a
-b
+a
 "}
 (5,1,1) = {"
 a
@@ -113,7 +117,7 @@ a
 a
 a
 a
-b
+a
 "}
 (6,1,1) = {"
 a
@@ -134,7 +138,7 @@ a
 a
 a
 a
-b
+a
 "}
 (7,1,1) = {"
 a
@@ -155,7 +159,7 @@ a
 a
 a
 a
-b
+a
 "}
 (8,1,1) = {"
 a
@@ -167,16 +171,16 @@ a
 a
 b
 b
+E
 b
 b
-b
 a
 a
 a
 a
 a
 a
-b
+a
 "}
 (9,1,1) = {"
 a
@@ -197,7 +201,7 @@ a
 a
 a
 a
-b
+a
 "}
 (10,1,1) = {"
 a
@@ -218,7 +222,7 @@ a
 a
 a
 a
-b
+a
 "}
 (11,1,1) = {"
 a
@@ -239,7 +243,7 @@ a
 a
 a
 a
-b
+a
 "}
 (12,1,1) = {"
 a
@@ -260,7 +264,7 @@ a
 a
 a
 a
-b
+a
 "}
 (13,1,1) = {"
 a
@@ -281,7 +285,7 @@ a
 a
 a
 a
-b
+a
 "}
 (14,1,1) = {"
 a
@@ -302,7 +306,7 @@ a
 a
 a
 a
-b
+a
 "}
 (15,1,1) = {"
 a
@@ -323,7 +327,7 @@ a
 a
 a
 a
-b
+a
 "}
 (16,1,1) = {"
 a
@@ -344,7 +348,7 @@ a
 a
 a
 a
-b
+a
 "}
 (17,1,1) = {"
 a
@@ -365,7 +369,7 @@ a
 a
 a
 a
-b
+a
 "}
 (18,1,1) = {"
 a
@@ -386,7 +390,7 @@ a
 a
 a
 a
-b
+a
 "}
 (19,1,1) = {"
 a
@@ -407,5 +411,5 @@ a
 a
 a
 a
-b
+a
 "}

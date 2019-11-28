@@ -9,6 +9,10 @@
 "tN" = (
 /turf/closed/mineral/random/snow,
 /area/icemoon/underground/explored)
+"JY" = (
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner,
+/turf/open/floor/plating/asteroid/snow,
+/area/icemoon/underground/explored)
 
 (1,1,1) = {"
 tN
@@ -167,7 +171,7 @@ tN
 tN
 aa
 aa
-aa
+JY
 aa
 aa
 tN
