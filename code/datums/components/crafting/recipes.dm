@@ -13,7 +13,8 @@
 	var/always_availible = TRUE //Set to FALSE if it needs to be learned first.
 
 /datum/crafting_recipe/New()
-	blacklist += result
+	if(!(result in reqs))
+		blacklist += result
 
 /datum/crafting_recipe/pin_removal
 	name = "Pin Removal"
