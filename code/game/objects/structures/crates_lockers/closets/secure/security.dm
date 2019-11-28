@@ -207,9 +207,9 @@
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/storage/belt/holster/full(src)
 	new /obj/item/pinpointer/crew(src)
-	new /obj/item/twohanded/binoculars(src)
 	new /obj/item/clothing/shoes/laceup/digitigrade(src) //fulp
-
+	new /obj/item/twohanded/binoculars(src)
+	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"
 	req_access = list(ACCESS_HOS)

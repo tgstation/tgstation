@@ -16,8 +16,14 @@
 /// Return value to cancel attaching
 #define ELEMENT_INCOMPATIBLE 1
 
-/// /datum/element flags
+// /datum/element flags
+/// Causes the detach proc to be called when the host object is being deleted 
 #define ELEMENT_DETACH		(1 << 0)
+/**
+  * Only elements created with the same arguments given after `id_arg_index` share an element instance
+  * The arguments are the same when the text and number values are the same and all other values have the same ref
+  */
+#define ELEMENT_BESPOKE		(1 << 1)
 
 // How multiple components of the exact same type are handled in the same datum
 /// old component is deleted (default)
@@ -300,6 +306,7 @@
 // /obj/projectile signals (sent to the firer)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire" 			// from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
+#define COMSIG_PROJECTILE_FIRE "projectile_fire"				// from the base of /obj/projectile/proc/fire(): ()
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"				// sent to targets during the process_hit proc of projectiles
 
 // /obj/mecha signals

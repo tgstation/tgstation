@@ -473,14 +473,18 @@ RLD
 	var/list/rcd_results = A.rcd_vals(user, src)
 	if(!rcd_results)
 		return FALSE
+	var/delay = rcd_results["delay"] * delay_mod
+	var/obj/effect/constructing_effect/rcd_effect = new(get_turf(A), delay, src.mode)
 	if(checkResource(rcd_results["cost"], user))
-		if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
+		if(do_after(user, delay, target = A))
 			if(checkResource(rcd_results["cost"], user))
 				if(A.rcd_act(user, src, rcd_results["mode"]))
+					rcd_effect.end_animation()
 					useResource(rcd_results["cost"], user)
 					activate()
 					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 					return TRUE
+	qdel(rcd_effect)
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
