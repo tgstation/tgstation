@@ -145,8 +145,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
 		if(I.use_tool(src, user, 40, volume=40))
 			if(!(stat & BROKEN))
-				var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
-				C.id = id
+				var/obj/item/stack/conveyor/C = new /obj/item/stack/conveyor(loc, 1, TRUE, id)
 				transfer_fingerprints_to(C)
 			to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 			qdel(src)
@@ -323,37 +322,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if((dir == NORTH) || (dir == WEST))
 		invert_icon = TRUE
 
-//
-// CONVEYOR CONSTRUCTION STARTS HERE
-//
-
-/obj/item/conveyor_construct
-	icon = 'icons/obj/recycling.dmi'
-	icon_state = "conveyor_construct"
-	name = "conveyor belt assembly"
-	desc = "A conveyor belt assembly."
-	w_class = WEIGHT_CLASS_BULKY
-	var/id = "" //inherited by the belt
-
-/obj/item/conveyor_construct/attackby(obj/item/I, mob/user, params)
-	..()
-	if(istype(I, /obj/item/conveyor_switch_construct))
-		to_chat(user, "<span class='notice'>You link the switch to the conveyor belt assembly.</span>")
-		var/obj/item/conveyor_switch_construct/C = I
-		id = C.id
-
-/obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
-	. = ..()
-	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
-		return
-	var/cdir = get_dir(A, user)
-	if(A == user.loc)
-		to_chat(user, "<span class='warning'>You cannot place a conveyor belt under yourself!</span>")
-		return
-	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A, cdir, id)
-	transfer_fingerprints_to(C)
-	qdel(src)
-
 /obj/item/conveyor_switch_construct
 	name = "conveyor switch assembly"
 	desc = "A conveyor control switch assembly."
@@ -367,7 +335,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	id = "[rand()]" //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/attack_self(mob/user)
-	for(var/obj/item/conveyor_construct/C in view())
+	for(var/obj/item/stack/conveyor/C in view())
 		C.id = id
 	to_chat(user, "<span class='notice'>You have linked all nearby conveyor belt assemblies to this switch.</span>")
 
@@ -386,6 +354,46 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
 	transfer_fingerprints_to(NC)
 	qdel(src)
+
+/obj/item/stack/conveyor
+	name = "conveyor belt assembly"
+	desc = "A conveyor belt assembly."
+	icon = 'icons/obj/recycling.dmi'
+	icon_state = "conveyor_construct"
+	max_amount = 30
+	singular_name = "conveyor belt"
+	w_class = WEIGHT_CLASS_BULKY
+	///id for linking
+	var/id = ""
+
+/obj/item/stack/conveyor/Initialize(mapload, new_amount, merge = TRUE, _id)
+	. = ..()
+	id = _id
+
+/obj/item/stack/conveyor/afterattack(atom/A, mob/user, proximity)
+	. = ..()
+	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
+		return
+	var/cdir = get_dir(A, user)
+	if(A == user.loc)
+		to_chat(user, "<span class='warning'>You cannot place a conveyor belt under yourself!</span>")
+		return
+	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A, cdir, id)
+	transfer_fingerprints_to(C)
+	use(1)
+
+/obj/item/stack/conveyor/attackby(obj/item/I, mob/user, params)
+	..()
+	if(istype(I, /obj/item/conveyor_switch_construct))
+		to_chat(user, "<span class='notice'>You link the switch to the conveyor belt assembly.</span>")
+		var/obj/item/conveyor_switch_construct/C = I
+		id = C.id
+
+/obj/item/stack/conveyor/update_weight()
+	return FALSE
+
+/obj/item/stack/conveyor/thirty
+	amount = 30
 
 /obj/item/paper/guides/conveyor
 	name = "paper- 'Nano-it-up U-build series, #9: Build your very own conveyor belt, in SPACE'"

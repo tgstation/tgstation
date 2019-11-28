@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Hivemind Link now properly requires you to keep holding on to the target, and lasts indefinetely."

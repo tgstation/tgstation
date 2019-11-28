@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - tweak: "The Detective should now actually have access to the Security Office on Boxstation, Kilostation, and Pubbystation."
