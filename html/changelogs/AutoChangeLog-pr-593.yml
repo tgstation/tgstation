@@ -1,0 +1,4 @@
+author: "TheMythicGhost"
+delete-after: True
+changes: 
+  - rscadd: "Adds a self knockback (recoil) element that can be applied currently to items and projectiles."
