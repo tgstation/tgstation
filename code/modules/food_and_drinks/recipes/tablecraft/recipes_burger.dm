@@ -313,3 +313,53 @@
 
 	result = /obj/item/reagent_containers/food/snacks/burger/crab
 	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/cheeseburger
+	name = "Cheese Burger"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/meat/steak/plain = 1,
+			/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/cheese
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/soylentburger
+	name = "Soylent Burger"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/soylentgreen = 1, //two full meats worht
+			/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/soylent
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/ribburger
+	name = "McRib"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/bbqribs = 1,     //The sauce is already included in the ribs
+			/obj/item/reagent_containers/food/snacks/onion_slice = 1, //feel free to remove if too burdensome.
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/rib
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/mcguffin
+	name = "McGuffin"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/friedegg = 1,
+			/obj/item/reagent_containers/food/snacks/meat/bacon = 2,
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/mcguffin
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/chickenburger
+	name = "Chicken Sandwich"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/meat/steak/chicken = 1,
+			/datum/reagent/consumable/mayonnaise = 5,
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/chicken
+	subcategory = CAT_BURGER

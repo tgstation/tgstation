@@ -4,8 +4,8 @@
 	icon_state = "hburger"
 	bitesize = 3
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("bun" = 4)
-	foodtype = GRAIN | MEAT
+	tastes = list("bun" = 2, "beef patty" = 4)
+	foodtype = GRAIN | MEAT //lettuce doesn't make burger a vegetable.
 
 /obj/item/reagent_containers/food/snacks/burger/plain
 	name = "burger"
@@ -32,6 +32,7 @@
 	name = "human burger"
 	desc = "A bloody burger."
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("bun" = 2, "long pig" = 4)
 	foodtype = MEAT | GRAIN | GROSS
 
 /obj/item/reagent_containers/food/snacks/burger/human/CheckParts(list/parts_list)
@@ -50,7 +51,7 @@
 /obj/item/reagent_containers/food/snacks/burger/corgi
 	name = "corgi burger"
 	desc = "You monster."
-	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	foodtype = GRAIN | MEAT | GROSS
 
 /obj/item/reagent_containers/food/snacks/burger/appendix
@@ -137,7 +138,7 @@
 /obj/item/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
 	desc = "Too Spooky!"
-	alpha = 125
+	icon_state = "ghostburger"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 12)
 	tastes = list("bun" = 4, "ectoplasm" = 2)
 	foodtype = GRAIN
@@ -221,7 +222,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 6)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 	w_class = WEIGHT_CLASS_NORMAL
-	foodtype = GRAIN | MEAT
+	foodtype = GRAIN | MEAT | DAIRY
 
 /obj/item/reagent_containers/food/snacks/burger/jelly
 	name = "jelly burger"
@@ -250,7 +251,7 @@
 	bitesize = 7
 	volume = 100
 	tastes = list("bun" = 4, "type two diabetes" = 10)
-	foodtype = GRAIN | MEAT
+	foodtype = GRAIN | MEAT | DAIRY
 
 /obj/item/reagent_containers/food/snacks/burger/fivealarm
 	name = "five alarm burger"
@@ -279,7 +280,7 @@
 	desc = "The perfect combination of all things American."
 	icon_state = "baconburger"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("bun" = 4, "bacon" = 2)
+	tastes = list("bacon" = 4, "bun" = 2)
 	foodtype = GRAIN | MEAT
 
 /obj/item/reagent_containers/food/snacks/burger/empoweredburger
@@ -297,3 +298,49 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("bun" = 2, "crab meat" = 4)
 	foodtype = GRAIN | MEAT
+
+/obj/item/reagent_containers/food/snacks/burger/soylent
+	name = "soylent burger"
+	desc = "A eco-friendly burger made using upcycled low value biomass."
+	icon_state = "soylentburger"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("bun" = 2, "assistant" = 4)
+	foodtype = GRAIN | MEAT | DAIRY
+
+/obj/item/reagent_containers/food/snacks/burger/rib
+	name = "mcrib"
+	desc = "An elusive rib shaped burger with limited availablity across the galaxy. Not as good as you remember it."
+	icon_state = "mcrib"
+	bonus_reagents = list(/datum/reagent/consumable/bbqsauce = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("bun" = 2, "pork patty" = 4)
+	foodtype = GRAIN | MEAT
+
+/obj/item/reagent_containers/food/snacks/burger/mcguffin
+	name = "mcguffin"
+	desc = "A cheap and greasy imitation of an eggs benedict."
+	icon_state = "mcguffin"
+	tastes = list("muffin" = 2, "bacon" = 3)
+	bonus_reagents = list(/datum/reagent/consumable/eggyolk = 3, /datum/reagent/consumable/nutriment = 1)
+	foodtype = GRAIN | MEAT | BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/burger/chicken
+	name = "chicken sandwich" //Apparently the proud people of Americlapstan object to this thing being called a burger. Apparently McDonald's just calls it a burger in Europe as to not scare and confuse us.
+	desc = "A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize homosexuality on the space frontier."
+	icon_state = "chickenburger"
+	tastes = list("bun" = 2, "chicken" = 4, "God's covenant" = 1)
+	bonus_reagents = list(/datum/reagent/consumable/mayonnaise = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/nutriment = 2)
+	foodtype = GRAIN | MEAT | FRIED
+
+/obj/item/reagent_containers/food/snacks/burger/cheese
+	name = "cheese burger"
+	desc = "This noble burger stands proudly clad in golden cheese."
+	icon_state = "cheeseburger"
+	tastes = list("bun" = 2, "beef patty" = 4, "cheese" = 3)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	foodtype = GRAIN | MEAT | DAIRY
+
+/obj/item/reagent_containers/food/snacks/burger/cheese/Initialize()
+	. = ..()
+	if(prob(33))
+		icon_state = "cheeseburgeralt"
+
