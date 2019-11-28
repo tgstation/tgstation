@@ -79,8 +79,8 @@
 /datum/chemical_reaction/caramel
 	name = "Caramel"
 	id = /datum/reagent/consumable/caramel
-	results = list(/datum/reagent/consumable/caramel = 1)
-	required_reagents = list(/datum/reagent/consumable/sugar = 1)
+	results = list(/datum/reagent/consumable/caramel = 5)
+	required_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/water = 1)
 	required_temp = 413.15
 	mob_react = FALSE
 
