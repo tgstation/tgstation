@@ -1,3 +1,4 @@
+#!/bin/bash
 # Usage: fix_tgui_conflicts.sh <reset commit sha>
 # Fixes conflicts in tgui folder by resetting everything to the correct commit
 # Run in repository root AFTER merging all proceeding PRs (Don't merge out of order.)
