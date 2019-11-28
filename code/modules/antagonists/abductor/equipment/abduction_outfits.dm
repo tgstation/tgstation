@@ -63,7 +63,7 @@
 	belt = /obj/item/storage/belt/military/abductor/full
 
 	backpack_contents = list(
-	/obj/item/abductor/gizmo = 1
+	/obj/item/abductor/gizmo = 1,
 	/obj/item/gun/energy/alien = 1,
 	/obj/item/abductor/silencer = 1
 	)
