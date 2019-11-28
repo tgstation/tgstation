@@ -1,0 +1,33 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/wall/rust,/area/ruin/unpowered)
+"c" = (/obj/item/stack/tile/noslip/thirty,/turf/template_noop,/area/template_noop)
+"d" = (/obj/machinery/shower{dir = 4},/turf/open/floor/noslip/airless,/area/ruin/unpowered/no_grav)
+"e" = (/turf/closed/wall/rust,/area/ruin/unpowered/no_grav)
+"f" = (/turf/open/floor/noslip/airless,/area/ruin/unpowered/no_grav)
+"g" = (/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/remains/human,/turf/open/floor/noslip/airless,/area/ruin/unpowered/no_grav)
+"h" = (/obj/machinery/shower{dir = 8},/turf/open/floor/noslip/airless,/area/ruin/unpowered/no_grav)
+"i" = (/obj/item/paper/crumpled/bloody/Newshowers,/turf/open/floor/noslip/airless,/area/ruin/unpowered/no_grav)
+"j" = (/obj/structure/lattice,/turf/template_noop,/area/space/nearstation)
+"k" = (/obj/structure/fluff/broken_flooring{dir = 4; icon_state = "pile"},/turf/template_noop,/area/template_noop)
+"l" = (/obj/effect/decal/cleanable/blood/old{dir = 1; icon_state = "trails_1"; name = "dried blood trail"},/turf/open/floor/noslip/airless,/area/ruin/unpowered/no_grav)
+"m" = (/obj/structure/bedsheetbin/empty,/obj/structure/table,/turf/open/floor/noslip/airless,/area/ruin/unpowered/no_grav)
+"n" = (/obj/effect/decal/cleanable/blood/old{dir = 5; icon_state = "trails_1"; name = "dried blood trail"},/turf/open/floor/noslip/airless,/area/ruin/unpowered/no_grav)
+"o" = (/obj/structure/fluff/broken_flooring{dir = 4; icon_state = "pile"},/obj/item/bodybag,/turf/template_noop,/area/template_noop)
+"p" = (/obj/structure/lattice,/obj/item/bodypart/chest,/turf/template_noop,/area/space/nearstation)
+"q" = (/obj/machinery/shower{dir = 8},/obj/item/clothing/under/misc/pj/blue,/turf/open/floor/noslip/airless,/area/ruin/unpowered/no_grav)
+"r" = (/obj/structure/lattice,/obj/item/bodypart/l_leg,/turf/template_noop,/area/space/nearstation)
+
+(1,1,1) = {"
+aaaaajjaaoaa
+aaaaaajaaaca
+aaabdpjjeaaa
+aaabdfjjeaaa
+aaabdfgqejja
+aajbdilhejaa
+aajjfflmjjaa
+aarjfjlfjaaa
+aaaedffheaaa
+akaedffheaaa
+aaaenfjjeaaa
+aaaaaajjjaaa
+"}
