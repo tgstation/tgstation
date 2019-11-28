@@ -40,10 +40,12 @@ import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
+import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
+import { NuclearBomb } from './interfaces/NuclearBomb';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
@@ -257,6 +259,12 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
+  ntos_arcade: {
+    component: () => NtosArcade,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
+    theme: 'ntos',
+  },
   ntos_power_monitor: {
     component: () => PowerMonitor,
     wrapper: () => NtosWrapper,
@@ -268,6 +276,11 @@ const ROUTES = {
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
+  },
+  nuclear_bomb: {
+    component: () => NuclearBomb,
+    scrollable: false,
+    theme: 'retro',
   },
   ore_redemption_machine: {
     component: () => OreRedemptionMachine,

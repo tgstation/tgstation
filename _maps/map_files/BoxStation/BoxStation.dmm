@@ -47301,7 +47301,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
 	name = "Security Office";
-	req_access_txt = "1"
+	req_access_txt = null;
+	req_one_access_txt = "1;4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
