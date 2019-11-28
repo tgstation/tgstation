@@ -447,7 +447,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/machinery/vending/proc/freebie(mob/fatty, freebies)
 	visible_message("<span class='notice'>\The [src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!</span>")
 
-	for(var/i=0, i<freebies, i++)
+	for(var/i in 1 to freebies)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 		for(var/datum/data/vending_product/R in shuffle(product_records))
 
