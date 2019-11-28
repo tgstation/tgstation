@@ -1298,6 +1298,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 								"<span class='notice'>You licked [target]'s feet!</span>", null, null, target)
 			to_chat(target, "<span class='userdanger'>[user] licked your feet!</span>")
 			target.adjust_fire_stacks(-2) // licking something wets it, right?
+		return TRUE
 	if(user.resting || user.IsKnockdown())
 		return FALSE
 	if(user == target)
