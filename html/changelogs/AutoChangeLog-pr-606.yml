@@ -1,0 +1,6 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - tweak: "conveyor belt now are stacks instead of single item"
+  - tweak: "conveyor crate has 30 belts"
+  - tweak: "printing a conveyor  costs 3000 metal"
