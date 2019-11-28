@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "You can now hold people at gunpoint! Attack someone at point blank with a gun on GRAB intent to initiate the stickup. You will automatically fire at your target if they move or attack, though they can still rummage through their (or your!) inventory, speak (including on the radio), and throw things. Go let loose your inner Omar!"
