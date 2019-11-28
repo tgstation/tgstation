@@ -384,6 +384,7 @@
 #include "code\datums\components\forced_gravity.dm"
 #include "code\datums\components\forensics.dm"
 #include "code\datums\components\gps.dm"
+#include "code\datums\components\gunpoint.dm"
 #include "code\datums\components\heirloom.dm"
 #include "code\datums\components\igniter.dm"
 #include "code\datums\components\infective.dm"
