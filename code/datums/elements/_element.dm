@@ -7,12 +7,6 @@
 /datum/element
 	/// Option flags for element behaviour
 	var/element_flags = NONE
-	/**
-	  * The index of the first attach argument to consider for duplicate elements
-	  * Is only used when flags contains ELEMENT_BESPOKE
-	  * This is infinity so you must explicitly set this
-	  */
-	var/id_arg_index = INFINITY
 
 /// Activates the functionality defined by the element on the given target datum
 /datum/element/proc/Attach(datum/target)
@@ -37,15 +31,12 @@
 
 /// Finds the singleton for the element type given and attaches it to src
 /datum/proc/AddElement(eletype, ...)
-	var/datum/element/ele = SSdcs.GetElement(arglist(args))
+	var/datum/element/ele = SSdcs.GetElement(eletype)
 	args[1] = src
 	if(ele.Attach(arglist(args)) == ELEMENT_INCOMPATIBLE)
 		CRASH("Incompatible [eletype] assigned to a [type]! args: [json_encode(args)]")
 
-/**
-  * Finds the singleton for the element type given and detaches it from src
-  * You only need additional arguments beyond the type if you're using ELEMENT_BESPOKE
-  */
-/datum/proc/RemoveElement(eletype, ...)
-	var/datum/element/ele = SSdcs.GetElement(arglist(args))
+/// Finds the singleton for the element type given and detaches it from src
+/datum/proc/RemoveElement(eletype)
+	var/datum/element/ele = SSdcs.GetElement(eletype)
 	ele.Detach(src)

@@ -172,9 +172,3 @@
 		qdel(src)
 	else
 		..()
-
-/obj/item/paper_bin/carbon
-	name = "carbon paper bin"
-	desc = "Contains all the paper you'll ever need, in duplicate!"
-	icon_state = "paper_bin_carbon"
-	papertype = /obj/item/paper/carbon

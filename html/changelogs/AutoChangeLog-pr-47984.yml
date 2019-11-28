@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "Interfaces featuring the Input component (such as the syndicate uplink) on tgui-next now properly function on IE8/WINE again."

@@ -10,22 +10,6 @@
   text-align: right;
 }
 
-.text-baseline {
-  text-align: baseline;
-}
-
-.text-justify {
-  text-align: justify;
-}
-
-.text-nowrap {
-  white-space: nowrap;
-}
-
-.text-pre {
-  white-space: pre;
-}
-
 .text-bold {
   font-weight: bold;
 }
@@ -34,6 +18,10 @@
   font-style: italic;
 }
 
-.text-underline {
-  text-decoration: underline;
+.text-big {
+  font-size: 125%;
+}
+
+.text-small {
+  font-size: 75%;
 }

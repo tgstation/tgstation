@@ -1,7 +1,6 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { AnimatedNumber, Button, LabeledList, ProgressBar, Section } from '../components';
-import { BeakerContents } from './common/BeakerContents';
+import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section} from '../components';
 
 export const Cryo = props => {
   const { state } = props;
@@ -102,10 +101,25 @@ export const Cryo = props => {
             onClick={() => act(ref, 'ejectbeaker')}
             content="Eject" />
         )}>
-        <BeakerContents
-          beakerLoaded={data.isBeakerLoaded}
-          beakerContents={data.beakerContents} />
+        <LabeledList>
+          <LabeledList.Item label="Contents">
+            {data.isBeakerLoaded ? (
+              data.beakerContents.length ? (
+                data.beakerContents.map(beakerContent => (
+                  <Box
+                    key={beakerContent.id}
+                    color="pale-blue" >
+                    {beakerContent.volume} units of {beakerContent.name}
+                  </Box>
+                ))
+              ) : (
+                <Box color="bad" content="Beaker Empty" />
+              )
+            ) : (
+              <Box color="average" content="No Beaker" />
+            )}
+          </LabeledList.Item>
+        </LabeledList>
       </Section>
     </Fragment>
-  );
-};
+  ); };

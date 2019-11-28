@@ -18,7 +18,6 @@
 	mob_name = "a swarmer"
 	death = FALSE
 	roundstart = FALSE
-	short_desc = "You are a swarmer, a weapon of a long dead civilization."
 	flavour_text = {"
 	<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>
 	<b>Clicking on any object will try to consume it, either deconstructing it into its components, destroying it, or integrating any materials it has into you if successful.</b>
@@ -140,9 +139,9 @@
 
 /mob/living/simple_animal/hostile/swarmer/CanPass(atom/movable/O)
 	if(istype(O, /obj/projectile/beam/disabler))//Allows for swarmers to fight as a group without wasting their shots hitting each other
-		return TRUE
+		return 1
 	if(isswarmer(O))
-		return TRUE
+		return 1
 	..()
 
 ////CTRL CLICK FOR SWARMERS AND SWARMER_ACT()'S////
@@ -192,9 +191,8 @@
 	return 0
 
 /obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
-	if(custom_materials)
-		if(custom_materials[getmaterialref(/datum/material/iron)] || custom_materials[getmaterialref(/datum/material/glass)])
-			return 1
+	if(custom_materials[getmaterialref(/datum/material/iron)] || custom_materials[getmaterialref(/datum/material/glass)])
+		return 1
 	return ..()
 
 /obj/item/gun/swarmer_act()//Stops you from eating the entire armory
@@ -415,7 +413,7 @@
 		resources -= fabrication_cost
 	else
 		to_chat(src, "<span class='warning'>You do not have the necessary resources to fabricate this object.</span>")
-		return
+		return 0
 	return new fabrication_object(loc)
 
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(atom/movable/target)
@@ -614,9 +612,9 @@
 
 /obj/structure/swarmer/blockade/CanPass(atom/movable/O)
 	if(isswarmer(O))
-		return TRUE
+		return 1
 	if(istype(O, /obj/projectile/beam/disabler))
-		return TRUE
+		return 1
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateSwarmer()
 	set name = "Replicate"

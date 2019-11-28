@@ -16,14 +16,8 @@
 /// Return value to cancel attaching
 #define ELEMENT_INCOMPATIBLE 1
 
-// /datum/element flags
-/// Causes the detach proc to be called when the host object is being deleted 
+/// /datum/element flags
 #define ELEMENT_DETACH		(1 << 0)
-/**
-  * Only elements created with the same arguments given after `id_arg_index` share an element instance
-  * The arguments are the same when the text and number values are the same and all other values have the same ref
-  */
-#define ELEMENT_BESPOKE		(1 << 1)
 
 // How multiple components of the exact same type are handled in the same datum
 /// old component is deleted (default)
@@ -98,8 +92,6 @@
 #define COMSIG_ATOM_NARSIE_ACT "atom_narsie_act"				//from base of atom/narsie_act(): ()
 #define COMSIG_ATOM_RCD_ACT "atom_rcd_act"						//from base of atom/rcd_act(): (/mob, /obj/item/construction/rcd, passed_mode)
 #define COMSIG_ATOM_SING_PULL "atom_sing_pull"					//from base of atom/singularity_pull(): (S, current_size)
-#define COMSIG_ATOM_BSA_BEAM "atom_bsa_beam_pass"				//from obj/machinery/bsa/full/proc/fire(): ()
-	#define COMSIG_ATOM_BLOCKS_BSA_BEAM 1
 #define COMSIG_ATOM_SET_LIGHT "atom_set_light"					//from base of atom/set_light(): (l_range, l_power, l_color)
 #define COMSIG_ATOM_DIR_CHANGE "atom_dir_change"				//from base of atom/setDir(): (old_dir, new_dir)
 #define COMSIG_ATOM_CONTENTS_DEL "atom_contents_del"			//from base of atom/handle_atom_del(): (atom/deleted)
@@ -306,7 +298,6 @@
 // /obj/projectile signals (sent to the firer)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire" 			// from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
-#define COMSIG_PROJECTILE_FIRE "projectile_fire"				// from the base of /obj/projectile/proc/fire(): ()
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"				// sent to targets during the process_hit proc of projectiles
 
 // /obj/mecha signals

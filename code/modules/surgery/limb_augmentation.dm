@@ -4,6 +4,17 @@
 
 //SURGERY STEPS
 
+/datum/surgery_step/replace
+	name = "sever muscles"
+	implements = list(TOOL_SCALPEL = 100, TOOL_WIRECUTTER = 55)
+	time = 32
+
+
+/datum/surgery_step/replace/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	display_results(user, target, "<span class='notice'>You begin to sever the muscles on [target]'s [parse_zone(user.zone_selected)]...</span>",
+		"<span class='notice'>[user] begins to sever the muscles on [target]'s [parse_zone(user.zone_selected)].</span>",
+		"<span class='notice'>[user] begins an incision on [target]'s [parse_zone(user.zone_selected)].</span>")
+
 /datum/surgery_step/replace_limb
 	name = "replace limb"
 	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100)
@@ -34,7 +45,7 @@
 
 /datum/surgery/augmentation
 	name = "Augmentation"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace_limb)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace, /datum/surgery_step/saw, /datum/surgery_step/replace_limb)
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
@@ -56,4 +67,4 @@
 		log_combat(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")
-	return ..(default_display_results = FALSE)
+	return TRUE

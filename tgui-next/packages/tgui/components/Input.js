@@ -2,6 +2,7 @@ import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
 
+/* eslint-disable react/destructuring-assignment */
 export class Input extends Component {
   constructor() {
     super();
@@ -61,6 +62,7 @@ export class Input extends Component {
         </div>
         <input
           ref={this.inputRef}
+          type="text"
           className="Input__input"
           onInput={e => {
             this.setEditing(true);

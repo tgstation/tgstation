@@ -1,4 +1,4 @@
-import { map } from 'common/collections';
+import { map } from 'common/fp';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { AnimatedNumber, Box, Button, LabeledList, Section, Tabs } from '../components';
@@ -60,7 +60,7 @@ export const Cargo = props => {
                   disabled={!(data.away && data.docked)}
                   onClick={() => act(ref, 'loan')} />
               ) : (
-                <Box color="bad">Loaned to Centcom</Box>
+                <span className="color-bad">Loaned to Centcom</span>
               )}
             </LabeledList.Item>
           ) : ''}

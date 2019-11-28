@@ -1,8 +1,8 @@
-import { map } from 'common/collections';
+import { map } from 'common/fp';
 import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Button, LabeledList, NumberInput, Section } from '../components';
+import { Button, LabeledList, Section, NumberInput } from '../components';
 
 export const AtmosControlConsole = props => {
   const { state } = props;

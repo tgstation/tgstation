@@ -26,7 +26,6 @@
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_SCREWDRIVER = 65, /obj/item/pen = 55)
 	repeatable = TRUE
 	time = 25
-	experience_given = 2
 	var/brutehealing = 0
 	var/burnhealing = 0
 	var/missinghpbonus = 0 //heals an extra point of damager per X missing damage of type (burn damage for burn healing, brute for brute). Smaller Number = More Healing!
@@ -52,7 +51,7 @@
 			if(!..())
 				break
 
-/datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/umsg = "You succeed in fixing some of [target]'s wounds" //no period, add initial space to "addons"
 	var/tmsg = "[user] fixes some of [target]'s wounds" //see above
 	var/urhealedamt_brute = brutehealing
@@ -76,7 +75,7 @@
 	if(istype(surgery, /datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		the_surgery.antispam = TRUE
-	return ..(default_display_results = FALSE)
+	return TRUE
 
 /datum/surgery_step/heal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='warning'>You screwed up!</span>",

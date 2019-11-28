@@ -99,7 +99,7 @@
 				AIproc = 0
 				break
 
-		var/sleeptime = cached_multiplicative_slowdown
+		var/sleeptime = movement_delay()
 		if(sleeptime <= 0)
 			sleeptime = 1
 

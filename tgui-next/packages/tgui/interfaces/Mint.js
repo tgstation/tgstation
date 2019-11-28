@@ -11,13 +11,15 @@ export const Mint = props => {
     <Fragment>
       <Section
         title="Materials"
-        buttons={
+        buttons={(data.processing ? (
           <Button
-            icon={data.processing ? "times" : "power-off"}
-            content={data.processing ? "Stop" : "Start"}
-            selected={data.processing}
-            onClick={() => act(ref, data.processing ? 'stoppress' : 'startpress')} />
-        }>
+            content="Stop"
+            onClick={() => act(ref, 'stoppress')} />
+        ) : (
+          <Button
+            content="Start"
+            onClick={() => act(ref, 'startpress')} />
+        ))}>
         <LabeledList>
           {inserted_materials.map(material => {
             return (
@@ -26,7 +28,7 @@ export const Mint = props => {
                 label={material.material}
                 buttons={(
                   <Button
-                    icon={data.chosen_material === material.material ? "check-square" : "square"}
+                    content="Select"
                     selected={data.chosen_material === material.material}
                     onClick={() => act(ref, 'changematerial', {
                       material_name: material.material,

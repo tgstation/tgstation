@@ -433,7 +433,7 @@
 	suit_store = /obj/item/tank/internals/oxygen
 	back = /obj/item/storage/backpack/holding
 	box = /obj/item/storage/box/debugtools
-	internals_slot = ITEM_SLOT_SUITSTORE
+	internals_slot = SLOT_S_STORE
 	backpack_contents = list(
 		/obj/item/construction/rcd/combat=1,\
 		/obj/item/melee/transforming/energy/axe=1,\

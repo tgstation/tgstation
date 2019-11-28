@@ -1,9 +1,9 @@
 import { Component, Fragment } from 'inferno';
 import { act } from '../byond';
-import { AnimatedNumber, Box, Button, ColorBox, LabeledList, NumberInput, Section, Table } from '../components';
+import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section, Table } from '../components';
 
 export const ChemMaster = props => {
-  const { state } = props;
+  const { state, dispatch } = props;
   const { config, data } = state;
   const { ref } = config;
   const {
@@ -12,6 +12,8 @@ export const ChemMaster = props => {
     bufferContents = [],
     beakerCurrentVolume,
     beakerMaxVolume,
+    pillStyles = [],
+    chosenPillStyle,
     isBeakerLoaded,
     isPillBottleLoaded,
     pillBottleCurrentAmount,
@@ -346,7 +348,16 @@ const AnalysisResults = props => {
           {analyzeVars.state}
         </LabeledList.Item>
         <LabeledList.Item label="Color">
-          <ColorBox color={analyzeVars.color} mr={1} />
+          <Box inline
+            mr={1}
+            width={2}
+            height={2}
+            lineHeight={2}
+            content="."
+            style={{
+              'color': analyzeVars.color,
+              'background-color': analyzeVars.color,
+            }} />
           {analyzeVars.color}
         </LabeledList.Item>
         <LabeledList.Item label="Description">

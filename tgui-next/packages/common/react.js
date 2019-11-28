@@ -21,7 +21,7 @@ export const classes = classNames => {
  */
 export const normalizeChildren = children => {
   if (Array.isArray(children)) {
-    return children.flat().filter(value => value);
+    return children.filter(value => value);
   }
   if (typeof children === 'object') {
     return [children];

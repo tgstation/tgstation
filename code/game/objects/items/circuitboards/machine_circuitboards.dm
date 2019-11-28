@@ -678,7 +678,7 @@
 	name = "Medical Kiosk (Machine Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/medical_kiosk
-	var/custom_cost = 10
+	var/custom_cost = 5
 	req_components = list(
 		/obj/item/healthanalyzer = 1,
 		/obj/item/stock_parts/scanning_module = 1)
@@ -686,10 +686,9 @@
 /obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
 	. = ..()
 	var/new_cost = input("Set a new cost for using this medical kiosk.","New cost", custom_cost) as num|null
-	if(new_cost == null && (src.loc == user))
+	if(new_cost == null)
 		return
-	custom_cost = CLAMP(round(new_cost, 1), 10, 1000)
-	to_chat(user, "<span class='notice'>The cost is now set to [custom_cost].</span>")
+	custom_cost = CLAMP(round(new_cost, 1), 1, 1000)
 
 /obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)
 	. = ..()
@@ -855,7 +854,7 @@
 /obj/item/circuitboard/machine/public_nanite_chamber/multitool_act(mob/living/user)
 	. = ..()
 	var/new_cloud = input("Set the public nanite chamber's Cloud ID (1-100).", "Cloud ID", cloud_id) as num|null
-	if(new_cloud && (src.loc == user))
+	if(new_cloud == null)
 		return
 	cloud_id = CLAMP(round(new_cloud, 1), 1, 100)
 

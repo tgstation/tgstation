@@ -427,10 +427,6 @@
 	suffix = "cere"
 	name = "NT Construction Vessel"
 
-/datum/map_template/shuttle/whiteship/kilo
-	suffix = "kilo"
-	name = "NT Mining Shuttle"
-
 /datum/map_template/shuttle/whiteship/donut
 	suffix = "donut"
 	name = "NT Long-Distance Bluespace Jumper"
@@ -539,10 +535,6 @@
 /datum/map_template/shuttle/mining_common/meta
 	suffix = "meta"
 	name = "lavaland shuttle (Meta)"
-
-/datum/map_template/shuttle/mining_common/kilo
-	suffix = "kilo"
-	name = "lavaland shuttle (Kilo)"
 
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"

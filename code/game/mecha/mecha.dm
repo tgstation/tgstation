@@ -4,8 +4,7 @@
 	icon = 'icons/mecha/mecha.dmi'
 	density = TRUE //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
-	move_force = MOVE_FORCE_VERY_STRONG
-	move_resist = MOVE_FORCE_EXTREMELY_STRONG
+	anchored = TRUE //no pulling around.
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	layer = BELOW_MOB_LAYER//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
@@ -64,7 +63,6 @@
 	var/obj/item/mecha_parts/mecha_equipment/selected
 	var/max_equip = 3
 
-	var/step_silent = FALSE //Used for disabling mech step sounds while using thrusters or pushing off lockers
 	var/stepsound = 'sound/mecha/mechstep.ogg'
 	var/turnsound = 'sound/mecha/mechturn.ogg'
 
@@ -86,6 +84,7 @@
 	var/datum/action/innate/mecha/mech_cycle_equip/cycle_action = new
 	var/datum/action/innate/mecha/mech_toggle_lights/lights_action = new
 	var/datum/action/innate/mecha/mech_view_stats/stats_action = new
+	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
 	var/datum/action/innate/mecha/mech_defense_mode/defense_action = new
 	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
 	var/datum/effect_system/smoke_spread/smoke_system = new //not an action, but trigged by one
@@ -96,7 +95,7 @@
 	var/datum/action/innate/mecha/strafe/strafing_action = new
 
 	//Action vars
-	var/obj/item/mecha_parts/mecha_equipment/thrusters/active_thrusters
+	var/thrusters_active = FALSE
 	var/defense_mode = FALSE
 	var/leg_overload_mode = FALSE
 	var/leg_overload_coeff = 100
@@ -542,22 +541,17 @@
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
 	. = ..()
 	if(.)
-		return TRUE
+		return 1
+	if(thrusters_active && movement_dir && use_power(step_energy_drain))
+		return 1
 
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180)))
-				step_silent = TRUE
 				if(occupant)
 					to_chat(occupant, "<span class='info'>You push off [backup] to propel yourself.</span>")
-		return TRUE
-
-	if(can_move <= world.time && active_thrusters && movement_dir && active_thrusters.thrust(movement_dir))
-		step_silent = TRUE
-		return TRUE
-
-	return FALSE
+		return 1
 
 /obj/mecha/relaymove(mob/user,direction)
 	if(completely_disabled)
@@ -628,16 +622,14 @@
 	var/result = step(src,direction)
 	if(strafe)
 		setDir(current_dir)
-	if(result && !step_silent)
+	if(result)
 		play_stepsound()
-	step_silent = FALSE
 	return result
 
 /obj/mecha/proc/mechsteprand()
 	var/result = step_rand(src)
-	if(result && !step_silent)
+	if(result)
 		play_stepsound()
-	step_silent = FALSE
 	return result
 
 /obj/mecha/Bump(var/atom/obstacle)
@@ -661,11 +653,11 @@
 					step(src,dir)
 		if(isobj(obstacle))
 			var/obj/O = obstacle
-			if(!O.anchored && O.move_resist <= move_force)
+			if(!O.anchored)
 				step(obstacle, dir)
 		else if(ismob(obstacle))
 			var/mob/M = obstacle
-			if(M.move_resist <= move_force)
+			if(!M.anchored)
 				step(obstacle, dir)
 
 

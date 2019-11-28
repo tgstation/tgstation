@@ -108,7 +108,7 @@
 
 /datum/export/rpd
 	cost = 100
-	unit_name = "rapid pipe dispenser"
+	unit_name = "rapid piping device"
 	export_types = list(/obj/item/pipe_dispenser)
 
 /datum/export/singulo //failsafe in case someone decides to ship a live singularity to CentCom without the corresponding bounty

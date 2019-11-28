@@ -104,7 +104,7 @@
 	..()
 	if (!istype(user))
 		return
-	if(slot_flags & slot) //Was equipped to a valid slot for this item?
+	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)
@@ -319,8 +319,9 @@ BLIND     // can't see anything
 /obj/item/clothing/obj_destruction(damage_flag)
 	if(damage_flag == "bomb" || damage_flag == "melee")
 		var/turf/T = get_turf(src)
-		//so the shred survives potential turf change from the explosion.
-		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(T, name)), 1)
+		spawn(1) //so the shred survives potential turf change from the explosion.
+			var/obj/effect/decal/cleanable/shreds/Shreds = new(T)
+			Shreds.desc = "The sad remains of what used to be [name]."
 		deconstruct(FALSE)
 	else
 		..()

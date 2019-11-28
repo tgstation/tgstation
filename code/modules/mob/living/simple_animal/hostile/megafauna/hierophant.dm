@@ -132,7 +132,7 @@ Difficulty: Hard
 	var/mob/living/L
 	if(isliving(target))
 		L = target
-		target_slowness += L.cached_multiplicative_slowdown
+		target_slowness += L.movement_delay()
 	if(client)
 		target_slowness += 1
 

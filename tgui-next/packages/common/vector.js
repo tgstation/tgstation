@@ -1,4 +1,4 @@
-import { map, product, reduce } from './collections';
+import { fastMap, fastProduct, fastReduce } from './collections';
 
 /**
  * Creates a vector, with as many dimensions are there are arguments.
@@ -20,23 +20,23 @@ class Vector {
   }
 
   add(vec) {
-    return new Vector(product(ADD)(this.c, vec.c));
+    return new Vector(fastProduct(this.c, vec.c, ADD));
   }
 
   subtract(vec) {
-    return new Vector(product(SUB)(this.c, vec.c));
+    return new Vector(fastProduct(this.c, vec.c, SUB));
   }
 
   multiply(n) {
-    return new Vector(map(x => x * n)(this.c));
+    return new Vector(fastMap(this.c, x => x * n));
   }
 
   divide(n) {
-    return new Vector(map(x => x / n)(this.c));
+    return new Vector(fastMap(this.c, x => x / n));
   }
 
   magnitude() {
-    return Math.sqrt(reduce(ADD)(product(MUL)(this.c, this.c)));
+    return Math.sqrt(fastReduce(fastProduct(this.c, this.c, MUL), ADD));
   }
 
   normalize() {

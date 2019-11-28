@@ -1,5 +1,5 @@
 import { classes, pureComponentHooks } from 'common/react';
-import { Box, unit } from './Box';
+import { unit } from './Box';
 
 export const LabeledList = props => {
   const { children } = props;
@@ -16,7 +16,7 @@ export const LabeledListItem = props => {
   const {
     className,
     label,
-    labelColor = 'label',
+    labelColor,
     color,
     buttons,
     content,
@@ -28,25 +28,24 @@ export const LabeledListItem = props => {
         'LabeledList__row',
         className,
       ])}>
-      <Box
-        as="td"
-        color={labelColor}
+      <td
         className={classes([
           'LabeledList__cell',
           'LabeledList__label',
-        ])}
-        content={label + ':'} />
-      <Box
-        as="td"
-        color={color}
+          'color-' + (labelColor ? labelColor : 'label'),
+        ])}>
+        {label}:
+      </td>
+      <td
         className={classes([
           'LabeledList__cell',
           'LabeledList__content',
+          color && 'color-' + color,
         ])}
         colSpan={buttons ? undefined : 2}>
         {content}
         {children}
-      </Box>
+      </td>
       {buttons && (
         <td className="LabeledList__cell LabeledList__buttons">
           {buttons}

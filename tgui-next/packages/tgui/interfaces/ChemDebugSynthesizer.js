@@ -1,6 +1,8 @@
+import { toFixed } from 'common/math';
+import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
+import { Box, Button, LabeledList, Section, AnimatedNumber } from '../components';
 import { NumberInput } from '../components/NumberInput';
 
 export const ChemDebugSynthesizer = props => {
@@ -17,7 +19,7 @@ export const ChemDebugSynthesizer = props => {
   return (
     <Section
       title="Recipient"
-      buttons={isBeakerLoaded ? (
+      buttons={(isBeakerLoaded ? (
         <Fragment>
           <Button
             icon="eject"
@@ -31,20 +33,23 @@ export const ChemDebugSynthesizer = props => {
             maxValue={beakerMaxVolume}
             step={1}
             stepPixelSize={2}
-            onChange={(e, value) => act(ref, 'amount', {
-              amount: value,
-            })} />
+            onChange={(e, value) => act(ref, 'amount', {amount: value})}
+          />
           <Button
             icon="plus"
             content="Input"
-            onClick={() => act(ref, 'input')} />
+            onClick={() => act(ref, 'input')}
+          />
         </Fragment>
       ) : (
         <Button
           icon="plus"
           content="Create Beaker"
-          onClick={() => act(ref, 'makecup')} />
-      )}>
+          onClick={() => act(ref, 'makecup')}
+        />
+      )
+      )}
+    >
       {isBeakerLoaded ? (
         <Fragment>
           <Box>
@@ -63,7 +68,8 @@ export const ChemDebugSynthesizer = props => {
               {beakerContents.map(chem => (
                 <LabeledList.Item
                   key={chem.name}
-                  label={chem.name}>
+                  label={chem.name}
+                >
                   {chem.volume} u
                 </LabeledList.Item>
               ))}

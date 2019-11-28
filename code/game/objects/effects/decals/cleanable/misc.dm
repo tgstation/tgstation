@@ -172,11 +172,9 @@
 	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
 		qdel(src)
 
-/obj/effect/decal/cleanable/shreds/Initialize(mapload, oldname)
+/obj/effect/decal/cleanable/shreds/Initialize()
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
-	if(!isnull(oldname))
-		desc = "The sad remains of what used to be [oldname]"
 	. = ..()
 
 /obj/effect/decal/cleanable/glitter

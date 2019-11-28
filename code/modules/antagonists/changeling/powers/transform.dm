@@ -9,7 +9,6 @@
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
-	item_flags = DROPDEL
 
 /obj/item/clothing/glasses/changeling/Initialize()
 	. = ..()
@@ -25,7 +24,6 @@
 
 /obj/item/clothing/under/changeling
 	name = "flesh"
-	item_flags = DROPDEL
 
 /obj/item/clothing/under/changeling/Initialize()
 	. = ..()
@@ -42,7 +40,6 @@
 /obj/item/clothing/suit/changeling
 	name = "flesh"
 	allowed = list(/obj/item/changeling)
-	item_flags = DROPDEL
 
 /obj/item/clothing/suit/changeling/Initialize()
 	. = ..()
@@ -58,7 +55,6 @@
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
-	item_flags = DROPDEL
 
 /obj/item/clothing/head/changeling/Initialize()
 	. = ..()
@@ -74,7 +70,6 @@
 
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
-	item_flags = DROPDEL
 
 /obj/item/clothing/shoes/changeling/Initialize()
 	. = ..()
@@ -90,7 +85,6 @@
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
-	item_flags = DROPDEL
 
 /obj/item/clothing/gloves/changeling/Initialize()
 	. = ..()
@@ -106,7 +100,6 @@
 
 /obj/item/clothing/mask/changeling
 	name = "flesh"
-	item_flags = DROPDEL
 
 /obj/item/clothing/mask/changeling/Initialize()
 	. = ..()
@@ -124,7 +117,6 @@
 	name = "flesh"
 	slot_flags = ALL
 	allowed = list(/obj/item/changeling)
-	item_flags = DROPDEL
 
 /obj/item/changeling/Initialize()
 	. = ..()

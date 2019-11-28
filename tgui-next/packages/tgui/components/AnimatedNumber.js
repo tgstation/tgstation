@@ -70,7 +70,7 @@ export class AnimatedNumber extends Component {
     }
     // Use a custom render function
     if (typeof children === 'function') {
-      return children(formattedValue, currentValue);
+      return children(formattedValue);
     }
     return formattedValue;
   }

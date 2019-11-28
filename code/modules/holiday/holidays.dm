@@ -93,16 +93,6 @@
 /datum/holiday/valentines/getStationPrefix()
 	return pick("Love","Amore","Single","Smootch","Hug")
 
-/// Garbage DAYYYYY
-/// Huh?.... NOOOO
-/// *GUNSHOT*
-/// AHHHGHHHHHHH
-/datum/holiday/garbageday
-	name = GARBAGEDAY
-	begin_day = 17
-	end_day = 17
-	begin_month = JUNE
-
 /datum/holiday/birthday
 	name = "Birthday of Space Station 13"
 	begin_day = 16
@@ -608,11 +598,3 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/ianbirthday/greet()
 	return "Happy birthday, Ian!"
-
-/datum/holiday/hotdogday //I have plans for this.
-	name = "National Hot Dog Day"
-	begin_day = 17
-	begin_month = JULY
-
-/datum/holiday/hotdogday/greet()
-	return "Happy National Hot Dog Day!"

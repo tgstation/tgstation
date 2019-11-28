@@ -202,14 +202,12 @@
 			var/new_species = input("Set target species","Scan Mode") as null|anything in sortList(list("Human",
 																								"Lizardperson",
 																								"Flyperson",
-																								"Felinid",
 																								"Plasmaman",
 																								"Mothmen",
 																								"Jellyperson",
 																								"Podperson",
 																								"Golem",
-																								"Zombie",
-																								))
+																								"Zombie"))
 			if(new_species)
 				switch(new_species)
 					if("Human")
@@ -218,8 +216,6 @@
 						detect_species = /datum/species/lizard
 					if("Flyperson")
 						detect_species = /datum/species/fly
-					if("Felinid")
-						detect_species = /datum/species/human/felinid
 					if("Plasmaman")
 						detect_species = /datum/species/plasmaman
 					if("Mothmen")

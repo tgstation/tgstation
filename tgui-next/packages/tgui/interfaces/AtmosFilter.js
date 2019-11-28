@@ -1,6 +1,6 @@
 import { act } from '../byond';
 import { Button, LabeledList, NumberInput, Section } from '../components';
-import { getGasLabel } from '../constants';
+import { getGasLabel } from './common/atmos';
 
 export const AtmosFilter = props => {
   const { state } = props;

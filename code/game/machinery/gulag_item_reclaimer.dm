@@ -8,8 +8,8 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 2500
-	ui_x = 300
-	ui_y = 400
+	ui_x = 455
+	ui_y = 440
 	var/list/stored_items = list()
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
 
@@ -60,6 +60,8 @@
 		mobs += list(mob_info)
 
 	data["mobs"] = mobs
+
+
 	data["can_reclaim"] = can_reclaim
 
 	return data

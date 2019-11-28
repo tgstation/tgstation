@@ -37,8 +37,6 @@
 /obj/structure/closet/crate/bin/proc/do_animate()
 	playsound(loc, open_sound, 15, TRUE, -3)
 	flick("animate_largebins", src)
-	addtimer(CALLBACK(src, .proc/do_close), 13)
-
-/obj/structure/closet/crate/bin/proc/do_close()
-	playsound(loc, close_sound, 15, TRUE, -3)
-	update_icon()
+	spawn(13)
+		playsound(loc, close_sound, 15, TRUE, -3)
+		update_icon()

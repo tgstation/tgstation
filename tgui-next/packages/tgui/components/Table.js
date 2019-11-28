@@ -23,13 +23,12 @@ export const Table = props => {
 Table.defaultHooks = pureComponentHooks;
 
 export const TableRow = props => {
-  const { className, header, ...rest } = props;
+  const { className, ...rest } = props;
   return (
     <Box
       as="tr"
       className={classes([
         'Table__row',
-        header && 'Table__row--header',
         className,
       ])}
       {...rest} />
@@ -39,14 +38,13 @@ export const TableRow = props => {
 TableRow.defaultHooks = pureComponentHooks;
 
 export const TableCell = props => {
-  const { className, collapsing, header, ...rest } = props;
+  const { className, collapsing, ...rest } = props;
   return (
     <Box
       as="td"
       className={classes([
         'Table__cell',
         collapsing && 'Table__cell--collapsing',
-        header && 'Table__cell--header',
         className,
       ])}
       {...rest} />

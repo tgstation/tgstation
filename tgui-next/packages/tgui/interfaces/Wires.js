@@ -40,7 +40,8 @@ export const Wires = props => {
                       wire: wire.color,
                     })} />
                 </Fragment>
-              )}>
+              )}
+            >
               {!!wire.wire && (
                 <i>
                   ({wire.wire})

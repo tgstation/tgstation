@@ -722,13 +722,10 @@
 			sleep(100) //so the ghost has time to re-enter
 
 
-			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				if(!(C.dna && C.dna.species && (NOBLOOD in C.dna.species.species_traits)))
-					C.blood_volume = max(C.blood_volume, BLOOD_VOLUME_NORMAL) //so you don't instantly re-die from a lack of blood
-				for(var/organ in C.internal_organs)
-					var/obj/item/organ/O = organ
-					O.setOrganDamage(0) //so you don't near-instantly re-die because your heart has decayed to the point of complete failure
+			var/mob/living/carbon/H = M
+			for(var/organ in H.internal_organs)
+				var/obj/item/organ/O = organ
+				O.setOrganDamage(0)
 
 			M.adjustOxyLoss(-20, 0)
 			M.adjustToxLoss(-20, 0)
@@ -1049,35 +1046,23 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/higadrite
-	name = "Higadrite"
-	description = "A medication utilized to treat ailing livers."
-	color = "#FF3542"
+/datum/reagent/medicine/corazone
+	// Heart attack code will not do damage if corazone is present
+	// because it's SPACE MAGIC ASPIRIN
+	name = "Corazone"
+	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks. Can also be used to stabilize livers."
+	color = "#F49797"
 	self_consuming = TRUE
 
-/datum/reagent/medicine/higadrite/on_mob_add(mob/living/M)
+/datum/reagent/medicine/corazone/on_mob_metabolize(mob/living/M)
 	..()
-	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
-
-/datum/reagent/medicine/higadrite/on_mob_end_metabolize(mob/living/M)
-	..()
-	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
-
-/datum/reagent/medicine/cordiolis_hepatico
-	name = "Cordiolis Hepatico"
-	description = "A strange, pitch-black reagent that seems to absorb all light. Effects unknown."
-	color = "#000000"
-	self_consuming = TRUE
-
-/datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/M)
-	..()
-	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 
-/datum/reagent/medicine/cordiolis_hepatico/on_mob_end_metabolize(mob/living/M)
-	..()
+/datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
 	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
+	..()
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"

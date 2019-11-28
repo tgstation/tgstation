@@ -167,7 +167,7 @@
 			if(user.a_intent != INTENT_GRAB)
 				to_chat(user, "<span class='warning'>You must be on grab intent to upgrade your grab further!</span>")
 				return 0
-		user.setGrabState(user.grab_state + 1)
+		user.grab_state++
 		switch(user.grab_state)
 			if(GRAB_AGGRESSIVE)
 				var/add_log = ""

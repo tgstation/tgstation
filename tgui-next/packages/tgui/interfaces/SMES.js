@@ -1,8 +1,8 @@
 import { Fragment } from 'inferno';
 import { act } from '../byond';
-import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
+import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section} from '../components';
 
-export const Smes = props => {
+export const SMES = props => {
   const { state } = props;
   const { config, data } = state;
   const { ref } = config;
@@ -32,11 +32,11 @@ export const Smes = props => {
     <Fragment>
       <Section title="Stored Energy">
         <ProgressBar
-          value={data.capacityPercent * 0.01}
+          value={data.capacityPercent*0.01}
           ranges={{
-            good: [0.5, Infinity],
-            average: [0.15, 0.5],
-            bad: [-Infinity, 0.15],
+            good: [50, Infinity],
+            average: [15, 50],
+            bad: [-Infinity, 15],
           }} />
       </Section>
       <Section title="Input">
@@ -52,11 +52,7 @@ export const Smes = props => {
               </Button>
             }>
             <Box color={inputState}>
-              {data.capacityPercent >= 100
-                ? 'Fully Charged'
-                : data.inputting
-                  ? 'Charging'
-                  : 'Not Charging'}
+              {data.capacityPercent >= 100 ? "Fully Charged" : data.inputting ? "Charging" : "Not Charging"}
             </Box>
           </LabeledList.Item>
           <LabeledList.Item label="Target Input">
@@ -100,11 +96,7 @@ export const Smes = props => {
               </Button>
             }>
             <Box color={outputState}>
-              {data.outputting
-                ? 'Sending'
-                : data.charge > 0
-                  ? 'Not Sending'
-                  : 'No Charge'}
+              {data.outputting ? "Sending" : data.charge > 0 ? "Not Sending" : "No Charge"}
             </Box>
           </LabeledList.Item>
           <LabeledList.Item label="Target Output">
