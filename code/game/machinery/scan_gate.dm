@@ -24,7 +24,7 @@
 	var/scangate_mode = SCANGATE_NONE
 	var/disease_threshold = DISEASE_SEVERITY_MINOR
 	var/nanite_cloud = 1
-	var/datum/species/detect_species = /datum/species/human
+	var/detect_species = "human"
 	var/reverse = FALSE //If true, signals if the scan returns false
 	var/detect_nutrition = NUTRITION_LEVEL_FAT
 
@@ -108,9 +108,29 @@
 		if(SCANGATE_SPECIES)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(is_species(H, detect_species))
+				var/datum/species/scan_species = /datum/species/human
+				switch(detect_species)
+					if("lizard")
+						scan_species = /datum/species/lizard
+					if("fly")
+						scan_species = /datum/species/fly
+					if("felinid")
+						scan_species = /datum/species/human/felinid
+					if("plasma")
+						scan_species = /datum/species/plasmaman
+					if("moth")
+						scan_species = /datum/species/moth
+					if("jelly")
+						scan_species = /datum/species/jelly
+					if("pod")
+						scan_species = /datum/species/pod
+					if("golem")
+						scan_species = /datum/species/golem
+					if("zombie")
+						scan_species = /datum/species/zombie
+				if(is_species(H, scan_species))
 					beep = TRUE
-				if(detect_species == /datum/species/zombie) //Can detect dormant zombies
+				if(detect_species == "zombie") //Can detect dormant zombies
 					if(H.getorganslot(ORGAN_SLOT_ZOMBIE))
 						beep = TRUE
 		if(SCANGATE_GUNS)
@@ -160,7 +180,7 @@
 	data["reverse"] = reverse
 	data["nanite_cloud"] = nanite_cloud
 	data["disease_threshold"] = disease_threshold
-	data["target_species"] = initial(detect_species.name)
+	data["target_species"] = detect_species
 	data["target_nutrition"] = detect_nutrition
 	return data
 
@@ -170,8 +190,7 @@
 	switch(action)
 		if("set_mode")
 			var/new_mode = params["new_mode"]
-			if(new_mode)
-				scangate_mode = new_mode
+			scangate_mode = new_mode
 			. = TRUE
 		if("toggle_reverse")
 			reverse = !reverse
@@ -201,40 +220,7 @@
 		//Some species are not scannable, like abductors (too unknown), androids (too artificial) or skeletons (too magic)
 		if("set_target_species")
 			var/new_species = params["new_species"]
-			var/species_list = list(
-				"Human",
-				"Lizardperson",
-				"Flyperson",
-				"Felinid",
-				"Plasmaman",
-				"Mothman",
-				"Jellyperson",
-				"Podperson",
-				"Golem",
-				"High-Functioning Zombie"
-			)
-			if(new_species && new_species in species_list)
-				switch(new_species)
-					if("Human")
-						detect_species = /datum/species/human
-					if("Lizardperson")
-						detect_species = /datum/species/lizard
-					if("Flyperson")
-						detect_species = /datum/species/fly
-					if("Felinid")
-						detect_species = /datum/species/human/felinid
-					if("Plasmaman")
-						detect_species = /datum/species/plasmaman
-					if("Mothman")
-						detect_species = /datum/species/moth
-					if("Jellyperson")
-						detect_species = /datum/species/jelly
-					if("Podperson")
-						detect_species = /datum/species/pod
-					if("Golem")
-						detect_species = /datum/species/golem
-					if("High-Functioning Zombie")
-						detect_species = /datum/species/zombie
+			detect_species = new_species
 			. = TRUE
 		if("set_target_nutrition")
 			var/new_nutrition = params["new_nutrition"]

@@ -14,16 +14,49 @@ const DISEASE_THEASHOLD_LIST = [
 ];
 
 const TARGET_SPECIES_LIST = [
-  "Human",
-  "Lizardperson",
-  "Flyperson",
-  "Felinid",
-  "Plasmaman",
-  "Mothman",
-  "Jellyperson",
-  "Podperson",
-  "Golem",
-  "High-Functioning Zombie",
+  {
+    name: "Human",
+    value: "human",
+  },
+  {
+    name: "Lizardperson",
+    value: "lizard",
+  },
+  {
+    name: "Flyperson",
+    value: "fly",
+  },
+  {
+    name: "Felinid",
+    value: "felinid",
+  },
+  {
+    name: "Plasmaman",
+    value: "plasma",
+  },
+  {
+    name: "Mothperson",
+    value: "moth",
+  },
+  {
+    name: "Jellyperson",
+    value: "jelly",
+  },
+
+  {
+    name: "Podperson",
+    value: "pod",
+  },
+
+  {
+    name: "Golem",
+    value: "golem",
+  },
+
+  {
+    name: "Zombie",
+    value: "zombie",
+  },
 ];
 
 const TARGET_NUTRITION_LIST = [
@@ -163,8 +196,7 @@ const ScannerGateWanted = props => {
   return (
     <Fragment>
       <Box mb={2}>
-        Person&#39;s scanned that {data.reverse ? "do not have" : "has"} any warrants for their arrest
-        will trigger the gate.
+      Trigger if the person scanned {data.reverse ? "does not have" : "has"} any warrants for their arrest.
       </Box>
       <ScannerGateMode state={state} />
     </Fragment>
@@ -178,8 +210,7 @@ const ScannerGateGuns = props => {
   return (
     <Fragment>
       <Box mb={2}>
-        Person&#39;s scanned that {data.reverse ? "do not have" : "has"} any guns
-        will trigger the gate.
+      Trigger if the person scanned {data.reverse ? "does not have" : "has"} any guns.
       </Box>
       <ScannerGateMode state={state} />
     </Fragment>
@@ -193,7 +224,7 @@ const ScannerGateMindshield = props => {
   return (
     <Fragment>
       <Box mb={2}>
-        Person&#39;s scanned that {data.reverse ? "do not have" : "has"} a mindshield will trigger the gate.
+      Trigger if the person scanned {data.reverse ? "does not have" : "has"} a mindshield.
       </Box>
       <ScannerGateMode state={state} />
     </Fragment>
@@ -208,8 +239,8 @@ const ScannerGateDisease = props => {
   return (
     <Fragment>
       <Box mb={2}>
-        Person&#39;s scanned that {data.reverse ? "do not have" : "has"} a disease equal or worse
-        than {data.disease_threshold} will trigger the gate.
+      Trigger if the person scanned {data.reverse ? "does not have" : "has"} a disease equal or worse
+      than {data.disease_threshold}.
       </Box>
       <Box mb={2}>
         {DISEASE_THEASHOLD_LIST.map(threshold => (
@@ -231,22 +262,29 @@ const ScannerGateSpecies = props => {
   const { config, data } = state;
   const { ref } = config;
 
+  let species_name;
+  for (let i = 0; i < TARGET_SPECIES_LIST.length; i++) {
+    if (TARGET_SPECIES_LIST[i].value === data.target_species) {
+      species_name = TARGET_SPECIES_LIST[i].name;
+      break;
+    }
+  }
+
   return (
     <Fragment>
       <Box mb={2}>
-        Person&#39;s scanned that is {data.reverse ? "not " : ""}of the {data.target_species} species
-        will trigger the gate.
-        {data.target_species === "High-Functioning Zombie" && (
+      Trigger if the person scanned is {data.reverse ? "not " : ""}of the {species_name} species.
+        {data.target_species === "zombie" && (
           " All zombie types will be detected, including dormant zombies."
         )}
       </Box>
       <Box mb={2}>
         {TARGET_SPECIES_LIST.map(species => (
           <Button
-            key={species}
-            selected={species === data.target_species}
-            content={species}
-            onClick={() => act(ref, 'set_target_species', { new_species: species })}
+            key={species.value}
+            selected={species.value === data.target_species}
+            content={species.name}
+            onClick={() => act(ref, 'set_target_species', { new_species: species.value })}
           />
         ))}
       </Box>
@@ -260,11 +298,18 @@ const ScannerGateNutrition = props => {
   const { config, data } = state;
   const { ref } = config;
 
+  let nutrition_name;
+  for (let i = 0; i < TARGET_NUTRITION_LIST.length; i++) {
+    if (TARGET_NUTRITION_LIST[i].value === data.target_nutrition) {
+      nutrition_name = TARGET_NUTRITION_LIST[i].name;
+      break;
+    }
+  }
+
   return (
     <Fragment>
       <Box mb={2}>
-        Person&#39;s scanned {data.reverse ? "does not have" : "has"} a nutrition level
-        of {data.target_nutrition} will trigger the gate.
+      Trigger if the person scanned {data.reverse ? "does not have" : "has"} the {nutrition_name} nutrition level.
       </Box>
       <Box mb={2}>
         {TARGET_NUTRITION_LIST.map(nutrition => (
@@ -289,8 +334,7 @@ const ScannerGateNanites = props => {
   return (
     <Fragment>
       <Box mb={2}>
-        Person&#39;s scanned {data.reverse ? "does not have" : "has"} the nanite cloud id:{data.nanite_cloud} will
-        trigger the gate.
+      Trigger if the person scanned {data.reverse ? "does not have" : "has"} the nanite cloud id: {data.nanite_cloud}.
       </Box>
       <Box mb={2}>
         <LabeledList>
