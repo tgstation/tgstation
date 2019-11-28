@@ -531,7 +531,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(!rule.repeatable)
 		if(rule.ruletype == "Latejoin")
 			latejoin_rules = remove_from_list(latejoin_rules, rule.type)
-		else if(rule.type == "Midround")
+		else if(rule.ruletype == "Midround")
 			midround_rules = remove_from_list(midround_rules, rule.type)
 
 	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)

@@ -74,13 +74,14 @@
 			disk_data["trigger_cooldown"] = P.trigger_cooldown / 10
 
 			disk_data["activated"] = P.activated
-			disk_data["activation_delay"] = P.activation_delay
-			disk_data["timer"] = P.timer
 			disk_data["activation_code"] = P.activation_code
 			disk_data["deactivation_code"] = P.deactivation_code
 			disk_data["kill_code"] = P.kill_code
 			disk_data["trigger_code"] = P.trigger_code
-			disk_data["timer_type"] = P.get_timer_type_text()
+			disk_data["timer_restart"] = P.timer_restart / 10
+			disk_data["timer_shutdown"] = P.timer_shutdown / 10
+			disk_data["timer_trigger"] = P.timer_trigger / 10
+			disk_data["timer_trigger_delay"] = P.timer_trigger_delay / 10
 
 			var/list/extra_settings = list()
 			for(var/X in P.extra_settings)
@@ -115,9 +116,11 @@
 				cloud_program["trigger_cost"] = P.trigger_cost
 				cloud_program["trigger_cooldown"] = P.trigger_cooldown / 10
 				cloud_program["activated"] = P.activated
-				cloud_program["activation_delay"] = P.activation_delay
-				cloud_program["timer"] = P.timer
-				cloud_program["timer_type"] = P.get_timer_type_text()
+				cloud_program["timer_restart"] = P.timer_restart / 10
+				cloud_program["timer_shutdown"] = P.timer_shutdown / 10
+				cloud_program["timer_trigger"] = P.timer_trigger / 10
+				cloud_program["timer_trigger_delay"] = P.timer_trigger_delay / 10
+
 				cloud_program["activation_code"] = P.activation_code
 				cloud_program["deactivation_code"] = P.deactivation_code
 				cloud_program["kill_code"] = P.kill_code

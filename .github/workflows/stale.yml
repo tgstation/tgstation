@@ -1,0 +1,19 @@
+name: Mark stale issues and pull requests
+
+on:
+  schedule:
+  - cron: "0 0 * * *"
+
+jobs:
+  stale:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/stale@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        stale-pr-message: "This PR has been inactive for long enough to be automatically marked as stale. This means it is at risk of being closed by a maintainer if it is not updated or reviews are not addressed. If your PR is closed as stale, feel free to open a new one after dealing with the issues. This may also be an indication that the maintainers do not have interest in this change, you can try to convince them otherwise, or persist in the doomed world you have created."
+        days-before-stale: 7
+        stale-pr-label: 'Stale'
+        exempt-pr-label: 'RED LABEL'

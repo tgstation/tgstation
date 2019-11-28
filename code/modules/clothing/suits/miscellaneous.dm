@@ -178,7 +178,7 @@
 
 /obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(slot == SLOT_WEAR_SUIT)
+	if(slot == ITEM_SLOT_OCLOTHING)
 		disguise(user)
 
 /obj/item/clothing/suit/cardborg/dropped(mob/living/user)
@@ -262,7 +262,7 @@
 
 /obj/item/clothing/head/hooded/carp_hood/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if (slot == SLOT_HEAD)
+	if (slot == ITEM_SLOT_HEAD)
 		user.faction |= "carp"
 
 /obj/item/clothing/head/hooded/carp_hood/dropped(mob/living/carbon/human/user)
@@ -703,3 +703,33 @@
 	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	alternate_worn_layer = UNDER_HEAD_LAYER
+
+/obj/item/clothing/suit/toggle/suspenders/blue
+	name = "blue suspenders"
+	desc = "The symbol of hard labor and dirty jobs."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "suspenders_blue"
+
+/obj/item/clothing/suit/toggle/suspenders/gray
+	name = "gray suspenders"
+	desc = "The symbol of hard labor and dirty jobs."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "suspenders_gray"
+
+/obj/item/clothing/suit/hooded/mysticrobe
+	name = "mystic's robe"
+	desc = "Wearing this makes you feel more attuned with the nature of the universe... as well as a bit more irresponsible. "
+	icon_state = "mysticrobe"
+	item_state = "mysticrobe"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/spellbook, /obj/item/storage/book/bible)
+	flags_inv = HIDEJUMPSUIT
+	hoodtype = /obj/item/clothing/head/hooded/mysticrobe
+
+/obj/item/clothing/head/hooded/mysticrobe
+	name = "mystic's hood"
+	desc = "The balance of reality tips towards order."
+	icon_state = "mystichood"
+	item_state = "mystichood"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK

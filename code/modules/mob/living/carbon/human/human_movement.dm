@@ -7,11 +7,6 @@
 			if(data[MOVESPEED_DATA_INDEX_FLAGS] & IGNORE_NOSLOW)
 				.[id] = data
 
-/mob/living/carbon/human/movement_delay()
-	. = ..()
-	if(dna && dna.species)
-		. += dna.species.movement_delay(src)
-
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube, paralyze, forcedrop)
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
 		return 0

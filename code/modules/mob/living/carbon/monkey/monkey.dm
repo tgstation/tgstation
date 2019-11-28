@@ -105,10 +105,16 @@
 	return
 
 
-/mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
+/mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys can't use advanced tools
 	if(mind && is_monkey(mind))
 		return TRUE
 	return FALSE
+
+/mob/living/carbon/monkey/can_use_guns(obj/item/G)
+	if(G.trigger_guard == TRIGGER_GUARD_NONE)
+		to_chat(src, "<span class='warning'>You are unable to fire this!</span>")
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return FALSE
@@ -157,9 +163,6 @@
 		return 0
 	return 1
 
-/mob/living/carbon/monkey/can_use_guns(obj/item/G)
-	return TRUE
-
 /mob/living/carbon/monkey/angry
 	aggressive = TRUE
 
@@ -167,5 +170,5 @@
 	. = ..()
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
-		equip_to_slot_or_del(helmet,SLOT_HEAD)
+		equip_to_slot_or_del(helmet,ITEM_SLOT_HEAD)
 		helmet.attack_self(src) // todo encapsulate toggle

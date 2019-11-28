@@ -93,10 +93,9 @@
 				S.set_opacity(TRUE)
 			newsmokes.Add(S)
 
-	if(newsmokes.len)
-		spawn(1) //the smoke spreads rapidly but not instantly
-			for(var/obj/effect/particle_effect/smoke/SM in newsmokes)
-				SM.spread_smoke()
+	//the smoke spreads rapidly but not instantly
+	for(var/obj/effect/particle_effect/smoke/SM in newsmokes)
+		addtimer(CALLBACK(SM, /obj/effect/particle_effect/smoke.proc/spread_smoke), 1)
 
 
 /datum/effect_system/smoke_spread
