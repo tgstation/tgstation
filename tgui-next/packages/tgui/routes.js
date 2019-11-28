@@ -40,6 +40,7 @@ import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
+import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
@@ -251,6 +252,12 @@ const ROUTES = {
     component: () => NtosNetDownloader,
     wrapper: () => NtosWrapper,
     scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_arcade: {
+    component: () => NtosArcade,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
     theme: 'ntos',
   },
   ntos_power_monitor: {
