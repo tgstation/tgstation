@@ -40,7 +40,6 @@ import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
-import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
@@ -53,7 +52,6 @@ import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
-import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
 import { Smes } from './interfaces/Smes';
@@ -215,10 +213,6 @@ const ROUTES = {
     component: () => Gps,
     scrollable: true,
   },
-  gulag_item_reclaimer: {
-    component: () => GulagItemReclaimer,
-    scrollable: true,
-  },
   holodeck: {
     component: () => Holodeck,
     scrollable: true,
@@ -257,12 +251,6 @@ const ROUTES = {
     component: () => NtosNetDownloader,
     wrapper: () => NtosWrapper,
     scrollable: true,
-    theme: 'ntos',
-  },
-  ntos_arcade: {
-    component: () => NtosArcade,
-    wrapper: () => NtosWrapper,
-    scrollable: false,
     theme: 'ntos',
   },
   ntos_power_monitor: {

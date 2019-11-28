@@ -9,7 +9,6 @@ const PROGRAM_ICONS = {
   smmonitor: 'radiation',
   alarmmonitor: 'bell',
   cardmod: 'id-card',
-  arcade: 'gamepad',
   ntnrc_client: 'comment-alt',
   nttransfer: 'exchange-alt',
   powermonitor: 'plug',

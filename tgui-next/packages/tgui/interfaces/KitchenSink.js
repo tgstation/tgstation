@@ -1,7 +1,7 @@
 import { Component, Fragment } from 'inferno';
 import {
   Box, Button, Flex, Input, LabeledList, NumberInput,
-  ProgressBar, Section, Tabs, Tooltip, Collapsible,
+  ProgressBar, Section, Tabs, Tooltip,
 } from '../components';
 
 const COLORS_ARBITRARY = [
@@ -44,7 +44,6 @@ export const KitchenSink = props => {
       <KitchenSinkProgress />
       <KitchenSinkTabs />
       <KitchenSinkTooltips />
-      <KitchenSinkCollapsible />
       <KitchenSinkInputs />
     </Fragment>
   );
@@ -263,21 +262,11 @@ class KitchenSinkInputs extends Component {
   }
 }
 
-const KitchenSinkCollapsible = props => {
-  return (
-    <Collapsible title="Collapsible Demo">
-      <Section>
-        <BoxOfSampleText />
-      </Section>
-    </Collapsible>
-  );
-};
-
 const BoxOfSampleText = props => {
   return (
     <Box {...props}>
       <Box italic>
-        Jackdaws love my big sphinx of quartz.
+        Jackdaws loves my big sphinx of quartz.
       </Box>
       <Box mt={1} bold>
         The wide electrification of the southern
