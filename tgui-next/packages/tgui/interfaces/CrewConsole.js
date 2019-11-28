@@ -1,25 +1,59 @@
 import { act } from '../byond';
-import { Box, Button, Section, Table } from '../components';
+import { Box, Button, Section, Table, ColorBox, Icon } from '../components';
+import { COLORS } from '../constants';
 
-export const HealthIcon = props => {
-  const {level} = props;
-  const healthColorMap = [
-    "#17d568",
-    "#2ecc71",
-    "#e67e22",
-    "#ed5100",
-    "#e74c3c",
-    "#ed2814",
-  ];
+const HEALTH_COLOR_BY_LEVEL = [
+  '#17d568',
+  '#2ecc71',
+  '#e67e22',
+  '#ed5100',
+  '#e74c3c',
+  '#ed2814',
+];
+
+const jobIsHead = jobId => jobId % 10 === 0;
+
+const jobToColor = jobId => {
+  if (jobId === 0) {
+    return COLORS.department.captain;
+  }
+  if (jobId >= 10 && jobId < 20) {
+    return COLORS.department.security;
+  }
+  if (jobId >= 20 && jobId < 30) {
+    return COLORS.department.medbay;
+  }
+  if (jobId >= 30 && jobId < 40) {
+    return COLORS.department.science;
+  }
+  if (jobId >= 40 && jobId < 50) {
+    return COLORS.department.engineering;
+  }
+  if (jobId >= 50 && jobId < 60) {
+    return COLORS.department.cargo;
+  }
+  if (jobId >= 200 && jobId < 230) {
+    return COLORS.department.centcom;
+  }
+  return COLORS.department.other;
+};
+
+const healthToColor = (oxy, tox, burn, brute) => {
+  const healthSum = oxy + tox + burn + brute;
+  const level = Math.min(Math.max(Math.ceil(healthSum / 25), 0), 5);
+  return HEALTH_COLOR_BY_LEVEL[level];
+};
+
+const HealthStat = props => {
+  const { type, value } = props;
   return (
     <Box
-      inline={1}
-      width="16px"
-      height="16px"
-      position="relative"
-      ml={2.5}
-      style={{ "background-color": healthColorMap[level], "vertical-align": "text-bottom" }}
-    />
+      inline
+      width={4}
+      color={COLORS.damageType[type]}
+      textAlign="center">
+      {value}
+    </Box>
   );
 };
 
@@ -27,58 +61,23 @@ export const CrewConsole = props => {
   const { state } = props;
   const { config, data } = state;
   const { ref } = config;
-  const isHead = function (jobId) {
-    return jobId % 10 === 0;
-  };
-  const deptClass = function (jobId) {
-    if (jobId === 0)	{ // captain
-      return "dept-cap";
-    }
-    else if	(jobId >= 10 && jobId < 20)	{ // security
-      return "dept-sec";
-    }
-    else if (jobId >= 20 && jobId < 30)	{ // medical
-      return "dept-med";
-    }
-    else if (jobId >= 30 && jobId < 40)	{ // science
-      return "dept-sci";
-    }
-    else if (jobId >= 40 && jobId < 50)	{ // engineering
-      return "dept-eng";
-    }
-    else if (jobId >= 50 && jobId < 60)	{ // cargo
-      return "dept-cargo";
-    }
-    else if (jobId >= 200 && jobId < 230)	{ // CentCom
-      return "dept-cent";
-    }
-    else { // other / unknown
-      return "dept-other";
-    }
-  };
-  const healthLevel = function (oxy, tox, burn, brute) {
-    const healthSum = oxy + tox + burn + brute;
-    return Math.min(Math.max(Math.ceil(healthSum / 25), 0), 5);
-  };
   const sensors = data.sensors || [];
   return (
     <Section minHeight={90}>
       <Table>
         <Table.Row>
-          <Table.Cell bold width="40%">
+          <Table.Cell bold>
             Name
           </Table.Cell>
-          <Table.Cell bold width="5%">
-            Status
-          </Table.Cell>
-          <Table.Cell bold width="20%" textAlign="center">
+          <Table.Cell bold collapsing />
+          <Table.Cell bold collapsing textAlign="center">
             Vitals
           </Table.Cell>
           <Table.Cell bold>
             Position
           </Table.Cell>
           {!!data.link_allowed && (
-            <Table.Cell bold>
+            <Table.Cell bold collapsing>
               Tracking
             </Table.Cell>
           )}
@@ -86,54 +85,44 @@ export const CrewConsole = props => {
         {sensors.map(sensor => (
           <Table.Row key={sensor.name}>
             <Table.Cell
-              bold={isHead(sensor.ijob)}
-              color={deptClass(sensor.ijob)}>
+              bold={jobIsHead(sensor.ijob)}
+              color={jobToColor(sensor.ijob)}>
               {sensor.name} ({sensor.assignment})
             </Table.Cell>
-            <Table.Cell>
-              <HealthIcon
-                level={healthLevel(sensor.oxydam, sensor.toxdam, sensor.brutedam, sensor.brutedam)}
-              />
+            <Table.Cell collapsing textAlign="center">
+              <ColorBox
+                color={healthToColor(
+                  sensor.oxydam,
+                  sensor.toxdam,
+                  sensor.brutedam,
+                  sensor.brutedam)} />
             </Table.Cell>
-            <Table.Cell>
+            <Table.Cell collapsing textAlign="center">
               {sensor.oxydam !== null ? (
-                <Box textAlign="center">
-                  (
-                  <Box inline width={4} color="damage-oxy" textAlign="center">
-                    {sensor.oxydam}
-                  </Box>
-                  /
-                  <Box inline width={4} color="damage-toxin" textAlign="center">
-                    {sensor.toxdam}
-                  </Box>
-                  /
-                  <Box inline width={4} color="damage-burn" textAlign="center">
-                    {sensor.burndam}
-                  </Box>
-                  /
-                  <Box inline width={4} color="damage-brute" textAlign="center">
-                    {sensor.brutedam}
-                  </Box>
-                  )
+                <Box inline>
+                  <HealthStat type="oxy" value={sensor.oxydam} />
+                  {'/'}
+                  <HealthStat type="toxin" value={sensor.toxdam} />
+                  {'/'}
+                  <HealthStat type="burn" value={sensor.burndam} />
+                  {'/'}
+                  <HealthStat type="brute" value={sensor.brutedam} />
                 </Box>
               ) : (
-                sensor.life_status ? "Alive" : "Dead"
+                sensor.life_status ? 'Alive' : 'Dead'
               )}
             </Table.Cell>
             <Table.Cell>
-              {sensor.pos_x !== null ? (
-                sensor.area
-              ) : (
-                "N/A"
-              )}
+              {sensor.pos_x !== null ? sensor.area : 'N/A'}
             </Table.Cell>
             {!!data.link_allowed && (
-              <Table.Cell>
+              <Table.Cell collapsing>
                 <Button
                   content="Track"
                   disabled={!sensor.can_track}
-                  onClick={() => act(ref, "select_person", {name: sensor.name})}
-                />
+                  onClick={() => act(ref, 'select_person', {
+                    name: sensor.name,
+                  })} />
               </Table.Cell>
             )}
           </Table.Row>

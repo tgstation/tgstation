@@ -86,7 +86,7 @@ export const OreRedemptionMachine = props => {
             <MaterialRow
               key={material.id}
               material={material}
-              onRelease={amount => act(ref, 'Release', {
+              onRelease={amount => act(ref, 'Smelt', {
                 id: material.id,
                 sheets: amount,
               })} />

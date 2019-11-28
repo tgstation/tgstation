@@ -42,6 +42,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 21
 	STR.set_holdable(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
@@ -122,6 +123,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_combined_w_class = 21
 	STR.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
@@ -169,7 +171,6 @@
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
-		/obj/item/pipe_dispenser/plumbing,
 		/obj/item/construction/plumbing,
 		/obj/item/plunger
 		))

@@ -81,10 +81,11 @@
 	SSnanites.nanite_monitored_mobs -= host_mob
 	host_mob.hud_set_nanite_indicator()
 
-/datum/nanite_program/triggered/self_scan
+/datum/nanite_program/self_scan
 	name = "Host Scan"
 	desc = "The nanites display a detailed readout of a body scan to the host."
 	unique = FALSE
+	can_trigger = TRUE
 	trigger_cost = 3
 	trigger_cooldown = 50
 	rogue_types = list(/datum/nanite_program/toxic)
@@ -92,7 +93,7 @@
 	extra_settings = list(NES_SCAN_TYPE)
 	var/scan_type = "Medical"
 
-/datum/nanite_program/triggered/self_scan/set_extra_setting(user, setting)
+/datum/nanite_program/self_scan/set_extra_setting(user, setting)
 	if(setting == NES_SCAN_TYPE)
 		var/list/scan_types = list("Medical","Chemical","Nanite")
 		var/new_scan_type = input("Choose the scan type", name) as null|anything in sortList(scan_types)
@@ -100,16 +101,14 @@
 			return
 		scan_type = new_scan_type
 
-/datum/nanite_program/triggered/self_scan/get_extra_setting(setting)
+/datum/nanite_program/self_scan/get_extra_setting(setting)
 	if(setting == NES_SCAN_TYPE)
 		return scan_type
 
-/datum/nanite_program/triggered/self_scan/copy_extra_settings_to(datum/nanite_program/triggered/self_scan/target)
+/datum/nanite_program/self_scan/copy_extra_settings_to(datum/nanite_program/self_scan/target)
 	target.scan_type = scan_type
 
-/datum/nanite_program/triggered/self_scan/trigger()
-	if(!..())
-		return
+/datum/nanite_program/self_scan/on_trigger(comm_message)
 	if(host_mob.stat == DEAD)
 		return
 	switch(scan_type)
@@ -261,14 +260,17 @@
 		points *= 0.25
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = points))
 
-/datum/nanite_program/triggered/access
+/datum/nanite_program/access
 	name = "Subdermal ID"
 	desc = "The nanites store the host's ID access rights in a subdermal magnetic strip. Updates when triggered, copying the host's current access."
+	can_trigger = TRUE
+	trigger_cost = 3
+	trigger_cooldown = 30
 	rogue_types = list(/datum/nanite_program/skin_decay)
 	var/access = list()
 
 //Syncs the nanites with the cumulative current mob's access level. Can potentially wipe existing access.
-/datum/nanite_program/triggered/access/trigger()
+/datum/nanite_program/access/on_trigger(comm_message)
 	var/list/new_access = list()
 	var/obj/item/current_item
 	current_item = host_mob.get_active_held_item()
@@ -317,16 +319,15 @@
 		SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
 		infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
-/datum/nanite_program/triggered/nanite_sting
+/datum/nanite_program/nanite_sting
 	name = "Nanite Sting"
 	desc = "When triggered, projects a nearly invisible spike of nanites that attempts to infect a nearby non-host with a copy of the host's nanites cluster."
+	can_trigger = TRUE
 	trigger_cost = 5
 	trigger_cooldown = 100
 	rogue_types = list(/datum/nanite_program/glitch, /datum/nanite_program/toxic)
 
-/datum/nanite_program/triggered/nanite_sting/trigger()
-	if(!..())
-		return
+/datum/nanite_program/nanite_sting/on_trigger(comm_message)
 	var/list/mob/living/target_hosts = list()
 	for(var/mob/living/L in oview(1, host_mob))
 		if(!(L.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)) || SEND_SIGNAL(L, COMSIG_HAS_NANITES) || !L.Adjacent(host_mob))

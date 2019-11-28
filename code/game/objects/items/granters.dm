@@ -46,18 +46,19 @@
 		return FALSE
 	if(already_known(user))
 		return FALSE
-	if(used && oneuse)
-		recoil(user)
-	else
-		on_reading_start(user)
-		reading = TRUE
-		for(var/i=1, i<=pages_to_mastery, i++)
-			if(!turn_page(user))
-				on_reading_stopped()
-				reading = FALSE
-				return
-		if(do_after(user,50, user))
-			on_reading_finished(user)
+	if(used)
+		if(oneuse)
+			recoil(user)
+		return FALSE
+	on_reading_start(user)
+	reading = TRUE
+	for(var/i=1, i<=pages_to_mastery, i++)
+		if(!turn_page(user))
+			on_reading_stopped()
+			reading = FALSE
+			return
+	if(do_after(user,50, user))
+		on_reading_finished(user)
 		reading = FALSE
 	return TRUE
 
@@ -270,7 +271,7 @@
 		var/obj/item/clothing/magichead = new /obj/item/clothing/mask/horsehead/cursed(user.drop_location())
 		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
-		user.equip_to_slot_if_possible(magichead, SLOT_WEAR_MASK, TRUE, TRUE)
+		user.equip_to_slot_if_possible(magichead, ITEM_SLOT_MASK, TRUE, TRUE)
 		qdel(src)
 	else
 		to_chat(user,"<span class='notice'>I say thee neigh</span>") //It still lives here

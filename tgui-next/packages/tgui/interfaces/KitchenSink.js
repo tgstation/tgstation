@@ -1,33 +1,30 @@
 import { Component, Fragment } from 'inferno';
 import {
   Box, Button, Flex, Input, LabeledList, NumberInput,
-  ProgressBar, Section, Tabs, Tooltip,
+  ProgressBar, Section, Tabs, Tooltip, Collapsible,
 } from '../components';
 
 const COLORS_ARBITRARY = [
-  'black',
-  'black-gray',
-  'dark-gray',
-  'gray',
-  'light-gray',
-  'white',
-  'dark-red',
   'red',
-  'pale-red',
-  'yellow-orange',
+  'orange',
   'yellow',
-  'grass-green',
-  'dark-green',
+  'olive',
   'green',
-  'pale-green',
-  'royal-blue',
-  'pale-blue',
+  'teal',
+  'blue',
+  'violet',
+  'purple',
+  'pink',
+  'brown',
+  'grey',
 ];
 
 const COLORS_STATES = [
   'good',
   'average',
   'bad',
+  'black',
+  'white',
 ];
 
 const TAB_KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -47,6 +44,7 @@ export const KitchenSink = props => {
       <KitchenSinkProgress />
       <KitchenSinkTabs />
       <KitchenSinkTooltips />
+      <KitchenSinkCollapsible />
       <KitchenSinkInputs />
     </Fragment>
   );
@@ -79,8 +77,17 @@ const KitchenSinkButtons = props => {
             color={color}
             content={color} />
         ))}
+        <br />
         {COLORS_ARBITRARY.map(color => (
           <Button
+            key={color}
+            color={color}
+            content={color} />
+        ))}
+        <br />
+        {COLORS_ARBITRARY.map(color => (
+          <Box inline
+            mx="7px"
             key={color}
             color={color}
             content={color} />
@@ -256,11 +263,21 @@ class KitchenSinkInputs extends Component {
   }
 }
 
+const KitchenSinkCollapsible = props => {
+  return (
+    <Collapsible title="Collapsible Demo">
+      <Section>
+        <BoxOfSampleText />
+      </Section>
+    </Collapsible>
+  );
+};
+
 const BoxOfSampleText = props => {
   return (
     <Box {...props}>
       <Box italic>
-        Jackdaws loves my big sphinx of quartz.
+        Jackdaws love my big sphinx of quartz.
       </Box>
       <Box mt={1} bold>
         The wide electrification of the southern

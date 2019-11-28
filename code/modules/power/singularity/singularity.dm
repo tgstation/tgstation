@@ -43,7 +43,8 @@
 		if(singubeacon.active)
 			target = singubeacon
 			break
-	return
+	AddElement(/datum/element/bsa_blocker)
+	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/bluespace_reaction)
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -446,6 +447,10 @@
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)
+
+/obj/singularity/proc/bluespace_reaction()
+	investigate_log("has been shot by bluespace artillery and destroyed.", INVESTIGATE_SINGULO)
+	qdel(src)
 
 /obj/singularity/deadchat_controlled
 	move_self = FALSE
