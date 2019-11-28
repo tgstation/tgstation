@@ -1032,9 +1032,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			target.AddComponent(immersies)
 
 /proc/mass_immerse(remove=FALSE)
-	for(var/M in GLOB.mob_list)
-		if(iscarbon(M))
-			immerse_player(M, toggle=FALSE, remove=remove)
+	for(var/mob/living/carbon/M in GLOB.mob_list)
+		immerse_player(M, toggle=FALSE, remove=remove)
 
 /client/proc/toggle_hub()
 	set category = "Server"
