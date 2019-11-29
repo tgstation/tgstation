@@ -696,7 +696,7 @@
 
 /obj/item/twohanded/shockpaddles/syndicate/nanotrasen
 	name = "elite nanotrasen defibrillator paddles"
-	desc = "A pair of paddles used to revive deceased ERT members. They possesses both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
+	desc = "A pair of paddles used to revive deceased ERT members. They possess both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
 	icon_state = "ntpaddles0"
 	item_state = "ntpaddles0"
 	base_icon_state = "ntpaddles"
