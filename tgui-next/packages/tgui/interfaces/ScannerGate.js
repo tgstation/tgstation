@@ -273,7 +273,7 @@ const ScannerGateSpecies = props => {
   return (
     <Fragment>
       <Box mb={2}>
-      Trigger if the person scanned is {data.reverse ? "not " : ""}of the {species_name} species.
+      Trigger if the person scanned is {data.reverse ? "not" : ""} of the {species_name} species.
         {data.target_species === "zombie" && (
           " All zombie types will be detected, including dormant zombies."
         )}
