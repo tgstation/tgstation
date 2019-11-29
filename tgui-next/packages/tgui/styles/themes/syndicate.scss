@@ -1,40 +1,49 @@
-$color-good: $pale-green;
-$color-highlight: $black;
-$background-color-start: #750000;
-$background-color-end: #340404;
-$rule-color-normal: $dark-gray;
-$titlebar-color-background: #910101;
-$titlebar-color-text: $pale-red;
-$titlebar-color-button: $pale-red;
-$display-color-background: rgba(#000, 0.33);
-$display-color-shadow: rgba(#000, 0.5);
-$notice-color-first: #750000;
-$notice-color-second: #910101;
-$section-color-label: $white;
-$bar-color-normal: $black;
-$bar-color-good: $pale-green;
-$bar-color-border: $black;
-$button-color-normal: $dark-green;
-$button-color-disabled: $gray;
-$button-color-selected: $dark-red;
-$button-color-caution: $yellow-orange;
-$button-color-danger: $yellow;
-$input-color-text: $white;
-$input-color-background: $dark-red;
-$rule-color-normal: rgba(#000, 0.25);
+@use 'sass:color';
+@use 'sass:meta';
 
-// Body style
-@at-root #{selector-unify(&, body)} {
-  color: $text-color-normal;
-  background-color: $background-color-start;
-  background-image: linear-gradient(to bottom,
-    $background-color-start 0%,
-    $background-color-end 100%);
-}
+@use '../colors.scss' with (
+  $primary: #397439,
+  $fg-map-keys: (),
+  $bg-map-keys: (),
+);
+@use '../base.scss' with (
+  $color-bg: #550202,
+  $color-bg-grad-spread: 6%,
+  $border-radius: 2px,
+);
 
-.Layout__content {
-  background-image: url('../public/images/tgui-bg-syndicate.svg');
-  background-size: 70%;
-  background-position: center;
-  background-repeat: no-repeat;
+.theme-syndicate {
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss');
+
+  // Components
+  @include meta.load-css('../components/Button.scss', $with: (
+    'color-default': colors.$primary,
+    'color-disabled': #363636,
+    'color-selected': #9d0808,
+    'color-caution': #be6209,
+    'color-danger': #9a9d00,
+  ));
+  @include meta.load-css('../components/Input.scss', $with: (
+    'border-color': colors.$primary,
+  ));
+  @include meta.load-css('../components/Layout.scss');
+  @include meta.load-css('../components/NoticeBox.scss', $with: (
+    'color-first': #750000,
+    'color-second': #910101,
+  ));
+  @include meta.load-css('../components/ProgressBar.scss', $with: (
+    'color-background': rgba(0, 0, 0, 0.5),
+  ));
+  @include meta.load-css('../components/Section.scss');
+  @include meta.load-css('../components/TitleBar.scss', $with: (
+    'color-background': #910101,
+  ));
+  @include meta.load-css('../components/Tooltip.scss', $with: (
+    'color-background': #4a0202,
+  ));
+
+  .Layout__content {
+    background-image: url('../../assets/bg-syndicate.svg');
+  }
 }

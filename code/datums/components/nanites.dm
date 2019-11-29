@@ -104,15 +104,17 @@
 		adjust_nanites(null, arguments[1]) //just add to the nanite volume
 
 /datum/component/nanites/process()
-	adjust_nanites(null, regen_rate)
-	add_research()
-	for(var/X in programs)
-		var/datum/nanite_program/NP = X
-		NP.on_process()
+	if(!IS_IN_STASIS(host_mob))
+		adjust_nanites(null, regen_rate)
+		add_research()
+		for(var/X in programs)
+			var/datum/nanite_program/NP = X
+			NP.on_process()
+		if(cloud_id && cloud_active && world.time > next_sync)
+			cloud_sync()
+			next_sync = world.time + NANITE_SYNC_DELAY
 	set_nanite_bar()
-	if(cloud_id && cloud_active && world.time > next_sync)
-		cloud_sync()
-		next_sync = world.time + NANITE_SYNC_DELAY
+	
 
 /datum/component/nanites/proc/delete_nanites()
 	qdel(src)
@@ -146,7 +148,7 @@
 				sync(null, cloud_copy)
 				return
 	//Without cloud syncing nanites can accumulate errors and/or defects
-	if(prob(8))
+	if(prob(8) && programs.len)
 		var/datum/nanite_program/NP = pick(programs)
 		NP.software_error()
 
@@ -222,8 +224,8 @@
 
 /datum/component/nanites/proc/receive_comm_signal(datum/source, comm_code, comm_message, comm_source = "an unidentified source")
 	for(var/X in programs)
-		if(istype(X, /datum/nanite_program/triggered/comm))
-			var/datum/nanite_program/triggered/comm/NP = X
+		if(istype(X, /datum/nanite_program/comm))
+			var/datum/nanite_program/comm/NP = X
 			NP.receive_comm_signal(comm_code, comm_message, comm_source)
 
 /datum/component/nanites/proc/check_viable_biotype()
@@ -231,7 +233,7 @@
 		qdel(src) //bodytype no longer sustains nanites
 
 /datum/component/nanites/proc/check_access(datum/source, obj/O)
-	for(var/datum/nanite_program/triggered/access/access_program in programs)
+	for(var/datum/nanite_program/access/access_program in programs)
 		if(access_program.activated)
 			return O.check_access_list(access_program.access)
 		else
@@ -278,7 +280,7 @@
 
 /datum/component/nanites/proc/add_research()
 	var/research_value = NANITE_BASE_RESEARCH
-	if(!ishuman(host_mob))	
+	if(!ishuman(host_mob))
 		if(!iscarbon(host_mob))
 			research_value *= 0.4
 		else
@@ -288,7 +290,7 @@
 	if(host_mob.stat == DEAD)
 		research_value *= 0.75
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_NANITES = research_value))
-	
+
 /datum/component/nanites/proc/nanite_scan(datum/source, mob/user, full_scan)
 	if(!full_scan)
 		if(!stealth)
@@ -336,9 +338,10 @@
 			mob_program["trigger_cooldown"] = P.trigger_cooldown / 10
 
 		if(scan_level >= 3)
-			mob_program["activation_delay"] = P.activation_delay
-			mob_program["timer"] = P.timer
-			mob_program["timer_type"] = P.get_timer_type_text()
+			mob_program["timer_restart"] = P.timer_restart / 10
+			mob_program["timer_shutdown"] = P.timer_shutdown / 10
+			mob_program["timer_trigger"] = P.timer_trigger / 10
+			mob_program["timer_trigger_delay"] = P.timer_trigger_delay / 10
 			var/list/extra_settings = list()
 			for(var/Y in P.extra_settings)
 				var/list/setting = list()

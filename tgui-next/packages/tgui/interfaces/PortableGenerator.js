@@ -17,17 +17,6 @@ export const PortableGenerator = props => {
   else {
     stackPercentState = "bad";
   }
-  let sheetsAmount;
-  if (data.sheets > 5) {
-    sheetsAmount = "good";
-  }
-  else if (data.sheets > 0) {
-    sheetsAmount = "average";
-  }
-  else {
-    sheetsAmount = "bad";
-  }
-
   return (
     <Fragment>
       {!data.anchored && (
@@ -47,6 +36,7 @@ export const PortableGenerator = props => {
             <Box inline color={stackPercentState}>{data.sheets}</Box>
             {(data.sheets >= 1) && (
               <Button
+                ml={1}
                 icon="eject"
                 disabled={data.active}
                 onClick={() => act(ref, 'eject')}>
@@ -56,8 +46,12 @@ export const PortableGenerator = props => {
           </LabeledList.Item>
           <LabeledList.Item label="Current sheet level">
             <ProgressBar
-              value={data.stack_percent}
-              color={sheetsAmount} />
+              value={data.stack_percent / 100}
+              ranges={{
+                good: [0.1, Infinity],
+                average: [0.01, 0.1],
+                bad: [-Infinity, 0.01],
+              }} />
           </LabeledList.Item>
           <LabeledList.Item label="Heat level">
             {data.current_heat < 100 ? (

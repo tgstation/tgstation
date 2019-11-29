@@ -70,20 +70,13 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "j" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light{
+	icon_state = "tube";
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/arrows{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/white,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "k" = (
 /obj/effect/turf_decal/bot,
@@ -96,18 +89,22 @@
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 1
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "m" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/arrows{
-	dir = 1
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
@@ -137,46 +134,33 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "q" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"r" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/arrows{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/arrival)
-"r" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "s" = (
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/item/radio/intercom{
-	pixel_x = 28
-	},
-/obj/effect/turf_decal/arrows{
-	dir = 1
-	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "t" = (
@@ -226,24 +210,22 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "w" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "x" = (
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/white,
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "y" = (
 /obj/machinery/requests_console{
@@ -268,23 +250,28 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "B" = (
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/status_display/evac{
+	pixel_y = -32
 	},
-/turf/open/floor/mineral/titanium/white,
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "C" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/item/radio/intercom{
+	pixel_x = 28
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "D" = (
@@ -299,12 +286,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "E" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
@@ -331,35 +318,32 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "I" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/arrival)
+"J" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/arrival)
-"J" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "K" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/arrival)
 "L" = (
@@ -387,27 +371,17 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 "O" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/white,
-/area/shuttle/arrival)
-"P" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/machinery/status_display/evac{
-	pixel_y = -32
-	},
-/turf/open/floor/mineral/plastitanium,
 /area/shuttle/arrival)
 
 (1,1,1) = {"
@@ -439,65 +413,65 @@ c
 "}
 (4,1,1) = {"
 d
-j
+m
+r
 q
-w
-I
-O
+J
+m
 f
 "}
 (5,1,1) = {"
 e
-k
-r
+j
+w
+s
+K
 x
-J
-N
 e
 "}
 (6,1,1) = {"
 f
 k
-r
+w
 y
-J
+K
 N
 f
 "}
 (7,1,1) = {"
 f
 k
-r
+w
 z
-J
+K
 N
 f
 "}
 (8,1,1) = {"
 f
 k
-r
+w
 A
-J
+K
 N
 f
 "}
 (9,1,1) = {"
 c
 l
-r
+w
+s
+K
 B
-J
-P
 c
 "}
 (10,1,1) = {"
 d
-m
-s
+q
 C
-K
-w
+E
+O
+q
 f
 "}
 (11,1,1) = {"
@@ -513,7 +487,7 @@ b
 c
 e
 t
-E
+I
 M
 e
 c

@@ -307,7 +307,7 @@
 	M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
 					"<span class='warning'>You're thrown clear of [AM]!</span>")
 	M.throw_at(target, 14, 5, AM)
-	M.Paralyze(60)
+	M.Knockdown(3 SECONDS)
 
 /datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, riding_target_override = null)
 	var/atom/movable/AM = parent
