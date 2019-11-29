@@ -21,26 +21,14 @@
     'color-default': colors.$primary,
     'color-disabled': #4A6A4A,
     'color-selected': #00FF00,
-    'color-caution': #BE6209,
-    'color-danger': #9A9D00,
   ));
   @include meta.load-css('../components/Input.scss', $with: (
     'border-color': colors.$primary,
   ));
   @include meta.load-css('../components/Layout.scss');
-  @include meta.load-css('../components/NoticeBox.scss', $with: (
-    'color-first': #750000,
-    'color-second': #910101,
-  ));
-  @include meta.load-css('../components/ProgressBar.scss', $with: (
-    'color-background': rgba(0, 0, 0, 0.5),
-  ));
   @include meta.load-css('../components/Section.scss');
   @include meta.load-css('../components/TitleBar.scss', $with: (
     'color-background': #223d22,
-  ));
-  @include meta.load-css('../components/Tooltip.scss', $with: (
-    'color-background': #4a0202,
   ));
 
   .Layout__content {

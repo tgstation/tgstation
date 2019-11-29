@@ -44,7 +44,7 @@ export const BlackmarketDownlink = props => {
       </Grid>
       <Button
         content="Cancel"
-        color="red"
+        color="bad"
         onClick={() => act(ref, 'cancel')} />
     </Dimmer>
   );
