@@ -326,9 +326,8 @@
 	tastes = list("rat meat" = 2, "metal" = 1)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 
-
 /obj/item/reagent_containers/food/snacks/kebab/fiesta
 	name = "fiesta skewer"
 	icon_state = "fiestaskewer"
-	tastes = list("Tex-Mex" = 4, "cumin" =1)
-	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/capsaicin = 2)
+	tastes = list("tex-mex" = 3, "cumin" = 2)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 3)
