@@ -59,11 +59,21 @@ SUBSYSTEM_DEF(blackmarket)
 					continue
 				
 				var/obj/machinery/ltsrbt/pad = pick(telepads)
+				purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being processed by [pad].</span>")
 				queued_purchases -= purchase
 				pad.add_to_queue(purchase)
 			// Get random area, throw it somewhere there.
 			if(SHIPPING_METHOD_TELEPORT)
-				CRASH("SSblackmarket: NOT IMPLEMENTED YET, [purchase.method].")
+				var/turf/targetturf = get_safe_random_station_turf()
+				// This shouldn't happen.
+				if (!targetturf)
+					continue
+				
+				purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
+				addtimer(CALLBACK(GLOBAL_PROC, /proc/do_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS)
+				queued_purchases -= purchase
+				qdel(purchase)
+				
 			// Get the current area of the uplink if it exists, drop the item there.
 			if(SHIPPING_METHOD_DROPPOD)
 				var/area/A = get_area(purchase.uplink)
@@ -84,7 +94,7 @@ SUBSYSTEM_DEF(blackmarket)
 				if(LZ)
 					new /obj/effect/DPtarget(LZ, supplypod_type, purchase.entry.spawn_item())
 
-					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] beeps noting that the order is being dropped to [get_area(LZ)].")
+					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being dropped to [get_area(LZ)].</span>")
 					queued_purchases -= purchase
 					qdel(purchase)
 
@@ -101,7 +111,7 @@ SUBSYSTEM_DEF(blackmarket)
 				var/atom/movable/item = purchase.entry.spawn_item(pickedloc)
 				item.throw_at(purchase.uplink, 3, 3)
 
-				purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] beeps noting that the order is being launched from [dir2text(startSide)].")
+				purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting the order is being launched from [dir2text(startSide)].</span>")
 				queued_purchases -= purchase
 				qdel(purchase)
 		
