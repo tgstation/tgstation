@@ -1,0 +1,4 @@
+author: "Effectism"
+delete-after: True
+changes: 
+  - config: "player requirements for gamemodes can be overridden via config."
