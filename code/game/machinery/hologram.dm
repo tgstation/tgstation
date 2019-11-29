@@ -71,6 +71,7 @@ Possible to do for anyone motivated enough:
 obj/machinery/holopad/secure/Initialize()
 	. = ..()
 	circuit.secure = TRUE
+	circuit.build_path = /obj/machinery/holopad/secure
 
 /obj/machinery/holopad/tutorial
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
