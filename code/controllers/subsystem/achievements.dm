@@ -52,15 +52,13 @@ SUBSYSTEM_DEF(achievements)
 /datum/controller/subsystem/achievements/proc/update_metadata()
 	var/list/current_metadata = list()
 	//select metadata here
-	var/datum/DBQuery/Q = SSdbcore.NewQuery("SELECT achievement_key,achievement_version,achievement_type FROM [format_table_name("achievement_metadata")]")
+	var/datum/DBQuery/Q = SSdbcore.NewQuery("SELECT achievement_key,achievement_version FROM [format_table_name("achievement_metadata")]")
 	if(!Q.Execute(async = TRUE))
 		qdel(Q)
 		return
 	else
 		while(Q.NextRow())
-			var/ac_key = Q.item[1]
-			var/ac_version = text2num(Q.item[2])
-			current_metadata[ac_key] = ac_version
+			current_metadata[Q.item[1]] = text2num(Q.item[2])
 		qdel(Q)
 
 	var/list/to_update = list()
@@ -68,7 +66,7 @@ SUBSYSTEM_DEF(achievements)
 		var/datum/award/A = awards[T]
 		if(!A.database_id)
 			continue
-		if(current_metadata[A.database_id] || current_metadata[A.database_id] < A.achievement_version)
+		if(!current_metadata[A.database_id] || current_metadata[A.database_id] < A.achievement_version)
 			to_update += list(A.get_metadata_row())
 	
 	if(to_update.len)
