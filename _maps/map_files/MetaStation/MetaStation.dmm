@@ -75374,8 +75374,7 @@
 	areastring = "/area/hallway/secondary/entry";
 	dir = 8;
 	name = "Arrivals APC";
-	pixel_x = -26;
-	pixel_y = null
+	pixel_x = -26
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
