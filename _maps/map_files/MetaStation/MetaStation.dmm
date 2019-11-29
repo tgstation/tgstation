@@ -31427,7 +31427,7 @@
 "bqh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock{
-	id_tag = "AuxToilet2";
+	id_tag = "AuxShower";
 	name = "Showers"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -75372,6 +75372,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/power/apc{
 	areastring = "/area/hallway/secondary/entry";
+	dir = 8;
 	name = "Arrivals APC";
 	pixel_x = -26
 	},
