@@ -10,9 +10,3 @@
 // Throws the item from somewhere at the station.
 #define SHIPPING_METHOD_LAUNCH		"Launch"
 
-// Categories
-
-#define MARKET_CATEGORY_TECH		"Technology"
-#define MARKET_CATEGORY_WEAPON		"Weaponry"
-#define MARKET_CATEGORY_MISC		"Miscellaneous"
-
