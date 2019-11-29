@@ -1028,9 +1028,12 @@
 "abM" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 1
 	},
-/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/structure/cable,
 /obj/machinery/holopad/secure,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai)
@@ -1188,10 +1191,16 @@
 "acd" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /obj/structure/cable,
 /obj/machinery/holopad/secure,
@@ -2576,22 +2585,12 @@
 /area/ai_monitored/turret_protected/aisat/atmos)
 "aed" = (
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/structure/cable,
 /obj/machinery/holopad/secure,
 /turf/open/floor/engine,
-/area/ai_monitored/turret_protected/ai)
+/area/ai_monitored/turret_protected/aisat/foyer)
 "aee" = (
 /obj/machinery/door/airlock/external{
 	name = "Satellite External Airlock";
@@ -4964,16 +4963,14 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "aic" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/holopad/secure,
-/turf/open/floor/engine,
-/area/ai_monitored/turret_protected/aisat_interior)
+/turf/open/floor/plasteel,
+/area/security/main)
 "aid" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/reagent_dispensers/fueltank,
@@ -52149,12 +52146,10 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "byK" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
-/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
 /obj/machinery/holopad/secure,
 /turf/open/floor/engine,
-/area/ai_monitored/turret_protected/aisat/foyer)
+/area/ai_monitored/turret_protected/ai_upload)
 "byL" = (
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes/corner{
@@ -59874,17 +59869,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"bJY" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/holopad/secure,
-/turf/open/floor/engine,
-/area/ai_monitored/turret_protected/ai_upload)
-"bJZ" = (
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/wood,
-/area/crew_quarters/heads/captain)
 "bKa" = (
 /obj/structure/dresser,
 /obj/machinery/button/door{
@@ -59901,15 +59885,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/locker)
-"bKb" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel,
-/area/security/main)
 "bKc" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/newscaster{
@@ -59925,31 +59900,6 @@
 	icon_state = "wood-broken4"
 	},
 /area/crew_quarters/locker)
-"bKd" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel/showroomfloor,
-/area/security/brig)
-"bKe" = (
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/carpet/red,
-/area/crew_quarters/heads/hos)
 "bKi" = (
 /obj/structure/chair/pew{
 	icon_state = "pewmiddle";
@@ -73675,6 +73625,15 @@
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai)
+"ceg" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/holopad/secure,
+/turf/open/floor/engine,
+/area/ai_monitored/turret_protected/ai)
 "ceh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -75720,6 +75679,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"chp" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/holopad/secure,
+/turf/open/floor/engine,
+/area/ai_monitored/turret_protected/aisat_interior)
 "chq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -83354,6 +83324,26 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
+"ctw" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/brig)
 "ctx" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -95326,6 +95316,11 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"cNI" = (
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/carpet/red,
+/area/crew_quarters/heads/hos)
 "cNJ" = (
 /turf/open/floor/carpet/red,
 /area/crew_quarters/heads/hos)
@@ -95845,6 +95840,11 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"fhz" = (
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/captain)
 
 (1,1,1) = {"
 aaa
@@ -114003,7 +114003,7 @@ bYc
 btJ
 aKL
 aUX
-bKb
+aic
 aiY
 aiI
 amS
@@ -115296,7 +115296,7 @@ bJU
 agS
 cmP
 cub
-bKe
+cNI
 cNL
 cNQ
 czS
@@ -118635,7 +118635,7 @@ apH
 bxS
 crU
 csY
-bKd
+ctw
 cut
 cwe
 cxQ
@@ -123675,7 +123675,7 @@ ajE
 ahf
 alh
 alz
-abM
+ceg
 cep
 ceh
 acn
@@ -124192,7 +124192,7 @@ cdZ
 cdW
 cdY
 abS
-aed
+acd
 cft
 adg
 byD
@@ -124459,7 +124459,7 @@ adm
 adI
 adW
 aeb
-byK
+aed
 aeh
 aeq
 aex
@@ -124710,7 +124710,7 @@ acj
 cfy
 adg
 ceH
-aic
+chp
 aph
 chX
 adL
@@ -125217,7 +125217,7 @@ apn
 abd
 abk
 abD
-acd
+abM
 abQ
 abX
 acs
@@ -125787,7 +125787,7 @@ aWM
 aYO
 bay
 byH
-bJY
+byK
 byT
 bdQ
 afh
@@ -128372,7 +128372,7 @@ bDc
 asx
 aqK
 azC
-bJZ
+fhz
 cMX
 cNl
 asx
