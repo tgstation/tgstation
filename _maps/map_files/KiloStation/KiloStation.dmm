@@ -1026,15 +1026,12 @@
 	},
 /area/space/nearstation)
 "abM" = (
-/obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 4
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/holopad/secure,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai)
 "abN" = (
@@ -1189,21 +1186,15 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port/aft)
 "acd" = (
-/obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai)
 "ace" = (
@@ -2584,13 +2575,23 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "aed" = (
-/obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/engine,
-/area/ai_monitored/turret_protected/aisat/foyer)
+/area/ai_monitored/turret_protected/ai)
 "aee" = (
 /obj/machinery/door/airlock/external{
 	name = "Satellite External Airlock";
@@ -4963,14 +4964,16 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "aic" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/holopad,
-/turf/open/floor/plasteel,
-/area/security/main)
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/holopad/secure,
+/turf/open/floor/engine,
+/area/ai_monitored/turret_protected/aisat_interior)
 "aid" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/reagent_dispensers/fueltank,
@@ -52145,11 +52148,13 @@
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai_upload)
 "byK" = (
-/obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/engine,
-/area/ai_monitored/turret_protected/ai_upload)
+/area/ai_monitored/turret_protected/aisat/foyer)
 "byL" = (
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes/corner{
@@ -59869,6 +59874,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"bJY" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/holopad/secure,
+/turf/open/floor/engine,
+/area/ai_monitored/turret_protected/ai_upload)
+"bJZ" = (
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/captain)
 "bKa" = (
 /obj/structure/dresser,
 /obj/machinery/button/door{
@@ -59885,6 +59901,15 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/locker)
+"bKb" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel,
+/area/security/main)
 "bKc" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/machinery/newscaster{
@@ -59900,6 +59925,31 @@
 	icon_state = "wood-broken4"
 	},
 /area/crew_quarters/locker)
+"bKd" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/brig)
+"bKe" = (
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/carpet/red,
+/area/crew_quarters/heads/hos)
 "bKi" = (
 /obj/structure/chair/pew{
 	icon_state = "pewmiddle";
@@ -73625,15 +73675,6 @@
 	},
 /turf/open/floor/circuit/red,
 /area/ai_monitored/turret_protected/ai)
-"ceg" = (
-/obj/machinery/holopad,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner,
-/turf/open/floor/engine,
-/area/ai_monitored/turret_protected/ai)
 "ceh" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -75679,17 +75720,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"chp" = (
-/obj/machinery/holopad,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/ai_monitored/turret_protected/aisat_interior)
 "chq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -83324,26 +83354,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
-"ctw" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
-/obj/machinery/holopad,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/showroomfloor,
-/area/security/brig)
 "ctx" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -95316,11 +95326,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"cNI" = (
-/obj/machinery/holopad,
-/obj/structure/cable,
-/turf/open/floor/carpet/red,
-/area/crew_quarters/heads/hos)
 "cNJ" = (
 /turf/open/floor/carpet/red,
 /area/crew_quarters/heads/hos)
@@ -113998,7 +114003,7 @@ bYc
 btJ
 aKL
 aUX
-aic
+bKb
 aiY
 aiI
 amS
@@ -115291,7 +115296,7 @@ bJU
 agS
 cmP
 cub
-cNI
+bKe
 cNL
 cNQ
 czS
@@ -118630,7 +118635,7 @@ apH
 bxS
 crU
 csY
-ctw
+bKd
 cut
 cwe
 cxQ
@@ -123670,7 +123675,7 @@ ajE
 ahf
 alh
 alz
-ceg
+abM
 cep
 ceh
 acn
@@ -124187,7 +124192,7 @@ cdZ
 cdW
 cdY
 abS
-acd
+aed
 cft
 adg
 byD
@@ -124454,7 +124459,7 @@ adm
 adI
 adW
 aeb
-aed
+byK
 aeh
 aeq
 aex
@@ -124705,7 +124710,7 @@ acj
 cfy
 adg
 ceH
-chp
+aic
 aph
 chX
 adL
@@ -125212,7 +125217,7 @@ apn
 abd
 abk
 abD
-abM
+acd
 abQ
 abX
 acs
@@ -125782,7 +125787,7 @@ aWM
 aYO
 bay
 byH
-byK
+bJY
 byT
 bdQ
 afh
@@ -128367,7 +128372,7 @@ bDc
 asx
 aqK
 azC
-bJD
+bJZ
 cMX
 cNl
 asx

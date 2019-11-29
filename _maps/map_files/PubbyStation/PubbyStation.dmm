@@ -342,6 +342,94 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
+"aaR" = (
+/obj/machinery/camera/motion{
+	c_tag = "MiniSat AI Chamber South";
+	network = list("minisat")
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_y = 20
+	},
+/obj/machinery/status_display/ai{
+	pixel_y = 37
+	},
+/obj/machinery/holopad/secure,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai)
+"aaS" = (
+/obj/machinery/holopad/secure,
+/mob/living/simple_animal/bot/secbot/pingsky,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/aisat_interior)
+"aaT" = (
+/obj/machinery/holopad/secure,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hos)
+"aaU" = (
+/obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel,
+/area/security/main)
+"aaV" = (
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/heads/captain)
+"aaW" = (
+/obj/machinery/camera/motion{
+	c_tag = "AI Upload Center";
+	dir = 1;
+	network = list("aiupload")
+	},
+/obj/item/radio/intercom{
+	broadcasting = 1;
+	frequency = 1447;
+	listening = 0;
+	name = "Station Intercom (AI Private)";
+	pixel_y = -28
+	},
+/obj/machinery/holopad/secure,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai_upload)
+"aaX" = (
+/obj/machinery/ai_slipper{
+	uses = 8
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/ai_monitored/turret_protected/ai)
+"aaY" = (
+/obj/machinery/turretid{
+	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
+	name = "AI Satellite turret control";
+	pixel_x = -5;
+	pixel_y = -24
+	},
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel/white,
+/area/ai_monitored/turret_protected/ai)
+"aaZ" = (
+/obj/structure/rack{
+	icon = !INVALID_VALUE!;
+	icon_state = "minibar";
+	name = "skeletal minibar"
+	},
+/obj/item/book/codex_gigas,
+/obj/machinery/camera{
+	c_tag = "Monastery Archives Aft";
+	dir = 1;
+	network = list("ss13","monastery")
+	},
+/turf/open/floor/plasteel/dark,
+/area/library)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -524,25 +612,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/ai_monitored/turret_protected/ai)
-"acr" = (
-/obj/machinery/ai_slipper{
-	uses = 8
-	},
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/machinery/holopad,
-/turf/open/floor/plasteel/white,
-/area/ai_monitored/turret_protected/ai)
-"acs" = (
-/obj/machinery/turretid{
-	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
-	name = "AI Satellite turret control";
-	pixel_x = -5;
-	pixel_y = -24
-	},
-/turf/open/floor/plasteel/white,
-/area/ai_monitored/turret_protected/ai)
 "act" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/command/glass{
@@ -619,23 +688,6 @@
 "acC" = (
 /obj/machinery/airalarm{
 	pixel_y = 22
-	},
-/turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai)
-"acD" = (
-/obj/machinery/camera/motion{
-	c_tag = "MiniSat AI Chamber South";
-	network = list("minisat")
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_y = 20
-	},
-/obj/machinery/status_display/ai{
-	pixel_y = 37
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
@@ -1784,11 +1836,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
-"afP" = (
-/obj/machinery/holopad,
-/mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "afQ" = (
@@ -4547,14 +4594,6 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/security/main)
-"amp" = (
-/obj/machinery/holopad,
-/obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
-	dir = 1
-	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/main)
 "amq" = (
@@ -10512,10 +10551,6 @@
 "aBm" = (
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
-"aBn" = (
-/obj/machinery/holopad,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/heads/captain)
 "aBo" = (
 /obj/structure/chair{
 	dir = 1
@@ -11623,22 +11658,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "aDL" = (
-/turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai_upload)
-"aDM" = (
-/obj/machinery/holopad,
-/obj/machinery/camera/motion{
-	c_tag = "AI Upload Center";
-	dir = 1;
-	network = list("aiupload")
-	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1447;
-	listening = 0;
-	name = "Station Intercom (AI Private)";
-	pixel_y = -28
-	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aDN" = (
@@ -48650,20 +48669,6 @@
 /obj/structure/destructible/cult/tome,
 /turf/open/floor/plasteel/dark,
 /area/library)
-"cAU" = (
-/obj/structure/rack{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "minibar";
-	name = "skeletal minibar"
-	},
-/obj/item/book/codex_gigas,
-/obj/machinery/camera{
-	c_tag = "Monastery Archives Aft";
-	dir = 1;
-	network = list("ss13","monastery")
-	},
-/turf/open/floor/plasteel/dark,
-/area/library)
 "cAV" = (
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
@@ -75533,7 +75538,7 @@ cAj
 cAv
 cAD
 cAK
-cAU
+aaZ
 cyU
 aaa
 aaa
@@ -82332,7 +82337,7 @@ ajn
 ajW
 rKz
 feH
-amp
+aaU
 and
 and
 aov
@@ -84901,7 +84906,7 @@ abI
 ajs
 akd
 akX
-alJ
+aaT
 amy
 cRC
 anV
@@ -85689,7 +85694,7 @@ awV
 axU
 aza
 aAw
-aBn
+aaV
 aCB
 aDE
 aEz
@@ -88261,7 +88266,7 @@ azj
 aAC
 aBv
 aCJ
-aDM
+aaW
 aEG
 aAB
 aGq
@@ -90523,11 +90528,11 @@ acf
 abO
 abO
 ack
-acr
+aaX
 acy
 abO
 abO
-acD
+aaR
 acL
 acS
 adb
@@ -90542,7 +90547,7 @@ aey
 aeO
 aff
 afy
-afP
+aaS
 agf
 agt
 agD
@@ -90780,7 +90785,7 @@ ace
 abO
 abO
 acl
-acs
+aaY
 abO
 abO
 abO
