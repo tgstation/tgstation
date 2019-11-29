@@ -141,3 +141,16 @@
 					break
 			buying = FALSE
 			selected_item = null
+
+/datum/crafting_recipe/blackmarket_uplink
+	name = "Black market downlink"
+	result = /obj/item/blackmarket_uplink
+	time = 30
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_MULTITOOL)
+	reqs = list(
+		/obj/item/stock_parts/subspace/amplifier = 1,
+		/obj/item/stack/cable_coil = 15,
+		/obj/item/radio = 1,
+		/obj/item/analyzer = 1
+	)
+	category = CATEGORY_MISC
