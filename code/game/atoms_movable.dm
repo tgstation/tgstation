@@ -638,12 +638,10 @@
 		SSthrowing.currentrun[src] = TT
 	TT.tick()
 
-/atom/movable/proc/handle_buckled_mob_movement(newloc, direct, _glide_size)
-	to_chat(world, "[src] is now handling buckled")
+/atom/movable/proc/handle_buckled_mob_movement(newloc, direct, glide_size_override)
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
-		to_chat(world, "[src] handling [buckled_mob]")
-		if(!buckled_mob.Move(newloc, direct, _glide_size))
+		if(!buckled_mob.Move(newloc, direct, glide_size_override))
 			forceMove(buckled_mob.loc)
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move
