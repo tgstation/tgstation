@@ -42,82 +42,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard/fore)
-"aah" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel,
-/area/security/main)
-"aai" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel/grimy,
-/area/crew_quarters/heads/hos)
-"aaj" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"aak" = (
-/obj/effect/landmark/start/cyborg,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
-"aal" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/wood,
-/area/crew_quarters/heads/captain/private)
-"aam" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel,
-/area/security/brig)
-"aan" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai_upload)
 "aao" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -34129,6 +34053,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
+"bpo" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel,
+/area/security/main)
 "bpp" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -34216,6 +34145,14 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/turf/open/floor/plasteel/grimy,
+/area/crew_quarters/heads/hos)
+"bpv" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/hos)
 "bpw" = (
@@ -42843,6 +42780,20 @@
 /obj/effect/landmark/start/ai/secondary,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
+"bEg" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
 "bEh" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -49362,10 +49313,10 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bOR" = (
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bOS" = (
@@ -53266,6 +53217,22 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/aisat_interior)
+"bVx" = (
+/obj/effect/landmark/start/cyborg,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bVy" = (
@@ -58708,6 +58675,15 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
+"ceH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/wood,
+/area/crew_quarters/heads/captain/private)
 "ceI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -60028,6 +60004,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"chd" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "che" = (
 /obj/effect/landmark/start/security_officer,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -60137,6 +60119,24 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai_upload)
+"chn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "cho" = (
@@ -123636,7 +123636,7 @@ btH
 bPC
 bRA
 bTq
-aak
+bVx
 bXX
 cab
 bPC
@@ -124398,7 +124398,7 @@ bxv
 byT
 bAz
 bCq
-aaj
+bEg
 bCq
 bCq
 bJF
@@ -125431,7 +125431,7 @@ bFT
 btH
 bJI
 bEl
-aaj
+bEg
 bPF
 bRH
 bTw
@@ -125441,7 +125441,7 @@ bVH
 cbM
 cdy
 cfw
-aan
+chn
 cdy
 ckq
 clO
@@ -126454,7 +126454,7 @@ bxv
 bzb
 bAF
 bCq
-aaj
+bEg
 bCq
 bCq
 bJM
@@ -127234,7 +127234,7 @@ btH
 bPC
 bRL
 bTC
-aak
+bVx
 bXX
 cam
 bPC
@@ -158849,7 +158849,7 @@ bXf
 bUQ
 cbe
 ccP
-aal
+ceH
 cgu
 cij
 cjM
@@ -170134,7 +170134,7 @@ biK
 bku
 bmp
 bnP
-aah
+bpo
 brt
 bts
 buP
@@ -170158,7 +170158,7 @@ bZV
 cbH
 bLs
 cfn
-aam
+chd
 ciM
 biy
 clJ
@@ -171933,7 +171933,7 @@ biQ
 bkA
 bmu
 bnW
-aai
+bpv
 brA
 kqy
 buU
