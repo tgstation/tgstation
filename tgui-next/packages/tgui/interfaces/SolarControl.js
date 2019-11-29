@@ -7,9 +7,11 @@ export const SolarControl = props => {
   const { act, data } = useBackend(props);
   const {
     generated,
-    angle,
+    generated_ratio,
+    azimuth_current,
+    azimuth_rate,
+    max_rotation_rate,
     tracking_state,
-    tracking_rate,
     connected_panels,
     connected_tracker,
   } = data;
@@ -43,13 +45,13 @@ export const SolarControl = props => {
               <LabeledList.Item label="Power output">
                 <ProgressBar
                   ranges={{
-                    good: [60000, Infinity],
-                    average: [30000, 60000],
-                    bad: [-Infinity, 30000],
+                    good: [0.66, Infinity],
+                    average: [0.33, 0.66],
+                    bad: [-Infinity, 0.33],
                   }}
                   minValue={0}
-                  maxValue={90000}
-                  value={generated}
+                  maxValue={1}
+                  value={generated_ratio}
                   content={generated + ' W'} />
               </LabeledList.Item>
             </LabeledList>
@@ -76,7 +78,7 @@ export const SolarControl = props => {
               disabled={!connected_tracker}
               onClick={() => act('tracking', { mode: 2 })} />
           </LabeledList.Item>
-          <LabeledList.Item label="Angle">
+          <LabeledList.Item label="Azimuth">
             {(tracking_state === 0 || tracking_state === 1) && (
               <NumberInput
                 width="52px"
@@ -85,28 +87,27 @@ export const SolarControl = props => {
                 stepPixelSize={2}
                 minValue={-360}
                 maxValue={+720}
-                value={angle}
-                format={angle => Math.round(360 + angle) % 360}
-                onDrag={(e, value) => act('angle', { value })} />
+                value={azimuth_current}
+                onDrag={(e, value) => act('azimuth', { value })} />
             )}
             {tracking_state === 1 && (
               <NumberInput
                 width="80px"
-                unit="°/h"
-                step={5}
-                stepPixelSize={2}
-                minValue={-7200}
-                maxValue={7200}
-                value={tracking_rate}
+                unit="°/m"
+                step={0.01}
+                stepPixelSize={1}
+                minValue={-max_rotation_rate-0.01}
+                maxValue={max_rotation_rate+0.01}
+                value={azimuth_rate}
                 format={rate => {
                   const sign = Math.sign(rate) > 0 ? '+' : '-';
-                  return sign + toFixed(Math.abs(rate));
+                  return sign + Math.abs(rate);
                 }}
-                onDrag={(e, value) => act('rate', { value })} />
+                onDrag={(e, value) => act('azimuth_rate', { value })} />
             )}
             {tracking_state === 2 && (
               <Box inline color="label" mt="3px">
-                {angle + ' °'} (auto)
+                {azimuth_current + ' °'} (auto)
               </Box>
             )}
           </LabeledList.Item>
