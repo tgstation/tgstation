@@ -1,8 +1,0 @@
-author: "carlarctg"
-delete-after: True
-changes: 
-  - balance: "Emagged defillibrators now knock people down for 7.5 seconds, deal 55 stamina damage, and convulse for 15 seconds, They don't stun borgs anymore."
-  - rscadd: "New status effect: Convulsions. 40% chance to drop your inhand item every tick."
-  - balance: "Harm intent defillibrator heart attack takes half as much time."
-  - bugfix: "ERT preproom no longer has a syndicate defillibrator."
-  - rscadd: "It now has a nanotrasen elite defillibrator, extremely high quality and definitely not a repaint of a syndicate defib."
