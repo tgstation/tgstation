@@ -9,9 +9,9 @@ export const SolarControl = props => {
   const { ref } = config;
   const {
     generated,
-    angle,
-    tracking_state,
-    tracking_rate,
+    max_generated,
+    azimuth_current,
+    elevation_current,
     connected_panels,
     connected_tracker,
   } = data;
@@ -50,7 +50,7 @@ export const SolarControl = props => {
                     bad: [-Infinity, 30000],
                   }}
                   minValue={0}
-                  maxValue={90000}
+                  maxValue={max_generated}
                   value={generated}
                   content={generated + ' W'} />
               </LabeledList.Item>
@@ -58,62 +58,22 @@ export const SolarControl = props => {
           </Grid.Column>
         </Grid>
       </Section>
-      <Section title="Controls">
-        <LabeledList>
-          <LabeledList.Item label="Tracking">
-            <Button
-              icon="times"
-              content="Off"
-              selected={tracking_state === 0}
-              onClick={() => act(ref, 'tracking', { mode: 0 })} />
-            <Button
-              icon="clock-o"
-              content="Timed"
-              selected={tracking_state === 1}
-              onClick={() => act(ref, 'tracking', { mode: 1 })} />
-            <Button
-              icon="sync"
-              content="Auto"
-              selected={tracking_state === 2}
-              disabled={!connected_tracker}
-              onClick={() => act(ref, 'tracking', { mode: 2 })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Angle">
-            {(tracking_state === 0 || tracking_state === 1) && (
-              <NumberInput
-                width="52px"
-                unit="°"
-                step={1}
-                stepPixelSize={2}
-                minValue={-360}
-                maxValue={+720}
-                value={angle}
-                format={angle => Math.round(360 + angle) % 360}
-                onDrag={(e, value) => act(ref, 'angle', { value })} />
-            )}
-            {tracking_state === 1 && (
-              <NumberInput
-                width="80px"
-                unit="°/h"
-                step={5}
-                stepPixelSize={2}
-                minValue={-7200}
-                maxValue={7200}
-                value={tracking_rate}
-                format={rate => {
-                  const sign = Math.sign(rate) > 0 ? '+' : '-';
-                  return sign + toFixed(Math.abs(rate));
-                }}
-                onDrag={(e, value) => act(ref, 'rate', { value })} />
-            )}
-            {tracking_state === 2 && (
+      {!!connected_tracker && (
+        <Section title="Tracker">
+          <LabeledList>
+            <LabeledList.Item label="Azimuth">
               <Box inline color="label" mt="3px">
-                {angle + ' °'} (auto)
+                {azimuth_current + ' °'}
               </Box>
-            )}
-          </LabeledList.Item>
-        </LabeledList>
-      </Section>
+            </LabeledList.Item>
+            <LabeledList.Item label="Elevation">
+              <Box inline color="label" mt="3px">
+                {elevation_current + ' °'}
+              </Box>
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+      )}
     </Fragment>
   );
 };

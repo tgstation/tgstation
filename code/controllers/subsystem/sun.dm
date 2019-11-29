@@ -1,49 +1,54 @@
 SUBSYSTEM_DEF(sun)
 	name = "Sun"
-	wait = 600
-	flags = SS_NO_TICK_CHECK|SS_NO_INIT
-	var/angle
-	var/dx
-	var/dy
-	var/rate
-	var/list/solars	= list()
+	wait = 6 MINUTES
+	flags = SS_NO_TICK_CHECK
 
-/datum/controller/subsystem/sun/PreInit()
-	angle = rand (0,360)			// the station position to the sun is randomised at round start
-	rate = rand(50,200)/100			// 50% - 200% of standard rotation
-	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
-		rate = -rate
+	var/azimuth = 0 //clockwise, top-down rotation from 0 (north) to 359
+	var/elevation = 0 //clockwise, vertical, side-on rotation from 90 (straight up) to -90 (straight down)
 
-/datum/controller/subsystem/sun/stat_entry(msg)
-	..("P:[solars.len]")
+	//how much each rotation will rotate in degrees each fire
+	var/azimuth_mod = 0
+	var/elevation_mod = 0
 
-/datum/controller/subsystem/sun/fire()
-	angle = (360 + angle + rate * 6) % 360	 // increase/decrease the angle to the sun, adjusted by the rate
+/datum/controller/subsystem/sun/Initialize(start_timeofday)
+	azimuth = rand(0, 359)
+	elevation = rand(-90, 90)
 
-	// now calculate and cache the (dx,dy) increments for line drawing
-	var/s = sin(angle)
-	var/c = cos(angle)
+	azimuth_mod = round((wait / (1 MINUTES)) * rand(50, 200)/100, 0.01) // 50% - 200% of standard rotation
+	elevation_mod = round((wait / (1 MINUTES)) * rand(50, 200)/100, 0.01)
+	if(prob(50))
+		azimuth_mod *= -1
+	if(prob(50))
+		elevation_mod *= -1
 
-	// Either "abs(s) < abs(c)" or "abs(s) >= abs(c)"
-	// In both cases, the greater is greater than 0, so, no "if 0" check is needed for the divisions
+	return ..()
 
-	if(abs(s) < abs(c))
-		dx = s / abs(c)
-		dy = c / abs(c)
-	else
-		dx = s / abs(s)
-		dy = c / abs(s)
+/datum/controller/subsystem/sun/fire(resumed = FALSE)
+	azimuth += azimuth_mod
+	elevation += elevation_mod
+	azimuth = round(azimuth, 0.01)
+	elevation = round(elevation, 0.01)
 
-	//now tell the solar control computers to update their status and linked devices
-	for(var/obj/machinery/power/solar_control/SC in solars)
-		if(!SC.powernet)
-			solars.Remove(SC)
-			continue
-		SC.update()
+	if(elevation > 90) //over the north pole
+		elevation = 180 - elevation
+		elevation_mod *= -1
+		azimuth -= 180
+	if(elevation < -90) //under the south pole
+		elevation = -180 - elevation
+		elevation_mod *= -1
+		azimuth += 180
 
+	if(azimuth >= 360)
+		azimuth -= 360
+	if(azimuth < 0)
+		azimuth += 360
 
+	complete_movement()
 
+/datum/controller/subsystem/sun/proc/complete_movement()
+	SEND_SIGNAL(src, COMSIG_SUN_MOVED, azimuth, elevation)
 
-
-
-
+/datum/controller/subsystem/sun/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(var_name == NAMEOF(src, azimuth) || var_name == NAMEOF(src, elevation))
+		complete_movement()
