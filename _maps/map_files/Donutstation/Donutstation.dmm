@@ -3344,27 +3344,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"ahY" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 6
-	},
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/holofloor/wood,
-/area/crew_quarters/heads/captain/private)
-"ahZ" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai_upload)
-"aia" = (
-/obj/machinery/holopad/secure,
-/turf/open/floor/wood,
-/area/crew_quarters/heads/captain)
 "aib" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -3391,14 +3370,6 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
-"aie" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/event_spawn,
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel,
-/area/security/main)
 "aif" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -3570,40 +3541,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
-"aiD" = (
-/obj/machinery/holopad/secure,
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/hos)
-"aiE" = (
-/obj/effect/landmark/start/cyborg,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel/grimy,
-/area/ai_monitored/turret_protected/aisat/foyer)
-"aiF" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/service)
-"aiG" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat/foyer)
 "aiH" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
@@ -3617,17 +3554,6 @@
 "aiI" = (
 /turf/closed/wall,
 /area/quartermaster/storage)
-"aiJ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/obj/structure/cable,
-/obj/machinery/holopad/secure,
-/turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai)
 "aiM" = (
 /obj/machinery/light/small,
 /obj/effect/turf_decal/tile/brown,
@@ -5026,6 +4952,17 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
+"ang" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/holofloor/wood,
+/area/crew_quarters/heads/captain/private)
 "ani" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line{
@@ -11418,6 +11355,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
+"aEN" = (
+/turf/open/floor/wood,
+/area/crew_quarters/heads/captain)
 "aEO" = (
 /obj/machinery/suit_storage_unit/captain,
 /obj/structure/window/reinforced,
@@ -11516,6 +11456,10 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"aEZ" = (
+/obj/machinery/holopad/secure,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hos)
 "aFa" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
@@ -23919,6 +23863,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/science)
+"bmd" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai_upload)
 "bme" = (
 /obj/machinery/door/airlock/research{
 	name = "Kill Chamber";
@@ -34089,6 +34039,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"bLe" = (
+/obj/effect/landmark/start/cyborg,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel/grimy,
+/area/ai_monitored/turret_protected/aisat/foyer)
 "bLg" = (
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat/foyer";
@@ -34324,6 +34283,16 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat/foyer)
+"bLI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/aisat/service)
 "bLJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -35099,6 +35068,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
+"bOb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/aisat/foyer)
 "bOd" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "AI Chamber";
@@ -35162,6 +35142,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai)
+"bOk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bOm" = (
@@ -39308,6 +39299,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"caP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/obj/structure/cable,
+/obj/machinery/holopad/secure,
+/turf/open/floor/plasteel,
+/area/security/main)
 "caQ" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -42682,6 +42681,7 @@
 	pixel_y = 25
 	},
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "gdI" = (
@@ -83799,7 +83799,7 @@ aug
 pjJ
 aeJ
 aqU
-aiF
+bLI
 bOf
 byJ
 aNw
@@ -85596,13 +85596,13 @@ aaa
 aal
 afA
 afD
-aiE
+bLe
 bLv
 bLL
 bOd
 bOj
 icV
-aiJ
+bOk
 aNA
 fmV
 bJE
@@ -87397,7 +87397,7 @@ cdv
 pjJ
 aNi
 asz
-aiG
+bOb
 bOi
 bLu
 aNw
@@ -91927,7 +91927,7 @@ aMu
 aiV
 aMJ
 anR
-ahZ
+bmd
 anR
 egP
 aiV
@@ -97113,7 +97113,7 @@ ajT
 baQ
 baV
 baW
-aiD
+aEZ
 aOZ
 acQ
 akK
@@ -97362,7 +97362,7 @@ aDV
 bhv
 baG
 baH
-aie
+caP
 baH
 baL
 baN
@@ -97578,7 +97578,7 @@ alP
 aup
 fQk
 rhZ
-ahY
+ang
 baf
 aBb
 aBr
@@ -98109,7 +98109,7 @@ bJf
 aCS
 aCS
 bKU
-aia
+aEN
 arl
 arT
 arT
