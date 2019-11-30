@@ -30,6 +30,10 @@
 	landmark_type = /obj/effect/landmark/abductor/scientist
 	greet_text = "Use your experimental console and surgical equipment to monitor your agent and experiment upon abducted humans."
 	show_in_antagpanel = TRUE
+	
+/datum/antagonist/abductor/scientist/onemanteam
+	name = "Abductor Solo"
+	outfit = /datum/outfit/abductor/scientist/onemanteam
 
 /datum/antagonist/abductor/create_team(datum/team/abductor_team/new_team)
 	if(!new_team)
