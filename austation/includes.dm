@@ -31,6 +31,7 @@
 #include "code\modules\antagonists\gang\gang_datums.dm"
 #include "code\modules\antagonists\gang\gang_hud.dm"
 #include "code\modules\antagonists\gang\vigilante.dm"
+#include "code\modules\clothing\spacesuit\miscellaneous.dm"
 #include "code\modules\food_and_drinks\drinks\drinks.dm"
 #include "code\modules\food_and_drinks\food\snacks_other.dm"
 #include "code\modules\food_and_drinks\kitchen_machinery\smartfridge.dm"
