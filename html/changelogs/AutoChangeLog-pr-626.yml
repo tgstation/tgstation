@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - bugfix: "Dead Goliath Broodmother no longer constantly spawns tentacles around them."
