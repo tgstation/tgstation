@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NumberInput, Section } from '../components';
+import { Box, Button, Input, LabeledList, NumberInput, Section } from '../components';
 
 export const ChemPress = props => {
   const { act, data } = useBackend(props);
@@ -29,7 +29,7 @@ export const ChemPress = props => {
           <Input
             value={pill_name}
             onChange={(e, value) => act('change_pill_name', {
-              name: value
+              name: value,
             })} />
         </LabeledList.Item>
         <LabeledList.Item label="Pill Style">
