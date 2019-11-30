@@ -240,6 +240,7 @@
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
 	if(should_stun)
 		Paralyze(40)
+	apply_status_effect(STATUS_EFFECT_CONVULSING)
 	//Jitter and other fluff.
 	jitteriness += 1000 //apparently jitteriness duration and how much your character shakes around are intertwined, so that's some good coding there (nov2019)
 	do_jitter_animation(jitteriness)
