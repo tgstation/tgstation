@@ -19,6 +19,7 @@
 	default_price = 25
 	extra_price = 100
 	payment_department = ACCOUNT_MED
+	tiltable = FALSE
 
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"
