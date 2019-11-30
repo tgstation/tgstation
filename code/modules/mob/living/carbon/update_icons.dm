@@ -258,7 +258,7 @@
 	- limbs (stores as the limb name and whether it is removed/fine, organic/robotic)
 	These procs only store limbs as to increase the number of matching icon_render_keys
 	This cache exists because drawing 6/7 icons for humans constantly is quite a waste
-	See RemieRichards on irc.rizon.net #coderbus
+	See RemieRichards on irc.rizon.net #coderbus (RIP remie :sob:)
 */
 
 //produces a key based on the mob's limbs
