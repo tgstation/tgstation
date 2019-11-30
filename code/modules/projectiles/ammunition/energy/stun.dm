@@ -5,6 +5,10 @@
 	e_cost = 100
 	harmful = FALSE
 
+/obj/item/ammo_casing/energy/electrode/turret
+	projectile_type = /obj/projectile/energy/electrode/turret
+	select_name = "stun"
+
 /obj/item/ammo_casing/energy/electrode/spec
 	e_cost = 50
 

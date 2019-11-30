@@ -31,4 +31,6 @@
 	..()
 
 /obj/projectile/energy/electrode/turret
-	name = "high-voltage electrode"
+	name = "low-wavelength electrode" //the low wavelengths make it not deal any amount of stamina damage, but instead paralyze the victim. this is how it works in real life
+	paralyze = 10 SECONDS
+	nodamage = TRUE
