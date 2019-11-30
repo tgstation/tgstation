@@ -1348,7 +1348,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				shove_blocked = TRUE
 
 		if(target.IsKnockdown() && !target.IsParalyzed())
-			target.Paralyze(SHOVE_CHAIN_PARALYZE)
+			var/stun_cut = target.AmountKnockdown()/3
+			target.Paralyze(stun_cut)
 			target.visible_message("<span class='danger'>[user.name] kicks [target.name] onto their side!</span>",
 							"<span class='userdanger'>You're kicked onto your side by [user.name]!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, "<span class='danger'>You kick [target.name] onto their side!</span>")
