@@ -36,7 +36,7 @@
 	var/icon_vomit = "vomit"
 	var/icon_vomit_end = "vomit_end"
 	var/message_cooldown = 0
-	var/eatcount = 0
+	var/list/nummies = list()
 	var/choking = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/goose/Initialize()
@@ -46,14 +46,27 @@
 /mob/living/simple_animal/hostile/retaliate/goose/proc/goosement(atom/movable/AM, OldLoc, Dir, Forced)
 	if(stat == DEAD)
 		return
-	eatcount = 0
-	for(var/obj/item/tasty in get_turf(src))
-		if(feed(tasty))
-			eatcount++
-			if(eatcount >= MAX_FOOD_TO_EAT)
-				break
+	nummies.Cut()
+	nummies += loc.contents
 	if(prob(5) && random_retaliate)
 		Retaliate()		
+
+/mob/living/simple_animal/hostile/retaliate/goose/handle_automated_action()
+	if(length(nummies))
+		var/obj/item/E = locate() in nummies
+		if(E.loc == loc)
+			feed(E)
+		nummies -= E
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/handle_automated_action()
+	if(length(nummies))
+		var/obj/item/E = pick(nummies)
+		if(!(E.custom_materials && E.custom_materials[getmaterialref(/datum/material/plastic)]))
+			nummies -= E // remove non-plastic item from queue
+			E = locate(/obj/item/reagent_containers/food) in nummies // find food
+		if(E.loc == loc)
+			feed(E)
+		nummies -= E
 
 /mob/living/simple_animal/hostile/retaliate/goose/proc/feed(obj/item/suffocator)
 	if(stat == DEAD || choking) // plapatin I swear to god
@@ -154,7 +167,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/proc/suffocate()
 	if(!choking)
 		return
-	deathmessage = "lets out one final oxygen-depraved honk before they go limp and lifeless.."
+	deathmessage = "lets out one final oxygen-deprived honk before they go limp and lifeless.."
 	death()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
