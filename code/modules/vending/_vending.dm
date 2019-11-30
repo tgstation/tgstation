@@ -636,7 +636,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(shock(user, 100))
 			return
 
-	if(tilted)
+	if(tilted && !user.buckled)
 		to_chat(user, "<span class='notice'>You begin righting \the [src].")
 		if(do_after(user, 50, target=src))
 			untilt(user)
