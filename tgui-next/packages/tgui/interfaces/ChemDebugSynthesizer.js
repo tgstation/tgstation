@@ -1,12 +1,9 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
-import { NumberInput } from '../components/NumberInput';
+import { useBackend } from '../backend';
+import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section } from '../components';
 
 export const ChemDebugSynthesizer = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     amount,
     beakerCurrentVolume,
@@ -22,8 +19,7 @@ export const ChemDebugSynthesizer = props => {
           <Button
             icon="eject"
             content="Eject"
-            onClick={() => act(ref, 'ejectBeaker')}
-          />
+            onClick={() => act('ejectBeaker')} />
           <NumberInput
             value={amount}
             unit="u"
@@ -31,32 +27,25 @@ export const ChemDebugSynthesizer = props => {
             maxValue={beakerMaxVolume}
             step={1}
             stepPixelSize={2}
-            onChange={(e, value) => act(ref, 'amount', {
+            onChange={(e, value) => act('amount', {
               amount: value,
             })} />
           <Button
             icon="plus"
             content="Input"
-            onClick={() => act(ref, 'input')} />
+            onClick={() => act('input')} />
         </Fragment>
       ) : (
         <Button
           icon="plus"
           content="Create Beaker"
-          onClick={() => act(ref, 'makecup')} />
+          onClick={() => act('makecup')} />
       )}>
       {isBeakerLoaded ? (
         <Fragment>
           <Box>
-            <Box inline>
-              <AnimatedNumber
-                value={beakerCurrentVolume}
-              />
-            </Box>
-            /
-            <Box inline>
-              {beakerMaxVolume} u
-            </Box>
+            <AnimatedNumber value={beakerCurrentVolume} />
+            {' / ' + beakerMaxVolume + ' u'}
           </Box>
           {beakerContents.length > 0 ? (
             <LabeledList>

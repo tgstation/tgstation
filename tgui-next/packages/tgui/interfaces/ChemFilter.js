@@ -1,12 +1,10 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Button, Section, Grid } from '../components';
-
+import { useBackend } from '../backend';
+import { Button, Grid, Section } from '../components';
 
 export const ChemFilterPane = props => {
-  const {state} = props;
-  const {ref} = state.config;
-  const {title, list} = props;
+  const { act } = useBackend(props);
+  const { title, list } = props;
   const titleKey = title.toLowerCase();
   return (
     <Section
@@ -17,18 +15,20 @@ export const ChemFilterPane = props => {
       buttons={(
         <Button
           icon="plus"
-          onClick={() => act(ref, "add", {which: titleKey})}
-        />
-      )}
-    >
+          onClick={() => act('add', {
+            which: titleKey,
+          })} />
+      )}>
       {list.map(filter => (
         <Fragment key={filter}>
           <Button
             fluid
             icon="minus"
             content={filter}
-            onClick={() => act(ref, "remove", {which: titleKey, reagent: filter})}
-          />
+            onClick={() => act('remove', {
+              which: titleKey,
+              reagent: filter,
+            })} />
         </Fragment>
       ))}
     </Section>
@@ -37,8 +37,7 @@ export const ChemFilterPane = props => {
 
 export const ChemFilter = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { data } = useBackend(props);
   const {
     left = [],
     right = [],
@@ -49,15 +48,13 @@ export const ChemFilter = props => {
         <ChemFilterPane
           title="Left"
           list={left}
-          state={state}
-        />
+          state={state} />
       </Grid.Column>
       <Grid.Column>
         <ChemFilterPane
           title="Right"
           list={right}
-          state={state}
-        />
+          state={state} />
       </Grid.Column>
     </Grid>
   );
