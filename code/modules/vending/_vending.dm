@@ -542,7 +542,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	transform = M
 
 	if(get_turf(fatty) != get_turf(src))
-		throw_at(get_turf(fatty), 2, 2, spin=FALSE)
+		throw_at(get_turf(fatty), 1, 1, spin=FALSE)
 
 /obj/machinery/vending/proc/untilt(mob/user)
 	user.visible_message("<span class='notice'>[user] rights /the [src].", \
