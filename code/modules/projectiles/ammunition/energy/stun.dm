@@ -16,7 +16,7 @@
 	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
 
 /obj/item/ammo_casing/energy/electrode/old
-	e_cost = 500
+	e_cost = 250
 
 /obj/item/ammo_casing/energy/disabler
 	projectile_type = /obj/projectile/beam/disabler
