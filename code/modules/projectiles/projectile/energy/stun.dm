@@ -29,3 +29,6 @@
 /obj/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	do_sparks(1, TRUE, src)
 	..()
+
+/obj/projectile/energy/electrode/turret
+	name = "high-voltage electrode"
