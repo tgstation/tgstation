@@ -241,17 +241,15 @@
 	if(should_stun)
 		Paralyze(40)
 	//Jitter and other fluff.
-	jitteriness += 1000
+	jitteriness += 1000 //apparently jitteriness duration and how much your character shakes around are intertwined, so that's some good coding there (nov2019)
 	do_jitter_animation(jitteriness)
 	stuttering += 2
-	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 20)
+	addtimer(CALLBACK(src, .proc/remove_jitter), 20)
 	return shock_damage
 
-///Called slightly after electrocute act to reduce jittering and apply a secondary stun.
-/mob/living/carbon/proc/secondary_shock(should_stun)
+///shitty hack to remove jitter
+/mob/living/carbon/proc/remove_jitter()
 	jitteriness = max(jitteriness - 990, 10)
-	if(should_stun)
-		Paralyze(60)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)
