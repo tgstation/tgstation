@@ -15399,8 +15399,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/stasis,
 /obj/effect/turf_decal/box,
+/obj/machinery/sleeper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "axI" = (
