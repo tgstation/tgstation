@@ -1,9 +1,8 @@
-import { toFixed } from 'common/math';
-import { decodeHtmlEntities } from 'common/string';
-import { Fragment, Component } from 'inferno';
+import { Component } from 'inferno';
 import { act } from '../byond';
 import { Box, Button, LabeledList, NumberInput, Section, Input } from '../components';
 import { map } from 'common/collections';
+import { classes } from 'common/react';
 
 
 export class ChemReactionChamber extends Component {
@@ -15,15 +14,15 @@ export class ChemReactionChamber extends Component {
     };
   }
 
-  setReagentName(name) {
+  setReagentName(reagentName) {
     this.setState({
-      reagentName: name,
+      reagentName,
     });
   }
 
-  setReagentQuantity(quantity) {
+  setReagentQuantity(reagentQuantity) {
     this.setState({
-      reagentQuantity: quantity,
+      reagentQuantity,
     });
   }
 
@@ -40,30 +39,26 @@ export class ChemReactionChamber extends Component {
           <Box
             inline
             bold
-            color={emptying ? "bad" : "good"}
-          >
+            color={emptying ? "bad" : "good"} >
             {emptying ? "Emptying" : "Filling"}
           </Box>
-        )}
-      >
+        )} >
         <LabeledList>
-          <tr
-            className="LabledList__row"
-          >
+          <tr className="LabledList__row">
             <td
               colSpan="2"
-              className="LabeledList__cell"
-            >
+              className="LabeledList__cell" >
               <Input
                 fluid
                 value=""
                 placeholder="Reagent Name"
-                onInput={(e, value) => this.setReagentName(value)}
-              />
+                onInput={(e, value) => this.setReagentName(value)} />
             </td>
             <td
-              className="LabeledList__cell LabeledList__buttons"
-            >
+              className={classes([
+                "LabeledList__buttons",
+                "LabeledList__cell",
+              ])} >
               <NumberInput
                 value={this.state.reagentQuantity}
                 minValue={1}
@@ -71,13 +66,14 @@ export class ChemReactionChamber extends Component {
                 step={1}
                 stepPixelSize={3}
                 width="39px"
-                onDrag={(e, value) => this.setReagentQuantity(value)}
-              />
+                onDrag={(e, value) => this.setReagentQuantity(value)} />
               <Box inline mr={1} />
               <Button
                 icon="plus"
-                onClick={() => act(ref, "add", {chem: this.state.reagentName, amount: this.state.reagentQuantity})}
-              />
+                onClick={() => act(ref, 'add', {
+                  chem: this.state.reagentName,
+                  amount: this.state.reagentQuantity,
+                })} />
             </td>
           </tr>
           {map((amount, reagent) => (
@@ -88,8 +84,9 @@ export class ChemReactionChamber extends Component {
                 <Button
                   icon="minus"
                   color="bad"
-                  onClick={() => act(ref, "remove", {chem: reagent})}
-                />
+                  onClick={() => act(ref, 'remove', {
+                    chem: reagent,
+                  })} />
               )}
             >
               {amount}
