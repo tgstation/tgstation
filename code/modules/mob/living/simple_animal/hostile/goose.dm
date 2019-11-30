@@ -54,7 +54,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/handle_automated_action()
 	if(length(nummies))
 		var/obj/item/E = locate() in nummies
-		if(E.loc == loc)
+		if(E && E.loc == loc)
 			feed(E)
 		nummies -= E
 
@@ -64,7 +64,7 @@
 		if(!(E.custom_materials && E.custom_materials[getmaterialref(/datum/material/plastic)]))
 			nummies -= E // remove non-plastic item from queue
 			E = locate(/obj/item/reagent_containers/food) in nummies // find food
-		if(E.loc == loc)
+		if(E && E.loc == loc)
 			feed(E)
 		nummies -= E
 
