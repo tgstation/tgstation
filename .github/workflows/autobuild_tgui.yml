@@ -1,0 +1,36 @@
+name: Autobuild TGUI
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'tgui-next/**.js'
+      - 'tgui-next/**.scss'
+
+jobs:
+  build:
+    name: Rebuild TGUI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+         node-version: '>=12.13'
+      - name: Get Dependencies
+        run: yarn install
+        working-directory: ./tgui-next
+      - name: Build TGUI
+        run: yarn run build
+        working-directory: ./tgui-next
+      - name: Commit Artifacts
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "TGUI"
+          git commit -m "Automatic TGUI Rebuild [ci skip]" -a
+      - name: Push Artifacts
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
