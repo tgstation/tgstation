@@ -57,7 +57,7 @@ export class Dropdown extends Component {
   render() {
     const { props } = this;
     const {
-      color,
+      color = "default",
       over,
       width,
       onClick,
@@ -67,13 +67,10 @@ export class Dropdown extends Component {
     } = props;
     const {
       className,
-      fluid,
       ...rest
     } = boxProps;
 
     const adjustedOpen = over ? !this.state.open : this.state.open;
-
-    const buttonColor = color || "default";
 
     const menu = this.state.open ? (
       <Box
@@ -96,7 +93,7 @@ export class Dropdown extends Component {
           className={classes([
             "Dropdown__control",
             "Button",
-            "Button--color--default",
+            "Button--color--" + color,
             className,
           ])}
           {...rest}
