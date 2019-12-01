@@ -325,12 +325,12 @@
 					grinded.on_juice()
 					reagents.add_reagent_list(grinded.juice_results)
 					to_chat(user, "<span class='notice'>You juice [grinded] into a fine liquid.</span>")
-					if(grinded.reagents) //food and pills
-						grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 					QDEL_NULL(grinded)
 					return
 				grinded.on_grind()
 				reagents.add_reagent_list(grinded.grind_results)
+				if(grinded.reagents) //food and pills
+					grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 				to_chat(user, "<span class='notice'>You break [grinded] into powder.</span>")
 				QDEL_NULL(grinded)
 				return
