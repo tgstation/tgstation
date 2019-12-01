@@ -74,7 +74,7 @@
 		visible_message("<span class='warning'>[src] begins to drink from [target]...</span>")
 		if(do_after(src, 70, target = target))
 			visible_message("<span class='warning'>[src] begins to fire up!</span>")
-			revive(full_heal = TRUE, admin_revive = TRUE)
+			fully_heal()
 			icon_state = "Basilisk_alert"
 			set_varspeed(0)
 			warmed_up = TRUE

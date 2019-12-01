@@ -34,8 +34,8 @@
 
 	var/chase_time = 100
 	var/will_burrow = TRUE
-	var/datum/action/innate/goldgrub/spitore/S
-	var/datum/action/innate/goldgrub/burrow/B
+	var/datum/action/innate/goldgrub/spitore/spit
+	var/datum/action/innate/goldgrub/burrow/burrow
 	var/is_burrowed = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/Initialize()
@@ -44,10 +44,10 @@
 	while(i)
 		loot += pick(/obj/item/stack/ore/silver, /obj/item/stack/ore/gold, /obj/item/stack/ore/uranium, /obj/item/stack/ore/diamond)
 		i--
-	S = new
-	B = new
-	S.Grant(src)
-	B.Grant(src)
+	spit = new
+	burrow = new
+	spit.Grant(src)
+	burrow.Grant(src)
 	
 /datum/action/innate/goldgrub
 	background_icon_state = "bg_default"
