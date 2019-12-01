@@ -116,6 +116,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(findtext(message, " ", 1, 2))
 		message = copytext(message, 2)
 
+	if(findtext(message, "reddit"))
+		var/mob/living/carbon/human/H = src
+		to_chat(H, "<span class='colossus'><b>Go away Reddit!</b></span>")
+		H.gib()
+
 	if(message_mode == MODE_ADMIN)
 		if(client)
 			client.cmd_admin_say(message)
