@@ -522,6 +522,7 @@
 	pixel_y = -24
 	},
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/white,
 /area/ai_monitored/turret_protected/ai)
 "acr" = (
@@ -531,7 +532,6 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/ai_monitored/turret_protected/ai)
 "acs" = (
@@ -637,6 +637,7 @@
 /obj/machinery/status_display/ai{
 	pixel_y = 37
 	},
+/obj/machinery/holopad/secure,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "acE" = (
@@ -1787,7 +1788,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "afP" = (
-/obj/machinery/holopad,
+/obj/machinery/holopad/secure,
 /mob/living/simple_animal/bot/secbot/pingsky,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
@@ -4550,11 +4551,11 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "amp" = (
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel,
 /area/security/main)
 "amq" = (
@@ -10513,7 +10514,7 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
 "aBn" = (
-/obj/machinery/holopad,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/captain)
 "aBo" = (
@@ -11626,7 +11627,6 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aDM" = (
-/obj/machinery/holopad,
 /obj/machinery/camera/motion{
 	c_tag = "AI Upload Center";
 	dir = 1;
@@ -11639,6 +11639,7 @@
 	name = "Station Intercom (AI Private)";
 	pixel_y = -28
 	},
+/obj/machinery/holopad/secure,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
 "aDN" = (
@@ -52269,6 +52270,10 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"kNE" = (
+/obj/machinery/holopad/secure,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hos)
 "kPi" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -84253,7 +84258,7 @@ abI
 ajs
 aka
 akV
-alJ
+kNE
 amv
 alJ
 anS
