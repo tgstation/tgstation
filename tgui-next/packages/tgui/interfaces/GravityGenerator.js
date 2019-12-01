@@ -13,9 +13,7 @@ export const GravityGenerator = props => {
   } = data;
   return (
     <Fragment>
-      <Section
-        title="Generator Status"
-        textAlign="center">
+      <Section>
         {!operational && (
           <NoticeBox>No data available</NoticeBox>
         ) || (
@@ -60,7 +58,6 @@ export const GravityGenerator = props => {
         <Section>
           <NoticeBox
             textAlign="center"
-            color="bad"
             bold>
             WARNING - Radiation detected
           </NoticeBox>
