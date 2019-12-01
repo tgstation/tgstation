@@ -158,6 +158,8 @@
 	else if(issilicon(entering))
 		if(isAI(entering))
 			return
+	else
+		return
 	step_towards(entering, center)
 	cancel_register_net()
 	use_power(electricity_level * 5)
