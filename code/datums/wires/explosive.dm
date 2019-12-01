@@ -40,12 +40,12 @@
 /datum/wires/explosive/chem_grenade/explode()
 	var/obj/item/grenade/chem_grenade/G = holder
 	var/obj/item/assembly/assembly = get_attached(get_wire(1))
-	message_admins("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
-	log_game("\An [assembly] has pulsed a grenade, which was installed by [fingerprint].")
+	message_admins("\An [assembly] has pulsed and preprimed a grenade, which was installed by [fingerprint].")
+	log_game("\An [assembly] has pulsed and preprimed a grenade, which was installed by [fingerprint].")
 	var/mob/M = get_mob_by_ckey(fingerprint)
 	var/turf/T = get_turf(M)	
 	G.log_grenade(M, T)
-	G.prime()
+	G.preprime()
 
 /datum/wires/explosive/chem_grenade/detach_assembly(color)
 	var/obj/item/assembly/S = get_attached(color)
