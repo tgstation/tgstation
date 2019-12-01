@@ -52,11 +52,9 @@
 
 /datum/antagonist/traitor/proc/handle_hearing(datum/source, list/hearing_args)
 	var/message = hearing_args[HEARING_MESSAGE]
-	world.log << message
 	message = GLOB.syndicate_code_phrase_regex.Replace(message, "<span class='blue'>$1</span>")
 	message = GLOB.syndicate_code_response_regex.Replace(message, "<span class='red'>$1</span>")
 	hearing_args[HEARING_MESSAGE] = message
-	world.log << message
 
 /datum/antagonist/traitor/proc/add_objective(datum/objective/O)
 	objectives += O
