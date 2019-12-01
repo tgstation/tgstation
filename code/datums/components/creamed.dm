@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 /datum/component/creamed/proc/cream()
 	if(iscarbon(parent))
 		var/mob/living/C = parent
-		if(C.client && thrower && thrower.mind) //making sure the target (C)  isnt afk
+		if(C.client && !qdeleted(thrower)) //making sure the target (C)  isnt afk
 			SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
 			var/experience_given = 30
 			if(HAS_TRAIT(C.mind, TRAIT_LAW_ENFORCEMENT_METABOLISM))
@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 			if(already_creamed)
 				experience_given *= 0.1
 			thrower.mind.adjust_experience(/datum/skill/pie_throwing, experience_given)
-		if(stun && thrower)
+		if(stun && !qdeleted(thrower))
 			var/skillmod = thrower.mind.get_skill_speed_modifier(/datum/skill/pie_throwing)
 			if(skillmod > 25)// journeyman level or higher
 				C.Paralyze(skillmod) //splat!
