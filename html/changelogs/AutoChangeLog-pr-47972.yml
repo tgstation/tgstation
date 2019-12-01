@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - rscadd: "All nanite interfaces have been completely reworked for tgui-next"
