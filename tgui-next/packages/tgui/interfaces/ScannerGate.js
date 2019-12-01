@@ -247,6 +247,7 @@ const ScannerGateDisease = props => {
           <Button
             key={threshold}
             selected={threshold === data.disease_threshold}
+            icon={threshold === data.disease_threshold ? 'check-square-o' : 'square-o'}
             content={threshold}
             onClick={() => act(ref, 'set_disease_threshold', { new_threshold: threshold })}
           />
@@ -283,6 +284,7 @@ const ScannerGateSpecies = props => {
           <Button
             key={species.value}
             selected={species.value === data.target_species}
+            icon={species.value === data.target_species ? 'check-square-o' : 'square-o'}
             content={species.name}
             onClick={() => act(ref, 'set_target_species', { new_species: species.value })}
           />
@@ -316,6 +318,7 @@ const ScannerGateNutrition = props => {
           <Button
             key={nutrition.name}
             selected={nutrition.value === data.target_nutrition}
+            icon={nutrition.value === data.target_nutrition ? 'check-square-o' : 'square-o'}
             content={nutrition.name}
             onClick={() => act(ref, 'set_target_nutrition', { new_nutrition: nutrition.name })}
           />
@@ -334,7 +337,7 @@ const ScannerGateNanites = props => {
   return (
     <Fragment>
       <Box mb={2}>
-      Trigger if the person scanned {data.reverse ? "does not have" : "has"} the nanite cloud id: {data.nanite_cloud}.
+      Trigger if the person scanned {data.reverse ? "does not have" : "has"} nanite cloud {data.nanite_cloud}.
       </Box>
       <Box mb={2}>
         <LabeledList>
@@ -365,6 +368,7 @@ const ScannerGateMode = props => {
       <LabeledList.Item label="Scanning Mode">
         <Button
           content={data.reverse ? "Inverted" : "Default"}
+          icon={data.reverse ? 'random' : 'long-arrow-alt-right'}
           onClick={() => act(ref, 'toggle_reverse')}
           color={data.reverse ? "bad" : "good"}
         />

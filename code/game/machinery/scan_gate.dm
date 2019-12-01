@@ -7,6 +7,17 @@
 #define SCANGATE_SPECIES		"Species"
 #define SCANGATE_NUTRITION		"Nutrition"
 
+#define SCANGATE_HUMAN			"human"
+#define SCANGATE_LIZARD			"lizard"
+#define SCANGATE_FELINID		"felinid"
+#define SCANGATE_FLY			"fly"
+#define SCANGATE_PLASMAMAN		"plasma"
+#define SCANGATE_MOTH			"moth"
+#define SCANGATE_JELLY			"jelly"
+#define SCANGATE_POD			"pod"
+#define SCANGATE_GOLEM			"golem"
+#define SCANGATE_ZOMBIE			"zombie"
+
 /obj/machinery/scanner_gate
 	name = "scanner gate"
 	desc = "A gate able to perform mid-depth scans on any organisms who pass under it."
@@ -24,7 +35,7 @@
 	var/scangate_mode = SCANGATE_NONE
 	var/disease_threshold = DISEASE_SEVERITY_MINOR
 	var/nanite_cloud = 1
-	var/detect_species = "human"
+	var/detect_species = SCANGATE_HUMAN
 	var/reverse = FALSE //If true, signals if the scan returns false
 	var/detect_nutrition = NUTRITION_LEVEL_FAT
 
@@ -110,27 +121,27 @@
 				var/mob/living/carbon/human/H = M
 				var/datum/species/scan_species = /datum/species/human
 				switch(detect_species)
-					if("lizard")
+					if(SCANGATE_LIZARD)
 						scan_species = /datum/species/lizard
-					if("fly")
+					if(SCANGATE_FLY)
 						scan_species = /datum/species/fly
-					if("felinid")
+					if(SCANGATE_FELINID)
 						scan_species = /datum/species/human/felinid
-					if("plasma")
+					if(SCANGATE_PLASMAMAN)
 						scan_species = /datum/species/plasmaman
-					if("moth")
+					if(SCANGATE_MOTH)
 						scan_species = /datum/species/moth
-					if("jelly")
+					if(SCANGATE_JELLY)
 						scan_species = /datum/species/jelly
-					if("pod")
+					if(SCANGATE_POD)
 						scan_species = /datum/species/pod
-					if("golem")
+					if(SCANGATE_GOLEM)
 						scan_species = /datum/species/golem
-					if("zombie")
+					if(SCANGATE_ZOMBIE)
 						scan_species = /datum/species/zombie
 				if(is_species(H, scan_species))
 					beep = TRUE
-				if(detect_species == "zombie") //Can detect dormant zombies
+				if(detect_species == SCANGATE_ZOMBIE) //Can detect dormant zombies
 					if(H.getorganslot(ORGAN_SLOT_ZOMBIE))
 						beep = TRUE
 		if(SCANGATE_GUNS)
@@ -201,17 +212,7 @@
 			. = TRUE
 		if("set_disease_threshold")
 			var/new_threshold = params["new_threshold"]
-			var/threshold_list = list(
-				DISEASE_SEVERITY_POSITIVE,
-				DISEASE_SEVERITY_NONTHREAT,
-				DISEASE_SEVERITY_MINOR,
-				DISEASE_SEVERITY_MEDIUM,
-				DISEASE_SEVERITY_HARMFUL,
-				DISEASE_SEVERITY_DANGEROUS,
-				DISEASE_SEVERITY_BIOHAZARD
-			)
-			if(new_threshold && new_threshold in threshold_list)
-				disease_threshold = new_threshold
+			disease_threshold = new_threshold
 			. = TRUE
 		if("set_nanite_cloud")
 			var/new_cloud = text2num(params["new_cloud"])
@@ -224,7 +225,7 @@
 			. = TRUE
 		if("set_target_nutrition")
 			var/new_nutrition = params["new_nutrition"]
-			var/nutrition_list = list(	
+			var/nutrition_list = list(
 				"Starving",
   				"Obese"
 			)
@@ -244,3 +245,14 @@
 #undef SCANGATE_WANTED
 #undef SCANGATE_SPECIES
 #undef SCANGATE_NUTRITION
+
+#undef SCANGATE_HUMAN
+#undef SCANGATE_LIZARD
+#undef SCANGATE_FELINID
+#undef SCANGATE_FLY
+#undef SCANGATE_PLASMAMAN
+#undef SCANGATE_MOTH
+#undef SCANGATE_JELLY
+#undef SCANGATE_POD
+#undef SCANGATE_GOLEM
+#undef SCANGATE_ZOMBIE
