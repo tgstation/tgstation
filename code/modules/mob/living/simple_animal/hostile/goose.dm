@@ -95,29 +95,26 @@
 	for(var/obj/item/reagent_containers/food/tasty in get_turf(src))
 		feed(tasty)
 
-///returns TRUE if the item got eaten.
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/reagent_containers/food/tasty)
 	if (stat == DEAD) // plapatin I swear to god
-		return FALSE
+		return
 	if (contents.len > GOOSE_SATIATED)
 		if(message_cooldown < world.time)
 			visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
 			message_cooldown = world.time + 5 SECONDS
-		return FALSE
+		return
 	if (tasty.foodtype & GROSS)
 		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, TRUE)
 		vomitCoefficient += 3
 		vomitTimeBonus += 2
-		return TRUE
+		return
 	if(message_cooldown < world.time)
 		visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
 		message_cooldown = world.time + 5 SECONDS
-	return FALSE
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
-	set waitfor = FALSE
 	if (stat == DEAD)
 		return
 	var/turf/T = get_turf(src)
