@@ -1,6 +1,7 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { Icon } from './Icon';
+import { toTitleCase } from 'common/string';
 
 const statusToColor = status => {
   switch (status) {
@@ -27,7 +28,7 @@ export const TitleBar = props => {
         color={statusToColor(status)}
         name="eye" />
       <div className="TitleBar__title">
-        {title}
+        {toTitleCase(title)}
       </div>
       <div className="TitleBar__dragZone"
         onMousedown={e => fancy && onDragStart(e)} />
