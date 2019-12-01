@@ -62,7 +62,7 @@
 		to_chat(H, "<span class = 'danger'>Your abilities have a use limit, before you need to rest to regain your strength.</span>")
 		to_chat(H, "<span class = 'danger'>You can't gain experience on yourself, dead humans, non humans, or braindead humans.</span>")
 		START_PROCESSING(SSfastprocess, src)
-		H.hairstyle = "Bald"
+		H.hairstyle = "Short_Hair"
 		H.update_body()
 		H.update_hair()
 
@@ -105,12 +105,14 @@
 			to_chat(owner, "<span class = 'danger'>You feel more confident in your strikes, and your body is pure.</span>")
 			flurry_of_blows_penalty = -1
 			purity_of_body = TRUE
+			owner.hairstyle = "Balding_Hair"
+			owner.update_hair()
 		if(7)
 			to_chat(owner, "<span class = 'danger'>You can perform more Stunning Fists before resting. You have figured out the wholeness of your body.</span>")
 			stunning_fist.max_uses = 7
 			wholeness_of_body.Grant(owner)
 			wholeness_of_body.martial = src
-			available_actions = list (stunning_fist) += (wholeness_of_body)
+			available_actions = list(stunning_fist) += (wholeness_of_body)
 		if(8)
 			to_chat(owner, "<span class = 'danger'>You move from one downed target to the next quickly.</span>")
 			cleave_level = 1
@@ -120,6 +122,8 @@
 		if(10)
 			to_chat(owner, "<span class = 'danger'>Your Ki helps you seek the holes in enemy armor.</span>")
 			ki_level = 75
+			owner.hairstyle = "Bald"
+			owner.update_hair()
 		if(11)
 			to_chat(owner, "<span class = 'danger'>You feel confident enough to strike more and harder, and use this against toxins in your body.</span>")
 			attacks_w_flurry = 3
@@ -134,7 +138,7 @@
 			to_chat(owner, "<span class = 'danger'>You have practiced the Quivering Palm technique enough to use it in combat.</span>")
 			quivering_palm.Grant(owner)
 			quivering_palm.martial = src
-			available_actions = list (stunning_fist) += (wholeness_of_body) += (quivering_palm)
+			available_actions = list(stunning_fist) += (wholeness_of_body) += (quivering_palm)
 		if(16)
 			to_chat(owner, "<span class = 'danger'>Your Ki has fully developed, and can be used to nullify armor.</span>")
 			ki_level = 100
