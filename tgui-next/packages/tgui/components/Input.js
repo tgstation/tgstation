@@ -1,6 +1,13 @@
-import { classes } from 'common/react';
+import { classes, isFalsy } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
+
+const toInputValue = value => {
+  if (isFalsy(value)) {
+    return '';
+  }
+  return value;
+};
 
 export class Input extends Component {
   constructor() {
@@ -50,7 +57,7 @@ export class Input extends Component {
       }
       if (e.keyCode === 27) {
         this.setEditing(false);
-        e.target.value = this.props.value;
+        e.target.value = toInputValue(this.props.value);
         e.target.blur();
         return;
       }
@@ -61,7 +68,7 @@ export class Input extends Component {
     const nextValue = this.props.value;
     const input = this.inputRef.current;
     if (input) {
-      input.value = nextValue;
+      input.value = toInputValue(nextValue);
     }
   }
 
@@ -71,7 +78,7 @@ export class Input extends Component {
     const nextValue = this.props.value;
     const input = this.inputRef.current;
     if (input && !editing && prevValue !== nextValue) {
-      input.value = nextValue;
+      input.value = toInputValue(nextValue);
     }
   }
 

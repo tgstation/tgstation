@@ -15,9 +15,8 @@ export const ChemFilterPane = props => {
       buttons={(
         <Fragment>
           <Input
-            value=""
             placeholder="Reagent"
-            width="150px"
+            width="140px"
             onInput={(e, value) => onReagentInput(value)} />
           <Button
             icon="plus"
@@ -47,8 +46,8 @@ export class ChemFilter extends Component {
   constructor() {
     super();
     this.state = {
-      leftReagentName: "",
-      rightReagentName: "",
+      leftReagentName: '',
+      rightReagentName: '',
     };
   }
 
