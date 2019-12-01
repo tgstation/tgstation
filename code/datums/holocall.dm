@@ -35,7 +35,7 @@
 	var/head_call = FALSE //calls from a head of staff autoconnect, if the recieving pad is not secure.
 
 //creates a holocall made by `caller` from `calling_pad` to `callees`
-/datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees, var/elevated_access = FALSE)
+/datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
 	call_start_time = world.time
 	user = caller
 	calling_pad.outgoing_call = src
