@@ -160,6 +160,8 @@
 			return
 	else
 		return
+	if(ismob(entering))
+		to_chat(entering, "<span class='warning'>You feel yourself pulled [dir2text(get_dir(entering, center))].</span>")
 	step_towards(entering, center)
 	cancel_register_net()
 	use_power(electricity_level * 5)
