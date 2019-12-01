@@ -107,6 +107,7 @@ const setupHttpLink = () => {
       });
       return;
     }
+    res.write('Hello');
     res.end();
   });
 

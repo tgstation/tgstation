@@ -47,4 +47,3 @@
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
 	projectile_type = /obj/projectile/bullet/a50AE
-

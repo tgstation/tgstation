@@ -16,6 +16,7 @@ $border-radius: base.$border-radius !default;
   &::after {
     position: absolute;
     display: block;
+    white-space: nowrap;
     z-index: 2;
     padding: 6px 10px;
     transform: translateX(-50%);

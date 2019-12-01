@@ -9009,7 +9009,7 @@
 	},
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/suit/suspenders,
+/obj/item/clothing/suit/toggle/suspenders,
 /obj/effect/spawner/lootdrop/costume,
 /obj/effect/turf_decal/tile/red{
 	dir = 1

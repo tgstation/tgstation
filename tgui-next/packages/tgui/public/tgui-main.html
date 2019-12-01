@@ -29,7 +29,12 @@ window.onerror = function (msg, url, line, col, error) {
   var errorStack = document.getElementById('FatalError__stack');
   if (errorRoot) {
     errorRoot.className = 'FatalError';
-    errorStack.textContent = stack;
+    if (errorStack.textContent) {
+      errorStack.textContent += '\n\n' + stack;
+    }
+    else {
+      errorStack.textContent = stack;
+    }
   }
   // Send to the backend
   location.href = 'byond://?src=' + window.__ref__

@@ -8,7 +8,8 @@ const ensureConnection = () => {
       return;
     }
     if (!socket || socket.readyState === WebSocket.CLOSED) {
-      socket = new WebSocket('ws://127.0.0.1:3000');
+      const DEV_SERVER_IP = process.env.DEV_SERVER_IP || '127.0.0.1';
+      socket = new WebSocket(`ws://${DEV_SERVER_IP}:3000`);
       socket.onopen = () => {
         // Empty the message queue
         while (queue.length !== 0) {
@@ -79,8 +80,10 @@ const sendRawMessage = msg => {
     }
     // Send message using plain HTTP request.
     else {
+      const DEV_SERVER_IP = process.env.DEV_SERVER_IP || '127.0.0.1';
       const req = new XMLHttpRequest();
-      req.open('POST', 'http://127.0.0.1:3001', true);
+      req.open('POST', `http://${DEV_SERVER_IP}:3001`);
+      req.timeout = 500;
       req.send(json);
     }
   }

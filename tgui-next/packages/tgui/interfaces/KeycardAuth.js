@@ -1,11 +1,9 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, Section } from '../components';
 
 export const KeycardAuth = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   return (
     <Section>
       <Box>
@@ -23,7 +21,7 @@ export const KeycardAuth = props => {
                 textAlign="center"
                 lineHeight="60px"
                 fluid
-                onClick={() => act(ref, 'auth_swipe')}
+                onClick={() => act('auth_swipe')}
                 content="Authorize" />
             )}
             {data.auth_required === 0 && (
@@ -32,18 +30,18 @@ export const KeycardAuth = props => {
                   icon="exclamation-triangle"
                   fluid
                   onClick={() => {
-                    return act(ref, 'red_alert');
+                    return act('red_alert');
                   }}
                   content="Red Alert" />
                 <Button
                   icon="wrench"
                   fluid
-                  onClick={() => act(ref, 'emergency_maint')}
+                  onClick={() => act('emergency_maint')}
                   content="Emergency Maintenance Access" />
                 <Button
                   icon="meteor"
                   fluid
-                  onClick={() => act(ref, 'bsa_unlock')}
+                  onClick={() => act('bsa_unlock')}
                   content="Bluespace Artillery Unlock" />
               </Fragment>
             )}

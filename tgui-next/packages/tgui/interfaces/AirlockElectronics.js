@@ -1,15 +1,9 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Tabs } from '../components';
-import { createLogger } from '../logging';
-
-const logger = createLogger('AirlockElectronics');
 
 export const AirlockElectronics = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-
+  const { act, data } = useBackend(props);
   const regions = data.regions || [];
 
   const diffMap = {
@@ -57,7 +51,7 @@ export const AirlockElectronics = props => {
             <Button
               icon={data.oneAccess ? 'unlock' : 'lock'}
               content={data.oneAccess ? 'One' : 'All'}
-              onClick={() => act(ref, 'one_access')}
+              onClick={() => act('one_access')}
             />
           </LabeledList.Item>
           <LabeledList.Item
@@ -65,12 +59,12 @@ export const AirlockElectronics = props => {
             <Button
               icon="check-double"
               content="Grant All"
-              onClick={() => act(ref, 'grant_all')}
+              onClick={() => act('grant_all')}
             />
             <Button
               icon="undo"
               content="Clear All"
-              onClick={() => act(ref, 'clear_all')}
+              onClick={() => act('clear_all')}
             />
           </LabeledList.Item>
           <LabeledList.Item
@@ -79,7 +73,7 @@ export const AirlockElectronics = props => {
               icon={data.unres_direction & 1 ? 'check-square-o' : 'square-o'}
               content="North"
               selected={data.unres_direction & 1}
-              onClick={() => act(ref, 'direc_set', {
+              onClick={() => act('direc_set', {
                 unres_direction: '1',
               })}
             />
@@ -87,7 +81,7 @@ export const AirlockElectronics = props => {
               icon={data.unres_direction & 2 ? 'check-square-o' : 'square-o'}
               content="East"
               selected={data.unres_direction & 2}
-              onClick={() => act(ref, 'direc_set', {
+              onClick={() => act('direc_set', {
                 unres_direction: '2',
               })}
             />
@@ -95,7 +89,7 @@ export const AirlockElectronics = props => {
               icon={data.unres_direction & 4 ? 'check-square-o' : 'square-o'}
               content="South"
               selected={data.unres_direction & 4}
-              onClick={() => act(ref, 'direc_set', {
+              onClick={() => act('direc_set', {
                 unres_direction: '4',
               })}
             />
@@ -103,7 +97,7 @@ export const AirlockElectronics = props => {
               icon={data.unres_direction & 8 ? 'check-square-o' : 'square-o'}
               content="West"
               selected={data.unres_direction & 8}
-              onClick={() => act(ref, 'direc_set', {
+              onClick={() => act('direc_set', {
                 unres_direction: '8',
               })}
             />
@@ -128,7 +122,7 @@ export const AirlockElectronics = props => {
                         icon={access.req ? 'check-square-o' : 'square-o'}
                         content={access.name}
                         selected={access.req}
-                        onClick={() => act(ref, 'set', {
+                        onClick={() => act('set', {
                           access: access.id,
                         })} />
                     </Box>
