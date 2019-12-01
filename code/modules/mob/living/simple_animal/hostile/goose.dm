@@ -144,6 +144,7 @@
 	playsound(currentTurf, 'sound/effects/splat.ogg', 50, TRUE)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_prestart(duration)
+	vomiting = TRUE //so we don't start vomiting twice.
 	flick("vomit_start",src)
 	addtimer(CALLBACK(src, .proc/vomit_start, duration), 13) //13 is the length of the vomit_start animation in gooseloose.dmi
 
