@@ -177,6 +177,10 @@
 		vomit() // its supposed to keep vomiting if you move
 		return
 	goosement()
+	if(prob(vomitCoefficient * 0.2))
+		INVOKE_ASYNC(vomit_prestart(vomitTimeBonus + 25))
+		vomitCoefficient = 1
+		vomitTimeBonus = 0
 
 /// A proc to make it easier for admins to make the goose playable by deadchat.
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/deadchat_plays_goose()
