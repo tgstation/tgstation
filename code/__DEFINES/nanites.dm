@@ -12,6 +12,12 @@
 #define NANITE_CLOUD_DISABLE 2
 #define NANITE_CLOUD_ENABLE	3
 
+///Nanite extra settings types: used to help uis know what type an extra setting is
+#define NESTYPE_TEXT "text"
+#define NESTYPE_NUMBER "number"
+#define NESTYPE_TYPE "type"
+#define NESTYPE_BOOLEAN "boolean"
+
 ///Nanite Extra Settings - Note that these will also be the names displayed in the UI
 #define NES_SENT_CODE "Sent Code"
 #define NES_DELAY "Delay"
@@ -29,6 +35,7 @@
 #define NES_INCLUSIVE_MODE "Inclusive Mode"
 #define NES_RACE "Race"
 #define NES_HALLUCINATION_TYPE "Hallucination Type"
+#define NES_HALLUCINATION_DETAIL "Hallucination Detail"
 #define NES_MOOD_MESSAGE "Mood Message"
 #define NES_PROGRAM_OVERWRITE "Program Overwrite"
 #define NES_CLOUD_OVERWRITE "Cloud Overwrite"
