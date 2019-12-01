@@ -87,6 +87,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/datum/embedding_behavior/embedding
 
+	var/embedded_in
+
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
 	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
@@ -149,12 +151,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(damtype == "brute")
 			hitsound = "swing_hit"
 
-	if (!embedding)
-		embedding = getEmbeddingBehavior()
-	else if (islist(embedding))
-		embedding = getEmbeddingBehavior(arglist(embedding))
-	else if (!istype(embedding, /datum/embedding_behavior))
-		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
+	if(embedding)
+		var/list/t = list("eletype" = /datum/element/embed)
+		t += embedding
+		testing(t)
+		AddElement(arglist(t))
+		/*if(islist(embedding))
+			embedding = getEmbeddingBehavior(arglist(embedding))
+		else if(!istype(embedding, /datum/embedding_behavior))
+			stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
+		*/
 
 	if(sharpness) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, 80 * toolspeed)
@@ -856,3 +862,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
+
+/obj/item/proc/is_embed_harmless()
+<<<<<<< HEAD
+	if(embedding)
+		return (embedding.pain_mult == 0 && embedding.jostle_pain_mult == 0)
+=======
+	return FALSE
+	//if(embedding)
+		//return (embedding.pain_mult == 0 && embedding.jostle_pain_mult == 0)
+>>>>>>> embeddead

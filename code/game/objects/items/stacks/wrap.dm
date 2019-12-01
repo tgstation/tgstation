@@ -130,3 +130,33 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5
+
+
+/obj/item/stack/sticky_tape
+	name = "sticky tape"
+	singular_name = "sticky tape"
+	desc = "Used for sticking things to people."
+	icon = 'icons/obj/stack_objects.dmi'
+	icon_state = "deliveryPaper"
+	var/prefix = "sticky"
+	item_flags = NOBLUDGEON
+	amount = 5
+	max_amount = 5
+	resistance_flags = FLAMMABLE
+	grind_results = list(/datum/reagent/cellulose = 5)
+
+
+/obj/item/stack/sticky_tape/afterattack(obj/item/I, mob/living/user)
+	. = ..()
+	if(I.embedding)
+		to_chat(user, "<span class='warning'>[I] is already able to stick inside someone!</span>")
+		return
+
+	user.visible_message("<span class='notice'>[user] begins wrapping [I] with [src].</span>", "<span class='notice'>You begin wrapping [I] with [src].</span>")
+
+	if(do_after(user, 30, target=I))
+		I.embedding = getEmbeddingBehavior(EMBED_HARMLESS)
+		I.AddElement(/datum/element/embed)
+
+	I.name = "[prefix] [I.name]"
+	update_icon()

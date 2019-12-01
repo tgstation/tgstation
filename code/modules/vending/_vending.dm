@@ -63,7 +63,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/purchase_message_cooldown
 	///Last mob to shop with us
 	var/last_shopper
-	var/tilted = FALSE
+
 
 	/**
 	  * List of products this machine sells
@@ -400,7 +400,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				else
 					to_chat(user, "<span class='warning'>There's nothing to restock!</span>")
 			return
-	if(compartmentLoadAccessCheck(user) && user.a_intent != "harm")
+	if(compartmentLoadAccessCheck(user))
 		if(canLoadItem(I))
 			loadingAttempt(I,user)
 			updateUsrDialog() //can't put this on the proc above because we spam it below
@@ -423,64 +423,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(loaded)
 				to_chat(user, "<span class='notice'>You insert [loaded] dishes into [src]'s compartment.</span>")
 				updateUsrDialog()
+
 	else
-		. = ..()
-		if(I.force && !tilted)
-			switch(rand(1, 100))
-				if(1 to 5)
-					freebie(user, 3)
-				if(6 to 15)
-					freebie(user, 2)
-				if(16 to 26)
-					freebie(user, 1)
-				if(81 to 100)
-					tilt(user)
-
-/obj/machinery/vending/proc/freebie(mob/fatty, freebies)
-	src.visible_message("<span class='notice'>\The [src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!</span>")
-
-	for(var/i=0, i<freebies, i++)
-		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-		for(var/datum/data/vending_product/R in shuffle(product_records))
-
-			if(R.amount <= 0) //Try to use a record that actually has something to dump.
-				continue
-			var/dump_path = R.product_path
-			if(!dump_path)
-				continue
-
-			R.amount--
-			new dump_path(get_turf(src))
-			break
-
-/obj/machinery/vending/proc/tilt(mob/fatty)
-	src.visible_message("<span class='danger'>\The [src] tips over!</span>")
-	tilted = TRUE
-	anchored = FALSE
-
-	for(var/mob/living/L in get_turf(fatty))
-		L.Paralyze(60)
-		L.emote("scream")
-		playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
-		playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
-		L.visible_message("<span class='danger'>[L] is crushed by \the [src]!</span>", \
-			"<span class='userdanger'>You are crushed by \the [src]!</span>")
-		L.apply_damage(90, forced=TRUE, spread_damage=TRUE)
-
-	var/matrix/M = matrix()
-	M.Turn(pick(90, 270))
-	src.transform = M
-
-	src.throw_at(get_turf(fatty), 2, 2, spin=FALSE)
-
-/obj/machinery/vending/proc/untilt(mob/user)
-	user.visible_message("<span class='notice'>[user] rights /the [src].", \
-		"<span class='notice'>You right \the [src].")
-	tilted = FALSE
-
-	var/matrix/M = matrix()
-	M.Turn(0)
-	src.transform = M
+		..()
 
 /obj/machinery/vending/proc/loadingAttempt(obj/item/I, mob/user)
 	. = TRUE
@@ -555,13 +500,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(seconds_electrified && !(stat & NOPOWER))
 		if(shock(user, 100))
 			return
-
-	if(tilted)
-		to_chat(user, "<span class='notice'>You begin righting \the [src].")
-		if(do_after(user, 50, target=src))
-			untilt(user)
-		return
-
 	return ..()
 
 /obj/machinery/vending/ui_interact(mob/user)
