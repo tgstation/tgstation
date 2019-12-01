@@ -514,6 +514,7 @@ Props:
 
 - See inherited props: [Box](#box)
 - `value: string` - Value of an input.
+- `placeholder: string` - Text placed into Input box when value is otherwise nothing. Clears automatically when focused.
 - `fluid: boolean` - Fill all available horizontal space.
 - `onChange: (e, value) => void` - An event, which fires when you commit
 the text by either unfocusing the input box, or by pressing the Enter key.

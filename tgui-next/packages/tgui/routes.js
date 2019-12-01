@@ -22,6 +22,7 @@ import { ChemFilter } from './interfaces/ChemFilter';
 import { ChemHeater } from './interfaces/ChemHeater';
 import { ChemMaster } from './interfaces/ChemMaster';
 import { ChemPress } from './interfaces/ChemPress';
+import { ChemReactionChamber } from './interfaces/ChemReactionChamber';
 import { ChemSplitter } from './interfaces/ChemSplitter';
 import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
 import { CodexGigas } from './interfaces/CodexGigas';
@@ -172,6 +173,10 @@ const ROUTES = {
   chem_press: {
     component: () => ChemPress,
     scrollable: false,
+  },
+  reaction_chamber: {
+    component: () => ChemReactionChamber,
+    scrollable: true,
   },
   chem_splitter: {
     component: () => ChemSplitter,
