@@ -65,7 +65,7 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/secure
 	name = "secure holopad"
-	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incomming calls."
+	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
 	secure = TRUE
 
 obj/machinery/holopad/secure/Initialize()
