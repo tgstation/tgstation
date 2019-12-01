@@ -66,16 +66,20 @@
 	. = ..()
 	goosevomit = new
 	goosevomit.Grant(src)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/goosement)
 	// 5% chance every round to have anarchy mode deadchat control on birdboat.
 	if(prob(5))
 		desc = "[initial(desc)] It's waddling more than usual. It seems to be possessed."
 		deadchat_plays_goose()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Destroy()
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 	QDEL_NULL(goosevomit)
 	return ..()
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/Life()
+	. = ..()
+	if(stat == DEAD)
+		return
+	goosement()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/examine(user)
 	. = ..()
@@ -86,26 +90,34 @@
 	if(istype(O, /obj/item/reagent_containers/food))
 		feed(O)
 
+///iterates through all foodstuff on the current turf and tries to eat it.
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/goosement()
+	for(var/obj/item/reagent_containers/food/tasty in get_turf(src))
+		feed(tasty)
+
+///returns TRUE if the item got eaten.
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/reagent_containers/food/tasty)
 	if (stat == DEAD) // plapatin I swear to god
-		return
+		return FALSE
 	if (contents.len > GOOSE_SATIATED)
 		if(message_cooldown < world.time)
 			visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
 			message_cooldown = world.time + 5 SECONDS
-		return
+		return FALSE
 	if (tasty.foodtype & GROSS)
 		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, TRUE)
 		vomitCoefficient += 3
 		vomitTimeBonus += 2
-	else
-		if(message_cooldown < world.time)
-			visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
-			message_cooldown = world.time + 5 SECONDS
+		return TRUE
+	if(message_cooldown < world.time)
+		visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
+		message_cooldown = world.time + 5 SECONDS
+	return FALSE
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
+	set waitfor = FALSE
 	if (stat == DEAD)
 		return
 	var/turf/T = get_turf(src)
@@ -157,22 +169,14 @@
 	vomiting = FALSE
 	icon_state = initial(icon_state)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/goosement(atom/movable/AM, OldLoc, Dir, Forced)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/Moved(atom/movable/AM, OldLoc, Dir, Forced)
+	. = ..()
 	if(stat == DEAD)
 		return
 	if(vomiting)
 		vomit() // its supposed to keep vomiting if you move
 		return
-	var/turf/currentTurf = get_turf(src)
-	while (currentTurf == get_turf(src))
-		var/obj/item/reagent_containers/food/tasty = locate() in currentTurf
-		if (tasty)
-			feed(tasty)
-		stoplag(2)
-	if(prob(vomitCoefficient * 0.2))
-		vomit_prestart(vomitTimeBonus + 25)
-		vomitCoefficient = 1
-		vomitTimeBonus = 0
+	goosement()
 
 /// A proc to make it easier for admins to make the goose playable by deadchat.
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/deadchat_plays_goose()
