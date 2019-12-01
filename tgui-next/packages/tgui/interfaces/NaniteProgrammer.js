@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, Section, NoticeBox, Grid, Input, Dropdown } from '../components';
 import { Fragment } from 'inferno';
+import { useBackend } from '../backend';
+import { Button, Dropdown, Grid, Input, LabeledList, NoticeBox, NumberInput, Section } from '../components';
 
 export const NaniteCodes = props => {
   const { act, data } = useBackend(props);
@@ -8,7 +8,7 @@ export const NaniteCodes = props => {
     <Section
       title="Codes"
       level={3}
-      mr={1} >
+      mr={1}>
       <LabeledList>
         <LabeledList.Item label="Activation">
           <NumberInput
@@ -68,7 +68,7 @@ export const NaniteDelays = props => {
     <Section
       title="Delays"
       level={3}
-      ml={1} >
+      ml={1}>
       <LabeledList>
         <LabeledList.Item label="Restart Timer">
           <NumberInput
@@ -105,9 +105,7 @@ export const NaniteDelays = props => {
                   delay: value,
                 })} />
             </LabeledList.Item>
-            <LabeledList.Item
-              label="Trigger Delay"
-            >
+            <LabeledList.Item label="Trigger Delay">
               <NumberInput
                 value={data.timer_trigger_delay}
                 unit="s"
@@ -215,8 +213,8 @@ export const NaniteExtraBoolean = props => {
   return (
     <Button.Checkbox
       content={value ? true_text : false_text}
-      selected={value}
-      onClick={val => act('set_extra_setting', {
+      checked={value}
+      onClick={() => act('set_extra_setting', {
         target_setting: name,
       })} />
   );
@@ -240,9 +238,7 @@ export const NaniteProgrammer = props => {
 
   if (!has_disk) {
     return (
-      <NoticeBox
-        mt={15}
-        textAlign="center" >
+      <NoticeBox textAlign="center">
         Insert a nanite program disk
       </NoticeBox>
     );
@@ -269,12 +265,12 @@ export const NaniteProgrammer = props => {
           icon="eject"
           content="Eject"
           onClick={() => act('eject')} />
-      )} >
+      )}>
       <Section
         title="Info"
-        level={2} >
+        level={2}>
         <Grid>
-          <Grid.Column mr={1}>
+          <Grid.Column>
             {desc}
           </Grid.Column>
           <Grid.Column size={0.7}>
@@ -307,7 +303,7 @@ export const NaniteProgrammer = props => {
             color="bad"
             bold
             onClick={() => act('toggle_active')} />
-        )} >
+        )}>
         <Grid>
           <Grid.Column>
             <NaniteCodes state={props.state} />
@@ -319,7 +315,7 @@ export const NaniteProgrammer = props => {
         {!!has_extra_settings && (
           <Section
             title="Special"
-            level={3} >
+            level={3}>
             <LabeledList>
               {extra_settings.map(setting => (
                 <NaniteExtraEntry key={setting.name} act={act} extra_setting={setting} />

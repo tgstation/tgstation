@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NumberInput, Section, NoticeBox, Grid, Collapsible } from '../components';
+import { Box, Button, Collapsible, Grid, LabeledList, NoticeBox, NumberInput, Section } from '../components';
 
 export const NaniteDiskBox = props => {
   const { state } = props;
@@ -63,11 +63,10 @@ export const NaniteInfoBox = props => {
         <Box
           inline
           bold
-          color={activated ? 'good' : 'bad'} >
+          color={activated ? 'good' : 'bad'}>
           {activated ? 'Activated' : 'Deactivated'}
         </Box>
-      )}
-    >
+      )}>
       <Grid>
         <Grid.Column mr={1}>
           {desc}
@@ -95,7 +94,7 @@ export const NaniteInfoBox = props => {
           <Section
             title="Codes"
             level={3}
-            mr={1} >
+            mr={1}>
             <LabeledList>
               <LabeledList.Item label="Activation">
                 {activation_code}
@@ -118,7 +117,7 @@ export const NaniteInfoBox = props => {
           <Section
             title="Delays"
             level={3}
-            mr={1} >
+            mr={1}>
             <LabeledList>
               <LabeledList.Item label="Restart">
                 {timer_restart} s
@@ -142,7 +141,7 @@ export const NaniteInfoBox = props => {
       </Grid>
       <Section
         title="Extra Settings"
-        level={3} >
+        level={3}>
         <LabeledList>
           {extra_settings.map(setting => (
             <LabeledList.Item key={setting.name} label={setting.name}>
@@ -205,7 +204,7 @@ export const NaniteCloudBackupDetails = props => {
             color="good"
             onClick={() => act('upload_program')} />
         )
-      )} >
+      )}>
       {cloud_programs.map(program => {
         const rules = program.rules || [];
         return (
@@ -219,7 +218,7 @@ export const NaniteCloudBackupDetails = props => {
                 onClick={() => act('remove_program', {
                   program_id: program.id,
                 })} />
-            )} >
+            )}>
             <Section>
               <NaniteInfoBox program={program} />
               {!!can_rule && (
@@ -235,7 +234,7 @@ export const NaniteCloudBackupDetails = props => {
                       onClick={() => act('add_rule', {
                         program_id: program.id,
                       })} />
-                  )} >
+                  )}>
                   {program.has_rules ? (
                     rules.map(rule => (
                       <Fragment key={rule.display}>
@@ -283,7 +282,7 @@ export const NaniteCloudControl = props => {
             content="Eject"
             disabled={!has_disk}
             onClick={() => act('eject')} />
-        )} >
+        )}>
         <NaniteDiskBox state={state} />
       </Section>
       <Section
@@ -313,11 +312,10 @@ export const NaniteCloudControl = props => {
                 onClick={() => act('create_backup')} />
             </Fragment>
           )
-        )}
-      >
+        )}>
         {!data.current_view ? (
           <NaniteCloudBackupList state={state} />
-        ): (
+        ) : (
           <NaniteCloudBackupDetails state={state} />
         )}
       </Section>

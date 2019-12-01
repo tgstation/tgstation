@@ -1,7 +1,7 @@
+import { map } from 'common/collections';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, NoticeBox, Tabs } from '../components';
-import { map } from 'common/collections';
+import { Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
 
 export const NaniteProgramHub = props => {
   const { act, data } = useBackend(props);
@@ -27,8 +27,7 @@ export const NaniteProgramHub = props => {
               content="Delete Program"
               onClick={() => act('clear')} />
           </Fragment>
-        )}
-      >
+        )}>
         {has_disk ? (
           has_program ? (
             <LabeledList>
@@ -63,17 +62,17 @@ export const NaniteProgramHub = props => {
               content="Sync Research"
               onClick={() => act('refresh')} />
           </Fragment>
-        )} >
+        )}>
         {programs !== null ? (
           <Tabs vertical>
             {map((cat_contents, category) => {
               const progs = cat_contents || [];
               // backend was sending stupid data that would have been annoying to fix
-              const tabLabel = category.substring(0, (category.length - 8));
+              const tabLabel = category.substring(0, category.length - 8);
               return (
                 <Tabs.Tab
                   key={category}
-                  label={tabLabel} >
+                  label={tabLabel}>
                   {detail_view ? (
                     progs.map(program => (
                       <Section
@@ -88,7 +87,7 @@ export const NaniteProgramHub = props => {
                             onClick={() => act('download', {
                               program_id: program.id,
                             })} />
-                        )} >
+                        )}>
                         {program.desc}
                       </Section>
                     ))
