@@ -4,6 +4,10 @@
 // tl;dr: it's magnets lol
 // This was created for firing ranges, but I suppose this could have other applications - Doohl
 
+#define MAX_ELECTRICITY_LEVEL 12
+#define MAX_MAGNETIC_LEVEL 4
+#define MAX_DIST 20
+
 /obj/machinery/magnetic_module
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "floor_magnet-f"
@@ -20,12 +24,11 @@
 	var/code = 0 // frequency code, they should be different unless you have a group of magnets working together or something
 	var/turf/center // the center of magnetic attraction
 	var/on = FALSE
-	var/magneting = FALSE
 
 	// x, y modifiers to the center turf; (0, 0) is centered on the magnet, whereas (1, -1) is one tile right, one tile down
 	var/center_x = 0
 	var/center_y = 0
-	var/max_dist = 20 // absolute value of center_x,y cannot exceed this integer
+	var/cooldown_timer
 
 /obj/machinery/magnetic_module/Initialize()
 	..()
@@ -36,7 +39,8 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/magnetic_module/LateInitialize()
-	magnetic_process()
+	if(on)
+		spread_register_net()
 
 /obj/machinery/magnetic_module/Destroy()
 	SSradio.remove_object(src, freq)
@@ -73,86 +77,59 @@
 
 
 /obj/machinery/magnetic_module/proc/Cmd(command, modifier)
-
+	cancel_register_net()
 	if(command)
 		switch(command)
 			if("set-electriclevel")
 				if(modifier)
-					electricity_level = modifier
+					electricity_level = CLAMP(modifier, 1, MAX_ELECTRICITY_LEVEL)
 			if("set-magneticfield")
 				if(modifier)
-					magnetic_field = modifier
+					magnetic_field = CLAMP(modifier, 1, MAX_MAGNETIC_LEVEL)
 
 			if("add-elec")
-				electricity_level++
-				if(electricity_level > 12)
-					electricity_level = 12
+				electricity_level = min(electricity_level+1, MAX_ELECTRICITY_LEVEL)
 			if("sub-elec")
-				electricity_level--
-				if(electricity_level <= 0)
-					electricity_level = 1
+				electricity_level = max(electricity_level-1, 1)
 			if("add-mag")
-				magnetic_field++
-				if(magnetic_field > 4)
-					magnetic_field = 4
+				magnetic_field = min(magnetic_field+1, MAX_MAGNETIC_LEVEL)
 			if("sub-mag")
-				magnetic_field--
-				if(magnetic_field <= 0)
-					magnetic_field = 1
+				magnetic_field = max(magnetic_field-1, 1)
 
 			if("set-x")
 				if(modifier)
-					center_x = modifier
+					center_x = CLAMP(modifier, -MAX_DIST, MAX_DIST)
 			if("set-y")
 				if(modifier)
-					center_y = modifier
+					center_y = CLAMP(modifier, -MAX_DIST, MAX_DIST)
 
 			if("N") // NORTH
-				center_y++
+				center_y = min(center_y+1, MAX_DIST)
 			if("S")	// SOUTH
-				center_y--
+				center_y = max(center_y-1, -MAX_DIST)
 			if("E") // EAST
-				center_x++
+				center_x = min(center_x+1, MAX_DIST)
 			if("W") // WEST
-				center_x--
+				center_x = max(center_x-1, -MAX_DIST)
 			if("C") // CENTER
 				center_x = 0
 				center_y = 0
 			if("R") // RANDOM
-				center_x = rand(-max_dist, max_dist)
-				center_y = rand(-max_dist, max_dist)
+				center_x = rand(-MAX_DIST, MAX_DIST)
+				center_y = rand(-MAX_DIST, MAX_DIST)
 
 			if("set-code")
 				if(modifier)
 					code = modifier
 			if("toggle-power")
 				on = !on
-
-				if(on)
-					INVOKE_ASYNC(src, .proc/magnetic_process)
-
-
+	center = locate(x+center_x, y+center_y, z)
+	spread_register_net()
 
 /obj/machinery/magnetic_module/process()
 	if(stat & NOPOWER)
 		on = FALSE
-
-	// Sanity checks:
-	if(electricity_level <= 0)
-		electricity_level = 1
-	if(magnetic_field <= 0)
-		magnetic_field = 1
-
-
-	// Limitations:
-	if(abs(center_x) > max_dist)
-		center_x = max_dist
-	if(abs(center_y) > max_dist)
-		center_y = max_dist
-	if(magnetic_field > 4)
-		magnetic_field = 4
-	if(electricity_level > 12)
-		electricity_level = 12
+		cancel_register_net()
 
 	// Update power usage:
 	if(on)
@@ -163,30 +140,28 @@
 
 	update_icon()
 
-
-/obj/machinery/magnetic_module/proc/magnetic_process() // proc that actually does the magneting
-	if(magneting)
+/obj/machinery/magnetic_module/proc/spread_register_net()
+	if(!on || magnetic_field < 1 || timeleft(cooldown_timer))
 		return
-	while(on)
+	cooldown_timer = null
+	for(var/turf/T in orange(magnetic_field, center))
+		RegisterSignal(T, COMSIG_ATOM_ENTERED, .proc/magnetic_pull)
 
-		magneting = TRUE
-		center = locate(x+center_x, y+center_y, z)
-		if(center)
-			for(var/obj/M in orange(magnetic_field, center))
-				if(!M.anchored && (M.flags_1 & CONDUCT_1))
-					step_towards(M, center)
+/obj/machinery/magnetic_module/proc/cancel_register_net()
+	for(var/turf/T in orange(magnetic_field, center))
+		UnregisterSignal(T, COMSIG_ATOM_ENTERED)
 
-			for(var/mob/living/silicon/S in orange(magnetic_field, center))
-				if(isAI(S))
-					continue
-				step_towards(S, center)
-
-		use_power(electricity_level * 5)
-		sleep(13 - electricity_level)
-
-	magneting = FALSE
-
-
+/obj/machinery/magnetic_module/proc/magnetic_pull(datum/source, atom/movable/entering, /atom/A)
+	if(isobj(entering))
+		if(entering.anchored || !(entering.flags_1 & CONDUCT_1))
+			return
+	else if(issilicon(entering))
+		if(isAI(entering))
+			return
+	step_towards(entering, center)
+	cancel_register_net()
+	use_power(electricity_level * 5)
+	cooldown_timer = addtimer(CALLBACK(src, .proc/spread_register_net), MAX_ELECTRICITY_LEVEL-electricity_level+1, TIMER_STOPPABLE)
 
 
 /obj/machinery/magnetic_controller
@@ -297,13 +272,9 @@
 	if(href_list["operation"])
 		switch(href_list["operation"])
 			if("plusspeed")
-				speed ++
-				if(speed > 10)
-					speed = 10
+				speed = min(speed+1, 10)
 			if("minusspeed")
-				speed --
-				if(speed <= 0)
-					speed = 1
+				speed = max(speed-1, 1)
 			if("setpath")
 				var/newpath = copytext(sanitize(input(usr, "Please define a new path!",,path) as text|null),1,MAX_MESSAGE_LEN)
 				if(newpath && newpath != "")
@@ -376,3 +347,7 @@
 			rpath += copytext(path, i, i+1) // else, add to list
 
 		// there doesn't HAVE to be separators but it makes paths syntatically visible
+
+#undef MAX_ELECTRICITY_LEVEL
+#undef MAX_MAGNETIC_LEVEL
+#undef MAX_DIST
