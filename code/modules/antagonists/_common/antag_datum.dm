@@ -262,4 +262,3 @@ datum/antagonist/custom/create_team(datum/team/team)
 	else
 		return
 	..()
-
