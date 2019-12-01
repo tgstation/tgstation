@@ -2,6 +2,7 @@
 								//uncommented, but not visible in the release version)
 
 //#define DATUMVAR_DEBUGGING_MODE	//Enables the ability to cache datum vars and retrieve later for debugging which vars changed.
+#define LOWMEMORYMODE
 
 // Comment this out if you are debugging problems that might be obscured by custom error handling in world/Error
 #ifdef DEBUG

@@ -53,11 +53,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects(old_body)
 	apply_innate_effects(new_body)
 
-//This handles the application of antag huds/special abilities
+///This handles the application of antag huds/special abilities
 /datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
 	return
 
-//This handles the removal of antag huds/special abilities
+///This handles the removal of antag huds/special abilities
 /datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
 	return
 
@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(owner && owner.current)
 		if(!silent)
 			greet()
-		apply_innate_effects()
+		apply_innate_effects(owner.current)
 		give_antag_moodies()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		owner.current.key = C.key
 
 /datum/antagonist/proc/on_removal()
-	remove_innate_effects()
+	remove_innate_effects(owner.current)
 	clear_antag_moodies()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
@@ -262,3 +262,4 @@ datum/antagonist/custom/create_team(datum/team/team)
 	else
 		return
 	..()
+
