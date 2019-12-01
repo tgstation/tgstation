@@ -282,12 +282,12 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/close_sound = 'sound/machines/crate_close.ogg'
 	var/max_mob_size = MOB_SIZE_HUMAN
 	var/locked = FALSE
-	var/datum/action/innate/mimic/lock/L
+	var/datum/action/innate/mimic/lock/lock
 	
 /mob/living/simple_animal/hostile/mimic/xenobio/Initialize()
 	. = ..()
-	L = new
-	L.Grant(src)
+	lock = new
+	lock.Grant(src)
 	
 /mob/living/simple_animal/hostile/mimic/xenobio/AttackingTarget()
 	if(src == target)

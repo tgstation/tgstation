@@ -48,7 +48,7 @@
 	
 /mob/living/simple_animal/hostile/bear/Life()
 	. = ..()
-	if(!rideable && src.mind)
+	if(!rideable && mind)
 		can_buckle = TRUE
 		buckle_lying = FALSE
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)

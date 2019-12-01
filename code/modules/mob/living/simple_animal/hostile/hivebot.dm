@@ -66,7 +66,7 @@
 		
 /mob/living/simple_animal/hostile/hivebot/death(gibbed)
 	do_sparks(3, TRUE, src)
-	..(1)
+	..(TRUE)
 
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "hivebot"
@@ -74,7 +74,7 @@
 	icon_state = "ranged"
 	icon_living = "ranged"
 	icon_dead = "ranged"
-	ranged = 1
+	ranged = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
 
@@ -82,7 +82,7 @@
 	icon_state = "ranged"
 	icon_living = "ranged"
 	icon_dead = "ranged"
-	ranged = 1
+	ranged = TRUE
 	rapid = 3
 	retreat_distance = 5
 	minimum_distance = 5
@@ -95,7 +95,7 @@
 	desc = "A robot, this one is armed and looks tough!"
 	health = 80
 	maxHealth = 80
-	ranged = 1
+	ranged = TRUE
 	
 /mob/living/simple_animal/hostile/hivebot/mechanic
 	name = "hivebot mechanic"
@@ -105,15 +105,15 @@
 	desc = "A robot built for base upkeep, intended for use inside hivebot colonies."
 	health = 60
 	maxHealth = 60
-	ranged = 1
+	ranged = TRUE
 	rapid = 3
 	gold_core_spawnable = HOSTILE_SPAWN
-	var/datum/action/innate/hivebot/foamwall/F
+	var/datum/action/innate/hivebot/foamwall/foam
 	
 /mob/living/simple_animal/hostile/hivebot/mechanic/Initialize()
 	. = ..()
-	F = new
-	F.Grant(src)
+	foam = new
+	foam.Grant(src)
 	
 /mob/living/simple_animal/hostile/hivebot/mechanic/AttackingTarget()
 	if(istype(target, /obj/machinery))
@@ -151,12 +151,12 @@
 	var/mob/living/simple_animal/hostile/hivebot/H = owner
 	var/turf/T = get_turf(H)
 	if(T.density)
-		to_chat(H, "<span class='warning'>There's something already on this tile!</span>")
+		to_chat(H, "<span class='warning'>There's already something on this tile!</span>")
 		return
 	to_chat(H, "<span class='warning'>You begin to create a foam wall at your position...</span>")
 	if(do_after(H, 50, target = H))
 		for(var/obj/structure/foamedmetal/FM in T.contents)
-			to_chat(H, "<span class='warning'>There's a foam wall already on this tile!</span>")
+			to_chat(H, "<span class='warning'>There's already a foam wall on this tile!</span>")
 			return
 		new /obj/structure/foamedmetal(H.loc)
 		playsound(get_turf(H), 'sound/effects/extinguish.ogg', 50, TRUE, -1)

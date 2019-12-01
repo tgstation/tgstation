@@ -19,14 +19,14 @@
 	minbodytemp = 0
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/phaser = TRUE
-	var/datum/action/innate/creature/teleport/T
+	var/datum/action/innate/creature/teleport/teleport
 	var/is_phased = FALSE
 	
 /mob/living/simple_animal/hostile/netherworld/Initialize()
 	. = ..()
 	if(phaser)
-		T = new
-		T.Grant(src)
+		teleport = new
+		teleport.Grant(src)
 	
 /datum/action/innate/creature
 	background_icon_state = "bg_default"
