@@ -1,12 +1,10 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Box, Button, LabeledList, NumberInput, Section, NoticeBox, Grid, Input, Collapsible } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, Section, NoticeBox, Grid, Input, Collapsible } from '../components';
 import { map } from 'common/collections';
 
 export const PandemicBeakerDisplay = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
 
   const {
     has_beaker,
@@ -27,20 +25,17 @@ export const PandemicBeakerDisplay = props => {
             content="Empty and Eject"
             color="bad"
             disabled={cant_empty}
-            onClick={() => act(ref, "empty_eject_beaker")}
-          />
+            onClick={() => act('empty_eject_beaker')} />
           <Button
             icon="trash"
             content="Empty"
             disabled={cant_empty}
-            onClick={() => act(ref, "empty_beaker")}
-          />
+            onClick={() => act('empty_beaker')} />
           <Button
             icon="eject"
             content="Eject"
             disabled={!has_beaker}
-            onClick={() => act(ref, "eject_beaker")}
-          />
+            onClick={() => act('eject_beaker')} />
         </Fragment>
       )}
     >
@@ -49,10 +44,10 @@ export const PandemicBeakerDisplay = props => {
           has_blood ? (
             <LabeledList>
               <LabeledList.Item label="Blood DNA">
-                {(blood && blood.dna) || "Unknown"}
+                {(blood && blood.dna) || 'Unknown'}
               </LabeledList.Item>
               <LabeledList.Item label="Blood Type">
-                {(blood && blood.type) || "Unknown"}
+                {(blood && blood.type) || 'Unknown'}
               </LabeledList.Item>
             </LabeledList>
           ) : (
@@ -75,9 +70,7 @@ export const PandemicBeakerDisplay = props => {
 };
 
 export const PandemicDiseaseDisplay = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
 
   const {
     is_ready,
@@ -94,8 +87,10 @@ export const PandemicDiseaseDisplay = props => {
           title={!virus.is_adv && virus.can_rename ? (
             <Input
               value={virus.name}
-              onChange={(e, value) => act(ref, "rename_disease", {index: virus.index, name: value})}
-            />
+              onChange={(e, value) => act('rename_disease', {
+                index: virus.index,
+                name: value,
+              })} />
           ) : (
             virus.name
           )}
@@ -104,8 +99,9 @@ export const PandemicDiseaseDisplay = props => {
               icon="flask"
               content="Create culture bottle"
               disabled={!is_ready}
-              onClick={() => act(ref, "create_culture_bottle", {index: virus.index})}
-            />
+              onClick={() => act('create_culture_bottle', {
+                index: virus.index,
+              })} />
           )}
         >
           <Grid>
@@ -130,8 +126,7 @@ export const PandemicDiseaseDisplay = props => {
             <Fragment>
               <Section
                 title="Statistics"
-                level={2}
-              >
+                level={2} >
                 <Grid>
                   <Grid.Column>
                     <LabeledList>
@@ -157,13 +152,11 @@ export const PandemicDiseaseDisplay = props => {
               </Section>
               <Section
                 title="Symptoms"
-                level={2}
-              >
+                level={2} >
                 {symptoms.map(symptom => (
                   <Collapsible
                     key={symptom.name}
-                    title={symptom.name}
-                  >
+                    title={symptom.name} >
                     <Section>
                       <PandemicSymptomDisplay symptom={symptom} />
                     </Section>
@@ -200,8 +193,7 @@ export const PandemicSymptomDisplay = props => {
       buttons={!!neutered && (
         <Box
           bold
-          color="bad"
-        >
+          color="bad" >
           Neutered
         </Box>
       )}
@@ -233,15 +225,13 @@ export const PandemicSymptomDisplay = props => {
       {thresholds !== {} && (
         <Section
           title="Thresholds"
-          level={3}
-        >
+          level={3} >
           <LabeledList>
             {map((desc, threshold) => {
               return (
                 <LabeledList.Item
                   key={threshold}
-                  label={threshold}
-                >
+                  label={threshold} >
                   {desc}
                 </LabeledList.Item>
               );
@@ -255,9 +245,7 @@ export const PandemicSymptomDisplay = props => {
 };
 
 export const PandemicAntibodyDisplay = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
 
   const resistances = data.resistances || [];
 
@@ -268,14 +256,14 @@ export const PandemicAntibodyDisplay = props => {
           {resistances.map(resistance => (
             <LabeledList.Item
               key={resistance.name}
-              label={resistance.name}
-            >
+              label={resistance.name} >
               <Button
                 icon="eye-dropper"
                 content="Create vaccine bottle"
                 disabled={!data.is_ready}
-                onClick={() => act(ref, "create_vaccine_bottle", {index: resistance.id})}
-              />
+                onClick={() => act('create_vaccine_bottle', {
+                  index: resistance.id,
+                })} />
             </LabeledList.Item>
           ))}
         </LabeledList>
@@ -283,8 +271,7 @@ export const PandemicAntibodyDisplay = props => {
         <Box
           bold
           color="bad"
-          mt={1}
-        >
+          mt={1} >
           No antibodies detected.
         </Box>
       )}
@@ -293,16 +280,15 @@ export const PandemicAntibodyDisplay = props => {
 };
 
 export const Pandemic = props => {
-  const { state } = props;
-  const { data } = state;
+  const { data } = useBackend(props);
 
   return (
     <Fragment>
-      <PandemicBeakerDisplay state={state} />
+      <PandemicBeakerDisplay state={props.state} />
       {!!data.has_blood && (
         <Fragment>
-          <PandemicDiseaseDisplay state={state} />
-          <PandemicAntibodyDisplay state={state} />
+          <PandemicDiseaseDisplay state={props.state} />
+          <PandemicAntibodyDisplay state={props.state} />
         </Fragment>
       )}
     </Fragment>
