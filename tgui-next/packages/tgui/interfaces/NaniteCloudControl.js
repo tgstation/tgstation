@@ -1,5 +1,5 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NumberInput, Section, NoticeBox, Grid, Collapsible } from '../components';
 
 export const NaniteDiskBox = props => {
@@ -63,9 +63,8 @@ export const NaniteInfoBox = props => {
         <Box
           inline
           bold
-          color={activated ? "good" : "bad"}
-        >
-          {activated ? "Activated" : "Deactivated"}
+          color={activated ? 'good' : 'bad'} >
+          {activated ? 'Activated' : 'Deactivated'}
         </Box>
       )}
     >
@@ -96,8 +95,7 @@ export const NaniteInfoBox = props => {
           <Section
             title="Codes"
             level={3}
-            mr={1}
-          >
+            mr={1} >
             <LabeledList>
               <LabeledList.Item label="Activation">
                 {activation_code}
@@ -120,8 +118,7 @@ export const NaniteInfoBox = props => {
           <Section
             title="Delays"
             level={3}
-            mr={1}
-          >
+            mr={1} >
             <LabeledList>
               <LabeledList.Item label="Restart">
                 {timer_restart} s
@@ -144,9 +141,8 @@ export const NaniteInfoBox = props => {
         </Grid.Column>
       </Grid>
       <Section
-        title="Extra"
-        level={3}
-      >
+        title="Extra Settings"
+        level={3} >
         <LabeledList>
           {extra_settings.map(setting => (
             <LabeledList.Item key={setting.name} label={setting.name}>
@@ -160,9 +156,7 @@ export const NaniteInfoBox = props => {
 };
 
 export const NaniteCloudBackupList = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const cloud_backups = data.cloud_backups || [];
   return (
     cloud_backups.map(backup => (
@@ -171,21 +165,18 @@ export const NaniteCloudBackupList = props => {
         key={backup.cloud_id}
         content={"Backup #" + backup.cloud_id}
         textAlign="center"
-        onClick={() => act(ref, "set_view", {view: backup.cloud_id})}
-      />
+        onClick={() => act('set_view', {
+          view: backup.cloud_id,
+        })} />
     ))
   );
 };
 
 export const NaniteCloudBackupDetails = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
-    has_disk,
     current_view,
     disk,
-    new_backup_id,
     has_program,
     cloud_backup,
   } = data;
@@ -212,11 +203,9 @@ export const NaniteCloudBackupDetails = props => {
             icon="upload"
             content="Upload From Disk"
             color="good"
-            onClick={() => act(ref, "upload_program")}
-          />
+            onClick={() => act('upload_program')} />
         )
-      )}
-    >
+      )} >
       {cloud_programs.map(program => {
         const rules = program.rules || [];
         return (
@@ -227,10 +216,10 @@ export const NaniteCloudBackupDetails = props => {
               <Button
                 icon="minus-circle"
                 color="bad"
-                onClick={() => act(ref, "remove_program", {program_id: program.id})}
-              />
-            )}
-          >
+                onClick={() => act('remove_program', {
+                  program_id: program.id,
+                })} />
+            )} >
             <Section>
               <NaniteInfoBox program={program} />
               {!!can_rule && (
@@ -241,26 +230,28 @@ export const NaniteCloudBackupDetails = props => {
                   buttons={(
                     <Button
                       icon="plus"
-                      content="Add Rule from Dsik"
+                      content="Add Rule from Disk"
                       color="good"
-                      onClick={() => act(ref, "add_rule", {program_id: program.id})}
-                    />
-                  )}
-                >
+                      onClick={() => act('add_rule', {
+                        program_id: program.id,
+                      })} />
+                  )} >
                   {program.has_rules ? (
                     rules.map(rule => (
                       <Fragment key={rule.display}>
                         <Button
                           icon="minus-circle"
                           color="bad"
-                          onClick={() => act(ref, "remove_rule", {program_id: program.id, rule_id: rule.id})}
-                        />
+                          onClick={() => act('remove_rule', {
+                            program_id: program.id,
+                            rule_id: rule.id,
+                          })} />
                         {rule.display}
                       </Fragment>
                     ))
                   ) : (
                     <Box color="bad">
-                    No Active Rules
+                      No Active Rules
                     </Box>
                   )}
                 </Section>
@@ -275,8 +266,7 @@ export const NaniteCloudBackupDetails = props => {
 
 export const NaniteCloudControl = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     has_disk,
     current_view,
@@ -292,10 +282,8 @@ export const NaniteCloudControl = props => {
             icon="eject"
             content="Eject"
             disabled={!has_disk}
-            onClick={() => act(ref, "eject")}
-          />
-        )}
-      >
+            onClick={() => act('eject')} />
+        )} >
         <NaniteDiskBox state={state} />
       </Section>
       <Section
@@ -305,8 +293,9 @@ export const NaniteCloudControl = props => {
             <Button
               icon="arrow-left"
               content="Return"
-              onClick={() => act(ref, "set_view", {view: 0})}
-            />
+              onClick={() => act('set_view', {
+                view: 0,
+              })} />
           ) : (
             <Fragment>
               {"New Backup: "}
@@ -316,12 +305,12 @@ export const NaniteCloudControl = props => {
                 maxValue={100}
                 stepPixelSize={4}
                 width="39px"
-                onChange={(e, value) => act(ref, "update_new_backup_value", {value: value})}
-              />
+                onChange={(e, value) => act('update_new_backup_value', {
+                  value: value,
+                })} />
               <Button
                 icon="plus"
-                onClick={() => act(ref, "create_backup")}
-              />
+                onClick={() => act('create_backup')} />
             </Fragment>
           )
         )}

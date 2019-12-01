@@ -1,12 +1,10 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Button, LabeledList, Section, NoticeBox, Tabs } from '../components';
 import { map } from 'common/collections';
 
 export const NaniteProgramHub = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     detail_view,
     disk,
@@ -23,13 +21,11 @@ export const NaniteProgramHub = props => {
             <Button
               icon="eject"
               content="Eject"
-              onClick={() => act(ref, "eject")}
-            />
+              onClick={() => act('eject')} />
             <Button
               icon="minus-circle"
               content="Delete Program"
-              onClick={() => act(ref, "clear")}
-            />
+              onClick={() => act('clear')} />
           </Fragment>
         )}
       >
@@ -61,16 +57,13 @@ export const NaniteProgramHub = props => {
             <Button
               icon={detail_view ? "info" : "list"}
               content={detail_view ? "Detailed" : "Compact"}
-              onClick={() => act(ref, "toggle_details")}
-            />
+              onClick={() => act('toggle_details')} />
             <Button
               icon="sync"
               content="Sync Research"
-              onClick={() => act(ref, "refresh")}
-            />
+              onClick={() => act('refresh')} />
           </Fragment>
-        )}
-      >
+        )} >
         {programs !== null ? (
           <Tabs vertical>
             {map((cat_contents, category) => {
@@ -80,8 +73,7 @@ export const NaniteProgramHub = props => {
               return (
                 <Tabs.Tab
                   key={category}
-                  label={tabLabel}
-                >
+                  label={tabLabel} >
                   {detail_view ? (
                     progs.map(program => (
                       <Section
@@ -93,10 +85,10 @@ export const NaniteProgramHub = props => {
                             icon="download"
                             content="Download"
                             disabled={!has_disk}
-                            onClick={() => act(ref, "download", {program_id: program.id})}
-                          />
-                        )}
-                      >
+                            onClick={() => act('download', {
+                              program_id: program.id,
+                            })} />
+                        )} >
                         {program.desc}
                       </Section>
                     ))
@@ -111,10 +103,10 @@ export const NaniteProgramHub = props => {
                               icon="download"
                               content="Download"
                               disabled={!has_disk}
-                              onClick={() => act(ref, "download", {program_id: program.id})}
-                            />
-                          )}
-                        />
+                              onClick={() => act('download', {
+                                program_id: program.id,
+                              })} />
+                          )} />
                       ))}
                     </LabeledList>
                   )}

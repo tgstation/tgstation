@@ -1,11 +1,9 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NumberInput, Section, NoticeBox, Grid, Collapsible } from '../components';
 
 export const NaniteChamberControl = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     status_msg,
     locked,
@@ -21,8 +19,7 @@ export const NaniteChamberControl = props => {
   if (status_msg) {
     return (
       <NoticeBox
-        textAlign="center"
-      >
+        textAlign="center" >
         {status_msg}
       </NoticeBox>
     );
@@ -36,12 +33,10 @@ export const NaniteChamberControl = props => {
       buttons={(
         <Button
           icon={locked ? 'lock' : 'lock-open'}
-          content={locked ? "Locked" : "Unlocked"}
-          color={locked ? "bad" : "default"}
-          onClick={() => act(ref, "toggle_lock")}
-        />
-      )}
-    >
+          content={locked ? 'Locked' : 'Unlocked'}
+          color={locked ? 'bad' : 'default'}
+          onClick={() => act('toggle_lock')} />
+      )} >
       {!has_nanites ? (
         <Fragment>
           <Box
@@ -49,8 +44,7 @@ export const NaniteChamberControl = props => {
             color="bad"
             textAlign="center"
             fontSize="30px"
-            mb={1}
-          >
+            mb={1} >
             No Nanites Detected
           </Box>
           <Button
@@ -62,8 +56,7 @@ export const NaniteChamberControl = props => {
             textAlign="center"
             fontSize="30px"
             lineHeight="50px"
-            onClick={() => act(ref, "nanite_injection")}
-          />
+            onClick={() => act('nanite_injection')} />
         </Fragment>
       ) : (
         <Fragment>
@@ -75,10 +68,8 @@ export const NaniteChamberControl = props => {
                 icon="exclamation-triangle"
                 content="Destroy Nanites"
                 color="bad"
-                onClick={() => act(ref, "remove_nanites")}
-              />
-            )}
-          >
+                onClick={() => act('remove_nanites')} />
+            )} >
             <Grid>
               <Grid.Column>
                 <LabeledList>
@@ -98,8 +89,9 @@ export const NaniteChamberControl = props => {
                       minValue={0}
                       maxValue={500}
                       width="39px"
-                      onChange={(e, value) => act(ref, "set_safety", {value: value})}
-                    />
+                      onChange={(e, value) => act('set_safety', {
+                        value: value,
+                      })} />
                   </LabeledList.Item>
                   <LabeledList.Item label="Cloud ID">
                     <NumberInput
@@ -109,8 +101,9 @@ export const NaniteChamberControl = props => {
                       step={1}
                       stepPixelSize={3}
                       width="39px"
-                      onChange={(e, value) => act(ref, "set_cloud", {value: value})}
-                    />
+                      onChange={(e, value) => act('set_cloud', {
+                        value: value,
+                      })} />
                   </LabeledList.Item>
                 </LabeledList>
               </Grid.Column>
@@ -118,16 +111,14 @@ export const NaniteChamberControl = props => {
           </Section>
           <Section
             title="Programs"
-            level={2}
-          >
+            level={2} >
             {mob_programs.map(program => {
               const extra_settings = program.extra_settings || [];
               const rules = program.rules || [];
               return (
                 <Collapsible
                   key={program.name}
-                  title={program.name}
-                >
+                  title={program.name} >
                   <Section>
                     <Grid>
                       <Grid.Column>
@@ -154,8 +145,7 @@ export const NaniteChamberControl = props => {
                           <Grid.Column>
                             <Section
                               title="Triggers"
-                              level={2}
-                            >
+                              level={2} >
                               <LabeledList>
                                 <LabeledList.Item label="Trigger Cost">
                                   {program.trigger_cost}
@@ -201,8 +191,7 @@ export const NaniteChamberControl = props => {
                       !!program.has_extra_settings && (
                         <Section
                           title="Extra Settings"
-                          level={2}
-                        >
+                          level={2} >
                           <LabeledList>
                             {extra_settings.map(extra_setting => (
                               <LabeledList.Item key={extra_setting.name} label={extra_setting.name}>
@@ -218,8 +207,7 @@ export const NaniteChamberControl = props => {
                         <Grid.Column>
                           <Section
                             title="Codes"
-                            level={2}
-                          >
+                            level={2} >
                             <LabeledList>
                               {!!program.activation_code && (
                                 <LabeledList.Item label="Activation">
@@ -248,8 +236,7 @@ export const NaniteChamberControl = props => {
                           <Grid.Column>
                             <Section
                               title="Rules"
-                              level={2}
-                            >
+                              level={2} >
                               {rules.map(rule => (
                                 <Fragment key={rule.display}>
                                   {rule.display}
