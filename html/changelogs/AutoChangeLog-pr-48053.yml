@@ -1,0 +1,4 @@
+author: "Firecage"
+delete-after: True
+changes: 
+  - bugfix: "Mobs which can metabolize reagents can now properly metabolize crayon powder."

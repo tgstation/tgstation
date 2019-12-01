@@ -22,6 +22,7 @@ module.exports = (env = {}, argv) => {
         path.resolve(__dirname, './styles/main.scss'),
         path.resolve(__dirname, './styles/themes/ntos.scss'),
         path.resolve(__dirname, './styles/themes/syndicate.scss'),
+        path.resolve(__dirname, './styles/themes/retro.scss'),
         path.resolve(__dirname, './index.js'),
       ],
     },
@@ -111,6 +112,7 @@ module.exports = (env = {}, argv) => {
       new webpack.EnvironmentPlugin({
         NODE_ENV: env.NODE_ENV || argv.mode || 'development',
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
+        DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
       new ExtractCssChunks({
         filename: '[name].bundle.css',

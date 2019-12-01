@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "You can now beat on vending machines to try and knock loose free stuff! You can also almost kill yourself doing it, so it's your call if your life is worth ten bucks."

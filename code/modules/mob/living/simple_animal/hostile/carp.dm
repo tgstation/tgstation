@@ -145,6 +145,7 @@
 	melee_damage_upper = 20
 
 	var/regen_cooldown = 0
+	var/rideable = FALSE
 
 /mob/living/simple_animal/hostile/carp/megacarp/Initialize()
 	. = ..()
@@ -163,6 +164,20 @@
 	. = ..()
 	if(regen_cooldown < world.time)
 		heal_overall_damage(4)
+	if(!rideable && src.mind)
+		can_buckle = TRUE
+		buckle_lying = FALSE
+		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
+		D.set_vehicle_dir_offsets(SOUTH, pixel_x, 0)
+		D.set_vehicle_dir_offsets(NORTH, pixel_x, 0)
+		D.set_vehicle_dir_offsets(EAST, pixel_x, 0)
+		D.set_vehicle_dir_offsets(WEST, pixel_x, 0)
+		D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
+		D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+		rideable = TRUE
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"

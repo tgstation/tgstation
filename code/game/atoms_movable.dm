@@ -138,6 +138,9 @@
 				AMob.grabbedby(src)
 			return TRUE
 		stop_pulling()
+
+	SEND_SIGNAL(src, COMSIG_ATOM_START_PULL, AM, state, force)
+
 	if(AM.pulledby)
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
