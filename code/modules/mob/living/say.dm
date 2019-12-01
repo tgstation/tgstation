@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		message = copytext(message, 2)
 
 	if(findtext(message, "reddit"))
-		var/mob/living/carbon/human/H = src
+		var/mob/living/H = src
 		to_chat(H, "<span class='colossus'><b>Go away Reddit!</b></span>")
 		H.gib()
 
