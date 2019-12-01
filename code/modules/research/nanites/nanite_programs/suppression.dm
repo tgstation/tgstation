@@ -134,7 +134,7 @@
 	trigger_cost = 3
 	trigger_cooldown = 20
 	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
-	var/static/list/blacklist = (
+	var/static/list/blacklist = list(
 		"*surrender",
 		"*collapse"
 	)
