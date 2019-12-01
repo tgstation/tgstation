@@ -1,0 +1,5 @@
+author: "Couls"
+delete-after: True
+changes: 
+  - rscadd: "Birdboat can eat anything with plastic, but he'll choke on it! Keep him away from plastic."
+  - bugfix: "(admin-spawned) mysterious water bottles now correctly have random reagent contents and show markings without runtiming"
