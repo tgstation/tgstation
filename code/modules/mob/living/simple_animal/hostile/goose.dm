@@ -169,7 +169,7 @@
 	vomiting = FALSE
 	icon_state = initial(icon_state)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/Moved(atom/movable/AM, OldLoc, Dir, Forced)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/Moved(OldLoc, Dir, Forced)
 	. = ..()
 	if(stat == DEAD)
 		return
