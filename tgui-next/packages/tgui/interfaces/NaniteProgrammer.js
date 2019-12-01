@@ -232,6 +232,7 @@ export const NaniteProgrammer = props => {
     use_rate,
     can_trigger,
     trigger_cost,
+    trigger_cooldown,
     activated,
     has_extra_settings,
     extra_settings = {},
@@ -276,15 +277,20 @@ export const NaniteProgrammer = props => {
           <Grid.Column mr={1}>
             {desc}
           </Grid.Column>
-          <Grid.Column size={0.5}>
+          <Grid.Column size={0.7}>
             <LabeledList>
-              <LabeledList.Item label="Nanite Cost">
+              <LabeledList.Item label="Use Rate">
                 {use_rate}
               </LabeledList.Item>
               {!!can_trigger && (
-                <LabeledList.Item label="Trigger Cost">
-                  {trigger_cost}
-                </LabeledList.Item>
+                <Fragment>
+                  <LabeledList.Item label="Trigger Cost">
+                    {trigger_cost}
+                  </LabeledList.Item>
+                  <LabeledList.Item label="Trigger Cooldown">
+                    {trigger_cooldown}
+                  </LabeledList.Item>
+                </Fragment>
               )}
             </LabeledList>
           </Grid.Column>
