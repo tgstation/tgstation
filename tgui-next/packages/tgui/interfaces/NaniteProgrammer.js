@@ -3,7 +3,7 @@ import { Button, LabeledList, NumberInput, Section, NoticeBox, Grid, Input, Drop
 import { Fragment } from 'inferno';
 
 export const NaniteCodes = props => {
-  const { act, data } = props;
+  const { act, data } = useBackend(props);
   return (
     <Section
       title="Codes"
@@ -62,7 +62,7 @@ export const NaniteCodes = props => {
 };
 
 export const NaniteDelays = props => {
-  const { act, data } = props;
+  const { act, data } = useBackend(props);
 
   return (
     <Section
@@ -304,10 +304,10 @@ export const NaniteProgrammer = props => {
         )} >
         <Grid>
           <Grid.Column>
-            <NaniteCodes act={act} data={data} />
+            <NaniteCodes state={props.state} />
           </Grid.Column>
           <Grid.Column>
-            <NaniteDelays act={act} data={data} />
+            <NaniteDelays state={props.state} />
           </Grid.Column>
         </Grid>
         {!!has_extra_settings && (
