@@ -56,9 +56,7 @@ export const GravityGenerator = props => {
       </Section>
       {operational && charging_state !== 0 && (
         <Section>
-          <NoticeBox
-            textAlign="center"
-            bold>
+          <NoticeBox textAlign="center">
             WARNING - Radiation detected
           </NoticeBox>
         </Section>
