@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	use_power = IDLE_POWER_USE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	ui_x = 400
-	ui_y = 400
+	ui_y = 225
 	var/on = TRUE
 	var/breaker = TRUE
 	var/list/parts = list()
@@ -231,13 +231,12 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 
 /obj/machinery/gravity_generator/main/ui_data(mob/user)
 	var/list/data = list()
-	if(stat & BROKEN)
-		return data
 
 	data["breaker"] = breaker
+	data["charge_count"] = charge_count
 	data["charging_state"] = charging_state
 	data["on"] = on
-	data["charge_count"] = charge_count
+	data["operational"] = (stat & BROKEN) ? FALSE : TRUE
 
 	return data
 
