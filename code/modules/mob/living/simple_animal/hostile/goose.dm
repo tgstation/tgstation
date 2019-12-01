@@ -1,5 +1,4 @@
 #define GOOSE_SATIATED 50
-#define MAX_FOOD_TO_EAT 10
 /mob/living/simple_animal/hostile/retaliate/goose
 	name = "goose"
 	desc = "It's loose"
