@@ -1,6 +1,7 @@
 /datum/element/embed
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_DETACH
 	var/list/active_embeds = list()
+	id_arg_index = 2
 
 	var/embed_chance
 	var/fall_chance
@@ -21,37 +22,37 @@
 	. = ..()
 	START_PROCESSING(SSdcs, src)
 
-/datum/element/embed/Attach(obj/item/target,
-	embed_chance = EMBED_CHANCE,
-    fall_chance = EMBEDDED_ITEM_FALLOUT,
-    pain_chance = EMBEDDED_PAIN_CHANCE,
-    pain_mult = EMBEDDED_PAIN_MULTIPLIER,
-    fall_pain_mult = EMBEDDED_FALL_PAIN_MULTIPLIER,
-    impact_pain_mult = EMBEDDED_IMPACT_PAIN_MULTIPLIER,
-    rip_pain_mult = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER,
-    rip_time = EMBEDDED_UNSAFE_REMOVAL_TIME,
-    ignore_throwspeed_threshold = FALSE,
-	jostle_chance = EMBEDDED_JOSTLE_CHANCE,
-	jostle_pain_mult = EMBEDDED_JOSTLE_PAIN_MULTIPLIER,
-	pain_stam_pct = EMBEDDED_PAIN_STAM_PCT)
+/datum/element/embed/Attach(datum/target,
+	embed_chance,
+    fall_chance,
+    pain_chance,
+    pain_mult,
+    fall_pain_mult,
+    impact_pain_mult,
+    rip_pain_mult,
+    rip_time,
+    ignore_throwspeed_threshold,
+	jostle_chance,
+	jostle_pain_mult,
+	pain_stam_pct)
 
 	. = ..()
 
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	src.embed_chance = embed_chance
-	src.fall_chance = fall_chance
-	src.pain_chance = pain_chance
-	src.pain_mult = pain_mult
-	src.fall_pain_mult = fall_pain_mult
-	src.impact_pain_mult = impact_pain_mult
-	src.rip_pain_mult = rip_pain_mult
-	src.rip_time = rip_time
-	src.ignore_throwspeed_threshold = ignore_throwspeed_threshold
-	src.jostle_chance = jostle_chance
-	src.jostle_pain_mult = jostle_pain_mult
-	src.pain_stam_pct = pain_stam_pct
+	src.embed_chance = (!isnull(embed_chance) ? embed_chance : EMBED_CHANCE)
+	src.fall_chance = (!isnull(fall_chance) ? fall_chance : EMBEDDED_ITEM_FALLOUT)
+	src.pain_chance = (!isnull(pain_chance) ? pain_chance : EMBEDDED_PAIN_CHANCE)
+	src.pain_mult = (!isnull(pain_mult) ? pain_mult : EMBEDDED_PAIN_MULTIPLIER)
+	src.fall_pain_mult = (!isnull(fall_pain_mult) ? fall_pain_mult : EMBEDDED_FALL_PAIN_MULTIPLIER)
+	src.impact_pain_mult = (!isnull(impact_pain_mult) ? impact_pain_mult : EMBEDDED_IMPACT_PAIN_MULTIPLIER)
+	src.rip_pain_mult = (!isnull(rip_pain_mult) ? rip_pain_mult : EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER)
+	src.rip_time = (!isnull(rip_time) ? rip_time : EMBEDDED_UNSAFE_REMOVAL_TIME)
+	src.ignore_throwspeed_threshold = (!isnull(ignore_throwspeed_threshold) ? ignore_throwspeed_threshold : FALSE)
+	src.jostle_chance = (!isnull(jostle_chance) ? jostle_chance : EMBEDDED_JOSTLE_CHANCE)
+	src.jostle_pain_mult = (!isnull(jostle_pain_mult) ? jostle_pain_mult : EMBEDDED_JOSTLE_PAIN_MULTIPLIER)
+	src.pain_stam_pct = (!isnull(pain_stam_pct) ? pain_stam_pct : EMBEDDED_PAIN_STAM_PCT)
 
 	harmless = (pain_mult == 0 && jostle_pain_mult == 0)
 
@@ -59,7 +60,6 @@
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/embed_check)
 	RegisterSignal(target, COMSIG_ITEM_EMBED_REMOVING_RIP, .proc/rip_out)
 	RegisterSignal(target, COMSIG_ITEM_EMBED_REMOVE_SURGERY, .proc/safe_remove)
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/byeee)
 
 /datum/element/embed/Detach(obj/item/target)
 	. = ..()
@@ -70,11 +70,6 @@
 	UnregisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE)
 	UnregisterSignal(target, COMSIG_ITEM_EMBED_REMOVING_RIP)
 	UnregisterSignal(target, COMSIG_ITEM_EMBED_REMOVE_SURGERY)
-	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
-
-/datum/element/embed/proc/byeee(obj/item/weapon)
-	if(weapon in active_embeds)
-		active_embeds -= weapon
 
 /datum/element/embed/proc/jostle_check(mob/living/carbon/human/victim)
 	for(var/obj/item/bodypart/L in victim.bodyparts)

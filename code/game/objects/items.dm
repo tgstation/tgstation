@@ -85,7 +85,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
-	var/datum/embedding_behavior/embedding
+	var/list/embedding
 
 	var/embedded_in
 
@@ -151,11 +151,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(damtype == "brute")
 			hitsound = "swing_hit"
 
-	if(embedding)
-		var/list/t = list("eletype" = /datum/element/embed)
-		t += embedding
-		testing(t)
-		AddElement(arglist(t))
+	if(embedding != null)
+		var/list/temp = embedding.Copy()
+		temp.Insert(1, /datum/element/embed)
+		for(var/i in temp)
+			testing("[i] | [temp[i]]")
+		AddElement(arglist(temp))
 		/*if(islist(embedding))
 			embedding = getEmbeddingBehavior(arglist(embedding))
 		else if(!istype(embedding, /datum/embedding_behavior))
@@ -864,11 +865,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return owner.dropItemToGround(src)
 
 /obj/item/proc/is_embed_harmless()
-<<<<<<< HEAD
-	if(embedding)
-		return (embedding.pain_mult == 0 && embedding.jostle_pain_mult == 0)
-=======
 	return FALSE
 	//if(embedding)
 		//return (embedding.pain_mult == 0 && embedding.jostle_pain_mult == 0)
->>>>>>> embeddead
