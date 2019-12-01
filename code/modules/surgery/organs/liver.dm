@@ -76,6 +76,7 @@
 	name = "alien liver" // doesnt matter for actual aliens because they dont take toxin damage
 	icon_state = "liver-x" // Same sprite as fly-person liver.
 	desc = "A liver that used to belong to a killer alien, who knows what it used to eat."
+	decay_factor = 0
 	toxLethality = LIVER_DEFAULT_TOX_LETHALITY * 2.5 // rejects its owner early after too much punishment
 	toxTolerance = 15 // complete toxin immunity like xenos have would be too powerful
 
