@@ -48,6 +48,6 @@
 	..()
 	if(!dna.check_mutation(STONER))
 		if(druggy)
-			grant_language(/datum/language/beachbum)
+			grant_language(/datum/language/beachbum, FALSE)
 		else
 			remove_language(/datum/language/beachbum)

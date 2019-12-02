@@ -1,8 +1,8 @@
 /datum/language_menu
 	var/datum/language_holder/language_holder
 
-/datum/language_menu/New(language_holder)
-	src.language_holder = language_holder
+/datum/language_menu/New(_language_holder)
+	language_holder = _language_holder
 
 /datum/language_menu/Destroy()
 	language_holder = null
@@ -24,21 +24,19 @@
 		data["is_living"] = FALSE
 
 	data["languages"] = list()
-	for(var/ld in GLOB.all_languages)
-		var/result = language_holder.has_language(ld)
+	for(var/lang in GLOB.all_languages)
+		var/result = language_holder.has_language(lang)
 		if(!result)
 			continue
-		var/shadow = result == LANGUAGE_SHADOWED
-		var/datum/language/LD = ld
+		var/datum/language/language = lang
 		var/list/L = list()
 
-		L["name"] = initial(LD.name)
-		L["desc"] = initial(LD.desc)
-		L["key"] = initial(LD.key)
-		L["is_default"] = (LD == language_holder.selected_default_language)
-		L["shadow"] = shadow
+		L["name"] = initial(language.name)
+		L["desc"] = initial(language.desc)
+		L["key"] = initial(language.key)
+		L["is_default"] = (language == language_holder.selected_language)
 		if(AM)
-			L["can_speak"] = AM.can_speak_in_language(LD)
+			L["can_speak"] = AM.can_speak_language(language)
 
 		data["languages"] += list(L)
 
@@ -47,15 +45,15 @@
 		data["omnitongue"] = language_holder.omnitongue
 
 		data["unknown_languages"] = list()
-		for(var/ld in GLOB.all_languages)
-			if(language_holder.has_language(ld))
+		for(var/lang in GLOB.all_languages)
+			if(language_holder.has_language(lang))
 				continue
-			var/datum/language/LD = ld
+			var/datum/language/language = lang
 			var/list/L = list()
 
-			L["name"] = initial(LD.name)
-			L["desc"] = initial(LD.desc)
-			L["key"] = initial(LD.key)
+			L["name"] = initial(language.name)
+			L["desc"] = initial(language.desc)
+			L["key"] = initial(language.key)
 
 			data["unknown_languages"] += list(L)
 	return data
@@ -68,16 +66,16 @@
 
 	var/language_name = params["language_name"]
 	var/datum/language/language_datum
-	for(var/ld in GLOB.all_languages)
-		var/datum/language/LD = ld
-		if(language_name == initial(LD.name))
-			language_datum = LD
+	for(var/lang in GLOB.all_languages)
+		var/datum/language/language = lang
+		if(language_name == initial(language.name))
+			language_datum = language
 	var/is_admin = check_rights_for(user.client, R_ADMIN)
 
 	switch(action)
 		if("select_default")
-			if(language_datum && AM.can_speak_in_language(language_datum))
-				language_holder.selected_default_language = language_datum
+			if(language_datum && AM.can_speak_language(language_datum))
+				language_holder.selected_language = language_datum
 				. = TRUE
 		if("grant_language")
 			if((is_admin || isobserver(AM)) && language_datum)

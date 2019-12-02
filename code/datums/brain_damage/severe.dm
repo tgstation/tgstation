@@ -31,15 +31,15 @@
 
 /datum/brain_trauma/severe/aphasia/on_gain()
 	mob_language = owner.get_language_holder()
-	prev_language = mob_language.copy()
+	mob_language.copy_holder(prev_language)
 	mob_language.remove_all_languages()
-	mob_language.grant_language(/datum/language/aphasia)
+	mob_language.grant_language(/datum/language/aphasia, FALSE)
 	..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
 	mob_language.remove_language(/datum/language/aphasia)
-	mob_language.copy_known_languages_from(prev_language) //this will also preserve languages learned during the trauma
-	QDEL_NULL(prev_language)
+	prev_language.copy_languages(mob_language)
+	qdel(prev_language)
 	mob_language = null
 	..()
 

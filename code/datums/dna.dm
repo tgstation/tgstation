@@ -308,6 +308,19 @@
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
+	to_chat(world, "Mob: [name]")
+	to_chat(world, "Mind: [mind]")
+	var/datum/language_holder/old_holder = get_language_holder(FALSE)
+	to_chat(world, "old_holder: [old_holder]")
+	var/species_holder = initial(mrace.species_language_holder)
+	to_chat(world, "species_holder: [species_holder]")
+	var/datum/language_holder/new_holder = new species_holder(src)
+	to_chat(world, "new_holder: [new_holder]")
+	new_holder.copy_holder(old_holder)
+	if(mind)
+		update_mob_languages(src)
+	qdel(new_holder)
+
 	if(icon_update)
 		update_body()
 		update_hair()
@@ -510,7 +523,7 @@
 			var/datum/mutation/human/HM = dna.get_mutation(mutation)
 			if(HM)
 				HM.scrambled = TRUE
-				if(HM.quality & resilient) 
+				if(HM.quality & resilient)
 					HM.mutadone_proof = TRUE
 		return TRUE
 

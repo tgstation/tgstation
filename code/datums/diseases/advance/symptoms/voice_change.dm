@@ -51,7 +51,8 @@ Bonus
 		scramble_language = TRUE
 		var/mob/living/M = A.affected_mob
 		mob_language = M.get_language_holder()
-		original_language = mob_language.copy()
+		original_language = new ()
+		mob_language.copy_holder(original_language)
 
 /datum/symptom/voice_change/Activate(datum/disease/advance/A)
 	if(!..())
@@ -70,7 +71,8 @@ Bonus
 					current_language = pick(subtypesof(/datum/language) - /datum/language/common)
 					H.grant_language(current_language)
 					mob_language = H.get_language_holder()
-					mob_language.only_speaks_language = current_language
+					mob_language.spoken_languages.Cut()
+					mob_language.spoken_languages += current_language
 
 /datum/symptom/voice_change/End(datum/disease/advance/A)
 	..()
@@ -78,10 +80,5 @@ Bonus
 		var/mob/living/carbon/human/H = A.affected_mob
 		H.UnsetSpecialVoice()
 	if(scramble_language)
-		var/mob/living/M = A.affected_mob
-		M.copy_known_languages_from(original_language, TRUE)
-		mob_language = M.get_language_holder()
-		mob_language.only_speaks_language = null
-		M.selected_default_language = original_language
-		current_language = null
-		QDEL_NULL(original_language)
+		original_language.copy_holder(mob_language)
+		qdel(original_language)

@@ -266,10 +266,10 @@
 
 /datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
 	..()
-	owner.grant_language(/datum/language/beachbum)
+	owner.grant_language(/datum/language/beachbum, FALSE)
 	owner.remove_language(/datum/language/common)
 
 /datum/mutation/human/stoner/on_losing(mob/living/carbon/human/owner)
 	..()
-	owner.grant_language(/datum/language/common)
+	owner.grant_language(/datum/language/common, FALSE)
 	owner.remove_language(/datum/language/beachbum)

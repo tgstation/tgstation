@@ -134,7 +134,7 @@
 	if(!ishuman(user))
 		return
 	if(slot == ITEM_SLOT_HEAD)
-		user.grant_language(/datum/language/piratespeak/)
+		user.grant_language(/datum/language/piratespeak/, FALSE)
 		to_chat(user, "<span class='boldnotice'>You suddenly know how to speak like a pirate!</span>")
 
 /obj/item/clothing/head/pirate/dropped(mob/user)

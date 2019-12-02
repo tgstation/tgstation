@@ -91,7 +91,8 @@
 
 	trauma = _trauma
 	owner = trauma.owner
-	copy_known_languages_from(owner, TRUE)
+	var/datum/language_holder/LH = owner.get_language_holder()
+	LH.copy_languages(language_holder)
 
 	setup_friend()
 
