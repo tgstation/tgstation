@@ -1,0 +1,5 @@
+author: "fludd12"
+delete-after: True
+changes: 
+  - tweak: "The pestle for the mortar and pestle now needs metal to craft, not plasteel."
+  - bugfix: "The mortar and pestle can now grind food and such."
