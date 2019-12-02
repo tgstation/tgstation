@@ -22,6 +22,7 @@ import { ChemFilter } from './interfaces/ChemFilter';
 import { ChemHeater } from './interfaces/ChemHeater';
 import { ChemMaster } from './interfaces/ChemMaster';
 import { ChemPress } from './interfaces/ChemPress';
+import { ChemReactionChamber } from './interfaces/ChemReactionChamber';
 import { ChemSplitter } from './interfaces/ChemSplitter';
 import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
 import { CodexGigas } from './interfaces/CodexGigas';
@@ -34,26 +35,38 @@ import { DnaVault } from './interfaces/DnaVault';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
 import { Holodeck } from './interfaces/Holodeck';
+import { ImplantChair } from './interfaces/ImplantChair';
+import { KeycardAuth } from './interfaces/KeycardAuth';
 import { LanguageMenu } from './interfaces/LanguageMenu';
+import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
+import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
+import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
+import { NaniteProgramHub } from './interfaces/NaniteProgramHub';
+import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
+import { NaniteRemote } from './interfaces/NaniteRemote';
+import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
+import { NuclearBomb } from './interfaces/NuclearBomb';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
+import { OreBox } from './interfaces/OreBox';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
+import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
 import { Smes } from './interfaces/Smes';
-import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { SolarControl } from './interfaces/SolarControl';
 import { SpaceHeater } from './interfaces/SpaceHeater';
+import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
 import { Tank } from './interfaces/Tank';
@@ -161,6 +174,10 @@ const ROUTES = {
     component: () => ChemPress,
     scrollable: false,
   },
+  reaction_chamber: {
+    component: () => ChemReactionChamber,
+    scrollable: true,
+  },
   chem_splitter: {
     component: () => ChemSplitter,
     scrollable: false,
@@ -209,13 +226,29 @@ const ROUTES = {
     component: () => Gps,
     scrollable: true,
   },
+  gulag_item_reclaimer: {
+    component: () => GulagItemReclaimer,
+    scrollable: true,
+  },
   holodeck: {
     component: () => Holodeck,
     scrollable: true,
   },
+  implantchair: {
+    component: () => ImplantChair,
+    scrollable: false,
+  },
+  keycard_auth: {
+    component: () => KeycardAuth,
+    scrollable: false,
+  },
   language_menu: {
     component: () => LanguageMenu,
     scrollable: true,
+  },
+  mech_bay_power_console: {
+    component: () => MechBayPowerConsole,
+    scrollable: false,
   },
   medical_kiosk: {
     component: () => MedicalKiosk,
@@ -224,6 +257,26 @@ const ROUTES = {
   mint: {
     component: () => Mint,
     scrollable: false,
+  },
+  nanite_chamber_control: {
+    component: () => NaniteChamberControl,
+    scrollable: true,
+  },
+  nanite_cloud_control: {
+    component: () => NaniteCloudControl,
+    scrollable: true,
+  },
+  nanite_program_hub: {
+    component: () => NaniteProgramHub,
+    scrollable: true,
+  },
+  nanite_programmer: {
+    component: () => NaniteProgrammer,
+    scrollable: true,
+  },
+  nanite_remote: {
+    component: () => NaniteRemote,
+    scrollable: true,
   },
   ntos_main: {
     component: () => NtosMain,
@@ -235,6 +288,12 @@ const ROUTES = {
     component: () => NtosNetDownloader,
     wrapper: () => NtosWrapper,
     scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_arcade: {
+    component: () => NtosArcade,
+    wrapper: () => NtosWrapper,
+    scrollable: false,
     theme: 'ntos',
   },
   ntos_power_monitor: {
@@ -249,8 +308,17 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
+  nuclear_bomb: {
+    component: () => NuclearBomb,
+    scrollable: false,
+    theme: 'retro',
+  },
   ore_redemption_machine: {
     component: () => OreRedemptionMachine,
+    scrollable: true,
+  },
+  ore_box: {
+    component: () => OreBox,
     scrollable: true,
   },
   operating_computer: {

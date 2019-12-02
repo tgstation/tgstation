@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - admin: "Admins can now pick solo abductor in traitor panel."

@@ -490,6 +490,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Engine Room"
 	icon_state = "atmos_engine"
 
+/area/engine/lobby
+	name = "Engineering Lobby"
+	icon_state = "engi_lobby"
+
 /area/engine/engine_room/external
 	name = "Supermatter External Access"
 	icon_state = "engine_foyer"

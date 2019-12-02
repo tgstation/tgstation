@@ -1,0 +1,5 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - refactor: "References to IRC now better describe TGS' and Discord's existence."
+  - admin: "Players will now be better informed that messages are sent through TGS to IRC/Discord/etc when attempting to adminhelp with no available admins/use adminwho verb."

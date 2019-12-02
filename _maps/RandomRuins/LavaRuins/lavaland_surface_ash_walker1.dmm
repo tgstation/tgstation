@@ -275,7 +275,7 @@
 	dir = 8
 	},
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/glass/waterbottle/large,
+/obj/item/reagent_containers/food/drinks/waterbottle/large,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aR" = (

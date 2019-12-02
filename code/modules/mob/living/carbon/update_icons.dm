@@ -210,6 +210,11 @@
 /mob/living/carbon/update_body()
 	update_body_parts()
 
+/mob/living/carbon/proc/assign_bodypart_ownership()
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		BP.original_owner = src
+
 /mob/living/carbon/proc/update_body_parts()
 	//CHECK FOR UPDATE
 	var/oldkey = icon_render_key
@@ -253,7 +258,7 @@
 	- limbs (stores as the limb name and whether it is removed/fine, organic/robotic)
 	These procs only store limbs as to increase the number of matching icon_render_keys
 	This cache exists because drawing 6/7 icons for humans constantly is quite a waste
-	See RemieRichards on irc.rizon.net #coderbus
+	See RemieRichards on irc.rizon.net #coderbus (RIP remie :sob:)
 */
 
 //produces a key based on the mob's limbs

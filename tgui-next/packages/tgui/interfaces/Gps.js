@@ -3,15 +3,13 @@ import { flow } from 'common/fp';
 import { clamp } from 'common/math';
 import { vec } from 'common/vector';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
 
 const coordsToVec = coords => vec(map(parseFloat)(coords.split(', ')));
 
 export const Gps = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     currentArea,
     currentCoords,
@@ -46,32 +44,28 @@ export const Gps = props => {
             icon="power-off"
             content={power ? "On" : "Off"}
             selected={power}
-            onClick={() => act(ref, "power")}
-          />
+            onClick={() => act('power')} />
         )}>
         <LabeledList>
           <LabeledList.Item label="Tag">
             <Button
               icon="pencil-alt"
               content={tag}
-              onClick={() => act(ref, "rename")}
-            />
+              onClick={() => act('rename')} />
           </LabeledList.Item>
           <LabeledList.Item label="Scan Mode">
             <Button
               icon={updating ? "unlock" : "lock"}
               content={updating ? "AUTO" : "MANUAL"}
               color={!updating && "bad"}
-              onClick={() => act(ref, "updating")}
-            />
+              onClick={() => act('updating')} />
           </LabeledList.Item>
           <LabeledList.Item label="Range">
             <Button
               icon="sync"
               content={globalmode ? "MAXIMUM" : "LOCAL"}
               selected={!globalmode}
-              onClick={() => act(ref, "globalmode")}
-            />
+              onClick={() => act('globalmode')} />
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -99,7 +93,9 @@ export const Gps = props => {
                   <Table.Cell
                     collapsing
                     opacity={signal.dist !== undefined && (
-                      clamp(1.2 / Math.log(Math.E + signal.dist / 20), 0.4, 1)
+                      clamp(
+                        1.2 / Math.log(Math.E + signal.dist / 20),
+                        0.4, 1)
                     )}>
                     {signal.degrees !== undefined && (
                       <Icon

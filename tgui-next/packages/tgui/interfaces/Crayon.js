@@ -1,11 +1,9 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Button, LabeledList, Section } from '../components';
 
 export const Crayon = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const capOrChanges = data.has_cap || data.can_change_colour;
   const drawables = data.drawables || [];
   return (
@@ -18,12 +16,12 @@ export const Crayon = props => {
                 icon={data.is_capped ? 'power-off' : 'times'}
                 content={data.is_capped ? 'On' : 'Off'}
                 selected={data.is_capped}
-                onClick={() => act(ref, 'toggle_cap')} />
+                onClick={() => act('toggle_cap')} />
             </LabeledList.Item>
           </LabeledList>
           <Button
             content="Select New Color"
-            onClick={() => act(ref, 'select_colour')} />
+            onClick={() => act('select_colour')} />
         </Section>
       )}
       <Section title="Stencil">
@@ -39,7 +37,7 @@ export const Crayon = props => {
                     key={item.item}
                     content={item.item}
                     selected={item.item === data.selected_stencil}
-                    onClick={() => act(ref, 'select_stencil', {
+                    onClick={() => act('select_stencil', {
                       item: item.item,
                     })} />
                 ))}
@@ -56,7 +54,7 @@ export const Crayon = props => {
         </LabeledList>
         <Button
           content="New Text"
-          onClick={() => act(ref, 'enter_text')} />
+          onClick={() => act('enter_text')} />
       </Section>
     </Fragment>
   );

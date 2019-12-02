@@ -1,11 +1,10 @@
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button } from '../components';
 import { refocusLayout } from '../refocus';
 
 export const NtosWrapper = props => {
-  const { state, children } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { children } = props;
+  const { act, data } = useBackend(props);
   const {
     PC_batteryicon,
     PC_showbatteryicon,
@@ -74,7 +73,7 @@ export const NtosWrapper = props => {
               icon="window-minimize-o"
               tooltip="Minimize"
               tooltipPosition="bottom"
-              onClick={() => act(ref, 'PC_minimize')} />
+              onClick={() => act('PC_minimize')} />
           )}
           {!!PC_showexitprogram && (
             <Button
@@ -86,7 +85,7 @@ export const NtosWrapper = props => {
               icon="window-close-o"
               tooltip="Close"
               tooltipPosition="bottom-left"
-              onClick={() => act(ref, 'PC_exit')} />
+              onClick={() => act('PC_exit')} />
           )}
           {!PC_showexitprogram && (
             <Button
@@ -98,7 +97,7 @@ export const NtosWrapper = props => {
               icon="power-off"
               tooltip="Power off"
               tooltipPosition="bottom-left"
-              onClick={() => act(ref, 'PC_shutdown')} />
+              onClick={() => act('PC_shutdown')} />
           )}
         </div>
       </div>
