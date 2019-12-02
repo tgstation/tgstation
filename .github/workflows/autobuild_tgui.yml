@@ -18,18 +18,15 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-         node-version: '>=12.13'
-      - name: Get Dependencies
-        run: yarn install
-        working-directory: ./tgui-next
+          node-version: '>=12.13'
       - name: Build TGUI
-        run: yarn run build
+        run: bin/tgui --ci
         working-directory: ./tgui-next
       - name: Commit Artifacts
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "TGUI"
-          git commit -m "Automatic TGUI Rebuild [ci skip]" -a
+          git commit -m "Automatic TGUI Rebuild [ci skip]" -a || true
       - name: Push Artifacts
         uses: ad-m/github-push-action@master
         with:
