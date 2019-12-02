@@ -2,7 +2,7 @@ name: Autobuild TGUI
 
 on:
   push:
-    branches:
+    branches-ignore:
       - 'master'
     paths:
       - 'tgui-next/**.js'
@@ -31,3 +31,4 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.event.ref }}
