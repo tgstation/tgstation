@@ -13,6 +13,9 @@
 #define MEDAL_DISKPLEASE	 	"Disk, Please!"
 #define MEDAL_GAMER			 	"My Watchlist Status is Not Important"
 #define MEDAL_VENDORSQUISH		"I Was a Teenage Anarchist"
+#define MEDAL_SWIRLIE			"A Bowl-d New World"
+#define MEDAL_SELFOUCH			"How Do I Switch Hands???"
+#define MEDAL_SANDMAN			"Mister Sandman"
 
 
 //Boss medals

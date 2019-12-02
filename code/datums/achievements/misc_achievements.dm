@@ -55,3 +55,18 @@
 	name = "I Was a Teenage Anarchist"
 	desc = "You were doing a great job sticking it to the system until that vending machine decided to fight back."
 	database_id = MEDAL_VENDORSQUISH
+
+/datum/award/achievement/misc/swirlie
+	name = "A Bowl-d New World"
+	desc = "There's a lot of grisly ways to kick it on the Spinward Periphery, but drowning to death in a toilet probably wasn't what you had in mind. Probably."
+	database_id = MEDAL_SWIRLIE
+
+/datum/award/achievement/misc/selfouch
+	name = "How Do I Switch Hands???"
+	desc = "If you saw someone casually club themselves upside the head with a toolbox anywhere in the galaxy but here, you'd probably be pretty concerned for them."
+	database_id = MEDAL_SELFOUCH
+
+/datum/award/achievement/misc/sandman
+	name = "Mister Sandman"
+	desc = "Mechanically speaking, there's no real benefit to being unconscious during surgery. Weird how insistent this doctor is about using the N2O anyway though, huh?"
+	database_id = MEDAL_SANDMAN
