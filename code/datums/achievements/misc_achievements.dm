@@ -35,8 +35,13 @@
 	name = "Helbitaljanken"
 	desc = "You janked hard"
 	database_id = MEDAL_HELBITALJANKEN
-	
+
 /datum/award/achievement/misc/getting_an_upgrade
 	name = "Getting an upgrade"
 	desc = "Make your first unique material item!"
 	database_id = MEDAL_MATERIALCRAFT
+
+/datum/award/achievement/misc/rocket_holdup
+	name = "Disk, Please!"
+	desc = "Is the man currently pointing a loaded rocket launcher at your head point blank really dumb enough to pull the trigger? Do you really want to find out?"
+	database_id = MEDAL_DISKPLEASE

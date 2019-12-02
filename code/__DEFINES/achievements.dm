@@ -10,6 +10,7 @@
 #define MEDAL_THANKSALOT 		"The Best Driver"
 #define MEDAL_HELBITALJANKEN	"Hel-bent on Winning"
 #define MEDAL_MATERIALCRAFT 	"Getting an Upgrade"
+#define MEDAL_DISKPLEASE	 	"Disk, Please!"
 
 
 //Boss medals
