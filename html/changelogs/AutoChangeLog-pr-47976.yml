@@ -1,0 +1,4 @@
+author: "spookydonut"
+delete-after: True
+changes: 
+  - bugfix: "TRAIT_NOMETABOLISM species are now immune to clone damage"
