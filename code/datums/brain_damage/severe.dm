@@ -31,6 +31,7 @@
 
 /datum/brain_trauma/severe/aphasia/on_gain()
 	mob_language = owner.get_language_holder()
+	prev_language = new (owner)
 	mob_language.copy_holder(prev_language)
 	mob_language.remove_all_languages()
 	mob_language.grant_language(/datum/language/aphasia, FALSE)

@@ -452,8 +452,6 @@
 		S.ckey = C.ckey
 		S.fully_replace_character_name(null, "The spirit of [name]")
 		S.status_flags |= GODMODE
-		var/datum/language_holder/LH = user.get_language_holder()
-		LH.copy_holder(language_holder)
 		var/input = sanitize_name(stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN))
 
 		if(src && input)

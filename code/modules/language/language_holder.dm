@@ -39,7 +39,6 @@
 
 /// Grants the supplied language and sets omnitongue true. Pass permanent = FALSE to tie language to current mob.
 /datum/language_holder/proc/grant_language(language, permanent = TRUE, spoken = TRUE)
-	to_chat(world, "grant: [language] permanent: [permanent] spoken: [spoken]")
 	if(permanent)
 		permanent_languages += language
 	else
@@ -128,6 +127,7 @@
 		if(istype(owner, /datum/mind))
 			var/datum/mind/M = owner
 			return M.current
+
 		else
 			return owner
 
@@ -141,6 +141,8 @@
 	permanent_languages |= from_mob.permanent_languages
 	temporary_languages |= from_mob.temporary_languages
 	spoken_languages |= from_mob.spoken_languages
+	if(!selected_language)
+		get_selected_language()
 
 /// Copies and replaces holder into the supplied language holder.
 /datum/language_holder/proc/copy_holder(var/datum/language_holder/to_holder)
