@@ -1,86 +1,80 @@
-import { act } from '../byond';
 import { Fragment } from 'inferno';
-import { Box, LabeledList, NumberInput, Button, Section } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, NumberInput, Section } from '../components';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 const DISEASE_THEASHOLD_LIST = [
-  "Positive",
-  "Harmless",
-  "Minor",
-  "Medium",
-  "Harmful",
-  "Dangerous",
-  "BIOHAZARD",
+  'Positive',
+  'Harmless',
+  'Minor',
+  'Medium',
+  'Harmful',
+  'Dangerous',
+  'BIOHAZARD',
 ];
 
 const TARGET_SPECIES_LIST = [
   {
-    name: "Human",
-    value: "human",
+    name: 'Human',
+    value: 'human',
   },
   {
-    name: "Lizardperson",
-    value: "lizard",
+    name: 'Lizardperson',
+    value: 'lizard',
   },
   {
-    name: "Flyperson",
-    value: "fly",
+    name: 'Flyperson',
+    value: 'fly',
   },
   {
-    name: "Felinid",
-    value: "felinid",
+    name: 'Felinid',
+    value: 'felinid',
   },
   {
-    name: "Plasmaman",
-    value: "plasma",
+    name: 'Plasmaman',
+    value: 'plasma',
   },
   {
-    name: "Mothperson",
-    value: "moth",
+    name: 'Mothperson',
+    value: 'moth',
   },
   {
-    name: "Jellyperson",
-    value: "jelly",
+    name: 'Jellyperson',
+    value: 'jelly',
   },
-
   {
-    name: "Podperson",
-    value: "pod",
+    name: 'Podperson',
+    value: 'pod',
   },
-
   {
-    name: "Golem",
-    value: "golem",
+    name: 'Golem',
+    value: 'golem',
   },
-
   {
-    name: "Zombie",
-    value: "zombie",
+    name: 'Zombie',
+    value: 'zombie',
   },
 ];
 
 const TARGET_NUTRITION_LIST = [
   {
-    name: "Starving",
+    name: 'Starving',
     value: 150,
   },
   {
-    name: "Obese",
+    name: 'Obese',
     value: 600,
   },
 ];
 
 export const ScannerGate = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-
+  const { act, data } = useBackend(props);
   return (
     <Fragment>
       <InterfaceLockNoticeBox
         locked={data.locked}
-        onLockedStatusChange={() => act(ref, 'toggle_lock')}
-      />
+        onLockedStatusChange={() => act('toggle_lock')} />
       {!data.locked && (
         <ScannerGateControl state={state} />
       )}
@@ -125,20 +119,19 @@ const SCANNER_GATE_ROUTES = {
 
 const ScannerGateControl = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-  const route = SCANNER_GATE_ROUTES[data.scan_mode] || SCANNER_GATE_ROUTES.off;
+  const { act, data } = useBackend(props);
+  const { scan_mode } = data;
+  const route = SCANNER_GATE_ROUTES[scan_mode]
+    || SCANNER_GATE_ROUTES.off;
   const Component = route.component();
-
   return (
     <Section
       title={route.title}
-      buttons={data.scan_mode !== 'Off' && (
+      buttons={scan_mode !== 'Off' && (
         <Button
           icon="arrow-left"
           content="back"
-          onClick={() => act(ref, 'set_mode', { new_mode: "Off" })}
-        />
+          onClick={() => act('set_mode', { new_mode: 'Off' })} />
       )}>
       <Component state={state} />
     </Section>
@@ -146,10 +139,7 @@ const ScannerGateControl = props => {
 };
 
 const ScannerGateOff = props => {
-  const { state } = props;
-  const { config } = state;
-  const { ref } = config;
-
+  const { act } = useBackend(props);
   return (
     <Fragment>
       <Box mb={2}>
@@ -158,32 +148,25 @@ const ScannerGateOff = props => {
       <Box>
         <Button
           content="Wanted"
-          onClick={() => act(ref, 'set_mode', { new_mode: "Wanted" })}
-        />
+          onClick={() => act('set_mode', { new_mode: 'Wanted' })} />
         <Button
           content="Guns"
-          onClick={() => act(ref, 'set_mode', { new_mode: "Guns" })}
-        />
+          onClick={() => act('set_mode', { new_mode: 'Guns' })} />
         <Button
           content="Mindshield"
-          onClick={() => act(ref, 'set_mode', { new_mode: "Mindshield" })}
-        />
+          onClick={() => act('set_mode', { new_mode: 'Mindshield' })} />
         <Button
           content="Disease"
-          onClick={() => act(ref, 'set_mode', { new_mode: "Disease" })}
-        />
+          onClick={() => act('set_mode', { new_mode: 'Disease' })} />
         <Button
           content="Species"
-          onClick={() => act(ref, 'set_mode', { new_mode: "Species" })}
-        />
+          onClick={() => act('set_mode', { new_mode: 'Species' })} />
         <Button
           content="Nutrition"
-          onClick={() => act(ref, 'set_mode', { new_mode: "Nutrition" })}
-        />
+          onClick={() => act('set_mode', { new_mode: 'Nutrition' })} />
         <Button
           content="Nanites"
-          onClick={() => act(ref, 'set_mode', { new_mode: "Nanites" })}
-        />
+          onClick={() => act('set_mode', { new_mode: 'Nanites' })} />
       </Box>
     </Fragment>
   );
@@ -191,12 +174,13 @@ const ScannerGateOff = props => {
 
 const ScannerGateWanted = props => {
   const { state } = props;
-  const { data } = state;
-
+  const { data } = useBackend(props);
+  const { reverse } = data;
   return (
     <Fragment>
       <Box mb={2}>
-      Trigger if the person scanned {data.reverse ? "does not have" : "has"} any warrants for their arrest.
+        Trigger if the person scanned {reverse ? 'does not have' : 'has'}
+        {' '}any warrants for their arrest.
       </Box>
       <ScannerGateMode state={state} />
     </Fragment>
@@ -205,12 +189,13 @@ const ScannerGateWanted = props => {
 
 const ScannerGateGuns = props => {
   const { state } = props;
-  const { data } = state;
-
+  const { data } = useBackend(props);
+  const { reverse } = data;
   return (
     <Fragment>
       <Box mb={2}>
-      Trigger if the person scanned {data.reverse ? "does not have" : "has"} any guns.
+        Trigger if the person scanned {reverse ? 'does not have' : 'has'}
+        {' '}any guns.
       </Box>
       <ScannerGateMode state={state} />
     </Fragment>
@@ -219,12 +204,13 @@ const ScannerGateGuns = props => {
 
 const ScannerGateMindshield = props => {
   const { state } = props;
-  const { data } = state;
-
+  const { data } = useBackend(props);
+  const { reverse } = data;
   return (
     <Fragment>
       <Box mb={2}>
-      Trigger if the person scanned {data.reverse ? "does not have" : "has"} a mindshield.
+        Trigger if the person scanned {reverse ? 'does not have' : 'has'}
+        {' '}a mindshield.
       </Box>
       <ScannerGateMode state={state} />
     </Fragment>
@@ -233,24 +219,23 @@ const ScannerGateMindshield = props => {
 
 const ScannerGateDisease = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-
+  const { act, data } = useBackend(props);
+  const { reverse, disease_threshold } = data;
   return (
     <Fragment>
       <Box mb={2}>
-      Trigger if the person scanned {data.reverse ? "does not have" : "has"} a disease equal or worse
-      than {data.disease_threshold}.
+        Trigger if the person scanned {reverse ? 'does not have' : 'has'}
+        {' '}a disease equal or worse than {disease_threshold}.
       </Box>
       <Box mb={2}>
         {DISEASE_THEASHOLD_LIST.map(threshold => (
-          <Button
+          <Button.Checkbox
             key={threshold}
-            selected={threshold === data.disease_threshold}
-            icon={threshold === data.disease_threshold ? 'check-square-o' : 'square-o'}
+            checked={threshold === disease_threshold}
             content={threshold}
-            onClick={() => act(ref, 'set_disease_threshold', { new_threshold: threshold })}
-          />
+            onClick={() => act('set_disease_threshold', {
+              new_threshold: threshold,
+            })} />
         ))}
       </Box>
       <ScannerGateMode state={state} />
@@ -260,34 +245,29 @@ const ScannerGateDisease = props => {
 
 const ScannerGateSpecies = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-
-  let species_name;
-  for (let i = 0; i < TARGET_SPECIES_LIST.length; i++) {
-    if (TARGET_SPECIES_LIST[i].value === data.target_species) {
-      species_name = TARGET_SPECIES_LIST[i].name;
-      break;
-    }
-  }
-
+  const { act, data } = useBackend(props);
+  const { reverse, target_species } = data;
+  const species = TARGET_SPECIES_LIST.find(species => {
+    return species.value === target_species;
+  });
   return (
     <Fragment>
       <Box mb={2}>
-      Trigger if the person scanned is {data.reverse ? "not" : ""} of the {species_name} species.
-        {data.target_species === "zombie" && (
-          " All zombie types will be detected, including dormant zombies."
+        Trigger if the person scanned is {reverse ? 'not' : ''}
+        {' '}of the {species.name} species.
+        {target_species === 'zombie' && (
+          ' All zombie types will be detected, including dormant zombies.'
         )}
       </Box>
       <Box mb={2}>
         {TARGET_SPECIES_LIST.map(species => (
-          <Button
+          <Button.Checkbox
             key={species.value}
-            selected={species.value === data.target_species}
-            icon={species.value === data.target_species ? 'check-square-o' : 'square-o'}
+            checked={species.value === target_species}
             content={species.name}
-            onClick={() => act(ref, 'set_target_species', { new_species: species.value })}
-          />
+            onClick={() => act('set_target_species', {
+              new_species: species.value,
+            })} />
         ))}
       </Box>
       <ScannerGateMode state={state} />
@@ -297,31 +277,26 @@ const ScannerGateSpecies = props => {
 
 const ScannerGateNutrition = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-
-  let nutrition_name;
-  for (let i = 0; i < TARGET_NUTRITION_LIST.length; i++) {
-    if (TARGET_NUTRITION_LIST[i].value === data.target_nutrition) {
-      nutrition_name = TARGET_NUTRITION_LIST[i].name;
-      break;
-    }
-  }
-
+  const { act, data } = useBackend(props);
+  const { reverse, target_nutrition } = data;
+  const nutrition = TARGET_NUTRITION_LIST.find(nutrition => {
+    return nutrition.value === target_nutrition;
+  });
   return (
     <Fragment>
       <Box mb={2}>
-      Trigger if the person scanned {data.reverse ? "does not have" : "has"} the {nutrition_name} nutrition level.
+        Trigger if the person scanned {reverse ? 'does not have' : 'has'}
+        {' '}the {nutrition.name} nutrition level.
       </Box>
       <Box mb={2}>
         {TARGET_NUTRITION_LIST.map(nutrition => (
-          <Button
+          <Button.Checkbox
             key={nutrition.name}
-            selected={nutrition.value === data.target_nutrition}
-            icon={nutrition.value === data.target_nutrition ? 'check-square-o' : 'square-o'}
+            checked={nutrition.value === target_nutrition}
             content={nutrition.name}
-            onClick={() => act(ref, 'set_target_nutrition', { new_nutrition: nutrition.name })}
-          />
+            onClick={() => act('set_target_nutrition', {
+              new_nutrition: nutrition.name,
+            })} />
         ))}
       </Box>
       <ScannerGateMode state={state} />
@@ -331,25 +306,26 @@ const ScannerGateNutrition = props => {
 
 const ScannerGateNanites = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-
+  const { act, data } = useBackend(props);
+  const { reverse, nanite_cloud } = data;
   return (
     <Fragment>
       <Box mb={2}>
-      Trigger if the person scanned {data.reverse ? "does not have" : "has"} nanite cloud {data.nanite_cloud}.
+        Trigger if the person scanned {reverse ? 'does not have' : 'has'}
+        {' '}nanite cloud {nanite_cloud}.
       </Box>
       <Box mb={2}>
         <LabeledList>
           <LabeledList.Item label="Cloud ID">
             <NumberInput
-              value={data.nanite_cloud}
+              value={nanite_cloud}
               width="65px"
               minValue={1}
               maxValue={100}
               stepPixelSize={2}
-              onChange={(e, value) => act(ref, 'set_nanite_cloud', { new_cloud: value })}
-            />
+              onChange={(e, value) => act('set_nanite_cloud', {
+                new_cloud: value,
+              })} />
           </LabeledList.Item>
         </LabeledList>
       </Box>
@@ -359,19 +335,16 @@ const ScannerGateNanites = props => {
 };
 
 const ScannerGateMode = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-
+  const { act, data } = useBackend(props);
+  const { reverse } = data;
   return (
     <LabeledList>
       <LabeledList.Item label="Scanning Mode">
         <Button
-          content={data.reverse ? "Inverted" : "Default"}
-          icon={data.reverse ? 'random' : 'long-arrow-alt-right'}
-          onClick={() => act(ref, 'toggle_reverse')}
-          color={data.reverse ? "bad" : "good"}
-        />
+          content={reverse ? 'Inverted' : 'Default'}
+          icon={reverse ? 'random' : 'long-arrow-alt-right'}
+          onClick={() => act('toggle_reverse')}
+          color={reverse ? 'bad' : 'good'} />
       </LabeledList.Item>
     </LabeledList>
   );
