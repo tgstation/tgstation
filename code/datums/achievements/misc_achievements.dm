@@ -45,3 +45,13 @@
 	name = "Disk, Please!"
 	desc = "Is the man currently pointing a loaded rocket launcher at your head point blank really dumb enough to pull the trigger? Do you really want to find out?"
 	database_id = MEDAL_DISKPLEASE
+
+/datum/award/achievement/misc/gamer
+	name = "My Watchlist Status is Not Important"
+	desc = "You may be under the impression that violent video games are a harmless pastime, but the security and medical personnel swarming your location with batons and knockout gas look like they disagree."
+	database_id = MEDAL_GAMER
+
+/datum/award/achievement/misc/vendor_squish
+	name = "I Was a Teenage Anarchist"
+	desc = "You were doing a great job sticking it to the system until that vending machine decided to fight back."
+	database_id = MEDAL_VENDORSQUISH

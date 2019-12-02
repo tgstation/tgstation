@@ -506,6 +506,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		gamers[gamer] = -1
 
+		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
+
 		if(!isnull(GLOB.data_core.general))
 			for(var/datum/data/record/R in GLOB.data_core.general)
 				if(R.fields["name"] == gamer.name)

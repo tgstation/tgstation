@@ -11,6 +11,8 @@
 #define MEDAL_HELBITALJANKEN	"Hel-bent on Winning"
 #define MEDAL_MATERIALCRAFT 	"Getting an Upgrade"
 #define MEDAL_DISKPLEASE	 	"Disk, Please!"
+#define MEDAL_GAMER			 	"My Watchlist Status is Not Important"
+#define MEDAL_VENDORSQUISH		"I Was a Teenage Anarchist"
 
 
 //Boss medals
