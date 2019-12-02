@@ -36,7 +36,8 @@
 					/obj/item/reagent_containers/food/drinks/bottle/blank/small = 15
 					)
 	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12,
-					 /obj/item/reagent_containers/food/drinks/bottle/fernet = 5)
+					 /obj/item/reagent_containers/food/drinks/bottle/fernet = 5,
+					 /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka = 3)
 	premium = list(/obj/item/reagent_containers/glass/bottle/ethanol = 4,
 				   /obj/item/reagent_containers/food/drinks/bottle/champagne = 5,
 				   /obj/item/reagent_containers/food/drinks/bottle/trappist = 5)
