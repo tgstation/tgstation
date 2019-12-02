@@ -1,0 +1,20 @@
+name: TGUI Rebuild After Merge
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  build:
+    name: Rebuild open TGUI PRs
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '>=12.13'
+      - name: Rebuild PRs
+        uses: tgstation/tgui-rebuild-pr-action@master
