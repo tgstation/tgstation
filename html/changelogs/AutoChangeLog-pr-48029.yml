@@ -1,0 +1,4 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - rscadd: "Scanner Gate uses TGUI-NEXT now"

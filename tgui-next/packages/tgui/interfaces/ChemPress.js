@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NumberInput, Section } from '../components';
+import { Box, Button, Input, LabeledList, NumberInput, Section } from '../components';
 
 export const ChemPress = props => {
   const { act, data } = useBackend(props);
@@ -26,10 +26,11 @@ export const ChemPress = props => {
             })} />
         </LabeledList.Item>
         <LabeledList.Item label="Pill Name">
-          <Button
-            icon="pencil-alt"
-            content={pill_name}
-            onClick={() => act('change_pill_name')} />
+          <Input
+            value={pill_name}
+            onChange={(e, value) => act('change_pill_name', {
+              name: value,
+            })} />
         </LabeledList.Item>
         <LabeledList.Item label="Pill Style">
           {pill_styles.map(pill => (

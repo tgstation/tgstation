@@ -52,6 +52,10 @@
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
 		AddElement(/datum/element/cleaning)
 		update_icon()
+	else if(istype(I, /obj/item/key/janitor))
+		..()
+	else if(mybag)
+		mybag.attackby(I, user)
 	else
 		return ..()
 
