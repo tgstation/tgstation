@@ -78,6 +78,7 @@ import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
+import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
@@ -451,6 +452,11 @@ const ROUTES = {
   radio: {
     component: () => Radio,
     scrollable: false,
+  },
+  roulette: {
+    component: () => Roulette,
+    scrollable: false,
+    theme: 'cardtable',
   },
   rpd: {
     component: () => RapidPipeDispenser,
