@@ -1,3 +1,5 @@
+// Keep the identifiers here below 32 characters, you can put the full display name in the actual achievement datum
+
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
 
@@ -11,11 +13,12 @@
 #define MEDAL_HELBITALJANKEN	"Hel-bent on Winning"
 #define MEDAL_MATERIALCRAFT 	"Getting an Upgrade"
 #define MEDAL_DISKPLEASE	 	"Disk, Please!"
-#define MEDAL_GAMER			 	"My Watchlist Status is Not Important"
-#define MEDAL_VENDORSQUISH		"I Was a Teenage Anarchist"
-#define MEDAL_SWIRLIE			"A Bowl-d New World"
-#define MEDAL_SELFOUCH			"How Do I Switch Hands???"
+#define MEDAL_GAMER			 	"I'm Not Important"
+#define MEDAL_VENDORSQUISH		"Teenage Anarchist"
+#define MEDAL_SWIRLIE			"Bowl-d"
+#define MEDAL_SELFOUCH			"Hands???"
 #define MEDAL_SANDMAN			"Mister Sandman"
+#define MEDAL_CLEANBOSS			"Cleanboss"
 
 
 //Boss medals

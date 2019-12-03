@@ -70,3 +70,8 @@
 	name = "Mister Sandman"
 	desc = "Mechanically speaking, there's no real benefit to being unconscious during surgery. Weird how insistent this doctor is about using the N2O anyway though, huh?"
 	database_id = MEDAL_SANDMAN
+
+/datum/award/achievement/misc/cleanboss
+	name = "One Lean, Mean, Cleaning Machine"
+	desc = "How does it feel to know that your workplace values a mop bucket on wheels more than you?" // i can do better than this give me time
+	database_id = MEDAL_CLEANBOSS
