@@ -120,6 +120,11 @@ const ROUTES = {
     component: () => AtmosPump,
     scrollable: false,
   },
+  blackmarket_uplink: {
+    component: () => BlackmarketUplink,
+    scrollable: true,
+    theme: 'hackerman',
+  },
   borgopanel: {
     component: () => BorgPanel,
     scrollable: true,
@@ -411,11 +416,6 @@ const ROUTES = {
   wires: {
     component: () => Wires,
     scrollable: false,
-  },
-  blackmarket_uplink: {
-    component: () => BlackmarketUplink,
-    scrollable: true,
-    theme: 'hackerman',
   },
 };
 

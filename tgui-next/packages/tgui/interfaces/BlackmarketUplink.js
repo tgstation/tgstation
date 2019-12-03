@@ -17,30 +17,32 @@ export const BlackmarketUplink = props => {
       <Grid mt={20}>
         {map(deliveryMethod => {
           const name = deliveryMethod.name;
-          if (!(name === "LTSRBT" && !data.ltsrbt_built)) {
-            return (
-              <Grid.Column
-                textAlign="center"
-                position="relative">
-                <Box>
-                  <Box
-                    fontSize="30px">
-                    {name}
-                  </Box>
-                  <Box mt={1}>
-                    {deliveryMethodDesc[name]}
-                  </Box>
-                </Box>
-                <Button
-                  key={name}
-                  content={deliveryMethod.price+'$'}
-                  mt={1}
-                  onClick={() => act('buy', {
-                    method: name,
-                  })} />
-              </Grid.Column>
-            );
+          if (name === "LTSRBT" && !data.ltsrbt_built) {
+            return null;
           }
+
+          return (
+            <Grid.Column
+              textAlign="center"
+              position="relative">
+              <Box>
+                <Box
+                  fontSize="30px">
+                  {name}
+                </Box>
+                <Box mt={1}>
+                  {deliveryMethodDesc[name]}
+                </Box>
+              </Box>
+              <Button
+                key={name}
+                content={deliveryMethod.price+'$'}
+                mt={1}
+                onClick={() => act('buy', {
+                  method: name,
+                })} />
+            </Grid.Column>
+          );
         })(deliveryMethods)}
       </Grid>
       <Button
@@ -63,7 +65,6 @@ export const BlackmarketUplink = props => {
       <Tabs
         activeTab={data.viewing_market}>
         {map(market => {
-          //
           const id = market.id;
           const name = market.name;
           return (
@@ -98,13 +99,13 @@ export const BlackmarketUplink = props => {
                     <Table.Cell bold>
                       {item.name}
                     </Table.Cell>
-                    <Table.Cell className="LabeledList__buttons">
+                    <Table.Cell collapsing textAlign="right">
                       {item.amount ? item.amount+" in stock" : "Out of stock"}
                     </Table.Cell>
-                    <Table.Cell className="LabeledList__buttons">
+                    <Table.Cell collapsing textAlign="right">
                       {item.cost+'$'}
                     </Table.Cell>
-                    <Table.Cell className="LabeledList__buttons">
+                    <Table.Cell collapsing textAlign="right">
                       <Button
                         content={'Buy'}
                         disabled={!item.amount}
