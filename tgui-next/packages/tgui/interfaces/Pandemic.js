@@ -184,7 +184,7 @@ export const PandemicSymptomDisplay = props => {
     neutered,
   } = symptom;
 
-  const thresholds = symptom.threshold_desc || {};
+  const thresholds = map((desc, label) => ({ desc, label }))(symptom.thresholds || {});
 
   return (
     <Section
@@ -222,20 +222,20 @@ export const PandemicSymptomDisplay = props => {
           </LabeledList>
         </Grid.Column>
       </Grid>
-      {thresholds !== {} && (
+      {thresholds.length > 0 && (
         <Section
           title="Thresholds"
           level={3} >
           <LabeledList>
-            {map((desc, threshold) => {
+            {thresholds.map(threshold => {
               return (
                 <LabeledList.Item
-                  key={threshold}
-                  label={threshold} >
-                  {desc}
+                  key={threshold.label}
+                  label={threshold.label} >
+                  {threshold.desc}
                 </LabeledList.Item>
               );
-            })(thresholds)}
+            })}
           </LabeledList>
         </Section>
       )}
