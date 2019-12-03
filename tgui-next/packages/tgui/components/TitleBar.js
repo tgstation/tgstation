@@ -28,7 +28,7 @@ export const TitleBar = props => {
         color={statusToColor(status)}
         name="eye" />
       <div className="TitleBar__title">
-        {toTitleCase(title)}
+        {title === title.toLowerCase() ? toTitleCase(title) : title}
       </div>
       <div className="TitleBar__dragZone"
         onMousedown={e => fancy && onDragStart(e)} />
