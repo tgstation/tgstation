@@ -26,7 +26,8 @@ export const AirAlarm = props => {
 
 const AirAlarmStatus = props => {
   const { data } = useBackend(props);
-  const entries = data.environment_data || [];
+  const entries = (data.environment_data || [])
+    .filter(entry => entry.value >= 0.01);
   const dangerMap = {
     0: {
       color: 'good',
@@ -47,19 +48,17 @@ const AirAlarmStatus = props => {
       <LabeledList>
         {entries.length > 0 && (
           <Fragment>
-            {entries
-              .filter(entry => entry.value >= 0.01)
-              .map(entry => {
-                const status = dangerMap[entry.danger_level] || dangerMap[0];
-                return (
-                  <LabeledList.Item
-                    key={entry.name}
-                    label={entry.name}
-                    color={status.color}>
-                    {toFixed(entry.value, 2)}{entry.unit}
-                  </LabeledList.Item>
-                );
-              })}
+            {entries.map(entry => {
+              const status = dangerMap[entry.danger_level] || dangerMap[0];
+              return (
+                <LabeledList.Item
+                  key={entry.name}
+                  label={entry.name}
+                  color={status.color}>
+                  {toFixed(entry.value, 2)}{entry.unit}
+                </LabeledList.Item>
+              );
+            })}
             <LabeledList.Item
               label="Local status"
               color={localStatus.color}>
