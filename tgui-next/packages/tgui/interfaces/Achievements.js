@@ -10,10 +10,10 @@ export const Achievement = props => {
   } = props;
   return (
     <tr key={name}>
-      <td style={{'padding': '6px'}}>
+      <td style={{ padding: '6px' }}>
         <Box className={icon_class} />
       </td>
-      <td style={{'vertical-align': 'top'}}>
+      <td style={{ 'vertical-align': 'top' }}>
         <h1>{name}</h1>
         {desc}
         <Box
@@ -33,10 +33,10 @@ export const Score = props => {
   } = props;
   return (
     <tr key={name}>
-      <td style={{'padding': '6px'}}>
+      <td style={{ 'padding': '6px' }}>
         <Box className={icon_class} />
       </td>
-      <td style={{'vertical-align': 'top'}}>
+      <td style={{ 'vertical-align': 'top' }}>
         <h1>{name}</h1>
         {desc}
         <Box

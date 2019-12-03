@@ -32,9 +32,11 @@ export const ChemAcclimator = props => {
               minValue={1}
               maxValue={data.target_temperature}
               stepPixelSize={2}
-              onChange={(e, value) => act('set_allowed_temperature_difference', {
-                temperature: value,
-              })} />
+              onChange={(e, value) => {
+                act('set_allowed_temperature_difference', {
+                  temperature: value,
+                });
+              }} />
           </LabeledList.Item>
         </LabeledList>
       </Section>

@@ -318,7 +318,10 @@ export const NaniteProgrammer = props => {
             level={3}>
             <LabeledList>
               {extra_settings.map(setting => (
-                <NaniteExtraEntry key={setting.name} act={act} extra_setting={setting} />
+                <NaniteExtraEntry
+                  key={setting.name}
+                  act={act}
+                  extra_setting={setting} />
               ))}
             </LabeledList>
           </Section>
