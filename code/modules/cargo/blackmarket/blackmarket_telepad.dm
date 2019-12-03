@@ -15,7 +15,7 @@
 	icon_state = "exonet_node"
 	circuit = /obj/item/circuitboard/machine/ltsrbt
 	density = TRUE
-	
+
 	idle_power_usage = 200
 
 	var/power_efficiency = 1
@@ -46,14 +46,14 @@
 		// On tier 4 recharge time is 10.
 		recharge_time = base_recharge_time - scan.rating * 5
 		recharge_cooldown = recharge_time
-	
+
 	power_efficiency = 0
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
 		power_efficiency += laser.rating
 	// Shouldn't happen but you never know.
 	if(!power_efficiency)
 		power_efficiency = 1
-	
+
 /obj/machinery/ltsrbt/proc/add_to_queue(datum/blackmarket_purchase/purchase)
 	if(!recharge_cooldown && !recieving)
 		recieving = purchase
@@ -63,11 +63,11 @@
 /obj/machinery/ltsrbt/process()
 	if(stat & NOPOWER)
 		return
-	
+
 	if(recharge_cooldown)
 		recharge_cooldown--
 		return
-	
+
 	if(teleporting)
 		return
 
@@ -79,7 +79,7 @@
 			CRASH("LTSRBT: SELLING NOT IMPLEMENTED YET.")
 		else
 			P.item = P.entry.spawn_item(T)
-			
+
 		use_power(power_usage_per_teleport / power_efficiency)
 		var/datum/effect_system/spark_spread/sparks = new
 		sparks.set_up(5, 1, get_turf(src))
@@ -108,7 +108,6 @@
 
 		recharge_cooldown = recharge_time
 		return
-	
+
 	if(queue.len)
 		recieving = pick_n_take(queue)
-	
