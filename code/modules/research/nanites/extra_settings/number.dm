@@ -18,6 +18,9 @@
 		return
 	src.value = CLAMP(value, min, max)
 
+/datum/nanite_extra_setting/number/get_copy()
+	return new /datum/nanite_extra_setting/number(value, min, max, unit)
+
 /datum/nanite_extra_setting/number/get_frontend_list(name)
 	return list(list(
 		"name" = name,
