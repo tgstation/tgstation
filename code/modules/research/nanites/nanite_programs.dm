@@ -122,8 +122,8 @@
 ///Copy of the list instead of direct reference for obvious reasons
 /datum/nanite_program/proc/copy_extra_settings_to(datum/nanite_program/target)
 	var/list/copy_list = list()
-	for(var/ns in extra_settings)
-		var/datum/nanite_extra_setting/extra_setting = ns
+	for(var/ns_name in extra_settings)
+		var/datum/nanite_extra_setting/extra_setting = extra_settings[ns_name]
 		copy_list += extra_setting.get_copy()
 	target.extra_settings = copy_list
 
