@@ -1,4 +1,0 @@
-author: "ghost"
-delete-after: True
-changes: 
-  - bugfix: "Cyborg buckling now waits to add to inhands until the buckling is complete"

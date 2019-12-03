@@ -1,5 +1,5 @@
 import { UI_DISABLED, UI_INTERACTIVE } from './constants';
-import { tridentVersion } from './byond';
+import { tridentVersion, act as _act } from './byond';
 
 /**
  * This file provides a clear separation layer between backend updates
@@ -54,4 +54,46 @@ export const backendReducer = (state, action) => {
   }
 
   return state;
+};
+
+/**
+ * @typedef BackendState
+ * @type {{
+ *   config: {
+ *     title: string,
+ *     status: number,
+ *     screen: string,
+ *     style: string,
+ *     interface: string,
+ *     fancy: number,
+ *     locked: number,
+ *     observer: number,
+ *     window: string,
+ *     ref: string,
+ *   },
+ *   data: any,
+ *   visible: boolean,
+ *   interactive: boolean,
+ * }}
+ */
+
+/**
+ * A React hook (sort of) for getting tgui state and related functions.
+ *
+ * This is supposed to be replaced with a real React Hook, which can only
+ * be used in functional components. DO NOT use it in class-based components!
+ *
+ * @return {BackendState & {
+ *   act: (action: string, params?: object) => void,
+ * }}
+ */
+export const useBackend = props => {
+  // TODO: Dispatch "act" calls as Redux actions
+  const { state, dispatch } = props;
+  const ref = state.config.ref;
+  const act = (action, params = {}) => _act(ref, action, params);
+  return {
+    ...state,
+    act,
+  };
 };

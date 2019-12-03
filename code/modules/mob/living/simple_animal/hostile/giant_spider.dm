@@ -165,6 +165,7 @@
 	melee_damage_upper = 20
 	poison_per_bite = 5
 	move_to_delay = 5
+	gold_core_spawnable = NO_SPAWN
 
 //vipers are the rare variant of the hunter, no IMMEDIATE damage but so much poison medical care will be needed fast.
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
@@ -181,7 +182,6 @@
 	move_to_delay = 4
 	poison_type = /datum/reagent/toxin/venom //all in venom, glass cannon. you bite 5 times and they are DEFINITELY dead, but 40 health and you are extremely obvious. Ambush, maybe?
 	speed = 1
-	gold_core_spawnable = NO_SPAWN
 
 //tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula

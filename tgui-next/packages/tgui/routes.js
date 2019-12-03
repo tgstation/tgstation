@@ -22,6 +22,7 @@ import { ChemFilter } from './interfaces/ChemFilter';
 import { ChemHeater } from './interfaces/ChemHeater';
 import { ChemMaster } from './interfaces/ChemMaster';
 import { ChemPress } from './interfaces/ChemPress';
+import { ChemReactionChamber } from './interfaces/ChemReactionChamber';
 import { ChemSplitter } from './interfaces/ChemSplitter';
 import { ChemSynthesizer } from './interfaces/ChemSynthesizer';
 import { CodexGigas } from './interfaces/CodexGigas';
@@ -40,6 +41,11 @@ import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { Mint } from './interfaces/Mint';
+import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
+import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
+import { NaniteProgramHub } from './interfaces/NaniteProgramHub';
+import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
+import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosMain } from './interfaces/NtosMain';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
@@ -48,6 +54,7 @@ import { NtosWrapper } from './interfaces/NtosWrapper';
 import { NuclearBomb } from './interfaces/NuclearBomb';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
+import { OreBox } from './interfaces/OreBox';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PowerMonitor } from './interfaces/PowerMonitor';
@@ -55,6 +62,7 @@ import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { ScannerGate } from './interfaces/ScannerGate';
 import { SmartVend } from './interfaces/SmartVend';
 import { Smes } from './interfaces/Smes';
 import { SolarControl } from './interfaces/SolarControl';
@@ -168,6 +176,10 @@ const ROUTES = {
     component: () => ChemPress,
     scrollable: false,
   },
+  reaction_chamber: {
+    component: () => ChemReactionChamber,
+    scrollable: true,
+  },
   chem_splitter: {
     component: () => ChemSplitter,
     scrollable: false,
@@ -248,6 +260,26 @@ const ROUTES = {
     component: () => Mint,
     scrollable: false,
   },
+  nanite_chamber_control: {
+    component: () => NaniteChamberControl,
+    scrollable: true,
+  },
+  nanite_cloud_control: {
+    component: () => NaniteCloudControl,
+    scrollable: true,
+  },
+  nanite_program_hub: {
+    component: () => NaniteProgramHub,
+    scrollable: true,
+  },
+  nanite_programmer: {
+    component: () => NaniteProgrammer,
+    scrollable: true,
+  },
+  nanite_remote: {
+    component: () => NaniteRemote,
+    scrollable: true,
+  },
   ntos_main: {
     component: () => NtosMain,
     wrapper: () => NtosWrapper,
@@ -287,6 +319,10 @@ const ROUTES = {
     component: () => OreRedemptionMachine,
     scrollable: true,
   },
+  ore_box: {
+    component: () => OreBox,
+    scrollable: true,
+  },
   operating_computer: {
     component: () => OperatingComputer,
     scrollable: true,
@@ -309,6 +345,10 @@ const ROUTES = {
   },
   rpd: {
     component: () => RapidPipeDispenser,
+    scrollable: true,
+  },
+  scanner_gate: {
+    component: () => ScannerGate,
     scrollable: true,
   },
   shuttle_manipulator: {

@@ -1,7 +1,7 @@
-import { Component, Fragment } from 'inferno';
+import { Component } from 'inferno';
 import {
-  Box, Button, Flex, Input, LabeledList, NumberInput,
-  ProgressBar, Section, Tabs, Tooltip, Collapsible,
+  Box, Button, Collapsible, Input, LabeledList,
+  NumberInput, ProgressBar, Section, Tabs, Tooltip, BlockQuote,
 } from '../components';
 
 const COLORS_ARBITRARY = [
@@ -27,34 +27,65 @@ const COLORS_STATES = [
   'white',
 ];
 
-const TAB_KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-  .map(x => 'tab_' + x);
+const PAGES = [
+  {
+    title: 'Button',
+    component: () => KitchenSinkButton,
+  },
+  {
+    title: 'Box',
+    component: () => KitchenSinkBox,
+  },
+  {
+    title: 'ProgressBar',
+    component: () => KitchenSinkProgressBar,
+  },
+  {
+    title: 'Tabs',
+    component: () => KitchenSinkTabs,
+  },
+  {
+    title: 'Tooltip',
+    component: () => KitchenSinkTooltip,
+  },
+  {
+    title: 'Input',
+    component: () => KitchenSinkInput,
+  },
+  {
+    title: 'Collapsible',
+    component: () => KitchenSinkCollapsible,
+  },
+  {
+    title: 'BlockQuote',
+    component: () => KitchenSinkBlockQuote,
+  },
+];
 
 export const KitchenSink = props => {
   return (
-    <Fragment>
-      <Flex mb={1}>
-        <Flex.Item mr={1} grow={1}>
-          <KitchenSinkButtons />
-        </Flex.Item>
-        <Flex.Item>
-          <KitchenSinkBoxes />
-        </Flex.Item>
-      </Flex>
-      <KitchenSinkProgress />
-      <KitchenSinkTabs />
-      <KitchenSinkTooltips />
-      <KitchenSinkCollapsible />
-      <KitchenSinkInputs />
-    </Fragment>
+    <Section>
+      <Tabs vertical>
+        {PAGES.map(page => (
+          <Tabs.Tab
+            key={page.title}
+            label={page.title}>
+            {() => {
+              const Component = page.component();
+              return (
+                <Component />
+              );
+            }}
+          </Tabs.Tab>
+        ))}
+      </Tabs>
+    </Section>
   );
 };
 
-const KitchenSinkButtons = props => {
+const KitchenSinkButton = props => {
   return (
-    <Section
-      title="Buttons"
-      height="100%">
+    <Box>
       <Box mb={1}>
         <Button content="Simple" />
         <Button selected content="Selected" />
@@ -93,16 +124,13 @@ const KitchenSinkButtons = props => {
             content={color} />
         ))}
       </Box>
-    </Section>
+    </Box>
   );
 };
 
-const KitchenSinkBoxes = props => {
+const KitchenSinkBox = props => {
   return (
-    <Section
-      title="Box"
-      width={25}
-      height="100%">
+    <Box>
       <Box bold content="bold" />
       <Box italic content="italic" />
       <Box opacity={0.5} content="opacity 0.5" />
@@ -111,11 +139,11 @@ const KitchenSinkBoxes = props => {
       <Box textAlign="left" content="left" />
       <Box textAlign="center" content="center" />
       <Box textAlign="right" content="right" />
-    </Section>
+    </Box>
   );
 };
 
-class KitchenSinkProgress extends Component {
+class KitchenSinkProgressBar extends Component {
   constructor() {
     super();
     this.state = {
@@ -126,7 +154,7 @@ class KitchenSinkProgress extends Component {
   render() {
     const { progress } = this.state;
     return (
-      <Section title="Progress">
+      <Box>
         <ProgressBar
           ranges={{
             good: [0.5, Infinity],
@@ -137,17 +165,19 @@ class KitchenSinkProgress extends Component {
           maxValue={1}
           value={progress}
           content={`value: ${Number(progress).toFixed(1)}`} />
-        <Button
-          content="-0.1"
-          onClick={() => this.setState(prevState => ({
-            progress: prevState.progress - 0.1,
-          }))} />
-        <Button
-          content="+0.1"
-          onClick={() => this.setState(prevState => ({
-            progress: prevState.progress + 0.1,
-          }))} />
-      </Section>
+        <Box mt={1}>
+          <Button
+            content="-0.1"
+            onClick={() => this.setState(prevState => ({
+              progress: prevState.progress - 0.1,
+            }))} />
+          <Button
+            content="+0.1"
+            onClick={() => this.setState(prevState => ({
+              progress: prevState.progress + 0.1,
+            }))} />
+        </Box>
+      </Box>
     );
   }
 }
@@ -162,8 +192,9 @@ class KitchenSinkTabs extends Component {
 
   render() {
     const { vertical } = this.state;
+    const TAB_KEYS = [1, 2, 3, 4, 5].map(x => 'tab_' + x);
     return (
-      <Section title="Tabs">
+      <Box>
         {'Vertical: '}
         <Button inline
           content={String(vertical)}
@@ -186,28 +217,46 @@ class KitchenSinkTabs extends Component {
             </Tabs.Tab>
           ))}
         </Tabs>
-      </Section>
+      </Box>
     );
   }
 }
 
-const KitchenSinkTooltips = props => {
+const KitchenSinkTooltip = props => {
+  const positions = [
+    'top',
+    'left',
+    'right',
+    'bottom',
+    'bottom-left',
+    'bottom-right',
+  ];
   return (
-    <Section label="Tooltips">
-      <Box inline position="relative" mr={1}>
-        Box (hover me).
-        <Tooltip
-          content="Tooltip text."
-          position="right" />
+    <Box>
+      <Box>
+        <Box inline position="relative" mr={1}>
+          Box (hover me).
+          <Tooltip content="Tooltip text." />
+        </Box>
+        <Button
+          tooltip="Tooltip text."
+          content="Button" />
       </Box>
-      <Button
-        tooltip="Tooltip text."
-        content="Button" />
-    </Section>
+      <Box mt={1}>
+        {positions.map(position => (
+          <Button
+            key={position}
+            color="transparent"
+            tooltip="Tooltip text."
+            tooltipPosition={position}
+            content={position} />
+        ))}
+      </Box>
+    </Box>
   );
 };
 
-class KitchenSinkInputs extends Component {
+class KitchenSinkInput extends Component {
   constructor() {
     super();
     this.state = {
@@ -219,7 +268,7 @@ class KitchenSinkInputs extends Component {
   render() {
     const { number, text } = this.state;
     return (
-      <Section title="Inputs">
+      <Box>
         <LabeledList>
           <LabeledList.Item label="NumberInput">
             <NumberInput
@@ -258,14 +307,18 @@ class KitchenSinkInputs extends Component {
               })} />
           </LabeledList.Item>
         </LabeledList>
-      </Section>
+      </Box>
     );
   }
 }
 
 const KitchenSinkCollapsible = props => {
   return (
-    <Collapsible title="Collapsible Demo">
+    <Collapsible
+      title="Collapsible Demo"
+      buttons={(
+        <Button icon="cog" />
+      )}>
       <Section>
         <BoxOfSampleText />
       </Section>
@@ -285,5 +338,13 @@ const BoxOfSampleText = props => {
         growth of soviet agriculture.
       </Box>
     </Box>
+  );
+};
+
+const KitchenSinkBlockQuote = props => {
+  return (
+    <BlockQuote>
+      <BoxOfSampleText />
+    </BlockQuote>
   );
 };

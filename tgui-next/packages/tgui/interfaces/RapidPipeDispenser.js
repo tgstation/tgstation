@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, ColorBox, Flex, LabeledList, Section, Tabs } from '../components';
 
 const ROOT_CATEGORIES = [
@@ -55,9 +55,7 @@ const TOOLS = [
 ];
 
 export const RapidPipeDispenser = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     category: rootCategoryIndex,
     categories = [],
@@ -79,7 +77,7 @@ export const RapidPipeDispenser = props => {
                 icon={ICON_BY_CATEGORY_NAME[categoryName]}
                 color="transparent"
                 content={categoryName}
-                onClick={() => act(ref, 'category', { category: i })} />
+                onClick={() => act('category', { category: i })} />
             ))}
           </LabeledList.Item>
           <LabeledList.Item label="Modes">
@@ -88,7 +86,7 @@ export const RapidPipeDispenser = props => {
                 key={tool.bitmask}
                 checked={mode & tool.bitmask}
                 content={tool.name}
-                onClick={() => act(ref, 'mode', {
+                onClick={() => act('mode', {
                   mode: tool.bitmask,
                 })} />
             ))}
@@ -105,7 +103,7 @@ export const RapidPipeDispenser = props => {
                   key={colorName}
                   ml={1}
                   color={PAINT_COLORS[colorName]}
-                  onClick={() => act(ref, 'color', {
+                  onClick={() => act('color', {
                     paint_color: colorName,
                   })} />
               ))}
@@ -123,7 +121,7 @@ export const RapidPipeDispenser = props => {
                     fluid
                     checked={layer === piping_layer}
                     content={'Layer ' + layer}
-                    onClick={() => act(ref, 'piping_layer', {
+                    onClick={() => act('piping_layer', {
                       piping_layer: layer,
                     })} />
                 ))}
@@ -140,7 +138,7 @@ export const RapidPipeDispenser = props => {
                     height: '48px',
                     padding: 0,
                   }}
-                  onClick={() => act(ref, 'setdir', {
+                  onClick={() => act('setdir', {
                     dir: preview.dir,
                     flipped: preview.flipped,
                   })}>
@@ -174,7 +172,7 @@ export const RapidPipeDispenser = props => {
                       checked={recipe.selected}
                       content={recipe.pipe_name}
                       title={recipe.pipe_name}
-                      onClick={() => act(ref, 'pipe_type', {
+                      onClick={() => act('pipe_type', {
                         pipe_type: recipe.pipe_index,
                         category: category.cat_name,
                       })} />

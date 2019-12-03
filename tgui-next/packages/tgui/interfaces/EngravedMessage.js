@@ -1,12 +1,10 @@
 import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Box, Button, LabeledList, Section, Grid } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Grid, LabeledList, Section } from '../components';
 
 export const EngravedMessage = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     admin_mode,
     creator_key,
@@ -26,8 +24,7 @@ export const EngravedMessage = props => {
           bold
           textAlign="center"
           fontSize="20px"
-          mb={2}
-        >
+          mb={2}>
           {decodeHtmlEntities(hidden_message)}
         </Box>
         <Grid>
@@ -41,8 +38,7 @@ export const EngravedMessage = props => {
               textAlign="center"
               fontSize="16px"
               lineHeight="24px"
-              onClick={() => act(ref, "like")}
-            />
+              onClick={() => act('like')} />
           </Grid.Column>
           <Grid.Column>
             <Button
@@ -53,8 +49,7 @@ export const EngravedMessage = props => {
               textAlign="center"
               fontSize="16px"
               lineHeight="24px"
-              onClick={() => act(ref, "neutral")}
-            />
+              onClick={() => act('neutral')} />
           </Grid.Column>
           <Grid.Column>
             <Button
@@ -66,8 +61,7 @@ export const EngravedMessage = props => {
               textAlign="center"
               fontSize="16px"
               lineHeight="24px"
-              onClick={() => act(ref, "dislike")}
-            />
+              onClick={() => act('dislike')} />
           </Grid.Column>
         </Grid>
       </Section>
@@ -87,10 +81,8 @@ export const EngravedMessage = props => {
               icon="times"
               content="Delete"
               color="bad"
-              onClick={() => act(ref, "delete")}
-            />
-          )}
-        >
+              onClick={() => act('delete')} />
+          )}>
           <LabeledList>
             <LabeledList.Item label="Creator Ckey">
               {creator_key}

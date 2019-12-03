@@ -1,4 +1,5 @@
-import { Box, Tabs, Table, Icon } from '../components';
+import { useBackend } from '../backend';
+import { Box, Icon, Table, Tabs } from '../components';
 
 export const Achievement = props => {
   const {
@@ -16,10 +17,11 @@ export const Achievement = props => {
         <h1>{name}</h1>
         {desc}
         <Box
-          color={value ? "good" : "bad"}
-          content={value ? "Unlocked" : "Locked"} />
+          color={value ? 'good' : 'bad'}
+          content={value ? 'Unlocked' : 'Locked'} />
       </td>
-    </tr>);
+    </tr>
+  );
 };
 
 export const Score = props => {
@@ -41,13 +43,12 @@ export const Score = props => {
           color={value > 0 ? "good" : "bad"}
           content={value > 0 ? "Earned " + value + " times" : "Locked"} />
       </td>
-    </tr>);
+    </tr>
+  );
 };
 
 export const Achievements = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { data } = useBackend(props);
   return (
     <Tabs>
       {data.categories.map(category => (
@@ -59,18 +60,22 @@ export const Achievements = props => {
               .filter(x => x.category === category)
               .map(achievement => {
                 if (achievement.score) {
-                  return (<Score
-                    name={achievement.name}
-                    desc={achievement.desc}
-                    icon_class={achievement.icon_class}
-                    value={achievement.value} />);
+                  return (
+                    <Score
+                      name={achievement.name}
+                      desc={achievement.desc}
+                      icon_class={achievement.icon_class}
+                      value={achievement.value} />
+                  );
                 }
                 else {
-                  return (<Achievement
-                    name={achievement.name}
-                    desc={achievement.desc}
-                    icon_class={achievement.icon_class}
-                    value={achievement.value} />);
+                  return (
+                    <Achievement
+                      name={achievement.name}
+                      desc={achievement.desc}
+                      icon_class={achievement.icon_class}
+                      value={achievement.value} />
+                  );
                 }
               })}
           </Box>
@@ -84,24 +89,43 @@ export const Achievements = props => {
               <Tabs.Tab key={highscore.name} label={highscore.name}>
                 <Table>
                   <Table.Row className="candystripe">
-                    <Table.Cell color="label" textAlign="center">#</Table.Cell>
-                    <Table.Cell color="label" textAlign="center">Key</Table.Cell>
-                    <Table.Cell color="label" textAlign="center">Score</Table.Cell>
+                    <Table.Cell color="label" textAlign="center">
+                      #
+                    </Table.Cell>
+                    <Table.Cell color="label" textAlign="center">
+                      Key
+                    </Table.Cell>
+                    <Table.Cell color="label" textAlign="center">
+                      Score
+                    </Table.Cell>
                   </Table.Row>
-                  { Object.keys(highscore.scores).map((key, index) => {
-                    return (
-                      <Table.Row className="candystripe" key={key} m={2}>
-                        <Table.Cell color="label" textAlign="center">{index+1}</Table.Cell>
-                        <Table.Cell color={key === data.user_ckey ? "green" : null} textAlign="center">
-                          {(index === 0 && <Icon name="crown" color="gold" mr={2} />)}
-                          {key}
-                          {(index === 0 && <Icon name="crown" color="gold" ml={2} />)}
-                        </Table.Cell>
-                        <Table.Cell textAlign="center">{highscore.scores[key]}</Table.Cell>
-                      </Table.Row>);
-                  })}
+                  {Object.keys(highscore.scores).map((key, index) => (
+                    <Table.Row
+                      key={key}
+                      className="candystripe"
+                      m={2}>
+                      <Table.Cell color="label" textAlign="center">
+                        {index+1}
+                      </Table.Cell>
+                      <Table.Cell
+                        color={key === data.user_ckey && 'green'}
+                        textAlign="center">
+                        {index === 0 && (
+                          <Icon name="crown" color="gold" mr={2} />
+                        )}
+                        {key}
+                        {index === 0 && (
+                          <Icon name="crown" color="gold" ml={2} />
+                        )}
+                      </Table.Cell>
+                      <Table.Cell textAlign="center">
+                        {highscore.scores[key]}
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
                 </Table>
-              </Tabs.Tab>);
+              </Tabs.Tab>
+            );
           })}
         </Tabs>
       </Tabs.Tab>

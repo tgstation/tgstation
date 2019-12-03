@@ -12,7 +12,7 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/space_up = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
 					/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,
-					/obj/item/reagent_containers/glass/waterbottle = 10)
+					/obj/item/reagent_containers/food/drinks/waterbottle = 10)
 	contraband = list(/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,
 		              /obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 6)
 	premium = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,

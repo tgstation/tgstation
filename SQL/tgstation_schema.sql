@@ -527,6 +527,14 @@ CREATE TABLE `achievements` (
 	PRIMARY KEY (`ckey`,`achievement_key`)
 ) ENGINE=InnoDB;
 
+DROP TABLE IF EXISTS `achievement_metadata`;
+CREATE TABLE `achievement_metadata` (
+	`achievement_key` VARCHAR(32) NOT NULL,
+	`achievement_version` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+	`achievement_type` enum('achievement','score','award') NULL DEFAULT NULL,
+	PRIMARY KEY (`achievement_key`)
+) ENGINE=InnoDB;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
