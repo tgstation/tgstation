@@ -48,7 +48,7 @@
 								C.adjustOxyLoss(5)
 						else
 							GM.adjustOxyLoss(5)
-					if(was_alive && swirlie.stat == DEAD)
+					if(was_alive && swirlie.stat == DEAD && swirlie.client)
 						swirlie.client.give_award(/datum/award/achievement/misc/swirlie, swirlie) // just like space high school all over again!
 					swirlie = null
 				else
