@@ -1,6 +1,5 @@
 /obj/item/blackmarket_uplink
-	// Named downlink so people wont get executed for having an uplink.
-	name = "Black market Downlink"
+	name = "Black Market Uplink"
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "timer-radio2"
 
@@ -143,7 +142,7 @@
 			selected_item = null
 
 /datum/crafting_recipe/blackmarket_uplink
-	name = "Black market downlink"
+	name = "Black Market Uplink"
 	result = /obj/item/blackmarket_uplink
 	time = 30
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_MULTITOOL)

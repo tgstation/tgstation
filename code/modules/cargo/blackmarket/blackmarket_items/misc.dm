@@ -3,9 +3,9 @@
 
 /datum/blackmarket_item/misc/cap_gun
 	name = "Cap Gun"
-	desc = "Prank your friends with this harmless gun! Harmlessness guranteed,"
+	desc = "Prank your friends with this harmless gun! Harmlessness guranteed."
 	item = /obj/item/toy/gun
-	
+
 	price_min = 50
 	price_max = 200
 	stock_max = 6
@@ -30,6 +30,11 @@
 	price_max = 2000
 	stock_max = 3
 	availability_prob = 40
+
+/datum/blackmarket_item/misc/holywater/spawn_item(loc)
+	if (prob(6.66))
+		return new /obj/item/reagent_containers/glass/beaker/unholywater(loc)
+	return ..()
 
 /datum/blackmarket_item/misc/strange_seed
 	name = "Strange Seeds"

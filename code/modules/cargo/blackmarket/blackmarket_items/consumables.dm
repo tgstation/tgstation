@@ -2,7 +2,7 @@
 	category = "Consumables"
 
 /datum/blackmarket_item/consumable/clown_tears
-	name = "Bowl of Clowns Tears"
+	name = "Bowl of Clown's Tears"
 	desc = "Guaranteed fresh from Weepy Boggins Tragic Kitchen"
 	item = /obj/item/reagent_containers/food/snacks/soup/clownstears
 	stock = 1
@@ -53,7 +53,7 @@
 	availability_prob = 50
 
 /datum/blackmarket_item/consumable/pumpup
-	name = "Maintenance Pumpup"
+	name = "Maintenance Pump-Up"
 	desc = "Resist any Baton stun with this handy device!"
 	item = /obj/item/reagent_containers/hypospray/medipen/pumpup
 

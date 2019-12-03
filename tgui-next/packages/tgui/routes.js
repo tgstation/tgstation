@@ -77,7 +77,7 @@ import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
-import { BlackmarketDownlink } from './interfaces/BlackmarketDownlink';
+import { BlackmarketUplink } from './interfaces/BlackmarketUplink';
 
 const ROUTES = {
   achievements: {
@@ -413,7 +413,7 @@ const ROUTES = {
     scrollable: false,
   },
   blackmarket_uplink: {
-    component: () => BlackmarketDownlink,
+    component: () => BlackmarketUplink,
     scrollable: true,
     theme: 'hackerman',
   },

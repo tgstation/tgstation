@@ -1,12 +1,10 @@
 import { map } from 'common/collections';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Dimmer, Box, Button, Section, Tabs, AnimatedNumber, Table, Grid } from '../components';
 
-export const BlackmarketDownlink = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+export const BlackmarketUplink = props => {
+  const { act, data } = useBackend(props);
   const categories = data.categories || [];
   const deliveryMethods = data.delivery_methods || [];
   const deliveryMethodDesc = data.delivery_method_description || [];
@@ -37,7 +35,7 @@ export const BlackmarketDownlink = props => {
                   key={name}
                   content={deliveryMethod.price+'$'}
                   mt={1}
-                  onClick={() => act(ref, 'buy', {
+                  onClick={() => act('buy', {
                     method: name,
                   })} />
               </Grid.Column>
@@ -48,7 +46,7 @@ export const BlackmarketDownlink = props => {
       <Button
         content="Cancel"
         color="bad"
-        onClick={() => act(ref, 'cancel')} />
+        onClick={() => act('cancel')} />
     </Dimmer>
   );
 
@@ -56,7 +54,7 @@ export const BlackmarketDownlink = props => {
     <Fragment>
       {shipmentSelector}
       <Section
-        title="Black Market Downlink"
+        title="Black Market Uplink"
         buttons={(
           <Box inline bold>
             <AnimatedNumber value={Math.round(data.money)} /> credits
@@ -72,7 +70,7 @@ export const BlackmarketDownlink = props => {
             <Tabs.Tab
               key={id}
               label={name}
-              onClick={() => act(ref, 'set_market', {
+              onClick={() => act('set_market', {
                 market: id,
               })}>
             </Tabs.Tab>
@@ -88,7 +86,7 @@ export const BlackmarketDownlink = props => {
               label={category}
               height={4}
               mt={0.5}
-              onClick={() => act(ref, 'set_category', {
+              onClick={() => act('set_category', {
                 category: category,
               })}>
               {items.map(item => (
@@ -110,7 +108,7 @@ export const BlackmarketDownlink = props => {
                       <Button
                         content={'Buy'}
                         disabled={!item.amount}
-                        onClick={() => act(ref, 'select', {
+                        onClick={() => act('select', {
                           item: item.id,
                         })} />
                     </Table.Cell>
