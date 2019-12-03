@@ -92,7 +92,7 @@ export const CrewConsole = props => {
                 color={healthToColor(
                   sensor.oxydam,
                   sensor.toxdam,
-                  sensor.brutedam,
+                  sensor.burndam,
                   sensor.brutedam)} />
             </Table.Cell>
             <Table.Cell collapsing textAlign="center">
