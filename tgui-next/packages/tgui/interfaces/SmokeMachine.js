@@ -34,16 +34,14 @@ export const SmokeMachine = props => {
         <Box mt={1}>
           <LabeledList>
             <LabeledList.Item label="Range">
-              <Button selected={setting === 1} icon="plus" content="3"
-                disabled={maxSetting < 1} onClick={() => act('setting', {amount: 1})} />
-              <Button selected={setting === 2} icon="plus" content="6"
-                disabled={maxSetting < 2} onClick={() => act('setting', {amount: 2})} />
-              <Button selected={setting === 3} icon="plus" content="9"
-                disabled={maxSetting < 3} onClick={() => act('setting', {amount: 3})} />
-              <Button selected={setting === 4} icon="plus" content="12"
-                disabled={maxSetting < 4} onClick={() => act('setting', {amount: 4})} />
-              <Button selected={setting === 5} icon="plus" content="15"
-                disabled={maxSetting < 5} onClick={() => act('setting', {amount: 5})} />
+              { [1, 2, 3, 4, 5].map(amount => (
+                <Button key={amount}
+                  selected={setting === amount}
+                  icon="plus"
+                  content={amount * 3}
+                  disabled={maxSetting < amount}
+                  onClick={() => act('setting', { amount: amount })} />
+              ))}
             </LabeledList.Item>
           </LabeledList>
         </Box>
@@ -63,7 +61,7 @@ export const SmokeMachine = props => {
               initial={0}
               value={chemical.volume} />
             {' '}
-          units of {chemical.name}
+            units of {chemical.name}
           </Box>
         ))}
       </Section>
