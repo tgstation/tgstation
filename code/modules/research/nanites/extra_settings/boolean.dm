@@ -10,7 +10,7 @@
 
 /datum/nanite_extra_setting/boolean/set_value(value)
 	if(isnull(value))
-		value = !value
+		src.value = !src.value
 		return
 	. = ..()
 
