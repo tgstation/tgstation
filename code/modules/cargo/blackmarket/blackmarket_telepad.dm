@@ -74,10 +74,8 @@
 	var/turf/T = get_turf(src)
 	if(recieving)
 		var/datum/blackmarket_purchase/P = recieving
-		if(P.item)
-			// We are relaying a sold item.
-			CRASH("LTSRBT: SELLING NOT IMPLEMENTED YET.")
-		else
+
+		if(!P.item)
 			P.item = P.entry.spawn_item(T)
 
 		use_power(power_usage_per_teleport / power_efficiency)

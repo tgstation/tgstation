@@ -32,7 +32,7 @@
 		to_chat(user, "<span class='notice'>You slot [I] into [src] and it reports a total of [money] money inserted.</span>")
 		qdel(I)
 		return
-	
+
 	. = ..()
 
 /obj/item/blackmarket_uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -98,9 +98,9 @@
 			var/market = text2path(params["market"])
 			if(!(market in accessible_markets))
 				return
-			
+
 			viewing_market = market
-			
+
 			var/list/categories = SSblackmarket.markets[viewing_market].categories
 			if(categories && categories.len)
 				viewing_category = categories[1]
@@ -134,8 +134,10 @@
 					if(overall_price > money)
 						to_chat(usr, "<span class='warning'>You don't have enough money in [src] for that!</span>")
 						break
-					money -= market.shipping[params["method"]]
-					I.buy(src, usr, params["method"])
+
+					if(I.buy(src, usr, params["method"]))
+						money -= market.shipping[params["method"]]
+
 					break
 			buying = FALSE
 			selected_item = null

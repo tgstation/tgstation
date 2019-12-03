@@ -32,23 +32,23 @@
 	// Sanity
 	if(!istype(uplink) || !istype(buyer))
 		return FALSE
-	
+
 	if(!item)
 		to_chat(buyer, "<span class='notice'>How did you even manage to do this there is no item, please ahelp an admin about how you did this.</span>")
-		return
+		return FALSE
 
 	if(stock <= 0)
 		to_chat(buyer, "<span class='warning'>This is not in stock right now.</span>")
-		return
-	
+		return FALSE
+
 	if(uplink.money < price)
 		to_chat(buyer, "<span class='warning'>You don't have enough money in the uplink for that.</span>")
 		return FALSE
-	
+
 	// Alright, the item has been purchased.
 	stock--
 	uplink.money -= price
-	
+
 	var/datum/blackmarket_purchase/purchase = new(src, uplink, shipping_method)
 
 	// SSblackmarket takes care of the shipping.
