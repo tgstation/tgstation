@@ -24,10 +24,7 @@ SUBSYSTEM_DEF(blackmarket)
 	
 	for(var/item in subtypesof(/datum/blackmarket_item))
 		var/datum/blackmarket_item/I = new item
-		if(!I.item)
-			qdel(I)
-			continue
-		if(!prob(I.availability_prob))
+		if(!I.item || !prob(I.availability_prob))
 			qdel(I)
 			continue
 		for(var/M in I.markets)
@@ -38,8 +35,16 @@ SUBSYSTEM_DEF(blackmarket)
 	. = ..()
 
 /datum/controller/subsystem/blackmarket/fire(resumed)
-	// This whole system will break if the uplink gets removed before the order is processed.
-	for(var/datum/blackmarket_purchase/purchase in queued_purchases)
+	while(length(queued_purchases))
+		var/datum/blackmarket_purchase/purchase = queued_purchases[1]
+		queued_purchases.Cut(1,2)
+		
+		// Uh oh, uplink is gone. We will just keep the money and you will not get your order.
+		if(!purchase.uplink || QDELETED(purchase.uplink))
+			queued_purchases -= purchase
+			qdel(purchase)
+			continue
+		
 		switch(purchase.method)
 			// Find a ltsrbt pad and make it handle the shipping.
 			if(SHIPPING_METHOD_LTSRBT)
@@ -59,7 +64,13 @@ SUBSYSTEM_DEF(blackmarket)
 					continue
 				
 				var/obj/machinery/ltsrbt/pad = pick(telepads)
-				purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being processed by [pad].</span>")
+				
+				// See this? this is terrible and it is all because visible_message does not show the message to the holder.
+				if(ishuman(purchase.uplink.loc))
+					to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being processed by [pad].</span>")
+				else
+					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being processed by [pad].</span>")
+				
 				queued_purchases -= purchase
 				pad.add_to_queue(purchase)
 			// Get random area, throw it somewhere there.
@@ -69,13 +80,19 @@ SUBSYSTEM_DEF(blackmarket)
 				if (!targetturf)
 					continue
 				
-				purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
-				addtimer(CALLBACK(GLOBAL_PROC, /proc/do_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS)
+				// See comment for the same snipet above
+				if(ishuman(purchase.uplink.loc))
+					to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
+				else
+					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
+				
+				// do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
+				addtimer(CALLBACK(src, /datum/controller/subsystem/blackmarket/proc/fake_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS)
 				queued_purchases -= purchase
 				qdel(purchase)
-				
 			// Get the current area of the uplink if it exists, drop the item there.
 			if(SHIPPING_METHOD_DROPPOD)
+				// This is mostly just copied from express cargo console but that should be fine.
 				var/area/A = get_area(purchase.uplink)
 				var/LZ
 				if(A.valid_territory)
@@ -84,23 +101,30 @@ SUBSYSTEM_DEF(blackmarket)
 						if(is_blocked_turf(T))
 							continue
 						LAZYADD(empty_turfs, T)
-						CHECK_TICK
+						if(MC_TICK_CHECK)
+							break
 					if(empty_turfs && empty_turfs.len)
 						LZ = pick(empty_turfs)
-				// Alright, bad area. cancel would happen here but I am too lazy to do that. Anyways just drop it on the uplink
+				// Bad area most likely, just drop it on the uplink. Sure this makes it just go to space and buy but w/e.
 				else
 					LZ = get_turf(purchase.uplink)
 				
 				if(LZ)
 					new /obj/effect/DPtarget(LZ, supplypod_type, purchase.entry.spawn_item())
 
-					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being dropped to [get_area(LZ)].</span>")
+
+					// See comment for the same snipet above
+					if(ishuman(purchase.uplink.loc))
+						to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being dropped to [get_area(LZ)].</span>")
+					else
+						purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being dropped to [get_area(LZ)].</span>")
+					
 					queued_purchases -= purchase
 					qdel(purchase)
 
 					continue
 				
-				// Guessing the uplink got sent to the void realm. This will refund at some point
+				// Guessing the uplink got sent to the void realm.
 				queued_purchases -= purchase
 				qdel(purchase)
 			// Get the current location of the uplink if it exists, then throws the item from space at the station from a random direction.
@@ -109,14 +133,27 @@ SUBSYSTEM_DEF(blackmarket)
 				var/pickedloc = spaceDebrisStartLoc(startSide, purchase.uplink.z)
 
 				var/atom/movable/item = purchase.entry.spawn_item(pickedloc)
-				item.throw_at(purchase.uplink, 3, 3)
-
-				purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting the order is being launched from [dir2text(startSide)].</span>")
+				item.throw_at(purchase.uplink, 3, 3, spin = FALSE)
+				
+				// See comment for the same snipet above
+				if(ishuman(purchase.uplink.loc))
+					to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)].</span>")
+				else
+					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)].</span>")
+				
 				queued_purchases -= purchase
 				qdel(purchase)
 		
 		if(MC_TICK_CHECK)
-			return
+			break
+
+// This exists because do_teleport does not like moving items from nullspace.
+/datum/controller/subsystem/blackmarket/proc/fake_teleport(atom/movable/item, turf/target)
+	item.forceMove(target)
+	var/datum/effect_system/spark_spread/sparks = new
+	sparks.set_up(5, 1, target)
+	sparks.attach(item)
+	sparks.start()
 
 // Add to queued_purchases after checking if shipping method is available.
 /datum/controller/subsystem/blackmarket/proc/queue_item(datum/blackmarket_purchase/P)

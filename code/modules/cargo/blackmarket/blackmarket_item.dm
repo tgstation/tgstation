@@ -49,23 +49,20 @@
 	stock--
 	uplink.money -= price
 	
-	var/datum/blackmarket_purchase/purchase = new(src, buyer, uplink, shipping_method)
+	var/datum/blackmarket_purchase/purchase = new(src, uplink, shipping_method)
 
 	// SSblackmarket takes care of the shipping.
 	SSblackmarket.queued_purchases += purchase
-	uplink.purchases += purchase
 	return TRUE
 
 // This only exists because I don't want to make a list for the values.
 /datum/blackmarket_purchase
 	var/datum/blackmarket_item/entry
 	var/item
-	var/mob/reciever
 	var/obj/item/blackmarket_uplink/uplink
 	var/method
 
-/datum/blackmarket_purchase/New(_entry, _reciever, _uplink, _method)
+/datum/blackmarket_purchase/New(_entry, _uplink, _method)
 	entry = _entry
-	reciever = _reciever
 	uplink = _uplink
 	method = _method

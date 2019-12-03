@@ -41,3 +41,13 @@
 	stock_min = 2
 	stock_max = 5
 	availability_prob = 50
+
+/datum/blackmarket_item/misc/smugglers_satchel
+	name = "Smuggler's Satchel"
+	desc = "This easily hidden satchel can become a versatile tool to anybody with the desire to keep certain items out of sight and out of mind."
+	item = /obj/item/storage/backpack/satchel/flat/empty
+
+	price_min = 1000
+	price_max = 1500
+	stock_max = 2
+	availability_prob = 30

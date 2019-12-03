@@ -4,16 +4,15 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "timer-radio2"
 
+	// UI variables.
 	var/ui_x = 720
 	var/ui_y = 480
-
-	var/money = 0
 	var/viewing_category
 	var/viewing_market
 	var/selected_item
 	var/buying
 
-	var/list/purchases = list()
+	var/money = 0
 	var/list/accessible_markets = list(/datum/blackmarket_market/blackmarket)
 
 /obj/item/blackmarket_uplink/Initialize()
@@ -50,16 +49,8 @@
 	if(market)
 		for(var/delivery in market.shipping)
 			data["delivery_methods"] += list(list("name" = delivery, "price" = market.shipping[delivery]))
-	data["markets"] = list()
-	for(var/M in accessible_markets)
-		var/datum/blackmarket_market/BM = SSblackmarket.markets[M]
-		data["markets"] += list(list(
-			"id" = M,
-			"name" = BM.name
-		))
 	data["money"] = money
 	data["buying"] = buying
-	data["purchases"] = purchases
 	data["items"] = list()
 	data["viewing_category"] = viewing_category
 	data["viewing_market"] = viewing_market
@@ -79,6 +70,13 @@
 	var/list/data = list()
 	data["delivery_method_description"] = SSblackmarket.shipping_method_descriptions
 	data["ltsrbt_built"] = SSblackmarket.telepads.len
+	data["markets"] = list()
+	for(var/M in accessible_markets)
+		var/datum/blackmarket_market/BM = SSblackmarket.markets[M]
+		data["markets"] += list(list(
+			"id" = M,
+			"name" = BM.name
+		))
 	return data
 
 /obj/item/blackmarket_uplink/ui_act(action, params)
@@ -153,4 +151,4 @@
 		/obj/item/radio = 1,
 		/obj/item/analyzer = 1
 	)
-	category = CATEGORY_MISC
+	category = CAT_MISC

@@ -39,7 +39,7 @@
 	desc = "Use this grenade for SHOCKING results!"
 	item = /obj/item/grenade/empgrenade
 
-	price_min = 1000
-	price_max = 4000
+	price_min = 100
+	price_max = 400
 	stock_max = 2
 	availability_prob = 50

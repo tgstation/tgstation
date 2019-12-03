@@ -4,8 +4,8 @@
 	build_path = /obj/machinery/ltsrbt
 	req_components = list(
 		/obj/item/stack/ore/bluespace_crystal = 2,
-		/obj/item/stock_parts/subspace/ansible,
-		/obj/item/stock_parts/micro_laser,
+		/obj/item/stock_parts/subspace/ansible = 1,
+		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stock_parts/scanning_module = 2)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
@@ -57,7 +57,6 @@
 /obj/machinery/ltsrbt/proc/add_to_queue(datum/blackmarket_purchase/purchase)
 	if(!recharge_cooldown && !recieving)
 		recieving = purchase
-		recharge_cooldown = recharge_time
 		return
 	queue += purchase
 
@@ -80,6 +79,13 @@
 			CRASH("LTSRBT: SELLING NOT IMPLEMENTED YET.")
 		else
 			P.item = P.entry.spawn_item(T)
+			
+		use_power(power_usage_per_teleport / power_efficiency)
+		var/datum/effect_system/spark_spread/sparks = new
+		sparks.set_up(5, 1, get_turf(src))
+		sparks.attach(P.item)
+		sparks.start()
+
 		recieving = null
 		transmitting = P
 
@@ -96,6 +102,7 @@
 			qdel(P)
 			return
 		do_teleport(P.item, get_turf(P.uplink))
+		use_power(power_usage_per_teleport / power_efficiency)
 		transmitting = null
 		qdel(P)
 

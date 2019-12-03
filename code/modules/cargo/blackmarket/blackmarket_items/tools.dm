@@ -74,4 +74,15 @@
 /datum/blackmarket_item/tool/thermite_bottle/spawn_item(loc)
 	var/obj/item/reagent_containers/glass/bottle/B = ..()
 	B.reagents.add_reagent(/datum/reagent/thermite, 30)
+	B.name = "Thermite Bottle"
 	return B
+
+/datum/blackmarket_item/tool/science_goggles
+	name = "Science Goggles"
+	desc = "These glasses scan the contents of containers and projects their contents to the user in an easy to read format."
+	item = /obj/item/clothing/glasses/science
+
+	price_min = 150
+	price_max = 200
+	stock_max = 3
+	availability_prob = 50

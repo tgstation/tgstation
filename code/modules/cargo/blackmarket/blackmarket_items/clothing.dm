@@ -13,7 +13,7 @@
 
 /datum/blackmarket_item/clothing/durathread_vest
 	name = "Durathread Vest"
-	desc = ""
+	desc = "Dont let them tell you this stuff is \"Like asbestos\" or \"Pulled from the market for safety concerns\". It could be the difference between a robusting and a retaliation."
 	item = /obj/item/clothing/suit/armor/vest/durathread
 
 	price_min = 200
@@ -23,7 +23,7 @@
 
 /datum/blackmarket_item/clothing/durathread_helmet
 	name = "Durathread Helmet"
-	desc = ""
+	desc = "Customers ask why it's called a helmet when it's just made from armoured fabric and I always say the same thing: No refunds."
 	item = /obj/item/clothing/head/helmet/durathread
 
 	price_min = 100

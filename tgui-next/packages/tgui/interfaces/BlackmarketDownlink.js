@@ -21,18 +21,21 @@ export const BlackmarketDownlink = props => {
           const name = deliveryMethod.name;
           if (!(name === "LTSRBT" && !data.ltsrbt_built)) {
             return (
-              <Grid.Column textAlign="center">
-                <Box fontSize="30px">
-                  {name}
-                </Box>
-                <Box
-                  mt={1}>
-                  {deliveryMethodDesc[name]}
+              <Grid.Column
+                textAlign="center"
+                position="relative">
+                <Box>
+                  <Box
+                    fontSize="30px">
+                    {name}
+                  </Box>
+                  <Box mt={1}>
+                    {deliveryMethodDesc[name]}
+                  </Box>
                 </Box>
                 <Button
                   key={name}
                   content={deliveryMethod.price+'$'}
-                  color="green"
                   mt={1}
                   onClick={() => act(ref, 'buy', {
                     method: name,
@@ -97,7 +100,7 @@ export const BlackmarketDownlink = props => {
                     <Table.Cell bold>
                       {item.name}
                     </Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell className="LabeledList__buttons">
                       {item.amount ? item.amount+" in stock" : "Out of stock"}
                     </Table.Cell>
                     <Table.Cell className="LabeledList__buttons">

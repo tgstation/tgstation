@@ -40,3 +40,24 @@
 				/obj/item/storage/pill_bottle/aranesp,
 				/obj/item/storage/pill_bottle/stimulant))
 	return new pillbottle(loc)
+
+/datum/blackmarket_item/consumable/floor_pill
+	name = "Strange Pill"
+	desc = "The Russian Roulette of the Maintenance Tunnels."
+	item = /obj/item/reagent_containers/pill/floorpill
+
+	stock_min = 5
+	stock_max = 35
+	price_min = 10
+	price_max = 60
+	availability_prob = 50
+
+/datum/blackmarket_item/consumable/pumpup
+	name = "Maintenance Pumpup"
+	desc = "Resist any Baton stun with this handy device!"
+	item = /obj/item/reagent_containers/hypospray/medipen/pumpup
+
+	stock_max = 3
+	price_min = 50
+	price_max = 150
+	availability_prob = 90
