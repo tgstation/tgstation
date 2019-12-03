@@ -237,9 +237,9 @@
 		if(old_stat != DEAD && D.stat == DEAD)
 			if(use_cleave)
 				switch(use_cleave)
-					if(1)
+					if(ATK_HIT)
 						do_attack(A, pick(surrounding_mobs), FALSE, FALSE, null)
-					if(2)
+					if(ATK_CRIT_HIT)
 						for(var/H in surrounding_mobs)
 							do_attack(A, H, FALSE, FALSE, null)
 		playsound(D.loc, A.dna.species.attack_sound, 25, 1, -1)
@@ -445,9 +445,9 @@
 
 /obj/item/monk_manual
 	name = "disciple monk manual"
-	desc = "A small, black manual. Inside is the collective history of all Monk orders to ever exist."
-	icon = 'icons/obj/library.dmi'
-	icon_state ="cqcmanual"
+	desc = "A small scroll. Inside is the collective history of all Monk orders to ever exist."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state ="scroll2"
 	force = 1
 	throwforce = 1
 
