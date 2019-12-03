@@ -62,6 +62,7 @@ import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
+import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
 import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
@@ -350,6 +351,10 @@ const ROUTES = {
   rpd: {
     component: () => RapidPipeDispenser,
     scrollable: true,
+  },
+  sat_control: {
+    component: () => SatelliteControl,
+    scrollable: false,
   },
   scanner_gate: {
     component: () => ScannerGate,
