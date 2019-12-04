@@ -2,7 +2,7 @@
 // **** Security gas mask ****
 
 /obj/item/clothing/mask/gas/sechailer
-	name = "security gas mask"
+	name = "Security Compli-o-nator"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you tase them. Do not tamper with the device."
 	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
@@ -100,7 +100,9 @@
 	var/phrase_sound = null
 
 
-	if(cooldown < world.time - 30) // A cooldown, to stop people being jerks
+	if(cooldown > world.time - 30) // A cooldown, to stop people being jerks
+		return
+	else
 		recent_uses++
 		if(cooldown_special < world.time - 180) //A better cooldown that burns jerks
 			recent_uses = initial(recent_uses)
@@ -125,68 +127,157 @@
 			if(4)
 				phrase = rand(12,18)	// user has broke the restrictor, it will now only play shitcurity phrases
 
-		if(!safety)
-			phrase_text = "FUCK YOUR CUNT YOU SHIT EATING COCKSTORM AND EAT A DONG FUCKING ASS RAMMING SHIT FUCK EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS OF FUCK AND POO AND SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT."
-			phrase_sound = "emag"
-		else
+		halt_sounds(phrase, phrase_text, phrase_sound)
 
-			switch(phrase)	//sets the properties of the chosen phrase
-				if(1)				// good cop
-					phrase_text = "HALT! HALT! HALT!"
-					phrase_sound = "halt"
-				if(2)
-					phrase_text = "Stop in the name of the Law."
-					phrase_sound = "bobby"
-				if(3)
-					phrase_text = "Compliance is in your best interest."
-					phrase_sound = "compliance"
-				if(4)
-					phrase_text = "Prepare for justice!"
-					phrase_sound = "justice"
-				if(5)
-					phrase_text = "Running will only increase your sentence."
-					phrase_sound = "running"
-				if(6)				// bad cop
-					phrase_text = "Don't move, Creep!"
-					phrase_sound = "dontmove"
-				if(7)
-					phrase_text = "Down on the floor, Creep!"
-					phrase_sound = "floor"
-				if(8)
-					phrase_text = "Dead or alive you're coming with me."
-					phrase_sound = "robocop"
-				if(9)
-					phrase_text = "God made today for the crooks we could not catch yesterday."
-					phrase_sound = "god"
-				if(10)
-					phrase_text = "Freeze, Scum Bag!"
-					phrase_sound = "freeze"
-				if(11)
-					phrase_text = "Stop right there, criminal scum!"
-					phrase_sound = "imperial"
-				if(12)				// LA-PD
-					phrase_text = "Stop or I'll bash you."
-					phrase_sound = "bash"
-				if(13)
-					phrase_text = "Go ahead, make my day."
-					phrase_sound = "harry"
-				if(14)
-					phrase_text = "Stop breaking the law, ass hole."
-					phrase_sound = "asshole"
-				if(15)
-					phrase_text = "You have the right to shut the fuck up."
-					phrase_sound = "stfu"
-				if(16)
-					phrase_text = "Shut up crime!"
-					phrase_sound = "shutup"
-				if(17)
-					phrase_text = "Face the wrath of the golden bolt."
-					phrase_sound = "super"
-				if(18)
-					phrase_text = "I am, the LAW!"
-					phrase_sound = "dredd"
 
-		usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
-		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, FALSE, 4)
-		cooldown = world.time
-		cooldown_special = world.time
+/obj/item/clothing/mask/gas/sechailer/proc/halt_sounds(phrase, phrase_text, phrase_sound)
+
+	if(!safety)
+		phrase_text = "FUCK YOUR CUNT YOU SHIT EATING COCKSTORM AND EAT A DONG FUCKING ASS RAMMING SHIT FUCK EAT PENISES IN YOUR FUCK FACE AND SHIT OUT ABORTIONS OF FUCK AND POO AND SHIT IN YOUR ASS YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT."
+		phrase_sound = 'sound/voice/complionator/emag.ogg'
+
+	else
+		switch(phrase)	//sets the properties of the chosen phrase
+			if(1)				// good cop
+				phrase_text = "HALT! HALT! HALT!"
+				phrase_sound = 'sound/voice/complionator/halt.ogg'
+			if(2)
+				phrase_text = "Stop in the name of the Law."
+				phrase_sound = 'sound/voice/complionator/bobby.ogg'
+			if(3)
+				phrase_text = "Compliance is in your best interest."
+				phrase_sound = 'sound/voice/complionator/compliance.ogg'
+			if(4)
+				phrase_text = "Prepare for justice!"
+				phrase_sound = 'sound/voice/complionator/justice.ogg'
+			if(5)
+				phrase_text = "Running will only increase your sentence."
+				phrase_sound = 'sound/voice/complionator/running.ogg'
+			if(6)				// bad cop
+				phrase_text = "Don't move, Creep!"
+				phrase_sound = 'sound/voice/complionator/dontmove.ogg'
+			if(7)
+				phrase_text = "Down on the floor, Creep!"
+				phrase_sound = 'sound/voice/complionator/floor.ogg'
+			if(8)
+				phrase_text = "Dead or alive you're coming with me."
+				phrase_sound = 'sound/voice/complionator/robocop.ogg'
+			if(9)
+				phrase_text = "God made today for the crooks we could not catch yesterday."
+				phrase_sound = 'sound/voice/complionator/god.ogg'
+			if(10)
+				phrase_text = "Freeze, Scum Bag!"
+				phrase_sound = 'sound/voice/complionator/freeze.ogg'
+			if(11)
+				phrase_text = "Stop right there, criminal scum!"
+				phrase_sound = 'sound/voice/complionator/imperial.ogg'
+			if(12)				// LA-PD
+				phrase_text = "Stop or I'll bash you."
+				phrase_sound = 'sound/voice/complionator/bash.ogg'
+			if(13)
+				phrase_text = "Go ahead, make my day."
+				phrase_sound = 'sound/voice/complionator/harry.ogg'
+			if(14)
+				phrase_text = "Stop breaking the law, ass hole."
+				phrase_sound = 'sound/voice/complionator/asshole.ogg'
+			if(15)
+				phrase_text = "You have the right to shut the fuck up."
+				phrase_sound = 'sound/voice/complionator/stfu.ogg'
+			if(16)
+				phrase_text = "Shut up crime!"
+				phrase_sound = 'sound/voice/complionator/shutup.ogg'
+			if(17)
+				phrase_text = "Face the wrath of the golden bolt."
+				phrase_sound = 'sound/voice/complionator/super.ogg'
+			if(18)
+				phrase_text = "I am, the LAW!"
+				phrase_sound = 'sound/voice/complionator/dredd.ogg'
+
+	halt_play(phrase, phrase_text, phrase_sound)
+
+/obj/item/clothing/mask/gas/sechailer/proc/halt_play(phrase, phrase_text, phrase_sound)
+	usr.audible_message("[usr]'s [src]: <font color='red' size='4'><b>[phrase_text]</b></font>")
+	playsound(src.loc, phrase_sound, 100, FALSE, 4)
+	cooldown = world.time
+	cooldown_special = world.time
+
+
+/obj/item/clothing/mask/gas/sechailer/monkey
+	name = "Monkey mask"
+	desc = "A mask used when acting as a monkey. It comes with a Banana-Tor and a pair of AA batteries."
+	actions_types = list(/datum/action/item_action/halt)
+	clothing_flags = MASKINTERNALS
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	icon_state = "monkeymask"
+	item_state = "monkeymask"
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	flags_cover = MASKCOVERSEYES
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/mask/gas/sechailer/monkey/halt_sounds(phrase, phrase_text, phrase_sound)
+
+	if(!safety)
+		phrase_text = "FUCK YOUR MONKEY YOU BANANA EATING APESTORM AND EAT A PEANUT FUCKING TREE CLIMBING SHIT FUCK THROW DUNG IN YOUR FUCK FACE AND THROW OUT PEELS OF FUCK AND BANANA AND SHIT IN YOUR FACE YOU COCK FUCK SHIT MONKEY FUCK ASS WANKER FROM THE DEPTHS OF SHIT."
+		phrase_sound = 'sound/voice/complionator/emagmonki.ogg'
+
+	else
+		switch(phrase)	//sets the properties of the chosen phrase
+			if(1)				// good monkey
+				phrase_text = "EEP! EEP! EEP!"
+				phrase_sound = 'sound/voice/complionator/monkey2.ogg'
+			if(2)
+				phrase_text = "Stop in the name of monkeys everywhere."
+				phrase_sound = 'sound/voice/complionator/monkey1.ogg'
+			if(3)
+				phrase_text = "Giving me a banana is in your best interest."
+				phrase_sound = 'sound/voice/complionator/monkey5.ogg'
+			if(4)
+				phrase_text = "Prepare for shrieking!"
+				phrase_sound = 'sound/voice/complionator/monkey3.ogg'
+			if(5)
+				phrase_text = "Running will only increase my cries."
+				phrase_sound = 'sound/voice/complionator/monkey4.ogg'
+			if(6)				// still a good monkey, there are no bad monkeys
+				phrase_text = "Don't move, chimp!"
+				phrase_sound = 'sound/voice/complionator/monkey1.ogg'
+			if(7)
+				phrase_text = "Down on the floor, chimp!"
+				phrase_sound = 'sound/voice/complionator/monkey3.ogg'
+			if(8)
+				phrase_text = "Dead or alive I'll be shrieking at you! "
+				phrase_sound = 'sound/voice/complionator/monkey2.ogg'
+			if(9)
+				phrase_text = "God made today to sling the shit we could not throw yesterday."
+				phrase_sound = 'sound/voice/complionator/monkey1.ogg'
+			if(10)
+				phrase_text = "Freeze, hairless chimp!"
+				phrase_sound = 'sound/voice/complionator/monkey4.ogg'
+			if(11)
+				phrase_text = "Stop right there, primate scum!"
+				phrase_sound = 'sound/voice/complionator/monkey5.ogg'
+			if(12)				// MN-KI
+				phrase_text = "Stop or I'll bite you."
+				phrase_sound = 'sound/voice/complionator/monkey3.ogg'
+			if(13)
+				phrase_text = "Go ahead, feed me, make my day."
+				phrase_sound = 'sound/voice/complionator/monkey2.ogg'
+			if(14)
+				phrase_text = "Stop feeding the elephants, ass hole."
+				phrase_sound = 'sound/voice/complionator/monkey4.ogg'
+			if(15)
+				phrase_text = "You have the right to be covered in my excrement."
+				phrase_sound = 'sound/voice/complionator/monkey2.ogg'
+			if(16)
+				phrase_text = "Shut up chimp!"
+				phrase_sound = 'sound/voice/complionator/monkey5.ogg'
+			if(17)
+				phrase_text = "Face the wrath of the golden banana."
+				phrase_sound = 'sound/voice/complionator/monkey1.ogg'
+			if(18)
+				phrase_text = "I AM, A MONKEY!"
+				phrase_sound = 'sound/voice/complionator/monkey3.ogg'
+
+	halt_play(phrase, phrase_text, phrase_sound)
+	
