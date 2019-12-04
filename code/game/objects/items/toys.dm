@@ -1032,20 +1032,39 @@
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
-	if (cooldown < world.time)
+	if (obj_flags & EMAGGED)
+		user.visible_message("<span class='hear'>You hear the click of a button.</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>")
+		sleep(5)
+		icon_state = "nuketoy"
+		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
+		sleep(135)
+		user.visible_message("<span class='alert'>[src] violently explodes!</span>")
+		explosion(src, 0, 0, 1, 0)
+		qdel(src)
+	else if (cooldown < world.time)
 		cooldown = world.time + 1800 //3 minutes
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='hear'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/machines/alarm.ogg', 100, FALSE)
+		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
 		sleep(135)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
 		icon_state = "nuketoyidle"
+	else if (obj_flags & EMAGGED)
+		to_chat(user, "<span class='alert'>Nothing happens, and 'ERR' appears on the small display.</span>")
 	else
 		var/timeleft = (cooldown - world.time)
-		to_chat(user, "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>")
+		to_chat(user, "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display.</span>")
+		sleep(5)
 
+
+/obj/item/toy/nuke/emag_act(mob/user)
+	if (obj_flags & EMAGGED)
+		return
+	to_chat(user, "<span class = 'notice'> You short-circuit \the [src]. The display reads 'ERR'.</span>")
+	desc = "A plastic model of a Nuclear Fission Explosive. The display reads 'ERR'."
+	obj_flags |= EMAGGED
 /*
  * Fake meteor
  */
