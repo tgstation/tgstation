@@ -50,6 +50,7 @@
 	id = /datum/reagent/consumable/hot_coco
 	results = list(/datum/reagent/consumable/hot_coco = 5)
 	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/coco = 1)
+	required_temp = 320
 
 /datum/chemical_reaction/coffee
 	name = "Coffee"
