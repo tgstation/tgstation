@@ -1925,3 +1925,15 @@
 /datum/sprite_accessory/moth_markings/moonfly
 	name = "Moon Fly"
 	icon_state = "moonfly"
+
+/datum/sprite_accessory/moth_markings/oakworm
+	name = "Oak Worm"
+	icon_state = "oakworm"
+
+/datum/sprite_accessory/moth_markings/jungle
+	name = "Jungle"
+	icon_state = "jungle"
+
+/datum/sprite_accessory/moth_markings/witchwing
+	name = "Witch Wing"
+	icon_state = "witchwing"
