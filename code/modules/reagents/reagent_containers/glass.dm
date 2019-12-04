@@ -392,6 +392,8 @@
 	I.forceMove(src)
 
 /obj/item/reagent_containers/glass/filterbowl/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
 	if(chemfilter)
 		chemfilter.forceMove(drop_location())
 		user.put_in_hands(chemfilter)
