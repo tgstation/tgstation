@@ -1,0 +1,7 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - bugfix: "Fixed recipe button layout in Chem Dispenser."
+  - bugfix: "Fixed the icon on the \"Save\" button in Chem Dispenser."
+  - bugfix: "ChemMaster no longer rounds volume of chemicals, allowing to package 0.1 unit pills."
+  - bugfix: "Air Alarm layout will no longer jump around when microscopic amounts of gases are present (less than 0.01%)."
