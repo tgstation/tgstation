@@ -394,6 +394,8 @@
 #include "code\datums\components\lifesteal.dm"
 #include "code\datums\components\lockon_aiming.dm"
 #include "code\datums\components\magnetic_catch.dm"
+#include "code\datums\components\manual_blinking.dm"
+#include "code\datums\components\manual_breathing.dm"
 #include "code\datums\components\material_container.dm"
 #include "code\datums\components\mirage_border.dm"
 #include "code\datums\components\mood.dm"
