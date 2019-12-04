@@ -2408,6 +2408,7 @@
 #include "code\modules\plumbing\plumbers\acclimator.dm"
 #include "code\modules\plumbing\plumbers\destroyer.dm"
 #include "code\modules\plumbing\plumbers\filter.dm"
+#include "code\modules\plumbing\plumbers\grinder_chemical.dm"
 #include "code\modules\plumbing\plumbers\pill_press.dm"
 #include "code\modules\plumbing\plumbers\pumps.dm"
 #include "code\modules\plumbing\plumbers\reaction_chamber.dm"
