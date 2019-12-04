@@ -54,7 +54,7 @@
 	if(SSblackmarket.queue_item(purchase))
 		stock--
 		uplink.money -= price
-		log_game("[key_name(buyer)] has succesfully purchased [src.name] using [shipping_method] for shipping.")
+		log_game("[key_name(buyer)] has succesfully purchased [name] using [shipping_method] for shipping.")
 		return TRUE
 	return FALSE
 
