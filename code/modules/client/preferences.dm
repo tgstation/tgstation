@@ -1465,13 +1465,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						preferred_map = maplist[pickedmap]
 
 				if ("clientfps")
-					var/desiredfps = input(user, "Choose your desired fps. (0 = 3x server tickrate (currently:[world.fps * 3]))", "Character Preference", clientfps)  as null|num
+					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tickrate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
 					if (!isnull(desiredfps))
 						clientfps = desiredfps
-						if(desiredfps)
-							parent.fps = desiredfps
-						else
-							parent.fps = world.fps * 3 // 60 fps at 20 tps (tg default)
+						parent.fps = desiredfps
 				if("ui")
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in sortList(GLOB.available_ui_styles)
 					if(pickedui)

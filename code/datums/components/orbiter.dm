@@ -16,7 +16,12 @@
 	orbiters = list()
 
 	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+
+/datum/component/orbiter/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/orbiter_glide_size_update)
+
+/datum/component/orbiter/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 
 /datum/component/orbiter/PostTransfer()
 	if(!isatom(parent) || isarea(parent))
