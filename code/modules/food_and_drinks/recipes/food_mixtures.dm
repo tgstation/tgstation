@@ -1,4 +1,4 @@
-/datum/reagent/consumable/milk/datum/crafting_recipe/food
+/datum/crafting_recipe/food
 	var/real_parts
 	category = CAT_FOOD
 
