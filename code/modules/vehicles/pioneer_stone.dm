@@ -2,7 +2,7 @@
 	name = "pioneer stone"
 	desc = "Pioneer's used to ride these babies for miles"
 	icon_state = "pioneer_stone"
-	max_integrity = 500
+	max_integrity = 200
 	armor = list("melee" = 75, "bullet" = 0, "laser" = 25, "energy" = 25, "bomb" = -75, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100) //it is a fucking stone, what do you expect
 	are_legs_exposed = TRUE
 	var/max_damage_force = 25
