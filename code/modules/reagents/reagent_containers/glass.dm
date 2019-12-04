@@ -347,6 +347,111 @@
 		return
 	to_chat(user, "<span class='warning'>You can't grind this!</span>")
 
+/obj/item/reagent_containers/glass/filterbowl
+	name = "filter bowl"
+	desc = "A wooden bowl with a thin slot on either side, letting you insert paper to filter out certain chemicals."
+	icon_state = "filterbowl"
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,20,25,30,50)
+	volume = 50
+	reagent_flags = OPENCONTAINER
+	spillable = TRUE
+	var/obj/item/paper_filter/chemfilter
+
+/obj/item/reagent_containers/glass/filterbowl/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_REAGENT_TRANSFER, .proc/setNewFilter)
+
+/obj/item/reagent_containers/glass/filterbowl/proc/setNewFilter(datum/source, datum/reagents/R)
+	if(chemfilter && !chemfilter.filterchem)
+		chemfilter.setFilter(R.get_master_reagent())
+
+/obj/item/reagent_containers/glass/filterbowl/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/paper))
+		if(chemfilter)
+			to_chat(user, "<span class='warning'>There is already a filter in [src]</span>")
+			return
+		to_chat(user, "<span class='notice'>You strip [I] into a filter, and slot it into [src].</span>")
+		qdel(I)
+		insertFilter(new /obj/item/paper_filter)
+	if(istype(I, /obj/item/paper_filter))
+		if(chemfilter)
+			to_chat(user, "<span class='warning'>There is already a filter in [src]</span>")
+			return
+		to_chat(user, "<span class='notice'>You slot [I] into [src].</span>")
+		insertFilter(I)
+
+/obj/item/reagent_containers/glass/filterbowl/proc/insertFilter(obj/item/paper_filter/I)
+	if(chemfilter)
+		return
+	if(!istype(I))
+		return
+	chemfilter = I
+	reagents.whitelist = list(chemfilter.filterchem)
+	update_icon()
+	I.forceMove(src)
+
+/obj/item/reagent_containers/glass/filterbowl/AltClick(mob/user)
+	if(chemfilter)
+		chemfilter.forceMove(drop_location())
+		user.put_in_hands(chemfilter)
+		reagents.whitelist = null
+		to_chat(user, "<span class='notice'>You remove [chemfilter].</span>")
+		chemfilter = null
+		update_icon()
+
+/obj/item/reagent_containers/glass/filterbowl/examine(mob/user)
+	. = ..()
+	if(chemfilter && chemfilter.filterchem)
+		. += "<span class='notice'>It has [chemfilter] inside, keyed to a specific chemical.</span>"
+	else if(chemfilter)
+		. += "<span class='notice'>It has [chemfilter] inside.</span>"
+	else
+		. += "<span class='notice'>It doesn't have a filter at the moment...</span>"
+
+/obj/item/reagent_containers/glass/filterbowl/update_icon()
+	cut_overlays()
+	if(!chemfilter)
+		return
+	var/overlay_color = chemfilter.color
+	var/mutable_appearance/filter_overlay = mutable_appearance('icons/obj/chemical.dmi', "filterpaper")
+	filter_overlay.color = overlay_color
+	add_overlay(filter_overlay)
+
+/obj/item/paper_filter
+	name = "filter paper"
+	desc = "A filter made of thin paper, used to separate chemicals in a filter bowl."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "filteritem"
+	w_class = WEIGHT_CLASS_TINY
+	var/datum/reagent/filterchem
+
+/obj/item/paper_filter/examine(mob/user)
+	. = ..()
+	if(filterchem)
+		. += "<span class='notice'>It appears to be filtering a specific chemical.</span>"
+	else
+		. += "<span class='notice'>It appears to be blank, filtering the first chemical it encounters in a filter bowl.</span>"
+
+/obj/item/paper_filter/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/pen))
+		if(!user.is_literate())
+			to_chat(user, "You don't know how to write...")
+			return
+		var/text = stripped_input(user, "What do you want to label the filter?", "Filter Label", 30)
+		if(!text || !user.canUseTopic(src, BE_CLOSE))
+			return
+		name = initial(name) + " ([text])"
+
+/obj/item/paper_filter/proc/setFilter(var/datum/reagent/chem)
+	if(chem)
+		filterchem = chem
+		color = chem.color
+		if(istype(loc, /obj/item/reagent_containers/glass/filterbowl))
+			var/obj/item/reagent_containers/glass/filterbowl/bowl = loc
+			bowl.reagents.whitelist = list(filterchem)
+			bowl.update_icon()
+
 /obj/item/reagent_containers/glass/saline
 	name = "saline canister"
 	volume = 5000

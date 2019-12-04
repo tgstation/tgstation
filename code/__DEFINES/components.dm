@@ -17,7 +17,7 @@
 #define ELEMENT_INCOMPATIBLE 1
 
 // /datum/element flags
-/// Causes the detach proc to be called when the host object is being deleted 
+/// Causes the detach proc to be called when the host object is being deleted
 #define ELEMENT_DETACH		(1 << 0)
 /**
   * Only elements created with the same arguments given after `id_arg_index` share an element instance
@@ -391,6 +391,9 @@
 // /datum/action signals
 #define COMSIG_ACTION_TRIGGER "action_trigger"						//from base of datum/action/proc/Trigger(): (datum/action)
 	#define COMPONENT_ACTION_BLOCK_TRIGGER 1
+
+// /datum/reagents signals
+#define COMSIG_REAGENT_TRANSFER "reagent_transfer"					//from base of datum/reagents/proc/trans_to() - returns /datum/reagents container transferring from.
 
 /*******Non-Signal Component Related Defines*******/
 

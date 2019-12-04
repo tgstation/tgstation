@@ -56,6 +56,7 @@
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
+	var/list/datum/reagent/whitelist //Set a list of reagents to only allow for incoming reagent transfer.
 	var/flags
 
 /datum/reagents/New(maximum=100, new_flags=0)
@@ -176,6 +177,7 @@
 	//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	//if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
 	var/list/cached_reagents = reagent_list
+	SEND_SIGNAL(target, COMSIG_REAGENT_TRANSFER, src)
 	if(!target || !total_volume)
 		return
 	if(amount < 0)
@@ -193,6 +195,7 @@
 		target_atom = target
 
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
+	var/total_transferred = 0
 	var/trans_data = null
 	var/transfer_log = list()
 	if(!round_robin)
@@ -201,10 +204,13 @@
 			var/datum/reagent/T = reagent
 			if(remove_blacklisted && !T.can_synth)
 				continue
+			if(R.whitelist && !(T in R.whitelist))
+				continue
 			var/transfer_amount = T.volume * part
 			if(preserve_data)
 				trans_data = copy_data(T)
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
+			total_transferred += transfer_amount * multiplier
 			if(method)
 				R.react_single(T, target_atom, method, part, show_message)
 				T.on_transfer(target_atom, method, transfer_amount * multiplier)
@@ -218,12 +224,15 @@
 			var/datum/reagent/T = reagent
 			if(remove_blacklisted && !T.can_synth)
 				continue
+			if(R.whitelist && !(T in R.whitelist))
+				continue
 			if(preserve_data)
 				trans_data = copy_data(T)
 			var/transfer_amount = amount
 			if(amount > T.volume)
 				transfer_amount = T.volume
 			R.add_reagent(T.type, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1)
+			total_transferred += transfer_amount * multiplier
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(method)
 				R.react_single(T, target_atom, method, transfer_amount, show_message)
@@ -240,7 +249,7 @@
 	if(!no_react)
 		R.handle_reactions()
 		src.handle_reactions()
-	return amount
+	return total_transferred
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
 	var/list/cached_reagents = reagent_list
