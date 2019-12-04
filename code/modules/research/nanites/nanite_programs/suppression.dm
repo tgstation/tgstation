@@ -117,6 +117,9 @@
 	var/comm_code = 0
 	var/comm_message = ""
 
+/datum/nanite_program/comm/register_extra_settings()
+	extra_settings[NES_COMM_CODE] = new /datum/nanite_extra_setting/number(0, 0, 9999)
+
 /datum/nanite_program/comm/proc/receive_comm_signal(signal_comm_code, comm_message, comm_source)
 	if(!activated || !comm_code)
 		return
@@ -131,38 +134,22 @@
 	trigger_cost = 3
 	trigger_cooldown = 20
 	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
+	var/static/list/blacklist = list(
+		"*surrender",
+		"*collapse"
+	)
 
-	extra_settings = list(NES_SENTENCE,NES_COMM_CODE)
-	var/sentence = ""
-
-/datum/nanite_program/comm/speech/set_extra_setting(user, setting)
-	if(setting == NES_SENTENCE)
-		var/new_sentence = stripped_input(user, "Choose the sentence that the host will be forced to say.", NES_SENTENCE, sentence, MAX_MESSAGE_LEN)
-		if(!new_sentence)
-			return
-		if(copytext(new_sentence, 1, 2) == "*") //emotes are abusable, like surrender
-			return
-		sentence = new_sentence
-	if(setting == NES_COMM_CODE)
-		var/new_code = input(user, "Set the communication code (1-9999) or set to 0 to disable external signals.", name, null) as null|num
-		if(isnull(new_code))
-			return
-		comm_code = CLAMP(round(new_code, 1), 0, 9999)
-
-/datum/nanite_program/comm/speech/get_extra_setting(setting)
-	if(setting == NES_SENTENCE)
-		return sentence
-	if(setting == NES_COMM_CODE)
-		return comm_code
-
-/datum/nanite_program/comm/speech/copy_extra_settings_to(datum/nanite_program/comm/speech/target)
-	target.sentence = sentence
-	target.comm_code = comm_code
+/datum/nanite_program/comm/speech/register_extra_settings()
+	. = ..()
+	extra_settings[NES_SENTENCE] = new /datum/nanite_extra_setting/text("")
 
 /datum/nanite_program/comm/speech/on_trigger(comm_message)
 	var/sent_message = comm_message
 	if(!comm_message)
-		sent_message = sentence
+		var/datum/nanite_extra_setting/sentence = extra_settings[NES_SENTENCE]
+		sent_message = sentence.get_value()
+	if(sent_message in blacklist)
+		return
 	if(host_mob.stat == DEAD)
 		return
 	to_chat(host_mob, "<span class='warning'>You feel compelled to speak...</span>")
@@ -176,35 +163,15 @@
 	trigger_cooldown = 20
 	rogue_types = list(/datum/nanite_program/brain_misfire, /datum/nanite_program/brain_decay)
 
-	extra_settings = list(NES_MESSAGE,NES_COMM_CODE)
-	var/message = ""
-
-/datum/nanite_program/comm/voice/set_extra_setting(user, setting)
-	if(setting == NES_MESSAGE)
-		var/new_message = stripped_input(user, "Choose the message sent to the host.", NES_MESSAGE, message, MAX_MESSAGE_LEN)
-		if(!new_message)
-			return
-		message = new_message
-	if(setting == NES_COMM_CODE)
-		var/new_code = input(user, "Set the communication code (1-9999) or set to 0 to disable external signals.", name, null) as null|num
-		if(isnull(new_code))
-			return
-		comm_code = CLAMP(round(new_code, 1), 0, 9999)
-
-/datum/nanite_program/comm/voice/get_extra_setting(setting)
-	if(setting == NES_MESSAGE)
-		return message
-	if(setting == NES_COMM_CODE)
-		return comm_code
-
-/datum/nanite_program/comm/voice/copy_extra_settings_to(datum/nanite_program/comm/voice/target)
-	target.message = message
-	target.comm_code = comm_code
+/datum/nanite_program/comm/voice/register_extra_settings()
+	. = ..()
+	extra_settings[NES_MESSAGE] = new /datum/nanite_extra_setting/text("")
 
 /datum/nanite_program/comm/voice/on_trigger(comm_message)
 	var/sent_message = comm_message
 	if(!comm_message)
-		sent_message = message
+		var/datum/nanite_extra_setting/message_setting = extra_settings[NES_MESSAGE]
+		sent_message = message_setting.get_value()
 	if(host_mob.stat == DEAD)
 		return
 	to_chat(host_mob, "<i>You hear a strange, robotic voice in your head...</i> \"<span class='robot'>[sent_message]</span>\"")
@@ -216,12 +183,31 @@
 	trigger_cooldown = 80
 	unique = FALSE
 	rogue_types = list(/datum/nanite_program/brain_misfire)
-	extra_settings = list(NES_HALLUCINATION_TYPE, NES_COMM_CODE)
-	var/hal_type
-	var/hal_details
+
+/datum/nanite_program/comm/hallucination/register_extra_settings()
+	. = ..()
+	var/list/options = list(
+		"Message",
+		"Battle",
+		"Sound",
+		"Weird Sound",
+		"Station Message",
+		"Health",
+		"Alert",
+		"Fire",
+		"Shock",
+		"Plasma Flood",
+		"Random"
+	)
+	extra_settings[NES_HALLUCINATION_TYPE] = new /datum/nanite_extra_setting/type("Message", options)
+	extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/text("")
 
 /datum/nanite_program/comm/hallucination/on_trigger(comm_message)
-	if(comm_message && (hal_type != NES_MESSAGE)) //Triggered via comm remote, but not set to a message hallucination
+	var/datum/nanite_extra_setting/hal_setting = extra_settings[NES_HALLUCINATION_TYPE]
+	var/hal_type = hal_setting.get_value()
+	var/datum/nanite_extra_setting/hal_detail_setting = extra_settings[NES_HALLUCINATION_DETAIL]
+	var/hal_details = hal_detail_setting.get_value()
+	if(comm_message && (hal_type != "Message")) //Triggered via comm remote, but not set to a message hallucination
 		return
 	var/sent_message = comm_message //Comm remotes can send custom hallucination messages for the chat hallucination
 	if(!sent_message)
@@ -230,11 +216,13 @@
 	if(!iscarbon(host_mob))
 		return
 	var/mob/living/carbon/C = host_mob
-	if(!hal_type)
+	if(hal_details == "random")
+		hal_details = null
+	if(hal_type == "Random")
 		C.hallucination += 15
 	else
 		switch(hal_type)
-			if(NES_MESSAGE)
+			if("Message")
 				new /datum/hallucination/chat(C, TRUE, null, sent_message)
 			if("Battle")
 				new /datum/hallucination/battle(C, TRUE, hal_details)
@@ -245,6 +233,13 @@
 			if("Station Message")
 				new /datum/hallucination/stationmessage(C, TRUE, hal_details)
 			if("Health")
+				switch(hal_details)
+					if("critical")
+						hal_details = SCREWYHUD_CRIT
+					if("dead")
+						hal_details = SCREWYHUD_DEAD
+					if("healthy")
+						hal_details = SCREWYHUD_HEALTHY
 				new /datum/hallucination/hudscrew(C, TRUE, hal_details)
 			if("Alert")
 				new /datum/hallucination/fake_alert(C, TRUE, hal_details)
@@ -255,101 +250,26 @@
 			if("Plasma Flood")
 				new /datum/hallucination/fake_flood(C, TRUE)
 
-/datum/nanite_program/comm/hallucination/set_extra_setting(user, setting)
-	if(setting == NES_COMM_CODE)
-		var/new_code = input(user, "(Only for Message) Set the communication code (1-9999) or set to 0 to disable external signals.", name, null) as null|num
-		if(isnull(new_code))
-			return
-		comm_code = CLAMP(round(new_code, 1), 0, 9999)
-
+/datum/nanite_program/comm/hallucination/set_extra_setting(setting, value)
+	. = ..()
 	if(setting == NES_HALLUCINATION_TYPE)
-		var/list/possible_hallucinations = list("Random",NES_MESSAGE,"Battle","Sound","Weird Sound","Station Message","Health","Alert","Fire","Shock","Plasma Flood")
-		var/hal_type_choice = input("Choose the hallucination type", name) as null|anything in sortList(possible_hallucinations)
-		if(!hal_type_choice)
-			return
-		switch(hal_type_choice)
-			if("Random")
-				hal_type = null
-				hal_details = null
-			if(NES_MESSAGE)
-				hal_type = NES_MESSAGE
-				var/hal_chat = stripped_input(user, "Choose the message the host will hear, or leave empty for random messages.", NES_MESSAGE, hal_details, MAX_MESSAGE_LEN)
-				if(hal_chat)
-					hal_details = hal_chat
+		switch(value)
+			if("Message")
+				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/text("")
 			if("Battle")
-				hal_type = "Battle"
-				var/sound_list = list("random","laser","disabler","esword","gun","stunprod","harmbaton","bomb")
-				var/hal_choice = input("Choose the hallucination battle type", name) as null|anything in sortList(sound_list)
-				if(!hal_choice || hal_choice == "random")
-					hal_details = null
-				else
-					hal_details = hal_choice
+				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","laser","disabler","esword","gun","stunprod","harmbaton","bomb"))
 			if("Sound")
-				hal_type = "Sound"
-				var/sound_list = list("random","airlock","airlock pry","console","explosion","far explosion","mech","glass","alarm","beepsky","mech","wall decon","door hack")
-				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sortList(sound_list)
-				if(!hal_choice || hal_choice == "random")
-					hal_details = null
-				else
-					hal_details = hal_choice
+				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","airlock","airlock pry","console","explosion","far explosion","mech","glass","alarm","beepsky","mech","wall decon","door hack"))
 			if("Weird Sound")
-				hal_type = "Weird Sound"
-				var/sound_list = list("random","phone","hallelujah","highlander","laughter","hyperspace","game over","creepy","tesla")
-				var/hal_choice = input("Choose the hallucination sound", name) as null|anything in sortList(sound_list)
-				if(!hal_choice || hal_choice == "random")
-					hal_details = null
-				else
-					hal_details = hal_choice
+				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","phone","hallelujah","highlander","laughter","hyperspace","game over","creepy","tesla"))
 			if("Station Message")
-				hal_type = "Station Message"
-				var/msg_list = list("random","ratvar","shuttle dock","blob alert","malf ai","meteors","supermatter")
-				var/hal_choice = input("Choose the hallucination station message", name) as null|anything in sortList(msg_list)
-				if(!hal_choice || hal_choice == "random")
-					hal_details = null
-				else
-					hal_details = hal_choice
+				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","ratvar","shuttle dock","blob alert","malf ai","meteors","supermatter"))
 			if("Health")
-				hal_type = "Health"
-				var/health_list = list("random","critical","dead","healthy")
-				var/hal_choice = input("Choose the health status", name) as null|anything in sortList(health_list)
-				if(!hal_choice || hal_choice == "random")
-					hal_details = null
-				else
-					switch(hal_choice)
-						if("critical")
-							hal_details = SCREWYHUD_CRIT
-						if("dead")
-							hal_details = SCREWYHUD_DEAD
-						if("healthy")
-							hal_details = SCREWYHUD_HEALTHY
+				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","critical","dead","healthy"))
 			if("Alert")
-				hal_type = "Alert"
-				var/alert_list = list("random","not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","gravity","fire","locked","hacked","temphot","tempcold","pressure")
-				var/hal_choice = input("Choose the alert", name) as null|anything in sortList(alert_list)
-				if(!hal_choice || hal_choice == "random")
-					hal_details = null
-				else
-					hal_details = hal_choice
-			if("Fire")
-				hal_type = "Fire"
-			if("Shock")
-				hal_type = "Shock"
-			if("Plasma Flood")
-				hal_type = "Plasma Flood"
-
-/datum/nanite_program/comm/hallucination/get_extra_setting(setting)
-	if(setting == NES_HALLUCINATION_TYPE)
-		if(!hal_type)
-			return "Random"
-		else
-			return hal_type
-	if(setting == NES_COMM_CODE)
-		return comm_code
-
-/datum/nanite_program/comm/hallucination/copy_extra_settings_to(datum/nanite_program/comm/hallucination/target)
-	target.hal_type = hal_type
-	target.hal_details = hal_details
-	target.comm_code = comm_code
+				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","gravity","fire","locked","hacked","temphot","tempcold","pressure"))
+			else
+				extra_settings.Remove(NES_HALLUCINATION_DETAIL)
 
 /datum/nanite_program/good_mood
 	name = "Happiness Enhancer"
@@ -366,7 +286,7 @@
 			return
 		message = new_message
 
-/datum/nanite_program/good_mood/get_extra_setting(setting)
+/datum/nanite_program/good_mood/get_extra_setting_value(setting)
 	if(setting == NES_MOOD_MESSAGE)
 		return message
 
@@ -396,7 +316,7 @@
 			return
 		message = new_message
 
-/datum/nanite_program/bad_mood/get_extra_setting(setting)
+/datum/nanite_program/bad_mood/get_extra_setting_value(setting)
 	if(setting == NES_MOOD_MESSAGE)
 		return message
 

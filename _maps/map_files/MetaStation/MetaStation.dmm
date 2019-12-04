@@ -32669,7 +32669,6 @@
 "bsO" = (
 /obj/structure/cable,
 /obj/machinery/photocopier,
-/mob/living/simple_animal/pet/dog/corgi/Ian,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
 "bsP" = (
@@ -32677,6 +32676,7 @@
 	pixel_y = 32
 	},
 /obj/structure/bed/dogbed/ian,
+/mob/living/simple_animal/pet/dog/corgi/Ian,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bsQ" = (
@@ -74101,11 +74101,6 @@
 "krD" = (
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
-"kwl" = (
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
-	},
-/area/maintenance/port)
 "kwI" = (
 /obj/item/wrench,
 /obj/item/clothing/suit/apron,
@@ -90164,7 +90159,7 @@ bbL
 bPL
 alK
 kPN
-kwl
+amU
 alC
 cga
 ibr

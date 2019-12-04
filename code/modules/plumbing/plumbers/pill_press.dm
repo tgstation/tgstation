@@ -96,7 +96,7 @@
 		if("change_pill_size")
 			pill_size = CLAMP(text2num(params["volume"]), minimum_pill, maximum_pill)
 		if("change_pill_name")
-			var/new_name = stripped_input(usr, "Enter a pill name.", name, pill_name)
+			var/new_name = html_encode(params["name"])
 			if(findtext(new_name, "pill")) //names like pillatron and Pilliam are thus valid
 				pill_name = new_name
 			else 
