@@ -1,4 +1,4 @@
-/datum/crafting_recipe/food
+/datum/reagent/consumable/milk/datum/crafting_recipe/food
 	var/real_parts
 	category = CAT_FOOD
 
@@ -49,7 +49,7 @@
 	name = "Hot Coco"
 	id = /datum/reagent/consumable/hot_coco
 	results = list(/datum/reagent/consumable/hot_coco = 5)
-	required_reagents = list(/datum/reagent/water = 5, /datum/reagent/consumable/coco = 1)
+	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/coco = 1)
 
 /datum/chemical_reaction/coffee
 	name = "Coffee"
