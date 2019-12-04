@@ -687,7 +687,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/lightgeist/ghost()
 	. = ..()
 	if(.)
-		qdel(src)
+		death()
 
 
 /obj/machinery/anomalous_crystal/refresher //Deletes and recreates a copy of the item, "refreshing" it.
