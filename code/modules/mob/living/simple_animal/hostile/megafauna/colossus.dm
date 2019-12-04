@@ -684,9 +684,9 @@ Difficulty: Very Hard
 			L.heal_overall_damage(heal_power, heal_power)
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 
-/mob/living/simple_animal/hostile/lightgeist/ghostize()
+/mob/living/simple_animal/hostile/lightgeist/ghost()
 	. = ..()
-	if(. && !QDELETED(src))
+	if(.)
 		qdel(src)
 
 
