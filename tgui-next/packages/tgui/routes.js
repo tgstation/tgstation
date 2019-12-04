@@ -34,6 +34,7 @@ import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
+import { GravityGenerator } from './interfaces/GravityGenerator';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
 import { ImplantChair } from './interfaces/ImplantChair';
@@ -226,6 +227,10 @@ const ROUTES = {
   gps: {
     component: () => Gps,
     scrollable: true,
+  },
+  gravity_generator: {
+    component: () => GravityGenerator,
+    scrollable: false,
   },
   gulag_item_reclaimer: {
     component: () => GulagItemReclaimer,
