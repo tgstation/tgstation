@@ -421,7 +421,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/library
 	name = "Library"
 	icon_state = "library"
-	flags_1 = NONE
+	flags_1 = CULT_PERMITTED_1
 
 /area/library/lounge
 	name = "Library Lounge"
