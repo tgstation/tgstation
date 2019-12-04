@@ -280,4 +280,4 @@
 				phrase_sound = 'sound/voice/complionator/monkey3.ogg'
 
 	halt_play(phrase, phrase_text, phrase_sound)
-	
+
