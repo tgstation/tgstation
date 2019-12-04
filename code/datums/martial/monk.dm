@@ -3,7 +3,7 @@
 #define ATK_CRIT_HIT 2
 #define HIT_MIN 5
 #define HIT_MAX 10
-
+#define STUNNING_FIST "stunning_fist"
 
 /datum/martial_art/monk
 	name = "Monk"
@@ -391,7 +391,7 @@
 	button_icon_state = "neckchop" // todo: replace
 	uses_left = 4
 	max_uses = 4
-	skill_name = "stunning_fist"
+	skill_name = STUNNING_FIST
 	pretty_name = "Stunning Fist"
 
 /datum/action/monk/quivering_palm
