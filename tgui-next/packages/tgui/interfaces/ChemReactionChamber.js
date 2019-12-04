@@ -87,8 +87,7 @@ export class ChemReactionChamber extends Component {
                   onClick={() => act(ref, 'remove', {
                     chem: reagent,
                   })} />
-              )}
-            >
+              )}>
               {amount}
             </LabeledList.Item>
           ))(reagents)}
