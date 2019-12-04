@@ -124,7 +124,7 @@
 	var/list/copy_list = list()
 	for(var/ns_name in extra_settings)
 		var/datum/nanite_extra_setting/extra_setting = extra_settings[ns_name]
-		copy_list += extra_setting.get_copy()
+		copy_list[name] = extra_setting.get_copy()
 	target.extra_settings = copy_list
 
 /datum/nanite_program/proc/on_add(datum/component/nanites/_nanites)
