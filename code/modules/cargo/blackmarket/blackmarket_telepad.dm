@@ -18,34 +18,41 @@
 
 	idle_power_usage = 200
 
+	/// Divider for power_usage_per_teleport.
 	var/power_efficiency = 1
-	// Uses lots of power.
+	/// Power used per teleported which gets divided by power_efficiency.
 	var/power_usage_per_teleport = 10000
-	// The time it takes for the machine to recharge before being able to send or recieve items.
+	/// The time it takes for the machine to recharge before being able to send or recieve items.
 	var/recharge_time = 0
-	// Current recharge progress.
+	/// Current recharge progress.
 	var/recharge_cooldown = 0
-
-	var/teleporting = FALSE
+	/// Base recharge time which is used to get recharge_time.
+	var/base_recharge_time = 100
+	/// Current /datum/blackmarket_purchase being recieved.
 	var/recieving
+	/// Current /datum/blackmarket_purchase being sent to the target uplink.
 	var/transmitting
+	/// Queue for purchases that the machine should recieve and send.
 	var/list/datum/blackmarket_purchase/queue = list()
 
 /obj/machinery/ltsrbt/Initialize()
 	. = ..()
 	SSblackmarket.telepads |= src
 
-// To-Do: Drop orders correctly. re-queue everything that is being recieved.
 /obj/machinery/ltsrbt/Destroy()
 	SSblackmarket.telepads -= src
+	// Bye bye orders.
+	if(SSblackmarket.telepads.len)
+		for(var/datum/blackmarket_purchase/P in queue)
+			SSblackmarket.queue_item(P)
 	. = ..()
 
 /obj/machinery/ltsrbt/RefreshParts()
-	var/base_recharge_time = 50
+	recharge_time = base_recharge_time
+	// On tier 4 recharge_time should be 20 and by default it is 80 as scanning modules should be tier 1.
 	for(var/obj/item/stock_parts/scanning_module/scan in component_parts)
-		// On tier 4 recharge time is 10.
-		recharge_time = base_recharge_time - scan.rating * 5
-		recharge_cooldown = recharge_time
+		recharge_time -= scan.rating * 10
+	recharge_cooldown = recharge_time
 
 	power_efficiency = 0
 	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
@@ -54,8 +61,9 @@
 	if(!power_efficiency)
 		power_efficiency = 1
 
+/// Adds /datum/blackmarket_purchase to queue unless the machine is free, then it sets the purchase to be instantly recieved
 /obj/machinery/ltsrbt/proc/add_to_queue(datum/blackmarket_purchase/purchase)
-	if(!recharge_cooldown && !recieving)
+	if(!recharge_cooldown && !recieving && !transmitting)
 		recieving = purchase
 		return
 	queue += purchase
@@ -66,9 +74,6 @@
 
 	if(recharge_cooldown)
 		recharge_cooldown--
-		return
-
-	if(teleporting)
 		return
 
 	var/turf/T = get_turf(src)
@@ -95,7 +100,6 @@
 			transmitting = null
 			qdel(P)
 		if(!P.item in T.contents)
-			P.uplink.visible_message("<span class='warning'>[P.uplink] flashes a message that a purchase has been stolen.</span>")
 			transmitting = null
 			qdel(P)
 			return

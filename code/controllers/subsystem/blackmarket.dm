@@ -3,8 +3,9 @@ SUBSYSTEM_DEF(blackmarket)
 	flags		 = SS_BACKGROUND
 	init_order	 = INIT_ORDER_DEFAULT
 
-	// I don't know why you would need this but it can be fun.
+	/// Type of supplypod used for SHIPPING_METHOD_DROPPOD.
 	var/supplypod_type = /obj/structure/closet/supplypod
+	/// Descriptions for each shipping methods.
 	var/shipping_method_descriptions = list(
 		SHIPPING_METHOD_DROPPOD="Launches a supply pod in the general area of the uplink.",
 		SHIPPING_METHOD_LAUNCH="Launches the item at the station from space, cheap but you might not recieve your item at all.",
@@ -12,8 +13,11 @@ SUBSYSTEM_DEF(blackmarket)
 		SHIPPING_METHOD_TELEPORT="Teleports the item in a random area in the station, you get 60 seconds to get there first though."
 	)
 
+	/// List of available markets.
 	var/list/datum/blackmarket_market/markets		= list()
+	/// List of existing ltsrbts.
 	var/list/obj/machinery/ltsrbt/telepads			= list()
+	/// Currently queued purchases.
 	var/list/queued_purchases 						= list()
 
 /datum/controller/subsystem/blackmarket/Initialize(timeofday)
@@ -21,7 +25,7 @@ SUBSYSTEM_DEF(blackmarket)
 		markets[market] += new market
 		for(var/cat in markets[market].categories)
 			markets[market].available_items[cat] = list()
-	
+
 	for(var/item in subtypesof(/datum/blackmarket_item))
 		var/datum/blackmarket_item/I = new item
 		if(!I.item || !prob(I.availability_prob))
@@ -38,13 +42,13 @@ SUBSYSTEM_DEF(blackmarket)
 	while(length(queued_purchases))
 		var/datum/blackmarket_purchase/purchase = queued_purchases[1]
 		queued_purchases.Cut(1,2)
-		
+
 		// Uh oh, uplink is gone. We will just keep the money and you will not get your order.
 		if(!purchase.uplink || QDELETED(purchase.uplink))
 			queued_purchases -= purchase
 			qdel(purchase)
 			continue
-		
+
 		switch(purchase.method)
 			// Find a ltsrbt pad and make it handle the shipping.
 			if(SHIPPING_METHOD_LTSRBT)
@@ -59,18 +63,18 @@ SUBSYSTEM_DEF(blackmarket)
 					queued_purchases -= purchase
 					free_pad_found = TRUE
 					break
-				
+
 				if(free_pad_found)
 					continue
-				
+
 				var/obj/machinery/ltsrbt/pad = pick(telepads)
-				
+
 				// See this? this is terrible and it is all because visible_message does not show the message to the holder.
 				if(ishuman(purchase.uplink.loc))
 					to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being processed by [pad].</span>")
 				else
 					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being processed by [pad].</span>")
-				
+
 				queued_purchases -= purchase
 				pad.add_to_queue(purchase)
 			// Get random area, throw it somewhere there.
@@ -79,13 +83,13 @@ SUBSYSTEM_DEF(blackmarket)
 				// This shouldn't happen.
 				if (!targetturf)
 					continue
-				
+
 				// See comment for the same snipet above
 				if(ishuman(purchase.uplink.loc))
 					to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
 				else
 					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
-				
+
 				// do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
 				addtimer(CALLBACK(src, /datum/controller/subsystem/blackmarket/proc/fake_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS)
 				queued_purchases -= purchase
@@ -108,7 +112,7 @@ SUBSYSTEM_DEF(blackmarket)
 				// Bad area most likely, just drop it on the uplink. Sure this makes it just go to space and buy but w/e.
 				else
 					LZ = get_turf(purchase.uplink)
-				
+
 				if(LZ)
 					new /obj/effect/DPtarget(LZ, supplypod_type, purchase.entry.spawn_item())
 
@@ -118,12 +122,12 @@ SUBSYSTEM_DEF(blackmarket)
 						to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being dropped to [get_area(LZ)].</span>")
 					else
 						purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting that the order is being dropped to [get_area(LZ)].</span>")
-					
+
 					queued_purchases -= purchase
 					qdel(purchase)
 
 					continue
-				
+
 				// Guessing the uplink got sent to the void realm.
 				queued_purchases -= purchase
 				qdel(purchase)
@@ -134,20 +138,20 @@ SUBSYSTEM_DEF(blackmarket)
 
 				var/atom/movable/item = purchase.entry.spawn_item(pickedloc)
 				item.throw_at(purchase.uplink, 3, 3, spin = FALSE)
-				
+
 				// See comment for the same snipet above
 				if(ishuman(purchase.uplink.loc))
 					to_chat(purchase.uplink.loc, "<span class='notice'>[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)].</span>")
 				else
 					purchase.uplink.visible_message("<span class='notice'>[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)].</span>")
-				
+
 				queued_purchases -= purchase
 				qdel(purchase)
-		
+
 		if(MC_TICK_CHECK)
 			break
 
-// This exists because do_teleport does not like moving items from nullspace.
+/// Used to make a teleportation effect as do_teleport does not like moving items from nullspace.
 /datum/controller/subsystem/blackmarket/proc/fake_teleport(atom/movable/item, turf/target)
 	item.forceMove(target)
 	var/datum/effect_system/spark_spread/sparks = new
@@ -155,8 +159,7 @@ SUBSYSTEM_DEF(blackmarket)
 	sparks.attach(item)
 	sparks.start()
 
-// Add to queued_purchases after checking if shipping method is available.
+/// Used to add /datum/blackmarket_purchase to queued_purchases var, returns TRUE if successful. Can't normally return FALSE at this time (4.12.2019)
 /datum/controller/subsystem/blackmarket/proc/queue_item(datum/blackmarket_purchase/P)
-	// Should never have the same purchase in the list anyways.
 	queued_purchases += P
 	return TRUE

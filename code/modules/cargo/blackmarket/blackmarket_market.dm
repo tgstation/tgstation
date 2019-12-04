@@ -9,7 +9,7 @@
 	var/list/categories	= list()
 
 	// Automatic vars, do not touch these.
-	/// Items available from this market, popuplated by SSblackmarket on initialization.
+	/// Items available from this market, populated by SSblackmarket on initialization.
 	var/list/available_items = list()
 
 /datum/blackmarket_market/blackmarket

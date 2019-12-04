@@ -5,7 +5,7 @@
 	name = "Space Ninja Mask"
 	desc = "Apart from being acid, lava, fireproof and being hard to take off someone it does nothing special on it's own."
 	item = /obj/item/clothing/mask/gas/space_ninja
-	
+
 	price_min = 200
 	price_max = 500
 	stock_max = 3
@@ -43,7 +43,8 @@
 
 /datum/blackmarket_item/clothing/full_spacesuit_set/spawn_item(loc)
 	var/obj/item/storage/box/B = ..()
-	B.name = "Space suit Box"
+	B.name = "Spacesuit Box"
+	B.desc = "It has a NT logo on it."
 	B.contents += new /obj/item/clothing/suit/space
 	B.contents += new /obj/item/clothing/head/helmet/space
 	return B
