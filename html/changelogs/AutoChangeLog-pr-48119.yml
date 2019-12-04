@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - rscadd: "Added an (admin only) amputation arcade subtype that dispenses wrapped gifts instead of arcade prizes."
