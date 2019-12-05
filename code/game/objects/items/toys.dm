@@ -1089,12 +1089,12 @@
 		for(var/mob/M in urange(10, src))
 			if(!M.stat && !isAI(M))
 				shake_camera(M, 3, 1)
+		qdel(src)
 	else
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
 		for(var/mob/M in urange(10, src))
 			if(!M.stat && !isAI(M))
 				shake_camera(M, 3, 1)
-		qdel(src)
 
 /*
  * Toy big red button
