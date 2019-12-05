@@ -34,7 +34,7 @@
 
 /datum/martial_art/monk/disciple
 	name = "Disciple Monk"
-	level_cap = 20
+	level_cap = 12
 	is_disciple = TRUE
 
 
@@ -59,6 +59,7 @@
 		to_chat(H, "<span class = 'userdanger'>You know the ancient Monk techniques!</span>")
 		to_chat(H, "<span class = 'danger'>This technique becomes more powerful the more you use it.</span>")
 		to_chat(H, "<span class = 'danger'>Your power level will increase from 1 to 20, gaining new abilities and growing stronger the more you train.</span>")
+		to_chat(H, "<span class = 'danger'>A disciple on the other hand has a level limit of 12 however.</span>")
 		to_chat(H, "<span class = 'danger'>Your abilities have a use limit, before you need to rest to regain your strength.</span>")
 		to_chat(H, "<span class = 'danger'>You can't gain experience on yourself, dead humans, non humans, or braindead humans.</span>")
 		START_PROCESSING(SSfastprocess, src)
