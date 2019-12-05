@@ -1076,8 +1076,20 @@
 	icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/toy/minimeteor/emag_act(mob/user)
+	if (obj_flags & EMAGGED)
+		return
+	to_chat(user, "<span class = 'notice'> You short-circuit whatever electronics exist inside \the [src]. If there even are any.</span>")
+	obj_flags |= EMAGGED
+
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!..())
+	if (obj_flags & EMAGGED)
+		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+		explosion(get_turf(hit_atom), -1, -1, 2)
+		for(var/mob/M in urange(10, src))
+			if(!M.stat && !isAI(M))
+				shake_camera(M, 3, 1)
+	else
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
 		for(var/mob/M in urange(10, src))
 			if(!M.stat && !isAI(M))
