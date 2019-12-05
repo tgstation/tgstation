@@ -22,7 +22,8 @@ export const SmokeMachine = props => {
             icon={active ? 'power-off' : 'times'}
             selected={active}
             content={active ? 'On' : 'Off'}
-            onClick={() => act('power')} />)}>
+            onClick={() => act('power')} />
+        )}>
         <ProgressBar
           value={TankCurrentVolume / TankMaxVolume}
           ranges={{
