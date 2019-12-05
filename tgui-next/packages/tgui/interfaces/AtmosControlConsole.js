@@ -63,7 +63,9 @@ export const AtmosControlConsole = props => {
                 width="63px"
                 minValue={0}
                 maxValue={200}
-                suppressFlicker={2000} // This takes an exceptionally long time to update due to being an async signal
+                // This takes an exceptionally long time to update
+                // due to being an async signal
+                suppressFlicker={2000}
                 onChange={(e, value) => act('rate', {
                   rate: value,
                 })} />
@@ -83,7 +85,9 @@ export const AtmosControlConsole = props => {
                 minValue={0}
                 maxValue={4500}
                 step={10}
-                suppressFlicker={2000} // This takes an exceptionally long time to update due to being an async signal
+                // This takes an exceptionally long time to update
+                // due to being an async signal
+                suppressFlicker={2000}
                 onChange={(e, value) => act('pressure', {
                   pressure: value,
                 })} />

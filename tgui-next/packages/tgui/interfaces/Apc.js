@@ -45,8 +45,10 @@ export const Apc = props => {
       action: 'occupy',
     },
   };
-  const externalPowerStatus = powerStatusMap[data.externalPower] || powerStatusMap[0];
-  const chargingStatus = powerStatusMap[data.chargingStatus] || powerStatusMap[0];
+  const externalPowerStatus = powerStatusMap[data.externalPower]
+    || powerStatusMap[0];
+  const chargingStatus = powerStatusMap[data.chargingStatus]
+    || powerStatusMap[0];
   const channelArray = data.powerChannels || [];
   const malfStatus = malfMap[data.malfStatus] || malfMap[0];
   const adjustedCellChange = data.powerCellStatus / 100;
