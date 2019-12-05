@@ -37,8 +37,7 @@ export const PandemicBeakerDisplay = props => {
             disabled={!has_beaker}
             onClick={() => act('eject_beaker')} />
         </Fragment>
-      )}
-    >
+      )} >
       {has_beaker ? (
         !beaker_empty ? (
           has_blood ? (
@@ -102,8 +101,7 @@ export const PandemicDiseaseDisplay = props => {
               onClick={() => act('create_culture_bottle', {
                 index: virus.index,
               })} />
-          )}
-        >
+          )} >
           <Grid>
             <Grid.Column>
               {virus.description}
@@ -184,7 +182,9 @@ export const PandemicSymptomDisplay = props => {
     neutered,
   } = symptom;
 
-  const thresholds = map((desc, label) => ({ desc, label }))(symptom.threshold_desc || {});
+  const thresholds = map((desc, label) => (
+    { desc, label }))(symptom.threshold_desc || {},
+  );
 
   return (
     <Section
@@ -196,8 +196,7 @@ export const PandemicSymptomDisplay = props => {
           color="bad" >
           Neutered
         </Box>
-      )}
-    >
+      )} >
       <Grid>
         <Grid.Column size={2}>
           {desc}
