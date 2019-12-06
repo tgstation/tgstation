@@ -24,7 +24,6 @@
 	textg = num2hex(255 - g, 2)
 	textb = num2hex(255 - b, 2)
 	return text("#[][][]", textr, textg, textb)
-	return
 
 /proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
 	if(!start || !end)

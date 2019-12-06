@@ -127,7 +127,6 @@
 			to_chat(user, "<span class='notice'>You refill the suit's built-in extinguisher, using up the cartridge.</span>")
 			qdel(E)
 			return
-		return
 	return
 
 /obj/item/extinguisher_refill
