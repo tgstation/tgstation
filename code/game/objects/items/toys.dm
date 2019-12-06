@@ -1032,17 +1032,18 @@
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
-	if (obj_flags & EMAGGED)
+	var/timeleft = (cooldown - world.time)
+	if (obj_flags & EMAGGED && cooldown < world.time)
+		cooldown = world.time + 600
 		user.visible_message("<span class='hear'>You hear the click of a button.</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>")
 		sleep(5)
-		icon_state = "nuketoy"
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
-		sleep(135)
+		sleep(140)
 		user.visible_message("<span class='alert'>[src] violently explodes!</span>")
 		explosion(src, 0, 0, 1, 0)
 		qdel(src)
 	else if (cooldown < world.time)
-		cooldown = world.time + 1800 //3 minutes
+		cooldown = world.time + 600 //1 minute
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='hear'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
@@ -1051,10 +1052,7 @@
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
 		icon_state = "nuketoyidle"
-	else if (obj_flags & EMAGGED)
-		to_chat(user, "<span class='alert'>Nothing happens, and 'ERR' appears on the small display.</span>")
 	else
-		var/timeleft = (cooldown - world.time)
 		to_chat(user, "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display.</span>")
 		sleep(5)
 
@@ -1062,8 +1060,8 @@
 /obj/item/toy/nuke/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
 		return
-	to_chat(user, "<span class = 'notice'> You short-circuit \the [src]. The display reads 'ERR'.</span>")
-	desc = "A plastic model of a Nuclear Fission Explosive. The display reads 'ERR'."
+	to_chat(user, "<span class = 'notice'> You short-circuit \the [src].</span>")
+	desc = "A plastic model of a Nuclear Fission Explosive."
 	obj_flags |= EMAGGED
 /*
  * Fake meteor
@@ -1071,7 +1069,7 @@
 
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
-	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
+	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
@@ -1079,7 +1077,7 @@
 /obj/item/toy/minimeteor/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
 		return
-	to_chat(user, "<span class = 'notice'> You short-circuit whatever electronics exist inside \the [src]. If there even are any.</span>")
+	to_chat(user, "<span class = 'notice'> You short-circuit whatever electronics exist inside \the [src], if there even are any.</span>")
 	obj_flags |= EMAGGED
 
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -1089,7 +1087,6 @@
 		for(var/mob/M in urange(10, src))
 			if(!M.stat && !isAI(M))
 				shake_camera(M, 3, 1)
-		qdel(src)
 	else
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
 		for(var/mob/M in urange(10, src))
