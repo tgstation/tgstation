@@ -685,7 +685,7 @@ Difficulty: Very Hard
 			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
 			visible_message("<span class='notice'>[src] mends the wounds of [target].</span>","<span class='notice'>You mend the wounds of [target].</span>")
 
-/mob/living/simple_animal/hostile/lightgeist/ghostize()
+/mob/living/simple_animal/hostile/lightgeist/ghost()
 	. = ..()
 	if(.)
 		death()
