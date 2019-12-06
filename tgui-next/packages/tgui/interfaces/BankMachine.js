@@ -1,7 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
-import { LabeledListItem } from '../components/LabeledList';
+import { Button, LabeledList, NoticeBox, Section } from '../components';
 
 export const BankMachine = props => {
   const { act, data } = useBackend(props);
@@ -11,12 +10,24 @@ export const BankMachine = props => {
     station_name,
   } = data;
   return (
-    <Section title={station_name + 'Vault'}>
-      <LabeledList>
-        <LabeledList.Item label="Current Balance">
-          {current_balance}
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
+    <Fragment>
+      <Section title={station_name + ' Vault'}>
+        <LabeledList>
+          <LabeledList.Item label="Current Balance"
+            buttons={(
+              <Button
+                icon={siphoning ? 'times' : 'sync'}
+                content={siphoning ? 'Stop Siphoning' : 'Siphon Credits'}
+                selected={siphoning}
+                onClick={() => act(siphoning ? 'halt' : 'siphon')} />
+            )}>
+            {current_balance}
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
+      <NoticeBox textAlign="center">
+        Authorized personnel only
+      </NoticeBox>
+    </Fragment>
   );
 };
