@@ -86,28 +86,22 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	actions_types = list(/datum/action/item_action/halt)
 
 /obj/item/clothing/mask/gas/sechailer/screwdriver_act(mob/living/user, obj/item/I)
+	. = TRUE
 	if(..())
-		return TRUE
-	switch(aggressiveness)
-		if(AGGR_GOOD_COP)
-			to_chat(user, "<span class='notice'>You set the restrictor to the middle position.</span>")
-			aggressiveness = AGGR_BAD_COP
-		if(AGGR_BAD_COP)
-			to_chat(user, "<span class='notice'>You set the restrictor to the last position.</span>")
-			aggressiveness = AGGR_SHIT_COP
-		if(AGGR_SHIT_COP)
-			to_chat(user, "<span class='notice'>You set the restrictor to the first position.</span>")
-			aggressiveness = AGGR_GOOD_COP
-		else
-			to_chat(user, "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>")
-	return TRUE
+		return
+	else if (aggressiveness == AGGR_BROKEN)
+		to_chat(user, "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>")
+		return
+	var/position = aggressiveness == AGGR_GOOD_COP ? "middle" : aggressiveness == AGGR_BAD_COP ? "last" : "first"
+	to_chat(user, "<span class='notice'>You set the restrictor to the [position] position.</span>")
+	aggressiveness = aggressiveness % 3 + 1 // loop AGGR_GOOD_COP -> AGGR_SHIT_COP
 
 /obj/item/clothing/mask/gas/sechailer/wirecutter_act(mob/living/user, obj/item/I)
+	. = TRUE
 	..()
 	if(aggressiveness != AGGR_BROKEN)
 		to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
 		aggressiveness = AGGR_BROKEN
-	return TRUE
 
 /obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/halt))
@@ -122,8 +116,6 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	if(safety)
 		safety = FALSE
 		to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.</span>")
-	else
-		return
 
 /obj/item/clothing/mask/gas/sechailer/verb/halt()
 	set category = "Object"
@@ -153,11 +145,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 			return
 
 	// select phrase to play
-	var/datum/hailer_phrase/selected_phrase = GLOB.hailer_phrases[select_phrase()]
-	usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[initial(selected_phrase.phrase_text)]</b></font>")
-	playsound(src.loc, "sound/voice/complionator/[initial(selected_phrase.phrase_sound)].ogg", 100, FALSE, 4)
-	cooldown = TRUE
-	addtimer(CALLBACK(src, /obj/item/clothing/mask/gas/sechailer/proc/reset_cooldown), PHRASE_COOLDOWN)
+	play_phrase(usr, GLOB.hailer_phrases[select_phrase()])
+
 
 /obj/item/clothing/mask/gas/sechailer/proc/select_phrase()
 	if (!safety)
@@ -172,6 +161,15 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 			else
 				upper_limit = ALL_PHRASES
 		return rand(aggressiveness == AGGR_BROKEN ? BROKE_PHRASES : EMAG_PHRASE + 1, upper_limit)
+
+/obj/item/clothing/mask/gas/sechailer/proc/play_phrase(mob/user, datum/hailer_phrase/phrase)
+	. = FALSE
+	if (!cooldown)
+		usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[initial(phrase.phrase_text)]</b></font>")
+		playsound(src.loc, "sound/voice/complionator/[initial(phrase.phrase_sound)].ogg", 100, FALSE, 4)
+		cooldown = TRUE
+		addtimer(CALLBACK(src, /obj/item/clothing/mask/gas/sechailer/proc/reset_cooldown), PHRASE_COOLDOWN)
+		. = TRUE
 
 /obj/item/clothing/mask/gas/sechailer/proc/reset_cooldown()
 	cooldown = FALSE
