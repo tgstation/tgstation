@@ -144,7 +144,7 @@
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/berryjuice = 5
 	)
-	result = /obj/item/reagent_containers/food/snacks/snowcones/mix
+	result = /obj/item/reagent_containers/food/snacks/snowcones/berry
 	subcategory = CAT_ICE
 
 /datum/crafting_recipe/food/fruitsalad_sc

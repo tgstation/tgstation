@@ -115,7 +115,7 @@
 	tastes = list("ice" = 1, "water" = 1, "red" = 5, "cherries" = 5)
 	foodtype = FRUIT
 
-/obj/item/reagent_containers/food/snacks/snowcones/mix
+/obj/item/reagent_containers/food/snacks/snowcones/berry
 	name = "berry snowcone"
 	desc = "Berry syrup drizzled over a snowball in a paper cup."
 	icon_state = "berry_sc"
@@ -160,7 +160,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/space_cola = 5)
 	tastes = list("ice" = 1, "water" = 1, "cola" = 5)
 
-/ob/item/reagent_containers/food/snacks/snowcones/spacemountainwind
+/obj/item/reagent_containers/food/snacks/snowcones/spacemountainwind
 	name = "Space Mountain Wind snowcone"
 	desc = "Space Mountain Wind drizzled over a snowball in a paper cup."
 	icon_state = "mountainwind_sc"
