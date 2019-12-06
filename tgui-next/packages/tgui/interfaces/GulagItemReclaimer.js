@@ -6,8 +6,7 @@ export const GulagItemReclaimer = props => {
   const mobs = data.mobs || [];
   return (
     <Section
-      title="Stored Items"
-      textAlign="center">
+      title="Stored Items">
       <Table>
         {mobs.map(mob => (
           <Table.Row key={mob.mob}>
