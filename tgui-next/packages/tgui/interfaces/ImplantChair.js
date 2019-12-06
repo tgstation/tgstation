@@ -1,42 +1,53 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Button, Icon, LabeledList, Section } from '../components';
 
 export const ImplantChair = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   return (
     <Fragment>
-      <Section title="Occupant Information"
+      <Section
+        title="Occupant Information"
         textAlign="center">
         <LabeledList>
           <LabeledList.Item label="Name">
-            {data.occupant.name ? data.occupant.name : "No Occupant"}
+            {data.occupant.name ? data.occupant.name : 'No Occupant'}
           </LabeledList.Item>
           {!!data.occupied && (
-            <LabeledList.Item label="Status"
-              color={(data.occupant.stat === 0) ? "good" : data.occupant.stat === 1 ? "average" : "bad"}>
-              {data.occupant.stat === 0 ? "Conscious" : data.occupant.stat === 1 ? "Unconcious" : "Dead"}
+            <LabeledList.Item
+              label="Status"
+              color={data.occupant.stat === 0
+                ? 'good'
+                : data.occupant.stat === 1
+                  ? 'average'
+                  : 'bad'}>
+              {data.occupant.stat === 0
+                ? 'Conscious'
+                : data.occupant.stat === 1
+                  ? 'Unconcious'
+                  : 'Dead'}
             </LabeledList.Item>
           )}
         </LabeledList>
       </Section>
-      <Section title="Operations"
+      <Section
+        title="Operations"
         textAlign="center">
         <LabeledList>
           <LabeledList.Item label="Door">
             <Button
-              icon={data.open ? "unlock" : "lock"}
-              color={data.open ? "default" : "red"}
-              onClick={() => act(ref, 'door')}
-              content={data.open ? "Open" : "Closed"} />
+              icon={data.open ? 'unlock' : 'lock'}
+              color={data.open ? 'default' : 'red'}
+              content={data.open ? 'Open' : 'Closed'}
+              onClick={() => act('door')} />
           </LabeledList.Item>
           <LabeledList.Item label="Implant Occupant">
             <Button
               icon="code-branch"
-              onClick={() => act(ref, 'implant')}
-              content={data.ready ? (data.special_name ? data.special_name : "Implant") : "Recharging"} />
+              content={data.ready
+                ? (data.special_name || 'Implant')
+                : 'Recharging'}
+              onClick={() => act('implant')} />
             {data.ready === 0 && (
               <Icon
                 name="cog"

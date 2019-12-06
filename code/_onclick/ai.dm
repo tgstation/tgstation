@@ -51,7 +51,7 @@
 		log_admin(message)
 		if(REALTIMEOFDAY >= chnotify + 9000)
 			chnotify = REALTIMEOFDAY
-			send2irc_adminless_only("NOCHEAT", message)
+			send2tgs_adminless_only("NOCHEAT", message)
 		return
 
 	var/list/modifiers = params2list(params)

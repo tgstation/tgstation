@@ -47,7 +47,7 @@
 		if(!A || !A.name) //Skip abstract achievements types
 			continue
 		if(!data[T])
-			data[T] = A.parse_value(kv[A.hub_id])
+			data[T] = A.parse_value(kv[A.database_id])
 			original_cached_data[T] = data[T]
 
 ///Updates local cache with db data for the given achievement type if it wasn't loaded yet.

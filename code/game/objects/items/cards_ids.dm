@@ -569,6 +569,18 @@ update_label()
 	access = get_all_accesses()
 	. = ..()
 
+/obj/item/card/id/debug
+	name = "\improper Debug ID"
+	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
+	icon_state = "ert_janitor"
+	assignment = "Jannie"
+	uses_overlays = FALSE
+
+/obj/item/card/id/debug/Initialize()
+	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	. = ..()
+
 /obj/item/card/id/prisoner
 	name = "prisoner ID card"
 	id_type_name = "prisoner ID card"

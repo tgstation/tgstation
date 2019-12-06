@@ -131,6 +131,8 @@
 	#define COMPONENT_NO_ATTACK_HAND 1							//works on all 3.
 //This signal return value bitflags can be found in __DEFINES/misc.dm
 #define COMSIG_ATOM_INTERCEPT_Z_FALL "movable_intercept_z_impact"	//called for each movable in a turf contents on /turf/zImpact(): (atom/movable/A, levels)
+#define COMSIG_ATOM_START_PULL "movable_start_pull"	//called on a movable (NOT living) when someone starts pulling it (atom/movable/puller, state, force)
+#define COMSIG_LIVING_START_PULL "living_start_pull"	//called on /living when someone starts pulling it (atom/movable/puller, state, force)
 
 /////////////////
 
@@ -183,6 +185,7 @@
 	#define HEARING_SPANS 6
 	#define HEARING_MESSAGE_MODE 7 */
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
+#define COMSIG_MOVABLE_UPDATE_GLIDE_SIZE "movable_glide_size"	//Called when the movable's glide size is updated: (new_glide_size)
 
 // /mob signals
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
@@ -218,6 +221,8 @@
 	#define SPEECH_FORCED 7 */
 #define COMSIG_MOB_DEADSAY "mob_deadsay" // from /mob/say_dead(): (mob/speaker, message)
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT 1
+#define COMSIG_MOB_EMOTE "mob_emote" // from /mob/living/emote(): ()
+
 // /mob/living signals
 #define COMSIG_LIVING_RESIST "living_resist"					//from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_IGNITED "living_ignite"					//from base of mob/living/IgniteMob() (/mob/living)
@@ -242,6 +247,8 @@
 
 // /mob/living/carbon signals
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
+#define COMSIG_CARBON_GAIN_ORGAN "carbon_gain_organ"				//from /item/organ/proc/Insert() (/obj/item/organ/)
+#define COMSIG_CARBON_LOSE_ORGAN "carbon_lose_organ"				//from /item/organ/proc/Remove() (/obj/item/organ/)
 
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
@@ -302,6 +309,9 @@
 
 // /obj/item/pen signals
 #define COMSIG_PEN_ROTATED "pen_rotated"						//called after rotation in /obj/item/pen/attack_self(): (rotation, mob/living/carbon/user)
+
+// /obj/item/gun signals
+#define COMSIG_MOB_FIRED_GUN "mob_fired_gun"					//called in /obj/item/gun/process_fire (user, target, params, zone_override)
 
 // /obj/projectile signals (sent to the firer)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
