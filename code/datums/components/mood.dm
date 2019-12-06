@@ -11,7 +11,6 @@
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
-	var/obj/screen/sanity/screen_obj_sanity
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
@@ -43,7 +42,7 @@
 		RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
 
 /datum/component/mood/proc/print_mood(mob/user)
-	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM>\n"
+	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM></span>\n"
 	msg += "<span class='notice'>My mental status: </span>" //Long term
 	switch(sanity)
 		if(SANITY_GREAT to INFINITY)
@@ -87,7 +86,7 @@
 			msg += event.description
 	else
 		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.</span>\n"
-	to_chat(user || parent, msg)
+	to_chat(user, msg)
 
 ///Called after moodevent/s have been added/removed.
 /datum/component/mood/proc/update_mood()
@@ -144,37 +143,28 @@
 			if(absmood > highest_absolute_mood)
 				highest_absolute_mood = absmood
 
+	switch(sanity_level)
+		if(1)
+			screen_obj.color = "#2eeb9a"
+		if(2)
+			screen_obj.color = "#86d656"
+		if(3)
+			screen_obj.color = "#4b96c4"
+		if(4)
+			screen_obj.color = "#dfa65b"
+		if(5)
+			screen_obj.color = "#f38943"
+		if(6)
+			screen_obj.color = "#f15d36"
+
 	if(!conflicting_moodies.len) //no special icons- go to the normal icon states
-		if(sanity < 25)
-			screen_obj.icon_state = "mood_insane"
-		else
-			screen_obj.icon_state = "mood[mood_level]"
-		screen_obj_sanity.icon_state = "sanity[sanity_level]"
+		screen_obj.icon_state = "mood[mood_level]"
 		return
 
 	for(var/i in conflicting_moodies)
 		var/datum/mood_event/event = i
 		if(abs(event.mood_change) == highest_absolute_mood)
 			screen_obj.icon_state = "[event.special_screen_obj]"
-			switch(mood_level)
-				if(1)
-					screen_obj.color = "#747690"
-				if(2)
-					screen_obj.color = "#f15d36"
-				if(3)
-					screen_obj.color = "#f38a43"
-				if(4)
-					screen_obj.color = "#dfa65b"
-				if(5)
-					screen_obj.color = "#4b96c4"
-				if(6)
-					screen_obj.color = "#a8d259"
-				if(7)
-					screen_obj.color = "#86d656"
-				if(8)
-					screen_obj.color = "#30dd26"
-				if(9)
-					screen_obj.color = "#2eeb9a"
 			break
 
 ///Called on SSmood process
@@ -297,9 +287,8 @@
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
-	screen_obj_sanity = new
+	screen_obj.color = "#4b96c4"
 	hud.infodisplay += screen_obj
-	hud.infodisplay += screen_obj_sanity
 	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
@@ -310,11 +299,11 @@
 	var/datum/hud/hud = owner.hud_used
 	if(hud && hud.infodisplay)
 		hud.infodisplay -= screen_obj
-		hud.infodisplay -= screen_obj_sanity
 	QDEL_NULL(screen_obj)
-	QDEL_NULL(screen_obj_sanity)
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
+	if(user != parent)
+		return
 	print_mood(user)
 
 /datum/component/mood/proc/HandleNutrition()
@@ -352,11 +341,34 @@
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
 
-/datum/component/mood/proc/check_area_mood(datum/source, var/area/A)
+/datum/component/mood/proc/check_area_mood(datum/source, area/A)
+	update_beauty(A)
 	if(A.mood_bonus)
 		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
 	else
 		clear_event(null, "area")
+
+/datum/component/mood/proc/update_beauty(area/A)
+	if(A.outdoors) //if we're outside, we don't care.
+		clear_event(null, "area_beauty")
+		return FALSE
+	if(HAS_TRAIT(parent, TRAIT_SNOB))
+		switch(A.beauty)
+			if(-INFINITY to BEAUTY_LEVEL_HORRID)
+				add_event(null, "area_beauty", /datum/mood_event/horridroom)
+				return
+			if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
+				add_event(null, "area_beauty", /datum/mood_event/badroom)
+				return
+	switch(A.beauty)
+		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_DECENT)
+			clear_event(null, "area_beauty")
+		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
+			add_event(null, "area_beauty", /datum/mood_event/decentroom)
+		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
+			add_event(null, "area_beauty", /datum/mood_event/goodroom)
+		if(BEAUTY_LEVEL_GREAT to INFINITY)
+			add_event(null, "area_beauty", /datum/mood_event/greatroom)
 
 ///Called when parent is ahealed.
 /datum/component/mood/proc/on_revive(datum/source, full_heal)

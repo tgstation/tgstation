@@ -18,11 +18,19 @@
 	results = list(/datum/reagent/medicine/spaceacillin = 2)
 	required_reagents = list(/datum/reagent/cryptobiolin = 1, /datum/reagent/medicine/epinephrine = 1)
 
+/datum/chemical_reaction/oculine
+	name = "Oculine"
+	id = /datum/reagent/medicine/oculine
+	results = list(/datum/reagent/medicine/oculine = 3)
+	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
+	mix_message = "The mixture bubbles noticeably and becomes a dark grey color!"
+
 /datum/chemical_reaction/inacusiate
 	name = /datum/reagent/medicine/inacusiate
 	id = /datum/reagent/medicine/inacusiate
 	results = list(/datum/reagent/medicine/inacusiate = 2)
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/multiver = 1)
+	mix_message = "The mixture sputters loudly and becomes a light grey color!"
 
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
@@ -40,7 +48,7 @@
 	name = "Miner's Salve"
 	id = /datum/reagent/medicine/mine_salve
 	results = list(/datum/reagent/medicine/mine_salve = 3)
-	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/water = 1, /datum/reagent/iron = 1)
+	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/water = 1, /datum/reagent/iron = 1)
 
 /datum/chemical_reaction/mine_salve2
 	name = "Miner's Salve"
@@ -74,7 +82,7 @@
 	required_reagents = list(/datum/reagent/fuel = 1, /datum/reagent/chlorine = 1, /datum/reagent/ammonia = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/sodium = 1, /datum/reagent/toxin/cyanide = 1)
 
 /datum/chemical_reaction/sal_acid
-	name = "Salicyclic Acid"
+	name = "Salicylic Acid"
 	id = /datum/reagent/medicine/sal_acid
 	results = list(/datum/reagent/medicine/sal_acid = 5)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/phenol = 1, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1, /datum/reagent/toxin/acid = 1)
@@ -95,22 +103,15 @@
 	name = "Ephedrine"
 	id = /datum/reagent/medicine/ephedrine
 	results = list(/datum/reagent/medicine/ephedrine = 4)
-	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/oil = 1, /datum/reagent/hydrogen = 1, /datum/reagent/diethylamine = 1)
+	required_reagents = list(/datum/reagent/consumable/sugar = 1, /datum/reagent/fuel/oil = 1, /datum/reagent/hydrogen = 1, /datum/reagent/diethylamine = 1)
 	mix_message = "The solution fizzes and gives off toxic fumes."
 
 /datum/chemical_reaction/diphenhydramine
 	name = "Diphenhydramine"
 	id = /datum/reagent/medicine/diphenhydramine
 	results = list(/datum/reagent/medicine/diphenhydramine = 4)
-	required_reagents = list(/datum/reagent/oil = 1, /datum/reagent/carbon = 1, /datum/reagent/bromine = 1, /datum/reagent/diethylamine = 1, /datum/reagent/consumable/ethanol = 1)
+	required_reagents = list(/datum/reagent/fuel/oil = 1, /datum/reagent/carbon = 1, /datum/reagent/bromine = 1, /datum/reagent/diethylamine = 1, /datum/reagent/consumable/ethanol = 1)
 	mix_message = "The mixture dries into a pale blue powder."
-
-/datum/chemical_reaction/oculine
-	name = "Oculine"
-	id = /datum/reagent/medicine/oculine
-	results = list(/datum/reagent/medicine/oculine = 3)
-	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
-	mix_message = "The mixture sputters loudly and becomes a pale pink color."
 
 /datum/chemical_reaction/atropine
 	name = "Atropine"
@@ -178,7 +179,7 @@
 	name = "Haloperidol"
 	id = /datum/reagent/medicine/haloperidol
 	results = list(/datum/reagent/medicine/haloperidol = 5)
-	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/medicine/potass_iodide = 1, /datum/reagent/oil = 1)
+	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/medicine/potass_iodide = 1, /datum/reagent/fuel/oil = 1)
 
 /datum/chemical_reaction/regen_jelly
 	name = "Regenerative Jelly"
@@ -186,10 +187,10 @@
 	results = list(/datum/reagent/medicine/regen_jelly = 2)
 	required_reagents = list(/datum/reagent/medicine/omnizine = 1, /datum/reagent/toxin/slimejelly = 1)
 
-/datum/chemical_reaction/corazone
-	name = "Corazone"
-	id = /datum/reagent/medicine/corazone
-	results = list(/datum/reagent/medicine/corazone = 3)
+/datum/chemical_reaction/higadrite
+	name = "Higadrite"
+	id = /datum/reagent/medicine/higadrite
+	results = list(/datum/reagent/medicine/higadrite = 3)
 	required_reagents = list(/datum/reagent/phenol = 2, /datum/reagent/lithium = 1)
 
 /datum/chemical_reaction/morphine
@@ -229,6 +230,20 @@
 /datum/chemical_reaction/granibitaluri
 	name = "Granibitaluri"
 	id = /datum/reagent/medicine/granibitaluri
-	results = list(/datum/reagent/medicine/granibitaluri = 1)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/space_cleaner/sterilizine = 1) //haha guys totally not some sort of saline reference!
-	required_temp = 373
+	results = list(/datum/reagent/medicine/granibitaluri = 3)
+	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/phenol = 1, /datum/reagent/nitrogen = 1)
+	required_catalysts = list(/datum/reagent/iron = 5)
+
+/datum/chemical_reaction/medsuture
+	name = "Medicated Suture"
+	id = "med_suture"
+	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/toxin/formaldehyde = 30, /datum/reagent/medicine/polypyr = 30) //This might be a bit much, reagent cost should be reviewed after implementation.
+
+/datum/chemical_reaction/medsuture/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/stack/medical/suture/medicated(location)
+	return
+
+
+

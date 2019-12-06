@@ -24,8 +24,8 @@
 	var/total_message_count = 0
 	///Next tick to reset the total message counter
 	var/total_count_reset = 0
-	///Internal counter for clients sending irc relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
-	var/ircreplyamount = 0
+	///Internal counter for clients sending external (IRC/Discord) relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
+	var/externalreplyamount = 0
 
 		/////////
 		//OTHER//
@@ -121,3 +121,5 @@
 	var/next_keysend_trip_reset = 0
 	///When set to true, user will be autokicked if they trip the keysends in a second limit again
 	var/keysend_tripped = FALSE
+	///custom movement keys for this client
+	var/list/movement_keys = list()

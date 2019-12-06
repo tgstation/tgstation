@@ -17,10 +17,10 @@
 
 /*****BURN*****/
 
-/datum/chemical_reaction/ichiyuri
-	name = "Ichiyuri"
-	id = /datum/reagent/medicine/C2/ichiyuri
-	results = list(/datum/reagent/medicine/C2/ichiyuri = 5)
+/datum/chemical_reaction/lenturi
+	name = "Lenturi"
+	id = /datum/reagent/medicine/C2/lenturi
+	results = list(/datum/reagent/medicine/C2/lenturi = 5)
 	required_reagents = list(/datum/reagent/ammonia = 1, /datum/reagent/silver = 1, /datum/reagent/sulfur = 1, /datum/reagent/oxygen = 1, /datum/reagent/chlorine = 1)
 
 /datum/chemical_reaction/aiuri
@@ -35,7 +35,7 @@
 	name = "Convermol"
 	id = /datum/reagent/medicine/C2/convermol
 	results = list(/datum/reagent/medicine/C2/convermol = 3)
-	required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1, /datum/reagent/oil = 1)
+	required_reagents = list(/datum/reagent/hydrogen = 1, /datum/reagent/fluorine = 1, /datum/reagent/fuel/oil = 1)
 	required_temp = 370
 	mix_message = "The mixture rapidly turns into a dense pink liquid."
 
@@ -48,10 +48,10 @@
 
 /*****TOX*****/
 
-/datum/chemical_reaction/fiziver
-	name = "Fiziver"
-	id = /datum/reagent/medicine/C2/fiziver
-	results = list(/datum/reagent/medicine/C2/fiziver = 3)
+/datum/chemical_reaction/seiver
+	name = "Seiver"
+	id = /datum/reagent/medicine/C2/seiver
+	results = list(/datum/reagent/medicine/C2/seiver = 3)
 	required_reagents = list(/datum/reagent/nitrogen = 1, /datum/reagent/potassium = 1, /datum/reagent/aluminium = 1)
 
 /datum/chemical_reaction/multiver
@@ -67,3 +67,9 @@
 	id = /datum/reagent/medicine/C2/syriniver
 	results = list(/datum/reagent/medicine/C2/syriniver = 5)
 	required_reagents = list(/datum/reagent/sulfur = 1, /datum/reagent/fluorine = 1, /datum/reagent/toxin = 1, /datum/reagent/nitrous_oxide = 2)
+
+/datum/chemical_reaction/penthrite
+	name = "Penthrite"
+	id  = /datum/reagent/medicine/C2/penthrite
+	results = list(/datum/reagent/medicine/C2/penthrite = 4)
+	required_reagents = list(/datum/reagent/pentaerythritol = 4, /datum/reagent/acetone = 1,  /datum/reagent/toxin/acid/nitracid = 1)

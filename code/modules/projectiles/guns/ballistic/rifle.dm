@@ -2,7 +2,7 @@
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
 	icon_state = "moistnugget"
-	icon_state = "moistnugget"
+	item_state = "moistnugget"
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_STANDARD
@@ -21,7 +21,7 @@ obj/item/gun/ballistic/rifle/update_icon()
 
 obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
-		to_chat(user, "<span class='notice'>You open the bolt of \the [src]</span>")
+		to_chat(user, "<span class='notice'>You open the bolt of \the [src].</span>")
 		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
 		process_chamber(FALSE, FALSE, FALSE)
 		bolt_locked = TRUE
@@ -53,9 +53,10 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	desc = "This piece of junk looks like something that could have been used 700 years ago. It feels slightly moist."
 	sawn_desc = "An extremely sawn-off Mosin Nagant, popularly known as an \"obrez\". There was probably a reason it wasn't manufactured this short to begin with."
 	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
 	icon_state = "moistnugget"
 	item_state = "moistnugget"
-	slot_flags = 0 //no ITEM_SLOT_BACK sprite, alas
+	slot_flags = ITEM_SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_bayonet = TRUE
 	knife_x_offset = 27
@@ -88,6 +89,7 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	pin = /obj/item/firing_pin/magic
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
+	slot_flags = null
 	can_bayonet = FALSE
 	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
 	flags_1 = NONE

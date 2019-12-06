@@ -62,6 +62,12 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/obj/item/gun/energy/handle_atom_del(atom/A)
+	if(A == cell)
+		cell = null
+		update_icon(FALSE, TRUE)
+	return ..()
+
 /obj/item/gun/energy/process()
 	if(selfcharge && cell && cell.percent() < 100)
 		charge_tick++
@@ -71,7 +77,7 @@
 		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
-		update_icon()
+		update_icon(FALSE, TRUE)
 
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
 	if(ammo_type.len > 1)
@@ -130,28 +136,30 @@
 	update_icon(TRUE)
 	return
 
-/obj/item/gun/energy/update_icon(force_update)
+/obj/item/gun/energy/update_icon(force_update, force_itemstate_update)
 	if(QDELETED(src))
 		return
 	..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1)
+	var/ratio = can_shoot() ? CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1) : 0
+				// Sets the ratio to 0 if the gun doesn't have enough charge to fire, or if it's power cell is removed.
+				// TG issues #5361 & #47908
 	if(ratio == old_ratio && !force_update)
 		return
 	old_ratio = ratio
 	cut_overlays()
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
 	var/itemState = null
 	if(!initial(item_state))
 		itemState = icon_state
 	if (modifystate)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		add_overlay("[icon_state]_[shot.select_name]")
 		iconState += "_[shot.select_name]"
 		if(itemState)
 			itemState += "[shot.select_name]"
-	if(cell.charge < shot.e_cost)
+	if(ratio == 0)
 		add_overlay("[icon_state]_empty")
 	else
 		if(!shaded_charge)
@@ -165,10 +173,14 @@
 	if(itemState)
 		itemState += "[ratio]"
 		item_state = itemState
+		if(force_itemstate_update && ismob(loc)) //used if the weapon is selfcharging, otherwise the icons won't update till the item is either fired or reequipped.
+			var/mob/M = loc
+			if(M.is_holding(src))
+				M.update_inv_hands()
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
 		if(user.is_holding(src))
 			user.visible_message("<span class='suicide'>[user] melts [user.p_their()] face off with [src]!</span>")
@@ -202,7 +214,7 @@
 		. = ""
 	else
 		var/obj/item/ammo_casing/energy/E = ammo_type[select]
-		var/obj/item/projectile/energy/BB = E.BB
+		var/obj/projectile/energy/BB = E.BB
 		if(!BB)
 			. = ""
 		else if(BB.nodamage || !BB.damage || BB.damage_type == STAMINA)

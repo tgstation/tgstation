@@ -21,7 +21,7 @@
 //95% chance of success, not 100 because organs are delicate
 /datum/surgery_step/hepatectomy
 	name = "remove damaged liver section"
-	implements = list(/obj/item/scalpel = 95, /obj/item/melee/transforming/energy/sword = 65, /obj/item/kitchen/knife = 45,
+	implements = list(TOOL_SCALPEL = 95, /obj/item/melee/transforming/energy/sword = 65, /obj/item/kitchen/knife = 45,
 		/obj/item/shard = 35)
 	time = 52
 
@@ -30,17 +30,17 @@
 		"<span class='notice'>[user] begins to make an incision in [target].</span>",
 		"<span class='notice'>[user] begins to make an incision in [target].</span>")
 
-/datum/surgery_step/hepatectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/hepatectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	var/mob/living/carbon/human/H = target
 	H.setOrganLoss(ORGAN_SLOT_LIVER, 10) //not bad, not great
 	display_results(user, target, "<span class='notice'>You successfully remove the damaged part of [target]'s liver.</span>",
-		"<span class='notice'>[user] successfullly removes the damaged part of [target]'s liver.",
-		"<span class='notice'>[user] successfullly removes the damaged part of [target]'s liver.")
-	return TRUE
+		"<span class='notice'>[user] successfully removes the damaged part of [target]'s liver.</span>",
+		"<span class='notice'>[user] successfully removes the damaged part of [target]'s liver.</span>")
+	return ..(default_display_results = FALSE)
 
 /datum/surgery_step/hepatectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery)
 	var/mob/living/carbon/human/H = target
 	H.adjustOrganLoss(ORGAN_SLOT_LIVER, 15)
 	display_results(user, target, "<span class='warning'>You cut the wrong part of [target]'s liver!</span>",
-		"<span class='warning'>[user] cuts the wrong part of [target]'s liver!",
-		"<span class='warning'>[user] cuts the wrong part of [target]'s liver!")
+		"<span class='warning'>[user] cuts the wrong part of [target]'s liver!</span>",
+		"<span class='warning'>[user] cuts the wrong part of [target]'s liver!</span>")

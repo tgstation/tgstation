@@ -15,7 +15,7 @@
 	var/obj/item/IC = null
 
 /datum/surgery_step/handle_cavity/tool_check(mob/user, obj/item/tool)
-	if(istype(tool, /obj/item/cautery) || istype(tool, /obj/item/gun/energy/laser))
+	if(tool.tool_behaviour == TOOL_CAUTERY || istype(tool, /obj/item/gun/energy/laser))
 		return FALSE
 	return !tool.get_temperature()
 
@@ -43,7 +43,7 @@
 				"<span class='notice'>[user] stuffs [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [target]'s [target_zone].</span>")
 			user.transferItemToLoc(tool, target, TRUE)
 			CH.cavity_item = tool
-			return 1
+			return ..(default_display_results = FALSE)
 	else
 		if(IC)
 			display_results(user, target, "<span class='notice'>You pull [IC] out of [target]'s [target_zone].</span>",
@@ -51,7 +51,7 @@
 				"<span class='notice'>[user] pulls [IC.w_class > WEIGHT_CLASS_SMALL ? IC : "something"] out of [target]'s [target_zone].</span>")
 			user.put_in_hands(IC)
 			CH.cavity_item = null
-			return 1
+			return ..(default_display_results = FALSE)
 		else
 			to_chat(user, "<span class='warning'>You don't find anything in [target]'s [target_zone].</span>")
 			return 0

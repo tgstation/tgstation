@@ -56,7 +56,7 @@
 	var/turf/target_turf = pick(L)
 	if(!target_turf)
 		return
-	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, src, 300, 1, /obj/effect/portal/anom)
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(src), target_turf, 300, 1, /obj/effect/portal/anom)
 	var/turf/T = get_turf(target)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [AREACOORD(T)]")
@@ -399,7 +399,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+		return "[output] \[[fuel]: [round(fuel.amount*fuel.mats_per_stack,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 /obj/item/mecha_parts/mecha_equipment/generator/action(target)
 	if(chassis)
@@ -409,9 +409,9 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(var/obj/item/stack/sheet/P)
 	if(P.type == fuel.type && P.amount > 0)
-		var/to_load = max(max_fuel - fuel.amount*fuel.perunit,0)
+		var/to_load = max(max_fuel - fuel.amount*fuel.mats_per_stack,0)
 		if(to_load)
-			var/units = min(max(round(to_load / P.perunit),1),P.amount)
+			var/units = min(max(round(to_load / P.mats_per_stack),1),P.amount)
 			fuel.amount += units
 			P.use(units)
 			occupant_message("<span class='notice'>[units] unit\s of [fuel] successfully loaded.</span>")
@@ -447,7 +447,7 @@
 	if(cur_charge < chassis.cell.maxcharge)
 		use_fuel = fuel_per_cycle_active
 		chassis.give_power(power_per_cycle)
-	fuel.amount -= min(use_fuel/fuel.perunit,fuel.amount)
+	fuel.amount -= min(use_fuel/fuel.mats_per_stack,fuel.amount)
 	update_equip_info()
 	return 1
 
@@ -468,3 +468,115 @@
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
 		radiation_pulse(get_turf(src), rad_per_cycle)
+
+
+/////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
+
+/obj/item/mecha_parts/mecha_equipment/thrusters
+	name = "generic exosuit thrusters" //parent object, in-game sources will be a child object
+	desc = "A generic set of thrusters, from an unknown source. Uses not-understood methods to propel exosuits seemingly for free."
+	icon_state = "thrusters"
+	selectable = FALSE
+	var/effect_type = /obj/effect/particle_effect/sparks
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/try_attach_part(mob/user, obj/mecha/M)
+	for(var/obj/item/I in M.equipment)
+		if(istype(I, src))
+			to_chat(user, "<span class='warning'>[M] already has this thruster package!</span>")
+			return FALSE
+	. = ..()
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/mecha/M)
+	M.active_thrusters = src //Enable by default
+	. = ..()
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/detach()
+	if(chassis?.active_thrusters == src)
+		chassis.active_thrusters = null
+	. = ..()
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/Destroy()
+	if(chassis?.active_thrusters == src)
+		chassis.active_thrusters = null
+	. = ..()
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/Topic(href,href_list)
+	..()
+	if(!chassis)
+		return
+	if(href_list["mode"])
+		var/mode = text2num(href_list["mode"])
+		switch(mode)
+			if(0)
+				enable()
+			if(1)
+				disable()
+	return
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/proc/enable()
+	if (chassis.active_thrusters == src)
+		return
+	chassis.active_thrusters = src
+	occupant_message("<span class='notice'>[src] enabled.</span>")
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/proc/disable()
+	if(chassis.active_thrusters != src)
+		return
+	chassis.active_thrusters = null
+	occupant_message("<span class='notice'>[src] disabled.</span>")
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/get_equip_info()
+	return "[..()] \[<a href='?src=[REF(src)];mode=0'>Enable</a>|<a href='?src=[REF(src)];mode=1'>Disable</a>\]"
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/proc/thrust(var/movement_dir)
+	if(!chassis)
+		return FALSE
+	generate_effect(movement_dir)
+	return TRUE //This parent should never exist in-game outside admeme use, so why not let it be a creative thruster?
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/proc/generate_effect(var/movement_dir)
+	var/obj/effect/particle_effect/E = new effect_type(get_turf(chassis))
+	E.dir = turn(movement_dir, 180)
+	step(E, turn(movement_dir, 180))
+	QDEL_IN(E, 5)
+
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/gas
+	name = "RCS thruster package"
+	desc = "A set of thrusters that allow for exosuit movement in zero-gravity enviroments, by expelling gas from the internal life support tank."
+	effect_type = /obj/effect/particle_effect/smoke
+	var/move_cost = 20 //moles per step
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/gas/try_attach_part(mob/user, obj/mecha/M)
+	if(!M.internal_tank)
+		to_chat(user, "<span class='warning'>[M] does not have an internal tank and cannot support this upgrade!</span>")
+		return FALSE
+	. = ..()
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/gas/thrust(var/movement_dir)
+	if(!chassis || !chassis.internal_tank)
+		return FALSE
+	var/moles = chassis.internal_tank.air_contents.total_moles()
+	if(moles < move_cost)
+		chassis.internal_tank.air_contents.remove(moles)
+		return FALSE
+	chassis.internal_tank.air_contents.remove(move_cost)
+	generate_effect(movement_dir)
+	return TRUE
+
+
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/ion //for mechs with built-in thrusters, should never really exist un-attached to a mech
+	name = "Ion thruster package"
+	desc = "A set of thrusters that allow for exosuit movement in zero-gravity enviroments."
+	detachable = FALSE
+	salvageable = FALSE
+	effect_type = /obj/effect/particle_effect/ion_trails
+
+/obj/item/mecha_parts/mecha_equipment/thrusters/ion/thrust(var/movement_dir)
+	if(!chassis)
+		return FALSE
+	if(chassis.use_power(chassis.step_energy_drain))
+		generate_effect(movement_dir)
+		return TRUE
+	return FALSE

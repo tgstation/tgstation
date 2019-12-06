@@ -331,6 +331,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape)
 "aJ" = (
@@ -685,7 +688,7 @@
 /obj/item/tank/internals/emergency_oxygen{
 	pixel_x = -4
 	},
-/obj/item/tank/internals/air{
+/obj/item/tank/internals/oxygen{
 	pixel_x = 4
 	},
 /obj/item/clothing/mask/breath{

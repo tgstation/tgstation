@@ -32,11 +32,11 @@ require only minor tweaks.
 #define ZTRAIT_CENTCOM "CentCom"
 #define ZTRAIT_STATION "Station"
 #define ZTRAIT_MINING "Mining"
-#define ZTRAIT_REEBE "Reebe"
 #define ZTRAIT_RESERVED "Transit/Reserved"
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
+#define ZTRAIT_ISOLATED_RUINS "Isolated Ruins" //Placing ruins on z levels with this trait will use turf reservation instead of usual placement.
 
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
@@ -69,7 +69,6 @@ require only minor tweaks.
     ZTRAIT_LAVA_RUINS = TRUE, \
     ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
     ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
-#define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"
@@ -84,7 +83,6 @@ require only minor tweaks.
 #define CAMERA_LOCK_STATION 1
 #define CAMERA_LOCK_MINING 2
 #define CAMERA_LOCK_CENTCOM 4
-#define CAMERA_LOCK_REEBE 8
 
 //Reserved/Transit turf type
 #define RESERVED_TURF_TYPE /turf/open/space/basic			//What the turf is when not being used
@@ -94,6 +92,8 @@ require only minor tweaks.
 #define PLACEMENT_TRIES 100 //How many times we try to fit the ruin somewhere until giving up (really should just swap to some packing algo)
 
 #define PLACE_DEFAULT "random"
-#define PLACE_SAME_Z "same"
-#define PLACE_SPACE_RUIN "space"
-#define PLACE_LAVA_RUIN "lavaland"
+#define PLACE_SAME_Z "same" //On same z level as original ruin
+#define PLACE_SPACE_RUIN "space" //On space ruin z level(s)
+#define PLACE_LAVA_RUIN "lavaland" //On lavaland ruin z levels(s)
+#define PLACE_BELOW "below" //On z levl below - centered on same tile
+#define PLACE_ISOLATED "isolated" //On isolated ruin z level

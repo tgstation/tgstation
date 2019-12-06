@@ -24,7 +24,8 @@
 	icon_living = "mega_legion"
 	desc = "One of many."
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	speak_emote = list("echoes")
 	armour_penetration = 50
@@ -37,8 +38,9 @@
 	minimum_distance = 5
 	ranged_cooldown_time = 20
 	gps_name = "Echoing Signal"
-	medal_type = BOSS_MEDAL_LEGION
-	score_type = LEGION_SCORE
+	achievement_type = /datum/award/achievement/boss/legion_kill
+	crusher_achievement_type = /datum/award/achievement/boss/legion_crusher
+	score_achievement_type = /datum/award/score/legion_score
 	pixel_y = -16
 	pixel_x = -32
 	loot = list(/obj/item/stack/sheet/bone = 3)
@@ -256,7 +258,7 @@
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
-	var/static/list/excluded_areas = list(/area/reebe/city_of_cogs)
+	var/static/list/excluded_areas = list()
 
 /obj/item/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
@@ -317,7 +319,7 @@
 	layer = ABOVE_OBJ_LAYER
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 100,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	///What kind of projectile the actual damaging part should be.
-	var/projectile_type = /obj/item/projectile/beam/legion
+	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot
 	var/initial_firing_time = 18
 	///How long it takes between shooting the tracer and the projectile.
@@ -355,14 +357,14 @@
 
 ///Called shot_delay after the turret shot the tracer. Shoots a projectile into the same direction.
 /obj/structure/legionturret/proc/fire_beam(angle)
-	var/obj/item/projectile/ouchie = new projectile_type(loc)
+	var/obj/projectile/ouchie = new projectile_type(loc)
 	ouchie.firer = src
 	ouchie.fire(angle)
 	playsound(src, 'sound/effects/bin_close.ogg', 100, TRUE)
 	QDEL_IN(src, 5)
 
 ///Used for the legion turret.
-/obj/item/projectile/beam/legion
+/obj/projectile/beam/legion
 	name = "blood pulse"
 	hitsound = 'sound/magic/magic_missile.ogg'
 	damage = 19
@@ -385,4 +387,3 @@
 /obj/effect/projectile/tracer/legion
 	icon = 'icons/effects/beam.dmi'
 	icon_state = "blood"
-

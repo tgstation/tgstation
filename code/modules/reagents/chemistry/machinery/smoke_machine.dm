@@ -7,7 +7,7 @@
 	icon_state = "smoke0"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smoke_machine
-	ui_x = 450
+	ui_x = 350
 	ui_y = 350
 
 	var/efficiency = 10
@@ -34,6 +34,7 @@
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
 	create_reagents(REAGENTS_BASE_VOLUME)
+	AddComponent(/datum/component/plumbing/simple_demand)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
 

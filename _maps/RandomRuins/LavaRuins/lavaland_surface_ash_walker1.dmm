@@ -219,11 +219,11 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aI" = (
 /obj/structure/stone_tile/block/cracked,
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aJ" = (
 /obj/structure/stone_tile/surrounding_tile/cracked,
@@ -234,7 +234,7 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aK" = (
 /obj/structure/stone_tile/block/cracked{
@@ -275,7 +275,7 @@
 	dir = 8
 	},
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/food/drinks/waterbottle/large,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aR" = (
@@ -304,17 +304,17 @@
 /obj/structure/stone_tile/block/cracked{
 	dir = 4
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aU" = (
 /obj/structure/lavaland/ash_walker,
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aV" = (
 /obj/structure/stone_tile/block{
 	dir = 8
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aW" = (
 /obj/structure/stone_tile/block{
@@ -383,13 +383,13 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 1
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "be" = (
 /obj/structure/stone_tile/block{
 	dir = 1
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "bf" = (
 /obj/structure/stone_tile/surrounding_tile/cracked{
@@ -402,7 +402,7 @@
 /obj/structure/stone_tile/surrounding_tile{
 	dir = 4
 	},
-/turf/open/lava/smooth,
+/turf/open/lava/smooth/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "bg" = (
 /obj/structure/stone_tile/block{

@@ -15,7 +15,7 @@
 //an incision but with greater bleed, and a 90% base success chance
 /datum/surgery_step/incise_heart
 	name = "incise heart"
-	implements = list(/obj/item/scalpel = 90, /obj/item/melee/transforming/energy/sword = 45, /obj/item/kitchen/knife = 45,
+	implements = list(TOOL_SCALPEL = 90, /obj/item/melee/transforming/energy/sword = 45, /obj/item/kitchen/knife = 45,
 		/obj/item/shard = 25)
 	time = 16
 
@@ -24,7 +24,7 @@
 		"<span class='notice'>[user] begins to make an incision in [target]'s heart.</span>",
 		"<span class='notice'>[user] begins to make an incision in [target]'s heart.</span>")
 
-/datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if (!(NOBLOOD in H.dna.species.species_traits))
@@ -33,7 +33,7 @@
 				"")
 			H.bleed_rate += 10
 			H.adjustBruteLoss(10)
-	return TRUE
+	return ..(default_display_results = FALSE)
 
 /datum/surgery_step/incise_heart/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))
@@ -48,7 +48,7 @@
 //grafts a coronary bypass onto the individual's heart, success chance is 90% base again
 /datum/surgery_step/coronary_bypass
 	name = "graft coronary bypass"
-	implements = list(/obj/item/hemostat = 90, TOOL_WIRECUTTER = 35, /obj/item/stack/packageWrap = 15, /obj/item/stack/cable_coil = 5)
+	implements = list(TOOL_HEMOSTAT = 90, TOOL_WIRECUTTER = 35, /obj/item/stack/packageWrap = 15, /obj/item/stack/cable_coil = 5)
 	time = 90
 
 /datum/surgery_step/coronary_bypass/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -56,7 +56,7 @@
 			"<span class='notice'>[user] begins to graft something onto [target]'s heart!</span>",
 			"<span class='notice'>[user] begins to graft something onto [target]'s heart!</span>")
 
-/datum/surgery_step/coronary_bypass/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/coronary_bypass/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	target.setOrganLoss(ORGAN_SLOT_HEART, 60)
 	var/obj/item/organ/heart/heart = target.getorganslot(ORGAN_SLOT_HEART)
 	if(heart)	//slightly worrying if we lost our heart mid-operation, but that's life
@@ -64,7 +64,7 @@
 	display_results(user, target, "<span class='notice'>You successfully graft a bypass onto [target]'s heart.</span>",
 			"<span class='notice'>[user] finishes grafting something onto [target]'s heart.</span>",
 			"<span class='notice'>[user] finishes grafting something onto [target]'s heart.</span>")
-	return TRUE
+	return ..(default_display_results = FALSE)
 
 /datum/surgery_step/coronary_bypass/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))

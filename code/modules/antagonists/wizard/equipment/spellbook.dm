@@ -141,7 +141,7 @@
 
 /datum/spellbook_entry/timestop
 	name = "Time Stop"
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/timestop
 	category = "Defensive"
 
 /datum/spellbook_entry/smoke
@@ -492,6 +492,8 @@
 /datum/spellbook_entry/summon/guns/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
 		return FALSE
+	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
+		return FALSE
 	return !CONFIG_GET(flag/no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -508,6 +510,8 @@
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
+		return FALSE
+	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
 		return FALSE
 	return !CONFIG_GET(flag/no_summon_magic)
 
@@ -526,6 +530,8 @@
 
 /datum/spellbook_entry/summon/events/IsAvailible()
 	if(!SSticker.mode) // In case spellbook is placed on map
+		return FALSE
+	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
 		return FALSE
 	return !CONFIG_GET(flag/no_summon_events)
 

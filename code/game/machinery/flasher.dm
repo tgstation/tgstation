@@ -6,9 +6,10 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
 	max_integrity = 250
-	integrity_failure = 100
+	integrity_failure = 0.4
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
+	damage_deflection = 10
 	var/obj/item/assembly/flash/handheld/bulb
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
@@ -46,7 +47,7 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/flasher/update_icon()
+/obj/machinery/flasher/update_icon_state()
 	if (powered())
 		if(bulb.burnt_out)
 			icon_state = "[base_state]1-p"
@@ -92,11 +93,6 @@
 /obj/machinery/flasher/attack_ai()
 	if (anchored)
 		return flash()
-
-/obj/machinery/flasher/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 10) //any melee attack below 10 dmg does nothing
-		return 0
-	. = ..()
 
 /obj/machinery/flasher/proc/flash()
 	if (!powered() || !bulb)

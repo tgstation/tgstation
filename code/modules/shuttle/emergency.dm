@@ -10,7 +10,7 @@
 	icon_keyboard = "tech_key"
 	ui_x = 400
 	ui_y = 400
-	
+
 	var/auth_need = 3
 	var/list/authorized = list()
 
@@ -315,7 +315,7 @@
 					return
 				mode = SHUTTLE_DOCKED
 				setTimer(SSshuttle.emergencyDockTime)
-				send2irc("Server", "The Emergency Shuttle has docked with the station.")
+				send2tgs("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/ai/shuttledock.ogg', "Priority")
 				ShuttleDBStuff()
 
@@ -453,7 +453,6 @@
 	icon_state = "dorm_available"
 	light_color = LIGHT_COLOR_BLUE
 	density = FALSE
-	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/shuttle/pod/update_icon()
 	return

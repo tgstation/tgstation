@@ -77,6 +77,7 @@
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
+	flags_inv = HIDEHAIR //bald
 	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "cage"
 	item_state = "cage"
@@ -123,6 +124,28 @@
 	icon_state = "witchhunterhat"
 	item_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEEYES|HIDEHAIR
+
+/obj/item/storage/box/holy/adept
+	name = "Divine Adept Kit"
+
+/obj/item/storage/box/holy/adept/PopulateContents()
+	new /obj/item/clothing/suit/armor/riot/chaplain/adept(src)
+	new /obj/item/clothing/head/helmet/chaplain/adept(src)
+
+/obj/item/clothing/head/helmet/chaplain/adept
+	name = "adept hood"
+	desc = "Its only heretical when others do it."
+	icon_state = "crusader"
+	item_state = "crusader"
+	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+/obj/item/clothing/suit/armor/riot/chaplain/adept
+	name = "adept robes"
+	desc = "The ideal outfit for burning the unfaithful."
+	icon_state = "crusader"
+	item_state = "crusader"
 
 /obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"
@@ -167,7 +190,7 @@
 
 /obj/item/nullrod
 	name = "null rod"
-	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar'Sie and Ratvar's followers."
+	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar'Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -204,7 +227,7 @@
 		if (initial(rodtype.chaplain_spawnable))
 			display_names[initial(rodtype.name)] = rodtype
 
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
+	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in sortList(display_names, /proc/cmp_typepaths_asc)
 	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.incapacitated() || reskinned)
 		return
 
@@ -300,6 +323,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	tool_behaviour = TOOL_SAW
+	toolspeed = 1.5 //slower than a real saw
 
 /obj/item/nullrod/claymore/glowing
 	icon_state = "swordon"
@@ -415,7 +440,7 @@
 	if(possessed)
 		return
 
-	to_chat(user, "You attempt to wake the spirit of the blade...")
+	to_chat(user, "<span class='notice'>You attempt to wake the spirit of the blade...</span>")
 
 	possessed = TRUE
 
@@ -434,12 +459,12 @@
 			name = input
 			S.fully_replace_character_name(null, "The spirit of [input]")
 	else
-		to_chat(user, "The blade is dormant. Maybe you can try again later.")
+		to_chat(user, "<span class='warning'>The blade is dormant. Maybe you can try again later.</span>")
 		possessed = FALSE
 
 /obj/item/nullrod/scythe/talking/Destroy()
 	for(var/mob/living/simple_animal/shade/S in contents)
-		to_chat(S, "You were destroyed!")
+		to_chat(S, "<span class='userdanger'>You were destroyed!</span>")
 		qdel(S)
 	return ..()
 
@@ -453,6 +478,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.5 //faster than normal saw
 
 /obj/item/nullrod/hammmer
 	icon_state = "hammeron"
@@ -477,6 +504,8 @@
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	tool_behaviour = TOOL_SAW
+	toolspeed = 2 //slower than a real saw
 
 /obj/item/nullrod/chainsaw/Initialize()
 	. = ..()
@@ -577,7 +606,7 @@
 /obj/item/nullrod/carp/attack_self(mob/living/user)
 	if(used_blessing)
 	else if(user.mind && (user.mind.isholy))
-		to_chat(user, "You are blessed by Carp-Sie. Wild space carp will no longer attack you.")
+		to_chat(user, "<span class='boldnotice'>You are blessed by Carp-Sie. Wild space carp will no longer attack you.</span>")
 		user.faction |= "carp"
 		used_blessing = TRUE
 

@@ -40,17 +40,22 @@ This file contains the cult dagger and rune list code
 	scribe_rune(user)
 
 /obj/item/melee/cultblade/dagger/proc/scribe_rune(mob/living/user)
+	if(drawing_rune)
+		return
+	drawing_rune = TRUE
+	scribe_rune_attempt(user)
+	drawing_rune = FALSE
+
+/obj/item/melee/cultblade/dagger/proc/scribe_rune_attempt(mob/living/user)
 	var/turf/Turf = get_turf(user)
 	var/chosen_keyword
 	var/obj/effect/rune/rune_to_scribe
 	var/entered_rune_name
 	var/list/shields = list()
 	var/area/A = get_area(src)
-
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!user_antag)
 		return
-
 	if(!check_rune_turf(Turf, user))
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in GLOB.rune_types
@@ -62,6 +67,7 @@ This file contains the cult dagger and rune list code
 	if(initial(rune_to_scribe.req_keyword))
 		chosen_keyword = stripped_input(user, "Enter a keyword for the new rune.", "Words of Power")
 		if(!chosen_keyword)
+			drawing_rune = FALSE
 			scribe_rune(user) //Go back a menu!
 			return
 	Turf = get_turf(user) //we may have moved. adjust as needed...
@@ -145,7 +151,7 @@ This file contains the cult dagger and rune list code
 		to_chat(user, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
 	var/area/A = get_area(T)
-	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !A.blob_allowed))
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !(A.flags_1 & CULT_PERMITTED_1)))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 		return FALSE
 	return TRUE

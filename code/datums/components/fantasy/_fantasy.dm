@@ -73,7 +73,7 @@
 		alignment |= AFFIX_GOOD
 	if(quality <= 0)
 		alignment |= AFFIX_EVIL
-	
+
 	var/usedSlots = NONE
 	for(var/i in 1 to max(1, abs(quality))) // We want at least 1 affix applied
 		var/datum/fantasy_affix/affix = pickweight(affixListing)
@@ -88,7 +88,7 @@
 
 /datum/component/fantasy/proc/modify()
 	var/obj/item/master = parent
-	
+
 	master.force = max(0, master.force + quality)
 	master.throwforce = max(0, master.throwforce + quality)
 	master.armor = master.armor?.modifyAllRatings(quality)
@@ -103,7 +103,7 @@
 
 	if(canFail && prob((quality - 9)*10))
 		var/turf/place = get_turf(parent)
-		place.visible_message("<span class='danger'>[parent] <span class='inathneq_large'>violently glows blue</span> for a while, then evaporates.</span>")
+		place.visible_message("<span class='danger'>[parent] <span class='blue'>violently glows blue</span> for a while, then evaporates.</span>")
 		master.burn()
 		return
 	else if(announce)
@@ -135,6 +135,6 @@
 		effect_description = "<span class='heavy_brass'>shimmering golden glow</span>"
 	else
 		span = "<span class='danger'>"
-		effect_description = "<span class='umbra_emphasis'>mottled black glow</span>"
+		effect_description = "<span class='bold'>mottled black glow</span>"
 
 	location.visible_message("[span][originalName] is covered by a [effect_description] and then transforms into [parent]!</span>")

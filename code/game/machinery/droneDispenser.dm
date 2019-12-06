@@ -11,7 +11,7 @@
 	density = TRUE
 
 	max_integrity = 250
-	integrity_failure = 80
+	integrity_failure = 0.33
 
 	// These allow for different icons when creating custom dispensers
 	var/icon_off = "off"
@@ -84,6 +84,17 @@
 	glass_cost = 2000
 	power_used = 2000
 	starting_amount = 10000
+
+// If the derelict gets lonely, make more friends.
+/obj/machinery/droneDispenser/derelict
+	name = "derelict drone shell dispenser"
+	desc = "A rusty machine that, when supplied with metal and glass, will periodically create a derelict drone shell. Does not need to be manually operated."
+	dispense_type = /obj/effect/mob_spawn/drone/derelict
+	end_create_message = "dispenses a derelict drone shell."
+	metal_cost = 10000
+	glass_cost = 5000
+	starting_amount = 0
+	cooldownTime = 600
 
 // An example of a custom drone dispenser.
 // This one requires no materials and creates basic hivebots
@@ -191,7 +202,7 @@
 		if(istype(a, dispense_type))
 			.++
 
-/obj/machinery/droneDispenser/update_icon()
+/obj/machinery/droneDispenser/update_icon_state()
 	if(stat & (BROKEN|NOPOWER))
 		icon_state = icon_off
 	else if(mode == DRONE_RECHARGING)

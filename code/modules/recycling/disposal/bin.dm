@@ -12,7 +12,7 @@
 	obj_flags = CAN_BE_HIT | USES_TGUI
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	ui_x = 300
-	ui_y = 200
+	ui_y = 180
 
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/full_pressure = FALSE
@@ -298,8 +298,7 @@
 	data["full_pressure"] = full_pressure
 	data["pressure_charging"] = pressure_charging
 	data["panel_open"] = panel_open
-	var/per = CLAMP(100* air_contents.return_pressure() / (SEND_PRESSURE), 0, 100)
-	data["per"] = round(per, 1)
+	data["per"] = CLAMP01(air_contents.return_pressure() / (SEND_PRESSURE))
 	data["isai"] = isAI(user)
 	return data
 
@@ -484,7 +483,7 @@
 /atom/movable/proc/CanEnterDisposals()
 	return TRUE
 
-/obj/item/projectile/CanEnterDisposals()
+/obj/projectile/CanEnterDisposals()
 	return
 
 /obj/effect/CanEnterDisposals()

@@ -37,6 +37,7 @@
 		if(stat != DEAD)
 			//heart attack stuff
 			handle_heart()
+			handle_liver()
 
 		if(stat != DEAD)
 			//Stuff jammed in your limbs hurts
@@ -61,18 +62,11 @@
 
 
 /mob/living/carbon/human/handle_traits()
-	if(eye_blind)			//blindness, heals slowly over time
-		if(HAS_TRAIT_FROM(src, TRAIT_BLIND, EYES_COVERED)) //covering your eyes heals blurry eyes faster
-			adjust_blindness(-3)
-		else
-			adjust_blindness(-1)
-	else if(eye_blurry)			//blurry eyes heal slowly
-		adjust_blurriness(-1)
-
 	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 60)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
+	return ..()
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
@@ -279,13 +273,13 @@
 
 
 /mob/living/carbon/human/has_smoke_protection()
-	if(wear_mask)
+	if(isclothing(wear_mask))
 		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(glasses)
+	if(isclothing(glasses))
 		if(glasses.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(head && istype(head, /obj/item/clothing))
+	if(isclothing(head))
 		var/obj/item/clothing/CH = head
 		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE

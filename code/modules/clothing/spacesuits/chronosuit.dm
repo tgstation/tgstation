@@ -119,7 +119,7 @@
 
 		teleport_now.UpdateButtonIcon()
 
-		var/list/nonsafe_slots = list(SLOT_BELT, SLOT_BACK)
+		var/list/nonsafe_slots = list(ITEM_SLOT_BELT, ITEM_SLOT_BACK)
 		var/list/exposed = list()
 		for(var/slot in nonsafe_slots)
 			var/obj/item/slot_item = user.get_item_by_slot(slot)
@@ -222,7 +222,7 @@
 			teleport_now.Remove(user)
 			if(user.wear_suit == src)
 				if(hard_landing)
-					user.electrocute_act(35, src, safety = 1)
+					user.electrocute_act(35, src, flags = SHOCK_NOGLOVES)
 					user.Paralyze(200)
 				if(!silent)
 					to_chat(user, "\nroot@ChronosuitMK4# chronowalk4 --stop\n")

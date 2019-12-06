@@ -1,16 +1,20 @@
 
 /datum/crafting_recipe
 	var/name = "" //in-game display name
-	var/reqs[] = list() //type paths of items consumed associated with how many are needed
-	var/blacklist[] = list() //type paths of items explicitly not allowed as an ingredient
+	var/list/reqs = list() //type paths of items consumed associated with how many are needed
+	var/list/blacklist = list() //type paths of items explicitly not allowed as an ingredient
 	var/result //type path of item resulting from this craft
-	var/tools[] = list() //type paths of items needed but not consumed
+	var/list/tools = list() //type paths of items needed but not consumed
 	var/time = 30 //time in deciseconds
-	var/parts[] = list() //type paths of items that will be placed in the result
-	var/chem_catalysts[] = list() //like tools but for reagents
+	var/list/parts = list() //type paths of items that will be placed in the result
+	var/list/chem_catalysts = list() //like tools but for reagents
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
 	var/always_availible = TRUE //Set to FALSE if it needs to be learned first.
+
+/datum/crafting_recipe/New()
+	if(!(result in reqs))
+		blacklist += result
 
 /datum/crafting_recipe/pin_removal
 	name = "Pin Removal"
@@ -39,7 +43,7 @@
 	result = /obj/item/twohanded/spear/explosive
 	reqs = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
-	blacklist = list(/obj/item/twohanded/spear/explosive, /obj/item/twohanded/spear/bonespear)
+	blacklist = list(/obj/item/twohanded/spear/bonespear)
 	parts = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
 	time = 15
@@ -526,6 +530,14 @@
 				 /obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/skilt
+	name = "Sinew Kilt"
+	result = /obj/item/clothing/accessory/skilt
+	time = 20
+	reqs = list(/obj/item/stack/sheet/bone = 1,
+				 /obj/item/stack/sheet/sinew = 2)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/bracers
 	name = "Bone Bracers"
 	result = /obj/item/clothing/gloves/bracer
@@ -639,13 +651,6 @@
 	result = /obj/structure/headpike/bone
 	category = CAT_PRIMAL
 
-/datum/crafting_recipe/smallcarton
-	name = "Small Carton"
-	result = /obj/item/reagent_containers/food/drinks/sillycup/smallcarton
-	time = 10
-	reqs = list(/obj/item/stack/sheet/cardboard = 1)
-	category = CAT_MISC
-
 /datum/crafting_recipe/pressureplate
 	name = "Pressure Plate"
 	result = /obj/item/pressure_plate
@@ -723,3 +728,48 @@
 	reqs = list(/obj/item/tank/internals/oxygen = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = MAXCOIL)
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/multiduct
+	name = "Multi-layer duct"
+	result = /obj/machinery/duct/multilayered
+	time = 5
+	reqs = list(/obj/item/stack/ducts = 5)
+	category = CAT_MISC
+	tools = list(TOOL_WELDER)
+
+/datum/crafting_recipe/rib
+	name = "Collosal Rib"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 10,
+            /datum/reagent/fuel/oil = 5)
+	result = /obj/structure/statue/bone/rib
+	subcategory = CAT_PRIMAL
+
+/datum/crafting_recipe/skull
+	name = "Skull Carving"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 6,
+            /datum/reagent/fuel/oil = 5)
+	result = /obj/structure/statue/bone/skull
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/halfskull
+	name = "Cracked Skull Carving"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 3,
+            /datum/reagent/fuel/oil = 5)
+	result = /obj/structure/statue/bone/skull/half
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/boneshovel
+	name = "Serrated Bone Shovel"
+	always_availible = FALSE
+	reqs = list(
+            /obj/item/stack/sheet/bone = 4,
+            /datum/reagent/fuel/oil = 5,
+            /obj/item/shovel/spade = 1)
+	result = /obj/item/shovel/serrated
+	category = CAT_PRIMAL

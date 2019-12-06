@@ -147,13 +147,6 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create an abductor team.")
-			if("clockcult")
-				if(src.makeClockCult())
-					message_admins("[key_name(usr)] started a clockwork cult.")
-					log_admin("[key_name(usr)] started a clockwork cult.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a clockwork cult. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a clockwork cult.")
 			if("revenant")
 				if(src.makeRevenant())
 					message_admins("[key_name(usr)] created a revenant.")
@@ -173,11 +166,13 @@
 				event.processing = FALSE
 				var/prompt = alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel")
 				switch(prompt)
+					if("Yes")
+						event.announceChance = 100
 					if("Cancel")
 						event.kill()
 						return
 					if("No")
-						event.announceWhen = -1
+						event.announceChance = 0
 				event.processing = TRUE
 			message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
 			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
@@ -354,12 +349,13 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 
-		var/delmob = FALSE
-		switch(alert("Delete old mob?","Message","Yes","No","Cancel"))
-			if("Cancel")
-				return
-			if("Yes")
-				delmob = TRUE
+		var/delmob = TRUE
+		if(!isobserver(M))
+			switch(alert("Delete old mob?","Message","Yes","No","Cancel"))
+				if("Cancel")
+					return
+				if("No")
+					delmob = FALSE
 
 		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
@@ -614,13 +610,13 @@
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
 			var/datum/dynamic_ruleset/roundstart/newrule = new rule()
 			roundstart_rules[newrule.name] = newrule
-		var/added_rule = input(usr,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", null) as null|anything in roundstart_rules
+		var/added_rule = input(usr,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", null) as null|anything in sortList(roundstart_rules)
 		if (added_rule)
 			GLOB.dynamic_forced_roundstart_ruleset += roundstart_rules[added_rule]
 			log_admin("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.")
 			message_admins("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.", 1)
 			Game()
-	
+
 	else if(href_list["f_dynamic_roundstart_clear"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -628,7 +624,7 @@
 		Game()
 		log_admin("[key_name(usr)] cleared the rigged roundstart rulesets. The mode will pick them as normal.")
 		message_admins("[key_name(usr)] cleared the rigged roundstart rulesets. The mode will pick them as normal.", 1)
-	
+
 	else if(href_list["f_dynamic_roundstart_remove"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -649,14 +645,14 @@
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/latejoin))
 			var/datum/dynamic_ruleset/latejoin/newrule = new rule()
 			latejoin_rules[newrule.name] = newrule
-		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in latejoin_rules
+		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in sortList(latejoin_rules)
 		if (added_rule)
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			mode.forced_latejoin_rule = latejoin_rules[added_rule]
 			log_admin("[key_name(usr)] set [added_rule] to proc on the next latejoin.")
 			message_admins("[key_name(usr)] set [added_rule] to proc on the next latejoin.", 1)
 			Game()
-	
+
 	else if(href_list["f_dynamic_latejoin_clear"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -666,7 +662,7 @@
 			Game()
 			log_admin("[key_name(usr)] cleared the forced latejoin ruleset.")
 			message_admins("[key_name(usr)] cleared the forced latejoin ruleset.", 1)
-	
+
 	else if(href_list["f_dynamic_midround"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -678,7 +674,7 @@
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/midround))
 			var/datum/dynamic_ruleset/midround/newrule = new rule()
 			midround_rules[newrule.name] = rule
-		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in midround_rules
+		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in sortList(midround_rules)
 		if (added_rule)
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			log_admin("[key_name(usr)] executed the [added_rule] ruleset.")
@@ -707,12 +703,12 @@
 		var/new_centre = input(usr,"Change the centre of the dynamic mode threat curve. A negative value will give a more peaceful round ; a positive value, a round with higher threat. Any number between -5 and +5 is allowed.", "Change curve centre", null) as num
 		if (new_centre < -5 || new_centre > 5)
 			return alert(usr, "Only values between -5 and +5 are allowed.", null, null, null, null)
-		
+
 		log_admin("[key_name(usr)] changed the distribution curve center to [new_centre].")
 		message_admins("[key_name(usr)] changed the distribution curve center to [new_centre]", 1)
 		GLOB.dynamic_curve_centre = new_centre
 		dynamic_mode_options(usr)
-	
+
 	else if(href_list["f_dynamic_roundstart_width"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -724,7 +720,7 @@
 		var/new_width = input(usr,"Change the width of the dynamic mode threat curve. A higher value will favour extreme rounds ; a lower value, a round closer to the average. Any Number between 0.5 and 4 are allowed.", "Change curve width", null) as num
 		if (new_width < 0.5 || new_width > 4)
 			return alert(usr, "Only values between 0.5 and +2.5 are allowed.", null, null, null, null)
-		
+
 		log_admin("[key_name(usr)] changed the distribution curve width to [new_width].")
 		message_admins("[key_name(usr)] changed the distribution curve width to [new_width]", 1)
 		GLOB.dynamic_curve_width = new_width
@@ -848,7 +844,7 @@
 		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
 		log_admin("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
 		message_admins("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
-		dynamic_mode_options(usr)	
+		dynamic_mode_options(usr)
 
 	else if(href_list["f_dynamic_high_pop_limit"])
 		if(!check_rights(R_ADMIN))
@@ -867,8 +863,8 @@
 
 		log_admin("[key_name(usr)] set 'high_pop_limit' to [GLOB.dynamic_high_pop_limit].")
 		message_admins("[key_name(usr)] set 'high_pop_limit' to [GLOB.dynamic_high_pop_limit].")
-		dynamic_mode_options(usr)		
-	
+		dynamic_mode_options(usr)
+
 	else if(href_list["f_dynamic_forced_threat"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -886,7 +882,7 @@
 
 		log_admin("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
 		message_admins("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
-		dynamic_mode_options(usr)	
+		dynamic_mode_options(usr)
 
 	else if(href_list["c_mode2"])
 		if(!check_rights(R_ADMIN|R_SERVER))
@@ -1117,8 +1113,8 @@
 
 		if(ishuman(L))
 			var/mob/living/carbon/human/observer = L
-			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit/black(observer), SLOT_W_UNIFORM)
-			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), SLOT_SHOES)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit/black(observer), ITEM_SLOT_ICLOTHING)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), ITEM_SLOT_FEET)
 		L.Unconscious(100)
 		sleep(5)
 		L.forceMove(pick(GLOB.tdomeobserve))
@@ -1135,7 +1131,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living.")
 			return
 
-		L.revive(full_heal = 1, admin_revive = 1)
+		L.revive(full_heal = TRUE, admin_revive = TRUE)
 		message_admins("<span class='danger'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!</span>")
 		log_admin("[key_name(usr)] healed / Revived [key_name(L)].")
 
@@ -1307,7 +1303,7 @@
 
 		//Gender
 		switch(M.gender)
-			if(MALE,FEMALE)
+			if(MALE,FEMALE,PLURAL)
 				gender_description = "[M.gender]"
 			else
 				gender_description = "<font color='red'><b>[M.gender]</b></font>"
@@ -1399,20 +1395,30 @@
 		if(!ishuman(H))
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.")
 			return
-
-		var/obj/item/reagent_containers/food/snacks/cookie/cookie = new(H)
-		if(H.put_in_hands(cookie))
+		//let's keep it simple
+		//milk to plasmemes and skeletons, meat to lizards, electricity bars to ethereals, cookies to everyone else
+		var/cookiealt = /obj/item/reagent_containers/food/snacks/cookie
+		if(isskeleton(H))
+			cookiealt = /obj/item/reagent_containers/food/condiment/milk
+		else if(isplasmaman(H))
+			cookiealt = /obj/item/reagent_containers/food/condiment/milk
+		else if(isethereal(H))
+			cookiealt = /obj/item/reagent_containers/food/snacks/energybar
+		else if(islizard(H))
+			cookiealt = /obj/item/reagent_containers/food/snacks/meat/slab
+		var/obj/item/new_item = new cookiealt(H)
+		if(H.put_in_hands(new_item))
 			H.update_inv_hands()
 		else
-			qdel(cookie)
-			log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
-			message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
+			qdel(new_item)
+			log_admin("[key_name(H)] has their hands full, so they did not receive their [new_item.name], spawned by [key_name(src.owner)].")
+			message_admins("[key_name(H)] has their hands full, so they did not receive their [new_item.name], spawned by [key_name(src.owner)].")
 			return
 
-		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
-		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)].")
+		log_admin("[key_name(H)] got their [new_item], spawned by [key_name(src.owner)].")
+		message_admins("[key_name(H)] got their [new_item], spawned by [key_name(src.owner)].")
 		SSblackbox.record_feedback("amount", "admin_cookies_spawned", 1)
-		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best cookie</b>!</span>")
+		to_chat(H, "<span class='adminnotice'>Your prayers have been answered!! You received the <b>best [new_item.name]!</b></span>")
 		SEND_SOUND(H, sound('sound/effects/pray_chaplain.ogg'))
 
 	else if(href_list["adminsmite"])
@@ -1604,7 +1610,7 @@
 			return
 
 		var/list/offset = splittext(href_list["offset"],",")
-		var/number = CLAMP(text2num(href_list["object_count"]), 1, 100)
+		var/number = CLAMP(text2num(href_list["object_count"]), 1, ADMIN_SPAWN_CAP)
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0
@@ -1713,7 +1719,7 @@
 			return
 		src.admincaster_feed_channel.channel_name = stripped_input(usr, "Provide a Feed Channel Name.", "Network Channel Handler", "")
 		while (findtext(src.admincaster_feed_channel.channel_name," ") == 1)
-			src.admincaster_feed_channel.channel_name = copytext(src.admincaster_feed_channel.channel_name,2,lentext(src.admincaster_feed_channel.channel_name)+1)
+			src.admincaster_feed_channel.channel_name = copytext(src.admincaster_feed_channel.channel_name,2,length(src.admincaster_feed_channel.channel_name)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_lock"])
@@ -1747,7 +1753,7 @@
 		var/list/available_channels = list()
 		for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
 			available_channels += F.channel_name
-		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler") in available_channels )
+		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler") in sortList(available_channels) )
 		src.access_news_network()
 
 	else if(href_list["ac_set_new_message"])
@@ -1755,7 +1761,7 @@
 			return
 		src.admincaster_feed_message.body = adminscrub(input(usr, "Write your Feed story.", "Network Channel Handler", ""))
 		while (findtext(src.admincaster_feed_message.returnBody(-1)," ") == 1)
-			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.returnBody(-1),2,lentext(src.admincaster_feed_message.returnBody(-1))+1)
+			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.returnBody(-1),2,length(src.admincaster_feed_message.returnBody(-1))+1)
 		src.access_news_network()
 
 	else if(href_list["ac_submit_new_message"])
@@ -1816,7 +1822,7 @@
 			return
 		src.admincaster_wanted_message.criminal = adminscrub(input(usr, "Provide the name of the Wanted person.", "Network Security Handler", ""))
 		while(findtext(src.admincaster_wanted_message.criminal," ") == 1)
-			src.admincaster_wanted_message.criminal = copytext(admincaster_wanted_message.criminal,2,lentext(admincaster_wanted_message.criminal)+1)
+			src.admincaster_wanted_message.criminal = copytext(admincaster_wanted_message.criminal,2,length(admincaster_wanted_message.criminal)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
@@ -1824,7 +1830,7 @@
 			return
 		src.admincaster_wanted_message.body = adminscrub(input(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler", ""))
 		while (findtext(src.admincaster_wanted_message.body," ") == 1)
-			src.admincaster_wanted_message.body = copytext(src.admincaster_wanted_message.body,2,lentext(src.admincaster_wanted_message.body)+1)
+			src.admincaster_wanted_message.body = copytext(src.admincaster_wanted_message.body,2,length(src.admincaster_wanted_message.body)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_submit_wanted"])
@@ -2194,19 +2200,6 @@
 
 	else if(href_list["beakerpanel"])
 		beaker_panel_act(href_list)
-
-	else if(href_list["retrieveboh"])
-		var/obj/singularity/boh_tear/tear = locate(href_list["retrieveboh"])
-		if(!tear)
-			to_chat(usr, "Either items were already retrieved or 10 minutes have passed and they were deleted.")
-			return
-		var/confirm = alert("This will teleport all items consumed to the BoH tear back to the BoH tear original location, and delete the BoH if it still exists. Are you sure?", "Confirm Damage Control", "Yes", "No")
-		if(confirm != "Yes")
-			return
-		var/turf/T = get_turf(tear.old_loc)
-		message_admins("The items consumed by the BoH tear at [ADMIN_VERBOSEJMP(T)] were retrieved by [key_name_admin(usr)].")
-		tear.investigate_log("Items consumed at [AREACOORD(T)] retrieved by [key_name(usr)].", INVESTIGATE_SINGULO)
-		tear.retrieve_consumed_items()
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

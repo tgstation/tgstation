@@ -21,6 +21,7 @@
 	throwforce = 25
 	armour_penetration = 35
 	actions_types = list(/datum/action/item_action/cult_dagger)
+	var/drawing_rune = FALSE
 
 /obj/item/melee/cultblade/dagger/Initialize()
 	. = ..()
@@ -74,14 +75,7 @@
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
 	if(!iscultist(user))
-		if(!is_servant_of_ratvar(user))
-			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
-		else
-			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
-			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
-			user.emote("scream")
-			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-			user.dropItemToGround(src)
+		to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
 
 /obj/item/twohanded/required/cult_bastard
 	name = "bloody bastard sword"
@@ -138,18 +132,9 @@
 /obj/item/twohanded/required/cult_bastard/pickup(mob/living/user)
 	. = ..()
 	if(!iscultist(user))
-		if(!is_servant_of_ratvar(user))
-			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
-			force = 5
-			return
-		else
-			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
-			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
-			user.emote("scream")
-			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-			user.dropItemToGround(src, TRUE)
-			user.Paralyze(50)
-			return
+		to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
+		force = 5
+		return
 	force = initial(force)
 	jaunt.Grant(user, src)
 	linked_action.Grant(user, src)
@@ -392,18 +377,11 @@
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
 	..()
 	if(!iscultist(user))
-		if(!is_servant_of_ratvar(user))
-			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
-			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
-			user.dropItemToGround(src, TRUE)
-			user.Dizzy(30)
-			user.Paralyze(100)
-		else
-			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
-			to_chat(user, "<span class='userdanger'>The armor squeezes at your body!</span>")
-			user.emote("scream")
-			user.adjustBruteLoss(25)
-			user.dropItemToGround(src, TRUE)
+		to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
+		to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
+		user.dropItemToGround(src, TRUE)
+		user.Dizzy(30)
+		user.Paralyze(100)
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(current_charges)
@@ -437,18 +415,11 @@
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
 	if(!iscultist(user))
-		if(!is_servant_of_ratvar(user))
-			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
-			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
-			user.dropItemToGround(src, TRUE)
-			user.Dizzy(30)
-			user.Paralyze(100)
-		else
-			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
-			to_chat(user, "<span class='userdanger'>The robes squeeze at your body!</span>")
-			user.emote("scream")
-			user.adjustBruteLoss(25)
-			user.dropItemToGround(src, TRUE)
+		to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
+		to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
+		user.dropItemToGround(src, TRUE)
+		user.Dizzy(30)
+		user.Paralyze(100)
 
 /obj/item/clothing/glasses/hud/health/night/cultblind
 	desc = "may Nar'Sie guide you through the darkness and shield you from the light."
@@ -479,7 +450,7 @@
 	desc = "You peer within this smokey orb and glimpse terrible fates befalling the escape shuttle."
 	icon = 'icons/obj/cult.dmi'
 	icon_state ="shuttlecurse"
-	var/global/curselimit = 0
+	var/static/curselimit = 0
 
 /obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!iscultist(user))
@@ -514,7 +485,7 @@
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 50, TRUE)
 		qdel(src)
 		sleep(20)
-		var/global/list/curses
+		var/static/list/curses
 		if(!curses)
 			curses = list("A fuel technician just slit his own throat and begged for death.",
 			"The shuttle's navigation programming was replaced by a file containing just two words: IT COMES.",
@@ -679,10 +650,7 @@
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
 			if(!L.anti_magic_check())
-				if(is_servant_of_ratvar(L))
-					L.Paralyze(100)
-				else
-					L.Paralyze(50)
+				L.Paralyze(50)
 			break_spear(T)
 	else
 		..()
@@ -755,17 +723,17 @@
 	ammo_type = /obj/item/ammo_casing/magic/arcane_barrage/blood
 
 /obj/item/ammo_casing/magic/arcane_barrage/blood
-	projectile_type = /obj/item/projectile/magic/arcane_barrage/blood
+	projectile_type = /obj/projectile/magic/arcane_barrage/blood
 	firing_effect_type = /obj/effect/temp_visual/cult/sparks
 
-/obj/item/projectile/magic/arcane_barrage/blood
+/obj/projectile/magic/arcane_barrage/blood
 	name = "blood bolt"
 	icon_state = "mini_leaper"
 	nondirectional_sprite = TRUE
 	damage_type = BRUTE
 	impact_effect_type = /obj/effect/temp_visual/dir_setting/bloodsplatter
 
-/obj/item/projectile/magic/arcane_barrage/blood/Bump(atom/target)
+/obj/projectile/magic/arcane_barrage/blood/Bump(atom/target)
 	var/turf/T = get_turf(target)
 	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 	if(iscultist(target))
@@ -914,8 +882,8 @@
 
 /obj/item/shield/mirror/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(iscultist(owner))
-		if(istype(hitby, /obj/item/projectile))
-			var/obj/item/projectile/P = hitby
+		if(istype(hitby, /obj/projectile))
+			var/obj/projectile/P = hitby
 			if(P.damage_type == BRUTE || P.damage_type == BURN)
 				if(P.damage >= 30)
 					var/turf/T = get_turf(owner)
@@ -937,12 +905,12 @@
 					var/mob/living/simple_animal/hostile/illusion/M = new(owner.loc)
 					M.faction = list("cult")
 					M.Copy_Parent(owner, 70, 10, 5)
-					M.move_to_delay = owner.movement_delay()
+					M.move_to_delay = owner.cached_multiplicative_slowdown
 				else
 					var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
 					E.Copy_Parent(owner, 70, 10)
 					E.GiveTarget(owner)
-					E.Goto(owner, owner.movement_delay(), E.minimum_distance)
+					E.Goto(owner, owner.cached_multiplicative_slowdown, E.minimum_distance)
 			return TRUE
 	else
 		if(prob(50))
@@ -950,7 +918,7 @@
 			H.Copy_Parent(owner, 100, 20, 5)
 			H.faction = list("cult")
 			H.GiveTarget(owner)
-			H.move_to_delay = owner.movement_delay()
+			H.move_to_delay = owner.cached_multiplicative_slowdown
 			to_chat(owner, "<span class='danger'><b>[src] betrays you!</b></span>")
 		return FALSE
 
@@ -978,10 +946,7 @@
 				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
 		else if(!..())
 			if(!L.anti_magic_check())
-				if(is_servant_of_ratvar(L))
-					L.Paralyze(60)
-				else
-					L.Paralyze(30)
+				L.Paralyze(30)
 				if(D?.thrower)
 					for(var/mob/living/Next in orange(2, T))
 						if(!Next.density || iscultist(Next))

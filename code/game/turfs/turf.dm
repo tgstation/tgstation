@@ -141,11 +141,18 @@
 /turf/proc/zAirOut(direction, turf/source)
 	return FALSE
 
-/turf/proc/zImpact(atom/movable/A, levels = 1)
+/turf/proc/zImpact(atom/movable/A, levels = 1, turf/prev_turf)
+	var/flags = NONE
+	var/mov_name = A.name
 	for(var/i in contents)
 		var/atom/thing = i
-		if(thing.intercept_zImpact(A, levels))
-			return FALSE
+		flags |= thing.intercept_zImpact(A, levels)
+		if(flags & FALL_STOP_INTERCEPTING)
+			break
+	if(prev_turf && !(flags & FALL_NO_MESSAGE))
+		prev_turf.visible_message("<span class='danger'>[mov_name] falls through [prev_turf]!</span>")
+	if(flags & FALL_INTERCEPTED)
+		return
 	if(zFall(A, ++levels))
 		return FALSE
 	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
@@ -161,11 +168,10 @@
 		return FALSE
 	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target, DOWN)))
 		return FALSE
-	A.visible_message("<span class='danger'>[A] falls through [src]!</span>")
 	A.zfalling = TRUE
 	A.forceMove(target)
 	A.zfalling = FALSE
-	target.zImpact(A, levels)
+	target.zImpact(A, levels, src)
 	return TRUE
 
 /turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
@@ -184,8 +190,6 @@
 		return TRUE
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
-			return
 		coil.place_turf(src, user)
 		return TRUE
 	else if(can_have_cabling() && istype(C, /obj/item/stack/pipe_cleaner_coil))
@@ -458,15 +462,6 @@
 		if(ismob(A) || .)
 			A.narsie_act()
 
-/turf/ratvar_act(force, ignore_mobs, probability = 40)
-	. = (prob(probability) || force)
-	for(var/I in src)
-		var/atom/A = I
-		if(ignore_mobs && ismob(A))
-			continue
-		if(ismob(A) || .)
-			A.ratvar_act()
-
 /turf/proc/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = icon
 	underlay_appearance.icon_state = icon_state
@@ -569,7 +564,7 @@
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
-/turf/bullet_act(obj/item/projectile/P)
+/turf/bullet_act(obj/projectile/P)
 	. = ..()
 	if(. != BULLET_ACT_FORCE_PIERCE)
 		. =  BULLET_ACT_TURF

@@ -15,7 +15,7 @@
 	steel_sheet_cost = 10
 	light_strength = 2
 	max_integrity = 300
-	integrity_failure = 150
+	integrity_failure = 0.5
 	var/console_department = "" // Used in New() to set network tag according to our area.
 
 /obj/machinery/modular_computer/console/buildable/Initialize()

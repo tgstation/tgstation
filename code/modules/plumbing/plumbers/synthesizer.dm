@@ -5,6 +5,8 @@
 
 	icon_state = "synthesizer"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
+	rcd_cost = 25
+	rcd_delay = 15
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
@@ -47,16 +49,11 @@
 	)
 
 	ui_x = 300
-	ui_y = 435
+	ui_y = 375
 
-/obj/machinery/plumbing/synthesizer/Initialize(mapload)
+/obj/machinery/plumbing/synthesizer/Initialize(mapload, bolt)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply)
-
-/obj/machinery/plumbing/synthesizer/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
 /obj/machinery/plumbing/synthesizer/process()
 	if(stat & NOPOWER || !reagent_id || !amount)

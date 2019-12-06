@@ -33,7 +33,7 @@
 /obj/item/minigunpack/attack_hand(var/mob/living/carbon/user)
 	if(src.loc == user)
 		if(!armed)
-			if(user.get_item_by_slot(SLOT_BACK) == src)
+			if(user.get_item_by_slot(ITEM_SLOT_BACK) == src)
 				armed = 1
 				if(!user.put_in_hands(gun))
 					armed = 0
@@ -103,7 +103,7 @@
 	slowdown = 1
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
-	materials = list()
+	custom_materials = null
 	burst_size = 3
 	automatic = 0
 	fire_delay = 1
@@ -127,7 +127,7 @@
 	return
 
 /obj/item/gun/ballistic/minigun/dropped(mob/user)
-	SHOULD_CALL_PARENT(FALSE)
+	SHOULD_CALL_PARENT(0)
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else

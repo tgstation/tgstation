@@ -11,7 +11,7 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	max_integrity = 250
-	integrity_failure = 50
+	integrity_failure = 0.2
 
 	var/id = 0
 	var/sun_angle = 0		// sun angle as set by sun datum

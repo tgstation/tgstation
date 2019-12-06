@@ -51,9 +51,9 @@
 	else
 		return 0
 
-/obj/machinery/power/proc/avail()
+/obj/machinery/power/proc/avail(amount)
 	if(powernet)
-		return powernet.avail
+		return amount ? powernet.avail >= amount : powernet.avail
 	else
 		return 0
 
@@ -117,7 +117,7 @@
   * Returns TRUE if the NOPOWER flag was toggled
   */
 /obj/machinery/proc/power_change()
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(1)
 	if(stat & BROKEN)
 		return
 	if(powered(power_channel))
@@ -235,7 +235,7 @@
 		index++
 
 		var/list/connections = working_cable.get_cable_connections(skip_assigned_powernets)
-		
+
 		for(var/obj/structure/cable/cable_entry in connections)
 			if(!cables[cable_entry]) //Since it's an associated list, we can just do an access and check it's null before adding; prevents duplicate entries
 				cables[cable_entry] = TRUE
@@ -282,7 +282,7 @@
 //dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
-	if(!M || ismecha(M.loc))
+	if(!istype(M) || ismecha(M.loc))
 		return 0	//feckin mechs are dumb
 	if(dist_check)
 		if(!in_range(source,M))
@@ -356,9 +356,11 @@
 /turf/proc/get_cable_node()
 	if(!can_have_cabling())
 		return null
+	var/obj/structure/cable_bridge/B = locate() in src
 	for(var/obj/structure/cable/C in src)
-		C.update_icon()
-		return C
+		if(C.cable_layer == CABLE_LAYER_2 || B)
+			C.update_icon()
+			return C
 	return null
 
 /area/proc/get_apc()

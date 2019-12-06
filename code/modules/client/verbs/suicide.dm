@@ -104,6 +104,7 @@
 
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(FALSE)
+		ghostize(FALSE)	// Disallows reentering body and disassociates mind
 
 /mob/living/brain/verb/suicide()
 	set hidden = 1
@@ -224,10 +225,10 @@
 		death(FALSE)
 
 /mob/living/proc/suicide_log()
-	log_message("[key_name(src)] committed suicide at [AREACOORD(src)] as [src.type].", LOG_ATTACK)
+	log_message("committed suicide as [src.type]", LOG_ATTACK)
 
 /mob/living/carbon/human/suicide_log()
-	log_message("[key_name(src)] (job: [src.job ? "[src.job]" : "None"]) committed suicide at [AREACOORD(src)].", LOG_ATTACK)
+	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
 
 /mob/living/proc/canSuicide()
 	switch(stat)

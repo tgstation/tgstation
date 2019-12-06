@@ -56,7 +56,7 @@
 
 /obj/item/pressure_plate/attack_self(mob/living/L)
 	if(removable_signaller && istype(sigdev))
-		to_chat(L, "<span class='notice'>You remove [sigdev] from [src]</span>")
+		to_chat(L, "<span class='notice'>You remove [sigdev] from [src].</span>")
 		if(!L.put_in_hands(sigdev))
 			sigdev.forceMove(get_turf(src))
 		sigdev = null
@@ -78,4 +78,3 @@
 		active = FALSE
 		if(tile_overlay)
 			loc.overlays -= tile_overlay
-
