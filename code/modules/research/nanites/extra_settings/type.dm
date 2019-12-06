@@ -6,7 +6,7 @@
 	value = initial
 	src.types = types
 
-/datum/nanite_extra_setting/type/get_value()
+/datum/nanite_extra_setting/type/get_copy()
 	return new /datum/nanite_extra_setting/type(value, types)
 
 /datum/nanite_extra_setting/type/get_frontend_list(name)

@@ -7,7 +7,7 @@
 /datum/nanite_extra_setting/text/set_value(value)
 	src.value = trim(value)
 
-/datum/nanite_extra_setting/text/get_value()
+/datum/nanite_extra_setting/text/get_copy()
 	return new /datum/nanite_extra_setting/text(value)
 
 /datum/nanite_extra_setting/text/get_frontend_list(name)
