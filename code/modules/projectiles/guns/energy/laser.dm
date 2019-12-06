@@ -60,6 +60,15 @@
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
+/obj/item/gun/energy/laser/scatter/security
+	name = "energy shotgun"
+	icon_state = "lasercannon"
+	item_state = "laser"
+	desc = "A laser cannon modified to fire scatter shots. Can switch between lethal and disabler shots."
+	shaded_charge = 0
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/disabler, /obj/item/ammo_casing/energy/laser/scatter)
+	pin = null
+
 /obj/item/gun/energy/laser/scatter/shotty
 	name = "energy shotgun"
 	icon = 'icons/obj/guns/projectile.dmi'

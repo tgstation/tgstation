@@ -134,6 +134,16 @@
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/scatterlaser
+	name = "Energy Shotgun"
+	desc = "A laser cannon modified to fire scatter shots. Can switch between lethal and disabler shots."
+	id = "scatterlaser"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000, /datum/material/diamond = 5000, /datum/material/gold = 5000)
+	build_path = /obj/item/gun/energy/laser/scatter/security
+	category = list("Weapons")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/decloner
 	name = "Decloner"
 	desc = "Your opponent will bubble into a messy pile of goop."
