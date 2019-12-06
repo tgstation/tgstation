@@ -147,7 +147,7 @@
 	tastes = list("ice" = 1, "water" = 1, "nothing" = 5)
 
 /obj/item/reagent_containers/food/snacks/snowcones/clown
-	name = "laughter flavored snowcone"
+	name = "clown snowcone"
 	desc = "Laughter drizzled over a snowball in a paper cup."
 	icon_state = "clown_sc"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/laughter = 5)
@@ -176,7 +176,7 @@
 	tastes = list("ice" = 1, "water" = 1, "valid" = 5, "salt" = 5, "wats" = 5)
 
 /obj/item/reagent_containers/food/snacks/snowcones/honey
-	name = "honey flavored snowcone"
+	name = "honey snowcone"
 	desc = "Honey drizzled over a snowball in a paper cup."
 	icon_state = "amber_sc"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/honey = 5)
