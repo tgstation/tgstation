@@ -3,7 +3,7 @@
 	desc = "A machine used to deposit and withdraw station funds."
 	icon = 'goon/icons/obj/goon_terminals.dmi'
 	idle_power_usage = 100
-	ui_x = 300
+	ui_x = 320
 	ui_y = 165
 	var/siphoning = FALSE
 	var/next_warning = 0
