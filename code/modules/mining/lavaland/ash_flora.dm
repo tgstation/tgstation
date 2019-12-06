@@ -130,7 +130,7 @@
 	name = "fruiting cacti"
 	desc = "Several prickly cacti, brimming with ripe fruit and covered in a thin layer of ash."
 	harvested_name = "cacti"
-	harvested_desc = "A bunch of prickly cacti. You can see fruits slowly growing beneath the covering of ash."
+	harvested_desc = "A bunch of prickly cacti. These ash-covered fruits are delicious but their juices burn through your fat like paper. Not for the starving."
 	harvest = /obj/item/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
 	needs_sharp_harvest = FALSE
 	harvest_amount_high = 2
@@ -220,7 +220,7 @@
 	genes = list(/datum/plant_gene/trait/fire_resistance)
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	growthstages = 2
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/vitfro = 0.08)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/vitfro = 0.08, /datum/reagent/toxin/lipolicide = 0.1)
 
 /obj/item/seeds/lavaland/polypore
 	name = "pack of polypore mycelium"
