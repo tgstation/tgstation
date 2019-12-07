@@ -125,3 +125,15 @@
 
 /obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
 	crystal_charge = CLAMP(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_FULL)
+
+/obj/item/organ/stomach/cybernetic
+	name = "cybernetic stomach"
+	icon_state = "stomach-c"
+	desc = "a basic cybernetic designed to mimic the operation of a stomach."
+	organ_flags = ORGAN_SYNTHETIC
+
+/obj/item/organ/stomach/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	owner.vomit(10)
