@@ -130,6 +130,7 @@
 	name = "cybernetic stomach"
 	icon_state = "stomach-c"
 	desc = "a basic cybernetic designed to mimic the operation of a stomach."
+	status = ORGAN_ROBOTIC
 	organ_flags = ORGAN_SYNTHETIC
 
 /obj/item/organ/stomach/cybernetic/emp_act(severity)
