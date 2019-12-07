@@ -8,6 +8,7 @@
 	states |= icon_states('icons/obj/hydroponics/growing_flowers.dmi')
 	states |= icon_states('icons/obj/hydroponics/growing_mushrooms.dmi')
 	states |= icon_states('icons/obj/hydroponics/growing_vegetables.dmi')
+	states |= icon_states('goon/icons/obj/hydroponics.dmi')
 	var/list/paths = typesof(/obj/item/seeds) - /obj/item/seeds - typesof(/obj/item/seeds/sample)
 
 	for(var/seedpath in paths)
