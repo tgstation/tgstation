@@ -594,7 +594,7 @@
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/cybernetic_ears
+/datum/design/cybernetic_stomach
 	name = "Cybernetic Stomach"
 	desc = "A cybernetic stomach."
 	id = "cybernetic_stomach"
