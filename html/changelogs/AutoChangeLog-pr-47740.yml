@@ -1,7 +1,0 @@
-author: "EdgeLordExe"
-delete-after: True
-changes: 
-  - rscadd: "New room: Medbay Clinic , found in between lobby and mebday 'proper' on metastation"
-  - rscdel: "Removed the office near medbay entrance"
-  - tweak: "Increased the size of security office in medbay
-del:public chem fridge removed, as the old 'private' one is in now public area"
