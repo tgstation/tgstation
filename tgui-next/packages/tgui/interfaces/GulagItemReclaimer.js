@@ -13,7 +13,7 @@ export const GulagItemReclaimer = props => {
             <Table.Cell>
               {mob.name}
             </Table.Cell>
-            <Table.Cell>
+            <Table.Cell textAlign="right">
               <Button
                 content="Retrieve Items"
                 disabled={!data.can_reclaim}
