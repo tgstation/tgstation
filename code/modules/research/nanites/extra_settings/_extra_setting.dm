@@ -8,6 +8,9 @@
 /datum/nanite_extra_setting/proc/set_value(value)
 	src.value = value
 
+/datum/nanite_extra_setting/proc/get_copy()
+	return
+
 //I made the choice to send the name as part of the parameter instead of storing it directly on
 //this datum as a way of avoiding duplication of data between the containing assoc list
 //and this datum.

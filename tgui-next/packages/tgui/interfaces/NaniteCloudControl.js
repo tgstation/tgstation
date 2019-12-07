@@ -143,11 +143,19 @@ export const NaniteInfoBox = props => {
         title="Extra Settings"
         level={3}>
         <LabeledList>
-          {extra_settings.map(setting => (
-            <LabeledList.Item key={setting.name} label={setting.name}>
-              {setting.value}
-            </LabeledList.Item>
-          ))}
+          {extra_settings.map(setting => {
+            const naniteTypesDisplayMap = {
+              number: <Fragment>{setting.value}{setting.unit}</Fragment>,
+              text: setting.value,
+              type: setting.value,
+              boolean: (setting.value ? setting.true_text : setting.false_text),
+            };
+            return (
+              <LabeledList.Item key={setting.name} label={setting.name}>
+                {naniteTypesDisplayMap[setting.type]}
+              </LabeledList.Item>
+            );
+          })}
         </LabeledList>
       </Section>
     </Section>
