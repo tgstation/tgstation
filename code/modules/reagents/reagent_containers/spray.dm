@@ -373,7 +373,7 @@
 	spray_range = 4
 	stream_range = 2
 	volume = 100
-	custom_premium_price = 200
+	custom_premium_price = 900
 
 /obj/item/reagent_containers/spray/syndicate/Initialize()
 	. = ..()

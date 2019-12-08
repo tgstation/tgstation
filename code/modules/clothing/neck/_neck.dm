@@ -22,7 +22,7 @@
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = 15
+	custom_price = 60
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"

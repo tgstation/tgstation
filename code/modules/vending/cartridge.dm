@@ -14,8 +14,8 @@
 					/obj/item/cartridge/captain = 3,
 					/obj/item/cartridge/quartermaster = 10)
 	refill_canister = /obj/item/vending_refill/cart
-	default_price = 50
-	extra_price = 100
+	default_price = 250
+	extra_price = 500
 	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/cart

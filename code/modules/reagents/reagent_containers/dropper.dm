@@ -7,6 +7,7 @@
 	possible_transfer_amounts = list(1, 2, 3, 4, 5)
 	volume = 5
 	reagent_flags = TRANSPARENT
+	custom_price = 75
 
 /obj/item/reagent_containers/dropper/afterattack(obj/target, mob/user , proximity)
 	. = ..()
