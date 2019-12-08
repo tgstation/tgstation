@@ -1,11 +1,9 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 
 export const Holodeck = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     can_toggle_safety,
     default_programs = [],
@@ -24,10 +22,8 @@ export const Holodeck = props => {
             color="bad"
             disabled={!can_toggle_safety}
             selected={!emagged}
-            onClick={() => act(ref, "safety")}
-          />
-        )}
-      >
+            onClick={() => act('safety')} />
+        )}>
         {default_programs.map(def_program => (
           <Button
             fluid
@@ -35,8 +31,9 @@ export const Holodeck = props => {
             content={def_program.name.substring(11)}
             textAlign="center"
             selected={def_program.type === program}
-            onClick={() => act(ref, "load_program", {type: def_program.type})}
-          />
+            onClick={() => act('load_program', {
+              type: def_program.type,
+            })} />
         ))}
       </Section>
       {!!emagged && (
@@ -49,8 +46,9 @@ export const Holodeck = props => {
               color="bad"
               textAlign="center"
               selected={emag_program.type === program}
-              onClick={() => act(ref, "load_program", {type: emag_program.type})}
-            />
+              onClick={() => act('load_program', {
+                type: emag_program.type,
+              })} />
           ))}
         </Section>
       )}

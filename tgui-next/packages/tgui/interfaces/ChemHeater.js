@@ -1,12 +1,11 @@
 import { round, toFixed } from 'common/math';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, NumberInput, Section } from '../components';
 import { BeakerContents } from './common/BeakerContents';
 
 export const ChemHeater = props => {
-  const { state } = props;
-  const { ref } = state.config;
+  const { act, data } = useBackend(props);
   const {
     targetTemp,
     isActive,
@@ -15,7 +14,7 @@ export const ChemHeater = props => {
     beakerCurrentVolume,
     beakerMaxVolume,
     beakerContents = [],
-  } = state.data;
+  } = data;
   return (
     <Fragment>
       <Section
@@ -25,7 +24,7 @@ export const ChemHeater = props => {
             icon={isActive ? 'power-off' : 'times'}
             selected={isActive}
             content={isActive ? 'On' : 'Off'}
-            onClick={() => act(ref, 'power')} />
+            onClick={() => act('power')} />
         )}>
         <LabeledList>
           <LabeledList.Item label="Target">
@@ -37,7 +36,7 @@ export const ChemHeater = props => {
               value={round(targetTemp)}
               minValue={0}
               maxValue={1000}
-              onDrag={(e, value) => act(ref, 'temperature', {
+              onDrag={(e, value) => act('temperature', {
                 target: value,
               })} />
           </LabeledList.Item>
@@ -64,7 +63,7 @@ export const ChemHeater = props => {
             <Button
               icon="eject"
               content="Eject"
-              onClick={() => act(ref, 'eject')} />
+              onClick={() => act('eject')} />
           </Fragment>
         )}>
         <BeakerContents

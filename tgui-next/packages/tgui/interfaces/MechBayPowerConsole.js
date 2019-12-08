@@ -1,10 +1,8 @@
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { AnimatedNumber, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 
 export const MechBayPowerConsole = props => {
-  const { state } = props;
-  const { data, config } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const { recharge_port } = data;
   const mech = recharge_port && recharge_port.mech;
   const cell = mech && mech.cell;
@@ -16,7 +14,7 @@ export const MechBayPowerConsole = props => {
         <Button
           icon="sync"
           content="Sync"
-          onClick={() => act(ref, "reconnect")} />
+          onClick={() => act('reconnect')} />
       )}>
       <LabeledList>
         <LabeledList.Item label="Integrity">

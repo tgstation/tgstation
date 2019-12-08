@@ -88,7 +88,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 50)
+	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 50), \
+	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50)
 ))
 
 /obj/item/stack/sheet/metal
@@ -142,7 +143,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = TRUE), \
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 50), \
-	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50), \
 	null, \
 	new /datum/stack_recipe_list("airlock assemblies", list( \
 		new/datum/stack_recipe("high security airlock assembly", /obj/structure/door_assembly/door_assembly_highsecurity, 4, time = 50, one_per_turf = 1, on_floor = 1), \
@@ -593,9 +593,9 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20), \
 	new /datum/stack_recipe("folding plastic chair", /obj/structure/chair/plastic, 2), \
 	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
-	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/glass/waterbottle/empty), \
-	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/glass/waterbottle/large/empty, 3), \
-	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/glass/colocup, 1), \
+	new /datum/stack_recipe("water bottle", /obj/item/reagent_containers/food/drinks/waterbottle/empty), \
+	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/food/drinks/waterbottle/large/empty, 3), \
+	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/food/drinks/colocup, 1), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2), \
 	new /datum/stack_recipe("blank sign", /obj/item/sign_backing, 1)))
 

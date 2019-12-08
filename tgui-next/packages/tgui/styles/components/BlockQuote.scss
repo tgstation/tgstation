@@ -1,0 +1,10 @@
+@use '../base.scss';
+@use '../colors.scss';
+
+$color-default: colors.fg(colors.$label) !default;
+
+.BlockQuote {
+  color: $color-default;
+  border-left: 2px solid $color-default;
+  padding-left: 6px;
+}

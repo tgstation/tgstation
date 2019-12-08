@@ -63,7 +63,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/purchase_message_cooldown
 	///Last mob to shop with us
 	var/last_shopper
-
+	var/tilted = FALSE
+	var/tiltable = TRUE
+	var/squish_damage = 75
+	var/forcecrit = 0
+	var/num_shards = 7
+	var/list/pinned_mobs = list()
 
 	/**
 	  * List of products this machine sells
@@ -362,6 +367,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	..()
 	if(panel_open)
 		default_unfasten_wrench(user, I, time = 60)
+		unbuckle_all_mobs(TRUE)
 	return TRUE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
@@ -400,7 +406,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				else
 					to_chat(user, "<span class='warning'>There's nothing to restock!</span>")
 			return
-	if(compartmentLoadAccessCheck(user))
+	if(compartmentLoadAccessCheck(user) && user.a_intent != INTENT_HARM)
 		if(canLoadItem(I))
 			loadingAttempt(I,user)
 			updateUsrDialog() //can't put this on the proc above because we spam it below
@@ -423,9 +429,133 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(loaded)
 				to_chat(user, "<span class='notice'>You insert [loaded] dishes into [src]'s compartment.</span>")
 				updateUsrDialog()
-
 	else
-		..()
+		. = ..()
+		if(tiltable && !tilted && I.force)
+			switch(rand(1, 100))
+				if(1 to 5)
+					freebie(user, 3)
+				if(6 to 15)
+					freebie(user, 2)
+				if(16 to 25)
+					freebie(user, 1)
+				if(76 to 90)
+					tilt(user)
+				if(91 to 100)
+					tilt(user, crit=TRUE)
+
+/obj/machinery/vending/proc/freebie(mob/fatty, freebies)
+	visible_message("<span class='notice'>\The [src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!</span>")
+
+	for(var/i in 1 to freebies)
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+		for(var/datum/data/vending_product/R in shuffle(product_records))
+
+			if(R.amount <= 0) //Try to use a record that actually has something to dump.
+				continue
+			var/dump_path = R.product_path
+			if(!dump_path)
+				continue
+
+			R.amount--
+			new dump_path(get_turf(src))
+			break
+
+/obj/machinery/vending/proc/tilt(mob/fatty, crit=FALSE)
+	visible_message("<span class='danger'>\The [src] tips over!</span>")
+	tilted = TRUE
+	layer = ABOVE_MOB_LAYER
+
+	var/crit_case
+	if(crit)
+		crit_case = rand(1,5)
+
+	if(forcecrit)
+		crit_case = forcecrit
+
+	if(in_range(fatty, src))
+		for(var/mob/living/L in get_turf(fatty))
+			var/mob/living/carbon/C = L
+
+			if(istype(C))
+				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
+
+				if(crit_case != 5) // the head asplode case has its own description
+					C.visible_message("<span class='danger'>[C] is crushed by \the [src]!</span>", \
+						"<span class='userdanger'>You are crushed by \the [src]!</span>")
+
+				switch(crit_case) // only carbons can have the fun crits
+					if(1) // shatter their legs and bleed 'em
+						crit_rebate = 60
+						C.bleed(150)
+						var/obj/item/bodypart/l_leg/l = C.get_bodypart(BODY_ZONE_L_LEG)
+						if(l)
+							l.receive_damage(brute=200, updating_health=TRUE)
+						var/obj/item/bodypart/r_leg/r = C.get_bodypart(BODY_ZONE_R_LEG)
+						if(r)
+							r.receive_damage(brute=200, updating_health=TRUE)
+						if(l || r)
+							C.visible_message("<span class='danger'>[C]'s legs shatter with a sickening crunch!</span>", \
+								"<span class='userdanger'>Your legs shatter with a sickening crunch!</span>")
+					if(2) // pin them beneath the machine until someone untilts it
+						forceMove(get_turf(C))
+						buckle_mob(C, force=TRUE)
+						C.visible_message("<span class='danger'>[C] is pinned underneath \the [src]!</span>", \
+							"<span class='userdanger'>You are pinned down by \the [src]!</span>")
+					if(3) // glass candy
+						crit_rebate = 50
+						for(var/i = 0, i < num_shards, i++)
+							var/obj/item/shard/shard = new /obj/item/shard(get_turf(C))
+							shard.embedding = shard.embedding.setRating(embed_chance = 100, embedded_ignore_throwspeed_threshold = TRUE, embedded_impact_pain_multiplier=1,embedded_pain_chance=5)
+							C.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
+							shard.embedding = shard.embedding.setRating(embed_chance = EMBED_CHANCE, embedded_ignore_throwspeed_threshold = FALSE)
+					if(4) // paralyze this binch
+						// the new paraplegic gets like 4 lines of losing their legs so skip them
+						visible_message("<span class='danger'>[C]'s spinal cord is obliterated with a sickening crunch!</span>", ignored_mobs = list(C))
+						C.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
+					if(5) // skull squish!
+						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
+						if(O)
+							C.visible_message("<span class='danger'>[O] explodes in a shower of gore beneath \the [src]!</span>", \
+								"<span class='userdanger'>Oh f-</span>")
+							O.dismember()
+							O.drop_organs()
+							qdel(O)
+							new /obj/effect/gibspawner/human/bodypartless(get_turf(C))
+
+				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
+				C.AddElement(/datum/element/squish, 18 SECONDS)
+			else
+				L.visible_message("<span class='danger'>[L] is crushed by \the [src]!</span>", \
+				"<span class='userdanger'>You are crushed by \the [src]!</span>")
+				L.apply_damage(squish_damage, forced=TRUE)
+				if(crit_case)
+					L.apply_damage(squish_damage, forced=TRUE)
+
+			L.Paralyze(60)
+			L.emote("scream")
+			playsound(L, 'sound/effects/blobattack.ogg', 40, TRUE)
+			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
+
+	var/matrix/M = matrix()
+	M.Turn(pick(90, 270))
+	transform = M
+
+	if(get_turf(fatty) != get_turf(src))
+		throw_at(get_turf(fatty), 1, 1, spin=FALSE)
+
+/obj/machinery/vending/proc/untilt(mob/user)
+	user.visible_message("<span class='notice'>[user] rights /the [src].", \
+		"<span class='notice'>You right \the [src].")
+
+	unbuckle_all_mobs(TRUE)
+
+	tilted = FALSE
+	layer = initial(layer)
+
+	var/matrix/M = matrix()
+	M.Turn(0)
+	transform = M
 
 /obj/machinery/vending/proc/loadingAttempt(obj/item/I, mob/user)
 	. = TRUE
@@ -437,6 +567,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 		vending_machine_input[format_text(I.name)] = 1
 	to_chat(user, "<span class='notice'>You insert [I] into [src]'s input compartment.</span>")
 	loaded_items++
+
+/obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force=FALSE)
+	if(!force)
+		return
+	. = ..()
 
 /**
   * Is the passed in user allowed to load this vending machines compartments
@@ -500,6 +635,13 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(seconds_electrified && !(stat & NOPOWER))
 		if(shock(user, 100))
 			return
+
+	if(tilted && !user.buckled)
+		to_chat(user, "<span class='notice'>You begin righting \the [src].")
+		if(do_after(user, 50, target=src))
+			untilt(user)
+		return
+
 	return ..()
 
 /obj/machinery/vending/ui_interact(mob/user)
@@ -992,6 +1134,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	return FALSE
 
 /obj/machinery/vending/custom/Destroy()
+	unbuckle_all_mobs(TRUE)
 	var/turf/T = get_turf(src)
 	if(T)
 		for(var/obj/item/I in contents)

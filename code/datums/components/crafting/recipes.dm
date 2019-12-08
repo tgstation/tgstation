@@ -530,6 +530,14 @@
 				 /obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/skilt
+	name = "Sinew Kilt"
+	result = /obj/item/clothing/accessory/skilt
+	time = 20
+	reqs = list(/obj/item/stack/sheet/bone = 1,
+				 /obj/item/stack/sheet/sinew = 2)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/bracers
 	name = "Bone Bracers"
 	result = /obj/item/clothing/gloves/bracer

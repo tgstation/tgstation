@@ -281,6 +281,13 @@
 		update_icon()
 		return
 
+/obj/item/defibrillator/compact/combat/loaded/nanotrasen
+	name = "elite nanotrasen defibrillator"
+	desc = "A belt-equipped state-of-the-art defibrillator. Can revive through spacesuits, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or agressive manner."
+	icon_state = "defibnt" //needs defib inhand sprites
+	item_state = "defibnt"
+	paddle_type = /obj/item/twohanded/shockpaddles/syndicate/nanotrasen
+
 //paddles
 
 /obj/item/twohanded/shockpaddles
@@ -483,12 +490,14 @@
 	busy = TRUE
 	M.visible_message("<span class='danger'>[user] has touched [M] with [src]!</span>", \
 			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
-	M.adjustStaminaLoss(50)
-	M.Paralyze(100)
-	M.updatehealth() //forces health update before next life tick //isn't this done by adjustStaminaLoss anyway?
+	M.adjustStaminaLoss(60)
+	M.Knockdown(75)
+	M.Jitter(50)
+	M.apply_status_effect(STATUS_EFFECT_CONVULSING)
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, TRUE, -1)
-	M.emote("gasp")
-	log_combat(user, M, "stunned", src)
+	if(HAS_TRAIT(M,MOB_ORGANIC))
+		M.emote("gasp")
+	log_combat(user, M, "zapped", src)
 	if(req_defib)
 		defib.deductcharge(revivecost)
 		cooldown = TRUE
@@ -508,7 +517,7 @@
 		"<span class='warning'>You overcharge the paddles and begin to place them onto [H]'s chest...</span>")
 	busy = TRUE
 	update_icon()
-	if(do_after(user, 30, target = H))
+	if(do_after(user, 15, target = H))
 		user.visible_message("<span class='notice'>[user] places [src] on [H]'s chest.</span>",
 			"<span class='warning'>You place [src] on [H]'s chest and begin to charge them.</span>")
 		var/turf/T = get_turf(defib)
@@ -517,7 +526,7 @@
 			T.audible_message("<span class='warning'>\The [defib] lets out an urgent beep and lets out a steadily rising hum...</span>")
 		else
 			user.audible_message("<span class='warning'>[src] let out an urgent beep.</span>")
-		if(do_after(user, 30, target = H)) //Takes longer due to overcharging
+		if(do_after(user, 15, target = H)) //Takes longer due to overcharging
 			if(!H)
 				busy = FALSE
 				update_icon()
@@ -678,12 +687,19 @@
 
 /obj/item/twohanded/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
-	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
+	desc = "A pair of paddles used to revive deceased operatives. They possess both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
 	combat = TRUE
 	icon = 'icons/obj/defib.dmi'
 	icon_state = "syndiepaddles0"
 	item_state = "syndiepaddles0"
 	base_icon_state = "syndiepaddles"
+
+/obj/item/twohanded/shockpaddles/syndicate/nanotrasen
+	name = "elite nanotrasen defibrillator paddles"
+	desc = "A pair of paddles used to revive deceased ERT members. They possess both the ability to penetrate armor and to deliver powerful or disabling shocks offensively."
+	icon_state = "ntpaddles0"
+	item_state = "ntpaddles0"
+	base_icon_state = "ntpaddles"
 
 /obj/item/twohanded/shockpaddles/syndicate/cyborg
 	req_defib = FALSE

@@ -372,3 +372,13 @@
 	above_suit = TRUE
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
 	attachment_slot = GROIN
+
+/obj/item/clothing/accessory/skilt
+	name = "Sinew Skirt"
+	desc = "For the last time. IT'S A KILT not a skirt."
+	icon_state = "skilt"
+	above_suit = TRUE
+	minimize_when_attached = FALSE
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
+	attachment_slot = GROIN
+
