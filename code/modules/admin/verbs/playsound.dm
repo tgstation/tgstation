@@ -52,6 +52,22 @@
 	playsound(get_turf(src.mob), S, 50, FALSE, FALSE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/play_local_mob_sound(S as sound)
+	set category = "Fun"
+	set name = "Play Local Mob Sound"
+	if(!check_rights(R_SOUND))
+		return
+
+	var/mob/target = input(usr, "Choose a mob to play the sound to.", "Play Mob Sound") as null|anything in sortNames(GLOB.player_list)
+	var/vol = input(usr, "What volume would you like the sound to play at?",, 50) as null|num
+	if(!vol)
+		return
+	vol = CLAMP(vol, 1, 100)
+	log_admin("[key_name(src)] played a local mob sound [S] to [target].")
+	message_admins("[key_name_admin(src)] played a local mob sound [S] to [ADMIN_LOOKUPFLW(target)].")
+	target.playsound_local(get_turf(target), S, vol, FALSE, pressure_affected = FALSE)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Local Mob Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/play_web_sound()
 	set category = "Fun"
 	set name = "Play Internet Sound"
