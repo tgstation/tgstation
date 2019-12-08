@@ -442,6 +442,7 @@
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to it's contents."
 	icon_state = "glassbottle"
 	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
+	custom_price = 65
 
 /obj/item/reagent_containers/food/drinks/bottle/blank/update_icon()
 	..()
@@ -452,6 +453,7 @@
 	desc = "This small bottle is unyieldingly anonymous, offering no clues to it's contents."
 	icon_state = "glassbottlesmall"
 	volume = 50
+	custom_price = 55
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov

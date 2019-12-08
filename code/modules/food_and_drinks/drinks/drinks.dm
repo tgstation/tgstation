@@ -276,6 +276,7 @@
 	var/cap_lost = FALSE
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
+	custom_price = 30
 
 /obj/item/reagent_containers/food/drinks/waterbottle/Initialize()
 	. = ..()
@@ -395,6 +396,7 @@
 	icon_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
 	foodtype = GRAIN | ALCOHOL
+	custom_price = 60
 
 /obj/item/reagent_containers/food/drinks/beer/light
 	name = "Carp Lite"
@@ -408,6 +410,7 @@
 	item_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
 	foodtype = GRAIN | ALCOHOL
+	custom_price = 60
 
 /obj/item/reagent_containers/food/drinks/sillycup
 	name = "paper cup"
