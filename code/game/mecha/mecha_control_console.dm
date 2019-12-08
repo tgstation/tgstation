@@ -41,8 +41,14 @@
 		return
 	if(href_list["shock"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["shock"])
-		if (istype(MT))
+		if (istype(MT) && MT.chassis)
 			MT.shock()
+			//if(MT.chassis.occupant)
+			//	log_admin("[key_name(usr)] has activated remote EMP on exosuit [MT.chassis]. Exosuit currently being piloted by [key_name(MT.chassis.occupant)].")
+			//	message_admins("[key_name(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [MT.chassis][ADMIN_JMP(MT.chassis)]. Exosuit currently being piloted by [key_name(MT.chassis.occupant)][ADMIN_FLW(MT.chassis.occupant)].")
+			//else
+			log_game("[key_name(usr)] has activated remote EMP on exosuit [MT.chassis], located at [loc_name(MT.chassis)], which is currently [MT.chassis.occupant? "being piloted by [key_name(MT.chassis.occupant)]." : "without a pilot."] ")
+			message_admins("[key_name(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [MT.chassis][ADMIN_JMP(MT.chassis)], which is currently [MT.chassis.occupant? "being piloted by [key_name(MT.chassis.occupant)][ADMIN_FLW(MT.chassis.occupant)]." : "without a pilot."] ")
 
 	updateUsrDialog()
 	return
@@ -55,6 +61,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
 	var/recharging = 0
+	var/obj/mecha/chassis
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())
@@ -91,6 +98,7 @@
 		return
 	M.trackers += src
 	M.diag_hud_set_mechtracking()
+	chassis = M
 
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
 	if(ismecha(loc))
