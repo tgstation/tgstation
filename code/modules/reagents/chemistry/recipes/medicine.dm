@@ -22,14 +22,14 @@
 	name = "Oculine"
 	id = /datum/reagent/medicine/oculine
 	results = list(/datum/reagent/medicine/oculine = 3)
-	required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)
+	//required_reagents = list(/datum/reagent/medicine/C2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1) austation -- trekchems added back. Changes in equiv file in austation dir
 	mix_message = "The mixture bubbles noticeably and becomes a dark grey color!"
 
 /datum/chemical_reaction/inacusiate
 	name = /datum/reagent/medicine/inacusiate
 	id = /datum/reagent/medicine/inacusiate
 	results = list(/datum/reagent/medicine/inacusiate = 2)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/multiver = 1)
+	//required_reagents = list(/datum/reagent/water = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/multiver = 1) austation -- trekchems added back. Changes in equiv file in austation dir
 	mix_message = "The mixture sputters loudly and becomes a light grey color!"
 
 /datum/chemical_reaction/synaptizine
@@ -56,11 +56,11 @@
 	results = list(/datum/reagent/medicine/mine_salve = 15)
 	required_reagents = list(/datum/reagent/toxin/plasma = 5, /datum/reagent/iron = 5, /datum/reagent/consumable/sugar = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
 
-/datum/chemical_reaction/instabitaluri
+/*/datum/chemical_reaction/instabitaluri austation begin -- revert cobbychem
 	name = "Synthflesh (Instabitaluri)"
 	id = /datum/reagent/medicine/C2/instabitaluri
 	results = list(/datum/reagent/medicine/C2/instabitaluri = 3)
-	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/libital = 1)
+	required_reagents = list(/datum/reagent/blood = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/libital = 1) austation end*/
 
 /datum/chemical_reaction/calomel
 	name = "Calomel"
@@ -154,7 +154,7 @@
 	name = /datum/reagent/medicine/antihol
 	id = /datum/reagent/medicine/antihol
 	results = list(/datum/reagent/medicine/antihol = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/copper = 1)
+	//required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/copper = 1) austation -- trekchems added back. Changes in equiv file in austation dir
 
 /datum/chemical_reaction/cryoxadone
 	name = "Cryoxadone"
@@ -227,12 +227,14 @@
 	results = list(/datum/reagent/medicine/trophazole = 4)
 	required_reagents = list(/datum/reagent/copper = 1, /datum/reagent/acetone = 2,  /datum/reagent/phosphorus = 1)
 
+/* austation begin -- revert cobbychem
 /datum/chemical_reaction/granibitaluri
 	name = "Granibitaluri"
 	id = /datum/reagent/medicine/granibitaluri
 	results = list(/datum/reagent/medicine/granibitaluri = 3)
 	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/phenol = 1, /datum/reagent/nitrogen = 1)
 	required_catalysts = list(/datum/reagent/iron = 5)
+austation end*/
 
 /datum/chemical_reaction/medsuture
 	name = "Medicated Suture"
@@ -244,6 +246,3 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/suture/medicated(location)
 	return
-
-
-

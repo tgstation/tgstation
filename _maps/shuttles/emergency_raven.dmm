@@ -460,7 +460,9 @@
 /area/shuttle/escape)
 "bh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 5
 	},
@@ -583,7 +585,9 @@
 /obj/item/radio/intercom{
 	pixel_x = 28
 	},
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -764,14 +768,14 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = 6;
 	pixel_y = 8
 	},

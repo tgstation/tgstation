@@ -131,7 +131,7 @@
 		/datum/reagent/medicine/leporazine,\
 		/datum/reagent/medicine/clonexadone,\
 		/datum/reagent/medicine/mine_salve,\
-		/datum/reagent/medicine/C2/convermol,\
+		/datum/reagent/medicine/perfluorodecalin,\
 		/datum/reagent/medicine/ephedrine,\
 		/datum/reagent/medicine/diphenhydramine,\
 		/datum/reagent/drug/space_drugs,\
@@ -150,7 +150,7 @@
 		/datum/reagent/drug/methamphetamine,\
 		/datum/reagent/teslium,\
 		/datum/reagent/toxin/anacea,\
-		/datum/reagent/pax)
+		/datum/reagent/pax) // austation -- revert cobbychem
 
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
@@ -233,7 +233,7 @@
 	//reagent that are possible to be chem factory'd
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/spaceacillin,\
-		/datum/reagent/medicine/C2/instabitaluri,\
+		/datum/reagent/medicine/charcoal,\
 		/datum/reagent/medicine/pen_acid,\
 		/datum/reagent/medicine/atropine,\
 		/datum/reagent/medicine/cryoxadone,\

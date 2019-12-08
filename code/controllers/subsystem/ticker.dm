@@ -147,7 +147,10 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
-			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
+			if(GLOB.master_mode == "sandbox") // austation start -- TGS bot now pings notification squad role
+				send2chat("New sandbox round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
+			else
+				send2chat("<@&586792483892232209> New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game)) // austation end
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
@@ -264,7 +267,7 @@ SUBSYSTEM_DEF(ticker)
 	else
 		mode.announce()
 
-	if(!CONFIG_GET(flag/ooc_during_round))
+	if(!CONFIG_GET(flag/ooc_during_round) && GLOB.master_mode != "sandbox") // austation -- OOC remains active during sandbox rounds
 		toggle_ooc(FALSE) // Turn it off
 
 	CHECK_TICK
@@ -648,9 +651,10 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg',
+		'austation/sound/roundend/ohthatsit.ogg',
 		'sound/roundend/scrunglartiy.ogg',
 		'sound/roundend/petersondisappointed.ogg'\
-		)
+		) // austation -- New roundend sound ohthatsit.ogg
 
 	SEND_SOUND(world, sound(round_end_sound))
 	text2file(login_music, "data/last_round_lobby_music.txt")

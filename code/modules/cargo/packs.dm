@@ -1236,7 +1236,7 @@
 	name = "Medical Supplies Crate"
 	desc = "Contains several medical supplies. German doctor not included."
 	cost = 2000
-	contains = list(/obj/item/reagent_containers/glass/bottle/multiver,
+	contains = list(/obj/item/reagent_containers/glass/bottle/charcoal,
 					/obj/item/reagent_containers/glass/bottle/epinephrine,
 					/obj/item/reagent_containers/glass/bottle/morphine,
 					/obj/item/reagent_containers/glass/bottle/toxin,
@@ -1256,7 +1256,7 @@
 					/obj/item/reagent_containers/blood/OMinus,
 					/obj/item/storage/pill_bottle/mining,
 					/obj/item/reagent_containers/pill/neurine,
-					/obj/item/vending_refill/medical)
+					/obj/item/vending_refill/medical) // austation -- revert cobbychem
 	crate_name = "medical supplies crate"
 
 /datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)

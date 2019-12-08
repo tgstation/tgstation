@@ -93,6 +93,19 @@
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
+	// hippie start -- gangmageddon stuff
+	if(istype(target, /obj/effect/decal/cleanable/crayon/gang) && (user.mind && user.mind.has_antag_datum(/datum/antagonist/vigilante)))
+		var/obj/item/gangtool/hell_march/vigilante/V =  locate(/obj/item/gangtool/hell_march/vigilante) in user.contents
+		var/obj/effect/decal/cleanable/crayon/gang/tag = target
+		user.visible_message("[user] begins to scrub \the [tag.name] out with [src].", "<span class='warning'>You begin to scrub \the [tag.name] out with [src]...</span>")
+		if(do_after(user, src.cleanspeed, target = target))
+			to_chat(user, "<span class='notice'>You scrub \the [tag.name] out.</span>")
+			if(V)
+				var/area/territory = get_area(tag)
+				V.tags |= territory
+				to_chat(user, "<span class='notice'><b>\The [territory] is no longer under gang control. Keep this area clean for additional influence.</b></span>")
+			decreaseUses(user)
+	// hippie end
 	else if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message("<span class='notice'>[user] begins to scrub \the [target.name] out with [src].</span>", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))

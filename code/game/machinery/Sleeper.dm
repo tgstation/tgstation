@@ -19,26 +19,23 @@
 	var/min_health = -25
 	var/list/available_chems
 	var/controls_inside = FALSE
-	var/list/possible_chems = list(
+	/*var/list/possible_chems = list( austation start -- trekchems added back. Changes in equiv file in austation dir
 		list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/morphine, /datum/reagent/medicine/C2/convermol, /datum/reagent/medicine/C2/libital, /datum/reagent/medicine/C2/aiuri),
 		list(/datum/reagent/medicine/oculine,/datum/reagent/medicine/inacusiate),
 		list(/datum/reagent/medicine/C2/multiver, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/pen_acid),
 		list(/datum/reagent/medicine/omnizine)
-	)
+	) austation end */
 	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: mutadone -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 	payment_department = ACCOUNT_MED
 	fair_market_price = 5
 
-/obj/machinery/sleeper/Initialize(mapload)
+/obj/machinery/sleeper/Initialize() // austation start -- adds back sleepers to the map and techweb
 	. = ..()
-	if(mapload)
-		component_parts -= circuit
-		QDEL_NULL(circuit)
 	occupant_typecache = GLOB.typecache_living
 	update_icon()
-	reset_chem_buttons()
+	reset_chem_buttons() // austation end
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -270,6 +267,7 @@
 /obj/machinery/sleeper/syndie/fullupgrade/Initialize()
 	. = ..()
 	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/sleeper(null)
 	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
 	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
 	component_parts += new /obj/item/stack/sheet/glass(null)

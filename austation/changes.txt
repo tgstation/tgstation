@@ -1,0 +1,24 @@
+Terra:Repo rebase August 2019
+Terra:Adds secborg upgrade board
+Terra/Peer:Adds new AI lawsets and corresponding boards
+Terra:HOP no longer rolls for antag
+Chrome:Adds space bitters beers
+Chrome/Terra:New roundend sound
+Flatgub:Crew autotransfer vote
+Flatgub:Autosandbox and respawn
+Terra:TGS Bot now pings notification role but not for sandbox rounds
+Terra:Austation custom icon
+Terra:Australium reagent
+Terra:Luminol and Energized Luminol reagents
+Effectism/Terra:Added Custom plaques
+Terra:OOC remains active during sandbox rounds
+Terra:Closets no longer have drag slowdown
+Effectism:Gangs and Gangmageddon gamemodes
+Terra:Modularized penthrite
+Effectism:Fusion max temperature config
+Effectism:Elances may explode when thrown again
+Effectism:Min pop config options for modes work now
+Mr. Lostman:MK1 SWAT Suit resprite
+Effectism:Optimized lighting algorithms from citadel
+Terra:Keep borg stuns
+Terra:Repo rebase December 2019

@@ -14934,7 +14934,7 @@
 	dir = 4
 	},
 /obj/item/clipboard,
-/obj/item/reagent_containers/pill/patch/aiuri,
+/obj/item/reagent_containers/pill/patch/silver_sulf,
 /obj/item/clothing/glasses/meson/engine,
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
@@ -15399,8 +15399,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/stasis,
 /obj/effect/turf_decal/box,
+/obj/machinery/sleeper{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "axI" = (

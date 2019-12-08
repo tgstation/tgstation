@@ -50,7 +50,7 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
 "k" = (
-/obj/machinery/stasis/survival_pod,
+/obj/machinery/sleeper/survival_pod,
 /turf/open/floor/pod,
 /area/survivalpod)
 "l" = (

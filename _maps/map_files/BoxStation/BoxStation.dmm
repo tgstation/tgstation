@@ -3384,7 +3384,7 @@
 /obj/item/reagent_containers/syringe{
 	name = "steel point"
 	},
-/obj/item/reagent_containers/glass/bottle/multiver,
+/obj/item/reagent_containers/glass/bottle/charcoal,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/machinery/light{
 	dir = 8
@@ -6850,7 +6850,6 @@
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stock_parts/capacitor,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "apM" = (
@@ -8931,7 +8930,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avS" = (
-/obj/item/circuitboard/machine/stasis,
 /obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -9392,7 +9390,9 @@
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
 "axe" = (
-/obj/structure/frame/machine,
+/obj/machinery/sleeper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "axf" = (
@@ -9831,7 +9831,6 @@
 "ayt" = (
 /obj/structure/table/glass,
 /obj/item/hemostat,
-/obj/item/stock_parts/manipulator,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ayu" = (
@@ -28747,7 +28746,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bwD" = (
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bwE" = (
@@ -30265,12 +30266,14 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bAq" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /obj/machinery/camera{
 	c_tag = "Medbay Treatment Center";
 	dir = 8;
 	network = list("ss13","medbay")
 	},
-/obj/machinery/stasis,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bAr" = (
@@ -41714,7 +41717,7 @@
 	pixel_y = 4
 	},
 /obj/item/stock_parts/cell/high/plus,
-/obj/item/reagent_containers/pill/patch/aiuri,
+/obj/item/reagent_containers/pill/patch/silver_sulf,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -49733,7 +49736,7 @@
 /area/space/nearstation)
 "gZG" = (
 /obj/structure/closet/crate/freezer/surplus_limbs,
-/obj/item/reagent_containers/glass/beaker/instabitaluri,
+/obj/item/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -52503,7 +52506,7 @@
 	pixel_x = -4;
 	pixel_y = 12
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = 7;
 	pixel_y = 12
 	},

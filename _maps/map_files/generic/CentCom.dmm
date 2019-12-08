@@ -1118,7 +1118,9 @@
 /obj/structure/window{
 	dir = 8
 	},
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 1
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -1130,7 +1132,9 @@
 	},
 /area/holodeck/rec_center/medical)
 "dd" = (
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 1
+	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -12104,14 +12108,14 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -12884,7 +12888,7 @@
 /area/centcom/control)
 "Da" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine{
@@ -17435,9 +17439,9 @@
 /obj/machinery/iv_drip,
 /obj/item/roller,
 /obj/item/storage/firstaid/regular,
-/obj/item/reagent_containers/medigel/instabitaluri,
-/obj/item/reagent_containers/medigel/instabitaluri,
-/obj/item/reagent_containers/medigel/instabitaluri,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Qj" = (

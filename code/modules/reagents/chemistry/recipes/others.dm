@@ -3,7 +3,7 @@
 	name = "Sterilizine"
 	id = /datum/reagent/space_cleaner/sterilizine
 	results = list(/datum/reagent/space_cleaner/sterilizine = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/chlorine = 1)
+	//required_reagents = list(/datum/reagent/consumable/ethanol = 1, /datum/reagent/medicine/C2/multiver = 1, /datum/reagent/chlorine = 1) austation -- trekchems added back. Changes in equiv file in austation dir
 
 /datum/chemical_reaction/lube
 	name = "Space Lube"
@@ -541,7 +541,7 @@
 /datum/chemical_reaction/life
 	name = "Life"
 	id = "life"
-	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/C2/instabitaluri = 1, /datum/reagent/blood = 1)
+	//required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/C2/instabitaluri = 1, /datum/reagent/blood = 1) austation -- trekchems added back. Changes in equiv file in austation dir
 	required_temp = 374
 
 /datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
@@ -550,7 +550,7 @@
 /datum/chemical_reaction/life_friendly
 	name = "Life (Friendly)"
 	id = "life_friendly"
-	required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/C2/instabitaluri = 1, /datum/reagent/consumable/sugar = 1)
+	//required_reagents = list(/datum/reagent/medicine/strange_reagent = 1, /datum/reagent/medicine/C2/instabitaluri = 1, /datum/reagent/consumable/sugar = 1) austation -- trekchems added back. Changes in equiv file in austation dir
 	required_temp = 374
 
 /datum/chemical_reaction/life_friendly/on_reaction(datum/reagents/holder, created_volume)

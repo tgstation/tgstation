@@ -15,7 +15,7 @@
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
-	reagents_add = list(/datum/reagent/medicine/C2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05)
+	//reagents_add = list(/datum/reagent/medicine/C2/libital = 0.2, /datum/reagent/consumable/nutriment = 0.05) austation -- trekchems added back. Changes in equiv file in austation dir
 
 /obj/item/reagent_containers/food/snacks/grown/poppy
 	seed = /obj/item/seeds/poppy

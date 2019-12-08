@@ -11,8 +11,9 @@
 	ui_y = 330
 
 	var/static/list/shortcuts = list(
-		"meth" = /datum/reagent/drug/methamphetamine
-	)
+		"meth" = /datum/reagent/drug/methamphetamine,
+		"tricord" = /datum/reagent/medicine/tricordrazine
+	) // austation -- revert trekchem removal
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)

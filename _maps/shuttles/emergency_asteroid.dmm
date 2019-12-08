@@ -369,7 +369,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bz" = (
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bC" = (
@@ -446,13 +448,6 @@
 /area/shuttle/escape)
 "Jx" = (
 /turf/open/floor/mineral/titanium/white,
-/area/shuttle/escape)
-"JM" = (
-/obj/machinery/vending/wallmed{
-	name = "Emergency NanoMed";
-	use_power = 0
-	},
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -840,7 +835,7 @@ aP
 ac
 bq
 ad
-JM
+ac
 ac
 ac
 ac

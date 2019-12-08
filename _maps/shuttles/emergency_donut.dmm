@@ -329,10 +329,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
-"bf" = (
-/obj/machinery/stasis,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
 "bg" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
@@ -412,14 +408,14 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = -3
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/glass/bottle/charcoal{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -485,10 +481,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bS" = (
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/item/clothing/suit/apron/surgical,
-/obj/item/clothing/mask/surgical,
-/obj/structure/table/optable,
+/obj/machinery/sleeper,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 
@@ -737,7 +730,7 @@ aW
 aX
 aZ
 ac
-bf
+bS
 bg
 bo
 ab
@@ -773,7 +766,7 @@ aW
 aX
 aZ
 ac
-bf
+bS
 bg
 bp
 ab
@@ -845,7 +838,7 @@ aW
 aX
 aY
 ab
-bf
+bS
 bk
 bq
 ab

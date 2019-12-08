@@ -196,8 +196,8 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/stack/medical/gauze = 1,
 			) = 1,
 		list(//medical chems
-			/obj/item/reagent_containers/glass/bottle/multiver = 1,
-			/obj/item/reagent_containers/syringe/convermol = 1,
+			/obj/item/reagent_containers/glass/bottle/charcoal = 1,
+			/obj/item/reagent_containers/syringe/thializid = 1,
 			) = 1, 
 		list(//drinks
 			/obj/item/reagent_containers/food/drinks/bottle/vodka = 1,

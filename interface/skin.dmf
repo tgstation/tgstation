@@ -55,7 +55,7 @@ window "mainwindow"
 		anchor2 = none
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
-		icon = 'icons\\tg_32.png'
+		icon = 'icons\\austation_64.png'
 		macro = "default"
 		menu = "menu"
 	elem "split"
@@ -306,4 +306,3 @@ window "statwindow"
 		anchor2 = 100,100
 		is-default = true
 		saved-params = ""
-

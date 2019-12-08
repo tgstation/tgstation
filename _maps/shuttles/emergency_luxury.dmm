@@ -301,7 +301,9 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "bf" = (
-/obj/machinery/stasis,
+/obj/machinery/sleeper{
+	dir = 4
+	},
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "bg" = (
@@ -349,25 +351,6 @@
 /obj/machinery/light,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
-"hA" = (
-/obj/structure/table/optable,
-/obj/item/surgical_drapes,
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape/luxury)
-"zg" = (
-/obj/machinery/vending/wallmed,
-/turf/closed/indestructible/riveted/uranium,
-/area/shuttle/escape/luxury)
-"OL" = (
-/obj/item/surgicaldrill,
-/obj/item/scalpel,
-/obj/item/retractor,
-/obj/item/cautery,
-/obj/item/hemostat,
-/obj/item/circular_saw,
-/obj/structure/table/wood/fancy,
-/turf/open/floor/mineral/gold,
-/area/shuttle/escape/luxury)
 
 (1,1,1) = {"
 aa
@@ -397,7 +380,7 @@ as
 as
 ab
 bf
-hA
+bf
 ab
 ab
 "}
@@ -411,10 +394,10 @@ ab
 ab
 ab
 ab
-zg
+ab
 aj
 aj
-zg
+ab
 ab
 "}
 (4,1,1) = {"
@@ -430,7 +413,7 @@ aj
 bj
 aj
 aj
-OL
+ak
 ab
 "}
 (5,1,1) = {"

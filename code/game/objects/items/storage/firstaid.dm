@@ -145,10 +145,10 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/aiuri = 3,
+		/obj/item/reagent_containers/pill/patch/silver_sulf = 3,
 		/obj/item/reagent_containers/spray/rhigoxane = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
-		/obj/item/reagent_containers/hypospray/medipen = 1)
+		/obj/item/reagent_containers/hypospray/medipen = 1) // austation -- revert cobbychem
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/toxin
@@ -170,10 +170,10 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-	    /obj/item/storage/pill_bottle/multiver/less = 1,
-		/obj/item/reagent_containers/syringe/syriniver = 3,
+	    /obj/item/storage/pill_bottle/charcoal/less = 1,
+		/obj/item/reagent_containers/syringe/thializid = 3,
 		/obj/item/storage/pill_bottle/potassiodide = 1,
-		/obj/item/reagent_containers/hypospray/medipen/penacid = 1)
+		/obj/item/reagent_containers/hypospray/medipen/penacid = 1) // austation -- revert cobbychem
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/o2
@@ -195,10 +195,10 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/syringe/convermol = 3,
+		/obj/item/reagent_containers/syringe/perfluorodecalin = 3,
 		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/storage/pill_bottle/iron = 1)
+		/obj/item/storage/pill_bottle/iron = 1) // austation -- revert cobbychem
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/brute
@@ -220,10 +220,10 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/libital = 3,
+		/obj/item/reagent_containers/pill/patch/styptic = 3,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/trophazole = 1,
-		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
+		/obj/item/reagent_containers/hypospray/medipen/salacid = 1) // austation -- revert cobbychem
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/advanced
@@ -237,10 +237,10 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/instabitaluri = 3,
+		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/storage/pill_bottle/penacid = 1)
+		/obj/item/storage/pill_bottle/penacid = 1) // austation -- revert cobbychem
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/tactical
@@ -259,10 +259,10 @@
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/defibrillator/compact/combat/loaded(src)
 	new /obj/item/reagent_containers/hypospray/combat(src)
-	new /obj/item/reagent_containers/pill/patch/libital(src)
-	new /obj/item/reagent_containers/pill/patch/libital(src)
-	new /obj/item/reagent_containers/pill/patch/aiuri(src)
-	new /obj/item/reagent_containers/pill/patch/aiuri(src)
+	new /obj/item/reagent_containers/pill/patch/styptic(src) // austation begin -- revert cobbychem
+	new /obj/item/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/reagent_containers/pill/patch/silver_sulf(src) // austation end
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
 //medibot assembly
@@ -316,7 +316,7 @@
 	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (TOXLOSS)
 
-/obj/item/storage/pill_bottle/multiver
+/*/obj/item/storage/pill_bottle/multiver austation begin -- revert cobbychem
 	name = "bottle of multiver pills"
 	desc = "Contains pills used to counter toxins."
 
@@ -328,7 +328,7 @@
 
 /obj/item/storage/pill_bottle/multiver/less/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/multiver(src)
+		new /obj/item/reagent_containers/pill/multiver(src) austation end */
 
 /obj/item/storage/pill_bottle/epinephrine
 	name = "bottle of epinephrine pills"
@@ -391,9 +391,9 @@
 	desc = "Contains patches used to treat brute and burn damage."
 
 /obj/item/storage/pill_bottle/mining/PopulateContents()
-	new /obj/item/reagent_containers/pill/patch/aiuri(src)
+	new /obj/item/reagent_containers/pill/patch/silver_sulf(src) // austation begin -- revert cobbychem
 	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/patch/libital(src)
+		new /obj/item/reagent_containers/pill/patch/styptic(src) // austation end
 
 /obj/item/storage/pill_bottle/zoom
 	name = "suspicious pill bottle"

@@ -90,3 +90,9 @@
 
 #SIC SEMPER TYRANNIS
 /code/modules/hydroponics/grown/citrus.dm @optimumtact
+
+# Austation
+# Mostly to make sure I notice changes to reagents or vendors after cobbychem revert
+/austation/ @MCterra10
+/code/modules/reagents/ @MCterra10
+/code/modules/vending/ @MCterra10

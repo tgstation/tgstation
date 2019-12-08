@@ -77,7 +77,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	var/heal_brute = 40
 	self_delay = 20
-	grind_results = list(/datum/reagent/medicine/C2/libital = 10)
+	//grind_results = list(/datum/reagent/medicine/C2/libital = 10) austation -- trekchems added back. Changes in equiv file in austation dir
 
 /obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
@@ -160,7 +160,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	var/heal_burn = 40
 	self_delay = 20
-	grind_results = list(/datum/reagent/medicine/C2/lenturi = 10)
+	//grind_results = list(/datum/reagent/medicine/C2/lenturi = 10) austation -- trekchems added back. Changes in equiv file in austation dir
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)

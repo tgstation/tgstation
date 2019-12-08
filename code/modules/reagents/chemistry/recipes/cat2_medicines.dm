@@ -1,4 +1,4 @@
-
+/* austation begin -- bye bye cobby
 
 /*****BRUTE*****/
 
@@ -73,3 +73,4 @@
 	id  = /datum/reagent/medicine/C2/penthrite
 	results = list(/datum/reagent/medicine/C2/penthrite = 4)
 	required_reagents = list(/datum/reagent/pentaerythritol = 4, /datum/reagent/acetone = 1,  /datum/reagent/toxin/acid/nitracid = 1)
+austation end */
