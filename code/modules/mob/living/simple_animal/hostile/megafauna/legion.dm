@@ -258,6 +258,7 @@
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
+	var/staff_cooldown = 200 // The minimum time between uses.
 	var/static/list/excluded_areas = list()
 
 /obj/item/staff/storm/attack_self(mob/user)
@@ -302,7 +303,7 @@
 	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
 	playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
 	A.telegraph()
-	storm_cooldown = world.time + 200
+	storm_cooldown = world.time + staff_cooldown
 
 ///A basic turret that shoots at nearby mobs. Intended to be used for the legion megafauna.
 /obj/structure/legionturret
