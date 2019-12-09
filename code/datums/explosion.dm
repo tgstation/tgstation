@@ -279,10 +279,7 @@ GLOBAL_LIST_EMPTY(explosions)
 		log_world("## DEBUG: Explosion([x0],[y0],[z0])(d[devastation_range],h[heavy_impact_range],l[light_impact_range]): Took [took] seconds.")
 
 	if(running)	//if we aren't in a hurry
-		//Machines which report explosions.
-		for(var/array in GLOB.doppler_arrays)
-			var/obj/machinery/doppler_array/A = array
-			A.sense_explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, took,orig_dev_range, orig_heavy_range, orig_light_range)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPLOSION, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 
 	++stopped
 	qdel(src)
