@@ -257,11 +257,14 @@
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_type = /datum/weather/ash_storm
-	var/storm_cooldown = 0
+	var/storm_nextuse = 0
+	var/staff_cooldown = 20 SECONDS // The minimum time between uses.
+	var/storm_telegraph_duration = 10 SECONDS
+	var/storm_duration = 10 SECONDS
 	var/static/list/excluded_areas = list()
 
 /obj/item/staff/storm/attack_self(mob/user)
-	if(storm_cooldown > world.time)
+	if(storm_nextuse > world.time)
 		to_chat(user, "<span class='warning'>The staff is still recharging!</span>")
 		return
 
@@ -295,14 +298,14 @@
 		if (is_special_character(user))
 			message_admins("[A] has been summoned in [ADMIN_VERBOSEJMP(user_turf)] by [ADMIN_LOOKUPFLW(user)], a non-antagonist")
 		A.area_type = user_area.type
-		A.telegraph_duration = 100
-		A.end_duration = 100
+		A.telegraph_duration = storm_telegraph_duration
+		A.end_duration = storm_duration
 
 	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
 	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
 	playsound(user, 'sound/magic/staff_change.ogg', 200, FALSE)
 	A.telegraph()
-	storm_cooldown = world.time + 200
+	storm_nextuse = world.time + staff_cooldown
 
 ///A basic turret that shoots at nearby mobs. Intended to be used for the legion megafauna.
 /obj/structure/legionturret
