@@ -28,7 +28,6 @@
 		if(M.mind)
 			count_only = FALSE
 			mob_data["ckey"] = M.mind.key
-			//escape status
 			if(M.stat != DEAD && !isbrain(M) && !iscameramob(M))
 				num_survivors++
 				if(EMERGENCY_ESCAPED_OR_ENDGAMED && (M.onCentCom() || M.onSyndieBase()))
