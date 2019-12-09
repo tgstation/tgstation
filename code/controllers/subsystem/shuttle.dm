@@ -183,7 +183,6 @@ SUBSYSTEM_DEF(shuttle)
 			resolve this problem by loading an emergency shuttle template \
 			manually, and then calling register() on the mobile docking port. \
 			Good luck.")
-			return
 		emergency = backup_shuttle
 	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
 	if(world.time - SSticker.round_start_time < srd)
