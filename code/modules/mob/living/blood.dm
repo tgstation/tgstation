@@ -54,6 +54,13 @@
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
 		switch(blood_volume)
+			if(BLOOD_VOLUME_LETHAL_EXCESS to BLOOD_VOLUME_MAXIMUM)
+				if(prob(15))
+					to_chat(src, "<span class='userdanger'>Blood starts to tear your skin apart. You're going to burst!</span>")
+					inflate_gib()
+			if(BLOOD_VOLUME_TOO_MUCH to BLOOD_VOLUME_LETHAL_EXCESS)
+				if(prob(10))
+					to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(prob(5))
 					to_chat(src, "<span class='warning'>You feel [word].</span>")
