@@ -322,6 +322,7 @@
 #include "code\datums\ert.dm"
 #include "code\datums\explosion.dm"
 #include "code\datums\forced_movement.dm"
+#include "code\datums\hailer_phrase.dm"
 #include "code\datums\holocall.dm"
 #include "code\datums\hud.dm"
 #include "code\datums\map_config.dm"
