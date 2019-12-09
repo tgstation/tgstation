@@ -437,7 +437,7 @@
 				var/mob/living/carbon/human/C = user
 				if(Adjacent(C))
 					if(C.flash_act(visual = 1))
-						. += "It's really bright, too. Ow."
+						. += " It's really bright, too. Ow."
 		if(LIGHT_EMPTY)
 			. += "The [fitting] has been removed."
 		if(LIGHT_BURNED)
