@@ -16,7 +16,7 @@ export class Collapsible extends Component {
     const { open } = this.state;
     const {
       children,
-      color = "default",
+      color = 'default',
       title,
       buttons,
       ...rest

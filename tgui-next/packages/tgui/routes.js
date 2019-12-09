@@ -34,6 +34,8 @@ import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { Gps } from './interfaces/Gps';
+import { GravityGenerator } from './interfaces/GravityGenerator';
+import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
 import { ImplantChair } from './interfaces/ImplantChair';
 import { KeycardAuth } from './interfaces/KeycardAuth';
@@ -53,18 +55,19 @@ import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
 import { NuclearBomb } from './interfaces/NuclearBomb';
 import { OperatingComputer } from './interfaces/OperatingComputer';
-import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { OreBox } from './interfaces/OreBox';
+import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
-import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
-import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
+import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
+import { ShuttleManipulator } from './interfaces/ShuttleManipulator';
 import { SmartVend } from './interfaces/SmartVend';
 import { Smes } from './interfaces/Smes';
+import { SmokeMachine } from './interfaces/SmokeMachine';
 import { SolarControl } from './interfaces/SolarControl';
 import { SpaceHeater } from './interfaces/SpaceHeater';
 import { SpawnersMenu } from './interfaces/SpawnersMenu';
@@ -227,6 +230,10 @@ const ROUTES = {
     component: () => Gps,
     scrollable: true,
   },
+  gravity_generator: {
+    component: () => GravityGenerator,
+    scrollable: false,
+  },
   gulag_item_reclaimer: {
     component: () => GulagItemReclaimer,
     scrollable: true,
@@ -346,6 +353,10 @@ const ROUTES = {
     component: () => RapidPipeDispenser,
     scrollable: true,
   },
+  sat_control: {
+    component: () => SatelliteControl,
+    scrollable: false,
+  },
   scanner_gate: {
     component: () => ScannerGate,
     scrollable: true,
@@ -360,6 +371,10 @@ const ROUTES = {
   },
   smes: {
     component: () => Smes,
+    scrollable: false,
+  },
+  smoke_machine: {
+    component: () => SmokeMachine,
     scrollable: false,
   },
   solar_control: {

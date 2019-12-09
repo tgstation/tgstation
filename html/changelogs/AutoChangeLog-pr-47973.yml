@@ -1,5 +1,0 @@
-author: "Firecage"
-delete-after: True
-changes: 
-  - rscadd: "Mining Cyborgs are now able to choose which icon they want upon picking their module. Either the Lavaland Mining Cyborg icon, the Asteroid Mining Cyborg icon, or the Spider Mining Cyborg icon."
-  - tweak: "Mining Cyborg Lavaproof Tracks upgrade is renamed to Mining Cyborg Lavaproof Chassis."

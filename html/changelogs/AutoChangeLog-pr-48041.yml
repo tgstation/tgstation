@@ -1,7 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - rscadd: "Heads of staff can now connect to holopads without the other side answering the call."
-  - rscadd: "Secure holopads, which do not allow auto-connect, have replaced holopads in a very small number of places."
-  - tweak: "Placements of holopads in various areas on various stations have been slightly adjusted."
-  - tweak: "Holopads now ping when a connection from another pad is established."

@@ -172,9 +172,9 @@ const handleHotKey = (e, eventType, dispatch) => {
       // stack in order for this to be a fatal error.
       setTimeout(() => {
         throw new Error(
-          "OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle"
-          + " fucko boingo! The code monkeys at our headquarters are"
-          + " working VEWY HAWD to fix this!");
+          'OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle'
+          + ' fucko boingo! The code monkeys at our headquarters are'
+          + ' working VEWY HAWD to fix this!');
       });
     }
     dispatch({

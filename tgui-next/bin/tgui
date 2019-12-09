@@ -132,6 +132,13 @@ if [[ ${1} == '--lint' ]]; then
   exit 0
 fi
 
+if [[ ${1} == '--lint-harder' ]]; then
+  shift 1
+  task-install
+  task-eslint -c .eslintrc-harder.yml "${@}"
+  exit 0
+fi
+
 ## Analyze the bundle
 if [[ ${1} == '--analyze' ]]; then
   task-install

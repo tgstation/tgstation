@@ -62,6 +62,12 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/obj/item/gun/energy/handle_atom_del(atom/A)
+	if(A == cell)
+		cell = null
+		update_icon(FALSE, TRUE)
+	return ..()
+
 /obj/item/gun/energy/process()
 	if(selfcharge && cell && cell.percent() < 100)
 		charge_tick++

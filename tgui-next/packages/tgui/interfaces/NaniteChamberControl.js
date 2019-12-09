@@ -28,7 +28,7 @@ export const NaniteChamberControl = props => {
 
   return (
     <Section
-      title={"Chamber: " + occupant_name}
+      title={'Chamber: ' + occupant_name}
       buttons={(
         <Button
           icon={locked ? 'lock' : 'lock-open'}
@@ -127,8 +127,8 @@ export const NaniteChamberControl = props => {
                         <Grid.Column size={0.6}>
                           <LabeledList>
                             <LabeledList.Item label="Activation Status">
-                              <Box color={program.activated ? "good" : "bad"}>
-                                {program.activated ? "Active" : "Inactive" }
+                              <Box color={program.activated ? 'good' : 'bad'}>
+                                {program.activated ? 'Active' : 'Inactive' }
                               </Box>
                             </LabeledList.Item>
                             <LabeledList.Item label="Nanites Consumed">
@@ -158,7 +158,8 @@ export const NaniteChamberControl = props => {
                                   </LabeledList.Item>
                                 )}
                                 {!!program.timer_trigger && (
-                                  <LabeledList.Item label="Trigger Repeat Timer">
+                                  <LabeledList.Item
+                                    label="Trigger Repeat Timer">
                                     {program.timer_trigger} s
                                   </LabeledList.Item>
                                 )}
@@ -166,10 +167,13 @@ export const NaniteChamberControl = props => {
                             </Section>
                           </Grid.Column>
                         )}
-                        {!!(program.timer_restart || program.timer_shutdown) && (
+                        {!!(program.timer_restart
+                          || program.timer_shutdown) && (
                           <Grid.Column>
                             <Section>
                               <LabeledList>
+                                {/* I mean, bruh, this indentation level
+                                    is ABSOLUTELY INSANE!!! */}
                                 {program.timer_restart && (
                                   <LabeledList.Item label="Restart Timer">
                                     {program.timer_restart} s
@@ -193,7 +197,9 @@ export const NaniteChamberControl = props => {
                           level={2}>
                           <LabeledList>
                             {extra_settings.map(extra_setting => (
-                              <LabeledList.Item key={extra_setting.name} label={extra_setting.name}>
+                              <LabeledList.Item
+                                key={extra_setting.name}
+                                label={extra_setting.name}>
                                 {extra_setting.value}
                               </LabeledList.Item>
                             ))}
@@ -223,7 +229,8 @@ export const NaniteChamberControl = props => {
                                   {program.kill_code}
                                 </LabeledList.Item>
                               )}
-                              {!!program.can_trigger && !!program.trigger_code && (
+                              {!!program.can_trigger
+                                && !!program.trigger_code && (
                                 <LabeledList.Item label="Trigger">
                                   {program.trigger_code}
                                 </LabeledList.Item>
