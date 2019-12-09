@@ -64,9 +64,9 @@
 	D.visible_message("<span class='danger'>[A] hits [D] with THE PLASMA FIST TECHNIQUE!</span>", \
 					"<span class='userdanger'>You're suddenly hit with THE PLASMA FIST TECHNIQUE by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
 	to_chat(A, "<span class='danger'>You hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
+	log_combat(A, D, "gibbed (Plasma Fist)")
 	var/turf/Dturf = get_turf(D)
 	D.gib()
-	log_combat(A, D, "gibbed (Plasma Fist)")
 	if(nobomb)
 		return
 	if(!hasclient)
@@ -97,8 +97,8 @@
 	A.update_body()
 	var/turf/boomspot = get_turf(A)
 
-	to_chat(dying, "<span class='userdanger'>The explosion knocks your soul out of your body!</span>")
-	A.ghostize(TRUE) //prevents... horrible memes just believe me
+	to_chat(A, "<span class='userdanger'>The explosion knocks your soul out of your body!</span>")
+	A.ghostize(FALSE) //prevents... horrible memes just believe me
 
 	A.apply_damage(rand(50,70), BRUTE)
 	log_combat(A, A, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
@@ -138,7 +138,7 @@
 	set desc = "Remember the martial techniques of the Plasma Fist."
 	set category = "Plasma Fist"
 
-	var/mob/living/carbom/human/H = usr
+	var/mob/living/carbon/human/H = usr
 	var/datum/martial_art/plasma_fist/martial = H.mind.martial_art
 	to_chat(usr, "<b><i>You clench your fists and have a flashback of knowledge...</i></b>")
 	to_chat(usr, "<span class='notice'>Tornado Sweep</span>: Harm Harm Disarm. Repulses opponent and everyone back.")
