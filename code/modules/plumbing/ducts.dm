@@ -42,8 +42,8 @@ All the important duct code:
 		active = FALSE
 		anchored = FALSE
 	else if(!can_anchor())
-		CRASH("Overlapping ducts detected")
 		qdel(src)
+		CRASH("Overlapping ducts detected")
 	if(force_connects)
 		connects = force_connects //skip change_connects() because we're still initializing and we need to set our connects at one point
 	if(!lock_layers)

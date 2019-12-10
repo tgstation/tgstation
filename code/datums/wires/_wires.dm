@@ -35,7 +35,6 @@
 	..()
 	if(!istype(holder, holder_type))
 		CRASH("Wire holder is not of the expected type!")
-		return
 
 	src.holder = holder
 	if(randomize)
