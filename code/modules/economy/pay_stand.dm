@@ -14,9 +14,16 @@
 /obj/machinery/paystand/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/card/id))
 		if(W == my_card)
-			locked = !locked
-			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the bolts on the paystand.</span>")
-			return
+			if(user.a_intent == INTENT_DISARM)
+				var/rename_msg = stripped_input(user, "Rename the Paystand:", "Paystand Naming", name)
+				if(!rename_msg)
+					return
+				name = rename_msg
+				return
+			else
+				locked = !locked
+				to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the paystand, protecting the bolts from [anchored ? "loosening" : "tightening"] as well as [src.locked ? "disabling" : "enabling"] the edit screen.</span>")
+				return
 		if(!my_card)
 			var/obj/item/card/id/assistant_mains_need_to_die = W
 			if(assistant_mains_need_to_die.registered_account)
@@ -81,7 +88,7 @@
 				desc += " A signaler appears to be attached to the scanner."
 		else
 			to_chat(user, "<span class='warning'>A signaler is already attached to this unit!</span>")
-		
+
 	if(default_deconstruction_screwdriver(user, "card_scanner", "card_scanner", W))
 		return
 
@@ -95,7 +102,7 @@
 		return
 	else
 		return ..()
-		
+
 /obj/machinery/paystand/proc/purchase(buyer, price)
 	my_card.registered_account.adjust_money(price)
 	my_card.registered_account.bank_card_talk("Purchase made at your vendor by [buyer] for [price] credits.")
@@ -106,7 +113,6 @@
 
 /obj/machinery/paystand/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	if(locked)
-		to_chat(user, "<span class='warning'>The anchored bolts on this paystand are currently locked!</span>")
+		to_chat(user, "<span class='warning'>The bolts on this paystand are currently covered!</span>")
 		return
 	. = ..()
-	

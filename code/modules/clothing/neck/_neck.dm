@@ -194,6 +194,38 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bling"
 
+/obj/item/clothing/neck/necklace/dope/merchant
+	desc = "Don't ask how it works, the proof is in the holochips!"
+	var/profit_scaling = 1 //in case you want to RP taxes or something
+	var/selling = FALSE //FALSE is scanning.
+
+/obj/item/clothing/neck/necklace/dope/merchant/attack_self(mob/user)
+	. = ..()
+	selling = !selling
+	to_chat(user, "<span class='notice'>[src] has been set to [selling ? "'Sell'" : "'Get Price'"] mode.</span>")
+
+/obj/item/clothing/neck/necklace/dope/merchant/afterattack(obj/item/I, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	var/datum/export_report/ex = export_item_and_contents(I, allowed_categories = (ALL), dry_run=TRUE)
+	var/price = 0
+	for(var/x in ex.total_amount)
+		price += ex.total_value[x]
+
+	if(price)
+		to_chat(user, "<span class='notice'>[selling ? "Sold" : "Getting the price of"] [I], value: <b>[price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].</span>")
+		if(selling)
+			new /obj/item/holochip(get_turf(user),(price*profit_scaling))
+			for(var/i in ex.exported_atoms_ref)
+				var/atom/movable/AM = i
+				if(QDELETED(AM))
+					continue
+				qdel(AM)
+	else
+		to_chat(user, "<span class='warning'>There is no export value for [I] or any items within it.</span>")
+
+
 /obj/item/clothing/neck/neckerchief
 	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
 	w_class = WEIGHT_CLASS_TINY
