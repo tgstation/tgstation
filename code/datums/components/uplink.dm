@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(uplinks)
-
 #define PEN_ROTATIONS 2
 
 /**
@@ -51,7 +49,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
-	GLOB.uplinks += src
 	uplink_items = get_uplink_items(_gamemode, TRUE, allow_restricted)
 
 	if(_owner)
@@ -81,7 +78,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 		purchase_log.MergeWithAndDel(U.purchase_log)
 
 /datum/component/uplink/Destroy()
-	GLOB.uplinks -= src
 	gamemode = null
 	purchase_log = null
 	return ..()
