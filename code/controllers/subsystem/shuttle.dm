@@ -753,27 +753,6 @@ SUBSYSTEM_DEF(shuttle)
 		ui = new(user, src, ui_key, "shuttle_manipulator", name, 800, 600, master_ui, state)
 		ui.open()
 
-/proc/shuttlemode2str(mode)
-	switch(mode)
-		if(SHUTTLE_IDLE)
-			. = "idle"
-		if(SHUTTLE_IGNITING)
-			. = "engines charging"
-		if(SHUTTLE_RECALL)
-			. = "recalled"
-		if(SHUTTLE_CALL)
-			. = "called"
-		if(SHUTTLE_DOCKED)
-			. = "docked"
-		if(SHUTTLE_STRANDED)
-			. = "stranded"
-		if(SHUTTLE_ESCAPE)
-			. = "escape"
-		if(SHUTTLE_ENDGAME)
-			. = "endgame"
-	if(!.)
-		CRASH("shuttlemode2str(): invalid mode [mode]")
-
 
 /datum/controller/subsystem/shuttle/ui_data(mob/user)
 	var/list/data = list()
@@ -829,7 +808,7 @@ SUBSYSTEM_DEF(shuttle)
 		else if(!M.destination)
 			L["can_fast_travel"] = FALSE
 		if (M.mode != SHUTTLE_IDLE)
-			L["mode"] = capitalize(shuttlemode2str(M.mode))
+			L["mode"] = capitalize(M.mode)
 		L["status"] = M.getDbgStatusText()
 		if(M == existing_shuttle)
 			data["existing_shuttle"] = L
