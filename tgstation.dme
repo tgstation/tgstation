@@ -422,6 +422,7 @@
 #include "code\datums\components\spooky.dm"
 #include "code\datums\components\squeak.dm"
 #include "code\datums\components\stationloving.dm"
+#include "code\datums\components\stationstuck.dm"
 #include "code\datums\components\summoning.dm"
 #include "code\datums\components\swarming.dm"
 #include "code\datums\components\tactical.dm"
