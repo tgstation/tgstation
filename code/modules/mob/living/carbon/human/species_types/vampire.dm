@@ -123,7 +123,7 @@
 
 /mob/living/carbon/Stat()
 	..()
-	if(statpanel("Status"))	
+	if(statpanel("Status"))
 		var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
 		if(darkheart)
 			stat(null, "<span class='notice'>Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>")
@@ -141,4 +141,5 @@
 	invocation = "Squeak!"
 	charge_max = 50
 	cooldown_min = 50
+	convert_blood = TRUE
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat

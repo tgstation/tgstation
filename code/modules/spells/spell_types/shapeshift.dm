@@ -14,6 +14,7 @@
 	var/revert_on_death = TRUE
 	var/die_with_shapeshifted_form = TRUE
 	var/convert_damage = TRUE //If you want to convert the caster's health to the shift, and vice versa.
+	var/convert_blood = FALSE //If you want to convert the caster's blood level to the shift, and vice versa.
 	var/convert_damage_type = BRUTE //Since simplemobs don't have advanced damagetypes, what to convert damage back into.
 
 	var/mob/living/shapeshift_type
@@ -101,7 +102,7 @@
 	desc = "Take on the shape a lesser ash drake."
 	invocation = "RAAAAAAAAWR!"
 	convert_damage = FALSE
-	
+
 
 	shapeshift_type = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
@@ -131,6 +132,9 @@
 		var/damapply = damage_percent * shape.maxHealth;
 
 		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE);
+
+	if(source.convert_blood)
+		shape.blood_volume = stored.blood_volume;
 
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src
@@ -186,6 +190,8 @@
 		var/damapply = stored.maxHealth * damage_percent
 
 		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
+	if(source.convert_blood)
+		stored.blood_volume = shape.blood_volume;
 	qdel(shape)
 	qdel(src)
 
