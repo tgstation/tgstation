@@ -43,10 +43,6 @@
 		var/obj/item/mecha_parts/mecha_tracking/MT = locate(href_list["shock"])
 		if (istype(MT) && MT.chassis)
 			MT.shock()
-			//if(MT.chassis.occupant)
-			//	log_admin("[key_name(usr)] has activated remote EMP on exosuit [MT.chassis]. Exosuit currently being piloted by [key_name(MT.chassis.occupant)].")
-			//	message_admins("[key_name(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [MT.chassis][ADMIN_JMP(MT.chassis)]. Exosuit currently being piloted by [key_name(MT.chassis.occupant)][ADMIN_FLW(MT.chassis.occupant)].")
-			//else
 			log_game("[key_name(usr)] has activated remote EMP on exosuit [MT.chassis], located at [loc_name(MT.chassis)], which is currently [MT.chassis.occupant? "being piloted by [key_name(MT.chassis.occupant)]." : "without a pilot."] ")
 			message_admins("[key_name(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [MT.chassis][ADMIN_JMP(MT.chassis)], which is currently [MT.chassis.occupant? "being piloted by [key_name(MT.chassis.occupant)][ADMIN_FLW(MT.chassis.occupant)]." : "without a pilot."] ")
 
