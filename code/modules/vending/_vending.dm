@@ -533,9 +533,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 				if(crit_case)
 					L.apply_damage(squish_damage, forced=TRUE)
 
-			if(was_alive && L.stat == DEAD)
-				if(L.client)
-					L.client.give_award(/datum/award/achievement/misc/vendor_squish, L) // good job losing a fight with an inanimate object idiot
+			if(was_alive && L.stat == DEAD && L.client)
+				L.client.give_award(/datum/award/achievement/misc/vendor_squish, L) // good job losing a fight with an inanimate object idiot
 
 			L.Paralyze(60)
 			L.emote("scream")

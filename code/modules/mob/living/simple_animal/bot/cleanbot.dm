@@ -66,7 +66,7 @@
 /mob/living/simple_animal/bot/cleanbot/proc/update_titles()
 	var/working_title = ""
 
-	var/ascending = TRUE
+	ascended = TRUE
 
 	for(var/pref in prefixes)
 		for(var/title in pref)
@@ -76,7 +76,7 @@
 					commissioned = TRUE
 				break
 			else
-				ascending =  FALSE // we didn't have the first entry in the list if we got here, so we're not achievement worthy yet
+				ascended = FALSE // we didn't have the first entry in the list if we got here, so we're not achievement worthy yet
 
 	working_title += chosen_name
 
@@ -86,7 +86,7 @@
 				working_title += " " + suf[title]
 				break
 			else
-				ascending =  FALSE
+				ascended = FALSE
 
 	name = working_title
 
