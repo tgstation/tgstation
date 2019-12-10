@@ -433,8 +433,8 @@
 	switch(status)
 		if(LIGHT_OK)
 			. += "It is turned [on? "on" : "off"]."
-			if(on && iscarbon(user))
-				var/mob/living/carbon/human/C = user
+			if(on && isliving(user))
+				var/mob/living/C = user
 				if(Adjacent(C))
 					if(C.flash_act(visual = 1))
 						. += " It's really bright, too. Ow."
