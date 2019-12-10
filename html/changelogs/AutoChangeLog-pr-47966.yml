@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - admin: "drones are no longer allowed to leave their station, they will die upon doing so"
