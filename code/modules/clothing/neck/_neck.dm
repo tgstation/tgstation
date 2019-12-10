@@ -216,7 +216,7 @@
 	if(price)
 		to_chat(user, "<span class='notice'>[selling ? "Sold" : "Getting the price of"] [I], value: <b>[price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].</span>")
 		if(selling)
-			new /obj/item/holochip(get_turf(user),(price*profit_scaling))
+			new /obj/item/holochip(get_turf(user),(round(price*profit_scaling)))
 			for(var/i in ex.exported_atoms_ref)
 				var/atom/movable/AM = i
 				if(QDELETED(AM))
