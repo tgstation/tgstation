@@ -50,3 +50,10 @@
 	icon_state = "explorer"
 	item_state = "explorer"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/cargo/cargonia
+	name = "cargonian uniform"
+	desc = "Glory to Cargonia!"
+	icon_state = "cargonia"
+	item_state = "lb_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
