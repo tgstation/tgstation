@@ -74242,18 +74242,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"kLK" = (
-/obj/machinery/airalarm{
-	pixel_y = 28
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
 "kMC" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -92090,7 +92078,7 @@ aaa
 aaa
 aaa
 aaa
-kLK
+aaa
 aaa
 aaa
 aaa
