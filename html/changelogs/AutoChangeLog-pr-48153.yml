@@ -1,0 +1,17 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - rscadd: "Space Mountain Wind Snowcones"
+  - tweak: "snow cones do not require water to make"
+  - tweak: "honey snow cones have more of an amber color"
+  - tweak: "the mime snow cone has a grey straw so you can actually see it."
+  - tweak: "apple snow cones are also amber now"
+  - tweak: "sodawater snow cones are actually Space Cola snow cones."
+  - tweak: "fruit salad snowcone tastes changed"
+  - tweak: "mixed berry is now just berry"
+  - tweak: "all snow cones can now taste of ice and water"
+  - tweak: "clown snow cones recipe changed to require laughter, output 5u of their reagent like almost all other snow cones."
+  - tweak: "berry snow cones require and output 5u of berry juice"
+  - bugfix: "clown and pwrgame snowcones now contain the appropriate reagents"
+  - bugfix: "removed stray pixel on mime snowcone"
+  - spellcheck: "Misspellings in snowcone titles and descriptions"
