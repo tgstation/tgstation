@@ -22787,7 +22787,7 @@
 	name = "Chemistry shutters";
 	pixel_x = 24;
 	pixel_y = -6;
-	req_one_access_txt = "5; 33"
+	req_one_access_txt = "5; 69"
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -26197,7 +26197,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Apothecary";
-	req_access_txt = "5; 59"
+	req_access_txt = "5; 69"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/apothecary)
@@ -50265,7 +50265,7 @@
 	name = "Chemistry shutters";
 	pixel_x = 24;
 	pixel_y = -28;
-	req_one_access_txt = "5; 33"
+	req_one_access_txt = "5; 69"
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
