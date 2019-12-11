@@ -293,7 +293,7 @@
 
 	if(start_with_cell && !no_emergency)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
-	
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()
@@ -433,6 +433,11 @@
 	switch(status)
 		if(LIGHT_OK)
 			. += "It is turned [on? "on" : "off"]."
+			if(on && iscarbon(user))
+				var/mob/living/carbon/C = user
+				if(Adjacent(C))
+					if(C.flash_act(visual = 1))
+						. += " It's really bright, too. Ow."
 		if(LIGHT_EMPTY)
 			. += "The [fitting] has been removed."
 		if(LIGHT_BURNED)
