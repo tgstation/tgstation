@@ -1,12 +1,12 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { clamp } from 'common/math';
-import { vec } from 'common/vector';
+import { vecLength, vecSubtract } from 'common/vector';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
 
-const coordsToVec = coords => vec(map(parseFloat)(coords.split(', ')));
+const coordsToVec = coords => map(parseFloat)(coords.split(', '));
 
 export const Gps = props => {
   const { act, data } = useBackend(props);
@@ -23,9 +23,9 @@ export const Gps = props => {
       // Calculate distance to the target. BYOND distance is capped to 127,
       // that's why we roll our own calculations here.
       const dist = signal.dist && (
-        Math.round(coordsToVec(currentCoords)
-          .subtract(coordsToVec(signal.coords))
-          .magnitude())
+        Math.round(vecLength(vecSubtract(
+          coordsToVec(currentCoords),
+          coordsToVec(signal.coords))))
       );
       return { ...signal, dist, index };
     }),

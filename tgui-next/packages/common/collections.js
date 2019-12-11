@@ -101,19 +101,6 @@ export const sortBy = (...iterateeFns) => array => {
 };
 
 /**
- * A version of map, but for mapping over two arrays instead of one.
- * The iteratee is invoked with three arguments:
- * (valueA, valueB, index).
- */
-export const product = iterateeFn => (arrayA, arrayB) => {
-  const result = [];
-  for (let i = 0; i < arrayA.length; i++) {
-    result.push(iterateeFn(arrayA[i], arrayB[i], i));
-  }
-  return result;
-};
-
-/**
  * A fast implementation of reduce.
  */
 export const reduce = (reducerFn, initialValue) => array => {

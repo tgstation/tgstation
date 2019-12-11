@@ -67,8 +67,4 @@ $color-shadow: rgba(0, 0, 0, 0.1) !default;
   font-size: 20px;
   line-height: 31px;
   text-align: center;
-
-  &::after {
-    content: '×';
-  }
 }
