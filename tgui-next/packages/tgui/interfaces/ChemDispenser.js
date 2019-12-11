@@ -70,28 +70,30 @@ export const ChemDispenser = props => {
             )}
             {recording && (
               <Button
-                icon="floppy-o"
+                icon="save"
                 color="green"
                 content="Save"
                 onClick={() => act('save_recording')} />
             )}
           </Fragment>
         )}>
-        {recipes.map(recipe => (
-          <Button key={recipe.name}
-            icon="tint"
-            width="129.5px"
-            lineHeight="21px"
-            content={recipe.name}
-            onClick={() => act('dispense_recipe', {
-              recipe: recipe.name,
-            })} />
-        ))}
-        {recipes.length === 0 && (
-          <Box color="light-gray">
-            No recipes.
-          </Box>
-        )}
+        <Box mr={-1}>
+          {recipes.map(recipe => (
+            <Button key={recipe.name}
+              icon="tint"
+              width="129.5px"
+              lineHeight="21px"
+              content={recipe.name}
+              onClick={() => act('dispense_recipe', {
+                recipe: recipe.name,
+              })} />
+          ))}
+          {recipes.length === 0 && (
+            <Box color="light-gray">
+              No recipes.
+            </Box>
+          )}
+        </Box>
       </Section>
       <Section
         title="Dispense"

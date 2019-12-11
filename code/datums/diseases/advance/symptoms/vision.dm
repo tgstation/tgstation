@@ -29,8 +29,10 @@ Bonus
 	symptom_delay_min = 25
 	symptom_delay_max = 80
 	var/remove_eyes = FALSE
-	threshold_desc = "<b>Resistance 12:</b> Weakens extraocular muscles, eventually leading to complete detachment of the eyes.<br>\
-					  <b>Stealth 4:</b> The symptom remains hidden until active."
+	threshold_descs = list(
+		"Resistance 12" = "Weakens extraocular muscles, eventually leading to complete detachment of the eyes.",
+		"Stealth 4" = "The symptom remains hidden until active.",
+	)
 
 /datum/symptom/visionloss/Start(datum/disease/advance/A)
 	if(!..())

@@ -29,9 +29,9 @@ const CraftingList = props => {
               icon="cog"
               content="Craft"
               disabled={!craftability[craftable.ref]}
-              tooltip={(craftable.tool_text && (
+              tooltip={craftable.tool_text && (
                 'Tools needed: ' + craftable.tool_text
-              ))}
+              )}
               tooltipPosition="left"
               onClick={() => act('make', {
                 recipe: craftable.ref,
@@ -137,7 +137,8 @@ export const PersonalCrafting = props => {
               label={recipe.category}
               onClick={() => act('set_category', {
                 category: recipe.category,
-                subcategory: recipe.firstSubcatName, // Backend expects "0" or "" to indicate no subcategory
+                // Backend expects "0" or "" to indicate no subcategory
+                subcategory: recipe.firstSubcatName,
               })}>
               {() => !recipe.hasSubcats && (
                 <CraftingList

@@ -54,8 +54,8 @@ export const NaniteProgramHub = props => {
         buttons={(
           <Fragment>
             <Button
-              icon={detail_view ? "info" : "list"}
-              content={detail_view ? "Detailed" : "Compact"}
+              icon={detail_view ? 'info' : 'list'}
+              content={detail_view ? 'Detailed' : 'Compact'}
               onClick={() => act('toggle_details')} />
             <Button
               icon="sync"
@@ -67,7 +67,8 @@ export const NaniteProgramHub = props => {
           <Tabs vertical>
             {map((cat_contents, category) => {
               const progs = cat_contents || [];
-              // backend was sending stupid data that would have been annoying to fix
+              // Backend was sending stupid data that would have been
+              // annoying to fix
               const tabLabel = category.substring(0, category.length - 8);
               return (
                 <Tabs.Tab

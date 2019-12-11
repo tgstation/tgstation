@@ -11,9 +11,11 @@
 	var/purge_alcohol = FALSE
 	var/trauma_heal_mild = FALSE
 	var/trauma_heal_severe = FALSE
-	threshold_desc = "<b>Resistance 6:</b> Heals minor brain traumas.<br>\
-					  <b>Resistance 9:</b> Heals severe brain traumas.<br>\
-					  <b>Transmission 8:</b> Purges alcohol in the bloodstream."
+	threshold_descs = list(
+		"Resistance 6" = "Heals minor brain traumas.",
+		"Resistance 9" = "Heals severe brain traumas.",
+		"Transmission 8" = "Purges alcohol in the bloodstream.",
+	)
 
 /datum/symptom/mind_restoration/Start(datum/disease/advance/A)
 	if(!..())

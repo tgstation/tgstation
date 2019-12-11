@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - admin: "The \"Start Now\" verb can now be cancelled by using it again or setting a custom pre-game delay."

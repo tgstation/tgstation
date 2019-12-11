@@ -26,7 +26,7 @@
 	target = targ
 	weapon = wep
 	RegisterSignal(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), .proc/trigger_reaction)
-	
+
 	RegisterSignal(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), .proc/cancel)
 
 	shooter.visible_message("<span class='danger'>[shooter] aims [weapon] point blank at [target]!</span>", \
@@ -36,11 +36,9 @@
 	shooter.apply_status_effect(STATUS_EFFECT_HOLDUP)
 	target.apply_status_effect(STATUS_EFFECT_HELDUP)
 
-	/*
 	if(target.job == "Captain" && target.stat == CONSCIOUS && is_nuclear_operative(shooter))
 		if(istype(weapon, /obj/item/gun/ballistic/rocketlauncher) && weapon.chambered)
 			shooter.client.give_award(/datum/award/achievement/misc/rocket_holdup, shooter)
-	*/
 
 	target.do_alert_animation(target)
 	target.playsound_local(target.loc, 'sound/machines/chime.ogg', 50, TRUE)

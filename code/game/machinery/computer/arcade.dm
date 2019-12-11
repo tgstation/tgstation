@@ -506,6 +506,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		gamers[gamer] = -1
 
+		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
+
 		if(!isnull(GLOB.data_core.general))
 			for(var/datum/data/record/R in GLOB.data_core.general)
 				if(R.fields["name"] == gamer.name)
@@ -1271,6 +1273,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			prizevend(user)
 	else
 		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
+
+/obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
+	name = "Mediborg's Festive Amputation Adventure"
+	desc = "A picture of a blood-soaked medical cyborg wearing a Santa hat flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
+	prize_override = list(/obj/item/a_gift/anything = 1)
 
 #undef ORION_TRAIL_WINTURN
 #undef ORION_TRAIL_RAIDERS
