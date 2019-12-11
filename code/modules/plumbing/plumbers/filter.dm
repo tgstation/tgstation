@@ -38,7 +38,7 @@
 	. = TRUE
 	switch(action)
 		if("add")
-			var/new_chem_name = input("Enter chemical to filter:", name) as text|null
+			var/new_chem_name = params["name"]
 			var/chem_id = get_chem_id(new_chem_name)
 			if(chem_id)
 				switch(params["which"])

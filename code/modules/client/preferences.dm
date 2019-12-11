@@ -129,7 +129,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	key_bindings = deepCopyList(GLOB.hotkey_keybinding_list_by_key) // give them default keybinds and update their movement keys
-	C.update_movement_keys()
+	C?.update_movement_keys()
 	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
 		save_preferences()
@@ -1465,7 +1465,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						preferred_map = maplist[pickedmap]
 
 				if ("clientfps")
-					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
+					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tickrate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
 					if (!isnull(desiredfps))
 						clientfps = desiredfps
 						parent.fps = desiredfps

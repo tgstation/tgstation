@@ -172,9 +172,9 @@ const handleHotKey = (e, eventType, dispatch) => {
       // stack in order for this to be a fatal error.
       setTimeout(() => {
         throw new Error(
-          "OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle"
-          + " fucko boingo! The code monkeys at our headquarters are"
-          + " working VEWY HAWD to fix this!");
+          'OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle'
+          + ' fucko boingo! The code monkeys at our headquarters are'
+          + ' working VEWY HAWD to fix this!');
       });
     }
     dispatch({
@@ -219,13 +219,17 @@ const subscribeToKeyPresses = listenerFn => {
 // Middleware
 export const hotKeyMiddleware = store => {
   const { dispatch } = store;
+  // Subscribe to key events
+  subscribeToKeyPresses((e, eventType) => {
+    // IE8: Can't determine the focused element, so by extension it passes
+    // keypresses when inputs are focused.
+    if (tridentVersion > 4) {
+      handlePassthrough(e, eventType);
+    }
+    handleHotKey(e, eventType, dispatch);
+  });
   // IE8: focusin/focusout only available on IE9+
   if (tridentVersion > 4) {
-    // Subscribe to key events
-    subscribeToKeyPresses((e, eventType) => {
-      handlePassthrough(e, eventType);
-      handleHotKey(e, eventType, dispatch);
-    });
     // Clean up when browser window completely loses focus
     subscribeToLossOfFocus(() => {
       releaseHeldKeys();

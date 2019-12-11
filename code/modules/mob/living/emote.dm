@@ -520,3 +520,13 @@
 		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
 	else
 		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
+
+/datum/emote/inhale
+	key = "inhale"
+	key_third_person = "inhales"
+	message = "breathes in."
+
+/datum/emote/exhale
+	key = "exhale"
+	key_third_person = "exhales"
+	message = "breathes out."

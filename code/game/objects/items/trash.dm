@@ -35,6 +35,11 @@
 	name = "chips"
 	icon_state = "chips"
 
+/obj/item/trash/boritos
+	name = "boritos bag"
+	icon_state = "boritos"
+	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
+
 /obj/item/trash/popcorn
 	name = "popcorn"
 	icon_state = "popcorn"

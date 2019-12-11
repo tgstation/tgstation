@@ -29,7 +29,7 @@
 	var/toggle = FALSE
 
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleMode()
-	if(src.loc == summoner)
+	if(loc == summoner)
 		if(toggle)
 			ranged = initial(ranged)
 			melee_damage_lower = initial(melee_damage_lower)
@@ -83,12 +83,12 @@
 	set name = "Set Surveillance Snare"
 	set category = "Guardian"
 	set desc = "Set an invisible snare that will alert you when living creatures walk over it. Max of 5"
-	if(src.snares.len <6)
-		var/turf/snare_loc = get_turf(src.loc)
+	if(snares.len <6)
+		var/turf/snare_loc = get_turf(loc)
 		var/obj/effect/snare/S = new /obj/effect/snare(snare_loc)
 		S.spawner = src
 		S.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
-		src.snares |= S
+		snares |= S
 		to_chat(src, "<span class='danger'><B>Surveillance snare deployed!</span></B>")
 	else
 		to_chat(src, "<span class='danger'><B>You have too many snares deployed. Remove some first.</span></B>")
@@ -97,9 +97,9 @@
 	set name = "Remove Surveillance Snare"
 	set category = "Guardian"
 	set desc = "Disarm unwanted surveillance snares."
-	var/picked_snare = input(src, "Pick which snare to remove", "Remove Snare") as null|anything in sortNames(src.snares)
+	var/picked_snare = input(src, "Pick which snare to remove", "Remove Snare") as null|anything in sortNames(snares)
 	if(picked_snare)
-		src.snares -= picked_snare
+		snares -= picked_snare
 		qdel(picked_snare)
 		to_chat(src, "<span class='danger'><B>Snare disarmed.</span></B>")
 

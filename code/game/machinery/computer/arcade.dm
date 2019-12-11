@@ -118,6 +118,19 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		new empprize(loc)
 	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
+/obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/stack/arcadeticket))
+		var/obj/item/stack/arcadeticket/T = O
+		var/amount = T.get_amount()
+		if(amount <2)
+			to_chat(user, "<span class='warning'>You need 2 tickets to claim a prize!</span>")
+			return
+		prizevend(user)
+		T.pay_tickets()
+		T.update_icon()
+		O = T
+		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
+		return
 
 // ** BATTLE ** //
 
@@ -1258,6 +1271,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			prizevend(user)
 	else
 		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
+
+/obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
+	name = "Mediborg's Festive Amputation Adventure"
+	desc = "A picture of a blood-soaked medical cyborg wearing a Santa hat flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
+	prize_override = list(/obj/item/a_gift/anything = 1)
 
 #undef ORION_TRAIL_WINTURN
 #undef ORION_TRAIL_RAIDERS

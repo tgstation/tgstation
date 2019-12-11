@@ -1,4 +1,5 @@
 .Table {
+  display: table;
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
@@ -9,7 +10,12 @@
   width: auto;
 }
 
+.Table__row {
+  display: table-row;
+}
+
 .Table__cell {
+  display: table-cell;
   padding: 0 3px;
 
   &:first-child {
@@ -28,6 +34,6 @@
 }
 
 .Table__cell--collapsing {
-  width: 0.01%;
+  width: 1%;
   white-space: nowrap;
 }

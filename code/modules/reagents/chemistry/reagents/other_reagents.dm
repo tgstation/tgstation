@@ -214,15 +214,15 @@
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
 	if(!data)
-		data = 1
-	data++
+		data = list("misc" = 1)
+	data["misc"]++
 	M.jitteriness = min(M.jitteriness+4,10)
 	if(iscultist(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
-	if(data >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
+	if(data["misc"] >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering+4, 10)
@@ -234,7 +234,7 @@
 				M.Unconscious(120)
 				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
-	if(data >= 60)	// 30 units, 135 seconds
+	if(data["misc"] >= 60)	// 30 units, 135 seconds
 		if(iscultist(M))
 			SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
 		M.jitteriness = 0
@@ -1583,12 +1583,12 @@
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M)
 	if(can_colour_mobs)
 		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
-		return ..()
+	return ..()
 
 /datum/reagent/colorful_reagent/reaction_mob(mob/living/M, reac_volume)
 	if(can_colour_mobs)
 		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
-		..()
+	..()
 
 /datum/reagent/colorful_reagent/reaction_obj(obj/O, reac_volume)
 	if(O)

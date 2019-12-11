@@ -1033,7 +1033,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "act" = (
-/obj/machinery/holopad,
+/obj/machinery/holopad/secure,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
 "acu" = (
@@ -2993,9 +2993,9 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "agC" = (
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel,
 /area/security/main)
 "agD" = (
@@ -3167,9 +3167,9 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "agV" = (
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "agW" = (
@@ -20947,8 +20947,8 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "bcf" = (
-/obj/machinery/holopad,
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "bcg" = (
@@ -22465,9 +22465,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/computer/shuttle/mining/common{
-	dir = 1
-	},
+/obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bgj" = (
@@ -22725,8 +22723,8 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bgW" = (
-/obj/machinery/holopad,
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bgX" = (
@@ -44999,10 +44997,10 @@
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
 "ctJ" = (
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/start/cyborg,
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat_interior)
 "ctK" = (
@@ -45365,8 +45363,8 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cuC" = (
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cuD" = (
@@ -45418,12 +45416,12 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cuG" = (
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cuH" = (
@@ -45448,10 +45446,10 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/service)
 "cuJ" = (
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/service)
 "cuK" = (
@@ -45960,9 +45958,9 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "cvT" = (
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "cvV" = (
@@ -46169,11 +46167,11 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cwA" = (
-/obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cwB" = (
@@ -46390,7 +46388,6 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "SS13: Auxiliary Dock, Station-Port";
-	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
 	width = 35
 	},
 /turf/open/space/basic,
@@ -47048,7 +47045,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/machinery/holopad,
+/obj/machinery/holopad/secure,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cBf" = (
@@ -47301,7 +47298,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
 	name = "Security Office";
-	req_access_txt = "1"
+	req_access_txt = null;
+	req_one_access_txt = "1;4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
@@ -50095,6 +50093,17 @@
 /obj/item/stack/cable_coil,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"jVc" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "jVl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -51390,6 +51399,17 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"qRW" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "rcD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -51625,6 +51645,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"sHE" = (
+/obj/machinery/door/airlock/external{
+	name = "Common Mining Shuttle Bay"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "sLv" = (
 /obj/structure/closet,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -51633,6 +51662,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"sNJ" = (
+/obj/structure/lattice,
+/obj/structure/lattice,
+/turf/open/space,
+/area/space/nearstation)
 "sOs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -52143,6 +52177,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"vul" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/space/basic,
+/area/hallway/secondary/entry)
 "vxh" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/eight,
@@ -52342,6 +52380,18 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"wCV" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 5;
+	id = "commonmining_home";
+	name = "SS13: Common Mining Dock";
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta;
+	width = 7
+	},
+/turf/open/space/basic,
+/area/space)
 "wHs" = (
 /turf/closed/wall/r_wall,
 /area/security/courtroom)
@@ -52503,6 +52553,15 @@
 "xwN" = (
 /turf/open/floor/plating,
 /area/engine/engine_smes)
+"xzN" = (
+/obj/machinery/door/airlock/external{
+	name = "Common Mining Shuttle Bay"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "xEu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -60709,7 +60768,7 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aoV
 aaa
 aaa
 aaa
@@ -60966,12 +61025,12 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aoV
+aaa
+wCV
 aaa
 aaa
-aaa
-aaa
-aaf
+aoV
 aaa
 aaa
 aaa
@@ -61223,12 +61282,12 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aaa
-aaa
-aaa
-aaf
-aaf
+asE
+asE
+xzN
+asE
+asE
+aoV
 aaa
 aaa
 aaa
@@ -61481,11 +61540,11 @@ aaa
 aaa
 aaa
 aaf
-aaa
+vul
+auP
+vul
 aaf
-aaa
-aAC
-aaf
+sNJ
 aaa
 aaa
 aaa
@@ -61738,10 +61797,10 @@ aaa
 aaa
 aaa
 arB
-awW
-awW
-asE
 arB
+sHE
+asE
+aAC
 aaf
 aaa
 aaa
@@ -61995,7 +62054,7 @@ aaa
 aaa
 aaa
 arB
-awY
+qRW
 ayk
 awW
 aAD
@@ -62251,8 +62310,8 @@ aaa
 aaa
 aaa
 aaa
-awW
-awZ
+arB
+jVc
 ayl
 beK
 auP

@@ -128,25 +128,14 @@
 	return TRUE
 
 /obj/structure/fence/door/proc/toggle(mob/user)
-	switch(open)
-		if(FALSE)
-			visible_message("<span class='notice'>\The [user] opens \the [src].</span>")
-			open = TRUE
-		if(TRUE)
-			visible_message("<span class='notice'>\The [user] closes \the [src].</span>")
-			open = FALSE
-
+	open = !open
+	visible_message("<span class='notice'>\The [user] [open ? "opens" : "closes"] \the [src].</span>")
 	update_door_status()
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 
 /obj/structure/fence/door/proc/update_door_status()
-	switch(open)
-		if(FALSE)
-			density = TRUE
-			icon_state = "door_closed"
-		if(TRUE)
-			density = FALSE
-			icon_state = "door_opened"
+	density = !density
+	icon_state = density ? "door_closed" : "door_opened"
 
 /obj/structure/fence/door/proc/can_open(mob/user)
 	return TRUE
