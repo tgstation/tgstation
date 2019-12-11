@@ -215,7 +215,7 @@
 
 	if(price)
 		var/true_price = round(price*profit_scaling)
-		to_chat(user, "<span class='notice'>[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]</span>")
+		to_chat(user, "<span class='notice'>[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]</span>")
 		if(selling)
 			new /obj/item/holochip(get_turf(user),true_price)
 			for(var/i in ex.exported_atoms_ref)
