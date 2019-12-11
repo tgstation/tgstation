@@ -27,8 +27,10 @@ Bonus
 	symptom_delay_min = 10
 	symptom_delay_max = 30
 	var/unsafe = FALSE //over the cold threshold
-	threshold_desc = "<b>Stage Speed 5:</b> Increases cooling speed; the host can fall below safe temperature levels.<br>\
-					  <b>Stage Speed 10:</b> Further increases cooling speed."
+	threshold_descs = list(
+		"Stage Speed 5" = "Increases cooling speed,; the host can fall below safe temperature levels.",
+		"Stage Speed 10" = "Further increases cooling speed."
+	)
 
 /datum/symptom/fever/Start(datum/disease/advance/A)
 	if(!..())
