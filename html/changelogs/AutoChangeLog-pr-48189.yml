@@ -1,0 +1,4 @@
+author: "Yenwodyah"
+delete-after: True
+changes: 
+  - bugfix: "Bear traps and bolas apply slowdown correctly again"
