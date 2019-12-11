@@ -2,8 +2,8 @@
 	name = "portable air scrubber"
 	icon_state = "pscrubber:0"
 	density = TRUE
-	ui_x = 420
-	ui_y = 435
+	ui_x = 320
+	ui_y = 335
 
 	var/on = FALSE
 	var/volume_rate = 1000
@@ -93,6 +93,8 @@
 		data["holding"] = list()
 		data["holding"]["name"] = holding.name
 		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
+	else
+		data["holding"] = null
 	return data
 
 /obj/machinery/portable_atmospherics/scrubber/replace_tank(mob/living/user, close_valve)
