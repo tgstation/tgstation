@@ -1,6 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - tweak: "Nanite extra settings display a bit better on the cloud controller"
-  - bugfix: "Boolean extra settings on nanites function properly"
-  - bugfix: "Extra settings on nanites copy properly instead of copying a literal ref"

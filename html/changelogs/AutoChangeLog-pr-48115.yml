@@ -1,4 +1,0 @@
-author: "TheVekter"
-delete-after: True
-changes: 
-  - rscadd: "Converted the smoke machine over to tgui-next."

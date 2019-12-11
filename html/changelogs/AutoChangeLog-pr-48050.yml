@@ -1,8 +1,0 @@
-author: "Krysonism"
-delete-after: True
-changes: 
-  - rscadd: "Several new burgers."
-  - rscadd: "Fiesta skewer, corn chips & chicken meat."
-  - rscdel: "some old burger sprites have been replaced."
-  - tweak: "The ghost burger is much spookier."
-  - balance: "some burger recipes have been tweaked."

@@ -24,7 +24,6 @@ GLOBAL_PROTECT(protected_ranks)
 	if(!name)
 		qdel(src)
 		CRASH("Admin rank created without name.")
-		return
 	if(init_rights)
 		rights = init_rights
 	include_rights = rights
