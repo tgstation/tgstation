@@ -1,7 +1,7 @@
+import { map } from 'common/collections';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, NoticeBox, Grid, Input, Collapsible } from '../components';
-import { map } from 'common/collections';
+import { Box, Button, Collapsible, Grid, Input, LabeledList, NoticeBox, Section } from '../components';
 
 export const PandemicBeakerDisplay = props => {
   const { act, data } = useBackend(props);
@@ -13,7 +13,7 @@ export const PandemicBeakerDisplay = props => {
     blood,
   } = data;
 
-  const cant_empty = (!has_beaker || beaker_empty);
+  const cant_empty = !has_beaker || beaker_empty;
 
   return (
     <Section
@@ -182,9 +182,8 @@ export const PandemicSymptomDisplay = props => {
     neutered,
   } = symptom;
 
-  const thresholds = map((desc, label) => (
-    { desc, label }))(symptom.threshold_desc || {},
-  );
+  const thresholds = map((desc, label) => ({ desc, label }))(
+    symptom.threshold_desc || {});
 
   return (
     <Section
