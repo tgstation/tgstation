@@ -152,6 +152,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PASSTABLE			"passtable"
 #define TRAIT_NOFLASH			"noflash" //Makes you immune to flashes
 #define TRAIT_XENO_IMMUNE		"xeno_immune"//prevents xeno huggies implanting skeletons
+#define TRAIT_NO_FORCED_SPEECH  "no_forced_speech" // so ayys and the like can't speak out loud
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
