@@ -1,0 +1,5 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "All human intent suicides now work properly"
+  - rscadd: "New disarm intent suicide"
