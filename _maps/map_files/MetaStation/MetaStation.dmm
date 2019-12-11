@@ -41356,7 +41356,6 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	name = "kitchen shutters";
-	step_x = 0;
 	id = "kitchenwindow"
 	},
 /obj/structure/table/reinforced,
@@ -41903,7 +41902,6 @@
 "bOQ" = (
 /obj/machinery/door/poddoor/preopen{
 	name = "kitchen shutters";
-	step_x = 0;
 	id = "kitchenwindow"
 	},
 /obj/structure/table/reinforced,
@@ -43125,13 +43123,11 @@
 /obj/structure/cable,
 /obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = -7;
-	pixel_y = -3;
-	step_x = 0
+	pixel_y = -3
 	},
 /obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -8;
-	pixel_y = 6;
-	step_x = 0
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
