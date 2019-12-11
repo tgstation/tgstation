@@ -119,7 +119,7 @@
 			owner.Stun(70)
 			owner.Jitter(8)
 		if(2)
-			if(!HAS_TRAIT(owner,TRAIT_NO_FORCED_SPEECH))			
+			if(HAS_TRAIT(owner,TRAIT_NO_FORCED_SPEECH))			
 				owner.Jitter(5)
 				to_chat(owner, "<span class='warning'>You try and scream but no sound comes out!</span>")
 			else
