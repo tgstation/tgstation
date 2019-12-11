@@ -41913,7 +41913,8 @@
 /area/crew_quarters/kitchen)
 "bOT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/deepfryer,
+/obj/structure/table,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -43104,8 +43105,7 @@
 	},
 /area/crew_quarters/kitchen)
 "bRS" = (
-/obj/structure/table,
-/obj/item/kitchen/rollingpin,
+/obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bRT" = (
@@ -72733,6 +72733,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/book/manual/wiki/cooking_to_serve_man,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -74291,10 +74292,10 @@
 /area/maintenance/starboard/secondary)
 "kWu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/deepfryer,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "lal" = (
@@ -76245,11 +76246,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "vuY" = (
-/obj/structure/table,
-/obj/item/book/manual/wiki/cooking_to_serve_man,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
