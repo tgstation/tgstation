@@ -1,8 +1,3 @@
-//Severe traumas, when your brain gets abused way too much.
-//These range from very annoying to completely debilitating.
-//They cannot be cured with chemicals, and require brain surgery to solve.
-
-/datum/brain_trauma/psychological
 
 /datum/brain_trauma/psychological/depression
 	name = "Depression"
@@ -12,11 +7,11 @@
 	lose_text = "<span class='notice'>You feel whole once again.</span>"
 	var/trait = TRAIT_DEPRESSION
 
-/datum/brain_trauma/severe/mute/on_gain()
+/datum/brain_trauma/psychological/depression/on_gain()
 	ADD_TRAIT(owner, trait, PSYCH_TRAIT)
 	..()
 
-/datum/brain_trauma/severe/mute/on_lose()
+/datum/brain_trauma/psychological/depression/on_lose()
 	REMOVE_TRAIT(owner, trait, PSYCH_TRAIT)
 	..()
 

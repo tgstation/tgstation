@@ -189,16 +189,16 @@
 			setSanity(sanity+0.4, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(9)
 			setSanity(sanity+0.6, SANITY_NEUTRAL, SANITY_MAXIMUM)
-		var/mob/living/owner = parent
-		var/psych_adjustment = (sanity_level*2 + mood)/3
-		adjustPsychInstability(owner,psych_adjustment)
+	var/mob/living/owner = parent
+	var/psych_adjustment = (sanity_level*2 + mood)/3
+	adjustPsychInstability(owner,psych_adjustment)
 	HandleNutrition()
 
 
-/datum/component/mood/proc/adjustPsychInstability(owner,amount)
-	var/possible_disorders = list(/datum/brain_trauma/psychological/depression)
+/datum/component/mood/proc/adjustPsychInstability(mob/living/carbon/human/owner,amount)
+	var/list/possible_disorders = list(/datum/brain_trauma/psychological/depression)
 	//add mental problems here^^^
-	psych_instab = clamp(psych_stability + amount,  -100, 100)
+	psych_instab = CLAMP(psych_instab + amount,  -100, 100)
 	if(psych_instab == 100)
 		for(var/i in possible_disorders)
 			if(!HAS_TRAIT(owner,i.trait) && prob(100/length(possible_disorders)))
