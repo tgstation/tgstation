@@ -51257,6 +51257,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
+"pSN" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/engine,
+/area/science/explab)
 "pUr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/wood,
@@ -101648,7 +101652,7 @@ bvO
 gHj
 kGS
 bzO
-bzO
+bAR
 bzO
 bqe
 fGF
@@ -101905,7 +101909,7 @@ bvO
 nbv
 bqe
 bzO
-bAR
+bzO
 bzO
 bqe
 uUy
@@ -102419,7 +102423,7 @@ xeP
 kxC
 kGS
 bzO
-bzO
+pSN
 bzO
 bqe
 btp

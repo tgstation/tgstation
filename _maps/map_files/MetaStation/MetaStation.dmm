@@ -50938,6 +50938,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/rnd/experimentor,
 /mob/living/simple_animal/pet/dog/pug{
 	desc = "It's Pugley IV, the research department's lovable pug clone. Hopefully nothing happens to this one - fourth time lucky!";
 	name = "Pugley IV";
@@ -50950,10 +50951,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/turf/open/floor/engine,
-/area/science/explab)
-"ciU" = (
-/obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "ciV" = (
@@ -75784,6 +75781,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
+"sNp" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/engine,
+/area/science/explab)
 "sQe" = (
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
@@ -111552,7 +111553,7 @@ bST
 ceZ
 cgq
 chy
-ciU
+cLU
 chx
 clU
 cmT
@@ -111809,7 +111810,7 @@ bST
 ceZ
 cgq
 chx
-cLU
+sNp
 chx
 clU
 cmU

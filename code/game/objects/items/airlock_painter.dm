@@ -125,3 +125,112 @@
 		user.put_in_hands(ink)
 		to_chat(user, "<span class='notice'>You remove [ink] from [src].</span>")
 		ink = null
+
+/obj/item/airlock_painter/decal
+	name = "decal painter"
+	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "decal_sprayer"
+	item_state = "decalsprayer"
+	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=500)
+	var/stored_dir = 2
+	var/stored_color = ""
+	var/stored_decal = "warningline"
+	var/stored_decal_total = "warningline"
+
+/obj/item/airlock_painter/decal/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	var/turf/open/floor/F = target
+	if(!(proximity))
+		to_chat(user, "<span class='notice'>You need to get closer!</span>")
+		return
+	if(use_paint(user) && isturf(F))
+		F.AddComponent(/datum/component/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_STRONG, color, null, null, alpha) //Make sure to delete in final version.
+
+/obj/item/airlock_painter/decal/attack_self(mob/user)
+	ui_interact(user)
+	if((ink) && (ink.charges >= 1))
+		to_chat(user, "<span class='notice'>[src] beeps to prevent you from removing the toner until out of charges.</span>")
+		return
+	. = ..()
+
+/obj/item/airlock_painter/decal/Initialize()
+	. = ..()
+	ink = new /obj/item/toner/large(src)
+
+/obj/item/airlock_painter/decal/proc/update_decal_path()
+	stored_decal_total = "[stored_decal][stored_color]"
+	return
+
+/obj/item/airlock_painter/decal/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "decal_painter", name, 500, 500, master_ui, state)
+		ui.open()
+
+/obj/item/airlock_painter/decal/ui_data(mob/user)
+	var/list/data = list()
+	data["decal_direction"] = stored_dir
+	data["decal_color"] = stored_color
+	data["decal_style"] = stored_decal
+	return data
+
+/obj/item/airlock_painter/decal/ui_act(action,active)
+	if(..())
+		return
+	switch(action)
+		//Decal Designs
+		if("lines")
+			stored_decal = "warningline"
+			update_decal_path()
+		if("lines corner")
+			stored_decal = "warninglinecorner"
+			update_decal_path()
+		if("caution")
+			stored_decal = "caution"
+			update_decal_path()
+		if("arrow")
+			stored_decal = "arrows"
+			update_decal_path()
+		if("stand clear")
+			stored_decal = "stand_clear"
+			update_decal_path()
+		if("box")
+			stored_decal = "box"
+			update_decal_path()
+		if("box corners")
+			stored_decal = "box_corners"
+			update_decal_path()
+		if("delivery")
+			stored_decal = "delivery"
+			update_decal_path()
+		if("full stripes")
+			stored_decal = "warn_full"
+			update_decal_path()
+		//Direction for the Decal
+		if("north")
+			stored_dir = 1
+		if("south")
+			stored_dir = 2
+		if("east")
+			stored_dir = 4
+		if("west")
+			stored_dir = 8
+		//Decal colors
+		if("yellow")
+			stored_color = ""
+			update_decal_path()
+		if("red")
+			stored_color = "_red"
+			update_decal_path()
+		if("white")
+			stored_color = "_white"
+			update_decal_path()
+			. = TRUE
+
+/obj/item/airlock_painter/decal/debug
+	name = "extreme decal painter"
+
+/obj/item/airlock_painter/decal/debug/Initialize()
+	. = ..()
+	ink = new /obj/item/toner/extreme(src)

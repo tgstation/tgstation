@@ -24860,9 +24860,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/engine,
-/area/science/explab)
-"blQ" = (
 /obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
@@ -24876,7 +24873,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/book/manual/wiki/experimentor,
+/obj/machinery/rnd/bepis,
 /turf/open/floor/engine,
 /area/science/explab)
 "blX" = (
@@ -25001,9 +24998,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bmt" = (
-/turf/open/floor/plasteel,
-/area/security/checkpoint/medical)
-"bmu" = (
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bmv" = (
@@ -25802,11 +25796,6 @@
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "boH" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/medical/medbay/central)
-"boI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -26951,19 +26940,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"bri" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "brj" = (
 /obj/machinery/chem_master,
 /obj/effect/turf_decal/tile/yellow{
@@ -27896,6 +27872,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/item/book/manual/wiki/experimentor,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "bti" = (
@@ -86394,7 +86371,7 @@ bim
 bjb
 bjY
 bli
-bmu
+bmt
 bnB
 boF
 bpO
@@ -86651,7 +86628,7 @@ bik
 bja
 bjZ
 blj
-bmu
+bmt
 bnC
 boG
 brg
@@ -87163,13 +87140,13 @@ aJI
 aDZ
 bik
 bjc
-boI
-boI
-boI
-boI
-boI
+boH
+boH
+boH
+boH
+boH
 bsG
-bri
+brh
 gfo
 cqm
 bvl
@@ -87424,9 +87401,9 @@ bkc
 bll
 bmw
 bkh
-boI
+boH
 bpR
-bri
+brh
 jWH
 nYu
 oSa
@@ -97701,7 +97678,7 @@ aEj
 aTx
 bjw
 bkz
-blQ
+bky
 bmW
 bnW
 bpe
