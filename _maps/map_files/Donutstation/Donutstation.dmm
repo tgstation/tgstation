@@ -1489,7 +1489,6 @@
 	},
 /area/science/explab)
 "adH" = (
-/obj/machinery/computer/rdconsole/experiment,
 /turf/open/floor/plasteel/white/corner,
 /area/science/explab)
 "adI" = (
@@ -1502,7 +1501,6 @@
 /area/security/prison)
 "adJ" = (
 /obj/structure/table,
-/obj/item/book/manual/wiki/experimentor,
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
 	},
@@ -19760,9 +19758,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/nuke_storage)
 "bcm" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
 /area/science/explab)
@@ -20468,8 +20463,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bef" = (
-/obj/machinery/rnd/experimentor,
 /obj/effect/landmark/blobstart,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/science/explab)
 "beg" = (

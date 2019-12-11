@@ -30464,10 +30464,6 @@
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
-"bAR" = (
-/obj/machinery/rnd/experimentor,
-/turf/open/floor/engine,
-/area/science/explab)
 "bAS" = (
 /obj/machinery/camera{
 	c_tag = "Quartermaster's Office";
@@ -49849,7 +49845,6 @@
 "ifv" = (
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/book/manual/wiki/experimentor,
 /turf/open/floor/plasteel/white/corner{
 	dir = 4
 	},
@@ -50228,9 +50223,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "kxC" = (
-/obj/machinery/computer/rdconsole/experiment{
-	dir = 1
-	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
 	},
@@ -101905,7 +101897,7 @@ bvO
 nbv
 bqe
 bzO
-bAR
+bzO
 bzO
 bqe
 uUy

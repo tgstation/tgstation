@@ -16135,10 +16135,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "ayT" = (
-/obj/machinery/computer/rdconsole/experiment{
-	icon_state = "computer";
-	dir = 4
-	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -16251,21 +16247,16 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "aza" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/delivery,
-/obj/item/folder/white,
-/obj/item/pen,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "chemistry_shutters";
 	name = "Chemistry Lobby Shutters"
 	},
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/window/northleft{
-	dir = 2;
-	name = "Chemistry Desk";
+/obj/machinery/door/airlock/medical/glass{
+	name = "Chemistry Lab";
 	req_access_txt = "5; 33"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "azb" = (
 /obj/machinery/door/firedoor,
@@ -16943,15 +16934,15 @@
 "aAc" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/delivery,
-/obj/item/folder/yellow,
+/obj/item/folder/white,
 /obj/item/pen,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "chemistry_shutters_2";
-	name = "Chemistry Hall Shutters"
+	id = "chemistry_shutters";
+	name = "Chemistry Lobby Shutters"
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/window/northleft{
-	dir = 8;
+	dir = 2;
 	name = "Chemistry Desk";
 	req_access_txt = "5; 33"
 	},
@@ -26045,15 +26036,22 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/cryo)
 "aNZ" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chemistry_shutters";
-	name = "Chemistry Lobby Shutters"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	icon_state = "pipe11-1";
+	dir = 8
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry Lab";
 	req_access_txt = "5; 33"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "aOa" = (
@@ -32837,7 +32835,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "aXo" = (
-/obj/machinery/rnd/experimentor,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
 /area/science/explab)
@@ -34916,23 +34913,21 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "bae" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	icon_state = "pipe11-1";
-	dir = 8
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/delivery,
+/obj/item/folder/yellow,
+/obj/item/pen,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chemistry_shutters_2";
+	name = "Chemistry Hall Shutters"
 	},
 /obj/machinery/door/firedoor/heavy,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Chemistry Lab";
+/obj/machinery/door/window/northleft{
+	dir = 8;
+	name = "Chemistry Desk";
 	req_access_txt = "5; 33"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plating,
 /area/medical/chemistry)
 "baf" = (
 /obj/effect/turf_decal/tile/red,
@@ -37548,7 +37543,6 @@
 /obj/item/folder{
 	pixel_x = -6
 	},
-/obj/item/book/manual/wiki/experimentor,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -116533,7 +116527,7 @@ aNm
 aQb
 aNn
 aQV
-bae
+aNZ
 aRn
 aQW
 aQW
@@ -117560,7 +117554,7 @@ aSY
 aSY
 aYC
 aTv
-aNZ
+aza
 aUF
 bdO
 beA
@@ -118074,7 +118068,7 @@ aTA
 aVx
 aRZ
 aSl
-aza
+aAc
 aSw
 aRO
 baR
@@ -118592,7 +118586,7 @@ aQW
 aWx
 aQW
 aSg
-aAc
+bae
 aSg
 bAN
 bAN

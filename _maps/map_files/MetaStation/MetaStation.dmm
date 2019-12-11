@@ -50953,7 +50953,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "ciU" = (
-/obj/machinery/rnd/experimentor,
+/obj/item/target/syndicate,
 /turf/open/floor/engine,
 /area/science/explab)
 "ciV" = (
@@ -52676,15 +52676,33 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmT" = (
-/obj/machinery/computer/rdconsole/experiment,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 4
+	},
+/obj/item/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmU" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
-/obj/item/book/manual/wiki/experimentor,
 /obj/effect/turf_decal/stripes/line,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/mask/gas,
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/item/multitool{
+	pixel_x = 3
+	},
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmV" = (
@@ -53406,20 +53424,8 @@
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "com" = (
-/obj/structure/table/reinforced,
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/explab)
@@ -53437,15 +53443,6 @@
 "coo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/item/wrench,
-/obj/item/crowbar,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/science,
-/obj/item/multitool{
-	pixel_x = 3
 	},
 /turf/open/floor/plasteel/white,
 /area/science/explab)
@@ -54800,6 +54797,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/target/syndicate,
+/obj/item/target/syndicate,
+/obj/item/target/clown,
+/obj/item/target/clown,
+/obj/item/target/alien,
+/obj/item/target/alien,
+/obj/structure/closet/crate,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cqX" = (
