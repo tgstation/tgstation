@@ -5,8 +5,7 @@ export const GulagItemReclaimer = props => {
   const { act, data } = useBackend(props);
   const mobs = data.mobs || [];
   return (
-    <Section
-      title="Stored Items">
+    <Section title="Stored Items">
       <Table>
         {mobs.map(mob => (
           <Table.Row key={mob.mob}>

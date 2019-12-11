@@ -29,9 +29,11 @@ Bonus
 	symptom_delay_max = 35
 	var/spread_range = 4
 	var/cartoon_sneezing = FALSE //ah, ah, AH, AH-CHOO!!
-	threshold_desc = "<b>Transmission 9:</b> Increases sneezing range, spreading the virus over 6 meter cone instead of over a 4 meter cone.<br>\
-					  <b>Stealth 4:</b> The symptom remains hidden until active.<br>\
-					  <b>Stage Speed 17:</b> The force of each sneeze catapults the host backwards, potentially stunning and lightly damaging them if they hit a wall or another person mid-flight."
+	threshold_descs = list(
+		"Transmission 9" = "Increases sneezing range, spreading the virus over 6 meter cone instead of over a 4 meter cone.",
+		"Stealth 4" = "The symptom remains hidden until active.",
+		"Stage Speed 17" = "The force of each sneeze catapults the host backwards, potentially stunning and lightly damaging them if they hit a wall or another person mid-flight."
+	)
 
 /datum/symptom/sneeze/Start(datum/disease/advance/A)
 	if(!..())

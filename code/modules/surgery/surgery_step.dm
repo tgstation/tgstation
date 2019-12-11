@@ -86,6 +86,8 @@
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
 		modded_time = time
 
+	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
+
 	if(do_after(user, modded_time, target = target))
 
 		var/chem_check_result = chem_check(target)
@@ -103,6 +105,9 @@
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
 				surgery.complete()
+
+	if(target.stat == DEAD && was_sleeping && user.client)
+		user.client.give_award(/datum/award/achievement/misc/sandman, user)
 
 	surgery.step_in_progress = FALSE
 	return advance
