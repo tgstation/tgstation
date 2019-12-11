@@ -41347,6 +41347,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -41897,6 +41898,7 @@
 	id = "kitchenwindow"
 	},
 /obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -43531,6 +43533,7 @@
 	name = "Service Door";
 	req_one_access_txt = "35;28"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -43551,6 +43554,10 @@
 	req_one_access_txt = "30;35"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchenhydro";
+	name = "Service Shutter"
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bSX" = (
@@ -74616,6 +74623,7 @@
 /area/engine/storage_shared)
 "mCX" = (
 /obj/machinery/biogenerator,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "mGS" = (
@@ -75530,6 +75538,7 @@
 	pixel_x = 8;
 	pixel_y = 0
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
