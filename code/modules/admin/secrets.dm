@@ -69,6 +69,8 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=massimmerse'>Fully Immerse Everyone</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=unmassimmerse'>Un-Fully Immerse Everyone</A><BR>
 			"}
 
 	dat += "<BR>"
@@ -594,6 +596,22 @@
 			message_admins("[key_name_admin(usr)] has removed everyone from \
 				purrbation.")
 			log_admin("[key_name(usr)] has removed everyone from purrbation.")
+
+		if("massimmerse")
+			if(!check_rights(R_FUN))
+				return
+			mass_immerse()
+			message_admins("[key_name_admin(usr)] has Fully Immersed \
+				everyone!")
+			log_admin("[key_name(usr)] has Fully Immersed everyone.")
+
+		if("unmassimmerse")
+			if(!check_rights(R_FUN))
+				return
+			mass_immerse(remove=TRUE)
+			message_admins("[key_name_admin(usr)] has Un-Fully Immersed \
+				everyone!")
+			log_admin("[key_name(usr)] has Un-Fully Immersed everyone.")
 
 		if("customportal")
 			if(!check_rights(R_FUN))

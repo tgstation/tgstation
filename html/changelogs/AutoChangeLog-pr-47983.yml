@@ -1,5 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - rscadd: "Plumbing Reaction Chamber uses tgui-next"
-  - tweak: "A couple of the other plumbing uis now use the Input component of tgui-next instead of having popup windows"

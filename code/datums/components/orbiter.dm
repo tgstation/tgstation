@@ -28,10 +28,13 @@
 	if(ismovableatom(target))
 		tracker = new(target, CALLBACK(src, .proc/move_react))
 
+	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/orbiter_glide_size_update)
+
 /datum/component/orbiter/UnregisterFromParent()
 	var/atom/target = parent
 	target.orbiters = null
 	QDEL_NULL(tracker)
+	UnregisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 
 /datum/component/orbiter/Destroy()
 	var/atom/master = parent
@@ -79,6 +82,12 @@
 	orbiter.transform = shift
 
 	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments, parallel = FALSE)
+	if(ismob(orbiter))
+		var/mob/M = orbiter
+		M.updating_glide_size = FALSE
+	if(ismovableatom(parent))
+		var/atom/movable/AM = parent
+		orbiter.glide_size = AM.glide_size
 
 	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
 	orbiter.transform = initial_transform
@@ -94,6 +103,10 @@
 	orbiters -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
+	if(ismob(orbiter))
+		var/mob/M = orbiter
+		M.updating_glide_size = TRUE
+		M.glide_size = 8
 	if(!refreshing && !length(orbiters) && !QDELING(src))
 		qdel(src)
 
@@ -123,6 +136,11 @@
 	if(orbiter.loc == get_turf(parent))
 		return
 	end_orbit(orbiter)
+
+/datum/component/orbiter/proc/orbiter_glide_size_update(datum/source, target)
+	for(var/orbiter in orbiters)
+		var/atom/movable/AM = orbiter
+		AM.glide_size = target
 
 /////////////////////
 
