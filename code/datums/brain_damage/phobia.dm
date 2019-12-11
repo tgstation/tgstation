@@ -119,9 +119,7 @@
 			owner.Stun(70)
 			owner.Jitter(8)
 		if(2)
-			if(!HAS_TRAIT(owner,TRAIT_NO_FORCED_SPEECH))
-				owner.say("AAAAH!!", forced = "phobia")
-				owner.emote("scream")			
+			if(!HAS_TRAIT(owner,TRAIT_NO_FORCED_SPEECH))			
 				owner.Jitter(5)
 			else
 				owner.say("AAAAH!!", forced = "phobia")
