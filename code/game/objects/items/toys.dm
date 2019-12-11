@@ -1032,7 +1032,6 @@
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
-	var/timeleft = (cooldown - world.time)
 	if (obj_flags & EMAGGED && cooldown < world.time)
 		cooldown = world.time + 600
 		user.visible_message("<span class='hear'>You hear the click of a button.</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>")
@@ -1053,6 +1052,7 @@
 		sleep(cooldown - world.time)
 		icon_state = "nuketoyidle"
 	else
+		var/timeleft = (cooldown - world.time)
 		to_chat(user, "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display.</span>")
 		sleep(5)
 
@@ -1061,7 +1061,6 @@
 	if (obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class = 'notice'> You short-circuit \the [src].</span>")
-	desc = "A plastic model of a Nuclear Fission Explosive."
 	obj_flags |= EMAGGED
 /*
  * Fake meteor
