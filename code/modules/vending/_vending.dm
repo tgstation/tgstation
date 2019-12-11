@@ -474,6 +474,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	if(in_range(fatty, src))
 		for(var/mob/living/L in get_turf(fatty))
+			var/was_alive = (L.stat != DEAD)
 			var/mob/living/carbon/C = L
 
 			if(istype(C))
@@ -530,6 +531,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 				L.apply_damage(squish_damage, forced=TRUE)
 				if(crit_case)
 					L.apply_damage(squish_damage, forced=TRUE)
+
+			if(was_alive && L.stat == DEAD && L.client)
+				L.client.give_award(/datum/award/achievement/misc/vendor_squish, L) // good job losing a fight with an inanimate object idiot
 
 			L.Paralyze(60)
 			L.emote("scream")
