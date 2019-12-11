@@ -141,5 +141,4 @@
 	invocation = "Squeak!"
 	charge_max = 50
 	cooldown_min = 50
-	convert_blood = TRUE
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/bat
