@@ -121,7 +121,7 @@
 		if(2)
 			if(!HAS_TRAIT(owner,TRAIT_NO_FORCED_SPEECH))			
 				owner.Jitter(5)
-				to_chat(owner, "<span class='warning'>You try and scream but no sound comes out! \"<span class='phobia'>[word]</span>\"!</span>")
+				to_chat(owner, "<span class='warning'>You try and scream but no sound comes out!</span>")
 			else
 				owner.say("AAAAH!!", forced = "phobia")
 				owner.emote("scream")			
