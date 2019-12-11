@@ -74763,6 +74763,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
+"nvp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
 "nwq" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/structure/sign/poster/contraband/random{
@@ -111140,7 +111149,7 @@ bKi
 bLN
 dDe
 bRQ
-bQD
+nvp
 bRT
 bST
 bUj
