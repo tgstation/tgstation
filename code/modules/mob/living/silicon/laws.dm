@@ -5,12 +5,19 @@
 	if (!laws)
 		make_laws()
 
+/mob/living/silicon/proc/deadchat_lawchange()
+	deadchat_broadcast("'s <b>laws were changed:</b>", "<span class='name'>[src]</span>", follow_target=src)
+	var/the_laws = laws.get_law_list(include_zeroth = TRUE) // technically a duplication of show_laws functionality
+	for(var/law in the_laws)
+		deadchat_broadcast(law, "")
+
 /mob/living/silicon/proc/post_lawchange(announce = TRUE)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	if(announce && last_lawchange_announce != world.time)
 		to_chat(src, "<b>Your laws have been changed.</b>")
 		addtimer(CALLBACK(src, .proc/show_laws), 0)
 		last_lawchange_announce = world.time
+		deadchat_lawchange()
 
 /mob/living/silicon/proc/set_law_sixsixsix(law, announce = TRUE)
 	laws_sanity_check()
