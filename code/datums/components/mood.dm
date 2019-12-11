@@ -4,6 +4,7 @@
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = SANITY_NEUTRAL //Current sanity
+	var/psych_instab = 0 //this grows the longer you are insane. Increases the chances of getting a mental disorder. When it hits 100 it will always roll a mental disorder and set itself to 65.
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
 	var/sanity_level = 2 //To track what stage of sanity they're on
@@ -188,8 +189,40 @@
 			setSanity(sanity+0.4, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(9)
 			setSanity(sanity+0.6, SANITY_NEUTRAL, SANITY_MAXIMUM)
+		var/mob/living/owner = parent
+		var/psych_adjustment = (sanity_level*2 + mood)/3
+		adjustPsychInstability(owner,psych_adjustment)
 	HandleNutrition()
 
+
+/datum/component/mood/proc/adjustPsychInstability(owner,amount)
+	var/possible_disorders = list(/datum/brain_trauma/psychological/depression)
+	//add mental problems here^^^
+	psych_instab = clamp(psych_stability + amount,  -100, 100)
+	if(psych_instab == 100)
+		for(var/i in possible_disorders)
+			if(!HAS_TRAIT(owner,i.trait) && prob(100/length(possible_disorders)))
+				owner.gain_trauma(i , TRAUMA_RESILIENCE_ABSOLUTE)
+		psych_instab = 75
+		return
+	if(psych_instab == -100)
+		for(var/i in possible_disorders)
+			if(HAS_TRAIT(owner,i.trait) && prob(100/length(possible_disorders)))
+				owner.cure_trauma_type(i , TRAUMA_RESILIENCE_ABSOLUTE)
+		psych_instab = -75
+		return
+	if(prob(abs(psych_instab)/1000) && psych_instab > 0)
+		for(var/i in possible_disorders)
+			if(!HAS_TRAIT(owner,i.trait) && prob(100/length(possible_disorders)))
+				owner.gain_trauma(i , TRAUMA_RESILIENCE_ABSOLUTE)
+		psych_instab -= 25
+		return
+	if(prob(abs(psych_instab)/1000) && psych_instab < 0)
+		for(var/i in possible_disorders)
+			if(HAS_TRAIT(owner,i.trait) && prob(100/length(possible_disorders)))
+				owner.cure_trauma_type(i , TRAUMA_RESILIENCE_ABSOLUTE)
+		psych_instab += 25
+		return
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5

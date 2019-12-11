@@ -194,6 +194,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define OBESITY "obesity"
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"
+#define PSYCH_TRAIT "psychological"
 #define DISEASE_TRAIT "disease"
 #define SPECIES_TRAIT "species"
 #define ORGAN_TRAIT "organ"
