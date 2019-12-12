@@ -48,9 +48,9 @@
 	return anchored
 
 /obj/machinery/power/rad_collector/RefreshParts()
-	var/coefficient
-	var/efficiency
-	var/miningrate
+	var/coefficient = 0
+	var/efficiency = 0
+	var/miningrate = 0
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		coefficient += 2/3+M.rating/3
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
