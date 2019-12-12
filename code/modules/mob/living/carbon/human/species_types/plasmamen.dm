@@ -94,6 +94,9 @@
 		if("Medical Doctor")
 			O = new /datum/outfit/plasmaman/medical
 
+		if("EMT")
+			O = new /datum/outfit/plasmaman/emt
+
 		if("Chemist")
 			O = new /datum/outfit/plasmaman/chemist
 
@@ -171,4 +174,4 @@
 					H.emote("sigh")
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
-		
+

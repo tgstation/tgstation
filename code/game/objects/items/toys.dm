@@ -1376,6 +1376,11 @@
 	icon_state = "md"
 	toysay = "The patient is already dead!"
 
+/obj/item/toy/figure/emt
+	name = "EMT action figure"
+	icon_state = "md" //Should have its own sprite
+	toysay = "And the best part? I'm not even a real doctor!"
+
 /obj/item/toy/figure/mime
 	name = "Mime action figure"
 	icon_state = "mime"
