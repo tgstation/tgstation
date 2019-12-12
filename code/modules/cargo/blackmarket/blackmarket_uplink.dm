@@ -40,6 +40,9 @@
 		return
 
 	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5) as num|null, 1)
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+
 	if(!amount_to_remove || amount_to_remove < 0)
 		return
 	if(amount_to_remove > money)
