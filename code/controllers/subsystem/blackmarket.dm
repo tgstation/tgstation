@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(blackmarket)
 				stack_trace("SSblackmarket: Item [I] available in market that does not exist.")
 				continue
 			markets[M].add_item(item)
-		qdel(item)
+		qdel(I)
 	. = ..()
 
 /datum/controller/subsystem/blackmarket/fire(resumed)
