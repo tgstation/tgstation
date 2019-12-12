@@ -62,7 +62,7 @@
 	drainratio = 1/(coefficient*miningrate)
 	mining_conversion_rate = efficiency*miningrate*RAD_COLLECTOR_MINING_CONVERSION_RATE
 
-/obj/machinery/power/rad_collector/
+/obj/machinery/power/rad_collector/Initialize()
 	. = ..()
 	RefreshParts()
 
