@@ -4,7 +4,7 @@
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = SANITY_NEUTRAL //Current sanity
-	var/list/disorders = list(/datum/brain_trauma/psychological/depression)
+	var/list/datum/brain_trauma/psychological/disorders = list(/datum/brain_trauma/psychological/depression)
 	var/psych_instab = 0 //this grows the longer you are insane. Increases the chances of getting a mental disorder. When it hits 100 it will always roll a mental disorder and set itself to 65.
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
@@ -225,19 +225,14 @@
 
 
 /datum/component/mood/proc/ForceGainRandomDisorder()
-	message_admins("ForceGainRandomDisorder-start")
-	var/mob/living/carbon/owner = parent
-	message_admins("ForceGainRandomDisorder-start1")
+	var/mob/living/carbon/human/owner = parent
 	var/list/possible_disorders = list()
-	message_admins("ForceGainRandomDisorder-start2")
-	for(var/D in disorders)
-		message_admins("ForceGainRandomDisorder-start3")
-		var/datum/brain_trauma/psychological/disorder = D
-		message_admins("ForceGainRandomDisorder-start4")
-		if(!HAS_TRAIT(owner,disorder.trait))
-			message_admins("ForceGainRandomDisorder-start5")
-			possible_disorders += disorder
-			message_admins("[disorder]")
+	for(var/datum/brain_trauma/psychological/D in disorders)
+		message_admins("[D.trait]")
+		if(!HAS_TRAIT(owner,D.trait))
+			message_admins("ForceGainRandomDisorder-start HAS PASSED")
+			possible_disorders += D
+			message_admins("[D]")
 	adjustPsychInstability(25)
 	if(length(possible_disorders) == 0)
 		message_admins("ForceGainRandomDisorder-no length")
@@ -245,14 +240,14 @@
 	var/chosen_disorder = pick(possible_disorders)
 	owner.gain_trauma(chosen_disorder , TRAUMA_RESILIENCE_ABSOLUTE)
 	message_admins("ForceGainRandomDisorder-end")
-/datum/component/mood/proc/ForceCureRandomDisorder()
+
+/datum/component/mood/proc/ForceCureRandomDisorder() //not up to the code
 	var/mob/living/carbon/owner = parent
 
 	var/list/possible_disorders = list()
-	for(var/D in disorders)
-		var/datum/brain_trauma/psychological/disorder = D
-		if(HAS_TRAIT(owner,disorder.trait))
-			possible_disorders += disorder
+	for(var/datum/brain_trauma/psychological/D in disorders)
+		if(HAS_TRAIT(owner,D.trait))
+			possible_disorders += D
 	if(length(possible_disorders) == 0)
 		return
 	var/chosen_disorder = pick(possible_disorders)

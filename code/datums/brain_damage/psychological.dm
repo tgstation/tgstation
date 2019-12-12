@@ -1,5 +1,5 @@
 /datum/brain_trauma/psychological
-	var/trait
+	var/trait = TRAIT_DEPRESSION // default
 
 /datum/brain_trauma/psychological/depression
 	name = "Depression"
