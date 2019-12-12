@@ -238,7 +238,10 @@
 	. = ..()
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
-	STR.set_holdable(list(/obj/item/stack/sheet),
+	STR.set_holdable(list(
+			/obj/item/stack/sheet,
+			/obj/item/stack/tile/bronze
+			),
 		list(
 			/obj/item/stack/sheet/mineral/sandstone,
 			/obj/item/stack/sheet/mineral/wood

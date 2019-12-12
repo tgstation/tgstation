@@ -450,7 +450,6 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 		return scan_result
 	else
 		return FALSE //The current element failed assessment, move on to the next.
-	return
 
 /mob/living/simple_animal/bot/proc/check_bot(targ)
 	var/turf/T = get_turf(targ)

@@ -9,7 +9,7 @@
 	///What ID do we use in db, limited to 32 characters
 	var/database_id
 	//Bump this up if you're changing outdated table identifier and/or achievement type
-	var/achievement_version = 1
+	var/achievement_version = 2
 
 	//Value returned on db connection failure, in case we want to differ 0 and nonexistent later on
 	var/default_value = FALSE
@@ -30,7 +30,7 @@
 	return list("ckey" = "'[sanitizeSQL(key)]'","achievement_key" = "'[sanitizeSQL(database_id)]'", "value" = "'[sanitizeSQL(value)]'")
 
 /datum/award/proc/get_metadata_row()
-	return list("achievement_key"  = "'[sanitizeSQL(database_id)]'", "achievement_version" = "'[sanitizeSQL(achievement_version)]'", "achievement_type" = "'award'")
+	return list("achievement_key"  = "'[sanitizeSQL(database_id)]'", "achievement_version" = "'[sanitizeSQL(achievement_version)]'", "achievement_type" = "'award'", "achievement_name" = "'[sanitizeSQL(name)]'", "achievement_description" = "'[sanitizeSQL(desc)]'")
 
 ///Get raw numerical achievement value from the database
 /datum/award/proc/get_raw_value(key)
