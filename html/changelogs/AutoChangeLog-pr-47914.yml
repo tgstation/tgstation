@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a couple of laser / energy guns never switching to the empty icon despite being unable to fire."

@@ -58,7 +58,7 @@
 		user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
 		var/brute2heal = brute
 		var/burn2heal = burn
-		if(user?.mind.get_skill_speed_modifier(/datum/skill/medical))
+		if(user?.mind?.get_skill_speed_modifier(/datum/skill/medical))
 			var/skillmods = user.mind.get_skill_speed_modifier(/datum/skill/medical)
 			brute2heal *= (2-skillmods)
 			burn2heal *= (2-skillmods)

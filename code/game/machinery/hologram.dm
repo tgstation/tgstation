@@ -34,6 +34,7 @@ Possible to do for anyone motivated enough:
 	layer = LOW_OBJ_LAYER
 	plane = FLOOR_PLANE
 	flags_1 = HEAR_1
+	req_access = list(ACCESS_KEYCARD_AUTH) //Used to allow for forced connecting to other (not secure) holopads. Anyone can make a call, though.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -60,6 +61,18 @@ Possible to do for anyone motivated enough:
 	var/ringing = FALSE
 	var/offset = FALSE
 	var/on_network = TRUE
+	var/secure = FALSE //for pads in secure areas; do not allow forced connecting
+
+/obj/machinery/holopad/secure
+	name = "secure holopad"
+	desc = "It's a floor-mounted device for projecting holographic images. This one will refuse to auto-connect incoming calls."
+	secure = TRUE
+
+obj/machinery/holopad/secure/Initialize()
+	. = ..()
+	var/obj/item/circuitboard/machine/holopad/board = circuit
+	board.secure = TRUE
+	board.build_path = /obj/machinery/holopad/secure
 
 /obj/machinery/holopad/tutorial
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -187,7 +200,10 @@ Possible to do for anyone motivated enough:
 	else
 		if(on_network)
 			dat += "<a href='?src=[REF(src)];AIrequest=1'>Request an AI's presence</a><br>"
-			dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"
+			if(allowed(user))
+				dat += "<a href='?src=[REF(src)];Holoconnect=1'>Connect to another holopad</a><br>"
+			else
+				dat += "<a href='?src=[REF(src)];Holocall=1'>Call another holopad</a><br>"
 		if(disk)
 			if(disk.record)
 				//Replay
@@ -255,9 +271,12 @@ Possible to do for anyone motivated enough:
 			temp = "A request for AI presence was already sent recently.<BR>"
 			temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 
-	else if(href_list["Holocall"])
+	else if(href_list["Holocall"] || href_list["Holoconnect"])
 		if(outgoing_call)
 			return
+		var/head_call = FALSE
+		if(href_list["Holoconnect"])
+			head_call = TRUE
 
 		temp = "You must stand on the holopad to make a call!<br>"
 		temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
@@ -276,7 +295,7 @@ Possible to do for anyone motivated enough:
 			if(usr.loc == loc)
 				temp = "Dialing...<br>"
 				temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
-				new /datum/holocall(usr, src, callnames[result])
+				new /datum/holocall(usr, src, callnames[result], head_call)
 
 	else if(href_list["connectcall"])
 		var/datum/holocall/call_to_connect = locate(href_list["connectcall"]) in holo_calls
@@ -361,6 +380,9 @@ Possible to do for anyone motivated enough:
 		var/datum/holocall/HC = I
 		if(HC.connected_holopad != src)
 			if(force_answer_call && world.time > (HC.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
+				HC.Answer(src)
+				break
+			if(HC.head_call && !secure)
 				HC.Answer(src)
 				break
 			if(outgoing_call)

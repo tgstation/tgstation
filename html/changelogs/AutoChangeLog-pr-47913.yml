@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Ion rifle inhand sprites no longer have an incorrectly colored scope when empty."
-  - imageadd: "Tweaked the colors of the charge indicators on a number of energy weapons to allow for easier identification of the remaining charge percentage."
-  - imageadd: "Ion rifle inhand sprite now more closely reflects it's normal sprite."

@@ -1,12 +1,10 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { AnimatedNumber, Button, LabeledList, ProgressBar, Section } from '../components';
 import { BeakerContents } from './common/BeakerContents';
 
 export const Cryo = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const damageTypes = [
     {
       label: "Brute",
@@ -25,7 +23,6 @@ export const Cryo = props => {
       type: "fireLoss",
     },
   ];
-
   return (
     <Fragment>
       <Section title="Occupant">
@@ -73,7 +70,7 @@ export const Cryo = props => {
               <Button
                 icon={data.isOperating ? "power-off" : "times"}
                 disabled={data.isOpen}
-                onClick={() => act(ref, 'power')}
+                onClick={() => act('power')}
                 color={data.isOperating && ("green")}>
                 {data.isOperating ? "On" : "Off"}
               </Button>
@@ -84,11 +81,11 @@ export const Cryo = props => {
           <LabeledList.Item label="Door">
             <Button
               icon={data.isOpen ? "unlock" : "lock"}
-              onClick={() => act(ref, 'door')}
+              onClick={() => act('door')}
               content={data.isOpen ? "Open" : "Closed"} />
             <Button
               icon={data.autoEject ? "sign-out-alt" : "sign-in-alt"}
-              onClick={() => act(ref, 'autoeject')}
+              onClick={() => act('autoeject')}
               content={data.autoEject ? "Auto" : "Manual"} />
           </LabeledList.Item>
         </LabeledList>
@@ -99,7 +96,7 @@ export const Cryo = props => {
           <Button
             icon="eject"
             disabled={!data.isBeakerLoaded}
-            onClick={() => act(ref, 'ejectbeaker')}
+            onClick={() => act('ejectbeaker')}
             content="Eject" />
         )}>
         <BeakerContents

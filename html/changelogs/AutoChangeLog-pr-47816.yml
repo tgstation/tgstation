@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - balance: "Cleanbots with knives will do full damage rather than half if emagged"
-  - bugfix: "Cleanbots will no longer lose their name when given knives"

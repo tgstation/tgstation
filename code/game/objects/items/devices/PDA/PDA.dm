@@ -1062,9 +1062,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// Returns a list of PDAs which can be viewed from another PDA/message monitor.,
 	var/sortmode
 	if(sort_by_job)
-		sortmode = /proc/cmp_pdaname_asc
-	else
 		sortmode = /proc/cmp_pdajob_asc
+	else
+		sortmode = /proc/cmp_pdaname_asc
 
 	for(var/obj/item/pda/P in sortList(GLOB.PDAs, sortmode))
 		if(!P.owner || P.toff || P.hidden)

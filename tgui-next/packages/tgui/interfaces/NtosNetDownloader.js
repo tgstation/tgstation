@@ -1,11 +1,10 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 
 export const NtosNetDownloader = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     disk_size,
     disk_used,
@@ -23,7 +22,7 @@ export const NtosNetDownloader = props => {
           </Box>
           <Button
             content="Reset"
-            onClick={() => act(ref, 'PRG_reseterror')} />
+            onClick={() => act('PRG_reseterror')} />
         </NoticeBox>
       )}
       <Section>
@@ -65,9 +64,8 @@ export const NtosNetDownloader = props => {
 };
 
 const Program = props => {
-  const { state, program } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { program } = props;
+  const { act, data } = useBackend(props);
   const {
     disk_size,
     disk_used,
@@ -99,7 +97,7 @@ const Program = props => {
               icon="download"
               content="Download"
               disabled={downloading || program.size > disk_free}
-              onClick={() => act(ref, 'PRG_downloadfile', {
+              onClick={() => act('PRG_downloadfile', {
                 filename: program.filename,
               })} />
           )}

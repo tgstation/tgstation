@@ -1,13 +1,11 @@
 import { toFixed } from 'common/math';
 import { toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
 
 export const ChemDispenser = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const recording = !!data.recordingRecipe;
   // TODO: Change how this piece of shit is built on server side
   // It has to be a list, not a fucking OBJECT!
@@ -53,7 +51,7 @@ export const ChemDispenser = props => {
                 <Button
                   color="transparent"
                   content="Clear recipes"
-                  onClick={() => act(ref, 'clear_recipes')} />
+                  onClick={() => act('clear_recipes')} />
               </Box>
             )}
             {!recording && (
@@ -61,39 +59,41 @@ export const ChemDispenser = props => {
                 icon="circle"
                 disabled={!data.isBeakerLoaded}
                 content="Record"
-                onClick={() => act(ref, 'record_recipe')} />
+                onClick={() => act('record_recipe')} />
             )}
             {recording && (
               <Button
                 icon="ban"
                 color="transparent"
                 content="Discard"
-                onClick={() => act(ref, 'cancel_recording')} />
+                onClick={() => act('cancel_recording')} />
             )}
             {recording && (
               <Button
-                icon="floppy-o"
+                icon="save"
                 color="green"
                 content="Save"
-                onClick={() => act(ref, 'save_recording')} />
+                onClick={() => act('save_recording')} />
             )}
           </Fragment>
         )}>
-        {recipes.map(recipe => (
-          <Button key={recipe.name}
-            icon="tint"
-            width="129.5px"
-            lineHeight="21px"
-            content={recipe.name}
-            onClick={() => act(ref, 'dispense_recipe', {
-              recipe: recipe.name,
-            })} />
-        ))}
-        {recipes.length === 0 && (
-          <Box color="light-gray">
-            No recipes.
-          </Box>
-        )}
+        <Box mr={-1}>
+          {recipes.map(recipe => (
+            <Button key={recipe.name}
+              icon="tint"
+              width="129.5px"
+              lineHeight="21px"
+              content={recipe.name}
+              onClick={() => act('dispense_recipe', {
+                recipe: recipe.name,
+              })} />
+          ))}
+          {recipes.length === 0 && (
+            <Box color="light-gray">
+              No recipes.
+            </Box>
+          )}
+        </Box>
       </Section>
       <Section
         title="Dispense"
@@ -103,7 +103,7 @@ export const ChemDispenser = props => {
               icon="plus"
               selected={amount === data.amount}
               content={amount}
-              onClick={() => act(ref, 'amount', {
+              onClick={() => act('amount', {
                 target: amount,
               })} />
           ))
@@ -115,7 +115,7 @@ export const ChemDispenser = props => {
               width="129.5px"
               lineHeight="21px"
               content={chemical.title}
-              onClick={() => act(ref, 'dispense', {
+              onClick={() => act('dispense', {
                 reagent: chemical.id,
               })} />
           ))}
@@ -129,7 +129,7 @@ export const ChemDispenser = props => {
               icon="minus"
               disabled={recording}
               content={amount}
-              onClick={() => act(ref, 'remove', { amount })} />
+              onClick={() => act('remove', { amount })} />
           ))
         )}>
         <LabeledList>
@@ -140,7 +140,7 @@ export const ChemDispenser = props => {
                 icon="eject"
                 content="Eject"
                 disabled={!data.isBeakerLoaded}
-                onClick={() => act(ref, 'eject')} />
+                onClick={() => act('eject')} />
             )}>
             {recording
               && 'Virtual beaker'

@@ -352,7 +352,7 @@
 		pathpos++ // increase iterator
 
 		// Broadcast the signal
-		INVOKE_ASYNC(CALLBACK(radio_connection, /datum/radio_frequency.proc/post_signal, src, signal, RADIO_MAGNETS))
+		INVOKE_ASYNC(radio_connection, /datum/radio_frequency.proc/post_signal, src, signal, RADIO_MAGNETS)
 
 		if(speed == 10)
 			sleep(1)

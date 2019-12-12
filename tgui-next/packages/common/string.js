@@ -64,8 +64,8 @@ export const toTitleCase = str => {
   // Handle string
   const WORDS_UPPER = ['Id', 'Tv'];
   const WORDS_LOWER = [
-    'A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'For', 'From', 'In', 'Into',
-    'Near', 'Nor', 'Of', 'On', 'Onto', 'Or', 'The', 'To', 'With',
+    'A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'For', 'From', 'In',
+    'Into', 'Near', 'Nor', 'Of', 'On', 'Onto', 'Or', 'The', 'To', 'With',
   ];
   let currentStr = str.replace(/([^\W_]+[^\s-]*) */g, str => {
     return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();

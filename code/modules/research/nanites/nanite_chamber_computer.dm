@@ -5,8 +5,8 @@
 	var/obj/item/disk/nanite_program/disk
 	icon_screen = "nanite_chamber_control"
 	circuit = /obj/item/circuitboard/computer/nanite_chamber_control
-	ui_x = 550
-	ui_y = 800
+	ui_x = 380
+	ui_y = 570
 
 /obj/machinery/computer/nanite_chamber_control/Initialize()
 	. = ..()
@@ -52,6 +52,7 @@
 		data["status_msg"] = chamber.busy_message
 		return data
 
+	data["status_msg"] = null
 	data["scan_level"] = chamber.scan_level
 	data["locked"] = chamber.locked
 	data["occupant_name"] = chamber.occupant.name
@@ -69,14 +70,14 @@
 			chamber.update_icon()
 			. = TRUE
 		if("set_safety")
-			var/threshold = input("Set safety threshold (0-500):", name, null) as null|num
+			var/threshold = text2num(params["value"])
 			if(!isnull(threshold))
 				chamber.set_safety(CLAMP(round(threshold, 1),0,500))
 				playsound(src, "terminal_type", 25, FALSE)
 				chamber.occupant.investigate_log("'s nanites' safety threshold was set to [threshold] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("set_cloud")
-			var/cloud_id = input("Set cloud ID (1-100, 0 to disable):", name, null) as null|num
+			var/cloud_id = text2num(params["value"])
 			if(!isnull(cloud_id))
 				chamber.set_cloud(CLAMP(round(cloud_id, 1),0,100))
 				playsound(src, "terminal_type", 25, FALSE)
