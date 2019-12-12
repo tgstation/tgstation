@@ -16,6 +16,7 @@
 		playing.is_global = TRUE
 		watcher = GLOB.mob_list
 	playing.play(watcher)
+	qdel(playing)
 
 /obj/screen/cinematic
 	icon = 'icons/effects/station_explosion.dmi'
@@ -44,6 +45,7 @@
 			continue
 		var/client/C = CC
 		C.screen -= screen
+	watching = null
 	QDEL_NULL(screen)
 	QDEL_NULL(special_callback)
 	for(var/MM in locked)
@@ -51,10 +53,11 @@
 			continue
 		var/mob/M = MM
 		M.notransform = FALSE
+	locked = null
 	return ..()
 
 /datum/cinematic/proc/play(watchers)
-	//Check if you can actually play it (stop mob cinematics for global ones)
+	//Check if cinematic can actually play (stop mob cinematics for global ones)
 	if(SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PLAY_CINEMATIC, src) & COMPONENT_GLOB_BLOCK_CINEMATIC)
 		return
 
@@ -69,19 +72,17 @@
 		ooc_toggled = TRUE
 		toggle_ooc(FALSE)
 
+	//Place /obj/screen/cinematic into everyone's screens, prevent them from moving
 	for(var/MM in watchers)
 		var/mob/M = MM
-		M.notransform = TRUE //Should this be done for non-global cinematics or even at all ?
-		locked += M
+		show_to(M, M.client)
+		RegisterSignal(M, COMSIG_MOB_CLIENT_LOGIN, .proc/show_to)
 		//Close watcher ui's
 		SStgui.close_user_uis(M)
-		if(M.client)
-			watching += M.client
-			M.client.screen += screen
 
 	//Actually play it
 	content()
-	
+
 	//Cleanup
 	sleep(cleanup_time)
 
@@ -89,7 +90,14 @@
 	if(ooc_toggled)
 		toggle_ooc(TRUE)
 
-	qdel(src)
+/datum/cinematic/proc/show_to(mob/M, client/C)
+	if(!M.notransform)
+		locked += M
+		M.notransform = TRUE //Should this be done for non-global cinematics or even at all ?
+	if(!C)
+		return
+	watching += C
+	C.screen += screen
 
 //Sound helper
 /datum/cinematic/proc/cinematic_sound(s)
@@ -110,7 +118,7 @@
 
 /datum/cinematic/proc/replacement_cinematic(datum/source, datum/cinematic/other)
 	if(!is_global && other.is_global) //Allow it to play if we're local and it's global
-		return 0
+		return NONE
 	return COMPONENT_GLOB_BLOCK_CINEMATIC
 
 /datum/cinematic/nuke_win
