@@ -48,6 +48,10 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/try_attach_part(mob/user, obj/mecha/M)
+	if(istype(M, /obj/mecha/combat/nerchen))//equipping to nerchen adds it to the chen's guns, aka the one that can shoot. (sorry)
+		var/obj/mecha/combat/nerchen/ner = M
+		M = ner.chen
+
 	if(can_attach(M))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return FALSE
