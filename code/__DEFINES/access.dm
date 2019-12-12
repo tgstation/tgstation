@@ -79,8 +79,8 @@
 #define ACCESS_NETWORK 67
 /// Cloning room and clone pod ejection
 #define ACCESS_CLONING 68
-/// Chemistry office access
-#define ACCESS_APOTHECARY 69 ///Nice.
+/// Pharmacy access (Chemistry room in Medbay)
+#define ACCESS_PHARMACY 69 ///Nice.
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
