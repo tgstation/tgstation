@@ -57,10 +57,14 @@
 		miningrate += 2/3+C.rating/3
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		efficiency += 4/3-M.rating/3
-	collector_efficiency == efficiency*RAD_COLLECTOR_EFFICIENCY
-	collector_coefficient == coefficient*RAD_COLLECTOR_COEFFICIENT
-	drainratio == 1/(coefficient*miningrate)
-	mining_conversion_rate == efficiency*miningrate*RAD_COLLECTOR_MINING_CONVERSION_RATE
+	collector_efficiency = efficiency*RAD_COLLECTOR_EFFICIENCY
+	collector_coefficient = coefficient*RAD_COLLECTOR_COEFFICIENT
+	drainratio = 1/(coefficient*miningrate)
+	mining_conversion_rate = efficiency*miningrate*RAD_COLLECTOR_MINING_CONVERSION_RATE
+
+/obj/machinery/power/rad_collector/
+	. = ..()
+	RefreshParts()
 
 /obj/machinery/power/rad_collector/process()
 	if(!loaded_tank)
