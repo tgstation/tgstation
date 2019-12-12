@@ -302,7 +302,7 @@
 		if(ACCESS_CE)
 			return "CE Office"
 		if(ACCESS_PHARMACY)
-			return "Apothecary"
+			return "Pharmacy"
 		if(ACCESS_RC_ANNOUNCE)
 			return "RC Announcements"
 		if(ACCESS_KEYCARD_AUTH)
