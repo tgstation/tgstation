@@ -226,13 +226,14 @@
 
 /datum/component/mood/proc/ForceGainRandomDisorder()
 	var/mob/living/carbon/human/owner = parent
+
 	var/list/possible_disorders = list()
 	for(var/datum/brain_trauma/psychological/D in disorders)
-		message_admins("[D.trait]")
-		if(!HAS_TRAIT(owner,D.trait))
-			message_admins("ForceGainRandomDisorder-start HAS PASSED")
+		if(!HAS_TRAIT(owner,initial(D.trait)))
+			message_admins("yes!")
 			possible_disorders += D
-			message_admins("[D]")
+		message_admins("ForceGainRandomDisorder-start HAS PASSED")
+		message_admins("[D]")
 	adjustPsychInstability(25)
 	if(length(possible_disorders) == 0)
 		message_admins("ForceGainRandomDisorder-no length")
