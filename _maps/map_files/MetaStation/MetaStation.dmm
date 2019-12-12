@@ -49562,7 +49562,7 @@
 "cfX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "Pharmacy_shutters";
+	id = "pharmacy_shutters";
 	name = "Pharmacy shutters"
 	},
 /turf/open/floor/plating,
@@ -49588,7 +49588,7 @@
 	pixel_y = -3
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "Pharmacy_shutters";
+	id = "pharmacy_shutters";
 	name = "pharmacy shutters"
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -50145,7 +50145,7 @@
 	layer = 2.7
 	},
 /obj/machinery/button/door{
-	id = "Pharmacy_shutters";
+	id = "pharmacy_shutters";
 	name = "pharmacy shutters control";
 	pixel_x = 24;
 	pixel_y = 24;
@@ -53138,7 +53138,7 @@
 "cnL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "Pharmacy_shutters_2";
+	id = "pharmacy_shutters_2";
 	name = "Pharmacy shutters"
 	},
 /turf/open/floor/plating,
@@ -53778,7 +53778,7 @@
 	},
 /obj/item/pen,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "Pharmacy_shutters_2";
+	id = "pharmacy_shutters_2";
 	name = "Pharmacy shutters"
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -54469,7 +54469,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/button/door{
-	id = "Pharmacy_shutters_2";
+	id = "pharmacy_shutters_2";
 	name = "pharmacy shutters control";
 	pixel_x = 26;
 	pixel_y = -26;

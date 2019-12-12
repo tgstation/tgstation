@@ -22749,7 +22749,7 @@
 "bgZ" = (
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	areastring = "/area/medical/Pharmacy";
+	areastring = "/area/medical/pharmacy";
 	dir = 1;
 	name = "Pharmacy APC";
 	pixel_y = 23
