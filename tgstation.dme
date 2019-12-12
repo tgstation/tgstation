@@ -1896,6 +1896,7 @@
 #include "code\modules\jobs\job_types\curator.dm"
 #include "code\modules\jobs\job_types\cyborg.dm"
 #include "code\modules\jobs\job_types\detective.dm"
+#include "code\modules\jobs\job_types\emt.dm"
 #include "code\modules\jobs\job_types\geneticist.dm"
 #include "code\modules\jobs\job_types\head_of_personnel.dm"
 #include "code\modules\jobs\job_types\head_of_security.dm"
