@@ -1,0 +1,5 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Some dynamic mode threat spending/refunding and threat logging fixes."
+  - bugfix: "Fixed a bug causing some midround antag ghost rolls to fail. Dynamic midround nightmare should now spawn again."
