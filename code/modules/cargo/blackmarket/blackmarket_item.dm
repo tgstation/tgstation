@@ -13,7 +13,7 @@
 	/// How many of this type of item is available, if not set creates a price according to the *_min and *_max vars.
 	var/stock
 
-	/// Path to the actual item this creates, this should be set even if you override spawn_item to spawn your item.
+	/// Path to or the item itself what this entry is for, this should be set even if you override spawn_item to spawn your item.
 	var/item
 
 	/// Minimum price for the item if generated randomly.
@@ -44,7 +44,7 @@
 		return FALSE
 
 	// This shouldn't be able to happen unless there was some manipulation or admin fuckery.
-	if(!item || stock <= 0 || uplink.money < price)
+	if(!item || stock <= 0)
 		return FALSE
 
 	// Alright, the item has been purchased.
@@ -53,7 +53,6 @@
 	// SSblackmarket takes care of the shipping.
 	if(SSblackmarket.queue_item(purchase))
 		stock--
-		uplink.money -= price
 		log_game("[key_name(buyer)] has succesfully purchased [name] using [shipping_method] for shipping.")
 		return TRUE
 	return FALSE
@@ -71,5 +70,7 @@
 
 /datum/blackmarket_purchase/New(_entry, _uplink, _method)
 	entry = _entry
+	if(!ispath(entry.item))
+		item = entry.item
 	uplink = _uplink
 	method = _method

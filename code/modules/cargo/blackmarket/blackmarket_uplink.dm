@@ -33,8 +33,23 @@
 		to_chat(user, "<span class='notice'>You slot [I] into [src] and it reports a total of [money] money inserted.</span>")
 		qdel(I)
 		return
-
 	. = ..()
+
+/obj/item/blackmarket_uplink/AltClick(mob/user)
+	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+
+	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5) as num|null, 1)
+	if(!amount_to_remove || amount_to_remove < 0)
+		return
+	if(amount_to_remove > money)
+		to_chat(user, "<span class='warning'>There is only [money] credits in [src]</span>")
+		return
+
+	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
+	holochip.name = "washed " + holochip.name
+	user.put_in_hands(holochip)
+	to_chat(user, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
 
 /obj/item/blackmarket_uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -127,19 +142,8 @@
 				buying = FALSE
 				return
 			var/datum/blackmarket_market/market = SSblackmarket.markets[viewing_market]
-			if(!(params["method"] in market.shipping))
-				return
-			for(var/datum/blackmarket_item/I in market.available_items[viewing_category])
-				if(I.type == selected_item)
-					var/overall_price = I.price + market.shipping[params["method"]]
-					if(overall_price > money)
-						to_chat(usr, "<span class='warning'>You don't have enough money in [src] for that!</span>")
-						break
+			market.purchase(selected_item, viewing_category, params["method"], src, usr)
 
-					if(I.buy(src, usr, params["method"]))
-						money -= market.shipping[params["method"]]
-
-					break
 			buying = FALSE
 			selected_item = null
 

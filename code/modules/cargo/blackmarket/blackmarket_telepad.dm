@@ -37,7 +37,7 @@
 
 /obj/machinery/ltsrbt/Initialize()
 	. = ..()
-	SSblackmarket.telepads |= src
+	SSblackmarket.telepads += src
 
 /obj/machinery/ltsrbt/Destroy()
 	SSblackmarket.telepads -= src
@@ -80,8 +80,11 @@
 	if(recieving)
 		var/datum/blackmarket_purchase/P = recieving
 
-		if(!P.item)
+		if(!P.item || ispath(P.item))
 			P.item = P.entry.spawn_item(T)
+		else
+			var/atom/movable/M = P.item
+			M.forceMove(T)
 
 		use_power(power_usage_per_teleport / power_efficiency)
 		var/datum/effect_system/spark_spread/sparks = new

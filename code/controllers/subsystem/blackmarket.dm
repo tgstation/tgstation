@@ -23,19 +23,15 @@ SUBSYSTEM_DEF(blackmarket)
 /datum/controller/subsystem/blackmarket/Initialize(timeofday)
 	for(var/market in subtypesof(/datum/blackmarket_market))
 		markets[market] += new market
-		for(var/cat in markets[market].categories)
-			markets[market].available_items[cat] = list()
 
-	for(var/item in subtypesof(/datum/blackmarket_item))
-		var/datum/blackmarket_item/I = new item
-		if(!I.item || !prob(I.availability_prob))
-			qdel(I)
+	for(var/datum/blackmarket_item/I in subtypesof(/datum/blackmarket_item))
+		if(!initial(I.item))
 			continue
-		for(var/M in I.markets)
+
+		for(var/M in initial(I.markets))
 			if(!markets[M])
 				CRASH("SSblackmarket: Item [I.name] available in market that does not exist.")
-			var/datum/blackmarket_market/market = markets[M]
-			market.available_items[I.category] += I
+			markets[M].add_item(new I())
 	. = ..()
 
 /datum/controller/subsystem/blackmarket/fire(resumed)
@@ -159,7 +155,9 @@ SUBSYSTEM_DEF(blackmarket)
 	sparks.attach(item)
 	sparks.start()
 
-/// Used to add /datum/blackmarket_purchase to queued_purchases var, returns TRUE if successful. Can't normally return FALSE at this time (4.12.2019)
+/// Used to add /datum/blackmarket_purchase to queued_purchases var. Returns TRUE when queued.
 /datum/controller/subsystem/blackmarket/proc/queue_item(datum/blackmarket_purchase/P)
+	if(P.method == SHIPPING_METHOD_LTSRBT && !telepads.len)
+		return FALSE
 	queued_purchases += P
 	return TRUE
