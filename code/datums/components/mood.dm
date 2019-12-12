@@ -4,6 +4,7 @@
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = SANITY_NEUTRAL //Current sanity
+	var/list/disorders = list(/datum/brain_trauma/psychological/depression)
 	var/psych_instab = 0 //this grows the longer you are insane. Increases the chances of getting a mental disorder. When it hits 100 it will always roll a mental disorder and set itself to 65.
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
@@ -170,6 +171,7 @@
 
 ///Called on SSmood process
 /datum/component/mood/process()
+
 	switch(mood_level)
 		if(1)
 			setSanity(sanity-0.3, SANITY_INSANE)
@@ -189,41 +191,108 @@
 			setSanity(sanity+0.4, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(9)
 			setSanity(sanity+0.6, SANITY_NEUTRAL, SANITY_MAXIMUM)
-	var/mob/living/owner = parent
-	var/psych_adjustment = (sanity_level*2 + mood)/3
-	adjustPsychInstability(owner,psych_adjustment)
+	var/psych_adjustment = ((sanity-SANITY_MAXIMUM/2)/SANITY_MAXIMUM + (mood-MOOD_LEVEL_HAPPY4/2)/MOOD_LEVEL_HAPPY4)/10
+
+	adjustPsychInstability(psych_adjustment)
+	CheckPsychInstability()
 	HandleNutrition()
 
 
-/datum/component/mood/proc/adjustPsychInstability(mob/living/carbon/human/owner,amount)
-	var/list/possible_disorders = list(/datum/brain_trauma/psychological/depression)
-	//add mental problems here^^^
-	psych_instab = CLAMP(psych_instab + amount,  -100, 100)
-	if(psych_instab == 100)
-		for(var/i in possible_disorders)
-			if(!HAS_TRAIT(owner,i.trait) && prob(100/length(possible_disorders)))
-				owner.gain_trauma(i , TRAUMA_RESILIENCE_ABSOLUTE)
-		psych_instab = 75
+
+#define PSYCH_BREAK_EXTREME 100
+#define PSYCH_BREAK 50 to 99
+
+#define PSYCH_CURE_EXTREME -100
+#define PSYCH_CURE -50 to -99
+
+/datum/component/mood/proc/adjustPsychInstability(amount)
+	psych_instab = CLAMP(psych_instab - amount,  -100, 100)
+
+
+/datum/component/mood/proc/CheckPsychInstability()
+	switch(psych_instab)
+		if(PSYCH_BREAK_EXTREME)
+			ForceGainRandomDisorder()
+
+		if(PSYCH_BREAK)
+			RollGainRandomDisorder()
+
+		if(PSYCH_CURE)
+			RollCureRandomDisorder()
+
+		if(PSYCH_CURE_EXTREME)
+			ForceCureRandomDisorder()
+
+
+/datum/component/mood/proc/ForceGainRandomDisorder()
+	message_admins("ForceGainRandomDisorder-start")
+	var/mob/living/carbon/owner = parent
+	message_admins("ForceGainRandomDisorder-start1")
+	var/list/possible_disorders = list()
+	message_admins("ForceGainRandomDisorder-start2")
+	for(var/D in disorders)
+		message_admins("ForceGainRandomDisorder-start3")
+		var/datum/brain_trauma/psychological/disorder = D
+		message_admins("ForceGainRandomDisorder-start4")
+		if(!HAS_TRAIT(owner,disorder.trait))
+			message_admins("ForceGainRandomDisorder-start5")
+			possible_disorders += disorder
+			message_admins("[disorder]")
+	adjustPsychInstability(25)
+	if(length(possible_disorders) == 0)
+		message_admins("ForceGainRandomDisorder-no length")
 		return
-	if(psych_instab == -100)
-		for(var/i in possible_disorders)
-			if(HAS_TRAIT(owner,i.trait) && prob(100/length(possible_disorders)))
-				owner.cure_trauma_type(i , TRAUMA_RESILIENCE_ABSOLUTE)
-		psych_instab = -75
+	var/chosen_disorder = pick(possible_disorders)
+	owner.gain_trauma(chosen_disorder , TRAUMA_RESILIENCE_ABSOLUTE)
+	message_admins("ForceGainRandomDisorder-end")
+/datum/component/mood/proc/ForceCureRandomDisorder()
+	var/mob/living/carbon/owner = parent
+
+	var/list/possible_disorders = list()
+	for(var/D in disorders)
+		var/datum/brain_trauma/psychological/disorder = D
+		if(HAS_TRAIT(owner,disorder.trait))
+			possible_disorders += disorder
+	if(length(possible_disorders) == 0)
 		return
-	if(prob(abs(psych_instab)/1000) && psych_instab > 0)
-		for(var/i in possible_disorders)
-			if(!HAS_TRAIT(owner,i.trait) && prob(100/length(possible_disorders)))
-				owner.gain_trauma(i , TRAUMA_RESILIENCE_ABSOLUTE)
-		psych_instab -= 25
+	var/chosen_disorder = pick(possible_disorders)
+	owner.cure_trauma_type(chosen_disorder , TRAUMA_RESILIENCE_ABSOLUTE)
+	adjustPsychInstability(-25)
+
+/datum/component/mood/proc/RollGainRandomDisorder()
+	if(!prob(abs(psych_instab))/100)
 		return
-	if(prob(abs(psych_instab)/1000) && psych_instab < 0)
-		for(var/i in possible_disorders)
-			if(HAS_TRAIT(owner,i.trait) && prob(100/length(possible_disorders)))
-				owner.cure_trauma_type(i , TRAUMA_RESILIENCE_ABSOLUTE)
-		psych_instab += 25
+	var/mob/living/carbon/owner = parent
+
+	var/list/possible_disorders = list()
+	for(var/D in disorders)
+		var/datum/brain_trauma/psychological/disorder = D
+		if(!HAS_TRAIT(owner,disorder.trait))
+			possible_disorders += disorder
+	if(length(possible_disorders) == 0)
 		return
-///Sets sanity to the specified amount and applies effects.
+	var/chosen_disorder = pick(possible_disorders)
+	owner.gain_trauma(chosen_disorder , TRAUMA_RESILIENCE_ABSOLUTE)
+	adjustPsychInstability(25)
+
+
+/datum/component/mood/proc/RollCureRandomDisorder()
+	if(!prob(abs(psych_instab))/100)
+		return
+	var/mob/living/carbon/owner = parent
+
+	var/list/possible_disorders = list()
+	for(var/D in disorders)
+		var/datum/brain_trauma/psychological/disorder = D
+		if(HAS_TRAIT(owner,disorder.trait))
+			possible_disorders += disorder
+	if(length(possible_disorders) == 0)
+		return
+	var/chosen_disorder = pick(possible_disorders)
+	owner.cure_trauma_type(chosen_disorder , TRAUMA_RESILIENCE_ABSOLUTE)
+	adjustPsychInstability(-25)
+
+
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
 	// If the new amount would move towards the acceptable range faster then use it instead
@@ -374,26 +443,26 @@
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
 
-/datum/component/mood/proc/check_area_mood(datum/source, area/A)
-	update_beauty(A)
-	if(A.mood_bonus)
-		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
+/datum/component/mood/proc/check_area_mood(datum/source, area/DISORDERS)
+	update_beauty(DISORDERS)
+	if(DISORDERS.mood_bonus)
+		add_event(null, "area", /datum/mood_event/area, DISORDERS.mood_bonus, DISORDERS.mood_message)
 	else
 		clear_event(null, "area")
 
-/datum/component/mood/proc/update_beauty(area/A)
-	if(A.outdoors) //if we're outside, we don't care.
+/datum/component/mood/proc/update_beauty(area/DISORDERS)
+	if(DISORDERS.outdoors) //if we're outside, we don't care.
 		clear_event(null, "area_beauty")
 		return FALSE
 	if(HAS_TRAIT(parent, TRAIT_SNOB))
-		switch(A.beauty)
+		switch(DISORDERS.beauty)
 			if(-INFINITY to BEAUTY_LEVEL_HORRID)
 				add_event(null, "area_beauty", /datum/mood_event/horridroom)
 				return
 			if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
 				add_event(null, "area_beauty", /datum/mood_event/badroom)
 				return
-	switch(A.beauty)
+	switch(DISORDERS.beauty)
 		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_DECENT)
 			clear_event(null, "area_beauty")
 		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)

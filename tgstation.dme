@@ -360,6 +360,7 @@
 #include "code\datums\brain_damage\magic.dm"
 #include "code\datums\brain_damage\mild.dm"
 #include "code\datums\brain_damage\phobia.dm"
+#include "code\datums\brain_damage\psychological.dm"
 #include "code\datums\brain_damage\severe.dm"
 #include "code\datums\brain_damage\special.dm"
 #include "code\datums\brain_damage\split_personality.dm"

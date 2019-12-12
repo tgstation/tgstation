@@ -1,3 +1,5 @@
+/datum/brain_trauma/psychological
+	var/trait
 
 /datum/brain_trauma/psychological/depression
 	name = "Depression"
@@ -5,7 +7,7 @@
 	scan_desc = "extensive damage to serotonin receptors"
 	gain_text = "<span class='warning'>You feel emptier inside!</span>"
 	lose_text = "<span class='notice'>You feel whole once again.</span>"
-	var/trait = TRAIT_DEPRESSION
+	trait = TRAIT_DEPRESSION
 
 /datum/brain_trauma/psychological/depression/on_gain()
 	ADD_TRAIT(owner, trait, PSYCH_TRAIT)
