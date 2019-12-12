@@ -76596,6 +76596,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"xQG" = (
+/obj/machinery/camera{
+	c_tag = "Dormitories - Cabin 4";
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/crew_quarters/dorms)
 "xTm" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -111749,7 +111756,7 @@ asT
 aud
 arB
 awC
-aun
+xQG
 arB
 aAd
 aBw
