@@ -97,15 +97,19 @@
 	A.update_body()
 	var/turf/boomspot = get_turf(A)
 
+	//before ghosting to prevent issues
+	log_combat(A, A, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
+	message_admins("[key_name_admin(A)] triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4].")
+
 	to_chat(A, "<span class='userdanger'>The explosion knocks your soul out of your body!</span>")
 	A.ghostize(FALSE) //prevents... horrible memes just believe me
 
 	A.apply_damage(rand(50,70), BRUTE)
-	log_combat(A, A, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
-	message_admins("[key_name_admin(A)] triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4].")
+
 	addtimer(CALLBACK(src,.proc/Apotheosis_end, A), 6 SECONDS)
 	playsound(boomspot, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 	explosion(boomspot,plasma_power,plasma_power*2,plasma_power*4,ignorecap = TRUE)
+	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/carbon/human/dying)
 	dying.dna.species.species_traits -= TRAIT_BOMBIMMUNE
