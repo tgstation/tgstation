@@ -10,7 +10,7 @@
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 50, "fire" = 100, "acid" = 100)
 	max_temperature = 25000
 	infra_luminosity = 3
-	wreckage = /obj/structure/mecha_wreckage/durand
+	//wreckage
 	add_req_access = 1
 	internal_damage_threshold = 25
 	force = 15
@@ -22,6 +22,14 @@
 	. = ..()
 	chen = new(src, src)
 	change_eyes()
+
+/obj/mecha/combat/nerchen/obj_destruction()
+	chen.Destroy()
+	..()
+/obj/mecha/combat/nerchen/Destroy()
+	chen.Destroy()
+	..()
+
 
 /obj/mecha/combat/nerchen/proc/change_eyes() //icon proc
 	var/newicon = initial(icon_state)
@@ -37,6 +45,16 @@
 		newicon += "open"
 	icon_state = newicon
 
+
+
+/obj/mecha/combat/nerchen/moved_inside(mob/living/carbon/human/H)
+	. = ..()
+	change_eyes()
+
+/obj/mecha/combat/nerchen/go_out(forced, atom/newloc = loc)
+	..()
+	change_eyes()
+
 /obj/mecha/combat/nerchen/click_action(atom/target,mob/user,params)
 	to_chat(occupant, "<span class='warning'>You need to be in the other cockpit to punch!</span>")
 	return FALSE
@@ -46,14 +64,6 @@
 		chen.MouseDrop_T(M, user)
 		return
 	..()
-
-/obj/mecha/combat/nerchen/moved_inside(mob/living/carbon/human/H)
-	. = ..()
-	change_eyes()
-
-/obj/mecha/combat/nerchen/go_out(forced, atom/newloc = loc)
-	..()
-	change_eyes()
 
 /obj/mecha/combat/chen
 	desc = "The second seat for the Nerchen."
