@@ -177,10 +177,11 @@
 
 /obj/item/storage/belt/medical/emt/PopulateContents()
 	new /obj/item/flashlight/pen(src)
+	new /obj/item/stack/medical/gauze/twelve(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/glass/bottle/epinephrine(src)
-	new /obj/item/reagent_containers/glass/bottle/syriniver(src)
-	new /obj/item/reagent_containers/glass/bottle/morphine(src)
+	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
+	new /obj/item/reagent_containers/glass/bottle/pen_acid(src)
 	update_icon()
 
 /obj/item/storage/belt/security
