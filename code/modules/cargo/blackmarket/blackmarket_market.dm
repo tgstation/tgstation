@@ -14,17 +14,18 @@
 
 /// Adds item to the available items and add it's category if it is not in categories yet.
 /datum/blackmarket_market/proc/add_item(datum/blackmarket_item/item)
-	if(!istype(item))
+	if(!prob(initial(item.availability_prob)))
 		return FALSE
 
-	if(!prob(item.availability_prob))
-		return FALSE
+	if(ispath(item))
+		item = new item()
 
 	if(!(item.category in categories))
 		categories += item.category
 		available_items[item.category] = list()
 
 	available_items[item.category] += item
+	return TRUE
 
 /// Handles buying the item, this is mainly for future use and moving the code away from the uplink.
 /datum/blackmarket_market/proc/purchase(item, category, method, obj/item/blackmarket_uplink/uplink, user)

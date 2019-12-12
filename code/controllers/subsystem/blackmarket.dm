@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(blackmarket)
 		SHIPPING_METHOD_TELEPORT="Teleports the item in a random area in the station, you get 60 seconds to get there first though."
 	)
 
-	/// List of available markets.
+	/// List of all existing markets.
 	var/list/datum/blackmarket_market/markets		= list()
 	/// List of existing ltsrbts.
 	var/list/obj/machinery/ltsrbt/telepads			= list()
@@ -24,14 +24,17 @@ SUBSYSTEM_DEF(blackmarket)
 	for(var/market in subtypesof(/datum/blackmarket_market))
 		markets[market] += new market
 
-	for(var/datum/blackmarket_item/I in subtypesof(/datum/blackmarket_item))
-		if(!initial(I.item))
+	for(var/item in subtypesof(/datum/blackmarket_item))
+		var/datum/blackmarket_item/I = new item()
+		if(!I.item)
 			continue
 
-		for(var/M in initial(I.markets))
+		for(var/M in I.markets)
 			if(!markets[M])
-				CRASH("SSblackmarket: Item [I.name] available in market that does not exist.")
-			markets[M].add_item(new I())
+				stack_trace("SSblackmarket: Item [I] available in market that does not exist.")
+				continue
+			markets[M].add_item(item)
+		qdel(item)
 	. = ..()
 
 /datum/controller/subsystem/blackmarket/fire(resumed)
