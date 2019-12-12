@@ -83867,10 +83867,13 @@
 	},
 /obj/item/folder/yellow,
 /obj/machinery/door/window/northleft{
-	name = "Chemistry Desk";
-	req_access_txt = "5; 33"
+	name = "Chemistry Desk"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/southleft{
+	name = "Chemistry Desk";
+	req_access_txt = "5; 69"
+	},
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "cZw" = (
@@ -87225,14 +87228,14 @@
 	name = "Chemistry Shutter Control";
 	pixel_x = -26;
 	pixel_y = -7;
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /obj/machinery/button/door{
 	id = "chemisttop";
 	name = "Chemistry Shutter Control";
 	pixel_x = -26;
 	pixel_y = 7;
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -88142,7 +88145,7 @@
 /obj/machinery/door/window/southleft{
 	dir = 8;
 	name = "Chemistry Desk";
-	req_access_txt = "5; 33"
+	req_access_txt = "5; 69"
 	},
 /obj/machinery/door/window/eastright{
 	name = "Chemistry Desk"
@@ -88924,7 +88927,7 @@
 /obj/machinery/door/window/southleft{
 	dir = 4;
 	name = "Chemistry Desk";
-	req_access_txt = "5; 33"
+	req_access_txt = "5; 69"
 	},
 /obj/item/folder/white,
 /obj/item/pen,
@@ -89978,7 +89981,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry Lab";
-	req_access_txt = "5; 33"
+	req_access_txt = "5; 69"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
