@@ -1,3 +1,5 @@
+#define PER_ITERATION_XP_CAP	3 //TW XP gain scales with repeated iterations.
+
 /datum/surgery/healing
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
@@ -48,11 +50,11 @@
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(..())
-		experience_given += 0.25
+		experience_given = min(experience_given+0.25,PER_ITERATION_XP_CAP)
 		while((brutehealing && target.getBruteLoss()) || (burnhealing && target.getFireLoss()))
 			if(!..())
 				break
-			experience_given += 0.25
+			experience_given = min(experience_given+0.25,PER_ITERATION_XP_CAP)
 
 /datum/surgery_step/heal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/umsg = "You succeed in fixing some of [target]'s wounds" //no period, add initial space to "addons"
@@ -216,3 +218,5 @@
 		"<span class='warning'>[user] screws up!</span>",
 		"<span class='notice'>[user] fixes some of [target]'s wounds.</span>", TRUE)
 	target.take_bodypart_damage(5,5)
+
+#undef PER_ITERATION_XP_CAP
