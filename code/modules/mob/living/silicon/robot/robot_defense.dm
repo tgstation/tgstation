@@ -5,6 +5,13 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	/obj/item/clothing/head/helmet/space/eva \
 	)))
 
+/mob/living/silicon/robot/attack_robot(mob/user)
+	. = ..()
+	if(user == src && buckled_mobs.len && user.a_intent == INTENT_HELP)
+		for(var/i in buckled_mobs)
+			var/mob/buckmob = i
+			unbuckle_mob(buckmob)
+
 /mob/living/silicon/robot/attackby(obj/item/I, mob/living/user)
 	if(I.slot_flags & ITEM_SLOT_HEAD && hat_offset != INFINITY && user.a_intent == INTENT_HELP && !is_type_in_typecache(I, GLOB.blacklisted_borg_hats))
 		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
