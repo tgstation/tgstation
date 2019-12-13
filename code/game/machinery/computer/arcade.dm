@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
 		visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
-		SSmedals.UnlockMedal(MEDAL_PULSE, user.client)
+		user.client.give_award(/datum/award/achievement/misc/pulse, user)
 		return
 
 	if(!contents.len)
@@ -118,6 +118,19 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		new empprize(loc)
 	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
+/obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/stack/arcadeticket))
+		var/obj/item/stack/arcadeticket/T = O
+		var/amount = T.get_amount()
+		if(amount <2)
+			to_chat(user, "<span class='warning'>You need 2 tickets to claim a prize!</span>")
+			return
+		prizevend(user)
+		T.pay_tickets()
+		T.update_icon()
+		O = T
+		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
+		return
 
 // ** BATTLE ** //
 
@@ -341,6 +354,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 // *** THE ORION TRAIL ** //
 
+/obj/item/gamer_pamphlet
+	name = "pamphlet - \'Violent Video Games and You\'"
+	desc = "A pamphlet encouraging the reader to maintain a balanced lifestyle and take care of their mental health, while still enjoying video games in a healthy way. You probably don't need this..."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "pamphlet"
+	item_state = "paper"
+	w_class = WEIGHT_CLASS_TINY
+
+
 #define ORION_TRAIL_WINTURN		9
 
 //Orion Trail Events
@@ -397,6 +419,20 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/gameStatus = ORION_STATUS_START
 	var/canContinueEvent = 0
 
+	var/obj/item/radio/Radio
+	var/list/gamers = list()
+	var/killed_crew = 0
+
+
+/obj/machinery/computer/arcade/orion_trail/Initialize()
+	. = ..()
+	Radio = new /obj/item/radio(src)
+	Radio.listening = 0
+
+/obj/machinery/computer/arcade/orion_trail/Destroy()
+	QDEL_NULL(Radio)
+	return ..()
+
 /obj/machinery/computer/arcade/orion_trail/kobayashi
 	name = "Kobayashi Maru control computer"
 	desc = "A test for cadets"
@@ -438,11 +474,45 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	event = null
 	gameStatus = ORION_STATUS_NORMAL
 	lings_aboard = 0
+	killed_crew = 0
 
 	//spaceport junk
 	spaceport_raided = 0
 	spaceport_freebie = 0
 	last_spaceport_action = ""
+
+/obj/machinery/computer/arcade/orion_trail/proc/report_player(mob/gamer)
+	if(gamers[gamer] == -2)
+		return // enough harassing them
+
+	if(gamers[gamer] == -1)
+		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
+		new /obj/item/gamer_pamphlet(get_turf(src))
+		gamers[gamer]--
+		return
+
+	if(!(gamer in gamers))
+		gamers[gamer] = 0
+
+	gamers[gamer]++ // How many times the player has 'prestiged' (massacred their crew)
+
+	if(gamers[gamer] > 2 && prob(20 * gamers[gamer]))
+
+		Radio.set_frequency(FREQ_SECURITY)
+		Radio.talk_into(src, "SECURITY ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please watch for violent behavior.", FREQ_SECURITY)
+
+		Radio.set_frequency(FREQ_MEDICAL)
+		Radio.talk_into(src, "PSYCH ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
+
+		gamers[gamer] = -1
+
+		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
+
+		if(!isnull(GLOB.data_core.general))
+			for(var/datum/data/record/R in GLOB.data_core.general)
+				if(R.fields["name"] == gamer.name)
+					R.fields["m_stat"] = "*Unstable*"
+					return
 
 /obj/machinery/computer/arcade/orion_trail/ui_interact(mob/user)
 	. = ..()
@@ -676,6 +746,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(gameStatus == ORION_STATUS_NORMAL || event == ORION_TRAIL_LING)
 			var/sheriff = remove_crewmember() //I shot the sheriff
 			playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
+			killed_crew++
 
 			if(settlers.len == 0 || alive == 0)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
@@ -684,6 +755,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 					obj_flags &= EMAGGED
 				gameStatus = ORION_STATUS_GAMEOVER
 				event = null
+
+				if(killed_crew >= 4)
+					report_player(usr)
 			else if(obj_flags & EMAGGED)
 				if(usr.name == sheriff)
 					say("The crew of the ship chose to kill [usr.name]!")
@@ -691,6 +765,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 			if(event == ORION_TRAIL_LING) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
 				event = null
+				killed_crew-- // the kill was valid
 
 	//Spaceport specific interactions
 	//they get a header because most of them don't reset event (because it's a shop, you leave when you want to)
@@ -703,6 +778,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				fuel -= 10
 				food -= 10
 				event()
+				killed_crew-- // I mean not really but you know
 
 	else if(href_list["sellcrew"]) //sell a crewmember
 		if(gameStatus == ORION_STATUS_MARKET)
@@ -1197,6 +1273,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			prizevend(user)
 	else
 		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
+
+/obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
+	name = "Mediborg's Festive Amputation Adventure"
+	desc = "A picture of a blood-soaked medical cyborg wearing a Santa hat flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
+	prize_override = list(/obj/item/a_gift/anything = 1)
 
 #undef ORION_TRAIL_WINTURN
 #undef ORION_TRAIL_RAIDERS

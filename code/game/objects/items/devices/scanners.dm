@@ -254,25 +254,25 @@ GENE SCANNER
 		var/list/damaged = C.get_damaged_bodyparts(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
 			var/list/dmgreport = list()
-			dmgreport += "<table style='margin-left:33px'><tr><font face='Verdana'>\
-							<td style='width: 90px;'><font color='#0000CC'>Damage:</font></td>\
-							<td style='width: 55px;'><font color='red'><b>Brute</b></font></td>\
-							<td style='width: 45px;'><font color='orange'><b>Burn</b></font></td>\
-							<td style='width: 45px;'><font color='green'><b>Toxin</b></font></td>\
-							<td style='width: 90px;'><font color='purple'><b>Suffocation</b></font></td></tr>\
+			dmgreport += "<table style='margin-left:3em'><tr><font face='Verdana'>\
+							<td style='width:7em;'><font color='#0000CC'>Damage:</font></td>\
+							<td style='width:5em;'><font color='red'><b>Brute</b></font></td>\
+							<td style='width:4em;'><font color='orange'><b>Burn</b></font></td>\
+							<td style='width:4em;'><font color='green'><b>Toxin</b></font></td>\
+							<td style='width:8em;'><font color='purple'><b>Suffocation</b></font></td></tr>\
 
 							<tr><td><font color='#0000CC'>Overall:</font></td>\
-							<td><font color='red'>[brute_loss]</font></td>\
-							<td><font color='orange'>[fire_loss]</font></td>\
-							<td><font color='green'>[tox_loss]</font></td>\
-							<td><font color='purple'>[oxy_loss]</font></td></tr>"
+							<td><font color='red'>[CEILING(brute_loss,1)]</font></td>\
+							<td><font color='orange'>[CEILING(fire_loss,1)]</font></td>\
+							<td><font color='green'>[CEILING(tox_loss,1)]</font></td>\
+							<td><font color='blue'>[CEILING(oxy_loss,1)]</font></td></tr>"
 
 			for(var/o in damaged)
 				var/obj/item/bodypart/org = o //head, left arm, right arm, etc.
 				dmgreport += "<tr><td><font color='#0000CC'>[capitalize(org.name)]:</font></td>\
-								<td><font color='red'>[(org.brute_dam > 0) ? "[org.brute_dam]" : "0"]</font></td>\
-								<td><font color='orange'>[(org.burn_dam > 0) ? "[org.burn_dam]" : "0"]</font></td></tr>"
-			dmgreport += "</table>"
+								<td><font color='red'>[(org.brute_dam > 0) ? "[CEILING(org.brute_dam,1)]" : "0"]</font></td>\
+								<td><font color='orange'>[(org.burn_dam > 0) ? "[CEILING(org.burn_dam,1)]" : "0"]</font></td></tr>"
+			dmgreport += "</font></table>"
 			to_chat(user, dmgreport.Join())
 
 
@@ -301,7 +301,7 @@ GENE SCANNER
 					major_damage += ", "
 					major_damage += organ.name
 				else
-					major_damage = "\t<span class='info'>Severely Damaged Organs: "
+					major_damage = "\t<span class='info'>Severely Damaged Organs: </span>"
 					major_damage += organ.name
 			else if(organ.damage > organ.low_threshold)
 				report_organs = TRUE
@@ -309,7 +309,7 @@ GENE SCANNER
 					minor_damage += ", "
 					minor_damage += organ.name
 				else
-					minor_damage = "\t<span class='info'>Mildly Damaged Organs: "
+					minor_damage = "\t<span class='info'>Mildly Damaged Organs: </span>"
 					minor_damage += organ.name
 
 		if(report_organs)	//we either finish the list, or set it to be empty if no organs were reported in that category
@@ -774,7 +774,7 @@ GENE SCANNER
 	if(istype(O, /obj/machinery/computer/scan_consolenew))
 		var/obj/machinery/computer/scan_consolenew/C = O
 		if(C.stored_research)
-			to_chat(user, "<span class='notice'>[name] database updated.</span>")
+			to_chat(user, "<span class='notice'>[name] linked to central research database.</span>")
 			discovered = C.stored_research.discovered_mutations
 		else
 			to_chat(user,"<span class='warning'>No database to update from.</span>")
@@ -796,7 +796,7 @@ GENE SCANNER
 	for(var/A in buffer)
 		options += get_display_name(A)
 
-	var/answer = input(user, "Analyze Potential", "Sequence Analyzer")  as null|anything in options
+	var/answer = input(user, "Analyze Potential", "Sequence Analyzer")  as null|anything in sortList(options)
 	if(answer && ready && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		var/sequence
 		for(var/A in buffer) //this physically hurts but i dont know what anything else short of an assoc list
@@ -829,3 +829,43 @@ GENE SCANNER
 		return  "[HM.name] ([HM.alias])"
 	else
 		return HM.alias
+
+/obj/item/scanner_wand
+	name = "kiosk scanner wand"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "scanner_wand"
+	item_state = "healthanalyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	desc = "An wand for scanning someone else for a medical analysis. Insert into a kiosk is make the scanned patient the target of a health scan."
+	force = 0
+	throwforce = 0
+	w_class = WEIGHT_CLASS_TINY
+	var/selected_target = null
+
+/obj/item/scanner_wand/attack(mob/living/M, mob/living/carbon/human/user)
+	flick("[icon_state]_active", src)	//nice little visual flash when scanning someone else.
+
+	if((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(25))
+		user.visible_message("<span class='warning'>[user] targets himself for scanning.</span>", \
+		to_chat(user, "<span class='info'>You try scanning [M], before realizing you're holding the scanner backwards. Whoops.</span>"))
+		selected_target = user
+		return
+
+	if(!ishuman(M))
+		to_chat(user, "<span class='info'>You can only scan human-like, non-robotic beings.</span>")
+		selected_target = null
+		return
+
+	user.visible_message("<span class='notice'>[user] targets [M] for scanning.</span>", \
+						"<span class='notice'>You target [M] vitals.</span>")
+	selected_target = M
+	return
+
+/obj/item/scanner_wand/attack_self(mob/user)
+	to_chat(user, "<span class='info'>You clear the scanner's target.</span>")
+	selected_target = null
+
+/obj/item/scanner_wand/proc/return_patient()
+	var/returned_target = selected_target
+	return returned_target

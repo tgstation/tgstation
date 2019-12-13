@@ -18,7 +18,6 @@
 	var/shoot_sound = 'sound/weapons/laser.ogg'
 	var/projectile = /obj/projectile/beam/disabler
 	var/fair_market_projectile = /obj/projectile/bullet/c38 // For shooting the worst scumbags of all: the poor
-	do_footstep = TRUE
 
 /mob/living/simple_animal/bot/secbot/ed209/Initialize(mapload)
 	. = ..()

@@ -83,7 +83,7 @@
 				update_icon()
 				return
 			else
-				to_chat(user, "<span class='notice'>[src] already has \a [cell] installed!</span>")
+				to_chat(user, "<span class='warning'>[src] already has \a [cell] installed!</span>")
 				return
 
 	if(cantbeused(user))
@@ -105,7 +105,7 @@
 	var/obj/O
 	var/coefficient = 1
 	if(istype(A, /obj/item/gun/energy))
-		to_chat(user,"Error unable to interface with device")
+		to_chat(user, "<span class='alert'>Error unable to interface with device.</span>")
 		return FALSE
 	if(istype(A, /obj))
 		O = A

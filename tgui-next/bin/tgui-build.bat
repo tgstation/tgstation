@@ -1,4 +1,5 @@
 @echo off
 cd "%~dp0\.."
-call npm ci
-call npm run build
+call yarn install
+call yarn run build
+timeout /t 9

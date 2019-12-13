@@ -36,7 +36,7 @@
 	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
 	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
 
-/obj/item/seeds/Initialize(loc, nogenes = 0)
+/obj/item/seeds/Initialize(mapload, nogenes = 0)
 	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
@@ -360,10 +360,10 @@
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if (length(newplantname) > 20)
-					to_chat(user, "That name is too long!")
+					to_chat(user, "<span class='warning'>That name is too long!</span>")
 					return
 				if(!newplantname)
-					to_chat(user, "That name is invalid.")
+					to_chat(user, "<span class='warning'>That name is invalid.</span>")
 					return
 				else
 					name = "[lowertext(newplantname)]"
@@ -373,10 +373,10 @@
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if (length(newdesc) > 180)
-					to_chat(user, "That description is too long!")
+					to_chat(user, "<span class='warning'>That description is too long!</span>")
 					return
 				if(!newdesc)
-					to_chat(user, "That description is invalid.")
+					to_chat(user, "<span class='warning'>That description is invalid.</span>")
 					return
 				else
 					desc = newdesc
@@ -387,10 +387,10 @@
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if (length(newproductdesc) > 180)
-					to_chat(user, "That description is too long!")
+					to_chat(user, "<span class='warning'>That description is too long!</span>")
 					return
 				if(!newproductdesc)
-					to_chat(user, "That description is invalid.")
+					to_chat(user, "<span class='warning'>That description is invalid.</span>")
 					return
 				else
 					productdesc = newproductdesc

@@ -1,7 +1,12 @@
 import { Button, Flex, NoticeBox } from '../../components';
 
 export const InterfaceLockNoticeBox = props => {
-  const { siliconUser, locked, onLockStatusChange } = props;
+  const {
+    siliconUser,
+    locked,
+    onLockStatusChange,
+    accessText,
+  } = props;
   // For silicon users
   if (siliconUser) {
     return (
@@ -30,7 +35,8 @@ export const InterfaceLockNoticeBox = props => {
   // For everyone else
   return (
     <NoticeBox>
-      Swipe an ID card to {locked ? 'unlock' : 'lock'} this interface.
+      Swipe {accessText || 'an ID card'}{' '}
+      to {locked ? 'unlock' : 'lock'} this interface.
     </NoticeBox>
   );
 };

@@ -1,10 +1,16 @@
 // simple is_type and similar inline helpers
 
+#if DM_VERSION < 513
 #define islist(L) (istype(L, /list))
+#endif
 
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
 
+#if DM_VERSION < 513
 #define ismovableatom(A) (istype(A, /atom/movable))
+#else
+#define ismovableatom(A) ismovable(A)
+#endif
 
 #define isatom(A) (isloc(A))
 
@@ -138,46 +144,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
-GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
-	/mob/living/carbon/human/,
-	/mob/living/simple_animal/cow,
-	/mob/living/simple_animal/hostile/cat_butcherer,
-	/mob/living/simple_animal/hostile/faithless,
-	/mob/living/simple_animal/hostile/nanotrasen,
-	/mob/living/simple_animal/hostile/pirate,
-	/mob/living/simple_animal/hostile/russian,
-	/mob/living/simple_animal/hostile/syndicate,
-	/mob/living/simple_animal/hostile/wizard,
-	/mob/living/simple_animal/hostile/zombie,
-	/mob/living/simple_animal/hostile/retaliate/clown,
-	/mob/living/simple_animal/hostile/retaliate/spaceman,
-	/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace,
-	/mob/living/simple_animal/hostile/retaliate/goat,
-	/mob/living/carbon/true_devil,
-	)))
-
-GLOBAL_LIST_INIT(clawfootmob, typecacheof(list(
-	/mob/living/carbon/alien/humanoid,
-	/mob/living/simple_animal/hostile/alien,
-	/mob/living/simple_animal/pet/cat,
-	/mob/living/simple_animal/pet/dog,
-	/mob/living/simple_animal/pet/fox,
-	/mob/living/simple_animal/chicken,
-	/mob/living/simple_animal/hostile/bear,
-	/mob/living/simple_animal/hostile/jungle/mega_arachnid
-	)))
-
-GLOBAL_LIST_INIT(barefootmob, typecacheof(list(
-	/mob/living/carbon/monkey,
-	/mob/living/simple_animal/pet/penguin,
-	/mob/living/simple_animal/hostile/gorilla,
-	/mob/living/simple_animal/hostile/jungle/mook
-	)))
-
-GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
-	/mob/living/simple_animal/hostile/megafauna,
-	/mob/living/simple_animal/hostile/jungle/leaper
-	)))
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -192,19 +158,12 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 
 #define isaicamera(A) (istype(A, /mob/camera/aiEye))
 
-//Footstep helpers
-#define isshoefoot(A) (is_type_in_typecache(A, GLOB.shoefootmob))
-
-#define isclawfoot(A) (is_type_in_typecache(A, GLOB.clawfootmob))
-
-#define isbarefoot(A) (is_type_in_typecache(A, GLOB.barefootmob))
-
-#define isheavyfoot(A) (is_type_in_typecache(A, GLOB.heavyfootmob))
-
 //Objects
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
 #define isitem(A) (istype(A, /obj/item))
+
+#define isidcard(I) (istype(I, /obj/item/card/id))
 
 #define isstructure(A) (istype(A, /obj/structure))
 

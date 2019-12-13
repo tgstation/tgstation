@@ -1,12 +1,13 @@
 import { classes, pureComponentHooks } from 'common/react';
+import { tridentVersion } from '../byond';
+import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
+import { createLogger } from '../logging';
+import { refocusLayout } from '../refocus';
 import { Box } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 
-export const BUTTON_ACTIVATION_KEYCODES = [
-  13, // Enter
-  32, // Space
-];
+const logger = createLogger('Button');
 
 export const Button = props => {
   const {
@@ -18,14 +19,24 @@ export const Button = props => {
     selected,
     tooltip,
     tooltipPosition,
+    ellipsis,
     content,
     children,
+    onclick,
     onClick,
     ...rest
   } = props;
   const hasContent = !!(content || children);
-  // NOTE: Lowercase "onclick" and unselectable is used for
-  // compatibility with IE8. Do not change it!
+  // A warning about the lowercase onclick
+  if (onclick) {
+    logger.warn(
+      `Lowercase 'onclick' is not supported on Button and lowercase`
+      + ` prop names are discouraged in general. Please use a camelCase`
+      + `'onClick' instead and read: `
+      + `https://infernojs.org/docs/guides/event-handling`);
+  }
+  // IE8: Use a lowercase "onclick" because synthetic events are fucked.
+  // IE8: Use an "unselectable" prop because "user-select" doesn't work.
   return (
     <Box as="span"
       className={classes([
@@ -34,24 +45,35 @@ export const Button = props => {
         disabled && 'Button--disabled',
         selected && 'Button--selected',
         hasContent && 'Button--hasContent',
+        ellipsis && 'Button--ellipsis',
         (color && typeof color === 'string')
           ? 'Button--color--' + color
-          : 'Button--color--normal',
+          : 'Button--color--default',
         className,
       ])}
-      tabindex={!disabled && '0'}
-      unselectable={true}
+      tabIndex={!disabled && '0'}
+      unselectable={tridentVersion <= 4}
       onclick={e => {
-        if (disabled || !onClick) {
+        refocusLayout();
+        if (!disabled && onClick) {
+          onClick(e);
+        }
+      }}
+      onKeyDown={e => {
+        const keyCode = window.event ? e.which : e.keyCode;
+        // Simulate a click when pressing space or enter.
+        if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
+          e.preventDefault();
+          if (!disabled && onClick) {
+            onClick(e);
+          }
           return;
         }
-        onClick(e);
-      }}
-      onKeyPress={e => {
-        const keyCode = window.event ? e.which : e.keyCode;
-        if (BUTTON_ACTIVATION_KEYCODES.includes(keyCode)) {
+        // Refocus layout on pressing escape.
+        if (keyCode === KEY_ESCAPE) {
           e.preventDefault();
-          onClick(e);
+          refocusLayout();
+          return;
         }
       }}
       {...rest}>
@@ -70,3 +92,16 @@ export const Button = props => {
 };
 
 Button.defaultHooks = pureComponentHooks;
+
+export const ButtonCheckbox = props => {
+  const { checked, ...rest } = props;
+  return (
+    <Button
+      color="transparent"
+      icon={checked ? 'check-square-o' : 'square-o'}
+      selected={checked}
+      {...rest} />
+  );
+};
+
+Button.Checkbox = ButtonCheckbox;

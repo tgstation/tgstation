@@ -38,6 +38,9 @@
 	var/siphoned_power = 0
 	var/siphon_max = 1e7
 
+	ui_x = 300
+	ui_y = 120
+
 
 /obj/machinery/computer/monitor/examine(mob/user)
 	. = ..()
@@ -130,7 +133,7 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "vault_controller", name, 300, 150, master_ui, state)
+		ui = new(user, src, ui_key, "vault_controller", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 
@@ -203,3 +206,10 @@
 			M.visible_message("<span class='notice'>[user] teaches [M] by beating [M.p_them()] over the head with [src]!</span>", "<span class='boldnotice'>As [user] hits you with [src], chitters resonate in your mind.</span>", "<span class='hear'>You hear smacking.</span>")
 			M.grant_language(/datum/language/drone)
 		return
+
+/obj/structure/fluff/oldturret
+	name = "broken turret"
+	desc = "An obsolete model of turret, long non-functional."
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "turretCover"
+	density = TRUE

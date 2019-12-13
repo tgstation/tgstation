@@ -106,7 +106,9 @@
 		            /obj/item/clothing/shoes/cowboy/black = 2,
 		            /obj/item/clothing/suit/jacket/miljacket = 1,
 		            /obj/item/clothing/suit/apron/purple_bartender = 2,
-		            /obj/item/clothing/under/rank/civilian/bartender/purple = 2)
+		            /obj/item/clothing/under/rank/civilian/bartender/purple = 2,
+		            /obj/item/clothing/suit/toggle/suspenders/blue = 2,
+		            /obj/item/clothing/suit/toggle/suspenders/gray = 2)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 1,
 					  /obj/item/clothing/under/syndicate/tacticool/skirt = 1,
 		              /obj/item/clothing/mask/balaclava = 1,

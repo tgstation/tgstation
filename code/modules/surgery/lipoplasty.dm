@@ -21,7 +21,7 @@
 			"<span class='notice'>[user] begins to cut away [target]'s excess fat.</span>",
 			"<span class='notice'>[user] begins to cut [target]'s [target_zone] with [tool].</span>")
 
-/datum/surgery_step/cut_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/cut_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	display_results(user, target, "<span class='notice'>You cut [target]'s excess fat loose.</span>",
 			"<span class='notice'>[user] cuts [target]'s excess fat loose!</span>",
 			"<span class='notice'>[user] finishes the cut on [target]'s [target_zone].</span>")
@@ -38,7 +38,7 @@
 			"<span class='notice'>[user] begins to extract [target]'s loose fat!</span>",
 			"<span class='notice'>[user] begins to extract something from [target]'s [target_zone].</span>")
 
-/datum/surgery_step/remove_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/remove_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	display_results(user, target, "<span class='notice'>You extract [target]'s fat.</span>",
 			"<span class='notice'>[user] extracts [target]'s fat!</span>",
 			"<span class='notice'>[user] extracts [target]'s fat!</span>")
@@ -59,4 +59,4 @@
 	newmeat.subjectjob = H.job
 	newmeat.reagents.add_reagent (/datum/reagent/consumable/nutriment, (removednutriment / 15)) //To balance with nutriment_factor of nutriment
 	newmeat.forceMove(target.loc)
-	return 1
+	return ..(default_display_results = FALSE)

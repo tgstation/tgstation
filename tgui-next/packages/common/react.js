@@ -1,37 +1,18 @@
 /**
  * Helper for conditionally adding/removing classes in React
  *
- * @copyright 2018 Aleksej Komarov
- * @license GPL-2.0-or-later
- *
+ * @param {any[]} classNames
  * @return {string}
  */
-export const classes = (...args) => {
-  const classNames = [];
-  const hasOwn = Object.prototype.hasOwnProperty;
-  for (let i = 0; i < args.length; i++) {
-    const arg = args[i];
-    if (!arg) {
-      continue;
-    }
-    if (typeof arg === 'string' || typeof arg === 'number') {
-      classNames.push(arg);
-    }
-    else if (Array.isArray(arg) && arg.length) {
-      const inner = classes.apply(null, arg);
-      if (inner) {
-        classNames.push(inner);
-      }
-    }
-    else if (typeof arg === 'object') {
-      for (let key in arg) {
-        if (hasOwn.call(arg, key) && arg[key]) {
-          classNames.push(key);
-        }
-      }
+export const classes = classNames => {
+  let className = '';
+  for (let i = 0; i < classNames.length; i++) {
+    const part = classNames[i];
+    if (typeof part === 'string') {
+      className += part + ' ';
     }
   }
-  return classNames.join(' ');
+  return className;
 };
 
 /**
@@ -40,7 +21,7 @@ export const classes = (...args) => {
  */
 export const normalizeChildren = children => {
   if (Array.isArray(children)) {
-    return children.filter(value => value);
+    return children.flat().filter(value => value);
   }
   if (typeof children === 'object') {
     return [children];
@@ -74,4 +55,13 @@ export const pureComponentHooks = {
   onComponentShouldUpdate: (lastProps, nextProps) => {
     return shallowDiffers(lastProps, nextProps);
   },
+};
+
+/**
+ * A helper to determine whether to render an item.
+ */
+export const isFalsy = value => {
+  return value === undefined
+    || value === null
+    || value === false;
 };

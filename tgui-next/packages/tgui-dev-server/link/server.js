@@ -1,13 +1,19 @@
 import { createLogger, directLog } from 'common/logging.js';
 import http from 'http';
+import { inspect } from 'util';
 import WebSocket from 'ws';
+import { retrace, loadSourceMaps } from './retrace.js';
 
 const logger = createLogger('link');
+
+const DEBUG = process.argv.includes('--debug');
+
+export { loadSourceMaps };
 
 export const setupLink = () => {
   logger.log('setting up');
   const wss = setupWebSocketLink();
-  setupSimpleLink();
+  setupHttpLink();
   return {
     wss,
   };
@@ -23,12 +29,37 @@ export const broadcastMessage = (link, msg) => {
   }
 };
 
+const deserializeObject = obj => {
+  return JSON.parse(obj, (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (value.__type__ === 'error') {
+        return retrace(value.stack);
+      }
+      return value;
+    }
+    return value;
+  });
+};
+
 const handleLinkMessage = msg => {
   const { type, payload } = msg;
 
   if (type === 'log') {
-    const { ns, args } = payload;
-    directLog(ns, ...args);
+    const { level, ns, args } = payload;
+    // Skip debug messages
+    if (level <= 0 && !DEBUG) {
+      return;
+    }
+    directLog(ns, ...args.map(arg => {
+      if (typeof arg === 'object') {
+        return inspect(arg, {
+          depth: Infinity,
+          colors: true,
+          compact: 8,
+        });
+      }
+      return arg;
+    }));
     return;
   }
 
@@ -37,7 +68,6 @@ const handleLinkMessage = msg => {
 
 // WebSocket-based client link
 const setupWebSocketLink = () => {
-  const logger = createLogger('link');
   const port = 3000;
   const wss = new WebSocket.Server({ port });
 
@@ -45,7 +75,7 @@ const setupWebSocketLink = () => {
     logger.log('client connected');
 
     ws.on('message', json => {
-      const msg = JSON.parse(json);
+      const msg = deserializeObject(json);
       handleLinkMessage(msg);
     });
 
@@ -59,8 +89,7 @@ const setupWebSocketLink = () => {
 };
 
 // One way HTTP-based client link for IE8
-const setupSimpleLink = () => {
-  const logger = createLogger('link');
+const setupHttpLink = () => {
   const port = 3001;
 
   const server = http.createServer((req, res) => {
@@ -76,6 +105,7 @@ const setupSimpleLink = () => {
       });
       return;
     }
+    res.write('Hello');
     res.end();
   });
 

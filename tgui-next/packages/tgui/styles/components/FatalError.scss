@@ -1,0 +1,92 @@
+.FatalError {
+  display: block !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px;
+  font-size: 12px;
+  font-family: Consolas, monospace;
+  color: #ffffff;
+  background-color: #0000dd;
+  z-index: 1000;
+  overflow: hidden;
+  text-align: center;
+}
+
+.FatalError__logo {
+  display: inline-block;
+  text-align: left;
+  font-size: 10px;
+  line-height: 8px;
+  position: relative;
+  margin-top: 12px;
+  top: 0;
+  left: 0;
+  animation:
+    FatalError__rainbow 2s linear infinite alternate,
+    FatalError__shadow 4s linear infinite alternate,
+    FatalError__tfmX 3s infinite alternate,
+    FatalError__tfmY 4s infinite alternate;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.FatalError__header {
+  margin-top: 12px;
+}
+
+.FatalError__stack {
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.FatalError__footer {
+  margin-bottom: 24px;
+}
+
+@keyframes FatalError__rainbow {
+  0% {
+    color: #ff0;
+  }
+  50% {
+    color: #0ff;
+  }
+  100% {
+    color: #f0f;
+  }
+}
+
+@keyframes FatalError__shadow {
+  0% {
+    left: -2px;
+    text-shadow: 4px 0 #f0f;
+  }
+  50% {
+    left: 0px;
+    text-shadow: 0px 0 #0ff;
+  }
+  100% {
+    left: 2px;
+    text-shadow: -4px 0 #ff0;
+  }
+}
+
+@keyframes FatalError__tfmX {
+  0% {
+    left: 15px;
+  }
+  100% {
+    left: -15px;
+  }
+}
+
+@keyframes FatalError__tfmY {
+  100% {
+    top: -15px;
+  }
+}

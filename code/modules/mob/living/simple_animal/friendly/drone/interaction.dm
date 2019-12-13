@@ -68,7 +68,7 @@
 		return
 	user.visible_message("<span class='notice'>[user] begins to reactivate [src].</span>", "<span class='notice'>You begin to reactivate [src]...</span>")
 	if(do_after(user, 30, 1, target = src))
-		revive(full_heal = 1)
+		revive(full_heal = TRUE, admin_revive = FALSE)
 		user.visible_message("<span class='notice'>[user] reactivates [src]!</span>", "<span class='notice'>You reactivate [src].</span>")
 		alert_drones(DRONE_NET_CONNECT)
 		if(G)
@@ -116,7 +116,7 @@
 	if(hack)
 		if(hacked)
 			return
-			Stun(40)
+		Stun(40)
 		visible_message("<span class='warning'>[src]'s display glows a vicious red!</span>", \
 						"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
 		to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")

@@ -8,23 +8,24 @@
 	var/obj/item/pda/storedpda = null
 	var/list/colorlist = list()
 
-
-/obj/machinery/pdapainter/update_icon()
-	cut_overlays()
-
+/obj/machinery/pdapainter/update_icon_state()
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 		return
-
-	if(storedpda)
-		add_overlay("[initial(icon_state)]-closed")
 
 	if(powered())
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
 
-	return
+/obj/machinery/pdapainter/update_overlays()
+	. = ..()
+
+	if(stat & BROKEN)
+		return
+
+	if(storedpda)
+		. += "[initial(icon_state)]-closed"
 
 /obj/machinery/pdapainter/Initialize()
 	. = ..()
@@ -113,7 +114,7 @@
 			to_chat(user, "<span class='info'>You manage to eject the loaded PDA.</span>")
 		else
 			var/obj/item/pda/P
-			P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
+			P = input(user, "Select your color!", "PDA Painting") as null|anything in sortNames(colorlist)
 			if(!P)
 				return
 			if(!in_range(src, user))

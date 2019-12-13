@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - refactor: "Removed some stinky smells from hailer mask code."

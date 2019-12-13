@@ -167,9 +167,9 @@
 
 	if(istype(W, /obj/item/mmi))
 		if(mmi_move_inside(W,user))
-			to_chat(user, "[src]-[W] interface initialized successfully.")
+			to_chat(user, "<span class='notice'>[src]-[W] interface initialized successfully.</span>")
 		else
-			to_chat(user, "[src]-[W] interface initialization failed.")
+			to_chat(user, "<span class='warning'>[src]-[W] interface initialization failed.</span>")
 		return
 
 	if(istype(W, /obj/item/mecha_ammo))
@@ -203,7 +203,7 @@
 				cell = C
 				log_message("Powercell installed", LOG_MECHA)
 			else
-				to_chat(user, "<span class='notice'>There's already a power cell installed.</span>")
+				to_chat(user, "<span class='warning'>There's already a power cell installed!</span>")
 		return
 
 	if(istype(W, /obj/item/stock_parts/scanning_module))
@@ -217,7 +217,7 @@
 				log_message("[W] installed", LOG_MECHA)
 				update_part_values()
 			else
-				to_chat(user, "<span class='notice'>There's already a scanning module installed.</span>")
+				to_chat(user, "<span class='warning'>There's already a scanning module installed!</span>")
 		return
 
 	if(istype(W, /obj/item/stock_parts/capacitor))
@@ -231,7 +231,7 @@
 				log_message("[W] installed", LOG_MECHA)
 				update_part_values()
 			else
-				to_chat(user, "<span class='notice'>There's already a capacitor installed.</span>")
+				to_chat(user, "<span class='warning'>There's already a capacitor installed!</span>")
 		return
 
 	if(istype(W, /obj/item/stack/cable_coil))

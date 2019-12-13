@@ -52,7 +52,7 @@
 		send_speech(message, 7, T, "robot", message_language = language)
 		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
 	else
-		to_chat(src, "No holopad connected.")
+		to_chat(src, "<span class='alert'>No holopad connected.</span>")
 
 
 // Make sure that the code compiles with AI_VOX undefined
