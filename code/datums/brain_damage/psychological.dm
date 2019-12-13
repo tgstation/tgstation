@@ -33,7 +33,7 @@
 	scan_desc = "Underdeveloped hemisphere to hemisphere connections"
 	var/dumb_thing = TRUE
 
-/datum/brain_trauma/psychological/social_anxiety/on_process()
+/datum/brain_trauma/psychological/social_anxiety/on_life()
 	..()
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
@@ -62,7 +62,7 @@
 	REMOVE_TRAIT(owner, TRAIT_SOCIAL_ANXIETY, PSYCH_TRAIT)
 	..()
 
-/datum/brain_trauma/psychological/schizophrenia
+/datum/brain_trauma/psychological/schizophrenia/paranoid
 	name = "Paranoid schizophrenia"
 	desc = "Mental disorder that is characterized by auditory and visual hallucinations"
 	gain_text = "<span class='danger'>You hear whispers behind you.</span>"
@@ -70,30 +70,69 @@
 	scan_desc = "Electric impulses detected in brain correspond to some form of schizophrenia"
 	var/active = FALSE
 
-/datum/brain_trauma/psychological/schizophrenia/on_process()
+/datum/brain_trauma/psychological/schizophrenia/paranoid/on_life()
 	..()
-	owner.hallucinations += 6
-	if(prob(10))
-		var/effect = pick(Jitter,Dizzy,blur_eyes)
-		owner.effect(2)
+	owner.hallucination += 20
+	if(prob(25))
+		owner.Jitter(2)
+	if(prob(5))
+		owner.Unconscious(80)
 	if(!active && prob(2))
 		whispering()
 
-/datum/brain_trauma/psychological/schizophrenia/proc/whispering()
-	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
+/datum/brain_trauma/psychological/schizophrenia/paranoid/proc/whispering()
+	ADD_TRAIT(owner, TRAIT_SIXTHSENSE, PSYCH_TRAIT)
 	active = TRUE
 	addtimer(CALLBACK(src, .proc/cease_whispering), rand(50, 300))
 
-/datum/brain_trauma/psychological/schizophrenia/proc/cease_whispering()
-	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
+/datum/brain_trauma/psychological/schizophrenia/paranoid/proc/cease_whispering()
+	REMOVE_TRAIT(owner, TRAIT_SIXTHSENSE, PSYCH_TRAIT)
 	active = FALSE
 
-/datum/brain_trauma/psychological/schizophrenia/on_gain()
-	ADD_TRAIT(owner, TRAIT_SOCIAL_ANXIETY, PSYCH_TRAIT)
+/datum/brain_trauma/psychological/schizophrenia/paranoid/on_gain()
+	ADD_TRAIT(owner, TRAIT_PARANOID, PSYCH_TRAIT)
 	..()
 
-/datum/brain_trauma/psychological/schizophrenia/on_lose()
+/datum/brain_trauma/psychological/schizophrenia/paranoid/on_lose()
 	if(active)
 		cease_whispering()
-	REMOVE_TRAIT(owner, TRAIT_SOCIAL_ANXIETY, PSYCH_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PARANOID, PSYCH_TRAIT)
+	..()
+
+
+/datum/brain_trauma/psychological/schizophrenia/catatonia
+	name = "Catatonic schizophrenia"
+	desc = "Mental disorder that is characterized by auditory and visual hallucinations"
+	gain_text = "<span class='danger'>You feel your body not responding</span>"
+	lose_text = "<span class='notice'>You feel free once again</span>"
+	scan_desc = "Electric impulses detected in brain correspond to some form of schizophrenia"
+
+
+/datum/brain_trauma/psychological/schizophrenia/catatonia/on_life()
+	..()
+	if(prob(25))
+		owner.Jitter(4)
+	addtimer(CALLBACK(src, .proc/roll_bad_effect()), rand(50, 300))
+
+
+/datum/brain_trauma/psychological/schizophrenia/catatonia/proc/roll_bad_effect()
+	clear_bad_effect()
+	if(prob(20)) owner.apply_status_effect(STATUS_EFFECT_SPASMS)
+	if(prob(20)) ADD_TRAIT(owner, TRAIT_MUTE, PSYCH_TRAIT)
+	if(prob(20)) ADD_TRAIT(owner, TRAIT_MONKEYLIKE, PSYCH_TRAIT)
+	if(prob(20)) owner.become_blind(PSYCH_TRAIT)
+	if(prob(20)) owner.Unconscious(120)
+
+/datum/brain_trauma/psychological/schizophrenia/catatonia/proc/clear_bad_effect()
+	REMOVE_TRAIT(owner, TRAIT_MUTE, PSYCH_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_MONKEYLIKE, PSYCH_TRAIT)
+	owner.remove_status_effect(STATUS_EFFECT_SPASMS)
+	owner.cure_blind(PSYCH_TRAIT)
+
+/datum/brain_trauma/psychological/schizophrenia/catatonia/on_gain()
+	ADD_TRAIT(owner, TRAIT_CATATONIA, PSYCH_TRAIT)
+	..()
+
+/datum/brain_trauma/psychological/schizophrenia/catatonia/on_lose()
+	REMOVE_TRAIT(owner, TRAIT_CATATONIA, PSYCH_TRAIT)
 	..()
