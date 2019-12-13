@@ -40504,6 +40504,10 @@
 /area/hallway/primary/central)
 "bLI" = (
 /obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/preopen{
+	name = "kitchen shutters";
+	id = "kitchenwindow"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "bLJ" = (
