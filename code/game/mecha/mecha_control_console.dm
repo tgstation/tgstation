@@ -44,7 +44,7 @@
 		if (istype(MT) && MT.chassis)
 			MT.shock()
 			log_game("[key_name(usr)] has activated remote EMP on exosuit [MT.chassis], located at [loc_name(MT.chassis)], which is currently [MT.chassis.occupant? "being piloted by [key_name(MT.chassis.occupant)]." : "without a pilot."] ")
-			message_admins("[key_name(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [MT.chassis][ADMIN_JMP(MT.chassis)], which is currently [MT.chassis.occupant? "being piloted by [key_name(MT.chassis.occupant)][ADMIN_FLW(MT.chassis.occupant)]." : "without a pilot."] ")
+			message_admins("[key_name_admin(usr)][ADMIN_FLW(usr)] has activated remote EMP on exosuit [MT.chassis][ADMIN_JMP(MT.chassis)], which is currently [MT.chassis.occupant? "being piloted by [key_name_admin(MT.chassis.occupant)][ADMIN_FLW(MT.chassis.occupant)]." : "without a pilot."] ")
 
 	updateUsrDialog()
 	return
