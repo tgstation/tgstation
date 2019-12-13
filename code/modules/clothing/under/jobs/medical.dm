@@ -115,3 +115,20 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
+
+/obj/item/clothing/under/rank/medical/emt
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer may or may not be trained medical personnel."
+	name = "EMT jumpsuit"
+	icon_state = "emt"
+	item_state = "w_suit"
+	permeability_coefficient = 0.5
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
+
+/obj/item/clothing/under/rank/medical/emt/skirt
+	name = "EMT jumpskirt"
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer may or may not be trained medical personnel."
+	icon_state = "emt_skirt"
+	item_state = "w_suit"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+	fitted = FEMALE_UNIFORM_TOP
