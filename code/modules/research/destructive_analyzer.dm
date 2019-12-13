@@ -132,7 +132,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/user_mode_string = ""
 		if(length(point_value))
 			user_mode_string = " for [json_encode(point_value)] points"
-		else if(loaded_item.custom_materials.len)
+		else if(length(loaded_item.custom_materials))
 			user_mode_string = " for material reclamation"
 		var/choice = input("Are you sure you want to destroy [loaded_item][user_mode_string]?") in list("Proceed", "Cancel")
 		if(choice == "Cancel")
