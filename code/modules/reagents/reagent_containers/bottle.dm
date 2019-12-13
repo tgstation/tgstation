@@ -57,10 +57,10 @@
 	desc = "A small bottle of multiver, which removes toxins and other chemicals from the bloodstream but causes shortness of breath. All effects scale with the amount of reagents in the patient."
 	list_reagents = list(/datum/reagent/medicine/C2/multiver = 30)
 
-/obj/item/reagent_containers/glass/bottle/pen_acid
-	name = "pentetic acid bottle"
-	desc = "A small bottle of pentetic acid."
-	list_reagents = list(/datum/reagent/medicine/pen_acid = 30)
+/obj/item/reagent_containers/glass/bottle/calomel
+	name = "calomel bottle"
+	desc = "A small bottle of calomel."
+	list_reagents = list(/datum/reagent/medicine/calomel = 30)
 
 /obj/item/reagent_containers/glass/bottle/syriniver
 	name = "syriniver bottle"
