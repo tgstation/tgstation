@@ -181,7 +181,7 @@
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/glass/bottle/epinephrine(src)
 	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
-	new /obj/item/reagent_containers/glass/bottle/pen_acid(src)
+	new /obj/item/reagent_containers/glass/bottle/calomel(src)
 	update_icon()
 
 /obj/item/storage/belt/security
