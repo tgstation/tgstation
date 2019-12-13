@@ -40486,7 +40486,6 @@
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bLH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/status_display/evac{
 	pixel_x = -32
 	},
@@ -40532,7 +40531,9 @@
 	},
 /area/crew_quarters/kitchen)
 "bLL" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -40541,12 +40542,18 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
 /area/crew_quarters/kitchen)
 "bLN" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -41918,9 +41925,9 @@
 	},
 /area/crew_quarters/kitchen)
 "bOT" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
 /obj/item/kitchen/rollingpin,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -42613,18 +42620,17 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bQC" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
 /area/crew_quarters/kitchen)
 "bQD" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -42633,12 +42639,10 @@
 	},
 /area/crew_quarters/kitchen)
 "bQF" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -43102,6 +43106,7 @@
 /obj/machinery/button/door{
 	id = "kitchenhydro";
 	name = "Service Shutter Control";
+	pixel_x = 7;
 	pixel_y = -24;
 	req_access_txt = "28"
 	},
@@ -43112,6 +43117,7 @@
 /area/crew_quarters/kitchen)
 "bRS" = (
 /obj/machinery/deepfryer,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bRT" = (
@@ -73062,7 +73068,7 @@
 /obj/machinery/button/door{
 	id = "kitchenwindow";
 	name = "Window Shutter Control";
-	pixel_x = 0;
+	pixel_x = -6;
 	pixel_y = -24;
 	req_access_txt = "28"
 	},
@@ -74302,11 +74308,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "kWu" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "lal" = (
@@ -76263,6 +76269,7 @@
 	dir = 4
 	},
 /obj/machinery/deepfryer,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -76521,6 +76528,14 @@
 /area/hallway/primary/port)
 "wyV" = (
 /obj/machinery/holopad,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
+"wzm" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -111460,7 +111475,7 @@ bFk
 bwO
 woI
 bKj
-bLK
+wzm
 vuY
 bRS
 bQF
