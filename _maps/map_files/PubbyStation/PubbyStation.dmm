@@ -26351,7 +26351,7 @@
 /obj/machinery/door/window/northleft{
 	dir = 2;
 	name = "Chemistry Desk";
-	req_access_txt = "5; 33"
+	req_access_txt = "5; 69"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -26927,7 +26927,11 @@
 /obj/machinery/computer/crew,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+<<<<<<< HEAD
 "brh" = (
+=======
+"bri" = (
+>>>>>>> upstream/master
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -26989,7 +26993,7 @@
 	name = "Shutters Control";
 	pixel_x = 26;
 	pixel_y = 4;
-	req_one_access_txt = "5;33"
+	req_one_access_txt = "5;69"
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -28666,7 +28670,7 @@
 "bvq" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry Lab";
-	req_access_txt = "5; 33"
+	req_access_txt = "5; 69"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
