@@ -87,6 +87,7 @@
 		var/obj/mecha/M = loc
 		if(src in M.trackers)
 			M.trackers -= src
+	chassis = null
 	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/mecha/M)
