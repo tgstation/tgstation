@@ -27,7 +27,6 @@
 	head = /obj/item/clothing/head/soft/emt
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	suit =  /obj/item/clothing/suit/toggle/labcoat/emt
-	l_hand = /obj/item/storage/firstaid/regular
 	suit_store = /obj/item/sensor_device
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
 	belt = /obj/item/storage/belt/medical/emt
