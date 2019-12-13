@@ -24,6 +24,7 @@ SUBSYSTEM_DEF(research)
 	var/list/techweb_categories = list()		//category name = list(node.id = TRUE)
 	var/list/techweb_boost_items = list()		//associative double-layer path = list(id = list(point_type = point_discount))
 	var/list/techweb_nodes_hidden = list()		//Node ids that should be hidden by default.
+	var/list/techweb_nodes_experimental = list()	//Node ids that are exclusive to the BEPIS.
 	var/list/techweb_point_items = list(		//path = list(point type = value)
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	)
@@ -248,6 +249,8 @@ SUBSYSTEM_DEF(research)
 			D.unlocked_by += node.id
 		if(node.hidden)
 			techweb_nodes_hidden[node.id] = TRUE
+		if(node.experimental)
+			techweb_nodes_experimental[node.id] = TRUE
 		CHECK_TICK
 	generate_techweb_unlock_linking()
 

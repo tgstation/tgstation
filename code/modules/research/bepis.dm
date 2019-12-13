@@ -208,10 +208,8 @@
 				say("Experiment concluded with partial success. Dispensing compiled research efforts.")
 				reward_number = rand(1,2)
 				if(reward_number == 1)
-					new /obj/item/research_notes(dropturf, (round(banked_cash/5)), "product development")
-				if(reward_number == 2)
 					new /obj/item/stack/circuit_stack/full(dropturf)
-				if(reward_number == 3)
+				if(reward_number == 2)
 					new /obj/item/airlock_painter/decal(dropturf)
 				banked_cash = 0
 				flick("chamber_flash",src)
@@ -228,7 +226,7 @@
 				say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
 				banked_cash = 0
 				new /mob/living/simple_animal/deer(src.loc, 1)
-				use_power(500000 * power_saver) //To prevent gambling at low cost and also spawming for infinite deer.
+				use_power(500000 * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
 				flick("chamber_flash",src)
 				update_icon_state()
 
