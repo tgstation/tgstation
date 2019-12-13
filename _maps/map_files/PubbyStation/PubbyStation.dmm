@@ -24341,6 +24341,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 1;
+	light_color = "#d1dfff"
+	},
 /turf/open/floor/engine,
 /area/science/explab)
 "bkB" = (
@@ -24856,7 +24860,6 @@
 /area/science/server)
 "blP" = (
 /obj/effect/landmark/event_spawn,
-/obj/item/beacon,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -24866,12 +24869,10 @@
 "blR" = (
 /obj/effect/landmark/blobstart,
 /obj/effect/landmark/xeno_spawn,
+/obj/item/beacon,
 /turf/open/floor/engine,
 /area/science/explab)
 "blS" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/rnd/bepis,
 /turf/open/floor/engine,
@@ -26927,11 +26928,7 @@
 /obj/machinery/computer/crew,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-<<<<<<< HEAD
 "brh" = (
-=======
-"bri" = (
->>>>>>> upstream/master
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
