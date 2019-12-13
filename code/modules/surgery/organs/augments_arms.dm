@@ -187,9 +187,9 @@
 /obj/item/organ/cyberimp/arm/toolset/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/cyberimp/arm/toolset/emag_act()
+/obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user)
 	if(!(locate(/obj/item/kitchen/knife/combat/cyborg) in items_list))
-		to_chat(usr, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
+		to_chat(user, "<span class='notice'>You unlock [src]'s integrated knife!</span>")
 		items_list += new /obj/item/kitchen/knife/combat/cyborg(src)
 		return 1
 	return 0

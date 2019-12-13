@@ -145,7 +145,7 @@
 		return
 
 	var/time = TIME_LEFT
-	message_admins("[ADMIN_LOOKUPFLW(user.client)] has emagged the emergency shuttle [time] seconds before launch.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has emagged the emergency shuttle [time] seconds before launch.")
 	log_game("[key_name(user)] has emagged the emergency shuttle in [COORD(src)] [time] seconds before launch.")
 
 	ENABLE_BITFIELD(obj_flags, EMAGGED)
