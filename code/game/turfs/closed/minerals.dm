@@ -551,7 +551,7 @@
 		to_chat(usr, "<span class='warning'>The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner.</span>")
 
 
-/turf/closed/mineral/strong/gets_drilled(user, give_exp = TRUE)
+/turf/closed/mineral/strong/gets_drilled(mob/user)
 	drop_ores()
 	var/flags = NONE
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
@@ -559,7 +559,9 @@
 	ScrapeAway(flags=flags)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
-	user.mind.adjust_experience(/datum/skill/mining, 100) //yay!
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.mind.adjust_experience(/datum/skill/mining, 100) //yay!
 
 /turf/closed/mineral/strong/proc/drop_ores()
 	if(prob(10))
