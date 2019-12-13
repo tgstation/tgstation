@@ -63,7 +63,7 @@
 		if(isobserver(M))
 			count_only = FALSE
 			escape_status = "ghosts"
-			category = length(file_data["ghosts"]) + 1
+			category = null //ghosts are one list deep
 		//All other mindless stuff just gets counts by name
 		if(count_only)
 			var/list/npc_nest = file_data["[escape_status]"]["npcs"]
@@ -76,8 +76,12 @@
 				file_data["[escape_status]"]["npcs"][name_to_use] = 1
 		else
 			//Mobs with minds and ghosts get detailed data
-			var/pos = length(file_data["[escape_status]"]["[category]"]) + 1
-			file_data["[escape_status]"]["[category]"]["[pos]"] = mob_data
+			if(category)
+				var/pos = length(file_data["[escape_status]"]["[category]"]) + 1
+				file_data["[escape_status]"]["[category]"]["[pos]"] = mob_data
+			else
+				var/pos = length(file_data["[escape_status]"]) + 1
+				file_data["[escape_status]"]["[pos]"] = mob_data
 
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
