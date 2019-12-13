@@ -231,7 +231,7 @@
 	if(!(chosen_disorder in aquired_disorders))
 		aquired_disorders += chosen_disorder
 		owner.gain_trauma(chosen_disorder , TRAUMA_RESILIENCE_ABSOLUTE)
-		adjustPsychInstability(-25)
+		adjustPsychInstability(25)
 
 /datum/component/mood/proc/ForceCureRandomDisorder() //not up to the code
 	var/mob/living/carbon/owner = parent
@@ -248,7 +248,7 @@
 	if(!(chosen_disorder in aquired_disorders))
 		aquired_disorders += chosen_disorder
 		owner.gain_trauma(chosen_disorder , TRAUMA_RESILIENCE_ABSOLUTE)
-		adjustPsychInstability(-25)
+		adjustPsychInstability(25)
 
 /datum/component/mood/proc/RollCureRandomDisorder()
 	if(!prob(abs(psych_instab))/100)

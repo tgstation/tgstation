@@ -400,30 +400,6 @@
 	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
 /datum/quirk/social_anxiety
-	name = "Social Anxiety"
-	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
-	value = -1
-	gain_text = "<span class='danger'>You start worrying about what you're saying.</span>"
-	lose_text = "<span class='notice'>You feel easier about talking again.</span>" //if only it were that easy!
-	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
-	var/dumb_thing = TRUE
-
-/datum/quirk/social_anxiety/on_process()
-	var/nearby_people = 0
-	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
-		if(H.client)
-			nearby_people++
-	var/mob/living/carbon/human/H = quirk_holder
-	if(prob(2 + nearby_people))
-		H.stuttering = max(3, H.stuttering)
-	else if(prob(min(3, nearby_people)) && !H.silent)
-		to_chat(H, "<span class='danger'>You retreat into yourself. You <i>really</i> don't feel up to talking.</span>")
-		H.silent = max(10, H.silent)
-	else if(prob(0.5) && dumb_thing)
-		to_chat(H, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
-		dumb_thing = FALSE //only once per life
-		if(prob(1))
-			new/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
 
 /datum/quirk/junkie
 	name = "Junkie"
