@@ -559,7 +559,7 @@
 	ScrapeAway(flags=flags)
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
-	H.mind.adjust_experience(/datum/skill/mining, 100) //yay!
+	user.mind.adjust_experience(/datum/skill/mining, 100) //yay!
 
 /turf/closed/mineral/strong/proc/drop_ores()
 	if(prob(10))
