@@ -271,6 +271,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 #define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
 #define DEADCHAT_DEATHRATTLE "deathrattle"
+#define DEADCHAT_LAWCHANGE "lawchange"
 #define DEADCHAT_REGULAR "regular-deadchat"
 
 // Bluespace shelter deploy checks
