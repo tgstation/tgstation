@@ -23,7 +23,7 @@
 	jobtype = /datum/job/emt
 
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical/doctor
+	uniform = /obj/item/clothing/under/rank/medical/emt
 	head = /obj/item/clothing/head/soft/emt
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	suit =  /obj/item/clothing/suit/toggle/labcoat/emt
