@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - bugfix: "Nanite damage sensor have extra settings again"

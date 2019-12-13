@@ -421,7 +421,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/library
 	name = "Library"
 	icon_state = "library"
-	flags_1 = NONE
+	flags_1 = CULT_PERMITTED_1
 
 /area/library/lounge
 	name = "Library Lounge"
@@ -430,7 +430,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/library/abandoned
 	name = "Abandoned Library"
 	icon_state = "library"
-	flags_1 = NONE
+	flags_1 = CULT_PERMITTED_1
 
 /area/chapel
 	icon_state = "chapel"
@@ -677,9 +677,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chemistry"
 	icon_state = "chem"
 
-/area/medical/apothecary
-	name = "Apothecary"
-	icon_state = "apothecary"
+/area/medical/pharmacy
+	name = "Pharmacy"
+	icon_state = "pharmacy"
 
 /area/medical/surgery
 	name = "Surgery"

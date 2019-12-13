@@ -185,7 +185,7 @@
 	var/damage = 50
 	var/direction = "Above"
 
-/datum/nanite_program/senor/damage/register_extra_settings()
+/datum/nanite_program/sensor/damage/register_extra_settings()
 	. = ..()
 	extra_settings[NES_DAMAGE_TYPE] = new /datum/nanite_extra_setting/type(BRUTE, list(BRUTE, BURN, TOX, OXY, CLONE))
 	extra_settings[NES_DAMAGE] = new /datum/nanite_extra_setting/number(50, 0, 500)

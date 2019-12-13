@@ -395,6 +395,9 @@
 		name = "empty scroll"
 		icon_state = "blankscroll"
 
+/obj/item/book/granter/martial/plasma_fist/nobomb
+	martial = /datum/martial_art/plasma_fist/nobomb
+
 // I did not include mushpunch's grant, it is not a book and the item does it just fine.
 
 //Crafting Recipe books
