@@ -411,7 +411,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	..()
 	var/item
 	if(!item_type)
-		item = pick(list("esword","taser","ebow","baton","dual_esword","clockspear","ttv","flash","armblade"))
+		item = pick(list("esword","taser","ebow","baton","dual_esword","ttv","flash","armblade"))
 	else
 		item = item_type
 	feedback_details += "Item: [item]"

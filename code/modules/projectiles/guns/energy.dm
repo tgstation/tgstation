@@ -62,6 +62,12 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/obj/item/gun/energy/handle_atom_del(atom/A)
+	if(A == cell)
+		cell = null
+		update_icon(FALSE, TRUE)
+	return ..()
+
 /obj/item/gun/energy/process()
 	if(selfcharge && cell && cell.percent() < 100)
 		charge_tick++
@@ -71,7 +77,7 @@
 		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
 			recharge_newshot(TRUE)
-		update_icon()
+		update_icon(FALSE, TRUE)
 
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
 	if(ammo_type.len > 1)
@@ -130,7 +136,7 @@
 	update_icon(TRUE)
 	return
 
-/obj/item/gun/energy/update_icon(force_update)
+/obj/item/gun/energy/update_icon(force_update, force_itemstate_update)
 	if(QDELETED(src))
 		return
 	..()
@@ -167,6 +173,10 @@
 	if(itemState)
 		itemState += "[ratio]"
 		item_state = itemState
+		if(force_itemstate_update && ismob(loc)) //used if the weapon is selfcharging, otherwise the icons won't update till the item is either fired or reequipped.
+			var/mob/M = loc
+			if(M.is_holding(src))
+				M.update_inv_hands()
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))

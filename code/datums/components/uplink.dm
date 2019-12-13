@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(uplinks)
-
 #define PEN_ROTATIONS 2
 
 /**
@@ -51,7 +49,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
-	GLOB.uplinks += src
 	uplink_items = get_uplink_items(_gamemode, TRUE, allow_restricted)
 
 	if(_owner)
@@ -81,7 +78,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 		purchase_log.MergeWithAndDel(U.purchase_log)
 
 /datum/component/uplink/Destroy()
-	GLOB.uplinks -= src
 	gamemode = null
 	purchase_log = null
 	return ..()
@@ -129,7 +125,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	active = TRUE
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "uplink", name, 720, 480, master_ui, state)
+		ui = new(user, src, ui_key, "uplink", name, 620, 580, master_ui, state)
 		ui.set_autoupdate(FALSE) // This UI is only ever opened by one person, and never is updated outside of user input.
 		ui.set_style("syndicate")
 		ui.open()

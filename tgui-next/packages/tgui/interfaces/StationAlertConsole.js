@@ -1,11 +1,9 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Section, Button } from '../components';
+import { useBackend } from '../backend';
+import { Section } from '../components';
 
 export const StationAlertConsole = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { data } = useBackend(props);
   const categories = data.alarms || [];
   const fire = categories['Fire'] || [];
   const atmos = categories['Atmosphere'] || [];

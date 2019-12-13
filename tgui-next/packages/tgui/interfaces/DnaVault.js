@@ -1,11 +1,9 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Box, Button, LabeledList, NumberInput, Section, Grid, ProgressBar } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Grid, LabeledList, ProgressBar, Section } from '../components';
 
 export const DnaVault = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     completed,
     used,
@@ -25,20 +23,17 @@ export const DnaVault = props => {
           <LabeledList.Item label="Human DNA">
             <ProgressBar
               value={dna / dna_max}
-              content={dna + " / " + dna_max + " Samples"}
-            />
+              content={dna + ' / ' + dna_max + ' Samples'} />
           </LabeledList.Item>
           <LabeledList.Item label="Plant DNA">
             <ProgressBar
               value={plants / plants_max}
-              content={plants + " / " + plants_max + " Samples"}
-            />
+              content={plants + ' / ' + plants_max + ' Samples'} />
           </LabeledList.Item>
           <LabeledList.Item label="Animal DNA">
             <ProgressBar
               value={animals / animals}
-              content={animals + " / " + animals_max + " Samples"}
-            />
+              content={animals + ' / ' + animals_max + ' Samples'} />
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -47,8 +42,7 @@ export const DnaVault = props => {
           <Box
             bold
             textAlign="center"
-            mb={1}
-          >
+            mb={1}>
             Applicable Gene Therapy Treatments
           </Box>
           <Grid>
@@ -58,8 +52,9 @@ export const DnaVault = props => {
                 bold
                 content={choiceA}
                 textAlign="center"
-                onClick={() => act(ref, "gene", {choice: choiceA})}
-              />
+                onClick={() => act('gene', {
+                  choice: choiceA,
+                })} />
             </Grid.Column>
             <Grid.Column>
               <Button
@@ -67,8 +62,9 @@ export const DnaVault = props => {
                 bold
                 content={choiceB}
                 textAlign="center"
-                onClick={() => act(ref, "gene", {choice: choiceB})}
-              />
+                onClick={() => act('gene', {
+                  choice: choiceB,
+                })} />
             </Grid.Column>
           </Grid>
         </Section>
