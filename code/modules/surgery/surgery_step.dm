@@ -100,7 +100,7 @@
 			if(failure(user, target, target_zone, tool, surgery, fail_prob))
 				advance = TRUE
 			if(chem_check_result)
-				return .(user, target, target_zone, tool, surgery, try_to_fail)) //automatically re-attempt if failed for reason other than lack of required chemical
+				return .(user, target, target_zone, tool, surgery, try_to_fail) //automatically re-attempt if failed for reason other than lack of required chemical
 		if(advance && !repeatable)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
