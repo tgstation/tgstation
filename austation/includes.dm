@@ -60,5 +60,6 @@
 #include "code\modules\research\designs\limbgrower_designs.dm"
 #include "code\modules\research\designs\machine_designs.dm"
 #include "code\modules\research\designs\mechfabricator_designs.dm"
+#include "code\modules\vehicles\cars\thanoscar.dm"
 #include "code\modules\vending\medical.dm"
 #include "code\modules\vending\medical_wall.dm"
