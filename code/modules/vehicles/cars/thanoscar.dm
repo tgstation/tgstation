@@ -1,7 +1,7 @@
 /obj/vehicle/sealed/car/thanoscar
 	name = "thanos car"
 	desc = "THANOS CAR! THANOS CAR!"
-	icon = 'austation/icons/obj/vehicles.dmi'
+	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "thanoscar"
 	max_integrity = 250
 	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
