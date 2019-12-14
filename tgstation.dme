@@ -2910,6 +2910,7 @@
 #include "code\modules\vehicles\wheelchair.dm"
 #include "code\modules\vehicles\cars\car.dm"
 #include "code\modules\vehicles\cars\clowncar.dm"
+#include "code\modules\vehicles\cars\thanoscar.dm"
 #include "code\modules\vending\_vending.dm"
 #include "code\modules\vending\assist.dm"
 #include "code\modules\vending\autodrobe.dm"
