@@ -74,8 +74,8 @@
 /datum/outfit/plasmaman/emt
 	name = "EMT Plasmaman"
 
-	head = /obj/item/clothing/head/helmet/space/plasmaman/medical
-	uniform = /obj/item/clothing/under/plasmaman/medical
+	head = /obj/item/clothing/head/helmet/space/plasmaman/emt
+	uniform = /obj/item/clothing/under/plasmaman/emt
 
 /datum/outfit/plasmaman/viro
 	name = "Virology Plasmaman"
