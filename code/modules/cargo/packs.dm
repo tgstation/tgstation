@@ -1492,6 +1492,7 @@
 					/obj/item/reagent_containers/food/drinks/shaker,
 					/obj/item/reagent_containers/food/drinks/bottle/patron,
 					/obj/item/reagent_containers/food/drinks/bottle/goldschlager,
+					/obj/item/reagent_containers/food/drinks/bottle/kong, //because every party needs at least one depressive alcoholic
 					/obj/item/reagent_containers/food/drinks/ale,
 					/obj/item/reagent_containers/food/drinks/ale,
 					/obj/item/reagent_containers/food/drinks/beer,

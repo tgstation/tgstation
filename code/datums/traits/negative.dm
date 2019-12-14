@@ -73,16 +73,16 @@
 /datum/quirk/depression
 	name = "Depression"
 	desc = "You sometimes just hate life."
-	mob_trait = TRAIT_DEPRESSION
+	mob_trait = TRAIT_DEPRESSION_MILD
 	value = -1
 	gain_text = "<span class='danger'>You start feeling depressed.</span>"
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
-	medical_record_text = "Patient has a severe mood disorder, causing them to experience acute episodes of depression."
+	medical_record_text = "Patient has a mood disorder causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
 
 /datum/quirk/depression/on_process()
 	if(prob(0.05))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression", /datum/mood_event/depression)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
 
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"

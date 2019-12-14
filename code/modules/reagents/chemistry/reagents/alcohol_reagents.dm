@@ -143,6 +143,63 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The silky, smokey whiskey goodness inside the glass makes the drink look very classy."
 	shot_glass_icon_state = "shotglassbrown"
 
+/datum/reagent/consumable/ethanol/whiskey/kong
+	name = "Kong&#174;"
+	description = "Makes You Go Ape!"
+	color = "#332100" // rgb: 51, 33, 0
+	addiction_threshold = 16
+	taste_description = "the vice grip of a giant ape"
+	glass_name = "glass of Kong"
+	glass_desc = "A promotional tie-in for the remaster of a bestselling 21st century video game. \
+	Modern lifespans mean no game is too old for the nostalgia audience. \
+	Bioengineered to cause an emotional trip to rival the protagonist's experience. \
+	Coroners linked it to several suicides, forcing a manufacturer recall. \
+	After its value plummeted, Nanotrasen bought up the remaining supply."
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage1(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>You've made so many mistakes.</span>")
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_minimal", /datum/mood_event/depression_minimal)
+	..()
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage2(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>No matter what you do, people will always get hurt.</span>")
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_minimal", /datum/mood_event/depression_minimal)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
+	..()
+	. = 1
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage3(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>You've lost so many people.</span>")
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_moderate", /datum/mood_event/depression_moderate)
+	..()
+	. = 1
+
+/datum/reagent/consumable/ethanol/whiskey/kong/addiction_act_stage4(mob/living/M)
+	if(prob(5))
+		to_chat(M, "<span class='notice'>Just lie down and die.</span>")
+	SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "depression_moderate", /datum/mood_event/depression_moderate)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "depression_severe", /datum/mood_event/depression_severe)
+	..()
+	. = 1
+
+/datum/reagent/consumable/ethanol/whiskey/candycorn
+	name = "candy corn whiskey"
+	description = "Like they drank in the 2D speakeasies."
+	color = "#ccb800" // rgb: 204, 184, 0
+	taste_description = "pancake syrup"
+	glass_name = "glass of candy corn whiskey"
+	glass_desc = "Good for the Imagination."
+	var/hal_amt = 4
+
+/datum/reagent/consumable/ethanol/whiskey/candycorn/on_mob_life(mob/living/carbon/M)
+	if(prob(10))
+		M.hallucination += hal_amt //conscious dreamers can be treasurers to their own currency
+	..()
+
 /datum/reagent/consumable/ethanol/thirteenloko
 	name = "Thirteen Loko"
 	description = "A potent mixture of caffeine and alcohol."

@@ -539,7 +539,15 @@
 	name = "detective's flask"
 	desc = "The detective's only true friend."
 	icon_state = "detflask"
-	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 30)
+	var/special_reagent_chance = 33
+	var/reagent_spawn_amt = 30
+
+/obj/item/reagent_containers/food/drinks/flask/det/Initialize()
+	. = ..()
+	if(prob(special_reagent_chance))
+		pick(reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey/kong, reagent_spawn_amt),reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey/candycorn, reagent_spawn_amt))
+	else
+		reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, reagent_spawn_amt)
 
 /obj/item/reagent_containers/food/drinks/britcup
 	name = "cup"
