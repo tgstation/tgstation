@@ -260,7 +260,7 @@
 									ROLE_MONKEY, ROLE_NINJA, ROLE_OPERATIVE,
 									ROLE_OVERTHROW, ROLE_REV, ROLE_REVENANT,
 									ROLE_REV_HEAD, ROLE_SYNDICATE,
-									ROLE_TRAITOR, ROLE_WIZARD, ROLE_HIVE)) //ROLE_REV_HEAD is excluded from this because rev jobbans are handled by ROLE_REV
+									ROLE_TRAITOR, ROLE_WIZARD, ROLE_HIVE, CATBAN)) //ROLE_REV_HEAD is excluded from this because rev jobbans are handled by ROLE_REV // austation -- add catbans
 		for(var/department in long_job_lists)
 			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
 			break_counter = 0
@@ -492,6 +492,7 @@
 		send2tgs("BAN ALERT","[kn] [msg]")
 	if(player_ckey)
 		create_message("note", player_ckey, admin_ckey, note_reason, null, null, 0, 0, null, 0, severity)
+		austation_on_jobban(get_mob_by_key(player_ckey), roles_to_ban) // austation -- ports catbans
 	var/client/C = GLOB.directory[player_ckey]
 	var/datum/admin_help/AH = admin_ticket_log(player_ckey, msg)
 	var/appeal_url = "No ban appeal url set!"

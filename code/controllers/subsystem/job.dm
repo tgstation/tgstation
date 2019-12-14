@@ -106,6 +106,9 @@ SUBSYSTEM_DEF(job)
 		if(is_banned_from(player.ckey, job.title) || QDELETED(player))
 			JobDebug("FOC isbanned failed, Player: [player]")
 			continue
+		if(is_banned_from(player.ckey, CATBAN) && job.title != overflow_role) // austation start -- ports catbans
+			JobDebug("FOC isbanned failed (cat/clown ban), Player: [player]")
+			continue // austation end
 		if(!job.player_old_enough(player.client))
 			JobDebug("FOC player not old enough, Player: [player]")
 			continue
@@ -159,6 +162,11 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ Random job given, Player: [player], Job: [job]")
 			if(AssignRole(player, job.title))
 				return TRUE
+
+		if(is_banned_from(player.ckey, CATBAN)) // austation start -- ports catbans
+			JobDebug("GRJ player is cat/clown banned")
+			if(AssignRole(player, overflow_role))
+				return TRUE // austation end
 
 /datum/controller/subsystem/job/proc/ResetOccupations()
 	JobDebug("Occupations reset.")
@@ -280,6 +288,8 @@ SUBSYSTEM_DEF(job)
 		AssignRole(player, SSjob.overflow_role)
 		overflow_candidates -= player
 	JobDebug("DO, AC1 end")
+
+	AustationFillBannedPosition() // austation -- ports catbans
 
 	//Select one head
 	JobDebug("DO, Running Head Check")
@@ -415,7 +425,7 @@ SUBSYSTEM_DEF(job)
 	H.job = rank
 
 	SEND_SIGNAL(H, COMSIG_JOB_RECEIVED, H.job)
-		
+
 
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
@@ -474,6 +484,7 @@ SUBSYSTEM_DEF(job)
 		H.add_memory("Your account ID is [wageslave.account_id].")
 	if(job && H)
 		job.after_spawn(H, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
+		job.austation_after_spawn(H, M) // austation -- ports catbans
 
 	return H
 

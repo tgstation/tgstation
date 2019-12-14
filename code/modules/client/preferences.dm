@@ -607,7 +607,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 			for (var/i in GLOB.special_roles)
-				if(is_banned_from(user.ckey, i))
+				if(is_banned_from(user.ckey, list(i, CATBAN))) // austation -- ports catbans
 					dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;bancheck=[i]'>BANNED</a><br>"
 				else
 					var/days_remaining = null
@@ -822,6 +822,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if(is_banned_from(user.ckey, rank))
 				HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;bancheck=[rank]'> BANNED</a></td></tr>"
 				continue
+			if(is_banned_from(user.ckey, CATBAN) && rank != SSjob.overflow_role) // austation start -- ports catbans
+				HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
+				continue // austation end
 			var/required_playtime_remaining = job.required_playtime_remaining(user.client)
 			if(required_playtime_remaining)
 				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[ [get_exp_format(required_playtime_remaining)] as [job.get_exp_req_type()] \] </font></td></tr>"

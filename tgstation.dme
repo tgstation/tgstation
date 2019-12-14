@@ -12,6 +12,10 @@
 #define DEBUG
 // END_PREFERENCES
 
+// BEGIN AUSTATION DEFINE INCLUDES
+#include "austation\define_includes.dm"
+// END AUSTATION DEFINE INCLUDES
+
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
 #include "code\_compile_options.dm"

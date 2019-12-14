@@ -1,7 +1,5 @@
 // AuStation includes file. Add all modularized code files here.
 
-#include "code\_DEFINES\antagonists.dm"
-#include "code\_DEFINES\misc.dm"
 #include "code\controllers\configuration\entries\game_options.dm"
 #include "code\controllers\configuration\entries\general.dm"
 #include "code\controllers\subsystem\autosandbox.dm"
@@ -28,6 +26,7 @@
 #include "code\game\objects\items\stacks\medical.dm"
 #include "code\game\objects\items\storage\firstaid.dm"
 #include "code\game\objects\structures\mirror.dm"
+#include "code\modules\admin\topic.dm"
 #include "code\modules\antagonists\gang\gang.dm"
 #include "code\modules\antagonists\gang\gang_datums.dm"
 #include "code\modules\antagonists\gang\gang_hud.dm"
@@ -41,6 +40,8 @@
 #include "code\modules\hydroponics\grown\flowers.dm"
 #include "code\modules\hydroponics\grown\kudzu.dm"
 #include "code\modules\hydroponics\grown\mushrooms.dm"
+#include "code\modules\jobs\job_types\job.dm"
+#include "code\modules\mob\dead\new_player\new_player.dm"
 #include "code\modules\reagents\chemistry\reagents\cat2_medicine_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\medicine_reagents.dm"
 #include "code\modules\reagents\chemistry\reagents\other_reagents.dm"

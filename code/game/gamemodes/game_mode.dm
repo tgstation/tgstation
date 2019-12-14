@@ -167,7 +167,8 @@
 
 	for(var/mob/living/carbon/human/H in living_crew)
 		if(H.client && H.client.prefs.allow_midround_antag && !is_centcom_level(H.z))
-			antag_candidates += H
+			if(!is_banned_from(H.ckey, CATBAN)) // austation -- ports catbans
+				antag_candidates += H
 
 	if(!antag_candidates)
 		message_admins("Convert_roundtype failed due to no antag candidates.")
@@ -367,7 +368,8 @@
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.check_preferences())
-			players += player
+			if(!is_banned_from(player.ckey, CATBAN)) // austation -- ports catbans
+				players += player
 
 	// Shuffling, the players list is now ping-independent!!!
 	// Goodbye antag dante

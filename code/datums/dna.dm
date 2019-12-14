@@ -308,6 +308,8 @@
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
+	if(is_banned_from(ckey, CATBAN) && !istype(dna.species, /datum/species/human/felinid)) // austation start -- ports catbans
+		set_species(/datum/species/human/felinid, icon_update=TRUE) // austation end
 	if(icon_update)
 		update_body()
 		update_hair()
@@ -510,7 +512,7 @@
 			var/datum/mutation/human/HM = dna.get_mutation(mutation)
 			if(HM)
 				HM.scrambled = TRUE
-				if(HM.quality & resilient) 
+				if(HM.quality & resilient)
 					HM.mutadone_proof = TRUE
 		return TRUE
 
