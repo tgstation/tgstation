@@ -240,7 +240,7 @@
   * `C`'s type will always be the same of the called component
   * return TRUE if you are absorbing the component, otherwise FALSE if you are fine having it exist as a duplicate component
   */
-/datum/component/proc/CheckDupeComponent(datum/component/C)
+/datum/component/proc/CheckDupeComponent(datum/component/C, ...)
 	return
 
 
@@ -306,7 +306,7 @@
   */
 /datum/proc/GetComponent(datum/component/c_type)
 	RETURN_TYPE(c_type)
-	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED)
+	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED || initial(c_type.dupe_mode) == COMPONENT_DUPE_SELECTIVE)
 		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 	var/list/dc = datum_components
 	if(!dc)
@@ -325,7 +325,7 @@
   */
 /datum/proc/GetExactComponent(datum/component/c_type)
 	RETURN_TYPE(c_type)
-	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED)
+	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED || initial(c_type.dupe_mode) == COMPONENT_DUPE_SELECTIVE)
 		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 	var/list/dc = datum_components
 	if(!dc)
@@ -402,11 +402,13 @@
 					else
 						old_comp.InheritComponent(new_comp, TRUE)
 				if(COMPONENT_DUPE_SELECTIVE)
+					if(!new_comp)
+						new_comp = new nt(arglist(args))
 					var/list/arguments = args.Copy()
 					arguments[1] = new_comp
 					for(var/i in GetComponents(new_type))
 						var/datum/component/C = i
-						if(C.CheckDupeComponent(arguments))
+						if(C.CheckDupeComponent(arglist(arguments)))
 							break
 		else if(!new_comp)
 			new_comp = new nt(arglist(args)) // There's a valid dupe mode but there's no old component, act like normal
