@@ -4,13 +4,11 @@
 	icon_state = "doctor_envirosuit"
 	item_state = "doctor_envirosuit"
 
-/* Commented out until sprite issue for this item is resolved
 /obj/item/clothing/under/plasmaman/emt
 	name = "EMT envirosuit"
 	desc = "A suit designed for the station's plasmamen EMTs."
 	icon_state = "emt_envirosuit"
 	item_state = "emt_envirosuit"
-*/
 
 /obj/item/clothing/under/plasmaman/science
 	name = "science plasma envirosuit"
