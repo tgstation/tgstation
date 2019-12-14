@@ -22,3 +22,5 @@ Mr. Lostman:MK1 SWAT Suit resprite
 Effectism:Optimized lighting algorithms from citadel
 Terra:Keep borg stuns
 Terra:Repo rebase December 2019
+Terra:Ports catbans from hippie
+Terra:Thanos car with sprites by me (Terra)
