@@ -168,8 +168,8 @@
 /obj/item/clothing/head/helmet/space/plasmaman/emt
 	name = "EMT plasma envirosuit helmet"
 	desc = "An envirohelmet designed for plasmaman EMTs, with darker blue stripes compared to the medical model."
-	icon_state = "doctor_envirohelm"
-	item_state = "doctor_envirohelm"
+	icon_state = "emt_envirohelm"
+	item_state = "emt_envirohelm"
 
 /obj/item/clothing/head/helmet/space/plasmaman/genetics
 	name = "geneticist's plasma envirosuit helmet"

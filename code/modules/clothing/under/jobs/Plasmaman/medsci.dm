@@ -6,7 +6,7 @@
 
 /obj/item/clothing/under/plasmaman/emt
 	name = "EMT envirosuit"
-	desc = "A suit designed for the station's plasmamen EMTs."
+	desc = "A suit designed for the station's plasmaman EMTs."
 	icon_state = "emt_envirosuit"
 	item_state = "emt_envirosuit"
 
