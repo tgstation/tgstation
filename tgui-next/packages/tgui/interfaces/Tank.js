@@ -1,16 +1,12 @@
-import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Section, ProgressBar, LabeledList, Button, NumberInput } from '../components';
-import { LabeledListItem } from '../components/LabeledList';
+import { useBackend } from '../backend';
+import { Button, LabeledList, NumberInput, ProgressBar, Section } from '../components';
 
 export const Tank = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   return (
     <Section>
       <LabeledList>
-        <LabeledListItem label="Pressure">
+        <LabeledList.Item label="Pressure">
           <ProgressBar
             value={data.tankPressure / 1013}
             content={data.tankPressure + ' kPa'}
@@ -18,14 +14,13 @@ export const Tank = props => {
               good: [0.35, Infinity],
               average: [0.15, 0.35],
               bad: [-Infinity, 0.15],
-            }}
-          />
-        </LabeledListItem>
-        <LabeledListItem label="Pressure Regulator">
+            }} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Pressure Regulator">
           <Button
             icon="fast-backward"
             disabled={data.ReleasePressure === data.minReleasePressure}
-            onClick={() => act(ref, 'pressure', {
+            onClick={() => act('pressure', {
               pressure: 'min',
             })} />
           <NumberInput
@@ -35,23 +30,23 @@ export const Tank = props => {
             unit="kPa"
             minValue={data.minReleasePressure}
             maxValue={data.maxReleasePressure}
-            onChange={(e, value) => act(ref, 'pressure', {
+            onChange={(e, value) => act('pressure', {
               pressure: value,
             })} />
           <Button
             icon="fast-forward"
             disabled={data.ReleasePressure === data.maxReleasePressure}
-            onClick={() => act(ref, 'pressure', {
+            onClick={() => act('pressure', {
               pressure: 'max',
             })} />
           <Button
             icon="undo"
             content=""
             disabled={data.ReleasePressure === data.defaultReleasePressure}
-            onClick={() => act(ref, 'pressure', {
+            onClick={() => act('pressure', {
               pressure: 'reset',
             })} />
-        </LabeledListItem>
+        </LabeledList.Item>
       </LabeledList>
     </Section>
   );

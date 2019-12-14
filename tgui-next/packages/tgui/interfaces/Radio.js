@@ -1,13 +1,11 @@
 import { map } from 'common/collections';
 import { toFixed } from 'common/math';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NumberInput, Section } from '../components';
 import { RADIO_CHANNELS } from '../constants';
 
 export const Radio = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     freqlock,
     frequency,
@@ -44,7 +42,7 @@ export const Radio = props => {
               maxValue={maxFrequency / 10}
               value={frequency / 10}
               format={value => toFixed(value, 1)}
-              onDrag={(e, value) => act(ref, 'frequency', {
+              onDrag={(e, value) => act('frequency', {
                 adjust: (value - frequency / 10),
               })} />
           )}
@@ -60,20 +58,20 @@ export const Radio = props => {
             width="37px"
             icon={listening ? 'volume-up' : 'volume-mute'}
             selected={listening}
-            onClick={() => act(ref, 'listen')} />
+            onClick={() => act('listen')} />
           <Button
             textAlign="center"
             width="37px"
             icon={broadcasting ? 'microphone' : 'microphone-slash'}
             selected={broadcasting}
-            onClick={() => act(ref, 'broadcast')} />
+            onClick={() => act('broadcast')} />
           {!!command && (
             <Button
               ml={1}
               icon="bullhorn"
               selected={useCommand}
               content={`High volume ${useCommand ? 'ON' : 'OFF'}`}
-              onClick={() => act(ref, 'command')} />
+              onClick={() => act('command')} />
           )}
           {!!subspaceSwitchable && (
             <Button
@@ -81,7 +79,7 @@ export const Radio = props => {
               icon="bullhorn"
               selected={subspace}
               content={`Subspace Tx ${subspace ? 'ON' : 'OFF'}`}
-              onClick={() => act(ref, 'subspace')} />
+              onClick={() => act('subspace')} />
           )}
         </LabeledList.Item>
         {!!subspace && (
@@ -97,7 +95,7 @@ export const Radio = props => {
                   icon={channel.status ? 'check-square-o' : 'square-o'}
                   selected={channel.status}
                   content={channel.name}
-                  onClick={() => act(ref, 'channel', {
+                  onClick={() => act('channel', {
                     channel: channel.name,
                   })} />
               </Box>

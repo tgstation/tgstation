@@ -173,7 +173,6 @@
 				if(pb_knockback > 0)
 					var/atom/throw_target = get_edge_target_turf(pbtarget, user.dir)
 					pbtarget.throw_at(throw_target, pb_knockback, 2)
-
 			else
 				user.visible_message("<span class='danger'>[user] fires [src]!</span>", \
 								"<span class='danger'>You fire [src]!</span>", \
@@ -198,6 +197,12 @@
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return
+		if(ismob(target) && user.a_intent == INTENT_GRAB)
+			if(user.GetComponent(/datum/component/gunpoint))
+				to_chat(user, "<span class='warning'>You are already holding someone up!</span>")
+				return
+			user.AddComponent(/datum/component/gunpoint, target, src)
+			return
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user
@@ -213,16 +218,10 @@
 		shoot_with_empty_chamber(user)
 		return
 
-	//Exclude lasertag guns from the TRAIT_CLUMSY check.
-	if(clumsy_check)
-		if(istype(user))
-			if (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
-				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
-				var/shot_leg = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-				process_fire(user, user, FALSE, params, shot_leg)
-				user.dropItemToGround(src, TRUE)
-				return
-	var/obj/item/bodypart/other_hand = user.has_hand_for_held_index(user.get_inactive_hand_index()) //returns non-disabled inactive hands 
+	if(check_botched(user))
+		return
+
+	var/obj/item/bodypart/other_hand = user.has_hand_for_held_index(user.get_inactive_hand_index()) //returns non-disabled inactive hands
 	if(weapon_weight == WEAPON_HEAVY && (user.get_inactive_held_item() || !other_hand))
 		to_chat(user, "<span class='warning'>You need two hands to fire \the [src]!</span>")
 		return
@@ -241,7 +240,15 @@
 
 	return process_fire(target, user, TRUE, params, null, bonus_spread)
 
-
+/obj/item/gun/proc/check_botched(mob/living/user, params)
+	if(clumsy_check)
+		if(istype(user))
+			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
+				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
+				var/shot_leg = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+				process_fire(user, user, FALSE, params, shot_leg)
+				user.dropItemToGround(src, TRUE)
+				return TRUE
 
 /obj/item/gun/can_trigger_gun(mob/living/user)
 	. = ..()
@@ -300,6 +307,9 @@
 	return TRUE
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(user)
+		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, user, target, params, zone_override)
+
 	add_fingerprint(user)
 
 	if(semicd)
@@ -583,13 +593,10 @@
 	if(!user || !user.client)
 		return
 
-	switch(forced_zoom)
-		if(FALSE)
-			zoomed = FALSE
-		if(TRUE)
-			zoomed = TRUE
-		else
-			zoomed = !zoomed
+	if(isnull(forced_zoom))
+		zoomed = !zoomed
+	else
+		zoomed = forced_zoom
 
 	if(zoomed)
 		var/_x = 0

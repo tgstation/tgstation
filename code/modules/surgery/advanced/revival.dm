@@ -40,7 +40,7 @@
 			return FALSE
 	if(istype(tool, /obj/item/melee/baton))
 		var/obj/item/melee/baton/B = tool
-		if(!B.status)
+		if(!B.turned_on)
 			to_chat(user, "<span class='warning'>[B] needs to be active!</span>")
 			return FALSE
 	if(istype(tool, /obj/item/gun/energy))

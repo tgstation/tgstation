@@ -1,11 +1,9 @@
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Button, LabeledList, Section, Box } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, Section } from '../components';
 
 export const CellularEmporium = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const { abilities } = data;
   return (
     <Fragment>
@@ -18,8 +16,7 @@ export const CellularEmporium = props => {
                 icon="undo"
                 content="Readapt"
                 disabled={!data.can_readapt}
-                onClick={() => act(ref, 'readapt')}
-              />
+                onClick={() => act('readapt')} />
             )}>
             {data.genetic_points_remaining}
           </LabeledList.Item>
@@ -39,8 +36,9 @@ export const CellularEmporium = props => {
                   <Button
                     content={ability.owned ? 'Evolved' : 'Evolve'}
                     selected={ability.owned}
-                    onClick={() => act(ref, 'evolve', {name: ability.name})}
-                  />
+                    onClick={() => act('evolve', {
+                      name: ability.name,
+                    })} />
                 </Fragment>
               )}>
               {ability.desc}

@@ -1,12 +1,10 @@
 import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { AnimatedNumber, Button, LabeledList, NumberInput, Section } from '../components';
 
 export const ThermoMachine = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   return (
     <Fragment>
       <Section title="Status">
@@ -32,7 +30,7 @@ export const ThermoMachine = props => {
             icon={data.on ? 'power-off' : 'times'}
             content={data.on ? 'On' : 'Off'}
             selected={data.on}
-            onClick={() => act(ref, 'power')} />
+            onClick={() => act('power')} />
         )}>
         <LabeledList>
           <LabeledList.Item label="Target Temperature">
@@ -45,7 +43,7 @@ export const ThermoMachine = props => {
               maxValue={Math.round(data.max)}
               step={5}
               stepPixelSize={3}
-              onDrag={(e, value) => act(ref, "target", {
+              onDrag={(e, value) => act('target', {
                 target: value,
               })} />
           </LabeledList.Item>
@@ -54,21 +52,21 @@ export const ThermoMachine = props => {
               icon="fast-backward"
               disabled={data.target === data.min}
               title="Minimum temperature"
-              onClick={() => act(ref, "target", {
+              onClick={() => act('target', {
                 target: data.min,
               })} />
             <Button
               icon="sync"
               disabled={data.target === data.initial}
               title="Room Temperature"
-              onClick={() => act(ref, "target", {
+              onClick={() => act('target', {
                 target: data.initial,
               })} />
             <Button
               icon="fast-forward"
               disabled={data.target === data.max}
               title="Maximum Temperature"
-              onClick={() => act(ref, "target", {
+              onClick={() => act('target', {
                 target: data.max,
               })} />
           </LabeledList.Item>

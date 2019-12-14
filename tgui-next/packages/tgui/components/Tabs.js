@@ -1,7 +1,7 @@
 import { classes, normalizeChildren } from 'common/react';
 import { Component } from 'inferno';
-import { Button } from './Button';
 import { Box } from './Box';
+import { Button } from './Button';
 
 // A magic value for enforcing type safety
 const TAB_MAGIC_TYPE = 'Tab';
@@ -9,8 +9,9 @@ const TAB_MAGIC_TYPE = 'Tab';
 const validateTabs = tabs => {
   for (let tab of tabs) {
     if (!tab.props || tab.props.__type__ !== TAB_MAGIC_TYPE) {
-      throw new Error("<Tabs> only accepts children of type <Tabs.Tab>."
-       + "\nThis is what we received: " + JSON.stringify(tab, null, 2));
+      const json = JSON.stringify(tab, null, 2);
+      throw new Error('<Tabs> only accepts children of type <Tabs.Tab>.'
+        + 'This is what we received: ' + json);
     }
   }
 };
@@ -48,7 +49,7 @@ export class Tabs extends Component {
   }
 
   render() {
-    const { state, props } = this;
+    const { props } = this;
     const {
       className,
       vertical,

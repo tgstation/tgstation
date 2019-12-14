@@ -347,6 +347,7 @@
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
 		changeNext_move(0)
+	update_equipment_speed_mods() // In case cuffs ever change speed
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
@@ -364,16 +365,16 @@
 	else
 		if(I == handcuffed)
 			handcuffed.forceMove(drop_location())
-			handcuffed.dropped(src)
 			handcuffed = null
+			I.dropped(src)
 			if(buckled && buckled.buckle_requires_restraints)
 				buckled.unbuckle_mob(src)
 			update_handcuffed()
 			return TRUE
 		if(I == legcuffed)
 			legcuffed.forceMove(drop_location())
-			legcuffed.dropped()
 			legcuffed = null
+			I.dropped(src)
 			update_inv_legcuffed()
 			return TRUE
 
@@ -964,7 +965,7 @@
 		for(var/i in artpaths)
 			var/datum/martial_art/M = i
 			artnames[initial(M.name)] = M
-		var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in sortNames(artnames)
+		var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in sortList(artnames, /proc/cmp_typepaths_asc)
 		if(!usr)
 			return
 		if(QDELETED(src))

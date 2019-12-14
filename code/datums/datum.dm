@@ -186,11 +186,9 @@
 	if(!islist(jsonlist))
 		if(!istext(jsonlist))
 			CRASH("Invalid JSON")
-			return
 		jsonlist = json_decode(jsonlist)
 		if(!islist(jsonlist))
 			CRASH("Invalid JSON")
-			return
 	if(!jsonlist["DATUM_TYPE"])
 		return
 	if(!ispath(jsonlist["DATUM_TYPE"]))

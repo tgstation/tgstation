@@ -1,5 +1,5 @@
-import { act } from '../byond';
-import { Box, Button, Section, Table, ColorBox, Icon } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, ColorBox, Section, Table } from '../components';
 import { COLORS } from '../constants';
 
 const HEALTH_COLOR_BY_LEVEL = [
@@ -58,9 +58,7 @@ const HealthStat = props => {
 };
 
 export const CrewConsole = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const sensors = data.sensors || [];
   return (
     <Section minHeight={90}>
@@ -94,7 +92,7 @@ export const CrewConsole = props => {
                 color={healthToColor(
                   sensor.oxydam,
                   sensor.toxdam,
-                  sensor.brutedam,
+                  sensor.burndam,
                   sensor.brutedam)} />
             </Table.Cell>
             <Table.Cell collapsing textAlign="center">
@@ -120,7 +118,7 @@ export const CrewConsole = props => {
                 <Button
                   content="Track"
                   disabled={!sensor.can_track}
-                  onClick={() => act(ref, 'select_person', {
+                  onClick={() => act('select_person', {
                     name: sensor.name,
                   })} />
               </Table.Cell>
