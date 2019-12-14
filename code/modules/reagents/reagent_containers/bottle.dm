@@ -59,7 +59,7 @@
 
 /obj/item/reagent_containers/glass/bottle/calomel
 	name = "calomel bottle"
-	desc = "A small bottle of calomel."
+	desc = "A small bottle of calomel, which quickly purges all chemicals from the patient. Causes toxin damage if the patient is not heavily injured."
 	list_reagents = list(/datum/reagent/medicine/calomel = 30)
 
 /obj/item/reagent_containers/glass/bottle/syriniver
@@ -147,7 +147,7 @@
 
 /obj/item/reagent_containers/glass/bottle/formaldehyde
 	name = "formaldehyde bottle"
-	desc = "A small bottle. Contains Formaldehyde."
+	desc = "A small bottle. Contains formaldehyde, a chemical that prevents organs from decaying."
 	list_reagents = list(/datum/reagent/toxin/formaldehyde = 30)
 
 /obj/item/reagent_containers/glass/bottle/initropidril
