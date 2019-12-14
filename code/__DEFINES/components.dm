@@ -57,6 +57,8 @@
 /// called by datum/cinematic/play() : (datum/cinematic/new_cinematic)
 #define COMSIG_GLOB_PLAY_CINEMATIC "!play_cinematic"
 	#define COMPONENT_GLOB_BLOCK_CINEMATIC 1
+/// ingame button pressed (/obj/machinery/button/button)
+#define COMSIG_GLOB_BUTTON_PRESSED "!button_pressed"
 
 // signals from globally accessible objects
 /// from SSsun when the sun changes position : (azimuth)
