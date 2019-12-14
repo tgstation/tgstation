@@ -444,7 +444,13 @@ SUBSYSTEM_DEF(job)
 
 	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
-		job.equip(living_mob, null, null, joined_late , null, M.client)
+		var/new_mob = job.equip(living_mob, null, null, joined_late , null, M.client)//silicons override this proc to return a mob
+		if(ismob(new_mob))
+			living_mob = new_mob
+			if(!joined_late)
+				newplayer.new_character = living_mob
+			else
+				M = living_mob
 
 		SSpersistence.antag_rep_change[M.client.ckey] += job.GetAntagRep()
 
