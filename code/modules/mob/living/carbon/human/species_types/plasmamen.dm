@@ -94,8 +94,8 @@
 		if("Medical Doctor")
 			O = new /datum/outfit/plasmaman/medical
 
-		if("EMT")
-			O = new /datum/outfit/plasmaman/emt
+		if("Paramedic")
+			O = new /datum/outfit/plasmaman/paramedic
 
 		if("Chemist")
 			O = new /datum/outfit/plasmaman/chemist

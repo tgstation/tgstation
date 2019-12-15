@@ -1376,9 +1376,9 @@
 	icon_state = "md"
 	toysay = "The patient is already dead!"
 
-/obj/item/toy/figure/emt
-	name = "EMT action figure"
-	icon_state = "emt"
+/obj/item/toy/figure/paramedic
+	name = "Paramedic action figure"
+	icon_state = "paramedic"
 	toysay = "And the best part? I'm not even a real doctor!"
 
 /obj/item/toy/figure/mime

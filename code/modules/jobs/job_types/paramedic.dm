@@ -1,6 +1,6 @@
-/datum/job/emt
-	title = "EMT"
-	flag = EMT
+/datum/job/paramedic
+	title = "Paramedic"
+	flag = PARAMEDIC
 	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
@@ -9,26 +9,26 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 
-	outfit = /datum/outfit/job/emt
+	outfit = /datum/outfit/job/paramedic
 
 	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS, ACCESS_EVA, ACCESS_ENGINE, ACCESS_CARGO, ACCESS_HYDROPONICS, ACCESS_RESEARCH)
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CLONING, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS, ACCESS_EVA, ACCESS_ENGINE, ACCESS_CARGO, ACCESS_HYDROPONICS, ACCESS_RESEARCH)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
 
-	display_order = JOB_DISPLAY_ORDER_EMT
+	display_order = JOB_DISPLAY_ORDER_PARAMEDIC
 
-/datum/outfit/job/emt
-	name = "EMT"
-	jobtype = /datum/job/emt
+/datum/outfit/job/paramedic
+	name = "Paramedic"
+	jobtype = /datum/job/paramedic
 
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical/emt
+	uniform = /obj/item/clothing/under/rank/medical/paramedic
 	head = /obj/item/clothing/head/soft/emt
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	suit =  /obj/item/clothing/suit/toggle/labcoat/emt
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
-	belt = /obj/item/storage/belt/medical/emt
+	belt = /obj/item/storage/belt/medical/paramedic
 	id = /obj/item/card/id
 	l_pocket = /obj/item/pda/medical
 	r_pocket = /obj/item/pinpointer/crew

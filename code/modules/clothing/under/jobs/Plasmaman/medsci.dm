@@ -4,11 +4,11 @@
 	icon_state = "doctor_envirosuit"
 	item_state = "doctor_envirosuit"
 
-/obj/item/clothing/under/plasmaman/emt
-	name = "EMT envirosuit"
-	desc = "A suit designed for the station's plasmaman EMTs."
-	icon_state = "emt_envirosuit"
-	item_state = "emt_envirosuit"
+/obj/item/clothing/under/plasmaman/paramedic
+	name = "paramedic envirosuit"
+	desc = "A suit designed for the station's plasmaman paramedics."
+	icon_state = "paramedic_envirosuit"
+	item_state = "paramedic_envirosuit"
 
 /obj/item/clothing/under/plasmaman/science
 	name = "science plasma envirosuit"

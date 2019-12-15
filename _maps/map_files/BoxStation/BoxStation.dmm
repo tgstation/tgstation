@@ -5142,7 +5142,7 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "akS" = (
-/obj/effect/landmark/start/emt,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "akT" = (
@@ -49932,7 +49932,7 @@
 /area/crew_quarters/kitchen)
 "iPA" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/landmark/start/emt,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "iQF" = (

@@ -3346,7 +3346,7 @@
 /area/science/research)
 "ahY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/effect/landmark/start/emt,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "aib" = (
@@ -15546,7 +15546,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/effect/landmark/start/emt,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel,
 /area/medical/cryo)
 "aRa" = (
