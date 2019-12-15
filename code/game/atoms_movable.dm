@@ -793,36 +793,46 @@
 *	Unless you are doing something very specific, these are the ones you want to use.
 */
 
-/// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For mobs with mind, gets the mind one.
+/// Gets or creates the relevant language holder. For mindless atoms, gets the local one. For atom with mind, gets the mind one.
 /atom/movable/proc/get_language_holder(get_minds = TRUE)
 	if(!language_holder)
 		language_holder = new initial_language_holder(src)
 	return language_holder
 
 /// Grants the supplied language and sets omnitongue true.
-/atom/movable/proc/grant_language(language, permanent = TRUE, spoken = TRUE)
+/atom/movable/proc/grant_language(language, understood = TRUE, spoken = TRUE, source = LANGUAGE_ATOM)
 	var/datum/language_holder/LH = get_language_holder()
-	LH.grant_language(language, permanent, spoken)
+	return LH.grant_language(language, understood, spoken, source)
 
-/// Grants every language to permanent understood, and spoken.
-/atom/movable/proc/grant_all_languages(spoken = FALSE)
+/// Grants every language.
+/atom/movable/proc/grant_all_languages(understood = TRUE, spoken = TRUE, omni = TRUE, source = LANGUAGE_MIND)
 	var/datum/language_holder/LH = get_language_holder()
-	LH.grant_all_languages(spoken)
+	return LH.grant_all_languages(understood, spoken, omni, source)
 
 /// Removes a single language.
-/atom/movable/proc/remove_language(language)
+/atom/movable/proc/remove_language(language, understood = TRUE, spoken = TRUE, source = LANGUAGE_ALL)
 	var/datum/language_holder/LH = get_language_holder()
-	LH.remove_language(language)
+	return LH.remove_language(language, understood, spoken, source)
 
 /// Removes every language and sets omnitongue false.
-/atom/movable/proc/remove_all_languages()
+/atom/movable/proc/remove_all_languages(source = LANGUAGE_ALL, omni = FALSE)
 	var/datum/language_holder/LH = get_language_holder()
-	LH.remove_all_languages()
+	return LH.remove_all_languages(source, omni)
+
+/// Adds a langauge to the blocked language list. Use this over remove_language in cases where you will give languages back later.
+/atom/movable/proc/add_blocked_language(language, source = LANGUAGE_ATOM)
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.add_blocked_language(language, source)
+
+/// Removes a langauge to the blocked language list.
+/atom/movable/proc/remove_blocked_language(language, source = LANGUAGE_ATOM)
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.remove_blocked_language(language, source)
 
 /// Checks if atom has the language. If spoken is true, only checks if atom can speak the language.
-/atom/movable/proc/has_language(language)
+/atom/movable/proc/has_language(language, spoken = FALSE)
 	var/datum/language_holder/LH = get_language_holder()
-	return LH.has_language(language)
+	return LH.has_language(language, spoken)
 
 /// Checks if atom can speak the language.
 /atom/movable/proc/can_speak_language(language)
@@ -837,6 +847,11 @@
 /atom/movable/proc/get_selected_language()
 	var/datum/language_holder/LH = get_language_holder()
 	return LH.get_selected_language()
+
+/// Gets a list of all the known langauges. Use this for populating blocking lists for mutations etc.
+/atom/movable/proc/get_known_languages(understood = TRUE, spoken = TRUE)
+	var/datum/language_holder/LH = get_language_holder()
+	return LH.get_known_languages(understood, spoken)
 
 /// Gets a random understood language, useful for hallucinations and such.
 /atom/movable/proc/get_random_understood_language()
@@ -858,11 +873,11 @@
 	var/datum/language_holder/LH = get_language_holder()
 	return LH.copy_languages(to_holder)
 
-/// Empties out the mob specific languages and updates them according to the supplied atoms language holder.
+/// Empties out the atom specific languages and updates them according to the supplied atoms language holder.
 /// As a side effect, it also creates missing language holders in the process.
-/atom/movable/proc/update_mob_languages(atom/movable/thing)
+/atom/movable/proc/update_atom_languages(atom/movable/thing)
 	var/datum/language_holder/LH = get_language_holder()
-	return LH.update_mob_languages(src)
+	return LH.update_atom_languages(src)
 
 /* End language procs */
 

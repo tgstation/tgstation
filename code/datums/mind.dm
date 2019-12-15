@@ -122,8 +122,8 @@
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
 
-	get_language_holder()			// Makes a language holder if one doesnt exist
-	language_holder.update_mob_languages(new_character)
+	var/datum/language_holder/LH = get_language_holder()	// Makes sure we got a language holder to work on.
+	LH.update_atom_languages(new_character)
 
 
 	///Adjust experience of a specific skill

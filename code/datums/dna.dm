@@ -314,7 +314,7 @@
 	new_holder.copy_holder(old_holder)
 	qdel(new_holder)
 	if(mind)
-		update_mob_languages(src)
+		update_atom_languages(src)
 
 	if(icon_update)
 		update_body()
