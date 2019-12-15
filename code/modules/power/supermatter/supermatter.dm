@@ -394,7 +394,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		removed.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen, /datum/gas/pluoxium, /datum/gas/tritium, /datum/gas/bz)
 		//calculating gas related values
-		//Wanna� know� a� secret?� See� that� max()� to� zero?� it's� used� for� error� checking.� If� we� get� a� mol� count� in� the� negative,� we'll� get� a� divide� by� zero� error
+		//Wanna know a secret? See that max() to zero? it's used for error checking. If we get a mol count in the negative, we'll get a divide by zero error
 		combined_gas = max(removed.total_moles(), 0)
 
 		//This is more error prevention, according to all known laws of atmos, gas_mix.remove() should never make negative mol values.
@@ -484,7 +484,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
 		//Power * 0.55 * (some value between 1.5 and 15) / 5
 		removed.temperature += ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER)
-		//We can only emmit so much heat, that being 37500
+		//We can only emit so much heat, that being 37500
 		removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier))
 
 		//Calculate how much gas to release
@@ -778,7 +778,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				"<span class='danger'>The unearthly ringing subsides and you notice you have new radiation burns.</span>", MSG_AUDIBLE)
 		else
 			L.show_message("<span class='hear'>You hear an unearthly ringing and notice your skin is covered in fresh radiation burns.</span>", MSG_AUDIBLE)
-	//Do not blow up our internal radio
+//Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)
 	return
 
@@ -796,15 +796,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	layer = ABOVE_MOB_LAYER
 	moveable = TRUE
 
-	/obj/machinery/power/supermatter_crystal/shard/engine
+/obj/machinery/power/supermatter_crystal/shard/engine
 	name = "anchored supermatter shard"
 	is_main_engine = TRUE
 	anchored = TRUE
 	moveable = FALSE
 
-	// When you wanna make a supermatter shard for the dramatic effect, but
-	// don't want it exploding suddenly
-	/obj/machinery/power/supermatter_crystal/shard/hugbox
+// When you wanna make a supermatter shard for the dramatic effect, but
+// don't want it exploding suddenly
+/obj/machinery/power/supermatter_crystal/shard/hugbox
 	name = "anchored supermatter shard"
 	takes_damage = FALSE
 	produces_gas = FALSE
