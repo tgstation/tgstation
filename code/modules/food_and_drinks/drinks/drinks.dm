@@ -246,7 +246,7 @@
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF
-	custom_price = 100
+	custom_price = 120
 
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
