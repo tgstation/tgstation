@@ -79,6 +79,7 @@
 	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
 	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
 	message_simple =  "stops moving..."
+	cooldown = 150
 	stat_allowed = UNCONSCIOUS
 
 /datum/emote/living/deathgasp/run_emote(mob/user, params, type_override, intentional)
@@ -91,13 +92,9 @@
 	if(. && user.deathsound)
 		if(isliving(user))
 			var/mob/living/L = user
-			var/cooldown = world.time
-			if(cooldown > world.time)
-				return //Still does the deathgasp but sound can't be spammed now
 			if(!L.can_speak_vocal() || L.oxyloss >= 50)
 				return //stop the sound if oxyloss too high/cant speak
 		playsound(user, user.deathsound, 200, TRUE, TRUE)
-		cooldown = world.time + 300 //30 seconds
 
 /datum/emote/living/drool
 	key = "drool"
