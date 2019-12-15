@@ -915,7 +915,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			supermatter_zap(target_structure, 5, power / 1.5)
 
-	#undef HALLUCINATION_RANGE
-	#undef GRAVITATIONAL_ANOMALY
-	#undef FLUX_ANOMALY
-	#undef PYRO_ANOMALY
+#undef HALLUCINATION_RANGE
+#undef GRAVITATIONAL_ANOMALY
+#undef FLUX_ANOMALY
+#undef PYRO_ANOMALY
