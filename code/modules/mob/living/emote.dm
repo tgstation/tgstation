@@ -87,12 +87,17 @@
 		message_simple = S.deathmessage
 	. = ..()
 	message_simple = initial(message_simple)
+
 	if(. && user.deathsound)
 		if(isliving(user))
 			var/mob/living/L = user
+			var/cooldown = world.time
+			if(cooldown > world.time)
+				return //Still does the deathgasp but sound can't be spammed now
 			if(!L.can_speak_vocal() || L.oxyloss >= 50)
 				return //stop the sound if oxyloss too high/cant speak
 		playsound(user, user.deathsound, 200, TRUE, TRUE)
+		cooldown = world.time + 300 //30 seconds
 
 /datum/emote/living/drool
 	key = "drool"
