@@ -399,31 +399,6 @@
 
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
-// Checks plants for broken tray icons. Use Advanced Proc Call to activate.
-// Maybe some day it would be used as unit test.
-/proc/check_plants_growth_stages_icons()
-	var/list/states = icon_states('icons/obj/hydroponics/growing.dmi')
-	states |= icon_states('icons/obj/hydroponics/growing_fruits.dmi')
-	states |= icon_states('icons/obj/hydroponics/growing_flowers.dmi')
-	states |= icon_states('icons/obj/hydroponics/growing_mushrooms.dmi')
-	states |= icon_states('icons/obj/hydroponics/growing_vegetables.dmi')
-	var/list/paths = typesof(/obj/item/seeds) - /obj/item/seeds - typesof(/obj/item/seeds/sample)
-
-	for(var/seedpath in paths)
-		var/obj/item/seeds/seed = new seedpath
-
-		for(var/i in 1 to seed.growthstages)
-			if("[seed.icon_grow][i]" in states)
-				continue
-			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!")
-
-		if(!(seed.icon_dead in states))
-			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!")
-
-		if(seed.icon_harvest) // mushrooms have no grown sprites, same for items with no product
-			if(!(seed.icon_harvest in states))
-				to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!")
-
 /obj/item/seeds/proc/randomize_stats()
 	set_lifespan(rand(25, 60))
 	set_endurance(rand(15, 35))

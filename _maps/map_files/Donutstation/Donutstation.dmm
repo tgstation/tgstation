@@ -13058,7 +13058,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastleft{
 	name = "Chemistry Desk";
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -18003,7 +18003,7 @@
 	},
 /obj/machinery/door/window/southleft{
 	name = "Chemistry Desk";
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -18016,7 +18016,7 @@
 	},
 /obj/machinery/door/window/southright{
 	name = "Chemistry Desk";
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -20818,7 +20818,7 @@
 "beT" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry Lab";
-	req_access_txt = "5; 33"
+	req_access_txt = "5; 69"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4

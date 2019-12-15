@@ -232,7 +232,7 @@
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 
 /obj/item/stack/medical/mesh/Initialize()
-	..()
+	. = ..()
 	if(amount == max_amount)	 //only seal full mesh packs
 		is_open = FALSE
 		icon_state = "regen_mesh_closed"
