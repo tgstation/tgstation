@@ -1179,6 +1179,7 @@
 #include "code\game\turfs\open\river.dm"
 #include "code\game\turfs\open\water.dm"
 #include "code\game\turfs\open\floor\fancy_floor.dm"
+#include "code\game\turfs\open\floor\hull.dm"
 #include "code\game\turfs\open\floor\light_floor.dm"
 #include "code\game\turfs\open\floor\mineral_floor.dm"
 #include "code\game\turfs\open\floor\misc_floor.dm"
