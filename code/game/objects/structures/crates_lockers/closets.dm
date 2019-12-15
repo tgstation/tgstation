@@ -440,9 +440,10 @@
 
 /obj/structure/closet/emag_act(mob/user)
 	if(secure && !broken)
-		user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
-						"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
-						"<span class='hear'>You hear a faint electrical spark.</span>")
+		if(user)
+			user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
+							"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
+							"<span class='hear'>You hear a faint electrical spark.</span>")
 		playsound(src, "sparks", 50, TRUE)
 		broken = TRUE
 		locked = FALSE
