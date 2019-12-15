@@ -57,9 +57,6 @@
 	adjustBruteLoss((levels * 5) ** 1.5)
 	Knockdown(levels * 50)
 
-/mob/living/proc/OpenCraftingMenu()
-	return
-
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
