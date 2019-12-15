@@ -2946,4 +2946,5 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
+#include "tools\HubMigrator\HubMigrator.dm"
 // END_INCLUDE
