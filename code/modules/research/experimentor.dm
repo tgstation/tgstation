@@ -241,7 +241,7 @@
 	smoke.start()
 
 
-/obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on, mob/user)
+/obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1
 	icon_state = "h_lathe_wloop"
 	var/chosenchem
