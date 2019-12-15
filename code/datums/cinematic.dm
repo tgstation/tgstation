@@ -207,7 +207,6 @@ GLOBAL_LIST_EMPTY(cinematics)
 	sleep(30)
 	special()
 
-
 /datum/cinematic/nuke_annihilation
 	id = CINEMATIC_ANNIHILATION
 

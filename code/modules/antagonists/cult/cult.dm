@@ -379,7 +379,7 @@
 		if(!O.check_completion())
 			return FALSE
 	return TRUE
-	
+
 /datum/team/cult/roundend_report()
 	var/list/parts = list()
 
