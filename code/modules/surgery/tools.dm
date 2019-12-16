@@ -330,3 +330,34 @@
 /obj/item/surgicaldrill/advanced/examine()
 	. = ..()
 	. += " It's set to [tool_behaviour == TOOL_DRILL ? "drilling" : "mending"] mode."
+
+/obj/item/shears
+	name = "amputation shears"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "shears"
+	flags_1 = CONDUCT_1
+	item_flags = SURGICAL_TOOL
+	toolspeed  = 1
+	force = 15
+	w_class = WEIGHT_CLASS_NORMAL
+	throwforce = 9
+	throw_speed = 2
+	throw_range = 5
+	custom_materials = list(/datum/material/iron=8000, /datum/material/titanium=6000)
+	attack_verb = list("sheared", "snipped")
+	sharpness = IS_SHARP
+
+/obj/item/shears/attack(mob/living/M, mob/user)
+	if(!iscarbon(M) || user.a_intent != INTENT_HELP)
+		return ..()
+
+	var/mob/living/carbon/patient = M
+	var/obj/item/bodypart/limb_snip_candidate = patient.get_bodypart(check_zone(user.zone_selected))
+
+	if(!limb_snip_candidate)
+		to_chat(user, "<span class='warning'>[patient] is already missing that limb, what more do you want?...</span>")
+		return ..()
+
+	if(patient.stat == DEAD || patient.stat != CONCIOUS || patient.IsStun()) //Faster if the patient is dead, unconcious or treated with a surgical paralytic such as curare
+		if(do_after(user,  toolspeed * 75 * user.mind.get_skill_speed_modifier(/datum/skill/medical), target = patient)
+	else
