@@ -686,8 +686,7 @@
 		if(SM.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
 			to_chat(SM, "<span class='userdanger'>You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts [src] and suddenly becomes attentive and aware. It worked!</span>")
-		var/datum/language_holder/LH = user.get_language_holder()
-		LH.copy_languages(SM.get_language_holder())
+		SM.copy_languages(user)
 		after_success(user, SM)
 		qdel(src)
 	else

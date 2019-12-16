@@ -848,11 +848,6 @@
 	var/datum/language_holder/LH = get_language_holder()
 	return LH.get_selected_language()
 
-/// Gets a list of all the known langauges. Use this for populating blocking lists for mutations etc.
-/atom/movable/proc/get_known_languages(understood = TRUE, spoken = TRUE)
-	var/datum/language_holder/LH = get_language_holder()
-	return LH.get_known_languages(understood, spoken)
-
 /// Gets a random understood language, useful for hallucinations and such.
 /atom/movable/proc/get_random_understood_language()
 	var/datum/language_holder/LH = get_language_holder()
@@ -863,19 +858,17 @@
 	var/datum/language_holder/LH = get_language_holder()
 	return LH.get_random_spoken_language()
 
-/// Copies every aspect of the language holder.
-/atom/movable/proc/copy_holder(to_holder)
+/// Copies all languages into the supplied atom/language holder.
+/atom/movable/proc/copy_languages(from_holder, source_override)
+	if(isatom(from_holder))
+		var/atom/movable/thing = from_holder
+		from_holder = thing.get_language_holder()
 	var/datum/language_holder/LH = get_language_holder()
-	return LH.copy_holder(to_holder)
+	return LH.copy_languages(from_holder, source_override)
 
-/// Copies all languages into the supplied language holder.
-/atom/movable/proc/copy_languages(to_holder)
-	var/datum/language_holder/LH = get_language_holder()
-	return LH.copy_languages(to_holder)
-
-/// Empties out the atom specific languages and updates them according to the supplied atoms language holder.
+/// Empties out the atom specific languages and updates them according to the current atoms language holder.
 /// As a side effect, it also creates missing language holders in the process.
-/atom/movable/proc/update_atom_languages(atom/movable/thing)
+/atom/movable/proc/update_atom_languages()
 	var/datum/language_holder/LH = get_language_holder()
 	return LH.update_atom_languages(src)
 

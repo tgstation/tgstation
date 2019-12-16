@@ -292,8 +292,11 @@
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	S.key = shade_controller.key
-	var/datum/language_holder/LH = user.get_language_holder()
-	LH.copy_holder(S.language_holder)
+	S.copy_languages(T)//Copies the old mobs languages into the new mob holder.
+	S.copy_languages(user)
+	var/datum/language_holder/LH = S.get_language_holder()
+	S.update_atom_languages()
+	LH.omnitongue = TRUE	//Spirit tongue now
 	if(user)
 		S.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 	if(user && iscultist(user))

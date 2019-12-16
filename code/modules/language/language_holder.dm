@@ -85,38 +85,22 @@
 		omnitongue = FALSE
 	return TRUE
 
-/// Adds a single language, list of languages or a list returned from get_known_languages to the blocked language list.
+/// Adds a single language or list of languages to the blocked language list.
 /datum/language_holder/proc/add_blocked_language(languages, source = LANGUAGE_MIND)
-	var/list/all = list()
 	if(!islist(languages))
-		all |= languages
-	if(languages["understood"] || languages["spoken"])
-		if(languages["understood"])
-			all |= languages["understood"]
-		if(languages["spoken"])
-			all |= languages["spoken"]
-	else
-		all |= languages
-	for(var/language in all)
+		languages = list(languages)
+	for(var/language in languages)
 		if(!blocked_languages[language])
 			blocked_languages += language
 			blocked_languages[language] = list()
 		blocked_languages[language] |= source
 	return TRUE
 
-/// Removes a single language, list of languages or a list returned from get_known_languages from the blocked language list.
+/// Removes a single language or list of languages from the blocked language list.
 /datum/language_holder/proc/remove_blocked_language(languages, source = LANGUAGE_MIND)
-	var/list/all = list()
 	if(!islist(languages))
-		all |= languages
-	if(languages["understood"] || languages["spoken"])
-		if(languages["understood"])
-			all |= languages["understood"]
-		if(languages["spoken"])
-			all |= languages["spoken"]
-	else
-		all |= languages
-	for(var/language in all)
+		languages = list(languages)
+	for(var/language in languages)
 		if(blocked_languages[language])
 			if(source == LANGUAGE_ALL)
 				blocked_languages -= language
@@ -155,21 +139,6 @@
 			highest_priority = priority
 	return selected_language
 
-/// Gets a list of all the known langauges. Use this for populating blocking lists for mutations etc.
-/datum/language_holder/proc/get_known_languages(understood = TRUE, spoken = TRUE)
-	var/list/allknown = list()
-	if(understood)
-		allknown += "understood"
-		allknown["understood"] = list()
-		for(var/lang in understood_languages)
-			allknown["understood"] += lang
-	if(spoken)
-		allknown += "spoken"
-		allknown["spoken"] = list()
-		for(var/lang in spoken_languages)
-			allknown["spoken"] += lang
-	return allknown
-
 /// Gets a random understood language, useful for hallucinations and such.
 /datum/language_holder/proc/get_random_understood_language()
 	return pick(understood_languages)
@@ -195,36 +164,34 @@
 
 /// Empties out the atom specific languages and updates them according to the supplied atoms language holder.
 /datum/language_holder/proc/update_atom_languages(atom/movable/thing)
+	var/datum/language_holder/from_atom = thing.get_language_holder(FALSE)	//Gets the atoms language holder
+	if(from_atom == src)	//This could happen if called on an atom without a mind.
+		return FALSE
 	for(var/language in understood_languages)
 		remove_language(language, TRUE, FALSE, LANGUAGE_ATOM)
 	for(var/language in spoken_languages)
 		remove_language(language, FALSE, TRUE, LANGUAGE_ATOM)
-	blocked_languages.Cut()
+	for(var/language in blocked_languages)
+		remove_blocked_language(language, LANGUAGE_ATOM)
 
-	var/datum/language_holder/from_atom = thing.get_language_holder(FALSE)	// Gets the atoms language holder
-	from_atom.copy_languages(src)
+	copy_languages(from_atom)
 	get_selected_language()
 	return TRUE
 
-/// Copies and replaces holder into the supplied language holder.
-/datum/language_holder/proc/copy_holder(var/datum/language_holder/to_holder)
-	to_holder.understood_languages.Cut()
-	to_holder.spoken_languages.Cut()
-	to_holder.blocked_languages.Cut()
-
-	copy_languages(to_holder)
-	to_holder.omnitongue = omnitongue
-	to_holder.selected_language = selected_language
-	return TRUE
-
 /// Copies all languages into the supplied language holder
-/datum/language_holder/proc/copy_languages(var/datum/language_holder/to_holder)
-	for(var/language in understood_languages)
-		to_holder.grant_language(language, TRUE, FALSE, understood_languages[language])
-	for(var/language in spoken_languages)
-		to_holder.grant_language(language, FALSE, TRUE, spoken_languages[language])
-	for(var/language in blocked_languages)
-		to_holder.add_blocked_language(language)
+/datum/language_holder/proc/copy_languages(var/datum/language_holder/from_holder, source_override)
+	if(source_override)	//No blocked languages here,
+		for(var/language in from_holder.understood_languages)
+			grant_language(language, TRUE, FALSE, source_override)
+		for(var/language in from_holder.spoken_languages)
+			grant_language(language, FALSE, TRUE, source_override)
+	else
+		for(var/language in from_holder.understood_languages)
+			grant_language(language, TRUE, FALSE, from_holder.understood_languages[language])
+		for(var/language in from_holder.spoken_languages)
+			grant_language(language, FALSE, TRUE, from_holder.spoken_languages[language])
+		for(var/language in from_holder.blocked_languages)
+			add_blocked_language(language, from_holder.blocked_languages[language])
 	return TRUE
 
 

@@ -121,12 +121,10 @@
 	RegisterSignal(new_character, COMSIG_MOB_DEATH, .proc/set_death_time)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
-
-	var/datum/language_holder/LH = get_language_holder()	// Makes sure we got a language holder to work on.
-	LH.update_atom_languages(new_character)
+	current.update_atom_languages()
 
 
-	///Adjust experience of a specific skill
+///Adjust experience of a specific skill
 /datum/mind/proc/adjust_experience(skill, amt, silent = FALSE)
 	var/datum/skill/S = GetSkillRef(skill)
 	skill_experience[S] = max(0, skill_experience[S] + amt) //Prevent going below 0

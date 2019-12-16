@@ -305,17 +305,14 @@
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
 		dna.species.on_species_gain(src, old_species, pref_load)
+		qdel(language_holder)
+		var/species_holder = initial(mrace.species_language_holder)
+		language_holder = new species_holder(src)
+		if(mind)
+			update_atom_languages()
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
-	var/datum/language_holder/old_holder = get_language_holder(FALSE)
-	var/species_holder = initial(mrace.species_language_holder)
-	var/datum/language_holder/new_holder = new species_holder(src)
-	new_holder.copy_holder(old_holder)
-	qdel(new_holder)
-	if(mind)
-		update_atom_languages(src)
-
 	if(icon_update)
 		update_body()
 		update_hair()

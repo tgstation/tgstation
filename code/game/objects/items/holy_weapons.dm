@@ -452,6 +452,10 @@
 		S.ckey = C.ckey
 		S.fully_replace_character_name(null, "The spirit of [name]")
 		S.status_flags |= GODMODE
+		S.copy_languages(user)	//Make sure the sword can understand and communicate with the user.
+		S.update_atom_languages()
+		var/datum/language_holder/LH = S.get_language_holder()
+		LH.omnitongue = TRUE
 		var/input = sanitize_name(stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN))
 
 		if(src && input)
