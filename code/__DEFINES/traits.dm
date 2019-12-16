@@ -112,6 +112,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HOLY				"holy"
 #define TRAIT_DEPRESSION		"depression"
 #define TRAIT_SOCIAL_ANXIETY	"social_anxiety"
+#define TRAIT_BIPOLAR			"bipolar"
+#define TRAIT_DELUSIONAL		"delusional"
+#define TRAIT_COLLECTOR			"collector"
 #define TRAIT_PARANOID			"paranoid"
 #define TRAIT_CATATONIA			"catatonia"
 #define TRAIT_JOLLY				"jolly"
@@ -125,6 +128,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DISSECTED			"dissected"
 #define TRAIT_SIXTHSENSE		"sixth_sense" //I can hear dead people
 #define TRAIT_FEARLESS			"fearless"
+#define TRAIT_RELAXED			"relaxed"
+#define TRAIT_UNDER_CONTROL     "under_control"
+#define TRAIT_LITHIATED     	"lithiated"
 #define TRAIT_PARALYSIS_L_ARM	"para-l-arm" //These are used for brain-based paralysis, where replacing the limb won't fix it
 #define TRAIT_PARALYSIS_R_ARM	"para-r-arm"
 #define TRAIT_PARALYSIS_L_LEG	"para-l-leg"

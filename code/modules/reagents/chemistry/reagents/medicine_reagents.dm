@@ -956,14 +956,18 @@
 	..()
 	. = 1
 
+
+
 /datum/reagent/medicine/haloperidol
 	name = "Haloperidol"
-	description = "Increases depletion rates for most stimulating/hallucinogenic drugs. Reduces druggy effects and jitteriness. Severe stamina regeneration penalty, causes drowsiness. Small chance of brain damage."
+	description = "Increases depletion rates for most stimulating/hallucinogenic drugs. Commonly used to treat schizophrenia. Reduces druggy effects and jitteriness. Severe stamina regeneration penalty, causes drowsiness. Small chance of brain damage."
 	reagent_state = LIQUID
 	color = "#27870a"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+	overdose_threshold = 25
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,5)
 	M.drowsyness += 2
@@ -974,8 +978,67 @@
 	if(prob(20))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 50)
 	M.adjustStaminaLoss(2.5*REM, 0)
+	mood.adjustPsychInstability(-2)
 	..()
 	return TRUE
+
+/datum/reagent/medicine/haloperidol/on_mob_add(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_UNDER_CONTROL, PSYCH_TRAIT)
+
+/datum/reagent/medicine/haloperidol/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_UNDER_CONTROL, PSYCH_TRAIT)
+
+/datum/reagent/medicine/haloperidol/overdose_process(mob/living/M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+	mood.adjustPsychInstability(3)
+	M.adjustToxLoss(1, 0)
+	if(prob(20))
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 50)
+	..()
+	. = 1
+
+/datum/reagent/medicine/lithium_carbonate
+	name = "Lithium Carbonate"
+	description = "Chemical of last resort. Highly roxic and induces muscle spasms but rapidly restores someones mood and heals their mental instability. Must be ingested , otherwise it is instantly purged from the body. If overdosed causes massive damage to sensory organs"
+	reagent_state = LIQUID
+	color = "#c5ddbd"
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	overdose_threshold = 10
+
+/datum/reagent/medicine/lithium_carbonate/on_mob_life(mob/living/carbon/M)
+	M.adjustToxLoss(2, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 1.5*REM, 50)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+	mood.adjustPsychInstability(-2)
+	if(mood.sanity <= SANITY_GREAT) // only take effect if in negative sanity and then...
+		mood.setSanity(min(mood.sanity+20, SANITY_GREAT)) // set minimum to prevent unwanted spiking over neutral
+	return TRUE
+
+/datum/reagent/medicine/lithium_carbonate/on_mob_add(mob/living/carbon/M)
+	M.apply_status_effect(STATUS_EFFECT_SPASMS)
+	ADD_TRAIT(M, TRAIT_LITHIATED, PSYCH_TRAIT)
+
+/datum/reagent/medicine/lithium_carbonate/on_mob_end_metabolize(mob/living/carbon/M)
+	M.remove_status_effect(STATUS_EFFECT_SPASMS)
+	REMOVE_TRAIT(M, TRAIT_LITHIATED, PSYCH_TRAIT)
+
+/datum/reagent/medicine/lithium_carbonate/overdose_process(mob/living/M)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+	mood.adjustPsychInstability(5)
+	M.adjustToxLoss(2, 0)
+	if(prob(30))
+		M.adjustOrganLoss(ORGAN_SLOT_EYES, 1*REM, 50)
+		M.adjustOrganLoss(ORGAN_SLOT_EARS, 1*REM, 50)
+	mood.setSanity(min(mood.sanity-20, SANITY_UNSTABLE))
+	..()
+	. = 1
+
+/datum/reagent/medicine/trophazole/on_transfer(atom/A, method=INGEST, trans_volume)
+	if(method != INGEST || !iscarbon(A))
+		A.reagents.remove_reagent(src, volume)
+	..()
+
 
 /datum/reagent/medicine/lavaland_extract
 	name = "Lavaland Extract"
@@ -1165,10 +1228,10 @@
 
 /datum/reagent/medicine/psicodine/on_mob_metabolize(mob/living/L)
 	..()
-	ADD_TRAIT(L, TRAIT_FEARLESS, type)
+	ADD_TRAIT(L, TRAIT_FEARLESS, PSYCH_TRAIT)
 
 /datum/reagent/medicine/psicodine/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_FEARLESS, type)
+	REMOVE_TRAIT(L, TRAIT_FEARLESS, PSYCH_TRAIT)
 	..()
 
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/M)
@@ -1185,6 +1248,42 @@
 /datum/reagent/medicine/psicodine/overdose_process(mob/living/M)
 	M.hallucination = min(max(0, M.hallucination + 5), 60)
 	M.adjustToxLoss(1, 0)
+	..()
+	. = 1
+
+datum/reagent/medicine/alprazolam
+	name = "Alprazolam"
+	description = "Used to supress extreme cases of mental disorders."
+	reagent_state = LIQUID
+	color = "#4a07e7"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 15
+
+/datum/reagent/medicine/alprazolam/on_mob_metabolize(mob/living/L)
+	..()
+	ADD_TRAIT(L, TRAIT_RELAXED, PSYCH_TRAIT)
+
+/datum/reagent/medicine/alprazolam/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_RELAXED, PSYCH_TRAIT)
+	..()
+
+/datum/reagent/medicine/alprazolam/on_mob_life(mob/living/carbon/M)
+	M.jitteriness = max(0, M.jitteriness-6)
+	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+	if(mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
+		mood.setSanity(min(mood.sanity+2, SANITY_NEUTRAL)) // set minimum to prevent unwanted spiking over neutral
+	M.remove_status_effect(STATUS_EFFECT_SPASMS)
+	..()
+	. = 1
+
+/datum/reagent/medicine/alprazolam/overdose_process(mob/living/M)
+	M.hallucination = min(max(0, M.hallucination + 5), 60)
+	M.adjustToxLoss(2, 0)
+	if(!HAS_TRAIT(M, TRAIT_NOBREATH))
+		M.adjustOxyLoss(2)
+		M.losebreath += 1
+		if(prob(10))
+			M.emote("gasp")
 	..()
 	. = 1
 

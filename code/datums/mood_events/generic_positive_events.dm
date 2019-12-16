@@ -19,6 +19,15 @@
 /datum/mood_event/besthug/add_effects(mob/friend)
 	description = "<span class='nicegreen'>[friend.name] is great to be around, [friend.p_they()] makes me feel so happy!</span>\n"
 
+/datum/mood_event/mood_swing_up
+	description = "<span class='nicegreen'>I feel good for no particular reason.</span>\n"
+	mood_change = 16
+	timeout = 2 MINUTES
+
+/datum/mood_event/collectors_satisfacton
+	description = "<span class='nicegreen'>I feel satisfied with my collection.</span>\n"
+	mood_change = 6
+
 /datum/mood_event/arcade
 	description = "<span class='nicegreen'>I beat the arcade game!</span>\n"
 	mood_change = 3
@@ -165,11 +174,11 @@
 	description = "<span class='nicegreen'>The bottle landing like that was satisfying.</span>\n"
 	mood_change = 2
 	timeout = 3 MINUTES
-  
+
 /datum/mood_event/hope_lavaland
 	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
 	mood_change = 5
-  
+
 /datum/mood_event/nanite_happiness
 	description = "<span class='nicegreen robot'>+++++++HAPPINESS ENHANCEMENT+++++++</span>\n"
 	mood_change = 7

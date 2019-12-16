@@ -181,6 +181,18 @@
 	results = list(/datum/reagent/medicine/haloperidol = 5)
 	required_reagents = list(/datum/reagent/chlorine = 1, /datum/reagent/fluorine = 1, /datum/reagent/aluminium = 1, /datum/reagent/medicine/potass_iodide = 1, /datum/reagent/fuel/oil = 1)
 
+/datum/chemical_reaction/lithium_carbonate
+	name = "Lithium carbonate"
+	id = /datum/reagent/medicine/lithium_carbonate
+	results = list(/datum/reagent/medicine/lithium_carbonate = 3)
+	required_reagents = list(/datum/reagent/lithium = 1, /datum/reagent/carbon = 1, /datum/reagent/oxygen = 1)
+
+/datum/chemical_reaction/alprazolam
+	name = "Alprazolam"
+	id = /datum/reagent/medicine/alprazolam
+	results = list(/datum/reagent/medicine/alprazolam = 5)
+	required_reagents = list(/datum/reagent/drug/space_drugs = 1, /datum/reagent/oxygen = 1, /datum/reagent/medicine/potass_iodide = 1)
+
 /datum/chemical_reaction/regen_jelly
 	name = "Regenerative Jelly"
 	id = /datum/reagent/medicine/regen_jelly

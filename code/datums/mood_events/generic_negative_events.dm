@@ -52,6 +52,15 @@
 	mood_change = -12
 	timeout = 2 MINUTES
 
+/datum/mood_event/mood_swing_down
+	description = "<span class='warning'>Everything i do isn't fulfilling</span>\n"
+	mood_change = -16
+	timeout = 2 MINUTES
+
+/datum/mood_event/collectors_itch
+	description = "<span class='warning'>My collection is incomplete!</span>\n"
+	mood_change = -10
+
 /datum/mood_event/shameful_suicide //suicide_acts that return SHAME, like sord
   description = "<span class='boldwarning'>I can't even end it all!</span>\n"
   mood_change = -15
