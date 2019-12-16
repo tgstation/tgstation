@@ -523,15 +523,19 @@
 			investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
 		if(globalMalf == 99)
 			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!")
-			sleep(50)
-			explosion(src, 1, 5, 10, 5, 1)
+			addtimer(CALLBACK(src, .proc/boom), 50)
 		if(globalMalf == 100)
 			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!")
-			sleep(50)
-			playsound(src, 'sound/items/bikehorn.ogg', 500)
-			new /obj/item/grown/bananapeel(loc)
+			addtimer(CALLBACK(src, .proc/honk), 50)
 
 	addtimer(CALLBACK(src, .proc/reset_exp), resetTime)
+
+/obj/machinery/rnd/experimentor/proc/boom()
+	explosion(src, 1, 5, 10, 5, 1)
+
+/obj/machinery/rnd/experimentor/proc/honk()
+	playsound(src, 'sound/items/bikehorn.ogg', 500)
+	new /obj/item/grown/bananapeel(loc)
 
 /obj/machinery/rnd/experimentor/proc/reset_exp()
 	update_icon()
