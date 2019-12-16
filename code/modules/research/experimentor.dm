@@ -577,7 +577,7 @@
 	revealed = TRUE
 	name = realName
 	cooldownMax = rand(60,300)
-	realProc = pick("teleport","explode","rapidDupe","petSpray","flash","clean","corgicannon")
+	realProc = pick(.proc/teleport,.proc/explode,.proc/rapidDupe,.proc/petSpray,.proc/flash,.proc/clean,.proc/corgicannon)
 
 /obj/item/relic/attack_self(mob/user)
 	if(revealed)

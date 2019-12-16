@@ -1173,6 +1173,15 @@
 			riding_datum.restore_position(user)
 	. = ..(user)
 
+/mob/living/silicon/robot/resist()
+	. = ..()
+	if(!buckled_mobs.len)
+		return
+	for(var/i in buckled_mobs)
+		var/mob/unbuckle_me_now = i
+		unbuckle_mob(unbuckle_me_now, FALSE)
+
+
 /mob/living/silicon/robot/proc/TryConnectToAI()
 	connected_ai = select_active_ai_with_fewest_borgs()
 	if(connected_ai)
