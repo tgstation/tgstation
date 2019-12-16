@@ -23,7 +23,7 @@
 					resisting = FALSE
 			else
 				walk_to(src,0)
-		else
+		else if(stat || client) // don't run when unconscious
 			goap_ai.actions_halted = TRUE
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()

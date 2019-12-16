@@ -82,9 +82,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		if(STATE_IDLE)
 			idle_state()
 		if(STATE_MOVINGTO)
-			if(movetimer < world.time)
-				movetimer = world.time + movedelay
-				moving_state()
+			moving_state()
 		if(STATE_ACTING)
 			act_state()
 
@@ -102,6 +100,8 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 		return
 	if(!range_check)
 		brain_state = STATE_MOVINGTO
+		LAZYCLEARLIST(path)
+		moving_state() // move immediately
 		return
 	already_acting = TRUE
 	if(!curr_action.Perform(agent))
@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 			movedelay = H.move_to_delay
 		else
 			movedelay = 0
-	if(astar_active)
+	if(movetimer > world.time || astar_active)
 		return
 	var/datum/goap_action/curr_action = action_queue[action_queue.len]
 
@@ -138,6 +138,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 			dense_garbage = TRUE
 			break
 	var/proc_to_use = /turf/proc/reachableTurftest
+	movetimer = world.time + movedelay
 	switch(movetype)
 		if(MOVETYPE_ASTAR) // AStar, Full
 			if(!path || !path.len)
@@ -148,8 +149,11 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 					else
 						path = get_path_to(agent, curr_action.target, /turf/proc/Distance_cardinal, 0, 200, adjacent = proc_to_use, id=given_pathfind_access, mintargetdist = dense_garbage)
 					if(!path || !path.len) // still can't path
-						if(!curr_action.PathingFailed(curr_action.target, current_loc))
-							brain_state = STATE_IDLE
+						tries++
+						if(tries >= MAX_TRIES)
+							if(!curr_action.PathingFailed(curr_action.target, current_loc))
+								brain_state = STATE_IDLE
+								idle_state()
 						astar_active = FALSE
 						return
 				else
@@ -170,12 +174,14 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	if(current_loc == get_turf(agent))
 		tries++
 		if(tries >= MAX_TRIES)
-			if(!curr_action.PathingFailed(curr_action.target, current_loc))
+			if(!curr_action.PathingFailed(get_turf(curr_action.target), current_loc))
 				brain_state = STATE_IDLE
 			tries = 0
 			return
 	else
 		tries = 0
+		brain_state = STATE_IDLE
+		idle_state() // we moved, replan to check if the worldstate changed in that time
 
 
 

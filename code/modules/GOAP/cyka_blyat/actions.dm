@@ -1,5 +1,5 @@
 /datum/goap_action/russian
-	var/saytext = "&#x421;&#x443;&#x43A;&#x430;" // Russians can speak so why not!
+	var/saytext = "cyka" // Russians can speak so why not!
 
 /datum/goap_action/russian/Perform(mob/living/simple_animal/hostile/russian/A)
 	A.say(saytext)
@@ -19,9 +19,13 @@
 
 /datum/goap_action/russian/attack/AdvancedPreconditions(atom/agent, list/worldstate)
 	var/list/viewl = view(10, agent)
+	var/maxdist = 11
 	for(var/mob/living/carbon/C in viewl)
-		if(C && !C.stat)
-			target = C
+		if(C && !C.stat && PATH_CHECK(src, C))
+			var/distcheck = get_dist(agent, C)
+			if(distcheck < maxdist)
+				target = C
+				maxdist = distcheck
 	return (target != null)
 
 /datum/goap_action/russian/attack/RequiresInRange()
@@ -160,7 +164,7 @@
 	var/list/viewl = view(10, agent)
 	for(var/mob/living/simple_animal/hostile/russian/ranged/R in viewl)
 		if(!R.stat)
-			if(R.health < (R.maxHealth/2))
+			if(R.health < (R.maxHealth/2) && PATH_CHECK(src, R))
 				target = R
 				break
 	return (target != null)

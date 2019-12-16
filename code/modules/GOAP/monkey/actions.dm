@@ -60,8 +60,15 @@
 	if(C.IsDeadOrIncap() || C.restrained())
 		return FALSE
 	for(var/obj/item/I in oview(4, C))
-		if(I && !C.blacklistItems[I] && !HAS_TRAIT(I, TRAIT_NODROP))
-			if(I.force > C.best_force)
+		if(!PATH_CHECK(src, I))
+			continue
+		if(!C.blacklistItems[I] && !HAS_TRAIT(I, TRAIT_NODROP))
+			if(isgun(I))
+				var/obj/item/gun/G = I
+				if(!G.chambered || !G.chambered.BB)
+					continue
+				target = G
+			else if(I.force > C.best_force)
 				C.best_force = I.force
 				target = I
 	return (target != null)
@@ -74,6 +81,13 @@
 	C.equip_item(target)
 	action_done = TRUE
 	return ..()
+
+/datum/goap_action/monkey/GetItem/PathingFailed(turf/failed, turf/current) // blacklist the item they couldn't get to
+	. = ..()
+	var/mob/living/carbon/monkey/C = locate() in current
+	if(target)
+		C.blacklistItems += target
+
 
 /datum/goap_action/monkey/GetItem/CheckDone(atom/agent)
 	return action_done
@@ -94,6 +108,8 @@
 	if(C.IsDeadOrIncap() || C.restrained())
 		return FALSE
 	for(var/mob/living/carbon/human/H in oview(4, C))
+		if(!PATH_CHECK(src, H))
+			continue
 		for(var/obj/item/I in H.held_items)
 			if(I && !C.blacklistItems[I] && I.force > C.best_force)
 				target = H
@@ -136,7 +152,7 @@
 	for(var/mob/living/L in around)
 		if(!C.should_target(L))
 			continue
-		if(L.stat || !L.held_items) // unconscious or not holding anything
+		if(L.stat || !L.held_items || !PATH_CHECK(src, L)) // unconscious or not holding anything
 			continue
 		target = L
 		for(var/obj/item/I in L.held_items)
@@ -160,6 +176,7 @@
 /datum/goap_action/monkey/harm
 	name = "Harm"
 	cost = 3
+	cooldown = 8
 
 /datum/goap_action/monkey/harm/New()
 	..()
@@ -175,7 +192,7 @@
 	for(var/mob/living/L in around)
 		if(!C.should_target(L))
 			continue
-		if(!L.stat && L.held_items) // conscious
+		if(!L.stat && L.held_items && PATH_CHECK(src, L)) // conscious
 			target = L
 			break
 	return (target != null)
@@ -253,7 +270,7 @@
 /datum/goap_action/monkey/grab/AdvancedPreconditions(mob/living/carbon/monkey/C, list/worldstate)
 	var/list/around = view(MONKEY_ENEMY_VISION, C)
 	for(var/mob/living/L in around)
-		if(L.stat && L != C) // unconscious
+		if(L.stat && L != C && PATH_CHECK(src, L)) // unconscious
 			target = L
 			break
 	return (target != null)

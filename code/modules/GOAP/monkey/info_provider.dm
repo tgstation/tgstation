@@ -46,7 +46,7 @@
 				.["attackEnemy"] = TRUE // we have a target
 				break
 			else if(locate(/obj/machinery/disposal) in around)
-				if(!L.pulledby) // nobody else has got rid of them and we're not in combat
+				if(!L.pulledby || C == L.pulledby) // we're not holding them and nobody else has got rid of them and we're not in combat
 					.["disposeEnemy"] = TRUE // they're not conscious, lets trash them will automatically grab
 					return // don't worry about getting items if we're just disposalling someone
 	if(W && isgun(W)) // we have an item and its a gun
@@ -68,7 +68,7 @@
 					break
 	else if(!isgun(W))
 		for(var/obj/item/V in itemview)
-			if(V && !C.blacklistItems[V] && V.force > W.force)
+			if(V && !C.blacklistItems[V] && V.force > W.force || isgun(V))
 				if(agent.has_action(/datum/goap_action/monkey/throwitem))
 					.["replaceItem"] = TRUE
 					break

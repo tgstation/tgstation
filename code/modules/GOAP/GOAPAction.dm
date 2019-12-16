@@ -1,3 +1,5 @@
+// macro to check if the agent can path to atom X in the action returns TRUE if its possible and FALSE if its not, this won't work with turfs
+#define PATH_CHECK(action, X) !(X.loc in action.bturfs)
 
 /datum/goap_action
 	var/name = "generic goap action" //for bookkeeping/debug
