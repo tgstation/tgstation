@@ -706,6 +706,7 @@
 #include "code\game\machinery\rechargestation.dm"
 #include "code\game\machinery\recycler.dm"
 #include "code\game\machinery\requests_console.dm"
+#include "code\game\machinery\robotic_arm.dm"
 #include "code\game\machinery\roulette_machine.dm"
 #include "code\game\machinery\scan_gate.dm"
 #include "code\game\machinery\shieldgen.dm"

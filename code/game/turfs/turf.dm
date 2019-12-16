@@ -251,6 +251,7 @@
 
 /turf/Exit(atom/movable/mover, atom/newloc)
 	. = ..()
+	SEND_SIGNAL(src, COMSIG_TURF_CONTENTS_CHANGE)
 	if(!. || QDELETED(mover))
 		return FALSE
 	for(var/i in contents)
@@ -274,6 +275,7 @@
 	if (AM.opacity)
 		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
 		reconsider_lights()
+	SEND_SIGNAL(src, COMSIG_TURF_CONTENTS_CHANGE)
 
 /turf/open/Entered(atom/movable/AM)
 	..()
