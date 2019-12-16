@@ -53,7 +53,7 @@
 	else
 		to_chat(src, "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>")
 
-/mob/living/simple_animal/hostile/guardian/ranged/Shoot(atom/targeted_atom)
+/mob/living/simple_animal/hostile/guardian/ranged/Shoot(atom/targeted_atom, spread)
 	. = ..()
 	if(istype(., /obj/projectile))
 		var/obj/projectile/P = .

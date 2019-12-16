@@ -1,0 +1,838 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/template_noop,
+/area/template_noop)
+"ab" = (
+/turf/closed/mineral/volcanic,
+/area/ruin/powered)
+"ac" = (
+/turf/closed/wall/rust,
+/area/ruin/powered)
+"ad" = (
+/turf/open/floor/vault,
+/area/ruin/powered)
+"ae" = (
+/obj/structure/chair/comfy/brown{
+	icon_state = "comfychair";
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"af" = (
+/obj/structure/fireplace,
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"ag" = (
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"ah" = (
+/obj/structure/chair/comfy/brown{
+	icon_state = "comfychair";
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"ai" = (
+/turf/closed/wall/rust/russian,
+/area/ruin/powered)
+"aj" = (
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 8
+	},
+/turf/open/floor/vault,
+/area/ruin/powered)
+"ak" = (
+/obj/structure/chair/comfy/brown{
+	icon_state = "comfychair";
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"al" = (
+/obj/structure/chair/comfy/brown{
+	icon_state = "comfychair";
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/russian/ranged/engineer,
+/turf/open/floor/carpet,
+/area/ruin/powered)
+"am" = (
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"an" = (
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/vault,
+/area/ruin/powered)
+"ao" = (
+/mob/living/simple_animal/hostile/russian/ranged/engineer,
+/turf/open/floor/vault,
+/area/ruin/powered)
+"ap" = (
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 4
+	},
+/turf/open/floor/vault,
+/area/ruin/powered)
+"aq" = (
+/mob/living/simple_animal/hostile/russian/ranged/medic,
+/turf/open/floor/vault,
+/area/ruin/powered)
+"ar" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/vault,
+/area/ruin/powered)
+"as" = (
+/obj/machinery/door/airlock/wood,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered)
+"at" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered)
+"au" = (
+/obj/structure/chair/stool,
+/mob/living/simple_animal/hostile/russian/ranged/medic,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"av" = (
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 1
+	},
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aw" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"ax" = (
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"ay" = (
+/obj/effect/holodeck_effect/cards{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"az" = (
+/obj/structure/chair/stool,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aB" = (
+/obj/structure/chair/stool,
+/mob/living/simple_animal/hostile/russian/ranged/sniper,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aC" = (
+/obj/structure/table,
+/obj/item/gun/ballistic/rifle/boltaction,
+/obj/item/ammo_box/a762,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aD" = (
+/mob/living/simple_animal/hostile/russian/ranged/medic,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aE" = (
+/obj/structure/bed,
+/obj/item/bedsheet/random,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aF" = (
+/obj/machinery/stasis,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aG" = (
+/obj/structure/bed/roller,
+/mob/living/simple_animal/hostile/russian/ranged/medic,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aH" = (
+/obj/structure/bed/roller,
+/mob/living/simple_animal/hostile/russian/ranged/engineer,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aI" = (
+/mob/living/simple_animal/hostile/bear/russian,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aJ" = (
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 8
+	},
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aK" = (
+/obj/structure/table/wood,
+/obj/item/clothing/under/costume/soviet,
+/obj/item/clothing/under/syndicate/soviet,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aL" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/vault,
+/area/ruin/powered)
+"aM" = (
+/obj/structure/grille,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aN" = (
+/obj/structure/table/wood,
+/obj/item/clothing/head/ushanka,
+/obj/item/ammo_box/a762,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aO" = (
+/obj/machinery/vending/sovietsoda,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aP" = (
+/obj/structure/chair/office,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aQ" = (
+/obj/structure/chair/office,
+/mob/living/simple_animal/hostile/russian/ranged/medic,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aR" = (
+/obj/structure/chair/office{
+	icon_state = "officechair_dark";
+	dir = 4
+	},
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aS" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/colocup,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aT" = (
+/obj/structure/chair/office{
+	icon_state = "officechair_dark";
+	dir = 8
+	},
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aU" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/head/bearpelt,
+/obj/item/clothing/mask/rat/bear,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aV" = (
+/obj/structure/table/wood,
+/obj/item/russian_reload,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aW" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aX" = (
+/obj/structure/russian_command_post,
+/turf/open/floor/vault,
+/area/ruin/powered)
+"aY" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/mask/russian_balaclava,
+/obj/item/clothing/shoes/russian,
+/obj/item/clothing/suit/armor/vest/russian,
+/obj/item/clothing/suit/armor/vest/russian_coat,
+/obj/item/clothing/suit/security/officer/russian,
+/obj/item/clothing/under/costume/russian_officer,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"aZ" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"ba" = (
+/obj/structure/closet/crate,
+/obj/item/gun/ballistic/revolver/russian/soul,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"bb" = (
+/turf/template_noop,
+/area/ruin/powered)
+"bc" = (
+/obj/structure/table/wood,
+/obj/item/storage/toolbox/drone,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"bd" = (
+/mob/living/simple_animal/hostile/russian/ranged/engineer,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"be" = (
+/obj/structure/chair/office{
+	icon_state = "officechair_dark";
+	dir = 1
+	},
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"bf" = (
+/obj/structure/chair/office{
+	icon_state = "officechair_dark";
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/russian/ranged/officer,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"bg" = (
+/obj/structure/bed,
+/obj/item/bedsheet/syndie,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"bh" = (
+/obj/machinery/light,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"bi" = (
+/obj/structure/closet/gimmick/russian,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+"bj" = (
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 1
+	},
+/turf/open/floor/vault,
+/area/ruin/powered)
+"bk" = (
+/obj/machinery/light,
+/obj/structure/closet/gimmick/russian,
+/turf/open/floor/vault/russian,
+/area/ruin/powered)
+
+(1,1,1) = {"
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+"}
+(2,1,1) = {"
+ai
+bd
+az
+am
+ai
+am
+aJ
+am
+aD
+am
+aD
+aJ
+am
+am
+ai
+"}
+(3,1,1) = {"
+ai
+au
+ay
+aB
+ai
+aE
+aK
+aE
+aN
+am
+aV
+aE
+bc
+bg
+ai
+"}
+(4,1,1) = {"
+ai
+am
+az
+am
+ai
+ai
+ai
+ai
+ai
+aL
+ai
+ai
+ai
+ai
+ai
+"}
+(5,1,1) = {"
+ai
+av
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+am
+bh
+ai
+"}
+(6,1,1) = {"
+ai
+am
+am
+am
+ai
+ai
+ai
+ai
+ai
+aL
+ai
+ai
+ai
+ai
+ai
+"}
+(7,1,1) = {"
+ai
+am
+aw
+aw
+ai
+aF
+aF
+ai
+aO
+am
+am
+am
+bd
+bi
+ai
+"}
+(8,1,1) = {"
+ai
+am
+am
+am
+ai
+aG
+am
+aL
+am
+am
+am
+am
+am
+bi
+ai
+"}
+(9,1,1) = {"
+ai
+aw
+aw
+am
+ai
+aH
+am
+ai
+av
+aR
+aR
+aR
+am
+bk
+ai
+"}
+(10,1,1) = {"
+ai
+am
+am
+am
+ai
+aF
+aF
+ai
+aP
+aS
+aW
+aZ
+be
+bi
+ai
+"}
+(11,1,1) = {"
+ai
+ax
+aw
+aw
+ai
+ai
+ai
+ai
+aP
+aS
+aX
+aZ
+be
+am
+ai
+"}
+(12,1,1) = {"
+ai
+am
+am
+am
+ai
+ai
+ai
+ai
+aQ
+aS
+aW
+aZ
+bf
+am
+ai
+"}
+(13,1,1) = {"
+ai
+am
+am
+aC
+ai
+ai
+ai
+ai
+av
+aT
+aT
+aT
+am
+bh
+ai
+"}
+(14,1,1) = {"
+ai
+am
+am
+am
+ai
+aI
+am
+aM
+am
+aU
+aY
+ba
+am
+am
+ai
+"}
+(15,1,1) = {"
+ai
+ai
+aL
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+"}
+(16,1,1) = {"
+ab
+ac
+ad
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+ab
+ac
+bj
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+ab
+ac
+ad
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+ab
+ac
+aL
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+ab
+ac
+ad
+aj
+ad
+aj
+an
+ac
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+ab
+ac
+ae
+ae
+an
+ad
+ad
+ac
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+ab
+ac
+af
+ak
+ad
+ad
+an
+ac
+ac
+ac
+ab
+ab
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+ab
+ac
+ag
+al
+ad
+ad
+ad
+ad
+ar
+ac
+ab
+ab
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+ab
+ac
+ah
+ah
+ad
+ad
+ad
+ad
+ar
+ac
+ab
+ab
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+ab
+ac
+bj
+ao
+ad
+ad
+ad
+ad
+ar
+ac
+ab
+ab
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+ab
+ac
+ad
+ad
+ad
+ad
+ar
+ad
+ad
+as
+at
+bb
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+ab
+ac
+ad
+ad
+ap
+aq
+ar
+ap
+ad
+as
+at
+bb
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+ab
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}

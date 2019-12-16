@@ -95,5 +95,5 @@ require only minor tweaks.
 #define PLACE_SAME_Z "same" //On same z level as original ruin
 #define PLACE_SPACE_RUIN "space" //On space ruin z level(s)
 #define PLACE_LAVA_RUIN "lavaland" //On lavaland ruin z levels(s)
-#define PLACE_BELOW "below" //On z levl below - centered on same tile
+#define PLACE_BELOW "below" //On z level below - centered on same tile
 #define PLACE_ISOLATED "isolated" //On isolated ruin z level

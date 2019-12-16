@@ -15,10 +15,16 @@
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
 	hud_type = /datum/hud/monkey
+	var/datum/goap_agent/goap_ai
 
 /mob/living/carbon/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+
+	goap_ai = new /datum/goap_agent/monkey
+	goap_ai.agent = src
+	goap_ai.movetype = MOVETYPE_DUMB
+
 
 	if(unique_name) //used to exclude pun pun
 		gender = pick(MALE, FEMALE)

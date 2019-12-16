@@ -31,7 +31,7 @@
 		chargealert = null
 		Shoot(A)
 
-/mob/living/simple_animal/hostile/guardian/charger/Shoot(atom/targeted_atom)
+/mob/living/simple_animal/hostile/guardian/charger/Shoot(atom/targeted_atom, spread)
 	charging = 1
 	throw_at(targeted_atom, range, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/charging_end))
 

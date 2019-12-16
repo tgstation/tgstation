@@ -56,6 +56,13 @@
 	icon = 'icons/turf/walls/rusty_wall.dmi'
 	hardness = 45
 
+/turf/closed/wall/rust/russian
+	name = "rusted wall"
+	desc = "A rusted metal wall. Wow, these russians really let themselves go huh?"
+	icon = 'icons/turf/walls/rusty_wall.dmi'
+	hardness = 45
+	baseturfs = /turf/open/openspace
+
 /turf/closed/wall/r_wall/rust
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."

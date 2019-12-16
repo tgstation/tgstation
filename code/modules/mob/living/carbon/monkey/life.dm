@@ -12,6 +12,7 @@
 	if(..() && !IS_IN_STASIS(src))
 
 		if(!client)
+			goap_ai.actions_halted = FALSE
 			if(stat == CONSCIOUS)
 				if(on_fire || buckled || restrained())
 					if(!resisting && prob(MONKEY_RESIST_PROB))
@@ -20,13 +21,10 @@
 						resist()
 				else if(resisting)
 					resisting = FALSE
-				else if((mode == MONKEY_IDLE && !pickupTarget && !prob(MONKEY_SHENANIGAN_PROB)) || !handle_combat())
-					if(prob(25) && (mobility_flags & MOBILITY_MOVE) && isturf(loc) && !pulledby)
-						step(src, pick(GLOB.cardinals))
-					else if(prob(1))
-						emote(pick("scratch","jump","roll","tail"))
 			else
 				walk_to(src,0)
+		else
+			goap_ai.actions_halted = TRUE
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 	if(radiation)

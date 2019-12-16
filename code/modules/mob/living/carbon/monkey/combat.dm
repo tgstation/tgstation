@@ -72,7 +72,7 @@
 	if(I.loc == src)
 		return TRUE
 
-	if(I.anchored)
+	if(I.anchored || istype(I, /obj/item/twohanded/required))
 		blacklistItems[I] ++
 		return FALSE
 
