@@ -358,7 +358,7 @@
 	var/mob/living/carbon/patient = M
 
 	if(HAS_TRAIT(patient, TRAIT_NODISMEMBER))
-		to_chat(user, "<span class='warning'>The patients limbs looks too sturdy to amputate.</span>")
+		to_chat(user, "<span class='warning'>The patient's limbs look too sturdy to amputate.</span>")
 		return
 
 	var/candidate_name
@@ -375,7 +375,7 @@
 	else
 		limb_snip_candidate = patient.get_bodypart(check_zone(user.zone_selected))
 		if(!limb_snip_candidate)
-			to_chat(user, "<span class='warning'>[patient] is already missing that limb, what more do you want?..</span>")
+			to_chat(user, "<span class='warning'>[patient] is already missing that limb, what more do you want?</span>")
 			return
 		candidate_name = limb_snip_candidate.name
 
@@ -398,6 +398,5 @@
 			tail_snip_candidate.forceMove(get_turf(patient))
 		else
 			limb_snip_candidate.dismember()
-		user.visible_message("<span class='danger'>[src] slams shut violently, amputating [patient]'s [candidate_name].</span>", "<span class='notice'>You amputate [patient]'s [candidate_name] with [src].</span>")
-
+		user.visible_message("<span class='danger'>[src] violently slams shut, amputating [patient]'s [candidate_name].</span>", "<span class='notice'>You amputate [patient]'s [candidate_name] with [src].</span>")
 
