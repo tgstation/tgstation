@@ -130,8 +130,8 @@
 		           /obj/item/clothing/neck/necklace/dope = 3,
 		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1)
 	refill_canister = /obj/item/vending_refill/clothing
-	default_price = 50
-	extra_price = 75
+	default_price = 60
+	extra_price = 120
 	payment_department = NO_FREEBIES
 
 /obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)

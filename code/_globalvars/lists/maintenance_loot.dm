@@ -87,6 +87,12 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/toy/crayon/spraycan = 1,
 		) = 1,
 
+	list(//strange objects
+		/obj/item/book/granter/language_book/random = 2, //FULP
+		/obj/item/stake/hardened/silver = 1, //FULP	"" = 3
+		/obj/item/relic = 5,
+		) = 1,
+
 	list(//equipment
 		/obj/item/clothing/mask/gas = 1,
 		/obj/item/radio/headset = 1,
@@ -201,7 +207,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		list(//medical chems
 			/obj/item/reagent_containers/glass/bottle/multiver = 1,
 			/obj/item/reagent_containers/syringe/convermol = 1,
-			) = 1, 
+			) = 1,
 		list(//drinks
 			/obj/item/reagent_containers/food/drinks/bottle/vodka = 1,
 			/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull = 1,
@@ -218,13 +224,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/storage/box/donkpockets = 1,
 		/obj/item/reagent_containers/food/snacks/monkeycube = 1,
 		) = 1,
-
-	list(//strange objects
-		/obj/item/book/granter/language_book/random = 2, //FULP
-		/obj/item/stake/hardened/silver = 1, //FULP	"" = 3
-		/obj/item/relic = 1,
-		) = 1,
-	))
+))
 
 GLOBAL_LIST_INIT(oddity_loot, list(//oddity: strange or crazy items
 	//keeping commented out until there are more, otherwise the same ones may appear too often

@@ -25003,9 +25003,6 @@
 "bmt" = (
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
-"bmu" = (
-/turf/open/floor/plasteel,
-/area/security/checkpoint/medical)
 "bmv" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -25806,11 +25803,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
-"boI" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/medical/medbay/central)
 "boJ" = (
 /obj/structure/cable,
 /turf/closed/wall,
@@ -26072,6 +26064,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/relic,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
 "bpn" = (
@@ -26362,7 +26355,7 @@
 /obj/machinery/door/window/northleft{
 	dir = 2;
 	name = "Chemistry Desk";
-	req_access_txt = "5; 33"
+	req_access_txt = "5; 69"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -26938,19 +26931,6 @@
 /obj/machinery/computer/crew,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"brh" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "bri" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -27013,7 +26993,7 @@
 	name = "Shutters Control";
 	pixel_x = 26;
 	pixel_y = 4;
-	req_one_access_txt = "5;33"
+	req_one_access_txt = "5;69"
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -28689,7 +28669,7 @@
 "bvq" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry Lab";
-	req_access_txt = "5; 33"
+	req_access_txt = "5; 69"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -86394,7 +86374,7 @@ bim
 bjb
 bjY
 bli
-bmu
+bmt
 bnB
 boF
 bpO
@@ -86651,7 +86631,7 @@ bik
 bja
 bjZ
 blj
-bmu
+bmt
 bnC
 boG
 brg
@@ -87163,11 +87143,11 @@ aJI
 aDZ
 bik
 bjc
-boI
-boI
-boI
-boI
-boI
+boH
+boH
+boH
+boH
+boH
 bsG
 bri
 gfo
@@ -87424,7 +87404,7 @@ bkc
 bll
 bmw
 bkh
-boI
+boH
 bpR
 bri
 jWH

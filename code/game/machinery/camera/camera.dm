@@ -452,30 +452,6 @@
 		see = get_hear(view_range, pos)
 	return see
 
-/atom/proc/auto_turn()
-	//Automatically turns based on nearby walls.
-	var/turf/closed/wall/T = null
-	for(var/i in GLOB.cardinals)
-		T = get_ranged_target_turf(src, i, 1)
-		if(istype(T))
-			setDir(turn(i, 180))
-			break
-
-//Return a working camera that can see a given mob
-//or null if none
-/proc/seen_by_camera(var/mob/M)
-	for(var/obj/machinery/camera/C in oview(4, M))
-		if(C.can_use())	// check if camera disabled
-			return C
-	return null
-
-/proc/near_range_camera(var/mob/M)
-	for(var/obj/machinery/camera/C in range(4, M))
-		if(C.can_use())	// check if camera disabled
-			return C
-
-	return null
-
 /obj/machinery/camera/proc/Togglelight(on=0)
 	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
 		for(var/obj/machinery/camera/cam in A.lit_cameras)

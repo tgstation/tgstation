@@ -189,7 +189,8 @@
 		authenticated = TRUE
 		log_activity("logged in")
 	else if(!(obj_flags & EMAGGED))
-		user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
+		if(user)
+			user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], disabling operator tracking.")
 		obj_flags |= EMAGGED
 	playsound(src, "sparks", 50, TRUE)

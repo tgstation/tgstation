@@ -57,9 +57,6 @@
 	adjustBruteLoss((levels * 5) ** 1.5)
 	Knockdown(levels * 50)
 
-/mob/living/proc/OpenCraftingMenu()
-	return
-
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
@@ -848,6 +845,8 @@
 		who.show_inv(src)
 	else
 		src << browse(null,"window=mob[REF(who)]")
+	
+	who.update_equipment_speed_mods() // Updates speed in case stripped speed affecting item
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)

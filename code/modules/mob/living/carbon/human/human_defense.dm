@@ -387,7 +387,7 @@
 
 
 /mob/living/carbon/human/ex_act(severity, target, origin)
-	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+	if(TRAIT_BOMBIMMUNE in dna.species.species_traits)
 		return
 	..()
 	if (!severity)
@@ -405,7 +405,8 @@
 			if(bomb_armor < EXPLODE_GIB_THRESHOLD) //gibs the mob if their bomb armor is lower than EXPLODE_GIB_THRESHOLD
 				for(var/I in contents)
 					var/atom/A = I
-					A.ex_act(severity)
+					if(!QDELETED(A))
+						A.ex_act(severity)
 				gib()
 				return
 			else
