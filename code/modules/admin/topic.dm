@@ -1501,8 +1501,9 @@
 			return
 
 		var/mob/M = locate(href_list["playsoundto"])
-		var/S = input("Select a file", "file",) as sound
-		usr.client.play_direct_mob_sound(S, M)
+		var/S = input("", "Select a sound file",) as null|sound
+		if(S)
+			usr.client.play_direct_mob_sound(S, M)
 
 	else if(href_list["individuallog"])
 		if(!check_rights(R_ADMIN))
