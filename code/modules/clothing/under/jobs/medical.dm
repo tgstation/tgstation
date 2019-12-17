@@ -117,7 +117,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/rank/medical/paramedic
-	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer may or may not be trained medical personnel."
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a dark blue cross on the chest denoting that the wearer is a trained paramedic."
 	name = "paramedic jumpsuit"
 	icon_state = "paramedic"
 	item_state = "w_suit"
@@ -126,7 +126,7 @@
 
 /obj/item/clothing/under/rank/medical/paramedic/skirt
 	name = "paramedic jumpskirt"
-	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer may or may not be trained medical personnel."
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a dark blue cross on the chest denoting that the wearer is a trained paramedic."
 	icon_state = "paramedic_skirt"
 	item_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
