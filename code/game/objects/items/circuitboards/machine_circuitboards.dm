@@ -503,7 +503,7 @@
 /obj/item/circuitboard/machine/vendor
 	name = "Custom Vendor (Machine Board)"
 	desc = "You can turn the \"brand selection\" dial using a screwdriver."
-	custom_premium_price = 100
+	custom_premium_price = 30
 	build_path = /obj/machinery/vending/custom
 	req_components = list(/obj/item/vending_refill/custom = 1)
 

@@ -34,7 +34,7 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
-	custom_premium_price = 300
+	custom_price = 50
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound =  'sound/items/handling/toolbelt_pickup.ogg'
 
@@ -221,7 +221,7 @@
 	icon_state = "securitywebbing"
 	item_state = "securitywebbing"
 	content_overlays = FALSE
-	custom_premium_price = 900
+	custom_premium_price = 800
 
 /obj/item/storage/belt/security/webbing/ComponentInitialize()
 	. = ..()
@@ -574,7 +574,7 @@
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
 	dying_key = DYE_REGISTRY_FANNYPACK
-	custom_price = 100
+	custom_price = 15
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()

@@ -1152,7 +1152,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/item/vending_refill/custom
 	machine_name = "Custom Vendor"
 	icon_state = "refill_custom"
-	custom_premium_price = 100
+	custom_premium_price = 30
 
 /obj/item/price_tagger
 	name = "price tagger"

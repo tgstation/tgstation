@@ -22,7 +22,7 @@
 	var/self_delay = 30
 	var/squirt_mode = 0
 	var/squirt_amount = 5
-	custom_price = 350
+	custom_price = 40
 
 /obj/item/reagent_containers/medigel/attack_self(mob/user)
 	squirt_mode = !squirt_mode
@@ -83,10 +83,9 @@
 	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains instabitaluri, a brute and burn healing agent."
 	icon_state = "synthgel"
 	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 60)
-	custom_price = 600
+	custom_price = 80
 
 /obj/item/reagent_containers/medigel/sterilizine
 	name = "sterilizer gel"
 	desc = "gel bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
 	list_reagents = list(/datum/reagent/space_cleaner/sterilizine = 60)
-	custom_price = 175

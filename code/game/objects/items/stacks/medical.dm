@@ -112,7 +112,6 @@
 	self_delay = 20
 	max_amount = 12
 	grind_results = list(/datum/reagent/cellulose = 2)
-	custom_price = 100
 
 /obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
 	if(ishuman(M))
