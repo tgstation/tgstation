@@ -32,7 +32,6 @@
 		new /obj/item/reagent_containers/food/snacks/chocolatebar(location)
 	return
 
-
 /datum/chemical_reaction/chocolate_bar2
 	name = "Chocolate Bar"
 	id = "chocolate_bar"
@@ -44,13 +43,6 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/reagent_containers/food/snacks/chocolatebar(location)
 	return
-
-/datum/chemical_reaction/hot_coco
-	name = "Hot Coco"
-	id = /datum/reagent/consumable/hot_coco
-	results = list(/datum/reagent/consumable/hot_coco = 5)
-	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/coco = 1)
-	required_temp = 320
 
 /datum/chemical_reaction/coffee
 	name = "Coffee"

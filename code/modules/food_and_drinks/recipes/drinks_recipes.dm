@@ -560,6 +560,13 @@
 	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/coco = 1)
 	mix_message = "The color changes as the mixture blends smoothly."
 
+/datum/chemical_reaction/hot_coco
+	name = "Hot Coco"
+	id = /datum/reagent/consumable/hot_coco
+	results = list(/datum/reagent/consumable/hot_coco = 5)
+	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/coco = 1)
+	required_temp = 320
+
 /datum/chemical_reaction/eggnog
 	name = /datum/reagent/consumable/ethanol/eggnog
 	id = /datum/reagent/consumable/ethanol/eggnog
