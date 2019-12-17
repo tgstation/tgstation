@@ -13,7 +13,7 @@
 	/// A list of blocked languages. Used to prevent understanding and speaking certain languages, ie for certain mobs, mutations etc.
 	var/list/blocked_languages = list()
 	/// If true, overrides spoken_languages and tongue limitations.
-	var/omnitongue
+	var/omnitongue = FALSE
 	/// Handles displaying the language menu UI.
 	var/datum/language_menu/language_menu
 	/// Currently spoken language
@@ -31,29 +31,27 @@
 	get_selected_language()
 
 /datum/language_holder/Destroy()
-	qdel(language_menu)
+	QDEL_NULL(language_menu)
 	return ..()
 
 /// Grants the supplied language.
 /datum/language_holder/proc/grant_language(language, understood = TRUE, spoken = TRUE, source = LANGUAGE_MIND)
 	if(understood)
 		if(!understood_languages[language])
-			understood_languages += language
 			understood_languages[language] = list()
 		understood_languages[language] |= source
 		. = TRUE
 	if(spoken)
 		if(!spoken_languages[language])
-			spoken_languages += language
 			spoken_languages[language] = list()
 		spoken_languages[language] |= source
 		. = TRUE
 
 /// Grants every language to understood and spoken, and gives omnitongue.
-/datum/language_holder/proc/grant_all_languages(understood = TRUE, spoken = TRUE, omni = TRUE, source = LANGUAGE_MIND)
+/datum/language_holder/proc/grant_all_languages(understood = TRUE, spoken = TRUE, grant_omnitongue = TRUE, source = LANGUAGE_MIND)
 	for(var/language in GLOB.all_languages)
 		grant_language(language, understood, spoken, source)
-	if(omni)	// Overrides tongue limitations.
+	if(grant_omnitongue)	// Overrides tongue limitations.
 		omnitongue = TRUE
 	return TRUE
 
@@ -78,10 +76,10 @@
 		. = TRUE
 
 /// Removes every language and optionally sets omnitongue false. If a non default source is supplied, only removes that source.
-/datum/language_holder/proc/remove_all_languages(source = LANGUAGE_ALL, omni = FALSE)
+/datum/language_holder/proc/remove_all_languages(source = LANGUAGE_ALL, remove_omnitongue = FALSE)
 	for(var/language in GLOB.all_languages)
 		remove_language(language, TRUE, TRUE, source)
-	if(omni)
+	if(remove_omnitongue)
 		omnitongue = FALSE
 	return TRUE
 
@@ -91,7 +89,6 @@
 		languages = list(languages)
 	for(var/language in languages)
 		if(!blocked_languages[language])
-			blocked_languages += language
 			blocked_languages[language] = list()
 		blocked_languages[language] |= source
 	return TRUE
@@ -119,7 +116,9 @@
 	return language in understood_languages
 
 /// Checks if you can speak the language. Tongue limitations should be supplied as an argument.
-/datum/language_holder/proc/can_speak_language(language, tongue = TRUE)
+/datum/language_holder/proc/can_speak_language(language)
+	var/atom/movable/ouratom = get_atom()
+	var/tongue = ouratom.could_speak_language(language)
 	if((omnitongue || tongue) && has_language(language, TRUE))
 		return TRUE
 	return FALSE
@@ -130,13 +129,13 @@
 		return selected_language
 	selected_language = null
 	var/highest_priority
-	var/list/spoken = spoken_languages.Copy()
-	for(var/lang in spoken)
+	for(var/lang in spoken_languages)
 		var/datum/language/language = lang
 		var/priority = initial(language.default_priority)
-		if((!highest_priority || (priority > highest_priority)) && !(lang in blocked_languages))
-			selected_language = language
-			highest_priority = priority
+		if((!highest_priority || (priority > highest_priority)) && !(language in blocked_languages))
+			if(can_speak_language(language))
+				selected_language = language
+				highest_priority = priority
 	return selected_language
 
 /// Gets a random understood language, useful for hallucinations and such.

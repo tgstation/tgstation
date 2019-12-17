@@ -264,7 +264,7 @@
 			continue
 		var/atom/movable/thing = i
 		thing.Crossed(src)
-	
+
 ////////////////////////////////////////
 
 /atom/movable/Move(atom/newloc, direct, glide_size_override = 0)
@@ -805,9 +805,9 @@
 	return LH.grant_language(language, understood, spoken, source)
 
 /// Grants every language.
-/atom/movable/proc/grant_all_languages(understood = TRUE, spoken = TRUE, omni = TRUE, source = LANGUAGE_MIND)
+/atom/movable/proc/grant_all_languages(understood = TRUE, spoken = TRUE, grant_omnitongue = TRUE, source = LANGUAGE_MIND)
 	var/datum/language_holder/LH = get_language_holder()
-	return LH.grant_all_languages(understood, spoken, omni, source)
+	return LH.grant_all_languages(understood, spoken, grant_omnitongue, source)
 
 /// Removes a single language.
 /atom/movable/proc/remove_language(language, understood = TRUE, spoken = TRUE, source = LANGUAGE_ALL)
@@ -815,9 +815,9 @@
 	return LH.remove_language(language, understood, spoken, source)
 
 /// Removes every language and sets omnitongue false.
-/atom/movable/proc/remove_all_languages(source = LANGUAGE_ALL, omni = FALSE)
+/atom/movable/proc/remove_all_languages(source = LANGUAGE_ALL, remove_omnitongue = FALSE)
 	var/datum/language_holder/LH = get_language_holder()
-	return LH.remove_all_languages(source, omni)
+	return LH.remove_all_languages(source, remove_omnitongue)
 
 /// Adds a langauge to the blocked language list. Use this over remove_language in cases where you will give languages back later.
 /atom/movable/proc/add_blocked_language(language, source = LANGUAGE_ATOM)
@@ -837,7 +837,7 @@
 /// Checks if atom can speak the language.
 /atom/movable/proc/can_speak_language(language)
 	var/datum/language_holder/LH = get_language_holder()
-	return LH.can_speak_language(language, could_speak_language())
+	return LH.can_speak_language(language)
 
 /// Returns the result of tongue specific limitations on spoken languages.
 /atom/movable/proc/could_speak_language(language)
