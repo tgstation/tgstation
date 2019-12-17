@@ -1,6 +1,7 @@
 //this is designed to replace the destructive analyzer
 
 //NEEDS MAJOR CODE CLEANUP
+//NO SHIT IT'S LIKE 20 NESTED IF STATEMENTS WHAT THE FUCK GUYS
 
 #define SCANTYPE_POKE 1
 #define SCANTYPE_IRRADIATE 2
@@ -15,6 +16,7 @@
 #define EFFECT_PROB_MEDIUM 50
 #define EFFECT_PROB_HIGH 75
 #define EFFECT_PROB_VERYHIGH 95
+#define EFFECT_PROB_RELICMAKE 50
 
 #define FAIL 8
 /obj/machinery/rnd/experimentor
@@ -251,7 +253,15 @@
 		visible_message("<span class='notice'>[src] prods at [exp_on] with mechanical arms.</span>")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='notice'>[exp_on] is gripped in just the right way, enhancing its focus.</span>")
+			var/points = rand(2500,3000)
+			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
+			new /obj/item/research_notes(drop_location(src), points, "experimentation")
+			ejectItem(TRUE)
 			badThingCoeff++
+		else if(prob(EFFECT_PROB_MEDIUM) && prob(EFFECT_PROB_RELICMAKE))
+			visible_message("<span class='notice'>[exp_on] is prodded into a new, strange shape!</span>")
+			new /obj/item/relic(drop_location(src))
+			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions and destroys [exp_on], lashing its arms out at nearby people!</span>")
 			for(var/mob/living/m in oview(1, src))
@@ -278,6 +288,13 @@
 			cloneMode = TRUE
 			investigate_log("Experimentor has made a clone of [exp_on]", INVESTIGATE_EXPERIMENTOR)
 			ejectItem()
+			var/points = rand(2500,3000)
+			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
+			new /obj/item/research_notes(drop_location(src), points, "experimentation")
+		else if(prob(EFFECT_PROB_MEDIUM) && prob(EFFECT_PROB_RELICMAKE))
+			visible_message("<span class='notice'>[exp_on] mutates into a new, strange shape!</span>")
+			new /obj/item/relic(drop_location(src))
+			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and leaking radiation!</span>")
 			radiation_pulse(src, 500)
@@ -306,6 +323,14 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='notice'>[exp_on] achieves the perfect mix!</span>")
 			new /obj/item/stack/sheet/mineral/plasma(get_turf(pick(oview(1,src))))
+			var/points = rand(2500,3000)
+			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
+			new /obj/item/research_notes(drop_location(src), points, "experimentation")
+			ejectItem(TRUE)
+		else if(prob(EFFECT_PROB_MEDIUM) && prob(EFFECT_PROB_RELICMAKE))
+			visible_message("<span class='notice'>[exp_on] reacts with the gas, changing into a new, strange shape!</span>")
+			new /obj/item/relic(drop_location(src))
+			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] destroys [exp_on], leaking dangerous gas!</span>")
 			chosenchem = pick(/datum/reagent/carbon,/datum/reagent/uranium/radium,/datum/reagent/toxin,/datum/reagent/consumable/condensedcapsaicin,/datum/reagent/drug/mushroomhallucinogen,/datum/reagent/drug/space_drugs,/datum/reagent/consumable/ethanol,/datum/reagent/consumable/ethanol/beepsky_smash)
@@ -354,6 +379,14 @@
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
+			var/points = rand(2500,3000)
+			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
+			new /obj/item/research_notes(drop_location(src), points, "experimentation")
+			ejectItem(TRUE)
+		else if(prob(EFFECT_PROB_MEDIUM) && prob(EFFECT_PROB_RELICMAKE))
+			visible_message("<span class='notice'>[exp_on] melts down into a new, strange shape!</span>")
+			new /obj/item/relic(drop_location(src))
+			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			var/turf/start = get_turf(src)
 			var/mob/M = locate(/mob/living) in view(src, 3)
@@ -403,6 +436,14 @@
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
+			var/points = rand(2500,3000)
+			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
+			new /obj/item/research_notes(drop_location(src), points, "experimentation")
+			ejectItem(TRUE)
+		else if(prob(EFFECT_PROB_MEDIUM) && prob(EFFECT_PROB_RELICMAKE))
+			visible_message("<span class='notice'>[exp_on]'s atoms align into a new, strange shape!</span>")
+			new /obj/item/relic(drop_location(src))
+			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!</span>")
 			var/datum/reagents/R = new/datum/reagents(50)
@@ -445,6 +486,9 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='warning'>[src]'s crushing mechanism slowly and smoothly descends, flattening the [exp_on]!</span>")
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
+			var/points = rand(3500,4000)
+			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
+			new /obj/item/research_notes(drop_location(src), points, "experimentation")
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes way too many levels too high, crushing right through space-time!</span>")
 			playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
@@ -475,9 +519,9 @@
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		var/obj/item/relic/R = loaded_item
 		if (!R.revealed)
-			var/points = rand(3500,3750) // discovery reward
+			var/points = rand(500, 750) // discovery reward
 			new /obj/item/research_notes(drop_location(src), points, "experimentation")
-			visible_message("<span class='notice'> This discovery netted [points] points for research.</span>")
+			visible_message("<span class='notice'>The [src] spits out research notes worth [points] points!</span>")
 		R.reveal()
 		investigate_log("Experimentor has revealed a relic with <span class='danger'>[R.realProc]</span> effect.", INVESTIGATE_EXPERIMENTOR)
 		ejectItem()
