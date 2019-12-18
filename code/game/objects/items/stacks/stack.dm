@@ -370,10 +370,10 @@
 	S.add(transfer)
 	return transfer
 
-/obj/item/stack/Crossed(obj/o)
-	if(istype(o, merge_type) && !o.throwing)
-		merge(o)
-	. = ..()
+//	/obj/item/stack/Crossed(obj/o)
+//		if(istype(o, merge_type) && !o.throwing)
+//			merge(o)
+//		. = ..()
 
 /obj/item/stack/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(istype(AM, merge_type))
