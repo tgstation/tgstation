@@ -402,14 +402,17 @@
 					else
 						old_comp.InheritComponent(new_comp, TRUE)
 				if(COMPONENT_DUPE_SELECTIVE)
-					if(!new_comp)
-						new_comp = new nt(arglist(args))
 					var/list/arguments = args.Copy()
 					arguments[1] = new_comp
+					var/make_new_component = TRUE
 					for(var/i in GetComponents(new_type))
 						var/datum/component/C = i
 						if(C.CheckDupeComponent(arglist(arguments)))
+							make_new_component = FALSE
+							QDEL_NULL(new_comp)
 							break
+					if(!new_comp && make_new_component)
+						new_comp = new nt(arglist(args))
 		else if(!new_comp)
 			new_comp = new nt(arglist(args)) // There's a valid dupe mode but there's no old component, act like normal
 	else if(!new_comp)
