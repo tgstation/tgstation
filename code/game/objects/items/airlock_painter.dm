@@ -219,6 +219,7 @@
 
 /obj/item/airlock_painter/decal/debug
 	name = "extreme decal painter"
+	icon_state = "decal_sprayer_ex"
 
 /obj/item/airlock_painter/decal/debug/Initialize()
 	. = ..()

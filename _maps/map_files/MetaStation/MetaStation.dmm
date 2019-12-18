@@ -779,6 +779,19 @@
 /obj/item/storage/photo_album/bar,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
+"abT" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/rnd/experimentor,
+/turf/open/floor/engine,
+/area/science/explab)
+"abU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/science/explab)
 "abV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light/small{
@@ -902,6 +915,15 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space/nearstation)
+"acl" = (
+/obj/item/beacon,
+/mob/living/simple_animal/pet/dog/pug{
+	desc = "It's Pugley IV, the research department's lovable pug clone. Hopefully nothing happens to this one - fourth time lucky!";
+	name = "Pugley IV";
+	real_name = "Pugley IV"
+	},
+/turf/open/floor/engine,
+/area/science/explab)
 "acm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -951,6 +973,14 @@
 	icon_state = "panelscorched"
 	},
 /area/security/prison)
+"acr" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/effect/landmark/xeno_spawn,
+/obj/effect/landmark/blobstart,
+/turf/open/floor/engine,
+/area/science/explab)
 "acs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -50903,31 +50933,6 @@
 	dir = 4
 	},
 /area/science/research)
-"ciS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/rnd/experimentor,
-/mob/living/simple_animal/pet/dog/pug{
-	desc = "It's Pugley IV, the research department's lovable pug clone. Hopefully nothing happens to this one - fourth time lucky!";
-	name = "Pugley IV";
-	real_name = "Pugley IV"
-	},
-/turf/open/floor/engine,
-/area/science/explab)
-"ciT" = (
-/obj/item/beacon,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/engine,
-/area/science/explab)
-"ciV" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/science/explab)
 "ciW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -64755,8 +64760,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cLU" = (
-/obj/effect/landmark/blobstart,
-/obj/effect/landmark/xeno_spawn,
+/obj/machinery/rnd/bepis,
 /turf/open/floor/engine,
 /area/science/explab)
 "cLV" = (
@@ -75912,12 +75916,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
-<<<<<<< HEAD
-"sNp" = (
-/obj/machinery/rnd/bepis,
-/turf/open/floor/engine,
-/area/science/explab)
-=======
 "sPc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -75925,7 +75923,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
->>>>>>> upstream/master
 "sQe" = (
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
@@ -111244,7 +111241,7 @@ bST
 ceZ
 cgq
 chx
-ciS
+abT
 chx
 clS
 cmR
@@ -111501,7 +111498,7 @@ bST
 csg
 cgq
 chx
-ciT
+abU
 ckr
 clT
 cmS
@@ -111758,13 +111755,8 @@ bST
 ceZ
 cgq
 chy
-<<<<<<< HEAD
-cLU
-chx
-=======
-ciU
+acl
 tEg
->>>>>>> upstream/master
 clU
 cmT
 con
@@ -112020,7 +112012,7 @@ bST
 ceZ
 cgq
 chx
-sNp
+cLU
 chx
 clU
 cmU
@@ -112277,7 +112269,7 @@ bST
 ceZ
 cgq
 chA
-ciV
+acr
 cks
 cgq
 cmV
