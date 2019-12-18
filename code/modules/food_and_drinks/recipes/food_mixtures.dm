@@ -44,18 +44,6 @@
 		new /obj/item/reagent_containers/food/snacks/chocolatebar(location)
 	return
 
-/datum/chemical_reaction/coffee
-	name = "Coffee"
-	id = /datum/reagent/consumable/coffee
-	results = list(/datum/reagent/consumable/coffee = 5)
-	required_reagents = list(/datum/reagent/toxin/coffeepowder = 1, /datum/reagent/water = 5)
-
-/datum/chemical_reaction/tea
-	name = "Tea"
-	id = /datum/reagent/consumable/tea
-	results = list(/datum/reagent/consumable/tea = 5)
-	required_reagents = list(/datum/reagent/toxin/teapowder = 1, /datum/reagent/water = 5)
-
 /datum/chemical_reaction/soysauce
 	name = "Soy Sauce"
 	id = /datum/reagent/consumable/soysauce
