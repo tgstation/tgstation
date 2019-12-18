@@ -561,20 +561,29 @@
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
 	if(SSticker.current_state == GAME_STATE_PREGAME || SSticker.current_state == GAME_STATE_STARTUP)
-		SSticker.start_immediately = TRUE
-		log_admin("[usr.key] has started the game.")
-		var/msg = ""
-		if(SSticker.current_state == GAME_STATE_STARTUP)
-			msg = " (The server is still setting up, but the round will be \
-				started as soon as possible.)"
-		message_admins("<font color='blue'>\
-			[usr.key] has started the game.[msg]</font>")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Start Now") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		return 1
+		if(!SSticker.start_immediately)
+			var/localhost_addresses = list("127.0.0.1", "::1")
+			if(!(isnull(usr.client.address) || (usr.client.address in localhost_addresses)))
+				if(alert("Are you sure you want to start the round?","Start Now","Start Now","Cancel") != "Start Now")
+					return FALSE
+			SSticker.start_immediately = TRUE
+			log_admin("[usr.key] has started the game.")
+			var/msg = ""
+			if(SSticker.current_state == GAME_STATE_STARTUP)
+				msg = " (The server is still setting up, but the round will be \
+					started as soon as possible.)"
+			message_admins("<font color='blue'>[usr.key] has started the game.[msg]</font>")
+			SSblackbox.record_feedback("tally", "admin_verb", 1, "Start Now") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			return TRUE
+		SSticker.start_immediately = FALSE
+		SSticker.SetTimeLeft(1800)
+		to_chat(world, "<b>The game will start in 180 seconds.</b>")
+		SEND_SOUND(world, sound('sound/ai/attention.ogg'))
+		message_admins("<font color='blue'>[usr.key] has cancelled immediate game start. Game will start in 180 seconds.</font>")
+		log_admin("[usr.key] has cancelled immediate game start.")
 	else
 		to_chat(usr, "<font color='red'>Error: Start Now: Game has already started.</font>")
-
-	return 0
+	return FALSE
 
 /datum/admins/proc/toggleenter()
 	set category = "Server"
@@ -630,6 +639,7 @@
 	if(newtime)
 		newtime = newtime*10
 		SSticker.SetTimeLeft(newtime)
+		SSticker.start_immediately = FALSE
 		if(newtime < 0)
 			to_chat(world, "<b>The game start has been delayed.</b>")
 			log_admin("[key_name(usr)] delayed the round start.")

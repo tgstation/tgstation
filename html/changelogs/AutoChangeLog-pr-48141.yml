@@ -1,0 +1,4 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - tweak: "Added brass sheets to the Sheet Snatcher's whitelist."

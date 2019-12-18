@@ -1,4 +1,0 @@
-author: "SteelSlayer"
-delete-after: True
-changes: 
-  - rscadd: "Adds a new server restart option: regular restart with a custom delay time that the user can specify"

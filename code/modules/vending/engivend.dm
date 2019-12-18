@@ -20,8 +20,8 @@
 	premium = list(/obj/item/storage/belt/utility = 3,
 				   /obj/item/storage/box/smart_metal_foam = 1)
 	refill_canister = /obj/item/vending_refill/engivend
-	default_price = 20
-	extra_price = 50
+	default_price = 450
+	extra_price = 500
 	payment_department = ACCOUNT_ENG
 
 /obj/item/vending_refill/engivend

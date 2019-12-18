@@ -19,6 +19,7 @@
 			silenced = TRUE
 			continue
 		if(P.run_emote(src, param, m_type, intentional))
+			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
 			return TRUE
 	if(intentional && !silenced)
 		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
@@ -70,11 +71,11 @@
 	if(.)
 		user.spin(20, 1)
 
-		if(iscyborg(user) && user.has_buckled_mobs())
-			var/mob/living/silicon/robot/R = user
-			var/datum/component/riding/riding_datum = R.GetComponent(/datum/component/riding)
+		if((iscyborg(user) || isanimal(user)) && user.has_buckled_mobs())
+			var/mob/living/L = user
+			var/datum/component/riding/riding_datum = L.GetComponent(/datum/component/riding)
 			if(riding_datum)
-				for(var/mob/M in R.buckled_mobs)
+				for(var/mob/M in L.buckled_mobs)
 					riding_datum.force_dismount(M)
 			else
-				R.unbuckle_all_mobs()
+				L.unbuckle_all_mobs()

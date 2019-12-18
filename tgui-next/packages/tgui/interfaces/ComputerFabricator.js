@@ -1,12 +1,11 @@
 import { multiline } from 'common/string';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, Grid, Section, Table, Tooltip } from '../components';
 
 export const ComputerFabricator = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   return (
     <Fragment>
       <Section italic fontSize="20px">
@@ -18,7 +17,7 @@ export const ComputerFabricator = props => {
           mb={1}
           icon="circle"
           content="Clear Order"
-          onClick={() => act(ref, 'clean_order')} />
+          onClick={() => act('clean_order')} />
       )}
       <CFScreen state={state} />
     </Fragment>
@@ -28,9 +27,7 @@ export const ComputerFabricator = props => {
 // This had a pretty gross backend so this was unfortunately one of the
 // best ways of doing it.
 const CFScreen = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   if (data.state === 0) {
     return (
       <Section
@@ -53,7 +50,7 @@ const CFScreen = props => {
                 textAlign="center"
                 fontSize="30px"
                 lineHeight="50px"
-                onClick={() => act(ref, 'pick_device', {
+                onClick={() => act('pick_device', {
                   pick: '1',
                 })} />
             </Grid.Column>
@@ -65,7 +62,7 @@ const CFScreen = props => {
                 textAlign="center"
                 fontSize="30px"
                 lineHeight="50px"
-                onClick={() => act(ref, 'pick_device', {
+                onClick={() => act('pick_device', {
                   pick: '2',
                 })} />
             </Grid.Column>
@@ -101,7 +98,7 @@ const CFScreen = props => {
               <Button
                 content="Standard"
                 selected={data.hw_battery === 1}
-                onClick={() => act(ref, 'hw_battery', {
+                onClick={() => act('hw_battery', {
                   battery: '1',
                 })} />
             </Table.Cell>
@@ -109,7 +106,7 @@ const CFScreen = props => {
               <Button
                 content="Upgraded"
                 selected={data.hw_battery === 2}
-                onClick={() => act(ref, 'hw_battery', {
+                onClick={() => act('hw_battery', {
                   battery: '2',
                 })} />
             </Table.Cell>
@@ -117,7 +114,7 @@ const CFScreen = props => {
               <Button
                 content="Advanced"
                 selected={data.hw_battery === 3}
-                onClick={() => act(ref, 'hw_battery', {
+                onClick={() => act('hw_battery', {
                   battery: '3',
                 })} />
             </Table.Cell>
@@ -138,7 +135,7 @@ const CFScreen = props => {
               <Button
                 content="Standard"
                 selected={data.hw_disk === 1}
-                onClick={() => act(ref, 'hw_disk', {
+                onClick={() => act('hw_disk', {
                   disk: '1',
                 })} />
             </Table.Cell>
@@ -146,7 +143,7 @@ const CFScreen = props => {
               <Button
                 content="Upgraded"
                 selected={data.hw_disk === 2}
-                onClick={() => act(ref, 'hw_disk', {
+                onClick={() => act('hw_disk', {
                   disk: '2',
                 })} />
             </Table.Cell>
@@ -154,7 +151,7 @@ const CFScreen = props => {
               <Button
                 content="Advanced"
                 selected={data.hw_disk === 3}
-                onClick={() => act(ref, 'hw_disk', {
+                onClick={() => act('hw_disk', {
                   disk: '3',
                 })} />
             </Table.Cell>
@@ -175,7 +172,7 @@ const CFScreen = props => {
               <Button
                 content="None"
                 selected={data.hw_netcard === 0}
-                onClick={() => act(ref, 'hw_netcard', {
+                onClick={() => act('hw_netcard', {
                   netcard: '0',
                 })} />
             </Table.Cell>
@@ -183,7 +180,7 @@ const CFScreen = props => {
               <Button
                 content="Standard"
                 selected={data.hw_netcard === 1}
-                onClick={() => act(ref, 'hw_netcard', {
+                onClick={() => act('hw_netcard', {
                   netcard: '1',
                 })} />
             </Table.Cell>
@@ -191,7 +188,7 @@ const CFScreen = props => {
               <Button
                 content="Advanced"
                 selected={data.hw_netcard === 2}
-                onClick={() => act(ref, 'hw_netcard', {
+                onClick={() => act('hw_netcard', {
                   netcard: '2',
                 })} />
             </Table.Cell>
@@ -212,7 +209,7 @@ const CFScreen = props => {
               <Button
                 content="None"
                 selected={data.hw_nanoprint === 0}
-                onClick={() => act(ref, 'hw_nanoprint', {
+                onClick={() => act('hw_nanoprint', {
                   print: '0',
                 })} />
             </Table.Cell>
@@ -220,7 +217,7 @@ const CFScreen = props => {
               <Button
                 content="Standard"
                 selected={data.hw_nanoprint === 1}
-                onClick={() => act(ref, 'hw_nanoprint', {
+                onClick={() => act('hw_nanoprint', {
                   print: '1',
                 })} />
             </Table.Cell>
@@ -241,7 +238,7 @@ const CFScreen = props => {
               <Button
                 content="None"
                 selected={data.hw_card === 0}
-                onClick={() => act(ref, 'hw_card', {
+                onClick={() => act('hw_card', {
                   card: '0',
                 })} />
             </Table.Cell>
@@ -249,7 +246,7 @@ const CFScreen = props => {
               <Button
                 content="Standard"
                 selected={data.hw_card === 1}
-                onClick={() => act(ref, 'hw_card', {
+                onClick={() => act('hw_card', {
                   card: '1',
                 })} />
             </Table.Cell>
@@ -272,7 +269,7 @@ const CFScreen = props => {
                   <Button
                     content="Standard"
                     selected={data.hw_cpu === 1}
-                    onClick={() => act(ref, 'hw_cpu', {
+                    onClick={() => act('hw_cpu', {
                       cpu: '1',
                     })} />
                 </Table.Cell>
@@ -280,7 +277,7 @@ const CFScreen = props => {
                   <Button
                     content="Advanced"
                     selected={data.hw_cpu === 2}
-                    onClick={() => act(ref, 'hw_cpu', {
+                    onClick={() => act('hw_cpu', {
                       cpu: '2',
                     })} />
                 </Table.Cell>
@@ -301,7 +298,7 @@ const CFScreen = props => {
                   <Button
                     content="None"
                     selected={data.hw_tesla === 0}
-                    onClick={() => act(ref, 'hw_tesla', {
+                    onClick={() => act('hw_tesla', {
                       tesla: '0',
                     })} />
                 </Table.Cell>
@@ -309,7 +306,7 @@ const CFScreen = props => {
                   <Button
                     content="Standard"
                     selected={data.hw_tesla === 1}
-                    onClick={() => act(ref, 'hw_tesla', {
+                    onClick={() => act('hw_tesla', {
                       tesla: '1',
                     })} />
                 </Table.Cell>
@@ -325,7 +322,7 @@ const CFScreen = props => {
           textAlign="center"
           fontSize="18px"
           lineHeight="26px"
-          onClick={() => act(ref, 'confirm_order')} />
+          onClick={() => act('confirm_order')} />
       </Section>
     );
   }
@@ -377,7 +374,7 @@ const CFScreen = props => {
           textAlign="center"
           fontSize="20px"
           lineHeight="28px"
-          onClick={() => act(ref, 'purchase')} />
+          onClick={() => act('purchase')} />
       </Section>
     );
   }

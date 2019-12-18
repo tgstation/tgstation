@@ -8,7 +8,7 @@
 
 /obj/item/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()
-	if(status && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		if(do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE))//honk honk
@@ -21,7 +21,7 @@
 			deductcharge(hitcost/4)
 		return
 	else
-		if(status)
+		if(turned_on)
 			if(!istype(M) && M.anchored)
 				return .
 			else

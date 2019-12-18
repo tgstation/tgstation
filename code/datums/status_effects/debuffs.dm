@@ -523,6 +523,29 @@
 					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
 					owner.throw_item(pick(targets))
 
+/datum/status_effect/convulsing
+	id = "convulsing"
+	duration = 	150
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /obj/screen/alert/status_effect/convulsing
+
+/datum/status_effect/convulsing/on_creation(mob/living/zappy_boy)
+	. = ..()
+	to_chat(zappy_boy, "<span class='boldwarning'>You feel a shock moving through your body! Your hands start shaking!</span>")
+
+/datum/status_effect/convulsing/tick()
+	var/mob/living/carbon/H = owner
+	if(prob(40))
+		var/obj/item/I = H.get_active_held_item()
+		if(I && H.dropItemToGround(I))
+			H.visible_message("<span class='notice'>[H]'s hand convulses, and they drop their [I.name]!</span>","<span class='userdanger'>Your hand convulses violently, and you drop what you were holding!</span>")
+			H.jitteriness += 5
+
+/obj/screen/alert/status_effect/convulsing
+	name = "Shaky Hands"
+	desc = "You've been zapped with something and your hands can't stop shaking! You can't seem to hold on to anything."
+	icon_state = "convulsing"
+
 /datum/status_effect/dna_melt
 	id = "dna_melt"
 	duration = 600

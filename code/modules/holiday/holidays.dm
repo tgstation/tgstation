@@ -608,3 +608,11 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/ianbirthday/greet()
 	return "Happy birthday, Ian!"
+
+/datum/holiday/hotdogday //I have plans for this.
+	name = "National Hot Dog Day"
+	begin_day = 17
+	begin_month = JULY
+
+/datum/holiday/hotdogday/greet()
+	return "Happy National Hot Dog Day!"

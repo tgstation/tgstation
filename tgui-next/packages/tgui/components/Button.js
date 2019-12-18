@@ -29,10 +29,11 @@ export const Button = props => {
   const hasContent = !!(content || children);
   // A warning about the lowercase onclick
   if (onclick) {
-    logger.warn("Lowercase 'onclick' is not supported on Button and "
-      + "lowercase prop names are discouraged in general. "
-      + "Please use a camelCase 'onClick' instead and read: "
-      + "https://infernojs.org/docs/guides/event-handling");
+    logger.warn(
+      `Lowercase 'onclick' is not supported on Button and lowercase`
+      + ` prop names are discouraged in general. Please use a camelCase`
+      + `'onClick' instead and read: `
+      + `https://infernojs.org/docs/guides/event-handling`);
   }
   // IE8: Use a lowercase "onclick" because synthetic events are fucked.
   // IE8: Use an "unselectable" prop because "user-select" doesn't work.

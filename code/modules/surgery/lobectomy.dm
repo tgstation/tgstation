@@ -24,7 +24,7 @@
 		"<span class='notice'>[user] begins to make an incision in [target].</span>",
 		"<span class='notice'>[user] begins to make an incision in [target].</span>")
 
-/datum/surgery_step/lobectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/lobectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/lungs/L = H.getorganslot(ORGAN_SLOT_LUNGS)
@@ -33,7 +33,7 @@
 		display_results(user, target, "<span class='notice'>You successfully excise [H]'s most damaged lobe.</span>",
 			"<span class='notice'>Successfully removes a piece of [H]'s lungs.</span>",
 			"")
-	return TRUE
+	return ..(default_display_results = FALSE)
 
 /datum/surgery_step/lobectomy/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(ishuman(target))

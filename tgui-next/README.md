@@ -238,6 +238,8 @@ Props:
 - `height: number` - Box height.
 - `minHeight: number` - Box minimum height.
 - `maxHeight: number` - Box maximum height.
+- `fontSize: number` - Font size.
+- `fontFamily: string` - Font family.
 - `lineHeight: number` - Directly affects the height of text lines.
 Useful for adjusting button height.
 - `inline: boolean` - Forces the `Box` to appear as an `inline-block`,
@@ -253,6 +255,7 @@ all available horizontal space.
 - `opacity: number` - Opacity, from 0 to 1.
 - `bold: boolean` - Make text bold.
 - `italic: boolean` - Make text italic.
+- `nowrap: boolean` - Stops text from wrapping.
 - `textAlign: string` - Align text inside the box.
   - `left` (default)
   - `center`
@@ -309,6 +312,17 @@ Props:
 - See inherited props: [Button](#button)
 - `checked: boolean` - Boolean value, which marks the checkbox as checked.
 
+### `Collapsible`
+
+Displays contents when open, acts as a fluid button when closed. Click to toggle, closed by default.
+
+Props:
+  - See inherited props: [Box](#box)
+  - `children: any` - What is collapsed when closed
+  - `title: string` - Text to display on the button for collapsing
+  - `color: string` - Color of the button; see [Button](#button)
+  - `buttons: any` - Buttons or other content to render inline with the button
+
 ### `ColorBox`
 
 Displays a 1-character wide colored square. Can be used as a status indicator,
@@ -329,6 +343,21 @@ Dims surrounding area to emphasize content placed inside.
 Props:
 
 - See inherited props: [Box](#box)
+
+### `Dropdown`
+
+A simple dropdown box component. Lets the user select from a list of options and displays selected entry.
+
+Props:
+
+  - See inherited props: [Box](#box)
+  - `options: string[]` - An array of strings which will be displayed in the dropdown when open
+  - `selected: string` - Currently selected entry
+  - `width: number` - Width of dropdown button and resulting menu
+  - `over: boolean` - dropdown renders over instead of below
+  - `color: string` - color of dropdown button
+  - `onClick: (e) => void` - Called when dropdown button is clicked
+  - `onSet: (e, value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
 ### `Flex`
 
@@ -485,6 +514,7 @@ Props:
 
 - See inherited props: [Box](#box)
 - `value: string` - Value of an input.
+- `placeholder: string` - Text placed into Input box when value is otherwise nothing. Clears automatically when focused.
 - `fluid: boolean` - Fill all available horizontal space.
 - `onChange: (e, value) => void` - An event, which fires when you commit
 the text by either unfocusing the input box, or by pressing the Enter key.

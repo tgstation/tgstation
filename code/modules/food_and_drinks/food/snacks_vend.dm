@@ -52,7 +52,7 @@
 	filling_color = "#8B0000"
 	tastes = list("dried raisins" = 1)
 	foodtype = JUNKFOOD | FRUIT | SUGAR
-	custom_price = 30
+	custom_price = 90
 
 /obj/item/reagent_containers/food/snacks/no_raisin/healthy
 	name = "homemade raisins"
@@ -69,7 +69,7 @@
 	junkiness = 25
 	filling_color = "#FFD700"
 	foodtype = JUNKFOOD | GRAIN | SUGAR
-	custom_price = 11
+	custom_price = 30
 
 /obj/item/reagent_containers/food/snacks/candy_trash
 	name = "candy cigarette butt"
@@ -95,7 +95,7 @@
 	filling_color = "#FFD700"
 	tastes = list("cheese" = 5, "crisps" = 2)
 	foodtype = JUNKFOOD | DAIRY | SUGAR
-	custom_price = 16
+	custom_price = 45
 
 /obj/item/reagent_containers/food/snacks/syndicake
 	name = "syndi-cakes"

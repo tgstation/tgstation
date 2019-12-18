@@ -1,8 +1,14 @@
-import { classes, pureComponentHooks } from 'common/react';
+import { classes, isFalsy } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
 
-/* eslint-disable react/destructuring-assignment */
+const toInputValue = value => {
+  if (isFalsy(value)) {
+    return '';
+  }
+  return value;
+};
+
 export class Input extends Component {
   constructor() {
     super();
@@ -10,13 +16,59 @@ export class Input extends Component {
     this.state = {
       editing: false,
     };
+    this.handleInput = e => {
+      const { editing } = this.state;
+      const { onInput } = this.props;
+      if (!editing) {
+        this.setEditing(true);
+      }
+      if (onInput) {
+        onInput(e, e.target.value);
+      }
+    };
+    this.handleFocus = e => {
+      const { editing } = this.state;
+      if (!editing) {
+        this.setEditing(true);
+      }
+    };
+    this.handleBlur = e => {
+      const { editing } = this.state;
+      const { onChange } = this.props;
+      if (editing) {
+        this.setEditing(false);
+        if (onChange) {
+          onChange(e, e.target.value);
+        }
+      }
+    };
+    this.handleKeyDown = e => {
+      const { onInput, onChange } = this.props;
+      if (e.keyCode === 13) {
+        this.setEditing(false);
+        if (onChange) {
+          onChange(e, e.target.value);
+        }
+        if (onInput) {
+          onInput(e, e.target.value);
+        }
+        e.target.blur();
+        return;
+      }
+      if (e.keyCode === 27) {
+        this.setEditing(false);
+        e.target.value = toInputValue(this.props.value);
+        e.target.blur();
+        return;
+      }
+    };
   }
 
   componentDidMount() {
     const nextValue = this.props.value;
     const input = this.inputRef.current;
     if (input) {
-      input.value = nextValue;
+      input.value = toInputValue(nextValue);
     }
   }
 
@@ -26,7 +78,7 @@ export class Input extends Component {
     const nextValue = this.props.value;
     const input = this.inputRef.current;
     if (input && !editing && prevValue !== nextValue) {
-      input.value = nextValue;
+      input.value = toInputValue(nextValue);
     }
   }
 
@@ -41,6 +93,8 @@ export class Input extends Component {
       onInput,
       onChange,
       value,
+      maxLength,
+      placeholder,
       ...boxProps
     } = props;
     // Box props
@@ -62,48 +116,14 @@ export class Input extends Component {
         </div>
         <input
           ref={this.inputRef}
-          type="text"
           className="Input__input"
-          onInput={e => {
-            this.setEditing(true);
-            if (onInput) {
-              onInput(e, e.target.value);
-            }
-          }}
-          onFocus={e => {
-            this.setEditing(true);
-          }}
-          onBlur={e => {
-            const { editing } = this.state;
-            if (editing) {
-              this.setEditing(false);
-              if (onChange) {
-                onChange(e, e.target.value);
-              }
-            }
-          }}
-          onKeyDown={e => {
-            if (e.keyCode === 13) {
-              this.setEditing(false);
-              if (onChange) {
-                onChange(e, e.target.value);
-              }
-              if (onInput) {
-                onInput(e, e.target.value);
-              }
-              e.target.blur();
-              return;
-            }
-            if (e.keyCode === 27) {
-              this.setEditing(false);
-              e.target.value = props.value;
-              e.target.blur();
-              return;
-            }
-          }} />
+          placeholder={placeholder}
+          onInput={this.handleInput}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          onKeyDown={this.handleKeyDown}
+          maxLength={maxLength} />
       </Box>
     );
   }
 }
-
-Input.defaultHooks = pureComponentHooks;

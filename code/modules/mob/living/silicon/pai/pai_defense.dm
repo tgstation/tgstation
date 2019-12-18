@@ -24,7 +24,7 @@
 			derpspeech = 1
 			to_chat(src, "<span class='danger'>Warning: Vocabulary databank corrupted.</span>")
 	if(prob(40))
-		mind.language_holder.selected_default_language = pick(mind.language_holder.languages)
+		mind.language_holder.selected_language = get_random_spoken_language()
 
 
 /mob/living/silicon/pai/ex_act(severity, target)

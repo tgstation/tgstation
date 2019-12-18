@@ -1,13 +1,11 @@
 import { map } from 'common/collections';
 import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 
 export const AtmosControlConsole = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const sensors = data.sensors || [];
   return (
     <Fragment>
@@ -48,7 +46,7 @@ export const AtmosControlConsole = props => {
             <Button
               icon="undo"
               content="Reconnect"
-              onClick={() => act(ref, 'reconnect')} />
+              onClick={() => act('reconnect')} />
           )}>
           <LabeledList>
             <LabeledList.Item label="Input Injector">
@@ -56,7 +54,7 @@ export const AtmosControlConsole = props => {
                 icon={data.inputting ? 'power-off' : 'times'}
                 content={data.inputting ? 'Injecting' : 'Off'}
                 selected={data.inputting}
-                onClick={() => act(ref, 'input')} />
+                onClick={() => act('input')} />
             </LabeledList.Item>
             <LabeledList.Item label="Input Rate">
               <NumberInput
@@ -65,8 +63,10 @@ export const AtmosControlConsole = props => {
                 width="63px"
                 minValue={0}
                 maxValue={200}
-                suppressFlicker={2000} // This takes an exceptionally long time to update due to being an async signal
-                onChange={(e, value) => act(ref, 'rate', {
+                // This takes an exceptionally long time to update
+                // due to being an async signal
+                suppressFlicker={2000}
+                onChange={(e, value) => act('rate', {
                   rate: value,
                 })} />
             </LabeledList.Item>
@@ -75,7 +75,7 @@ export const AtmosControlConsole = props => {
                 icon={data.outputting ? 'power-off' : 'times'}
                 content={data.outputting ? 'Open' : 'Closed'}
                 selected={data.outputting}
-                onClick={() => act(ref, 'output')} />
+                onClick={() => act('output')} />
             </LabeledList.Item>
             <LabeledList.Item label="Output Pressure">
               <NumberInput
@@ -85,8 +85,10 @@ export const AtmosControlConsole = props => {
                 minValue={0}
                 maxValue={4500}
                 step={10}
-                suppressFlicker={2000} // This takes an exceptionally long time to update due to being an async signal
-                onChange={(e, value) => act(ref, 'pressure', {
+                // This takes an exceptionally long time to update
+                // due to being an async signal
+                suppressFlicker={2000}
+                onChange={(e, value) => act('pressure', {
                   pressure: value,
                 })} />
             </LabeledList.Item>

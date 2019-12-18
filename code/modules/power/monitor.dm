@@ -11,7 +11,6 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/computer/powermonitor
 	tgui_id = "power_monitor"
-	ui_style = "ntos"
 	ui_x = 550
 	ui_y = 700
 

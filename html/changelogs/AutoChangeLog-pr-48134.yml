@@ -1,0 +1,6 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "AI's are no longer able to right tipped vending machines"
+  - bugfix: "Borgies can now attack and be attacked by vending machines!
+spelling: Untipping vending machines no longer shoes an errant /the"
