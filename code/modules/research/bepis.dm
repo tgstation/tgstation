@@ -204,6 +204,7 @@
 				return
 			calcsuccess()
 			use_power(10000 * power_saver) //This thing should eat your APC battery if you're not careful.
+			powered = FALSE	//Shuts off after use in order to get the right visual look. Kinda annoying, but also prevents some possible spam issues.
 			update_icon_state()
 		if("amount")
 			var/input = text2num(params["amount"])
