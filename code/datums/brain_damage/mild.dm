@@ -199,11 +199,11 @@
 		var/list/new_message = list()
 
 		for(var/word in message_split)
-			var/suffix = copytext(word,-1)
+			var/suffix = copytext_char(word, -1)
 
 			// Check if we have a suffix and break it out of the word
 			if(suffix in list("." , "," , ";" , "!" , ":" , "?"))
-				word = copytext(word,1,-1)
+				word = copytext(word, 1, -length(suffix))
 			else
 				suffix = ""
 
@@ -216,10 +216,10 @@
 					new_message += pick("uh","erm")
 					break
 				else
-					var/list/charlist = string2charlist(word) // Stupid shit code
+					var/list/charlist = text2charlist(word)
+					charlist.len = round(charlist.len * 0.5, 1)
 					shuffle_inplace(charlist)
-					charlist.len = round(charlist.len * 0.5,1)
-					new_message += html_encode(jointext(charlist,"")) + suffix
+					new_message += jointext(charlist, "") + suffix
 
 		message = jointext(new_message, " ")
 
