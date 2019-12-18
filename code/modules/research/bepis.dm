@@ -43,8 +43,6 @@
 	if(istype(O, /obj/item/holochip) || istype(O, /obj/item/stack/spacecash))
 		var/deposit_value = O.get_item_credit_value()
 		banked_cash += deposit_value
-		if (banked_cash >= 1)
-			chamber_status = 2
 		qdel(O)
 		say("Deposited [deposit_value] credits into storage.")
 		update_icon_state()
@@ -79,7 +77,6 @@
 
 	deposit_value = banking_amount
 	if(deposit_value == 0)
-		chamber_status = 1
 		update_icon_state()
 		say("Attempting to deposit 0 credits. Aborting.")
 		return
@@ -93,11 +90,6 @@
 		banked_cash += deposit_value
 		use_power(1000 * power_saver)
 		say("Cash deposit successful. There is [banked_cash] in the chamber.")
-
-	if(banked_cash >= 1)
-		chamber_status = 2
-	else
-		chamber_status = 1
 	update_icon_state()
 	return
 
@@ -148,7 +140,7 @@
 	return
 
 /obj/machinery/rnd/bepis/update_icon_state()
-	if(is_operational() && (chamber_status < 2))
+	if(is_operational() && (powered == TRUE))
 		chamber_status = 1
 	if(((powered == FALSE) && (banked_cash == 0)) || (!is_operational()))
 		chamber_status = 0
@@ -212,6 +204,7 @@
 				return
 			calcsuccess()
 			use_power(10000 * power_saver) //This thing should eat your APC battery if you're not careful.
+			update_icon_state()
 		if("amount")
 			var/input = text2num(params["amount"])
 			if(input)

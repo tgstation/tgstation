@@ -82,7 +82,11 @@
 /obj/item/stack/circuit_stack/attack_hand(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(user.get_inactive_held_item() == src)
+		if(zero_amount())
+			return
 		chosen_circuit = input("What type of circuit would you like to remove?", "Choose a Circuit Type", chosen_circuit) in list("airlock","firelock","fire alarm","air alarm","APC")
+		if(zero_amount())
+			return
 		switch(chosen_circuit)
 			if("airlock")
 				circuit_type = /obj/item/electronics/airlock
@@ -94,8 +98,6 @@
 				circuit_type = /obj/item/electronics/airalarm
 			if("APC")
 				circuit_type = /obj/item/electronics/apc
-		if(zero_amount())
-			return
 		to_chat(user, "<span class='notice'>You spot your circuit, and carefully attempt to remove it from the [src], hold still!</span>")
 		if(do_after(user, 30, 1, user, 1))
 			if(!src || QDELETED(src))//Sanity Check.
