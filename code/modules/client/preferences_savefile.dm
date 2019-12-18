@@ -53,7 +53,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < 31)
 		if(clientfps == 60)
-			clientfps = 20
+			clientfps = 0
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 19)
