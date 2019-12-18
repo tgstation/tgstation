@@ -1,41 +1,45 @@
-import { winset, winget } from './byond';
+import { vecAdd, vecInverse, vecMultiply } from 'common/vector';
+import { winget, winset } from './byond';
 import { createLogger } from './logging';
 
 const logger = createLogger('drag');
 
-const dragState = {
-  dragging: false,
-  resizing: false,
-  windowRef: undefined,
-  screenOffset: { x: 0, y: 0 },
-  dragPointOffset: {},
-  resizeMatrix: {},
-  initialWindowSize: {},
+let ref;
+let dragging = false;
+let resizing = false;
+let screenOffset = [0, 0];
+let dragPointOffset;
+let resizeMatrix;
+let initialSize;
+let size;
+
+const getWindowPosition = ref => {
+  return winget(ref, 'pos').then(pos => [pos.x, pos.y]);
+};
+
+const setWindowPosition = (ref, vec) => {
+  return winset(ref, 'pos', vec[0] + ',' + vec[1]);
+};
+
+const setWindowSize = (ref, vec) => {
+  return winset(ref, 'size', vec[0] + ',' + vec[1]);
 };
 
 export const setupDrag = async state => {
   logger.log('setting up');
-  dragState.windowRef = state.config.window;
-  // Remove window borders
-  // NOTE: We are currently doing it in the open() tgui module proc, and
-  // this bit of code is left here just in case everything goes to shit.
-  // if (state.config.fancy) {
-  //   winset(state.config.window, 'titlebar', false);
-  //   winset(state.config.window, 'can-resize', false);
-  // }
+  ref = state.config.window;
   // Calculate offset caused by windows taskbar
-  const realPosition = await winget(dragState.windowRef, 'pos');
-  dragState.screenOffset = {
-    x: realPosition.x - window.screenX,
-    y: realPosition.y - window.screenY,
-  };
+  const realPosition = await getWindowPosition(ref);
+  screenOffset = [
+    realPosition[0] - window.screenLeft,
+    realPosition[1] - window.screenTop,
+  ];
   // Constraint window position
   const [relocated, safePosition] = constraintPosition(realPosition);
   if (relocated) {
-    winset(dragState.windowRef, 'pos',
-      safePosition.x + ',' + safePosition.y);
+    setWindowPosition(ref, safePosition);
   }
-  logger.debug('current dragState', dragState);
+  logger.debug('current state', { ref, screenOffset });
 };
 
 /**
@@ -43,7 +47,8 @@ export const setupDrag = async state => {
  * margins which could be a system taskbar.
  */
 const constraintPosition = position => {
-  let { x, y } = position;
+  let x = position[0];
+  let y = position[1];
   let relocated = false;
   // Left
   if (x < 0) {
@@ -65,101 +70,77 @@ const constraintPosition = position => {
     y = window.screen.availHeight - window.innerHeight;
     relocated = true;
   }
-  return [relocated, { x, y }];
+  return [relocated, [x, y]];
 };
 
 export const dragStartHandler = event => {
   logger.log('drag start');
-  dragState.dragging = true;
-  dragState.dragPointOffset = {
-    x: window.screenX - event.screenX,
-    y: window.screenY - event.screenY,
-  };
+  dragging = true;
+  dragPointOffset = [
+    window.screenLeft - event.screenX,
+    window.screenTop - event.screenY,
+  ];
   document.addEventListener('mousemove', dragMoveHandler);
   document.addEventListener('mouseup', dragEndHandler);
-  dragHandler(event);
+  dragMoveHandler(event);
 };
 
-export const dragMoveHandler = event => {
-  dragHandler(event);
-};
-
-export const dragEndHandler = event => {
+const dragEndHandler = event => {
   logger.log('drag end');
-  dragHandler(event);
+  dragMoveHandler(event);
   document.removeEventListener('mousemove', dragMoveHandler);
   document.removeEventListener('mouseup', dragEndHandler);
-  dragState.dragging = false;
+  dragging = false;
 };
 
-const dragHandler = event => {
-  if (!dragState.dragging) {
+const dragMoveHandler = event => {
+  if (!dragging) {
     return;
   }
   event.preventDefault();
-  let x = event.screenX
-    + dragState.screenOffset.x
-    + dragState.dragPointOffset.x;
-  let y = event.screenY
-    + dragState.screenOffset.y
-    + dragState.dragPointOffset.y;
-  winset(dragState.windowRef, 'pos', x + ',' + y);
+  setWindowPosition(ref, vecAdd(
+    [event.screenX, event.screenY],
+    screenOffset,
+    dragPointOffset));
 };
 
 export const resizeStartHandler = (x, y) => event => {
-  logger.log('resize start', [x, y]);
-  dragState.resizing = true;
-  dragState.resizeMatrix = { x, y };
-  dragState.dragPointOffset = {
-    x: window.screenX - event.screenX,
-    y: window.screenY - event.screenY,
-  };
-  dragState.initialWindowSize = {
-    x: window.innerWidth,
-    y: window.innerHeight,
-  };
+  resizeMatrix = [x, y];
+  logger.log('resize start', resizeMatrix);
+  resizing = true;
+  dragPointOffset = [
+    window.screenLeft - event.screenX,
+    window.screenTop - event.screenY,
+  ];
+  initialSize = [
+    window.innerWidth,
+    window.innerHeight,
+  ];
   document.addEventListener('mousemove', resizeMoveHandler);
   document.addEventListener('mouseup', resizeEndHandler);
-  resizeHandler(event);
+  resizeMoveHandler(event);
 };
 
-export const resizeMoveHandler = event => {
-  resizeHandler(event);
-};
-
-export const resizeEndHandler = event => {
-  logger.log('resize end', dragState.currentSize);
-  resizeHandler(event);
+const resizeEndHandler = event => {
+  logger.log('resize end', size);
+  resizeMoveHandler(event);
   document.removeEventListener('mousemove', resizeMoveHandler);
   document.removeEventListener('mouseup', resizeEndHandler);
-  dragState.resizing = false;
+  resizing = false;
 };
 
-const resizeHandler = event => {
-  if (!dragState.resizing) {
+const resizeMoveHandler = event => {
+  if (!resizing) {
     return;
   }
   event.preventDefault();
-  dragState.currentSize = {
-    x: (
-      dragState.initialWindowSize.x
-      + (event.screenX
-        - window.screenX
-        + dragState.dragPointOffset.x
-        + 1)
-      * dragState.resizeMatrix.x
-    ),
-    y: (
-      dragState.initialWindowSize.y
-      + (event.screenY
-        - window.screenY
-        + dragState.dragPointOffset.y
-        + 1)
-      * dragState.resizeMatrix.y
-    ),
-  };
+  size = vecAdd(initialSize, vecMultiply(resizeMatrix, vecAdd(
+    [event.screenX, event.screenY],
+    vecInverse([window.screenLeft, window.screenTop]),
+    dragPointOffset,
+    [1, 1])));
   // Sane window size values
-  const x = Math.max(dragState.currentSize.x, 250);
-  const y = Math.max(dragState.currentSize.y, 120);
-  winset(dragState.windowRef, 'size', x + ',' + y);
+  size[0] = Math.max(size[0], 250);
+  size[1] = Math.max(size[1], 120);
+  setWindowSize(ref, size);
 };

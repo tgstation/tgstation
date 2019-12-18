@@ -100,7 +100,7 @@
 	obj/source,  // the originating radio
 	frequency,  // the frequency the signal is taking place on
 	atom/movable/virtualspeaker/speaker,  // representation of the method's speaker
-	datum/language/language,  // the langauge of the message
+	datum/language/language,  // the language of the message
 	message,  // the text content of the message
 	spans  // the list of spans applied to the message
 )

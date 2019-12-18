@@ -1,5 +1,6 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { toTitleCase } from 'common/string';
+import { tridentVersion } from '../byond';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { Icon } from './Icon';
 
@@ -36,7 +37,12 @@ export const TitleBar = props => {
       {!!fancy && (
         <div
           className="TitleBar__close TitleBar__clickable"
-          onClick={onClose} />
+          // IE8: Synthetic onClick event doesn't work on IE8.
+          // IE8: Use a plain character instead of a unicode symbol.
+          // eslint-disable-next-line react/no-unknown-property
+          onclick={onClose}>
+          {tridentVersion <= 4 ? 'x' : '×'}
+        </div>
       )}
     </div>
   );

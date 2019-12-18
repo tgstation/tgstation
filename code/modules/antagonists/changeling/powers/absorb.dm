@@ -59,10 +59,10 @@
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.set_nutrition(min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED))
 
-	if(target.mind && user.mind)//if the victim and user have minds
-		// Absorb a lizard, speak Draconic.
-		user.copy_known_languages_from(target)
+	// Absorb a lizard, speak Draconic.
+	owner.copy_languages(target, LANGUAGE_ABSORB)
 
+	if(target.mind && user.mind)//if the victim and user have minds
 		var/datum/mind/suckedbrain = target.mind
 		user.mind.memory += "<BR><b>We've absorbed [target]'s memories into our own...</b><BR>[suckedbrain.memory]<BR>"
 		for(var/A in suckedbrain.antag_datums)
