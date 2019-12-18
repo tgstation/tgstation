@@ -1,10 +1,40 @@
-/* 	Language Holders
-*	Language holders live in two places, either in atom movables (mobs, vending machines, etc) or in a mind.
-*	Accessing and using language holders should be done through the atom procs where possible.
-*	If a mind holder is available, the atom holder will never be used for anything but update the mind holder on transfers and initial creation.
-*	If an atom does not have a mind or loses it for some reason, the local holder will be used.
-*/
+/*!Language holders will either exist in an atom/movable or a mind. Creation of language holders happens
+automatically when they are needed, for example when something tries to speak.
+Where a mind is available, the mind language holder will be the one "in charge". The mind holder
+will update its languages based on the atom holder, and will get updated as part of
+transformations and other events that cause new languages to become available.
 
+Every language holder has three lists of languages (and sources for each of them):
+- understood_languages
+- spoken_languages
+- blocked_languages
+
+Understood languages let you understand them, spoken languages lets you speak them
+(if your tongue is compatible), and blocked languages will let you do neither no matter
+what the source of the language is.
+
+Language holders are designed to mostly only ever require the use the helpers in atom/movable
+to achieve your goals, but it is also possible to work on them directly if needed. Any adding
+and removing of languages and sources should only happen through the procs, as directly changing
+these will mess something up somewhere down the line.
+
+All atom movables have the initial_language_holder var which allows you to set the default language
+holder to create. For example, /datum/language_holder/alien will give you xenocommon and a block for
+galactic common. Human species also have a default language holder var that will be updated on
+species change, initial_species_holder.
+
+Key procs
+* [grant_language](atom/movable.html#proc/grant_language)
+* [remove_language](atom/movable.html#proc/remove_language)
+* [add_blocked_language](atom/movable.html#proc/add_blocked_language)
+* [remove_blocked_language](atom/movable.html#proc/remove_blocked_language)
+* [grant_all_languages](atom/movable.html#proc/grant_all_languages)
+* [remove_all_languages](atom/movable.html#proc/remove_all_languages)
+* [has_language](atom/movable.html#proc/has_language)
+* [can_speak_language](atom/movable.html#proc/can_speak_language)
+* [get_selected_language](atom/movable.html#proc/get_selected_language)
+* [update_atom_languages](atom/movable.html#proc/update_atom_languages)
+*/
 /datum/language_holder
 	/// Understood languages.
 	var/list/understood_languages = list(/datum/language/common = list(LANGUAGE_MIND))
@@ -12,7 +42,7 @@
 	var/list/spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
 	/// A list of blocked languages. Used to prevent understanding and speaking certain languages, ie for certain mobs, mutations etc.
 	var/list/blocked_languages = list()
-	/// If true, overrides spoken_languages and tongue limitations.
+	/// If true, overrides tongue limitations.
 	var/omnitongue = FALSE
 	/// Handles displaying the language menu UI.
 	var/datum/language_menu/language_menu
@@ -177,7 +207,7 @@
 	get_selected_language()
 	return TRUE
 
-/// Copies all languages into the supplied language holder
+/// Copies all languages from the supplied language holder
 /datum/language_holder/proc/copy_languages(var/datum/language_holder/from_holder, source_override)
 	if(source_override)	//No blocked languages here,
 		for(var/language in from_holder.understood_languages)
@@ -194,10 +224,11 @@
 	return TRUE
 
 
-/************************************************
-*        Specific language holders              *
-*      Use atom language sources only.           *
-************************************************/
+//************************************************
+//*        Specific language holders              *
+//*      Use atom language sources only.           *
+//************************************************/
+
 
 /datum/language_holder/alien
 	understood_languages = list(/datum/language/xenocommon = list(LANGUAGE_ATOM))
@@ -235,6 +266,9 @@
 								/datum/language/draconic = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/draconic = list(LANGUAGE_ATOM))
+
+/datum/language_holder/lizard/ash
+	selected_language = /datum/language/draconic
 
 /datum/language_holder/monkey
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
