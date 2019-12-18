@@ -52,8 +52,8 @@
 					  /obj/item/seeds/random = 2)
 	premium = list(/obj/item/reagent_containers/spray/waterflower = 1)
 	refill_canister = /obj/item/vending_refill/hydroseeds
-	default_price = 10
-	extra_price = 50
+	default_price = 100
+	extra_price = 350
 	payment_department = ACCOUNT_SRV
 
 /obj/item/vending_refill/hydroseeds

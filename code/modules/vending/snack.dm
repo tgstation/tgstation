@@ -15,8 +15,8 @@
 	contraband = list(/obj/item/reagent_containers/food/snacks/syndicake = 6)
 	refill_canister = /obj/item/vending_refill/snack
 	canload_access_list = list(ACCESS_KITCHEN)
-	default_price = 20
-	extra_price = 30
+	default_price = 60
+	extra_price = 160
 	payment_department = ACCOUNT_SRV
 	input_display_header = "Chef's Food Selection"
 

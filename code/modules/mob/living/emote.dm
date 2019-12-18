@@ -79,6 +79,7 @@
 	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
 	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
 	message_simple =  "stops moving..."
+	cooldown = (15 SECONDS)
 	stat_allowed = UNCONSCIOUS
 
 /datum/emote/living/deathgasp/run_emote(mob/user, params, type_override, intentional)
@@ -87,6 +88,7 @@
 		message_simple = S.deathmessage
 	. = ..()
 	message_simple = initial(message_simple)
+
 	if(. && user.deathsound)
 		if(isliving(user))
 			var/mob/living/L = user

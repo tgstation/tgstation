@@ -37,7 +37,7 @@
 	else if(default_deconstruction_crowbar(O))
 		return
 	if(powered == FALSE)
-		to_chat(user, "<span class='notice'>The [src] can't accept money with no power.</span>")
+		to_chat(user, "<span class='notice'>[src] can't accept money with no power.</span>")
 		return
 	if(istype(O, /obj/item/holochip))
 		var/obj/item/holochip/cash = O

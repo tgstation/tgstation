@@ -7478,9 +7478,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
+/obj/item/relic,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
 "alP" = (
@@ -44276,6 +44274,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/item/relic,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bnf" = (
