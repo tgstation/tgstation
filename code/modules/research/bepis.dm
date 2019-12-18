@@ -17,10 +17,8 @@
 	var/banking_amount = 100
 	var/banked_cash = 0					//stored player cash
 	var/datum/bank_account/account		//payer's account.
-	var/mob/living/carbon/human/H   	//the person using the console in each instance.
 	var/obj/item/card/id/Card   		//the account of the person using the console.
 	var/chamber_status = 0
-	var/success_type = 0
 	var/error_cause = null
 	var/powered = FALSE
 	//Vars related to probability and chance of success for testing
@@ -34,6 +32,10 @@
 	var/negative_cash_offset = 0
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "chamber_open", "chamber", O))
+		return
+	else if(default_deconstruction_crowbar(O))
+		return
 	if(powered == FALSE)
 		to_chat(user, "<span class='notice'>The [src] can't accept money with no power.</span>")
 		return
@@ -84,7 +86,7 @@
 		account = Card.registered_account
 
 	deposit_value = banking_amount
-	if(deposit_value == null || deposit_value == 0)
+	if(deposit_value == 0)
 		chamber_status = 1
 		update_icon_state()
 		say("Attempting to deposit 0 credits. Aborting.")
@@ -109,23 +111,49 @@
 	return
 
 /obj/machinery/rnd/bepis/proc/calcsuccess()
+	var/turf/dropturf = get_turf(pick(view(1,src)))
 	var/gauss_major = 0
 	var/gauss_minor = 0
 	var/gauss_real = 0
+	if(!dropturf) //Check to verify the turf exists and the reward isn't lost somehow.
+		dropturf = drop_location()
 	gauss_major = (gaussian(major_threshold, std) - negative_cash_offset)	//This is the randomized profit value that this experiment has to surpass to unlock a tech.
 	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset)	//And this is the threshold to instead get a minor prize.
 	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset)	//this is the randomized profit value that your experiment expects to give.
-	say("Real, [gauss_real]. Minor, [gauss_minor]. Major, [gauss_major].")
+	say("Real: [gauss_real]. Minor: [gauss_minor]. Major: [gauss_major].")
 	if(gauss_real >= gauss_major) //Major Success.
-		success_type = 2
+		say("Experiment concluded with major success. New technology node discovered on technology disc.")
+		banked_cash = 0
+		new /obj/item/disk/tech_disk/major(dropturf,1)
+		flick("chamber_flash",src)
+		update_icon_state()
 		return
 	else if(gauss_real >= gauss_minor) //Minor Success.
-		success_type = 1
+		var/reward_number = 1
+		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
+		reward_number = rand(1,2)
+		if(reward_number == 1)
+			new /obj/item/stack/circuit_stack/full(dropturf)
+		if(reward_number == 2)
+			new /obj/item/airlock_painter/decal(dropturf)
+		banked_cash = 0
+		flick("chamber_flash",src)
+		update_icon_state()
 		return
-	else if(gauss_real <= -1)
-		success_type = 3 //Critical Failure.
+	else if(gauss_real <= -1)	//Critical Failure
+		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
+		banked_cash = 0
+		new /mob/living/simple_animal/deer(dropturf, 1)
+		use_power(500000 * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
+		flick("chamber_flash",src)
+		update_icon_state()
 		return
-	success_type = 0 //Neutral Failure.
+	else	//Minor Failure
+		error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
+		say("Experiment concluded with zero product viability. Cause of error: [error_cause]")
+		banked_cash = 0
+		flick("chamber_flash",src)
+		update_icon_state()
 	return
 
 /obj/machinery/rnd/bepis/update_icon_state()
@@ -147,8 +175,8 @@
 		if(3)
 			icon_state = "chamber_loaded"
 
-
 /obj/machinery/rnd/bepis/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	var/mob/living/carbon/human/H   	//the person using the console in each instance.
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "bepis", name, 500, 400, master_ui, state)
@@ -156,16 +184,13 @@
 	if(ishuman(user))
 		H = user
 		Card = H.get_idcard(TRUE)
-		update_icon_state()
 	RefreshParts()
-	update_icon_state()
 
 /obj/machinery/rnd/bepis/ui_data()
 	var/list/data = list()
-	var/storedcash = banked_cash
 
 	data["amount"] = banking_amount
-	data["stored_cash"] = storedcash
+	data["stored_cash"] = banked_cash
 	data["mean_value"] = major_threshold
 	data["error_name"] = error_cause
 	data["power_saver"] = power_saver
@@ -185,53 +210,13 @@
 			depositcash()
 			update_icon_state()
 		if("begin_experiment")
-			var/turf/dropturf = get_turf(pick(view(1,src)))
-			if(!dropturf) //Check to verify the turf exists and the reward isn't lost somehow.
-				dropturf = drop_location()
 			if(powered == FALSE)
 				return
-			calcsuccess()
 			if(banked_cash == 0)
 				say("Please deposit funds to begin testing.")
 				return
+			calcsuccess()
 			use_power(10000 * power_saver) //This thing should eat your APC battery if you're not careful.
-			//For assigning major rewards, the tech disk will have a random tech with the bepis_tech variable true, check _techweb.dm
-			if(success_type == 2)
-				say("Experiment concluded with major success. New technology node discovered on technology disc.")
-				banked_cash = 0
-				new /obj/item/disk/tech_disk/major(dropturf,1)
-				flick("chamber_flash",src)
-				update_icon_state()
-			//For assigning minor rewards, throw it here, and sure the random
-			else if(success_type == 1)
-				var/reward_number = 1
-				say("Experiment concluded with partial success. Dispensing compiled research efforts.")
-				reward_number = rand(1,2)
-				if(reward_number == 1)
-					new /obj/item/stack/circuit_stack/full(dropturf)
-				if(reward_number == 2)
-					new /obj/item/airlock_painter/decal(dropturf)
-				banked_cash = 0
-				flick("chamber_flash",src)
-				update_icon_state()
-
-			else if(success_type == 0)
-				error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
-				say("Experiment concluded with zero product viability. Cause of error: [error_cause]")
-				banked_cash = 0
-				flick("chamber_flash",src)
-				update_icon_state()
-
-			else if(success_type == 3)
-				say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
-				banked_cash = 0
-				new /mob/living/simple_animal/deer(src.loc, 1)
-				use_power(500000 * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
-				flick("chamber_flash",src)
-				update_icon_state()
-
-			powered = FALSE
-			success_type = 0
 		if("amount")
 			var/input = text2num(params["amount"])
 			if(input)

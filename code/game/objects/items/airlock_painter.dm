@@ -141,11 +141,11 @@
 /obj/item/airlock_painter/decal/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	var/turf/open/floor/F = target
-	if(!(proximity))
+	if(!proximity)
 		to_chat(user, "<span class='notice'>You need to get closer!</span>")
 		return
 	if(use_paint(user) && isturf(F))
-		F.AddComponent(/datum/component/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_STRONG, color, null, null, alpha) //Make sure to delete in final version.
+		F.AddComponent(/datum/component/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_STRONG, color, null, null, alpha)
 
 /obj/item/airlock_painter/decal/attack_self(mob/user)
 	ui_interact(user)
@@ -182,31 +182,22 @@
 		//Decal Designs
 		if("lines")
 			stored_decal = "warningline"
-			update_decal_path()
 		if("lines corner")
 			stored_decal = "warninglinecorner"
-			update_decal_path()
 		if("caution")
 			stored_decal = "caution"
-			update_decal_path()
 		if("arrow")
 			stored_decal = "arrows"
-			update_decal_path()
 		if("stand clear")
 			stored_decal = "stand_clear"
-			update_decal_path()
 		if("box")
 			stored_decal = "box"
-			update_decal_path()
 		if("box corners")
 			stored_decal = "box_corners"
-			update_decal_path()
 		if("delivery")
 			stored_decal = "delivery"
-			update_decal_path()
 		if("full stripes")
 			stored_decal = "warn_full"
-			update_decal_path()
 		//Direction for the Decal
 		if("north")
 			stored_dir = 1
@@ -219,14 +210,12 @@
 		//Decal colors
 		if("yellow")
 			stored_color = ""
-			update_decal_path()
 		if("red")
 			stored_color = "_red"
-			update_decal_path()
 		if("white")
 			stored_color = "_white"
-			update_decal_path()
-			. = TRUE
+	. = TRUE
+	update_decal_path()
 
 /obj/item/airlock_painter/decal/debug
 	name = "extreme decal painter"

@@ -12,7 +12,6 @@
 	var/list/custom_designs = list()		//Custom inserted designs like from disks that should survive recalculation.
 	var/list/boosted_nodes = list()			//Already boosted nodes that can't be boosted again. node id = path of boost object.
 	var/list/hidden_nodes = list()			//Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
-	var/list/experimental_nodes = list()	//Nodes to be drawn from for the BEPIS major reward.
 	var/list/deconstructed_items = list()						//items already deconstructed for a generic point boost. path = list(point_type = points)
 	var/list/research_points = list()										//Available research points. type = number
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
@@ -30,7 +29,6 @@
 		var/datum/techweb_node/DN = SSresearch.techweb_node_by_id(i)
 		research_node(DN, TRUE, FALSE, FALSE)
 	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
-	experimental_nodes = SSresearch.techweb_nodes_experimental.Copy()
 	return ..()
 
 /datum/techweb/admin
@@ -51,12 +49,12 @@
 	organization = "Nanotrasen"
 
 /datum/techweb/bepis	//Should contain only 1 BEPIS tech selected at random.
-	id = "SCIENCE"
+	id = "EXPERIMENTAL"
 	organization = "Nanotrasen R&D"
 
 /datum/techweb/bepis/New()
 	. = ..()
-	var/bepis_id = pick(experimental_nodes)	//To add a new tech to the BEPIS, add the ID to this pick list.
+	var/bepis_id = pick(SSresearch.techweb_nodes_experimental)	//To add a new tech to the BEPIS, add the ID to this pick list.
 	var/datum/techweb_node/BN = (SSresearch.techweb_node_by_id(bepis_id))
 	hidden_nodes -= BN.id				//Has to be removed from hidden nodes
 	research_node(BN, TRUE, FALSE, FALSE)
