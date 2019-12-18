@@ -605,6 +605,7 @@
 #include "code\datums\wires\r_n_d.dm"
 #include "code\datums\wires\radio.dm"
 #include "code\datums\wires\robot.dm"
+#include "code\datums\wires\robotic_arm.dm"
 #include "code\datums\wires\roulette.dm"
 #include "code\datums\wires\suit_storage_unit.dm"
 #include "code\datums\wires\syndicatebomb.dm"
