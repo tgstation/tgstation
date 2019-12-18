@@ -244,6 +244,24 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		qdel(adminmob)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_give_direct_control(mob/M in GLOB.mob_list)
+	set category = "Admin"
+	set name = "Give direct control"
+
+	if(M.ckey)
+		if(alert("This mob is being controlled by [M.key]. Are you sure you wish to give away control of it? [M.key] will be made a ghost.",,"Yes","No") != "Yes")
+			return
+		else
+			M.ghostize(FALSE)
+	var/client/newkey = input(src, "Pick the player to put in control.", "New player") as null|anything in sortList(GLOB.clients)
+	var/mob/oldmob = newkey.mob
+	M.ckey = newkey.key
+	if(isobserver(oldmob) || alert("Do you want to delete [newkey]'s old mob?","Delete?","Yes","No") != "No")
+		qdel(oldmob)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave away direct control of [M] to [newkey].</span>")
+	log_admin("[key_name(usr)] gave away direct control of [M] to [newkey].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/cmd_admin_test_atmos_controllers()
 	set category = "Mapping"
 	set name = "Test Atmos Monitoring Consoles"
