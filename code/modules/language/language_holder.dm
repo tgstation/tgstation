@@ -209,7 +209,7 @@ Key procs
 
 /// Copies all languages from the supplied language holder
 /datum/language_holder/proc/copy_languages(var/datum/language_holder/from_holder, source_override)
-	if(source_override)	//No blocked languages here,
+	if(source_override)	//No blocked languages here, for now only used by ling absorb.
 		for(var/language in from_holder.understood_languages)
 			grant_language(language, TRUE, FALSE, source_override)
 		for(var/language in from_holder.spoken_languages)
