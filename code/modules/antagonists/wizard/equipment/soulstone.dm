@@ -79,7 +79,7 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
-	if(!M.mind.hasSoul || is_devil(M))
+	if((M.mind && !M.mind.hasSoul) || is_devil(M))
 		to_chat(user, "<span class='warning'>This... thing has no soul! It's filled with evil!</span>")
 		return
 	if(iscultist(M))
