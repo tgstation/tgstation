@@ -33,29 +33,21 @@
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "chamber_open", "chamber", O))
+		update_icon_state()
 		return
 	else if(default_deconstruction_crowbar(O))
 		return
-	if(powered == FALSE)
-		to_chat(user, "<span class='notice'>[src] can't accept money with no power.</span>")
+	if(!is_operational())
+		to_chat(user, "<span class='notice'>[src] can't accept money when it's not functioning.</span>")
 		return
-	if(istype(O, /obj/item/holochip))
-		var/obj/item/holochip/cash = O
-		var/deposit_value = cash.get_item_credit_value()
+	if(istype(O, /obj/item/holochip) || istype(O, /obj/item/stack/spacecash))
+		var/deposit_value = O.get_item_credit_value()
 		banked_cash += deposit_value
 		if (banked_cash >= 1)
 			chamber_status = 2
 		qdel(O)
 		say("Deposited [deposit_value] credits into storage.")
-		return
-	if(istype(O, /obj/item/stack/spacecash))
-		var/obj/item/stack/spacecash/cash = O
-		var/deposit_value = cash.get_item_credit_value()
-		banked_cash += deposit_value
-		if (banked_cash >= 1)
-			chamber_status = 2
-		qdel(O)
-		say("Deposited [deposit_value] credits in cash into storage.")
+		update_icon_state()
 		return
 	return ..()
 
@@ -104,10 +96,9 @@
 
 	if(banked_cash >= 1)
 		chamber_status = 2
-		update_icon_state()
 	else
 		chamber_status = 1
-		update_icon_state()
+	update_icon_state()
 	return
 
 /obj/machinery/rnd/bepis/proc/calcsuccess()
@@ -161,10 +152,12 @@
 		chamber_status = 1
 	if(((powered == FALSE) && (banked_cash == 0)) || (!is_operational()))
 		chamber_status = 0
-	if((powered == TRUE) && (banked_cash > 0))
+	if((powered == TRUE) && (banked_cash > 0) && (is_operational()))
 		chamber_status = 2
-	else if ((powered == FALSE) && (banked_cash > 0))
+	if (((powered == FALSE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational()))
 		chamber_status = 3
+	if(panel_open == TRUE)
+		chamber_status = 4
 	switch(chamber_status)
 		if(0)
 			icon_state = "chamber"
@@ -174,6 +167,8 @@
 			icon_state = "chamber_active_loaded"
 		if(3)
 			icon_state = "chamber_loaded"
+		if(4)
+			icon_state = "chamber_open"
 
 /obj/machinery/rnd/bepis/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	var/mob/living/carbon/human/H   	//the person using the console in each instance.
