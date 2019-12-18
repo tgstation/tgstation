@@ -19,9 +19,9 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/action)
 	update_parent(index)
 
-/datum/component/construction/proc/examine(datum/source, mob/user)
+/datum/component/construction/proc/examine(datum/source, mob/user, list/examine_list)
 	if(desc)
-		to_chat(user, desc)
+		examine_list += desc
 
 /datum/component/construction/proc/on_step()
 	if(index > steps.len)

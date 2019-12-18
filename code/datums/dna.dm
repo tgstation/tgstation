@@ -90,16 +90,22 @@
 	. = ""
 	var/list/L = new /list(DNA_UNI_IDENTITY_BLOCKS)
 
-	L[DNA_GENDER_BLOCK] = construct_block((holder.gender!=MALE)+1, 2)
+	switch(holder.gender)
+		if(MALE)
+			L[DNA_GENDER_BLOCK] = construct_block(G_MALE, 3)
+		if(FEMALE)
+			L[DNA_GENDER_BLOCK] = construct_block(G_FEMALE, 3)
+		else
+			L[DNA_GENDER_BLOCK] = construct_block(G_PLURAL, 3)
 	if(ishuman(holder))
 		var/mob/living/carbon/human/H = holder
-		if(!GLOB.hair_styles_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/hair,GLOB.hair_styles_list, GLOB.hair_styles_male_list, GLOB.hair_styles_female_list)
-		L[DNA_HAIR_STYLE_BLOCK] = construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len)
+		if(!GLOB.hairstyles_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/hair,GLOB.hairstyles_list, GLOB.hairstyles_male_list, GLOB.hairstyles_female_list)
+		L[DNA_HAIRSTYLE_BLOCK] = construct_block(GLOB.hairstyles_list.Find(H.hairstyle), GLOB.hairstyles_list.len)
 		L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color)
-		if(!GLOB.facial_hair_styles_list.len)
-			init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, GLOB.facial_hair_styles_list, GLOB.facial_hair_styles_male_list, GLOB.facial_hair_styles_female_list)
-		L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len)
+		if(!GLOB.facial_hairstyles_list.len)
+			init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, GLOB.facial_hairstyles_list, GLOB.facial_hairstyles_male_list, GLOB.facial_hairstyles_female_list)
+		L[DNA_FACIAL_HAIRSTYLE_BLOCK] = construct_block(GLOB.facial_hairstyles_list.Find(H.facial_hairstyle), GLOB.facial_hairstyles_list.len)
 		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 		L[DNA_SKIN_TONE_BLOCK] = construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len)
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
@@ -178,11 +184,17 @@
 		if(DNA_EYE_COLOR_BLOCK)
 			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.eye_color))
 		if(DNA_GENDER_BLOCK)
-			setblock(uni_identity, blocknumber, construct_block((H.gender!=MALE)+1, 2))
-		if(DNA_FACIAL_HAIR_STYLE_BLOCK)
-			setblock(uni_identity, blocknumber, construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len))
-		if(DNA_HAIR_STYLE_BLOCK)
-			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
+			switch(H.gender)
+				if(MALE)
+					setblock(uni_identity, blocknumber, construct_block(G_MALE, 3))
+				if(FEMALE)
+					setblock(uni_identity, blocknumber, construct_block(G_FEMALE, 3))
+				else
+					setblock(uni_identity, blocknumber, construct_block(G_PLURAL, 3))
+		if(DNA_FACIAL_HAIRSTYLE_BLOCK)
+			setblock(uni_identity, blocknumber, construct_block(GLOB.facial_hairstyles_list.Find(H.facial_hairstyle), GLOB.facial_hairstyles_list.len))
+		if(DNA_HAIRSTYLE_BLOCK)
+			setblock(uni_identity, blocknumber, construct_block(GLOB.hairstyles_list.Find(H.hairstyle), GLOB.hairstyles_list.len))
 
 //Please use add_mutation or activate_mutation instead
 /datum/dna/proc/force_give(datum/mutation/human/HM)
@@ -201,25 +213,6 @@
 		. = HM.on_losing(holder)
 		update_instability(FALSE)
 		return
-
-/datum/dna/proc/mutations_say_mods(message)
-	if(message)
-		for(var/datum/mutation/human/M in mutations)
-			message = M.say_mod(message)
-		return message
-
-/datum/dna/proc/mutations_get_spans()
-	var/list/spans = list()
-	for(var/datum/mutation/human/M in mutations)
-		spans |= M.get_spans()
-	return spans
-
-/datum/dna/proc/species_get_spans()
-	var/list/spans = list()
-	if(species)
-		spans |= species.get_spans()
-	return spans
-
 
 /datum/dna/proc/is_same_as(datum/dna/D)
 	if(uni_identity == D.uni_identity && mutation_index == D.mutation_index && real_name == D.real_name)
@@ -249,61 +242,22 @@
 				if(-INFINITY to 0)
 					message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
 		if(stability <= 0)
-			addtimer(CALLBACK(src, .proc/something_horrible), 600) //you've got 60 seconds to get your shit togheter
+			holder.apply_status_effect(STATUS_EFFECT_DNA_MELT)
 		if(message)
 			to_chat(holder, message)
-
-/datum/dna/proc/something_horrible()
-	if(!holder || (stability > 0))
-		return
-	var/instability = -stability
-	remove_all_mutations()
-	stability = 100
-	if(!ishuman(holder))
-		holder.gib()
-		return
-	var/mob/living/carbon/human/H = holder
-	if(prob(max(70-instability,0)))
-		switch(rand(0,3)) //not complete and utter death
-			if(0)
-				H.monkeyize()
-			if(1)
-				H.gain_trauma(/datum/brain_trauma/severe/paralysis)
-			if(2)
-				H.corgize()
-			if(3)
-				to_chat(H, "<span class='notice'>Oh, we actually feel quite alright!</span>")
-	else
-		switch(rand(0,3))
-			if(0)
-				H.gib()
-			if(1)
-				H.dust()
-
-			if(2)
-				H.death()
-				H.petrify(INFINITY)
-			if(3)
-				if(prob(90))
-					var/obj/item/bodypart/BP = H.get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
-					if(BP)
-						BP.dismember()
-					else
-						H.gib()
-				else
-					H.set_species(/datum/species/dullahan)
 
 //used to update dna UI, UE, and dna.real_name.
 /datum/dna/proc/update_dna_identity()
 	uni_identity = generate_uni_identity()
 	unique_enzymes = generate_unique_enzymes()
 
-/datum/dna/proc/initialize_dna(newblood_type)
+/datum/dna/proc/initialize_dna(newblood_type, skip_index = FALSE)
 	if(newblood_type)
 		blood_type = newblood_type
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
-	generate_dna_blocks()
+	if(!skip_index) //I hate this
+		generate_dna_blocks()
 	features = random_features()
 
 
@@ -318,7 +272,7 @@
 /datum/dna/stored/check_mutation(mutation_name)
 	return
 
-/datum/dna/stored/remove_all_mutations()
+/datum/dna/stored/remove_all_mutations(list/classes, mutadone = FALSE)
 	return
 
 /datum/dna/stored/remove_mutation_group(list/group)
@@ -351,6 +305,11 @@
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
 		dna.species.on_species_gain(src, old_species, pref_load)
+		if(ishuman(src))
+			qdel(language_holder)
+			var/species_holder = initial(mrace.species_language_holder)
+			language_holder = new species_holder(src)
+		update_atom_languages()
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
@@ -368,8 +327,8 @@
 	return dna
 
 
-/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures)
-
+/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/mutations, force_transfer_mutations)
+//Do not use force_transfer_mutations for stuff like cloners without some precautions, otherwise some conditional mutations could break (timers, drill hat etc)
 	if(newfeatures)
 		dna.features = newfeatures
 
@@ -390,7 +349,7 @@
 		updateappearance(icon_update=0)
 
 	if(LAZYLEN(mutation_index))
-		dna.mutation_index = mutation_index
+		dna.mutation_index = mutation_index.Copy()
 		domutcheck()
 
 	if(mrace || newfeatures || ui)
@@ -399,6 +358,11 @@
 		update_body_parts()
 		update_mutations_overlay()
 
+	if(LAZYLEN(mutations))
+		for(var/M in mutations)
+			var/datum/mutation/human/HM = M
+			if(HM.allow_transfer || force_transfer_mutations)
+				dna.force_give(new HM.type(HM.class, copymut=HM)) //using force_give since it may include exotic mutations that otherwise wont be handled properly
 
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
@@ -410,7 +374,14 @@
 /mob/living/carbon/proc/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
 	if(!has_dna())
 		return
-	gender = (deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 2)-1) ? FEMALE : MALE
+
+	switch(deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 3))
+		if(G_MALE)
+			gender = MALE
+		if(G_FEMALE)
+			gender = FEMALE
+		else
+			gender = PLURAL
 
 /mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
 	..()
@@ -419,8 +390,8 @@
 	facial_hair_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
 	skin_tone = GLOB.skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), GLOB.skin_tones.len)]
 	eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
-	facial_hair_style = GLOB.facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), GLOB.facial_hair_styles_list.len)]
-	hair_style = GLOB.hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), GLOB.hair_styles_list.len)]
+	facial_hairstyle = GLOB.facial_hairstyles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIRSTYLE_BLOCK), GLOB.facial_hairstyles_list.len)]
+	hairstyle = GLOB.hairstyles_list[deconstruct_block(getblock(structure, DNA_HAIRSTYLE_BLOCK), GLOB.hairstyles_list.len)]
 	if(icon_update)
 		update_body()
 		update_hair()
@@ -521,7 +492,7 @@
 	var/mutation = pick(candidates)
 	. = dna.add_mutation(mutation)
 
-/mob/living/carbon/proc/easy_randmut(quality = POSITIVE + NEGATIVE + MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, exclude_monkey = TRUE)
+/mob/living/carbon/proc/easy_randmut(quality = POSITIVE + NEGATIVE + MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, exclude_monkey = TRUE, resilient = NONE)
 	if(!has_dna())
 		return
 	var/list/mutations = list()
@@ -544,6 +515,8 @@
 			var/datum/mutation/human/HM = dna.get_mutation(mutation)
 			if(HM)
 				HM.scrambled = TRUE
+				if(HM.quality & resilient)
+					HM.mutadone_proof = TRUE
 		return TRUE
 
 /mob/living/carbon/proc/randmuti()
@@ -596,3 +569,91 @@
 	return value
 
 /////////////////////////// DNA HELPER-PROCS
+
+/mob/living/carbon/human/proc/something_horrible(ignore_stability)
+	if(!has_dna()) //shouldn't ever happen anyway so it's just in really weird cases
+		return
+	if(!ignore_stability && (dna.stability > 0))
+		return
+	var/instability = -dna.stability
+	dna.remove_all_mutations()
+	dna.stability = 100
+	if(prob(max(70-instability,0)))
+		switch(rand(0,10)) //not complete and utter death
+			if(0)
+				monkeyize()
+			if(1)
+				gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
+				new/obj/vehicle/ridden/wheelchair(get_turf(src)) //don't buckle, because I can't imagine to plethora of things to go through that could otherwise break
+				to_chat(src, "<span class='warning'>My flesh turned into a wheelchair and I can't feel my legs.</span>")
+			if(2)
+				corgize()
+			if(3)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
+			if(4)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>") //you thought
+				physiology.damage_resistance = -20000
+			if(5)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
+				reagents.add_reagent(/datum/reagent/aslimetoxin, 10)
+			if(6)
+				apply_status_effect(STATUS_EFFECT_GO_AWAY)
+			if(7)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
+				ForceContractDisease(new/datum/disease/decloning()) //slow acting, non-viral clone damage based GBS
+			if(8)
+				var/list/elligible_organs = list()
+				for(var/obj/item/organ/O in internal_organs) //make sure we dont get an implant or cavity item
+					elligible_organs += O
+				vomit(20, TRUE)
+				if(elligible_organs.len)
+					var/obj/item/organ/O = pick(elligible_organs)
+					O.Remove(src)
+					visible_message("<span class='danger'>[src] vomits up their [O.name]!</span>", "<span class='danger'>You vomit up your [O.name]") //no "vomit up your the heart"
+					O.forceMove(drop_location())
+					if(prob(20))
+						O.animate_atom_living()
+			if(9 to 10)
+				ForceContractDisease(new/datum/disease/gastrolosis())
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
+	else
+		switch(rand(0,5))
+			if(0)
+				gib()
+			if(1)
+				dust()
+
+			if(2)
+				death()
+				petrify(INFINITY)
+			if(3)
+				if(prob(95))
+					var/obj/item/bodypart/BP = get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
+					if(BP)
+						BP.dismember()
+					else
+						gib()
+				else
+					set_species(/datum/species/dullahan)
+			if(4)
+				visible_message("<span class='warning'>[src]'s skin melts off!</span>", "<span class='boldwarning'>Your skin melts off!</span>")
+				spawn_gibs()
+				set_species(/datum/species/skeleton)
+				if(prob(90))
+					addtimer(CALLBACK(src, .proc/death), 30)
+					if(mind)
+						mind.hasSoul = FALSE
+			if(5)
+				to_chat(src, "<span class='phobia'>LOOK UP!</span>")
+				addtimer(CALLBACK(src, .proc/something_horrible_mindmelt), 30)
+
+
+/mob/living/carbon/human/proc/something_horrible_mindmelt()
+	if(!HAS_TRAIT(src, TRAIT_BLIND))
+		var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in internal_organs
+		if(!eyes)
+			return
+		eyes.Remove(src)
+		qdel(eyes)
+		visible_message("<span class='notice'>[src] looks up and their eyes melt away!</span>", "<span class>='userdanger'>I understand now.</span>")
+		addtimer(CALLBACK(src, .proc/adjustOrganLoss, ORGAN_SLOT_BRAIN, 200), 20)

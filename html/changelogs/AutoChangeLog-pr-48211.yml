@@ -1,0 +1,6 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - tweak: "Moved the Biogenerator to be shared with the kitchen"
+  - rscadd: "Hallway counter to the kitchen"
+  - tweak: "Changed the layout of the kitchen"

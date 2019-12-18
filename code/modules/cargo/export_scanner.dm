@@ -12,9 +12,9 @@
 	var/obj/machinery/computer/cargo/cargo_console = null
 
 /obj/item/export_scanner/examine(user)
-	..()
+	. = ..()
 	if(!cargo_console)
-		to_chat(user, "<span class='notice'>[src] is not currently linked to a cargo console.</span>")
+		. += "<span class='notice'>[src] is not currently linked to a cargo console.</span>"
 
 /obj/item/export_scanner/afterattack(obj/O, mob/user, proximity)
 	. = ..()
@@ -31,7 +31,7 @@
 	else
 		// Before you fix it:
 		// yes, checking manifests is a part of intended functionality.
-		
+
 		var/datum/export_report/ex = export_item_and_contents(O, cargo_console.get_export_categories(), dry_run=TRUE)
 		var/price = 0
 		for(var/x in ex.total_amount)

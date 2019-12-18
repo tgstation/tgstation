@@ -14,7 +14,7 @@
 	. = ..()
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-	var/dat = "Status: [M ? M.getStatusText() : "*Missing*"]<br><br>"
+	var/dat = "<small><i>Donk Co. Transportation Division</small></i><br>Status: [M ? M.getStatusText() : "*Missing*"]<br><br>"
 	if(M)
 		var/destination_found
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
@@ -51,16 +51,23 @@
 			to_chat(usr, "<span class='warning'>You've already escaped. Never going back to that place again!</span>")
 			return
 		if(no_destination_swap)
+			if(M.mode == SHUTTLE_RECHARGING)
+				to_chat(usr, "<span class='warning'>Shuttle engines are not ready for use.</span>")
+				return
 			if(M.mode != SHUTTLE_IDLE)
 				to_chat(usr, "<span class='warning'>Shuttle already in transit.</span>")
 				return
+		if(!(href_list["move"] in params2list(possible_destinations)))
+			log_admin("[usr] attempted to href dock exploit on [src] with target location \"[href_list["move"]]\"")
+			message_admins("[usr] just attempted to href dock exploit on [src] with target location \"[href_list["move"]]\"")
+			return
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)
 				say("Shuttle departing. Please stand away from the doors.")
 			if(1)
 				to_chat(usr, "<span class='warning'>Invalid shuttle requested.</span>")
 			else
-				to_chat(usr, "<span class='notice'>Unable to comply.</span>")
+				to_chat(usr, "<span class='warning'>Unable to comply.</span>")
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

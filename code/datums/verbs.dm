@@ -11,7 +11,7 @@
 
 //do things for each entry in Generate_list
 //return value sets Generate_list[verbpath]
-/datum/verbs/proc/HandleVerb(list/entry, atom/verb/verbpath, ...)
+/datum/verbs/proc/HandleVerb(list/entry, procpath/verbpath, ...)
 	return entry
 
 /datum/verbs/New()
@@ -82,7 +82,7 @@
 				. += childlist
 
 	for (var/thing in verblist)
-		var/atom/verb/verbpath = thing
+		var/procpath/verbpath = thing
 		if (!verbpath)
 			stack_trace("Bad VERB in [type] verblist: [english_list(verblist)]")
 		var/list/entry = list()

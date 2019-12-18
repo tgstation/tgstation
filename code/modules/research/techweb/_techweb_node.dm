@@ -95,3 +95,6 @@
 
 /datum/techweb_node/proc/price_display(datum/techweb/TN)
 	return techweb_point_display_generic(get_price(TN))
+
+/datum/techweb_node/proc/on_research() //new proc, not currently in file
+    return

@@ -26,11 +26,11 @@
 			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 			if(BP)
 				BP.drop_limb()
-				playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+				playsound(loc, "desceration" ,50, TRUE, -1)
 		return (BRUTELOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
+		playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
 		return (BRUTELOSS)
 
 
@@ -46,7 +46,7 @@
 	if(istype(P, /obj/item/paper) && !storedpaper)
 		if(!user.transferItemToLoc(P, src))
 			return
-		playsound(loc, "pageturn", 60, 1)
+		playsound(loc, "pageturn", 60, TRUE)
 		to_chat(user, "<span class='notice'>You place [P] in [src].</span>")
 		storedpaper = P
 		update_icon()
@@ -72,7 +72,7 @@
 		return
 	add_fingerprint(user)
 	if(!storedcutter)
-		to_chat(user, "<span class='notice'>The cutting blade is gone! You can't use [src] now.</span>")
+		to_chat(user, "<span class='warning'>The cutting blade is gone! You can't use [src] now.</span>")
 		return
 
 	if(!cuttersecured)
@@ -82,7 +82,7 @@
 		update_icon()
 
 	if(storedpaper)
-		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1)
+		playsound(src.loc, 'sound/weapons/slash.ogg', 50, TRUE)
 		to_chat(user, "<span class='notice'>You neatly cut [storedpaper].</span>")
 		storedpaper = null
 		qdel(storedpaper)

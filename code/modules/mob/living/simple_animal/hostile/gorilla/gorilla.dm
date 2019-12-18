@@ -6,25 +6,28 @@
 	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the forests of central Africa."
 	icon = 'icons/mob/gorilla.dmi'
 	icon_state = "crawling"
-	icon_state = "crawling"
 	icon_living = "crawling"
 	icon_dead = "dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 80
 	maxHealth = 220
 	health = 220
 	loot = list(/obj/effect/gibspawner/generic/animal)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/gorilla = 4)
-	response_help  = "prods"
-	response_disarm = "challenges"
-	response_harm   = "thumps"
+	response_help_continuous = "prods"
+	response_help_simple = "prod"
+	response_disarm_continuous = "challenges"
+	response_disarm_simple = "challenge"
+	response_harm_continuous = "thumps"
+	response_harm_simple = "thump"
 	speed = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 18
 	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1.5)
 	obj_damage = 20
 	environment_smash = ENVIRONMENT_SMASH_WALLS
-	attacktext = "pummels"
+	attack_verb_continuous = "pummels"
+	attack_verb_simple = "pummel"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	dextrous = TRUE
 	held_items = list(null, null)
@@ -38,7 +41,7 @@
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 	var/oogas = 0
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_BAREFOOT
 
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
@@ -107,4 +110,3 @@
 	if(oogas >= rand(2,6))
 		playsound(src, 'sound/creatures/gorilla.ogg', 50)
 		oogas = 0
-

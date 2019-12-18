@@ -122,11 +122,9 @@ CONTINUOUS INTERNAL_AFFAIRS
 #CONTINUOUS NUCLEAR
 #CONTINUOUS REVOLUTION
 CONTINUOUS CULT
-CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
-CONTINUOUS HIVEMIND
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -145,7 +143,6 @@ MIDROUND_ANTAG INTERNAL_AFFAIRS
 #MIDROUND_ANTAG  NUCLEAR
 #MIDROUND_ANTAG  REVOLUTION
 MIDROUND_ANTAG CULT
-MIDROUND_ANTAG CLOCKWORK_CULT
 MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
 #MIDROUND_ANTAG  MONKEY
@@ -176,9 +173,6 @@ MIDROUND_ANTAG WIZARD
 
 #MIN_POP CULT 24
 #MAX_POP CULT -1
-
-#MIN_POP CLOCKWORK_CULT 24
-#MAX_POP CLOCKWORK_CULT -1
 
 #MIN_POP CHANGELING 15
 #MAX_POP CHANGELING -1
@@ -255,6 +249,9 @@ MAX_TICKETS_PER_ROLL 100
 ## Uncomment to allow players to see the set odds of different rounds in secret/random in the get server revision screen. This will NOT tell the current roundtype.
 #SHOW_GAME_TYPE_ODDS
 
+## Uncomment to enable dynamic ruleset config file.
+DYNAMIC_CONFIG_ENABLED
+
 ## RANDOM EVENTS ###
 ## Comment this out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
@@ -285,6 +282,9 @@ ALLOW_AI_MULTICAM
 #DISABLE_PEACEBORG
 
 ## AWAY MISSIONS ###
+
+## Uncomment to load the virtual reality hub map
+#VIRTUAL_REALITY
 
 ## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
 #ROUNDSTART_AWAY
@@ -374,7 +374,6 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS ninja
 #RANDOM_LAWS antimov
 #RANDOM_LAWS thermodynamic
-#RANDOM_LAWS ratvar
 
 ## meme laws. Honk
 #RANDOM_LAWS buildawall
@@ -407,7 +406,6 @@ LAW_WEIGHT syndie,0
 LAW_WEIGHT ninja,0
 LAW_WEIGHT antimov,0
 LAW_WEIGHT thermodynamic,0
-LAW_WEIGHT ratvar,0
 LAW_WEIGHT buildawall,0
 
 ##------------------------------------------------

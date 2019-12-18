@@ -22,9 +22,9 @@
 	var/slowdown_open = TRUE
 
 /obj/item/modular_computer/laptop/examine(mob/user)
-	..()
+	. = ..()
 	if(screen_on)
-		to_chat(user, "<span class='notice'>Alt-click to close it.</span>")
+		. += "<span class='notice'>Alt-click to close it.</span>"
 
 /obj/item/modular_computer/laptop/Initialize()
 	. = ..()
@@ -77,7 +77,7 @@
 		return
 	if(!isturf(loc) && !ismob(loc)) // No opening it in backpack.
 		return
-	if(!user.canUseTopic(src))
+	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 
 	toggle_open(user)

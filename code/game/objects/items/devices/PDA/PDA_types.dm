@@ -7,7 +7,7 @@
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
 
-/obj/item/pda/clown/Initialize()
+/obj/item/pda/clown/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip))
 
@@ -17,23 +17,45 @@
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 
+//Mime PDA sends "silent" messages.
+/obj/item/pda/mime
+	name = "mime PDA"
+	default_cartridge = /obj/item/cartridge/virus/mime
+	inserted_item = /obj/item/toy/crayon/mime
+	icon_state = "pda-mime"
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. The hardware has been modified for compliance with the vows of silence."
+	allow_emojis = TRUE
+	silent = TRUE
+	ttone = "silence"
+
+/obj/item/pda/mime/msg_input(mob/living/U = usr)
+	if(emped || toff)
+		return
+	var/emojis = emoji_sanitize(stripped_input(U, "Please enter emojis", name))
+	if(!emojis)
+		return
+	if(!U.canUseTopic(src, BE_CLOSE))
+		return
+	return emojis
+
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/pda/ai
 	icon = null
 	ttone = "data"
 	fon = FALSE
-	detonatable = FALSE
 
 /obj/item/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
-		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
+		playsound(loc, 'sound/items/bikehorn.ogg', 30, TRUE)
 	return
 
 /obj/item/pda/ai/pai
 	ttone = "assist"
 
-
+/obj/item/pda/ai/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
 /obj/item/pda/medical
 	name = "medical PDA"
@@ -77,13 +99,6 @@
 	icon_state = "pda-science"
 	ttone = "boom"
 
-/obj/item/pda/mime
-	name = "mime PDA"
-	default_cartridge = /obj/item/cartridge/virus/mime
-	inserted_item = /obj/item/toy/crayon/mime
-	icon_state = "pda-mime"
-	silent = TRUE
-	ttone = "silence"
 
 /obj/item/pda/heads
 	default_cartridge = /obj/item/cartridge/head
@@ -120,7 +135,10 @@
 	default_cartridge = /obj/item/cartridge/captain
 	inserted_item = /obj/item/pen/fountain/captain
 	icon_state = "pda-captain"
-	detonatable = FALSE
+
+/obj/item/pda/captain/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
 /obj/item/pda/cargo
 	name = "cargo technician PDA"

@@ -20,7 +20,7 @@
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
-	to_chat(user, "This countdown is displaying: [displayed_text].")
+	. += "This countdown is displaying: [displayed_text]."
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
@@ -63,6 +63,12 @@
 /obj/effect/countdown/ex_act(severity, target) //immune to explosions
 	return
 
+/obj/effect/countdown/singularity_pull()
+	return
+
+/obj/effect/countdown/singularity_act()
+	return
+
 /obj/effect/countdown/syndicatebomb
 	name = "syndicate bomb countdown"
 
@@ -96,19 +102,6 @@
 	else if(C.occupant)
 		var/completion = round(C.get_completion())
 		return completion
-
-/obj/effect/countdown/clockworkgate
-	name = "gateway countdown"
-	text_size = 1
-	color = "#BE8700"
-	layer = POINT_LAYER
-
-/obj/effect/countdown/clockworkgate/get_value()
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = attached_to
-	if(!istype(G))
-		return
-	else if(G.obj_integrity && !G.purpose_fulfilled)
-		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[G.get_arrival_time(FALSE)]</div>"
 
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
@@ -154,8 +147,26 @@
 		var/time_left = max(0, (A.death_time - world.time) / 10)
 		return round(time_left)
 
-/obj/effect/countdown/singularity_pull()
-	return
+/obj/effect/countdown/hourglass
+	name = "hourglass countdown"
 
-/obj/effect/countdown/singularity_act()
-	return
+/obj/effect/countdown/hourglass/get_value()
+	var/obj/item/hourglass/H = attached_to
+	if(!istype(H))
+		return
+	else
+		var/time_left = max(0, (H.finish_time - world.time) / 10)
+		return round(time_left)
+
+/obj/effect/countdown/arena
+	invisibility = 0
+	name = "arena countdown"
+
+/obj/effect/countdown/arena/get_value()
+	var/obj/machinery/arena_spawn/A = attached_to
+	if(!istype(A))
+		return
+	else
+		var/obj/machinery/computer/arena/C = A.get_controller()
+		var/time_left = max(0, (C.start_time - world.time) / 10)
+		return round(time_left)

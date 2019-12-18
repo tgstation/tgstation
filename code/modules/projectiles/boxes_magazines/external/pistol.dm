@@ -5,7 +5,7 @@
 	ammo_type = /obj/item/ammo_casing/c10mm
 	caliber = "10mm"
 	max_ammo = 8
-	multiple_sprites = 2
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
 /obj/item/ammo_box/magazine/m10mm/fire
 	name = "pistol magazine (10mm incendiary)"
@@ -34,7 +34,10 @@
 
 /obj/item/ammo_box/magazine/m45/update_icon()
 	..()
-	icon_state = "45-[ammo_count() ? "8" : "0"]"
+	if (ammo_count() >= 8)
+		icon_state = "45-8"
+	else
+		icon_state = "45-[ammo_count()]"
 
 /obj/item/ammo_box/magazine/pistolm9mm
 	name = "pistol magazine (9mm)"
@@ -53,4 +56,4 @@
 	ammo_type = /obj/item/ammo_casing/a50AE
 	caliber = ".50"
 	max_ammo = 7
-	multiple_sprites = 1
+	multiple_sprites = AMMO_BOX_PER_BULLET

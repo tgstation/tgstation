@@ -4,7 +4,7 @@
 #define CHARS_PER_LINE 5
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
-#define FONT_STYLE "Arial Black"
+#define FONT_STYLE "Small Fonts"
 #define SCROLL_SPEED 2
 
 #define SD_BLANK 0  // 0 = Blank
@@ -27,6 +27,7 @@
 
 	maptext_height = 26
 	maptext_width = 32
+	maptext_y = -1
 
 	var/message1 = ""	// message line 1
 	var/message2 = ""	// message line 2
@@ -46,6 +47,8 @@
 
 /// Immediately change the display to the given two lines.
 /obj/machinery/status_display/proc/update_display(line1, line2)
+	line1 = uppertext(line1)
+	line2 = uppertext(line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 	if(maptext != new_text)
 		maptext = new_text
@@ -114,12 +117,11 @@
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	if (message1 || message2)
-		var/list/msg = list("The display says:")
+		. += "The display says:"
 		if (message1)
-			msg += "<br>\t<tt>[html_encode(message1)]</tt>"
+			. += "<br>\t<tt>[html_encode(message1)]</tt>"
 		if (message2)
-			msg += "<br>\t<tt>[html_encode(message2)]</tt>"
-		to_chat(user, msg.Join())
+			. += "<br>\t<tt>[html_encode(message2)]</tt>"
 
 // Helper procs for child display types.
 /obj/machinery/status_display/proc/display_shuttle_status(obj/docking_port/mobile/shuttle)
@@ -146,9 +148,9 @@
 				modestr = "<br>\t<tt>[modestr]: [shuttle.getTimerStr()]</tt>"
 			else
 				modestr = "<br>\t<tt>[modestr]</tt>"
-		to_chat(user, "The display says:<br>\t<tt>[shuttle.name]</tt>[modestr]")
+		return "The display says:<br>\t<tt>[shuttle.name]</tt>[modestr]"
 	else
-		to_chat(user, "The display says:<br>\t<tt>Shuttle missing!</tt>")
+		return "The display says:<br>\t<tt>Shuttle missing!</tt>"
 
 
 /// Evac display which shows shuttle timer or message set by Command.
@@ -195,9 +197,9 @@
 /obj/machinery/status_display/evac/examine(mob/user)
 	. = ..()
 	if(mode == SD_EMERGENCY)
-		examine_shuttle(user, SSshuttle.emergency)
+		. += examine_shuttle(user, SSshuttle.emergency)
 	else if(!message1 && !message2)
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 /obj/machinery/status_display/evac/receive_signal(datum/signal/signal)
 	switch(signal.data["command"])
@@ -243,7 +245,7 @@
 	else
 		line1 = "CARGO"
 		line2 = SSshuttle.supply.getTimerStr()
-		if(lentext(line2) > CHARS_PER_LINE)
+		if(length(line2) > CHARS_PER_LINE)
 			line2 = "Error"
 	update_display(line1, line2)
 
@@ -257,9 +259,9 @@
 	else
 		shuttleMsg = "[shuttle.getModeStr()]: [shuttle.getTimerStr()]"
 	if (shuttleMsg)
-		to_chat(user, "The display says:<br>\t<tt>[shuttleMsg]</tt>")
+		. += "The display says:<br>\t<tt>[shuttleMsg]</tt>"
 	else
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 
 /// General-purpose shuttle status display.
@@ -278,9 +280,9 @@
 /obj/machinery/status_display/shuttle/examine(mob/user)
 	. = ..()
 	if(shuttle_id)
-		examine_shuttle(user, SSshuttle.getShuttle(shuttle_id))
+		. += examine_shuttle(user, SSshuttle.getShuttle(shuttle_id))
 	else
-		to_chat(user, "The display is blank.")
+		. += "The display is blank."
 
 /obj/machinery/status_display/shuttle/vv_edit_var(var_name, var_value)
 	. = ..()

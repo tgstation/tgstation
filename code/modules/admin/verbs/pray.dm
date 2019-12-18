@@ -25,8 +25,8 @@
 		cross.icon_state = "kingyellow"
 		font_color = "blue"
 		prayer_type = "CHAPLAIN PRAYER"
-		if(SSreligion.deity)
-			deity = SSreligion.deity
+		if(GLOB.deity)
+			deity = GLOB.deity
 	else if(iscultist(usr))
 		cross.icon_state = "tome"
 		font_color = "red"
@@ -34,7 +34,7 @@
 		deity = "Nar'Sie"
 	else if(isliving(usr))
 		var/mob/living/L = usr
-		if(L.has_trait(TRAIT_SPIRITUAL))
+		if(HAS_TRAIT(L, TRAIT_SPIRITUAL))
 			cross.icon_state = "holylight"
 			font_color = "blue"
 			prayer_type = "SPIRITUAL PRAYER"

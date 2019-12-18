@@ -17,36 +17,46 @@
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 
 
+#define MESSAGE_SERVER_FUNCTIONING_MESSAGE "This is an automated message. The messaging system is functioning correctly."
+
 // The message server itself.
 /obj/machinery/telecomms/message_server
-	icon = 'icons/obj/machines/research.dmi'
-	icon_state = "server"
+	icon_state = "message_server"
 	name = "Messaging Server"
-	desc = "A machine that attempts to gather the secret knowledge of the universe."
+	desc = "A machine that processes and routes PDA and request console messages."
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
-
-	id = "Messaging Server"
-	network = "tcommsat"
-	autolinkers = list("common")
+	circuit = /obj/item/circuitboard/machine/telecomms/message_server
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
-	var/decryptkey
+	var/decryptkey = "password"
+	var/calibrating = 15 MINUTES //Init reads this and adds world.time, then becomes 0 when that time has passed and the machine works
 
-/obj/machinery/telecomms/message_server/Initialize()
+/obj/machinery/telecomms/message_server/Initialize(mapload)
 	. = ..()
 	if (!decryptkey)
 		decryptkey = GenerateKey()
-	pda_msgs += new /datum/data_pda_msg("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
+
+	if (calibrating)
+		calibrating += world.time
+		say("Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
+		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", "This is an automated message. System calibration started at [station_time_timestamp()]")
+	else
+		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 
 /obj/machinery/telecomms/message_server/Destroy()
 	for(var/obj/machinery/computer/message_monitor/monitor in GLOB.telecomms_list)
 		if(monitor.linkedServer && monitor.linkedServer == src)
 			monitor.linkedServer = null
 	. = ..()
+
+/obj/machinery/telecomms/message_server/examine(mob/user)
+	. = ..()
+	if(calibrating)
+		. += "<span class='warning'>It's still calibrating.</span>"
 
 /obj/machinery/telecomms/message_server/proc/GenerateKey()
 	var/newKey
@@ -56,68 +66,86 @@
 	return newKey
 
 /obj/machinery/telecomms/message_server/process()
-	if(toggled && (stat & (BROKEN|NOPOWER)))
-		toggled = FALSE
-	update_icon()
+	. = ..()
+	if(calibrating && calibrating <= world.time)
+		calibrating = 0
+		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 
-/obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/pda/signal, obj/machinery/telecomms/machine_from)
-	// can't log non-PDA signals
-	if(!istype(signal) || !signal.data["message"] || !toggled)
+/obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/messaging/signal, obj/machinery/telecomms/machine_from)
+	// can't log non-message signals
+	if(!istype(signal) || !signal.data["message"] || !on || calibrating)
 		return
 
 	// log the signal
-	var/datum/data_pda_msg/M = new(signal.format_target(), "[signal.data["name"]] ([signal.data["job"]])", signal.data["message"], signal.data["photo"])
-	pda_msgs += M
-	signal.logged = M
+	if(istype(signal, /datum/signal/subspace/messaging/pda))
+		var/datum/signal/subspace/messaging/pda/PDAsignal = signal
+		var/datum/data_pda_msg/M = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
+		pda_msgs += M
+		signal.logged = M
+	else if(istype(signal, /datum/signal/subspace/messaging/rc))
+		var/datum/data_rc_msg/M = new(signal.data["rec_dpt"], signal.data["send_dpt"], signal.data["message"], signal.data["stamped"], signal.data["verified"], signal.data["priority"])
+		signal.logged = M
+		if(signal.data["send_dpt"]) // don't log messages not from a department but allow them to work
+			rc_msgs += M
+	signal.data["reject"] = FALSE
 
 	// pass it along to either the hub or the broadcaster
 	if(!relay_information(signal, /obj/machinery/telecomms/hub))
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
-/obj/machinery/telecomms/message_server/update_icon()
-	if((stat & (BROKEN|NOPOWER)))
-		icon_state = "server-nopower"
-	else if (!toggled)
-		icon_state = "server-off"
-	else
-		icon_state = "server-on"
+/obj/machinery/telecomms/message_server/update_overlays()
+	. = ..()
+	
+	if(calibrating)
+		. += "message_server_calibrate"
 
 
-// PDA signal datum
-/datum/signal/subspace/pda
+// Root messaging signal datum
+/datum/signal/subspace/messaging
 	frequency = FREQ_COMMON
 	server_type = /obj/machinery/telecomms/message_server
-	var/datum/data_pda_msg/logged
+	var/datum/logged
 
-/datum/signal/subspace/pda/New(source, data)
-	src.source = source
-	src.data = data
+/datum/signal/subspace/messaging/New(init_source, init_data)
+	source = init_source
+	data = init_data
 	var/turf/T = get_turf(source)
 	levels = list(T.z)
+	if(!("reject" in data))
+		data["reject"] = TRUE
 
-/datum/signal/subspace/pda/copy()
-	var/datum/signal/subspace/pda/copy = new(source, data.Copy())
+/datum/signal/subspace/messaging/copy()
+	var/datum/signal/subspace/messaging/copy = new type(source, data.Copy())
 	copy.original = src
 	copy.levels = levels
 	return copy
 
-/datum/signal/subspace/pda/proc/format_target()
+// PDA signal datum
+/datum/signal/subspace/messaging/pda/proc/format_target()
 	if (length(data["targets"]) > 1)
 		return "Everyone"
 	return data["targets"][1]
 
-/datum/signal/subspace/pda/proc/format_message()
+/datum/signal/subspace/messaging/pda/proc/format_message()
 	if (logged && data["photo"])
 		return "\"[data["message"]]\" (<a href='byond://?src=[REF(logged)];photo=1'>Photo</a>)"
 	return "\"[data["message"]]\""
 
-/datum/signal/subspace/pda/broadcast()
+/datum/signal/subspace/messaging/pda/broadcast()
 	if (!logged)  // Can only go through if a message server logs it
 		return
 	for (var/obj/item/pda/P in GLOB.PDAs)
 		if ("[P.owner] ([P.ownjob])" in data["targets"])
 			P.receive_message(src)
 
+// Request Console signal datum
+/datum/signal/subspace/messaging/rc/broadcast()
+	if (!logged)  // Like /pda, only if logged
+		return
+	var/rec_dpt = ckey(data["rec_dpt"])
+	for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
+		if(ckey(Console.department) == rec_dpt || (data["ore_update"] && Console.receive_ore_updates))
+			Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
 
 // Log datums stored by the message server.
 /datum/data_pda_msg
@@ -125,6 +153,7 @@
 	var/recipient = "Unspecified"
 	var/message = "Blank"  // transferred message
 	var/datum/picture/picture  // attached photo
+	var/automated = 0 //automated message
 
 /datum/data_pda_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)
@@ -168,12 +197,20 @@
 		id_auth = param_id_auth
 	if(param_priority)
 		switch(param_priority)
-			if(1)
+			if(REQ_NORMAL_MESSAGE_PRIORITY)
 				priority = "Normal"
-			if(2)
+			if(REQ_HIGH_MESSAGE_PRIORITY)
 				priority = "High"
-			if(3)
+			if(REQ_EXTREME_MESSAGE_PRIORITY)
 				priority = "Extreme"
 			else
 				priority = "Undetermined"
 
+#undef MESSAGE_SERVER_FUNCTIONING_MESSAGE
+
+/obj/machinery/telecomms/message_server/preset
+	id = "Messaging Server"
+	network = "tcommsat"
+	autolinkers = list("messaging")
+	decryptkey = null //random
+	calibrating = 0

@@ -31,6 +31,9 @@
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	circuit = /obj/item/circuitboard/machine/power_compressor
+	ui_x = 350
+	ui_y = 280
+
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/inturf
@@ -41,6 +44,11 @@
 	var/comp_id = 0
 	var/efficiency
 
+/obj/machinery/power/compressor/Destroy()
+	if (turbine && turbine.compressor == src)
+		turbine.compressor = null
+	turbine = null
+	return ..()
 
 /obj/machinery/power/turbine
 	name = "gas turbine generator"
@@ -57,14 +65,11 @@
 	var/lastgen
 	var/productivity = 1
 
-/obj/machinery/computer/turbine_computer
-	name = "gas turbine control computer"
-	desc = "A computer to remotely control a gas turbine."
-	icon_screen = "turbinecomp"
-	icon_keyboard = "tech_key"
-	circuit = /obj/item/circuitboard/computer/turbine_computer
-	var/obj/machinery/power/compressor/compressor
-	var/id = 0
+/obj/machinery/power/turbine/Destroy()
+	if (compressor && compressor.turbine == src)
+		compressor.turbine = null
+	compressor = null
+	return ..()
 
 // the inlet stage of the gas turbine electricity generator
 
@@ -75,7 +80,7 @@
 	inturf = get_step(src, dir)
 	locate_machinery()
 	if(!turbine)
-		stat |= BROKEN
+		obj_break()
 
 
 #define COMPFRICTION 5e5
@@ -95,9 +100,9 @@
 	efficiency = E / 6
 
 /obj/machinery/power/compressor/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.")
+		. += "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.</span>"
 
 /obj/machinery/power/compressor/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
@@ -112,17 +117,18 @@
 			stat &= ~BROKEN
 		else
 			to_chat(user, "<span class='alert'>Turbine not connected.</span>")
-			stat |= BROKEN
+			obj_break()
 		return
 
 	default_deconstruction_crowbar(I)
 
 /obj/machinery/power/compressor/process()
-	if(!turbine)
-		stat = BROKEN
-	if(stat & BROKEN || panel_open)
-		return
 	if(!starter)
+		return
+	if(!turbine || (turbine.stat & BROKEN))
+		starter = FALSE
+	if(stat & BROKEN || panel_open)
+		starter = FALSE
 		return
 	cut_overlays()
 
@@ -137,6 +143,7 @@
 
 // RPM function to include compression friction - be advised that too low/high of a compfriction value can make things screwy
 
+	rpm = min(rpm, (COMPFRICTION*efficiency)/2)
 	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION*efficiency))
 
 
@@ -172,7 +179,7 @@
 	outturf = get_step(src, dir)
 	locate_machinery()
 	if(!compressor)
-		stat |= BROKEN
+		obj_break()
 	connect_to_network()
 
 /obj/machinery/power/turbine/RefreshParts()
@@ -182,9 +189,9 @@
 	productivity = P / 6
 
 /obj/machinery/power/turbine/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.</span>"
 
 /obj/machinery/power/turbine/locate_machinery()
 	if(compressor)
@@ -245,7 +252,7 @@
 			stat &= ~BROKEN
 		else
 			to_chat(user, "<span class='alert'>Compressor not connected.</span>")
-			stat |= BROKEN
+			obj_break()
 		return
 
 	default_deconstruction_crowbar(I)
@@ -298,7 +305,17 @@
 
 // COMPUTER NEEDS A SERIOUS REWRITE.
 
+/obj/machinery/computer/turbine_computer
+	name = "gas turbine control computer"
+	desc = "A computer to remotely control a gas turbine."
+	icon_screen = "turbinecomp"
+	icon_keyboard = "tech_key"
+	circuit = /obj/item/circuitboard/computer/turbine_computer
+	var/obj/machinery/power/compressor/compressor
+	var/id = 0
 
+	ui_x = 300
+	ui_y = 200
 
 /obj/machinery/computer/turbine_computer/Initialize()
 	. = ..()
@@ -314,27 +331,27 @@
 				compressor = C
 				return
 	else
-		compressor = locate(/obj/machinery/power/compressor) in range(5, src)
+		compressor = locate(/obj/machinery/power/compressor) in range(7, src)
 
 /obj/machinery/computer/turbine_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "turbine_computer", name, 350, 280, master_ui, state)
+		ui = new(user, src, ui_key, "turbine_computer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/turbine_computer/ui_data(mob/user)
 	var/list/data = list()
 
-	data["connected"] = (compressor && compressor.turbine) ? TRUE : FALSE
+	data["compressor"] = compressor ? TRUE : FALSE
 	data["compressor_broke"] = (!compressor || (compressor.stat & BROKEN)) ? TRUE : FALSE
+	data["turbine"] = compressor?.turbine ? TRUE : FALSE
 	data["turbine_broke"] = (!compressor || !compressor.turbine || (compressor.turbine.stat & BROKEN)) ? TRUE : FALSE
-	data["broken"] = (data["compressor_broke"] || data["turbine_broke"])
-	data["online"] = compressor.starter
+	data["online"] = compressor?.starter
 
-	data["power"] = DisplayPower(compressor.turbine.lastgen)
-	data["rpm"] = compressor.rpm
-	data["temp"] = compressor.gas_contained.temperature
+	data["power"] = DisplayPower(compressor?.turbine?.lastgen)
+	data["rpm"] = compressor?.rpm
+	data["temp"] = compressor?.gas_contained.temperature
 
 	return data
 
@@ -342,13 +359,9 @@
 	if(..())
 		return
 	switch(action)
-		if("power-on")
+		if("toggle_power")
 			if(compressor && compressor.turbine)
-				compressor.starter = TRUE
-				. = TRUE
-		if("power-off")
-			if(compressor && compressor.turbine)
-				compressor.starter = FALSE
+				compressor.starter = !compressor.starter
 				. = TRUE
 		if("reconnect")
 			locate_machinery()

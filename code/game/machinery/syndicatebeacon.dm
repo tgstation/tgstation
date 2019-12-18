@@ -53,26 +53,30 @@
 	if(anchored)
 		return active ? Deactivate(user) : Activate(user)
 	else
-		to_chat(user, "<span class='warning'>You need to screw the beacon to the floor first!</span>")
+		to_chat(user, "<span class='warning'>You need to screw \the [src] to the floor first!</span>")
 
 /obj/machinery/power/singularity_beacon/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
+	if(W.tool_behaviour == TOOL_WRENCH)
 		if(active)
-			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
+			to_chat(user, "<span class='warning'>You need to deactivate \the [src] first!</span>")
 			return
 
 		if(anchored)
 			setAnchored(FALSE)
-			to_chat(user, "<span class='notice'>You unscrew the beacon from the floor.</span>")
+			to_chat(user, "<span class='notice'>You unbolt \the [src] from the floor and detach it from the cable.</span>")
 			disconnect_from_network()
 			return
 		else
 			if(!connect_to_network())
-				to_chat(user, "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>")
+				to_chat(user, "<span class='warning'>\The [src] must be placed over an exposed, powered cable node!</span>")
 				return
 			setAnchored(TRUE)
-			to_chat(user, "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>")
+			to_chat(user, "<span class='notice'>You bolt \the [src] to the floor and attach it to the cable.</span>")
 			return
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		user.visible_message( \
+			"[user] messes with \the [src] for a bit.", \
+			"<span class='notice'>You can't fit the screwdriver into \the [src]'s bolts! Try using a wrench.</span>")
 	else
 		return ..()
 
@@ -118,7 +122,7 @@
 	if(user)
 		to_chat(user, "<span class='notice'>Locked In.</span>")
 		new droptype( user.loc )
-		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+		playsound(src, 'sound/effects/pop.ogg', 100, TRUE, TRUE)
 		qdel(src)
 	return
 

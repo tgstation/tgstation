@@ -7,11 +7,7 @@
 	max_integrity = 500
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 	var/tamperproof = 0
-
-/obj/structure/closet/crate/secure/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 25)
-		return 0
-	. = ..()
+	damage_deflection = 25
 
 /obj/structure/closet/crate/secure/update_icon()
 	..()
@@ -26,7 +22,7 @@
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
 		boom()
 	else
-		..()
+		return ..()
 
 
 /obj/structure/closet/crate/secure/proc/boom(mob/user)
@@ -77,7 +73,7 @@
 
 /obj/structure/closet/crate/secure/owned/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>It's locked with a privacy lock, and can only be unlocked by the buyer's ID.</span>")
+	. += "<span class='notice'>It's locked with a privacy lock, and can only be unlocked by the buyer's ID.</span>"
 
 /obj/structure/closet/crate/secure/owned/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()

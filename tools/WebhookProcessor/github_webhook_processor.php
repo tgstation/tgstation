@@ -520,6 +520,8 @@ function game_announce($action, $payload, $pr_flags) {
 
 	$game_servers = filter_announce_targets($servers, $payload['pull_request']['base']['repo']['owner']['login'], $payload['pull_request']['base']['repo']['name'], $action, $pr_flags);
 	
+	$msg = '?announce='.urlencode($msg).'&payload='.urlencode(json_encode($payload));
+	
 	foreach ($game_servers as $serverid => $server) {
 		$server_message = $msg;
 		if (isset($server['comskey']))

@@ -4,6 +4,7 @@
 	icon_state = "mjollnir0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	color = "#212121"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	force = 5
@@ -12,18 +13,18 @@
 	throwforce = 15
 	throw_range = 1
 	w_class = WEIGHT_CLASS_HUGE
-	var/charged = 5
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
+	var/charged = 5
 
-/obj/item/twohanded/singularityhammer/New()
-	..()
+/obj/item/twohanded/singularityhammer/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/twohanded/singularityhammer/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	return ..()
+	. = ..()
 
 /obj/item/twohanded/singularityhammer/process()
 	if(charged < 5)
@@ -40,7 +41,7 @@
 			var/atom/movable/A = X
 			if(A == wielder)
 				continue
-			if(A && !A.anchored && !ishuman(X))
+			if(A && !A.anchored && !ishuman(X) && !isobserver(X))
 				step_towards(A,pull)
 				step_towards(A,pull)
 				step_towards(A,pull)
@@ -66,7 +67,7 @@
 			if(istype(A, /mob/living/))
 				var/mob/living/Z = A
 				Z.take_bodypart_damage(20,0)
-			playsound(user, 'sound/weapons/marauder.ogg', 50, 1)
+			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
 			var/turf/target = get_turf(A)
 			vortex(target,user)
 
@@ -92,7 +93,7 @@
 	s.start()
 	target.visible_message("<span class='danger'>[target.name] was shocked by [src]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
-		"<span class='italics'>You hear a heavy electrical crack!</span>")
+		"<span class='hear'>You hear a heavy electrical crack!</span>")
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
 	return
@@ -100,7 +101,7 @@
 /obj/item/twohanded/mjollnir/attack(mob/living/M, mob/user)
 	..()
 	if(wielded)
-		playsound(src.loc, "sparks", 50, 1)
+		playsound(src.loc, "sparks", 50, TRUE)
 		shock(M)
 
 /obj/item/twohanded/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

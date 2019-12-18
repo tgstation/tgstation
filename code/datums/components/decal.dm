@@ -1,6 +1,6 @@
 /datum/component/decal
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-
+	can_transfer = TRUE
 	var/cleanable
 	var/description
 	var/mutable_appearance/pic
@@ -71,5 +71,5 @@
 	if(strength >= cleanable)
 		qdel(src)
 
-/datum/component/decal/proc/examine(datum/source, mob/user)
-	to_chat(user, description)
+/datum/component/decal/proc/examine(datum/source, mob/user, list/examine_list)
+	examine_list += description

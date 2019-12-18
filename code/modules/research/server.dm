@@ -2,13 +2,15 @@
 	name = "\improper R&D Server"
 	desc = "A computer system running a deep neural network that processes arbitrary information to produce data useable in the development of new technologies. In layman's terms, it makes research points."
 	icon = 'icons/obj/machines/research.dmi'
-	icon_state = "server"
+	icon_state = "RD-server-on"
 	var/datum/techweb/stored_research
 	var/heat_health = 100
 	//Code for point mining here.
 	var/working = TRUE			//temperature should break it.
+	var/research_disabled = FALSE
 	var/server_id = 0
 	var/base_mining_income = 2
+	var/current_temp = 0
 	var/heat_gen = 100
 	var/heating_power = 40000
 	var/delay = 5
@@ -19,10 +21,12 @@
 
 /obj/machinery/rnd/server/Initialize()
 	. = ..()
+	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 	SSresearch.servers |= src
 	stored_research = SSresearch.science_tech
 	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
+	current_temp = get_env_temp()
 
 /obj/machinery/rnd/server/Destroy()
 	SSresearch.servers -= src
@@ -34,11 +38,26 @@
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
+/obj/machinery/rnd/server/update_icon()
+	if (stat & EMPED || stat & NOPOWER)
+		icon_state = "RD-server-off"
+		return
+	if (research_disabled)
+		icon_state = "RD-server-halt"
+		return
+	icon_state = "RD-server-on"
+
+/obj/machinery/rnd/server/power_change()
+	. = ..()
+	refresh_working()
+	return
+
 /obj/machinery/rnd/server/proc/refresh_working()
-	if(stat & EMPED)
+	if(stat & EMPED || research_disabled || stat & NOPOWER)
 		working = FALSE
 	else
 		working = TRUE
+	update_icon()
 
 /obj/machinery/rnd/server/emp_act()
 	. = ..()
@@ -52,14 +71,21 @@
 	stat &= ~EMPED
 	refresh_working()
 
+/obj/machinery/rnd/server/proc/toggle_disable()
+	research_disabled = !research_disabled
+	refresh_working()
+
 /obj/machinery/rnd/server/proc/mine()
 	. = base_mining_income
 	var/penalty = max((get_env_temp() - temp_tolerance_high), 0) * temp_penalty_coefficient
+	current_temp = get_env_temp()
 	. = max(. - penalty, 0)
 
 /obj/machinery/rnd/server/proc/get_env_temp()
-	var/datum/gas_mixture/environment = loc.return_air()
-	return environment.temperature
+	var/turf/L = loc
+	if(isturf(L))
+		return L.temperature
+	return 0
 
 /obj/machinery/rnd/server/proc/produce_heat(heat_amt)
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
@@ -114,6 +140,7 @@
 	var/obj/machinery/rnd/server/temp_server
 	var/list/servers = list()
 	var/list/consoles = list()
+	req_access = list(ACCESS_RD)
 	var/badmin = 0
 	circuit = /obj/item/circuitboard/computer/rdservercontrol
 
@@ -122,33 +149,46 @@
 		return
 
 	add_fingerprint(usr)
-	usr.set_machine(src)
-	if(!src.allowed(usr) && !(obj_flags & EMAGGED))
-		to_chat(usr, "<span class='danger'>You do not have the required access level.</span>")
-		return
-
-	if(href_list["main"])
-		screen = 0
+	if (href_list["toggle"])
+		if(allowed(usr) || obj_flags & EMAGGED)
+			var/obj/machinery/rnd/server/S = locate(href_list["toggle"]) in SSresearch.servers
+			S.toggle_disable()
+		else
+			to_chat(usr, "<span class='danger'>Access Denied.</span>")
 
 	updateUsrDialog()
 	return
 
 /obj/machinery/computer/rdservercontrol/ui_interact(mob/user)
 	. = ..()
-	var/dat = ""
+	var/list/dat = list()
 
-	switch(screen)
-		if(0) //Main Menu
-			dat += "Connected Servers:<BR><BR>"
+	dat += "<b>Connected Servers:</b>"
+	dat += "<table><tr><td style='width:25%'><b>Server</b></td><td style='width:25%'><b>Operating Temp</b></td><td style='width:25%'><b>Status</b></td>"
+	for(var/obj/machinery/rnd/server/S in GLOB.machines)
+		dat += "<tr><td style='width:25%'>[S.name]</td><td style='width:25%'>[S.current_temp]</td><td style='width:25%'>[S.stat & EMPED || stat & NOPOWER?"Offline":"<A href='?src=[REF(src)];toggle=[REF(S)]'>([S.research_disabled? "<font color=red>Disabled" : "<font color=lightgreen>Online"]</font>)</A>"]</td><BR>"
+	dat += "</table></br>"
 
-			for(var/obj/machinery/rnd/server/S in GLOB.machines)
-				dat += "[S.name]<BR>"
+	dat += "<b>Research Log</b></br>"
+	var/datum/techweb/stored_research
+	stored_research = SSresearch.science_tech
+	if(stored_research.research_logs.len)
+		dat += "<table BORDER=\"1\">"
+		dat += "<tr><td><b>Entry</b></td><td><b>Research Name</b></td><td><b>Cost</b></td><td><b>Researcher Name</b></td><td><b>Console Location</b></td></tr>"
+		for(var/i=stored_research.research_logs.len, i>0, i--)
+			dat += "<tr><td>[i]</td>"
+			for(var/j in stored_research.research_logs[i])
+				dat += "<td>[j]</td>"
+			dat +="</tr>"
+		dat += "</table>"
 
-		//Mining status here
+	else
+		dat += "</br>No history found."
 
-	user << browse("<TITLE>R&D Server Control</TITLE><HR>[dat]", "window=server_control;size=575x400")
-	onclose(user, "server_control")
-	return
+	var/datum/browser/popup = new(user, "server_com", src.name, 900, 620)
+	popup.set_content(dat.Join())
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/D, mob/user, params)
 	. = ..()
@@ -157,6 +197,6 @@
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	playsound(src, "sparks", 75, 1)
+	playsound(src, "sparks", 75, TRUE)
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You disable the security protocols.</span>")

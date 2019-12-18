@@ -43,12 +43,14 @@
 
 /obj/machinery/jukebox/Initialize()
 	. = ..()
-	var/list/tracks = flist("config/jukebox_music/sounds/")
+	var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
 
 	for(var/S in tracks)
 		var/datum/track/T = new()
-		T.song_path = file("config/jukebox_music/sounds/[S]")
+		T.song_path = file("[global.config.directory]/jukebox_music/sounds/[S]")
 		var/list/L = splittext(S,"+")
+		if(L.len != 3)
+			continue
 		T.song_name = L[1]
 		T.song_length = text2num(L[2])
 		T.song_beat = text2num(L[3])
@@ -70,11 +72,11 @@
 			else if(anchored)
 				to_chat(user,"<span class='notice'>You unsecure and disconnect [src].</span>")
 				setAnchored(FALSE)
-			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return
 	return ..()
 
-/obj/machinery/jukebox/update_icon()
+/obj/machinery/jukebox/update_icon_state()
 	if(active)
 		icon_state = "[initial(icon_state)]-active"
 	else
@@ -93,7 +95,7 @@
 		return
 	if(!songs.len)
 		to_chat(user,"<span class='warning'>Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue.</span>")
-		playsound(src,'sound/misc/compiler-failure.ogg', 25, 1)
+		playsound(src,'sound/misc/compiler-failure.ogg', 25, TRUE)
 		return
 	var/list/dat = list()
 	dat +="<div class='statusDisplay' style='text-align:center'>"
@@ -118,7 +120,7 @@
 			if(!active)
 				if(stop > world.time)
 					to_chat(usr, "<span class='warning'>Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)].</span>")
-					playsound(src, 'sound/misc/compiler-failure.ogg', 50, 1)
+					playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
 					return
 				activate_music()
 				START_PROCESSING(SSobj, src)
@@ -134,7 +136,7 @@
 			var/list/available = list()
 			for(var/datum/track/S in songs)
 				available[S.song_name] = S
-			var/selected = input(usr, "Choose your song", "Track:") as null|anything in available
+			var/selected = input(usr, "Choose your song", "Track:") as null|anything in sortList(available)
 			if(QDELETED(src) || !selected || !istype(available[selected], /datum/track))
 				return
 			selection = available[selected]
@@ -310,14 +312,14 @@
 		if(7 to 9)
 			dance5(M)
 
-/obj/machinery/jukebox/disco/proc/dance2(var/mob/living/M)
-	for(var/i = 1, i < 10, i++)
-		for(var/d in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
-			M.setDir(d)
-			if(i == WEST)
-				M.emote("flip")
-			sleep(1)
+/obj/machinery/jukebox/disco/proc/dance2(mob/living/M)
+	for(var/i in 0 to 9)
+		dance_rotate(M, CALLBACK(M, /mob.proc/dance_flip))
 		sleep(20)
+
+/mob/proc/dance_flip()
+	if(dir == WEST)
+		emote("flip")
 
 /obj/machinery/jukebox/disco/proc/dance3(var/mob/living/M)
 	var/matrix/initial_matrix = matrix(M.transform)
@@ -450,7 +452,7 @@
 		active = FALSE
 		STOP_PROCESSING(SSobj, src)
 		dance_over()
-		playsound(src,'sound/machines/terminal_off.ogg',50,1)
+		playsound(src,'sound/machines/terminal_off.ogg',50,TRUE)
 		update_icon()
 		stop = world.time + 100
 

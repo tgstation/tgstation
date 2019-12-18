@@ -33,8 +33,6 @@
 	popup.set_content(return_text())
 	popup.open()
 
-/obj/machinery/embedded_controller/update_icon()
-
 /obj/machinery/embedded_controller/proc/return_text()
 
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)

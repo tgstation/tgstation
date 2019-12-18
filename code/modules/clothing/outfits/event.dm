@@ -9,7 +9,7 @@
 	r_pocket = /obj/item/flashlight
 	gloves = /obj/item/clothing/gloves/color/red
 
-	box = /obj/item/storage/box/engineer
+	box = /obj/item/storage/box/survival/engineer
 	backpack_contents = list(/obj/item/a_gift/anything = 5)
 
 /datum/outfit/santa/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -19,8 +19,8 @@
 	H.mind.assigned_role = "Santa"
 	H.mind.special_role = "Santa"
 
-	H.hair_style = "Long Hair 3"
-	H.facial_hair_style = "Beard (Full)"
+	H.hairstyle = "Long Hair 3"
+	H.facial_hairstyle = "Beard (Full)"
 	H.hair_color = "FFF"
 	H.facial_hair_color = "FFF"
 	H.update_hair()

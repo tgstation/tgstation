@@ -57,9 +57,9 @@
 		seed_multiplier = M.rating
 
 /obj/machinery/seed_extractor/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Extracting <b>[seed_multiplier]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]%</b> seeds.<span>")
+		. += "<span class='notice'>The status display reads: Extracting <b>[seed_multiplier]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]%</b> seeds.</span>"
 
 /obj/machinery/seed_extractor/attackby(obj/item/O, mob/user, params)
 
@@ -112,7 +112,7 @@
 	var/potency = 0
 	var/amount = 0
 
-/datum/seed_pile/New(var/name, var/life, var/endur, var/matur, var/prod, var/yie, var/poten, var/am = 1)
+/datum/seed_pile/New(name, life, endur, matur, prod, yie, poten, am = 1)
 	src.name = name
 	src.lifespan = life
 	src.endurance = endur
@@ -143,7 +143,7 @@
 	popup.open()
 	return
 
-/obj/machinery/seed_extractor/Topic(var/href, var/list/href_list)
+/obj/machinery/seed_extractor/Topic(href, list/href_list)
 	if(..())
 		return
 	usr.set_machine(src)
@@ -179,7 +179,7 @@
 		to_chat(usr, "<span class='notice'>\The [src] is full.</span>")
 		return FALSE
 
-	GET_COMPONENT_FROM(STR, /datum/component/storage, O.loc)
+	var/datum/component/storage/STR = O.loc.GetComponent(/datum/component/storage)
 	if(STR)
 		if(!STR.remove_from_storage(O,src))
 			return FALSE

@@ -47,9 +47,9 @@
 	maxnutri = tmp_capacity * 5 // Up to 30
 
 /obj/machinery/hydroponics/constructable/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Tray efficiency at <b>[rating*100]%</b>.<span>")
+		. += "<span class='notice'>The status display reads: Tray efficiency at <b>[rating*100]%</b>.</span>"
 
 
 /obj/machinery/hydroponics/Destroy()
@@ -91,12 +91,12 @@
 	return connected
 
 
-/obj/machinery/hydroponics/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
+/obj/machinery/hydroponics/bullet_act(obj/projectile/Proj) //Works with the Somatoray to modify plant variables.
 	if(!myseed)
 		return ..()
-	if(istype(Proj , /obj/item/projectile/energy/floramut))
+	if(istype(Proj , /obj/projectile/energy/floramut))
 		mutate()
-	else if(istype(Proj , /obj/item/projectile/energy/florayield))
+	else if(istype(Proj , /obj/projectile/energy/florayield))
 		return myseed.bullet_act(Proj)
 	else
 		return ..()
@@ -123,6 +123,7 @@
 				lastproduce = age
 
 			needs_update = 1
+
 
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
@@ -175,8 +176,27 @@
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
-			else if(pestlevel >= 5)
-				adjustHealth(-1 / rating)
+			if(pestlevel >= 8)
+				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+					adjustHealth(-2 / rating)
+
+				else
+					adjustHealth(2 / rating)
+					adjustPests(-1 / rating)
+
+			else if(pestlevel >= 4)
+				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+					adjustHealth(-1 / rating)
+
+				else
+					adjustHealth(1 / rating)
+					if(prob(50))
+						adjustPests(-1 / rating)
+
+			else if(pestlevel < 4 && myseed.get_gene(/datum/plant_gene/trait/plant_type/carnivory))
+				adjustHealth(-2 / rating)
+				if(prob(5))
+					adjustPests(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
 			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
@@ -207,7 +227,7 @@
 				adjustWeeds(1 / rating)
 
 		// Weeeeeeeeeeeeeeedddssss
-		if(weedlevel >= 10 && prob(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
+		if(weedlevel >= 10 && prob(50) && !self_sustaining) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(myseed)
 				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) && !myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism)) // If a normal plant
 					weedinvasion()
@@ -216,6 +236,12 @@
 			needs_update = 1
 		if (needs_update)
 			update_icon()
+
+		if(myseed && prob(5 * (11-myseed.production)))
+			for(var/g in myseed.genes)
+				if(istype(g, /datum/plant_gene/trait))
+					var/datum/plant_gene/trait/selectedtrait = g
+					selectedtrait.on_grow(src)
 	return
 
 /obj/machinery/hydroponics/proc/nutrimentMutation()
@@ -300,26 +326,26 @@
 
 
 /obj/machinery/hydroponics/examine(user)
-	..()
+	. = ..()
 	if(myseed)
-		to_chat(user, "<span class='info'>It has <span class='name'>[myseed.plantname]</span> planted.</span>")
+		. += "<span class='info'>It has <span class='name'>[myseed.plantname]</span> planted.</span>"
 		if (dead)
-			to_chat(user, "<span class='warning'>It's dead!</span>")
+			. += "<span class='warning'>It's dead!</span>"
 		else if (harvest)
-			to_chat(user, "<span class='info'>It's ready to harvest.</span>")
+			. += "<span class='info'>It's ready to harvest.</span>"
 		else if (plant_health <= (myseed.endurance / 2))
-			to_chat(user, "<span class='warning'>It looks unhealthy.</span>")
+			. += "<span class='warning'>It looks unhealthy.</span>"
 	else
-		to_chat(user, "<span class='info'>It's empty.</span>")
+		. += "<span class='info'>It's empty.</span>"
 
 	if(!self_sustaining)
-		to_chat(user, "<span class='info'>Water: [waterlevel]/[maxwater].</span>")
-		to_chat(user, "<span class='info'>Nutrient: [nutrilevel]/[maxnutri].</span>")
+		. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>\n"+\
+		"<span class='info'>Nutrient: [nutrilevel]/[maxnutri].</span>"
 		if(self_sufficiency_progress > 0)
 			var/percent_progress = round(self_sufficiency_progress * 100 / self_sufficiency_req)
-			to_chat(user, "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>")
+			. += "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>"
 	else
-		to_chat(user, "<span class='info'>It doesn't require any water or nutrients.</span>")
+		. += "<span class='info'>It doesn't require any water or nutrients.</span>"
 
 	if(weedlevel >= 5)
 		to_chat(user, "<span class='warning'>It's filled with weeds!</span>")
@@ -362,6 +388,11 @@
 	pestlevel = 0 // Reset
 	update_icon()
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
+	name = "hydroponics tray ([myseed.plantname])"
+	if(myseed.product)
+		desc = initial(myseed.product.desc)
+	else
+		desc = initial(desc)
 
 
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
@@ -396,6 +427,11 @@
 	sleep(5) // Wait a while
 	update_icon()
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutates into [myseed.plantname]!</span>")
+	name = "hydroponics tray ([myseed.plantname])"
+	if(myseed.product)
+		desc = initial(myseed.product.desc)
+	else
+		desc = initial(desc)
 
 
 /obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
@@ -424,6 +460,7 @@
 	plant_health = 0
 	harvest = 0
 	pestlevel = 0 // Pests die
+	lastproduce = 0
 	if(!dead)
 		update_icon()
 		dead = 1
@@ -444,7 +481,7 @@
 		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
 
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
-	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
+	if(S.has_reagent(/datum/reagent/toxin/mutagen, 5) || S.has_reagent(/datum/reagent/uranium/radium, 10) || S.has_reagent(/datum/reagent/uranium, 10))
 		switch(rand(100))
 			if(91 to 100)
 				adjustHealth(-10)
@@ -465,202 +502,207 @@
 				to_chat(user, "<span class='notice'>Nothing happens...</span>")
 
 	// 2 or 1 units is enough to change the yield and other stats.// Can change the yield and other stats, but requires more than mutagen
-	else if(S.has_reagent("mutagen", 2) || S.has_reagent("radium", 5) || S.has_reagent("uranium", 5))
+	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 2) || S.has_reagent(/datum/reagent/uranium/radium, 5) || S.has_reagent(/datum/reagent/uranium, 5))
 		hardmutate()
-	else if(S.has_reagent("mutagen", 1) || S.has_reagent("radium", 2) || S.has_reagent("uranium", 2))
+	else if(S.has_reagent(/datum/reagent/toxin/mutagen, 1) || S.has_reagent(/datum/reagent/uranium/radium, 2) || S.has_reagent(/datum/reagent/uranium, 2))
 		mutate()
 
 	// After handling the mutating, we now handle the damage from adding crude radioactives...
-	if(S.has_reagent("uranium", 1))
-		adjustHealth(-round(S.get_reagent_amount("uranium") * 1))
-		adjustToxic(round(S.get_reagent_amount("uranium") * 2))
-	if(S.has_reagent("radium", 1))
-		adjustHealth(-round(S.get_reagent_amount("radium") * 1))
-		adjustToxic(round(S.get_reagent_amount("radium") * 3)) // Radium is harsher (OOC: also easier to produce)
+	if(S.has_reagent(/datum/reagent/uranium, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/uranium) * 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/uranium) * 2))
+	if(S.has_reagent(/datum/reagent/uranium/radium, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/uranium/radium) * 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/uranium/radium) * 3)) // Radium is harsher (OOC: also easier to produce)
 
 	// Nutriments
-	if(S.has_reagent("eznutriment", 1))
+	if(S.has_reagent(/datum/reagent/plantnutriment/eznutriment, 1))
 		yieldmod = 1
 		mutmod = 1
-		adjustNutri(round(S.get_reagent_amount("eznutriment") * 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/plantnutriment/eznutriment) * 1))
 
-	if(S.has_reagent("left4zednutriment", 1))
+	if(S.has_reagent(/datum/reagent/plantnutriment/left4zednutriment, 1))
 		yieldmod = 0
 		mutmod = 2
-		adjustNutri(round(S.get_reagent_amount("left4zednutriment") * 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/plantnutriment/left4zednutriment) * 1))
 
-	if(S.has_reagent("robustharvestnutriment", 1))
+	if(S.has_reagent(/datum/reagent/plantnutriment/robustharvestnutriment, 1))
 		yieldmod = 1.3
 		mutmod = 0
-		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) *1 ))
 
 	// Ambrosia Gaia produces earthsblood.
-	if(S.has_reagent("earthsblood"))
-		self_sufficiency_progress += S.get_reagent_amount("earthsblood")
+	if(S.has_reagent(/datum/reagent/medicine/earthsblood))
+		self_sufficiency_progress += S.get_reagent_amount(/datum/reagent/medicine/earthsblood)
 		if(self_sufficiency_progress >= self_sufficiency_req)
 			become_self_sufficient()
 		else if(!self_sustaining)
 			to_chat(user, "<span class='notice'>[src] warms as it might on a spring day under a genuine Sun.</span>")
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
-	if(S.has_reagent("charcoal", 1))
-		adjustToxic(-round(S.get_reagent_amount("charcoal") * 2))
+	if(S.has_reagent(/datum/reagent/medicine/C2/multiver, 1))
+		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/C2/multiver) * 2))
 
 	// NIGGA, YOU JUST WENT ON FULL RETARD.
-	if(S.has_reagent("toxin", 1))
-		adjustToxic(round(S.get_reagent_amount("toxin") * 2))
+	if(S.has_reagent(/datum/reagent/toxin, 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin) * 2))
 
 	// Milk is good for humans, but bad for plants. The sugars canot be used by plants, and the milk fat fucks up growth. Not shrooms though. I can't deal with this now...
-	if(S.has_reagent("milk", 1))
-		adjustNutri(round(S.get_reagent_amount("milk") * 0.1))
-		adjustWater(round(S.get_reagent_amount("milk") * 0.9))
+	if(S.has_reagent(/datum/reagent/consumable/milk, 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/milk) * 0.1))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/consumable/milk) * 0.9))
 
 	// Beer is a chemical composition of alcohol and various other things. It's a shitty nutrient but hey, it's still one. Also alcohol is bad, mmmkay?
-	if(S.has_reagent("beer", 1))
-		adjustHealth(-round(S.get_reagent_amount("beer") * 0.05))
-		adjustNutri(round(S.get_reagent_amount("beer") * 0.25))
-		adjustWater(round(S.get_reagent_amount("beer") * 0.7))
+	if(S.has_reagent(/datum/reagent/consumable/ethanol/beer, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/consumable/ethanol/beer) * 0.05))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/ethanol/beer) * 0.25))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/consumable/ethanol/beer) * 0.7))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
-	if(S.has_reagent("fluorine", 1))
-		adjustHealth(-round(S.get_reagent_amount("fluorine") * 2))
-		adjustToxic(round(S.get_reagent_amount("fluorine") * 2.5))
-		adjustWater(-round(S.get_reagent_amount("fluorine") * 0.5))
+	if(S.has_reagent(/datum/reagent/fluorine, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/fluorine) * 2))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/fluorine) * 2.5))
+		adjustWater(-round(S.get_reagent_amount(/datum/reagent/fluorine) * 0.5))
 		adjustWeeds(-rand(1,4))
 
 	// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
-	if(S.has_reagent("chlorine", 1))
-		adjustHealth(-round(S.get_reagent_amount("chlorine") * 1))
-		adjustToxic(round(S.get_reagent_amount("chlorine") * 1.5))
-		adjustWater(-round(S.get_reagent_amount("chlorine") * 0.5))
+	if(S.has_reagent(/datum/reagent/chlorine, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/chlorine) * 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/chlorine) * 1.5))
+		adjustWater(-round(S.get_reagent_amount(/datum/reagent/chlorine) * 0.5))
 		adjustWeeds(-rand(1,3))
 
 	// White Phosphorous + water -> phosphoric acid. That's not a good thing really.
 	// Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
-	if(S.has_reagent("phosphorus", 1))
-		adjustHealth(-round(S.get_reagent_amount("phosphorus") * 0.75))
-		adjustNutri(round(S.get_reagent_amount("phosphorus") * 0.1))
-		adjustWater(-round(S.get_reagent_amount("phosphorus") * 0.5))
+	if(S.has_reagent(/datum/reagent/phosphorus, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/phosphorus) * 0.75))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/phosphorus) * 0.1))
+		adjustWater(-round(S.get_reagent_amount(/datum/reagent/phosphorus) * 0.5))
 		adjustWeeds(-rand(1,2))
 
 	// Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
-	if(S.has_reagent("sugar", 1))
+	if(S.has_reagent(/datum/reagent/consumable/sugar, 1))
 		adjustWeeds(rand(1,2))
 		adjustPests(rand(1,2))
-		adjustNutri(round(S.get_reagent_amount("sugar") * 0.1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/sugar) * 0.1))
 
 	// It is water!
-	if(S.has_reagent("water", 1))
-		adjustWater(round(S.get_reagent_amount("water") * 1))
+	if(S.has_reagent(/datum/reagent/water, 1))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/water) * 1))
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits~
-	if(S.has_reagent("holywater", 1))
-		adjustWater(round(S.get_reagent_amount("holywater") * 1))
-		adjustHealth(round(S.get_reagent_amount("holywater") * 0.1))
+	if(S.has_reagent(/datum/reagent/water/holywater, 1))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/water/holywater) * 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/water/holywater) * 0.1))
 
 	// A variety of nutrients are dissolved in club soda, without sugar.
 	// These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
-	if(S.has_reagent("sodawater", 1))
-		adjustWater(round(S.get_reagent_amount("sodawater") * 1))
-		adjustHealth(round(S.get_reagent_amount("sodawater") * 0.1))
-		adjustNutri(round(S.get_reagent_amount("sodawater") * 0.1))
+	if(S.has_reagent(/datum/reagent/consumable/sodawater, 1))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/consumable/sodawater) * 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/consumable/sodawater) * 0.1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/sodawater) * 0.1))
 
 	// Man, you guys are retards
-	if(S.has_reagent("sacid", 1))
-		adjustHealth(-round(S.get_reagent_amount("sacid") * 1))
-		adjustToxic(round(S.get_reagent_amount("sacid") * 1.5))
+	if(S.has_reagent(/datum/reagent/toxin/acid, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/toxin/acid) * 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/acid) * 1.5))
 		adjustWeeds(-rand(1,2))
 
 	// SERIOUSLY
-	if(S.has_reagent("facid", 1))
-		adjustHealth(-round(S.get_reagent_amount("facid") * 2))
-		adjustToxic(round(S.get_reagent_amount("facid") * 3))
+	if(S.has_reagent(/datum/reagent/toxin/acid/fluacid, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/toxin/acid/fluacid) * 2))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/acid/fluacid) * 3))
 		adjustWeeds(-rand(1,4))
 
 	// Plant-B-Gone is just as bad
-	if(S.has_reagent("plantbgone", 1))
-		adjustHealth(-round(S.get_reagent_amount("plantbgone") * 5))
-		adjustToxic(round(S.get_reagent_amount("plantbgone") * 6))
+	if(S.has_reagent(/datum/reagent/toxin/plantbgone, 1))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/toxin/plantbgone) * 5))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/plantbgone) * 6))
 		adjustWeeds(-rand(4,8))
 
 	// why, just why
-	if(S.has_reagent("napalm", 1))
+	if(S.has_reagent(/datum/reagent/napalm, 1))
 		if(!(myseed.resistance_flags & FIRE_PROOF))
-			adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
-			adjustToxic(round(S.get_reagent_amount("napalm") * 7))
-			adjustWeeds(-rand(5,9))
+			adjustHealth(-round(S.get_reagent_amount(/datum/reagent/napalm) * 6))
+			adjustToxic(round(S.get_reagent_amount(/datum/reagent/napalm) * 7))
+		adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
 
 	//Weed Spray
-	if(S.has_reagent("weedkiller", 1))
-		adjustToxic(round(S.get_reagent_amount("weedkiller") * 0.5))
+	if(S.has_reagent(/datum/reagent/toxin/plantbgone/weedkiller, 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/plantbgone/weedkiller) * 0.5))
 		//old toxicity was 4, each spray is default 10 (minimal of 5) so 5 and 2.5 are the new ammounts
 		adjustWeeds(-rand(1,2))
 
 	//Pest Spray
-	if(S.has_reagent("pestkiller", 1))
-		adjustToxic(round(S.get_reagent_amount("pestkiller") * 0.5))
+	if(S.has_reagent(/datum/reagent/toxin/pestkiller, 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/toxin/pestkiller) * 0.5))
+		adjustPests(-rand(1,2))
+
+	//Nicotine is used as a pesticide IRL.
+	if(S.has_reagent(/datum/reagent/drug/nicotine, 1))
+		adjustToxic(round(S.get_reagent_amount(/datum/reagent/drug/nicotine)))
 		adjustPests(-rand(1,2))
 
 	// Healing
-	if(S.has_reagent("cryoxadone", 1))
-		adjustHealth(round(S.get_reagent_amount("cryoxadone") * 3))
-		adjustToxic(-round(S.get_reagent_amount("cryoxadone") * 3))
+	if(S.has_reagent(/datum/reagent/medicine/cryoxadone, 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/medicine/cryoxadone) * 3))
+		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/cryoxadone) * 3))
 
 	// Ammonia is bad ass.
-	if(S.has_reagent("ammonia", 1))
-		adjustHealth(round(S.get_reagent_amount("ammonia") * 0.5))
-		adjustNutri(round(S.get_reagent_amount("ammonia") * 1))
+	if(S.has_reagent(/datum/reagent/ammonia, 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/ammonia) * 0.5))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/ammonia) * 1))
 		if(myseed)
-			myseed.adjust_yield(round(S.get_reagent_amount("ammonia") * 0.01))
+			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/ammonia) * 0.04))
 
 	// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
-	if(S.has_reagent("saltpetre", 1))
-		var/salt = S.get_reagent_amount("saltpetre")
+	if(S.has_reagent(/datum/reagent/saltpetre, 1))
+		var/salt = S.get_reagent_amount(/datum/reagent/saltpetre)
 		adjustHealth(round(salt * 0.25))
 		if (myseed)
 			myseed.adjust_production(-round(salt/100)-prob(salt%100))
 			myseed.adjust_potency(round(salt*0.5))
 	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
-	if(S.has_reagent("ash", 1))
-		adjustHealth(round(S.get_reagent_amount("ash") * 0.25))
-		adjustNutri(round(S.get_reagent_amount("ash") * 0.5))
+	if(S.has_reagent(/datum/reagent/ash, 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/ash) * 0.25))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/ash) * 0.5))
 		adjustWeeds(-1)
 
 	// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant.
-	if(S.has_reagent("diethylamine", 1))
-		adjustHealth(round(S.get_reagent_amount("diethylamine") * 1))
-		adjustNutri(round(S.get_reagent_amount("diethylamine") * 2))
+	if(S.has_reagent(/datum/reagent/diethylamine, 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 2))
 		if(myseed)
-			myseed.adjust_yield(round(S.get_reagent_amount("diethylamine") * 0.02))
+			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 0.02))
 		adjustPests(-rand(1,2))
 
 	// Compost, effectively
-	if(S.has_reagent("nutriment", 1))
-		adjustHealth(round(S.get_reagent_amount("nutriment") * 0.5))
-		adjustNutri(round(S.get_reagent_amount("nutriment") * 1))
+	if(S.has_reagent(/datum/reagent/consumable/nutriment, 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/consumable/nutriment) * 0.5))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/nutriment) * 1))
 
 	// Compost for EVERYTHING
-	if(S.has_reagent("virusfood", 1))
-		adjustNutri(round(S.get_reagent_amount("virusfood") * 0.5))
-		adjustHealth(-round(S.get_reagent_amount("virusfood") * 0.5))
+	if(S.has_reagent(/datum/reagent/consumable/virus_food, 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/consumable/virus_food) * 0.5))
+		adjustHealth(-round(S.get_reagent_amount(/datum/reagent/consumable/virus_food) * 0.5))
 
 	// FEED ME
-	if(S.has_reagent("blood", 1))
-		adjustNutri(round(S.get_reagent_amount("blood") * 1))
+	if(S.has_reagent(/datum/reagent/blood, 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/blood) * 1))
 		adjustPests(rand(2,4))
 
 	// FEED ME SEYMOUR
-	if(S.has_reagent("strangereagent", 1))
+	if(S.has_reagent(/datum/reagent/medicine/strange_reagent, 1))
 		spawnplant()
 
 	// The best stuff there is. For testing/debugging.
-	if(S.has_reagent("adminordrazine", 1))
-		adjustWater(round(S.get_reagent_amount("adminordrazine") * 1))
-		adjustHealth(round(S.get_reagent_amount("adminordrazine") * 1))
-		adjustNutri(round(S.get_reagent_amount("adminordrazine") * 1))
+	if(S.has_reagent(/datum/reagent/medicine/adminordrazine, 1))
+		adjustWater(round(S.get_reagent_amount(/datum/reagent/medicine/adminordrazine) * 1))
+		adjustHealth(round(S.get_reagent_amount(/datum/reagent/medicine/adminordrazine) * 1))
+		adjustNutri(round(S.get_reagent_amount(/datum/reagent/medicine/adminordrazine) * 1))
 		adjustPests(-rand(1,5))
 		adjustWeeds(-rand(1,5))
-	if(S.has_reagent("adminordrazine", 5))
+	if(S.has_reagent(/datum/reagent/medicine/adminordrazine, 5))
 		switch(rand(100))
 			if(66  to 100)
 				mutatespecie()
@@ -683,7 +725,7 @@
 				return
 
 		if(!reagent_source.reagents.total_volume)
-			to_chat(user, "<span class='notice'>[reagent_source] is empty.</span>")
+			to_chat(user, "<span class='warning'>[reagent_source] is empty!</span>")
 			return 1
 
 		var/list/trays = list(src)//makes the list just this in cases of syringes and compost etc
@@ -693,6 +735,10 @@
 		var/transfer_amount
 
 		if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
+			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks))
+				var/obj/item/reagent_containers/food/snacks/R = reagent_source
+				if (R.trash)
+					R.generate_trash(get_turf(user))
 			visi_msg="[user] composts [reagent_source], spreading it through [target]"
 			transfer_amount = reagent_source.reagents.total_volume
 		else
@@ -704,14 +750,14 @@
 					syr.mode = 0
 			else if(istype(reagent_source, /obj/item/reagent_containers/spray/))
 				visi_msg="[user] sprays [target] with [reagent_source]"
-				playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
+				playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
 				irrigate = 1
 			else if(transfer_amount) // Droppers, cans, beakers, what have you.
 				visi_msg="[user] uses [reagent_source] on [target]"
 				irrigate = 1
 			// Beakers, bottles, buckets, etc.
 			if(reagent_source.is_drainable())
-				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+				playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 
 		if(irrigate && transfer_amount > 30 && reagent_source.reagents.total_volume >= 30 && using_irrigation)
 			trays = FindConnected()
@@ -751,6 +797,15 @@
 			to_chat(user, "<span class='notice'>You plant [O].</span>")
 			dead = 0
 			myseed = O
+			name = "hydroponics tray ([myseed.plantname])"
+			if(!myseed.productdesc) //we haven't changed our produce's description
+				if(myseed.product)
+					myseed.productdesc = initial(myseed.product.desc)
+				else if(myseed.desc)
+					myseed.productdesc = myseed.desc
+				else
+					myseed.productdesc = "A fascinating specimen."
+			desc = myseed.productdesc
 			age = 1
 			plant_health = myseed.endurance
 			lastcycle = world.time
@@ -776,7 +831,7 @@
 
 	else if(istype(O, /obj/item/cultivator))
 		if(weedlevel > 0)
-			user.visible_message("[user] uproots the weeds.", "<span class='notice'>You remove the weeds from [src].</span>")
+			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
 			update_icon()
 		else
@@ -812,12 +867,16 @@
 			if(myseed) //Could be that they're just using it as a de-weeder
 				age = 0
 				plant_health = 0
+				lastproduce = 0
 				if(harvest)
 					harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
 				qdel(myseed)
 				myseed = null
+				name = initial(name)
+				desc = initial(desc)
 			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
 			update_icon()
+
 
 	else
 		return ..()
@@ -848,6 +907,8 @@
 		qdel(myseed)
 		myseed = null
 		update_icon()
+		name = initial(name)
+		desc = initial(desc)
 	else
 		if(user)
 			examine(user)
@@ -865,6 +926,8 @@
 		qdel(myseed)
 		myseed = null
 		dead = 0
+		name = initial(name)
+		desc = initial(desc)
 	update_icon()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///

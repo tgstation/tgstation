@@ -14,31 +14,26 @@
 	req_access = list(ACCESS_AI_UPLOAD)
 
 /obj/machinery/ai_slipper/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It has <b>[uses]</b> uses of foam remaining.</span>")
+	. = ..()
+	. += "<span class='notice'>It has <b>[uses]</b> uses of foam remaining.</span>"
 
-/obj/machinery/ai_slipper/power_change()
+/obj/machinery/ai_slipper/update_icon_state()
 	if(stat & BROKEN)
 		return
+	if((stat & NOPOWER) || cooldown_time > world.time || !uses)
+		icon_state = "ai-slipper0"
 	else
-		if(powered())
-			stat &= ~NOPOWER
-		else
-			stat |= NOPOWER
-		if((stat & (NOPOWER|BROKEN)) || cooldown_time > world.time || !uses)
-			icon_state = "ai-slipper0"
-		else
-			icon_state = "ai-slipper1"
+		icon_state = "ai-slipper1"
 
 /obj/machinery/ai_slipper/interact(mob/user)
 	if(!allowed(user))
 		to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
 	if(!uses)
-		to_chat(user, "<span class='danger'>[src] is out of foam and cannot be activated.</span>")
+		to_chat(user, "<span class='warning'>[src] is out of foam and cannot be activated!</span>")
 		return
 	if(cooldown_time > world.time)
-		to_chat(user, "<span class='danger'>[src] cannot be activated for <b>[DisplayTimeText(world.time - cooldown_time)]</b>.</span>")
+		to_chat(user, "<span class='warning'>[src] cannot be activated for <b>[DisplayTimeText(world.time - cooldown_time)]</b>!</span>")
 		return
 	new /obj/effect/particle_effect/foam(loc)
 	uses--

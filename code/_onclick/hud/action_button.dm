@@ -20,10 +20,23 @@
 	else
 		return TRUE
 
-/obj/screen/movable/action_button/MouseDrop()
-	if (!can_use(usr))
+/obj/screen/movable/action_button/MouseDrop(over_object)
+	if(!can_use(usr))
 		return
-	return ..()
+	if((istype(over_object, /obj/screen/movable/action_button) && !istype(over_object, /obj/screen/movable/action_button/hide_toggle)))
+		if(locked)
+			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
+			return
+		var/obj/screen/movable/action_button/B = over_object
+		var/list/actions = usr.actions
+		actions.Swap(actions.Find(src.linked_action), actions.Find(B.linked_action))
+		moved = FALSE
+		ordered = TRUE
+		B.moved = FALSE
+		B.ordered = TRUE
+		usr.update_action_buttons()
+	else
+		return ..()
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	if (!can_use(usr))
@@ -59,6 +72,23 @@
 	var/hide_icon = 'icons/mob/actions.dmi'
 	var/hide_state = "hide"
 	var/show_state = "show"
+	var/mutable_appearance/hide_appearance
+	var/mutable_appearance/show_appearance
+
+/obj/screen/movable/action_button/hide_toggle/Initialize()
+	. = ..()
+	var/static/list/icon_cache = list()
+	
+	var/cache_key = "[hide_icon][hide_state]"
+	hide_appearance = icon_cache[cache_key]
+	if(!hide_appearance)
+		hide_appearance = icon_cache[cache_key] = mutable_appearance(hide_icon, hide_state)
+
+	cache_key = "[hide_icon][show_state]"
+	show_appearance = icon_cache[cache_key]
+	if(!show_appearance)
+		show_appearance = icon_cache[cache_key] = mutable_appearance(hide_icon, show_state)
+
 
 /obj/screen/movable/action_button/hide_toggle/Click(location,control,params)
 	if (!can_use(usr))
@@ -100,7 +130,7 @@
 		name = "Show Buttons"
 	else
 		name = "Hide Buttons"
-	UpdateIcon()
+	update_icon()
 	usr.update_action_buttons()
 
 /obj/screen/movable/action_button/hide_toggle/AltClick(mob/user)
@@ -121,12 +151,14 @@
 	hide_icon = settings["toggle_icon"]
 	hide_state = settings["toggle_hide"]
 	show_state = settings["toggle_show"]
-	UpdateIcon()
+	update_icon()
 
-/obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
-	cut_overlays()
-	add_overlay(mutable_appearance(hide_icon, hidden ? show_state : hide_state))
-
+/obj/screen/movable/action_button/hide_toggle/update_overlays()
+	. = ..()
+	if(hidden)
+		. += show_appearance
+	else
+		. += hide_appearance
 
 /obj/screen/movable/action_button/MouseEntered(location,control,params)
 	if(!QDELETED(src))

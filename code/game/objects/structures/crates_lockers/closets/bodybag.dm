@@ -8,12 +8,23 @@
 	mob_storage_capacity = 2
 	open_sound = 'sound/items/zip.ogg'
 	close_sound = 'sound/items/zip.ogg'
+	open_sound_volume = 15
+	close_sound_volume = 15
 	integrity_failure = 0
 	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+	drag_slowdown = 0
 	var/foldedbag_path = /obj/item/bodybag
+	var/obj/item/bodybag/foldedbag_instance = null
 	var/tagged = 0 // so closet code knows to put the tag overlay back
+
+/obj/structure/closet/body_bag/Destroy()
+	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
+	if (foldedbag_instance && !foldedbag_instance.loc)
+		QDEL_NULL(foldedbag_instance)
+	return ..()
 
 /obj/structure/closet/body_bag/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
@@ -43,23 +54,30 @@
 	if (tagged)
 		add_overlay("bodybag_label")
 
+/obj/structure/closet/body_bag/open(mob/living/user)
+	. = ..()
+	if(.)
+		mouse_drag_pointer = MOUSE_INACTIVE_POINTER
+
 /obj/structure/closet/body_bag/close()
-	if(..())
+	. = ..()
+	if(.)
 		density = FALSE
-		return 1
-	return 0
+		mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/structure/closet/body_bag/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
-			return 0
+			return
 		if(opened)
-			return 0
+			to_chat(usr, "<span class='warning'>You wrestle with [src], but it won't fold while unzipped.</span>")
+			return
 		if(contents.len)
-			return 0
+			to_chat(usr, "<span class='warning'>There are too many things inside of [src] to fold it up!</span>")
+			return
 		visible_message("<span class='notice'>[usr] folds up [src].</span>")
-		var/obj/item/bodybag/B = new foldedbag_path(get_turf(src))
+		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 		usr.put_in_hands(B)
 		qdel(src)
 
@@ -77,17 +95,18 @@
 	. = ..()
 	if(over_object == usr && Adjacent(usr) && (in_range(src, usr) || usr.contents.Find(src)))
 		if(!ishuman(usr))
-			return 0
+			return
 		if(opened)
-			return 0
+			to_chat(usr, "<span class='warning'>You wrestle with [src], but it won't fold while unzipped.</span>")
+			return
 		if(contents.len >= mob_storage_capacity / 2)
 			to_chat(usr, "<span class='warning'>There are too many things inside of [src] to fold it up!</span>")
-			return 0
+			return
 		for(var/obj/item/bodybag/bluespace/B in src)
 			to_chat(usr, "<span class='warning'>You can't recursively fold bluespace body bags!</span>" )
-			return 0
+			return
 		visible_message("<span class='notice'>[usr] folds up [src].</span>")
-		var/obj/item/bodybag/B = new foldedbag_path(get_turf(src))
+		var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
 		usr.put_in_hands(B)
 		for(var/atom/movable/A in contents)
 			A.forceMove(B)

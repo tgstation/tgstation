@@ -11,6 +11,8 @@
 	var/id = 1
 	var/drive_range = 50	//this is mostly irrelevant since current mass drivers throw into space, but you could make a lower-range mass driver for interstation transport or something I guess.
 
+/obj/machinery/mass_driver/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+	id = "[idnum][id]"
 
 /obj/machinery/mass_driver/proc/drive(amount)
 	if(stat & (BROKEN|NOPOWER))
@@ -20,6 +22,8 @@
 	var/atom/target = get_edge_target_turf(src, dir)
 	for(var/atom/movable/O in loc)
 		if(!O.anchored || ismecha(O))	//Mechs need their launch platforms.
+			if(ismob(O) && !isliving(O))
+				continue
 			O_limit++
 			if(O_limit >= 20)
 				audible_message("<span class='notice'>[src] lets out a screech, it doesn't seem to be able to handle the load.</span>")

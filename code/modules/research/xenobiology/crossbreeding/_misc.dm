@@ -4,27 +4,91 @@ Slimecrossing Items
 	Collected here for clarity.
 */
 
-//Timefreeze camera - Burning Sepia
+//Rewind camera - I'm already Burning Sepia
+/obj/item/camera/rewind
+	name = "sepia-tinted camera"
+	desc = "They say a picture is like a moment stopped in time."
+	pictures_left = 1
+	pictures_max = 1
+	can_customise = FALSE
+	default_picture_name = "A nostalgic picture"
+	var/used = FALSE
+
+/datum/saved_bodypart
+	var/obj/item/bodypart/old_part
+	var/bodypart_type
+	var/brute_dam
+	var/burn_dam
+	var/stamina_dam
+
+/datum/saved_bodypart/New(obj/item/bodypart/part)
+	old_part = part
+	bodypart_type = part.type
+	brute_dam = part.brute_dam
+	burn_dam = part.burn_dam
+	stamina_dam = part.stamina_dam
+
+/mob/living/carbon/proc/apply_saved_bodyparts(list/datum/saved_bodypart/parts)
+	var/list/dont_chop = list()
+	for(var/zone in parts)
+		var/datum/saved_bodypart/saved_part = parts[zone]
+		var/obj/item/bodypart/already = get_bodypart(zone)
+		if(QDELETED(saved_part.old_part))
+			saved_part.old_part = new saved_part.bodypart_type
+		if(!already || already != saved_part.old_part)
+			saved_part.old_part.replace_limb(src, TRUE)
+		saved_part.old_part.heal_damage(INFINITY, INFINITY, INFINITY, null, FALSE)
+		saved_part.old_part.receive_damage(saved_part.brute_dam, saved_part.burn_dam, saved_part.stamina_dam)
+		dont_chop[zone] = TRUE
+	for(var/_part in bodyparts)
+		var/obj/item/bodypart/part = _part
+		if(dont_chop[part.body_zone])
+			continue
+		part.drop_limb(TRUE)
+
+/mob/living/carbon/proc/save_bodyparts()
+	var/list/datum/saved_bodypart/ret = list()
+	for(var/_part in bodyparts)
+		var/obj/item/bodypart/part = _part
+		var/datum/saved_bodypart/saved_part = new(part)
+
+		ret[part.body_zone] = saved_part
+	return ret
+
+/obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
+	if(!on || !pictures_left || !isturf(target.loc))
+		return
+	if(!used)//selfie time
+		if(user == target)
+			to_chat(user, "<span class=notice>You take a selfie!</span>")
+		else
+			to_chat(user, "<span class=notice>You take a photo with [target]!</span>")
+			to_chat(target, "<span class=notice>[user] takes a photo with you!</span>")
+		to_chat(target, "<span class=notice>You'll remember this moment forever!</span>")
+
+		used = TRUE
+		target.AddComponent(/datum/component/dejavu, 2)
+	.=..()
+
+
+
+//Timefreeze camera - Old Burning Sepia result. Kept in case admins want to spawn it
 /obj/item/camera/timefreeze
 	name = "sepia-tinted camera"
 	desc = "They say a picture is like a moment stopped in time."
 	pictures_left = 1
 	pictures_max = 1
+	var/used = FALSE
 
 /obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
-	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
+	if(!used) //refilling the film does not refill the timestop
+		new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
+		used = TRUE
+		desc = "This camera has seen better days."
 	. = ..()
-	var/text = "The camera fades away"
-	if(disk)
-		text += ", leaving the disk behind!"
-		if(!user.put_in_hands(disk))
-			disk.forceMove(user.drop_location())
-	else
-		text += "!"
-	to_chat(user,"<span class='notice'>[text]</span>")
-	qdel(src)
+
 
 //Hypercharged slime cell - Charged Yellow
 /obj/item/stock_parts/cell/high/slime/hypercharged
@@ -86,17 +150,15 @@ Slimecrossing Items
 	filling_color = "#964B00"
 	tastes = list("cardboard" = 3, "sadness" = 3)
 	foodtype = null //Don't ask what went into them. You're better off not knowing.
-	list_reagents = list("stabilizednutriment" = 10, "nutriment" = 2) //Won't make you fat. Will make you question your sanity.
+	list_reagents = list(/datum/reagent/consumable/nutriment/stabilized = 10, /datum/reagent/consumable/nutriment = 2) //Won't make you fat. Will make you question your sanity.
 
 /obj/item/reagent_containers/food/snacks/rationpack/checkLiked(fraction, mob/M)	//Nobody likes rationpacks. Nobody.
 	if(last_check_time + 50 < world.time)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(H.mind && !H.has_trait(TRAIT_AGEUSIA))
+			if(H.mind && !HAS_TRAIT(H, TRAIT_AGEUSIA))
 				to_chat(H,"<span class='notice'>That didn't taste very good...</span>") //No disgust, though. It's just not good tasting.
-				GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-				if(mood)
-					mood.add_event(null,"gross_food", /datum/mood_event/gross_food)
+				SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "gross_food", /datum/mood_event/gross_food)
 				last_check_time = world.time
 				return
 	..()
@@ -113,12 +175,12 @@ Slimecrossing Items
 
 /obj/structure/ice_stasis/Initialize()
 	. = ..()
-	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, 1)
+	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, TRUE)
 
 /obj/structure/ice_stasis/Destroy()
 	for(var/atom/movable/M in contents)
 		M.forceMove(loc)
-	playsound(src, 'sound/effects/glassbr3.ogg', 50, 1)
+	playsound(src, 'sound/effects/glassbr3.ogg', 50, TRUE)
 	return ..()
 
 //Gold capture device - Chilling Gold

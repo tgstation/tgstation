@@ -2,7 +2,7 @@
 	if(!message || !subject)
 		return
 	var/F = file("[GLOB.log_directory]/[subject].html")
-	WRITE_FILE(F, "<small>[time_stamp()] [REF(src)] ([x],[y],[z])</small> || [src] [message]<br>")
+	WRITE_FILE(F, "[time_stamp()] [REF(src)] ([x],[y],[z]) || [src] [message]<br>")
 
 /client/proc/investigate_show()
 	set name = "Investigate"
@@ -22,7 +22,7 @@
 		else
 			logs_missing += "[subject] (empty)"
 
-	var/list/combined = logs_present + logs_missing
+	var/list/combined = sortList(logs_present) + sortList(logs_missing)
 
 	var/selected = input("Investigate what?", "Investigate") as null|anything in combined
 

@@ -221,6 +221,11 @@
 			D.adjust_money(SSeconomy.techweb_bounty)
 	return TRUE
 
+/datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE) //When something is researched, triggers the proc for this techweb only
+	. = ..()
+	if(.)
+		node.on_research()
+
 /datum/techweb/proc/unresearch_node_id(id)
 	return unresearch_node(SSresearch.techweb_node_by_id(id))
 

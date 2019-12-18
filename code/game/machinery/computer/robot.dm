@@ -25,15 +25,14 @@
 
 /obj/machinery/computer/robotics/ui_interact(mob/user)
 	. = ..()
-	if(z > 6)
-		to_chat(user, "<span class='boldannounce'>Unable to establish a connection: You're too far away from the station!</span>")
-		return
 	user.set_machine(src)
 	var/dat
 	var/list/robo_list = list()
 	var/robot_count
 	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 		if(!can_control(user, R))
+			continue
+		if(z != (get_turf(R)).z)
 			continue
 		robot_count++
 		var/unit_sync = "Independent"
@@ -69,9 +68,7 @@
 				dat += "<b>Unit Controls:</b> "
 				if(issilicon(user) && user != R)
 					var/mob/living/silicon/S = user
-					if(is_servant_of_ratvar(S) && !is_servant_of_ratvar(R))
-						dat += "<A href='?src=[REF(src)];convert=[REF(R)]'>(<font color=#BE8700><i>Convert</i></font>)</A> "
-					else if(S.hack_software && !R.emagged)
+					if(S.hack_software && !R.emagged)
 						dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
 				else if(IsAdminGhost(user) && !R.emagged)
 					dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
@@ -83,6 +80,8 @@
 	var/drones = 0
 	for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
 		if(D.hacked)
+			continue
+		if(z != (get_turf(D)).z)
 			continue
 		if(drones)
 			dat += "<br><br>"
@@ -153,14 +152,6 @@
 				log_game("[key_name(usr)] emagged [key_name(R)] using robotic console!")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 				R.SetEmagged(TRUE)
-
-	else if(href_list["convert"])
-		if(isAI(usr) && is_servant_of_ratvar(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["convert"]) in GLOB.silicon_mobs
-			if(istype(R) && !is_servant_of_ratvar(R) && R.connected_ai == usr)
-				log_game("[key_name(usr)] converted [key_name(R)] using robotic console!")
-				message_admins("[ADMIN_LOOKUPFLW(usr)] converted cyborg [key_name_admin(R)] using robotic console!")
-				add_servant_of_ratvar(R)
 
 	else if (href_list["killdrone"])
 		if(allowed(usr))

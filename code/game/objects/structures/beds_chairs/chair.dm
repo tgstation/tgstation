@@ -8,17 +8,18 @@
 	buckle_lying = 0 //you sit in a chair, not lay
 	resistance_flags = NONE
 	max_integrity = 250
-	integrity_failure = 25
+	integrity_failure = 0.1
+	custom_materials = list(/datum/material/iron = 2000)
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
 	layer = OBJ_LAYER
 
 /obj/structure/chair/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+	. = ..()
+	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 	if(!has_buckled_mobs())
-		to_chat(user, "<span class='notice'>Drag your sprite to sit in it.</span>")
+		. += "<span class='notice'>Drag your sprite to sit in it.</span>"
 
 /obj/structure/chair/Initialize()
 	. = ..()
@@ -53,8 +54,13 @@
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(buildstacktype && (!(flags_1 & NODECONSTRUCT_1)))
-		new buildstacktype(loc,buildstackamount)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(buildstacktype)
+			new buildstacktype(loc,buildstackamount)
+		else
+			for(var/i in custom_materials)
+				var/datum/material/M = i
+				new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 	..()
 
 /obj/structure/chair/attack_paw(mob/user)
@@ -63,11 +69,6 @@
 /obj/structure/chair/narsie_act()
 	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
 	W.setDir(dir)
-	qdel(src)
-
-/obj/structure/chair/ratvar_act()
-	var/obj/structure/chair/brass/B = new(get_turf(src))
-	B.setDir(dir)
 	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
@@ -79,7 +80,7 @@
 			return
 		var/obj/item/assembly/shock_kit/SK = W
 		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		E.setDir(dir)
 		E.part = SK
 		SK.forceMove(E)
@@ -120,6 +121,14 @@
 	handle_rotation(newdir)
 
 // Chair types
+
+///Material chair
+/obj/structure/chair/greyscale
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	item_chair = /obj/item/chair/greyscale
+	buildstacktype = null //Custom mats handle this
+
+
 /obj/structure/chair/wood
 	icon_state = "wooden_chair"
 	name = "wooden chair"
@@ -132,9 +141,6 @@
 
 /obj/structure/chair/wood/narsie_act()
 	return
-
-/obj/structure/chair/wood/normal //Kept for map compatibility
-
 
 /obj/structure/chair/wood/wings
 	icon_state = "wooden_chair_wings"
@@ -204,18 +210,16 @@
 	anchored = FALSE
 	buildstackamount = 5
 	item_chair = null
+	icon_state = "officechair_dark"
 
 
 /obj/structure/chair/office/Moved()
 	. = ..()
 	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, 1)
+		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 
 /obj/structure/chair/office/light
 	icon_state = "officechair_white"
-
-/obj/structure/chair/office/dark
-	icon_state = "officechair_dark"
 
 //Stool
 
@@ -238,7 +242,8 @@
 		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
-		var/C = new item_chair(loc)
+		var/obj/item/C = new item_chair(loc)
+		C.set_custom_materials(custom_materials)
 		TransferComponents(C)
 		usr.put_in_hands(C)
 		qdel(src)
@@ -263,13 +268,13 @@
 	throw_range = 3
 	hitsound = 'sound/items/trayhit1.ogg'
 	hit_reaction_chance = 50
-	materials = list(MAT_METAL = 2000)
+	custom_materials = list(/datum/material/iron = 2000)
 	var/break_chance = 5 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
 /obj/item/chair/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src,hitsound,50,1)
+	playsound(src,hitsound,50,TRUE)
 	return BRUTELOSS
 
 /obj/item/chair/narsie_act()
@@ -281,16 +286,21 @@
 	plant(user)
 
 /obj/item/chair/proc/plant(mob/user)
-	for(var/obj/A in get_turf(loc))
+	var/turf/T = get_turf(loc)
+	if(!isfloorturf(T))
+		to_chat(user, "<span class='warning'>You need ground to plant this on!</span>")
+		return
+	for(var/obj/A in T)
 		if(istype(A, /obj/structure/chair))
-			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
+			to_chat(user, "<span class='warning'>There is already a chair here!</span>")
 			return
 		if(A.density && !(A.flags_1 & ON_BORDER_1))
-			to_chat(user, "<span class='danger'>There is already something here.</span>")
+			to_chat(user, "<span class='warning'>There is already something here!</span>")
 			return
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
+	C.set_custom_materials(custom_materials)
 	TransferComponents(C)
 	C.setDir(dir)
 	qdel(src)
@@ -304,7 +314,7 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(materials[MAT_METAL])
+	else if(custom_materials[getmaterialref(/datum/material/iron)])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
@@ -329,6 +339,9 @@
 				C.Paralyze(20)
 		smash(user)
 
+/obj/item/chair/greyscale
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	origin_type = /obj/structure/chair/greyscale
 
 /obj/item/chair/stool
 	name = "stool"
@@ -354,7 +367,7 @@
 	max_integrity = 70
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/wood
-	materials = null
+	custom_materials = null
 	break_chance = 50
 
 /obj/item/chair/wood/narsie_act()
@@ -370,43 +383,6 @@
 	icon_state = "chairold"
 	item_chair = null
 
-/obj/structure/chair/brass
-	name = "brass chair"
-	desc = "A spinny chair made of brass. It looks uncomfortable."
-	icon_state = "brass_chair"
-	max_integrity = 150
-	buildstacktype = /obj/item/stack/tile/brass
-	buildstackamount = 1
-	item_chair = null
-	var/turns = 0
-
-/obj/structure/chair/brass/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	. = ..()
-
-/obj/structure/chair/brass/process()
-	setDir(turn(dir,-90))
-	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)
-	turns++
-	if(turns >= 8)
-		STOP_PROCESSING(SSfastprocess, src)
-
-/obj/structure/chair/brass/ratvar_act()
-	return
-
-/obj/structure/chair/brass/AltClick(mob/living/user)
-	turns = 0
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-		return
-	if(!(datum_flags & DF_ISPROCESSING))
-		user.visible_message("<span class='notice'>[user] spins [src] around, and Ratvarian technology keeps it spinning FOREVER.</span>", \
-		"<span class='notice'>Automated spinny chairs. The pinnacle of Ratvarian technology.</span>")
-		START_PROCESSING(SSfastprocess, src)
-	else
-		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
-		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
-		STOP_PROCESSING(SSfastprocess, src)
-
 /obj/structure/chair/bronze
 	name = "brass chair"
 	desc = "A spinny chair made of bronze. It has little cogs for wheels!"
@@ -415,8 +391,92 @@
 	buildstacktype = /obj/item/stack/tile/bronze
 	buildstackamount = 1
 	item_chair = null
+	var/turns = 0
+
+/obj/structure/chair/bronze/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	. = ..()
+
+/obj/structure/chair/bronze/process()
+	setDir(turn(dir,-90))
+	playsound(src, 'sound/effects/servostep.ogg', 50, FALSE)
+	turns++
+	if(turns >= 8)
+		STOP_PROCESSING(SSfastprocess, src)
 
 /obj/structure/chair/bronze/Moved()
 	. = ..()
 	if(has_gravity())
 		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
+
+/obj/structure/chair/bronze/AltClick(mob/living/user)
+	turns = 0
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		return
+	if(!(datum_flags & DF_ISPROCESSING))
+		user.visible_message("<span class='notice'>[user] spins [src] around, and the last vestiges of Ratvarian technology keeps it spinning FOREVER.</span>", \
+		"<span class='notice'>Automated spinny chairs. The pinnacle of ancient Ratvarian technology.</span>")
+		START_PROCESSING(SSfastprocess, src)
+	else
+		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
+		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
+		STOP_PROCESSING(SSfastprocess, src)
+
+/obj/structure/chair/mime
+	name = "invisible chair"
+	desc = "The mime needs to sit down and shut up."
+	anchored = FALSE
+	icon_state = null
+	buildstacktype = null
+	item_chair = null
+	flags_1 = NODECONSTRUCT_1
+	alpha = 0
+
+/obj/structure/chair/mime/post_buckle_mob(mob/living/M)
+	M.pixel_y += 5
+
+/obj/structure/chair/mime/post_unbuckle_mob(mob/living/M)
+	M.pixel_y -= 5
+
+
+/obj/structure/chair/plastic
+	icon_state = "plastic_chair"
+	name = "folding plastic chair"
+	desc = "No matter how much you squirm, it'll still be uncomfortable."
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
+	custom_materials = list(/datum/material/plastic = 2000)
+	buildstacktype = /obj/item/stack/sheet/plastic
+	buildstackamount = 2
+	item_chair = /obj/item/chair/plastic
+
+/obj/structure/chair/plastic/post_buckle_mob(mob/living/Mob)
+	Mob.pixel_y += 2
+	.=..()
+	if(iscarbon(Mob))
+		INVOKE_ASYNC(src, .proc/snap_check, Mob)
+
+/obj/structure/chair/plastic/post_unbuckle_mob(mob/living/Mob)
+	Mob.pixel_y -= 2
+
+/obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
+	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
+		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
+		if(do_after(Mob, 60, 1, Mob, 0))
+			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
+			qdel(src)
+
+/obj/item/chair/plastic
+	name = "folding plastic chair"
+	desc = "Somehow, you can always find one under the wrestling ring."
+	icon = 'icons/obj/chairs.dmi'
+	icon_state = "folded_chair"
+	item_state = "folded_chair"
+	lefthand_file = 'icons/mob/inhands/misc/chairs_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/chairs_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 7
+	throw_range = 5 //Lighter Weight --> Flies Farther.
+	custom_materials = list(/datum/material/plastic = 2000)
+	break_chance = 25
+	origin_type = /obj/structure/chair/plastic

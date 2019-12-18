@@ -12,7 +12,7 @@
 	var/on = FALSE
 	var/current_temperature = SHOWER_NORMAL
 	var/datum/looping_sound/showering/soundloop
-	var/reagent_id = "water"
+	var/reagent_id = /datum/reagent/water
 	var/reaction_volume = 200
 
 /obj/machinery/shower/Initialize()
@@ -49,6 +49,7 @@
 		return ..()
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
+	..()
 	to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
 	if(I.use_tool(src, user, 50))
 		switch(current_temperature)
@@ -126,8 +127,8 @@
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
 	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
-	L.wash_cream()
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = TRUE
@@ -143,16 +144,16 @@
 		if(M.head && wash_obj(M.head))
 			M.update_inv_head()
 
-		if(M.glasses && !(SLOT_GLASSES in obscured) && wash_obj(M.glasses))
+		if(M.glasses && !(ITEM_SLOT_EYES in obscured) && wash_obj(M.glasses))
 			M.update_inv_glasses()
 
-		if(M.wear_mask && !(SLOT_WEAR_MASK in obscured) && wash_obj(M.wear_mask))
+		if(M.wear_mask && !(ITEM_SLOT_MASK in obscured) && wash_obj(M.wear_mask))
 			M.update_inv_wear_mask()
 
 		if(M.ears && !(HIDEEARS in obscured) && wash_obj(M.ears))
 			M.update_inv_ears()
 
-		if(M.wear_neck && !(SLOT_NECK in obscured) && wash_obj(M.wear_neck))
+		if(M.wear_neck && !(ITEM_SLOT_NECK in obscured) && wash_obj(M.wear_neck))
 			M.update_inv_neck()
 
 		if(M.shoes && !(HIDESHOES in obscured) && wash_obj(M.shoes))
@@ -164,12 +165,6 @@
 
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(check_clothes(L))
-				to_chat(L, "<span class='warning'>You shower with your clothes on, and feel like an idiot.</span>")
-				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "badshower", /datum/mood_event/idiot_shower)
-			else
-				H.set_hygiene(HYGIENE_LEVEL_CLEAN)
-				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 
 			if(H.wear_suit && wash_obj(H.wear_suit))
 				H.update_inv_wear_suit()
@@ -187,10 +182,8 @@
 				H.update_inv_belt()
 		else
 			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	else
 		SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 
 /obj/machinery/shower/proc/contamination_cleanse(atom/thing)
 	var/datum/component/radioactive/healthy_green_glow = thing.GetComponent(/datum/component/radioactive)
@@ -226,23 +219,6 @@
 			C.adjust_bodytemperature(35, 0, 500)
 		L.adjustFireLoss(5)
 		to_chat(L, "<span class='danger'>[src] is searing!</span>")
-
-/obj/machinery/shower/proc/check_clothes(mob/living/carbon/human/H)
-	if(H.wear_suit && (H.wear_suit.clothing_flags & SHOWEROKAY))
-		// Do not check underclothing if the over-suit is suitable.
-		// This stops people feeling dumb if they're showering
-		// with a radiation suit on.
-		return FALSE
-
-	. = FALSE
-	if(H.wear_suit && !(H.wear_suit.clothing_flags & SHOWEROKAY))
-		. = TRUE
-	else if(H.w_uniform && !(H.w_uniform.clothing_flags & SHOWEROKAY))
-		. = TRUE
-	else if(H.wear_mask && !(H.wear_mask.clothing_flags & SHOWEROKAY))
-		. = TRUE
-	else if(H.head && !(H.head.clothing_flags & SHOWEROKAY))
-		. = TRUE
 
 
 /obj/effect/mist

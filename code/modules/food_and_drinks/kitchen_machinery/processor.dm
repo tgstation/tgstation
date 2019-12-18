@@ -22,9 +22,9 @@
 		rating_speed = M.rating
 
 /obj/machinery/processor/examine(mob/user)
-	..()
+	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.<span>")
+		. += "<span class='notice'>The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.</span>"
 
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (recipe.output && loc && !QDELETED(src))
@@ -74,8 +74,8 @@
 
 	var/datum/food_processor_process/P = select_recipe(O)
 	if(P)
-		user.visible_message("[user] put [O] into [src].", \
-			"You put [O] into [src].")
+		user.visible_message("<span class='notice'>[user] put [O] into [src].</span>", \
+			"<span class='notice'>You put [O] into [src].</span>")
 		user.transferItemToLoc(O, src, TRUE)
 		return 1
 	else
@@ -94,7 +94,7 @@
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		var/mob/living/pushed_mob = user.pulling
-		visible_message("<span class='warner'>[user] stuffs [pushed_mob] into [src]!</span>")
+		visible_message("<span class='warning'>[user] stuffs [pushed_mob] into [src]!</span>")
 		pushed_mob.forceMove(src)
 		user.stop_pulling()
 		return
@@ -102,10 +102,10 @@
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return TRUE
 	processing = TRUE
-	user.visible_message("[user] turns on [src].", \
+	user.visible_message("<span class='notice'>[user] turns on [src].</span>", \
 		"<span class='notice'>You turn on [src].</span>", \
-		"<span class='italics'>You hear a food processor.</span>")
-	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		"<span class='hear'>You hear a food processor.</span>")
+	playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
 	use_power(500)
 	var/total_time = 0
 	for(var/O in src.contents)
@@ -125,7 +125,7 @@
 		process_food(P, O)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	processing = FALSE
-	visible_message("\The [src] finishes processing.")
+	visible_message("<span class='notice'>\The [src] finishes processing.</span>")
 
 /obj/machinery/processor/verb/eject()
 	set category = "Object"
@@ -139,6 +139,10 @@
 			return
 	empty()
 	add_fingerprint(usr)
+
+/obj/machinery/processor/container_resist(mob/living/user)
+	user.forceMove(drop_location())
+	user.visible_message("<span class='notice'>[user] crawls free of the processor!</span>")
 
 /obj/machinery/processor/proc/empty()
 	for (var/obj/O in src)
@@ -186,7 +190,7 @@
 	if (!P)
 		return
 
-	visible_message("[picked_slime] is sucked into [src].")
+	visible_message("<span class='notice'>[picked_slime] is sucked into [src].</span>")
 	picked_slime.forceMove(src)
 
 /obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)

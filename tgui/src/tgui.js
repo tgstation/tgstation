@@ -13,22 +13,35 @@ Object.assign(Math, require('util/math'))
 // Set up the initialize function. This is either called below if JSON is provided
 // inline, or called by the server if it was not.
 import TGUI from 'tgui.ract'
-window.initialize = (dataString) => {
-  // Don't run twice.
-  window.tgui = window.tgui || new TGUI({
-    el: '#container',
-    data () {
-      const initial = JSON.parse(dataString)
-      return {
-        constants: require('util/constants'),
-        text: require('util/text'),
-        config: initial.config,
-        data: initial.data,
-        adata: initial.data
-      }
+
+// This thing was a part of an old index.html
+window.update = window.initialize = dataString => {
+  const data = JSON.parse(dataString);
+  // Initialize
+  if (!window.tgui) {
+    window.tgui = new TGUI({
+      el: '#container',
+      data () {
+        const initial = data;
+        return {
+          constants: require('util/constants'),
+          text: require('util/text'),
+          config: initial.config,
+          data: initial.data,
+          adata: initial.data,
+        };
+      },
+    });
+  }
+  // Update
+  if (window.tgui) {
+    window.tgui.set('config', data.config);
+    if (typeof data.data !== 'undefined') {
+      window.tgui.set('data', data.data);
+      window.tgui.animate('adata', data.data);
     }
-  })
-}
+  }
+};
 
 // Try to find data in the page. If the JSON was inlined, load it.
 const holder = document.getElementById('data')
@@ -38,16 +51,20 @@ if (data !== '{}') {
   window.initialize(data)
   holder.remove()
 }
-// Let the server know we're set up. This also sends data if it was not inlined.
-import { act } from 'util/byond'
-act(ref, 'tgui:initialize')
 
-// Load fonts.
-import { loadCSS } from 'fg-loadcss'
-loadCSS('font-awesome.min.css')
-// Handle font loads.
-import FontFaceObserver from 'fontfaceobserver'
-const fontawesome = new FontFaceObserver('FontAwesome')
-fontawesome.check('\uf240')
-  .then(() => document.body.classList.add('icons'))
-  .catch(() => document.body.classList.add('no-icons'))
+// Let the server know we're set up.
+// This also sends data if it was not inlined.
+// NOTE: This is currently handled by tgui-next. Only initialize if
+// we were loaded by tgui-fallback.html.
+import { act } from 'util/byond';
+import { loadCSS } from 'fg-loadcss';
+
+if (window.tguiFallback) {
+  act(ref, 'tgui:initialize');
+  // Load fonts.
+  loadCSS('v4shim.css')
+  loadCSS('font-awesome.css')
+}
+else {
+  act(ref, 'tgui:update');
+}

@@ -3,11 +3,14 @@
 	pressure_resistance = 8
 	max_integrity = 300
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
+	layer = BELOW_OBJ_LAYER
+
 	var/climb_time = 20
 	var/climb_stun = 20
 	var/climbable = FALSE
 	var/mob/living/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
+
 
 /obj/structure/Initialize()
 	if (!armor)
@@ -43,9 +46,13 @@
 	. = ..()
 	if(!climbable)
 		return
-	if(user == O && iscarbon(O))
-		var/mob/living/carbon/C = O
-		if(C.mobility_flags & MOBILITY_MOVE)
+	if(user == O && isliving(O))
+		var/mob/living/L = O
+		if(isanimal(L))
+			var/mob/living/simple_animal/A = L
+			if (!A.dextrous)
+				return
+		if(L.mobility_flags & MOBILITY_MOVE)
 			climb_structure(user)
 			return
 	if(!istype(O, /obj/item) || user.get_active_held_item() != O)
@@ -72,7 +79,7 @@
 		adjusted_climb_time *= 2
 	if(isalien(user))
 		adjusted_climb_time *= 0.25 //aliens are terrifyingly fast
-	if(user.has_trait(TRAIT_FREERUNNING)) //do you have any idea how fast I am???
+	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		adjusted_climb_time *= 0.8
 	structureclimber = user
 	if(do_mob(user, user, adjusted_climb_time))
@@ -89,15 +96,15 @@
 	structureclimber = null
 
 /obj/structure/examine(mob/user)
-	..()
+	. = ..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			to_chat(user, "<span class='warning'>It's on fire!</span>")
+			. += "<span class='warning'>It's on fire!</span>"
 		if(broken)
-			to_chat(user, "<span class='notice'>It appears to be broken.</span>")
+			. += "<span class='notice'>It appears to be broken.</span>"
 		var/examine_status = examine_status(user)
 		if(examine_status)
-			to_chat(user, examine_status)
+			. += examine_status
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	var/healthpercent = (obj_integrity/max_integrity) * 100

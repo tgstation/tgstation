@@ -10,26 +10,27 @@
 	circuit = /obj/item/circuitboard/machine/cell_charger
 	pass_flags = PASSTABLE
 	var/obj/item/stock_parts/cell/charging = null
-	var/chargelevel = -1
 	var/charge_rate = 500
 
-/obj/machinery/cell_charger/proc/updateicon()
-	cut_overlays()
-	if(charging)
-		add_overlay(image(charging.icon, charging.icon_state))
-		add_overlay("ccharger-on")
-		if(!(stat & (BROKEN|NOPOWER)))
-			var/newlevel = 	round(charging.percent() * 4 / 100)
-			chargelevel = newlevel
-			add_overlay("ccharger-o[newlevel]")
+/obj/machinery/cell_charger/update_overlays()
+	. = ..()
+
+	if(!charging)
+		return
+	
+	. += image(charging.icon, charging.icon_state)
+	. += "ccharger-on"
+	if(!(stat & (BROKEN|NOPOWER)))
+		var/newlevel = 	round(charging.percent() * 4 / 100)
+		. += "ccharger-o[newlevel]"
 
 /obj/machinery/cell_charger/examine(mob/user)
-	..()
-	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
+	. = ..()
+	. += "There's [charging ? "a" : "no"] cell in the charger."
 	if(charging)
-		to_chat(user, "Current charge: [round(charging.percent(), 1)]%.")
+		. += "Current charge: [round(charging.percent(), 1)]%."
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Charge rate at <b>[charge_rate]J</b> per cycle.<span>")
+		. += "<span class='notice'>The status display reads: Charge rate at <b>[charge_rate]J</b> per cycle.</span>"
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)
@@ -53,9 +54,8 @@
 				return
 
 			charging = W
-			user.visible_message("[user] inserts a cell into [src].", "<span class='notice'>You insert a cell into [src].</span>")
-			chargelevel = -1
-			updateicon()
+			user.visible_message("<span class='notice'>[user] inserts a cell into [src].</span>", "<span class='notice'>You insert a cell into [src].</span>")
+			update_icon()
 	else
 		if(!charging && default_deconstruction_screwdriver(user, icon_state, icon_state, W))
 			return
@@ -77,8 +77,7 @@
 /obj/machinery/cell_charger/proc/removecell()
 	charging.update_icon()
 	charging = null
-	chargelevel = -1
-	updateicon()
+	update_icon()
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	. = ..()
@@ -90,7 +89,7 @@
 	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
 
-	user.visible_message("[user] removes [charging] from [src].", "<span class='notice'>You remove [charging] from [src].</span>")
+	user.visible_message("<span class='notice'>[user] removes [charging] from [src].</span>", "<span class='notice'>You remove [charging] from [src].</span>")
 
 	removecell()
 
@@ -129,4 +128,4 @@
 	use_power(charge_rate)
 	charging.give(charge_rate)	//this is 2558, efficient batteries exist
 
-	updateicon()
+	update_icon()

@@ -33,6 +33,37 @@
 /datum/proc/ui_data(mob/user)
 	return list() // Not implemented.
 
+ /**
+  * public
+  *
+  * Static Data to be sent to the UI.
+  * Static data differs from normal data in that it's large data that should be sent infrequently
+  * This is implemented optionally for heavy uis that would be sending a lot of redundant data
+  * frequently.
+  * Gets squished into one object on the frontend side, but the static part is cached.
+  *
+  * required user mob The mob interacting with the UI.
+  *
+  * return list Statuic Data to be sent to the UI.
+ **/
+/datum/proc/ui_static_data(mob/user)
+	return list()
+
+/**
+  * public
+  *
+  * Forces an update on static data. Should be done manually whenever something happens to change static data.
+  *
+  * required user the mob currently interacting with the ui
+  * optional ui ui to be updated
+  * optional ui_key ui key of ui to be updated
+  *
+**/
+/datum/proc/update_static_data(mob/user, datum/tgui/ui, ui_key = "main")
+	ui = SStgui.try_update_ui(user, src, ui_key, ui)
+	if(!ui)
+		return //If there was no ui to update, there's no static data to update either.
+	ui.push_data(null, ui_static_data(), TRUE)
 
  /**
   * public
@@ -49,6 +80,20 @@
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return 1 // If UI is not interactive or usr calling Topic is not the UI user, bail.
 
+ /**
+  * public
+  *
+  * Called on an object when a tgui object is being created, allowing you to customise the html
+  * For example: inserting a custom stylesheet that you need in the head
+  *
+  * For this purpose, some tags are available in the html, to be parsed out with replacetext
+  * (customheadhtml) - Additions to the head tag
+  *
+  * required html the html base text
+  *
+ **/
+/datum/proc/ui_base_html(html)
+	return html
 
  /**
   * private

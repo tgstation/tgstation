@@ -41,16 +41,11 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aj" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	environ = 3;
-	equipment = 3;
-	pixel_y = 32;
-	req_access = null
+	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "ak" = (
@@ -58,34 +53,12 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "al" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "am" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/small,
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"an" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"ao" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"ap" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aq" = (
@@ -102,27 +75,10 @@
 /turf/closed/wall,
 /area/awaymission/academy/headmaster)
 "at" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/wood{
 	name = "Headmaster Room"
 	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"au" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"av" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aw" = (
@@ -142,19 +98,15 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "az" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
 /obj/item/stack/sheet/animalhide/monkey,
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "aA" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "aB" = (
@@ -184,12 +136,10 @@
 /turf/closed/indestructible/rock,
 /area/space/nearstation)
 "aH" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aI" = (
@@ -239,9 +189,7 @@
 "aR" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/gold,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aS" = (
@@ -252,13 +200,11 @@
 /turf/closed/wall,
 /area/awaymission/academy/headmaster)
 "aU" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "aV" = (
-/obj/structure/chair/office/dark,
+/obj/structure/chair/office,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aW" = (
@@ -281,10 +227,8 @@
 /area/awaymission/academy/headmaster)
 "ba" = (
 /obj/structure/table/wood,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/item/pen/red,
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bb" = (
@@ -303,7 +247,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "be" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/carpet,
@@ -319,10 +263,8 @@
 /area/awaymission/academy/headmaster)
 "bh" = (
 /obj/structure/table/wood,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/item/dice/d20,
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bi" = (
@@ -336,16 +278,14 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "bk" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "bl" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/carpet,
@@ -369,9 +309,7 @@
 /area/awaymission/academy/headmaster)
 "bq" = (
 /obj/machinery/door/airlock/gold,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "br" = (
@@ -490,39 +428,8 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
-"bN" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/headmaster)
-"bO" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/headmaster)
-"bP" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/headmaster)
 "bQ" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -536,13 +443,8 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "bR" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "bS" = (
@@ -554,9 +456,6 @@
 /area/awaymission/academy/headmaster)
 "bU" = (
 /obj/machinery/autolathe,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "bV" = (
@@ -592,9 +491,6 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "ce" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -605,15 +501,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/headmaster)
-"cf" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "cg" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
@@ -628,9 +517,6 @@
 /area/awaymission/academy/headmaster)
 "ci" = (
 /obj/structure/table,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
@@ -655,12 +541,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
-"cm" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/headmaster)
 "co" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
 /turf/open/floor/plating,
@@ -669,14 +549,6 @@
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/showroomfloor,
 /area/awaymission/academy/headmaster)
-"cq" = (
-/obj/structure/table,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/item/pen/red,
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
 "cr" = (
 /obj/machinery/light{
 	dir = 4
@@ -696,18 +568,18 @@
 /obj/machinery/door/window{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cw" = (
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cx" = (
 /obj/machinery/door/window{
 	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cy" = (
@@ -716,10 +588,7 @@
 /area/awaymission/academy/headmaster)
 "cz" = (
 /obj/structure/table,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/item/stack/cable_coil/random,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "cA" = (
@@ -746,27 +615,10 @@
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
-"cE" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
 "cF" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/door/airlock/plasma,
+/obj/structure/cable,
 /turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"cG" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
 "cH" = (
 /obj/structure/sign/warning/nosmoking/circle,
@@ -792,12 +644,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
-"cM" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
 "cN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -875,36 +721,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/headmaster)
-"cW" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/headmaster)
-"cX" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"cY" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"cZ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"da" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
 "db" = (
 /obj/machinery/light{
 	dir = 8
@@ -994,13 +810,6 @@
 /obj/machinery/gibber,
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
-"do" = (
-/obj/machinery/mech_bay_recharge_port,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
 "dp" = (
 /turf/open/floor/mech_bay_recharge_floor,
 /area/awaymission/academy/classrooms)
@@ -1008,9 +817,7 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
 "dr" = (
@@ -1021,7 +828,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "ds" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -1060,33 +867,9 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/headmaster)
 "dz" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/structure/reagent_dispensers/fueltank,
+/obj/structure/cable,
 /turf/open/floor/circuit/green,
-/area/awaymission/academy/classrooms)
-"dA" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/circuit/green,
-/area/awaymission/academy/classrooms)
-"dB" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "dC" = (
 /turf/open/floor/grass,
@@ -1140,41 +923,6 @@
 /obj/item/seeds/tomato/blue/bluespace,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-"dN" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"dO" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"dP" = (
-/obj/machinery/door/airlock/freezer,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/academy/classrooms)
-"dQ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/academy/classrooms)
-"dR" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/academy/classrooms)
 "dS" = (
 /obj/structure/kitchenspike,
 /turf/open/floor/plasteel/white,
@@ -1185,9 +933,7 @@
 /area/awaymission/academy/classrooms)
 "dU" = (
 /obj/structure/mineral_door/iron,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "dV" = (
@@ -1204,12 +950,6 @@
 /area/awaymission/academy/classrooms)
 "dY" = (
 /obj/structure/closet/crate/freezer,
-/turf/open/floor/plasteel/white,
-/area/awaymission/academy/classrooms)
-"dZ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
 "ea" = (
@@ -1244,13 +984,11 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "ef" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "eg" = (
@@ -1277,25 +1015,18 @@
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "ek" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	environ = 3;
-	equipment = 3;
-	pixel_y = 32;
-	req_access = null
+	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "el" = (
 /turf/open/floor/carpet,
 /area/awaymission/academy/classrooms)
 "em" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/classrooms)
 "en" = (
@@ -1333,7 +1064,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "er" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
 "es" = (
@@ -1371,21 +1102,12 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "ew" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/classrooms)
 "ex" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"ey" = (
-/obj/machinery/door/airlock/freezer,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
 "ez" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1464,18 +1186,6 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/classrooms)
-"eI" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/academy/classrooms)
 "eJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -1512,9 +1222,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "eO" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
@@ -1582,9 +1290,7 @@
 /turf/open/floor/plasteel/chapel,
 /area/awaymission/academy/classrooms)
 "eX" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/chapel{
 	dir = 8
 	},
@@ -1632,106 +1338,6 @@
 "fc" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"fd" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/classrooms)
-"fe" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/classrooms)
-"ff" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/classrooms)
-"fg" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/academy/classrooms)
-"fh" = (
-/obj/structure/mineral_door/wood,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"fi" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white/corner,
-/area/awaymission/academy/classrooms)
-"fj" = (
-/obj/structure/table,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white/corner,
-/area/awaymission/academy/classrooms)
-"fk" = (
-/obj/structure/table/reinforced,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/academy/classrooms)
-"fl" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/awaymission/academy/classrooms)
-"fm" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/classrooms)
 "fn" = (
 /obj/structure/table,
@@ -1842,52 +1448,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-"fx" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
 "fy" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/structure/noticeboard{
 	pixel_y = -32
 	},
 /obj/item/paper/fluff/awaymissions/academy/class/biology,
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/academy/classrooms)
-"fz" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/academy/classrooms)
-"fA" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/academy/classrooms)
-"fB" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/carpet,
 /area/awaymission/academy/classrooms)
 "fC" = (
 /obj/machinery/light,
@@ -1902,47 +1468,19 @@
 "fD" = (
 /turf/closed/wall,
 /area/awaymission/academy/academyaft)
-"fE" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
 "fF" = (
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
-"fG" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
 "fH" = (
-/obj/machinery/shieldwallgen,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/machinery/power/shieldwallgen,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "fI" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/white/side{
-	dir = 1
-	},
-/area/awaymission/academy/classrooms)
-"fJ" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -1968,22 +1506,6 @@
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/academyaft)
 "fP" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/classrooms)
-"fQ" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -2036,20 +1558,12 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "fY" = (
-/mob/living/simple_animal/hostile/wizard,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/wizard,
 /turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
-"fZ" = (
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "ga" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2070,7 +1584,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "gd" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/wood,
 /area/awaymission/academy/classrooms)
 "ge" = (
@@ -2081,32 +1595,11 @@
 /obj/structure/holohoop,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
-"gg" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
 "gh" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/academyaft)
-"gi" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
 "gk" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/recharger,
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
@@ -2170,9 +1663,6 @@
 /obj/machinery/door/window{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gq" = (
@@ -2183,30 +1673,6 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/awaymission/academy/classrooms)
-"gs" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
-"gt" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/classrooms)
 "gu" = (
 /obj/structure/window/reinforced,
@@ -2271,26 +1737,6 @@
 /obj/item/scalpel,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-"gE" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
-"gF" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"gG" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
 "gH" = (
 /obj/structure/table,
 /obj/item/paper/fluff/awaymissions/academy/grade/aplus,
@@ -2386,54 +1832,10 @@
 /obj/structure/mineral_door/iron,
 /turf/open/floor/carpet,
 /area/awaymission/academy/classrooms)
-"gS" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
 "gT" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/gold,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /turf/open/floor/carpet,
-/area/awaymission/academy/classrooms)
-"gU" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/academy/classrooms)
-"gV" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
 /area/awaymission/academy/classrooms)
 "gW" = (
 /obj/structure/table,
@@ -2458,43 +1860,19 @@
 /obj/item/target,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-"gY" = (
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/classrooms)
-"gZ" = (
-/obj/machinery/shieldwallgen,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/classrooms)
 "ha" = (
-/turf/open/floor/plasteel/white/side{
-	dir = 2
-	},
+/turf/open/floor/plasteel/white/side,
 /area/awaymission/academy/classrooms)
 "hb" = (
 /obj/structure/chair/stool,
-/turf/open/floor/plasteel/white/side{
-	dir = 2
-	},
+/turf/open/floor/plasteel/white/side,
 /area/awaymission/academy/classrooms)
 "hc" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/academy/academyaft)
 "hd" = (
 /obj/structure/mineral_door/wood,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "he" = (
@@ -2504,51 +1882,16 @@
 "hf" = (
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
-"hg" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"hh" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"hi" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hk" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
 "hl" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	environ = 3;
-	equipment = 3;
-	pixel_y = 32;
-	req_access = null
+	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "hm" = (
 /obj/structure/grille,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "hn" = (
@@ -2584,129 +1927,41 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-"ht" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hv" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hx" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"hy" = (
-/obj/machinery/power/smes/magical,
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
 "hz" = (
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
 /turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"hA" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "hB" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hC" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
-"hD" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/maintenance_hatch,
-/turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "hE" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "hF" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "hH" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-"hI" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"hJ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
 "hK" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/item/caution,
+/obj/structure/cable,
+/obj/item/clothing/suit/caution,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -2717,20 +1972,8 @@
 /obj/structure/mecha_wreckage/durand,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
-"hM" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
 "hN" = (
 /obj/structure/frame/machine,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"hO" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "hQ" = (
@@ -2754,12 +1997,12 @@
 "hT" = (
 /obj/structure/closet,
 /obj/item/storage/belt/soulstone,
-/obj/item/clothing/under/schoolgirl,
+/obj/item/clothing/under/costume/schoolgirl,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "hU" = (
 /obj/structure/closet,
-/obj/item/clothing/under/skirt/black,
+/obj/item/clothing/under/dress/skirt,
 /obj/item/clothing/glasses/regular,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
@@ -2772,7 +2015,7 @@
 "hW" = (
 /obj/structure/closet,
 /obj/item/lipstick/random,
-/obj/item/clothing/under/schoolgirl,
+/obj/item/clothing/under/costume/schoolgirl,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "hX" = (
@@ -2820,15 +2063,6 @@
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-"if" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
 "ih" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/mineral/plasma{
@@ -2846,30 +2080,18 @@
 /obj/item/circuitboard/machine/telecomms/relay,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-"ik" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/academy/academyaft)
 "il" = (
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "im" = (
 /obj/structure/mirror{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "in" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "io" = (
 /obj/structure/rack,
@@ -2893,9 +2115,7 @@
 /area/awaymission/academy/academyaft)
 "ir" = (
 /obj/structure/mineral_door/iron,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "is" = (
 /obj/structure/rack,
@@ -2920,17 +2140,13 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iw" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "ix" = (
 /obj/machinery/light{
@@ -2948,18 +2164,14 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iA" = (
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = 11
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iB" = (
 /obj/structure/rack,
@@ -2978,9 +2190,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iE" = (
 /obj/machinery/light{
@@ -3001,16 +2211,14 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iH" = (
 /obj/item/paper,
 /turf/open/floor/wood,
 /area/awaymission/academy/academyaft)
 "iI" = (
-/obj/item/stack/cable_coil/random,
+/obj/item/stack/cable_coil,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "iJ" = (
@@ -3038,14 +2246,10 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/vomit,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "iO" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/academy/academyaft)
 "iP" = (
@@ -3077,9 +2281,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -3090,38 +2291,13 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "iT" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"iU" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
-"iV" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "iW" = (
 /obj/structure/window/reinforced{
 	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/airless/white{
 	dir = 4
@@ -3151,69 +2327,27 @@
 /obj/structure/shuttle/engine/propulsion/right,
 /turf/open/space,
 /area/awaymission/academy/academyaft)
-"jb" = (
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
 "jc" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-"jd" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
-"je" = (
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
 "jf" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/airless/white{
 	dir = 4
 	},
 /area/awaymission/academy/academyaft)
 "jg" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/structure/cable,
 /turf/open/floor/plasteel/airless/white,
-/area/awaymission/academy/academyaft)
-"jh" = (
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "ji" = (
 /obj/structure/table,
@@ -3221,9 +2355,6 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "jj" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -3231,12 +2362,10 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
 "jk" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jl" = (
@@ -3250,9 +2379,6 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jn" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/airless/white{
 	dir = 4
 	},
@@ -3269,13 +2395,8 @@
 /turf/open/floor/plasteel/airless/white,
 /area/awaymission/academy/academyaft)
 "jp" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/item/weldingtool,
+/obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/awaymission/academy/classrooms)
 "jq" = (
@@ -3294,20 +2415,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
-"js" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel/airless/white{
-	dir = 4
-	},
-/area/awaymission/academy/academyaft)
 "jt" = (
 /obj/structure/grille,
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
 /obj/item/shard,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/awaymission/academy/academyaft)
 "ju" = (
@@ -3390,18 +2501,11 @@
 /obj/structure/window/reinforced,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
-"jE" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyaft)
 "jF" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jG" = (
@@ -3416,19 +2520,11 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
-"jI" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academyaft)
 "jJ" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jK" = (
@@ -3489,9 +2585,7 @@
 /area/awaymission/academy/academyaft)
 "jQ" = (
 /obj/machinery/door/airlock/hatch,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
 "jR" = (
@@ -3508,9 +2602,7 @@
 /turf/open/floor/grass,
 /area/awaymission/academy/academygate)
 "jU" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "jV" = (
@@ -3528,35 +2620,12 @@
 /turf/open/floor/grass,
 /area/awaymission/academy/academygate)
 "jZ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/door/window,
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "ka" = (
 /obj/machinery/door/window,
-/turf/open/floor/carpet,
-/area/awaymission/academy/academygate)
-"kb" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academygate)
-"kc" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/academy/academygate)
-"kd" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "ke" = (
@@ -3569,53 +2638,25 @@
 "kh" = (
 /obj/machinery/power/apc/unlocked{
 	dir = 1;
-	environ = 3;
-	equipment = 3;
-	pixel_y = 32;
-	req_access = null
+	pixel_y = 23
 	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "ki" = (
-/obj/item/stack/cable_coil/random,
+/obj/item/stack/cable_coil,
+/obj/structure/cable,
 /turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"kj" = (
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"kk" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"kl" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "km" = (
 /obj/machinery/gateway{
 	dir = 9
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
 	},
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kn" = (
 /obj/machinery/gateway{
 	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "2-8"
 	},
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
@@ -3632,13 +2673,13 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kq" = (
-/mob/living/simple_animal/hostile/wizard,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/wizard,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "kr" = (
@@ -3655,6 +2696,7 @@
 /area/awaymission/academy/academygate)
 "kt" = (
 /obj/machinery/gateway,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "ku" = (
@@ -3669,8 +2711,8 @@
 /area/awaymission/academy/academygate)
 "kw" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 8
+	dir = 8;
+	icon_state = "fakewindows"
 	},
 /area/awaymission/academy/headmaster)
 "kx" = (
@@ -3682,9 +2724,7 @@
 /obj/machinery/door/poddoor/shutters{
 	id = "AcademyGate"
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kz" = (
@@ -3692,18 +2732,17 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/classrooms)
 "kA" = (
-/mob/living/simple_animal/hostile/wizard,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/wizard,
 /turf/open/floor/plasteel/white/corner,
 /area/awaymission/academy/classrooms)
 "kB" = (
 /obj/structure/chair,
-/mob/living/simple_animal/hostile/wizard,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3714,6 +2753,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/wizard,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/academy/classrooms)
 "kC" = (
@@ -3726,31 +2766,17 @@
 /area/awaymission/academy/academyaft)
 "kF" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 8
+	dir = 8;
+	icon_state = "fakewindows2"
 	},
 /area/awaymission/academy/headmaster)
 "kG" = (
 /mob/living/simple_animal/hostile/wizard,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 2
-	},
-/area/awaymission/academy/academyaft)
-"kH" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "kI" = (
+/obj/machinery/gateway/centeraway,
 /obj/structure/cable,
-/obj/machinery/gateway/centeraway{
-	calibrated = 1
-	},
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
 "kJ" = (
@@ -3759,9 +2785,6 @@
 /area/awaymission/academy/classrooms)
 "kK" = (
 /obj/structure/table,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /obj/item/book/manual/ripley_build_and_repair,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
@@ -3770,15 +2793,6 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "kM" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /obj/structure/trap/chill,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
@@ -3898,39 +2912,19 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "ln" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-2"
-	},
-/turf/open/floor/vault,
-/area/awaymission/academy/academyengine)
-"lo" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
+/obj/structure/cable,
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "lp" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	pixel_y = 32
+	pixel_y = 23
 	},
-/obj/structure/cable{
-	icon_state = "0-8"
-	},
+/obj/structure/cable,
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "lq" = (
 /turf/closed/wall/rust,
-/area/awaymission/academy/academyengine)
-"lr" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "ls" = (
 /obj/machinery/power/smes/magical,
@@ -3994,18 +2988,6 @@
 "lF" = (
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/academy/academyengine)
-"lG" = (
-/obj/structure/cable{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyengine)
-"lH" = (
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyengine)
 "lI" = (
 /obj/structure/ladder/unbreakable/rune{
 	id = "academy_engine"
@@ -4019,10 +3001,6 @@
 "lK" = (
 /obj/effect/immovablerod{
 	dir = 4
-	},
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
@@ -4039,18 +3017,6 @@
 "lN" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plating,
-/area/awaymission/academy/academyengine)
-"lO" = (
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academyengine)
-"lP" = (
-/obj/structure/cable{
-	icon_state = "2-4"
-	},
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "lQ" = (
@@ -4223,7 +3189,7 @@
 /turf/open/floor/light,
 /area/awaymission/academy/academyengine)
 "my" = (
-/obj/structure/chair/wood/normal,
+/obj/structure/chair/wood,
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
 "mz" = (
@@ -4232,7 +3198,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
 "mA" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -4242,7 +3208,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
 "mC" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -4285,7 +3251,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
 "mM" = (
-/obj/structure/chair/wood/normal{
+/obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -4331,8 +3297,8 @@
 /area/awaymission/academy/academycellar)
 "mW" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 4
+	dir = 4;
+	icon_state = "fakewindows"
 	},
 /area/awaymission/academy/headmaster)
 "mX" = (
@@ -4345,14 +3311,14 @@
 /area/space/nearstation)
 "mZ" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 1
+	dir = 1;
+	icon_state = "fakewindows"
 	},
 /area/awaymission/academy/headmaster)
 "na" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 1
+	dir = 1;
+	icon_state = "fakewindows2"
 	},
 /area/awaymission/academy/headmaster)
 "nb" = (
@@ -4371,38 +3337,38 @@
 /area/awaymission/academy/headmaster)
 "nd" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 1
+	dir = 1;
+	icon_state = "fakewindows"
 	},
 /area/awaymission/academy/academyengine)
 "ne" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 1
+	dir = 1;
+	icon_state = "fakewindows2"
 	},
 /area/awaymission/academy/academyengine)
 "nf" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 6
+	dir = 6;
+	icon_state = "fakewindows2"
 	},
 /area/awaymission/academy/headmaster)
 "ng" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 8
+	dir = 8;
+	icon_state = "fakewindows"
 	},
 /area/awaymission/academy/academyengine)
 "nh" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 8
+	dir = 8;
+	icon_state = "fakewindows2"
 	},
 /area/awaymission/academy/academyengine)
 "ni" = (
 /turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 4
+	dir = 4;
+	icon_state = "fakewindows"
 	},
 /area/awaymission/academy/academyengine)
 "nj" = (
@@ -4437,24 +3403,55 @@
 	},
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
-"LW" = (
-/obj/structure/cable{
-	icon_state = "4-8"
+"np" = (
+/obj/item/stack/cable_coil,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/awaymission/academy/academyaft)
+"sw" = (
+/obj/machinery/power/terminal{
+	dir = 1
 	},
+/turf/open/floor/vault,
+/area/awaymission/academy/academyengine)
+"AA" = (
+/obj/structure/cable,
+/turf/open/floor/carpet,
+/area/awaymission/academy/academyaft)
+"CD" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/academy/classrooms)
+"Dy" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/awaymission/academy/headmaster)
+"DX" = (
+/obj/structure/cable,
+/turf/open/floor/plasteel/white/side,
+/area/awaymission/academy/classrooms)
+"In" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/awaymission/academy/classrooms)
+"LW" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "Tk" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 
@@ -10353,13 +9350,13 @@ bs
 bs
 bU
 ci
-cq
+gb
 cz
 kK
-cM
-cX
+bz
+bz
 de
-do
+dH
 jp
 dH
 de
@@ -10487,7 +9484,7 @@ bV
 bz
 bz
 bz
-cY
+bz
 de
 dp
 dz
@@ -10512,14 +9509,14 @@ gL
 bB
 bB
 hc
-hg
-hy
-hO
-hy
-hO
-ip
 hf
-ho
+ip
+hE
+ip
+hE
+ip
+hE
+hB
 hc
 hc
 aa
@@ -10617,10 +9614,10 @@ bB
 kJ
 kL
 cN
-cZ
+bV
 de
 dq
-dA
+dz
 dI
 de
 bE
@@ -10642,14 +9639,14 @@ bB
 bB
 gL
 hc
-hh
-hz
 hf
 hz
 hf
 hz
 hf
-ho
+hz
+hf
+hB
 ho
 hc
 hc
@@ -10747,10 +9744,10 @@ bB
 bB
 bB
 bB
-cZ
 bV
 bV
-cY
+bV
+dX
 bV
 bz
 bE
@@ -10763,23 +9760,23 @@ fc
 eu
 fv
 bs
-fG
-fZ
+CD
+CD
 gp
-fZ
-fZ
+CD
+CD
 gp
-fZ
-gY
+CD
+CD
 hc
-hh
-hh
 hf
-hh
 hf
-hh
 hf
-iI
+hf
+hf
+hf
+hf
+np
 ho
 ho
 hc
@@ -10877,10 +9874,10 @@ bB
 lW
 cJ
 bB
-cZ
+bV
 bV
 bz
-cY
+dX
 bz
 bV
 bE
@@ -10896,20 +9893,20 @@ bE
 fH
 ga
 ga
+In
 ga
 ga
 ga
-ga
-gZ
+fH
 hc
-hi
-hA
-ik
-if
-ik
-hM
-kD
 ho
+ho
+ho
+ho
+ho
+ho
+kD
+hB
 mb
 ho
 hc
@@ -11007,10 +10004,10 @@ bB
 bB
 bB
 cO
-cZ
+bV
 bz
 bz
-cY
+dX
 bz
 bz
 dT
@@ -11024,22 +10021,22 @@ ee
 ee
 dT
 fI
-bz
-bz
-bz
-bz
-bz
-bz
-ha
+dX
+dX
+dX
+dX
+dX
+dX
+DX
 hc
-hv
+ho
 ho
 ho
 iI
 ho
 ho
 ho
-ho
+hB
 ho
 ho
 hc
@@ -11137,12 +10134,12 @@ bz
 bz
 bz
 bz
-da
-cM
-cM
-dB
-cM
-cM
+bz
+bz
+bz
+dX
+dX
+dX
 dU
 ef
 ef
@@ -11151,9 +10148,9 @@ ef
 ef
 ef
 ef
-fx
+ef
 dU
-fJ
+fI
 bz
 gq
 du
@@ -11162,14 +10159,14 @@ du
 gq
 hb
 hc
-hk
+ho
 hB
-ho
-ho
-ho
-ho
-ho
-ho
+hB
+hB
+hB
+hB
+hB
+hB
 ho
 ho
 iJ
@@ -11279,7 +10276,7 @@ ej
 ej
 ej
 ej
-ej
+ew
 ej
 fy
 bE
@@ -11293,7 +10290,7 @@ bz
 ha
 hc
 hl
-hC
+hB
 hQ
 ih
 ih
@@ -11409,9 +10406,9 @@ ej
 el
 el
 el
-el
+em
 ej
-fg
+ej
 bE
 fK
 gb
@@ -11539,9 +10536,9 @@ ej
 el
 eM
 eV
-el
+em
 ej
-fg
+ej
 bE
 fL
 gc
@@ -11552,7 +10549,7 @@ gr
 gr
 dm
 hc
-hm
+hR
 hE
 hR
 hc
@@ -11669,9 +10666,9 @@ ej
 el
 eN
 eW
-el
+em
 ej
-fg
+ej
 bE
 bE
 bE
@@ -11799,9 +10796,9 @@ ej
 el
 el
 kz
-el
+em
 ej
-fg
+ej
 bE
 fM
 dc
@@ -11929,10 +10926,10 @@ ej
 el
 eM
 eV
-el
+em
 ej
-fz
-es
+ej
+CD
 dc
 gd
 df
@@ -11943,7 +10940,7 @@ ds
 dc
 fD
 ho
-hv
+hB
 hS
 fD
 il
@@ -11956,9 +10953,9 @@ il
 il
 hc
 hc
-jb
+iT
 hc
-jb
+iT
 hc
 hc
 aa
@@ -12059,10 +11056,10 @@ ej
 el
 eN
 eW
-el
+em
 ej
 ej
-es
+CD
 dc
 dc
 dc
@@ -12073,7 +11070,7 @@ dc
 dc
 fD
 ho
-hv
+hB
 hT
 fD
 il
@@ -12086,9 +11083,9 @@ kG
 il
 fD
 iR
-hv
+hB
 ji
-hv
+hB
 ju
 hc
 hc
@@ -12189,10 +11186,10 @@ ej
 el
 el
 el
-el
-ej
-ej
-es
+em
+ew
+ew
+CD
 dc
 lZ
 dc
@@ -12203,7 +11200,7 @@ dc
 dc
 fD
 hp
-hv
+hB
 hU
 fD
 im
@@ -12218,7 +11215,7 @@ fD
 iS
 jc
 jj
-kH
+jc
 jv
 jC
 hc
@@ -12320,9 +11317,9 @@ em
 eO
 eX
 em
-ew
-fA
-es
+ej
+ej
+CD
 dc
 lZ
 dc
@@ -12333,7 +11330,7 @@ dc
 dc
 fD
 ho
-hv
+hB
 hV
 fD
 il
@@ -12346,12 +11343,12 @@ fD
 ir
 fD
 iT
-jd
-jd
-jd
-jd
-jd
-jE
+iT
+iT
+iT
+iT
+iT
+iT
 hc
 hc
 hc
@@ -12449,9 +11446,9 @@ ej
 el
 eN
 eW
-el
+em
 ej
-fg
+ej
 bE
 dc
 dc
@@ -12463,7 +11460,7 @@ dc
 dc
 fD
 ho
-hv
+hB
 hW
 fD
 in
@@ -12579,15 +11576,15 @@ ej
 el
 el
 el
-el
+em
 ej
-fg
+ej
 bE
 bE
-gg
-gs
-gs
-gE
+CD
+CD
+CD
+CD
 bE
 gR
 bE
@@ -12605,14 +11602,14 @@ fD
 fD
 fD
 fD
-iU
-fE
+AA
+AA
 jk
-fE
-fE
-fE
+AA
+AA
+AA
 jF
-jI
+AA
 fN
 jL
 hc
@@ -12709,12 +11706,12 @@ ej
 el
 eM
 eV
-el
+em
 ej
-fg
+ej
 fD
 fN
-gh
+fN
 fN
 fN
 gh
@@ -12723,7 +11720,7 @@ fF
 fN
 fD
 fF
-gF
+AA
 hX
 hX
 hX
@@ -12735,7 +11732,7 @@ iH
 hX
 hX
 fD
-gF
+AA
 fF
 fD
 fF
@@ -12839,21 +11836,21 @@ ej
 el
 eN
 eW
-fd
-ew
-fB
-fE
-fE
-gi
+em
+ej
+el
 fF
 fF
-gF
+fF
+fF
+fF
+AA
 fF
 fF
 fF
 fD
 kC
-gF
+AA
 hX
 ii
 ii
@@ -12865,14 +11862,14 @@ ii
 ii
 hX
 fD
-gF
+AA
 fF
 fD
 jq
 jw
 fF
 jG
-gF
+AA
 fN
 fN
 hc
@@ -12883,10 +11880,10 @@ jY
 jW
 jW
 ki
-kf
-kf
-kf
-jW
+ke
+ke
+ke
+jU
 kx
 jS
 mE
@@ -12969,21 +11966,21 @@ ej
 el
 kz
 el
-fe
-ej
-el
-fF
-fF
-fF
-fF
-fF
-gG
-fE
-gS
-fE
+em
+ew
+em
+AA
+AA
+AA
+AA
+AA
+AA
+AA
+AA
+AA
 hd
-fE
-hI
+AA
+AA
 hX
 hX
 hX
@@ -12995,28 +11992,28 @@ hX
 hX
 iO
 hd
-hI
+AA
 fF
 jl
 kD
 jx
 fF
 fF
-gG
-fE
-fE
+AA
+AA
+AA
 jQ
 jU
 jU
 jU
 jZ
-kb
+jU
 ke
-kj
+ke
 km
 kp
 ks
-kf
+ke
 kf
 ky
 kf
@@ -13099,7 +12096,7 @@ ej
 el
 eM
 eV
-fe
+em
 ej
 ej
 fD
@@ -13109,23 +12106,23 @@ fN
 fN
 fN
 fN
-gh
+fN
 fN
 fD
 fF
-hJ
-fE
-fE
-fE
-fE
-fE
-fE
-fE
-fE
-fE
-gi
+AA
+AA
+AA
+AA
+AA
+AA
+AA
+AA
+AA
+AA
+AA
 fD
-gF
+AA
 fF
 fD
 ho
@@ -13140,13 +12137,13 @@ jV
 jV
 jV
 jY
-kc
+jU
 jW
 kf
 kn
 kI
 kt
-kf
+ke
 kf
 ky
 mF
@@ -13229,7 +12226,7 @@ ej
 el
 eN
 eW
-fe
+em
 ej
 ej
 fD
@@ -13239,11 +12236,11 @@ fN
 fN
 fN
 fN
-gh
+fN
 fN
 fD
 fF
-gF
+fF
 fF
 fF
 kC
@@ -13255,7 +12252,7 @@ fF
 fF
 fF
 fD
-gF
+AA
 fF
 fD
 ho
@@ -13270,7 +12267,7 @@ jV
 jV
 jV
 jY
-kc
+jU
 jW
 kf
 ko
@@ -13332,34 +12329,34 @@ ah
 ab
 aF
 aU
-ap
+al
 ba
 bh
 bk
-ap
+al
 bq
-ap
-ap
-ap
-ap
-ap
-ap
-cE
-ap
-ap
-ap
-ap
-ap
-ap
-ap
-ap
-ap
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
 em
 ew
 em
 em
+el
 em
-ff
 ej
 el
 fF
@@ -13369,11 +12366,11 @@ fF
 fF
 fF
 fF
-gF
+fF
 fF
 he
 fF
-gF
+fF
 hX
 hX
 hX
@@ -13385,7 +12382,7 @@ hX
 hX
 hX
 he
-gF
+AA
 kC
 jl
 ho
@@ -13400,7 +12397,7 @@ jW
 jW
 jW
 ka
-kc
+jU
 kf
 kf
 kf
@@ -13451,17 +12448,17 @@ aa
 kF
 ag
 ai
-an
+al
 as
 aB
 lk
 lm
 as
 al
-ap
+al
 aR
-ap
-av
+al
+al
 ah
 bb
 bi
@@ -13474,7 +12471,7 @@ br
 br
 ah
 cu
-an
+al
 br
 br
 br
@@ -13489,7 +12486,7 @@ ej
 el
 eM
 eV
-fe
+el
 ej
 el
 fF
@@ -13499,11 +12496,11 @@ fF
 fF
 fF
 fF
-gF
+fF
 fF
 fD
 fF
-gF
+fF
 hX
 ii
 ii
@@ -13515,7 +12512,7 @@ ii
 ii
 hX
 fD
-gF
+AA
 fF
 fD
 jr
@@ -13530,9 +12527,9 @@ jT
 jV
 jV
 jY
-kd
 jU
-kk
+jU
+kf
 kf
 kf
 kf
@@ -13581,13 +12578,13 @@ aa
 kF
 ae
 ah
-an
+al
 as
 as
 as
 as
 as
-an
+al
 ah
 ab
 aF
@@ -13604,7 +12601,7 @@ bJ
 dy
 ah
 ah
-an
+al
 dy
 bx
 bJ
@@ -13619,7 +12616,7 @@ ej
 el
 eN
 eW
-fe
+el
 ej
 ej
 fD
@@ -13629,11 +12626,11 @@ fN
 gy
 fN
 fN
-gF
+fF
 fN
 fD
 fF
-gF
+fF
 hX
 hX
 hX
@@ -13645,7 +12642,7 @@ hX
 hX
 hX
 fD
-gF
+AA
 fF
 fD
 fF
@@ -13662,7 +12659,7 @@ jX
 jX
 jS
 kh
-kl
+jW
 kf
 kf
 jW
@@ -13711,13 +12708,13 @@ aa
 mW
 ah
 ah
-ao
-au
-ap
+al
+al
+al
 aH
-ap
-ap
-av
+al
+al
+al
 ah
 ab
 aF
@@ -13734,7 +12731,7 @@ bK
 br
 ah
 cu
-an
+al
 br
 by
 bK
@@ -13749,7 +12746,7 @@ ej
 el
 el
 el
-fe
+el
 ej
 ej
 bE
@@ -13763,7 +12760,7 @@ gT
 bE
 fD
 hn
-hF
+hn
 fD
 fD
 fD
@@ -13775,7 +12772,7 @@ fD
 fD
 fD
 fD
-gF
+AA
 fF
 jm
 fF
@@ -13841,8 +12838,8 @@ aa
 ab
 ab
 aj
-ap
-av
+al
+ah
 ax
 ah
 ax
@@ -13864,7 +12861,7 @@ bL
 br
 ah
 ah
-an
+al
 br
 bL
 br
@@ -13879,7 +12876,7 @@ ej
 ej
 eP
 ej
-fg
+ej
 ej
 ej
 bE
@@ -13889,11 +12886,11 @@ fP
 gz
 fP
 fP
-gU
+fP
 fP
 fD
 ho
-hv
+ho
 hY
 fD
 il
@@ -14009,21 +13006,21 @@ bE
 bE
 bE
 eY
-fh
+eY
 bE
 bE
 bE
-fQ
+fP
 gk
-gt
-gt
-gt
-gt
-gV
+fP
+fP
+fP
+fP
+fP
 fP
 fD
 ho
-hv
+ho
 hZ
 fD
 il
@@ -14035,13 +13032,13 @@ ir
 fD
 ir
 fD
-iV
-je
-je
-je
-je
-je
-jE
+iT
+iT
+iT
+iT
+iT
+iT
+iT
 hc
 hc
 hc
@@ -14124,7 +13121,7 @@ bM
 cd
 cl
 cd
-bO
+ce
 cd
 cT
 as
@@ -14139,7 +13136,7 @@ bE
 eD
 eD
 eD
-fi
+eD
 eD
 eD
 bE
@@ -14153,7 +13150,7 @@ gJ
 gO
 fD
 hp
-hv
+ho
 ia
 fD
 im
@@ -14168,7 +13165,7 @@ fD
 iW
 jf
 jn
-js
+jf
 jz
 jC
 hc
@@ -14250,11 +13247,11 @@ aP
 aa
 aa
 ab
-bN
+cd
+cl
+cd
 ce
-cm
-ce
-cG
+Dy
 cl
 cd
 as
@@ -14269,7 +13266,7 @@ bE
 eD
 eD
 eD
-fi
+eD
 fq
 eD
 bE
@@ -14283,7 +13280,7 @@ gJ
 gO
 fD
 ho
-hv
+ho
 ib
 fD
 il
@@ -14380,10 +13377,10 @@ ab
 aP
 aP
 ab
-bO
-cd
 cl
 cd
+cl
+Dy
 cl
 cd
 cl
@@ -14399,7 +13396,7 @@ bE
 eD
 eD
 eD
-fi
+eD
 fr
 eD
 bE
@@ -14413,7 +13410,7 @@ gW
 gO
 fD
 ho
-hv
+ho
 ic
 fD
 il
@@ -14426,7 +13423,7 @@ kG
 il
 hc
 hc
-jh
+iT
 hc
 jt
 hc
@@ -14510,7 +13507,7 @@ aP
 aP
 aa
 ab
-bP
+cd
 as
 as
 cv
@@ -14529,7 +13526,7 @@ bE
 eE
 eQ
 eZ
-fi
+eD
 fs
 eD
 bE
@@ -14659,7 +13656,7 @@ bE
 eF
 eD
 eD
-fi
+eD
 eD
 fC
 bE
@@ -14673,7 +13670,7 @@ gX
 bs
 hc
 hc
-hD
+iJ
 hc
 hc
 hc
@@ -14771,12 +13768,12 @@ aa
 aP
 ab
 bR
-cf
-cf
+bR
+bR
 cx
-cf
-cf
-cW
+bR
+bR
+bR
 as
 di
 dw
@@ -14789,7 +13786,7 @@ bE
 eD
 kA
 eE
-fj
+eQ
 eZ
 eD
 bE
@@ -14804,7 +13801,7 @@ bs
 hc
 hm
 kM
-hR
+hm
 hc
 aa
 aa
@@ -14919,7 +13916,7 @@ ex
 eD
 eD
 eD
-fi
+eD
 eD
 eD
 bE
@@ -14933,7 +13930,7 @@ bs
 aP
 hc
 hc
-hD
+iJ
 hc
 hc
 hc
@@ -15049,7 +14046,7 @@ ex
 eD
 eD
 eD
-fi
+eD
 kA
 eD
 bE
@@ -15063,7 +14060,7 @@ aP
 aa
 hc
 ho
-hv
+ho
 id
 ij
 io
@@ -15172,14 +14169,14 @@ di
 bz
 dE
 dL
-dN
-dX
+bz
+bz
 ep
 bE
 eD
 eD
 eD
-fi
+eD
 eD
 eD
 bE
@@ -15192,8 +14189,8 @@ aP
 aa
 aa
 hc
-ht
-hM
+ho
+ho
 ie
 ho
 ho
@@ -15302,14 +14299,14 @@ dl
 dx
 dx
 dx
-dO
+dx
 dx
 eq
 bE
 eG
 eR
 eG
-fk
+eG
 eG
 eG
 bE
@@ -15322,7 +14319,7 @@ aa
 aa
 aa
 hc
-hv
+ho
 ho
 ho
 ho
@@ -15432,14 +14429,14 @@ bE
 bE
 dF
 bE
-dP
+dF
 bE
 bE
 bE
 eH
 eH
 eH
-fl
+eH
 eH
 eH
 bE
@@ -15452,7 +14449,7 @@ aa
 aa
 aa
 hc
-hv
+ho
 ho
 ho
 ho
@@ -15562,14 +14559,14 @@ lX
 dm
 dm
 dm
-dQ
+dm
 dY
 dY
 bE
 eH
 eH
 eH
-fl
+eH
 eH
 eH
 bE
@@ -15582,7 +14579,7 @@ aa
 aa
 aa
 hc
-hh
+hf
 hf
 hf
 hf
@@ -15692,14 +14689,14 @@ dm
 dm
 dm
 dm
-dR
-dZ
-dZ
-ey
-eI
-eI
-eI
-fm
+dm
+dm
+dm
+dF
+eH
+eH
+eH
+eH
 eH
 eH
 bs
@@ -15712,7 +14709,7 @@ aa
 aa
 aa
 hc
-hx
+hf
 hf
 hf
 hf
@@ -20215,12 +19212,12 @@ aG
 aG
 aG
 ll
-lo
 ls
+sw
 ll
-lH
 lv
-lP
+lv
+lv
 ll
 aG
 aG
@@ -20346,11 +19343,11 @@ aG
 aG
 ll
 ln
-lr
+lt
 ll
-lG
+lv
 lK
-lO
+lv
 ll
 aG
 aG

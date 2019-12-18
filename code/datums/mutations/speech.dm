@@ -19,9 +19,18 @@
 	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
 
-/datum/mutation/human/wacky/get_spans()
-	return list(SPAN_SANS)
+/datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
+/datum/mutation/human/wacky/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/wacky/proc/handle_speech(datum/source, list/speech_args)
+	speech_args[SPEECH_SPANS] |= SPAN_SANS
 
 /datum/mutation/human/mute
 	name = "Mute"
@@ -33,12 +42,12 @@
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_trait(TRAIT_MUTE, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
 
 /datum/mutation/human/mute/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(TRAIT_MUTE, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
 
 
 /datum/mutation/human/smile
@@ -48,7 +57,18 @@
 	text_gain_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
 	text_lose_indication = "<span class='notice'>Everything is terrible again. :(</span>"
 
-/datum/mutation/human/smile/say_mod(message)
+/datum/mutation/human/smile/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/mutation/human/smile/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/smile/proc/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
 	if(message)
 		message = " [message] "
 		//Time for a friendly game of SS13
@@ -72,6 +92,7 @@
 		message = replacetext(message," murder "," tease ")
 		message = replacetext(message," ugly "," beautiful ")
 		message = replacetext(message," douchbag "," nice guy ")
+		message = replacetext(message," douchebag "," nice guy ")
 		message = replacetext(message," whore "," lady ")
 		message = replacetext(message," nerd "," smart guy ")
 		message = replacetext(message," moron "," fun person ")
@@ -95,7 +116,7 @@
 		message = replacetext(message," cunt "," privates ")
 		message = replacetext(message," dick "," jerk ")
 		message = replacetext(message," vagina "," privates ")
-	return trim(message)
+		speech_args[SPEECH_MESSAGE] = trim(message)
 
 
 /datum/mutation/human/unintelligible
@@ -108,12 +129,12 @@
 /datum/mutation/human/unintelligible/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.add_trait(TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
+	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
 
 /datum/mutation/human/unintelligible/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.remove_trait(TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
+	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
 
 /datum/mutation/human/swedish
 	name = "Swedish"
@@ -122,7 +143,18 @@
 	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
 	text_lose_indication = "<span class='notice'>The feeling of Swedishness passes.</span>"
 
-/datum/mutation/human/swedish/say_mod(message)
+/datum/mutation/human/swedish/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/mutation/human/swedish/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/swedish/proc/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
 	if(message)
 		message = replacetext(message,"w","v")
 		message = replacetext(message,"j","y")
@@ -131,8 +163,7 @@
 		message = replacetext(message,"o",pick("ö","ø","o"))
 		if(prob(30))
 			message += " Bork[pick("",", bork",", bork, bork")]!"
-	return message
-
+		speech_args[SPEECH_MESSAGE] = trim(message)
 
 /datum/mutation/human/chav
 	name = "Chav"
@@ -141,7 +172,18 @@
 	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
 
-/datum/mutation/human/chav/say_mod(message)
+/datum/mutation/human/chav/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/mutation/human/chav/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/chav/proc/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
 	if(message)
 		message = " [message] "
 		message = replacetext(message," looking at  ","  gawpin' at ")
@@ -165,7 +207,7 @@
 		message = replacetext(message," break "," do ")
 		message = replacetext(message," your "," yer ")
 		message = replacetext(message," security "," coppers ")
-	return trim(message)
+		speech_args[SPEECH_MESSAGE] = trim(message)
 
 
 /datum/mutation/human/elvis
@@ -187,7 +229,18 @@
 			if(prob(15))
 				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
 
-/datum/mutation/human/elvis/say_mod(message)
+/datum/mutation/human/elvis/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+
+/datum/mutation/human/elvis/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+
+/datum/mutation/human/elvis/proc/handle_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
 	if(message)
 		message = " [message] "
 		message = replacetext(message," i'm not "," I aint ")
@@ -195,11 +248,12 @@
 		message = replacetext(message," man ",pick(" son "," buddy "," brother"," pal "," friendo "))
 		message = replacetext(message," out of "," outta ")
 		message = replacetext(message," thank you "," thank you, thank you very much ")
+		message = replacetext(message," thanks "," thank you, thank you very much ")
 		message = replacetext(message," what are you "," whatcha ")
 		message = replacetext(message," yes ",pick(" sure", "yea "))
 		message = replacetext(message," faggot "," square ")
-		message = replacetext(message," muh valids "," getting my kicks ")
-	return trim(message)
+		message = replacetext(message," muh valids "," my kicks ")
+		speech_args[SPEECH_MESSAGE] = trim(message)
 
 
 /datum/mutation/human/stoner
@@ -212,10 +266,10 @@
 
 /datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
 	..()
-	owner.grant_language(/datum/language/beachbum)
-	owner.remove_language(/datum/language/common)
+	owner.grant_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_STONER)
+	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
 /datum/mutation/human/stoner/on_losing(mob/living/carbon/human/owner)
 	..()
-	owner.grant_language(/datum/language/common)
-	owner.remove_language(/datum/language/beachbum)
+	owner.remove_language(/datum/language/beachbum, TRUE, TRUE, LANGUAGE_STONER)
+	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)

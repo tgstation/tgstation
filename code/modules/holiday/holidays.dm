@@ -93,6 +93,16 @@
 /datum/holiday/valentines/getStationPrefix()
 	return pick("Love","Amore","Single","Smootch","Hug")
 
+/// Garbage DAYYYYY
+/// Huh?.... NOOOO
+/// *GUNSHOT*
+/// AHHHGHHHHHHH
+/datum/holiday/garbageday
+	name = GARBAGEDAY
+	begin_day = 17
+	end_day = 17
+	begin_month = JUNE
+
 /datum/holiday/birthday
 	name = "Birthday of Space Station 13"
 	begin_day = 16
@@ -170,7 +180,8 @@
 /datum/holiday/april_fools/celebrate()
 	SSjob.set_overflow_role("Clown")
 	SSticker.login_music = 'sound/ambience/clown.ogg'
-	for(var/mob/dead/new_player/P in GLOB.mob_list)
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/P = i
 		if(P.client)
 			P.client.playtitlemusic()
 
@@ -589,3 +600,19 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/easter/getStationPrefix()
 	return pick("Fluffy","Bunny","Easter","Egg")
+
+/datum/holiday/ianbirthday
+	name = "Ian's Birthday"
+	begin_day = 15
+	begin_month = MARCH
+
+/datum/holiday/ianbirthday/greet()
+	return "Happy birthday, Ian!"
+
+/datum/holiday/hotdogday //I have plans for this.
+	name = "National Hot Dog Day"
+	begin_day = 17
+	begin_month = JULY
+
+/datum/holiday/hotdogday/greet()
+	return "Happy National Hot Dog Day!"

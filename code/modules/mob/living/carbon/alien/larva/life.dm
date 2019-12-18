@@ -4,7 +4,7 @@
 	set invisibility = 0
 	if (notransform)
 		return
-	if(..()) //not dead
+	if(..() && !IS_IN_STASIS(src)) //not dead and not in stasis
 		// GROW!
 		if(amount_grown < max_grown)
 			amount_grown++
@@ -18,15 +18,15 @@
 		if(health<= -maxHealth || !getorgan(/obj/item/organ/brain))
 			death()
 			return
-		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (has_trait(TRAIT_DEATHCOMA)) || health <= crit_threshold)
+		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || health <= crit_threshold)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
-				blind_eyes(1)
+				become_blind(UNCONSCIOUS_BLIND)
 				update_mobility()
 		else
 			if(stat == UNCONSCIOUS)
 				stat = CONSCIOUS
+				cure_blind(UNCONSCIOUS_BLIND)
 				set_resting(FALSE)
-				adjust_blindness(-1)
 	update_damage_hud()
 	update_health_hud()

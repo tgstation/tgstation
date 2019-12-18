@@ -83,7 +83,7 @@
 				update_icon()
 				return
 			else
-				to_chat(user, "<span class='notice'>[src] already has \a [cell] installed!</span>")
+				to_chat(user, "<span class='warning'>[src] already has \a [cell] installed!</span>")
 				return
 
 	if(cantbeused(user))
@@ -105,7 +105,7 @@
 	var/obj/O
 	var/coefficient = 1
 	if(istype(A, /obj/item/gun/energy))
-		to_chat(user,"Error unable to interface with device")
+		to_chat(user, "<span class='alert'>Error unable to interface with device.</span>")
 		return FALSE
 	if(istype(A, /obj))
 		O = A
@@ -115,7 +115,7 @@
 			to_chat(user, "<span class='notice'>[A] is fully charged!</span>")
 			recharging = FALSE
 			return TRUE
-		user.visible_message("[user] starts recharging [A] with [src].","<span class='notice'>You start recharging [A] with [src].</span>")
+		user.visible_message("<span class='notice'>[user] starts recharging [A] with [src].</span>", "<span class='notice'>You start recharging [A] with [src].</span>")
 		while(C.charge < C.maxcharge)
 			if(do_after(user, 10, target = user) && cell.charge)
 				done_any = TRUE
@@ -126,7 +126,7 @@
 			else
 				break
 		if(done_any) // Only show a message if we succeeded at least once
-			user.visible_message("[user] recharged [A]!","<span class='notice'>You recharged [A]!</span>")
+			user.visible_message("<span class='notice'>[user] recharged [A]!</span>", "<span class='notice'>You recharged [A]!</span>")
 		recharging = FALSE
 		return TRUE
 	recharging = FALSE
@@ -146,7 +146,7 @@
 
 /obj/item/inducer/attack_self(mob/user)
 	if(opened && cell)
-		user.visible_message("[user] removes [cell] from [src]!","<span class='notice'>You remove [cell].</span>")
+		user.visible_message("<span class='notice'>[user] removes [cell] from [src]!</span>", "<span class='notice'>You remove [cell].</span>")
 		cell.update_icon()
 		user.put_in_hands(cell)
 		cell = null
@@ -154,13 +154,13 @@
 
 
 /obj/item/inducer/examine(mob/living/M)
-	..()
+	. = ..()
 	if(cell)
-		to_chat(M, "<span class='notice'>Its display shows: [DisplayEnergy(cell.charge)].</span>")
+		. += "<span class='notice'>Its display shows: [DisplayEnergy(cell.charge)].</span>"
 	else
-		to_chat(M,"<span class='notice'>Its display is dark.</span>")
+		. += "<span class='notice'>Its display is dark.</span>"
 	if(opened)
-		to_chat(M,"<span class='notice'>Its battery compartment is open.</span>")
+		. += "<span class='notice'>Its battery compartment is open.</span>"
 
 /obj/item/inducer/update_icon()
 	cut_overlays()

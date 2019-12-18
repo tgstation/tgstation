@@ -79,6 +79,7 @@
 	return FALSE
 
 /obj/machinery/pipedispenser/wrench_act(mob/living/user, obj/item/I)
+	..()
 	if(default_unfasten_wrench(user, I, 40))
 		user << browse(null, "window=pipedispenser")
 

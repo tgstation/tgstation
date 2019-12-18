@@ -31,18 +31,17 @@
 	decksize = 50
 	card_text_file = "strings/cas_black.txt"
 
-/obj/item/toy/cards/deck/cas/Initialize()
-	. = ..()
+/obj/item/toy/cards/deck/cas/populate_deck()
 	var/static/list/cards_against_space = list("cas_white" = world.file2list("strings/cas_white.txt"),"cas_black" = world.file2list("strings/cas_black.txt"))
 	allcards = cards_against_space[card_face]
 	var/list/possiblecards = allcards.Copy()
 	if(possiblecards.len < decksize) // sanity check
 		decksize = (possiblecards.len - 1)
 	var/list/randomcards = list()
-	while (randomcards.len < decksize)
+	for(var/x in 1 to decksize)
 		randomcards += pick_n_take(possiblecards)
-	for(var/i=1 to randomcards.len)
-		var/cardtext = randomcards[i]
+	for(var/x in 1 to randomcards.len)
+		var/cardtext = randomcards[x]
 		var/datum/playingcard/P
 		P = new()
 		P.name = "[cardtext]"
@@ -50,7 +49,7 @@
 		cards += P
 	if(!blanks)
 		return
-	for(var/x=1 to blanks)
+	for(var/x in 1 to blanks)
 		var/datum/playingcard/P
 		P = new()
 		P.name = "Blank Card"
@@ -58,10 +57,7 @@
 		cards += P
 	shuffle_inplace(cards) // distribute blank cards throughout deck
 
-/obj/item/toy/cards/deck/cas/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/item/toy/cards/deck/cas/draw_card(mob/user)
 	if(isliving(user))
 		var/mob/living/L = user
 		if(!(L.mobility_flags & MOBILITY_PICKUP))
@@ -81,7 +77,7 @@
 	src.cards -= choice
 	H.pickup(user)
 	user.put_in_hands(H)
-	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
+	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 	update_icon()
 
 /obj/item/toy/cards/deck/cas/attackby(obj/item/I, mob/living/user, params)
@@ -95,7 +91,7 @@
 		RC.name = "[SC.name]"
 		RC.card_icon = SC.card_face
 		cards += RC
-		user.visible_message("[user] adds a card to the bottom of the deck.","<span class='notice'>You add the card to the bottom of the deck.</span>")
+		user.visible_message("<span class='notice'>[user] adds a card to the bottom of the deck.</span>","<span class='notice'>You add the card to the bottom of the deck.</span>")
 		qdel(SC)
 	update_icon()
 
@@ -113,14 +109,14 @@
 	var/buffertext = "A funny bit of text."
 
 /obj/item/toy/cards/singlecard/cas/examine(mob/user)
-	..()
+	. = ..()
 	if (flipped)
-		to_chat(user, "<span class='notice'>The card is face down.</span>")
+		. += "<span class='notice'>The card is face down.</span>"
 	else if (blank)
-		to_chat(user, "<span class='notice'>The card is blank. Write on it with a pen.</span>")
+		. += "<span class='notice'>The card is blank. Write on it with a pen.</span>"
 	else
-		to_chat(user, "<span class='notice'>The card reads: [name]</span>")
-	to_chat(user, "<span class='notice'>Alt-click to flip it.</span>")
+		. += "<span class='notice'>The card reads: [name]</span>"
+	. += "<span class='notice'>Alt-click to flip it.</span>"
 
 /obj/item/toy/cards/singlecard/cas/Flip()
 	set name = "Flip Card"
@@ -152,7 +148,7 @@
 			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
 			return
 		if(!blank)
-			to_chat(user, "You cannot write on that card.")
+			to_chat(user, "<span class='warning'>You cannot write on that card!</span>")
 			return
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
 		if(!cardtext || !user.canUseTopic(src, BE_CLOSE))

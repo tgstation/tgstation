@@ -10,12 +10,12 @@
 	var/obj/machinery/quantumpad/qpad
 
 /obj/item/quantum_keycard/examine(mob/user)
-	..()
+	. = ..()
 	if(qpad)
-		to_chat(user, "It's currently linked to a quantum pad.")
-		to_chat(user, "<span class='notice'>Alt-click to unlink the keycard.</span>")
+		. += "It's currently linked to a quantum pad."
+		. += "<span class='notice'>Alt-click to unlink the keycard.</span>"
 	else
-		to_chat(user, "<span class='notice'>Insert [src] into an active quantum pad to link it.</span>")
+		. += "<span class='notice'>Insert [src] into an active quantum pad to link it.</span>"
 
 /obj/item/quantum_keycard/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))

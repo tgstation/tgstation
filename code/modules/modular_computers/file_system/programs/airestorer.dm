@@ -44,6 +44,7 @@
 		if("PRG_beginReconstruction")
 			if(A && A.health < 100)
 				restoring = TRUE
+				A.notify_ghost_cloning("Your core files are being restored!", source = computer)
 			return TRUE
 		if("PRG_eject")
 			if(computer.all_components[MC_AI])
@@ -73,13 +74,13 @@
 		restoring = FALSE
 		return
 	ai_slot.locked =TRUE
-	A.adjustOxyLoss(-1, 0)
-	A.adjustFireLoss(-1, 0)
-	A.adjustToxLoss(-1, 0)
-	A.adjustBruteLoss(-1, 0)
+	A.adjustOxyLoss(-5, 0)
+	A.adjustFireLoss(-5, 0)
+	A.adjustToxLoss(-5, 0)
+	A.adjustBruteLoss(-5, 0)
 	A.updatehealth()
 	if(A.health >= 0 && A.stat == DEAD)
-		A.revive()
+		A.revive(full_heal = FALSE, admin_revive = FALSE)
 	// Finished restoring
 	if(A.health >= 100)
 		ai_slot.locked = FALSE

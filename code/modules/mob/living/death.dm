@@ -47,6 +47,7 @@
 
 
 /mob/living/death(gibbed)
+	var/was_dead_before = stat == DEAD
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time
@@ -55,17 +56,15 @@
 	for(var/obj/item/I in contents)
 		I.on_mob_death(src, gibbed)
 	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf))
-		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[get_area_name(T)]</b>.</span>"
-		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
+		deadchat_broadcast(" has died at <b>[get_area_name(T)]</b>.", "<b>[mind.name]</b>", follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
 	GLOB.alive_mob_list -= src
-	if(!gibbed)
+	if(!gibbed && !was_dead_before)
 		GLOB.dead_mob_list += src
 	set_drugginess(0)
 	set_disgust(0)
 	SetSleeping(0, 0)
-	blind_eyes(1)
 	reset_perspective(null)
 	reload_fullscreen()
 	update_action_buttons_icon()

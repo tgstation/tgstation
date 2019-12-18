@@ -41,7 +41,7 @@
 	if(pods)
 		for(var/P in pods)
 			var/obj/machinery/clonepod/pod = P
-			if(pod.occupant && pod.clonemind == mind)
+			if(pod.occupant && mind && pod.clonemind == mind)
 				return null
 			if(pod.is_operational() && !(pod.occupant || pod.mess))
 				return pod
@@ -62,8 +62,8 @@
 			else if(!. && pod.is_operational() && !(pod.occupant || pod.mess) && pod.efficiency > 5)
 				. = pod
 
-/proc/grow_clone_from_record(obj/machinery/clonepod/pod, datum/data/record/R)
-	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["last_death"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"], R.fields["traumas"])
+/proc/grow_clone_from_record(obj/machinery/clonepod/pod, datum/data/record/R, empty)
+	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mindref"], R.fields["last_death"], R.fields["blood_type"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"], R.fields["traumas"], empty)
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
@@ -73,7 +73,7 @@
 		scan_occupant(scanner.occupant)
 
 	for(var/datum/data/record/R in records)
-		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
+		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mindref"])
 
 		if(!pod)
 			return
@@ -84,9 +84,10 @@
 		var/result = grow_clone_from_record(pod, R)
 		if(result & CLONING_SUCCESS)
 			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
+			log_cloning("Cloning of [key_name(R.fields["mindref"])] automatically started via autoprocess - [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
 		if(result & CLONING_DELETE_RECORD)
 			records -= R
-			
+
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
 	scanner = findscanner()
@@ -138,7 +139,7 @@
 				return
 			diskette = W
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 			updateUsrDialog()
 	else if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!multitool_check_buffer(user, W))
@@ -210,6 +211,7 @@
 
 				if(scanner_occupant)
 					dat += "<a href='byond://?src=[REF(src)];scan=1'>Start Scan</a>"
+					dat += "<a href='byond://?src=[REF(src)];scan=1;body_only=1'>Body-Only Scan</a>"
 					dat += "<br><a href='byond://?src=[REF(src)];lock=1'>[scanner.locked ? "Unlock Scanner" : "Lock Scanner"]</a>"
 				else
 					dat += "<span class='linkOff'>Start Scan</span>"
@@ -237,8 +239,11 @@
 			if (!active_record)
 				dat += "<font class='bad'>Record not found.</font>"
 			else
-				dat += "<h4>[active_record.fields["name"]]</h4>"
-				dat += "Scan ID [active_record.fields["id"]] <a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a><br>"
+				var/body_only = active_record.fields["body_only"]
+				dat += "<h4>[active_record.fields["name"]][body_only ? " - BODY-ONLY" : ""]</h4>"
+				dat += "Scan ID [active_record.fields["id"]] \
+					[!body_only ? "<a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]]'>Clone</a>" : "" ]\
+				 	<a href='byond://?src=[REF(src)];clone=[active_record.fields["id"]];empty=TRUE'>Empty Clone</a><br>"
 
 				var/obj/item/implant/health/H = locate(active_record.fields["imp"])
 
@@ -326,11 +331,11 @@
 				if(scanner && HasEfficientPod() && scanner.scan_level >= AUTOCLONING_MINIMAL_LEVEL)
 					autoprocess = TRUE
 					START_PROCESSING(SSmachines, src)
-					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			if("stopautoprocess")
 				autoprocess = FALSE
 				STOP_PROCESSING(SSmachines, src)
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			if("include_se")
 				include_se = TRUE
 			if("exclude_se")
@@ -346,31 +351,25 @@
 
 	else if ((href_list["scan"]) && !isnull(scanner) && scanner.is_operational())
 		scantemp = ""
-
+		var/body_only = href_list["body_only"]
 		loading = TRUE
 		updateUsrDialog()
-		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 		say("Initiating scan...")
 
-		spawn(20)
-			scan_occupant(scanner.occupant)
-				
-			loading = FALSE
-			updateUsrDialog()
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-
+		addtimer(CALLBACK(src, .proc/do_scan, usr, body_only), 2 SECONDS)
 
 		//No locking an open scanner.
 	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational())
 		if ((!scanner.locked) && (scanner.occupant))
 			scanner.locked = TRUE
-			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 		else
 			scanner.locked = FALSE
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 	else if(href_list["view_rec"])
-		playsound(src, "terminal_type", 25, 0)
+		playsound(src, "terminal_type", 25, FALSE)
 		active_record = find_record("id", href_list["view_rec"], records)
 		if(active_record)
 			menu = 3
@@ -388,38 +387,41 @@
 				if(C)
 					if(check_access(C))
 						has_access = TRUE
+			if(active_record.fields["body_only"]) //Body-only scans are not as important and can be deleted freely
+				has_access = TRUE
 			if(has_access)
 				temp = "Delete record?"
 				menu = 4
-				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 			else
 				temp = "Access Denied"
-				menu = 2 
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-				
+				menu = 2
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+
 
 		else if (menu == 4)
+			log_cloning("[key_name(usr)] deleted [key_name(active_record.fields["mindref"])]'s cloning records from [src] at [AREACOORD(src)].")
 			temp = "[active_record.fields["name"]] => Record deleted."
 			records.Remove(active_record)
 			active_record = null
-			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			menu = 2
 
 	else if (href_list["disk"]) //Load or eject.
 		switch(href_list["disk"])
 			if("load")
-						
+
 
 				if (!diskette || !istype(diskette.fields))
 					temp = "<font class='bad'>Load error.</font>"
 					updateUsrDialog()
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 				if (!active_record)
 					temp = "<font class='bad'>Record error.</font>"
 					menu = 1
 					updateUsrDialog()
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 
 				if(include_ue)
@@ -430,59 +432,69 @@
 					overwrite_field_if_available(active_record, diskette, "UI")
 				if(include_se)
 					overwrite_field_if_available(active_record, diskette, "SE")
-					
+
+				log_cloning("[key_name(usr)] uploaded [key_name(active_record.fields["mindref"])]'s cloning records to [src] at [AREACOORD(src)] via [diskette].")
 				temp = "Load successful."
-				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 			if("eject")
 				if(diskette)
 					diskette.forceMove(drop_location())
 					diskette = null
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 			if("save")
 				if(!diskette || diskette.read_only || !active_record || !active_record.fields)
 					temp = "<font class='bad'>Save error.</font>"
 					updateUsrDialog()
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 					return
 
+				log_cloning("[key_name(usr)] added [key_name(active_record.fields["mindref"])]'s cloning records to [diskette] via [src] at [AREACOORD(src)].")
 				diskette.fields = active_record.fields.Copy()
 				diskette.name = "data disk - '[diskette.fields["name"]]'"
 				temp = "Save successful."
-				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 	else if (href_list["refresh"])
 		updateUsrDialog()
-		playsound(src, "terminal_type", 25, 0)
+		playsound(src, "terminal_type", 25, FALSE)
 
 	else if (href_list["clone"])
 		var/datum/data/record/C = find_record("id", href_list["clone"], records)
+		var/empty = href_list["empty"]
 		//Look for that player! They better be dead!
 		if(C)
+			if(C.fields["body_only"] && !empty)
+				temp = "<font class='bad'>Cannot initiate regular cloning with body-only scans.</font>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			var/obj/machinery/clonepod/pod = GetAvailablePod()
 			var/success = FALSE
 			//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
 			if(!LAZYLEN(pods))
 				temp = "<font class='bad'>No Clonepods detected.</font>"
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			else if(!pod)
 				temp = "<font class='bad'>No Clonepods available.</font>"
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(!CONFIG_GET(flag/revival_cloning))
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+			else if(!CONFIG_GET(flag/revival_cloning) && !empty)
 				temp = "<font class='bad'>Unable to initiate cloning cycle.</font>"
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			else if(pod.occupant)
 				temp = "<font class='bad'>Cloning cycle already in progress.</font>"
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			else
-				var/result = grow_clone_from_record(pod, C)
+				var/result = grow_clone_from_record(pod, C, empty)
 				if(result & CLONING_SUCCESS)
 					temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
-					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 					if(active_record == C)
 						active_record = null
 					menu = 1
 					success = TRUE
+					if(!empty)
+						log_cloning("[key_name(usr)] initiated cloning of [key_name(C.fields["mindref"])] via [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
+					else
+						log_cloning("[key_name(usr)] initiated EMPTY cloning of [key_name(C.fields["mindref"])] via [src] at [AREACOORD(src)]. Pod: [pod] at [AREACOORD(pod)].")
 				if(result &	CLONING_DELETE_RECORD)
 					if(active_record == C)
 						active_record = null
@@ -491,21 +503,28 @@
 
 			if(!success)
 				temp = "[C.fields["name"]] => <font class='bad'>Initialisation failure.</font>"
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 
 		else
 			temp = "<font class='bad'>Data corruption.</font>"
-			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 
 	else if (href_list["menu"])
 		menu = text2num(href_list["menu"])
-		playsound(src, "terminal_type", 25, 0)
+		playsound(src, "terminal_type", 25, FALSE)
 
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/cloning/proc/scan_occupant(occupant)
+/obj/machinery/computer/cloning/proc/do_scan(mob/user, body_only)
+	scan_occupant(scanner.occupant, user, body_only)
+
+	loading = FALSE
+	updateUsrDialog()
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+
+/obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M, body_only)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account
@@ -524,28 +543,28 @@
 
 	if(!istype(dna))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 		return
-	if(mob_occupant.suiciding || mob_occupant.hellbound)
+	if(!body_only && (mob_occupant.suiciding || mob_occupant.hellbound))
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 		return
-	if((mob_occupant.has_trait(TRAIT_HUSK)) && (src.scanner.scan_level < 2))
+	if((HAS_TRAIT(mob_occupant, TRAIT_HUSK)) && (src.scanner.scan_level < 2))
 		scantemp = "<font class='bad'>Subject's body is too damaged to scan properly.</font>"
-		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		return
-	if(mob_occupant.has_trait(TRAIT_BADDNA))
+	if(HAS_TRAIT(mob_occupant, TRAIT_BADDNA))
 		scantemp = "<font class='bad'>Subject's DNA is damaged beyond any hope of recovery.</font>"
-		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		return
-	if (isnull(mob_occupant.mind))
+	if (!body_only && isnull(mob_occupant.mind))
 		scantemp = "<font class='bad'>Mental interface failure.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 		return
-	if(SSeconomy.full_ancap)
+	if(!body_only && SSeconomy.full_ancap)
 		if(!has_bank_account)
 			scantemp = "<font class='average'>Subject is either missing an ID card with a bank account on it, or does not have an account to begin with. Please ensure the ID card is on the body before attempting to scan.</font>"
-			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
 			return
 	var/datum/data/record/R = new()
 	if(dna.species)
@@ -578,23 +597,31 @@
 		R.fields["traumas"] = B.get_traumas()
 
 	R.fields["bank_account"] = has_bank_account
-	R.fields["mind"] = "[REF(mob_occupant.mind)]"
+	R.fields["mindref"] = "[REF(mob_occupant.mind)]"
 	R.fields["last_death"] = mob_occupant.stat == DEAD ? mob_occupant.mind.last_death : -1
+	R.fields["body_only"] = body_only
 
-   //Add an implant if needed
-	var/obj/item/implant/health/imp
-	for(var/obj/item/implant/health/HI in mob_occupant.implants)
-		imp = HI
-		break
-	if(!imp)
-		imp = new /obj/item/implant/health(mob_occupant)
-		imp.implant(mob_occupant)
-	R.fields["imp"] = "[REF(imp)]"
-	var/old_record = find_record("mind", REF(mob_occupant.mind), records)
+	if(!body_only)
+	    //Add an implant if needed
+		var/obj/item/implant/health/imp
+		for(var/obj/item/implant/health/HI in mob_occupant.implants)
+			imp = HI
+			break
+		if(!imp)
+			imp = new /obj/item/implant/health(mob_occupant)
+			imp.implant(mob_occupant)
+		R.fields["imp"] = "[REF(imp)]"
+
+	var/datum/data/record/old_record = find_record("mindref", REF(mob_occupant.mind), records)
+	if(body_only)
+		old_record = find_record("UE", dna.unique_enzymes, records) //Body-only records cannot be identified by mind, so we use the DNA
+		if(old_record && ((old_record.fields["UI"] != dna.uni_identity) || (!old_record.fields["body_only"]))) //Never overwrite a mind-and-body record if it exists
+			old_record = null
 	if(old_record)
 		records -= old_record
 		scantemp = "Record updated."
 	else
 		scantemp = "Subject successfully scanned."
 	records += R
+	log_cloning("[M ? key_name(M) : "Autoprocess"] added the [body_only ? "body-only " : ""]record of [key_name(mob_occupant)] to [src] at [AREACOORD(src)].")
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50)

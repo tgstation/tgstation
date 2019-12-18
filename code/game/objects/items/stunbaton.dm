@@ -1,5 +1,5 @@
 /obj/item/melee/baton
-	name = "stunbaton"
+	name = "stun baton"
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
@@ -12,8 +12,11 @@
 	attack_verb = list("beaten")
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
-	var/stunforce = 140
-	var/status = 0
+	var/cooldown_check = 0
+
+	var/cooldown = (2.5 SECONDS)
+	var/stunforce = (5 SECONDS)
+	var/turned_on = FALSE
 	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
@@ -30,16 +33,30 @@
 	. = ..()
 	if(preload_cell_type)
 		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
-			log_world("### MAP WARNING, [src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
+			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
 	update_icon()
 
+
+/obj/item/melee/baton/Destroy()
+	if(cell)
+		QDEL_NULL(cell)
+	return ..()
+
+/obj/item/melee/baton/handle_atom_del(atom/A)
+	if(A == cell)
+		cell = null
+		turned_on = FALSE
+		update_icon()
+	return ..()
+
+
 /obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
-	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
-		baton_stun(hit_atom)
+	if(turned_on && prob(throw_hit_chance) && iscarbon(hit_atom))
+		baton_effect(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
@@ -49,33 +66,33 @@
 		//Note this value returned is significant, as it will determine
 		//if a stun is applied or not
 		. = cell.use(chrgdeductamt)
-		if(status && cell.charge < hitcost)
+		if(turned_on && cell.charge < hitcost)
 			//we're below minimum, turn off
-			status = 0
+			turned_on = FALSE
 			update_icon()
-			playsound(loc, "sparks", 75, 1, -1)
+			playsound(src, "sparks", 75, TRUE, -1)
 
 
 /obj/item/melee/baton/update_icon()
-	if(status)
-		icon_state = "[initial(name)]_active"
+	if(turned_on)
+		icon_state = "[initial(icon_state)]_active"
 	else if(!cell)
-		icon_state = "[initial(name)]_nocell"
+		icon_state = "[initial(icon_state)]_nocell"
 	else
-		icon_state = "[initial(name)]"
+		icon_state = "[initial(icon_state)]"
 
 /obj/item/melee/baton/examine(mob/user)
-	..()
+	. = ..()
 	if(cell)
-		to_chat(user, "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>")
+		. += "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>"
 	else
-		to_chat(user, "<span class='warning'>\The [src] does not have a power source installed.</span>")
+		. += "<span class='warning'>\The [src] does not have a power source installed.</span>"
 
 /obj/item/melee/baton/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/C = W
 		if(cell)
-			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
+			to_chat(user, "<span class='warning'>[src] already has a cell!</span>")
 		else
 			if(C.maxcharge < hitcost)
 				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
@@ -92,18 +109,18 @@
 			cell.forceMove(get_turf(src))
 			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
-			status = 0
+			turned_on = FALSE
 			update_icon()
 	else
 		return ..()
 
 /obj/item/melee/baton/attack_self(mob/user)
 	if(cell && cell.charge > hitcost)
-		status = !status
-		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-		playsound(loc, "sparks", 75, 1, -1)
+		turned_on = !turned_on
+		to_chat(user, "<span class='notice'>[src] is now [turned_on ? "on" : "off"].</span>")
+		playsound(src, "sparks", 75, TRUE, -1)
 	else
-		status = 0
+		turned_on = FALSE
 		if(!cell)
 			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
@@ -112,10 +129,10 @@
 	add_fingerprint(user)
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Paralyze(stunforce*3)
+		user.Knockdown(stunforce*3)
 		deductcharge(hitcost)
 		return
 
@@ -130,36 +147,47 @@
 			return
 
 	if(user.a_intent != INTENT_HARM)
-		if(status)
-			if(baton_stun(M, user))
-				user.do_attack_animation(M)
-				return
+		if(turned_on)
+			if(cooldown_check <= world.time)
+				if(baton_effect(M, user))
+					user.do_attack_animation(M)
+					return
+			else
+				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
 		else
 			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
 							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
 	else
-		if(status)
-			baton_stun(M, user)
+		if(turned_on)
+			if(cooldown_check <= world.time)
+				baton_effect(M, user)
 		..()
 
 
-/obj/item/melee/baton/proc/baton_stun(mob/living/L, mob/user)
+/obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
-			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
-			return 0
+			playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
+			return FALSE
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		if(!R || !R.cell || !R.cell.use(hitcost))
-			return 0
+			return FALSE
 	else
 		if(!deductcharge(hitcost))
-			return 0
+			return FALSE
 
-	L.Paralyze(stunforce)
-	L.apply_effect(EFFECT_STUTTER, stunforce)
+	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
+	/// After a period of time, we then check to see what stun duration we give.
+	L.Jitter(20)
+	L.confused = max(10, L.confused)
+	L.stuttering = max(8, L.stuttering)
+	L.adjustStaminaLoss(60)
+
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
+	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), 2 SECONDS)
+
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
@@ -167,14 +195,25 @@
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 		log_combat(user, L, "stunned")
 
-	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
 
+	cooldown_check = world.time + cooldown
 
 	return 1
+
+/// After the initial stun period, we check to see if the target needs to have the stun applied.
+/obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
+	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	if(trait_check)
+		target.Knockdown(stunforce * 0.1)
+	else
+		target.Knockdown(stunforce)
+	if(!target.IsKnockdown())
+		to_chat(target, "<span class='warning'>You muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
@@ -185,14 +224,14 @@
 /obj/item/melee/baton/cattleprod
 	name = "stunprod"
 	desc = "An improvised stun baton."
-	icon_state = "stunprod_nocell"
+	icon_state = "stunprod"
 	item_state = "prod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stunforce = 100
+	stunforce = (5 SECONDS)
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = ITEM_SLOT_BACK
@@ -202,6 +241,12 @@
 	. = ..()
 	sparkler = new (src)
 
-/obj/item/melee/baton/cattleprod/baton_stun()
+/obj/item/melee/baton/cattleprod/baton_effect()
 	if(sparkler.activate())
 		..()
+
+/obj/item/melee/baton/cattleprod/Destroy()
+	if(sparkler)
+		QDEL_NULL(sparkler)
+	return ..()
+

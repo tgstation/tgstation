@@ -38,22 +38,23 @@
 
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)
+		log_message("has died (BRUTE: [src.getBruteLoss()], BURN: [src.getFireLoss()], TOX: [src.getToxLoss()], OXY: [src.getOxyLoss()], CLONE: [src.getCloneLoss()])", LOG_ATTACK)
 	if(is_devil(src))
 		INVOKE_ASYNC(is_devil(src), /datum/antagonist/devil.proc/beginResurrectionCheck, src)
-	if(is_hivemember(src))
-		remove_hivemember(src)
-	if(is_hivehost(src))
-		var/datum/antagonist/hivemind/hive = mind.has_antag_datum(/datum/antagonist/hivemind)
-		hive.destroy_hive()
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 	set_species(/datum/species/skeleton)
-	return 1
+	return TRUE
 
 
 /mob/living/carbon/proc/Drain()
 	become_husk(CHANGELING_DRAIN)
-	add_trait(TRAIT_BADDNA, CHANGELING_DRAIN)
+	ADD_TRAIT(src, TRAIT_BADDNA, CHANGELING_DRAIN)
 	blood_volume = 0
-	return 1
+	return TRUE
+
+/mob/living/carbon/proc/makeUncloneable()
+	ADD_TRAIT(src, TRAIT_BADDNA, MADE_UNCLONEABLE)
+	blood_volume = 0
+	return TRUE

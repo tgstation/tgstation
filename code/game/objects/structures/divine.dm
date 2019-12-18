@@ -39,12 +39,12 @@
 		return
 	last_process = world.time
 	to_chat(user, "<span class='notice'>The water feels warm and soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>")
-	user.reagents.add_reagent("godblood",20)
-	update_icons()
-	addtimer(CALLBACK(src, .proc/update_icons), time_between_uses)
+	user.reagents.add_reagent(/datum/reagent/medicine/omnizine/godblood,20)
+	update_icon()
+	addtimer(CALLBACK(src, /atom/.proc/update_icon), time_between_uses)
 
 
-/obj/structure/healingfountain/proc/update_icons()
+/obj/structure/healingfountain/update_icon()
 	if(last_process + time_between_uses > world.time)
 		icon_state = "fountain"
 	else
