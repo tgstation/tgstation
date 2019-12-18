@@ -35,6 +35,7 @@ Key procs
 * [get_selected_language](atom/movable.html#proc/get_selected_language)
 * [update_atom_languages](atom/movable.html#proc/update_atom_languages)
 */
+
 /datum/language_holder
 	/// Understood languages.
 	var/list/understood_languages = list(/datum/language/common = list(LANGUAGE_MIND))
@@ -207,7 +208,8 @@ Key procs
 	get_selected_language()
 	return TRUE
 
-/// Copies all languages from the supplied language holder
+/// Copies all languages from the supplied atom/language holder. Source should be overridden when you
+/// do not want the language overwritten by later atom updates or want to avoid blocked languages.
 /datum/language_holder/proc/copy_languages(var/datum/language_holder/from_holder, source_override)
 	if(source_override)	//No blocked languages here, for now only used by ling absorb.
 		for(var/language in from_holder.understood_languages)

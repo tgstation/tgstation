@@ -858,7 +858,8 @@
 	var/datum/language_holder/LH = get_language_holder()
 	return LH.get_random_spoken_language()
 
-/// Copies all languages into the supplied atom/language holder.
+/// Copies all languages into the supplied atom/language holder. Source should be overridden when you
+/// do not want the language overwritten by later atom updates or want to avoid blocked languages.
 /atom/movable/proc/copy_languages(from_holder, source_override)
 	if(isatom(from_holder))
 		var/atom/movable/thing = from_holder
