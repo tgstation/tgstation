@@ -1000,7 +1000,7 @@
 
 /datum/reagent/medicine/lithium_carbonate
 	name = "Lithium Carbonate"
-	description = "Chemical of last resort. Highly roxic and induces muscle spasms but rapidly restores someones mood and heals their mental instability. Must be ingested , otherwise it is instantly purged from the body. If overdosed causes massive damage to sensory organs"
+	description = "Chemical of last resort. Highly toxic and induces muscle spasms but rapidly restores someones mood and heals their mental instability. Must be ingested , otherwise it is instantly purged from the body. If overdosed causes massive damage to sensory organs"
 	reagent_state = LIQUID
 	color = "#c5ddbd"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -1011,8 +1011,8 @@
 	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 1.5*REM, 50)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	mood.adjustPsychInstability(-2)
-	if(mood.sanity <= SANITY_GREAT) // only take effect if in negative sanity and then...
-		mood.setSanity(min(mood.sanity+20, SANITY_GREAT)) // set minimum to prevent unwanted spiking over neutral
+	if(mood.sanity <= SANITY_GREAT) // only take effect if in not good sanity and then...
+		mood.setSanity(min(mood.sanity+20, SANITY_GREAT)) // set minimum to prevent unwanted spiking over great
 	return TRUE
 
 /datum/reagent/medicine/lithium_carbonate/on_mob_add(mob/living/carbon/M)
@@ -1251,7 +1251,7 @@
 	..()
 	. = 1
 
-datum/reagent/medicine/alprazolam
+/datum/reagent/medicine/alprazolam
 	name = "Alprazolam"
 	description = "Used to supress extreme cases of mental disorders."
 	reagent_state = LIQUID

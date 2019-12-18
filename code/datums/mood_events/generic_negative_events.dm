@@ -57,6 +57,11 @@
 	mood_change = -16
 	timeout = 2 MINUTES
 
+/datum/mood_event/ashamed_bulimia
+	description = "<span class='warning'>I just vomited... I'm so ashamed, I just cannot handle that much food</span>\n"
+	mood_change = -4
+	timeout = 2 MINUTES
+
 /datum/mood_event/collectors_itch
 	description = "<span class='warning'>My collection is incomplete!</span>\n"
 	mood_change = -10

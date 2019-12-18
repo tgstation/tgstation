@@ -435,6 +435,46 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/psicodine(src)
 
+/obj/item/storage/pill_bottle/lithium_carbonate
+	name = "bottle of lithium carbonate pills"
+	desc = "An ancient pill bottle filled with psychostabilizng drug . You cannot really see the side effect table, even though it is quite long..."
+
+/obj/item/storage/pill_bottle/lithium_carbonate/PopulateContents()
+	for(var/i in 1 to 5) //it is an old pill bottle, someone took the 6th pill!
+		new /obj/item/reagent_containers/pill/lithium_carbonate(src)
+
+/obj/item/storage/pill_bottle/alprazolam
+	name = "bottle of alprazolam pills"
+	desc = "An old pill bottle with 'Xanax' taped over and alprazolam written over it"
+
+/obj/item/storage/pill_bottle/alprazolam/PopulateContents()
+	for(var/i in 1 to 6) //it is an old pill bottle, someone took the 7th pill!
+		new /obj/item/reagent_containers/pill/alprazolam(src)
+
+/obj/item/storage/pill_bottle/alprazolam
+	name = "bottle of alprazolam pills"
+	desc = "An old pill bottle with 'Xanax' taped over and alprazolam written over it"
+
+/obj/item/storage/pill_bottle/alprazolam/PopulateContents()
+	for(var/i in 1 to 6) //it is an old pill bottle, someone took the 7th pill!
+		new /obj/item/reagent_containers/pill/alprazolam(src)
+
+/obj/item/storage/pill_bottle/haloperidol
+	name = "bottle of haloperidol pills"
+	desc = "Contains pills used to treat mental distress and drug overdoses"
+
+/obj/item/storage/pill_bottle/haloperidol/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/haloperidol(src)
+
+/obj/item/storage/pill_bottle/psicodine
+	name = "bottle of psicodine pills"
+	desc = "Contains pills used to treat mental distress and traumas."
+
+/obj/item/storage/pill_bottle/psicodine/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/psicodine(src)
+
 /obj/item/storage/pill_bottle/happiness
 	name = "happiness pill bottle"
 	desc = "The label is long gone, in its place an 'H' written with a marker."

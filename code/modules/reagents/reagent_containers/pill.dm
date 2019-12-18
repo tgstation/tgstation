@@ -161,6 +161,27 @@
 	list_reagents = list(/datum/reagent/medicine/insulin = 50)
 	rename_with_volume = TRUE
 
+/obj/item/reagent_containers/pill/lithium_carbonate
+	name = "Lithium carbonate pill"
+	desc = "A potent psychic stabilizer, I wonder why was it taken off the market."
+	list_reagents = list(/datum/reagent/medicine/lithium_carbonate = 5 )
+	icon_state = "pill18"
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/alprazolam
+	name = "haloperidol pill"
+	desc = "Used in extreme cases of mental illness"
+	list_reagents = list(/datum/reagent/medicine/alprazolam = 10)
+	icon_state = "pill19"
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/haloperidol
+	name = "haloperidol pill"
+	desc = "Used to treat mental instability and drug overdoses"
+	list_reagents = list(/datum/reagent/medicine/haloperidol = 10)
+	icon_state = "pill20"
+	rename_with_volume = TRUE
+
 /obj/item/reagent_containers/pill/psicodine
 	name = "psicodine pill"
 	desc = "Used to treat mental instability and phobias."

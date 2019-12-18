@@ -29,7 +29,7 @@
 	scan_desc = "Electric imaging suggests a mental disorder is present"
 	gain_text = "<span class='warning'>You feel emptier inside!</span>"
 	lose_text = "<span class='notice'>You feel whole once again.</span>"
-	cure_points = 500
+	cure_points = 1500
 	lithiated_mod = -2
 	control_mod = -1
 	fearless_mod = 4
@@ -58,7 +58,7 @@
 	lose_text = "<span class='notice'>You feel easier about talking again.</span>" //if only it were that easy!
 	scan_desc = "Electric imaging suggests a mental disorder is present"
 	var/dumb_thing = TRUE
-	cure_points = 100
+	cure_points = 500
 	lithiated_mod = -2
 	control_mod = 2
 	fearless_mod = 1
@@ -99,7 +99,7 @@
 	gain_text = "<span class='danger'>You feel as on a moodswing.</span>"
 	lose_text = "<span class='notice'>You feel peace</span>" //if only it were that easy!
 	scan_desc = "Electric imaging suggests a mental disorder is present"
-	cure_points = 400
+	cure_points = 750
 	lithiated_mod = 2
 	control_mod = 4
 	fearless_mod = -2
@@ -134,7 +134,7 @@
 	gain_text = "<span class='danger'>You feel reality warping to your perception</span>"
 	lose_text = "<span class='notice'>World shifts back to its original place</span>"
 	scan_desc = "Electric imaging suggests a mental disorder is present"
-	cure_points = 250
+	cure_points = 1000
 	lithiated_mod = 5
 	control_mod = 3
 	fearless_mod = -3
@@ -194,7 +194,7 @@
 	gain_text = "<span class='danger'>You feel your body not responding</span>"
 	lose_text = "<span class='notice'>You feel free once again</span>"
 	scan_desc = "Electric imaging suggests a mental disorder is present"
-	cure_points = 300
+	cure_points = 1200
 	var/state = 0
 	lithiated_mod = 3
 	control_mod = -3
@@ -233,12 +233,12 @@
 
 /datum/brain_trauma/psychological/schizophrenia/delusional/on_gain()
 	roll_bad_effect()
-	ADD_TRAIT(owner, TRAIT_CATATONIA, PSYCH_TRAIT)
+	ADD_TRAIT(owner, TRAIT_DELUSIONAL, PSYCH_TRAIT)
 	..()
 
 /datum/brain_trauma/psychological/schizophrenia/delusional/on_lose()
 	clear_bad_effect()
-	REMOVE_TRAIT(owner, TRAIT_CATATONIA, PSYCH_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_DELUSIONAL, PSYCH_TRAIT)
 	..()
 
 
@@ -248,7 +248,7 @@
 	gain_text = "<span class='danger'>You feel an odd compulsion to objects</span>"
 	lose_text = "<span class='notice'>You feel free once again</span>"
 	scan_desc = "Electric imaging suggests a mental disorder is present"
-	cure_points = 200
+	cure_points = 1000
 	lithiated_mod = -2
 	control_mod = 4
 	fearless_mod = -1
@@ -291,6 +291,7 @@
 			to_chat(owner, "<span class='boldwarning'>You feel a great need to collect bottles of all kind!</span>")
 		if(list(/obj/item/bodypart/l_arm,/obj/item/bodypart/r_arm))
 			to_chat(owner, "<span class='boldwarning'>You feel like you need a hand. They are so.. so... beautiful... </span>")
+
 /datum/brain_trauma/psychological/collector/on_gain()
 	needed_item = pick(possible_items)
 	announce_item()
@@ -301,4 +302,30 @@
 
 /datum/brain_trauma/psychological/collector/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_COLLECTOR, PSYCH_TRAIT)
+	..()
+
+/datum/brain_trauma/psychological/bulimia
+	name = "Bulimia Nervosa"
+	desc = "Mental disorder that is characterized by vomiting after eating"
+	gain_text = "<span class='danger'>You feel your stomach turning</span>"
+	lose_text = "<span class='notice'>You feel able to eat once again</span>"
+	scan_desc = "Electric imaging suggests a mental disorder is present"
+	cure_points = 500
+	lithiated_mod = -4
+	control_mod = 3
+	fearless_mod = 2
+	relaxed_mod = -3
+
+/datum/brain_trauma/psychological/bulimia/on_life()
+	if(owner.nutrition > NUTRITION_LEVEL_WELL_FED && !HAS_TRAIT(owner,TRAIT_UNDER_CONTROL))
+		to_chat(owner, "<span class='boldwarning'>You cannot handle that much food in your stomach</span>")
+		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "collectors_satisfaction", /datum/mood_event/ashamed_bulimia)
+		owner.vomit()
+
+/datum/brain_trauma/psychological/bulimia/on_gain()
+	ADD_TRAIT(owner, TRAIT_BULIMIA, PSYCH_TRAIT)
+	..()
+
+/datum/brain_trauma/psychological/bulimia/on_lose()
+	REMOVE_TRAIT(owner, TRAIT_BULIMIA, PSYCH_TRAIT)
 	..()

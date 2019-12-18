@@ -79,7 +79,8 @@
 #define ACCESS_NETWORK 67
 /// Cloning room and clone pod ejection
 #define ACCESS_CLONING 68
-
+/// Psychology quarters, EST room , Psych Cells
+#define ACCESS_PSYCHIATRIST 69
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
 	Mostly for admin fun times.*/

@@ -107,3 +107,16 @@
 	new /obj/item/storage/box/syringes/variety(src)
 	new /obj/item/storage/box/beakers/variety(src)
 	new /obj/item/clothing/glasses/science(src)
+
+
+/obj/structure/closet/secure_closet/psychiatrist
+	name = "\improper psychiatrist's cabinet"
+	req_access = list(ACCESS_PSYCHIATRIST)
+	icon_state = "cabinet"
+	resistance_flags = FLAMMABLE
+	max_integrity = 70
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+
+/obj/structure/closet/secure_closet/psychiatrist/PopulateContents()
+	..()

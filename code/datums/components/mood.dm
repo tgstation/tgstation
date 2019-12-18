@@ -6,7 +6,7 @@
 	var/sanity = SANITY_NEUTRAL //Current sanity
 	var/list/datum/brain_trauma/psychological/disorders = list(	/datum/brain_trauma/psychological/depression,/datum/brain_trauma/psychological/schizophrenia/paranoid,
 																/datum/brain_trauma/psychological/social_anxiety,/datum/brain_trauma/psychological/schizophrenia/delusional,
-																/datum/brain_trauma/psychological/bipolar,/datum/brain_trauma/psychological/collector)
+																/datum/brain_trauma/psychological/bipolar,/datum/brain_trauma/psychological/collector,/datum/brain_trauma/psychological/bulimia)
 	var/list/datum/brain_trauma/psychological/aquired_disorders = list()
 	var/psych_instab = 0 //this grows the longer you are insane. Increases the chances of getting a mental disorder. When it hits 100 it will always roll a mental disorder and set itself to 65.
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
