@@ -413,10 +413,10 @@
 			else
 				tending = FALSE
 
+			update_icon()
 			if(!tending)
 				visible_message("[src] places its tools back into itself.")
-			update_icon()
-			soft_reset()
+				soft_reset()
 		else
 			tending = FALSE
 

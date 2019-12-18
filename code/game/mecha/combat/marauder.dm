@@ -15,24 +15,24 @@
 	add_req_access = 0
 	internal_damage_threshold = 25
 	force = 45
-	max_equip = 4
+	max_equip = 5
 	bumpsmash = 1
 
 /obj/mecha/combat/marauder/GrantActions(mob/living/user, human_occupant = 0)
 	..()
 	smoke_action.Grant(user, src)
-	thrusters_action.Grant(user, src)
 	zoom_action.Grant(user, src)
 
 /obj/mecha/combat/marauder/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	smoke_action.Remove(user)
-	thrusters_action.Remove(user)
 	zoom_action.Remove(user)
 
 /obj/mecha/combat/marauder/loaded/Initialize()
 	. = ..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack(src)
 	ME.attach(src)
@@ -53,11 +53,13 @@
 	wreckage = /obj/structure/mecha_wreckage/seraph
 	internal_damage_threshold = 20
 	force = 55
-	max_equip = 5
+	max_equip = 6
 
 /obj/mecha/combat/marauder/seraph/Initialize()
 	. = ..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse(src)
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack(src)
 	ME.attach(src)
@@ -76,8 +78,13 @@
 	operation_req_access = list(ACCESS_SYNDICATE)
 	internals_req_access = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/mauler
-	max_equip = 5
+	max_equip = 6
 	destruction_sleep_duration = 20
+
+/obj/mecha/combat/marauder/mauler/Initialize()
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/thrusters/ion(src)
+	ME.attach(src)
 
 /obj/mecha/combat/marauder/mauler/loaded/Initialize()
 	. = ..()

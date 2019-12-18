@@ -183,37 +183,36 @@ SUBSYSTEM_DEF(shuttle)
 			resolve this problem by loading an emergency shuttle template \
 			manually, and then calling register() on the mobile docking port. \
 			Good luck.")
-			return
 		emergency = backup_shuttle
 	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
 	if(world.time - SSticker.round_start_time < srd)
-		to_chat(user, "The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.")
+		to_chat(user, "<span class='alert'>The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.</span>")
 		return
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			to_chat(user, "The emergency shuttle may not be called while returning to CentCom.")
+			to_chat(user, "<span class='alert'>The emergency shuttle may not be called while returning to CentCom.</span>")
 			return
 		if(SHUTTLE_CALL)
-			to_chat(user, "The emergency shuttle is already on its way.")
+			to_chat(user, "<span class='alert'>The emergency shuttle is already on its way.</span>")
 			return
 		if(SHUTTLE_DOCKED)
-			to_chat(user, "The emergency shuttle is already here.")
+			to_chat(user, "<span class='alert'>The emergency shuttle is already here.</span>")
 			return
 		if(SHUTTLE_IGNITING)
-			to_chat(user, "The emergency shuttle is firing its engines to leave.")
+			to_chat(user, "<span class='alert'>The emergency shuttle is firing its engines to leave.</span>")
 			return
 		if(SHUTTLE_ESCAPE)
-			to_chat(user, "The emergency shuttle is moving away to a safe distance.")
+			to_chat(user, "<span class='alert'>The emergency shuttle is moving away to a safe distance.</span>")
 			return
 		if(SHUTTLE_STRANDED)
-			to_chat(user, "The emergency shuttle has been disabled by CentCom.")
+			to_chat(user, "<span class='alert'>The emergency shuttle has been disabled by CentCom.</span>")
 			return
 
 	call_reason = trim(html_encode(call_reason))
 
 	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && seclevel2num(get_security_level()) > SEC_LEVEL_GREEN)
-		to_chat(user, "You must provide a reason.")
+		to_chat(user, "<span class='alert'>You must provide a reason.</span>")
 		return
 
 	var/area/signal_origin = get_area(user)
@@ -753,27 +752,6 @@ SUBSYSTEM_DEF(shuttle)
 		ui = new(user, src, ui_key, "shuttle_manipulator", name, 800, 600, master_ui, state)
 		ui.open()
 
-/proc/shuttlemode2str(mode)
-	switch(mode)
-		if(SHUTTLE_IDLE)
-			. = "idle"
-		if(SHUTTLE_IGNITING)
-			. = "engines charging"
-		if(SHUTTLE_RECALL)
-			. = "recalled"
-		if(SHUTTLE_CALL)
-			. = "called"
-		if(SHUTTLE_DOCKED)
-			. = "docked"
-		if(SHUTTLE_STRANDED)
-			. = "stranded"
-		if(SHUTTLE_ESCAPE)
-			. = "escape"
-		if(SHUTTLE_ENDGAME)
-			. = "endgame"
-	if(!.)
-		CRASH("shuttlemode2str(): invalid mode [mode]")
-
 
 /datum/controller/subsystem/shuttle/ui_data(mob/user)
 	var/list/data = list()
@@ -829,7 +807,7 @@ SUBSYSTEM_DEF(shuttle)
 		else if(!M.destination)
 			L["can_fast_travel"] = FALSE
 		if (M.mode != SHUTTLE_IDLE)
-			L["mode"] = capitalize(shuttlemode2str(M.mode))
+			L["mode"] = capitalize(M.mode)
 		L["status"] = M.getDbgStatusText()
 		if(M == existing_shuttle)
 			data["existing_shuttle"] = L

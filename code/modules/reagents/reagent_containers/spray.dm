@@ -90,6 +90,8 @@
 			if(stream_mode)
 				if(isliving(T))
 					var/mob/living/M = T
+					if(!M.can_inject())
+						continue
 					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
 						D.reagents.reaction(M, VAPOR)
 						puff_reagent_left -= 1
@@ -167,7 +169,7 @@
 	stream_amount = 5
 
 /obj/item/reagent_containers/spray/cleaner/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting the nozzle of \the [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is putting the nozzle of \the [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(do_mob(user,user,30))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
 			user.visible_message("<span class='suicide'>[user] pulls the trigger!</span>")
@@ -371,7 +373,7 @@
 	spray_range = 4
 	stream_range = 2
 	volume = 100
-	custom_premium_price = 200
+	custom_premium_price = 900
 
 /obj/item/reagent_containers/spray/syndicate/Initialize()
 	. = ..()
@@ -390,7 +392,7 @@
 						"Blue" = "sprayer_med_blue")
 
 /obj/item/reagent_containers/spray/medical/AltClick(mob/user)
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		reskin_obj(user)
 
 /obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)
@@ -409,7 +411,3 @@
 	desc = "A medical spray bottle.This one contains rhigoxane, it is used to treat burns and cool down temperature if applied with spray."
 	icon_state = "sprayer_large"
 	list_reagents = list(/datum/reagent/medicine/rhigoxane = 100)
-
-
-
-

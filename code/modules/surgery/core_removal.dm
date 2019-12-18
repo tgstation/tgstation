@@ -14,7 +14,7 @@
 //extract brain
 /datum/surgery_step/extract_core
 	name = "extract core"
-	implements = list(/obj/item/hemostat = 100, TOOL_CROWBAR = 100)
+	implements = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 100)
 	time = 16
 
 /datum/surgery_step/extract_core/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -22,7 +22,7 @@
 		"<span class='notice'>[user] begins to extract a core from [target].</span>",
 		"<span class='notice'>[user] begins to extract a core from [target].</span>")
 
-/datum/surgery_step/extract_core/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/extract_core/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	var/mob/living/simple_animal/slime/slime = target
 	if(slime.cores > 0)
 		slime.cores--
@@ -34,9 +34,9 @@
 
 		if(slime.cores <= 0)
 			slime.icon_state = "[slime.colour] baby slime dead-nocore"
-			return 1
+			return ..(default_display_results = FALSE)
 		else
 			return 0
 	else
 		to_chat(user, "<span class='warning'>There aren't any cores left in [target]!</span>")
-		return 1
+		return ..(default_display_results = FALSE)

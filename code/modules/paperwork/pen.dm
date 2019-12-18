@@ -21,7 +21,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	materials = list(/datum/material/iron=10)
+	custom_materials = list(/datum/material/iron=10)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	var/colour = "black"	//what colour the ink is!
@@ -71,6 +71,22 @@
 	icon_state = "pen-fountain"
 	font = FOUNTAIN_PEN_FONT
 
+/obj/item/pen/charcoal
+	name = "charcoal stylus"
+	desc = "It's just a wooden stick with some compressed ash on the end. At least it can write."
+	icon_state = "pen-charcoal"
+	colour = "dimgray"
+	font = CHARCOAL_FONT
+	custom_materials = null
+	grind_results = list(/datum/reagent/ash = 5, /datum/reagent/cellulose = 10)
+
+/datum/crafting_recipe/charcoal_stylus
+	name = "Charcoal Stylus"
+	result = /obj/item/pen/charcoal
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 1, /datum/reagent/ash = 30)
+	time = 30
+	category = CAT_PRIMAL
+
 /obj/item/pen/fountain/captain
 	name = "captain's fountain pen"
 	desc = "It's an expensive Oak fountain pen. The nib is quite sharp."
@@ -79,7 +95,7 @@
 	throwforce = 5
 	throw_speed = 4
 	colour = "crimson"
-	materials = list(/datum/material/gold = 750)
+	custom_materials = list(/datum/material/gold = 750)
 	sharpness = IS_SHARP
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
@@ -134,10 +150,10 @@
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 			if(oldname == input)
-				to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
+				to_chat(user, "<span class='notice'>You changed \the [O.name] to... well... \the [O.name].</span>")
 			else
 				O.name = input
-				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
+				to_chat(user, "<span class='notice'>\The [oldname] has been successfully been renamed to \the [input].</span>")
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Change description")
@@ -145,7 +161,7 @@
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 			O.desc = input
-			to_chat(user, "You have successfully changed \the [O.name]'s description.")
+			to_chat(user, "<span class='notice'>You have successfully changed \the [O.name]'s description.</span>")
 
 /*
  * Sleepypens

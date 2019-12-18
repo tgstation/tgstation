@@ -279,11 +279,11 @@
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!ishuman(M) && !ismonkey(M))
 		return
-		
+
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
 		var/pepper_proof = victim.is_pepper_proof()
-	
+
 		//check for protection
 		//actually handle the pepperspray effects
 		if (!(pepper_proof)) // you need both eye and mouth protection
@@ -296,7 +296,7 @@
 			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
 		victim.update_damage_hud()
-			
+
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
@@ -520,13 +520,13 @@
 /datum/reagent/consumable/corn_starch
 	name = "Corn Starch"
 	description = "A slippery solution."
-	color = "#C8A5DC"
+	color = "#DBCE95"
 	taste_description = "slime"
 
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"
 	description = "Decays into sugar."
-	color = "#C8A5DC"
+	color = "#DBCE95"
 	metabolization_rate = 3 * REAGENTS_METABOLISM
 	taste_description = "sweet slime"
 
@@ -556,7 +556,7 @@
     var/mob/living/carbon/C = M
     for(var/s in C.surgeries)
       var/datum/surgery/S = s
-      S.success_multiplier = max(0.6, S.success_multiplier) // +60% success probability on each step, compared to bacchus' blessing's ~46%
+      S.speed_modifier = max(0.6, S.speed_modifier)
   ..()
 
 /datum/reagent/consumable/mayonnaise
@@ -734,3 +734,27 @@
 	taste_mult = 2
 	taste_description = "caramel"
 	reagent_state = SOLID
+
+/datum/reagent/consumable/char
+	name = "Char"
+	description = "Essence of the grill. Has strange properties when overdosed."
+	reagent_state = LIQUID
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#C8C8C8"
+	taste_mult = 6
+	taste_description = "smoke"
+	overdose_threshold = 25
+
+/datum/reagent/consumable/char/overdose_process(mob/living/carbon/M)
+	if(prob(10))
+		M.say(pick("I hate my wife.", "I just want to grill for God's sake.", "I wish I could just go on my lawnmower and cut the grass.", "Yep, Quake. That was a good game...", "Yeah, my PDA has wi-fi. A wife I hate."), forced = /datum/reagent/consumable/char)
+	..()
+
+
+/datum/reagent/consumable/bbqsauce
+	name = "BBQ Sauce"
+	description = "Sweet, Smokey, Savory, and gets everywhere. Perfect for Grilling."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#78280A" // rgb: 120 40, 10
+	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
+	taste_description = "smokey sweetness"

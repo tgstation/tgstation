@@ -7,6 +7,7 @@
 /obj/item/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
+	force = 15 //Smashing bottles over someone's head hurts.
 	throwforce = 15
 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
@@ -57,8 +58,6 @@
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return
 
-	force = 15 //Smashing bottles over someoen's head hurts.
-
 	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
 
 	var/armor_block = 0 //Get the target's armor values for normal attack damage.
@@ -94,7 +93,6 @@
 	var/head_attack_message = ""
 	if(affecting == BODY_ZONE_HEAD && istype(target, /mob/living/carbon/))
 		head_attack_message = " on the head"
-		//Knock down the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
 			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN)
 
@@ -331,7 +329,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
 	name = "orange juice"
 	desc = "Full of vitamins and deliciousness!"
-	custom_price = 10
+	custom_price = 100
 	icon_state = "orangejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -343,7 +341,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
-	custom_price = 10
+	custom_price = 100
 	icon_state = "cream"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -355,7 +353,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
-	custom_price = 10
+	custom_price = 100
 	icon_state = "tomatojuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -367,7 +365,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
 	desc = "Sweet-sour goodness."
-	custom_price = 10
+	custom_price = 100
 	icon_state = "limejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -379,7 +377,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"
 	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
-	custom_price = 10
+	custom_price = 100
 	icon_state = "mentholbox"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -390,7 +388,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/grenadine
 	name = "Jester Grenadine"
 	desc = "Contains 0% real cherries!"
-	custom_price = 10
+	custom_price = 100
 	icon_state = "grenadine"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/grenadine = 100)
@@ -399,7 +397,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/applejack
 	name = "Buckin' Bronco's Applejack"
 	desc = "Kicks like a horse, tastes like an apple!"
-	custom_price = 10
+	custom_price = 100
 	icon_state = "applejack_bottle"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/ethanol/applejack = 100)
@@ -408,7 +406,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne
 	name = "Eau d' Dandy Brut Champagne"
 	desc = "Finely sourced from only the most pretentious French vineyards."
-	custom_premium_price = 200
+	custom_premium_price = 250
 	icon_state = "champagne_bottle"
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/ethanol/champagne = 100)
@@ -422,11 +420,40 @@
 /obj/item/reagent_containers/food/drinks/bottle/trappist
 	name = "Mont de Requin Trappistes Bleu"
 	desc = "Brewed in space-Belgium. Fancy!"
-	custom_premium_price = 50
+	custom_premium_price = 170
 	icon_state = "trappistbottle"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/ethanol/trappist = 50)
 
+/obj/item/reagent_containers/food/drinks/bottle/hooch
+	name = "hooch bottle"
+	desc = "A bottle of rotgut. Its owner has applied some street wisdom to cleverly disguise it as a brown paper bag."
+	icon_state = "hoochbottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/hooch = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/moonshine
+	name = "moonshine jug"
+	desc = "It is said that the ancient Applalacians used these stoneware jugs to capture lightning in a bottle."
+	icon_state = "moonshinebottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/moonshine = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/blank //Don't let players print these from a lathe, bottles should be obtained in mass from the bar only.
+	name = "glass bottle"
+	desc = "This blank bottle is unyieldingly anonymous, offering no clues to it's contents."
+	icon_state = "glassbottle"
+	fill_icon_thresholds = list(0, 10, 20, 30, 40, 50, 60, 70, 80, 90)
+	custom_price = 65
+
+/obj/item/reagent_containers/food/drinks/bottle/blank/update_icon()
+	..()
+	add_overlay("[initial(icon_state)]shine")
+
+/obj/item/reagent_containers/food/drinks/bottle/blank/small
+	name = "small glass bottle"
+	desc = "This small bottle is unyieldingly anonymous, offering no clues to it's contents."
+	icon_state = "glassbottlesmall"
+	volume = 50
+	custom_price = 55
 
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/food/drinks/bottle/molotov
@@ -469,19 +496,19 @@
 		to_chat(user, "<span class='info'>You light [src] on fire.</span>")
 		add_overlay(GLOB.fire_overlay)
 		if(!isGlass)
-			spawn(50)
-				if(active)
-					var/counter
-					var/target = src.loc
-					for(counter = 0, counter<2, counter++)
-						if(istype(target, /obj/item/storage))
-							var/obj/item/storage/S = target
-							target = S.loc
-					if(istype(target, /atom))
-						var/atom/A = target
-						SplashReagents(A)
-						A.fire_act()
-					qdel(src)
+			addtimer(CALLBACK(src, .proc/explode), 5 SECONDS)
+
+/obj/item/reagent_containers/food/drinks/bottle/molotov/proc/explode()
+	if(!active)
+		return
+	if(get_turf(src))
+		var/atom/target = loc
+		for(var/i in 1 to 2)
+			if(istype(target, /obj/item/storage))
+				target = target.loc
+		SplashReagents(target)
+		target.fire_act()
+	qdel(src)
 
 /obj/item/reagent_containers/food/drinks/bottle/molotov/attack_self(mob/user)
 	if(active)

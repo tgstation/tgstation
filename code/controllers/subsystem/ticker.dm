@@ -311,7 +311,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
-	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
+	send2tgs("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 	setup_done = TRUE
 
 	for(var/i in GLOB.start_landmarks_list)
@@ -378,7 +378,7 @@ SUBSYSTEM_DEF(ticker)
 		for(var/i in GLOB.new_player_list)
 			var/mob/dead/new_player/N = i
 			if(N.new_character)
-				to_chat(N, "Captainship not forced on anyone.")
+				to_chat(N, "<span class='notice'>Captainship not forced on anyone.</span>")
 			CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()

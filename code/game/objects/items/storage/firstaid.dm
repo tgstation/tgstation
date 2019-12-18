@@ -32,10 +32,9 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/bruise_pack = 2,
-		/obj/item/stack/medical/ointment = 2,
-		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/healthanalyzer = 1)
+		/obj/item/stack/medical/suture = 2,
+		/obj/item/stack/medical/mesh = 2,
+		/obj/item/reagent_containers/hypospray/medipen = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/medical
@@ -47,7 +46,7 @@
 /obj/item/storage/firstaid/medical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_BULKY //holds the same equipment as a medibelt
+	STR.max_w_class = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
 	STR.max_items = 12
 	STR.max_combined_w_class = 24
 	STR.set_holdable(list(
@@ -104,14 +103,14 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/bruise_pack = 2,
-		/obj/item/stack/medical/ointment = 2,
+		/obj/item/stack/medical/suture = 2,
+		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/healthanalyzer = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
-		/obj/item/cautery = 1)
+		/obj/item/cautery = 1,
+		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/ancient
@@ -150,8 +149,7 @@
 		/obj/item/reagent_containers/spray/rhigoxane = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
 		/obj/item/reagent_containers/pill/patch/silversulfadiazine = 3,	//FULP
-		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/healthanalyzer = 1)
+		/obj/item/reagent_containers/hypospray/medipen = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/toxin
@@ -177,8 +175,7 @@
 		/obj/item/reagent_containers/syringe/syriniver = 3,
 		/obj/item/storage/pill_bottle/potassiodide = 1,
 		/obj/item/reagent_containers/pill/charcoal = 3,	//FULP
-		/obj/item/reagent_containers/hypospray/medipen/penacid = 1,
-		/obj/item/healthanalyzer = 1)
+		/obj/item/reagent_containers/hypospray/medipen/penacid = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/o2
@@ -203,8 +200,7 @@
 		/obj/item/reagent_containers/syringe/convermol = 3,
 		/obj/item/reagent_containers/hypospray/medipen/salbutamol = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
-		/obj/item/storage/pill_bottle/iron = 1,
-		/obj/item/healthanalyzer = 1)
+		/obj/item/storage/pill_bottle/iron = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/brute
@@ -230,8 +226,7 @@
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/trophazole = 1,
 		/obj/item/reagent_containers/pill/patch/stypticpowder = 3,	//FULP
-		/obj/item/reagent_containers/hypospray/medipen/salacid = 1,
-		/obj/item/healthanalyzer = 1)
+		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/advanced
@@ -239,7 +234,7 @@
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "radfirstaid"
 	item_state = "firstaid-rad"
-	custom_premium_price = 600
+	custom_premium_price = 1100
 
 /obj/item/storage/firstaid/advanced/PopulateContents()
 	if(empty)

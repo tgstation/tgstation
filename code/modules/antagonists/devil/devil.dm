@@ -89,6 +89,8 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	roundend_category = "devils"
 	antagpanel_category = "Devil"
 	job_rank = ROLE_DEVIL
+	antag_hud_type = ANTAG_HUD_DEVIL
+	antag_hud_name = "devil"
 	var/obligation
 	var/ban
 	var/bane
@@ -233,7 +235,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 
 /datum/antagonist/devil/proc/increase_blood_lizard()
-	to_chat(owner.current, "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard.</span>")
+	to_chat(owner.current, "<span class='warning'>You feel as though your humanoid form is about to shed. You will soon turn into a blood lizard.</span>")
 	sleep(50)
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
@@ -251,7 +253,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 
 /datum/antagonist/devil/proc/increase_true_devil()
-	to_chat(owner.current, "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true devil.</span>")
+	to_chat(owner.current, "<span class='warning'>You feel as though your current form is about to shed. You will soon turn into a true devil.</span>")
 	sleep(50)
 	var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(owner.current.loc)
 	A.faction |= "hell"
@@ -359,7 +361,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/proc/beginResurrectionCheck(mob/living/body)
 	if(SOULVALUE>0)
-		to_chat(owner.current, "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it.  At the cost of some of your power, you will return to life soon.  Remain in your body.</span>")
+		to_chat(owner.current, "<span class='userdanger'>Your body has been damaged to the point that you may no longer use it. At the cost of some of your power, you will return to life soon. Remain in your body.</span>")
 		sleep(DEVILRESURRECTTIME)
 		if (!body ||  body.stat == DEAD)
 			if(SOULVALUE>0)
@@ -370,7 +372,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 					to_chat(owner.current, "<span class='userdanger'>WE LIVE AGAIN!</span>")
 					return hellish_resurrection(body)
 			else
-				to_chat(owner.current, "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished.  You no longer have enough power to resurrect.</span>")
+				to_chat(owner.current, "<span class='userdanger'>Unfortunately, the power that stemmed from your contracts has been extinguished. You no longer have enough power to resurrect.</span>")
 				return -1
 		else
 			to_chat(owner.current, "<span class='danger'>You seem to have resurrected without your hellish powers.</span>")
@@ -427,13 +429,13 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		reviveNumber += LOSS_PER_DEATH
 		update_hud()
 	if(body)
-		body.revive(TRUE, TRUE) //Adminrevive also recovers organs, preventing someone from resurrecting without a heart.
+		body.revive(full_heal = TRUE, admin_revive = TRUE) //Adminrevive also recovers organs, preventing someone from resurrecting without a heart.
 		if(istype(body.loc, /obj/effect/dummy/phased_mob/slaughter/))
 			body.forceMove(get_turf(body))//Fixes dying while jaunted leaving you permajaunted.
 		if(istype(body, /mob/living/carbon/true_devil))
 			var/mob/living/carbon/true_devil/D = body
 			if(D.oldform)
-				D.oldform.revive(1,0) // Heal the old body too, so the devil doesn't resurrect, then immediately regress into a dead body.
+				D.oldform.revive(full_heal = TRUE, admin_revive = FALSE) // Heal the old body too, so the devil doesn't resurrect, then immediately regress into a dead body.
 		if(body.stat == DEAD)
 			create_new_body()
 	else
@@ -454,10 +456,10 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 			return -1
 		currentMob.change_mob_type( /mob/living/carbon/human, targetturf, null, 1)
 		var/mob/living/carbon/human/H = owner.current
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/civilian/lawyer/black(H), SLOT_W_UNIFORM)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), SLOT_SHOES)
-		H.equip_to_slot_or_del(new /obj/item/storage/briefcase(H), SLOT_HANDS)
-		H.equip_to_slot_or_del(new /obj/item/pen(H), SLOT_L_STORE)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/civilian/lawyer/black(H), ITEM_SLOT_ICLOTHING)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), ITEM_SLOT_FEET)
+		H.equip_to_slot_or_del(new /obj/item/storage/briefcase(H), ITEM_SLOT_HANDS)
+		H.equip_to_slot_or_del(new /obj/item/pen(H), ITEM_SLOT_LPOCKET)
 		if(SOULVALUE >= BLOOD_THRESHOLD)
 			H.set_species(/datum/species/lizard, 1)
 			H.underwear = "Nude"
@@ -485,7 +487,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 			C.hud_used.devilsouldisplay.update_counter(SOULVALUE)
 
 /datum/antagonist/devil/greet()
-	to_chat(owner.current, "<span class='warning'><b>You remember your link to the infernal.  You are [truename], an agent of hell, a devil.  And you were sent to the plane of creation for a reason.  A greater purpose.  Convince the crew to sin, and embroiden Hell's grasp.</b></span>")
+	to_chat(owner.current, "<span class='warning'><b>You remember your link to the infernal. You are [truename], an agent of hell, a devil. And you were sent to the plane of creation for a reason. A greater purpose. Convince the crew to sin, and embroiden Hell's grasp.</b></span>")
 	to_chat(owner.current, "<span class='warning'><b>However, your infernal form is not without weaknesses.</b></span>")
 	to_chat(owner.current, "You may not use violence to coerce someone into selling their soul.")
 	to_chat(owner.current, "You may not directly and knowingly physically harm a devil, other than yourself.")
@@ -510,10 +512,6 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		var/laws = list("You may not use violence to coerce someone into selling their soul.", "You may not directly and knowingly physically harm a devil, other than yourself.", GLOB.lawlorify[LAW][ban], GLOB.lawlorify[LAW][obligation], "Accomplish your objectives at all costs.")
 		robot_devil.set_law_sixsixsix(laws)
 	sleep(10)
-	if(owner.assigned_role == "Clown" && ishuman(owner.current))
-		var/mob/living/carbon/human/S = owner.current
-		to_chat(S, "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>")
-		S.dna.remove_mutation(CLOWNMUT)
 	.=..()
 
 /datum/antagonist/devil/on_removal()
@@ -522,6 +520,9 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/apply_innate_effects(mob/living/mob_override)
 	give_appropriate_spells()
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	handle_clown_mutation(M, mob_override ? null : "Your infernal nature has allowed you to overcome your clownishness.")
 	owner.current.grant_all_languages(TRUE)
 	update_hud()
 	.=..()
@@ -531,6 +532,9 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		var/obj/effect/proc_holder/spell/S = X
 		if(is_type_in_typecache(S, devil_spells))
 			owner.RemoveSpell(S)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
+	handle_clown_mutation(M, removing = FALSE)
 	.=..()
 
 /datum/antagonist/devil/proc/printdevilinfo()

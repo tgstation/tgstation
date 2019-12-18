@@ -2,7 +2,7 @@
 	name = "infrared emitter"
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared"
-	materials = list(/datum/material/iron=1000, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron=1000, /datum/material/glass=500)
 	is_position_sensitive = TRUE
 
 	var/on = FALSE
@@ -12,6 +12,8 @@
 	var/olddir = 0
 	var/turf/listeningTo
 	var/hearing_range = 3
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 /obj/item/assembly/infra/Initialize()
 	. = ..()

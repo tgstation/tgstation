@@ -66,14 +66,11 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=customportal'>Spawn a custom portal storm</A><BR>
 			<BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=flipmovement'>Flip client movement directions</A><BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=randommovement'>Randomize client movement directions</A><BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=custommovement'>Set each movement direction manually</A><BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=resetmovement'>Reset movement directions to default</A><BR>
-			<BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=massimmerse'>Fully Immerse Everyone</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=unmassimmerse'>Un-Fully Immerse Everyone</A><BR>
 			"}
 
 	dat += "<BR>"
@@ -240,7 +237,7 @@
 				message_admins("[key_name_admin(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 				log_admin("[key_name(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 			else
-				to_chat(usr, "<span class='admin'>There is no arrivals shuttle</span>")
+				to_chat(usr, "<span class='admin'>There is no arrivals shuttle.</span>")
 		if("showailaws")
 			if(!check_rights(R_ADMIN))
 				return
@@ -418,12 +415,12 @@
 						var/obj/item/clothing/under/costume/schoolgirl/I = new seifuku
 						var/olduniform = H.w_uniform
 						H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE, FALSE)
-						H.equip_to_slot_or_del(I, SLOT_W_UNIFORM)
+						H.equip_to_slot_or_del(I, ITEM_SLOT_ICLOTHING)
 						qdel(olduniform)
 						if(droptype == "Yes")
 							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
 				else
-					to_chat(H, "You're not kawaii enough for this.")
+					to_chat(H, "<span class='warning'>You're not kawaii enough for this!</span>")
 
 		if("whiteout")
 			if(!check_rights(R_FUN))
@@ -444,12 +441,14 @@
 				if("Make Your Own")
 					AdminCreateVirus(usr.client)
 				if("Random")
-					E = new /datum/round_event/disease_outbreak()
+					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
+					E = DC.runEvent()
 				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in typesof(/datum/disease)
-					E = new /datum/round_event/disease_outbreak{}()
-					var/datum/round_event/disease_outbreak/DO = E
+					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease, /proc/cmp_typepaths_asc))
+					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
+					var/datum/round_event/disease_outbreak/DO = DC.runEvent()
 					DO.virus_type = virus
+					E = DO
 
 		if("retardify")
 			if(!check_rights(R_FUN))
@@ -598,59 +597,21 @@
 				purrbation.")
 			log_admin("[key_name(usr)] has removed everyone from purrbation.")
 
-		if("flipmovement")
+		if("massimmerse")
 			if(!check_rights(R_FUN))
 				return
-			if(alert("Flip all movement controls?","Confirm","Yes","Cancel") == "Cancel")
-				return
-			var/list/movement_keys = SSinput.movement_keys
-			for(var/i in 1 to movement_keys.len)
-				var/key = movement_keys[i]
-				movement_keys[key] = turn(movement_keys[key], 180)
-			message_admins("[key_name_admin(usr)] has flipped all movement directions.")
-			log_admin("[key_name(usr)] has flipped all movement directions.")
+			mass_immerse()
+			message_admins("[key_name_admin(usr)] has Fully Immersed \
+				everyone!")
+			log_admin("[key_name(usr)] has Fully Immersed everyone.")
 
-		if("randommovement")
+		if("unmassimmerse")
 			if(!check_rights(R_FUN))
 				return
-			if(alert("Randomize all movement controls?","Confirm","Yes","Cancel") == "Cancel")
-				return
-			var/list/movement_keys = SSinput.movement_keys
-			for(var/i in 1 to movement_keys.len)
-				var/key = movement_keys[i]
-				movement_keys[key] = turn(movement_keys[key], 45 * rand(1, 8))
-			message_admins("[key_name_admin(usr)] has randomized all movement directions.")
-			log_admin("[key_name(usr)] has randomized all movement directions.")
-
-		if("custommovement")
-			if(!check_rights(R_FUN))
-				return
-			if(alert("Are you sure you want to change every movement key?","Confirm","Yes","Cancel") == "Cancel")
-				return
-			var/list/movement_keys = SSinput.movement_keys
-			var/list/new_movement = list()
-			for(var/i in 1 to movement_keys.len)
-				var/key = movement_keys[i]
-
-				var/msg = "Please input the new movement direction when the user presses [key]. Ex. northeast"
-				var/title = "New direction for [key]"
-				var/new_direction = text2dir(input(usr, msg, title) as text|null)
-				if(!new_direction)
-					new_direction = movement_keys[key]
-
-				new_movement[key] = new_direction
-			SSinput.movement_keys = new_movement
-			message_admins("[key_name_admin(usr)] has configured all movement directions.")
-			log_admin("[key_name(usr)] has configured all movement directions.")
-
-		if("resetmovement")
-			if(!check_rights(R_FUN))
-				return
-			if(alert("Are you sure you want to reset movement keys to default?","Confirm","Yes","Cancel") == "Cancel")
-				return
-			SSinput.setup_default_movement_keys()
-			message_admins("[key_name_admin(usr)] has reset all movement keys.")
-			log_admin("[key_name(usr)] has reset all movement keys.")
+			mass_immerse(remove=TRUE)
+			message_admins("[key_name_admin(usr)] has Un-Fully Immersed \
+				everyone!")
+			log_admin("[key_name(usr)] has Un-Fully Immersed everyone.")
 
 		if("customportal")
 			if(!check_rights(R_FUN))
@@ -681,7 +642,7 @@
 				var/list/prefs = settings["mainsettings"]
 
 				if (prefs["amount"]["value"] < 1 || prefs["portalnum"]["value"] < 1)
-					to_chat(usr, "Number of portals and mobs to spawn must be at least 1")
+					to_chat(usr, "<span class='warning'>Number of portals and mobs to spawn must be at least 1.</span>")
 					return
 
 				var/mob/pathToSpawn = prefs["typepath"]["value"]
@@ -689,7 +650,7 @@
 					pathToSpawn = text2path(pathToSpawn)
 
 				if (!ispath(pathToSpawn))
-					to_chat(usr, "Invalid path [pathToSpawn]")
+					to_chat(usr, "<span class='notice'>Invalid path [pathToSpawn].</span>")
 					return
 
 				var/list/candidates = list()
@@ -726,8 +687,14 @@
 	if(E)
 		E.processing = FALSE
 		if(E.announceWhen>0)
-			if(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No") == "No")
-				E.announceWhen = -1
+			switch(alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel"))
+				if("Yes")
+					E.announceChance = 100
+				if("Cancel")
+					E.kill()
+					return
+				if("No")
+					E.announceChance = 0
 		E.processing = TRUE
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")

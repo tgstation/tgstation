@@ -4,7 +4,7 @@
 	desc = "A shell of swarmer that was completely powered down. It can no longer activate itself."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	materials = list(/datum/material/iron=10000, /datum/material/glass=4000)
+	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=4000)
 
 /obj/effect/mob_spawn/swarmer
 	name = "unactivated swarmer"
@@ -18,6 +18,7 @@
 	mob_name = "a swarmer"
 	death = FALSE
 	roundstart = FALSE
+	short_desc = "You are a swarmer, a weapon of a long dead civilization."
 	flavour_text = {"
 	<b>You are a swarmer, a weapon of a long dead civilization. Until further orders from your original masters are received, you must continue to consume and replicate.</b>
 	<b>Clicking on any object will try to consume it, either deconstructing it into its components, destroying it, or integrating any materials it has into you if successful.</b>
@@ -81,9 +82,11 @@
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	attacktext = "shocks"
+	attack_verb_continuous = "shocks"
+	attack_verb_simple = "shock"
 	attack_sound = 'sound/effects/empulse.ogg'
-	friendly = "pinches"
+	friendly_verb_continuous = "pinches"
+	friendly_verb_simple = "pinch"
 	speed = 0
 	faction = list("swarmer")
 	AIStatus = AI_OFF
@@ -91,7 +94,7 @@
 	mob_size = MOB_SIZE_TINY
 	ventcrawler = VENTCRAWLER_ALWAYS
 	ranged = 1
-	projectiletype = /obj/item/projectile/beam/disabler
+	projectiletype = /obj/projectile/beam/disabler
 	ranged_cooldown_time = 20
 	projectilesound = 'sound/weapons/taser2.ogg'
 	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/stack/ore/bluespace_crystal)
@@ -136,10 +139,10 @@
 		death()
 
 /mob/living/simple_animal/hostile/swarmer/CanPass(atom/movable/O)
-	if(istype(O, /obj/item/projectile/beam/disabler))//Allows for swarmers to fight as a group without wasting their shots hitting each other
-		return 1
+	if(istype(O, /obj/projectile/beam/disabler))//Allows for swarmers to fight as a group without wasting their shots hitting each other
+		return TRUE
 	if(isswarmer(O))
-		return 1
+		return TRUE
 	..()
 
 ////CTRL CLICK FOR SWARMERS AND SWARMER_ACT()'S////
@@ -189,30 +192,13 @@
 	return 0
 
 /obj/item/IntegrateAmount() //returns the amount of resources gained when eating this item
-	if(materials[getmaterialref(/datum/material/iron)] || materials[getmaterialref(/datum/material/glass)])
-		return 1
+	if(custom_materials)
+		if(custom_materials[getmaterialref(/datum/material/iron)] || custom_materials[getmaterialref(/datum/material/glass)])
+			return 1
 	return ..()
 
 /obj/item/gun/swarmer_act()//Stops you from eating the entire armory
 	return FALSE
-
-/obj/item/clockwork/alloy_shards/IntegrateAmount()
-	return 10
-
-/obj/item/stack/tile/brass/IntegrateAmount()
-	return 5
-
-/obj/item/clockwork/alloy_shards/medium/gear_bit/large/IntegrateAmount()
-	return 4
-
-/obj/item/clockwork/alloy_shards/large/IntegrateAmount()
-	return 3
-
-/obj/item/clockwork/alloy_shards/medium/IntegrateAmount()
-	return 2
-
-/obj/item/clockwork/alloy_shards/small/IntegrateAmount()
-	return 1
 
 /turf/open/swarmer_act()//ex_act() on turf calls it on its contents, this is to prevent attacking mobs by DisIntegrate()'ing the floor
 	return FALSE
@@ -388,10 +374,6 @@
 	to_chat(S, "<span class='warning'>This object is receiving unactivated swarmer shells to help us. Aborting.</span>")
 	return FALSE
 
-/obj/structure/destructible/clockwork/massive/celestial_gateway/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This object is multiplying existing resources. Aborting.</span>")
-	return FALSE
-
 /obj/structure/lattice/catwalk/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	. = ..()
 	var/turf/here = get_turf(src)
@@ -433,7 +415,7 @@
 		resources -= fabrication_cost
 	else
 		to_chat(src, "<span class='warning'>You do not have the necessary resources to fabricate this object.</span>")
-		return 0
+		return
 	return new fabrication_object(loc)
 
 /mob/living/simple_animal/hostile/swarmer/proc/Integrate(atom/movable/target)
@@ -501,8 +483,8 @@
 	playsound(src,'sound/effects/sparks4.ogg',50,TRUE)
 	do_teleport(target, F, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 
-/mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, source, siemens_coeff = 1, safety = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
-	if(!tesla_shock)
+/mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
+	if(!(flags & SHOCK_TESLA))
 		return FALSE
 	return ..()
 
@@ -593,7 +575,7 @@
 		var/mob/living/L = AM
 		if(!istype(L, /mob/living/simple_animal/hostile/swarmer))
 			playsound(loc,'sound/effects/snap.ogg',50, TRUE, -1)
-			L.electrocute_act(0, src, 1, 1, 1)
+			L.electrocute_act(0, src, 1, flags = SHOCK_NOGLOVES|SHOCK_ILLUSION)
 			if(iscyborg(L))
 				L.Paralyze(100)
 			qdel(src)
@@ -632,9 +614,9 @@
 
 /obj/structure/swarmer/blockade/CanPass(atom/movable/O)
 	if(isswarmer(O))
-		return 1
-	if(istype(O, /obj/item/projectile/beam/disabler))
-		return 1
+		return TRUE
+	if(istype(O, /obj/projectile/beam/disabler))
+		return TRUE
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateSwarmer()
 	set name = "Replicate"

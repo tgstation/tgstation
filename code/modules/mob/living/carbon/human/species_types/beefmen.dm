@@ -211,7 +211,7 @@
 		else
 			newSash = new /obj/item/clothing/under/bodysash/civilian()
 
-	H.equip_to_slot_or_del(newSash, SLOT_W_UNIFORM) // equip_to_slot_or_del
+	H.equip_to_slot_or_del(newSash, ITEM_SLOT_OCLOTHING) // equip_to_slot_or_del
 
 	return ..()
 

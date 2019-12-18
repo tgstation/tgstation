@@ -111,7 +111,7 @@
 			if(scooldown < world.time)
 				if(M.health >= 0)
 					if(ishuman(M)||ismonkey(M))
-						M.electrocute_act(5, "[user]", safety = 1)
+						M.electrocute_act(5, "[user]", flags = SHOCK_NOGLOVES)
 						user.visible_message("<span class='userdanger'>[user] electrocutes [M] with [user.p_their()] touch!</span>", \
 							"<span class='danger'>You electrocute [M] with your touch!</span>")
 						M.update_mobility()
@@ -493,18 +493,18 @@
 /obj/item/ammo_casing/caseless/gumball
 	name = "Gumball"
 	desc = "Why are you seeing this?!"
-	projectile_type = /obj/item/projectile/bullet/reusable/gumball
+	projectile_type = /obj/projectile/bullet/reusable/gumball
 	click_cooldown_override = 2
 
 
-/obj/item/projectile/bullet/reusable/gumball
+/obj/projectile/bullet/reusable/gumball
 	name = "gumball"
 	desc = "Oh noes! A fast-moving gumball!"
 	icon_state = "gumball"
 	ammo_type = /obj/item/reagent_containers/food/snacks/gumball/cyborg
 	nodamage = TRUE
 
-/obj/item/projectile/bullet/reusable/gumball/handle_drop()
+/obj/projectile/bullet/reusable/gumball/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
 		var/obj/item/reagent_containers/food/snacks/gumball/S = new ammo_type(T)
@@ -514,10 +514,10 @@
 /obj/item/ammo_casing/caseless/lollipop	//NEEDS RANDOMIZED COLOR LOGIC.
 	name = "Lollipop"
 	desc = "Why are you seeing this?!"
-	projectile_type = /obj/item/projectile/bullet/reusable/lollipop
+	projectile_type = /obj/projectile/bullet/reusable/lollipop
 	click_cooldown_override = 2
 
-/obj/item/projectile/bullet/reusable/lollipop
+/obj/projectile/bullet/reusable/lollipop
 	name = "lollipop"
 	desc = "Oh noes! A fast-moving lollipop!"
 	icon_state = "lollipop_1"
@@ -525,7 +525,7 @@
 	var/color2 = rgb(0, 0, 0)
 	nodamage = TRUE
 
-/obj/item/projectile/bullet/reusable/lollipop/Initialize()
+/obj/projectile/bullet/reusable/lollipop/Initialize()
 	. = ..()
 	var/obj/item/reagent_containers/food/snacks/lollipop/S = new ammo_type(src)
 	color2 = S.headcolor
@@ -533,7 +533,7 @@
 	head.color = color2
 	add_overlay(head)
 
-/obj/item/projectile/bullet/reusable/lollipop/handle_drop()
+/obj/projectile/bullet/reusable/lollipop/handle_drop()
 	if(!dropped)
 		var/turf/T = get_turf(src)
 		var/obj/item/reagent_containers/food/snacks/lollipop/S = new ammo_type(T)
@@ -559,7 +559,7 @@
 	var/projectile_damage_tick_ecost_coefficient = 2	//Lasers get half their damage chopped off, drains 50 power/tick. Note that fields are processed 5 times per second.
 	var/projectile_speed_coefficient = 1.5		//Higher the coefficient slower the projectile.
 	var/projectile_tick_speed_ecost = 15
-	var/list/obj/item/projectile/tracked
+	var/list/obj/projectile/tracked
 	var/image/projectile_effect
 	var/field_radius = 3
 	var/active = FALSE
@@ -652,7 +652,7 @@
 /obj/item/borg/projectile_dampen/proc/process_usage()
 	var/usage = 0
 	for(var/I in tracked)
-		var/obj/item/projectile/P = I
+		var/obj/projectile/P = I
 		if(!P.stun && P.nodamage)	//No damage
 			continue
 		usage += projectile_tick_speed_ecost
@@ -673,7 +673,7 @@
 		host.cell.use(energy_recharge*energy_recharge_cyborg_drain_coefficient)
 		energy += energy_recharge
 
-/obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/item/projectile/P, track_projectile = TRUE)
+/obj/item/borg/projectile_dampen/proc/dampen_projectile(obj/projectile/P, track_projectile = TRUE)
 	if(tracked[P])
 		return
 	if(track_projectile)
@@ -682,7 +682,7 @@
 	P.speed *= projectile_speed_coefficient
 	P.add_overlay(projectile_effect)
 
-/obj/item/borg/projectile_dampen/proc/restore_projectile(obj/item/projectile/P)
+/obj/item/borg/projectile_dampen/proc/restore_projectile(obj/projectile/P)
 	tracked -= P
 	P.damage *= (1/projectile_damage_coefficient)
 	P.speed *= (1/projectile_speed_coefficient)
@@ -700,11 +700,6 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "securearea"
 	sight_mode = BORGXRAY
-
-/obj/item/borg/sight/xray/truesight_lens
-	name = "truesight lens"
-	icon = 'icons/obj/clockwork_objects.dmi'
-	icon_state = "truesight_lens"
 
 /obj/item/borg/sight/thermal
 	name = "\proper thermal vision"
@@ -775,7 +770,7 @@
 
 /obj/item/borg/apparatus/Exited(atom/A)
 	if(A == stored) //sanity check
-		UnregisterSignal(stored, COMSIG_OBJ_UPDATE_ICON)
+		UnregisterSignal(stored, COMSIG_ATOM_UPDATE_ICON)
 		stored = null
 	update_icon()
 	. = ..()
@@ -809,7 +804,7 @@
 			var/obj/item/O = A
 			O.forceMove(src)
 			stored = O
-			RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
+			RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
 			update_icon()
 			return
 	else
@@ -837,7 +832,7 @@
 /obj/item/borg/apparatus/beaker/Initialize()
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
-	RegisterSignal(stored, COMSIG_OBJ_UPDATE_ICON, .proc/update_icon)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
 	update_icon()
 
 /obj/item/borg/apparatus/beaker/Destroy()
@@ -887,6 +882,19 @@
 /obj/item/borg/apparatus/beaker/extra
 	name = "secondary beaker storage apparatus"
 	desc = "A supplementary beaker storage apparatus."
+	
+/obj/item/borg/apparatus/beaker/service
+	name = "beverage storage apparatus"
+	desc = "A special apparatus for carrying drinks without spilling the contents. Alt-Z or right-click to drop the beaker."
+	icon_state = "borg_beaker_apparatus"
+	storable = list(/obj/item/reagent_containers/food/drinks/,
+				/obj/item/reagent_containers/food/condiment)
+
+/obj/item/borg/apparatus/beaker/service/Initialize()
+	. = ..()
+	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATE_ICON, /atom/.proc/update_icon)
+	update_icon()
 
 ////////////////////
 //engi part holder//

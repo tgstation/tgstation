@@ -17,10 +17,7 @@
 	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/cartridge/rd(src)
-	new /obj/item/clothing/gloves/color/latex(src)
 	new /obj/item/radio/headset/heads/rd(src)
-	new /obj/item/tank/internals/air(src)
-	new /obj/item/clothing/mask/gas(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/storage/lockbox/medal/sci(src)
 	new /obj/item/clothing/suit/armor/reactive/teleport(src)
@@ -28,6 +25,6 @@
 	new /obj/item/laser_pointer(src)
 	new /obj/item/door_remote/research_director(src)
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
-	new /obj/item/storage/photo_album/RD(src)
-	new /obj/item/card/id/departmental_budget/sci(src)
 	new /obj/item/clothing/shoes/laceup/digitigrade(src) //fulp
+	new /obj/item/clothing/suit/hooded/wintercoat/science/head(src) // [FULP] [PNX] [PAPRITO]
+	new /obj/item/storage/photo_album/RD(src)

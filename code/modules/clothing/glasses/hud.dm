@@ -9,7 +9,7 @@
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot != SLOT_GLASSES)
+	if(slot != ITEM_SLOT_EYES)
 		return
 	if(hud_type)
 		var/datum/atom_hud/H = GLOB.huds[hud_type]

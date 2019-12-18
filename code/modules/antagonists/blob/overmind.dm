@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)
 		else
-			L.fully_heal()
+			L.fully_heal(admin_revive = FALSE)
 
 		for(var/area/A in GLOB.sortedAreas)
 			if(!(A.type in GLOB.the_station_areas))
@@ -204,13 +204,13 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	blob_points = CLAMP(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_points)]</font></div>"
 
-/mob/camera/blob/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if (!message)
 		return
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "You cannot send IC messages (muted).")
+			to_chat(src, "<span class='boldwarning'>You cannot send IC messages (muted).</span>")
 			return
 		if (!(ignore_spam || forced) && src.client.handle_spam_prevention(message,MUTE_IC))
 			return

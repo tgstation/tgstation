@@ -90,9 +90,6 @@
 		return FALSE
 	return TRUE
 
-/datum/action/proc/Process()
-	return
-
 /datum/action/proc/IsAvailable()
 	if(!owner)
 		return FALSE
@@ -318,39 +315,6 @@
 			return 0
 	return ..()
 
-/datum/action/item_action/clock
-	icon_icon = 'icons/mob/actions/actions_clockcult.dmi'
-	background_icon_state = "bg_clock"
-	buttontooltipstyle = "clockcult"
-
-/datum/action/item_action/clock/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
-		return 0
-	return ..()
-
-/datum/action/item_action/clock/toggle_visor
-	name = "Create Judicial Marker"
-	desc = "Allows you to create a stunning Judicial Marker at any location in view. Click again to disable."
-
-/datum/action/item_action/clock/toggle_visor/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
-		return 0
-	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
-		var/obj/item/clothing/glasses/judicial_visor/V = target
-		if(V.recharging)
-			return 0
-	return ..()
-
-/datum/action/item_action/clock/hierophant
-	name = "Hierophant Network"
-	desc = "Lets you discreetly talk with all other servants. Nearby listeners can hear you whispering, so make sure to do this privately."
-	button_icon_state = "hierophant_slab"
-
-/datum/action/item_action/clock/quickbind
-	name = "Quickbind"
-	desc = "If you're seeing this, file a bug report."
-	var/scripture_index = 0 //the index of the scripture we're associated with
-
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
 
@@ -507,7 +471,7 @@
 			H.attack_self(owner)
 			return
 	var/obj/item/I = target
-	if(owner.can_equip(I, SLOT_HANDS))
+	if(owner.can_equip(I, ITEM_SLOT_HANDS))
 		owner.temporarilyRemoveItemFromInventory(I)
 		owner.put_in_hands(I)
 		I.attack_self(owner)
@@ -542,7 +506,7 @@
 		return
 	//Box closing from here on out.
 	if(!isturf(owner.loc)) //Don't let the player use this to escape mechs/welded closets.
-		to_chat(owner, "<span class = 'notice'>You need more space to activate this implant.</span>")
+		to_chat(owner, "<span class='warning'>You need more space to activate this implant!</span>")
 		return
 	if(cooldown < world.time - 100)
 		var/box = new boxtype(owner.drop_location())

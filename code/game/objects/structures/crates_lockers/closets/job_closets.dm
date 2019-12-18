@@ -64,7 +64,7 @@
 	new /obj/item/flashlight(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/caution(src)
-	new /obj/item/holosign_creator/janibarrier(src)
+	new /obj/item/holosign_creator(src)
 	new /obj/item/lightreplacer(src)
 	new /obj/item/soap(src)
 	new /obj/item/storage/bag/trash(src)
@@ -173,8 +173,6 @@
 		/obj/item/clothing/under/rank/engineering/atmospheric_technician = 3,
 		/obj/item/clothing/shoes/sneakers/black = 3)
 	generate_items_inside(items_inside,src)
-	if(prob(20))
-		new /obj/item/book/granter/language_book/ratvarian(src) //FULP
 	return
 
 /obj/structure/closet/wardrobe/engineering_yellow
@@ -193,8 +191,6 @@
 		/obj/item/clothing/shoes/workboots = 3,
 		/obj/item/clothing/head/hardhat = 3)
 	generate_items_inside(items_inside,src)
-	if(prob(10))
-		new /obj/item/book/granter/language_book/ratvarian(src) //FULP
 	return
 
 /obj/structure/closet/wardrobe/white/medical

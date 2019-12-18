@@ -77,7 +77,6 @@
 ///Returns HTML for mech actions. Ideally, this proc would be empty for the base mecha. Segmented for easy refactoring.
 /obj/mecha/proc/get_actions()
 	. = ""
-	. += "[thrusters_action.owner ? "<b>Thrusters: </b> [thrusters_active ? "Enabled" : "Disabled"]<br>" : ""]"
 	. += "[defense_action.owner ? "<b>Defense Mode: </b> [defense_mode ? "Enabled" : "Disabled"]<br>" : ""]"
 	. += "[overload_action.owner ? "<b>Leg Actuators Overload: </b> [leg_overload_mode ? "Enabled" : "Disabled"]<br>" : ""]"
 	. += "[smoke_action.owner ? "<b>Smoke: </b> [smoke]<br>" : ""]"
@@ -153,7 +152,7 @@
 	if(equipment.len)
 		for(var/X in equipment)
 			var/obj/item/mecha_parts/mecha_equipment/W = X
-			. += "[W.name] <a href='?src=[REF(W)];detach=1'>Detach</a><br>"
+			. += "[W.name] [W.detachable?"<a href='?src=[REF(W)];detach=1'>Detach</a><br>":"\[Non-removable\]<br>"]"
 	. += {"<b>Available equipment slots:</b> [max_equip-equipment.len]
 	</div>
 	</div>"}
@@ -251,10 +250,10 @@
 					return
 				if(construction_state == MECHA_LOCKED)
 					construction_state = MECHA_SECURE_BOLTS
-					to_chat(usr, "The securing bolts are now exposed.")
+					to_chat(usr, "<span class='notice'>The securing bolts are now exposed.</span>")
 				else if(construction_state == MECHA_SECURE_BOLTS)
 					construction_state = MECHA_LOCKED
-					to_chat(usr, "The securing bolts are now hidden.")
+					to_chat(usr, "<span class='notice'>The securing bolts are now hidden.</span>")
 				output_maintenance_dialog(id_card,usr)
 				return
 			if(href_list["drop_cell"])

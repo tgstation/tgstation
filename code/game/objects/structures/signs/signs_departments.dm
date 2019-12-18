@@ -72,3 +72,16 @@
 
 /obj/structure/sign/departments/medbay/alt
 	icon_state = "bluecross2"
+
+/obj/structure/sign/departments/mait
+	name = "\improper MAINTENANCE TUNNEL"
+	desc = "A sign labelling an area where the departments of the station are linked together."
+	icon_state = "mait1"
+
+/obj/structure/sign/departments/mait/alt
+	icon_state = "mait2"
+
+/obj/structure/sign/departments/nanites
+	name = "\improper NANITE LAB"
+	desc = "A sign labelling an area where testing and development of nanites is performed."
+	icon_state = "nanites"

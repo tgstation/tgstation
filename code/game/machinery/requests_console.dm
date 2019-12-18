@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	max_integrity = 300
 	armor = list("melee" = 70, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
-/obj/machinery/requests_console/update_icon()
+/obj/machinery/requests_console/update_icon_state()
 	if(stat & NOPOWER)
 		set_light(0)
 	else
@@ -267,6 +267,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
 		usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
+		deadchat_broadcast(" made a station announcement from <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr)
 		announceAuth = FALSE
 		message = ""
 		screen = REQ_SCREEN_MAIN

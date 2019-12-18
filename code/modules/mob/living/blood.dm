@@ -58,6 +58,13 @@
 		//Effects of bloodloss
 		var/word = pick("dizzy","woozy","faint")
 		switch(blood_volume)
+			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+				if(prob(15))
+					to_chat(src, "<span class='userdanger'>Blood starts to tear your skin apart. You're going to burst!</span>")
+					inflate_gib()
+			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
+				if(prob(10))
+					to_chat(src, "<span class='warning'>You feel terribly bloated.</span>")
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(prob(5))
 					to_chat(src, "<span class='warning'>You feel [word].</span>")
@@ -154,7 +161,7 @@
 					C.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return 1
 
-			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAXIMUM)
+			C.blood_volume = min(C.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAX_LETHAL)
 			return 1
 
 	AM.reagents.add_reagent(blood_id, amount, blood_data, bodytemperature)

@@ -9,7 +9,7 @@
 		return
 	if(message)
 		say(message)
-
+	
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
@@ -22,7 +22,7 @@
 ///whisper a message
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
-
+	
 ///The me emote verb
 /mob/verb/me_verb(message as text)
 	set name = "Me"
@@ -78,6 +78,8 @@
 	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
 	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
+	if(SEND_SIGNAL(src, COMSIG_MOB_DEADSAY, message) & MOB_DEADSAY_SIGNAL_INTERCEPT)
+		return
 	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = key)
 
 ///Check if this message is an emote

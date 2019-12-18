@@ -24,7 +24,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	materials = list(/datum/material/iron=400)
+	custom_materials = list(/datum/material/iron=400)
 
 /obj/item/locator/attack_self(mob/user)
 	user.set_machine(src)
@@ -126,7 +126,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	materials = list(/datum/material/iron=10000)
+	custom_materials = list(/datum/material/iron=10000)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
@@ -198,9 +198,11 @@
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	user.show_message("<span class='notice'>Locked In.</span>", MSG_AUDIBLE)
-	var/list/obj/effect/portal/created = create_portal_pair(current_location, get_teleport_turf(get_turf(T)), src, 300, 1, null, atmos_link_override)
+	var/list/obj/effect/portal/created = create_portal_pair(current_location, get_teleport_turf(get_turf(T)), 300, 1, null, atmos_link_override)
 	if(!(LAZYLEN(created) == 2))
 		return
+	RegisterSignal(created[1], COMSIG_PARENT_QDELETING, .proc/on_portal_destroy) //Gosh darn it kevinz.
+	RegisterSignal(created[2], COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 	try_move_adjacent(created[1])
 	active_portal_pairs[created[1]] = created[2]
 	var/obj/effect/portal/c1 = created[1]

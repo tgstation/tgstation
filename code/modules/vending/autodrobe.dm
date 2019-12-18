@@ -120,7 +120,10 @@
 					/obj/item/clothing/head/zepellihat = 1, //fulp
 					/obj/item/clothing/shoes/clown_shoes/digitigrade = 1, //fulp
 					/obj/item/clothing/shoes/sneakers/mime/digitigrade = 1, //fulp
-					/obj/item/clothing/under/costume/saiyan = 1) //fulp
+					/obj/item/clothing/under/costume/saiyan = 1, //fulp
+					/obj/item/clothing/head/shrine_wig = 1,
+					/obj/item/clothing/suit/shrine_maiden = 1,
+					/obj/item/gohei = 1)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
 					  /obj/item/clothing/head/powdered_wig = 1,
 					  /obj/item/gun/magic/wand = 2,
@@ -142,15 +145,16 @@
 				   /obj/item/shield/riot/roman/fake = 1,
 				   /obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
 				   /obj/item/clothing/head/clownmitre = 1,
-				   /obj/item/skub = 1)
+				   /obj/item/skub = 1,
+				   /obj/item/clothing/suit/hooded/mysticrobe = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
+	default_price = 180
+	extra_price = 360
+	payment_department = ACCOUNT_SRV
 
 /obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
 	return (I.type in products)
 
-	default_price = 50
-	extra_price = 75
-	payment_department = ACCOUNT_SRV
 /obj/machinery/vending/autodrobe/all_access
 	desc = "A vending machine for costumes. This model appears to have no access restrictions."
 	req_access = null

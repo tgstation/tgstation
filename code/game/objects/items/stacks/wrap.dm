@@ -35,6 +35,7 @@
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
+	grind_results = list(/datum/reagent/cellulose = 5)
 
 /obj/item/stack/packageWrap/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

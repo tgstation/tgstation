@@ -65,7 +65,7 @@
 
 	money++ //SPESSH MAJICKS
 
-/obj/machinery/computer/slot_machine/update_icon()
+/obj/machinery/computer/slot_machine/update_icon_state()
 	if(stat & NOPOWER)
 		icon_state = "slots0"
 
@@ -83,7 +83,7 @@
 		var/obj/item/coin/C = I
 		if(paymode == COIN)
 			if(prob(2))
-				if(!user.transferItemToLoc(C, drop_location()))
+				if(!user.transferItemToLoc(C, drop_location(), silent = FALSE))
 					return
 				C.throw_at(user, 3, 10)
 				if(prob(10))

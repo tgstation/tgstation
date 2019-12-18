@@ -9,7 +9,7 @@
 
 	var/erupting_state = null //set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/activated = FALSE //whether we are active and generating chems
-	var/reagent_id = /datum/reagent/oil
+	var/reagent_id = /datum/reagent/fuel/oil
 	var/potency = 2 //how much reagents we add every process (2 seconds)
 	var/max_volume = 500
 	var/start_volume = 50
@@ -35,16 +35,16 @@
 		to_chat(user, "<span class='warning'>The [P.name] isn't strong enough!</span>")
 		return
 	if(activated)
-		to_chat(user, "<span class'warning'>The [name] is already active!")
+		to_chat(user, "<span class'warning'>The [name] is already active!</span>")
 		return
 
-	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!")
+	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!</span>")
 	if(do_after(user, 50*P.plunge_mod, target = src) && !activated)
 		start_chemming()
 
 /obj/structure/geyser/random
 	erupting_state = null
-	var/list/options = list(/datum/reagent/oil = 2, /datum/reagent/clf3 = 1) //fucking add more
+	var/list/options = list(/datum/reagent/fuel/oil = 2, /datum/reagent/clf3 = 1) //fucking add more
 
 /obj/structure/geyser/random/Initialize()
 	. = ..()
@@ -56,6 +56,8 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
 
+	slot_flags = ITEM_SLOT_MASK
+
 	var/plunge_mod = 1 //time*plunge_mod = total time we take to plunge an object
 	var/reinforced = FALSE //whether we do heavy duty stuff like geysers
 
@@ -65,7 +67,7 @@
 
 /obj/item/plunger/reinforced
 	name = "reinforced plunger"
-	desc = " It's an M. 7 Reinforced Plunger© for heavy duty plunging."
+	desc = "It's an M. 7 Reinforced PlungerÂ© for heavy duty plunging."
 	icon_state = "reinforced_plunger"
 
 	reinforced = TRUE

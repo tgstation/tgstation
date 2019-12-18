@@ -14,9 +14,9 @@
 "e" = (
 /obj/machinery/porta_turret/syndicate{
 	desc = "A ballistic machine gun auto-turret that fires bluespace bullets.";
-	lethal_projectile = /obj/item/projectile/magic/teleport;
+	lethal_projectile = /obj/projectile/magic/teleport;
 	name = "displacement turret";
-	stun_projectile = /obj/item/projectile/magic/teleport
+	stun_projectile = /obj/projectile/magic/teleport
 	},
 /turf/open/floor/plasteel/grimy{
 	icon_state = "engine"

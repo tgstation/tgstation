@@ -1,0 +1,4 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - balance: "Payouts and vending machine prices have been completely rebalanced"

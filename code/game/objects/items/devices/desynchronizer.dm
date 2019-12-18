@@ -8,7 +8,7 @@
 	item_flags = NOBLUDGEON
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	materials = list(/datum/material/iron=250, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron=250, /datum/material/glass=500)
 	var/max_duration = 3000
 	var/duration = 300
 	var/last_use = 0

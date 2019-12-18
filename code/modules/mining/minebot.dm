@@ -24,7 +24,8 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	check_friendly_fire = TRUE
 	stop_automated_movement_when_pulled = TRUE
-	attacktext = "drills"
+	attack_verb_continuous = "drills"
+	attack_verb_simple = "drill"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
 	sentience_type = SENTIENCE_MINEBOT
 	speak_emote = list("states")
@@ -132,14 +133,14 @@
 		return
 
 /mob/living/simple_animal/hostile/mining_drone/CanPass(atom/movable/O)
-	if(istype(O, /obj/item/projectile/kinetic))
-		var/obj/item/projectile/kinetic/K = O
+	if(istype(O, /obj/projectile/kinetic))
+		var/obj/projectile/kinetic/K = O
 		if(K.kinetic_gun)
 			for(var/A in K.kinetic_gun.get_modkits())
 				var/obj/item/borg/upgrade/modkit/M = A
 				if(istype(M, /obj/item/borg/upgrade/modkit/minebot_passthrough))
 					return TRUE
-	if(istype(O, /obj/item/projectile/destabilizer))
+	if(istype(O, /obj/projectile/destabilizer))
 		return TRUE
 	return ..()
 

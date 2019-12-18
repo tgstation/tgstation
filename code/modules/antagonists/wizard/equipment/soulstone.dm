@@ -26,11 +26,13 @@
 /obj/item/soulstone/anybody
 	usability = TRUE
 
+/obj/item/soulstone/anybody/revolver
+	old_shard = TRUE
+
 /obj/item/soulstone/anybody/purified
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "purified_soulstone"
 	purified = TRUE
-
 
 /obj/item/soulstone/anybody/chaplain
 	name = "mysterious old shard"
@@ -57,6 +59,14 @@
 		A.death()
 	return ..()
 
+/obj/item/soulstone/proc/hot_potato(mob/living/user)
+	to_chat(user, "<span class='userdanger'>Holy magics residing in \the [src] burn your hand!</span>")
+	var/obj/item/bodypart/affecting = user.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+	affecting.receive_damage( 0, 10 )	// 10 burn damage
+	user.emote("scream")
+	user.update_damage_overlays()
+	user.dropItemToGround(src)
+
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
 /obj/item/soulstone/attack(mob/living/carbon/human/M, mob/living/user)
@@ -69,12 +79,15 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
+	if(!M.mind.hasSoul || is_devil(M))
+		to_chat(user, "<span class='warning'>This... thing has no soul! It's filled with evil!</span>")
+		return
 	if(iscultist(M))
 		if(iscultist(user))
 			to_chat(user, "<span class='cultlarge'>\"Come now, do not capture your bretheren's soul.\"</span>")
 			return
 	if(purified && iscultist(user))
-		to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
+		hot_potato(user)
 		return
 	log_combat(user, M, "captured [M.name]'s soul", src)
 	transfer_soul("VICTIM", M, user)
@@ -89,14 +102,12 @@
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
 	if(purified && iscultist(user))
-		to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
+		hot_potato(user)
 		return
 	release_shades(user)
 
 /obj/item/soulstone/proc/release_shades(mob/user)
 	for(var/mob/living/simple_animal/shade/A in src)
-		A.status_flags &= ~GODMODE
-		A.mobility_flags = MOBILITY_FLAGS_DEFAULT
 		A.forceMove(get_turf(user))
 		A.cancel_camera()
 		if(purified)
@@ -136,7 +147,7 @@
 			user.Dizzy(30)
 			return
 		if(SS.purified && iscultist(user))
-			to_chat(user, "<span class='warning'>Holy magic resides within the stone, you cannot use it.</span>")
+			SS.hot_potato(user)
 			return
 		SS.transfer_soul("CONSTRUCT",src,user)
 		SS.was_used()
@@ -192,10 +203,7 @@
 			if(contents.len)
 				to_chat(user, "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room.")
 			else
-				T.forceMove(src) //put shade in stone
-				T.status_flags |= GODMODE
-				T.mobility_flags = NONE
-				T.health = T.maxHealth
+				T.AddComponent(/datum/component/soulstoned, src)
 				if(purified)
 					icon_state = "purified_soulstone2"
 					if(iscultist(T))
@@ -241,8 +249,7 @@
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
 				for(var/datum/mind/B in SSticker.mode.cult)
 					if(B == A.mind)
-						SSticker.mode.cult -= A.mind
-						SSticker.mode.update_cult_icons_removed(A.mind)
+						SSticker.mode.remove_cultist(A.mind)
 				qdel(T)
 				qdel(src)
 			else
@@ -281,8 +288,7 @@
 	T.invisibility = INVISIBILITY_ABSTRACT
 	T.dust_animation()
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade(src)
-	S.status_flags |= GODMODE //So they won't die inside the stone somehow
-	S.mobility_flags = NONE //Can't move out of the soul stone
+	S.AddComponent(/datum/component/soulstoned, src)
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	S.key = shade_controller.key
