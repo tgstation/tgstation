@@ -978,7 +978,7 @@
 	if(prob(20))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 50)
 	M.adjustStaminaLoss(2.5*REM, 0)
-	mood.adjustPsychInstability(-2)
+	mood.adjustPsychInstability(2)
 	..()
 	return TRUE
 
@@ -1008,18 +1008,20 @@
 
 /datum/reagent/medicine/lithium_carbonate/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(2, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 1.5*REM, 50)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER,REM, 50)
 	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.adjustPsychInstability(-2)
+	mood.adjustPsychInstability(4)
 	if(mood.sanity <= SANITY_GREAT) // only take effect if in not good sanity and then...
 		mood.setSanity(min(mood.sanity+20, SANITY_GREAT)) // set minimum to prevent unwanted spiking over great
-	return TRUE
+	..()
 
 /datum/reagent/medicine/lithium_carbonate/on_mob_add(mob/living/carbon/M)
+	..()
 	M.apply_status_effect(STATUS_EFFECT_SPASMS)
 	ADD_TRAIT(M, TRAIT_LITHIATED, PSYCH_TRAIT)
 
 /datum/reagent/medicine/lithium_carbonate/on_mob_end_metabolize(mob/living/carbon/M)
+	..()
 	M.remove_status_effect(STATUS_EFFECT_SPASMS)
 	REMOVE_TRAIT(M, TRAIT_LITHIATED, PSYCH_TRAIT)
 
@@ -1034,7 +1036,7 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/trophazole/on_transfer(atom/A, method=INGEST, trans_volume)
+/datum/reagent/medicine/lithium_carbonate/on_transfer(atom/A, method=INGEST, trans_volume)
 	if(method != INGEST || !iscarbon(A))
 		A.reagents.remove_reagent(src, volume)
 	..()

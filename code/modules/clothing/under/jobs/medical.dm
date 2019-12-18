@@ -64,6 +64,25 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
+/obj/item/clothing/under/rank/medical/psychiatrist
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
+	name = "psychiatrist's jumpsuit"
+	icon_state = "psychiatrist"
+	item_state = "w_suit"
+	permeability_coefficient = 0.5
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
+
+/obj/item/clothing/under/rank/medical/psychiatrist_skirt
+	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
+	name = "psychiatrist's jumpskirt"
+	icon_state = "psychiatrist_skirt"
+	item_state = "w_suit"
+	permeability_coefficient = 0.5
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+	fitted = FEMALE_UNIFORM_TOP
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
+
 /obj/item/clothing/under/rank/medical/doctor
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
 	name = "medical doctor's jumpsuit"

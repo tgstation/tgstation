@@ -48,5 +48,6 @@
 	new	/obj/item/storage/pill_bottle/psicodine(src)
 	new /obj/item/storage/pill_bottle/neurine(src)
 	new /obj/item/storage/pill_bottle/haloperidol(src)
+	new /obj/item/storage/pill_bottle/alprazolam(src)
 	new /obj/item/storage/pill_bottle/lithium_carbonate(src)
 
