@@ -133,6 +133,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return
 	use_power(6)
 	//get the first 30 items in contents
+	affecting = list()
 	var/i = 0
 	for(var/item in loc.contents)
 		if(item == src)
