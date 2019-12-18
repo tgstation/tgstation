@@ -2304,6 +2304,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/machinery/door/airlock/external{
+	name = "External Docking Port";
+	safety_mode = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "ajg" = (
@@ -114760,6 +114764,19 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
+"jfR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/power/apc,
+/obj/machinery/power/apc,
+/turf/open/floor/plasteel/white/corner{
+	dir = 1
+	},
+/area/hallway/secondary/entry)
 "jjN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/camera{
@@ -116200,9 +116217,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -151334,7 +151348,7 @@ aaa
 aaO
 aaO
 aaO
-ajw
+jfR
 ajV
 aky
 alm
