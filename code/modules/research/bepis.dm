@@ -220,9 +220,8 @@
 			if(powered == FALSE)
 				powered = TRUE
 				idle_power_usage = 1500
-				update_icon_state()
 			else
 				powered = FALSE
 				idle_power_usage = 0
-				update_icon_state()
-			. = TRUE
+			update_icon_state()
+	. = TRUE

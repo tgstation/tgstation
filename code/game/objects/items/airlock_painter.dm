@@ -214,8 +214,8 @@
 			stored_color = "_red"
 		if("white")
 			stored_color = "_white"
-	. = TRUE
 	update_decal_path()
+	. = TRUE
 
 /obj/item/airlock_painter/decal/debug
 	name = "extreme decal painter"
