@@ -36,6 +36,7 @@
 	faction = list("hostile")
 	move_to_delay = 0
 	obj_damage = 0
+	ventcrawler = VENTCRAWLER_ALWAYS
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
@@ -44,7 +45,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	movement_type = FLYING
 	gold_core_spawnable = HOSTILE_SPAWN
-	search_objects = 1 //have to find those plant trays!
+	search_objects = 1 //have to find those plant trays! 
 
 	//Spaceborn beings don't get hurt by space
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
