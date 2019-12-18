@@ -92,7 +92,7 @@ Key procs
 			understood_languages -= language
 		else
 			understood_languages[language] -= source
-			if(!understood_languages[language].len)
+			if(!length(understood_languages[language]))
 				understood_languages -= language
 		. = TRUE
 
@@ -101,7 +101,7 @@ Key procs
 			spoken_languages -= language
 		else
 			spoken_languages[language] -= source
-			if(!spoken_languages[language].len)
+			if(!length(spoken_languages[language]))
 				spoken_languages -= language
 		. = TRUE
 
@@ -133,7 +133,7 @@ Key procs
 				blocked_languages -= language
 			else
 				blocked_languages[language] -= source
-				if(!blocked_languages[language].len)
+				if(!length(blocked_languages[language]))
 					blocked_languages -= language
 	return TRUE
 
