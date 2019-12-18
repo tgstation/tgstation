@@ -91,6 +91,8 @@
 	. = ..()
 
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
+	if(QDELETED(AM0))
+		return
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
@@ -104,7 +106,10 @@
 
 	var/items_recycled = 0
 
-	for(var/i in to_eat)
+	for(var/datum/i in to_eat)
+		//Deleted items should not be eaten
+		if(QDELETED(i))
+			continue
 		var/atom/movable/AM = i
 		var/obj/item/bodypart/head/as_head = AM
 		var/obj/item/mmi/as_mmi = AM
