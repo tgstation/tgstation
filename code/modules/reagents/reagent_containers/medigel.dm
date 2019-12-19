@@ -22,7 +22,7 @@
 	var/self_delay = 30
 	var/squirt_mode = 0
 	var/squirt_amount = 5
-	custom_price = 40
+	custom_price = 350
 
 /obj/item/reagent_containers/medigel/attack_self(mob/user)
 	squirt_mode = !squirt_mode
@@ -66,7 +66,8 @@
 		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, method = apply_type)
 	return
 
-/*/obj/item/reagent_containers/medigel/libital austation begin -- revert cobbychem
+/* austation begin -- revert cobbychem
+/obj/item/reagent_containers/medigel/libital
 	name = "medical gel (libital)"
 	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains libital, for treating cuts and bruises. Libital does minor liver damage. Diluted with granibitaluri."
 	icon_state = "brutegel"
@@ -83,9 +84,11 @@
 	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains instabitaluri, a brute and burn healing agent."
 	icon_state = "synthgel"
 	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 60)
-	custom_price = 80 austation end*/
+	custom_price = 600
+austation end*/
 
 /obj/item/reagent_containers/medigel/sterilizine
 	name = "sterilizer gel"
 	desc = "gel bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
 	list_reagents = list(/datum/reagent/space_cleaner/sterilizine = 60)
+	custom_price = 175

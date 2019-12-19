@@ -15,4 +15,4 @@
 	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, an apex brute and burn healing agent."
 	icon_state = "synthgel"
 	list_reagents = list(/datum/reagent/medicine/synthflesh = 60)
-	custom_price = 80
+	custom_price = 600
