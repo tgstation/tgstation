@@ -30,7 +30,7 @@
 	//this is shit but how do i fix it? no clue.
 
 	// Body tempurature for ethereals is much higher
-	// they can handle hotter enviroments
+	// they can handle hotter environments
 	// but they are hurt at cold temps faster as it is harder to move with out the heat energy
 	bodytemp_normal = (BODYTEMP_NORMAL + 70)
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // about 100C

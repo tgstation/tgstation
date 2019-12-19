@@ -571,10 +571,6 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 // Base carbon environment handler
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment)
-	// If we do not have an enviroment exit
-	if(!environment)
-		return
-
 	// Get the curent temperature of the area
 	var/areatemp = get_temperature(environment)
 
@@ -584,16 +580,16 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	if(stat != DEAD)
 		natural = natural_bodytemperature_stabilization()
 
-	// Get the mobs thermal protection and enviromental change
+	// Get the mobs thermal protection and environmental change
 	var/thermal_protection = 1
-	var/enviroment_change = 0
+	var/environment_change = 0
 	if(areatemp > bodytemperature) // It is hot here
 		// Get the thermal protection of the mob,
 		// This returns a 0 - 1 value which corresponds to the percentage of protection
 		thermal_protection -= get_heat_protection(areatemp)
-		// How much the enviroment heats the mob
+		// How much the environment heats the mob
 		// with thermal protection
-		enviroment_change = min(thermal_protection * (areatemp - bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
+		environment_change = min(thermal_protection * (areatemp - bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
 		if(bodytemperature < BODYTEMP_NORMAL)
 			// Our bodytemp is below normal we are cold, insulation helps us retain body heat
 			// and will reduce the heat we lose to the environment
@@ -607,9 +603,9 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		// which corresponds to the percentage of protection
 		thermal_protection -= get_cold_protection(areatemp)
 		if(!on_fire) // If on fire ignore ignore local temperature in cold areas
-			// How much the enviroment cools the mob
+			// How much the environment cools the mob
 			// with thermal protection
-			enviroment_change = max(thermal_protection * (areatemp - bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
+			environment_change = max(thermal_protection * (areatemp - bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
 			if(bodytemperature < BODYTEMP_NORMAL)
 				// Our bodytemp is below normal, insulation helps us retain body heat
 				// and will reduce the heat we lose to the environment
@@ -620,7 +616,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				natural_change = (1 / (thermal_protection + 1)) * natural
 
 	// Apply the tempurature changes
-	adjust_bodytemperature(natural_change + enviroment_change)
+	adjust_bodytemperature(natural_change + environment_change)
 
 // Used to stabilize the normal body tempurature on living mobs
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()

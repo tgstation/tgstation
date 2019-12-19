@@ -111,9 +111,8 @@
 		return
 
 	// hand off to the species handlers
-	if(environment) // We need an environment for these checks
-		dna.species.handle_environment(environment, src)
-		dna.species.handle_environment_pressure(environment, src)
+	dna.species.handle_environment(environment, src)
+	dna.species.handle_environment_pressure(environment, src)
 	dna.species.handle_body_temperature(src)
 
 ///FIRE CODE

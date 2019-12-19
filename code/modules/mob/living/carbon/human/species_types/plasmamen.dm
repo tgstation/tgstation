@@ -23,7 +23,7 @@
 	outfit_important_for_life = /datum/outfit/plasmaman
 
 	// Body tempurature for Plasmen is much lower
-	// they can handle colder enviroments
+	// they can handle colder environments
 	// but they are hurt at hot temps faster as it is harder to hold their form
 	// and they will regain tempurature more slowly in some situations
 	bodytemp_normal = (BODYTEMP_NORMAL - 90)

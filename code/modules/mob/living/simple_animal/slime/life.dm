@@ -108,7 +108,20 @@
 	AIproc = 0
 
 /mob/living/simple_animal/slime/handle_environment(datum/gas_mixture/environment)
-	. = ..()
+	var/loc_temp = get_temperature(environment)
+	var/divisor = 10
+	if(abs(bodytemperature - loc_temp) > 50)
+		divisor = 5
+
+	var/environment_change = 0
+	if(bodytemperature < loc_temp)
+		environment_change = (bodytemperature - loc_temp) / divisor
+	else if(bodytemperature > loc_temp)
+		environment_change = (bodytemperature - loc_temp) / divisor
+
+	// update the body tempurature
+	adjust_bodytemperature(environment_change)
+
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
 		if(bodytemperature <= (T0C - 40)) // stun temperature
 			Tempstun = 1
@@ -118,7 +131,6 @@
 				adjustBruteLoss(200)
 			else
 				adjustBruteLoss(round(sqrt(bodytemperature)) * 2)
-
 	else
 		Tempstun = 0
 
@@ -142,7 +154,6 @@
 			regenerate_icons()
 
 	updatehealth()
-
 
 	return //TODO: DEFERRED
 

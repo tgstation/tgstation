@@ -1628,15 +1628,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.stat != DEAD)
 		natural = natural_bodytemperature_stabilization(H)
 
-	// Get the mobs thermal protection and enviromental change
+	// Get the mobs thermal protection and environmental change
 	var/thermal_protection = 1
-	var/enviroment_change = 0
+	var/environment_change = 0
 	if(areatemp > H.bodytemperature) // It is hot here
 		// Get the thermal protection of the mob,
 		// This returns a 0 - 1 value which corresponds to the percentage of protection
 		thermal_protection -= H.get_heat_protection(areatemp)
-		// How much the enviroment heats the mob with thermal protection
-		enviroment_change = min(thermal_protection * (areatemp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, \
+		// How much the environment heats the mob with thermal protection
+		environment_change = min(thermal_protection * (areatemp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR, \
 			BODYTEMP_HEATING_MAX)
 		if(H.bodytemperature < bodytemp_normal)
 			// Our bodytemp is below normal, insulation helps us retain body heat
@@ -1655,21 +1655,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				// Our bodytemp is below normal, insulation helps us retain body heat
 				// and will reduce the heat we lose to the environment
 				natural_change = (thermal_protection + 1) * natural
-				// How much the enviroment cools the mob
+				// How much the environment cools the mob
 				// with thermal protection
-				enviroment_change = max(thermal_protection * (areatemp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, \
+				environment_change = max(thermal_protection * (areatemp - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, \
 					BODYTEMP_COOLING_MAX)
 			else
 				// Our bodytemp is above normal and sweating, insulation hinders out ability to reduce heat
 				// but will reduce the amount of heat we get from the environment
 				natural_change = (1 / (thermal_protection + 1)) * natural
-				// How much the enviroment cools the mob
+				// How much the environment cools the mob
 				// with thermal protection
 				// Extra calculation for hardsuits to bleed off heat
-				enviroment_change = max((thermal_protection * (areatemp - H.bodytemperature) + bodytemp_normal - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
+				environment_change = max((thermal_protection * (areatemp - H.bodytemperature) + bodytemp_normal - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
 
 	// Apply the tempurature changes
-	H.adjust_bodytemperature(natural_change + enviroment_change)
+	H.adjust_bodytemperature(natural_change + environment_change)
 
 /// Handle the body tempurature status effects for the species
 /datum/species/proc/handle_body_temperature(mob/living/carbon/human/H)
