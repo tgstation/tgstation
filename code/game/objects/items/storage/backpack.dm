@@ -88,19 +88,19 @@
 	return (OXYLOSS)
 
 /obj/item/storage/backpack/santabag/proc/regenerate_presents()
-	addtimer(CALLBACK(src, .proc/regenerate_presents), rand(30 SECONDS, 60 SECONDS))
+	addtimer(CALLBACK(src, .proc/regenerate_presents), 30 SECONDS)
 
 	var/mob/M = get(loc, /mob)
 	if(!istype(M))
 		return
-	if(HAS_TRAIT(M, TRAIT_CANNOT_OPEN_PRESENTS))
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CANNOT_OPEN_PRESENTS))
 		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 		var/turf/floor = get_turf(src)
-		var/obj/item/I = new /obj/item/a_gift/anything(floor)
-		if(STR.can_be_inserted(I, stop_messages=TRUE))
-			STR.handle_item_insertion(I, prevent_warning=TRUE)
-		else
-			qdel(I)
+			var/obj/item/I = new /obj/item/a_gift/anything(floor)
+			if(STR.can_be_inserted(I, stop_messages=TRUE))
+				STR.handle_item_insertion(I, prevent_warning=TRUE)
+			else
+				qdel(I)
 
 
 /obj/item/storage/backpack/cultpack
