@@ -17,7 +17,7 @@
 	var/turf/source
 	var/turf/dest
 	var/obj/item/held
-	var/mob/living/simple_animal/dummy //A dummy mob to use when inserting objects.
+	var/mob/living/simple_animal/robotic_arm_dummy/dummy //A dummy mob to use when inserting objects, which is done via attack chain.
 
 /obj/machinery/robotic_arm/lefty
 	r_arm = FALSE
@@ -25,7 +25,8 @@
 /obj/machinery/robotic_arm/Initialize()
 	. = ..()
 	wires = new /datum/wires/robotic_arm(src)
-	dummy = new /mob/living/simple_animal(src)
+	dummy = new /mob/living/simple_animal/robotic_arm_dummy(src)
+	dummy.arm = src
 	source_update()
 
 /obj/machinery/robotic_arm/ComponentInitialize()
@@ -61,6 +62,8 @@
 	else
 		set_turfs()
 		START_PROCESSING(SSmachines, src)
+	user.visible_message("<span class='notice'>[user.name] [anchored?"unbolts":"bolts down"] the [src].</span>", \
+				"<span class='notice'>You [anchored?"unbolt":"bolt down"] the [src].</span>")
 	return TRUE
 
 /obj/machinery/robotic_arm/screwdriver_act(mob/living/user, obj/item/I)
@@ -77,7 +80,10 @@
 			new /obj/item/bodypart/r_arm/robot(get_turf(src))
 		else
 			new /obj/item/bodypart/l_arm/robot(get_turf(src))
-		new /obj/item/robotic_arm_base/steptwo(get_turf(src))
+		new /obj/item/robotic_arm_base(get_turf(src))
+		user.visible_message("<span class='notice'>[user.name] prys off the robotic arm from its base.</span>", \
+				"<span class='notice'>You pry off the robotic arm from its base</span>")
+		qdel(dummy) //prevent robo-gibs
 		qdel(src)
 		return TRUE
 
@@ -88,8 +94,8 @@
 	if(held)
 		held.forceMove(get_turf(src))
 	held = null
-	if(dummy)
-		qdel(dummy)
+	if(dummy && !QDELETED(dummy))
+		dummy.death(FALSE)
 	. = ..()
 
 /obj/machinery/robotic_arm/proc/set_turfs()
@@ -105,7 +111,7 @@
 	..()
 	if(!anchored || moving)
 		return
-	if(!anchored  || wires.is_cut(WIRE_SENSOR) || wires.is_cut(WIRE_MOTOR1)) //If we're unanchored, our detection wire is cut, or the arm rotate wire is cut
+	if(!anchored  || wires.is_cut(WIRE_SENSOR) || wires.is_cut(WIRE_MOTOR1) || !locate(/obj/item) in source) //If we're unanchored, our detection wire is cut, or the arm rotate wire is cut
 		STOP_PROCESSING(SSmachines, src)
 		return
 	if(!grab()) //if we didn't find jack
@@ -174,53 +180,53 @@ obj/machinery/robotic_arm/proc/animate_return()
 		target = M
 
 
-////////////////////////
+////////////////////
+//Dummy Simple Mob//
+////////////////////
 
+/mob/living/simple_animal/robotic_arm_dummy
+	name = "robotic arm"
+	health = 200
+	maxHealth = 200
+	mob_biotypes = MOB_ROBOTIC
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	maxbodytemp = INFINITY
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	mob_size = MOB_SIZE_TINY
+	AIStatus = AI_OFF
+	sentience_type = SENTIENCE_BOSS
+	can_have_ai = FALSE
+	del_on_death = 1
+	var/obj/machinery/robotic_arm/arm
+
+/mob/living/simple_animal/robotic_arm_dummy/death()
+	if(arm && !QDELETED(arm))
+		qdel(arm)
+	new /obj/effect/gibspawner/robot(get_turf(src))
+	. = ..()
+	
+
+////////////////////
+//Robotic Arm Base//
+////////////////////
 obj/item/robotic_arm_base
 	icon = 'icons/obj/machines/robotic_arm.dmi'
-	icon_state = "base01"
+	icon_state = "base02"
 	name = "robotic arm base"
 	desc = "A base frame to support an automatic robotic arm."
-	var/step = 1
-
-obj/item/robotic_arm_base/steptwo
-	icon_state = "base02"
-	step = 2
-
-obj/item/robotic_arm_base/screwdriver_act(mob/living/user, obj/item/I)
-	if(step == 1)
-		if(I.use_tool(src, user, 5, volume=50))
-			new /obj/item/stack/rods(get_turf(src),3)
-			qdel(src)
-	else
-		. = ..()
-
-obj/item/robotic_arm_base/crowbar_act(mob/living/user, obj/item/I)
-	if(step == 2)
-		if(I.use_tool(src, user, 5, volume=50))
-			new /obj/item/stack/tile/plasteel(get_turf(src)) //Great job naming the normal metal tiles, guys
-			step = 1
-			icon_state = "base01"
-	else
-		. = ..()
 
 obj/item/robotic_arm_base/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/tile/plasteel))
-		if(step == 1 && W.use(1))
-			step = 2
-			icon_state = "base02"
-			return
-
 	if(istype(W, /obj/item/bodypart/r_arm/robot))
-		if(step == 2 && user.transferItemToLoc(W, src))
-			new /obj/machinery/robotic_arm(get_turf(src))
-			qdel(src)
-			return
+		new /obj/machinery/robotic_arm(get_turf(src))
+		qdel(W)
+		qdel(src)
+		return
 
 	if(istype(W, /obj/item/bodypart/l_arm/robot))
-		if(step == 2 && user.transferItemToLoc(W, src))
-			new /obj/machinery/robotic_arm/lefty(get_turf(src))
-			qdel(src)
-			return
+		new /obj/machinery/robotic_arm/lefty(get_turf(src))
+		qdel(W)
+		qdel(src)
+		return
 
 	. = ..()
