@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - bugfix: "Assemblies in chemical grenades are removed when wrenched while there are no beakers inside instead of only when there is a beaker inside"
