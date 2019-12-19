@@ -41360,9 +41360,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-<<<<<<< HEAD
-/turf/open/floor/plating,
-=======
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -41380,7 +41377,6 @@
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
->>>>>>> remotes/Master/master
 /area/crew_quarters/kitchen)
 "bNx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
