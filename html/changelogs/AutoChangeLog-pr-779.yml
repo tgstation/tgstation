@@ -1,0 +1,6 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - refactor: "Refactored language holders. Fixes a bunch of language related bugs and inconsistencies."
+  - bugfix: "Transforms now apply new languages properly. Monkeys can no longer speak common."
+  - rscadd: "Species changes will now give you the relevant languages."
