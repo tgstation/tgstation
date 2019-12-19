@@ -21,6 +21,7 @@
 	var/chamber_status = 0
 	var/error_cause = null
 	var/powered = FALSE
+	var/silicon_check = FALSE
 	//Vars related to probability and chance of success for testing
 	var/major_threshold = 6000
 	var/minor_threshold = 3000
@@ -171,6 +172,10 @@
 	if(ishuman(user))
 		H = user
 		Card = H.get_idcard(TRUE)
+	if(issilicon(user))
+		silicon_check = TRUE
+	else
+		silicon_check = FALSE
 	RefreshParts()
 
 /obj/machinery/rnd/bepis/ui_data()
@@ -185,6 +190,7 @@
 	data["positive_cash_offset"] = positive_cash_offset
 	data["negative_cash_offset"] = negative_cash_offset
 	data["manual_power"] = powered ? FALSE : TRUE
+	data["silicon_check"] = silicon_check ? FALSE : TRUE
 	return data
 
 /obj/machinery/rnd/bepis/ui_act(action,params)

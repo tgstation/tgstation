@@ -61,7 +61,7 @@ export const Bepis = props => {
           <Box>
             <Button
               icon="donate"
-              disabled={data.manual_power === 1}
+              disabled={data.manual_power === 1 || data.silicon_check === 0}
               onClick={() => act(ref, 'deposit_cash')}
               content="Deposit Credits for Testing" />
           </Box>
