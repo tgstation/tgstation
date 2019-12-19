@@ -25,6 +25,17 @@
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
 	wings_icon = "Dragon"
 	species_language_holder = /datum/language_holder/lizard
+	// lizards are coldblooded
+	// and can stand aa higher tempurature range by a few points
+	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 10)
+	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
+
+// Lizards are cold blooded and do not stabilize body tempurature naturally
+/datum/species/lizard/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
+	return 0
+
+/datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
+	H.grant_language(/datum/language/draconic)
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)

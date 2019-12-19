@@ -72,7 +72,7 @@
 #define WALL_HEAT_TRANSFER_COEFFICIENT		0.0
 #define OPEN_HEAT_TRANSFER_COEFFICIENT		0.4
 /// a hack for now
-#define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1	
+#define WINDOW_HEAT_TRANSFER_COEFFICIENT	0.1
 /// a hack to help make vacuums "cold", sacrificing realism for gameplay
 #define HEAT_CAPACITY_VACUUM				7000
 
@@ -104,7 +104,7 @@
 
 // Pressure limits.
 /// This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
-#define HAZARD_HIGH_PRESSURE				550	
+#define HAZARD_HIGH_PRESSURE				550
 /// This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
 #define WARNING_HIGH_PRESSURE				325
 /// This is when the gray low pressure icon is displayed. (it is 2.5 * HAZARD_LOW_PRESSURE)
@@ -131,9 +131,11 @@
 #define BODYTEMP_HEATING_MAX				30
 
 /// The limit the human body can take before it starts taking damage from heat.
-#define BODYTEMP_HEAT_DAMAGE_LIMIT			(BODYTEMP_NORMAL + 50)
+//  340 is 66 degrees C, and rather high for a human
+#define BODYTEMP_HEAT_DAMAGE_LIMIT			(BODYTEMP_NORMAL + 30)
 /// The limit the human body can take before it starts taking damage from coldness.
-#define BODYTEMP_COLD_DAMAGE_LIMIT			(BODYTEMP_NORMAL - 50)
+//  270 is -3 degrees C, that is below freezing and would hurt over time
+#define BODYTEMP_COLD_DAMAGE_LIMIT			(BODYTEMP_NORMAL - 40)
 
 
 /// what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
