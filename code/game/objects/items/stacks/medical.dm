@@ -13,19 +13,35 @@
 	novariants = FALSE
 	item_flags = NOBLUDGEON
 	var/self_delay = 50
+	var/other_delay = 0
+	var/repeating = FALSE
+	var/experience_given = 1
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 	. = ..()
+	try_heal(M, user)
+
+
+/obj/item/stack/medical/proc/try_heal(mob/living/M, mob/user, silent = FALSE)
 	if(!M.can_inject(user, TRUE))
 		return
 	if(M == user)
-		user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [user.p_them()]self...</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
+		if(!silent)
+			user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [user.p_them()]self...</span>", "<span class='notice'>You begin applying \the [src] on yourself...</span>")
 		if(!do_mob(user, M, self_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
 			return
+	else if(other_delay)
+		if(!silent)
+			user.visible_message("<span class='notice'>[user] starts to apply \the [src] on [M].</span>", "<span class='notice'>You begin applying \the [src] on [M]...</span>")
+		if(!do_mob(user, M, other_delay, extra_checks=CALLBACK(M, /mob/living/proc/can_inject, user, TRUE)))
+			return
+
 	if(heal(M, user))
+		user?.mind.adjust_experience(/datum/skill/medical, experience_given)
 		log_combat(user, M, "healed", src.name)
 		use(1)
-
+		if(repeating && amount > 0)
+			try_heal(M, user, TRUE)
 
 /obj/item/stack/medical/proc/heal(mob/living/M, mob/user)
 	return
@@ -35,15 +51,22 @@
 	if(!affecting) //Missing limb?
 		to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
 		return
-	if(affecting.status == BODYPART_ORGANIC) //Limb must be organic to be healed - RR
-		if(affecting.brute_dam && brute || affecting.burn_dam && burn)
-			user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
-			if(affecting.heal_damage(brute, burn))
-				C.update_damage_overlays()
-			return TRUE
-		to_chat(user, "<span class='warning'>[C]'s [affecting.name] can not be healed with \the [src]!</span>")
+	if(affecting.status != BODYPART_ORGANIC) //Limb must be organic to be healed - RR
+		to_chat(user, "<span class='warning'>\The [src] won't work on a robotic limb!</span>")
 		return
-	to_chat(user, "<span class='warning'>\The [src] won't work on a robotic limb!</span>")
+	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
+		user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
+		var/brute2heal = brute
+		var/burn2heal = burn
+		if(user?.mind?.get_skill_speed_modifier(/datum/skill/medical))
+			var/skillmods = user.mind.get_skill_speed_modifier(/datum/skill/medical)
+			brute2heal *= (2-skillmods)
+			burn2heal *= (2-skillmods)
+		if(affecting.heal_damage(brute2heal, burn2heal))
+			C.update_damage_overlays()
+		return TRUE
+	to_chat(user, "<span class='warning'>[C]'s [affecting.name] can not be healed with \the [src]!</span>")
+
 
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
@@ -88,6 +111,8 @@
 	var/stop_bleeding = 1800
 	self_delay = 20
 	max_amount = 12
+	grind_results = list(/datum/reagent/cellulose = 2)
+	custom_price = 100
 
 /obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
 	if(ishuman(M))
@@ -122,7 +147,7 @@
 	stop_bleeding = 900
 
 /obj/item/stack/medical/gauze/cyborg
-	materials = list()
+	custom_materials = null
 	is_cyborg = 1
 	cost = 250
 
@@ -136,7 +161,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	var/heal_burn = 40
 	self_delay = 20
-	grind_results = list(/datum/reagent/medicine/C2/ichiyuri = 10)
+	grind_results = list(/datum/reagent/medicine/C2/lenturi = 10)
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
 	if(M.stat == DEAD)
@@ -149,3 +174,117 @@
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?</span>")
 	return TOXLOSS
+
+/obj/item/stack/medical/suture
+	name = "suture"
+	desc = "Sterile sutures used to seal up cuts and lacerations."
+	gender = PLURAL
+	singular_name = "suture"
+	icon_state = "suture"
+	self_delay = 30
+	other_delay = 10
+	amount = 15
+	max_amount = 15
+	repeating = TRUE
+	var/heal_brute = 10
+	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
+
+/obj/item/stack/medical/suture/medicated
+	name = "medicated suture"
+	icon_state = "suture_purp"
+	desc = "A suture infused with drugs that speed up wound healing of the treated laceration."
+	heal_brute = 15
+	grind_results = list(/datum/reagent/medicine/polypyr = 2)
+
+/obj/item/stack/medical/suture/heal(mob/living/M, mob/user)
+	. = ..()
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
+		return
+	if(iscarbon(M))
+		return heal_carbon(M, user, heal_brute, 0)
+	if(isanimal(M))
+		var/mob/living/simple_animal/critter = M
+		if (!(critter.healable))
+			to_chat(user, "<span class='warning'>You cannot use \the [src] on [M]!</span>")
+			return FALSE
+		else if (critter.health == critter.maxHealth)
+			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
+			return FALSE
+		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
+		M.heal_bodypart_damage(heal_brute)
+		return TRUE
+
+	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+
+/obj/item/stack/medical/mesh
+	name = "regenerative mesh"
+	desc = "A bacteriostatic mesh used to dress burns."
+	gender = PLURAL
+	singular_name = "regenerative mesh"
+	icon_state = "regen_mesh"
+	self_delay = 30
+	other_delay = 10
+	amount = 15
+	max_amount = 15
+	repeating = TRUE
+	var/heal_burn = 10
+	var/is_open = TRUE ///This var determines if the sterile packaging of the mesh has been opened.
+	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
+
+/obj/item/stack/medical/mesh/Initialize()
+	. = ..()
+	if(amount == max_amount)	 //only seal full mesh packs
+		is_open = FALSE
+		icon_state = "regen_mesh_closed"
+
+
+/obj/item/stack/medical/mesh/update_icon()
+	if(!is_open)
+		return
+	. = ..()
+
+/obj/item/stack/medical/mesh/heal(mob/living/M, mob/user)
+	. = ..()
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
+		return
+	if(iscarbon(M))
+		return heal_carbon(M, user, 0, heal_burn)
+	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+
+
+/obj/item/stack/medical/mesh/try_heal(mob/living/M, mob/user, silent = FALSE)
+	if(!is_open)
+		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
+		return
+	. = ..()
+
+/obj/item/stack/medical/mesh/AltClick(mob/living/user)
+	if(!is_open)
+		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
+		return
+	. = ..()
+
+/obj/item/stack/medical/mesh/attack_hand(mob/user)
+	if(!is_open & user.get_inactive_held_item() == src)
+		to_chat(user, "<span class='warning'>You need to open [src] first.</span>")
+		return
+	. = ..()
+
+/obj/item/stack/medical/mesh/attack_self(mob/user)
+	if(!is_open)
+		is_open = TRUE
+		to_chat(user, "<span class='notice'>You open the sterile mesh package.</span>")
+		update_icon()
+		playsound(src, 'sound/items/poster_ripped.ogg', 20, TRUE)
+		return
+	. = ..()
+
+	/*
+	The idea is for these medical devices to work like a hybrid of the old brute packs and tend wounds,
+	they heal a little at a time, have reduced healing density and does not allow for rapid healing while in combat.
+	However they provice graunular control of where the healing is directed, this makes them better for curing work-related cuts and scrapes.
+
+	The interesting limb targeting mechanic is retained and i still believe they will be a viable choice, especially when healing others in the field.
+	 */

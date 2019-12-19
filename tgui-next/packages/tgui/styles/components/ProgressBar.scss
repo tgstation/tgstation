@@ -1,0 +1,50 @@
+@use '../colors.scss';
+@use '../functions.scss' as *;
+
+$color-default: colors.bg(colors.$primary) !default;
+$color-background: rgba(0, 0, 0, 0) !default;
+$border-radius: 0 !default;
+$bg-map: colors.$bg-map !default;
+
+.ProgressBar {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding: 0 6px;
+  border-radius: $border-radius;
+  background-color: $color-background;
+  transition: border-color 500ms;
+}
+
+.ProgressBar__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  transition: background-color 500ms, width 500ms;
+}
+
+.ProgressBar__content {
+  position: relative;
+  line-height: 17px;
+  width: 100%;
+  text-align: right;
+}
+
+.ProgressBar--color--default {
+  border: 1px solid $color-default;
+
+  .ProgressBar__fill {
+    background-color: $color-default;
+  }
+}
+
+@each $color-name, $color-value in $bg-map {
+  .ProgressBar--color--#{$color-name} {
+    border: 1px solid $color-value !important;
+
+    .ProgressBar__fill {
+      background-color: $color-value;
+    }
+  }
+}

@@ -7,7 +7,7 @@
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 200
-	integrity_failure = 100
+	integrity_failure = 0.5
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
@@ -106,6 +106,7 @@
 			var/datum/species/S = speciestype
 			if(initial(S.changesource_flags) & MIRROR_MAGIC)
 				choosable_races += initial(S.id)
+		choosable_races = sortList(choosable_races)
 	..()
 
 /obj/structure/mirror/magic/lesser/New()

@@ -125,8 +125,6 @@
 	if (isliving(source)) // yeah it's gonna be living but just to be clean
 		var/mob/living/L = source
 		if(fake_species && L.health > disguise_fail_health)
-			switch (fake_species.type)
+			switch(fake_species.type)
 				if (/datum/species/golem/bananium)
 					speech_args[SPEECH_SPANS] |= SPAN_CLOWN
-				if (/datum/species/golem/clockwork)
-					speech_args[SPEECH_SPANS] |= SPAN_ROBOT

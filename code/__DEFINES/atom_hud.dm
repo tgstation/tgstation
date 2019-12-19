@@ -74,11 +74,10 @@
 #define ANTAG_HUD_DEVIL			19
 #define ANTAG_HUD_SINTOUCHED	20
 #define ANTAG_HUD_SOULLESS		21
-#define ANTAG_HUD_CLOCKWORK		22
-#define ANTAG_HUD_BROTHER		23
-#define ANTAG_HUD_OBSESSED	24
-#define ANTAG_HUD_FUGITIVE	25
-#define ANTAG_HUD_BLOODSUCKER		26  // FULPSTATION // Check atom_hud.dm to see what the current top number is.
+#define ANTAG_HUD_BROTHER		22
+#define ANTAG_HUD_OBSESSED	23
+#define ANTAG_HUD_FUGITIVE	24
+#define ANTAG_HUD_BLOODSUCKER   25  // FULPSTATION // Check atom_hud.dm to see what the current top number is. Put this one last! DON'T LEAVE SPACE BETWEEN HUDS!
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

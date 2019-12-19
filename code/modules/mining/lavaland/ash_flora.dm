@@ -209,6 +209,7 @@
 	rarity = 20
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 	resistance_flags = FIRE_PROOF
+	species = "polypore" // silence unit test
 
 /obj/item/seeds/lavaland/cactus
 	name = "pack of fruiting cactus seeds"

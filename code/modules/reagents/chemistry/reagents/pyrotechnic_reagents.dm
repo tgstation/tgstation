@@ -85,15 +85,15 @@
 	color = "#210021"
 	taste_description = "compressed bitterness"
 
-/datum/reagent/blackpowder
-	name = "Black Powder"
+/datum/reagent/gunpowder
+	name = "Gunpowder"
 	description = "Explodes. Violently."
 	reagent_state = LIQUID
 	color = "#000000"
 	metabolization_rate = 0.05
 	taste_description = "salt"
 
-/datum/reagent/blackpowder/on_mob_life(mob/living/carbon/M)
+/datum/reagent/gunpowder/on_mob_life(mob/living/carbon/M)
 	. = TRUE
 	..()
 	if(!isplasmaman(M))
@@ -102,12 +102,26 @@
 	if(M.hallucination < volume)
 		M.hallucination += 5
 
-/datum/reagent/blackpowder/on_ex_act()
+/datum/reagent/gunpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(1 + round(volume/6, 1), location, 0, 0, message = 0)
 	e.start()
 	holder.clear_reagents()
+
+/datum/reagent/rdx
+	name = "RDX"
+	description = "Military grade explosive"
+	reagent_state = SOLID
+	color = "#FFFFFF"
+	taste_description = "salt"
+
+/datum/reagent/tatp
+	name = "TaTP"
+	description = "Suicide grade explosive"
+	reagent_state = SOLID
+	color = "#FFFFFF"
+	taste_description = "death"
 
 /datum/reagent/flash_powder
 	name = "Flash Powder"
@@ -217,7 +231,7 @@
 	shock_timer++
 	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
-		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
+		M.electrocute_act(rand(5,20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, TRUE)
 	..()
 

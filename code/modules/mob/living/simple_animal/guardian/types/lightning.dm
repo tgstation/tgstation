@@ -6,7 +6,8 @@
 /mob/living/simple_animal/hostile/guardian/beam
 	melee_damage_lower = 7
 	melee_damage_upper = 7
-	attacktext = "shocks"
+	attack_verb_continuous = "shocks"
+	attack_verb_simple = "shock"
 	melee_damage_type = BURN
 	attack_sound = 'sound/machines/defib_zap.ogg'
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
@@ -101,17 +102,7 @@
 				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
 					continue
 				if(successfulshocks > 4)
-					if(iscarbon(L))
-						var/mob/living/carbon/C = L
-						if(ishuman(C))
-							var/mob/living/carbon/human/H = C
-							H.electrocution_animation(20)
-						C.jitteriness += 1000
-						C.do_jitter_animation(jitteriness)
-						C.stuttering += 1
-						spawn(20)
-							if(C)
-								C.jitteriness = max(C.jitteriness - 990, 10)
+					L.electrocute_act(0)
 					L.visible_message(
 						"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \

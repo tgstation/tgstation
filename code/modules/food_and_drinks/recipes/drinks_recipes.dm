@@ -180,6 +180,12 @@
 	results = list(/datum/reagent/consumable/ethanol/beer/green = 10)
 	required_reagents = list(/datum/reagent/colorful_reagent/powder/green = 1, /datum/reagent/consumable/ethanol/beer = 10)
 
+/datum/chemical_reaction/greenbeer2 //apparently there's no other way to do this
+	name = "Green Beer"
+	id = /datum/reagent/consumable/ethanol/beer/green
+	results = list(/datum/reagent/consumable/ethanol/beer/green = 10)
+	required_reagents = list(/datum/reagent/colorful_reagent/powder/green/crayon = 1, /datum/reagent/consumable/ethanol/beer = 10)
+
 /datum/chemical_reaction/hooch
 	name = "Hooch"
 	id = /datum/reagent/consumable/ethanol/hooch
@@ -208,8 +214,8 @@
 /datum/chemical_reaction/margarita
 	name = "Margarita"
 	id = /datum/reagent/consumable/ethanol/margarita
-	results = list(/datum/reagent/consumable/ethanol/margarita = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 2, /datum/reagent/consumable/limejuice = 1)
+	results = list(/datum/reagent/consumable/ethanol/margarita = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/tequila = 2, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ethanol/triple_sec = 1)
 
 /datum/chemical_reaction/longislandicedtea
 	name = "Long Island Iced Tea"

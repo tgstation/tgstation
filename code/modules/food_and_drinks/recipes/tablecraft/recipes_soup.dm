@@ -81,6 +81,18 @@
 	result = /obj/item/reagent_containers/food/snacks/soup/coldchili
 	subcategory = CAT_SOUP
 
+/datum/crafting_recipe/food/clownchili
+	name = "Chili con carnival"
+	reqs = list(
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 1,
+		/obj/item/clothing/shoes/clown_shoes = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/clownchili
+	subcategory = CAT_SOUP
+
 /datum/crafting_recipe/food/tomatosoup
 	name = "Tomato soup"
 	reqs = list(
@@ -257,4 +269,27 @@
 		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/bisque
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/bungocurry
+	name = "Bungo Curry"
+	reqs = list(
+		/datum/reagent/water = 5,
+		/datum/reagent/consumable/cream = 5,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/reagent_containers/food/snacks/grown/bungofruit = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/bungocurry
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/electron
+	name = "Electron Soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/sodiumchloride = 5,
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/food/snacks/grown/mushroom/jupitercup = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/electron
 	subcategory = CAT_SOUP

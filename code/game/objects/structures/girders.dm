@@ -275,7 +275,7 @@
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return prob(girderpasschance)
 	else
-		if(istype(mover, /obj/item/projectile))
+		if(istype(mover, /obj/projectile))
 			return prob(girderpasschance)
 		else
 			return 0
@@ -290,13 +290,6 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/metal)
 		new remains(loc)
-	qdel(src)
-
-/obj/structure/girder/ratvar_act()
-	if(anchored)
-		new /obj/structure/destructible/clockwork/wall_gear(loc)
-	else
-		new /obj/structure/destructible/clockwork/wall_gear/displaced(loc)
 	qdel(src)
 
 /obj/structure/girder/narsie_act()

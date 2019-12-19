@@ -1,0 +1,8 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - rscadd: "Due to its age, the E.X.P.E.R.I-Mentor might be prone to exploding in very, very rare scenarios. Please take care in its use."
+  - tweak: "Increased the amount of research gained for discovering a strange object's true nature."
+  - tweak: "The E.X.P.E.R.I-Mentor will now produce research notes instead of feeding points directly into the server."
+  - tweak: "Strange objects have a more informational examine string."
+  - balance: "Reduced the overall amount of passive research generation by a small amount."

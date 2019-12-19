@@ -243,7 +243,7 @@
 			if(!same_z_level(C))
 				return
 			if(!C.can_use())
-				to_chat(usr, "<span class='warning'>Something's wrong with that camera!  You can't get a feed.</span>")
+				to_chat(usr, "<span class='warning'>Something's wrong with that camera! You can't get a feed.</span>")
 				return
 			current = C
 			spawn(6)

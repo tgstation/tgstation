@@ -23,7 +23,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	circuit = /obj/item/circuitboard/machine/chem_dispenser
 	ui_x = 565
-	ui_y = 550
+	ui_y = 620
 
 	var/obj/item/stock_parts/cell/cell
 	var/powerefficiency = 0.1
@@ -70,7 +70,7 @@
 		/datum/reagent/ammonia,
 		/datum/reagent/ash,
 		/datum/reagent/diethylamine,
-		/datum/reagent/oil,
+		/datum/reagent/fuel/oil,
 		/datum/reagent/saltpetre
 	)
 	//available with T5 manipulator (Quantum) [XEON Code]
@@ -654,7 +654,7 @@
 		/datum/reagent/ammonia,
 		/datum/reagent/ash,
 		/datum/reagent/diethylamine,
-		/datum/reagent/oil,
+		/datum/reagent/fuel/oil,
 		/datum/reagent/saltpetre,
 		/datum/reagent/medicine/mine_salve,
 		/datum/reagent/medicine/morphine,

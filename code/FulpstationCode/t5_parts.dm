@@ -60,7 +60,7 @@
 	id = "quantumcell"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 5500, /datum/material/plasma = 3500, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
-	build_path = /obj/item/stock_parts/cell/quantum
+	build_path = /obj/item/stock_parts/cell/quantum/empty
 	category = list("Power Designs")
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
@@ -82,7 +82,7 @@
 	starting_node = FALSE
 	display_name = "Quantum Tech"
 	description = "Strange modified bluespace stock parts, with a dash of quantum physics mixed in."
-	design_ids = list("quantumscan","quantummanip",,"quantumbin","quantumbeaker")
+	design_ids = list("quantumscan","quantummanip","quantumbin","quantumbeaker")
 	prereq_ids = list("micro_bluespace")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
@@ -95,7 +95,7 @@
 	icon_state = "quantumcap"
 	icon = 'icons/Fulpicons/quantumcell_fulp.dmi'
 	rating = 5
-	materials = list(/datum/material/iron =225, /datum/material/glass =180, /datum/material/gold =135, /datum/material/diamond = 90)
+	custom_materials = list(/datum/material/iron =225, /datum/material/glass =180, /datum/material/gold =135, /datum/material/diamond = 90)
 
 /obj/item/stock_parts/scanning_module/quantumscan
 	name = "quantum field scanning module"
@@ -103,7 +103,7 @@
 	icon_state = "quantumscan"
 	icon = 'icons/Fulpicons/quantumcell_fulp.dmi'
 	rating = 5
-	materials = list(/datum/material/iron= 225, /datum/material/glass = 180, /datum/material/diamond = 54, /datum/material/bluespace = 54)
+	custom_materials = list(/datum/material/iron= 225, /datum/material/glass = 180, /datum/material/diamond = 54, /datum/material/bluespace = 54)
 
 /obj/item/stock_parts/manipulator/quantummanip
 	name = "quantum field manipulator"
@@ -111,7 +111,7 @@
 	icon_state = "quantummanip"
 	icon = 'icons/Fulpicons/quantumcell_fulp.dmi'
 	rating = 5
-	materials = list(/datum/material/iron= 180, /datum/material/diamond = 27, /datum/material/titanium = 27, /datum/material/uranium = 27)
+	custom_materials = list(/datum/material/iron= 180, /datum/material/diamond = 27, /datum/material/titanium = 27, /datum/material/uranium = 27)
 
 /obj/item/stock_parts/micro_laser/quantumlaser
 	name = "quantum micro-laser"
@@ -119,22 +119,22 @@
 	icon_state = "quantumlaser"
 	icon = 'icons/Fulpicons/quantumcell_fulp.dmi'
 	rating = 5
-	materials = list(/datum/material/iron= 180, /datum/material/glass = 180, /datum/material/uranium = 90, /datum/material/diamond = 90)
+	custom_materials = list(/datum/material/iron= 180, /datum/material/glass = 180, /datum/material/uranium = 90, /datum/material/diamond = 90)
 
 /obj/item/stock_parts/matter_bin/quantumbin
-	name = "entangled matter bin"
+	name = "quantum entangled matter bin"
 	desc = "A bluespace matter bin that makes use of entangled particles to store states of materials as energy."
 	icon_state = "quantumbin"
 	icon = 'icons/Fulpicons/quantumcell_fulp.dmi'
 	rating = 5
-	materials = list(/datum/material/iron= 225, /datum/material/diamond = 90, /datum/material/bluespace = 135)
+	custom_materials = list(/datum/material/iron= 225, /datum/material/diamond = 90, /datum/material/bluespace = 135)
 
 /obj/item/reagent_containers/glass/beaker/quantum
 	name = "quantum entangled beaker"
 	desc = "A quantum entangled beaker, capable of holding a massive 400 units of any reagent."
 	icon_state = "quantumbeaker"
 	icon = 'icons/Fulpicons/quantumcell_fulp.dmi'
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1500, /datum/material/bluespace = 1500)
+	custom_materials = list(/datum/material/iron = 500, /datum/material/glass = 5000, /datum/material/plasma = 3000, /datum/material/diamond = 1500, /datum/material/bluespace = 1500)
 	volume = 400
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
@@ -145,7 +145,7 @@
 	icon_state = "quantumcell"
 	icon = 'icons/Fulpicons/quantumcell_fulp.dmi'
 	maxcharge = 50000
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 5500, /datum/material/plasma = 3500, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
+	custom_materials = list(/datum/material/iron = 1000, /datum/material/glass = 5500, /datum/material/plasma = 3500, /datum/material/diamond = 1000, /datum/material/bluespace = 1000)
 	chargerate = 5000
 
 /obj/item/stock_parts/cell/quantum/empty/Initialize()
@@ -170,18 +170,47 @@
 	id = "quantum_tech_power"
 	starting_node = FALSE
 	display_name = "Quantum Power Technology"
-	description = "Quantum based power technologies, making apt use of Bluespace Folds and Quantum Tears"
+	description = "Quantum based power technologies, making apt use of newly discovered Bluespace Folds and Quantum Tears"
 	design_ids = list("quantumcap","quantumcell")
 	prereq_ids = list("bluespace_power")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	export_price = 5000
 
-/datum/techweb_node/quantum_tech_laser
+/datum/techweb_node/quantum_tech_laser //Renamed 10/3/19, fixed a spelling mistake -Xeon
 	id = "quantum_tech_laser"
 	starting_node = FALSE
-	display_name = "Quantum Laser Technology"
-	description = "Improved quantum technoligies that shake the foundations of the focal sciences. How far is too far?"
+	display_name = "Integrated Quantum Laser Theory"
+	description = "Improved quantum technologies that shake the foundations of the focal sciences. How far is too far?"
 	design_ids = list("quantumlaser")
 	prereq_ids = list("emp_super")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	export_price = 5000
 
+///10/3/19 Update BELOW///
+
+///T5 Motorized wheelchair code///
+
+/obj/vehicle/ridden/wheelchair/motorized/proc/RunOver(var/mob/living/carbon/human/H)
+	var/bloodiness = 0
+	log_combat(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
+	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", "<span class='userdanger'>[src] drives over you!</span>")
+	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
+
+	var/damage = rand(1,10) //Choose between 1 and 10, then use for damage calc applied to head, chest, legs and arms.
+	H.apply_damage(2*damage, BRUTE, BODY_ZONE_HEAD, H.run_armor_check(BODY_ZONE_HEAD, "melee"))
+	H.apply_damage(2*damage, BRUTE, BODY_ZONE_CHEST, H.run_armor_check(BODY_ZONE_CHEST, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_LEG, H.run_armor_check(BODY_ZONE_L_LEG, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_LEG, H.run_armor_check(BODY_ZONE_R_LEG, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_L_ARM, H.run_armor_check(BODY_ZONE_L_ARM, "melee"))
+	H.apply_damage(0.5*damage, BRUTE, BODY_ZONE_R_ARM, H.run_armor_check(BODY_ZONE_R_ARM, "melee"))
+	if(islizard(H)) //If H (target) is a lizard, deal 0.5*var/damage to their tail. Sorry rico!
+		H.adjustOrganLoss(ORGAN_SLOT_TAIL, 0.5*damage)
+	H.Knockdown(85)
+	H.adjustStaminaLoss(40)
+
+	var/turf/T = get_turf(src)
+	T.add_mob_blood(H)
+
+	var/list/blood_dna = H.get_blood_dna_list()
+	add_blood_DNA(blood_dna)
+	bloodiness += 4

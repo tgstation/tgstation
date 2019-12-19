@@ -12,7 +12,7 @@
 	message = "The blob blasts you"
 
 
-/datum/blobstrain/debris_devourer/attack_living(var/mob/living/L, var/list/nearby_blobs)
+/datum/blobstrain/debris_devourer/attack_living(mob/living/L, list/nearby_blobs)
 	send_message(L)
 	for (var/obj/structure/blob/blob in nearby_blobs)
 		debris_attack(L, blob)

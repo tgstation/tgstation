@@ -104,7 +104,7 @@
 				update_icon()
 				return
 		if(smile == TRUE)
-			to_chat(user, "<span class='notice'>Seems like someone already drew something on this helmet's visor.</span>")
+			to_chat(user, "<span class='warning'>Seems like someone already drew something on this helmet's visor!</span>")
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(isinhands)
 	. = ..()

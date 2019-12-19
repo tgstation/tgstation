@@ -3,6 +3,7 @@
 	desc = "Someone should clean that up."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shards"
+	beauty = -50
 
 /obj/effect/decal/cleanable/ash
 	name = "ashes"
@@ -10,6 +11,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	mergeable_decal = FALSE
+	beauty = -50
 
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
@@ -24,6 +26,7 @@
 /obj/effect/decal/cleanable/ash/large
 	name = "large pile of ashes"
 	icon_state = "big_ash"
+	beauty = -100
 
 /obj/effect/decal/cleanable/ash/large/Initialize()
 	. = ..()
@@ -34,6 +37,7 @@
 	desc = "Back to sand."
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "tiny"
+	beauty = -100
 
 /obj/effect/decal/cleanable/glass/Initialize()
 	. = ..()
@@ -52,6 +56,7 @@
 	canSmoothWith = list(/obj/effect/decal/cleanable/dirt, /turf/closed/wall, /obj/structure/falsewall)
 	smooth = SMOOTH_FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	beauty = -75
 
 /obj/effect/decal/cleanable/dirt/Initialize()
 	. = ..()
@@ -78,6 +83,7 @@
 	light_power = 3
 	light_range = 2
 	light_color = LIGHT_COLOR_GREEN
+	beauty = -300
 
 /obj/effect/decal/cleanable/greenglow/ex_act()
 	return
@@ -86,6 +92,11 @@
 	. = ..()
 	reagents.add_reagent(pick(/datum/reagent/uranium, /datum/reagent/uranium/radium), 5)
 
+/obj/effect/decal/cleanable/greenglow/ecto
+	name = "ectoplasmic puddle"
+	desc = "You know who to call."
+	light_power = 2
+
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
 	desc = "Somebody should remove that."
@@ -93,6 +104,7 @@
 	layer = WALL_OBJ_LAYER
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
+	beauty = -100
 
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
@@ -104,10 +116,12 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "molten"
 	mergeable_decal = FALSE
+	beauty = -150
 
 /obj/effect/decal/cleanable/molten_object/large
 	name = "big gooey grey mass"
 	icon_state = "big_molten"
+	beauty = -300
 
 //Vomit (sorry)
 /obj/effect/decal/cleanable/vomit
@@ -116,6 +130,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
+	beauty = -150
 
 /obj/effect/decal/cleanable/vomit/attack_hand(mob/user)
 	. = ..()
@@ -162,9 +177,11 @@
 	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
 		qdel(src)
 
-/obj/effect/decal/cleanable/shreds/Initialize()
+/obj/effect/decal/cleanable/shreds/Initialize(mapload, oldname)
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
+	if(!isnull(oldname))
+		desc = "The sad remains of what used to be [oldname]"
 	. = ..()
 
 /obj/effect/decal/cleanable/glitter
@@ -192,7 +209,7 @@
 	desc = "A puddle of stabilized plasma."
 	icon_state = "flour"
 	icon = 'icons/effects/tomatodecal.dmi'
-	color = "#C8A5DC"
+	color = "#2D2D2D"
 
 /obj/effect/decal/cleanable/insectguts
 	name = "insect guts"

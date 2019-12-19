@@ -1,5 +1,5 @@
 /obj/item/ammo_casing/energy/electrode
-	projectile_type = /obj/item/projectile/energy/electrode
+	projectile_type = /obj/projectile/energy/electrode
 	select_name = "stun"
 	fire_sound = 'sound/weapons/taser.ogg'
 	e_cost = 200
@@ -16,7 +16,7 @@
 	e_cost = 1000
 
 /obj/item/ammo_casing/energy/disabler
-	projectile_type = /obj/item/projectile/beam/disabler
+	projectile_type = /obj/projectile/beam/disabler
 	select_name  = "disable"
 	e_cost = 50
 	fire_sound = 'sound/weapons/taser2.ogg'

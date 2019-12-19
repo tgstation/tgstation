@@ -213,6 +213,10 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*
+		*  REMOVED 12/11/19 - There was a change to Sun SubSystem, and solar machines aren't tracked in one spot. Rather than work on a
+		                      new way to track solars, let's just remove this objective that no one pursues anyway.
+
 // Destroy the Solar Arrays
 /datum/objective/bloodsucker/solars
 
@@ -232,6 +236,7 @@
 		if (SC && SC.lastgen > 0 && SC.connected_panels.len > 0 && SC.connected_tracker)
 			return FALSE
 	return TRUE
+*/
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -327,7 +332,7 @@
 	monsters += SSticker.mode.cult
 	monsters += SSticker.mode.wizards
 	monsters += SSticker.mode.apprentices
-	monsters += SSticker.mode.servants_of_ratvar
+	//monsters += SSticker.mode.servants_of_ratvar
 	monsters += SSticker.mode.changelings
 
 	for (var/datum/mind/M in monsters)

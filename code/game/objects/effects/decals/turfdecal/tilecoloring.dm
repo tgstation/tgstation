@@ -234,5 +234,5 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner
 	icon_state = "trimline_corner_fill"
 
-/obj/effect/turf_decal/trimline/brown/filled/end
+/obj/effect/turf_decal/trimline/neutral/filled/end
 	icon_state = "trimline_end_fill"

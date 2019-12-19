@@ -2,6 +2,7 @@
 	var/id = 0
 	var/status = CONTRACT_STATUS_INACTIVE
 	var/datum/objective/contract/contract = new()
+	var/target_rank
 	var/ransom = 0
 	var/payout_type = null
 
@@ -15,6 +16,12 @@
 
 /datum/syndicate_contract/proc/generate(blacklist)
 	contract.find_target(null, blacklist)
+	
+	var/datum/data/record/record = find_record("name", contract.target.name, GLOB.data_core.general)
+	if (record)
+		target_rank = record.fields["rank"]
+	else 
+		target_rank = "Unknown"
 
 	if (payout_type == CONTRACT_PAYOUT_LARGE)
 		contract.payout_bonus = rand(9,13)

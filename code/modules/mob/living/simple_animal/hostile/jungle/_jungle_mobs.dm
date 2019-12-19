@@ -7,9 +7,8 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	minbodytemp = 0
 	maxbodytemp = 450
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "strikes"
+	response_harm_continuous = "strikes"
+	response_harm_simple = "strike"
 	status_flags = NONE
 	a_intent = INTENT_HARM
 	see_in_dark = 4

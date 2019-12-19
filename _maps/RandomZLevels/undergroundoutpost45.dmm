@@ -3064,7 +3064,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gn" = (
-/obj/item/tank/internals/air,
+/obj/item/tank/internals/oxygen,
 /obj/item/clothing/mask/gas,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,

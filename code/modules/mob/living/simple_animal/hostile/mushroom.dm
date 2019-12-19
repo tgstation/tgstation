@@ -9,15 +9,19 @@
 	maxHealth = 10
 	health = 10
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/hugemushroomslice = 1)
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "whacks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "whacks"
+	response_harm_simple = "whack"
 	harm_intent_damage = 5
 	obj_damage = 0
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attack_same = 2
-	attacktext = "chomps"
+	attack_verb_continuous = "chomps"
+	attack_verb_simple = "chomp"
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("mushroom")
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -108,7 +112,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/simple_animal/hostile/mushroom/revive(full_heal = 0, admin_revive = 0)
+/mob/living/simple_animal/hostile/mushroom/revive(full_heal = FALSE, admin_revive = FALSE)
 	if(..())
 		icon_state = "mushroom_color"
 		UpdateMushroomCap()
@@ -130,7 +134,7 @@
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message("<span class='notice'>[src] slowly begins to recover.</span>")
 	faint_ticker = 0
-	revive(full_heal = 1)
+	revive(full_heal = TRUE, admin_revive = FALSE)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
 	addtimer(CALLBACK(src, .proc/recovery_recharge), 300)
@@ -177,7 +181,7 @@
 		if(T.throwforce)
 			Bruise()
 
-/mob/living/simple_animal/hostile/mushroom/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hostile/mushroom/bullet_act(obj/projectile/P)
 	. = ..()
 	if(P.nodamage)
 		Bruise()
