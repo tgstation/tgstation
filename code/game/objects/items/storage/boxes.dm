@@ -424,93 +424,74 @@
 		new /obj/item/reagent_containers/food/drinks/sillycup( src )
 
 /obj/item/storage/box/donkpockets
+    var/donktype = /obj/item/reagent_containers/food/snacks/donkpocket
+
+/obj/item/storage/box/donkpockets/PopulateContents()
+    for(1 to 6)
+        new donktype(src)
+
+/obj/item/storage/box/donkpockets
 	name = "box of donk-pockets"
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket
 
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/donkpocket))
 
-/obj/item/storage/box/donkpockets/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/snacks/donkpocket(src)
-
 /obj/item/storage/box/donkpockets/donkpocketspicy
 	name = "box of spicy-flavoured donk-pockets"
 	icon_state = "donkpocketboxspicy"
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/donkpocketspicy
 	
 /obj/item/storage/box/donkpockets/donkpocketspicy/ComponentInitialize()
 	. = ..()
 
-/obj/item/storage/box/donkpockets/donkpocketspicy/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/snacks/donkpocket/spicy(src)
-
 /obj/item/storage/box/donkpockets/donkpocketteriyaki
 	name = "box of teriyaki-flavoured donk-pockets"
 	icon_state = "donkpocketboxteriyaki"
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/donkpocketteriyaki
 	
 /obj/item/storage/box/donkpockets/donkpocketteriyaki/ComponentInitialize()
 	. = ..()
 
-/obj/item/storage/box/donkpockets/donkpocketteriyaki/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki(src)
-
 /obj/item/storage/box/donkpockets/donkpocketpizza
 	name = "box of pizza-flavoured donk-pockets"
 	icon_state = "donkpocketboxpizza"
-	
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/donkpocketpizza
 
 /obj/item/storage/box/donkpockets/donkpocketpizza/ComponentInitialize()
 	. = ..()
 
-
-/obj/item/storage/box/donkpockets/donkpocketpizza/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/snacks/donkpocket/pizza(src)
-
 /obj/item/storage/box/donkpockets/donkpocketgondola
 	name = "box of gondola-flavoured donk-pockets"
 	icon_state = "donkpocketboxgondola"
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/donkpocketgondola
 	
 
 /obj/item/storage/box/donkpockets/donkpocketgondola/ComponentInitialize()
 	. = ..()
 
-
-/obj/item/storage/box/donkpockets/donkpocketgondola/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/snacks/donkpocket/gondola(src)
-
 /obj/item/storage/box/donkpockets/donkpocketberry
 	name = "box of berry-flavoured donk-pockets"
 	icon_state = "donkpocketboxberry"
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/donkpocketberry
 	
 
 /obj/item/storage/box/donkpockets/donkpocketberry/ComponentInitialize()
 	. = ..()
 
-
-/obj/item/storage/box/donkpockets/donkpocketberry/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/snacks/donkpocket/berry(src)
-
 /obj/item/storage/box/donkpockets/donkpockethonk
 	name = "box of banana-flavoured donk-pockets"
 	icon_state = "donkpocketboxbanana"
+	donktype = /obj/item/reagent_containers/food/snacks/donkpocket/donkpockethonk
 	
 
 /obj/item/storage/box/donkpockets/donkpockethonk/ComponentInitialize()
 	. = ..()
-
-
-/obj/item/storage/box/donkpockets/donkpockethonk/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/snacks/donkpocket/honk(src)
 
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
