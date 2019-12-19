@@ -1,7 +1,6 @@
 /obj/mecha/combat/nerchen
 	desc = "This is a discontinued and highly experimental exosuit. Early on in the production in the durand, the idea of a second pilot was thrown around, resulting in this mecha."
 	name = "\improper Nerchen"
-	icon = 'icons/mecha/mecha_larger.dmi'
 	icon_state = "nerchen"
 	step_in = 3
 	dir_in = 2 //Facing South.
@@ -11,11 +10,9 @@
 	max_temperature = 25000
 	infra_luminosity = 3
 	//wreckage
+	melee_can_hit = FALSE
 	add_req_access = 1
 	internal_damage_threshold = 25
-	force = 15
-	max_equip = 0
-	pixel_x = -9
 	var/obj/mecha/combat/chen/chen
 
 /obj/mecha/combat/nerchen/Initialize()
@@ -30,15 +27,18 @@
 	chen.Destroy()
 	..()
 
+/obj/mecha/combat/nerchen/mmi_move_inside(obj/item/mmi/mmi_as_oc, mob/user) //no cheese
+	to_chat(user, "<span class='warning'>There doesn't seem to be any way to interface with the mech!</span>")
+	return FALSE
 
 /obj/mecha/combat/nerchen/proc/change_eyes() //icon proc
 	var/newicon = initial(icon_state)
-	newicon += "_"
+	newicon += "-"
 	if(occupant)
 		newicon += "closed"
 	else
 		newicon += "open"
-	newicon += "_"
+	newicon += "-"
 	if(chen.occupant)
 		newicon += "closed"
 	else
@@ -55,14 +55,13 @@
 	..()
 	change_eyes()
 
-/obj/mecha/combat/nerchen/click_action(atom/target,mob/user,params)
-	to_chat(occupant, "<span class='warning'>You need to be in the other cockpit to punch!</span>")
-	return FALSE
-
 /obj/mecha/combat/nerchen/MouseDrop_T(mob/M, mob/user) //if chen exists, you can enter that instead.
-	if(alert("Which cockpit would you like to enter?","Mecha","Ner (Movement)","Chen (Weapons)") == "Chen (Weapons)")
-		chen.MouseDrop_T(M, user)
-		return
+	switch(alert("Which cockpit would you like to enter?","Mecha","Ner (Movement)","Chen (Weapons)", "Cancel"))
+		if("Chen (Weapons)")
+			chen.MouseDrop_T(M, user)
+			return
+		if("Cancel")
+			return
 	..()
 
 /obj/mecha/combat/chen
@@ -85,6 +84,18 @@
 /obj/mecha/combat/chen/Initialize(mapload, _ner)
 	. = ..()
 	ner = _ner
+
+/obj/mecha/combat/chen/GrantActions(mob/living/user, human_occupant = 0)
+	if(human_occupant)
+		eject_action.Grant(user, src)
+	if(enclosed)
+		internals_action.Grant(user, src)
+	cycle_action.Grant(user, src)
+	stats_action.Grant(user, src)
+
+/obj/mecha/combat/chen/mmi_move_inside(obj/item/mmi/mmi_as_oc, mob/user) //no cheese
+	to_chat(user, "<span class='warning'>There doesn't seem to be any way to interface with the mech!</span>")
+	return FALSE
 
 /obj/mecha/combat/chen/MouseDrop_T(mob/M, mob/user) //has some differences here and there, with progress bars too
 	if((user != M) || user.incapacitated() || !ner.Adjacent(user))
