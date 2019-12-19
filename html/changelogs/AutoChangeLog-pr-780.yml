@@ -1,0 +1,4 @@
+author: "Bumtickley00"
+delete-after: True
+changes: 
+  - tweak: "Pills found in medkits now have their own unique colors"
