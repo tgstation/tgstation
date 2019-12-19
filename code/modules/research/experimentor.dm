@@ -2,6 +2,7 @@
 
 //NEEDS MAJOR CODE CLEANUP
 //NO SHIT IT'S LIKE 20 NESTED IF STATEMENTS WHAT THE FUCK GUYS
+//TODO: WRITE ALL THE EXPERIMENTS INTO PROCS
 
 #define SCANTYPE_POKE 1
 #define SCANTYPE_IRRADIATE 2
@@ -16,7 +17,7 @@
 #define EFFECT_PROB_MEDIUM 50
 #define EFFECT_PROB_HIGH 75
 #define EFFECT_PROB_VERYHIGH 95
-#define EFFECT_PROB_RELICMAKE 50
+#define EFFECT_PROB_RESEARCH 50
 
 #define FAIL 8
 /obj/machinery/rnd/experimentor
@@ -36,7 +37,10 @@
 	var/list/item_reactions = list()
 	var/list/valid_items = list() //valid items for special reactions like transforming
 	var/list/critical_items_typecache //items that can cause critical reactions
+	var/static/list/already_researched //can't get points for two of the same item
 	var/banned_typecache // items that won't be produced
+	var/list/banned_items // Items the experimentor won't let you use (Nuke disk, material sheets, etc.)
+	var/exp_item
 	requires_console = FALSE
 
 /obj/machinery/rnd/experimentor/proc/ConvertReqString2List(list/source_list)
@@ -74,10 +78,19 @@
 
 /obj/machinery/rnd/experimentor/Initialize()
 	. = ..()
+	already_researched = list()
 
 	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list
 	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_living_list
 	SetTypeReactions()
+
+	banned_items = typecacheof(list(
+		/obj/item/disk/nuclear,
+		/obj/item/stack/sheet,
+		/obj/item/reagent_containers/food,
+		/obj/item/reagent_containers/food/drinks,
+		/obj/item/research_notes
+	))
 
 	critical_items_typecache = typecacheof(list(
 		/obj/item/construction/rcd,
@@ -86,7 +99,18 @@
 		/obj/item/storage/backpack/holding,
 		/obj/item/slime_extract,
 		/obj/item/onetankbomb,
-		/obj/item/transfer_valve))
+		/obj/item/transfer_valve,
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
+		/obj/item/hand_tele,
+		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/clothing/shoes/magboots/advance,
+		/obj/item/reagent_containers/hypospray/CMO,
+		/obj/item/clothing/suit/hooded/ablative,
+		/obj/item/clothing/suit/armor/reactive/teleport,
+		/obj/item/gun/energy/e_gun/nuclear,
+		/obj/item/stock_parts/cell/hyper
+	))
 
 /obj/machinery/rnd/experimentor/RefreshParts()
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -125,11 +149,21 @@
 	ejectItem()
 	. = ..(O)
 
+//This eventually needs to be converted to tgui-next because it's a clusterfuck
+
 /obj/machinery/rnd/experimentor/ui_interact(mob/user)
 	var/list/dat = list("<center>")
-	if(loaded_item)
+	if(banned_items[loaded_item.type])
+		dat += "<b>Item is not cleared for use in E.X.P.E.R.I-MENTOR. If you believe this is in error, please contact Nanotrasen Central Command."
+		dat += "<b><a href='byond://?src=[REF(src)];function=eject'>Eject</A>"
+	else if(loaded_item)
 		dat += "<b>Loaded Item:</b> [loaded_item]"
-
+		if(is_type_in_typecache(loaded_item, critical_items_typecache))
+			dat += "<b>Advanced technolgy detected - chance of higher research point generation</b>"
+		if(is_type_in_typecache(loaded_item, already_researched))
+			dat += "<b>Technology has already been experimented on - no points will be awarded!</b>"
+		if(istype(loaded_item,/obj/item/relic))
+			dat += "<b>Relic detected - press 'Discover' to research alternate uses and obtain research points"
 		dat += "<div>Available tests:"
 		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_POKE]'>Poke</A></b>"
 		dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_IRRADIATE];'>Irradiate</A></b>"
@@ -140,22 +174,6 @@
 		if(istype(loaded_item,/obj/item/relic))
 			dat += "<b><a href='byond://?src=[REF(src)];item=[REF(loaded_item)];function=[SCANTYPE_DISCOVER]'>Discover</A></b>"
 		dat += "<b><a href='byond://?src=[REF(src)];function=eject'>Eject</A>"
-		var/list/listin = techweb_item_boost_check(src)
-		if(listin)
-			var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
-			var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
-			var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
-			for(var/node_id in listin)
-				var/datum/techweb_node/N = SSresearch.techweb_node_by_id(node_id)
-				var/str = "<b>[N.display_name]</b>: [listin[N]] points.</b>"
-				if(SSresearch.science_tech.researched_nodes[N.id])
-					res += str
-				else if(SSresearch.science_tech.boosted_nodes[N.id])
-					boosted += str
-				if(SSresearch.science_tech.visible_nodes[N.id])	//JOY OF DISCOVERY!
-					output += str
-			output += boosted + res
-			dat += output
 	else
 		dat += "<b>Nothing loaded.</b>"
 	dat += "<a href='byond://?src=[REF(src)];function=refresh'>Refresh</A>"
@@ -232,6 +250,18 @@
 	smoke.set_up(0, where)
 	smoke.start()
 
+/obj/machinery/rnd/experimentor/proc/grantPoints(value, obj/item/exp_item)
+	visible_message("<span class='notice'>[src] spits out some research notes worth [value] points!</span>")
+	new /obj/item/research_notes(drop_location(src), value, "experimentation")
+	value = 0
+	if(istype(exp_item, /obj/item/relic))
+		ejectItem()
+	else if(!already_researched[exp_item.type])
+		already_researched[exp_item.type] = TRUE
+		ejectItem(TRUE)
+	else
+		visible_message("<span class='alert'>Experiment results already exist in system. Experiment aborted.</span>")
+		ejectItem()
 
 /obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1
@@ -243,15 +273,12 @@
 		visible_message("<span class='notice'>[src] prods at [exp_on] with mechanical arms.</span>")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='notice'>[exp_on] is gripped in just the right way, enhancing its focus.</span>")
-			var/points = rand(2500,3000)
-			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
-			new /obj/item/research_notes(drop_location(src), points, "experimentation")
-			ejectItem(TRUE)
+			playsound(src, 'sound/machines/ping.ogg', 50, 3, -1)
+			grantPoints(rand(3000, 5000), exp_on)
 			badThingCoeff++
-		else if(prob(EFFECT_PROB_MEDIUM) && prob(EFFECT_PROB_RELICMAKE))
-			visible_message("<span class='notice'>[exp_on] is prodded into a new, strange shape!</span>")
-			new /obj/item/relic(drop_location(src))
-			ejectItem(TRUE)
+		else if(prob(EFFECT_PROB_RESEARCH) && !criticalReaction)
+			visible_message("<span class='notice'>[exp_on] is prodded and its reaction is recorded. Science!</span>")
+			grantPoints(rand(300, 500), exp_on)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions and destroys [exp_on], lashing its arms out at nearby people!</span>")
 			for(var/mob/living/m in oview(1, src))
@@ -276,15 +303,12 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='notice'>[exp_on] has activated an unknown subroutine!</span>")
 			cloneMode = TRUE
+			playsound(src, 'sound/machines/ping.ogg', 50, 3, -1)
 			investigate_log("Experimentor has made a clone of [exp_on]", INVESTIGATE_EXPERIMENTOR)
 			ejectItem()
-			var/points = rand(2500,3000)
-			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
-			new /obj/item/research_notes(drop_location(src), points, "experimentation")
-		else if(prob(EFFECT_PROB_MEDIUM) && prob(EFFECT_PROB_RELICMAKE))
-			visible_message("<span class='notice'>[exp_on] mutates into a new, strange shape!</span>")
-			new /obj/item/relic(drop_location(src))
-			ejectItem(TRUE)
+		else if(prob(EFFECT_PROB_RESEARCH) && !criticalReaction)
+			visible_message("<span class='notice'>[exp_on] changes in new, strange ways! Results recorded.</span>")
+			grantPoints(rand(300, 500), exp_on)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, melting [exp_on] and leaking radiation!</span>")
 			radiation_pulse(src, 500)
@@ -313,14 +337,11 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='notice'>[exp_on] achieves the perfect mix!</span>")
 			new /obj/item/stack/sheet/mineral/plasma(get_turf(pick(oview(1,src))))
-			var/points = rand(2500,3000)
-			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
-			new /obj/item/research_notes(drop_location(src), points, "experimentation")
-			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_MEDIUM) && prob(EFFECT_PROB_RELICMAKE))
-			visible_message("<span class='notice'>[exp_on] reacts with the gas, changing into a new, strange shape!</span>")
-			new /obj/item/relic(drop_location(src))
-			ejectItem(TRUE)
+			grantPoints(rand(3000, 5000), exp_on)
+			playsound(src, 'sound/machines/ping.ogg', 50, 3, -1)
+		else if(prob(EFFECT_PROB_RESEARCH) && !criticalReaction)
+			visible_message("<span class='notice'>[exp_on] reacts with the gas! Results recorded.</span>")
+			grantPoints(rand(300, 500), exp_on)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] destroys [exp_on], leaking dangerous gas!</span>")
 			chosenchem = pick(/datum/reagent/carbon,/datum/reagent/uranium/radium,/datum/reagent/toxin,/datum/reagent/consumable/condensedcapsaicin,/datum/reagent/drug/mushroomhallucinogen,/datum/reagent/drug/space_drugs,/datum/reagent/consumable/ethanol,/datum/reagent/consumable/ethanol/beepsky_smash)
@@ -369,14 +390,10 @@
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
-			var/points = rand(2500,3000)
-			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
-			new /obj/item/research_notes(drop_location(src), points, "experimentation")
-			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_MEDIUM) && prob(EFFECT_PROB_RELICMAKE))
-			visible_message("<span class='notice'>[exp_on] melts down into a new, strange shape!</span>")
-			new /obj/item/relic(drop_location(src))
-			ejectItem(TRUE)
+			grantPoints(rand(3000, 5000), exp_on)
+		else if(prob(EFFECT_PROB_RESEARCH) && !criticalReaction)
+			visible_message("<span class='notice'>[exp_on] melts down at a very high temperature. Results recorded.</span>")
+			grantPoints(rand(300, 500), exp_on)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			var/turf/start = get_turf(src)
 			var/mob/M = locate(/mob/living) in view(src, 3)
@@ -426,14 +443,10 @@
 			C.name = "Cup of Suspicious Liquid"
 			C.desc = "It has a large hazard symbol printed on the side in fading ink."
 			investigate_log("Experimentor has made a cup of [chosenchem] coffee.", INVESTIGATE_EXPERIMENTOR)
-			var/points = rand(2500,3000)
-			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
-			new /obj/item/research_notes(drop_location(src), points, "experimentation")
-			ejectItem(TRUE)
-		else if(prob(EFFECT_PROB_MEDIUM) && prob(EFFECT_PROB_RELICMAKE))
-			visible_message("<span class='notice'>[exp_on]'s atoms align into a new, strange shape!</span>")
-			new /obj/item/relic(drop_location(src))
-			ejectItem(TRUE)
+			grantPoints(rand(3000, 5000), exp_on)
+		else if(prob(EFFECT_PROB_RESEARCH) && !criticalReaction)
+			visible_message("<span class='notice'>[exp_on]'s atoms align into a new crystaline shape! Results recorded.</span>")
+			grantPoints(rand(300, 500), exp_on)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src] malfunctions, shattering [exp_on] and releasing a dangerous cloud of coolant!</span>")
 			var/datum/reagents/R = new/datum/reagents(50)
@@ -472,9 +485,8 @@
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='warning'>[src]'s crushing mechanism slowly and smoothly descends, flattening the [exp_on]!</span>")
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
-			var/points = rand(3500,4000)
-			visible_message("<span class='notice'>[src] spits out some research notes worth [points] points!")
-			new /obj/item/research_notes(drop_location(src), points, "experimentation")
+			grantPoints(rand(3000, 5000), exp_on)
+			playsound(src, 'sound/machines/ping.ogg', 50, 3, -1)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes way too many levels too high, crushing right through space-time!</span>")
 			playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE, -3)
@@ -505,9 +517,7 @@
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		var/obj/item/relic/R = loaded_item
 		if (!R.revealed)
-			var/points = rand(500, 750) // discovery reward
-			new /obj/item/research_notes(drop_location(src), points, "experimentation")
-			visible_message("<span class='notice'>The [src] spits out research notes worth [points] points!</span>")
+			grantPoints(rand(3000, 5000), exp_on)
 		R.reveal()
 		investigate_log("Experimentor has revealed a relic with <span class='danger'>[R.realProc]</span> effect.", INVESTIGATE_EXPERIMENTOR)
 		ejectItem()
