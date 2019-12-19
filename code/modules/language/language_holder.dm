@@ -301,6 +301,48 @@ Key procs
 							/datum/language/machine = list(LANGUAGE_ATOM),
 							/datum/language/draconic = list(LANGUAGE_ATOM))
 
+/datum/language_holder/moth
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/moffic = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/moffic = list(LANGUAGE_ATOM))
+
+/datum/language_holder/skeleton
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/calcic = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/calcic = list(LANGUAGE_ATOM))
+
+/datum/language_holder/ethereal
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/voltaic = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/voltaic = list(LANGUAGE_ATOM))
+
+/datum/language_holder/golem
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/golemic = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/golemic = list(LANGUAGE_ATOM))
+
+/datum/language_holder/fly
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/buzztalk = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/buzztalk = list(LANGUAGE_ATOM))
+
+/datum/language_holder/plant
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/sylvan = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/sylvan = list(LANGUAGE_ATOM))
+
+/datum/language_holder/nightmare
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/shadowspeak = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/shadowspeak = list(LANGUAGE_ATOM))
+
 /datum/language_holder/empty
 	understood_languages = list()
 	spoken_languages = list()
