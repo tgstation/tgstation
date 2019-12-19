@@ -87,7 +87,7 @@
 			return FALSE
 	return TRUE
 
-/datum/component/personal_crafting/proc/get_environment(mob/user, var/list/blacklist = null)
+/datum/component/personal_crafting/proc/get_environment(mob/user, list/blacklist = null)
 	. = list()
 	for(var/obj/item/I in user.held_items)
 		. += I
