@@ -39,6 +39,8 @@
 	random_sensor = FALSE
 	fulp_item = TRUE
 	mutantrace_variation = MUTANTRACE_VARIATION
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/security/mallcop/skirt
 	name = "deputy skirt"
@@ -156,17 +158,17 @@ GLOBAL_LIST_INIT(available_deputy_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MED
 			dep_access = list(ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_MECH_SCIENCE)
 			destination = /area/security/checkpoint/science
 			spawn_point = get_fulp_spawn(destination)
-	
+
 	if(ears)
 		if(H.ears)
 			qdel(H.ears)
-		H.equip_to_slot_or_del(new ears(H),SLOT_EARS)
+		H.equip_to_slot_or_del(new ears(H),ITEM_SLOT_EARS)
 	if(head)
 		if(isplasmaman(H))
 			head = head_p
 		if(H.head)
 			qdel(H.head)
-		H.equip_to_slot_or_del(new head(H),SLOT_HEAD)
+		H.equip_to_slot_or_del(new head(H),ITEM_SLOT_HEAD)
 
 	var/obj/item/card/id/W = H.wear_id
 	W.access |= dep_access

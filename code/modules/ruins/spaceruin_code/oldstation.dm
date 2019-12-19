@@ -6,7 +6,7 @@
 
 /obj/item/paper/fluff/ruins/oldstation/damagereport
 	name = "Damage Report"
-	info = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics, partially destroyed. Engine Core, destroyed.<br><br><b>Charlie Station</b> - Intact. Loss of oxygen to eastern side of main corridor.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via solar array. Reestablish station atmospherics system to restore air."
+	info = "<b>*Damage Report*</b><br><br><b>Alpha Station</b> - Destroyed<br><br><b>Beta Station</b> - Catastrophic Damage. Medical, destroyed. Atmospherics, partially destroyed. Engine Core, destroyed.<br><br><b>Charlie Station</b> - Multiple asteroid impacts, no loss in air pressure.<br><br><b>Delta Station</b> - Intact. <b>WARNING</b>: Unknown force occupying Delta Station. Intent unknown. Species unknown. Numbers unknown.<br><br>Recommendation - Reestablish station powernet via solar array. Reestablish station atmospherics system to restore air."
 
 /obj/item/paper/fluff/ruins/oldstation/protosuit
 	name = "B01-RIG Hardsuit Report"
@@ -46,7 +46,8 @@
 	info = "Artificial Program's report to surviving crewmembers.<br><br>Crew were placed into cryostasis on March 10th, 2445.<br><br>Crew were awoken from cryostasis around June, 2557.<br><br> \
 	<b>SIGNIFICANT EVENTS OF NOTE</b><br>1: The primary radiation detectors were taken offline after 112 years due to power failure, secondary radiation detectors showed no residual \
 	radiation on station. Deduction, primarily detector was malfunctioning and was producing a radiation signal when there was none.<br><br>2: A data burst from a nearby Nanotrasen Space \
-	Station was received, this data burst contained research data that has been uploaded to our RnD labs.<br><br>3: Unknown invasion force has occupied Delta station."
+	Station was received, this data burst contained research data that has been uploaded to our RnD labs.<br><br>3: An unknown force has occupied Delta station. Additionally, a school of common space carp have \
+	taken refuge in the space surrounding all remaining stations, primarily Beta station. "
 
 /obj/item/paper/fluff/ruins/oldstation/generator_manual
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator manual"
@@ -54,5 +55,11 @@
 
 /obj/item/paper/fluff/ruins/oldstation/protosleep
 	name = "Prototype Delivery"
-	info = "<b>*Prototype Sleeper*</b><br><br>We have deliverted the lastest in medical technology to the medical bay."
+	info = "<b>*Prototype Sleeper*</b><br><br>We have delivered the lastest in medical technology to the medical bay: circuitry for a new prototype sleeper. Looks like it didn't come with the parts to actually build it figures. Get engineering on this."
 
+/obj/item/paper/fluff/ruins/oldstation/survivor_note
+	name = "To those who find this"
+	info = "You can barely make out a faded message... <br><br>I come back to the station after a simple mining mission, and nobody is here. Well, they COULD have gone to cryo... I didn't really check. Doesn't matter, I have bigger issues now. There is something out there. \
+	I have no fucking idea what they are, all I know is that they don't like me. On occasion I hear them hissing and clawing on the airlock... good idea I barricaded the way in. Bad news: the transit tube is still broken, the damn engineers never fixed it. \
+	So basically, I'm stuck here until someone comes to rescue us. And I have no food or water. <br>If you're reading this, I'm probably dead. These things have taken over part of Delta station, and I think they somehow came from the AI core... \
+	Whatever you do, DON'T OPEN THE FIRELOCKS unless you have something to kill them. Look in security, maybe there might be some gear left in there. <br><br>So hungry... I don't want to go out like this..."

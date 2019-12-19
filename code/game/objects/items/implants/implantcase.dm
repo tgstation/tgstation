@@ -9,7 +9,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(/datum/material/glass=500)
+	custom_materials = list(/datum/material/glass=500)
 	var/obj/item/implant/imp = null
 	var/imp_type
 

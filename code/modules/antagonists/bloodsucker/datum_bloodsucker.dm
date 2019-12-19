@@ -443,20 +443,21 @@ datum/antagonist/bloodsucker/proc/SpendRank()
 	protege_objective.generate_objective()
 	add_objective(protege_objective)
 
-	if (rand(0,1) == 0)
-		// Heart Thief Objective
-		var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
-		heartthief_objective.owner = owner
-		heartthief_objective.generate_objective()
-		add_objective(heartthief_objective)
+	//if (rand(0,1) == 0)
+	// Heart Thief Objective
+	var/datum/objective/bloodsucker/heartthief/heartthief_objective = new
+	heartthief_objective.owner = owner
+	heartthief_objective.generate_objective()
+	add_objective(heartthief_objective)
 
+	/* REMOVED 12/11/19 - See bloodsucker_objectives.dm
 	else
 		// Solars Objective
 		var/datum/objective/bloodsucker/solars/solars_objective = new
 		solars_objective.owner = owner
 		solars_objective.generate_objective()
 		add_objective(solars_objective)
-
+	*/
 	// Survive Objective
 	var/datum/objective/bloodsucker/survive/survive_objective = new
 	survive_objective.owner = owner

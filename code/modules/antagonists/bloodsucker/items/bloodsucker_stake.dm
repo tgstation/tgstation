@@ -32,7 +32,7 @@
 	righthand_file = 'icons/Fulpicons/fulpitems_hold_right.dmi'
 	//origin_tech = "biotech=1;combat=1"
 	attack_verb = list("staked")
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 
 	hitsound = 'sound/weapons/bladeslice.ogg'

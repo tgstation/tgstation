@@ -43,3 +43,8 @@
 	results = list(/datum/reagent/medicine/CF/styptic = 3)
 
 
+/obj/item/clothing/accessory
+	mob_overlay_icon = 'icons/mob/clothing/accessories.dmi'
+
+/obj/item/clothing/suit/space/hardsuit
+	var/toggle_helmet_sound = 'sound/mecha/mechmove03.ogg'

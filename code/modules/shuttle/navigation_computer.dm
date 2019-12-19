@@ -10,7 +10,7 @@
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
 	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
-	var/list/locked_traits = list(ZTRAIT_RESERVED, ZTRAIT_CENTCOM, ZTRAIT_AWAY, ZTRAIT_REEBE) //traits forbided for custom docking
+	var/list/locked_traits = list(ZTRAIT_RESERVED, ZTRAIT_CENTCOM, ZTRAIT_AWAY) //traits forbided for custom docking
 	var/view_range = 7
 	var/x_offset = 0
 	var/y_offset = 0
@@ -130,7 +130,7 @@
 	if(landing_clear != SHUTTLE_DOCKER_LANDING_CLEAR)
 		switch(landing_clear)
 			if(SHUTTLE_DOCKER_BLOCKED)
-				to_chat(current_user, "<span class='warning'>Invalid transit location</span>")
+				to_chat(current_user, "<span class='warning'>Invalid transit location.</span>")
 			if(SHUTTLE_DOCKER_BLOCKED_BY_HIDDEN_PORT)
 				to_chat(current_user, "<span class='warning'>Unknown object detected in landing zone. Please designate another location.</span>")
 		return
@@ -170,7 +170,7 @@
 
 	if(current_user.client)
 		current_user.client.images += the_eye.placed_images
-		to_chat(current_user, "<span class='notice'>Transit location designated</span>")
+		to_chat(current_user, "<span class='notice'>Transit location designated.</span>")
 	return TRUE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/canDesignateTarget()
@@ -353,7 +353,7 @@
 			L["([L.len]) [nav_beacon.name] locked"] = null
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
-	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in L
+	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in sortList(L)
 	if(QDELETED(src) || QDELETED(target) || !isliving(target))
 		return
 	playsound(src, "terminal_type", 25, FALSE)
@@ -362,7 +362,7 @@
 		if(T)
 			playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 			remote_eye.setLoc(T)
-			to_chat(target, "<span class='notice'>Jumped to [selected]</span>")
+			to_chat(target, "<span class='notice'>Jumped to [selected].</span>")
 			C.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 			C.clear_fullscreen("flash", 3)
 	else

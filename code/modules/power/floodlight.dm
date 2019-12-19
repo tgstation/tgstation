@@ -43,7 +43,7 @@
 	icon_state = "floodlight"
 	density = TRUE
 	max_integrity = 100
-	integrity_failure = 80
+	integrity_failure = 0.8
 	idle_power_usage = 100
 	active_power_usage = 1000
 	var/list/light_setting_list = list(0, 5, 10, 15)
@@ -80,7 +80,7 @@
 		if(4)
 			setting_text = "high power"
 	if(user)
-		to_chat(user, "You set [src] to [setting_text].")
+		to_chat(user, "<span class='notice'>You set [src] to [setting_text].</span>")
 
 /obj/machinery/power/floodlight/attackby(obj/item/O, mob/user, params)
 	if(O.tool_behaviour == TOOL_WRENCH)

@@ -11,9 +11,6 @@
 		if(A.attachable)
 			return TRUE
 
-/atom
-	var/datum/wires/wires = null
-
 /atom/proc/attempt_wire_interaction(mob/user)
 	if(!wires)
 		return WIRE_INTERACTION_FAIL
@@ -38,7 +35,6 @@
 	..()
 	if(!istype(holder, holder_type))
 		CRASH("Wire holder is not of the expected type!")
-		return
 
 	src.holder = holder
 	if(randomize)
@@ -222,7 +218,7 @@
 							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "wires", "[holder.name] wires", 350, 150 + wires.len * 30, master_ui, state)
+		ui = new(user, src, ui_key, "wires", "[holder.name] Wires", 350, 150 + wires.len * 30, master_ui, state)
 		ui.open()
 
 /datum/wires/ui_data(mob/user)

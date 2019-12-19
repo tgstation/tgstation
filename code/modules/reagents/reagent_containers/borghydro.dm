@@ -115,7 +115,7 @@ Borg Hypospray
 		to_chat(user, "<span class='notice'>You inject [M] with the injector.</span>")
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this, transfered_by = user, method = INJECT)
-			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>")
+			to_chat(user, "<span class='notice'>[trans] unit\s injected. [R.total_volume] unit\s remaining.</span>")
 
 	var/list/injected = list()
 	for(var/datum/reagent/RG in R.reagent_list)
@@ -123,7 +123,7 @@ Borg Hypospray
 	log_combat(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
 
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
-	var/chosen_reagent = modes[reagent_names[input(user, "What reagent do you want to dispense?") as null|anything in reagent_names]]
+	var/chosen_reagent = modes[reagent_names[input(user, "What reagent do you want to dispense?") as null|anything in sortList(reagent_names)]]
 	if(!chosen_reagent)
 		return
 	mode = chosen_reagent
@@ -202,7 +202,21 @@ Borg Shaker
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
 
-	reagent_ids = list(/datum/reagent/consumable/ethanol/beer, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/grenadine, /datum/reagent/consumable/limejuice, /datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/space_cola, /datum/reagent/consumable/tonic, /datum/reagent/consumable/sodawater, /datum/reagent/consumable/ice, /datum/reagent/consumable/cream, /datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/vodka, /datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/gin, /datum/reagent/consumable/ethanol/tequila, /datum/reagent/consumable/ethanol/vermouth, /datum/reagent/consumable/ethanol/wine, /datum/reagent/consumable/ethanol/kahlua, /datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/ale, /datum/reagent/consumable/milk, /datum/reagent/consumable/coffee, /datum/reagent/consumable/banana, /datum/reagent/consumable/lemonjuice)
+	reagent_ids = list(/datum/reagent/consumable/applejuice, /datum/reagent/consumable/banana, /datum/reagent/consumable/coffee, 
+	/datum/reagent/consumable/cream, /datum/reagent/consumable/dr_gibb, /datum/reagent/consumable/grenadine, 
+	/datum/reagent/consumable/ice, /datum/reagent/consumable/lemonjuice, /datum/reagent/consumable/lemon_lime, 
+	/datum/reagent/consumable/limejuice, /datum/reagent/consumable/menthol, /datum/reagent/consumable/milk, 
+	/datum/reagent/consumable/nothing, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/peachjuice, 
+	/datum/reagent/consumable/sodawater, /datum/reagent/consumable/space_cola, /datum/reagent/consumable/spacemountainwind, 
+	/datum/reagent/consumable/pwr_game, /datum/reagent/consumable/shamblers, /datum/reagent/consumable/soymilk, 
+	/datum/reagent/consumable/space_up, /datum/reagent/consumable/tea, /datum/reagent/consumable/tomatojuice, 
+	/datum/reagent/consumable/tonic, /datum/reagent/water, 
+	/datum/reagent/consumable/ethanol/ale, /datum/reagent/consumable/ethanol/applejack, /datum/reagent/consumable/ethanol/beer, 
+	/datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_menthe, 
+	/datum/reagent/consumable/ethanol/creme_de_cacao, /datum/reagent/consumable/ethanol/gin, /datum/reagent/consumable/ethanol/kahlua, 
+	/datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/sake, /datum/reagent/consumable/ethanol/tequila, 
+	/datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth, 
+	/datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine)
 
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we? //not with that attitude

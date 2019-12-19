@@ -31,7 +31,10 @@
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/grappa = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
-					/obj/item/reagent_containers/food/drinks/bottle/applejack = 5)
+					/obj/item/reagent_containers/food/drinks/bottle/applejack = 5,
+					/obj/item/reagent_containers/food/drinks/bottle/blank = 15,
+					/obj/item/reagent_containers/food/drinks/bottle/blank/small = 15
+					)
 	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12,
 					 /obj/item/reagent_containers/food/drinks/bottle/fernet = 5)
 	premium = list(/obj/item/reagent_containers/glass/bottle/ethanol = 4,
@@ -42,8 +45,8 @@
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access = list(ACCESS_BAR)
 	refill_canister = /obj/item/vending_refill/boozeomat
-	default_price = 20
-	extra_price = 50
+	default_price = 120
+	extra_price = 200
 	payment_department = ACCOUNT_SRV
 
 /obj/machinery/vending/boozeomat/all_access

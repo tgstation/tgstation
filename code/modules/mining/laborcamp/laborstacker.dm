@@ -10,7 +10,7 @@ GLOBAL_LIST(labor_sheet_values)
 	density = FALSE
 	ui_x = 450
 	ui_y = 475
-	
+
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine = null
 	var/machinedir = SOUTH
 	var/obj/machinery/door/airlock/release_door
@@ -82,18 +82,18 @@ GLOBAL_LIST(labor_sheet_values)
 				stacking_machine.points = 0
 				to_chat(usr, "<span class='notice'>Points transferred.</span>")
 			else
-				to_chat(usr, "<span class='notice'>No valid id for point transfer detected.</span>")
+				to_chat(usr, "<span class='alert'>No valid id for point transfer detected.</span>")
 		if("move_shuttle")
 			if(!alone_in_area(get_area(src), usr))
-				to_chat(usr, "<span class='warning'>Prisoners are only allowed to be released while alone.</span>")
+				to_chat(usr, "<span class='alert'>Prisoners are only allowed to be released while alone.</span>")
 			else
 				switch(SSshuttle.moveShuttle("laborcamp", "laborcamp_home", TRUE))
 					if(1)
-						to_chat(usr, "<span class='notice'>Shuttle not found.</span>")
+						to_chat(usr, "<span class='alert'>Shuttle not found.</span>")
 					if(2)
-						to_chat(usr, "<span class='notice'>Shuttle already at station.</span>")
+						to_chat(usr, "<span class='alert'>Shuttle already at station.</span>")
 					if(3)
-						to_chat(usr, "<span class='notice'>No permission to dock could be granted.</span>")
+						to_chat(usr, "<span class='alert'>No permission to dock could be granted.</span>")
 					else
 						if(!(obj_flags & EMAGGED))
 							Radio.set_frequency(FREQ_SECURITY)

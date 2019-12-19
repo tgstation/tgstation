@@ -134,7 +134,7 @@
 	if(istype(W, /obj/item/hemostat/supermatter))
 		var/obj/item/hemostat/supermatter/tongs = W
 		if (tongs.sliver)
-			to_chat(user, "<span class='notice'>\The [tongs] is already holding a supermatter sliver!</span>")
+			to_chat(user, "<span class='warning'>\The [tongs] is already holding a supermatter sliver!</span>")
 			return FALSE
 		forceMove(tongs)
 		tongs.sliver = src

@@ -27,7 +27,7 @@
 
 /datum/component/archaeology/proc/Dig(datum/source, obj/item/I, mob/living/user)
 	if(dug)
-		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
+		to_chat(user, "<span class='warning'>Looks like someone has dug here already!</span>")
 		return
 
 	if(!isturf(user.loc))

@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/singularity_act()
 	return
 
-/obj/effect/hallucination/simple/Initialize(mapload, var/mob/living/carbon/T)
+/obj/effect/hallucination/simple/Initialize(mapload, mob/living/carbon/T)
 	. = ..()
 	target = T
 	current_image = GetImage()
@@ -411,7 +411,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	..()
 	var/item
 	if(!item_type)
-		item = pick(list("esword","taser","ebow","baton","dual_esword","clockspear","ttv","flash","armblade"))
+		item = pick(list("esword","taser","ebow","baton","dual_esword","ttv","flash","armblade"))
 	else
 		item = item_type
 	feedback_details += "Item: [item]"
@@ -472,12 +472,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					image_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 				target.playsound_local(H, "sparks",75,1,-1)
 				A = image(image_file,H,"baton", layer=ABOVE_MOB_LAYER)
-			if("clockspear")
-				if(side == "right")
-					image_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
-				else
-					image_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
-				A = image(image_file,H,"ratvarian_spear", layer=ABOVE_MOB_LAYER)
 			if("ttv")
 				if(side == "right")
 					image_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
@@ -738,13 +732,13 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if(close_other) //increase the odds
 			for(var/i in 1 to 5)
 				message_pool.Add("<span class='warning'>You feel a tiny prick!</span>")
-		var/obj/item/storage/equipped_backpack = other.get_item_by_slot(SLOT_BACK)
+		var/obj/item/storage/equipped_backpack = other.get_item_by_slot(ITEM_SLOT_BACK)
 		if(istype(equipped_backpack))
 			for(var/i in 1 to 5) //increase the odds
 				message_pool.Add("<span class='notice'>[other] puts the [pick(\
 					"revolver","energy sword","cryptographic sequencer","power sink","energy bow",\
 					"hybrid taser","stun baton","flash","syringe gun","circular saw","tank transfer valve",\
-					"ritual dagger","clockwork slab","spellbook",\
+					"ritual dagger","spellbook",\
 					"pulse rifle","captain's spare ID","hand teleporter","hypospray","antique laser gun","X-01 MultiPhase Energy Gun","station's blueprints"\
 					)] into [equipped_backpack].</span>")
 
@@ -1290,9 +1284,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		qdel(src)
 		return
 	var/turf/start = pick(startlocs)
-	var/proj_type = pick(subtypesof(/obj/item/projectile/hallucination))
+	var/proj_type = pick(subtypesof(/obj/projectile/hallucination))
 	feedback_details += "Type: [proj_type]"
-	var/obj/item/projectile/hallucination/H = new proj_type(start)
+	var/obj/projectile/hallucination/H = new proj_type(start)
 	target.playsound_local(start, H.hal_fire_sound, 60, 1)
 	H.hal_target = target
 	H.preparePixelProjectile(target, start)

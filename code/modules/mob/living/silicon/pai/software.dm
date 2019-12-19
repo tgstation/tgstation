@@ -156,7 +156,7 @@
 				radio.attack_self(src)
 
 			if("image") // Set pAI card display face
-				var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
+				var/newImage = input("Select your new display image.", "Display Image", "Happy") in sortList(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses"))
 				var/pID = 1
 
 				switch(newImage)
@@ -180,6 +180,8 @@
 						pID = 9
 					if("Null")
 						pID = 10
+					if("Sunglasses")
+						pID = 11
 				card.setEmotion(pID)
 
 			if("news")
@@ -211,7 +213,7 @@
 					if(iscarbon(card.loc))
 						CheckDNA(card.loc, src) //you should only be able to check when directly in hand, muh immersions?
 					else
-						to_chat(src, "You are not being carried by anyone!")
+						to_chat(src, "<span class='warning'>You are not being carried by anyone!</span>")
 						return 0 // FALSE ? If you return here you won't call paiinterface() below
 
 			if("pdamessage")
@@ -425,7 +427,7 @@
 		else
 			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		to_chat(P, "[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly.")
+		to_chat(P, "<span class='warning'>[M] does not seem like [M.p_theyre()] going to provide a DNA sample willingly.</span>")
 
 // -=-=-=-= Software =-=-=-=-=- //
 
@@ -639,7 +641,7 @@
 	[(aiPDA.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!aiPDA.toff)
-		for (var/obj/item/pda/P in sortNames(get_viewable_pdas()))
+		for (var/obj/item/pda/P in get_viewable_pdas())
 			if (P == aiPDA)
 				continue
 			dat += "<li><a href='byond://?src=[REF(src)];software=pdamessage;target=[REF(P)]'>[P]</a>"

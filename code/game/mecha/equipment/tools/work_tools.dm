@@ -8,6 +8,8 @@
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
 	energy_drain = 10
+	tool_behaviour = TOOL_RETRACTOR
+	toolspeed = 0.8
 	var/dam_force = 20
 	var/obj/mecha/working/ripley/cargo_holder
 	harmful = TRUE

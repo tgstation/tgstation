@@ -30,7 +30,6 @@
 	icon_state = "laptop"
 	icon_screen = "seclaptop"
 	icon_keyboard = "laptop_key"
-	clockwork = TRUE //it'd look weird
 	pass_flags = PASSTABLE
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
@@ -377,14 +376,14 @@ What a mess.*/
 							else
 								var/diff = p.fine - p.paid
 								GLOB.data_core.payCitation(active2.fields["id"], text2num(href_list["cdataid"]), pay)
-								to_chat(usr, "<span class='notice'>You have paid [pay] credit\s towards your fine</span>")
+								to_chat(usr, "<span class='notice'>You have paid [pay] credit\s towards your fine.</span>")
 								if (pay == diff || pay > diff || pay >= diff)
 									investigate_log("Citation Paid off: <strong>[p.crimeName]</strong> Fine: [p.fine] | Paid off by [key_name(usr)]", INVESTIGATE_RECORDS)
-									to_chat(usr, "<span class='notice'>The fine has been paid in full</span>")
+									to_chat(usr, "<span class='notice'>The fine has been paid in full.</span>")
 								qdel(C)
 								playsound(src, "terminal_type", 25, FALSE)
 						else
-							to_chat(usr, "<span class='warning'>Fines can only be paid with holochips</span>")
+							to_chat(usr, "<span class='warning'>Fines can only be paid with holochips!</span>")
 
 			if("Print Record")
 				if(!( printing ))
@@ -642,7 +641,7 @@ What a mess.*/
 					if("age")
 						if(istype(active1, /datum/data/record))
 							var/t1 = input("Please input age:", "Secure. records", active1.fields["age"], null) as num|null
-							
+
 							if (!t1)
 								return
 
@@ -733,7 +732,7 @@ What a mess.*/
 						if(istype(active1, /datum/data/record))
 							var/t1 = stripped_input(usr, "Please input citation crime:", "Secure. records", "", null)
 							var/fine = FLOOR(input(usr, "Please input citation fine:", "Secure. records", 50) as num|null, 1)
-							
+
 							if (isnull(fine))
 								return
 
@@ -745,7 +744,7 @@ What a mess.*/
 
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-								
+
 							var/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
 							for (var/obj/item/pda/P in GLOB.PDAs)
 								if(P.owner == active1.fields["name"])
@@ -910,7 +909,7 @@ What a mess.*/
 /obj/machinery/computer/secure_data/proc/canUseSecurityRecordsConsole(mob/user, message1 = 0, record1, record2)
 	if(user)
 		if(authenticated)
-			if(user.canUseTopic(src, BE_CLOSE))
+			if(user.canUseTopic(src, !issilicon(user)))
 				if(!trim(message1))
 					return 0
 				if(!record1 || record1 == active1)

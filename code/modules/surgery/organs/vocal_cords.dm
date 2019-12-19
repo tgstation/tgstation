@@ -131,8 +131,6 @@
 	if(!span_list || !span_list.len)
 		if(iscultist(user))
 			span_list = list("narsiesmall")
-		else if (is_servant_of_ratvar(user))
-			span_list = list("ratvar")
 		else
 			span_list = list()
 
@@ -169,8 +167,6 @@
 
 	//Cultists are closer to their gods and are more powerful, but they'll give themselves away
 	if(iscultist(user))
-		power_multiplier *= 2
-	else if (is_servant_of_ratvar(user))
 		power_multiplier *= 2
 
 	//Try to check if the speaker specified a name or a job to focus on

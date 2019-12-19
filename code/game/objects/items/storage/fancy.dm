@@ -135,6 +135,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
+	var/candy = FALSE //for cigarette overlay
+	custom_price = 75
 
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
@@ -174,6 +176,8 @@
 					inserted_overlay.icon_state = "lighter_in"
 				else if(istype(C, /obj/item/lighter))
 					inserted_overlay.icon_state = "zippo_in"
+				else if(candy)
+					inserted_overlay.icon_state = "candy"
 				else
 					inserted_overlay.icon_state = "cigarette"
 
@@ -191,7 +195,7 @@
 		if(M == user && contents.len > 0 && !user.wear_mask)
 			var/obj/item/clothing/mask/cigarette/W = cig
 			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE, W, M)
-			M.equip_to_slot_if_possible(W, SLOT_WEAR_MASK)
+			M.equip_to_slot_if_possible(W, ITEM_SLOT_MASK)
 			contents -= W
 			to_chat(user, "<span class='notice'>You take \a [W] out of the pack.</span>")
 		else
@@ -241,6 +245,19 @@
 	icon_state = "midori"
 	spawn_type = /obj/item/clothing/mask/cigarette/rollie/nicotine
 
+/obj/item/storage/fancy/cigarettes/cigpack_candy
+	name = "\improper Timmy's First Candy Smokes packet"
+	desc = "Unsure about smoking? Want to bring your children safely into the family tradition? Look no more with this special packet! Includes 100%* Nicotine-Free candy cigarettes."
+	icon_state = "candy"
+	icon_type = "candy cigarette"
+	spawn_type = /obj/item/clothing/mask/cigarette/candy
+	candy = TRUE
+
+/obj/item/storage/fancy/cigarettes/cigpack_candy/Initialize()
+	. = ..()
+	if(prob(7))
+		spawn_type = /obj/item/clothing/mask/cigarette/candy/nicotine //uh oh!
+
 /obj/item/storage/fancy/cigarettes/cigpack_shadyjims
 	name = "\improper Shady Jim's Super Slims packet"
 	desc = "Is your weight slowing you down? Having trouble running away from gravitational singularities? Can't stop stuffing your mouth? Smoke Shady Jim's Super Slims and watch all that fat burn away. Guaranteed results!"
@@ -273,6 +290,7 @@
 	icon_state = "cig_paper_pack"
 	icon_type = "rolling paper"
 	spawn_type = /obj/item/rollingpaper
+	custom_price = 25
 
 /obj/item/storage/fancy/rollingpapers/ComponentInitialize()
 	. = ..()
@@ -350,3 +368,18 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 8
 	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/tinychocolate))
+
+
+/obj/item/storage/fancy/nugget_box
+	name = "nugget box"
+	desc = "A cardboard box used for holding chicken nuggies."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "nuggetbox"
+	icon_type = "nugget"
+	spawn_type = /obj/item/reagent_containers/food/snacks/nugget
+
+/obj/item/storage/fancy/nugget_box/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/nugget))

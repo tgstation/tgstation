@@ -2,8 +2,8 @@
 	icon_state = "refill_clothes"
 
 /obj/machinery/vending/wardrobe
-	default_price = 50
-	extra_price = 75
+	default_price = 350
+	extra_price = 450
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
 
@@ -274,6 +274,8 @@
 					/obj/item/clothing/under/rank/civilian/chef = 1,
 					/obj/item/clothing/under/rank/civilian/chef/skirt = 2,
 					/obj/item/clothing/head/chefhat = 1,
+					/obj/item/clothing/under/rank/civilian/cookjorts = 2,
+					/obj/item/clothing/shoes/cookflops = 2,
 					/obj/item/reagent_containers/glass/rag = 1,
 					/obj/item/clothing/shoes/sneakers/brown/digitigrade = 1,
 					/obj/item/clothing/suit/hooded/wintercoat = 2)
@@ -297,7 +299,7 @@
 					/obj/item/melee/flyswatter = 2,
 					/obj/item/flashlight = 2,
 					/obj/item/clothing/suit/caution = 6,
-					/obj/item/holosign_creator/janibarrier = 2,
+					/obj/item/holosign_creator = 2,
 					/obj/item/lightreplacer = 2,
 					/obj/item/soap/nanotrasen = 2,
 					/obj/item/storage/bag/trash = 2,

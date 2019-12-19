@@ -43,7 +43,8 @@
 		if(singubeacon.active)
 			target = singubeacon
 			break
-	return
+	AddElement(/datum/element/bsa_blocker)
+	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/bluespace_reaction)
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -112,7 +113,7 @@
 	return
 
 
-/obj/singularity/bullet_act(obj/item/projectile/P)
+/obj/singularity/bullet_act(obj/projectile/P)
 	qdel(P)
 	return BULLET_ACT_HIT //Will there be an impact? Who knows.  Will we see it? No.
 
@@ -446,3 +447,18 @@
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)
+
+/obj/singularity/proc/bluespace_reaction()
+	investigate_log("has been shot by bluespace artillery and destroyed.", INVESTIGATE_SINGULO)
+	qdel(src)
+
+/obj/singularity/deadchat_controlled
+	move_self = FALSE
+
+/obj/singularity/deadchat_controlled/Initialize(mapload, starting_energy)
+	. = ..()
+	AddComponent(/datum/component/deadchat_control, DEMOCRACY_MODE, list(
+	 "up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
+	 "down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
+	 "left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
+	 "right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST)))

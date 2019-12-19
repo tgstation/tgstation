@@ -12,10 +12,10 @@
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
 	resistance_flags = FIRE_PROOF
-
+	damage_deflection = 12
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 50)
 	max_integrity = 100
-	integrity_failure = 50
+	integrity_failure = 0.5
 	var/default_camera_icon = "camera" //the camera's base icon used by update_icon - icon_state is primarily used for mapping display purposes.
 	var/list/network = list("ss13")
 	var/c_tag = null
@@ -129,7 +129,7 @@
 	if(panel_open)
 		. += "<span class='info'>Its maintenance panel is currently open.</span>"
 		if(!status && powered())
-			. += "<span class='info'>It can reactivated with a <b>screwdriver</b>.</span>"
+			. += "<span class='info'>It can reactivated with <b>wirecutters</b>.</span>"
 
 /obj/machinery/camera/emp_act(severity)
 	. = ..()
@@ -150,7 +150,7 @@
 				if (M.client.eye == src)
 					M.unset_machine()
 					M.reset_perspective(null)
-					to_chat(M, "The screen bursts into static.")
+					to_chat(M, "<span class='warning'>The screen bursts into static!</span>")
 
 /obj/machinery/camera/proc/post_emp_reset(thisemp, previous_network)
 	if(QDELETED(src))
@@ -195,12 +195,42 @@
 	update_icon()
 	return TRUE
 
+/obj/machinery/camera/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(!panel_open)
+		return
+	var/list/droppable_parts = list()
+	if(assembly.xray_module)
+		droppable_parts += assembly.xray_module
+	if(assembly.emp_module)
+		droppable_parts += assembly.emp_module
+	if(assembly.proxy_module)
+		droppable_parts += assembly.proxy_module
+	if(!droppable_parts.len)
+		return
+	var/obj/item/choice = input(user, "Select a part to remove:", src) as null|obj in sortNames(droppable_parts)
+	if(!choice || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	to_chat(user, "<span class='notice'>You remove [choice] from [src].</span>")
+	if(choice == assembly.xray_module)
+		assembly.drop_upgrade(assembly.xray_module)
+		removeXRay()
+	if(choice == assembly.emp_module)
+		assembly.drop_upgrade(assembly.emp_module)
+		removeEmpProof()
+	if(choice == assembly.proxy_module)
+		assembly.drop_upgrade(assembly.proxy_module)
+		removeMotion()
+	I.play_tool_sound(src)
+	return TRUE
+
 /obj/machinery/camera/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(!panel_open)
 		return
 	toggle_cam(user, 1)
 	obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
+	stat &= ~BROKEN
 	I.play_tool_sound(src)
 	return TRUE
 
@@ -240,7 +270,7 @@
 				to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
 				qdel(I)
 			else
-				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
+				to_chat(user, "<span class='warning'>[src] already has that upgrade!</span>")
 			return
 
 		else if(istype(I, /obj/item/stack/sheet/mineral/plasma))
@@ -249,7 +279,7 @@
 					upgradeEmpProof(FALSE, TRUE)
 					to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
 			else
-				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
+				to_chat(user, "<span class='warning'>[src] already has that upgrade!</span>")
 			return
 
 		else if(istype(I, /obj/item/assembly/prox_sensor))
@@ -260,7 +290,7 @@
 				to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
 				qdel(I)
 			else
-				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
+				to_chat(user, "<span class='warning'>[src] already has that upgrade!</span>")
 			return
 
 	// OTHER
@@ -287,12 +317,12 @@
 				if(AI.control_disabled || (AI.stat == DEAD))
 					return
 				if(U.name == "Unknown")
-					to_chat(AI, "<b>[U]</b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
+					to_chat(AI, "<span class='name'>[U]</span> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				else
 					to_chat(AI, "<b><a href='?src=[REF(AI)];track=[html_encode(U.name)]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
 			else if (O.client.eye == src)
-				to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
+				to_chat(O, "<span class='name'>[U]</span> holds \a [itemname] up to one of the cameras ...")
 				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		return
 
@@ -317,9 +347,10 @@
 
 	return ..()
 
+
 /obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 12 && !(stat & BROKEN))
-		return 0
+	if(stat & BROKEN)
+		return damage_amount
 	. = ..()
 
 /obj/machinery/camera/obj_break(damage_flag)
@@ -345,7 +376,7 @@
 			new /obj/item/stack/cable_coil(loc, 2)
 	qdel(src)
 
-/obj/machinery/camera/update_icon() //TO-DO: Make panel open states, xray camera, and indicator lights overlays instead.
+/obj/machinery/camera/update_icon_state() //TO-DO: Make panel open states, xray camera, and indicator lights overlays instead.
 	var/xray_module
 	if(isXRay(TRUE))
 		xray_module = "xray"
@@ -393,7 +424,7 @@
 		if (O.client.eye == src)
 			O.unset_machine()
 			O.reset_perspective(null)
-			to_chat(O, "The screen bursts into static.")
+			to_chat(O, "<span class='warning'>The screen bursts into static!</span>")
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = TRUE
@@ -420,32 +451,6 @@
 	else
 		see = get_hear(view_range, pos)
 	return see
-
-/atom/proc/auto_turn()
-	//Automatically turns based on nearby walls.
-	var/turf/closed/wall/T = null
-	for(var/i in GLOB.cardinals)
-		T = get_ranged_target_turf(src, i, 1)
-		if(istype(T))
-			setDir(turn(i, 180))
-			break
-
-//Return a working camera that can see a given mob
-//or null if none
-/proc/seen_by_camera(var/mob/M)
-	for(var/obj/machinery/camera/C in oview(4, M))
-		if(C.can_use())	// check if camera disabled
-			return C
-			break
-	return null
-
-/proc/near_range_camera(var/mob/M)
-	for(var/obj/machinery/camera/C in range(4, M))
-		if(C.can_use())	// check if camera disabled
-			return C
-			break
-
-	return null
 
 /obj/machinery/camera/proc/Togglelight(on=0)
 	for(var/mob/living/silicon/ai/A in GLOB.ai_list)

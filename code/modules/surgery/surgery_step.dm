@@ -9,6 +9,7 @@
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
 	var/silicons_obey_prob = FALSE
+	var/experience_given = 1
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
@@ -56,10 +57,12 @@
 
 	return FALSE
 
+#define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
 
 /datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	surgery.step_in_progress = TRUE
 	var/speed_mod = 1
+	var/fail_prob = 0//100 - fail_prob = success_prob
 	var/advance = FALSE
 
 	if(preop(user, target, target_zone, tool, surgery) == -1)
@@ -69,19 +72,31 @@
 	if(tool)
 		speed_mod = tool.toolspeed
 
-	if(do_after(user, time * speed_mod, target = target))
-		var/prob_chance = 100
+	var/implement_speed_mod = 1
+	if(implement_type)	//this means it isn't a require hand or any item step.
+		implement_speed_mod = implements[implement_type] / 100.0
 
-		if(implement_type)	//this means it isn't a require hand or any item step.
-			prob_chance = implements[implement_type]
-		prob_chance *= surgery.get_propability_multiplier()
+	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod)
+	var/modded_time = time * speed_mod * user.mind.get_skill_speed_modifier(/datum/skill/medical)
+
+
+	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
+	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
+
+	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
+		modded_time = time
+
+	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
+
+	if(do_after(user, modded_time, target = target))
 
 		var/chem_check_result = chem_check(target)
-		if((prob(prob_chance) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
+		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
+
 			if(success(user, target, target_zone, tool, surgery))
 				advance = TRUE
 		else
-			if(failure(user, target, target_zone, tool, surgery))
+			if(failure(user, target, target_zone, tool, surgery, fail_prob))
 				advance = TRUE
 			if(chem_check_result)
 				if(.(user, target, target_zone, tool, surgery, try_to_fail)) //automatically re-attempt if failed for reason other than lack of required chemical
@@ -91,6 +106,9 @@
 			if(surgery.status > surgery.steps.len)
 				surgery.complete()
 
+	if(target.stat == DEAD && was_sleeping && user.client)
+		user.client.give_award(/datum/award/achievement/misc/sandman, user)
+
 	surgery.step_in_progress = FALSE
 	return advance
 
@@ -99,14 +117,25 @@
 		"<span class='notice'>[user] begins to perform surgery on [target].</span>",
 		"<span class='notice'>[user] begins to perform surgery on [target].</span>")
 
-/datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You succeed.</span>",
-		"<span class='notice'>[user] succeeds!</span>",
-		"<span class='notice'>[user] finishes.</span>")
+/datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = TRUE)
+	if(default_display_results)
+		display_results(user, target, "<span class='notice'>You succeed.</span>",
+				"<span class='notice'>[user] succeeds!</span>",
+				"<span class='notice'>[user] finishes.</span>")
+	user?.mind.adjust_experience(/datum/skill/medical, experience_given)
 	return TRUE
 
-/datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='warning'>You screw up!</span>",
+/datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)
+	var/screwedmessage = ""
+	switch(fail_prob)
+		if(0 to 24)
+			screwedmessage = " You almost had it, though."
+		if(50 to 74)//25 to 49 = no extra text
+			screwedmessage = " This is hard to get right in these conditions..."
+		if(75 to 99)
+			screwedmessage = " This is practically impossible in these conditions..."
+
+	display_results(user, target, "<span class='warning'>You screw up![screwedmessage]</span>",
 		"<span class='warning'>[user] screws up!</span>",
 		"<span class='notice'>[user] finishes.</span>", TRUE) //By default the patient will notice if the wrong thing has been cut
 	return FALSE

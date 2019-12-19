@@ -1,5 +1,4 @@
 #define GOOSE_SATIATED 50
-
 /mob/living/simple_animal/hostile/retaliate/goose
 	name = "goose"
 	desc = "It's loose"
@@ -9,10 +8,13 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat = 2)
-	response_help = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm = "kicks"
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	emote_taunt = list("hisses")
 	taunt_chance = 30
 	speed = 0
@@ -21,7 +23,8 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "pecks"
+	attack_verb_continuous = "pecks"
+	attack_verb_simple = "peck"
 	attack_sound = "goose"
 	speak_emote = list("honks")
 	faction = list("neutral")
@@ -31,20 +34,61 @@
 	var/icon_vomit_start = "vomit_start"
 	var/icon_vomit = "vomit"
 	var/icon_vomit_end = "vomit_end"
+	var/message_cooldown = 0
+	var/list/nummies = list()
+	var/choking = FALSE
 
-/mob/living/simple_animal/hostile/retaliate/goose/handle_automated_movement()
+/mob/living/simple_animal/hostile/retaliate/goose/Initialize()
 	. = ..()
-	if(prob(5) && random_retaliate == TRUE)
-		Retaliate()
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/goosement)
+
+/mob/living/simple_animal/hostile/retaliate/goose/proc/goosement(atom/movable/AM, OldLoc, Dir, Forced)
+	if(stat == DEAD)
+		return
+	nummies.Cut()
+	nummies += loc.contents
+	if(prob(5) && random_retaliate)
+		Retaliate()		
+
+/mob/living/simple_animal/hostile/retaliate/goose/handle_automated_action()
+	if(length(nummies))
+		var/obj/item/E = locate() in nummies
+		if(E && E.loc == loc)
+			feed(E)
+		nummies -= E
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/handle_automated_action()
+	if(length(nummies))
+		var/obj/item/E = pick(nummies)
+		if(!(E.custom_materials && E.custom_materials[getmaterialref(/datum/material/plastic)]))
+			nummies -= E // remove non-plastic item from queue
+			E = locate(/obj/item/reagent_containers/food) in nummies // find food
+		if(E && E.loc == loc)
+			feed(E)
+		nummies -= E
+
+/mob/living/simple_animal/hostile/retaliate/goose/proc/feed(obj/item/suffocator)
+	if(stat == DEAD || choking) // plapatin I swear to god
+		return FALSE
+	if(suffocator.custom_materials && suffocator.custom_materials[getmaterialref(/datum/material/plastic)]) // dumb goose'll swallow food or drink with plastic in it
+		visible_message("<span class='danger'>[src] hungrily gobbles up \the [suffocator]! </span>")
+		visible_message("<span class='boldwarning'>[src] is choking on \the [suffocator]! </span>")
+		suffocator.forceMove(src)
+		choke(suffocator)
+		choking = TRUE
+		return TRUE
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit
 	name = "Birdboat"
 	real_name = "Birdboat"
 	desc = "It's a sick-looking goose, probably ate too much maintenance trash. Best not to move it around too much."
 	gender = MALE
-	response_help  = "pets"
-	response_disarm = "gently pushes aside"
-	response_harm   = "kicks"
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "gently pushes aside"
+	response_disarm_simple = "gently push aside"
+	response_harm_continuous = "kicks"
+	response_harm_simple = "kick"
 	gold_core_spawnable = NO_SPAWN
 	random_retaliate = FALSE
 	var/vomiting = FALSE
@@ -56,7 +100,10 @@
 	. = ..()
 	goosevomit = new
 	goosevomit.Grant(src)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/goosement)
+	// 5% chance every round to have anarchy mode deadchat control on birdboat.
+	if(prob(5))
+		desc = "[initial(desc)] It's waddling more than usual. It seems to be possessed."
+		deadchat_plays_goose()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Destroy()
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
@@ -67,34 +114,76 @@
 	. = ..()
 	. += "<span class='notice'>Somehow, it still looks hungry.</span>"
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/attacked_by(obj/item/O, mob/user)
+/mob/living/simple_animal/hostile/retaliate/goose/attackby(obj/item/O, mob/user)
 	. = ..()
-	if(istype(O, /obj/item/reagent_containers/food))
-		feed(O)
+	if(feed(O))
+		return TRUE
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/feed(obj/item/reagent_containers/food/tasty)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/feed(obj/item/reagent_containers/food/tasty)
+	. = ..()
+	if(. || !istype(tasty))
+		return FALSE
 	if (contents.len > GOOSE_SATIATED)
-		visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
-		return
+		if(message_cooldown < world.time)
+			visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
+			message_cooldown = world.time + 5 SECONDS
+		return FALSE
 	if (tasty.foodtype & GROSS)
 		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, TRUE)
 		vomitCoefficient += 3
 		vomitTimeBonus += 2
+		return TRUE
 	else
-		visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
+		if(message_cooldown < world.time)
+			visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
+			message_cooldown = world.time + 5 SECONDS
+			return FALSE
+
+/mob/living/simple_animal/hostile/retaliate/goose/proc/choke(obj/item/reagent_containers/food/plastic)
+	if(stat == DEAD || choking)
+		return
+	addtimer(CALLBACK(src, .proc/suffocate), 300)
+
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/choke(obj/item/reagent_containers/food/plastic)
+	if(stat == DEAD || choking)
+		return
+	if(prob(25))
+		visible_message("<span class='warning'>[src] is gagging on \the [plastic]!</span>")
+		emote("me", 1, "gags!")
+		addtimer(CALLBACK(src, .proc/vomit), 300)
+	else
+		addtimer(CALLBACK(src, .proc/suffocate), 300)
+
+/mob/living/simple_animal/hostile/retaliate/goose/Life()
+	. = ..()
+	if(choking && !stat)
+		do_jitter_animation(50)
+		if(prob(20))
+			emote("gasp")
+
+/mob/living/simple_animal/hostile/retaliate/goose/proc/suffocate()
+	if(!choking)
+		return
+	deathmessage = "lets out one final oxygen-deprived honk before they go limp and lifeless.."
+	death()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit()
+	if (stat == DEAD)
+		return
 	var/turf/T = get_turf(src)
 	var/obj/item/reagent_containers/food/consumed = locate() in contents //Barf out a single food item from our guts
+	choking = FALSE // assume birdboat is vomiting out whatever he was choking on
 	if (prob(50) && consumed)
 		barf_food(consumed)
 	else
 		playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 		T.add_vomit_floor(src)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(var/atom/A, var/hard = FALSE)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/barf_food(atom/A, hard = FALSE)
+	if (stat == DEAD)
+		return
 	if(!istype(A, /obj/item/reagent_containers/food))
 		return
 	var/turf/currentTurf = get_turf(src)
@@ -133,20 +222,25 @@
 	vomiting = FALSE
 	icon_state = initial(icon_state)
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/goosement(atom/movable/AM, OldLoc, Dir, Forced)
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/goosement(atom/movable/AM, OldLoc, Dir, Forced)
+	. = ..()
 	if(vomiting)
 		vomit() // its supposed to keep vomiting if you move
 		return
-	var/turf/currentTurf = get_turf(src)
-	while (currentTurf == get_turf(src))
-		var/obj/item/reagent_containers/food/tasty = locate() in currentTurf
-		if (tasty)
-			feed(tasty)
-		stoplag(2)
 	if(prob(vomitCoefficient * 0.2))
 		vomit_prestart(vomitTimeBonus + 25)
 		vomitCoefficient = 1
 		vomitTimeBonus = 0
+
+/// A proc to make it easier for admins to make the goose playable by deadchat.
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/deadchat_plays_goose()
+	stop_automated_movement = TRUE
+	AddComponent(/datum/component/deadchat_control, ANARCHY_MODE, list(
+	 "up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
+	 "down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
+	 "left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
+	 "right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST),
+	 "vomit" = CALLBACK(src, .proc/vomit_prestart, 25)), 12 SECONDS, 4 SECONDS)
 
 /datum/action/cooldown/vomit
 	name = "Vomit"

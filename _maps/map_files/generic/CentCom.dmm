@@ -8165,7 +8165,7 @@
 "sa" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
-/obj/item/wirecutters/power,
+/obj/item/crowbar/power,
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
 "sb" = (

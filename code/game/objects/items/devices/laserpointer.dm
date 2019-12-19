@@ -8,7 +8,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(/datum/material/iron=500, /datum/material/glass=500)
+	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	w_class = WEIGHT_CLASS_SMALL
 	var/turf/pointer_loc
 	var/energy = 10
@@ -46,7 +46,7 @@
 			diode = W
 			to_chat(user, "<span class='notice'>You install a [diode.name] in [src].</span>")
 		else
-			to_chat(user, "<span class='notice'>[src] already has a diode installed.</span>")
+			to_chat(user, "<span class='warning'>[src] already has a diode installed!</span>")
 
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(diode)
@@ -94,7 +94,6 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-			log_combat(user, C, "shone in the eyes", src)
 
 			var/severity = 1
 			if(prob(33))
@@ -105,8 +104,10 @@
 			//chance to actually hit the eyes depends on internal component
 			if(prob(effectchance * diode.rating) && C.flash_act(severity))
 				outmsg = "<span class='notice'>You blind [C] by shining [src] in [C.p_their()] eyes.</span>"
+				log_combat(user, C, "blinded with a laser pointer",src)
 			else
 				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at [C.p_their()] eyes!</span>"
+				log_combat(user, C, "attempted to blind with a laser pointer",src)
 
 	//robots
 	else if(iscyborg(target))
@@ -133,7 +134,7 @@
 
 	//catpeople
 	for(var/mob/living/carbon/human/H in view(1,targloc))
-		if(!iscatperson(H) || H.incapacitated() || H.eye_blind )
+		if(!isfelinid(H) || H.incapacitated() || H.eye_blind )
 			continue
 		if(user.mobility_flags & MOBILITY_STAND)
 			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
