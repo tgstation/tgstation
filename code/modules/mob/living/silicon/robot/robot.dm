@@ -1175,7 +1175,7 @@
 
 /mob/living/silicon/robot/resist()
 	. = ..()
-	if(!length(buckled_mobs))
+	if(!has_buckled_mobs())
 		return
 	for(var/i in buckled_mobs)
 		var/mob/unbuckle_me_now = i
