@@ -1,0 +1,6 @@
+author: "OnlineGirlfriend"
+delete-after: True
+changes: 
+  - bugfix: "hot coco glass name and description"
+  - bugfix: "hot coco, tea, and coffee are now drink recipes (not food)"
+  - tweak: "hot coco now has 20% chance of healing brute damage"
