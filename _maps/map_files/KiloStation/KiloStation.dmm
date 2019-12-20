@@ -45274,13 +45274,9 @@
 	pixel_x = -8;
 	pixel_y = 12
 	},
+/obj/effect/spawner/lootdrop/donkpockets,
 /obj/item/storage/box/donkpockets{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 6;
-	pixel_y = 6
+	
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/kitchen)
