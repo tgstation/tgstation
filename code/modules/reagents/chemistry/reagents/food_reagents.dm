@@ -337,20 +337,6 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "bitterness"
 
-/datum/reagent/consumable/hot_coco
-	name = "Hot Chocolate"
-	description = "Made with love! And coco beans."
-	nutriment_factor = 3 * REAGENTS_METABOLISM
-	color = "#403010" // rgb: 64, 48, 16
-	taste_description = "creamy chocolate"
-	glass_icon_state  = "chocolateglass"
-	glass_name = "glass of chocolate"
-	glass_desc = "Tasty."
-
-/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
-	..()
-
 /datum/reagent/drug/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
 	description = "A strong hallucinogenic drug derived from certain species of mushroom."
