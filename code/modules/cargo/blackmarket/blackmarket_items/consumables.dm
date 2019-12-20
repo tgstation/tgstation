@@ -7,8 +7,8 @@
 	item = /obj/item/reagent_containers/food/snacks/soup/clownstears
 	stock = 1
 
-	price_min = 500
-	price_max = 590
+	price_min = 520
+	price_max = 600
 	availability_prob = 10
 
 /datum/blackmarket_item/consumable/donk_pocket_box
@@ -18,8 +18,8 @@
 
 	stock_min = 2
 	stock_max = 5
-	price_min = 200
-	price_max = 300
+	price_min = 325
+	price_max = 400
 	availability_prob = 80
 
 /datum/blackmarket_item/consumable/suspicious_pills
@@ -29,8 +29,8 @@
 
 	stock_min = 2
 	stock_max = 3
-	price_min = 500
-	price_max = 1000
+	price_min = 400
+	price_max = 700
 	availability_prob = 50
 
 /datum/blackmarket_item/consumable/suspicious_pills/spawn_item(loc)

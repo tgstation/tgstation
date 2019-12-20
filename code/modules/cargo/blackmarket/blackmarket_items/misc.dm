@@ -26,8 +26,8 @@
 	desc = "Father Lootius' own brand of ready-made holy water."
 	item = /obj/item/reagent_containers/food/drinks/bottle/holywater
 
-	price_min = 500
-	price_max = 2000
+	price_min = 400
+	price_max = 600
 	stock_max = 3
 	availability_prob = 40
 
@@ -52,7 +52,7 @@
 	desc = "This easily hidden satchel can become a versatile tool to anybody with the desire to keep certain items out of sight and out of mind."
 	item = /obj/item/storage/backpack/satchel/flat/empty
 
-	price_min = 1000
-	price_max = 1500
+	price_min = 750
+	price_max = 1000
 	stock_max = 2
 	availability_prob = 30
