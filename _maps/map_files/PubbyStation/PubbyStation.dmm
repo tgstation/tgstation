@@ -150,9 +150,6 @@
 	name = "Nanite Lab";
 	req_access_txt = "55"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /turf/open/floor/engine,
 /area/science/explab)
 "aat" = (
@@ -17995,7 +17992,7 @@
 "aUU" = (
 /obj/machinery/power/apc{
 	name = "Hydroponics APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -26081,6 +26078,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/relic,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
 "bpn" = (
@@ -57769,9 +57767,6 @@
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering";
 	req_one_access_txt = "10;24"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/lobby)

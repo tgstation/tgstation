@@ -744,6 +744,28 @@
 	quality = DRINK_NICE
 	taste_description = "chocolate milk"
 
+/datum/reagent/consumable/hot_coco
+	name = "Hot Coco"
+	description = "Made with love! And coco beans."
+	nutriment_factor = 3 * REAGENTS_METABOLISM
+	color = "#403010" // rgb: 64, 48, 16
+	taste_description = "creamy chocolate"
+	glass_icon_state  = "chocolateglass"
+	glass_name = "glass of hot coco"
+	glass_desc = "A favorite winter drink to warm you up."
+
+/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
+
+/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
+	if(M.getBruteLoss() && prob(20))
+		M.heal_bodypart_damage(1,0, 0)
+		. = 1
+	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
+		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
+	..()
+
 /datum/reagent/consumable/menthol
 	name = "Menthol"
 	description = "Alleviates coughing symptoms one might have."

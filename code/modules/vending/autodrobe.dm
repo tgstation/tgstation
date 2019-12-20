@@ -139,8 +139,8 @@
 				   /obj/item/skub = 1,
 				   /obj/item/clothing/suit/hooded/mysticrobe = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
-	default_price = 50
-	extra_price = 75
+	default_price = 180
+	extra_price = 360
 	payment_department = ACCOUNT_SRV
 
 /obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)

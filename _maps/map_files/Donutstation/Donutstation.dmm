@@ -1503,6 +1503,7 @@
 "adJ" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/experimentor,
+/obj/item/relic,
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
 	},
@@ -3345,10 +3346,13 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "ahY" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/effect/landmark/start/paramedic,
-/turf/open/floor/plasteel/white,
-/area/medical/storage)
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
 "aib" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -5249,17 +5253,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"aol" = (
-/obj/structure/table,
-/obj/item/storage/box/donkpockets,
-/obj/item/storage/box/donkpockets{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/crew_quarters/kitchen)
 "aom" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
@@ -12347,6 +12340,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"aHC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/turf/open/floor/plasteel/white,
+/area/medical/storage)
 "aHD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/purple/hidden/layer1{
@@ -15546,7 +15543,6 @@
 	dir = 10
 	},
 /obj/structure/cable,
-/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel,
 /area/medical/cryo)
 "aRa" = (
@@ -36365,6 +36361,7 @@
 /obj/item/circuitboard/computer/arcade/battle,
 /obj/item/circuitboard/machine/microwave,
 /obj/item/book/manual/wiki/research_and_development,
+/obj/item/relic,
 /turf/open/floor/plating,
 /area/science/research)
 "bRC" = (
@@ -76524,7 +76521,7 @@ bkM
 aEw
 apU
 aEV
-ahY
+aHC
 aIy
 aFm
 aGl
@@ -83748,7 +83745,7 @@ amG
 bbL
 anL
 anL
-aol
+ahY
 apt
 aqb
 bcL
