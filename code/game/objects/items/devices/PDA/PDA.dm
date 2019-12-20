@@ -94,10 +94,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 
 	if(id)
-		. += "<span class='notice'>Alt-click to remove the id.</span>"
+		. += "<span class='notice'>Alt-click to remove the ID.</span>"
 
 	if(inserted_item && (!isturf(loc)))
 		. += "<span class='notice'>Ctrl-click to remove [inserted_item].</span>"
+
+	if((!isnull(cartridge)))
+		. += "<span class='notice'>Ctrl+Shift-click to remove the cartridge.</span>"
 
 /obj/item/pda/Initialize()
 	. = ..()
@@ -448,13 +451,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					owner = id.registered_name
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
-				if (!isnull(cartridge))
-					U.put_in_hands(cartridge)
-					to_chat(U, "<span class='notice'>You remove [cartridge] from [src].</span>")
-					scanmode = PDA_SCANNER_NONE
-					cartridge.host_pda = null
-					cartridge = null
-					update_icon()
+				eject_cart()
 
 //MENU FUNCTIONS===================================
 
@@ -760,6 +757,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	remove_pen()
 
+/obj/item/pda/CtrlShiftClick()
+	..()
+	eject_cart()
+
 /obj/item/pda/verb/verb_toggle_light()
 	set category = "Object"
 	set name = "Toggle Flashlight"
@@ -782,6 +783,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 	set src in usr
 
 	remove_pen()
+
+/obj/item/pda/verb/verb_eject_cart()
+	set category = "Object"
+	set name = "Eject Cartridge"
+	set src in usr
+
+	eject_cart()
 
 /obj/item/pda/proc/toggle_light()
 	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE))
@@ -806,6 +814,18 @@ GLOBAL_LIST_EMPTY(PDAs)
 		update_icon()
 	else
 		to_chat(usr, "<span class='warning'>This PDA does not have a pen in it!</span>")
+
+/obj/item/pda/proc/eject_cart()
+	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	if (!isnull(cartridge))
+		usr.put_in_hands(cartridge)
+		to_chat(usr, "<span class='notice'>You eject [cartridge] from [src].</span>")
+		scanmode = PDA_SCANNER_NONE
+		cartridge.host_pda = null
+		cartridge = null
+		//update ui stupid
+		update_icon()
 
 //trying to insert or remove an id
 /obj/item/pda/proc/id_check(mob/user, obj/item/card/id/I)
@@ -842,9 +862,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 // access to status display signals
 /obj/item/pda/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/cartridge) && !cartridge)
+	if(istype(C, /obj/item/cartridge))
 		if(!user.transferItemToLoc(C, src))
 			return
+		eject_cart()
 		cartridge = C
 		cartridge.host_pda = src
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
