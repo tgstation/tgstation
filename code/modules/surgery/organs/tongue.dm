@@ -20,8 +20,8 @@
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
-		/datum/language/shadowspeak,
-		/datum/language/golemic,
+		/datum/language/shadowtongue,
+		/datum/language/terrum,
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
@@ -83,9 +83,9 @@
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
-		/datum/language/shadowspeak,
-		/datum/language/golemic,
-		/datum/language/buzztalk
+		/datum/language/shadowtongue,
+		/datum/language/terrum,
+		/datum/language/buzzwords
 	))
 
 /obj/item/organ/tongue/fly/handle_speech(datum/source, list/speech_args)
@@ -219,8 +219,8 @@
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
-		/datum/language/shadowspeak,
-		/datum/language/golemic,
+		/datum/language/shadowtongue,
+		/datum/language/terrum,
 		/datum/language/calcic
 	))
 
@@ -292,8 +292,8 @@
 		/datum/language/piratespeak,
 		/datum/language/moffic,
 		/datum/language/sylvan,
-		/datum/language/shadowspeak,
-		/datum/language/golemic,
+		/datum/language/shadowtongue,
+		/datum/language/terrum,
 		/datum/language/voltaic
 	))
 

@@ -1,7 +1,7 @@
 // You n'wah!
 // many thanks to https://casualscrolls.fandom.com/wiki/Dunmeri_language, for providing this list of syllables
-/datum/language/shadowspeak
-	name = "Shadowspeak"
+/datum/language/shadowtongue
+	name = "Shadowtongue"
 	desc = "What a grand and intoxicating innocence."
 	speech_verb = "growls"
 	ask_verb = "growls"

@@ -1,11 +1,10 @@
-/datum/language/golemic
-	name = "Golemic"
+/datum/language/terrum
+	name = "Terrum"
 	desc = "The language of the golems. Sounds similar to old-earth Hebrew."
 	speech_verb = "rumbles"
 	ask_verb = "questions"
 	exclaim_verb = "tremors"
 	key = "g"
-	flags = TONGUELESS_SPEECH
 	space_chance = 40
 	syllables = list(
 		"sha", "vu", "nah", "ha", "yom", "ma", "cha", "ar", "et", "mol", "lua",
