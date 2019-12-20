@@ -82,6 +82,7 @@ import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
+import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
 
 const ROUTES = {
@@ -440,6 +441,10 @@ const ROUTES = {
   vault_controller: {
     component: () => VaultController,
     scrollable: false,
+  },
+  vending: {
+    component: () => Vending,
+    scrollable: true,
   },
   wires: {
     component: () => Wires,

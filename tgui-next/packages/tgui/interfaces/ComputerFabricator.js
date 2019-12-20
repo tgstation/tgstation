@@ -41,7 +41,7 @@ const CFScreen = props => {
           Choose your Device
         </Box>
         <Box mt={3}>
-          <Grid width="100%">
+          <Grid>
             <Grid.Column>
               <Button
                 fluid
@@ -78,10 +78,10 @@ const CFScreen = props => {
         minHeight={47}
         buttons={(
           <Box bold color="good">
-            ${data.totalprice}
+            {data.totalprice}Ꞥ
           </Box>
         )}>
-        <Table width="100%">
+        <Table>
           <Table.Row>
             <Table.Cell
               bold
@@ -347,7 +347,7 @@ const CFScreen = props => {
           </Box>
           {' '}
           <Box inline color="good">
-            ${data.totalprice}
+            {data.totalprice}Ꞥ
           </Box>
         </Box>
         <Box
@@ -363,7 +363,7 @@ const CFScreen = props => {
           textAlign="center"
           fontSize="18px"
           color={data.credits >= data.totalprice ? "good" : "bad"}>
-          ${data.credits}
+          {data.credits}Ꞥ
         </Box>
         <Button
           fluid

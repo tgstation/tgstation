@@ -207,7 +207,8 @@
 							<td>$[c.fine]</td><td>[c.author]</td>
 							<td>[c.time]</td>"}
 							if(owed > 0)
-								dat += "<td>$[owed] <A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
+								//TODO: 513 change N to Ꞥ
+								dat += "<td>[owed]N <A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td></td>"
 							else
 								dat += "<td>All Paid Off</td>"
 							dat += {"<td>
