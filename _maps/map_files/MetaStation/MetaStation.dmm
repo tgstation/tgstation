@@ -3701,7 +3701,8 @@
 /obj/item/wirecutters{
 	pixel_y = 2
 	},
-/turf/open/floor/plasteel/showroomfloor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
 /area/security/brig)
 "ahQ" = (
 /obj/item/clothing/head/festive,
@@ -5156,6 +5157,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/gun/energy/e_gun/dragnet,
+/obj/item/gun/energy/e_gun/dragnet,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "akD" = (
@@ -5817,9 +5820,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -5873,9 +5873,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
 /obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/door/airlock/security/glass{
@@ -8293,9 +8290,6 @@
 "ari" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/door/airlock/security/glass{
@@ -11570,6 +11564,9 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/closed/wall,
 /area/security/warden)
 "azd" = (
@@ -11854,6 +11851,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "azK" = (
@@ -11865,6 +11863,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "azN" = (
@@ -12462,6 +12461,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aBe" = (
@@ -12474,6 +12474,7 @@
 	dir = 8
 	},
 /obj/machinery/holopad,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aBf" = (
@@ -12991,6 +12992,7 @@
 	name = "Brig";
 	req_access_txt = "63"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aCq" = (
@@ -26514,19 +26516,17 @@
 	pixel_x = -22
 	},
 /obj/structure/rack,
-/obj/item/gun/energy/e_gun/dragnet,
-/obj/item/gun/energy/e_gun/dragnet,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/storage/lockbox/loyalty,
 /obj/item/reagent_containers/glass/bottle/morphine,
-/obj/item/storage/box/trackimp,
 /obj/item/storage/box/chemimp{
 	pixel_x = 4;
 	pixel_y = 3
 	},
+/obj/item/storage/box/trackimp,
+/obj/item/storage/lockbox/loyalty,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "bgC" = (
@@ -75329,9 +75329,6 @@
 	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -75432,6 +75429,7 @@
 	req_access_txt = "63"
 	},
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "rrB" = (
@@ -76235,6 +76233,15 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"vVY" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "Secure Gate";
+	name = "brig shutters"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/warden)
 "vWK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -104336,7 +104343,7 @@ axh
 dCh
 mDQ
 dmU
-aBc
+vVY
 aDA
 aEN
 aGl
