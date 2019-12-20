@@ -1167,3 +1167,11 @@
 		/obj/item/storage/box/material=1
 		)
 	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/plastic
+	name = "plastic box"
+	desc = "It's a solid, plastic shell box."
+	icon_state = "plasticbox"
+	foldable = /obj/item/stack/sheet/plastic
+	illustration = "writing"
+	custom_materials = list(/datum/material/plastic = 1000) //You lose most if recycled.

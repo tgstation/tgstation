@@ -22,6 +22,8 @@
 	maxHealth = 25
 	health = 25
 	spacewalk = TRUE
+	search_objects = 1
+	wanted_objects = list(/obj/item/storage/cans)
 
 	harm_intent_damage = 8
 	obj_damage = 50
@@ -95,6 +97,19 @@
 	var/mutable_appearance/base_dead_overlay = mutable_appearance(icon, "base_dead_mouth")
 	base_dead_overlay.appearance_flags = RESET_COLOR
 	add_overlay(base_dead_overlay)
+
+/mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
+	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in loc
+	if(tasty_plastic)
+		step_to(src,tasty_plastic.loc)
+		src.visible_message("<span class='notice'>[src] gets it's head stuck in the [tasty_plastic], and chokes on it!</span>", "<span class='notice'>You try to avoid the [tasty_plastic], but it looks so... delicious... OH NO IT'S CHOKING YOU!</span>")
+		adjustBruteLoss(5)
+		qdel(tasty_plastic)
+
+/mob/living/simple_animal/hostile/carp/Life()
+	. = ..()
+	if(stat == CONSCIOUS)
+		chomp_plastic()
 
 /mob/living/simple_animal/hostile/carp/death(gibbed)
 	. = ..()
