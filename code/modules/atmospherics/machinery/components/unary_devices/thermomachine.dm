@@ -30,7 +30,10 @@
 	initialize_directions = dir
 
 /obj/machinery/atmospherics/components/unary/thermomachine/on_construction()
-	..(dir,dir)
+	var/obj/item/circuitboard/machine/thermomachine/board = circuit
+	if(board)
+		piping_layer = board.pipe_layer
+	..(dir, piping_layer)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	var/B
