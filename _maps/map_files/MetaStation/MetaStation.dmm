@@ -5173,7 +5173,6 @@
 /obj/structure/rack,
 /obj/item/gun/energy/ionrifle,
 /obj/item/gun/energy/temperature/security,
-/obj/item/gun/energy/laser/scatter/shotty,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -7653,6 +7652,7 @@
 	pixel_x = 1;
 	pixel_y = -23
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "apN" = (
@@ -7660,6 +7660,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "apP" = (
@@ -8875,6 +8876,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "asw" = (
@@ -11837,6 +11839,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/event_spawn,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "azJ" = (
@@ -12442,6 +12445,11 @@
 /area/security/warden)
 "aBc" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "Secure Gate";
+	name = "brig shutters"
+	},
 /turf/open/floor/plating,
 /area/security/warden)
 "aBd" = (
@@ -73325,6 +73333,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "hkq" = (
@@ -73349,6 +73358,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
 /obj/item/storage/fancy/donut_box,
+/obj/machinery/door/poddoor/preopen{
+	id = "Secure Gate";
+	name = "brig shutters"
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "hvf" = (
@@ -102008,8 +102021,8 @@ alS
 awc
 axg
 ahx
-ajo
-ajo
+aiq
+aiq
 ajm
 aDw
 aEL
@@ -102779,8 +102792,8 @@ axR
 awe
 axe
 ahx
-ajo
-ajo
+aiq
+aiq
 ajm
 aDx
 dCo
@@ -103550,8 +103563,8 @@ adY
 ayz
 ajx
 adY
-aBc
-aBc
+ajx
+ajx
 adY
 aDw
 aEN
@@ -103809,7 +103822,7 @@ aDE
 ayA
 roZ
 pvK
-ajx
+aBc
 aDx
 aEQ
 aGj
@@ -104323,7 +104336,7 @@ axh
 dCh
 mDQ
 dmU
-ajx
+aBc
 aDA
 aEN
 aGl
@@ -104578,8 +104591,8 @@ adY
 ayE
 ajx
 adY
-aBc
-aBc
+ajx
+ajx
 adY
 aDB
 aES
