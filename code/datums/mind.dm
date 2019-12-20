@@ -317,7 +317,7 @@
 		P = locate() in PDA
 	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
 		P = locate() in all_contents
-		if(!P) // I do not have a pen.
+		if(!P && (traitor_mob.client.prefs.uplink_spawn_loc == UPLINK_PEN)) // I have no pen and I must write.
 			var/obj/item/pen/inowhaveapen
 			if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
 				inowhaveapen = new /obj/item/pen(traitor_mob.back)
