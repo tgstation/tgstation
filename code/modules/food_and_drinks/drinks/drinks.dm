@@ -211,7 +211,7 @@
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
-	custom_price = 5
+	custom_price = 15
 	icon_state = "coffee"
 	list_reagents = list(/datum/reagent/consumable/ice = 30)
 	spillable = TRUE
@@ -246,7 +246,7 @@
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
 	foodtype = SUGAR
 	resistance_flags = FREEZE_PROOF
-	custom_price = 42
+	custom_price = 120
 
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
@@ -256,7 +256,7 @@
 	list_reagents = list(/datum/reagent/consumable/dry_ramen = 15, /datum/reagent/consumable/sodiumchloride = 3)
 	foodtype = GRAIN
 	isGlass = FALSE
-	custom_price = 38
+	custom_price = 95
 
 /obj/item/reagent_containers/food/drinks/waterbottle
 	name = "bottle of water"
@@ -276,6 +276,7 @@
 	var/cap_lost = FALSE
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
+	custom_price = 30
 
 /obj/item/reagent_containers/food/drinks/waterbottle/Initialize()
 	. = ..()
@@ -395,6 +396,7 @@
 	icon_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
 	foodtype = GRAIN | ALCOHOL
+	custom_price = 60
 
 /obj/item/reagent_containers/food/drinks/beer/light
 	name = "Carp Lite"
@@ -408,6 +410,7 @@
 	item_state = "beer"
 	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
 	foodtype = GRAIN | ALCOHOL
+	custom_price = 60
 
 /obj/item/reagent_containers/food/drinks/sillycup
 	name = "paper cup"
@@ -523,7 +526,7 @@
 /obj/item/reagent_containers/food/drinks/flask
 	name = "flask"
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
-	custom_price = 30
+	custom_price = 200
 	icon_state = "flask"
 	custom_materials = list(/datum/material/iron=250)
 	volume = 60
@@ -558,7 +561,7 @@
 	reagent_flags = NONE
 	spillable = FALSE
 	isGlass = FALSE
-	custom_price = 10
+	custom_price = 45
 
 /obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/human/H)
 	if(!reagents.total_volume)

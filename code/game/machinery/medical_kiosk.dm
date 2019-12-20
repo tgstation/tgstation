@@ -134,11 +134,12 @@
 	qdel(scanner_wand)
 	return ..()
 
-/obj/machinery/medical_kiosk/emag_act(mob/living/emagger)
+/obj/machinery/medical_kiosk/emag_act(mob/user)
 	..()
 	if(obj_flags & EMAGGED)
 		return
-	emagger.visible_message("<span class='warning'>[emagger] waves a suspicious card by the [src]'s biometric scanner!</span>",
+	if(user)
+		user.visible_message("<span class='warning'>[user] waves a suspicious card by the [src]'s biometric scanner!</span>",
 	"<span class='notice'>You overload the sensory electronics, the diagnostic readouts start jittering across the screen..</span>")
 	obj_flags |= EMAGGED
 	var/obj/item/circuitboard/computer/cargo/board = circuit

@@ -1,4 +1,0 @@
-author: "TheChosenEvilOne"
-delete-after: True
-changes: 
-  - bugfix: "Arrival deadchat message will no longer colour other text in the deadchat colour."

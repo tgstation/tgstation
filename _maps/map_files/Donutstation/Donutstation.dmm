@@ -1503,6 +1503,7 @@
 "adJ" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/experimentor,
+/obj/item/relic,
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
 	},
@@ -3344,6 +3345,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"ahY" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
 "aib" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -5244,17 +5253,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"aol" = (
-/obj/structure/table,
-/obj/item/storage/box/donkpockets,
-/obj/item/storage/box/donkpockets{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/crew_quarters/kitchen)
 "aom" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 10
@@ -13058,7 +13056,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastleft{
 	name = "Chemistry Desk";
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
@@ -18003,7 +18001,7 @@
 	},
 /obj/machinery/door/window/southleft{
 	name = "Chemistry Desk";
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -18016,7 +18014,7 @@
 	},
 /obj/machinery/door/window/southright{
 	name = "Chemistry Desk";
-	req_access_txt = "33"
+	req_access_txt = "69"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -20818,7 +20816,7 @@
 "beT" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Chemistry Lab";
-	req_access_txt = "5; 33"
+	req_access_txt = "5; 69"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -36363,6 +36361,7 @@
 /obj/item/circuitboard/computer/arcade/battle,
 /obj/item/circuitboard/machine/microwave,
 /obj/item/book/manual/wiki/research_and_development,
+/obj/item/relic,
 /turf/open/floor/plating,
 /area/science/research)
 "bRC" = (
@@ -83746,7 +83745,7 @@ amG
 bbL
 anL
 anL
-aol
+ahY
 apt
 aqb
 bcL
