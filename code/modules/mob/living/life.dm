@@ -1,3 +1,5 @@
+#define BODYTEMP_DIVISOR 5
+
 /mob/living/proc/Life(seconds, times_fired)
 	set waitfor = FALSE
 	set invisibility = 0
@@ -84,7 +86,13 @@
 	return
 
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
-	return
+	if(!on_fire)
+		return
+
+	// get the current air temperature
+	var/loc_temp = get_temperature(environment)
+	// update the body tempurature
+	adjust_bodytemperature((bodytemperature - loc_temp) / BODYTEMP_DIVISOR)
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
@@ -143,3 +151,5 @@
 	if(gravity >= GRAVITY_DAMAGE_TRESHOLD) //Aka gravity values of 3 or more
 		var/grav_stregth = gravity - GRAVITY_DAMAGE_TRESHOLD
 		adjustBruteLoss(min(grav_stregth,3))
+
+#undef BODYTEMP_DIVISOR

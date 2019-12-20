@@ -19,7 +19,7 @@
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
 	var/heat_protection = 0.5 // Fire vunerability
-	var/cold_protection = 1 // Cold immunity
+	var/cold_protection = 0 // No cold protection
 	var/leaping = 0
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1

@@ -576,13 +576,13 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 	// Have the body regulate it's own temperature
 	var/natural = 0
-	var/natural_change = 0
 	if(stat != DEAD)
 		natural = natural_bodytemperature_stabilization()
 
 	// Get the mobs thermal protection and environmental change
 	var/thermal_protection = 1
 	var/environment_change = 0
+	var/natural_change = 0
 	if(areatemp > bodytemperature) // It is hot here
 		// Get the thermal protection of the mob,
 		// This returns a 0 - 1 value which corresponds to the percentage of protection
@@ -622,14 +622,23 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
 	switch(bodytemperature)
-		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT) //Cold damage limit is 50 below the default, the temperature where you start to feel effects.
-			return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
+		// Cold damage limit is 50 below the default, the temperature where you start to feel effects.
+		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT)
+			return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), \
+			BODYTEMP_AUTORECOVERY_MINIMUM)
+
 		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_NORMAL)
-			return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))
-		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT) // Heat damage limit is 50 above the default, the temperature where you start to feel effects.
-			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM/4))
+			return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
+			min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM / 4))
+
+		// Heat damage limit is 50 above the default, the temperature where you start to feel effects.
+		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT)
+			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
+			max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM / 4))
+
+		//We're dealing with negative numbers
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
-			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)
 
 // Temperature is the temperature you're being exposed to.
 // This returns a 0 - 1 value which corresponds to the percentage of protection

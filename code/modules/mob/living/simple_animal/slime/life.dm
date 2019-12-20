@@ -110,17 +110,17 @@
 /mob/living/simple_animal/slime/handle_environment(datum/gas_mixture/environment)
 	var/loc_temp = get_temperature(environment)
 	var/divisor = 10
-	if(abs(bodytemperature - loc_temp) > 50)
+
+	// if the difference is great then reduce the divisor
+	if(abs(loc_temp - bodytemperature) > 50)
 		divisor = 5
 
-	var/environment_change = 0
-	if(bodytemperature < loc_temp)
-		environment_change = (bodytemperature - loc_temp) / divisor
-	else if(bodytemperature > loc_temp)
-		environment_change = (bodytemperature - loc_temp) / divisor
-
 	// update the body tempurature
-	adjust_bodytemperature(environment_change)
+	if(loc_temp < bodytemperature) // it is cold here
+		if(!on_fire) // do not reduce body temp when on fire
+			adjust_bodytemperature((loc_temp - bodytemperature) / divisor)
+	else // this is a hot place
+		adjust_bodytemperature((loc_temp - bodytemperature) / divisor)
 
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
 		if(bodytemperature <= (T0C - 40)) // stun temperature
