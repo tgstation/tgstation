@@ -1,4 +1,0 @@
-author: "Jdawg1290"
-delete-after: True
-changes: 
-  - bugfix: "field generator floor shields should stay still now"
