@@ -45,6 +45,7 @@
 
 	var/random_color = TRUE //if the carp uses random coloring
 	var/rarechance = 1 //chance for rare color variant
+	var/snack_distance = 0
 
 	var/static/list/carp_colors = list(\
 	"lightpurple" = "#c3b9f1", \
@@ -99,10 +100,11 @@
 	add_overlay(base_dead_overlay)
 
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
-	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in loc
-	if(tasty_plastic)
-		step_to(src,tasty_plastic.loc)
-		src.visible_message("<span class='notice'>[src] gets it's head stuck in the [tasty_plastic], and chokes on it!</span>", "<span class='notice'>You try to avoid the [tasty_plastic], but it looks so... delicious... OH NO IT'S CHOKING YOU!</span>")
+	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in oview(src, 9)
+	snack_distance = get_dist(src.loc,tasty_plastic.loc)
+	if(tasty_plastic && snack_distance <= 1)
+		src.visible_message("<span class='notice'>[src] gets it's head stuck in [tasty_plastic], and chokes on it!</span>", "<span class='notice'>You try to avoid [tasty_plastic], but it looks so... delicious... OH NO IT'S CHOKING YOU!</span>")
+		new /obj/effect/decal/cleanable/plastic(src.loc)
 		adjustBruteLoss(5)
 		qdel(tasty_plastic)
 

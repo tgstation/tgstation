@@ -464,6 +464,7 @@
 		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
 		if(do_after(Mob, 60, 1, Mob, 0))
 			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
+			new /obj/effect/decal/cleanable/plastic(src.loc)
 			qdel(src)
 
 /obj/item/chair/plastic
