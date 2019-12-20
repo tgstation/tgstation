@@ -86,13 +86,15 @@
 	return
 
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
-	if(!on_fire)
-		return
-
 	// get the current air temperature
 	var/loc_temp = get_temperature(environment)
+
 	// update the body tempurature
-	adjust_bodytemperature((bodytemperature - loc_temp) / BODYTEMP_DIVISOR)
+	if(loc_temp < bodytemperature) // it is cold here
+		if(!on_fire) // do not reduce body temp when on fire
+			adjust_bodytemperature((loc_temp - bodytemperature) / BODYTEMP_DIVISOR)
+	else // this is a hot place
+		adjust_bodytemperature((loc_temp - bodytemperature) / BODYTEMP_DIVISOR)
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
