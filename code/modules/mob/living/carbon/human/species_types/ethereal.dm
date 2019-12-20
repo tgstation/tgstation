@@ -32,8 +32,8 @@
 	// Body tempurature for ethereals is much higher
 	// they can handle hotter environments
 	// but they are hurt at cold temps faster as it is harder to move with out the heat energy
-	bodytemp_normal = (BODYTEMP_NORMAL + 70)
-	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // about 100C
+	bodytemp_normal = (BODYTEMP_NORMAL + 50)
+	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // about 150C
 	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
 
 /datum/species/ethereal/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)

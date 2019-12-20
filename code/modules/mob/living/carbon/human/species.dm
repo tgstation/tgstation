@@ -1685,11 +1685,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/burn_damage
 		var/firemodifier = H.fire_stacks / 50
 		if (H.on_fire)
-			burn_damage = max(log(2-firemodifier, (H.bodytemperature - bodytemp_normal)) - 5,0)
+			burn_damage = max(log(2 - firemodifier, (H.bodytemperature - bodytemp_normal)) - 5,0)
 		else
 			firemodifier = min(firemodifier, 0)
 			// this can go below 5 at log 2.5
-			burn_damage = max(log(2-firemodifier, (H.bodytemperature - bodytemp_normal)) - 5,0)
+			burn_damage = max(log(2 - firemodifier, (H.bodytemperature - bodytemp_normal)) - 5,0)
 		if (burn_damage)
 			switch(burn_damage)
 				if(0 to 2)
