@@ -203,7 +203,7 @@
 		if(TRAITOR_AI)
 			add_law_zero()
 			owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/malf.ogg', 100, FALSE, pressure_affected = FALSE)
-			owner.current.grant_language(/datum/language/codespeak)
+			owner.current.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MALF)
 		if(TRAITOR_HUMAN)
 			if(should_equip)
 				equip(silent)
