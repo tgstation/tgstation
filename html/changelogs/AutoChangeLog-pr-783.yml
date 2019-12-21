@@ -1,4 +1,0 @@
-author: "AustationBot"
-delete-after: True
-changes: 
-  - tweak: "Makes encryption keys be put in the hands of the user when able instead of being dropped on the floor when removed from headsets"
