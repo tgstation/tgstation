@@ -5137,9 +5137,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "akC" = (
-/obj/item/radio/intercom{
-	pixel_y = 24
-	},
 /obj/structure/rack,
 /obj/item/grenade/barrier{
 	pixel_x = -3;
