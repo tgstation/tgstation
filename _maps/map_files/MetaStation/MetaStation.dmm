@@ -68246,6 +68246,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"cZk" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapon Distribution";
+	req_access_txt = "3"
+	},
+/obj/item/paper,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
+/obj/machinery/door/window/southleft{
+	name = "Requests Window"
+	},
+/obj/item/pen,
+/turf/open/floor/plasteel/showroomfloor,
+/area/ai_monitored/security/armory)
 "cZq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -103821,7 +103838,7 @@ akD
 ano
 akD
 apN
-anl
+cZk
 asu
 atQ
 auZ
