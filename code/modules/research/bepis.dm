@@ -17,11 +17,9 @@
 	var/banking_amount = 100
 	var/banked_cash = 0					//stored player cash
 	var/datum/bank_account/account		//payer's account.
-	var/obj/item/card/id/Card   		//the account of the person using the console.
 	var/chamber_status = 0
 	var/error_cause = null
 	var/powered = FALSE
-	var/silicon_check = FALSE
 	//Vars related to probability and chance of success for testing
 	var/major_threshold = 6000
 	var/minor_threshold = 3000
@@ -70,19 +68,15 @@
 
 /obj/machinery/rnd/bepis/proc/depositcash()
 	var/deposit_value = 0
-	if(!Card)
-		say("No account detected.")  //No freeloading off of science.
-		return
-	else if(Card.registered_account)
-		account = Card.registered_account
-
 	deposit_value = banking_amount
 	if(deposit_value == 0)
 		update_icon_state()
 		say("Attempting to deposit 0 credits. Aborting.")
 		return
 	deposit_value = CLAMP(round(deposit_value, 1), 1, 30000)
-
+	if(!account)
+		say("Cannot find user account. Aborting.")
+		return
 	if(!account.has_money(deposit_value))
 		say("You do not possess enough credits.")
 		return
@@ -165,6 +159,8 @@
 
 /obj/machinery/rnd/bepis/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	var/mob/living/carbon/human/H   	//the person using the console in each instance.
+	var/obj/item/card/id/Card   		//the account of the person using the console.
+	account = null
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "bepis", name, 500, 400, master_ui, state)
@@ -172,15 +168,17 @@
 	if(ishuman(user))
 		H = user
 		Card = H.get_idcard(TRUE)
+		if(Card.registered_account)
+			account = Card.registered_account
+	RefreshParts()
+
+/obj/machinery/rnd/bepis/ui_data(mob/user)
+	var/list/data = list()
+	var/silicon_check = FALSE
 	if(issilicon(user))
 		silicon_check = TRUE
 	else
 		silicon_check = FALSE
-	RefreshParts()
-
-/obj/machinery/rnd/bepis/ui_data()
-	var/list/data = list()
-
 	data["amount"] = banking_amount
 	data["stored_cash"] = banked_cash
 	data["mean_value"] = major_threshold
