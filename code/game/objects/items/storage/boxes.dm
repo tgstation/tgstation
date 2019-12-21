@@ -1172,6 +1172,6 @@
 	name = "plastic box"
 	desc = "It's a solid, plastic shell box."
 	icon_state = "plasticbox"
-	foldable = /obj/item/stack/sheet/plastic
+	foldable = null
 	illustration = "writing"
 	custom_materials = list(/datum/material/plastic = 1000) //You lose most if recycled.
