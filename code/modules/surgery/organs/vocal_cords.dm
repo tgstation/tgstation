@@ -186,17 +186,17 @@
 			//Cut out the name so it doesn't trigger commands
 			message = copytext(message, 0, start)+copytext(message, start + length(devilinfo.truename), length(message) + 1)
 			break
-		else if(dd_hasprefix(message, L.real_name))
+		else if(spantext(message, L.real_name))
 			specific_listeners += L //focus on those with the specified name
 			//Cut out the name so it doesn't trigger commands
 			found_string = L.real_name
 
-		else if(dd_hasprefix(message, L.first_name()))
+		else if(spantext(message, L.first_name()))
 			specific_listeners += L //focus on those with the specified name
 			//Cut out the name so it doesn't trigger commands
 			found_string = L.first_name()
 
-		else if(L.mind && L.mind.assigned_role && dd_hasprefix(message, L.mind.assigned_role))
+		else if(L.mind && L.mind.assigned_role && spantext(message, L.mind.assigned_role))
 			specific_listeners += L //focus on those with the specified job
 			//Cut out the job so it doesn't trigger commands
 			found_string = L.mind.assigned_role

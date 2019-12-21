@@ -216,34 +216,6 @@
 		return a
 	return (a < b ? a : b)
 
-/*
- * Text searches
- */
-
-//Checks the beginning of a string for a specified sub-string
-//Returns the position of the substring or 0 if it was not found
-/proc/dd_hasprefix(text, prefix)
-	var/start = 1
-	var/end = length(prefix) + 1
-	return findtext(text, prefix, start, end)
-
-//Checks the beginning of a string for a specified sub-string. This proc is case sensitive
-//Returns the position of the substring or 0 if it was not found
-/proc/dd_hasprefix_case(text, prefix)
-	var/start = 1
-	var/end = length(prefix) + 1
-	return findtextEx(text, prefix, start, end)
-
-//Checks the end of a string for a specified substring.
-//Returns the position of the substring or 0 if it was not found
-/proc/dd_hassuffix(text, suffix)
-	return findtext(text, suffix, -length(suffix))
-
-//Checks the end of a string for a specified substring. This proc is case sensitive
-//Returns the position of the substring or 0 if it was not found
-/proc/dd_hassuffix_case(text, suffix)
-	return findtextEx(text, suffix, -length(suffix))
-
 //Checks if any of a given list of needles is in the haystack
 /proc/text_in_list(haystack, list/needle_list, start=1, end=0)
 	for(var/needle in needle_list)
@@ -261,20 +233,14 @@
 //Adds 'char' ahead of 'text' until there are 'count' characters total
 /proc/add_leading(text, count, char = " ")
 	var/charcount = count - length_char(text)
-	var/addstring = ""
-	while(charcount > 0)
-		addstring += char
-		charcount--
-	return addstring + text
+	var/list/chars_to_add[max(charcount + 1, 0)]
+	return jointext(chars_to_add, char) + text
 
 //Adds 'char' behind 'text' until there are 'count' characters total
 /proc/add_trailing(text, count, char = " ")
 	var/charcount = count - length_char(text)
-	var/addstring = ""
-	while(charcount > 0)
-		addstring += char
-		charcount--
-	return text + addstring
+	var/list/chars_to_add[max(charcount + 1, 0)]
+	return text + jointext(chars_to_add, char)
 
 //Returns a string with reserved characters and spaces before the first letter removed
 /proc/trim_left(text)
@@ -300,33 +266,6 @@
 /proc/capitalize(t as text)
 	. = t[1]
 	return uppertext(.) + copytext(t, 1 + length(.))
-
-//Centers text by adding spaces to either side of the string.
-/proc/dd_centertext(message, length)
-	var/new_message = message
-	var/size = length_char(message)
-	var/delta = length - size
-	if(delta == 0)
-		return new_message
-	if(delta < 0)
-		return copytext_char(new_message, 1, delta)
-	if(delta == 1)
-		return new_message + " "
-	if(delta % 2)
-		new_message = " " + new_message
-		delta--
-	var/spaces = add_leading("", delta/2, " ")
-	return spaces + new_message + spaces
-
-//Limits the length of the text. Note: MAX_MESSAGE_LEN and MAX_NAME_LEN are widely used for this purpose
-/proc/dd_limittext(message, length)
-	var/size = length_char(message)
-	if(size <= length)
-		return message
-	if(size >= length * 2)
-		return copytext_char(message, 1, length) //count forward from the first char
-	return copytext_char(message, 1, length - size) //count backward from the last char
-
 
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
