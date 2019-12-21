@@ -87,7 +87,7 @@
 	if(!holds_charge)
 		empty()
 
-/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot()
+/obj/item/gun/energy/kinetic_accelerator/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	. = ..()
 	attempt_reload()
 
