@@ -780,20 +780,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "abT" = (
-<<<<<<< HEAD
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/rnd/experimentor,
-/turf/open/floor/engine,
-/area/science/explab)
-"abU" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/engine,
-/area/science/explab)
-=======
 /obj/structure/rack,
 /obj/item/book/manual/chef_recipes{
 	pixel_x = 2;
@@ -808,7 +794,13 @@
 	dir = 5
 	},
 /area/crew_quarters/kitchen)
->>>>>>> upstream/master
+"abU" = (
+/obj/item/beacon,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/engine,
+/area/science/explab)
 "abV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light/small{
@@ -933,7 +925,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "acl" = (
-/obj/item/beacon,
 /mob/living/simple_animal/pet/dog/pug{
 	desc = "It's Pugley IV, the research department's lovable pug clone. Hopefully nothing happens to this one - fourth time lucky!";
 	name = "Pugley IV";
@@ -41393,21 +41384,6 @@
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"bNw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "kitchenwindow";
-	name = "kitchen shutters"
-	},
-/obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/crew_quarters/kitchen)
 "bNx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -75939,6 +75915,13 @@
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
+"sRB" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/rnd/experimentor,
+/turf/open/floor/engine,
+/area/science/explab)
 "tay" = (
 /turf/closed/wall,
 /area/medical/medbay/central)
@@ -111253,7 +111236,7 @@ bST
 ceZ
 cgq
 chx
-abT
+sRB
 chx
 clS
 cmR
