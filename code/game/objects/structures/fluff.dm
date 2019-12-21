@@ -260,3 +260,12 @@
 	name = "clockwork golem scrap"
 	desc = "A pile of scrap metal. It seems damaged beyond repair."
 	icon_state = "clockgolem_dead"
+
+
+/obj/structure/fluff/lightpost
+	name = "lightpost"
+	desc = "A homely lightpost adorned with festive decor."
+	icon = 'icons/obj/2x2.dmi'
+	icon_state = "lightpost"
+	deconstructible = FALSE
+	layer = EDGED_TURF_LAYER
