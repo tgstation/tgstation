@@ -172,7 +172,7 @@
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client
 	var/turf/posobj = get_turf(C.eye)
-	if(!posobj) 
+	if(!posobj)
 		return
 	var/area/areaobj = posobj.loc
 
@@ -307,7 +307,7 @@
 	layer = 3
 
 /obj/screen/parallax_layer/random/space_gas
-	icon_state = "space gas"
+	icon_state = "space_gas"
 
 /obj/screen/parallax_layer/random/space_gas/Initialize(mapload, view)
 	. = ..()
