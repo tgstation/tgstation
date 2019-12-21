@@ -489,7 +489,7 @@
 	if (.)
 		if(R.shell)
 			R.undeploy()
-			R.notify_ai(AI_SHELL)
+			R.notify_ai(DISCONNECT)
 
 /obj/item/borg/upgrade/expand
 	name = "borg expander"

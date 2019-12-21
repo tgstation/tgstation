@@ -1,5 +1,0 @@
-author: "Ecobbomy"
-delete-after: True
-changes: 
-  - tweak: "Paystands have a few new functions. Examine your paystand with the registered card in hand to view these options!"
-  - admin: "there is a bling necklace subtype that allows you to sell items for credits, hassle-free (search \"merchant\" in the spawn menu)! Useful for merchant-based events."
