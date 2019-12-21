@@ -185,7 +185,17 @@
 	icon_state = "railing"
 	density = TRUE
 	anchored = TRUE
-	deconstructible = FALSE
+	climbable = TRUE
+
+/obj/structure/fluff/railing/CanPass(atom/movable/mover, turf/target)
+	if(get_dir(loc, target) == dir)
+		return !density
+	return 1
+
+/obj/structure/fluff/railing/CheckExit(atom/movable/O, turf/target)
+	if(get_dir(O.loc, target) == dir)
+		return 0
+	return 1
 
 /obj/structure/fluff/railing/corner
 	icon_state = "railing_corner"
