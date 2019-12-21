@@ -333,12 +333,13 @@
 
 /obj/item/shears
 	name = "amputation shears"
+	desc = "A type of heavy duty surgical shears used for achieving a clean separation between limb and patient. Keeping the patient still is imperative to be able to secure and align the shears."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "shears"
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	toolspeed  = 1
-	force = 15
+	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 6
 	throw_speed = 2
@@ -390,8 +391,8 @@
 	else
 		amputation_speed_mod = 1
 
-	if(do_after(user,  toolspeed * 150 * amputation_speed_mod * user.mind.get_skill_speed_modifier(/datum/skill/medical), target = patient))
-		playsound(get_turf(patient), 'sound/weapons/bladeslice.ogg', 180, TRUE)
+	if(do_after(user,  toolspeed * 150 * amputation_speed_mod, target = patient))
+		playsound(get_turf(patient), 'sound/weapons/bladeslice.ogg', 250, TRUE)
 		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN) //OwO
 			playsound(get_turf(patient), 'sound/misc/splort.ogg', 50, TRUE)
 			tail_snip_candidate.Remove(patient)
