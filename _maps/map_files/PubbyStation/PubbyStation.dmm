@@ -26061,6 +26061,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/relic,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
 "bpn" = (

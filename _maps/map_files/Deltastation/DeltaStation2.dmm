@@ -92885,6 +92885,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/item/relic,
 /turf/open/floor/plasteel/dark,
 /area/science/explab)
 "dqk" = (
@@ -103176,6 +103177,7 @@
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = -32
 	},
+/obj/item/relic,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dJY" = (

@@ -46874,6 +46874,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/item/relic,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cav" = (
@@ -76026,6 +76027,10 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"tEg" = (
+/obj/item/relic,
+/turf/open/floor/engine,
+/area/science/explab)
 "tFJ" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
@@ -111764,7 +111769,7 @@ ceZ
 cgq
 chy
 ciU
-chx
+tEg
 clU
 cmT
 con

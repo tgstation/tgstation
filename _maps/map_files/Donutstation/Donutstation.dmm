@@ -1503,6 +1503,7 @@
 "adJ" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/experimentor,
+/obj/item/relic,
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
 	},
@@ -36364,6 +36365,7 @@
 /obj/item/circuitboard/computer/arcade/battle,
 /obj/item/circuitboard/machine/microwave,
 /obj/item/book/manual/wiki/research_and_development,
+/obj/item/relic,
 /turf/open/floor/plating,
 /area/science/research)
 "bRC" = (

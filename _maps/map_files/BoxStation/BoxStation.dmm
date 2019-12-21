@@ -26865,6 +26865,7 @@
 	},
 /obj/item/folder/white,
 /obj/item/pen,
+/obj/item/relic,
 /turf/open/floor/plating,
 /area/science/robotics/lab)
 "brt" = (
@@ -49848,6 +49849,7 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/book/manual/wiki/experimentor,
+/obj/item/relic,
 /turf/open/floor/plasteel/white/corner{
 	dir = 4
 	},
