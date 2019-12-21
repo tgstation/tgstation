@@ -5125,7 +5125,8 @@
 	})
 "kc" = (
 /obj/structure/flora/tree/pine/xmas{
-	pixel_x = 16
+	pixel_x = 0;
+	step_x = 0
 	},
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
@@ -6141,6 +6142,373 @@
 	dir = 4
 	},
 /turf/open/indestructible/cobble/side,
+/area/centcom)
+"oe" = (
+/obj/structure/stairs{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom)
+"oZ" = (
+/obj/machinery/clonepod,
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"qx" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	icon_state = "tile_corner";
+	dir = 4
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel/dark,
+/area/centcom)
+"qC" = (
+/obj/machinery/computer/cloning{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"rC" = (
+/obj/structure/window/reinforced,
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"sR" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"tH" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"tS" = (
+/turf/closed/indestructible/riveted,
+/area/awaymission/snowdin/outside)
+"uW" = (
+/obj/structure/bodycontainer/morgue,
+/turf/open/floor/plasteel/dark,
+/area/centcom)
+"vf" = (
+/obj/structure/chair/comfy/teal{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"vv" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"wK" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"wV" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	icon_state = "tile_corner";
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom)
+"xh" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"xz" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"xT" = (
+/turf/open/floor/plasteel/stairs/left,
+/area/centcom)
+"yN" = (
+/obj/machinery/stasis,
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"yV" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"Au" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/centcom)
+"AH" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"Bd" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"BA" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"BL" = (
+/obj/structure/sign/departments/medbay/alt{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"CV" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/centcom)
+"Dt" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"EX" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom{
+	icon_state = "hallC";
+	name = "Central Hallway"
+	})
+"Fp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small,
+/obj/structure/bodycontainer/morgue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/awaymission/snowdin/outside)
+"Fs" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"FQ" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"FU" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"Hk" = (
+/obj/structure/window/reinforced,
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"HP" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/centcom{
+	icon_state = "hallC";
+	name = "Central Hallway"
+	})
+"HQ" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"JG" = (
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"Kv" = (
+/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"KD" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"KT" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table/optable,
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"Lc" = (
+/turf/open/floor/plasteel/stairs/medium,
+/area/centcom)
+"Lv" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"Lw" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"LY" = (
+/obj/machinery/dna_scannernew,
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"OI" = (
+/obj/item/twohanded/required/kirbyplants/photosynthetic{
+	anchored = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"PK" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/computer/operating{
+	dir = 8
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"PS" = (
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"QF" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"Te" = (
+/obj/structure/sign/warning/nosmoking{
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"TI" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/centcom)
+"TS" = (
+/obj/structure/chair/comfy/teal{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"Ud" = (
+/obj/machinery/iv_drip,
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"Vx" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"WU" = (
+/obj/structure/bed,
+/turf/open/floor/plasteel/white,
+/area/centcom)
+"ZK" = (
+/obj/structure/bodycontainer/morgue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
 /area/centcom)
 
 (1,1,1) = {"
@@ -17926,10 +18294,10 @@ ap
 ap
 ap
 ap
-ap
-ap
-ap
-ap
+tS
+tS
+tS
+tS
 ap
 ap
 ap
@@ -18129,8 +18497,8 @@ ap
 ap
 au
 au
-au
-au
+KD
+KD
 au
 au
 au
@@ -18330,21 +18698,21 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+Lw
+HQ
+Lv
+Vx
+Au
+vv
+vv
+vv
+vv
+cp
+vf
+vf
+vf
+vf
+HP
 eh
 et
 eA
@@ -18532,21 +18900,21 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+wK
+xh
+Fs
+xz
+Au
+yN
+vv
+vv
+vv
+Au
+vv
+vv
+vv
+vv
+HP
 ei
 eu
 eB
@@ -18734,21 +19102,21 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+Lw
+Kv
+Kv
+Vx
+Au
+KD
+vv
+vv
+vv
+JG
+vv
+vv
+vv
+vv
+EX
 ei
 ek
 eB
@@ -18936,21 +19304,21 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+wK
+xh
+Fs
+xz
+Au
+yN
+vv
+vv
+vv
+JG
+vv
+vv
+vv
+vv
+EX
 ei
 ek
 eB
@@ -19138,21 +19506,21 @@ au
 au
 au
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+Lw
+Dt
+FQ
+Vx
+Au
+vv
+vv
+vv
+vv
+Au
+OI
+vv
+vv
+vv
+EX
 ei
 ek
 eB
@@ -19334,27 +19702,27 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+TI
+Te
+JG
+JG
+JG
+Au
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+cp
+KD
+KD
+KD
+vv
+EX
 ei
 ek
 eB
@@ -19536,27 +19904,27 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+PS
+JG
+JG
+JG
+JG
+JG
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+cp
+BL
+JG
+KD
+vv
+EX
 ei
 ek
 eB
@@ -19738,27 +20106,27 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+PS
+JG
+JG
+JG
+JG
+JG
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+vv
+JG
+JG
+JG
+KD
+vv
+EX
 ei
 ek
 eB
@@ -19940,27 +20308,27 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-bQ
-bQ
-bQ
-bQ
-bQ
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+oZ
+qC
+LY
+JG
+JG
+Au
+Ud
+WU
+vv
+WU
+Ud
+vv
+vv
+vv
+vv
+cp
+BL
+JG
+KD
+vv
+EX
 ei
 ek
 eB
@@ -20142,27 +20510,27 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-bQ
-aA
-bQ
-aA
-bQ
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+CV
+CV
+CV
+JG
+CV
+CV
+sR
+sR
+tH
+sR
+QF
+yN
+vv
+vv
+vv
+cp
+KD
+KD
+KD
+vv
+EX
 ei
 ek
 eB
@@ -20344,27 +20712,27 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-bQ
-aA
-bQ
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+wV
+wV
+wV
+wV
+wV
+CV
+yV
+tH
+tH
+tH
+Hk
+yN
+vv
+vv
+vv
+Au
+OI
+vv
+vv
+vv
+EX
 ei
 ek
 eB
@@ -20546,27 +20914,27 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+ZK
+wV
+ZK
+wV
+wV
+JG
+tH
+tH
+KT
+tH
+tH
+vv
+vv
+vv
+vv
+JG
+vv
+vv
+vv
+vv
+EX
 ei
 ek
 eB
@@ -20748,27 +21116,27 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-bQ
-bQ
-bQ
-bQ
-bQ
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+uW
+wV
+uW
+wV
+wV
+CV
+PS
+tH
+PK
+tH
+Bd
+yN
+vv
+vv
+vv
+JG
+vv
+vv
+vv
+vv
+EX
 ei
 ek
 eB
@@ -20947,30 +21315,30 @@ ap
 ap
 ap
 ap
-ap
+Fp
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-bQ
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+wV
+wV
+wV
+wV
+ZK
+CV
+BA
+PS
+tH
+PS
+rC
+yN
+vv
+vv
+vv
+Au
+vv
+vv
+vv
+vv
+HP
 ei
 ek
 eB
@@ -21152,27 +21520,27 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-bQ
-aA
-aA
-aA
-aA
-aA
-aA
-dZ
+wV
+wV
+wV
+wV
+uW
+CV
+CV
+cp
+cp
+cp
+cp
+vv
+vv
+vv
+yN
+cp
+TS
+TS
+TS
+TS
+HP
 ei
 ek
 eB
@@ -21354,26 +21722,26 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+ZK
+wV
+ZK
+wV
+wV
+CV
+CV
+cp
+cp
+cp
+cp
+AH
+vv
+vv
+yN
+cp
+cp
+cp
+cp
+cp
 dZ
 ei
 ek
@@ -21556,26 +21924,26 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-bQ
-bQ
-bQ
-bQ
-aA
-aA
-aA
-aA
-aA
-aA
+uW
+wV
+uW
+wV
+wV
+wV
+qx
+cp
+cp
+oe
+xT
+FU
+vv
+vv
+vv
+Au
+JG
+JG
+JG
+JG
 dZ
 ei
 ek
@@ -21758,26 +22126,26 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-bQ
-aA
-bQ
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
+wV
+wV
+wV
+wV
+wV
+wV
+qx
+cp
+cp
+oe
+Lc
+FU
+vv
+vv
+vv
+JG
+JG
+vv
+vv
+JG
 dZ
 ei
 ek
@@ -21960,26 +22328,26 @@ ap
 ap
 ap
 au
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-bQ
-bQ
-bQ
-bQ
-aA
-aA
-aA
-aA
-aA
-aA
+wV
+ZK
+wV
+ZK
+wV
+wV
+qx
+cp
+cp
+oe
+Lc
+FU
+vv
+vv
+vv
+Au
+JG
+JG
+JG
+JG
 dZ
 ei
 ek
@@ -22162,26 +22530,26 @@ ap
 ap
 ap
 au
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
-aB
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
 dZ
 ei
 ek
