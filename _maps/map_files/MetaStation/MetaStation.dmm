@@ -779,6 +779,21 @@
 /obj/item/storage/photo_album/bar,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
+"abT" = (
+/obj/structure/rack,
+/obj/item/book/manual/chef_recipes{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/item/stack/packageWrap,
+/obj/effect/spawner/lootdrop/donkpockets,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
 "abV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light/small{
@@ -109933,7 +109948,7 @@ bGZ
 bIt
 bKe
 bLI
-bNw
+abT
 bOQ
 qOS
 bLI
