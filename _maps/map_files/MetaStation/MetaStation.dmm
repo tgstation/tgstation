@@ -10491,7 +10491,6 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "awj" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -10873,7 +10872,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/machinery/power/apc/highcap/ten_k{
 	areastring = "/area/security/brig";
 	name = "Brig APC";
@@ -10897,15 +10895,20 @@
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "axo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
+	},
+/obj/machinery/button/flasher{
+	id = "holdingflash";
+	pixel_y = -26;
+	req_access_txt = "1"
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -10914,6 +10917,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "axq" = (
@@ -10921,11 +10925,6 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "axr" = (
-/obj/machinery/button/flasher{
-	id = "holdingflash";
-	pixel_y = -26;
-	req_access_txt = "1"
-	},
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -11930,7 +11929,6 @@
 	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/delivery,
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -72794,6 +72792,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"eph" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig)
 "eqt" = (
 /obj/structure/girder,
 /obj/structure/grille,
@@ -73065,12 +73069,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
-"fEv" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/brig)
 "fEQ" = (
 /turf/closed/wall,
 /area/science/nanite)
@@ -73767,16 +73765,6 @@
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"jGJ" = (
-/obj/structure/table/wood,
-/obj/item/taperecorder{
-	pixel_x = 3
-	},
-/obj/item/storage/box/evidence,
-/obj/item/flashlight/seclite,
-/obj/structure/cable,
-/turf/open/floor/plasteel/grimy,
-/area/security/detectives_office)
 "jHw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -74032,6 +74020,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"kKH" = (
+/obj/structure/table/wood,
+/obj/item/taperecorder{
+	pixel_x = 3
+	},
+/obj/item/storage/box/evidence,
+/obj/item/flashlight/seclite,
+/obj/structure/cable,
+/turf/open/floor/plasteel/grimy,
+/area/security/detectives_office)
 "kMC" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
@@ -74737,6 +74735,14 @@
 /obj/machinery/vending/modularpc,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"ofB" = (
+/obj/machinery/door/airlock/security{
+	name = "Court Cell";
+	req_access_txt = "63"
+	},
+/obj/machinery/door/firedoor,
+/turf/closed/wall,
+/area/security/courtroom)
 "ogE" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -74774,6 +74780,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"ooY" = (
+/obj/machinery/computer/warrant{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "otq" = (
 /obj/structure/closet/emcloset,
 /obj/structure/sign/warning/vacuum/external{
@@ -74915,6 +74928,14 @@
 /obj/machinery/vending/snack/random,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port/aft)
+"oVO" = (
+/obj/machinery/flasher/portable,
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/warden)
 "oXP" = (
 /obj/structure/closet/crate,
 /obj/item/crowbar/red,
@@ -75858,14 +75879,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"tNu" = (
-/obj/machinery/door/airlock/security{
-	name = "Court Cell";
-	req_access_txt = "63"
-	},
-/obj/machinery/door/firedoor,
-/turf/closed/wall,
-/area/security/courtroom)
 "tOc" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -76033,14 +76046,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
-"uJW" = (
-/obj/machinery/flasher/portable,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/warden)
 "uLY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -76067,13 +76072,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"uOl" = (
-/obj/machinery/computer/warrant{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
 "uRM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -105424,7 +105422,7 @@ aBh
 aGq
 gPT
 aEV
-uOl
+ooY
 aHD
 aIN
 aJY
@@ -106194,7 +106192,7 @@ ajx
 ahB
 aGt
 qRr
-uJW
+oVO
 aDH
 adY
 aIQ
@@ -106709,8 +106707,8 @@ aBj
 aCr
 avk
 avk
-fEv
-tNu
+eph
+ofB
 aIS
 aKd
 aIR
@@ -107223,7 +107221,7 @@ ayF
 ayF
 aDI
 aFa
-jGJ
+kKH
 aHD
 aHD
 aHD
