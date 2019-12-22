@@ -1,5 +1,0 @@
-author: "swindly"
-delete-after: True
-changes: 
-  - bugfix: "Fixed bonfires not returning the logs used to build them when deconstructed"
-  - tweak: "Steel-cap logs can not be used to build bonfires"
