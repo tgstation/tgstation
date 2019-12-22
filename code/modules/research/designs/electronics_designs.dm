@@ -33,6 +33,16 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/ai_suit_sensor_upgrade
+	name = "Suit Sensor Virus Software Update"
+	desc = "A software package that will allow an artificial intelligence to enable all suit sensors."
+	id = "ai_suit_sensor_upgrade"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 5000, /datum/material/glass = 5000, /datum/material/gold = 20000, /datum/material/silver = 20000, /datum/material/diamond = 10000, /datum/material/titanium = 20000)
+	build_path = /obj/item/suitsensors_upgrade
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 ///////////////////////////////////
 //////////Nanite Devices///////////
 ///////////////////////////////////

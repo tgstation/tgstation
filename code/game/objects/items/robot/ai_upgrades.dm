@@ -50,3 +50,27 @@
 	log_game("[key_name(user)] has upgraded [key_name(AI)] with a [src].")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
 	qdel(src)
+
+
+//Forced Suit Sensors. If anyone adds more of these, you should probably make them subtypes, but two isn't enough to be worthwhile.
+/obj/item/suitsensors_upgrade
+	name = "suit sensors virus upgrade"
+	desc = "An illegal software package that will allow an artificial intelligence to distribute a virus to all sensor-enabled clothing, permanently enabling their vital sensors and tracking beacons."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "datadisk3"
+
+/obj/item/suitsensors_upgrade/afterattack(mob/living/silicon/ai/AI, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	if(!istype(AI))
+		return
+	if(!GLOB.force_sensors)
+		GLOB.force_sensors = TRUE
+		to_chat(AI, "<span class='userdanger'>[user] has upgraded you with a suit sensor virus!</span>")
+		to_chat(AI, "Thanks to a powerful virus package, all suit sensors will be permanently enabled, allowing you to monitor the condition of the crew and track them.")
+	to_chat(user, "<span class='notice'>You upgrade [AI]. [src] is consumed in the process.</span>")
+	log_game("[key_name(user)] has upgraded [key_name(AI)] with a [src].")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has upgraded [ADMIN_LOOKUPFLW(AI)] with a [src].")
+	qdel(src)
+
