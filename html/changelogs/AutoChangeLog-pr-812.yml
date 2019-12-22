@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - bugfix: "SM radiation no longer kills you in 12 seconds without rad protection."
