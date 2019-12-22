@@ -28,7 +28,7 @@
 	var/obj/item/clothing/under/U = H.w_uniform
 	if(!istype(U))
 		return 0
-	if(U.sensor_mode <= SENSOR_VITALS)
+	if(U.sensor_mode <= SENSOR_VITALS && !GLOB.force_sensors)
 		return 0
 	return 1
 
@@ -149,7 +149,6 @@
 			return "health-85"
 		else
 			return "health-100"
-	return "0"
 
 //HOOKS
 
@@ -302,7 +301,6 @@
 			return "crit"
 		else
 			return "dead"
-	return "dead"
 
 //Sillycone hooks
 /mob/living/silicon/proc/diag_hud_set_health()

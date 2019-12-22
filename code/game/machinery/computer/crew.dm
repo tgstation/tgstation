@@ -130,8 +130,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			U = H.w_uniform
 
 			// Are the suit sensors on?
-			if (nanite_sensors || ((U.has_sensor > 0) && U.sensor_mode))
-				pos = H.z == 0 || (nanite_sensors || U.sensor_mode == SENSOR_COORDS) ? get_turf(H) : null
+			if (nanite_sensors || ((U.has_sensor > 0) && (U.sensor_mode || GLOB.force_sensors)))
+				pos = H.z == 0 || (GLOB.force_sensors || nanite_sensors || U.sensor_mode == SENSOR_COORDS) ? get_turf(H) : null
 
 				// Special case: If the mob is inside an object confirm the z-level on turf level.
 				if (H.z == 0 && (!pos || pos.z != z))
@@ -148,12 +148,12 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 					assignment = ""
 					ijob = 80
 
-				if (nanite_sensors || U.sensor_mode >= SENSOR_LIVING)
+				if (GLOB.force_sensors || nanite_sensors || U.sensor_mode >= SENSOR_LIVING)
 					life_status = (!H.stat ? TRUE : FALSE)
 				else
 					life_status = null
 
-				if (nanite_sensors || U.sensor_mode >= SENSOR_VITALS)
+				if (GLOB.force_sensors || nanite_sensors || U.sensor_mode >= SENSOR_VITALS)
 					oxydam = round(H.getOxyLoss(),1)
 					toxdam = round(H.getToxLoss(),1)
 					burndam = round(H.getFireLoss(),1)
@@ -164,7 +164,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 					burndam = null
 					brutedam = null
 
-				if (nanite_sensors || U.sensor_mode >= SENSOR_COORDS)
+				if (GLOB.force_sensors || nanite_sensors || U.sensor_mode >= SENSOR_COORDS)
 					if (!pos)
 						pos = get_turf(H)
 					area = get_area_name(H, TRUE)

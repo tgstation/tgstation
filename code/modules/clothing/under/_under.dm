@@ -61,7 +61,10 @@
 		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
 		if(ismob(loc))
 			var/mob/M = loc
-			to_chat(M,"<span class='warning'>The sensors on the [src] change rapidly!</span>")
+			if(GLOB.force_sensors)
+				to_chat(M,"<span class='warning'>The sensors on the [src] flicker, but remain unchanged!</span>") //Technically changes, but sensor_mode is ignored anyway.
+			else
+				to_chat(M,"<span class='warning'>The sensors on the [src] change rapidly!</span>")
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
@@ -161,15 +164,18 @@
 	if (has_sensor == BROKEN_SENSORS)
 		. += "Its sensors appear to be shorted out."
 	else if(has_sensor > NO_SENSORS)
-		switch(sensor_mode)
-			if(SENSOR_OFF)
-				. += "Its sensors appear to be disabled."
-			if(SENSOR_LIVING)
-				. += "Its binary life sensors appear to be enabled."
-			if(SENSOR_VITALS)
-				. += "Its vital tracker appears to be enabled."
-			if(SENSOR_COORDS)
-				. += "Its vital tracker and tracking beacon appear to be enabled."
+		If(GLOB.force_sensors)
+			. += "Its vital tracker and tracking beacon appear to be enabled, and seem to be malfunctioning." //hint hint
+		else
+			switch(sensor_mode)
+				if(SENSOR_OFF)
+					. += "Its sensors appear to be disabled."
+				if(SENSOR_LIVING)
+					. += "Its binary life sensors appear to be enabled."
+				if(SENSOR_VITALS)
+					. += "Its vital tracker appears to be enabled."
+				if(SENSOR_COORDS)
+					. += "Its vital tracker and tracking beacon appear to be enabled."
 	if(attached_accessory)
 		. += "\A [attached_accessory] is attached to it."
 

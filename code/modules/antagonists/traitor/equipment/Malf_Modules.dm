@@ -873,6 +873,20 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 	unlock_text = replacetext(unlock_text, "CAMSUPGRADED", "<b>[upgraded_cameras]</b>") //This works, since unlock text is called after upgrade()
 
+//Hack Suit Sensors - sets all suit sensors on all clothing to max and prevents them from being turned off. Fairly obvious if anyone examines a jumpsuit or tries to change suit sensors.
+/datum/AI_Module/large/suit_sensors
+	module_name = "Hack Suit Sensors" //Announcement: "Suit Sensors!"
+	mod_pick_name = "suitsensors"
+	description = "Distribute a virus over the crew monitoring network, setting all suit sensors to max and preventing them from being turned off. The virus will also automatically infect any and all newly-created jumpsuits." //Announcement: "I wasn't asking."
+	one_purchase = TRUE
+	cost = 25 //Not quite omniscience, but it certainly helps!
+	upgrade = TRUE
+	unlock_text = "<span class='notice'>Viral payload distributed, all fabric-integrated lifesign monitors and tracking systems have been fully activated.</span>"
+	unlock_sound = 'sound/machines/defib_success.ogg'
+
+/datum/AI_Module/large/suit_sensors/upgrade()
+	GLOB.force_sensors = TRUE //It's easier and more efficient to set a global var that crew monitors check, than to iterate through every piece of clothing and change the sensor state.
+
 /datum/AI_Module/large/eavesdrop
 	module_name = "Enhanced Surveillance"
 	mod_pick_name = "eavesdrop"

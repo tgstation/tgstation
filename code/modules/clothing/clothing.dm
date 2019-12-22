@@ -191,14 +191,14 @@ BLIND     // can't see anything
 		return
 	if (!can_use(M))
 		return
-	if(src.has_sensor == LOCKED_SENSORS)
-		to_chat(usr, "The controls are locked.")
-		return 0
 	if(src.has_sensor == BROKEN_SENSORS)
 		to_chat(usr, "The sensors have shorted out!")
 		return 0
 	if(src.has_sensor <= NO_SENSORS)
 		to_chat(usr, "This suit does not have any sensors.")
+		return 0
+	if(src.has_sensor == LOCKED_SENSORS || GLOB.force_sensors)
+		to_chat(usr, "The controls are locked.") //
 		return 0
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")

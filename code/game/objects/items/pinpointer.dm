@@ -95,8 +95,8 @@
 	if((H.z == 0 || H.z == here.z) && istype(H.w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/U = H.w_uniform
 
-		// Suit sensors must be on maximum.
-		if(!U.has_sensor || (U.sensor_mode < SENSOR_COORDS && !ignore_suit_sensor_level))
+		// Suit sensors must be on maximum, or hacked.
+		if(!U.has_sensor || (U.sensor_mode < SENSOR_COORDS && (!ignore_suit_sensor_level || !GLOB.force_sensors)))
 			return FALSE
 
 		var/turf/there = get_turf(H)
