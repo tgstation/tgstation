@@ -312,6 +312,12 @@
 	var/obj/item/pda/PDA = locate() in all_contents
 	var/obj/item/radio/R = locate() in all_contents
 	var/obj/item/pen/P
+
+	if (PDA) // Prioritize PDA pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink
+		P = locate() in PDA
+	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
+		P = locate() in all_contents
+
 	var/obj/item/uplink_loc
 
 	if(traitor_mob.client && traitor_mob.client.prefs)
@@ -329,23 +335,15 @@
 				if(!uplink_loc)
 					uplink_loc = P
 			if(UPLINK_PEN)
-				if (PDA) // Prioritize PDA pen, otherwise the pocket protector pens will be chosen, which causes numerous ahelps about missing uplink
-					P = locate() in PDA
-				if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
-					P = locate() in all_contents
-					if(!P) // I have no pen and I must write.
-						var/obj/item/pen/inowhaveapen
-						if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
-							inowhaveapen = new /obj/item/pen(traitor_mob.back)
-						else
-							inowhaveapen = new /obj/item/pen(traitor_mob.loc)
-							traitor_mob.put_in_hands(inowhaveapen) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
-						P = inowhaveapen
 				uplink_loc = P
-				if(!uplink_loc)
-					uplink_loc = PDA
-				if(!uplink_loc)
-					uplink_loc = R
+
+	if(!uplink_loc) // We've looked everywhere, let's just give you a pen
+		if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
+			P = new /obj/item/pen(traitor_mob.back)
+		else
+			P = new /obj/item/pen(traitor_mob.loc)
+			traitor_mob.put_in_hands(P) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
+		uplink_loc = P
 
 	if (!uplink_loc)
 		if(!silent)
