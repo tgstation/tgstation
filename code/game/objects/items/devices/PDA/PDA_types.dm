@@ -62,6 +62,11 @@
 	default_cartridge = /obj/item/cartridge/medical
 	icon_state = "pda-medical"
 
+/obj/item/pda/psychiatrist
+	name = "psychiatrist PDA"
+	default_cartridge = /obj/item/cartridge/medical
+	icon_state = "pda-psychiatrist"
+
 /obj/item/pda/viro
 	name = "virology PDA"
 	default_cartridge = /obj/item/cartridge/medical

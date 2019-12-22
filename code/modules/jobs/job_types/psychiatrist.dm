@@ -22,11 +22,11 @@
 /datum/outfit/job/psychiatrist
 	name = "Psychiatrist"
 	jobtype = /datum/job/psychiatrist
-	belt = /obj/item/pda/clear
+	belt = /obj/item/pda/psychiatrist
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/civilian/curator
+	uniform = /obj/item/clothing/under/rank/medical/psychiatrist
 	shoes = /obj/item/clothing/shoes/laceup
-	suit =  /obj/item/clothing/suit/toggle/labcoat/psychiatrist
+	suit =  /obj/item/clothing/suit/toggle/labcoat
 	suit_store = /obj/item/flashlight/pen
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	glasses = /obj/item/clothing/glasses/regular/hipster
@@ -50,4 +50,6 @@
 	new /obj/item/storage/pill_bottle/haloperidol(src)
 	new /obj/item/storage/pill_bottle/alprazolam(src)
 	new /obj/item/storage/pill_bottle/lithium_carbonate(src)
+	new /obj/item/reagent_containers/glass/bottle/morphine(src)
+	new /obj/item/reagent_containers/glass/bottle/morphine(src)
 

@@ -1,6 +1,5 @@
 /*TODO:
 	PTSD
-	Schizophrenia
 */
 /datum/brain_trauma/psychological
 	var/cure_points = 1000
@@ -208,9 +207,9 @@
 		if(1)
 			owner.become_blind(PSYCH_TRAIT)
 		if(2)
-			owner.emote(pick("moan","giggle"))
+			owner.emote(pick("moan","giggle","laugh"))
 		if(3)
-			owner.emote("scream","giggle")
+			owner.emote(pick("scream","giggle","laugh"))
 		if(4)
 			owner.apply_status_effect(STATUS_EFFECT_SPASMS)
 		if(5)

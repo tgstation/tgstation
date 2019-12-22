@@ -60252,6 +60252,9 @@
 /obj/structure/bed,
 /obj/item/bedsheet,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/clothing/mask/muzzle,
 /turf/open/floor/plasteel/freezer,
 /area/medical/psychiatrist)
 "cCL" = (
@@ -60597,12 +60600,15 @@
 	dir = 10
 	},
 /obj/structure/bookcase/random/adult,
+/obj/machinery/status_display/evac{
+	pixel_y = 30
+	},
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cDB" = (
 /obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cDC" = (
 /obj/structure/extinguisher_cabinet{
@@ -60611,11 +60617,14 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cDD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -24
 	},
 /turf/open/floor/carpet/blue,
 /area/medical/psychiatrist)
@@ -60648,6 +60657,9 @@
 	},
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/machinery/newscaster{
+	pixel_x = 30
+	},
 /turf/open/floor/carpet/blue,
 /area/medical/psychiatrist)
 "cDN" = (
@@ -60656,6 +60668,9 @@
 	},
 /obj/structure/cable,
 /obj/structure/bed,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_y = 30
+	},
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cDO" = (
@@ -61161,6 +61176,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/chair/office,
 /turf/open/floor/carpet/blue,
 /area/medical/psychiatrist)
 "cEO" = (
@@ -61573,7 +61589,8 @@
 /obj/machinery/airalarm{
 	pixel_x = -30
 	},
-/turf/open/floor/plasteel/white,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cFN" = (
 /obj/structure/sink{
@@ -61583,7 +61600,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cFO" = (
 /obj/machinery/firealarm{
@@ -61846,7 +61863,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/obj/machinery/electric,
+/obj/machinery/iv_drip,
+/turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cGu" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
@@ -62053,7 +62072,7 @@
 /turf/closed/wall,
 /area/medical/psychiatrist)
 "cGH" = (
-/turf/open/floor/plasteel/white,
+/turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cGI" = (
 /obj/machinery/door/airlock/medical,
@@ -62083,6 +62102,9 @@
 	dir = 8
 	},
 /obj/structure/filingcabinet,
+/obj/structure/sign/poster/official/random{
+	pixel_x = 30
+	},
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cGM" = (
@@ -63328,9 +63350,6 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/generic,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cJw" = (
@@ -63348,9 +63367,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -64162,7 +64178,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/chapel/main)
 "cLg" = (
@@ -64190,9 +64205,6 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cLj" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -64456,9 +64468,6 @@
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "cLT" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -64499,10 +64508,6 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cLY" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -64520,9 +64525,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cMd" = (
@@ -64793,18 +64796,12 @@
 /turf/open/floor/plating,
 /area/chapel/office)
 "cME" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cMF" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -65208,11 +65205,6 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cNu" = (
-/obj/machinery/requests_console{
-	department = "Chapel";
-	departmentType = 2;
-	pixel_y = 30
-	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -65237,7 +65229,7 @@
 "cNx" = (
 /obj/item/flashlight/lamp,
 /obj/machinery/newscaster{
-	pixel_x = -30
+	pixel_y = 30
 	},
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -66371,8 +66363,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cPZ" = (
-/obj/machinery/light_switch{
-	pixel_x = 25
+/obj/machinery/button/crematorium{
+	id = "crematoriumChapel";
+	pixel_x = 26;
+	req_access_txt = "27"
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
@@ -67214,9 +67208,6 @@
 /area/science/xenobiology)
 "cRT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -71450,10 +71441,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "djX" = (
-/obj/machinery/button/crematorium{
-	id = "crematoriumChapel";
-	pixel_x = -26;
-	req_access_txt = "27"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/public/glass{
+	name = "Chapel Office";
+	req_access_txt = "22"
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
@@ -71954,7 +71945,7 @@
 /area/maintenance/starboard/aft)
 "dzK" = (
 /obj/structure/closet/secure_closet/psychiatrist,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/wood,
 /area/medical/psychiatrist)
 "dzQ" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -74452,13 +74443,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
-"mQr" = (
-/obj/machinery/camera{
-	c_tag = "Chapel Office - Backroom";
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/chapel/main)
 "mRT" = (
 /obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/plasteel/white,
@@ -96750,10 +96734,10 @@ cLa
 ozG
 cLa
 cMI
-cOP
 cPZ
+cOP
 cQT
-mQr
+cOP
 cRE
 cMI
 aaa
@@ -97008,10 +96992,10 @@ cTf
 eFN
 cMI
 cMI
+cMI
+cMI
+cMI
 djX
-cOP
-cOP
-cOP
 cMI
 aaa
 aaa
@@ -97515,7 +97499,7 @@ cHl
 bZT
 cHl
 cBR
-cgN
+cMa
 cLa
 cRF
 cOc
@@ -98543,7 +98527,7 @@ cFR
 diR
 iXc
 bTs
-cLY
+cLX
 cMH
 cNy
 cOg
@@ -100856,7 +100840,7 @@ cIC
 cJv
 bTs
 cLR
-cMa
+cLY
 cMI
 cNG
 cNC
@@ -101113,7 +101097,7 @@ bTs
 cJw
 bTs
 cLi
-cMa
+cLY
 cMI
 xep
 cNC

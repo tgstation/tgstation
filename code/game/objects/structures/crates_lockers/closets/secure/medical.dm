@@ -112,7 +112,11 @@
 /obj/structure/closet/secure_closet/psychiatrist
 	name = "\improper psychiatrist's cabinet"
 	req_access = list(ACCESS_PSYCHIATRIST)
-	icon_state = "med"
+	icon_state = "cabinet"
+	resistance_flags = FLAMMABLE
+	max_integrity = 70
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
 
 /obj/structure/closet/secure_closet/psychiatrist/PopulateContents()
 	..()
@@ -122,8 +126,10 @@
 	new /obj/item/clothing/suit/toggle/labcoat(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
-	new /obj/item/clothing/under/rank/civilian/curator(src)
+	new /obj/item/clothing/under/rank/medical/psychiatrist(src)
 	new /obj/item/radio/headset/headset_med(src)
 	new /obj/item/taperecorder(src)
 	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/gun/syringe(src)
+	new /obj/item/storage/box/syringes(src)
 

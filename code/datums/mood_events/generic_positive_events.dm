@@ -19,6 +19,12 @@
 /datum/mood_event/besthug/add_effects(mob/friend)
 	description = "<span class='nicegreen'>[friend.name] is great to be around, [friend.p_they()] makes me feel so happy!</span>\n"
 
+/datum/mood_event/near_psychotherapist
+	description = "<span class='nicegreen'>I feel so cozy around the psychotherapist!</span>\n"
+	mood_change = 4
+	timeout = 5 MINUTES
+
+
 /datum/mood_event/mood_swing_up
 	description = "<span class='nicegreen'>I feel good for no particular reason.</span>\n"
 	mood_change = 16

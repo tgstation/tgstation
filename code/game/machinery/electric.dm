@@ -1,9 +1,9 @@
 #define STASIS_TOGGLE_COOLDOWN 50
-/obj/machinery/stasis
-	name = "Lifeform Stasis Unit"
-	desc = "A not so comfortable looking bed with some nozzles at the top and bottom. It will keep someone in stasis."
+/obj/machinery/electric
+	name = "Electric Shock Therapy Unit"
+	desc = "A not so comfortable looking bed with some nozzles at the top and bottom. It will shock the buckled person after 10 seconds."
 	icon = 'icons/obj/machines/stasis.dmi'
-	icon_state = "stasis"
+	icon_state = "electric"
 	density = FALSE
 	can_buckle = TRUE
 	buckle_lying = 90
@@ -12,19 +12,20 @@
 	active_power_usage = 340
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
-	var/stasis_enabled = TRUE
+	var/electric_enabled = TRUE
 	var/last_stasis_sound = FALSE
-	var/stasis_can_toggle = 0
-	var/mattress_state = "stasis_on"
+	var/electric_can_toggle = 0
+	var/mattress_state = "electric_on"
+	var/safety = TRUE
 	var/obj/effect/overlay/vis/mattress_on
-	var/obj/machinery/computer/operating/op_computer
 
-/obj/machinery/stasis/examine(mob/user)
+/obj/machinery/electric/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.</span>"
-	. += "<span class='notice'>[src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to an operating computer.</span>"
+	. += "<span class='notice'>Alt-click to [electric_enabled ? "turn off" : "turn on"] the machine.</span>"
+	if(!safety)
+		. += "<span class='danger'>the maintenance panel looks heavily damaged, and wiring messed up!</span>"
 
-/obj/machinery/stasis/proc/play_power_sound()
+/obj/machinery/electric/proc/play_power_sound()
 	var/_running = stasis_running()
 	if(last_stasis_sound != _running)
 		var/sound_freq = rand(5120, 8800)
@@ -34,34 +35,27 @@
 			playsound(src, 'sound/machines/synth_no.ogg', 50, TRUE, frequency = sound_freq)
 		last_stasis_sound = _running
 
-/obj/machinery/stasis/AltClick(mob/user)
-	if(world.time >= stasis_can_toggle && user.canUseTopic(src, !issilicon(user)))
-		stasis_enabled = !stasis_enabled
-		stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
+/obj/machinery/electric/AltClick(mob/user)
+	if(world.time >= electric_can_toggle && user.canUseTopic(src, !issilicon(user)))
+		electric_enabled = !electric_enabled
+		electric_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
 		playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 		play_power_sound()
 		update_icon()
 
-/obj/machinery/stasis/Exited(atom/movable/AM, atom/newloc)
-	if(AM == occupant)
-		var/mob/living/L = AM
-		if(IS_IN_STASIS(L))
-			thaw_them(L)
-	. = ..()
+/obj/machinery/electric/proc/stasis_running()
+	return electric_enabled && is_operational()
 
-/obj/machinery/stasis/proc/stasis_running()
-	return stasis_enabled && is_operational()
-
-/obj/machinery/stasis/update_icon_state()
+/obj/machinery/electric/update_icon_state()
 	if(stat & BROKEN)
-		icon_state = "stasis_broken"
+		icon_state = "electric_broken"
 		return
 	if(panel_open || stat & MAINT)
-		icon_state = "stasis_maintenance"
+		icon_state = "electric_maintenance"
 		return
-	icon_state = "stasis"
+	icon_state = "electric"
 
-/obj/machinery/stasis/update_overlays()
+/obj/machinery/electric/update_overlays()
 	. = ..()
 	var/_running = stasis_running()
 	var/list/overlays_to_remove = managed_vis_overlays
@@ -79,66 +73,71 @@
 
 	SSvis_overlays.remove_vis_overlay(src, overlays_to_remove)
 
-/obj/machinery/stasis/obj_break(damage_flag)
+/obj/machinery/electric/obj_break(damage_flag)
 	. = ..()
 	if(.)
 		play_power_sound()
 
-/obj/machinery/stasis/power_change()
+/obj/machinery/electric/power_change()
 	. = ..()
 	play_power_sound()
 
-/obj/machinery/stasis/proc/chill_out(mob/living/target)
+/obj/machinery/electric/proc/shock_n_heal(mob/living/target)
 	if(target != occupant)
 		return
 	var/freq = rand(24750, 26550)
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
-	target.ExtinguishMob()
+	addtimer(CALLBACK(src, .proc/shock), 10 SECONDS)
 	use_power = ACTIVE_POWER_USE
 
-/obj/machinery/stasis/proc/thaw_them(mob/living/target)
-	target.remove_status_effect(STATUS_EFFECT_STASIS)
-	if(target == occupant)
-		use_power = IDLE_POWER_USE
+/obj/machinery/electric/proc/shock()
+	if(!(istype(occupant,/mob/living/carbon/human) && occupant))
+		return
+	var/mob/living/carbon/human/H = occupant
+	var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
+	playsound(src,  'sound/machines/defib_zap.ogg', 50, TRUE, -1)
+	new /obj/effect/particle_effect/sparks(get_turf(H))
+	if(safety)
+		mood.adjustPsychInstability(rand(-5,10))
+		H.Jitter(100)
+		H.electrocute_act(15,src)
+		unbuckle_mob(H)
+	else
+		mood.adjustPsychInstability(rand(-20,10))
+		H.Jitter(100)
+		H.electrocute_act(25,src)
 
-/obj/machinery/stasis/post_buckle_mob(mob/living/L)
+/obj/machinery/electric/post_buckle_mob(mob/living/L)
 	if(!can_be_occupant(L))
 		return
 	occupant = L
 	if(stasis_running() && check_nap_violations())
-		chill_out(L)
+		shock_n_heal(L)
 	update_icon()
 
-/obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
-	thaw_them(L)
+/obj/machinery/electric/post_unbuckle_mob(mob/living/L)
 	if(L == occupant)
 		occupant = null
 	update_icon()
 
-/obj/machinery/stasis/process()
+/obj/machinery/electric/process()
 	if( !( occupant && isliving(occupant) && check_nap_violations() ) )
 		use_power = IDLE_POWER_USE
 		return
-	var/mob/living/L_occupant = occupant
-	if(stasis_running())
-		if(!IS_IN_STASIS(L_occupant))
-			chill_out(L_occupant)
-	else if(IS_IN_STASIS(L_occupant))
-		thaw_them(L_occupant)
 
-/obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)
+/obj/machinery/electric/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
 	. |= default_deconstruction_screwdriver(user, "stasis_maintenance", "stasis", I)
 	update_icon()
 
-/obj/machinery/stasis/crowbar_act(mob/living/user, obj/item/I)
+/obj/machinery/electric/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
 	return default_deconstruction_crowbar(I) || .
 
-/obj/machinery/stasis/nap_violation(mob/violator)
+/obj/machinery/electric/nap_violation(mob/violator)
 	unbuckle_mob(violator, TRUE)
 
-/obj/machinery/stasis/attack_robot(mob/user)
+/obj/machinery/electric/attack_robot(mob/user)
 	if(Adjacent(user) && occupant)
 		unbuckle_mob(occupant)
 	else

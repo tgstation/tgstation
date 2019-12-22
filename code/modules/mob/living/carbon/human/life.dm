@@ -48,6 +48,9 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
+	if(HAS_TRAIT(src,TRAIT_PSYCHIATRIST))
+		handle_psychotherapist()
+
 	if(stat != DEAD)
 		return 1
 
@@ -61,12 +64,26 @@
 	return pressure
 
 
+/mob/living/carbon/human/proc/handle_psychotherapist()
+	for(var/mob/living/carbon/human/H in in_range(src,3))
+		if(H == src)
+			continue
+		var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
+		mood.adjustPsychInstability(1)
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "near_psychotherapist", /datum/mood_event/near_psychotherapist)
+	return
+
 /mob/living/carbon/human/handle_traits()
+
+
 	if (getOrganLoss(ORGAN_SLOT_BRAIN) >= 60)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
 	return ..()
+
+
+
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
