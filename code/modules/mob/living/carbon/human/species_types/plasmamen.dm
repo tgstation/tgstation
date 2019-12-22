@@ -26,7 +26,7 @@
 	// they can handle colder environments
 	// but they are hurt at hot temps faster as it is harder to hold their form
 	// and they will regain tempurature more slowly in some situations
-	bodytemp_normal = (BODYTEMP_NORMAL - 90)
+	bodytemp_normal = (BODYTEMP_NORMAL - 40)
 	bodytemp_autorecovery_min = 2
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 20) // about 40C
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
