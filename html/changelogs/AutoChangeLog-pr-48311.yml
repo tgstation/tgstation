@@ -1,4 +1,0 @@
-author: "swindly"
-delete-after: True
-changes: 
-  - bugfix: "Fixed crafting items using blacklisted subtypes of required items."
