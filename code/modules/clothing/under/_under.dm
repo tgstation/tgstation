@@ -164,7 +164,7 @@
 	if (has_sensor == BROKEN_SENSORS)
 		. += "Its sensors appear to be shorted out."
 	else if(has_sensor > NO_SENSORS)
-		If(GLOB.force_sensors)
+		if(GLOB.force_sensors)
 			. += "Its vital tracker and tracking beacon appear to be enabled, and seem to be malfunctioning." //hint hint
 		else
 			switch(sensor_mode)

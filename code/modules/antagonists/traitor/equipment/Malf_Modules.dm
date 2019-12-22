@@ -1,5 +1,6 @@
 #define DEFAULT_DOOMSDAY_TIMER 4500
 #define DOOMSDAY_ANNOUNCE_INTERVAL 600
+#define ANTAG_FREEZE 1 //Remove if the winter ever ends.
 
 GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/field/containment,
@@ -884,8 +885,13 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	unlock_text = "<span class='notice'>Viral payload distributed, all fabric-integrated lifesign monitors and tracking systems have been fully activated.</span>"
 	unlock_sound = 'sound/machines/defib_success.ogg'
 
-/datum/AI_Module/large/suit_sensors/upgrade()
-	GLOB.force_sensors = TRUE //It's easier and more efficient to set a global var that crew monitors check, than to iterate through every piece of clothing and change the sensor state.
+/datum/AI_Module/large/suit_sensors/upgrade(mob/living/silicon/ai/AI)
+	if(ANTAG_FREEZE && AI.mind.has_antag_datum(/datum/antagonist/traitor,TRUE)) //to avoid violating the permanent antag freeze
+		to_chat(owner, "<span class='notice'>Sorry! Syndicate-affiliated Artifical Intelligences are unable to use this right now!</span>")
+		var/datum/module_picker/M = AI.module_picker
+		M.processing_time += cost
+	else
+		GLOB.force_sensors = TRUE //It's easier and more efficient to set a global var that crew monitors check, than to iterate through every piece of clothing and change the sensor state.
 
 /datum/AI_Module/large/eavesdrop
 	module_name = "Enhanced Surveillance"
@@ -903,3 +909,4 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 #undef DEFAULT_DOOMSDAY_TIMER
 #undef DOOMSDAY_ANNOUNCE_INTERVAL
+#undef ANTAG_FREEZE
