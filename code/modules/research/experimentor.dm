@@ -89,7 +89,15 @@
 		/obj/item/stack/sheet,
 		/obj/item/reagent_containers/food,
 		/obj/item/reagent_containers/food/drinks,
-		/obj/item/research_notes
+		/obj/item/research_notes,
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
+		/obj/item/hand_tele,
+		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/clothing/shoes/magboots/advance,
+		/obj/item/reagent_containers/hypospray/CMO,
+		/obj/item/clothing/suit/hooded/ablative,
+		/obj/item/clothing/suit/armor/reactive/teleport,
 	))
 
 	critical_items_typecache = typecacheof(list(
@@ -100,14 +108,6 @@
 		/obj/item/slime_extract,
 		/obj/item/onetankbomb,
 		/obj/item/transfer_valve,
-		/obj/item/gun/energy/laser/captain,
-		/obj/item/gun/energy/e_gun/hos,
-		/obj/item/hand_tele,
-		/obj/item/tank/jetpack/oxygen/captain,
-		/obj/item/clothing/shoes/magboots/advance,
-		/obj/item/reagent_containers/hypospray/CMO,
-		/obj/item/clothing/suit/hooded/ablative,
-		/obj/item/clothing/suit/armor/reactive/teleport,
 		/obj/item/gun/energy/e_gun/nuclear,
 		/obj/item/stock_parts/cell/hyper
 	))
@@ -153,7 +153,7 @@
 
 /obj/machinery/rnd/experimentor/ui_interact(mob/user)
 	var/list/dat = list("<center>")
-	if(banned_items[loaded_item.type])
+	if(is_type_in_typecache(loaded_item, banned_items))
 		dat += "<b>Item is not cleared for use in E.X.P.E.R.I-MENTOR. If you believe this is in error, please contact Nanotrasen Central Command."
 		dat += "<b><a href='byond://?src=[REF(src)];function=eject'>Eject</A>"
 	else if(loaded_item)
