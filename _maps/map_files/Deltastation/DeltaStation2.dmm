@@ -114767,19 +114767,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
-"jfR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/power/apc,
-/obj/machinery/power/apc,
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/secondary/entry)
 "jjN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/camera{
@@ -151351,7 +151338,7 @@ aaa
 aaO
 aaO
 aaO
-jfR
+ajw
 ajV
 aky
 alm
