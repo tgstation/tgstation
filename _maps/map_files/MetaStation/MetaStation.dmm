@@ -4077,9 +4077,6 @@
 	pixel_x = 6;
 	pixel_y = 28
 	},
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "aiB" = (
@@ -13392,24 +13389,22 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aDy" = (
-/obj/structure/sign/warning/electricshock{
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
+	},
+/obj/structure/sign/warning/electricshock{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aDz" = (
-/obj/structure/sign/warning/electricshock{
-	pixel_y = 32
-	},
 /obj/machinery/camera{
 	c_tag = "Fore Primary Hallway Cells"
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
+/obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aDA" = (
@@ -13431,6 +13426,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
+	},
+/obj/structure/sign/warning/electricshock{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
@@ -14604,13 +14602,6 @@
 /obj/item/restraints/handcuffs,
 /obj/item/restraints/handcuffs,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/security/brig)
-"aGt" = (
-/obj/structure/chair{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -73745,6 +73736,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port/aft)
+"jnV" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "jnW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -102143,7 +102141,7 @@ ahx
 aiq
 aiq
 ajm
-aDw
+aDy
 aEL
 aGd
 aHx
@@ -102400,7 +102398,7 @@ ayw
 xjc
 cTY
 aCk
-aDy
+aDw
 aEM
 aFZ
 aHx
@@ -102657,7 +102655,7 @@ dhv
 azG
 eYX
 aCk
-aDw
+jnV
 aEN
 aGf
 aHx
@@ -102914,7 +102912,7 @@ ahx
 aiq
 aiq
 ajm
-aDx
+aDy
 dCo
 aGg
 aHx
@@ -103685,7 +103683,7 @@ adY
 ajx
 ajx
 adY
-aDw
+aDy
 aEN
 aGg
 aHx
@@ -103942,7 +103940,7 @@ ayA
 roZ
 pvK
 aBc
-aDx
+aDw
 aEQ
 aGj
 aHz
@@ -106254,7 +106252,7 @@ axo
 azQ
 snF
 eeh
-aGt
+aCr
 ajm
 avk
 aDH
@@ -106768,7 +106766,7 @@ axq
 aBf
 azP
 aBj
-aGt
+aCr
 ajm
 hdb
 avk
