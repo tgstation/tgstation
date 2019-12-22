@@ -112,7 +112,7 @@
 	icon_state = "guillotine_raised"
 
 /obj/structure/guillotine/proc/drop_blade(mob/user)
-	if (buckled_mobs.len && blade_sharpness)
+	if (has_buckled_mobs() && blade_sharpness)
 		var/mob/living/carbon/human/H = buckled_mobs[1]
 
 		if (!H)

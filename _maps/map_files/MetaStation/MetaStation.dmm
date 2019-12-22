@@ -779,6 +779,21 @@
 /obj/item/storage/photo_album/bar,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
+"abT" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "kitchenwindow";
+	name = "kitchen shutters"
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
+	},
+/area/crew_quarters/kitchen)
 "abV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light/small{
@@ -26057,9 +26072,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/power/apc/auto_name/west{
-	pixel_x = -26
-	},
+/obj/machinery/power/apc/auto_name/west,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
@@ -40504,8 +40517,8 @@
 "bLI" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/preopen{
-	name = "kitchen shutters";
-	id = "kitchenwindow"
+	id = "kitchenwindow";
+	name = "kitchen shutters"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/kitchen)
@@ -41348,21 +41361,6 @@
 /obj/effect/turf_decal/tile/bar,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"bNw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/preopen{
-	name = "kitchen shutters";
-	id = "kitchenwindow"
-	},
-/obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/crew_quarters/kitchen)
 "bNx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -41905,8 +41903,8 @@
 /area/hallway/primary/central)
 "bOQ" = (
 /obj/machinery/door/poddoor/preopen{
-	name = "kitchen shutters";
-	id = "kitchenwindow"
+	id = "kitchenwindow";
+	name = "kitchen shutters"
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -41940,7 +41938,6 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/storage/box/donkpockets,
 /obj/item/stack/packageWrap{
 	pixel_x = 6
 	},
@@ -41950,6 +41947,7 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -73681,10 +73679,10 @@
 "hBB" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/mint,
-/obj/item/storage/box/donkpockets,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -75537,8 +75535,8 @@
 /area/maintenance/port/aft)
 "qOS" = (
 /obj/machinery/door/poddoor/preopen{
-	name = "kitchen shutters";
-	id = "kitchenwindow"
+	id = "kitchenwindow";
+	name = "kitchen shutters"
 	},
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -75546,8 +75544,7 @@
 	pixel_y = 6
 	},
 /obj/item/reagent_containers/food/condiment/peppermill{
-	pixel_x = 8;
-	pixel_y = 0
+	pixel_x = 8
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/cafeteria{
@@ -75641,9 +75638,7 @@
 /turf/open/floor/wood,
 /area/vacant_room/office)
 "rxn" = (
-/obj/machinery/power/apc/auto_name/south{
-	pixel_y = -26
-	},
+/obj/machinery/power/apc/auto_name/south,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
@@ -109939,7 +109934,7 @@ bGZ
 bIt
 bKe
 bLI
-bNw
+abT
 bOQ
 qOS
 bLI

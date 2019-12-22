@@ -1,0 +1,5 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - rscadd: "Bank Machine now uses tgui-next UI."
+  - tweak: "Small UI tweaks for Gravity Generator and Equipment Reclaimer Console."

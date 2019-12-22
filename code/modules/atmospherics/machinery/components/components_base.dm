@@ -31,7 +31,7 @@
 	underlays.Cut()
 
 	var/turf/T = loc
-	if(level == 2 || !T.intact)
+	if(level == 2 || (istype(T) && !T.intact))
 		showpipe = TRUE
 		plane = GAME_PLANE
 	else
