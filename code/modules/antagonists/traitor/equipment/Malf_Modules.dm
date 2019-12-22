@@ -890,8 +890,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 /datum/AI_Module/large/suit_sensors/upgrade(mob/living/silicon/ai/AI)
 	if(ANTAG_FREEZE && AI.mind.has_antag_datum(/datum/antagonist/traitor,TRUE)) //to avoid violating the permanent antag freeze
 		to_chat(AI, "<span class='notice'>Sorry! Syndicate-affiliated Artifical Intelligences are unable to use this right now!</span>")
-		var/datum/module_picker/M = AI.malf_picker
-		M.processing_time += cost
+		var/datum/module_picker/module = AI.malf_picker
+		module.processing_time += cost
 	else
 		GLOB.force_sensors = TRUE //It's easier and more efficient to set a global var that crew monitors check, than to iterate through every piece of clothing and change the sensor state.
 
