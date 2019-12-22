@@ -285,13 +285,9 @@
 			else
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
-
 	//Clear all moods if no miasma at all
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-
-
-
 
 	breath.garbage_collect()
 
@@ -302,7 +298,13 @@
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
-	return
+	// the air you breath out should match your body tempurature
+	if(bodytemperature > breath.temperature)
+		// raise the tempurature of our breath to just below body temp
+		breath.temperature = bodytemperature - BREATH_TEMPERATURE_OFFSET
+	else
+		// the air is hot so we need to lower the air temp
+		breath.temperature = bodytemperature + BREATH_TEMPERATURE_OFFSET
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
