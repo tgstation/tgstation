@@ -49281,20 +49281,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cfG" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/computer/med_data,
-/turf/open/floor/plasteel/dark,
-/area/medical/sleeper)
-"cfH" = (
 /obj/structure/closet/wardrobe/pjs,
 /obj/machinery/airalarm{
 	pixel_y = 24
@@ -49309,6 +49295,20 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/turf/open/floor/plasteel/dark,
+/area/medical/sleeper)
+"cfH" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/med_data,
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
 "cfI" = (
@@ -49328,7 +49328,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/closet/wardrobe/pjs,
+/obj/machinery/computer/crew,
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
 "cfJ" = (
@@ -51919,12 +51919,7 @@
 /area/medical/medbay/central)
 "clp" = (
 /obj/structure/table,
-/obj/item/storage/firstaid{
-	pixel_x = 4;
-	pixel_y = 4
-	},
 /obj/machinery/light,
-/obj/item/storage/firstaid,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -51934,6 +51929,15 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular{
+	pixel_x = -4;
+	pixel_y = -4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
