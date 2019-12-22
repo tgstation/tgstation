@@ -317,14 +317,6 @@
 		P = locate() in PDA
 	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
 		P = locate() in all_contents
-		if(!P) // I do not have a pen.
-			var/obj/item/pen/inowhaveapen
-			if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
-				inowhaveapen = new /obj/item/pen(traitor_mob.back)
-			else
-				inowhaveapen = new /obj/item/pen(traitor_mob.loc)
-				traitor_mob.put_in_hands(inowhaveapen) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
-			P = inowhaveapen
 
 	var/obj/item/uplink_loc
 
@@ -344,10 +336,14 @@
 					uplink_loc = P
 			if(UPLINK_PEN)
 				uplink_loc = P
-				if(!uplink_loc)
-					uplink_loc = PDA
-				if(!uplink_loc)
-					uplink_loc = R
+
+	if(!uplink_loc) // We've looked everywhere, let's just give you a pen
+		if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
+			P = new /obj/item/pen(traitor_mob.back)
+		else
+			P = new /obj/item/pen(traitor_mob.loc)
+			traitor_mob.put_in_hands(P) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
+		uplink_loc = P
 
 	if (!uplink_loc)
 		if(!silent)
