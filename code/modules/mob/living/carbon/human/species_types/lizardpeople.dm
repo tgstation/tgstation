@@ -34,9 +34,6 @@
 /datum/species/lizard/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
 	return 0
 
-/datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H.grant_language(/datum/language/draconic)
-
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_lizard_name(gender)
