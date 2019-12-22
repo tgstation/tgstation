@@ -1,0 +1,5 @@
+author: "Miningby"
+delete-after: True
+changes: 
+  - balance: "Mining skill only affects tools like pickaxe/drill, and the skill can only be gained by using such tools"
+  - balance: "Mining tools have been returned to their previous speed, and mining skill boosts this speed further. Previously mining skill lowered the speed and brought it back to normal after reaching certain levels."

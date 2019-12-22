@@ -738,7 +738,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set_ghost_appearance()
 	if(client && client.prefs)
 		deadchat_name = client.prefs.real_name
-		mind.ghostname = client.prefs.real_name
+		if(mind)
+			mind.ghostname = client.prefs.real_name
 		name = client.prefs.real_name
 
 /mob/dead/observer/proc/set_ghost_appearance()
