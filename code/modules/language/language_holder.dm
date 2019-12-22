@@ -331,6 +331,22 @@ Key procs
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/terrum = list(LANGUAGE_ATOM))
 
+/datum/language_holder/golem/bone
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/terrum = list(LANGUAGE_ATOM),
+								/datum/language/calcic = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/terrum = list(LANGUAGE_ATOM),
+							/datum/language/calcic = list(LANGUAGE_ATOM))
+
+/datum/language_holder/golem/runic
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/terrum = list(LANGUAGE_ATOM),
+								/datum/language/narsie = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/terrum = list(LANGUAGE_ATOM),
+							/datum/language/narsie = list(LANGUAGE_ATOM))
+
 /datum/language_holder/fly
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 								/datum/language/buzzwords = list(LANGUAGE_ATOM))
@@ -348,22 +364,6 @@ Key procs
 								/datum/language/shadowtongue = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/shadowtongue = list(LANGUAGE_ATOM))
-
-/datum/language_holder/bonegolem
-	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-								/datum/language/terrum = list(LANGUAGE_ATOM),
-								/datum/language/calcic = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-							/datum/language/terrum = list(LANGUAGE_ATOM),
-							/datum/language/calcic = list(LANGUAGE_ATOM))
-
-/datum/language_holder/runegolem
-	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-								/datum/language/terrum = list(LANGUAGE_ATOM),
-								/datum/language/narsie = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
-							/datum/language/terrum = list(LANGUAGE_ATOM),
-							/datum/language/narsie = list(LANGUAGE_ATOM))
 
 /datum/language_holder/empty
 	understood_languages = list()
