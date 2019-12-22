@@ -320,6 +320,7 @@
 	icon_state = "railing_corner";
 	dir = 1
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
 /area/centcom)
 "aC" = (
@@ -520,7 +521,19 @@
 "bg" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet/black,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
+"bn" = (
+/obj/effect/turf_decal/stripes/white/line,
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "bq" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
@@ -538,6 +551,16 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"bu" = (
+/obj/structure/chair/sofa{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8;
+	light_color = "#e8eaff"
+	},
+/turf/open/floor/wood,
+/area/centcom)
 "bv" = (
 /obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
@@ -567,6 +590,14 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
+"bD" = (
+/obj/structure/fluff/railing{
+	dir = 4
+	},
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/space_heater,
+/turf/open/floor/wood,
+/area/centcom)
 "bE" = (
 /obj/machinery/light{
 	dir = 1
@@ -617,7 +648,11 @@
 	layer = 2.9
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "bR" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -683,6 +718,17 @@
 	icon_state = "kitchen_cold";
 	name = "Kitchen Cold Room"
 	})
+"ce" = (
+/obj/effect/turf_decal/stripes/white/box,
+/obj/structure/closet/boxinggloves{
+	anchored = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "cg" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/bulletproof,
@@ -739,6 +785,13 @@
 /area/centcom/prison{
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
+	})
+"cn" = (
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
 	})
 "co" = (
 /obj/machinery/light{
@@ -799,6 +852,13 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
+"cB" = (
+/obj/structure/table/wood,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom)
 "cE" = (
 /obj/structure/chair/comfy/teal{
 	dir = 8
@@ -844,7 +904,11 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken2"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "cK" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -873,7 +937,11 @@
 "cN" = (
 /obj/structure/weightmachine/stacklifter,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "cP" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -969,7 +1037,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "de" = (
 /obj/structure{
 	density = 1;
@@ -1026,7 +1098,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "dr" = (
 /obj/machinery/computer/crew{
 	dir = 8
@@ -1041,7 +1117,11 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "dv" = (
 /obj/machinery/vending/dinnerware,
 /obj/machinery/light{
@@ -1056,7 +1136,11 @@
 /obj/structure/bed,
 /obj/item/bedsheet/orange,
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "dx" = (
 /obj/machinery/door/airlock/security{
 	name = "Arrivals Checkpoint";
@@ -1104,6 +1188,14 @@
 	name = "Arrivals Checkpoint";
 	icon_state = "rightsecure";
 	dir = 2
+	},
+/obj/machinery/door/window/brigdoor/northright{
+	name = "Arrivals Checkpoint";
+	req_access_txt = "63"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "cp1_privacy";
+	name = "Checkpoint 1"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/prison{
@@ -1161,7 +1253,11 @@
 /turf/open/floor/pod{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "dN" = (
 /obj/machinery/vending/games{
 	desc = "Vends things that help with tabletop RPGs.";
@@ -1242,7 +1338,11 @@
 "dZ" = (
 /obj/machinery/doomsday_device,
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "eb" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/public/glass{
@@ -1297,12 +1397,20 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "eg" = (
 /obj/structure/bed,
 /obj/item/bedsheet/black,
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "ei" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -1336,7 +1444,11 @@
 "eq" = (
 /obj/machinery/doomsday_device,
 /turf/open/floor/carpet/red,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "er" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel/dark,
@@ -1364,7 +1476,11 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "ez" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
@@ -1525,7 +1641,11 @@
 	anchored = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "eR" = (
 /obj/structure{
 	anchored = 1;
@@ -1545,7 +1665,11 @@
 	},
 /obj/machinery/vending/sovietsoda,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "eS" = (
 /obj/item/paper/fluff{
 	desc = "Top-Secret Document";
@@ -1555,6 +1679,10 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plating/snowed/temperatre,
 /area/space)
+"eT" = (
+/obj/item/disk/nuclear/fake,
+/turf/open/floor/plating,
+/area/centcom)
 "eU" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1567,7 +1695,11 @@
 /obj/item/clothing/under/suit/white,
 /obj/item/clothing/under/suit/white/skirt,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "eV" = (
 /turf/open/floor/plasteel,
 /area/centcom)
@@ -1586,7 +1718,11 @@
 /turf/open/floor/pod/dark{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "eX" = (
 /obj/structure{
 	anchored = 1;
@@ -1666,7 +1802,11 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "fs" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -1914,7 +2054,11 @@
 	},
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "gI" = (
 /obj/machinery/light/floor,
 /turf/open/floor/carpet,
@@ -1951,6 +2095,7 @@
 /obj/structure/fluff/railing/corner{
 	dir = 4
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
 /area/centcom)
 "gN" = (
@@ -1966,7 +2111,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "gR" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -2029,14 +2178,22 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "hd" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "hf" = (
 /obj/structure/mirror{
 	pixel_y = -32
@@ -2063,7 +2220,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "hk" = (
 /obj/structure/rack,
 /obj/item/storage/fancy/donut_box,
@@ -2107,7 +2268,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "hw" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/public/glass{
@@ -2150,7 +2315,11 @@
 /obj/structure/bed,
 /obj/item/bedsheet/blue,
 /turf/open/floor/carpet/blue,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "hC" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -2197,13 +2366,21 @@
 /obj/structure/bed,
 /obj/item/bedsheet/purple,
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "hP" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "hQ" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/reagent_containers/food/snacks/sandwich,
@@ -2260,6 +2437,7 @@
 	icon_state = "railing";
 	dir = 1
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
 /area/centcom)
 "id" = (
@@ -2359,7 +2537,11 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "iM" = (
 /obj/machinery/shuttle_manipulator{
 	desc = "A holographic display of the cruise shuttle we're on right now.";
@@ -2406,12 +2588,20 @@
 "iU" = (
 /obj/structure/dresser,
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "iV" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/candy,
 /turf/open/floor/carpet/black,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "iZ" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -2427,11 +2617,19 @@
 /obj/structure/table/reinforced,
 /obj/item/toy/katana,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "ja" = (
 /obj/structure/chair/wood,
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "jb" = (
 /obj/structure/sign/plaques/golden{
 	pixel_y = 32
@@ -2618,7 +2816,11 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "jJ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -2668,6 +2870,7 @@
 /obj/structure/fluff/railing{
 	density = 0
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
 /area/centcom)
 "jW" = (
@@ -2698,6 +2901,29 @@
 	},
 /turf/open/floor/carpet,
 /area/centcom)
+"kd" = (
+/obj/structure{
+	anchored = 1;
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "dirt";
+	layer = 1;
+	mouse_opacity = 0;
+	name = "dust"
+	},
+/obj/structure{
+	anchored = 1;
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "dirt";
+	layer = 1;
+	mouse_opacity = 0;
+	name = "dust"
+	},
+/turf/open/floor/plating,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "ke" = (
 /obj/structure/chair/wood/wings{
 	dir = 8;
@@ -2749,7 +2975,11 @@
 	anchored = 1
 	},
 /turf/open/floor/carpet/red,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "kp" = (
 /turf/open/floor/carpet/red,
 /area/centcom/prison{
@@ -2773,7 +3003,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "ku" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/reagent_containers/food/snacks/spaghetti/meatballspaghetti,
@@ -2833,6 +3067,13 @@
 	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
 	icon_state = "vent_out";
 	name = "air vent"
+	},
+/obj/machinery/button/door/indestructible{
+	id = "cp1_privacy";
+	name = "Privacy Shutters";
+	pixel_x = 7;
+	pixel_y = -32;
+	req_access_txt = "63"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/prison{
@@ -2908,7 +3149,11 @@
 	anchored = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "kZ" = (
 /obj/machinery/light{
 	light_color = "#cee5d2"
@@ -2963,6 +3208,7 @@
 	})
 "lj" = (
 /obj/structure/fluff/railing,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
 /area/centcom)
 "ln" = (
@@ -3057,7 +3303,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "lN" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -3144,7 +3394,11 @@
 	anchored = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "lZ" = (
 /obj/machinery/light{
 	dir = 8;
@@ -3159,7 +3413,11 @@
 	anchored = 1
 	},
 /turf/open/floor/carpet/green,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "md" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/glass/rag{
@@ -3225,13 +3483,29 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "mo" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/carpet/red,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
+"mp" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "mr" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
@@ -3263,7 +3537,11 @@
 	},
 /obj/machinery/vending/sustenance,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "mt" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -3319,7 +3597,11 @@
 /obj/structure/bed,
 /obj/item/bedsheet/grey,
 /turf/open/floor/carpet/red,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "mA" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -3382,7 +3664,11 @@
 	name = "dust"
 	},
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "mE" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
@@ -3391,6 +3677,10 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"mG" = (
+/obj/item/toy/nuke,
+/turf/open/floor/plating,
+/area/centcom)
 "mH" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -3428,7 +3718,11 @@
 	anchored = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "mN" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -3508,6 +3802,12 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
+"ng" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/space)
 "nh" = (
 /obj/structure/fluff/railing{
 	icon_state = "railing";
@@ -3616,7 +3916,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "nC" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -3816,7 +4120,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "ox" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -3897,7 +4205,11 @@
 "oN" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet/green,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "oQ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -3974,6 +4286,7 @@
 /obj/item/clothing/under/suit/waiter,
 /obj/item/clothing/under/suit/waiter,
 /obj/item/clothing/under/suit/waiter,
+/obj/item/toy/figure/mime,
 /turf/open/floor/wood,
 /area/centcom{
 	icon_state = "bar";
@@ -3991,6 +4304,13 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
+"pq" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom)
 "pr" = (
 /obj/structure/fluff{
 	desc = "Has a valve and pump attached to it.";
@@ -4080,7 +4400,11 @@
 /turf/open/floor/pod/dark{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "pO" = (
 /obj/machinery/processor,
 /turf/open/floor/plasteel/cafeteria,
@@ -4116,7 +4440,11 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "qg" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -4180,6 +4508,10 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
+"qv" = (
+/obj/machinery/light,
+/turf/open/openspace,
+/area/space)
 "qy" = (
 /obj/structure{
 	anchored = 1;
@@ -4201,7 +4533,11 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "qB" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/item/paper_bin{
@@ -4211,7 +4547,11 @@
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "qE" = (
 /obj/structure/rack,
 /obj/item/gun/energy/laser{
@@ -4292,7 +4632,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "qU" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -4399,6 +4743,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/toy/figure/clown,
 /turf/open/floor/wood,
 /area/centcom{
 	icon_state = "bar";
@@ -4415,7 +4760,11 @@
 	},
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "rt" = (
 /obj/structure/closet/secure_closet/freezer/fridge{
 	anchored = 1
@@ -4428,7 +4777,11 @@
 /obj/structure/table/wood,
 /obj/item/pda/clear,
 /turf/open/floor/carpet/blue,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "rx" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -4541,7 +4894,11 @@
 	},
 /obj/structure/weightmachine/weightlifter,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "rZ" = (
 /obj/structure{
 	anchored = 1;
@@ -4558,7 +4915,11 @@
 /turf/open/floor/pod/dark{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "se" = (
 /obj/machinery/vending/snack/blue,
 /turf/open/floor/plasteel/dark,
@@ -4581,7 +4942,11 @@
 	pixel_y = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "sh" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral,
@@ -4611,7 +4976,11 @@
 "sl" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet/red,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "sm" = (
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
@@ -4686,7 +5055,11 @@
 	},
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "sF" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
@@ -4778,7 +5151,11 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "ti" = (
 /obj/machinery/door/airlock/glass_large,
 /turf/open/floor/carpet/green,
@@ -4858,13 +5235,24 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/mask/facehugger/toy,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "tz" = (
 /obj/structure/piano,
 /turf/open/floor/wood,
 /area/centcom{
 	icon_state = "bar";
 	name = "Bar"
+	})
+"tA" = (
+/turf/open/floor/carpet/green,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
 	})
 "tC" = (
 /obj/structure/table,
@@ -4931,6 +5319,8 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
+/obj/item/stamp,
+/obj/item/stamp/denied,
 /turf/open/floor/plasteel,
 /area/centcom/prison{
 	icon_state = "checkpoint1";
@@ -4996,7 +5386,11 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/blue,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "tU" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph{
 	pixel_x = 32
@@ -5004,7 +5398,11 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "tX" = (
 /obj/machinery/door/airlock/security{
 	name = "Arrivals Checkpoint";
@@ -5087,7 +5485,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "ur" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -5113,7 +5515,11 @@
 	},
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "uw" = (
 /obj/machinery/clonepod,
 /turf/open/floor/plasteel/showroomfloor,
@@ -5122,7 +5528,11 @@
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /turf/open/floor/carpet/black,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "uB" = (
 /obj/structure/closet,
 /obj/effect/turf_decal/bot,
@@ -5168,7 +5578,11 @@
 	anchored = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "uH" = (
 /obj/structure/chair/comfy{
 	color = "#ff0000";
@@ -5190,7 +5604,11 @@
 /turf/open/floor/pod/dark{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "uL" = (
 /obj/machinery/door/airlock/security{
 	name = "Arrivals Checkpoint";
@@ -5229,13 +5647,21 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "va" = (
 /obj/structure/sign/poster/contraband/pwr_game{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "vb" = (
 /obj/effect/turf_decal/stripes/white/box,
 /obj/structure/closet/boxinggloves{
@@ -5253,7 +5679,11 @@
 	},
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "vf" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -5304,7 +5734,11 @@
 	anchored = 1
 	},
 /turf/open/floor/carpet/blue,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "vC" = (
 /obj/structure/table/wood,
 /obj/item/instrument/banjo,
@@ -5323,7 +5757,11 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "vH" = (
 /obj/structure/piano{
 	desc = "How theatrical!";
@@ -5418,7 +5856,11 @@
 	},
 /obj/structure/chair/sofa/right,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "vT" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/secure_closet/contraband/armory,
@@ -5491,6 +5933,11 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/carpet/royalblack,
 /area/centcom)
+"wg" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/toy/figure/ian,
+/turf/open/floor/carpet/black,
+/area/library/lounge)
 "wn" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/bot,
@@ -5566,7 +6013,11 @@
 "wD" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet/blue,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "wG" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
@@ -5580,7 +6031,11 @@
 	pixel_y = 5
 	},
 /turf/open/floor/carpet/green,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "wI" = (
 /obj/machinery/light{
 	dir = 8
@@ -5630,7 +6085,11 @@
 	},
 /obj/structure/chair/sofa/left,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "wQ" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/carpet/black,
@@ -5641,7 +6100,11 @@
 "wR" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "wS" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/showroomfloor,
@@ -5657,7 +6120,11 @@
 /obj/item/clothing/under/rank/civilian/lawyer/black,
 /obj/item/clothing/under/rank/civilian/lawyer/black/skirt,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "wW" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/peppermill{
@@ -5775,6 +6242,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
+/obj/item/toy/figure/bartender,
 /turf/open/floor/plasteel,
 /area/centcom{
 	icon_state = "bar";
@@ -5785,7 +6253,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "xw" = (
 /turf/closed/indestructible/riveted,
 /area/centcom)
@@ -5849,7 +6321,11 @@
 	layer = 2.9
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "xM" = (
 /turf/closed/indestructible/riveted{
 	name = "Hull"
@@ -5880,7 +6356,30 @@
 	anchored = 1
 	},
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
+"xV" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	icon_state = "tile_corner";
+	dir = 4
+	},
+/obj/structure/punching_bag,
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "xW" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -6079,7 +6578,11 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "yS" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -6216,7 +6719,11 @@
 	})
 "zw" = (
 /turf/open/floor/carpet/blue,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "zx" = (
 /obj/structure/kitchenspike,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -6332,6 +6839,7 @@
 	icon_state = "railing";
 	dir = 10
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
 /area/centcom)
 "zQ" = (
@@ -6362,7 +6870,11 @@
 	anchored = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "zT" = (
 /obj/machinery/computer/camera_advanced,
 /turf/open/floor/carpet,
@@ -6454,7 +6966,11 @@
 	},
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Ag" = (
 /obj/structure{
 	anchored = 1;
@@ -6477,14 +6993,22 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Aj" = (
 /obj/structure/table/wood,
 /obj/item/pen/fountain/captain{
 	name = "fancy fountain pen"
 	},
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "An" = (
 /obj/machinery/light{
 	light_color = "#cee5d2"
@@ -6675,6 +7199,7 @@
 /obj/item/clothing/accessory/fan_mime_pin,
 /obj/item/clothing/accessory/fan_mime_pin,
 /obj/item/clothing/accessory/fan_mime_pin,
+/obj/item/toy/figure/assistant,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
@@ -6746,7 +7271,11 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Bo" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
@@ -6788,6 +7317,14 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
+"Bv" = (
+/obj/effect/turf_decal/stripes/white/full,
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Bw" = (
 /obj/structure/kitchenspike,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -6821,7 +7358,11 @@
 	},
 /obj/machinery/vending/cola/shamblers,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "BK" = (
 /mob/living/simple_animal/bot/secbot{
 	arrest_type = 1;
@@ -6859,7 +7400,11 @@
 "BV" = (
 /obj/structure/weightmachine/weightlifter,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "BY" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -6908,7 +7453,11 @@
 	},
 /obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Cf" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -6936,7 +7485,11 @@
 /obj/item/clothing/under/suit/black,
 /obj/item/clothing/under/suit/black/skirt,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Ck" = (
 /obj/machinery/light{
 	dir = 4
@@ -7030,7 +7583,11 @@
 /obj/item/paper_bin,
 /obj/item/pen/blue,
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "CA" = (
 /obj/structure{
 	anchored = 1;
@@ -7044,7 +7601,11 @@
 /turf/open/floor/pod/dark{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "CD" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/carpet/black,
@@ -7081,6 +7642,16 @@
 /area/centcom{
 	icon_state = "cafeteria";
 	name = "Cafeteria"
+	})
+"CK" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
 	})
 "CN" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -7121,7 +7692,11 @@
 /turf/open/floor/pod/dark{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "CT" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -7144,7 +7719,21 @@
 "Da" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet/red,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
+"Dc" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Df" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
@@ -7222,10 +7811,16 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Dt" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
+/obj/item/stamp/denied,
+/obj/item/stamp,
 /turf/open/floor/plasteel,
 /area/centcom/prison{
 	icon_state = "checkpoint1";
@@ -7257,6 +7852,24 @@
 /obj/structure/table/optable,
 /turf/open/floor/plasteel/showroomfloor,
 /area/centcom)
+"DB" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	icon_state = "tile_corner";
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "DE" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/dark,
@@ -7305,7 +7918,11 @@
 "DL" = (
 /obj/structure/dresser,
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "DM" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
@@ -7444,7 +8061,11 @@
 /obj/structure/table/wood,
 /obj/item/paperplane,
 /turf/open/floor/carpet/green,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Eo" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -7480,7 +8101,11 @@
 	},
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Ew" = (
 /obj/structure/table/wood/fancy/green,
 /obj/item/reagent_containers/food/snacks/grilledcheese,
@@ -7503,7 +8128,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "EB" = (
 /obj/machinery/light{
 	dir = 1
@@ -7681,7 +8310,11 @@
 /obj/structure/bed,
 /obj/item/bedsheet/red,
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Fn" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -7744,7 +8377,11 @@
 	pixel_y = 8
 	},
 /turf/open/floor/carpet/red,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "FD" = (
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 8
@@ -7778,7 +8415,11 @@
 "FG" = (
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "FH" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
@@ -7806,6 +8447,16 @@
 	},
 /turf/open/floor/plating,
 /area/centcom)
+"FK" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "cp2_privacy";
+	name = "Checkpoint 2"
+	},
+/turf/closed/indestructible/fakeglass,
+/area/centcom/prison{
+	icon_state = "checkpoint1";
+	name = "Arrivals Checkpoint"
+	})
 "FL" = (
 /obj/effect/oneway{
 	icon_state = "field_dir";
@@ -7842,7 +8493,11 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "FS" = (
 /obj/vehicle/ridden/secway,
 /obj/item/key/security,
@@ -7867,7 +8522,11 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "FX" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -7918,7 +8577,11 @@
 	},
 /obj/item/stack/wrapping_paper,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Gh" = (
 /obj/machinery/smartfridge/food,
 /turf/open/floor/plasteel/cafeteria,
@@ -8077,7 +8740,11 @@
 /turf/open/floor/pod/dark{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "GV" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -8402,7 +9069,11 @@
 "Im" = (
 /obj/machinery/doomsday_device,
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "In" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
@@ -8476,7 +9147,11 @@
 "Ix" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet/black,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Iy" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -8494,11 +9169,22 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
+"IA" = (
+/turf/open/floor/carpet/red,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "ID" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "IE" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security";
@@ -8560,7 +9246,11 @@
 "IP" = (
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "IQ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -8571,7 +9261,11 @@
 	},
 /obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "IR" = (
 /turf/open/floor/plasteel/stairs{
 	name = "stairs"
@@ -8594,7 +9288,11 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Jl" = (
 /obj/machinery/door/airlock/glass_large,
 /turf/open/floor/wood,
@@ -8695,7 +9393,11 @@
 /obj/item/clothing/under/rank/civilian/lawyer/red,
 /obj/item/clothing/under/rank/civilian/lawyer/red/skirt,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "JI" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -8705,12 +9407,35 @@
 	},
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "JJ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/white,
 /area/space)
+"JL" = (
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "vent_out";
+	name = "air vent"
+	},
+/obj/machinery/button/door/indestructible{
+	id = "cp2_privacy";
+	name = "Privacy Shutters";
+	pixel_x = 7;
+	pixel_y = 32;
+	req_access_txt = "63"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison{
+	icon_state = "checkpoint1";
+	name = "Arrivals Checkpoint"
+	})
 "JO" = (
 /obj/item/twohanded/required/kirbyplants/random{
 	anchored = 1
@@ -8786,7 +9511,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Kp" = (
 /turf/closed/indestructible/fakeglass,
 /area/centcom/prison{
@@ -8822,7 +9551,11 @@
 	},
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "KE" = (
 /obj/machinery/icecream_vat{
 	anchored = 1
@@ -8835,6 +9568,10 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/northright{
 	name = "Arrivals Checkpoint"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "cp2_privacy";
+	name = "Checkpoint 2"
 	},
 /turf/open/floor/plasteel,
 /area/centcom/prison{
@@ -8937,7 +9674,11 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Li" = (
 /obj/machinery/light{
 	dir = 1
@@ -9066,7 +9807,11 @@
 /obj/structure/bed,
 /obj/item/bedsheet/green,
 /turf/open/floor/carpet/green,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "LM" = (
 /obj/structure/table/glass,
 /obj/item/folder/white,
@@ -9113,7 +9858,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "LU" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
@@ -9150,6 +9899,12 @@
 	dir = 8
 	},
 /area/centcom)
+"Md" = (
+/obj/machinery/light{
+	light_color = "#cee5d2"
+	},
+/turf/open/openspace,
+/area/space)
 "Me" = (
 /obj/structure/dresser,
 /obj/structure/sign/poster/contraband/clown{
@@ -9171,7 +9926,11 @@
 /turf/open/floor/pod/dark{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Mi" = (
 /obj/structure/bed{
 	desc = "This isn't used.";
@@ -9185,7 +9944,25 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken4"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
+"Mm" = (
+/obj/effect/turf_decal/stripes/white/box,
+/obj/structure/closet/masks{
+	anchored = 1
+	},
+/obj/item/clothing/mask/joy,
+/obj/item/clothing/mask/gondola,
+/obj/item/clothing/mask/horsehead,
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Mn" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -9305,6 +10082,21 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"MN" = (
+/obj/structure/table/wood,
+/turf/open/floor/carpet/green,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
+"MO" = (
+/turf/open/floor/carpet/black,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "MP" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -9342,7 +10134,11 @@
 	pixel_x = -6
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "MY" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -9488,7 +10284,11 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "NK" = (
 /obj/structure/mirror{
 	step_x = 0;
@@ -9523,7 +10323,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "NQ" = (
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /turf/open/floor/plasteel/white,
@@ -9580,7 +10384,11 @@
 	name = "Cabin 1"
 	},
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "NW" = (
 /obj/structure{
 	anchored = 1;
@@ -9600,7 +10408,11 @@
 	},
 /obj/structure/chair/sofa,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "NX" = (
 /obj/structure/table/wood/poker,
 /obj/structure{
@@ -9650,7 +10462,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Oi" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/red,
@@ -9735,16 +10551,6 @@
 /area/centcom/prison{
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
-	})
-"OB" = (
-/obj/effect/baseturf_helper/beach{
-	baseturf = /turf/open/floor/plating/dirt;
-	name = "dirt baseturf helper"
-	},
-/turf/open/floor/wood,
-/area/centcom{
-	icon_state = "bar";
-	name = "Bar"
 	})
 "OC" = (
 /obj/structure/table/reinforced,
@@ -10110,7 +10916,11 @@
 /turf/open/floor/pod/dark{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "PX" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -10134,6 +10944,7 @@
 /obj/structure/fluff/railing{
 	dir = 4
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
 /area/centcom)
 "Qd" = (
@@ -10185,7 +10996,11 @@
 	})
 "Qg" = (
 /turf/open/floor/plasteel/grimy,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Qh" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
@@ -10230,9 +11045,6 @@
 /obj/machinery/computer/operating{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -10243,12 +11055,18 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/centcom)
 "Qs" = (
 /turf/open/floor/plating/snowed/temperatre,
 /area/space)
+"Qx" = (
+/turf/open/floor/wood,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "QG" = (
 /obj/structure{
 	anchored = 1;
@@ -10261,7 +11079,11 @@
 /turf/open/floor/pod/light{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "QH" = (
 /obj/effect/oneway{
 	icon_state = "field_dir";
@@ -10279,7 +11101,11 @@
 /obj/item/clothing/under/suit/black_really,
 /obj/item/clothing/under/suit/black_really/skirt,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "QL" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
@@ -10374,7 +11200,24 @@
 /turf/open/floor/pod/dark{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
+"QU" = (
+/obj/effect/turf_decal/stripes/white/box,
+/obj/structure/closet/athletic_mixed{
+	anchored = 1
+	},
+/obj/item/clothing/under/costume/jabroni,
+/obj/item/clothing/under/costume/jabroni,
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "QV" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -10451,7 +11294,11 @@
 	},
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Rq" = (
 /turf/open/floor/plasteel,
 /area/centcom/prison{
@@ -10507,7 +11354,11 @@
 "RB" = (
 /obj/machinery/doomsday_device,
 /turf/open/floor/carpet/green,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "RE" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 4
@@ -10531,7 +11382,11 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/carpet/black,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "RK" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -10541,7 +11396,11 @@
 	},
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "RM" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
@@ -10689,7 +11548,11 @@
 "SD" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet/blue,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "SK" = (
 /obj/structure/chair{
 	dir = 4
@@ -10897,7 +11760,11 @@
 "TC" = (
 /obj/machinery/doomsday_device,
 /turf/open/floor/carpet/black,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "TD" = (
 /obj/machinery/light{
 	dir = 4
@@ -10954,7 +11821,11 @@
 /obj/structure/table/reinforced,
 /obj/item/toy/eightball,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "TN" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -11200,7 +12071,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "UI" = (
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/centcom)
@@ -11234,12 +12109,15 @@
 /obj/structure/fluff/railing{
 	dir = 5
 	},
+/obj/structure/fans/tiny/invisible,
+/obj/machinery/space_heater,
 /turf/open/floor/wood,
 /area/centcom)
 "UR" = (
 /obj/structure/fluff/railing/corner{
 	dir = 8
 	},
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
 /area/centcom)
 "US" = (
@@ -11323,9 +12201,14 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Vu" = (
 /obj/structure/fluff/railing/corner,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
 /area/centcom)
 "Vz" = (
@@ -11333,7 +12216,11 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/green,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "VE" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -11390,6 +12277,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/item/toy/figure/syndie,
 /turf/open/floor/plasteel,
 /area/centcom/prison{
 	icon_state = "security";
@@ -11455,7 +12343,11 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/carpet/blue,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Wc" = (
 /obj/structure{
 	anchored = 1;
@@ -11468,14 +12360,22 @@
 /turf/open/floor/pod/dark{
 	name = "cage floor"
 	},
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Wd" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 9
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "We" = (
 /obj/structure/sign/barsign{
 	pixel_y = -32
@@ -11570,7 +12470,11 @@
 	name = "The Gym"
 	},
 /turf/open/floor/carpet/red,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Wt" = (
 /obj/structure/displaycase,
 /turf/open/floor/wood,
@@ -11587,7 +12491,11 @@
 	layer = 2.9
 	},
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "WC" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -11638,7 +12546,11 @@
 "WR" = (
 /obj/machinery/doomsday_device,
 /turf/open/floor/carpet/blue,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "WT" = (
 /obj/structure/table/wood/fancy/royalblack,
 /obj/item/clothing/head/flatcap,
@@ -11767,13 +12679,21 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Xs" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
 /turf/open/floor/carpet/black,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Xv" = (
 /obj/structure/bed,
 /turf/open/floor/plasteel/white,
@@ -11789,6 +12709,13 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plasteel/white,
 /area/space)
+"XC" = (
+/turf/closed/wall/r_wall,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "XE" = (
 /obj/effect/turf_decal/trimline/neutral/line{
 	icon_state = "trimline";
@@ -12032,7 +12959,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "YO" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -12087,7 +13018,11 @@
 /obj/item/clothing/under/rank/civilian/lawyer/blue,
 /obj/item/clothing/under/rank/civilian/lawyer/blue/skirt,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "YZ" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -12113,6 +13048,13 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
+"Zb" = (
+/turf/closed/indestructible/riveted,
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Zc" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -12135,7 +13077,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "Zk" = (
 /obj/machinery/gravity_generator/main/station/admin,
 /obj/effect/turf_decal/stripes/full,
@@ -12143,6 +13089,16 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
+"Zl" = (
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair";
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom)
 "Zp" = (
 /turf/closed/indestructible/fakeglass,
 /area/centcom/prison{
@@ -12247,6 +13203,16 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"ZH" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "cp1_privacy";
+	name = "Checkpoint 1"
+	},
+/turf/closed/indestructible/fakeglass,
+/area/centcom/prison{
+	icon_state = "checkpoint1";
+	name = "Arrivals Checkpoint"
+	})
 "ZJ" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/maintenance{
@@ -12269,7 +13235,11 @@
 /obj/structure/bed,
 /obj/item/bedsheet/yellow,
 /turf/open/floor/wood,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "ZN" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -12277,7 +13247,11 @@
 	},
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/dark,
-/area/centcom)
+/area/centcom{
+	icon_state = "Sleep";
+	name = "Dorms";
+	safe = 1
+	})
 "ZT" = (
 /obj/structure/table/wood/fancy/green,
 /obj/item/reagent_containers/food/snacks/salad/boiledrice,
@@ -21861,7 +22835,7 @@ lE
 cp
 kO
 jP
-Zp
+ZH
 Do
 Zp
 Do
@@ -21902,9 +22876,9 @@ Uc
 Do
 Zp
 Do
-Zp
+FK
 tS
-kO
+JL
 ni
 lE
 pZ
@@ -22063,7 +23037,7 @@ lE
 uB
 Rq
 hI
-Zp
+ZH
 GN
 Zp
 GN
@@ -22104,7 +23078,7 @@ Uc
 fi
 Zp
 GN
-Zp
+FK
 mN
 Rq
 zE
@@ -22265,7 +23239,7 @@ lE
 pk
 OA
 Dt
-Zp
+ZH
 WG
 Zp
 uC
@@ -22306,7 +23280,7 @@ Uc
 GN
 Zp
 WG
-Zp
+FK
 tK
 OA
 YZ
@@ -23523,14 +24497,14 @@ zr
 zr
 zr
 lE
-xw
-xw
-xw
-xw
-xw
-xw
-xw
-xw
+Zb
+Zb
+Zb
+Zb
+Zb
+Zb
+Zb
+Zb
 pZ
 pZ
 pZ
@@ -23721,7 +24695,7 @@ Iy
 hT
 PX
 Ff
-Uc
+XC
 gF
 ha
 ha
@@ -23732,7 +24706,7 @@ ha
 RK
 wT
 YW
-xw
+Zb
 pZ
 pZ
 pZ
@@ -23923,18 +24897,18 @@ qN
 yt
 Yz
 eD
-Uc
+XC
 IQ
-ue
-ue
-ue
+DB
+DB
+DB
 Gg
 iZ
-ue
-ue
-ue
+DB
+DB
+DB
 JE
-xw
+Zb
 pZ
 pZ
 pZ
@@ -24125,19 +25099,19 @@ qN
 bP
 Yz
 Hw
-Uc
+XC
 ve
-ue
-ue
-ue
+DB
+DB
+DB
 MS
 Gg
-ue
-ue
-ue
+DB
+DB
+DB
 Ev
-xw
-xw
+Zb
+Zb
 pZ
 pZ
 pZ
@@ -24329,17 +25303,17 @@ nq
 Hw
 ha
 xv
-nk
-nk
-nk
-nk
-nk
-nk
-nk
-ue
+cn
+cn
+cn
+cn
+cn
+cn
+cn
+DB
 dq
 Ey
-xw
+Zb
 pZ
 pZ
 pZ
@@ -24529,20 +25503,20 @@ qN
 lg
 lg
 iF
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-nk
-ue
-ue
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+cn
+DB
+DB
 lY
-xw
-xw
+Zb
+Zb
 pZ
 pZ
 pZ
@@ -24731,20 +25705,20 @@ qN
 lg
 lg
 dS
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-nk
-ue
-ue
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+cn
+DB
+DB
 dq
 kY
-xw
+Zb
 pZ
 pZ
 pZ
@@ -24935,19 +25909,19 @@ bw
 Hw
 fn
 gQ
-nk
-nk
-nk
-nk
-jN
-jN
-nk
-ue
-ue
-ue
+cn
+cn
+cn
+cn
+IA
+IA
+cn
+DB
+DB
+DB
 db
-xw
-xw
+Zb
+Zb
 pZ
 pZ
 pZ
@@ -25137,19 +26111,19 @@ pK
 Hw
 Hw
 Ae
-ue
-ue
-ue
-nk
-jN
-jN
-nk
+DB
+DB
+DB
+cn
+IA
+IA
+cn
 Gg
 TK
-ue
+DB
 dq
 sD
-xw
+Zb
 pZ
 pZ
 pZ
@@ -25339,19 +26313,19 @@ Yz
 dz
 Hw
 eU
-ue
-ue
-ue
-nk
-jN
-jN
-nk
+DB
+DB
+DB
+cn
+IA
+IA
+cn
 tx
 Gg
-ue
-ue
+DB
+DB
 Cd
-xw
+Zb
 pZ
 pZ
 pZ
@@ -25545,15 +26519,15 @@ QK
 Ro
 hj
 gQ
-jN
-jN
+IA
+IA
 IP
 hj
 hj
 hj
 hj
 rm
-xw
+Zb
 pZ
 pZ
 pZ
@@ -25742,20 +26716,20 @@ lg
 Yz
 OQ
 Hw
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
 xv
-jN
-jN
+IA
+IA
 dq
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 pZ
@@ -25944,20 +26918,20 @@ lg
 Yz
 Hw
 Hw
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
 ID
-jN
-jN
+IA
+IA
 ID
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 pZ
@@ -26145,21 +27119,21 @@ qN
 lg
 Yz
 Hw
-Uc
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
+XC
 gQ
-jN
-jN
+IA
+IA
 IP
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 pZ
@@ -26353,15 +27327,15 @@ ha
 ha
 ha
 xv
-jN
-jN
+IA
+IA
 dq
 ha
 ha
 ha
 ha
 mL
-xw
+Zb
 pZ
 pZ
 pZ
@@ -26555,15 +27529,15 @@ hj
 hj
 hj
 gQ
-jN
-jN
+IA
+IA
 IP
 hj
 hj
 hj
 hj
 uF
-xw
+Zb
 pZ
 pZ
 pZ
@@ -26751,21 +27725,21 @@ tE
 Ya
 Gm
 Hw
-Uc
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 pZ
@@ -26923,7 +27897,7 @@ nJ
 tz
 ej
 tl
-OB
+ej
 vW
 pj
 rk
@@ -26953,21 +27927,21 @@ qN
 lg
 Yz
 Hw
-oC
-GE
+mp
+Qx
 ja
 qB
-Uc
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
+XC
 Qg
 du
 wR
 iU
-xw
+Zb
 pZ
 pZ
 pZ
@@ -27156,20 +28130,20 @@ lg
 Yz
 Hw
 xU
-GE
-GE
-GE
+Qx
+Qx
+Qx
 NU
-ue
-jN
-jN
-ue
+DB
+IA
+IA
+DB
 Im
 Qg
 kr
 Qg
 eg
-xw
+Zb
 pZ
 pZ
 pZ
@@ -27358,20 +28332,20 @@ lg
 Yz
 Hw
 ZM
-GE
+Qx
 DL
-GE
-Uc
+Qx
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
+XC
 Qg
 Qg
 Qg
 hP
-xw
+Zb
 pZ
 pZ
 pZ
@@ -27559,21 +28533,21 @@ qN
 lg
 Yz
 Hw
-Uc
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 pZ
@@ -27767,15 +28741,15 @@ ha
 ha
 ha
 xv
-jN
-jN
+IA
+IA
 dq
 Ww
 JI
 ha
 JI
 Ey
-xw
+Zb
 pZ
 pZ
 pZ
@@ -27963,21 +28937,21 @@ qN
 lg
 nq
 Hw
-nk
-nk
-nk
-nk
-nk
-nk
-jN
-jN
-nk
+cn
+cn
+cn
+cn
+cn
+cn
+IA
+IA
+cn
 xL
-nk
-nk
-nk
+cn
+cn
+cn
 db
-xw
+Zb
 pZ
 pZ
 pZ
@@ -28165,21 +29139,21 @@ qN
 lg
 lg
 iF
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-nk
-nk
-ue
-ue
-ue
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+cn
+cn
+DB
+DB
+DB
 ZN
-xw
+Zb
 pZ
 pZ
 pZ
@@ -28367,21 +29341,21 @@ qN
 lg
 lg
 dS
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-nk
-nk
-ue
-ue
-ue
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+cn
+cn
+DB
+DB
+DB
 ZN
-xw
+Zb
 pZ
 pZ
 pZ
@@ -28569,21 +29543,21 @@ qN
 lg
 bw
 Hw
-nk
-nk
-nk
-nk
-nk
-nk
-jN
-jN
-nk
+cn
+cn
+cn
+cn
+cn
+cn
+IA
+IA
+cn
 xL
-nk
-nk
-nk
+cn
+cn
+cn
 db
-xw
+Zb
 pZ
 pZ
 pZ
@@ -28777,15 +29751,15 @@ hj
 hj
 hj
 gQ
-jN
-jN
+IA
+IA
 IP
 bQ
 uu
 hj
 uu
 mn
-xw
+Zb
 pZ
 pZ
 ac
@@ -28973,21 +29947,21 @@ qN
 lg
 pK
 Hw
-Uc
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 ac
@@ -29179,17 +30153,17 @@ SD
 zw
 VZ
 wD
-Uc
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-xc
+XC
+MO
 Xs
 RG
 iV
-xw
+Zb
 pZ
 pZ
 ac
@@ -29382,16 +30356,16 @@ zw
 tT
 zw
 WR
-ue
-jN
-jN
-ue
+DB
+IA
+IA
+DB
 TC
-xc
-xc
+MO
+MO
 bg
 Ix
-xw
+Zb
 pZ
 pZ
 ac
@@ -29583,17 +30557,17 @@ rv
 hB
 zw
 zw
-Uc
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-xc
-xc
+XC
+MO
+MO
 uz
 Ix
-xw
+Zb
 pZ
 pZ
 ac
@@ -29781,21 +30755,21 @@ Mn
 bP
 Yz
 Hw
-Uc
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 ac
@@ -29983,21 +30957,21 @@ tE
 lg
 Yz
 Hw
-PL
-oB
+MN
+tA
 En
 wH
-Uc
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
+XC
 sl
 mo
-jN
+IA
 Da
-xw
+Zb
 pZ
 pZ
 ac
@@ -30186,20 +31160,20 @@ lg
 Yz
 Hw
 mc
-oB
+tA
 Vz
-oB
+tA
 RB
-ue
-jN
-jN
-ue
+DB
+IA
+IA
+DB
 eq
-jN
-jN
-jN
+IA
+IA
+IA
 kn
-xw
+Zb
 pZ
 pZ
 ac
@@ -30389,19 +31363,19 @@ Yz
 Hw
 oN
 LJ
-oB
-oB
-Uc
+tA
+tA
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
+XC
 sl
 mo
 mz
 FB
-xw
+Zb
 pZ
 ac
 ac
@@ -30589,21 +31563,21 @@ qN
 lg
 Yz
 Hw
-Uc
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 ac
 ac
@@ -30792,20 +31766,20 @@ lg
 Yz
 Hw
 Bn
-GE
+Qx
 vF
-GE
-Uc
+Qx
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
+XC
 Lg
-oC
-oC
+mp
+mp
 DL
-xw
+Zb
 pZ
 ac
 ac
@@ -30994,20 +31968,20 @@ lg
 Yz
 Hw
 Mi
-GE
-GE
-GE
+Qx
+Qx
+Qx
 cJ
-ue
-jN
-jN
-ue
+DB
+IA
+IA
+DB
 dZ
-GE
-zX
-GE
-GE
-xw
+Qx
+CK
+Qx
+Qx
+Zb
 pZ
 ac
 ac
@@ -31197,19 +32171,19 @@ Yz
 Hw
 yR
 tU
-GE
+Qx
 Jh
-Uc
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-GE
-GE
+XC
+Qx
+Qx
 dw
 xU
-xw
+Zb
 pZ
 ac
 ac
@@ -31397,21 +32371,21 @@ BQ
 lg
 Yz
 Hw
-Uc
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 ac
 ac
@@ -31605,15 +32579,15 @@ ha
 ha
 ha
 xv
-jN
-jN
+IA
+IA
 dq
 Ww
 JI
 ha
 JI
 Ey
-xw
+Zb
 pZ
 ac
 ac
@@ -31801,21 +32775,21 @@ qN
 lg
 yN
 Hw
-nk
-nk
-nk
-nk
-nk
-nk
-jN
-jN
-nk
+cn
+cn
+cn
+cn
+cn
+cn
+IA
+IA
+cn
 xL
-nk
-nk
-nk
+cn
+cn
+cn
 db
-xw
+Zb
 pZ
 ac
 ac
@@ -32003,21 +32977,21 @@ qN
 lg
 lg
 iF
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-nk
-nk
-ue
-ue
-ue
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+cn
+cn
+DB
+DB
+DB
 ZN
-xw
+Zb
 pZ
 ac
 ac
@@ -32205,21 +33179,21 @@ qN
 lg
 lg
 dS
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-jN
-nk
-nk
-ue
-ue
-ue
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+IA
+cn
+cn
+DB
+DB
+DB
 ZN
-xw
+Zb
 pZ
 pZ
 ac
@@ -32407,21 +33381,21 @@ qN
 lg
 Wi
 Hw
-nk
-nk
-nk
-nk
-nk
-nk
-jN
-jN
-nk
+cn
+cn
+cn
+cn
+cn
+cn
+IA
+IA
+cn
 xL
-nk
-nk
-nk
+cn
+cn
+cn
 db
-xw
+Zb
 pZ
 pZ
 ac
@@ -32615,15 +33589,15 @@ hj
 hj
 hj
 gQ
-jN
-jN
+IA
+IA
 IP
 bQ
 uu
 hj
 uu
 mn
-xw
+Zb
 pZ
 pZ
 ac
@@ -32811,21 +33785,21 @@ lg
 Ya
 Gm
 Hw
-Uc
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 ac
@@ -33017,17 +33991,17 @@ sg
 Qg
 Qg
 Qg
-Uc
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
+XC
 Cz
 FG
 FG
-GE
-xw
+Qx
+Zb
 pZ
 pZ
 ac
@@ -33220,16 +34194,16 @@ up
 Qg
 Qg
 Im
-ue
-jN
-jN
-ue
+DB
+IA
+IA
+DB
 dZ
-GE
-zX
-GE
-GE
-xw
+Qx
+CK
+Qx
+Qx
+Zb
 pZ
 pZ
 pZ
@@ -33415,23 +34389,23 @@ GE
 GE
 GE
 GE
-Uc
-Uc
+XC
+XC
 hP
 Qg
 hO
 iU
-Uc
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-GE
+XC
+Qx
 DL
 Fk
 xU
-xw
+Zb
 pZ
 pZ
 pZ
@@ -33611,29 +34585,29 @@ id
 Hw
 am
 So
-So
+bu
 gX
 GE
 GE
 GE
 GE
-Uc
-Uc
-Uc
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
+XC
+XC
+XC
 nB
-jN
-jN
+IA
+IA
 db
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 pZ
@@ -33819,23 +34793,23 @@ GE
 GE
 Wt
 GE
-Uc
-Uc
+XC
+XC
 eQ
 ha
 ha
 ha
 ha
 xv
-jN
-jN
+IA
+IA
 dq
 ha
 ha
 ha
 ha
 mL
-xw
+Zb
 pZ
 pZ
 pZ
@@ -34021,23 +34995,23 @@ no
 GE
 GE
 GE
-Uc
-Uc
+XC
+XC
 zS
 hj
 hj
 hj
 hj
 gQ
-jN
-jN
+IA
+IA
 IP
 hj
 hj
 hj
 hj
 uF
-xw
+Zb
 pZ
 pZ
 pZ
@@ -34223,23 +35197,23 @@ sL
 GE
 GE
 GE
-Uc
-Uc
-Uc
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
+XC
+XC
+XC
 xv
-jN
-jN
+IA
+IA
 dq
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 pZ
@@ -34425,23 +35399,23 @@ DT
 GE
 GE
 GE
-Uc
-Uc
-Uc
-Uc
-Uc
-Uc
-Uc
+XC
+XC
+XC
+XC
+XC
+XC
+XC
 ID
 Wm
 Wm
 ID
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 pZ
@@ -34617,7 +35591,7 @@ GE
 GE
 GE
 GE
-GE
+ly
 GE
 GE
 GE
@@ -34627,23 +35601,23 @@ GE
 GE
 Wt
 GE
-Uc
-Uc
-Uc
-Uc
-Uc
-Uc
-Uc
-nk
-ue
-ue
-nk
-Uc
-Uc
-Uc
-Uc
-Uc
-xw
+XC
+XC
+XC
+XC
+XC
+XC
+XC
+cn
+DB
+DB
+cn
+XC
+XC
+XC
+XC
+XC
+Zb
 pZ
 pZ
 pZ
@@ -34829,23 +35803,23 @@ GE
 GE
 GE
 GE
-Uc
-nk
-vb
-nN
-Tb
-nN
-AK
-nk
-ue
-ue
-nk
-nk
+XC
+cn
+ce
+xV
+QU
+xV
+Mm
+cn
+DB
+DB
+cn
+cn
 cN
 jI
 BV
-xw
-xw
+Zb
+Zb
 pZ
 pZ
 pZ
@@ -35030,23 +36004,23 @@ Qa
 Qa
 Qa
 gM
-GE
-Uc
-nk
-CH
-ue
-CH
-ue
-CH
-nk
-ue
-ue
-nk
-nk
+jB
+XC
+cn
+Bv
+DB
+Bv
+DB
+Bv
+cn
+DB
+DB
+cn
+cn
 cN
-nk
+cn
 BV
-xw
+Zb
 pZ
 pZ
 pZ
@@ -35219,36 +36193,36 @@ DV
 GE
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
-Uc
-nk
-CH
-nk
-CH
-nk
-CH
-nk
-ue
-ue
-nk
-nk
-nk
-nk
-nk
-xw
+XC
+cn
+Bv
+cn
+Bv
+cn
+Bv
+cn
+DB
+DB
+cn
+cn
+cn
+cn
+cn
+Zb
 pZ
 pZ
 pZ
@@ -35418,39 +36392,39 @@ lg
 lg
 bw
 Hw
-gt
+pq
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
-Uc
-nk
-CH
-nk
-CH
-nk
-CH
-nk
-ue
-ue
-nk
-nk
+XC
+cn
+Bv
+cn
+Bv
+cn
+Bv
+cn
+DB
+DB
+cn
+cn
 BV
-nk
+cn
 cN
-xw
+Zb
 pZ
 pZ
 pZ
@@ -35623,36 +36597,36 @@ Hw
 dn
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
-Uc
-nk
-CH
+XC
+cn
+Bv
 Ob
-CH
+Bv
 Ob
-CH
+Bv
 Ob
 Ob
 Ob
 Ob
 Ob
 rT
-nk
+cn
 cN
-xw
+Zb
 pZ
 pZ
 pZ
@@ -35825,36 +36799,36 @@ Hw
 oC
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
-Uc
+XC
 iG
-CH
-tN
-tN
-tN
-tN
-tN
-tN
-tN
-tN
-tN
+Bv
+kd
+kd
+kd
+kd
+kd
+kd
+kd
+kd
+kd
 UF
 uW
-nk
-xw
+cn
+Zb
 pZ
 pZ
 pZ
@@ -36027,23 +37001,23 @@ Hw
 zX
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
-Uc
-Fo
-tN
+XC
+bn
+kd
 eR
 ev
 Xp
@@ -36055,8 +37029,8 @@ Ag
 ms
 mD
 Ds
-ue
-xw
+DB
+Zb
 pZ
 pZ
 pZ
@@ -36229,23 +37203,23 @@ Hw
 dn
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
-Uc
-Fo
-tN
+XC
+bn
+kd
 KB
 lL
 hd
@@ -36255,10 +37229,10 @@ hd
 hd
 hv
 tc
-tN
+kd
 Ds
-nN
-xw
+xV
+Zb
 pZ
 pZ
 pZ
@@ -36431,24 +37405,24 @@ Hw
 oC
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
-Uc
-Fo
-tN
-tN
+XC
+bn
+kd
+kd
 pM
 GT
 Wc
@@ -36457,10 +37431,10 @@ Wc
 CR
 qe
 NI
-tN
+kd
 Ds
-ue
-xw
+DB
+Zb
 pZ
 pZ
 pZ
@@ -36633,23 +37607,23 @@ Hw
 zX
 GE
 UR
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 aB
 GE
-Uc
-Fo
-tN
+XC
+bn
+kd
 vS
 Wd
 Wc
@@ -36659,10 +37633,10 @@ Wc
 Wc
 qe
 NI
-tN
+kd
 Ds
 va
-xw
+Zb
 pZ
 pZ
 pZ
@@ -36835,23 +37809,23 @@ Hw
 dn
 GE
 Vu
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 gM
-GE
-Uc
-Fo
-tN
+jB
+XC
+bn
+kd
 NW
 YL
 Wc
@@ -36861,10 +37835,10 @@ QG
 Wc
 qe
 NI
-tN
+kd
 Ds
-ue
-xw
+DB
+Zb
 pZ
 pZ
 pZ
@@ -37034,26 +38008,26 @@ CT
 lg
 Yz
 Hw
-oC
+cB
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
-Uc
-Fo
-tN
+XC
+bn
+kd
 NW
 YL
 PW
@@ -37063,10 +38037,10 @@ Wc
 rZ
 qe
 NI
-tN
+kd
 Ds
-nN
-xw
+xV
+Zb
 pZ
 pZ
 pZ
@@ -37239,23 +38213,23 @@ Hw
 zX
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
-Uc
-Fo
-tN
+XC
+bn
+kd
 NW
 YL
 Wc
@@ -37265,10 +38239,10 @@ Wc
 CA
 qe
 NI
-tN
+kd
 Ds
-ue
-xw
+DB
+Zb
 pZ
 pZ
 pZ
@@ -37441,23 +38415,23 @@ Hw
 gt
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
-Uc
-Fo
-tN
+XC
+bn
+kd
 wP
 NN
 LT
@@ -37467,10 +38441,10 @@ Zj
 Mg
 ef
 qy
-tN
+kd
 Ds
-xw
-xw
+Zb
+Zb
 pZ
 pZ
 pZ
@@ -37643,18 +38617,18 @@ DV
 GE
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
 Uc
@@ -37669,9 +38643,9 @@ iN
 FJ
 Vs
 BB
-tN
+kd
 Ds
-xw
+Zb
 pZ
 pZ
 pZ
@@ -37845,18 +38819,18 @@ DV
 GE
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
 Uc
@@ -37869,11 +38843,11 @@ tN
 tN
 tN
 FJ
-tN
-tN
+kd
+kd
 ot
 Kn
-xw
+Zb
 pZ
 pZ
 pZ
@@ -38047,18 +39021,18 @@ Hw
 gt
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 hZ
 GE
 Uc
@@ -38071,11 +39045,11 @@ CH
 Eo
 Eo
 KQ
-Eo
+Dc
 FV
 Kn
-xw
-xw
+Zb
+Zb
 pZ
 pZ
 pZ
@@ -38249,21 +39223,21 @@ Hw
 GE
 GE
 lj
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 UQ
-Qa
-Uc
+bD
+xw
 nk
 CH
 nk
@@ -38452,20 +39426,20 @@ GE
 GE
 UR
 zP
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-Uc
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+xw
 nk
 CH
 ue
@@ -38476,8 +39450,8 @@ nk
 nN
 rK
 NZ
-NZ
-NZ
+eT
+mG
 xw
 pZ
 pZ
@@ -38650,24 +39624,24 @@ lg
 lg
 Yz
 Hw
-dn
+Zl
 dn
 GE
 jR
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-Uc
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+qv
+xw
 nk
 vb
 nN
@@ -38850,29 +39824,29 @@ eI
 Os
 Tc
 lg
-Yz
+MY
 Hw
 oC
 oC
 GE
 jR
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-Uc
-Uc
-Uc
-Uc
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+xw
+xw
+xw
+xw
 xw
 xw
 xw
@@ -39045,7 +40019,7 @@ eX
 eI
 if
 OD
-Eq
+wg
 Eq
 Ms
 eI
@@ -39058,17 +40032,17 @@ zX
 zX
 GE
 jR
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 pZ
 pZ
 pZ
@@ -39260,17 +40234,17 @@ GE
 GE
 GE
 jR
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 pZ
 pZ
 pZ
@@ -39462,17 +40436,17 @@ GE
 GE
 GE
 jR
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 pZ
 pZ
 pZ
@@ -39664,18 +40638,18 @@ dn
 dn
 GE
 jR
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-pZ
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+Md
+xw
 pZ
 pZ
 pZ
@@ -39866,17 +40840,17 @@ oC
 oC
 GE
 jR
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 pZ
 pZ
 pZ
@@ -40068,15 +41042,15 @@ zX
 zX
 GE
 jR
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 pZ
 pZ
 pZ
@@ -40266,19 +41240,19 @@ XK
 tR
 aD
 Hw
-GE
+Dn
 GE
 GE
 jR
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 pZ
 pZ
 pZ
@@ -40472,15 +41446,15 @@ pZ
 pZ
 pZ
 pZ
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 pZ
 pZ
 pZ
@@ -40673,17 +41647,17 @@ pZ
 pZ
 pZ
 pZ
-pZ
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-pZ
+xw
+ng
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+Md
+xw
 pZ
 pZ
 pZ
@@ -40876,15 +41850,15 @@ pZ
 pZ
 pZ
 pZ
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 pZ
 pZ
 pZ
@@ -41081,12 +42055,12 @@ ac
 ac
 ac
 ac
-FA
-FA
-FA
-FA
-FA
-FA
+ac
+ac
+ac
+ac
+ac
+ac
 pZ
 pZ
 pZ
