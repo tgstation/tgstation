@@ -33157,8 +33157,7 @@
 /area/science/nanite)
 "bvk" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8;
-	step_y = 0
+	dir = 8
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
