@@ -1,0 +1,4 @@
+author: "Thebleh"
+delete-after: True
+changes: 
+  - bugfix: "Clown and Mime traitors don't get a pen unless it's their uplink choice"
