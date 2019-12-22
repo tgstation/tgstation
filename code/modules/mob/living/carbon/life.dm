@@ -298,12 +298,12 @@
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
-	// the air you breath out should match your body tempurature
+	// The air you breath out should about match your body temperature
 	if(bodytemperature > breath.temperature)
-		// raise the tempurature of our breath to just below body temp
+		// Raise the temperature of our breath to just below body temp
 		breath.temperature = bodytemperature - BREATH_TEMPERATURE_OFFSET
 	else
-		// the air is hot so we need to lower the air temp
+		// The air is hotter than out body so we need to lower the air temp
 		breath.temperature = bodytemperature + BREATH_TEMPERATURE_OFFSET
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)

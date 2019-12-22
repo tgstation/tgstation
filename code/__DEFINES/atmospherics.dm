@@ -44,7 +44,7 @@
 #define BREATH_VOLUME				0.5
 /// Amount of air to take a from a tile
 #define BREATH_PERCENTAGE			(BREATH_VOLUME/CELL_VOLUME)
-// Your breath is a few degrees less then body temperatur
+// Your breath is a few degrees less than body temperature
 #define BREATH_TEMPERATURE_OFFSET	4
 
 //EXCITED GROUPS

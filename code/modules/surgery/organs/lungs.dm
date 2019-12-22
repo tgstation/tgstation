@@ -388,12 +388,12 @@
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
 
-	// the air you breath out should match your body tempurature
+	// The air you breath out should about match your body temperature
 	if(H.bodytemperature > breath.temperature)
-		// raise the tempurature of our breath to just below body temp
+		// Raise the temperature of our breath to just below body temp
 		breath.temperature = H.bodytemperature - BREATH_TEMPERATURE_OFFSET
 	else
-		// the air is hot so we need to lower the air temp
+		// The air is hotter than out body so we need to lower the air temp
 		breath.temperature = H.bodytemperature + BREATH_TEMPERATURE_OFFSET
 
 /obj/item/organ/lungs/on_life()
