@@ -376,16 +376,17 @@
 	for(var/datum/objective/O in objectives)
 		if(O.check_completion() == -1)
 			return -1
-		if(!O.check_completion())
+		else if(!O.check_completion())
 			return FALSE
 	return TRUE
 
 /datum/team/cult/roundend_report()
 	var/list/parts = list()
+	var/victory = check_cult_victory()
 
-	if(check_cult_victory() == -1) // Epic failure, you summoned your god and then someone killed it.
+	if(victory == -1) // Epic failure, you summoned your god and then someone killed it.
 		parts += "<span class='redtext big'>Nar'sie has been killed! The cult will haunt the universe no longer!</span>"
-	else if(check_cult_victory())
+	else if(victory)
 		parts += "<span class='greentext big'>The cult has succeeded! Nar'Sie has snuffed out another torch in the void!</span>"
 	else
 		parts += "<span class='redtext big'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>"

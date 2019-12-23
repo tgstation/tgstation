@@ -72,7 +72,7 @@
 	sleep(50)
 	if(QDELETED(GLOB.cult_narsie)) // uno
 		priority_announce("Status report? We detected a anomaly, but it disappeared almost immediately.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
-		GLOB.cult_narsie.resolved = TRUE
+		GLOB.cult_narsie = null
 		sleep(20)
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
 		return
@@ -80,7 +80,7 @@
 	sleep(500)
 	if(QDELETED(GLOB.cult_narsie)) // dos
 		priority_announce("Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
-		GLOB.cult_narsie.resolved = TRUE
+		GLOB.cult_narsie = null
 		sleep(20)
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
 		return
@@ -92,10 +92,10 @@
 	sleep(600)
 	if(QDELETED(GLOB.cult_narsie)) // tres
 		priority_announce("Normalization detected! Abort the solution package!","Central Command Higher Dimensional Affairs", 'sound/misc/notice1.ogg')
-		GLOB.cult_narsie.resolved = TRUE
+		GLOB.cult_narsie = null
 		sleep(20)
 		set_security_level("red")
-		SSshuttle.clearHostileEnvironment(GLOB.cult_narsie)
+		SSshuttle.clearHostileEnvironment()
 		SSshuttle.lockdown = FALSE
 		INVOKE_ASYNC(GLOBAL_PROC, .proc/cult_ending_helper, 2)
 		return
