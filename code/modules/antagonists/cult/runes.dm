@@ -524,8 +524,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/raise_dead/examine(mob/user)
 	. = ..()
 	if(iscultist(user) || user.stat == DEAD)
-		var/usable_sacrifices = LAZYLEN(GLOB.sacrificed) - sacrifices_used
-		. += "<b>Sacrifices unrewarded:</b>[usable_sacrifices]"
+		. += "<b>Sacrifices unrewarded:</b> [LAZYLEN(GLOB.sacrificed) - sacrifices_used]"
 
 /obj/effect/rune/raise_dead/invoke(var/list/invokers)
 	var/turf/T = get_turf(src)
