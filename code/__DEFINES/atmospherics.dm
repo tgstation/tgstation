@@ -41,11 +41,10 @@
 #define CELL_VOLUME				2500
 
 /// liters in a normal breath
-#define BREATH_VOLUME				0.5
+#define BREATH_VOLUME			0.5
 /// Amount of air to take a from a tile
-#define BREATH_PERCENTAGE			(BREATH_VOLUME/CELL_VOLUME)
-// Your breath is a few degrees less than body temperature
-#define BREATH_TEMPERATURE_OFFSET	4
+#define BREATH_PERCENTAGE		(BREATH_VOLUME/CELL_VOLUME)
+
 
 //EXCITED GROUPS
 /// number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
