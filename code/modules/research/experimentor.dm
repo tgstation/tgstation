@@ -159,7 +159,7 @@
 	else if(loaded_item)
 		dat += "<b>Loaded Item:</b> [loaded_item]"
 		if(is_type_in_typecache(loaded_item, critical_items_typecache))
-			dat += "<b>Advanced technolgy detected - chance of higher research point generation</b>"
+			dat += "<b>Advanced technology detected - chance of higher research point generation</b>"
 		if(is_type_in_typecache(loaded_item, already_researched))
 			dat += "<b>Technology has already been experimented on - no points will be awarded!</b>"
 		if(istype(loaded_item,/obj/item/relic))
