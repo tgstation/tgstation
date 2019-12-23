@@ -234,29 +234,39 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(M.ckey)
 		if(alert("This mob is being controlled by [M.key]. Are you sure you wish to assume control of it? [M.key] will be made a ghost.",,"Yes","No") != "Yes")
 			return
-		else
-			M.ghostize(FALSE)
+	if(!M || QDELETED(M))
+		to_chat(usr, "<span class='warning'>The target mob no longer exists.</span>")
+		return
+	var/mob/adminmob = mob
+	M.ghostize(FALSE)
+	M.ckey = ckey
+	if(isobserver(adminmob))
+		qdel(adminmob)
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
 	log_admin("[key_name(usr)] assumed direct control of [M].")
-	var/mob/adminmob = src.mob
-	M.ckey = src.ckey
-	if( isobserver(adminmob) )
-		qdel(adminmob)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_give_direct_control(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Give direct control"
 
+	if(!M)
+		return
 	if(M.ckey)
-		if(alert("This mob is being controlled by [M.key]. Are you sure you wish to give away control of it? [M.key] will be made a ghost.",,"Yes","No") != "Yes")
+		if(alert("This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,"Yes","No") != "Yes")
 			return
-		else
-			M.ghostize(FALSE)
 	var/client/newkey = input(src, "Pick the player to put in control.", "New player") as null|anything in sortList(GLOB.clients)
 	var/mob/oldmob = newkey.mob
+	var/delmob = FALSE
+	if((isobserver(oldmob) || alert("Do you want to delete [newkey]'s old mob?","Delete?","Yes","No") != "No"))
+		delmob = TRUE
+	if(!M || QDELETED(M))
+		to_chat(usr, "<span class='warning'>The target mob no longer exists, aborting.</span>")
+		return
+	if(M.ckey)
+		M.ghostize(FALSE)
 	M.ckey = newkey.key
-	if(isobserver(oldmob) || alert("Do you want to delete [newkey]'s old mob?","Delete?","Yes","No") != "No")
+	if(delmob)
 		qdel(oldmob)
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave away direct control of [M] to [newkey].</span>")
 	log_admin("[key_name(usr)] gave away direct control of [M] to [newkey].")
