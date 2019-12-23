@@ -1,0 +1,4 @@
+author: "CRITAWAKETS"
+delete-after: True
+changes: 
+  - imageadd: "The action button sprites for implants look better and less placeholder-y now."

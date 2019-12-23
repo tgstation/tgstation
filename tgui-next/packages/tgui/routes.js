@@ -8,6 +8,7 @@ import { AtmosControlConsole } from './interfaces/AtmosControlConsole';
 import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
+import { BankMachine } from './interfaces/BankMachine';
 import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
@@ -126,8 +127,13 @@ const ROUTES = {
     component: () => AtmosPump,
     scrollable: false,
   },
+<<<<<<< HEAD
   bepis: {
     component: () => Bepis,
+=======
+  bank_machine: {
+    component: () => BankMachine,
+>>>>>>> upstream/master
     scrollable: false,
   },
   borgopanel: {

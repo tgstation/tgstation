@@ -780,16 +780,16 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "abT" = (
-/obj/structure/rack,
-/obj/item/book/manual/chef_recipes{
-	pixel_x = 2;
-	pixel_y = 6
+/obj/machinery/door/poddoor/preopen{
+	id = "kitchenwindow";
+	name = "kitchen shutters"
 	},
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/stack/packageWrap,
-/obj/effect/spawner/lootdrop/donkpockets,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -41961,7 +41961,6 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/storage/box/donkpockets,
 /obj/item/stack/packageWrap{
 	pixel_x = 6
 	},
@@ -41971,6 +41970,7 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -73673,10 +73673,10 @@
 "hBB" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/snacks/mint,
-/obj/item/storage/box/donkpockets,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/spawner/lootdrop/donkpockets,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
