@@ -18,8 +18,8 @@
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
-	var/heat_protection = 0.5 // Fire vunerability
-	var/cold_protection = 0 // No cold protection
+	heat_protection = 0.5 // minor heat insulation
+
 	var/leaping = 0
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1
@@ -49,6 +49,8 @@
 	return -10
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
+	// Run base mob body temperature proc before taking damage
+	// this balances body temp to the enviroment and natural stabilization
 	. = ..()
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
@@ -66,12 +68,6 @@
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 	else
 		clear_alert("alien_fire")
-
-/mob/living/carbon/alien/get_heat_protection(temperature)
-	return heat_protection
-
-/mob/living/carbon/alien/get_cold_protection(temperature)
-	return cold_protection
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return 0

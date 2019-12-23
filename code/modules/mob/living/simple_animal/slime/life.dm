@@ -108,18 +108,21 @@
 	AIproc = 0
 
 /mob/living/simple_animal/slime/handle_environment(datum/gas_mixture/environment)
+	// Get the current air temperature
 	var/loc_temp = get_temperature(environment)
+	// This divisor controls how fast body temperature changes
+	// lowering this number changes body temp faster
 	var/divisor = 10
 
-	// if the difference is great then reduce the divisor
+	// If the difference is great then reduce the divisor to stabilize faster
 	if(abs(loc_temp - bodytemperature) > 50)
 		divisor = 5
 
-	// update the body temperature
-	if(loc_temp < bodytemperature) // it is cold here
-		if(!on_fire) // do not reduce body temp when on fire
+	// Update the body temperature
+	if(loc_temp < bodytemperature) // It is cold here
+		if(!on_fire) // Do not reduce body temp when on fire
 			adjust_bodytemperature((loc_temp - bodytemperature) / divisor)
-	else // this is a hot place
+	else // This is a hot place
 		adjust_bodytemperature((loc_temp - bodytemperature) / divisor)
 
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc

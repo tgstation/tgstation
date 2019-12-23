@@ -29,7 +29,9 @@
 	bodytemp_normal = (BODYTEMP_NORMAL - 40)
 	bodytemp_autorecovery_min = 2
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 20) // about 40C
-	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c, incase they loss the resit trait
+	// In the event they loss the cold resit trait
+	// This also has an effect on how fast they stabilize body temp
+	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()

@@ -620,35 +620,40 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 // Used to stabilize the normal body temperature on living mobs
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
+	// Get the difference between our current body temp and what is a normal body temp
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
+
 	switch(bodytemperature)
-		// Cold damage limit is 50 below the default, the temperature where you start to feel effects.
+
+		// When below the cold damage limit body temp raises faster
 		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT)
 			return max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), \
-			BODYTEMP_AUTORECOVERY_MINIMUM)
+				BODYTEMP_AUTORECOVERY_MINIMUM)
 
+		// When above the cold damage limit the body temp raises slower
 		if(BODYTEMP_COLD_DAMAGE_LIMIT to BODYTEMP_NORMAL)
 			return max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-			min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM / 4))
+				min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM / 4))
 
-		// Heat damage limit is 50 above the default, the temperature where you start to feel effects.
+		// When below the heat damage limit the body temp lowers slower
 		if(BODYTEMP_NORMAL to BODYTEMP_HEAT_DAMAGE_LIMIT)
 			return min(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, \
-			max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM / 4))
+				max(body_temperature_difference, -BODYTEMP_AUTORECOVERY_MINIMUM / 4))
 
-		//We're dealing with negative numbers
+		// When above the heat damage limit bring the body temp down faster
+		// We're dealing with negative numbers
 		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 			return min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)
 
 // Temperature is the temperature you're being exposed to.
 // This returns a 0 - 1 value which corresponds to the percentage of protection
 /mob/living/carbon/proc/get_heat_protection(temperature)
-	return 0
+	return heat_protection
 
 // Temperature is the temperature you're being exposed to.
 // This returns a 0 - 1 value which corresponds to the percentage of protection
 /mob/living/carbon/proc/get_cold_protection(temperature)
-	return 0
+	return cold_protection
 
 /////////
 //LIVER//
