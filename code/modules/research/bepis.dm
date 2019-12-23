@@ -8,16 +8,15 @@
 	desc = "A high fidelity testing device which unlocks the secrets of the known universe using the two most powerful substances available to man: excessive amounts of electricity and capital."
 	icon = 'icons/obj/machines/bepis.dmi'
 	icon_state = "chamber"
-	layer = ABOVE_MOB_LAYER
 	density = TRUE
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 1500
+	active_power_usage = 1500
 	circuit = /obj/item/circuitboard/machine/bepis
 
 	var/banking_amount = 100
 	var/banked_cash = 0					//stored player cash
 	var/datum/bank_account/account		//payer's account.
-	var/chamber_status = 0
+	var/account_name					//name of the payer's account.
 	var/error_cause = null
 	var/powered = FALSE
 	//Vars related to probability and chance of success for testing
@@ -45,6 +44,15 @@
 		qdel(O)
 		say("Deposited [deposit_value] credits into storage.")
 		update_icon_state()
+		return
+	if(istype(O, /obj/item/card/id))
+		var/obj/item/card/id/Card = O
+		if(Card.registered_account)
+			account = Card.registered_account
+			account_name = Card.registered_name
+			say("New account detected. Console Updated.")
+		else
+			say("No account detected on card. Aborting.")
 		return
 	return ..()
 
@@ -75,16 +83,27 @@
 		return
 	deposit_value = CLAMP(round(deposit_value, 1), 1, 30000)
 	if(!account)
-		say("Cannot find user account. Aborting.")
+		say("Cannot find user account. Please swipe a valid ID.")
 		return
 	if(!account.has_money(deposit_value))
 		say("You do not possess enough credits.")
 		return
+	account.adjust_money(-deposit_value) //The money vanishes, not paid to any accounts.
+	banked_cash += deposit_value
+	use_power(1000 * power_saver)
+	say("Cash deposit successful. There is [banked_cash] in the chamber.")
+	update_icon_state()
+	return
+
+/obj/machinery/rnd/bepis/proc/withdrawcash()
+	var/withdraw_value = 0
+	withdraw_value = banking_amount
+	if(withdraw_value > banked_cash)
+		say("Cannot withdraw more than stored funds. Aborting.")
 	else
-		account.adjust_money(-deposit_value) //The money vanishes, not paid to any accounts.
-		banked_cash += deposit_value
-		use_power(1000 * power_saver)
-		say("Cash deposit successful. There is [banked_cash] in the chamber.")
+		banked_cash -= withdraw_value
+		new /obj/item/holochip(src.loc, withdraw_value)
+		say("Withdrawing [withdraw_value] credits from the chamber.")
 	update_icon_state()
 	return
 
@@ -99,14 +118,14 @@
 	gauss_minor = (gaussian(minor_threshold, std) - negative_cash_offset)	//And this is the threshold to instead get a minor prize.
 	gauss_real = (gaussian(banked_cash, std*inaccuracy_percentage) + positive_cash_offset)	//this is the randomized profit value that your experiment expects to give.
 	say("Real: [gauss_real]. Minor: [gauss_minor]. Major: [gauss_major].")
+	flick("chamber_flash",src)
+	update_icon_state()
+	banked_cash = 0
 	if(gauss_real >= gauss_major) //Major Success.
 		say("Experiment concluded with major success. New technology node discovered on technology disc.")
-		banked_cash = 0
 		new /obj/item/disk/tech_disk/major(dropturf,1)
-		flick("chamber_flash",src)
-		update_icon_state()
 		return
-	else if(gauss_real >= gauss_minor) //Minor Success.
+	if(gauss_real >= gauss_minor) //Minor Success.
 		var/reward_number = 1
 		say("Experiment concluded with partial success. Dispensing compiled research efforts.")
 		reward_number = rand(1,2)
@@ -114,71 +133,44 @@
 			new /obj/item/stack/circuit_stack/full(dropturf)
 		if(reward_number == 2)
 			new /obj/item/airlock_painter/decal(dropturf)
-		banked_cash = 0
-		flick("chamber_flash",src)
-		update_icon_state()
 		return
-	else if(gauss_real <= -1)	//Critical Failure
+	if(gauss_real <= -1)	//Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
-		banked_cash = 0
 		new /mob/living/simple_animal/deer(dropturf, 1)
 		use_power(500000 * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
-		flick("chamber_flash",src)
-		update_icon_state()
 		return
-	else	//Minor Failure
-		error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
-		say("Experiment concluded with zero product viability. Cause of error: [error_cause]")
-		banked_cash = 0
-		flick("chamber_flash",src)
-		update_icon_state()
+	//Minor Failure
+	error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
+	say("Experiment concluded with zero product viability. Cause of error: [error_cause]")
 	return
 
 /obj/machinery/rnd/bepis/update_icon_state()
-	if(is_operational() && (powered == TRUE))
-		chamber_status = 1
-	if(((powered == FALSE) && (banked_cash == 0)) || (!is_operational()))
-		chamber_status = 0
-	if((powered == TRUE) && (banked_cash > 0) && (is_operational()))
-		chamber_status = 2
-	if (((powered == FALSE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational()))
-		chamber_status = 3
 	if(panel_open == TRUE)
-		chamber_status = 4
-	switch(chamber_status)
-		if(0)
-			icon_state = "chamber"
-		if(1)
-			icon_state = "chamber_active"
-		if(2)
-			icon_state = "chamber_active_loaded"
-		if(3)
-			icon_state = "chamber_loaded"
-		if(4)
-			icon_state = "chamber_open"
+		icon_state = "chamber_open"
+		return
+	if((powered == TRUE) && is_operational())
+		icon_state = "chamber_active"
+		return
+	if((powered == TRUE) && (banked_cash > 0) && (is_operational()))
+		icon_state = "chamber_active_loaded"
+		return
+	if (((powered == FALSE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational()))
+		icon_state = "chamber_loaded"
+		return
+	if(((powered == FALSE) && (banked_cash == 0)) || (!is_operational()))
+		icon_state = "chamber"
+		return
 
 /obj/machinery/rnd/bepis/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	var/mob/living/carbon/human/H   	//the person using the console in each instance.
-	var/obj/item/card/id/Card   		//the account of the person using the console.
-	account = null
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "bepis", name, 500, 400, master_ui, state)
+		ui = new(user, src, ui_key, "bepis", name, 500, 480, master_ui, state)
 		ui.open()
-	if(ishuman(user))
-		H = user
-		Card = H.get_idcard(TRUE)
-		if(Card.registered_account)
-			account = Card.registered_account
 	RefreshParts()
 
 /obj/machinery/rnd/bepis/ui_data(mob/user)
 	var/list/data = list()
-	var/silicon_check = FALSE
-	if(issilicon(user))
-		silicon_check = TRUE
-	else
-		silicon_check = FALSE
+	data["account_owner"] = account_name
 	data["amount"] = banking_amount
 	data["stored_cash"] = banked_cash
 	data["mean_value"] = major_threshold
@@ -188,7 +180,7 @@
 	data["positive_cash_offset"] = positive_cash_offset
 	data["negative_cash_offset"] = negative_cash_offset
 	data["manual_power"] = powered ? FALSE : TRUE
-	data["silicon_check"] = silicon_check ? FALSE : TRUE
+	data["silicon_check"] = issilicon(user)
 	return data
 
 /obj/machinery/rnd/bepis/ui_act(action,params)
@@ -199,7 +191,10 @@
 			if(powered == FALSE)
 				return
 			depositcash()
-			update_icon_state()
+		if("withdraw_cash")
+			if(powered == FALSE)
+				return
+			withdrawcash()
 		if("begin_experiment")
 			if(powered == FALSE)
 				return
@@ -215,11 +210,16 @@
 			if(input)
 				banking_amount = input
 		if("toggle_power")
+			powered = !powered
 			if(powered == FALSE)
-				powered = TRUE
-				idle_power_usage = 1500
+				use_power = IDLE_POWER_USE
 			else
-				powered = FALSE
-				idle_power_usage = 0
+				use_power = ACTIVE_POWER_USE
 			update_icon_state()
+		if("account_reset")
+			if(powered == FALSE)
+				return
+			account_name = ""
+			account = null
+			say("Account settings reset.")
 	. = TRUE

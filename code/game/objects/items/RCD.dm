@@ -699,6 +699,7 @@ RLD
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	matter = 200
 	max_matter = 200
+	var/matter_divisor = 35
 	var/mode = LIGHT_MODE
 	slot_flags = ITEM_SLOT_BELT
 	actions_types = list(/datum/action/item_action/pick_color)
@@ -722,7 +723,7 @@ RLD
 		..()
 
 /obj/item/construction/rld/update_icon()
-	icon_state = "rld-[round(matter/35)]"
+	icon_state = "rld-[round(matter/matter_divisor)]"
 	..()
 
 
@@ -856,15 +857,7 @@ RLD
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	matter = 100
 	max_matter = 100
-
-	wallcost = 10
-	floorcost = 15
-	launchcost = 5
-	deconcost = 5
-
-/obj/item/construction/rld/mini/update_icon()
-	..()
-	icon_state = "rld-[round(matter/20,1)]"
+	matter_divisor = 20
 
 /obj/item/construction/plumbing
 	name = "Plumbing Constructor"

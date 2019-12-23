@@ -1,3 +1,4 @@
+import { multiline } from 'common/string';
 import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Section, LabeledList, Button, NumberInput, Box, Grid } from '../components';
@@ -26,6 +27,17 @@ export const Bepis = props => {
         using electrical and financial resources to invent
         new products, or discover new technologies otherwise
         overlooked for being too risky or too niche to produce!
+      </Section>
+      <Section 
+        title="Payer's Account"
+        buttons={(
+          <Button
+            icon="redo-alt"
+            content="Reset Account"
+            onClick={() => act(ref, 'account_reset')} />
+        )}>
+        Console is currently being operated
+        by {data.account_owner ? data.account_owner : 'no one'}.
       </Section>
       <Grid>
         <Grid.Column size={1.5}>
@@ -61,9 +73,15 @@ export const Bepis = props => {
           <Box>
             <Button
               icon="donate"
-              disabled={data.manual_power === 1 || data.silicon_check === 0}
+              content="Deposit Credits"
+			  disabled={data.manual_power === 1 || data.silicon_check === 1}
               onClick={() => act(ref, 'deposit_cash')}
-              content="Deposit Credits for Testing" />
+               />
+            <Button
+              icon="eject"
+              content="Withdraw Credits"
+			  disabled={data.manual_power === 1}
+              onClick={() => act(ref, 'withdraw_cash')} />
           </Box>
         </Grid.Column>
         <Grid.Column>

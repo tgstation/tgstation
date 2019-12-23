@@ -128,7 +128,7 @@
 
 /obj/item/airlock_painter/decal
 	name = "decal painter"
-	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed."
+	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed. Alt-Click to change design."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "decal_sprayer"
 	item_state = "decalsprayer"
@@ -148,11 +148,14 @@
 		F.AddComponent(/datum/component/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_STRONG, color, null, null, alpha)
 
 /obj/item/airlock_painter/decal/attack_self(mob/user)
-	ui_interact(user)
 	if((ink) && (ink.charges >= 1))
 		to_chat(user, "<span class='notice'>[src] beeps to prevent you from removing the toner until out of charges.</span>")
 		return
 	. = ..()
+
+/obj/item/airlock_painter/decal/AltClick(mob/user)
+	. = ..()
+	ui_interact(user)
 
 /obj/item/airlock_painter/decal/Initialize()
 	. = ..()
