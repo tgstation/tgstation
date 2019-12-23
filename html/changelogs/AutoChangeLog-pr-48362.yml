@@ -1,0 +1,4 @@
+author: "wesoda25"
+delete-after: True
+changes: 
+  - bugfix: "RCD animations are now anchored"
