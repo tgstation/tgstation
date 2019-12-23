@@ -26,7 +26,7 @@
 	QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/iv_drip/update_icon()
+/obj/machinery/iv_drip/update_icon_state()
 	if(attached)
 		if(mode)
 			icon_state = "injecting"
@@ -38,13 +38,14 @@
 		else
 			icon_state = "donateidle"
 
-	cut_overlays()
+/obj/machinery/iv_drip/update_overlays()
+	. = ..()
 
 	if(beaker)
 		if(attached)
-			add_overlay("beakeractive")
+			. += "beakeractive"
 		else
-			add_overlay("beakeridle")
+			. += "beakeridle"
 		if(beaker.reagents.total_volume)
 			var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/iv_drip.dmi', "reagent")
 
@@ -66,7 +67,7 @@
 					filling_overlay.icon_state = "reagent100"
 
 			filling_overlay.color = mix_color_from_reagents(beaker.reagents.reagent_list)
-			add_overlay(filling_overlay)
+			. += filling_overlay
 
 /obj/machinery/iv_drip/MouseDrop(mob/living/target)
 	. = ..()

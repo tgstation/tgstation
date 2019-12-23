@@ -157,6 +157,21 @@
 		return card_slot.GetID()
 	return ..()
 
+/obj/item/modular_computer/RemoveID()
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(!card_slot)
+		return
+	return card_slot.RemoveID()
+
+/obj/item/modular_computer/InsertID(obj/item/inserting_item)
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(!card_slot)
+		return FALSE
+	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+	if(!inserting_id)
+		return FALSE
+	return card_slot.try_insert(inserting_id)
+
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src, BE_CLOSE))
@@ -303,7 +318,7 @@
 				data["PC_batteryicon"] = "batt_20.gif"
 			else
 				data["PC_batteryicon"] = "batt_5.gif"
-		data["PC_batterypercent"] = "[round(battery_module.battery.percent())] %"
+		data["PC_batterypercent"] = "[round(battery_module.battery.percent())]%"
 		data["PC_showbatteryicon"] = 1
 	else
 		data["PC_batteryicon"] = "batt_5.gif"

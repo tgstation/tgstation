@@ -51,6 +51,7 @@
 	var/obj/item/flashlight/seclite/gun_light
 	var/mutable_appearance/flashlight_overlay
 	var/datum/action/item_action/toggle_gunlight/alight
+	var/gunlight_state = "flight"
 
 	var/can_bayonet = FALSE //if a bayonet can be added or removed if it already has one.
 	var/obj/item/kitchen/knife/bayonet
@@ -71,6 +72,7 @@
 	var/datum/action/toggle_scope_zoom/azoom
 
 	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
+	var/pb_knockback = 0
 
 /obj/item/gun/Initialize()
 	. = ..()
@@ -154,7 +156,7 @@
 	playsound(src, dry_fire_sound, 30, TRUE)
 
 
-/obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
+/obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
 
@@ -168,6 +170,10 @@
 								"<span class='danger'>You fire [src] point blank at [pbtarget]!</span>", \
 								"<span class='hear'>You hear a gunshot!</span>", COMBAT_MESSAGE_RANGE, pbtarget)
 				to_chat(pbtarget, "<span class='userdanger'>[user] fires [src] point blank at you!</span>")
+				if(pb_knockback > 0 && ismob(pbtarget))
+					var/mob/PBT = pbtarget
+					var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
+					PBT.throw_at(throw_target, pb_knockback, 2)
 			else
 				user.visible_message("<span class='danger'>[user] fires [src]!</span>", \
 								"<span class='danger'>You fire [src]!</span>", \
@@ -192,6 +198,12 @@
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return
+		if(ismob(target) && user.a_intent == INTENT_GRAB)
+			if(user.GetComponent(/datum/component/gunpoint))
+				to_chat(user, "<span class='warning'>You are already holding someone up!</span>")
+				return
+			user.AddComponent(/datum/component/gunpoint, target, src)
+			return
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user
@@ -207,20 +219,13 @@
 		shoot_with_empty_chamber(user)
 		return
 
-	//Exclude lasertag guns from the TRAIT_CLUMSY check.
-	if(clumsy_check)
-		if(istype(user))
-			if (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
-				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
-				var/shot_leg = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-				process_fire(user, user, FALSE, params, shot_leg)
-				user.dropItemToGround(src, TRUE)
-				return
-
-	if(weapon_weight == WEAPON_HEAVY && user.get_inactive_held_item())
-		to_chat(user, "<span class='warning'>You need both hands free to fire \the [src]!</span>")
+	if(check_botched(user))
 		return
 
+	var/obj/item/bodypart/other_hand = user.has_hand_for_held_index(user.get_inactive_hand_index()) //returns non-disabled inactive hands
+	if(weapon_weight == WEAPON_HEAVY && (user.get_inactive_held_item() || !other_hand))
+		to_chat(user, "<span class='warning'>You need two hands to fire \the [src]!</span>")
+		return
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
 	var/loop_counter = 0
@@ -236,7 +241,15 @@
 
 	return process_fire(target, user, TRUE, params, null, bonus_spread)
 
-
+/obj/item/gun/proc/check_botched(mob/living/user, params)
+	if(clumsy_check)
+		if(istype(user))
+			if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(40))
+				to_chat(user, "<span class='userdanger'>You shoot yourself in the foot with [src]!</span>")
+				var/shot_leg = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+				process_fire(user, user, FALSE, params, shot_leg)
+				user.dropItemToGround(src, TRUE)
+				return TRUE
 
 /obj/item/gun/can_trigger_gun(mob/living/user)
 	. = ..()
@@ -295,6 +308,9 @@
 	return TRUE
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(user)
+		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, user, target, params, zone_override)
+
 	add_fingerprint(user)
 
 	if(semicd)
@@ -478,7 +494,7 @@
 		else
 			set_light(0)
 		cut_overlays(flashlight_overlay, TRUE)
-		var/state = "flight[gun_light.on? "_on":""]"	//Generic state.
+		var/state = "[gunlight_state][gun_light.on? "_on":""]"	//Generic state.
 		if(gun_light.icon_state in icon_states('icons/obj/guns/flashlights.dmi'))	//Snowflake state?
 			state = gun_light.icon_state
 		flashlight_overlay = mutable_appearance('icons/obj/guns/flashlights.dmi', state)
@@ -578,13 +594,10 @@
 	if(!user || !user.client)
 		return
 
-	switch(forced_zoom)
-		if(FALSE)
-			zoomed = FALSE
-		if(TRUE)
-			zoomed = TRUE
-		else
-			zoomed = !zoomed
+	if(isnull(forced_zoom))
+		zoomed = !zoomed
+	else
+		zoomed = forced_zoom
 
 	if(zoomed)
 		var/_x = 0

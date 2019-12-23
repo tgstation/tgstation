@@ -21,14 +21,14 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 	var/canisterinfo = null
 	var/hsbinfo = null
 	//items that shouldn't spawn on the floor because they would bug or act weird
-	var/global/list/spawn_forbidden = list(
+	var/static/list/spawn_forbidden = list(
 		/obj/item/tk_grab, /obj/item/implant, // not implanter, the actual thing that is inside you
 		/obj/item/assembly, /obj/item/onetankbomb, /obj/item/pda/ai,
 		/obj/item/smallDelivery, /obj/projectile,
 		/obj/item/borg/sight, /obj/item/borg/stun, /obj/item/robot_module)
 
 /datum/hSB/proc/update()
-	var/global/list/hrefs = list(
+	var/static/list/hrefs = list(
 			"Space Gear",
 			"Suit Up (Space Travel Gear)"		= "hsbsuit",
 			"Spawn Gas Mask"					= "hsbspawn&path=[/obj/item/clothing/mask/gas]",

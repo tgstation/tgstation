@@ -8,19 +8,19 @@
 	/// For admin logging and round end screen.
 	var/name = ""
 	/// For admin logging and round end screen, do not change this unless making a new rule type.
-	var/ruletype = "" 
+	var/ruletype = ""
 	/// If set to TRUE, the rule won't be discarded after being executed, and dynamic will call rule_process() every time it ticks.
-	var/persistent = FALSE 
+	var/persistent = FALSE
 	/// If set to TRUE, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
-	var/repeatable = FALSE 
+	var/repeatable = FALSE
 	/// If set higher than 0 decreases weight by itself causing the ruleset to appear less often the more it is repeated.
-	var/repeatable_weight_decrease = 2 
+	var/repeatable_weight_decrease = 2
 	/// List of players that are being drafted for this rule
-	var/list/mob/candidates = list() 
+	var/list/mob/candidates = list()
 	/// List of players that were selected for this rule
-	var/list/datum/mind/assigned = list() 
+	var/list/datum/mind/assigned = list()
 	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag
-	var/antag_flag = null 
+	var/antag_flag = null
 	/// The antagonist datum that is assigned to the mobs mind on ruleset execution.
 	var/datum/antagonist/antag_datum = null
 	/// The required minimum account age for this ruleset.
@@ -28,17 +28,17 @@
 	/// If set, and config flag protect_roles_from_antagonist is false, then the rule will not pick players from these roles.
 	var/list/protected_roles = list()
 	/// If set, rule will deny candidates from those roles always.
-	var/list/restricted_roles = list() 
+	var/list/restricted_roles = list()
 	/// If set, rule will only accept candidates from those roles, IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/list/exclusive_roles = list() 
+	var/list/exclusive_roles = list()
 	/// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/list/enemy_roles = list() 
+	var/list/enemy_roles = list()
 	/// If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0) 
+	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0)
 	/// The rule needs this many candidates (post-trimming) to be executed (example: Cult needs 4 players at round start)
-	var/required_candidates = 0 
+	var/required_candidates = 0
 	/// 1 -> 9, probability for this rule to be picked against other rules
-	var/weight = 5 
+	var/weight = 5
 	/// Threat cost for this rule, this is decreased from the mode's threat when the rule is executed.
 	var/cost = 0
 	/// Cost per level the rule scales up.
@@ -56,18 +56,18 @@
 	/// Requirements are the threat level requirements per pop range.
 	/// With the default values, The rule will never get drafted below 10 threat level (aka: "peaceful extended"), and it requires a higher threat level at lower pops.
 	var/list/requirements = list(40,30,20,10,10,10,10,10,10,10)
-	/// An alternative, static requirement used instead when pop is over mode's high_pop_limit. 
+	/// An alternative, static requirement used instead when pop is over mode's high_pop_limit.
 	var/high_population_requirement = 10
 	/// Reference to the mode, use this instead of SSticker.mode.
 	var/datum/game_mode/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
-	var/antag_flag_override = null 
+	var/antag_flag_override = null
 	/// If a ruleset type which is in this list has been executed, then the ruleset will not be executed.
 	var/list/blocking_rules = list()
-	/// The minimum amount of players required for the rule to be considered. 
+	/// The minimum amount of players required for the rule to be considered.
 	var/minimum_players = 0
 	/// The maximum amount of players required for the rule to be considered.
-	/// Anything below zero or exactly zero is ignored. 
+	/// Anything below zero or exactly zero is ignored.
 	var/maximum_players = 0
 	/// Calculated during acceptable(), used in scaling and team sizes.
 	var/indice_pop = 0
@@ -75,6 +75,9 @@
 	var/list/antag_cap = list()
 	/// Base probability used in scaling. The higher it is, the more likely to scale. Kept as a var to allow for config editing._SendSignal(sigtype, list/arguments)
 	var/base_prob = 60
+	/// Delay for when execute will get called from the time of post_setup (roundstart) or process (midround/latejoin).
+	/// Make sure your ruleset works with execute being called during the game when using this, and that the clean_up proc reverts it properly in case of faliure.
+	var/delay = 0
 
 
 /datum/dynamic_ruleset/New()
@@ -91,9 +94,6 @@
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
 	ruletype = "Roundstart"
-	/// Delay for when execute will get called from the time of post_setup.
-	/// Make sure your ruleset works with execute being called during the game when using this.
-	var/delay = 0
 
 // Can be drafted when a player joins the server
 /datum/dynamic_ruleset/latejoin
@@ -111,7 +111,7 @@
 		return (threat_level >= high_population_requirement)
 	else
 		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-		if(antag_cap && requirements.len != antag_cap.len)
+		if(antag_cap.len && requirements.len != antag_cap.len)
 			message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 			log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
 		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
@@ -119,10 +119,10 @@
 
 /// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the amount of scaled steps.
 /datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
-	if(scaling_cost) // Only attempts to scale the modes with a scaling cost explicitly set. 
+	remaining_threat_level -= cost
+	if(scaling_cost && scaling_cost <= remaining_threat_level) // Only attempts to scale the modes with a scaling cost explicitly set.
 		var/new_prob
-		var/pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * scaled_times + 1)) / mode.roundstart_pop_ready
-		remaining_threat_level -= cost
+		var/pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * (scaled_times + 1))) / mode.roundstart_pop_ready
 		log_game("DYNAMIC: [name] roundstart ruleset attempting to scale up with [extra_rulesets] rulesets waiting and [remaining_threat_level] threat remaining.")
 		for(var/i in 1 to 3) //Can scale a max of 3 times
 			if(remaining_threat_level >= scaling_cost && pop_to_antags < 0.25)
@@ -131,7 +131,7 @@
 					break
 				remaining_threat_level -= scaling_cost
 				scaled_times++
-				pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * scaled_times + 1)) / mode.roundstart_pop_ready
+				pop_to_antags = (mode.antags_rolled + (antag_cap[indice_pop] * (scaled_times + 1))) / mode.roundstart_pop_ready
 		log_game("DYNAMIC: [name] roundstart ruleset failed scaling up at [new_prob ? new_prob : 0]% chance after [scaled_times]/3 successful scaleups. [remaining_threat_level] threat remaining, antag to crew ratio: [pop_to_antags*100]%.")
 		mode.antags_rolled += (1 + scaled_times) * antag_cap[indice_pop]
 		return scaled_times * scaling_cost
@@ -157,10 +157,16 @@
 /// Here you can perform any additional checks you want. (such as checking the map etc)
 /// Remember that on roundstart no one knows what their job is at this point.
 /// IMPORTANT: If ready() returns TRUE, that means pre_execute() or execute() should never fail!
-/datum/dynamic_ruleset/proc/ready(forced = 0)	
-	if (required_candidates > candidates.len)		
+/datum/dynamic_ruleset/proc/ready(forced = 0)
+	if (required_candidates > candidates.len)
 		return FALSE
 	return TRUE
+
+/// Runs from gamemode process() if ruleset fails to start, like delayed rulesets not getting valid candidates.
+/// This one only handles refunding the threat, override in ruleset to clean up the rest.
+/datum/dynamic_ruleset/proc/clean_up()
+	mode.refund_threat(cost + (scaled_times * scaling_cost))
+	mode.threat_log += "[worldtime2text()]: [ruletype] [name] refunded [cost + (scaled_times * scaling_cost)]. Failed to execute."
 
 /// Gets weight of the ruleset
 /// Note that this decreases weight if repeatable is TRUE and repeatable_weight_decrease is higher than 0

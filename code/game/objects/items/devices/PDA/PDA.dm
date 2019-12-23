@@ -65,6 +65,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/emped = FALSE
 	var/equipped = FALSE  //used here to determine if this is the first time its been picked up
 	var/allow_emojis = FALSE //if the pda can send emojis and actually have them parsed as such
+	var/sort_by_job = FALSE // If this is TRUE, will sort PDA list by job.
 
 	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
@@ -147,6 +148,18 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/GetID()
 	return id
 
+/obj/item/pda/RemoveID()
+	return do_remove_id()
+
+/obj/item/pda/InsertID(obj/item/inserting_item)
+	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+	if(!inserting_id)
+		return
+	insert_id(inserting_id)
+	if(id == inserting_id)
+		return TRUE
+	return FALSE
+
 /obj/item/pda/update_icon()
 	cut_overlays()
 	var/mutable_appearance/overlay = new()
@@ -188,10 +201,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pda)
 	assets.send(user)
 
+	var/datum/asset/spritesheet/emoji_s = get_asset_datum(/datum/asset/spritesheet/goonchat)
+	emoji_s.send(user) //Already sent by chat but no harm doing this
+
 	user.set_machine(src)
 
 	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
 	dat += assets.css_tag()
+	dat += emoji_s.css_tag()
 
 	dat += "<a href='byond://?src=[REF(src)];choice=Refresh'>[PDAIMG(refresh)]Refresh</a>"
 
@@ -311,6 +328,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<a href='byond://?src=[REF(src)];choice=Toggle Messenger'>[PDAIMG(mail)]Send / Receive: [toff == 1 ? "Off" : "On"]</a> | "
 				dat += "<a href='byond://?src=[REF(src)];choice=Ringtone'>[PDAIMG(bell)]Set Ringtone</a> | "
 				dat += "<a href='byond://?src=[REF(src)];choice=21'>[PDAIMG(mail)]Messages</a><br>"
+				dat += "<a href='byond://?src=[REF(src)];choice=Sorting Mode'>Sorted by: [sort_by_job ? "Job" : "Name"]</a>"
 
 				if(cartridge)
 					dat += cartridge.message_header()
@@ -321,10 +339,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 				var/count = 0
 
 				if (!toff)
-					for (var/obj/item/pda/P in sortNames(get_viewable_pdas()))
+					for (var/obj/item/pda/P in get_viewable_pdas(sort_by_job))
 						if (P == src)
 							continue
-						dat += "<li><a href='byond://?src=[REF(src)];choice=Message;target=[REF(P)]'>[P]</a>"
+						dat += "<li><a href='byond://?src=[REF(src)];choice=Message;target=[REF(P)]'>[P.owner] ([P.ownjob])</a>"
 						if(cartridge)
 							dat += cartridge.message_special(P)
 						dat += "</li>"
@@ -530,6 +548,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Message")
 				create_message(U, locate(href_list["target"]) in GLOB.PDAs)
 
+			if("Sorting Mode")
+				sort_by_job = !sort_by_job
+
 			if("MessageAll")
 				send_to_all(U)
 
@@ -587,19 +608,29 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return
 
 /obj/item/pda/proc/remove_id()
-
 	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
+	do_remove_id(usr)
 
-	if (id)
-		usr.put_in_hands(id)
-		to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
-		id = null
-		update_icon()
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_id == src)
-				H.sec_hud_set_ID()
+
+/obj/item/pda/proc/do_remove_id(mob/user)
+	if(!id)
+		return
+	if(user)
+		user.put_in_hands(id)
+		to_chat(user, "<span class='notice'>You remove the ID from the [name].</span>")
+	else
+		id.forceMove(get_turf(src))
+
+	. = id
+	id = null
+	update_icon()
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.wear_id == src)
+			H.sec_hud_set_ID()
+
 
 /obj/item/pda/proc/msg_input(mob/living/U = usr)
 	var/t = stripped_input(U, "Please enter message", name)
@@ -663,7 +694,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			to_chat(M, "[FOLLOW_LINK(M, user)] [ghost_message]")
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="PDA: [initial(name)] to [target_text]")
-	to_chat(user, "<span class='info'>Message sent to [target_text]: \"[message]\"</span>")
+	to_chat(user, "<span class='info'>PDA message sent to [target_text]: \"[message]\"</span>")
 	// Reset the photo
 	picture = null
 	last_text = world.time
@@ -699,7 +730,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(signal.data["emojis"] == TRUE)//so will not parse emojis as such from pdas that don't send emojis
 			inbound_message = emoji_parse(inbound_message)
 
-		to_chat(L, "[icon2html(src)] <b>Message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]")
+		to_chat(L, "[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]")
 
 	update_icon()
 	add_overlay(icon_alert)
@@ -787,19 +818,27 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if(istype(C))
 				I = C
 
-	if(I && I.registered_name)
+	if(I?.registered_name)
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
-		var/obj/old_id = id
-		id = I
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_id == src)
-				H.sec_hud_set_ID()
-		if(old_id)
-			user.put_in_hands(old_id)
+		insert_id(I, user)
 		update_icon()
 	return TRUE
+
+
+/obj/item/pda/proc/insert_id(obj/item/card/id/inserting_id, mob/user)
+	var/obj/old_id = id
+	id = inserting_id
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human_wearer = loc
+		if(human_wearer.wear_id == src)
+			human_wearer.sec_hud_set_ID()
+	if(old_id)
+		if(user)
+			user.put_in_hands(old_id)
+		else
+			old_id.forceMove(get_turf(src))
+
 
 // access to status display signals
 /obj/item/pda/attackby(obj/item/C, mob/user, params)
@@ -1018,10 +1057,16 @@ GLOBAL_LIST_EMPTY(PDAs)
 		spawn(200 * severity)
 			emped -= 1
 
-/proc/get_viewable_pdas()
+/proc/get_viewable_pdas(sort_by_job = FALSE)
 	. = list()
-	// Returns a list of PDAs which can be viewed from another PDA/message monitor.
-	for(var/obj/item/pda/P in GLOB.PDAs)
+	// Returns a list of PDAs which can be viewed from another PDA/message monitor.,
+	var/sortmode
+	if(sort_by_job)
+		sortmode = /proc/cmp_pdajob_asc
+	else
+		sortmode = /proc/cmp_pdaname_asc
+
+	for(var/obj/item/pda/P in sortList(GLOB.PDAs, sortmode))
 		if(!P.owner || P.toff || P.hidden)
 			continue
 		. += P

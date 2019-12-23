@@ -406,7 +406,7 @@
 	else if(href_list["Master"])
 		forced_ai = select_active_ai(usr)
 		if(!forced_ai)
-			to_chat(usr, "<span class='error'>No active AIs detected.</span>")
+			to_chat(usr, "<span class='alert'>No active AIs detected.</span>")
 
 	else if(href_list["Law"])
 		lawsync = !lawsync

@@ -15,18 +15,19 @@
 	name = "splice nerves"
 	accept_hand = TRUE
 	time = 155
+	experience_given = 5
 
 /datum/surgery_step/splice_nerves/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You start splicing together [target]'s nerves.</span>",
 		"<span class='notice'>[user] starts splicing together [target]'s nerves.</span>",
 		"<span class='notice'>[user] starts manipulating [target]'s nervous system.</span>")
 
-/datum/surgery_step/splice_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/splice_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	display_results(user, target, "<span class='notice'>You successfully splice [target]'s nervous system!</span>",
 		"<span class='notice'>[user] successfully splices [target]'s nervous system!</span>",
 		"<span class='notice'>[user] finishes manipulating [target]'s nervous system.</span>")
 	new /datum/bioware/spliced_nerves(target)
-	return TRUE
+	return ..(default_display_results = FALSE)
 
 /datum/bioware/spliced_nerves
 	name = "Spliced Nerves"

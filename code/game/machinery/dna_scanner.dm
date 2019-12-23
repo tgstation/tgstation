@@ -32,8 +32,7 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Radiation pulse accuracy increased by factor <b>[precision_coeff**2]</b>.<br>Radiation pulse damage decreased by factor <b>[damage_coeff**2]</b>.</span>"
 
-/obj/machinery/dna_scannernew/update_icon()
-
+/obj/machinery/dna_scannernew/update_icon_state()
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = initial(icon_state)+ (state_open ? "_open" : "") + "_unpowered"

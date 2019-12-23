@@ -152,17 +152,9 @@
 			))
 
 		for (var/datum/syndicate_contract/contract in traitor_data.contractor_hub.assigned_contracts)
-			var/target_rank = ""
-			if (contract.contract.target)
-				var/datum/data/record/record = find_record("name", contract.contract.target.current.real_name, GLOB.data_core.general)
-				if (record)
-					target_rank = record.fields["rank"]
-				else 
-					target_rank = "Unknown"
-
 			data["contracts"] += list(list(
 				"target" = contract.contract.target,
-				"target_rank" = target_rank,
+				"target_rank" = contract.target_rank,
 				"payout" = contract.contract.payout,
 				"payout_bonus" = contract.contract.payout_bonus,
 				"dropoff" = contract.contract.dropoff,

@@ -90,9 +90,9 @@
 
 /datum/component/nanites/Destroy()
 	STOP_PROCESSING(SSnanites, src)
-	set_nanite_bar(TRUE)
 	QDEL_LIST(programs)
 	if(host_mob)
+		set_nanite_bar(TRUE)
 		host_mob.hud_set_nanite_indicator()
 	host_mob = null
 	return ..()
@@ -104,14 +104,17 @@
 		adjust_nanites(null, arguments[1]) //just add to the nanite volume
 
 /datum/component/nanites/process()
-	adjust_nanites(null, regen_rate)
-	for(var/X in programs)
-		var/datum/nanite_program/NP = X
-		NP.on_process()
+	if(!IS_IN_STASIS(host_mob))
+		adjust_nanites(null, regen_rate)
+		add_research()
+		for(var/X in programs)
+			var/datum/nanite_program/NP = X
+			NP.on_process()
+		if(cloud_id && cloud_active && world.time > next_sync)
+			cloud_sync()
+			next_sync = world.time + NANITE_SYNC_DELAY
 	set_nanite_bar()
-	if(cloud_id && cloud_active && world.time > next_sync)
-		cloud_sync()
-		next_sync = world.time + NANITE_SYNC_DELAY
+	
 
 /datum/component/nanites/proc/delete_nanites()
 	qdel(src)
@@ -137,13 +140,17 @@
 		add_program(null, SNP.copy())
 
 /datum/component/nanites/proc/cloud_sync()
-	if(!cloud_id)
-		return
-	var/datum/nanite_cloud_backup/backup = SSnanites.get_cloud_backup(cloud_id)
-	if(backup)
-		var/datum/component/nanites/cloud_copy = backup.nanites
-		if(cloud_copy)
-			sync(null, cloud_copy)
+	if(cloud_id)
+		var/datum/nanite_cloud_backup/backup = SSnanites.get_cloud_backup(cloud_id)
+		if(backup)
+			var/datum/component/nanites/cloud_copy = backup.nanites
+			if(cloud_copy)
+				sync(null, cloud_copy)
+				return
+	//Without cloud syncing nanites can accumulate errors and/or defects
+	if(prob(8) && programs.len)
+		var/datum/nanite_program/NP = pick(programs)
+		NP.software_error()
 
 /datum/component/nanites/proc/add_program(datum/source, datum/nanite_program/new_program, datum/nanite_program/source_program)
 	for(var/X in programs)
@@ -217,8 +224,8 @@
 
 /datum/component/nanites/proc/receive_comm_signal(datum/source, comm_code, comm_message, comm_source = "an unidentified source")
 	for(var/X in programs)
-		if(istype(X, /datum/nanite_program/triggered/comm))
-			var/datum/nanite_program/triggered/comm/NP = X
+		if(istype(X, /datum/nanite_program/comm))
+			var/datum/nanite_program/comm/NP = X
 			NP.receive_comm_signal(comm_code, comm_message, comm_source)
 
 /datum/component/nanites/proc/check_viable_biotype()
@@ -226,7 +233,7 @@
 		qdel(src) //bodytype no longer sustains nanites
 
 /datum/component/nanites/proc/check_access(datum/source, obj/O)
-	for(var/datum/nanite_program/triggered/access/access_program in programs)
+	for(var/datum/nanite_program/access/access_program in programs)
 		if(access_program.activated)
 			return O.check_access_list(access_program.access)
 		else
@@ -270,6 +277,19 @@
 
 /datum/component/nanites/proc/get_programs(datum/source, list/nanite_programs)
 	nanite_programs |= programs
+
+/datum/component/nanites/proc/add_research()
+	var/research_value = NANITE_BASE_RESEARCH
+	if(!ishuman(host_mob))
+		if(!iscarbon(host_mob))
+			research_value *= 0.4
+		else
+			research_value *= 0.8
+	if(!host_mob.client)
+		research_value *= 0.5
+	if(host_mob.stat == DEAD)
+		research_value *= 0.75
+	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_NANITES = research_value))
 
 /datum/component/nanites/proc/nanite_scan(datum/source, mob/user, full_scan)
 	if(!full_scan)
@@ -318,18 +338,16 @@
 			mob_program["trigger_cooldown"] = P.trigger_cooldown / 10
 
 		if(scan_level >= 3)
-			mob_program["activation_delay"] = P.activation_delay
-			mob_program["timer"] = P.timer
-			mob_program["timer_type"] = P.get_timer_type_text()
-			var/list/extra_settings = list()
-			for(var/Y in P.extra_settings)
-				var/list/setting = list()
-				setting["name"] = Y
-				setting["value"] = P.get_extra_setting(Y)
-				extra_settings += list(setting)
+			mob_program["timer_restart"] = P.timer_restart / 10
+			mob_program["timer_shutdown"] = P.timer_shutdown / 10
+			mob_program["timer_trigger"] = P.timer_trigger / 10
+			mob_program["timer_trigger_delay"] = P.timer_trigger_delay / 10
+			var/list/extra_settings = P.get_extra_settings_frontend()
 			mob_program["extra_settings"] = extra_settings
 			if(LAZYLEN(extra_settings))
 				mob_program["has_extra_settings"] = TRUE
+			else
+				mob_program["has_extra_settings"] = FALSE
 
 		if(scan_level >= 4)
 			mob_program["activation_code"] = P.activation_code

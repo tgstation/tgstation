@@ -77,7 +77,6 @@
 ///Returns HTML for mech actions. Ideally, this proc would be empty for the base mecha. Segmented for easy refactoring.
 /obj/mecha/proc/get_actions()
 	. = ""
-	. += "[thrusters_action.owner ? "<b>Thrusters: </b> [thrusters_active ? "Enabled" : "Disabled"]<br>" : ""]"
 	. += "[defense_action.owner ? "<b>Defense Mode: </b> [defense_mode ? "Enabled" : "Disabled"]<br>" : ""]"
 	. += "[overload_action.owner ? "<b>Leg Actuators Overload: </b> [leg_overload_mode ? "Enabled" : "Disabled"]<br>" : ""]"
 	. += "[smoke_action.owner ? "<b>Smoke: </b> [smoke]<br>" : ""]"
@@ -153,7 +152,7 @@
 	if(equipment.len)
 		for(var/X in equipment)
 			var/obj/item/mecha_parts/mecha_equipment/W = X
-			. += "[W.name] <a href='?src=[REF(W)];detach=1'>Detach</a><br>"
+			. += "[W.name] [W.detachable?"<a href='?src=[REF(W)];detach=1'>Detach</a><br>":"\[Non-removable\]<br>"]"
 	. += {"<b>Available equipment slots:</b> [max_equip-equipment.len]
 	</div>
 	</div>"}

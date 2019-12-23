@@ -350,7 +350,7 @@
 	id = "holobarrier_jani"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/silver = 1000)
-	build_path = /obj/structure/holosign/barrier/wetsign
+	build_path = /obj/item/holosign_creator/janibarrier
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 

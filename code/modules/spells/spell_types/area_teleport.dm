@@ -84,9 +84,6 @@
 		switch(invocation_type)
 			if("shout")
 				user.say(words, forced = "spell")
-				if(user.gender==MALE)
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
-				else
-					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
+				playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, TRUE)
 			if("whisper")
 				user.whisper(words, forced = "spell")

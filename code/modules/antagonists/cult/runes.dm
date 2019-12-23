@@ -1062,7 +1062,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /proc/hudFix(mob/living/carbon/human/target)
 	if(!target || !target.client)
 		return
-	var/obj/O = target.get_item_by_slot(SLOT_GLASSES)
+	var/obj/O = target.get_item_by_slot(ITEM_SLOT_EYES)
 	if(istype(O, /obj/item/clothing/glasses/hud/security))
 		var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 		AH.add_hud_to(target)

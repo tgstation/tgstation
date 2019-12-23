@@ -516,6 +516,7 @@
 							ME2.name = "used slime extract"
 							ME2.desc = "This extract has been used up."
 
+			my_atom?.on_reagent_change(REACT_REAGENTS)
 			selected_reaction.on_reaction(src, multiplier)
 			reaction_occurred = 1
 
@@ -716,7 +717,6 @@
 	if(isnull(amount))
 		amount = 0
 		CRASH("null amount passed to reagent code")
-		return FALSE
 
 	if(!isnum(amount))
 		return FALSE

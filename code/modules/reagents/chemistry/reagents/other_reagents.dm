@@ -151,6 +151,7 @@
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),TCMB)
 			G.react(src)
 			qdel(hotspot)
+	//fixed
 	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
 	if(A)
 		A.acid_level = max(A.acid_level - reac_volume*50, 0)
@@ -208,20 +209,20 @@
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(iscultist(M))
-		to_chat(M, "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Old God's influence!</span>")
+		to_chat(M, "<span class='userdanger'>A vile holiness begins to spread its shining tendrils through your mind, purging the Geometer of Blood's influence!</span>")
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
 	if(!data)
-		data = 1
-	data++
+		data = list("misc" = 1)
+	data["misc"]++
 	M.jitteriness = min(M.jitteriness+4,10)
 	if(iscultist(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			to_chat(M, "<span class='cultlarge'>Your blood rites falter as holy water scours your body!</span>")
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
-	if(data >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
+	if(data["misc"] >= 25)		// 10 units, 45 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
 		M.stuttering = min(M.stuttering+4, 10)
@@ -233,7 +234,7 @@
 				M.Unconscious(120)
 				to_chat(M, "<span class='cultlarge'>[pick("Your blood is your bond - you are nothing without it", "Do not forget your place", \
 				"All that power, and you still fail?", "If you cannot scour this poison, I shall scour your meager life!")].</span>")
-	if(data >= 60)	// 30 units, 135 seconds
+	if(data["misc"] >= 60)	// 30 units, 135 seconds
 		if(iscultist(M))
 			SSticker.mode.remove_cultist(M.mind, FALSE, TRUE)
 		M.jitteriness = 0
@@ -250,6 +251,37 @@
 		for(var/obj/effect/rune/R in T)
 			qdel(R)
 	T.Bless()
+
+/datum/reagent/hydrogen_peroxide
+	name = "Hydrogen peroxide"
+	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen and oxygen." //intended intended
+	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
+	taste_description = "burning water"
+	var/cooling_temperature = 2
+	glass_icon_state = "glass_clear"
+	glass_name = "glass of oxygenated water"
+	glass_desc = "The father of all refreshments. Surely it tastes great, right?"
+	shot_glass_icon_state = "shotglassclear"
+
+/*
+ *	Water reaction to turf
+ */
+
+/datum/reagent/hydrogen_peroxide/reaction_turf(turf/open/T, reac_volume)
+	if(!istype(T))
+		return
+	if(reac_volume >= 5)
+		T.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
+/*
+ *	Water reaction to a mob
+ */
+
+/datum/reagent/hydrogen_peroxide/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with h2o2 can burn them !
+	if(!istype(M))
+		return
+	if(method == TOUCH)
+		M.adjustFireLoss(2, 0) // burns
+	..()
 
 /datum/reagent/fuel/unholywater		//if you somehow managed to extract this from someone, dont splash it on yourself and have a smoke
 	name = "Unholy Water"
@@ -738,7 +770,7 @@
 	name = "Chlorine"
 	description = "A pale yellow gas that's well known as an oxidizer. While it forms many harmless molecules in its elemental form it is far from harmless."
 	reagent_state = GAS
-	color = "#808080" // rgb: 128, 128, 128
+	color = "#FFFB89" //pale yellow? let's make it light gray
 	taste_description = "chlorine"
 
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/M)
@@ -789,13 +821,13 @@
 /datum/reagent/glycerol
 	name = "Glycerol"
 	description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
-	color = "#808080" // rgb: 128, 128, 128
+	color = "#D3B913"
 	taste_description = "sweetness"
 
 /datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#D0EFEE" // space cleaner but lighter
 	taste_description = "bitterness"
 
 /datum/reagent/space_cleaner/sterilizine/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
@@ -811,7 +843,7 @@
 	reagent_state = SOLID
 	taste_description = "iron"
 
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#606060" //pure iron? let's make it violet of course
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
 	if(C.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -845,9 +877,9 @@
 
 /datum/reagent/uranium
 	name ="Uranium"
-	description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
+	description = "A jade-green metallic chemical element in the actinide series, weakly radioactive."
 	reagent_state = SOLID
-	color = "#B8B8C0" // rgb: 184, 184, 192
+	color = "#5E9964" //this used to be silver, but liquid uranium can still be green and it's more easily noticeable as uranium like this so why bother?
 	taste_description = "the inside of a reactor"
 	var/irradiation_level = 1
 
@@ -867,7 +899,7 @@
 	name = "Radium"
 	description = "Radium is an alkaline earth metal. It is extremely radioactive."
 	reagent_state = SOLID
-	color = "#C7C7C7" // rgb: 199,199,199
+	color = "#00CC00" // ditto
 	taste_description = "the colour blue and regret"
 	irradiation_level = 2*REM
 
@@ -1005,7 +1037,7 @@
 /datum/reagent/cryptobiolin
 	name = "Cryptobiolin"
 	description = "Cryptobiolin causes confusion and dizziness."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#ADB5DB" //i hate default violets and 'crypto' keeps making me think of cryo so it's light blue now
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	taste_description = "sourness"
 
@@ -1019,7 +1051,7 @@
 /datum/reagent/impedrezene
 	name = "Impedrezene"
 	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
-	color = "#C8A5DC" // rgb: 200, 165, 220A
+	color = "#E07DDD" // pink = happy = dumb
 	taste_description = "numbness"
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/M)
@@ -1354,16 +1386,16 @@
 
 /datum/reagent/fuel/oil
 	name = "Oil"
-	description = "Burns in a small smoky fire, mostly used to get Ash."
+	description = "Burns in a small smoky fire, can be used to get Ash."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#2D2D2D"
 	taste_description = "oil"
 
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"
 	description = "Non-flammable plasma locked into a liquid form that cannot ignite or become gaseous/solid."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#2D2D2D"
 	taste_description = "bitterness"
 	taste_mult = 1.5
 
@@ -1375,7 +1407,7 @@
 	name = "Iodine"
 	description = "Commonly added to table salt as a nutrient. On its own it tastes far less pleasing."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#BC8A00"
 	taste_description = "metal"
 
 /datum/reagent/carpet
@@ -1415,7 +1447,7 @@
 
 /datum/reagent/carpet/green
 	name = "Green Carpet"
-	description = "For those that need the perfect flourish for your green eggs and ham."
+	description = "For those that need the perfect flourish for green eggs and ham."
 	color = "#A8E61D"
 	taste_description = "Green" //the caps is intentional
 	carpet_type = /turf/open/floor/carpet/green
@@ -1477,49 +1509,86 @@
 	name = "Bromine"
 	description = "A brownish liquid that's highly reactive. Useful for stopping free radicals, but not intended for human consumption."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#D35415"
 	taste_description = "chemicals"
+
+/datum/reagent/pentaerythritol
+	name = "Pentaerythritol"
+	description = "Slow down, it ain't no spelling bee!"
+	reagent_state = SOLID
+	color = "#E66FFF"
+	taste_description = "acid"
+
+/datum/reagent/acetaldehyde
+	name = "Acetaldehyde"
+	description = "Similar to plastic. Tastes like dead people."
+	reagent_state = SOLID
+	color = "#EEEEEF"
+	taste_description = "dead people" //made from formaldehyde, ya get da joke ?
+
+/datum/reagent/acetone_oxide
+	name = "Acetone oxide"
+	description = "Enslaved oxygen"
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	taste_description = "acid"
+
+
+/datum/reagent/acetone_oxide/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people kills people!
+	if(!istype(M))
+		return
+	if(method == TOUCH)
+		M.adjustFireLoss(2, FALSE) // burns,
+		M.adjust_fire_stacks((reac_volume / 10))
+	..()
+
+
 
 /datum/reagent/phenol
 	name = "Phenol"
 	description = "An aromatic ring of carbon with a hydroxyl group. A useful precursor to some medicines, but has no healing properties on its own."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#E7EA91"
 	taste_description = "acid"
 
 /datum/reagent/ash
 	name = "Ash"
 	description = "Supposedly phoenixes rise from these, but you've never seen it."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#515151"
 	taste_description = "ash"
 
 /datum/reagent/acetone
 	name = "Acetone"
 	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#AF14B7"
 	taste_description = "acid"
 
 /datum/reagent/colorful_reagent
 	name = "Colorful Reagent"
 	description = "Thoroughly sample the rainbow."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
 	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
+	color = "#C8A5DC"
 	taste_description = "rainbows"
 	var/can_colour_mobs = TRUE
 
+/datum/reagent/colorful_reagent/New()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+
+/datum/reagent/colorful_reagent/proc/UpdateColor()
+	color = pick(random_color_list)
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M)
 	if(can_colour_mobs)
 		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
-		return ..()
+	return ..()
 
 /datum/reagent/colorful_reagent/reaction_mob(mob/living/M, reac_volume)
 	if(can_colour_mobs)
 		M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
-		..()
+	..()
 
 /datum/reagent/colorful_reagent/reaction_obj(obj/O, reac_volume)
 	if(O)
@@ -1535,9 +1604,15 @@
 	name = "Quantum Hair Dye"
 	description = "Has a high chance of making you look like a mad scientist."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
 	var/list/potential_colors = list("0ad","a0f","f73","d14","d14","0b5","0ad","f73","fc2","084","05e","d22","fa0") // fucking hair code
+	color = "#C8A5DC"
 	taste_description = "sourness"
+
+/datum/reagent/hair_dye/New()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+
+/datum/reagent/hair_dye/proc/UpdateColor()
+	color = pick(potential_colors)
 
 /datum/reagent/hair_dye/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -1551,7 +1626,7 @@
 	name = "Barber's Aid"
 	description = "A solution to hair loss across the world."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#A86B45" //hair is brown
 	taste_description = "sourness"
 
 /datum/reagent/barbers_aid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -1568,7 +1643,7 @@
 	name = "Concentrated Barber's Aid"
 	description = "A concentrated solution to hair loss across the world."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#7A4E33" //hair is dark browmn
 	taste_description = "sourness"
 
 /datum/reagent/concentrated_barbers_aid/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -1629,13 +1704,13 @@
 
 /datum/reagent/toxin/plasma/plasmavirusfood
 	name = "virus plasma"
-	color = "#A69DA9" // rgb: 166,157,169
+	color = "#A270A8" // rgb: 166,157,169
 	taste_description = "bitterness"
 	taste_mult = 1.5
 
 /datum/reagent/toxin/plasma/plasmavirusfood/weak
 	name = "weakened virus plasma"
-	color = "#CEC3C6" // rgb: 206,195,198
+	color = "#A28CA5" // rgb: 206,195,198
 	taste_description = "bitterness"
 	taste_mult = 1.5
 

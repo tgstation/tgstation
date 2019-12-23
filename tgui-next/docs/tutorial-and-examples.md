@@ -1,22 +1,25 @@
-# TGUI Backend Documentation
+# Tutorial and Examples
 
 ## Main concepts
 
-Basic tgui backend code consists of defining a few procs. In these procs
-you will handle a request to open or update a UI (typically by updating a UI
-if it exists or setting up and opening it if it does not), a request for data,
-in which you build a list to be passed as JSON to the UI, and an action
-handler, which handles any user input.
+Basic tgui backend code consists of the following vars and procs:
 
-- The atom, which UI corresponds to in the game world, is in most cases
-known as the `src_object`.
-- Frontend data is built in `ui_data` proc, which munges whatever complex
-data your `src_object` has into a list.
-- The action/topic handler, `ui_act`, is what recieves input from the user
-and acts on it.
-- The request/update proc, `ui_interact` is where you open your UI and set
-options like title, size, autoupdate, theme, and more.
-- Finally, `ui_state` (set in `ui_interact`) dictates under what conditions
+```
+ui_interact(mob/user, ui_key, datum/tgui/ui, force_open,
+  datum/tgui/master_ui, datum/ui_state/state)
+ui_data(mob/user)
+ui_act(action, params)
+```
+
+- `src_object` - The atom, which UI corresponds to in the game world.
+- `ui_interact` - The proc where you will handle a request to open an
+interface. Typically, you would update an existing UI (if it exists),
+or set up a new instance of UI by calling the `SStgui` subsystem.
+- `ui_data` - In this proc you munges whatever complex data your `src_object`
+has into an associative list, which will then be sent to UI as a JSON string.
+- `ui_act` - This proc receives user actions and reacts to them by changing
+the state of the game.
+- `ui_state` (set in `ui_interact`) - This var dictates under what conditions
 a UI may be interacted with. This may be the standard checks that check if
 you are in range and conscious, or more.
 
@@ -115,20 +118,14 @@ This object contains a few special values:
 - `config` is always the same and is part of core tgui
 (it will be explained later),
 - `data` is the data returned from `ui_data`
-- `adata` is the same, but with certain values (numbers at this time)
-interpolated in order to allow animation.
 
 ```jsx
 import { Section, LabeledList } from '../components';
 
 const SampleInterface = props => {
-  // Extract state from props
   const { state } = props;
-  // Extract config and data from the state
   const { config, data } = state;
-  // Extract window reference (will be used later for dispatching actions)
   const { ref } = config;
-  // Return the Virtual DOM
   return (
     <Section title="Health status">
       <LabeledList>
@@ -145,11 +142,10 @@ const SampleInterface = props => {
 ```
 
 This syntax can be very confusing at first, but it is very important to
-realize that this is just a natural extension of javascript. This syntax
-simply creates a Virtual DOM object, which you can treat as any other
-object in javascript. Here are some control flow examples:
+realize that this is just a natural extension of javascript. Here's a few
+examples of this syntax:
 
-Returning different elements based on a condition:
+Return a different element based on a condition:
 
 ```jsx
 if (condition) {
@@ -158,7 +154,7 @@ if (condition) {
 return <Bar />;
 ```
 
-Conditionally rendering a element inside of another element:
+Conditionally render a element inside of another element:
 
 ```jsx
 <Box>
@@ -168,7 +164,7 @@ Conditionally rendering a element inside of another element:
 </Box>
 ```
 
-Looping over the array to make element for each item:
+Looping over the array to make an element for each item:
 
 ```jsx
 <LabeledList>
@@ -178,6 +174,24 @@ Looping over the array to make element for each item:
     </LabeledList.Item>
   ))}
 </LabeledList>
+```
+
+### Routing table
+
+Once you finished creating your interface, you need to add a route entry to
+the large `ROUTES` object, otherwise tgui won't know when and how to render
+your interface. Key of this `ROUTES` object corresponds to the interface
+name you use in DM code.
+
+```js
+import { SampleInterface } from './interfaces/SampleInterface';
+
+const ROUTES = {
+  sample_interface: {
+    component: () => SampleInterface,
+    scrollable: true,
+  },
+};
 ```
 
 ## Copypasta
@@ -196,17 +210,16 @@ upon code review):
 /obj/copypasta/ui_data(mob/user)
   var/list/data = list()
   data["var"] = var
-
   return data
 
 /obj/copypasta/ui_act(action, params)
   if(..())
     return
-  switch(action)
-    if("copypasta")
-      var/newvar = params["var"]
-      var = Clamp(newvar, min_val, max_val) // Just a demo of proper input sanitation.
-      . = TRUE
+  if(action == "copypasta")
+    var/newvar = params["var"]
+    // A demo of proper input sanitation.
+    var = CLAMP(newvar, min_val, max_val)
+    return TRUE
   update_icon() // Not applicable to all objects.
 ```
 
@@ -216,13 +229,9 @@ And the template:
 import { Section, LabeledList } from '../components';
 
 const SampleInterface = props => {
-  // Extract state from props
   const { state } = props;
-  // Extract config and data from the state
   const { config, data } = state;
-  // Extract window reference (will be used later for dispatching actions)
   const { ref } = config;
-  // Return the UI
   return (
     <Section title="Section name">
       <LabeledList>

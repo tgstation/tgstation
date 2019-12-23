@@ -49,11 +49,6 @@
 	detail_overlay.color = detail_color
 	add_overlay(detail_overlay)
 
-/obj/item/proc/GetCard()
-
-/obj/item/card/data/GetCard()
-	return src
-
 /obj/item/card/data/full_color
 	desc = "A plastic magstripe card for simple and speedy data storage and transfer. This one has the entire card colored."
 	icon_state = "data_2"
@@ -297,6 +292,9 @@
 	return access
 
 /obj/item/card/id/GetID()
+	return src
+
+/obj/item/card/id/RemoveID()
 	return src
 
 /obj/item/card/id/update_icon(blank=FALSE)
@@ -569,6 +567,18 @@ update_label()
 
 /obj/item/card/id/ert/Janitor/Initialize()
 	access = get_all_accesses()
+	. = ..()
+
+/obj/item/card/id/debug
+	name = "\improper Debug ID"
+	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
+	icon_state = "ert_janitor"
+	assignment = "Jannie"
+	uses_overlays = FALSE
+
+/obj/item/card/id/debug/Initialize()
+	access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
+	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	. = ..()
 
 /obj/item/card/id/prisoner

@@ -9,6 +9,8 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	resistance_flags = NONE
+	custom_price = 1200
+	custom_premium_price = 1200
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
@@ -141,7 +143,7 @@
 
 /obj/item/clothing/gloves/color/latex/equipped(mob/user, slot)
 	..()
-	if(slot == SLOT_GLOVES)
+	if(slot == ITEM_SLOT_GLOVES)
 		ADD_TRAIT(user, carrytrait, CLOTHING_TRAIT)
 
 /obj/item/clothing/gloves/color/latex/dropped(mob/user)

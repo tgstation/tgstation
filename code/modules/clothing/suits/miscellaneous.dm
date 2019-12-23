@@ -178,7 +178,7 @@
 
 /obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(slot == SLOT_WEAR_SUIT)
+	if(slot == ITEM_SLOT_OCLOTHING)
 		disguise(user)
 
 /obj/item/clothing/suit/cardborg/dropped(mob/living/user)
@@ -262,7 +262,7 @@
 
 /obj/item/clothing/head/hooded/carp_hood/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if (slot == SLOT_HEAD)
+	if (slot == ITEM_SLOT_HEAD)
 		user.faction |= "carp"
 
 /obj/item/clothing/head/hooded/carp_hood/dropped(mob/living/carbon/human/user)
@@ -532,7 +532,7 @@
 	name = "captain's winter coat"
 	icon_state = "coatcaptain"
 	item_state = "coatcaptain"
-	armor = list("melee" = 25, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list("melee" = 25, "bullet" = 30, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize()
@@ -546,7 +546,7 @@
 	name = "security winter coat"
 	icon_state = "coatsecurity"
 	item_state = "coatsecurity"
-	armor = list("melee" = 25, "bullet" = 15, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
+	armor = list("melee" = 25, "bullet" = 15, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
 
 /obj/item/clothing/suit/hooded/wintercoat/security/Initialize()
@@ -629,19 +629,23 @@
 	name = "ablative hood"
 	desc = "Hood hopefully belonging to an ablative trenchcoat. Includes a visor for cool-o-vision."
 	icon_state = "ablativehood"
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 60, "energy" = 50, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 60, "energy" = 60, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	strip_delay = 30
 	var/hit_reflect_chance = 50
 
 /obj/item/clothing/head/hooded/ablative/equipped(mob/living/carbon/human/user, slot)
 	..()
 	to_chat(user, "As you put on the hood, a visor shifts into place and starts analyzing the people around you. Neat!")
-	ADD_TRAIT(user, TRAIT_SECURITY_HUD, CLOTHING_TRAIT)
+	ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+	H.add_hud_to(user)
 
 /obj/item/clothing/head/hooded/ablative/dropped(mob/living/carbon/human/user)
 	..()
 	to_chat(user, "You take off the hood, removing the visor in the process and disabling its integrated hud.")
-	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, CLOTHING_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+	H.remove_hud_from(user)
 
 /obj/item/clothing/head/hooded/ablative/IsReflect(def_zone)
 	if(!(def_zone in BODY_ZONE_HEAD)) //If not shot where ablative is covering you, you don't get the reflection bonus!
@@ -651,13 +655,11 @@
 
 /obj/item/clothing/suit/hooded/ablative
 	name = "ablative trenchcoat"
-	desc = "Experimental trenchcoat specially crafted to reflect and absorb laser and disabler shots. Don't expect it to do all that much against an ax or a shotgun, however."
+	desc = "Experimental trenchcoat specially crafted to reflect and absorb laser and disabler shots. Don't expect it to do all that much against an axe or a shotgun, however."
 	icon_state = "ablativecoat"
 	item_state = "ablativecoat"
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list("melee" = 10, "bullet" = 10, "laser" = 60, "energy" = 50, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	armor = list("melee" = 10, "bullet" = 10, "laser" = 60, "energy" = 60, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	hoodtype = /obj/item/clothing/head/hooded/ablative
 	strip_delay = 30
 	equip_delay_other = 40
@@ -688,7 +690,7 @@
 	desc = "A big and clanky suit made of bronze that offers no protection and looks very unfashionable. Nice."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass_old"
-	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
+	armor = list("melee" = 5, "bullet" = 0, "laser" = -5, "energy" = -15, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
 
 /obj/item/clothing/suit/ghost_sheet
 	name = "ghost sheet"
@@ -701,3 +703,33 @@
 	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	alternate_worn_layer = UNDER_HEAD_LAYER
+
+/obj/item/clothing/suit/toggle/suspenders/blue
+	name = "blue suspenders"
+	desc = "The symbol of hard labor and dirty jobs."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "suspenders_blue"
+
+/obj/item/clothing/suit/toggle/suspenders/gray
+	name = "gray suspenders"
+	desc = "The symbol of hard labor and dirty jobs."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "suspenders_gray"
+
+/obj/item/clothing/suit/hooded/mysticrobe
+	name = "mystic's robe"
+	desc = "Wearing this makes you feel more attuned with the nature of the universe... as well as a bit more irresponsible. "
+	icon_state = "mysticrobe"
+	item_state = "mysticrobe"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/spellbook, /obj/item/storage/book/bible)
+	flags_inv = HIDEJUMPSUIT
+	hoodtype = /obj/item/clothing/head/hooded/mysticrobe
+
+/obj/item/clothing/head/hooded/mysticrobe
+	name = "mystic's hood"
+	desc = "The balance of reality tips towards order."
+	icon_state = "mystichood"
+	item_state = "mystichood"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK

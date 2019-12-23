@@ -75,13 +75,16 @@
 
 /obj/machinery/computer/aifixer/proc/Fix()
 	use_power(1000)
-	occupier.adjustOxyLoss(-1, 0)
-	occupier.adjustFireLoss(-1, 0)
-	occupier.adjustToxLoss(-1, 0)
-	occupier.adjustBruteLoss(-1, 0)
+	occupier.adjustOxyLoss(-5, 0)
+	occupier.adjustFireLoss(-5, 0)
+	occupier.adjustToxLoss(-5, 0)
+	occupier.adjustBruteLoss(-5, 0)
 	occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
 		occupier.revive(full_heal = FALSE, admin_revive = FALSE)
+		if(!occupier.radio_enabled)
+			occupier.radio_enabled = TRUE
+			to_chat(occupier, "<span class='warning'>Your Subspace Transceiver has been enabled!</span>")
 	return occupier.health < 100
 
 /obj/machinery/computer/aifixer/process()
@@ -106,21 +109,21 @@
 		add_fingerprint(usr)
 	updateUsrDialog()
 
-/obj/machinery/computer/aifixer/update_icon()
-	..()
+/obj/machinery/computer/aifixer/update_overlays()
+	. = ..()
 	if(stat & (NOPOWER|BROKEN))
 		return
+	
+	if(active)
+		. += "ai-fixer-on"
+	if (occupier)
+		switch (occupier.stat)
+			if (0)
+				. += "ai-fixer-full"
+			if (2)
+				. += "ai-fixer-404"
 	else
-		if(active)
-			add_overlay("ai-fixer-on")
-		if (occupier)
-			switch (occupier.stat)
-				if (0)
-					add_overlay("ai-fixer-full")
-				if (2)
-					add_overlay("ai-fixer-404")
-		else
-			add_overlay("ai-fixer-empty")
+		. += "ai-fixer-empty"
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(!..())

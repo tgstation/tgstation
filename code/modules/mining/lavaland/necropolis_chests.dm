@@ -208,7 +208,7 @@
 	var/mob/living/carbon/human/active_owner
 
 /obj/item/clothing/neck/necklace/memento_mori/item_action_slot_check(slot)
-	return slot == SLOT_NECK
+	return slot == ITEM_SLOT_NECK
 
 /obj/item/clothing/neck/necklace/memento_mori/dropped(mob/user)
 	..()
@@ -577,7 +577,7 @@
 	if(!user.can_read(src))
 		return FALSE
 	to_chat(user, "<span class='notice'>You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.</span>")
-	user.grant_all_languages(omnitongue=TRUE)
+	user.grant_all_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
@@ -1036,7 +1036,7 @@
 		var/mob/living/L = I
 		da_list[L.real_name] = L
 
-	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in sortNames(da_list)
+	var/choice = input(user,"Who do you want dead?","Choose Your Victim") as null|anything in sortList(da_list)
 
 	choice = da_list[choice]
 

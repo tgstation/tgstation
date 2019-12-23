@@ -2,6 +2,7 @@
 	can_transfer = TRUE
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/orbiters
+	var/datum/movement_detector/tracker
 
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
 //clockwise: whether you orbit clockwise or anti clockwise
@@ -22,17 +23,18 @@
 
 /datum/component/orbiter/RegisterWithParent()
 	var/atom/target = parent
+
 	target.orbiters = src
-	while(ismovableatom(target))
-		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/move_react)
-		target = target.loc
+	if(ismovableatom(target))
+		tracker = new(target, CALLBACK(src, .proc/move_react))
+
+	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/orbiter_glide_size_update)
 
 /datum/component/orbiter/UnregisterFromParent()
 	var/atom/target = parent
 	target.orbiters = null
-	while(ismovableatom(target))
-		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
-		target = target.loc
+	QDEL_NULL(tracker)
+	UnregisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 
 /datum/component/orbiter/Destroy()
 	var/atom/master = parent
@@ -80,6 +82,12 @@
 	orbiter.transform = shift
 
 	orbiter.SpinAnimation(rotation_speed, -1, clockwise, rotation_segments, parallel = FALSE)
+	if(ismob(orbiter))
+		var/mob/M = orbiter
+		M.updating_glide_size = FALSE
+	if(ismovableatom(parent))
+		var/atom/movable/AM = parent
+		orbiter.glide_size = AM.glide_size
 
 	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
 	orbiter.transform = initial_transform
@@ -95,33 +103,23 @@
 	orbiters -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
+	if(ismob(orbiter))
+		var/mob/M = orbiter
+		M.updating_glide_size = TRUE
+		M.glide_size = 8
 	if(!refreshing && !length(orbiters) && !QDELING(src))
 		qdel(src)
 
 // This proc can receive signals by either the thing being directly orbited or anything holding it
-/datum/component/orbiter/proc/move_react(atom/orbited, atom/oldloc, direction)
+/datum/component/orbiter/proc/move_react(atom/movable/master, atom/mover, atom/oldloc, direction)
 	set waitfor = FALSE // Transfer calls this directly and it doesnt care if the ghosts arent done moving
 
-	var/atom/movable/master = parent
 	if(master.loc == oldloc)
 		return
 
 	var/turf/newturf = get_turf(master)
 	if(!newturf)
 		qdel(src)
-
-	// Handling the signals of stuff holding us (or not anymore)
-	// These are prety rarely activated, how often are you following something in a bag?
-	if(oldloc && !isturf(oldloc)) // We used to be registered to it, probably
-		var/atom/target = oldloc
-		while(ismovableatom(target))
-			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
-			target = target.loc
-	if(orbited?.loc && orbited.loc != newturf) // We want to know when anything holding us moves too
-		var/atom/target = orbited.loc
-		while(ismovableatom(target))
-			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/move_react, TRUE)
-			target = target.loc
 
 	var/atom/curloc = master.loc
 	for(var/i in orbiters)
@@ -138,6 +136,11 @@
 	if(orbiter.loc == get_turf(parent))
 		return
 	end_orbit(orbiter)
+
+/datum/component/orbiter/proc/orbiter_glide_size_update(datum/source, target)
+	for(var/orbiter in orbiters)
+		var/atom/movable/AM = orbiter
+		AM.glide_size = target
 
 /////////////////////
 
