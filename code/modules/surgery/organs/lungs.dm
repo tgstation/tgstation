@@ -388,7 +388,7 @@
 			if(prob(20))
 				to_chat(H, "<span class='warning'>You feel [hot_message] in your [name]!</span>")
 
-	// The air you breath out should match your body temperature
+	// The air you breathe out should match your body temperature
 	breath.temperature = H.bodytemperature
 
 /obj/item/organ/lungs/on_life()

@@ -298,7 +298,7 @@
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
-	// The air you breath out should match your body temperature
+	// The air you breathe out should match your body temperature
 	breath.temperature = bodytemperature
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
