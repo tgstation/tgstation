@@ -340,7 +340,7 @@
 		set_species(newrace, icon_update=0)
 
 	if(newreal_name)
-		real_name = newreal_name
+		dna.real_name = newreal_name
 		dna.generate_unique_enzymes()
 
 	if(newblood_type)
