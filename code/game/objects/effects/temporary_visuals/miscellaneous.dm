@@ -466,9 +466,9 @@
 	icon = 'icons/effects/effects_rcd.dmi'
 	icon_state = ""
 	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
 	var/status = 0
 	var/delay = 0
-	anchored = TRUE
 
 /obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status)
 	. = ..()
