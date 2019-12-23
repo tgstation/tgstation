@@ -28,18 +28,10 @@
 
 	var/turf/T = loc
 	hide(T.intact)
-	if(codes["patrol"])
-		if(!GLOB.navbeacons["[z]"])
-			GLOB.navbeacons["[z]"] = list()
-		GLOB.navbeacons["[z]"] += src //Register with the patrol list!
-	if(codes["delivery"])
-		GLOB.deliverybeacons += src
-		GLOB.deliverybeacontags += location
+	glob_lists_register(init=TRUE)
 
 /obj/machinery/navbeacon/Destroy()
-	if (GLOB.navbeacons["[z]"])
-		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
-	GLOB.deliverybeacons -= src
+	glob_lists_deregister()
 	return ..()
 
 /obj/machinery/navbeacon/onTransitZ(old_z, new_z)
@@ -67,6 +59,25 @@
 		else
 			codes[e] = "1"
 
+/obj/machinery/navbeacon/proc/glob_lists_deregister()
+	if (GLOB.navbeacons["[z]"])
+		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	GLOB.deliverybeacons -= src
+	GLOB.deliverybeacontags -= location
+	GLOB.wayfindingbeacons -= src
+
+/obj/machinery/navbeacon/proc/glob_lists_register(var/init=FALSE)
+	if(!init)
+		glob_lists_deregister()
+	if(codes["patrol"])
+		if(!GLOB.navbeacons["[z]"])
+			GLOB.navbeacons["[z]"] = list()
+		GLOB.navbeacons["[z]"] += src //Register with the patrol list!
+	if(codes["delivery"])
+		GLOB.deliverybeacons += src
+		GLOB.deliverybeacontags += location
+	if(codes["wayfinding"])
+		GLOB.wayfindingbeacons += src
 
 // called when turf state changes
 // hide the object if turf is intact
@@ -170,6 +181,7 @@ Transponder Codes:<UL>"}
 			var/newloc = copytext(sanitize(input("Enter New Location", "Navigation Beacon", location) as text|null),1,MAX_MESSAGE_LEN)
 			if(newloc)
 				location = newloc
+				glob_lists_register()
 				updateDialog()
 
 		else if(href_list["edit"])
@@ -187,12 +199,14 @@ Transponder Codes:<UL>"}
 
 			codes.Remove(codekey)
 			codes[newkey] = newval
+			glob_lists_register()
 
 			updateDialog()
 
 		else if(href_list["delete"])
 			var/codekey = href_list["code"]
 			codes.Remove(codekey)
+			glob_lists_register()
 			updateDialog()
 
 		else if(href_list["add"])
@@ -210,5 +224,6 @@ Transponder Codes:<UL>"}
 				codes = new()
 
 			codes[newkey] = newval
+			glob_lists_register()
 
 			updateDialog()
