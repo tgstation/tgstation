@@ -56,8 +56,7 @@
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
 	icon_states = null
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //protected by the christmas spirit
-	flags_1 = NODECONSTRUCT_1
+	flags_1 = NODECONSTRUCT_1 //protected by the christmas spirit
 
 /obj/structure/flora/tree/pine/xmas/presents
 	icon_state = "pinepresents"
