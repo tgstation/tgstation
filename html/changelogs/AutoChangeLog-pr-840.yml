@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - admin: "Cutting down (xmas) trees is now logged."
