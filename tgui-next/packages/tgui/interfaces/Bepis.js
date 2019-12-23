@@ -74,13 +74,13 @@ export const Bepis = props => {
             <Button
               icon="donate"
               content="Deposit Credits"
-			  disabled={data.manual_power === 1 || data.silicon_check === 1}
+              disabled={data.manual_power === 1 || data.silicon_check === 1}
               onClick={() => act(ref, 'deposit_cash')}
-               />
+            />
             <Button
               icon="eject"
               content="Withdraw Credits"
-			  disabled={data.manual_power === 1}
+              disabled={data.manual_power === 1}
               onClick={() => act(ref, 'withdraw_cash')} />
           </Box>
         </Grid.Column>

@@ -2,6 +2,8 @@
 
 //economics defined values, subject to change should anything be too high or low in practice.
 
+#define MACHINE_OPERATION 100000
+#define MACHINE_OVERLOAD 500000
 
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
@@ -33,7 +35,7 @@
 	if(default_deconstruction_screwdriver(user, "chamber_open", "chamber", O))
 		update_icon_state()
 		return
-	else if(default_deconstruction_crowbar(O))
+	if(default_deconstruction_crowbar(O))
 		return
 	if(!is_operational())
 		to_chat(user, "<span class='notice'>[src] can't accept money when it's not functioning.</span>")
@@ -81,7 +83,7 @@
 		update_icon_state()
 		say("Attempting to deposit 0 credits. Aborting.")
 		return
-	deposit_value = CLAMP(round(deposit_value, 1), 1, 30000)
+	deposit_value = CLAMP(round(deposit_value, 1), 1, 15000)
 	if(!account)
 		say("Cannot find user account. Please swipe a valid ID.")
 		return
@@ -137,7 +139,7 @@
 	if(gauss_real <= -1)	//Critical Failure
 		say("ERROR: CRITICAL MACHIME MALFUNCTI- ON. CURRENCY IS NOT CRASH. CANNOT COMPUTE COMMAND: 'make bucks'") //not a typo, for once.
 		new /mob/living/simple_animal/deer(dropturf, 1)
-		use_power(500000 * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
+		use_power(MACHINE_OVERLOAD * power_saver) //To prevent gambling at low cost and also prevent spamming for infinite deer.
 		return
 	//Minor Failure
 	error_cause = pick("attempted to sell grey products to American dominated market.","attempted to sell gray products to British dominated market.","placed wild assumption that PDAs would go out of style.","simulated product #76 damaged brand reputation mortally.","simulated business model resembled 'pyramid scheme' by 98.7%.","product accidently granted override access to all station doors.")
@@ -202,7 +204,7 @@
 				say("Please deposit funds to begin testing.")
 				return
 			calcsuccess()
-			use_power(10000 * power_saver) //This thing should eat your APC battery if you're not careful.
+			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.
 			powered = FALSE	//Shuts off after use in order to get the right visual look. Kinda annoying, but also prevents some possible spam issues.
 			update_icon_state()
 		if("amount")

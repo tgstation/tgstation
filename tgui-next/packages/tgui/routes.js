@@ -127,13 +127,12 @@ const ROUTES = {
     component: () => AtmosPump,
     scrollable: false,
   },
-<<<<<<< HEAD
   bepis: {
     component: () => Bepis,
-=======
+    scrollable: false,
+  },
   bank_machine: {
     component: () => BankMachine,
->>>>>>> upstream/master
     scrollable: false,
   },
   borgopanel: {
