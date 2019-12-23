@@ -54,8 +54,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/datum/action/innate/flight/fly //the actual flying ability given to flying species
 	var/wings_icon = "Angel" //the icon used for the wings
 
-	// Body tempurature defaults
-	// this enables different species to have different body tempurature settings
+	// Body temperature defaults
+	// this enables different species to have different body temperature settings
 	var/bodytemp_normal = BODYTEMP_NORMAL
 	var/bodytemp_autorecovery_min = BODYTEMP_AUTORECOVERY_MINIMUM
 	var/bodytemp_heat_damage_limit = BODYTEMP_HEAT_DAMAGE_LIMIT
@@ -1668,10 +1668,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				// Extra calculation for hardsuits to bleed off heat
 				environment_change = max((thermal_protection * (areatemp - H.bodytemperature) + bodytemp_normal - H.bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
 
-	// Apply the tempurature changes
+	// Apply the temperature changes
 	H.adjust_bodytemperature(natural_change + environment_change)
 
-/// Handle the body tempurature status effects for the species
+/// Handle the body temperature status effects for the species
 /datum/species/proc/handle_body_temperature(mob/living/carbon/human/H)
 	// +30, -40 degrees from 310K is the 'safe' zone for humans, where no damage is dealt.
 
@@ -1757,7 +1757,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod)
 				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 
-// Used to stabilize the normal body tempurature on living mobs
+// Used to stabilize the normal body temperature on living mobs
 // This allows for species overrides
 /datum/species/proc/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
 	var/body_temperature_difference = bodytemp_normal - H.bodytemperature

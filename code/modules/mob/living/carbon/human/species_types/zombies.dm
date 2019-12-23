@@ -38,9 +38,10 @@
 	var/regen_cooldown = 0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
-// Zombies do not stabilize body tempurature they are the walking dead and are cold blooded
+// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
+// Return the the amount of change in temperature
 /datum/species/zombie/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
-	return 0
+	return 0 // No natural temperature change, only enviromental
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE

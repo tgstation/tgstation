@@ -115,7 +115,7 @@
 	if(abs(loc_temp - bodytemperature) > 50)
 		divisor = 5
 
-	// update the body tempurature
+	// update the body temperature
 	if(loc_temp < bodytemperature) // it is cold here
 		if(!on_fire) // do not reduce body temp when on fire
 			adjust_bodytemperature((loc_temp - bodytemperature) / divisor)

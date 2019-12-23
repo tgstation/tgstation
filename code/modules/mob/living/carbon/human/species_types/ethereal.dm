@@ -29,7 +29,7 @@
 	var/static/b2 = 149
 	//this is shit but how do i fix it? no clue.
 
-	// Body tempurature for ethereals is much higher
+	// Body temperature for ethereals is much higher
 	// they can handle hotter environments
 	// but they are hurt at cold temps faster as it is harder to move with out the heat energy
 	bodytemp_normal = (BODYTEMP_NORMAL + 50)

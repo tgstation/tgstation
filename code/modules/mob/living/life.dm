@@ -89,7 +89,7 @@
 	// get the current air temperature
 	var/loc_temp = get_temperature(environment)
 
-	// update the body tempurature
+	// update the body temperature
 	if(loc_temp < bodytemperature) // it is cold here
 		if(!on_fire) // do not reduce body temp when on fire
 			adjust_bodytemperature(max((loc_temp - bodytemperature) / BODYTEMP_DIVISOR, BODYTEMP_COOLING_MAX))

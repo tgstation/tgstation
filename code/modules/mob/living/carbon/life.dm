@@ -615,10 +615,10 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				// but will reduce the amount of heat we get from the environment
 				natural_change = (1 / (thermal_protection + 1)) * natural
 
-	// Apply the tempurature changes
+	// Apply the temperature changes
 	adjust_bodytemperature(natural_change + environment_change)
 
-// Used to stabilize the normal body tempurature on living mobs
+// Used to stabilize the normal body temperature on living mobs
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
 	var/body_temperature_difference = BODYTEMP_NORMAL - bodytemperature
 	switch(bodytemperature)

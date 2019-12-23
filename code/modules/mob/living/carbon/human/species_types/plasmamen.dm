@@ -22,14 +22,14 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	outfit_important_for_life = /datum/outfit/plasmaman
 
-	// Body tempurature for Plasmen is much lower
+	// Body temperature for Plasmen is much lower
 	// they can handle colder environments
 	// but they are hurt at hot temps faster as it is harder to hold their form
-	// and they will regain tempurature more slowly in some situations
+	// and they will regain temperature more slowly in some situations
 	bodytemp_normal = (BODYTEMP_NORMAL - 40)
 	bodytemp_autorecovery_min = 2
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 20) // about 40C
-	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
+	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c, incase they loss the resit trait
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()

@@ -26,13 +26,14 @@
 	wings_icon = "Dragon"
 	species_language_holder = /datum/language_holder/lizard
 	// lizards are coldblooded
-	// and can stand aa higher tempurature range by a few points
+	// and can stand a higher temperature range by a few points
 	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT + 10)
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 10)
 
-// Lizards are cold blooded and do not stabilize body tempurature naturally
+// Lizards are cold blooded and do not stabilize body temperature naturally
+// Return the the amount of change in temperature
 /datum/species/lizard/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
-	return 0
+	return 0 // No natural temperature change, only enviromental
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
