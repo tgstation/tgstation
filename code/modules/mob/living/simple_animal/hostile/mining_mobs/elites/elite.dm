@@ -180,7 +180,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(boosted)
 		mychild.key = elitemind.key
 		mychild.sentience_act()
-		notify_ghosts("[mychild.name] has been awakened in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite awakened")
+		notify_ghosts("\A [mychild] has been awakened in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite awakened")
 	icon_state = "tumor_popped"
 	INVOKE_ASYNC(src, .proc/arena_checks)
 
@@ -192,7 +192,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 2
 		mychild.health = mychild.maxHealth
-		notify_ghosts("[mychild.name] has been challenged in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite challenged")
+		notify_ghosts("\A [mychild] has been challenged in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite challenged")
 
 /obj/structure/elite_tumor/Initialize(mapload)
 	. = ..()
