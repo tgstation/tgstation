@@ -21,14 +21,14 @@
 			if(do_after(user, 1000/W.force, target = src)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
 				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "<span class='hear'>You hear the sound of a tree falling.</span>")
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
+				user.log_message("cut down [src] at [AREACOORD(src)]", LOG_ATTACK)
+				if(istype(src, /obj/structure/flora/tree/pine/xmas))
+					message_admins("[ADMIN_LOOKUPFLW(user)][ADMIN_SMITE(user)] cut down [src] at [ADMIN_COORDJMP(src)]")
 				for(var/i=1 to log_amount)
 					new /obj/item/grown/log/tree(get_turf(src))
-
 				var/obj/structure/flora/stump/S = new(loc)
 				S.name = "[name] stump"
-
 				qdel(src)
-
 	else
 		return ..()
 

@@ -185,6 +185,10 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
+	if(!clonename)	//to prevent null names
+		clonename = "clone ([rand(1,999)])"
+	H.real_name = clonename
+
 	H.hardset_dna(ui, mutation_index, H.real_name, blood_type, mrace, features)
 
 	if(!HAS_TRAIT(H, TRAIT_RADIMMUNE))//dont apply mutations if the species is Mutation proof.
@@ -200,10 +204,6 @@
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
-
-	if(!clonename)	//to prevent null names
-		clonename = "clone ([rand(1,999)])"
-	H.real_name = clonename
 
 	icon_state = "pod_1"
 	//Get the clone body ready
