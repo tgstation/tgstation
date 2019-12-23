@@ -48,12 +48,17 @@ const serializeObject = obj => {
       // Error object
       if (value instanceof Error) {
         return {
-          __type__: 'error',
+          __error__: true,
           string: String(value),
           stack: value.stack,
         };
       }
       return value;
+    }
+    if (typeof value === 'number' && !Number.isFinite(value)) {
+      return {
+        __number__: String(value),
+      };
     }
     return value;
   });

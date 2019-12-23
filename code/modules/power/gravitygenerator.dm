@@ -118,7 +118,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	use_power = IDLE_POWER_USE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OFFLINE
 	ui_x = 400
-	ui_y = 200
+	ui_y = 165
 	var/on = TRUE
 	var/breaker = TRUE
 	var/list/parts = list()
@@ -249,6 +249,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 			breaker = !breaker
 			investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [key_name(usr)].", INVESTIGATE_GRAVITY)
 			set_power()
+			. = TRUE
 
 // Power and Icon States
 
