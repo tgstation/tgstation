@@ -22,8 +22,6 @@
 				user.visible_message("<span class='notice'>[user] fells [src] with the [W].</span>","<span class='notice'>You fell [src] with the [W].</span>", "<span class='hear'>You hear the sound of a tree falling.</span>")
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
 				user.log_message("cut down [src] at [AREACOORD(src)]", LOG_ATTACK)
-				if(istype(src, /obj/structure/flora/tree/pine/xmas))
-					message_admins("[ADMIN_LOOKUPFLW(user)][ADMIN_SMITE(user)] cut down [src] at [ADMIN_COORDJMP(src)]")
 				for(var/i=1 to log_amount)
 					new /obj/item/grown/log/tree(get_turf(src))
 				var/obj/structure/flora/stump/S = new(loc)
@@ -58,6 +56,8 @@
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
 	icon_states = null
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //protected by the christmas spirit
+	flags_1 = NODECONSTRUCT_1
 
 /obj/structure/flora/tree/pine/xmas/presents
 	icon_state = "pinepresents"
