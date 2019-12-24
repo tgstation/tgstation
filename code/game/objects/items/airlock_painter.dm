@@ -174,7 +174,7 @@
 /obj/item/airlock_painter/decal/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "decal_painter", name, 500, 500, master_ui, state)
+		ui = new(user, src, ui_key, "decal_painter", name, 500, 400, master_ui, state)
 		ui.open()
 
 /obj/item/airlock_painter/decal/ui_data(mob/user)
@@ -200,7 +200,7 @@
 		))
 	return data
 
-/obj/item/airlock_painter/decal/ui_act(action,active,params)
+/obj/item/airlock_painter/decal/ui_act(action,list/params)
 	if(..())
 		return
 	switch(action)
@@ -212,43 +212,8 @@
 			var/selected_color = params["color_type"]
 			stored_color = selected_color
 		if("selected direction")
-			var/selected_direction = params["dir_type"]
+			var/selected_direction = text2num(params["dir_type"])
 			stored_dir = selected_direction
-		//Decal Designs
-		if("lines")
-			stored_decal = "warningline"
-		if("lines corner")
-			stored_decal = "warninglinecorner"
-		if("caution")
-			stored_decal = "caution"
-		if("arrow")
-			stored_decal = "arrows"
-		if("stand clear")
-			stored_decal = "stand_clear"
-		if("box")
-			stored_decal = "box"
-		if("box corners")
-			stored_decal = "box_corners"
-		if("delivery")
-			stored_decal = "delivery"
-		if("full stripes")
-			stored_decal = "warn_full"
-		//Direction for the Decal
-		if("north")
-			stored_dir = 1
-		if("south")
-			stored_dir = 2
-		if("east")
-			stored_dir = 4
-		if("west")
-			stored_dir = 8
-		//Decal colors
-		if("yellow")
-			stored_color = ""
-		if("red")
-			stored_color = "_red"
-		if("white")
-			stored_color = "_white"
 	update_decal_path()
 	. = TRUE
 
