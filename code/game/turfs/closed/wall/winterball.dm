@@ -5,5 +5,5 @@
 	desc = "A strange wall made out of bricks. It almost looks non-euclidean."
 	icon = 'icons/turf/walls/eldritch_wall.dmi'
 	icon_state = "box"
-	baseturfs = /turf/open/indestructible/temple
+	baseturfs = /turf/open/floor/plating/asteroid/snow
 	smooth = SMOOTH_TRUE
