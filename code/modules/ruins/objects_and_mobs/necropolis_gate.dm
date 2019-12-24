@@ -340,6 +340,48 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	tile_key = "pristine_surrounding_tile"
 	tile_random_sprite_max = 2
 
+/obj/structure/stone_tile/elder
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_pristine_tile"
+	tile_key = "elder_pristine_tile"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/elderblock
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_pristine_block"
+	tile_key = "elder_pristine_block"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/elderslab
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_pristine_slab"
+	tile_key = "elder_pristine_slab"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/eldercenter
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_pristine_center"
+	tile_key = "elder_pristine_center"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/eldersurrounding
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_pristine_surrounding"
+	tile_key = "elder_pristine_surrounding"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/eldersurrounding_tile
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_pristine_surroundingtile"
+	tile_key = "elder_pristine_surroundingtile"
+	tile_random_sprite_max = 1
+
 //cracked stone tiles
 /obj/structure/stone_tile/cracked
 	name = "cracked stone tile"
@@ -373,6 +415,48 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	icon_state = "cracked_surrounding_tile1"
 	tile_key = "cracked_surrounding_tile"
 
+/obj/structure/stone_tile/eldercracked
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_cracked_tile"
+	tile_key = "elder_cracked_tile"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/block/eldercracked
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_cracked_block"
+	tile_key = "elder_cracked_block"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/slab/eldercracked
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_cracked_slab"
+	tile_key = "elder_cracked_slab"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/center/eldercracked
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_cracked_center"
+	tile_key = "elder_cracked_center"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/surrounding/eldercracked
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_cracked_surrounding"
+	tile_key = "elder_cracked_surrounding"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/surrounding_tile/eldercracked
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_cracked_surroundingtile"
+	tile_key = "elder_cracked_surroundingtile"
+	tile_random_sprite_max = 1
+
 //burnt stone tiles
 /obj/structure/stone_tile/burnt
 	name = "burnt stone tile"
@@ -403,6 +487,48 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	name = "burnt stone surrounding tile"
 	icon_state = "burnt_surrounding_tile1"
 	tile_key = "burnt_surrounding_tile"
+
+/obj/structure/stone_tile/elderburnt
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_burnt_tile"
+	tile_key = "elder_burnt_tile"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/block/elderburnt
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_burnt_block"
+	tile_key = "elder_burnt_block"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/slab/elderburnt
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_burnt_slab"
+	tile_key = "elder_burnt_slab"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/center/elderburnt
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_burnt_center"
+	tile_key = "elder_burnt_center"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/surrounding/elderburnt
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_burnt_surrounding"
+	tile_key = "elder_burnt_surrounding"
+	tile_random_sprite_max = 1
+
+/obj/structure/stone_tile/surrounding_tile/elderburnt
+	name = "Temple Tile"
+	icon = 'icons/turf/floors/elder_floors.dmi'
+	icon_state = "elder_burnt_surroundingtile"
+	tile_key = "elder_burnt_surroundingtile"
+	tile_random_sprite_max = 1
 
 #undef STABLE
 #undef COLLAPSE_ON_CROSS
