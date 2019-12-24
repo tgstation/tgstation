@@ -1,8 +1,6 @@
 {
     "map_name": "Runtime Station",
     "map_path": "map_files/debug",
-    "map_file": "runtimestation.dmm",
-	"shuttles": {
-	    "cargo": "cargo_delta"
-    }
+    "map_file": ["runtimestation.dmm","iceburg_lvl2.dmm"],
+	"traits": [{"Up": 1}, {"Down": -1}]
 }

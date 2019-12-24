@@ -55,3 +55,34 @@
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/reagent_containers/food/snacks/meat/slab/penguin = 1)
+
+/mob/living/simple_animal/pet/penguin/club
+	name = "fat penguin"
+	desc = "Known for tipping icebergs."
+	icon_state = "clubby"
+	icon_living = "clubby"
+	icon_dead = "penguin_dead"
+	dextrous = TRUE
+	var/obj/item/hat
+
+/mob/living/simple_animal/pet/penguin/club/proc/wear_hat(obj/item/new_hat)
+	if(hat)
+		hat.forceMove(get_turf(src))
+	hat = new_hat
+	new_hat.forceMove(src)
+	update_icons()
+
+/mob/living/simple_animal/pet/penguin/club/attackby(obj/item/I, mob/living/user)
+	if(I.slot_flags & ITEM_SLOT_HEAD && user.a_intent == INTENT_HELP && !is_type_in_typecache(I, GLOB.blacklisted_borg_hats))
+		to_chat(user, "<span class='notice'>You begin to place [I] on [src]'s head...</span>")
+		to_chat(src, "<span class='notice'>[user] is placing [I] on your head...</span>")
+		if(do_after(user, 30, target = src))
+			if (user.temporarilyRemoveItemFromInventory(I, TRUE))
+				wear_hat(I)
+		return
+
+/mob/living/simple_animal/pet/penguin/club/update_icons()
+	cut_overlays()
+	if(hat)
+		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head.dmi')
+		add_overlay(head_overlay)

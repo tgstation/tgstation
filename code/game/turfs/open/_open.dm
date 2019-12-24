@@ -64,6 +64,20 @@
 	..()
 	if(istype(AM))
 		playsound(src,sound,50,TRUE)
+	
+/turf/open/indestructible/cobble
+	name = "cobblestone path"
+	desc = "A simple but beautiful path made of various sized stones."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "cobble"
+	baseturfs = /turf/open/indestructible/cobble
+	tiled_dirt = FALSE
+
+/turf/open/indestructible/cobble/side
+	icon_state = "cobble_side"
+
+/turf/open/indestructible/cobble/corner
+	icon_state = "cobble_corner"
 
 /turf/open/indestructible/necropolis
 	name = "necropolis floor"

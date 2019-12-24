@@ -185,7 +185,17 @@
 	icon_state = "railing"
 	density = TRUE
 	anchored = TRUE
-	deconstructible = FALSE
+	climbable = TRUE
+
+/obj/structure/fluff/railing/CanPass(atom/movable/mover, turf/target)
+	if(get_dir(loc, target) == dir)
+		return !density
+	return 1
+
+/obj/structure/fluff/railing/CheckExit(atom/movable/O, turf/target)
+	if(get_dir(O.loc, target) == dir)
+		return 0
+	return 1
 
 /obj/structure/fluff/railing/corner
 	icon_state = "railing_corner"
@@ -260,3 +270,12 @@
 	name = "clockwork golem scrap"
 	desc = "A pile of scrap metal. It seems damaged beyond repair."
 	icon_state = "clockgolem_dead"
+
+
+/obj/structure/fluff/lightpost
+	name = "lightpost"
+	desc = "A homely lightpost adorned with festive decor."
+	icon = 'icons/obj/2x2.dmi'
+	icon_state = "lightpost"
+	deconstructible = FALSE
+	layer = EDGED_TURF_LAYER
