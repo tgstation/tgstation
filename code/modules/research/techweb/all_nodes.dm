@@ -964,6 +964,7 @@
 	design_ids = list("mindshield_nanites", "pacifying_nanites", "blinding_nanites", "sleep_nanites", "mute_nanites", "speech_nanites","hallucination_nanites")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000, TECHWEB_POINT_TYPE_NANITES = 1000)
 	export_price = 5000
+	experimental = TRUE
 
 /datum/techweb_node/nanite_harmonic
 	id = "nanite_harmonic"
@@ -1056,7 +1057,6 @@
 
 
 ////////////////////////B.E.P.I.S. Locked Techs////////////////////////
-//Make sure to add the node's ID to the _techweb.dm file so that it's rewardable!
 /datum/techweb_node/light_apps
 	id = "light_apps"
 	display_name = "Illumination Applications"

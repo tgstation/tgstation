@@ -59,6 +59,7 @@
 	hidden_nodes -= BN.id				//Has to be removed from hidden nodes
 	research_node(BN, TRUE, FALSE, FALSE)
 	update_node_status(BN)
+	SSresearch.techweb_nodes_experimental -= bepis_id
 
 /datum/techweb/Destroy()
 	researched_nodes = null

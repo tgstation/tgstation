@@ -11,6 +11,7 @@
 	icon = 'icons/obj/machines/bepis.dmi'
 	icon_state = "chamber"
 	density = TRUE
+	layer = ABOVE_MOB_LAYER
 	use_power = IDLE_POWER_USE
 	active_power_usage = 1500
 	circuit = /obj/item/circuitboard/machine/bepis
@@ -30,6 +31,7 @@
 	var/inaccuracy_percentage = 1.5
 	var/positive_cash_offset = 0
 	var/negative_cash_offset = 0
+	var/static/list/item_list = list()
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "chamber_open", "chamber", O))
@@ -123,9 +125,11 @@
 	flick("chamber_flash",src)
 	update_icon_state()
 	banked_cash = 0
-	if(gauss_real >= gauss_major) //Major Success.
+	if((gauss_real >= gauss_major) && (SSresearch.techweb_nodes_experimental.len > 0)) //Major Success.
 		say("Experiment concluded with major success. New technology node discovered on technology disc.")
 		new /obj/item/disk/tech_disk/major(dropturf,1)
+		if(SSresearch.techweb_nodes_experimental.len == 0)
+			say("Expended all available experimental technology nodes. Resorting to minor rewards.")
 		return
 	if(gauss_real >= gauss_minor) //Minor Success.
 		var/reward_number = 1
