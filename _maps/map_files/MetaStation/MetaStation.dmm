@@ -24828,6 +24828,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/item/radio/off,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bcM" = (
@@ -76749,13 +76750,13 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/item/radio/off,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/item/geiger_counter,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "wpK" = (
