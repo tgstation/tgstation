@@ -137,6 +137,9 @@
 	var/stored_color = ""
 	var/stored_decal = "warningline"
 	var/stored_decal_total = "warningline"
+	var/list/dir_list = list()
+	var/list/decal_list = list()
+	var/list/color_list = list()
 
 /obj/item/airlock_painter/decal/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -160,6 +163,9 @@
 /obj/item/airlock_painter/decal/Initialize()
 	. = ..()
 	ink = new /obj/item/toner/large(src)
+	dir_list = list(1,2,4,8)
+	decal_list = list("warningline","warninglinecorner","caution","arrows","stand_clear","box","box_corners","delivery","warn_full")
+	color_list = list("","_red","_white")
 
 /obj/item/airlock_painter/decal/proc/update_decal_path()
 	stored_decal_total = "[stored_decal][stored_color]"
@@ -176,12 +182,38 @@
 	data["decal_direction"] = stored_dir
 	data["decal_color"] = stored_color
 	data["decal_style"] = stored_decal
+	data["decal_builder"] = list()
+	data["color_builder"] = list()
+	data["direction_builder"] = list()
+
+	for(var/i in decal_list)
+		data["decal_builder"] += list(list(
+			"decal_type" = i
+		))
+	for(var/j in color_list)
+		data["color_builder"] += list(list(
+			"color_type" = j
+		))
+	for(var/k in dir_list)
+		data["direction_builder"] += list(list(
+			"dir_type" = k
+		))
 	return data
 
-/obj/item/airlock_painter/decal/ui_act(action,active)
+/obj/item/airlock_painter/decal/ui_act(action,active,params)
 	if(..())
 		return
 	switch(action)
+		//Lists of decals and designs
+		if("select decal")
+			var/selected_decal = params["decal_type"]
+			stored_decal = selected_decal
+		if("select color")
+			var/selected_color = params["color_type"]
+			stored_color = selected_color
+		if("selected direction")
+			var/selected_direction = params["dir_type"]
+			stored_dir = selected_direction
 		//Decal Designs
 		if("lines")
 			stored_decal = "warningline"

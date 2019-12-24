@@ -4,6 +4,9 @@ import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section, Tabs } 
 
 export const DecalPainter = props => {
   const { act, data } = useBackend(props);
+  const decal_builder = data.decal_builder || [];
+  const color_builder = data.color_builder || [];
+  const direction_builder = data.direction_builder || [];
   return (
     <Fragment>
       <Section title="Decal Style">
@@ -89,6 +92,45 @@ export const DecalPainter = props => {
           color={data.decal_color === "_white" ? "white" : "default"}
           onClick={() => act('white')}
           content="White" />
+      </Section>
+      <Section title="Decal Type">
+        {decal_builder.map(decal => {
+          return (
+            <Button
+              key={decal.decal_type}
+              content={decal.decal_type}
+              selected={decal.decal_type === data.decal_style}
+              onClick={() => act('select decal', {
+                decal_type: decal.decal_type, 
+              })} />
+          );
+        })} 
+      </Section>
+      <Section title="Decal Color">
+        {color_builder.map(color => {
+          return (
+            <Button
+              key={color.color_type}
+              content={color.color_type}
+              selected={color.color_type === data.decal_color}
+              onClick={() => act('select color', {
+                color_type: color.color_type, 
+              })} />
+          );
+        })} 
+      </Section>
+      <Section title="Decal Direction">
+        {direction_builder.map(dir => {
+          return (
+            <Button
+              key={dir.dir_type}
+              content={dir.dir_type}
+              selected={dir.dir_type === data.decal_direction}
+              onClick={() => act('selected direction', {
+                dir_type: dir.dir_type, 
+              })} />
+          );
+        })} 
       </Section>
     </Fragment>
   );
