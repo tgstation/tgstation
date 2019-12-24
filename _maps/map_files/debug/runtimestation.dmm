@@ -28,7 +28,7 @@
 /turf/open/floor/plating/beach/water,
 /area/awaymission/snowdin/outside)
 "ah" = (
-/turf/open/floor/plating/snowed/smoothed,
+/turf/open/floor/plating/snowed/smoothed/notfrozen,
 /area/awaymission/snowdin/outside)
 "ai" = (
 /turf/open/floor/wood,
@@ -59,7 +59,7 @@
 /area/awaymission/snowdin/outside)
 "an" = (
 /obj/structure/cable,
-/turf/open/floor/plating/snowed/smoothed,
+/turf/open/floor/plating/snowed/smoothed/notfrozen,
 /area/awaymission/snowdin/outside)
 "ao" = (
 /obj/structure/cable,
