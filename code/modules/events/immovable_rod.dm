@@ -27,7 +27,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	announceWhen = 5
 
 /datum/round_event/immovable_rod/announce(fake)
-	priority_announce("Unknown object detected on collision course with the station.", "General Alert")
+	priority_announce("Unknown high-density object detected on collision co-- What the fuck was that?!", "General Alert")
 
 /datum/round_event/immovable_rod/start()
 	var/datum/round_event_control/immovable_rod/C = control
