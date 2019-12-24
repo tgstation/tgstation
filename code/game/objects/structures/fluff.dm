@@ -281,8 +281,8 @@
 	layer = EDGED_TURF_LAYER
 
 /obj/structure/fluff/hedge
-	name = "lightpost"
-	desc = "A homely lightpost adorned with festive decor."
+	name = "hedge"
+	desc = "A large bushy hedge."
 	icon = 'icons/obj/smooth_structures/hedge.dmi'
 	icon_state = "hedge"
 	smooth = SMOOTH_TRUE
