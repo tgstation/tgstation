@@ -646,14 +646,11 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	AddComponent(/datum/component/butchering, 50, 100)
+	AddComponent(/datum/component/speed_curse)
 
 /obj/item/nullrod/tribal_knife/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
-
-/obj/item/nullrod/tribal_knife/process()
-	slowdown = rand(-2, 2)
-
 
 /obj/item/nullrod/pitchfork
 	icon_state = "pitchfork0"
