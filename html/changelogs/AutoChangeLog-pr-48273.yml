@@ -1,4 +1,0 @@
-author: "Buggy123"
-delete-after: True
-changes: 
-  - tweak: "An intern at Nanotrasen noticed that their shift timer was running about 3 minutes fast, misleading employees about how long they had been clocked in. The timer has been fixed, and anyone who clocked out early has had their pay docked."
