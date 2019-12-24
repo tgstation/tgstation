@@ -22,7 +22,7 @@ export const Cargo = props => {
         {cart.length === 1 && '1 item'}
         {cart.length >= 2 && cart.length + ' items'}
         {' '}
-        {cartTotalAmount > 0 && `(${cartTotalAmount} cr)`}
+        {cartTotalAmount > 0 && `(${cartTotalAmount}Ꞥ)`}
       </Box>
       <Button
         icon="times"
@@ -38,7 +38,7 @@ export const Cargo = props => {
         title="Cargo"
         buttons={(
           <Box inline bold>
-            <AnimatedNumber value={Math.round(data.points)} /> credits
+            <AnimatedNumber value={Math.round(data.points)} />Ꞥ
           </Box>
         )}>
         <LabeledList>
@@ -161,7 +161,7 @@ const Catalog = props => {
               <Button fluid
                 content={(data.self_paid
                   ? Math.round(pack.cost * 1.1)
-                  : pack.cost) + ' credits'}
+                  : pack.cost) + 'Ꞥ'}
                 onClick={() => act(ref, 'add', {
                   id: pack.id,
                 })} />
@@ -215,7 +215,7 @@ const Requests = props => {
               <i>{request.reason}</i>
             </td>
             <td className="LabeledList__cell LabeledList__buttons">
-              {request.cost} credits
+              {request.cost}Ꞥ
               {' '}
               {!data.requestonly && (
                 <Fragment>
@@ -260,7 +260,7 @@ const Cart = props => {
                   <Box inline mx={2}>
                     {!!entry.paid && (<b>[Paid Privately]</b>)}
                     {' '}
-                    {entry.cost} credits
+                    {entry.cost}Ꞥ
                   </Box>
                   <Button
                     icon="minus"
@@ -314,7 +314,7 @@ export const CargoExpress = props => {
             title="Cargo Express"
             buttons={(
               <Box inline bold>
-                <AnimatedNumber value={Math.round(data.points)} /> credits
+                <AnimatedNumber value={Math.round(data.points)} />Ꞥ
               </Box>
             )}>
             <LabeledList>
