@@ -1,6 +1,7 @@
+import { toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Table } from '../components';
+import { Box, Button, LabeledList, Section, Table } from '../components';
 
 export const LaborClaimConsole = props => {
   const { act, data } = useBackend(props);
@@ -13,24 +14,12 @@ export const LaborClaimConsole = props => {
   } = data;
   return (
     <Fragment>
-      <Section title="Ore value">
-        <Table>
-          {ores.map(ore => (
-            <Table.Row key={ore.ore}>
-              <Table.Cell>
-                {ore.ore}
-              </Table.Cell>
-              <Table.Cell textAlign="right">
-                {ore.value}
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table>
-      </Section>
-      <Section title="Points">
+      <Section>
         <LabeledList>
           <LabeledList.Item label="Status">
             {status_info}
+          </LabeledList.Item>
+          <LabeledList.Item label="Shuttle controls">
             <Button
               content="Move shuttle"
               disabled={!can_go_home}
@@ -42,11 +31,36 @@ export const LaborClaimConsole = props => {
           <LabeledList.Item label="Unclaimed points">
             {unclaimed_points}
             <Button
-              content="Claim points"
+              ml={1}
+              content="Claim"
               disabled={!unclaimed_points}
               onClick={() => act('claim_points')} />
           </LabeledList.Item>
         </LabeledList>
+      </Section>
+      <Section title="Material values">
+        <Table>
+          <Table.Row header>
+            <Table.Cell>
+              Material
+            </Table.Cell>
+            <Table.Cell collapsing textAlign="right">
+              Value
+            </Table.Cell>
+          </Table.Row>
+          {ores.map(ore => (
+            <Table.Row key={ore.ore}>
+              <Table.Cell>
+                {toTitleCase(ore.ore)}
+              </Table.Cell>
+              <Table.Cell collapsing textAlign="right">
+                <Box color="label" inline>
+                  {ore.value}
+                </Box>
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table>
       </Section>
     </Fragment>
   );
