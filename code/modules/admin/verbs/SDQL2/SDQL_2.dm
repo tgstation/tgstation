@@ -1001,13 +1001,13 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 //Staying as a world proc as this is called too often for changes to offset the potential IsAdminAdvancedProcCall checking overhead.
 /world/proc/SDQL_var(object, list/expression, start = 1, source, superuser, datum/SDQL2_query/query)
 	var/v
-	var/static/list/exclude = list("usr", "src", "marked", "global")
+	var/static/list/exclude = list("usr", "src", "marked", "global", "MC", "FS", "CFG")
 	var/long = start < expression.len
 	var/datum/D
 	if(is_proper_datum(object))
 		D = object
 
-	if (object == world && (!long || expression[start + 1] == ".") && !(expression[start] in exclude))
+	if (object == world && (!long || expression[start + 1] == ".") && !(expression[start] in exclude) && copytext(expression[start], 1, 3) != "SS")
 		to_chat(usr, "<span class='danger'>World variables are not allowed to be accessed. Use global.</span>")
 		return null
 
@@ -1053,46 +1053,22 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				v = Failsafe
 			if("CFG")
 				v = config
-			//Subsystem switches
-			if("SSgarbage")
-				v = SSgarbage
-			if("SSmachines")
-				v = SSmachines
-			if("SSobj")
-				v = SSobj
-			if("SSresearch")
-				v = SSresearch
-			if("SSprojectiles")
-				v = SSprojectiles
-			if("SSfastprocess")
-				v = SSfastprocess
-			if("SSticker")
-				v = SSticker
-			if("SStimer")
-				v = SStimer
-			if("SSradiation")
-				v = SSradiation
-			if("SSnpcpool")
-				v = SSnpcpool
-			if("SSmobs")
-				v = SSmobs
-			if("SSmood")
-				v = SSmood
-			if("SSquirks")
-				v = SSquirks
-			if("SSwet_floors")
-				v = SSwet_floors
-			if("SSshuttle")
-				v = SSshuttle
-			if("SSmapping")
-				v = SSmapping
-			if("SSevents")
-				v = SSevents
-			if("SSeconomy")
-				v = SSeconomy
-			//End
 			else
-				return null
+				if(copytext(expression[start], 1, 3) == "SS") //Subsystem
+					var/SSname = copytext(expression[start], 3)
+					var/SSlength = length(SSname)
+					var/datum/controller/subsystem/SS
+					var/SSmatch
+					for(var/_SS in Master.subsystems)
+						SS = _SS
+						if(copytext("[SS.type]", -SSlength) == SSname)
+							SSmatch = SS
+							break
+					if(!SSmatch)
+						return null
+					v = SSmatch
+				else
+					return null
 	else if(object == GLOB) // Shitty ass hack kill me.
 		v = expression[start]
 	if(long)

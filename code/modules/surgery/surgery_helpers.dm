@@ -94,7 +94,7 @@
 		var/is_robotic = S.requires_bodypart_type == BODYPART_ROBOTIC
 		if(is_robotic)
 			required_tool_type = TOOL_SCREWDRIVER
-		if(close_tool?.tool_behaviour == required_tool_type || iscyborg(user))
+		if(close_tool && close_tool.tool_behaviour == required_tool_type || iscyborg(user))
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.bleed_rate = max( (H.bleed_rate - 3), 0)
