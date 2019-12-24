@@ -144,6 +144,21 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
+//////////////////////runed metal////////////////////////////////
+
+/obj/structure/statue/runed_metal
+	name = "/dev/null"
+	desc = "/dev/null"
+	max_integrity = 500
+	material_drop_type = /obj/item/stack/sheet/runed_metal
+
+/obj/structure/statue/runed_metal/cthulhu
+    name = "strange statue"
+    desc = "A statue of a vague anthropoid with an octopus-like head and long, narrow wings. The epigraph is indecipherable."
+    icon = 'icons/obj/2x2.dmi'
+    icon_state = "elder"
+    max_integrity = 6666
+
 //////////////////////gold///////////////////////////////////////
 
 /obj/structure/statue/gold
