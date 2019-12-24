@@ -1,0 +1,40 @@
+{
+    "boomer": [
+	"@pick(kids) these days have it too easy!",
+	"Do I look like I know what a @pick(file) is!?",
+	"How do I open @pick(file) again?",
+	"Unlike you snowflakes, I'm not offended as easily.",
+	"Back in my day..",
+	"When I was your age..",
+	"This generation can't take a joke.",
+	"Why are @pick(kids) these days so @pick(sad) all the time?",
+	"These damn @pick(kids) need to get a @pick(impossible) for once!"
+    ],
+
+    "kids": [
+	"kids",
+	"millenials",
+	"snowflakes"
+    ],
+
+    "file": [
+	"jpeg",
+	"pdf",
+	"dmi",
+	"json"
+    ],
+
+    "sad": [
+	"sad",
+	"depressed",
+	"sad and depressed"
+    ],
+
+    "impossible": [
+	"job",
+	"house",
+	"job and a house",
+	"life"
+    ]
+
+}

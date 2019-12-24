@@ -563,7 +563,7 @@
 
 /datum/reagent/consumable/monkey_energy/overdose_process(mob/living/M)
 	if(prob(15))
-		M.say(pick("How do I open PDF?", "Unlike you snowflakes, I'm not offended as easily.", "Kids these days have it too easy.", "Back in my day..", "When I was your age..", "This generation can't take a joke.", "Kids these days are so sad and depressed."), forced = /datum/reagent/consumable/monkey_energy)
+		M.say(pick_list_replacements(BOOMER_FILE, "boomer"), forced = /datum/reagent/consumable/monkey_energy)
 	..()
 	return
 
