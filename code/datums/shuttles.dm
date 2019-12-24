@@ -222,14 +222,6 @@
 	credit_cost = 15000
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
-/datum/map_template/shuttle/emergency/luxury
-	suffix = "luxury"
-	name = "Luxury Shuttle"
-	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
-	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
-	can_be_bought = FALSE
-	credit_cost = 10000
-
 /datum/map_template/shuttle/emergency/discoinferno
 	suffix = "discoinferno"
 	name = "Disco Inferno"
