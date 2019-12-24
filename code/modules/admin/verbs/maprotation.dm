@@ -51,7 +51,7 @@
 		if(isnull(map_file))
 			return
 		
-		if(copytext("[map_file]",-4) != ".dmm")
+		if(copytext("[map_file]", -4) != ".dmm")//4 == length(".dmm")
 			to_chat(src, "<span class='warning'>Filename must end in '.dmm': [map_file]</span>")
 			return
 

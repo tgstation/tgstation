@@ -40,7 +40,7 @@
 		return
 	var/client/C
 	if(istext(whom))
-		if(cmptext(copytext(whom,1,2),"@"))
+		if(whom[1] == "@")
 			whom = findStealthKey(whom)
 		C = GLOB.directory[whom]
 	else if(istype(whom, /client))
@@ -75,7 +75,7 @@
 	var/client/recipient
 	var/external = 0
 	if(istext(whom))
-		if(cmptext(copytext(whom,1,2),"@"))
+		if(whom[1] == "@")
 			whom = findStealthKey(whom)
 		if(whom == "IRCKEY")
 			external = 1
@@ -132,7 +132,7 @@
 
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0)||external)//no sending html to the poor bots
-		msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
+		msg = trim(sanitize(msg), MAX_MESSAGE_LEN)
 		if(!msg)
 			return
 
@@ -285,7 +285,7 @@
 	if(!stealthkey)
 		stealthkey = GenTgsStealthKey()
 
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 	if(!msg)
 		return "Error: No message"
 

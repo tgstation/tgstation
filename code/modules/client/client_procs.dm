@@ -438,7 +438,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			winset(src, "[child]", "[entries[child]]")
 			if (!ispath(child, /datum/verbs/menu))
 				var/procpath/verbpath = child
-				if (copytext(verbpath.name,1,2) != "@")
+				if (verbpath.name[1] != "@")
 					new child(src)
 
 	for (var/thing in prefs.menuoptions)
