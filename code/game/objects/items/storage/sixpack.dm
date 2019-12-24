@@ -3,9 +3,9 @@
 	desc = "Holds up to six drink cans, and select bottles."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "canholder"
-	item_state = "utility"
-	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
+	item_state = "cola"
+	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	custom_materials = list(/datum/material/plastic = 1200)
 	max_integrity = 500
 //	var/content_overlays = FALSE //If this is true, the can holder will display the cans it contains.
