@@ -33,7 +33,7 @@ export const Vending = props => {
             {' '}
             <b>{data.user.job || "Unemployed"}</b>!
             <br />
-            Your balance is <b>${data.user.cash}Ꞥ</b>.
+            Your balance is <b>{data.user.cash}Ꞥ</b>.
           </Box>
         ) || (
           <Box color="light-gray">
