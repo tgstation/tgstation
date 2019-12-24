@@ -912,6 +912,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/datum/bank_account/private_a
 	/// max number of items that the custom vendor can hold
 	var/max_loaded_items = 20
+	/// Base64 cache of custom icons.
+	var/list/base64_cache = list()
 
 /obj/machinery/vending/custom/compartmentLoadAccessCheck(mob/user)
 	. = FALSE
