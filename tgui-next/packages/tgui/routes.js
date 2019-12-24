@@ -40,6 +40,7 @@ import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
 import { Holodeck } from './interfaces/Holodeck';
 import { ImplantChair } from './interfaces/ImplantChair';
 import { KeycardAuth } from './interfaces/KeycardAuth';
+import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
@@ -255,6 +256,10 @@ const ROUTES = {
   },
   keycard_auth: {
     component: () => KeycardAuth,
+    scrollable: false,
+  },
+  labor_claim_console: {
+    component: () => LaborClaimConsole,
     scrollable: false,
   },
   language_menu: {
