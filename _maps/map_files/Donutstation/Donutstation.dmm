@@ -4796,7 +4796,9 @@
 	req_one_access_txt = "35;28"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/navbeacon/wayfinding,
+/obj/machinery/navbeacon/wayfinding{
+	name = "Kitchen"
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "amG" = (
@@ -29366,7 +29368,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor,
-/obj/machinery/navbeacon/wayfinding,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Dormitories"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "bzG" = (
@@ -45284,7 +45288,9 @@
 /obj/machinery/door/airlock/external{
 	safety_mode = 1
 	},
-/obj/machinery/navbeacon/wayfinding,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Escape Shuttle"
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "mtv" = (
@@ -45611,7 +45617,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/obj/machinery/navbeacon/wayfinding/public/tools,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/storage/tools)
 "nft" = (
@@ -47325,7 +47331,9 @@
 	name = "Unisex Showers"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/navbeacon/wayfinding,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Locker Room"
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/locker_room)
 "qJe" = (
@@ -49461,7 +49469,9 @@
 /obj/machinery/door/airlock/external{
 	safety_mode = 1
 	},
-/obj/machinery/navbeacon/wayfinding/shuttle/arrival,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Arrival Shuttle"
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "vqS" = (

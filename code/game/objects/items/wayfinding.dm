@@ -73,39 +73,5 @@
 		active = FALSE
 
 /obj/machinery/navbeacon/wayfinding
-	name = "wayfinding beacon"
-	desc = "A beacon used by wayfinding pinpointers."
-
-/obj/machinery/navbeacon/wayfinding/Initialize()
-	if(!location)
-		location = get_area(src)
-	codes_txt = "wayfinding=[location]"
-	..()
-
-/obj/machinery/navbeacon/wayfinding/medical
-	location = "Medbay"
-
-/obj/machinery/navbeacon/wayfinding/medical/morgue
-	location = "Morgue"
-
-/obj/machinery/navbeacon/wayfinding/science
-	location = "Research and Development"
-
-/obj/machinery/navbeacon/wayfinding/command/hop
-	location = "Head of Personnel's Office"
-
-/obj/machinery/navbeacon/wayfinding/shuttle/escape
-	location = "Escape Shuttle Dock"
-
-/obj/machinery/navbeacon/wayfinding/shuttle/arrival
-	location = "Arrival Shuttle Dock"
-
-/obj/machinery/navbeacon/wayfinding/shuttle/publicmining
-	location = "Public Mining Shuttle Dock"
-
-/obj/machinery/navbeacon/wayfinding/public/tools
-	location = "Primary Tool Storage"
-
-/obj/machinery/navbeacon/wayfinding/public/tools/auxiliary
-	location = "Auxiliary Tool Storage"
+	wayfinding = TRUE
 

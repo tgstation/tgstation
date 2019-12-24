@@ -13370,6 +13370,7 @@
 "aHG" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/vault{
+	name = "Vault";
 	req_access_txt = "53"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -23023,7 +23024,7 @@
 	name = "Research Division Access";
 	req_access_txt = "47"
 	},
-/obj/machinery/navbeacon/wayfinding/science,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "bhC" = (
@@ -25659,7 +25660,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/navbeacon/wayfinding/medical,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bof" = (
@@ -42481,7 +42482,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cjn" = (
@@ -46393,7 +46393,9 @@
 	name = "Escape Airlock";
 	safety_mode = 1
 	},
-/obj/machinery/navbeacon/wayfinding/shuttle/escape,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Escape"
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "cyr" = (
@@ -50020,7 +50022,9 @@
 	name = "Port Docking Bay 1";
 	safety_mode = 1
 	},
-/obj/machinery/navbeacon/wayfinding,
+/obj/machinery/navbeacon/wayfinding{
+	location = "Arrival Shuttle"
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "jox" = (
@@ -51810,7 +51814,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/obj/machinery/navbeacon/wayfinding/shuttle/publicmining,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "sLv" = (

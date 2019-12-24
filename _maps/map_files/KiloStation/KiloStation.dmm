@@ -12818,7 +12818,7 @@
 	name = "Head of Personnel's Office";
 	req_access_txt = "57"
 	},
-/obj/machinery/navbeacon/wayfinding/command/hop,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "aus" = (
@@ -30692,7 +30692,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/navbeacon/wayfinding/medical/morgue,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "aVo" = (
@@ -86929,7 +86929,7 @@
 	safety_mode = 1
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/navbeacon/wayfinding/shuttle/arrival,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/entry)
 "cCk" = (
@@ -93909,7 +93909,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/navbeacon/wayfinding/shuttle/escape,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "pSI" = (
@@ -93922,7 +93922,7 @@
 	name = "Medbay";
 	req_access_txt = "5"
 	},
-/obj/machinery/navbeacon/wayfinding/medical,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "utx" = (
@@ -93935,7 +93935,7 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
-/obj/machinery/navbeacon/wayfinding/science,
+/obj/machinery/navbeacon/wayfinding,
 /turf/open/floor/plasteel/dark,
 /area/science/research)
 

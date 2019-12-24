@@ -6,7 +6,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "navbeacon0-f"
 	name = "navigation beacon"
-	desc = "A radio beacon used for bot navigation."
+	desc = "A radio beacon used for bot navigation and crew wayfinding."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
 	max_integrity = 500
@@ -18,16 +18,27 @@
 	var/location = ""	// location response text
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
+	var/wayfinding = FALSE
 
 	req_one_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
 
 /obj/machinery/navbeacon/Initialize()
 	. = ..()
 
+	if(wayfinding)
+		if(!location)
+			var/obj/machinery/door/airlock/A = locate(/obj/machinery/door/airlock) in loc
+			if(A)
+				location = A.name
+			else
+				location = get_area(src)
+		codes_txt += "wayfinding=[location]"
+
 	set_codes()
 
 	var/turf/T = loc
 	hide(T.intact)
+
 	glob_lists_register(init=TRUE)
 
 /obj/machinery/navbeacon/Destroy()
