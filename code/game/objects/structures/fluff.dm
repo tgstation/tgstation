@@ -279,3 +279,17 @@
 	icon_state = "lightpost"
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER
+
+/obj/structure/fluff/hedge
+	name = "lightpost"
+	desc = "A homely lightpost adorned with festive decor."
+	icon = 'icons/obj/smooth_structures/hedge.dmi'
+	icon_state = "hedge"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = list(/obj/structure/fluff/hedge)
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/hedge/opaque //useful for mazes and such
+	opacity = True
