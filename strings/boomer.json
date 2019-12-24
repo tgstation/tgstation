@@ -9,9 +9,19 @@
 	"This generation can't take a joke.",
 	"Why are @pick(kids) these days so @pick(sad) all the time?",
 	"These damn @pick(kids) need to get a @pick(impossible) for once!",
-	"It's simply a matter of showing up, looking the manager in the eye, giving him a firm handshake and telling him you want the job."
+	"It's simply a matter of showing up, looking the manager in the eye, giving him a firm handshake and telling him you want the job.",
+	"You'll never get anywhere in life without a degree.",
+	"@pick(expense) isn't really that expensive."
     ],
 
+	"expense": [
+	"Healthcare",
+	"College",
+	"A car",
+	"A house",
+	"Food"
+	],
+	
     "kids": [
 	"kids",
 	"millenials",
