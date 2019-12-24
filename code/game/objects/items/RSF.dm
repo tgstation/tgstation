@@ -5,7 +5,7 @@ RSF
 */
 /obj/item/rsf
 	name = "\improper Rapid-Service-Fabricator"
-	desc = "A device used to rapidly deploy service items."
+	desc = "A device used to rapidly deploy service items. Can be recharged using glass, metal, or compressed matter cartridges."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -23,16 +23,43 @@ RSF
 	. = ..()
 	. += "<span class='notice'>It currently holds [matter]/30 fabrication-units.</span>"
 
+/obj/item/rsf/loaded
+	matter = 30
+
 /obj/item/rsf/cyborg
 	matter = 30
 
 /obj/item/rsf/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/rcd_ammo/large))
+		if((matter + 30) > 30)
+			to_chat(user, "<span class='warning'>The RSF needs to be empty in order to use a large matter cartridge on it!</span>")
+			return
+		qdel(W)
+		matter += 30
+		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
+		to_chat(user, "<span class='notice'>The RSF now holds [matter]/30 fabrication-units.</span>")
 	if(istype(W, /obj/item/rcd_ammo))
 		if((matter + 10) > 30)
 			to_chat(user, "<span class='warning'>The RSF can't hold any more matter!</span>")
 			return
 		qdel(W)
 		matter += 10
+		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
+		to_chat(user, "<span class='notice'>The RSF now holds [matter]/30 fabrication-units.</span>")
+	if(istype(W, /obj/item/stack/sheet/glass))
+		if((matter + 2) > 30)
+			to_chat(user, "<span class='warning'>The RSF can't hold any more matter!</span>")
+			return
+		qdel(W)
+		matter += 2
+		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
+		to_chat(user, "<span class='notice'>The RSF now holds [matter]/30 fabrication-units.</span>")
+	if(istype(W, /obj/item/stack/sheet/metal))
+		if((matter + 2) > 30)
+			to_chat(user, "<span class='warning'>The RSF can't hold any more matter!</span>")
+			return
+		qdel(W)
+		matter += 2
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 		to_chat(user, "<span class='notice'>The RSF now holds [matter]/30 fabrication-units.</span>")
 	else
