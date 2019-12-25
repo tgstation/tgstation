@@ -8249,6 +8249,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Brig - Hallway - Port"
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "arb" = (
@@ -10768,6 +10771,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "axf" = (
@@ -10788,10 +10792,6 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/machinery/camera{
-	c_tag = "Brig - Hallway - Port";
-	dir = 1
-	},
 /obj/machinery/door_timer{
 	id = "Cell 1";
 	name = "Cell 1";
@@ -11387,6 +11387,10 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Warden's Office";
+	dir = 4
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -12438,8 +12442,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/flasher{
 	id = "Cell 3";
-	pixel_x = -28;
-	pixel_y = -28
+	pixel_x = -23;
+	pixel_y = -23
 	},
 /obj/structure/bed,
 /obj/item/bedsheet,
@@ -12455,7 +12459,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
-	id = "Secure Gate";
+	id = "briglockdown";
 	name = "brig shutters"
 	},
 /turf/open/floor/plating,
@@ -12974,6 +12978,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "briglockdown";
+	name = "brig shutters"
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aCq" = (
@@ -13396,10 +13404,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aDx" = (
-/obj/structure/chair/stool,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
+/obj/structure/chair/stool,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aDy" = (
@@ -13412,13 +13420,15 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aDz" = (
-/obj/machinery/camera{
-	c_tag = "Fore Primary Hallway Cells"
-	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
 	},
-/obj/structure/chair/stool,
+/obj/structure/sign/warning/electricshock{
+	pixel_y = 32
+	},
+/obj/machinery/camera{
+	c_tag = "Fore Primary Hallway Cells"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aDA" = (
@@ -67835,8 +67845,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/flasher{
 	id = "Cell 2";
-	pixel_x = -28;
-	pixel_y = -28
+	pixel_x = -23;
+	pixel_y = -23
 	},
 /obj/structure/bed,
 /obj/item/bedsheet,
@@ -72156,21 +72166,21 @@
 /obj/machinery/button/door{
 	id = "Prison Gate";
 	name = "Prison Wing Lockdown";
-	pixel_y = 7;
+	pixel_y = -3;
 	req_access_txt = "2"
 	},
 /obj/machinery/button/door{
 	id = "Secure Gate";
 	name = "Cell Window Control";
 	pixel_x = -5;
-	pixel_y = -3;
+	pixel_y = 7;
 	specialfunctions = 4
 	},
 /obj/machinery/button/door{
 	id = "briglockdown";
 	name = "Brig Lockdown Control";
 	pixel_x = 5;
-	pixel_y = -3
+	pixel_y = 7
 	},
 /obj/item/key/security,
 /obj/machinery/firealarm{
@@ -73396,9 +73406,9 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/item/storage/fancy/donut_box,
-/obj/machinery/door/poddoor/preopen{
-	id = "Secure Gate";
-	name = "brig shutters"
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "briglockdown";
+	name = "Warden Desk Shutters"
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -73749,13 +73759,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port/aft)
-"jnV" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/obj/structure/chair/stool,
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
 "jnW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -76840,7 +76843,7 @@
 "yej" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = "Secure Gate";
+	id = "briglockdown";
 	name = "brig shutters"
 	},
 /obj/structure/cable,
@@ -101642,7 +101645,7 @@ ayw
 azD
 aAY
 aCk
-aDw
+aDx
 aDC
 aGb
 aHx
@@ -101899,7 +101902,7 @@ ayx
 azE
 uvH
 aCk
-aDx
+aDw
 aEK
 aFZ
 aHx
@@ -102413,7 +102416,7 @@ ayw
 xjc
 cTY
 aCk
-aDw
+aDx
 aEM
 aFZ
 aHx
@@ -102670,7 +102673,7 @@ dhv
 azG
 eYX
 aCk
-jnV
+aDw
 aEN
 aGf
 aHx
@@ -103184,7 +103187,7 @@ ayw
 xjc
 aBa
 aCk
-aDw
+aDx
 aEN
 aGh
 aHx
@@ -103441,7 +103444,7 @@ dBX
 hjl
 nEv
 aCk
-aDz
+aDw
 aEN
 aFZ
 aHy
@@ -103698,7 +103701,7 @@ adY
 ajx
 ajx
 adY
-aDy
+aDz
 aEN
 aGg
 aHx
