@@ -71,9 +71,6 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
 		return 0
 	var/datum/antagonist/changeling/c = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	if(c.chem_charges < chemical_cost)
-		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
-		return 0
 	if(c.absorbedcount < req_dna)
 		to_chat(user, "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>")
 		return 0
@@ -85,6 +82,9 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 		return 0
 	if((HAS_TRAIT(user, TRAIT_DEATHCOMA)) && (!ignores_fakedeath))
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
+		return 0
+	if(c.chem_charges < chemical_cost)
+		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
 		return 0
 	return 1
 
