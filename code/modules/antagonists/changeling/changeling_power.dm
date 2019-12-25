@@ -79,6 +79,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 		return 0
 	if(c.trueabsorbs < req_absorbs)
 		to_chat(user, "<span class='warning'>We require at least [req_absorbs] sample\s of DNA gained through our Absorb ability.</span>")
+		return 0
 	if(req_stat < user.stat)
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
