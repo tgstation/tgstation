@@ -36,4 +36,3 @@
 /datum/component/speed_curse/UnregisterFromParent()
     UnregisterSignal(parent, COMSIG_ITEM_EQUIPPED)
     UnregisterSignal(parent, COMSIG_ITEM_DROPPED)
-    
