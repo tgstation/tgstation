@@ -1,16 +1,19 @@
+import { classes, pureComponentHooks } from 'common/react';
 import { Box } from './Box';
 
 export const ColorBox = props => {
-  const { color, ...rest } = props;
+  const { color, content, className, ...rest } = props;
   return (
     <Box
-      inline
-      width={2}
-      height={2}
-      lineHeight={2}
-      color={color}
+      className={classes([
+        'ColorBox',
+        className,
+      ])}
+      color={content ? null : 'transparent'}
       backgroundColor={color}
-      content="."
+      content={content || '.'}
       {...rest} />
   );
 };
+
+ColorBox.defaultHooks = pureComponentHooks;

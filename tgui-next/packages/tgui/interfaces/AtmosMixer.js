@@ -1,10 +1,8 @@
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 
 export const AtmosMixer = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   return (
     <Section>
       <LabeledList>
@@ -13,7 +11,7 @@ export const AtmosMixer = props => {
             icon={data.on ? 'power-off' : 'times'}
             content={data.on ? 'On' : 'Off'}
             selected={data.on}
-            onClick={() => act(ref, 'power')} />
+            onClick={() => act('power')} />
         </LabeledList.Item>
         <LabeledList.Item label="Output Pressure">
           <NumberInput
@@ -24,7 +22,7 @@ export const AtmosMixer = props => {
             minValue={0}
             maxValue={4500}
             step={10}
-            onChange={(e, value) => act(ref, 'pressure', {
+            onChange={(e, value) => act('pressure', {
               pressure: value,
             })} />
           <Button
@@ -32,7 +30,7 @@ export const AtmosMixer = props => {
             icon="plus"
             content="Max"
             disabled={data.set_pressure === data.max_pressure}
-            onClick={() => act(ref, 'pressure', {
+            onClick={() => act('pressure', {
               pressure: 'max',
             })} />
         </LabeledList.Item>
@@ -45,7 +43,7 @@ export const AtmosMixer = props => {
             minValue={0}
             maxValue={100}
             stepPixelSize={2}
-            onDrag={(e, value) => act(ref, 'node1', {
+            onDrag={(e, value) => act('node1', {
               concentration: value,
             })} />
         </LabeledList.Item>
@@ -58,7 +56,7 @@ export const AtmosMixer = props => {
             minValue={0}
             maxValue={100}
             stepPixelSize={2}
-            onDrag={(e, value) => act(ref, 'node2', {
+            onDrag={(e, value) => act('node2', {
               concentration: value,
             })} />
         </LabeledList.Item>

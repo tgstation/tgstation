@@ -60,6 +60,31 @@
 		log_combat(attacker, occupant, "injected", null, "with nanites via [src]")
 	occupant.AddComponent(/datum/component/nanites, 75, cloud_id)
 
+/obj/machinery/public_nanite_chamber/proc/change_cloud(mob/living/attacker)
+	if(stat & (NOPOWER|BROKEN))
+		return
+	if((stat & MAINT) || panel_open)
+		return
+	if(!occupant || busy)
+		return
+
+	var/locked_state = locked
+	locked = TRUE
+
+	set_busy(TRUE, "[initial(icon_state)]_raising")
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_active"),20)
+	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_falling"),40)
+	addtimer(CALLBACK(src, .proc/complete_cloud_change, locked_state, attacker),60)
+
+/obj/machinery/public_nanite_chamber/proc/complete_cloud_change(locked_state, mob/living/attacker)
+	locked = locked_state
+	set_busy(FALSE)
+	if(!occupant)
+		return
+	if(attacker)
+		occupant.investigate_log("had their nanite cloud ID changed into [cloud_id] by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+	SEND_SIGNAL(occupant, COMSIG_NANITE_SET_CLOUD, cloud_id)
+
 /obj/machinery/public_nanite_chamber/update_icon()
 	cut_overlays()
 
@@ -135,6 +160,9 @@
 	if(occupant)
 		var/mob/living/L = occupant
 		if(SEND_SIGNAL(L, COMSIG_HAS_NANITES))
+			var/datum/component/nanites/nanites = L.GetComponent(/datum/component/nanites)
+			if(nanites && nanites.cloud_id != cloud_id)
+				change_cloud(attacker)
 			return
 		if(L.mob_biotypes & (MOB_ORGANIC | MOB_UNDEAD))
 			inject_nanites(attacker)

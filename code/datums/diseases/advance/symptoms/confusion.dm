@@ -29,9 +29,11 @@ Bonus
 	symptom_delay_min = 10
 	symptom_delay_max = 30
 	var/brain_damage = FALSE
-	threshold_desc = "<b>Resistance 6:</b> Causes brain damage over time.<br>\
-					  <b>Transmission 6:</b> Increases confusion duration and strength.<br>\
-					  <b>Stealth 4:</b> The symptom remains hidden until active."
+	threshold_descs = list(
+		"Resistance 6" = "Causes brain damage over time.",
+		"Transmission 6" = "Increases confusion duration and strength.",
+		"Stealth 4" = "The symptom remains hidden until active.",
+	)
 
 /datum/symptom/confusion/Start(datum/disease/advance/A)
 	if(!..())

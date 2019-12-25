@@ -63,8 +63,8 @@
 		// it's has TRAIT_NODROP
 		D.dropItemToGround(target, TRUE)
 		qdel(old_headgear)
-		// where is `SLOT_HEAD` defined? WHO KNOWS
-		D.equip_to_slot(new_headgear, SLOT_HEAD)
+		// where is `ITEM_SLOT_HEAD` defined? WHO KNOWS
+		D.equip_to_slot(new_headgear, ITEM_SLOT_HEAD)
 	return 1
 
 

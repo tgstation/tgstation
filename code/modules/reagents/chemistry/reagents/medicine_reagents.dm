@@ -1049,20 +1049,35 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/corazone
-	//Corazone no longer stops heart attacks. look into C2 penthrite.
-	name = "Corazone"
-	description = "A medication used to treat pain, fever, and inflammation, along with failing livers."
-	color = "#F49797"
+/datum/reagent/medicine/higadrite
+	name = "Higadrite"
+	description = "A medication utilized to treat ailing livers."
+	color = "#FF3542"
 	self_consuming = TRUE
 
-/datum/reagent/medicine/corazone/on_mob_add(mob/living/M)
+/datum/reagent/medicine/higadrite/on_mob_add(mob/living/M)
 	..()
 	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 
-/datum/reagent/medicine/corazone/on_mob_end_metabolize(mob/living/M)
-	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
+/datum/reagent/medicine/higadrite/on_mob_end_metabolize(mob/living/M)
 	..()
+	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
+
+/datum/reagent/medicine/cordiolis_hepatico
+	name = "Cordiolis Hepatico"
+	description = "A strange, pitch-black reagent that seems to absorb all light. Effects unknown."
+	color = "#000000"
+	self_consuming = TRUE
+
+/datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/M)
+	..()
+	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
+	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+
+/datum/reagent/medicine/cordiolis_hepatico/on_mob_end_metabolize(mob/living/M)
+	..()
+	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(M, TRAIT_STABLELIVER, type)
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"
@@ -1291,27 +1306,23 @@
 
 /datum/reagent/medicine/granibitaluri
 	name = "Granibitaluri" //achieve "GRANular" amounts of C2
-	description = "A chemical solution useful as a diluent for more potent medicine. Especially useful when combined with brute/burn medication. Large amounts can cause fluid to appear in both the lungs and the heart."
+	description = "A mild painkiller useful as an additive alongside more potent medicines. Speeds up the healing of small wounds and burns, but is ineffective at treating severe injuries. Extremely large doses are toxic, and may eventually cause liver failure."
 	color = "#E0E0E0"
 	reagent_state = LIQUID
 	overdose_threshold = 50
 	metabolization_rate = 0.2 //same as C2s
 
 /datum/reagent/medicine/granibitaluri/on_mob_life(mob/living/carbon/M)
-	var/tdamage = M.getBruteLoss() //1 var + 2 proccall < 4 proccalls
-	if(tdamage && tdamage <= 10)
-		M.adjustBruteLoss(-0.1)
-	else
-		tdamage = M.getFireLoss()
-		if(tdamage && tdamage <= 10)
-			M.adjustFireLoss(-0.1)
+	var/healamount = min(-0.5 + round(0.01 * (M.getBruteLoss() + M.getFireLoss()), 0.1), 0) //base of 0.5 healing per cycle and loses 0.1 healing for every 10 combined brute/burn damage you have
+	M.adjustBruteLoss(healamount * REM, 0)
+	M.adjustFireLoss(healamount * REM, 0)
 	..()
-	return TRUE
+	. = TRUE
 
 /datum/reagent/medicine/granibitaluri/overdose_process(mob/living/M)
 	. = TRUE
-	M.adjustOrganLoss(ORGAN_SLOT_HEART,0.2)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS,0.2)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.2 * REM)
+	M.adjustToxLoss(0.2 * REM, 0) //Only really deadly if you eat over 100u
 	..()
 
 /datum/reagent/medicine/badstims  //These are bad for combat on purpose. Used in adrenal implant.

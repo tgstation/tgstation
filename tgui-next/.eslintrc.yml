@@ -18,7 +18,8 @@ rules:
   ## Possible Errors
   ## ----------------------------------------
 
-  ## Enforce “for” loop update clause moving the counter in the right direction.
+  ## Enforce “for” loop update clause moving the counter in the right
+  ## direction.
   # for-direction: error
   ## Enforce return statements in getters
   # getter-return: error
@@ -66,7 +67,8 @@ rules:
   no-invalid-regexp: error
   ## Disallow irregular whitespace
   no-irregular-whitespace: error
-  ## Disallow characters which are made with multiple code points in character class syntax
+  ## Disallow characters which are made with multiple code points in character
+  ## class syntax
   no-misleading-character-class: error
   ## Disallow calling global object properties as functions
   no-obj-calls: error
@@ -80,13 +82,15 @@ rules:
   no-template-curly-in-string: error
   ## Disallow confusing multiline expressions
   no-unexpected-multiline: error
-  ## Disallow unreachable code after return, throw, continue, and break statements
+  ## Disallow unreachable code after return, throw, continue, and break
+  ## statements
   # no-unreachable: warn
   ## Disallow control flow statements in finally blocks
   no-unsafe-finally: error
   ## Disallow negating the left operand of relational operators
   no-unsafe-negation: error
-  ## Disallow assignments that can lead to race conditions due to usage of await or yield
+  ## Disallow assignments that can lead to race conditions due to usage of
+  ## await or yield
   # require-atomic-updates: error
   ## Require calls to isNaN() when checking for NaN
   use-isnan: error
@@ -128,8 +132,9 @@ rules:
   ## Disallow the use of arguments.caller or arguments.callee
   # no-caller: error
   ## Disallow lexical declarations in case clauses
-  # no-case-declarations: error
-  ## Disallow division operators explicitly at the beginning of regular expressions
+  no-case-declarations: error
+  ## Disallow division operators explicitly at the beginning of regular
+  ## expressions
   # no-div-regex: error
   ## Disallow else blocks after return statements in if statements
   # no-else-return: error
@@ -148,11 +153,11 @@ rules:
   ## Disallow unnecessary labels
   # no-extra-label: error
   ## Disallow fallthrough of case statements
-  # no-fallthrough: error
+  no-fallthrough: error
   ## Disallow leading or trailing decimal points in numeric literals
   # no-floating-decimal: error
   ## Disallow assignments to native objects or read-only global variables
-  # no-global-assign: error
+  no-global-assign: error
   ## Disallow shorthand type conversions
   # no-implicit-coercion: error
   ## Disallow variable and function declarations in the global scope
@@ -167,7 +172,8 @@ rules:
   # no-labels: error
   ## Disallow unnecessary nested blocks
   # no-lone-blocks: error
-  ## Disallow function declarations that contain unsafe references inside loop statements
+  ## Disallow function declarations that contain unsafe references inside
+  ## loop statements
   # no-loop-func: error
   ## Disallow magic numbers
   # no-magic-numbers: error
@@ -190,7 +196,7 @@ rules:
   ## Disallow the use of the __proto__ property
   # no-proto: error
   ## Disallow variable redeclaration
-  # no-redeclare: error
+  no-redeclare: error
   ## Disallow certain properties on certain objects
   # no-restricted-properties: error
   ## Disallow assignment operators in return statements
@@ -233,7 +239,8 @@ rules:
   # prefer-named-capture-group: error
   ## Require using Error objects as Promise rejection reasons
   # prefer-promise-reject-errors: error
-  ## Disallow use of the RegExp constructor in favor of regular expression literals
+  ## Disallow use of the RegExp constructor in favor of regular expression
+  ## literals
   # prefer-regex-literals: error
   ## Enforce the consistent use of the radix argument when using parseInt()
   radix: error
@@ -288,7 +295,8 @@ rules:
   array-bracket-spacing: [error, never]
   ## Enforce line breaks after each array element
   # array-element-newline: error
-  ## Disallow or enforce spaces inside of blocks after opening block and before closing block
+  ## Disallow or enforce spaces inside of blocks after opening block and
+  ## before closing block
   block-spacing: [error, always]
   ## Enforce consistent brace style for blocks
   # brace-style: [error, stroustrup, { allowSingleLine: false }]
@@ -308,9 +316,11 @@ rules:
   # consistent-this: error
   ## Require or disallow newline at the end of files
   # eol-last: error
-  ## Require or disallow spacing between function identifiers and their invocations
+  ## Require or disallow spacing between function identifiers and their
+  ## invocations
   func-call-spacing: [error, never]
-  ## Require function names to match the name of the variable or property to which they are assigned
+  ## Require function names to match the name of the variable or property
+  ## to which they are assigned
   # func-name-matching: error
   ## Require or disallow named function expressions
   # func-names: error
@@ -331,9 +341,11 @@ rules:
   # implicit-arrow-linebreak: error
   ## Enforce consistent indentation
   indent: [error, 2, { SwitchCase: 1 }]
-  ## Enforce the consistent use of either double or single quotes in JSX attributes
+  ## Enforce the consistent use of either double or single quotes in JSX
+  ## attributes
   jsx-quotes: [error, prefer-double]
-  ## Enforce consistent spacing between keys and values in object literal properties
+  ## Enforce consistent spacing between keys and values in object literal
+  ## properties
   key-spacing: [error, { beforeColon: false, afterColon: true }]
   ## Enforce consistent spacing before and after keywords
   keyword-spacing: [error, { before: true, after: true }]
@@ -348,7 +360,13 @@ rules:
   ## Enforce a maximum depth that blocks can be nested
   # max-depth: error
   ## Enforce a maximum line length
-  max-len: [error, { code: 120 }]
+  max-len: [error, {
+    code: 80,
+    ## Ignore imports
+    ignorePattern: '^(import\s.+\sfrom\s|.*require\()',
+    ignoreUrls: true,
+    ignoreRegExpLiterals: true,
+  }]
   ## Enforce a maximum number of lines per file
   # max-lines: error
   ## Enforce a maximum number of line of code in a function
@@ -367,7 +385,8 @@ rules:
   multiline-ternary: [error, always-multiline]
   ## Require constructor names to begin with a capital letter
   # new-cap: error
-  ## Enforce or disallow parentheses when invoking a constructor with no arguments
+  ## Enforce or disallow parentheses when invoking a constructor with no
+  ## arguments
   # new-parens: error
   ## Require a newline after each call in a method chain
   # newline-per-chained-call: error
@@ -414,12 +433,13 @@ rules:
   ## Enforce the location of single-line statements
   # nonblock-statement-body-position: error
   ## Enforce consistent line breaks inside braces
-  # object-curly-newline: error
+  # object-curly-newline: [error, { multiline: true }]
   ## Enforce consistent spacing inside braces
-  # object-curly-spacing: error
+  object-curly-spacing: [error, always]
   ## Enforce placing object properties on separate lines
   # object-property-newline: error
-  ## Enforce variables to be declared either together or separately in functions
+  ## Enforce variables to be declared either together or separately in
+  ## functions
   # one-var: error
   ## Require or disallow newlines around variable declarations
   # one-var-declaration-per-line: error
@@ -431,7 +451,8 @@ rules:
   # padded-blocks: error
   ## Require or disallow padding lines between statements
   # padding-line-between-statements: error
-  ## Disallow using Object.assign with an object literal as the first argument and prefer the use of object spread instead.
+  ## Disallow using Object.assign with an object literal as the first
+  ## argument and prefer the use of object spread instead.
   # prefer-object-spread: error
   ## Require quotes around object literal property names
   # quote-props: error
@@ -474,7 +495,7 @@ rules:
 
   ## ES6
   ## ----------------------------------------
-	## Require braces around arrow function bodies
+  ## Require braces around arrow function bodies
   # arrow-body-style: error
   ## Require parentheses around arrow function arguments
   arrow-parens: [error, as-needed]
@@ -504,19 +525,23 @@ rules:
   # no-useless-computed-key: error
   ## Disallow unnecessary constructors
   # no-useless-constructor: error
-  ## Disallow renaming import, export, and destructured assignments to the same name
+  ## Disallow renaming import, export, and destructured assignments to the
+  ## same name
   # no-useless-rename: error
   ## Require let or const instead of var
   no-var: error
-  ## Require or disallow method and property shorthand syntax for object literals
+  ## Require or disallow method and property shorthand syntax for object
+  ## literals
   # object-shorthand: error
   ## Require using arrow functions for callbacks
   prefer-arrow-callback: error
-  ## Require const declarations for variables that are never reassigned after declared
+  ## Require const declarations for variables that are never reassigned after
+  ## declared
   # prefer-const: error
   ## Require destructuring from arrays and/or objects
   # prefer-destructuring: error
-  ## Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
+  ## Disallow parseInt() and Number.parseInt() in favor of binary, octal, and
+  ## hexadecimal literals
   # prefer-numeric-literals: error
   ## Require rest parameters instead of arguments
   # prefer-rest-params: error
@@ -532,7 +557,8 @@ rules:
   # sort-imports: error
   ## Require symbol descriptions
   # symbol-description: error
-  ## Require or disallow spacing around embedded expressions of template strings
+  ## Require or disallow spacing around embedded expressions of template
+  ## strings
   # template-curly-spacing: error
   ## Require or disallow spacing around the * in yield* expressions
   yield-star-spacing: [error, { before: false, after: true }]
@@ -569,11 +595,11 @@ rules:
   react/no-danger: error
   ## Prevent problem with children and props.dangerouslySetInnerHTML
   react/no-danger-with-children: error
-  ## Prevent usage of deprecated methods, including component lifecycle methods
+  ## Prevent usage of deprecated methods, including component lifecycle
+  ## methods
   react/no-deprecated: error
   ## Prevent usage of setState in componentDidMount
   react/no-did-mount-set-state: error
-  ## <<<<<
   ## Prevent usage of setState in componentDidUpdate
   react/no-did-update-set-state: error
   ## Prevent direct mutation of this.state
@@ -618,7 +644,8 @@ rules:
   # react/prop-types: error
   ## Prevent missing React when using JSX
   # react/react-in-jsx-scope: error
-  ## Enforce a defaultProps definition for every prop that is not a required prop
+  ## Enforce a defaultProps definition for every prop that is not a required
+  ## prop
   # react/require-default-props: error
   ## Enforce React components to have a shouldComponentUpdate method
   # react/require-optimization: error
@@ -630,7 +657,8 @@ rules:
   # react/sort-comp: error
   ## Enforce propTypes declarations alphabetical sorting
   # react/sort-prop-types: error
-  ## Enforce the state initialization style to be either in a constructor or with a class property
+  ## Enforce the state initialization style to be either in a constructor or
+  ## with a class property
   react/state-in-constructor: error
   ## Enforces where React component static properties should be positioned.
   # react/static-property-placement: error
@@ -643,19 +671,22 @@ rules:
   ## ----------------------------------------
   ## Enforce boolean attributes notation in JSX (fixable)
   react/jsx-boolean-value: error
-  ## Enforce or disallow spaces inside of curly braces in JSX attributes and expressions.
+  ## Enforce or disallow spaces inside of curly braces in JSX attributes and
+  ## expressions.
   # react/jsx-child-element-spacing: error
   ## Validate closing bracket location in JSX (fixable)
-  ## NOTE: Too fucking annoying because all styles are viable
-  # react/jsx-closing-bracket-location: [error, {
-  #   selfClosing: after-props,
-  #   nonEmpty: after-props,
-  # }]
+  react/jsx-closing-bracket-location: [error, {
+    ## NOTE: Not really sure about enforcing this one
+    selfClosing: false,
+    nonEmpty: after-props,
+  }]
   ## Validate closing tag location in JSX (fixable)
   react/jsx-closing-tag-location: error
-  ## Enforce or disallow newlines inside of curly braces in JSX attributes and expressions (fixable)
+  ## Enforce or disallow newlines inside of curly braces in JSX attributes and
+  ## expressions (fixable)
   react/jsx-curly-newline: error
-  ## Enforce or disallow spaces inside of curly braces in JSX attributes and expressions (fixable)
+  ## Enforce or disallow spaces inside of curly braces in JSX attributes and
+  ## expressions (fixable)
   react/jsx-curly-spacing: error
   ## Enforce or disallow spaces around equal signs in JSX attributes (fixable)
   react/jsx-equals-spacing: error
@@ -666,7 +697,9 @@ rules:
   ## Enforce event handler naming conventions in JSX
   react/jsx-handler-names: error
   ## Validate JSX indentation (fixable)
-  react/jsx-indent: [error, 2]
+  react/jsx-indent: [error, 2, {
+    checkAttributes: true,
+  }]
   ## Validate props indentation in JSX (fixable)
   react/jsx-indent-props: [error, 2]
   ## Validate JSX has key prop when in array or iterator
@@ -705,7 +738,8 @@ rules:
   # react/jsx-sort-default-props: error
   ## Enforce props alphabetical sorting (fixable)
   # react/jsx-sort-props: error
-  ## Validate whitespace in and around the JSX opening and closing brackets (fixable)
+  ## Validate whitespace in and around the JSX opening and closing brackets
+  ## (fixable)
   react/jsx-tag-spacing: error
   ## Prevent React to be incorrectly marked as unused
   react/jsx-uses-react: error

@@ -104,9 +104,9 @@
 	mob_name = "derelict drone"
 	mob_type = /mob/living/simple_animal/drone/derelict
 	anchored = TRUE
-	flavour_text = {"
-	<b>You are a drone on Kosmicheskaya Stantsiya 13. Something has brought you out of hibernation, and the station is in gross disrepair. Build, repair, maintain and improve the station that housed you on activation.</b>
-	"}
+	short_desc = "You are a drone on Kosmicheskaya Stantsiya 13."
+	flavour_text = "Something has brought you out of hibernation, and the station is in gross disrepair."
+	important_info = "Build, repair, maintain and improve the station that housed you on activation."
 
 /mob/living/simple_animal/drone/derelict
 	name = "derelict drone"
@@ -124,3 +124,10 @@
 	"<span class='notice'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
+
+/mob/living/simple_animal/drone/derelict/Initialize()
+	. = ..()
+	AddComponent(/datum/component/stationstuck, TRUE, "Your emergency station return device activates, sending you back to KS13!", "01000110 01010101 01000011 01001011 00100000 01011001 01001111 01010101<br>WARNING: Dereliction of KS13 detected. Self destruct activated.")
+
+
+

@@ -72,7 +72,7 @@
 	icon_state = "overalls"
 	item_state = "lb_suit"
 	can_adjust = FALSE
-	custom_price = 20
+	custom_price = 60
 
 /obj/item/clothing/under/misc/assistantformal
 	name = "assistant's formal uniform"
@@ -121,14 +121,10 @@
 	if (istype(E, /obj/item/extinguisher_refill))
 		if (extinguishes_left == 5)
 			to_chat(user, "<span class='notice'>The inbuilt extinguisher is full.</span>")
-			return
 		else
 			extinguishes_left = 5
 			to_chat(user, "<span class='notice'>You refill the suit's built-in extinguisher, using up the cartridge.</span>")
 			qdel(E)
-			return
-		return
-	return
 
 /obj/item/extinguisher_refill
 	name = "envirosuit extinguisher cartridge"
