@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - bugfix: "Fixed door access requirements on meta, for northern club maint door, and northern maint door between toxins/toxins launch."
