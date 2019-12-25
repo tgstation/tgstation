@@ -20466,7 +20466,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bef" = (
-/obj/machinery/rnd/experimentor,
 /obj/effect/landmark/blobstart,
 /turf/open/floor/engine,
 /area/science/explab)
@@ -40870,6 +40869,10 @@
 /obj/structure/table/wood,
 /turf/open/floor/plating,
 /area/library/abandoned)
+"coN" = (
+/obj/machinery/rnd/experimentor,
+/turf/open/floor/engine,
+/area/science/explab)
 "cpK" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/effect/turf_decal/delivery,
@@ -48898,6 +48901,10 @@
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing)
+"uuf" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/engine,
+/area/science/explab)
 "uva" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -74698,7 +74705,7 @@ gst
 cbi
 cIZ
 acp
-acw
+uuf
 acw
 adk
 adG
@@ -75469,7 +75476,7 @@ mjC
 tVl
 ljF
 acp
-acw
+coN
 acw
 adk
 adJ
