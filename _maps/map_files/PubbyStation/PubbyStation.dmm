@@ -371,6 +371,20 @@
 "abO" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai)
+"abQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "abV" = (
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/white,
@@ -25439,6 +25453,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bnI" = (
@@ -35675,13 +35690,14 @@
 /turf/closed/wall/r_wall,
 /area/medical/psychiatrist)
 "bKy" = (
-/obj/machinery/door/airlock/medical{
-	name = "Patient Room";
-	req_access_txt = "5"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Psychiatrist Office"
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/freezer,
 /area/medical/psychiatrist)
 "bKz" = (
@@ -35690,6 +35706,8 @@
 	},
 /obj/effect/landmark/event_spawn,
 /obj/item/beacon,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bKA" = (
@@ -48712,6 +48730,7 @@
 	name = "Medbay Maintenance";
 	req_one_access_txt = "12;45;5;9"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "cBM" = (
@@ -49691,6 +49710,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "eZA" = (
@@ -50088,6 +50108,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet/blue,
 /area/medical/psychiatrist)
 "gam" = (
@@ -50765,10 +50786,10 @@
 /obj/machinery/airalarm{
 	pixel_y = -31
 	},
-/obj/machinery/light,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "hvW" = (
@@ -51334,10 +51355,14 @@
 /turf/open/floor/plating,
 /area/security/execution/transfer)
 "iEi" = (
-/obj/machinery/door/airlock/medical,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Psychiatrist Backroom";
+	req_access_txt = "69"
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "iEQ" = (
@@ -53254,6 +53279,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "ndI" = (
@@ -54380,6 +54406,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "pps" = (
@@ -55257,9 +55284,13 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "rxt" = (
-/obj/machinery/door/airlock/medical/glass,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Padded Cell";
+	req_access_txt = "69"
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "rxQ" = (
@@ -56430,6 +56461,14 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
+"unb" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "uoj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -86217,7 +86256,7 @@ bFS
 bGZ
 bCn
 bJo
-bGZ
+abQ
 bLJ
 bMK
 bjc
@@ -86476,7 +86515,7 @@ bIh
 bkh
 bKz
 bnH
-boN
+unb
 cBL
 bCz
 bPB

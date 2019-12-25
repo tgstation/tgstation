@@ -60258,7 +60258,6 @@
 /turf/open/floor/plasteel/freezer,
 /area/medical/psychiatrist)
 "cCL" = (
-/obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/freezer,
 /area/medical/psychiatrist)
@@ -60682,7 +60681,9 @@
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cDP" = (
-/obj/machinery/door/airlock/medical/glass,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Psychiatrist Office"
+	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -62075,8 +62076,11 @@
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cGI" = (
-/obj/machinery/door/airlock/medical,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Psychiatrist Backroom";
+	req_access_txt = "69"
+	},
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "cGJ" = (
@@ -72579,7 +72583,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "dDB" = (
-/obj/machinery/door/airlock/medical/glass,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Padded Cell";
+	req_access_txt = "69"
+	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
