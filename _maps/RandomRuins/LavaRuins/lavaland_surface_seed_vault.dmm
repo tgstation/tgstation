@@ -446,9 +446,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/mineral/titanium/blue,
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bi" = (
 /obj/structure/disposalpipe/segment{
@@ -464,10 +466,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 10
 	},
-/turf/closed/wall/r_wall,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bk" = (
 /obj/structure/disposalpipe/segment{
@@ -595,6 +598,41 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"by" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/powered/seedvault)
+"bz" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/powered/seedvault)
+"bA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/powered/seedvault)
+"bB" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/seedvault)
+"bC" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/trimline/green/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/powered/seedvault)
+"bD" = (
+/turf/closed/wall/r_wall,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aa
@@ -621,19 +659,19 @@ ab
 (2,1,1) = {"
 aa
 aa
-ac
-ac
-ac
-ac
-ac
-ac
+aa
+aa
+ab
+ab
+aa
+aa
 aa
 aa
 aa
 aa
 ab
-ab
-ab
+aa
+aa
 aa
 aa
 aa
@@ -641,7 +679,28 @@ aa
 ab
 "}
 (3,1,1) = {"
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
 ab
+ab
+ab
+aa
+aa
+aa
+ab
+ab
+ab
+"}
+(4,1,1) = {"
 aa
 ac
 ak
@@ -660,10 +719,10 @@ ab
 ab
 ab
 ab
-ab
+aa
+aa
 "}
-(4,1,1) = {"
-ab
+(5,1,1) = {"
 aa
 ac
 ap
@@ -683,9 +742,9 @@ aa
 aa
 aa
 aa
-"}
-(5,1,1) = {"
 aa
+"}
+(6,1,1) = {"
 aa
 ac
 ap
@@ -698,27 +757,6 @@ am
 aR
 ab
 ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-"}
-(6,1,1) = {"
-aa
-aa
-ac
-aq
-ah
-ac
-ah
-aU
-ac
-ac
-ac
-aG
 ac
 ac
 ac
@@ -730,6 +768,27 @@ aa
 "}
 (7,1,1) = {"
 aa
+ac
+aq
+ah
+ac
+ah
+aU
+ac
+ac
+ac
+ac
+ac
+ac
+bc
+bc
+bc
+ac
+ac
+bD
+aa
+"}
+(8,1,1) = {"
 aa
 ac
 ac
@@ -741,17 +800,17 @@ aS
 ac
 aG
 ac
+bh
+aN
+aN
+aN
+aN
+aN
+bB
 ac
-bc
-bc
-bc
-ac
-ac
-aa
 aa
 "}
-(8,1,1) = {"
-ab
+(9,1,1) = {"
 ac
 ac
 ar
@@ -765,15 +824,15 @@ ac
 ac
 bb
 bb
-bh
-bb
+aN
+aN
+aN
+aN
 aN
 ac
 ac
-aa
 "}
-(9,1,1) = {"
-ab
+(10,1,1) = {"
 ac
 ad
 al
@@ -786,16 +845,16 @@ aC
 ac
 aZ
 bb
+aN
 bd
 ba
 bo
-bb
+aN
+aN
 bv
 ac
-aa
 "}
-(10,1,1) = {"
-aa
+(11,1,1) = {"
 ac
 ae
 al
@@ -808,16 +867,16 @@ ah
 aH
 ah
 bb
+aN
 aV
 aW
 be
 aN
+aN
 bw
 ac
-aa
 "}
-(11,1,1) = {"
-aa
+(12,1,1) = {"
 ac
 af
 am
@@ -830,16 +889,16 @@ aD
 ac
 aK
 bb
+aN
 bf
 bi
 bp
-bh
+aN
+aN
 bv
 ac
-aa
 "}
-(12,1,1) = {"
-ab
+(13,1,1) = {"
 ac
 ac
 ac
@@ -852,16 +911,16 @@ ac
 ac
 ac
 aN
-bb
-bk
 aN
-bb
+aN
+bz
+aN
+aN
+aN
 ac
 ac
-aa
 "}
-(13,1,1) = {"
-aa
+(14,1,1) = {"
 ac
 ag
 an
@@ -873,42 +932,64 @@ ah
 au
 aA
 ac
+bj
+aN
+bb
+bk
+aN
+bb
+bC
+ac
+aa
+"}
+(15,1,1) = {"
+ac
+ai
+al
+ah
+ah
+ah
+ah
+aF
+ac
+aA
+ac
+ac
 ac
 bg
 bl
 bq
 ac
 ac
-aa
+ac
 aa
 "}
-(14,1,1) = {"
-aa
+(16,1,1) = {"
 ac
-ai
+aj
 al
-ah
-ah
+al
+al
 aU
 ac
 ac
 ac
 aI
+aA
 aL
 ac
+by
+bA
 ac
-bj
 ac
-ac
-aa
-aa
+ab
+ab
 aa
 "}
-(15,1,1) = {"
-aa
+(17,1,1) = {"
 ac
-aj
-al
+ac
+ao
 al
 al
 ah
@@ -922,15 +1003,15 @@ ac
 bm
 br
 bt
-aa
+ab
+ab
 aa
 aa
 "}
-(16,1,1) = {"
-ab
+(18,1,1) = {"
+aa
 ac
 ac
-ao
 ax
 aJ
 ah
@@ -946,12 +1027,12 @@ bs
 bu
 bx
 ab
-aa
+ab
+ab
 "}
-(17,1,1) = {"
+(19,1,1) = {"
 aa
 aa
-ac
 ac
 ay
 aO
@@ -965,51 +1046,8 @@ ac
 aa
 aa
 aa
-ab
-ab
-aa
-aa
-"}
-(18,1,1) = {"
-aa
-aa
-aa
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-aa
-aa
-aa
-aa
 aa
 ab
-ab
-ab
-"}
-(19,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 ab
 ab
 ab
@@ -1017,15 +1055,15 @@ ab
 (20,1,1) = {"
 aa
 aa
-aa
-aa
-ab
-aa
-aa
-aa
-aa
-aa
-aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 aa
 aa
 aa
