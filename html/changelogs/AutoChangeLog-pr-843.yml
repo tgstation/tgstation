@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - tweak: "Filing cabinets can now hold any small or below object, rather than just papers/folders/photos."
