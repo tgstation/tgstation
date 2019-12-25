@@ -33,7 +33,7 @@ export const Vending = props => {
             {' '}
             <b>{data.user.job || "Unemployed"}</b>!
             <br />
-            Your balance is <b>{data.user.cash}Ꞥ</b>.
+            Your balance is <b>{data.user.cash} credits</b>.
           </Box>
         ) || (
           <Box color="light-gray">
@@ -87,7 +87,7 @@ export const Vending = props => {
                 <Table.Cell>
                   {custom && (
                     <Button
-                      content={data.access ? 'FREE' : product.price + 'Ꞥ'}
+                      content={data.access ? 'FREE' : product.price + ' cr'}
                       onClick={() => act(ref, 'dispense', {
                         'item': product.name,
                       })} />
@@ -103,7 +103,7 @@ export const Vending = props => {
                           )
                         )
                       )}
-                      content={free ? 'FREE' : product.price + 'Ꞥ'}
+                      content={free ? 'FREE' : product.price + ' cr'}
                       onClick={() => act(ref, 'vend', {
                         'ref': product.ref,
                       })} />
