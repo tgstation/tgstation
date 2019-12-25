@@ -462,6 +462,7 @@
 #include "code\datums\diseases\beesease.dm"
 #include "code\datums\diseases\brainrot.dm"
 #include "code\datums\diseases\cold.dm"
+#include "code\datums\diseases\cold9.dm"
 #include "code\datums\diseases\decloning.dm"
 #include "code\datums\diseases\dna_spread.dm"
 #include "code\datums\diseases\fake_gbs.dm"

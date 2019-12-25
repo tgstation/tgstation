@@ -154,18 +154,19 @@
 	if(panel_open == TRUE)
 		icon_state = "chamber_open"
 		return
-	if((powered == TRUE) && is_operational())
-		icon_state = "chamber_active"
-		return
-	if((powered == TRUE) && (banked_cash > 0) && (is_operational()))
+	if(powered && (banked_cash > 0) && (is_operational()))
 		icon_state = "chamber_active_loaded"
 		return
-	if (((powered == FALSE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational()))
+	if (((!powered) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational()))
 		icon_state = "chamber_loaded"
 		return
-	if(((powered == FALSE) && (banked_cash == 0)) || (!is_operational()))
+	if(powered && is_operational())
+		icon_state = "chamber_active"
+		return
+	if(((!powered) && (banked_cash == 0)) || (!is_operational()))
 		icon_state = "chamber"
 		return
+
 
 /obj/machinery/rnd/bepis/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -194,15 +195,15 @@
 		return
 	switch(action)
 		if("deposit_cash")
-			if(powered == FALSE)
+			if(!powered)
 				return
 			depositcash()
 		if("withdraw_cash")
-			if(powered == FALSE)
+			if(!powered)
 				return
 			withdrawcash()
 		if("begin_experiment")
-			if(powered == FALSE)
+			if(!powered)
 				return
 			if(banked_cash == 0)
 				say("Please deposit funds to begin testing.")
@@ -210,6 +211,7 @@
 			calcsuccess()
 			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.
 			powered = FALSE	//Shuts off after use in order to get the right visual look. Kinda annoying, but also prevents some possible spam issues.
+			use_power = IDLE_POWER_USE
 			update_icon_state()
 		if("amount")
 			var/input = text2num(params["amount"])
@@ -217,13 +219,13 @@
 				banking_amount = input
 		if("toggle_power")
 			powered = !powered
-			if(powered == FALSE)
+			if(!powered)
 				use_power = IDLE_POWER_USE
 			else
 				use_power = ACTIVE_POWER_USE
 			update_icon_state()
 		if("account_reset")
-			if(powered == FALSE)
+			if(!powered)
 				return
 			account_name = ""
 			account = null

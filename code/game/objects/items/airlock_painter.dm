@@ -137,9 +137,17 @@
 	var/stored_color = ""
 	var/stored_decal = "warningline"
 	var/stored_decal_total = "warningline"
-	var/list/dir_list = list()
-	var/list/decal_list = list()
-	var/list/color_list = list()
+	var/color_list = list("","red","white")
+	var/dir_list = list(1,2,4,8)
+	var/decal_list = list(list("Warning Line","warningline"),
+			list("Warning Line Corner","warninglinecorner"),
+			list("Caution Label","caution"),
+			list("Directional Arrows","arrows"),
+			list("Stand Clear Label","stand_clear"),
+			list("Box","box"),
+			list("Box Corner","box_corners"),
+			list("Delivery Marker","delivery"),
+			list("Warning Box","warn_full"))
 
 /obj/item/airlock_painter/decal/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -163,17 +171,6 @@
 /obj/item/airlock_painter/decal/Initialize()
 	. = ..()
 	ink = new /obj/item/toner/large(src)
-	dir_list = list(1,2,4,8)
-	decal_list = list(list("Warning Line","warningline"),
-			list("Warning Line Corner","warninglinecorner"),
-			list("Caution Label","caution"),
-			list("Directional Arrows","arrows"),
-			list("Stand Clear Label","stand_clear"),
-			list("Box","box"),
-			list("Box Corner","box_corners"),
-			list("Delivery Marker","delivery"),
-			list("Warning Box","warn_full"))
-	color_list = list("","red","white")
 
 /obj/item/airlock_painter/decal/proc/update_decal_path()
 	var/yellow_fix = "" //This will have to do until someone refactor's markings.dm
