@@ -165,14 +165,14 @@
 	ink = new /obj/item/toner/large(src)
 	dir_list = list(1,2,4,8)
 	decal_list = list(list("Warning Line","warningline"),
-					list("Warning Line Corner","warninglinecorner"),
-					list("Caution Label","caution"),
-					list("Directional Arrows","arrows"),
-					list("Stand Clear Label","stand_clear"),
-					list("Box","box"),
-					list("Box Corner","box_corners"),
-					list("Delivery Marker","delivery"),
-					list("Warning Box","warn_full"))
+			list("Warning Line Corner","warninglinecorner"),
+			list("Caution Label","caution"),
+			list("Directional Arrows","arrows"),
+			list("Stand Clear Label","stand_clear"),
+			list("Box","box"),
+			list("Box Corner","box_corners"),
+			list("Delivery Marker","delivery"),
+			list("Warning Box","warn_full"))
 	color_list = list("","red","white")
 
 /obj/item/airlock_painter/decal/proc/update_decal_path()
