@@ -256,7 +256,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return 1
 
 /datum/gas_mixture/copy_from_turf(turf/model)
+	#ifndef EVENTMODE
 	parse_gas_string(model.initial_gas_mix)
+	#endif
+	#ifdef EVENTMODE
+	///Default nice breathable atmosphere and temp
+	parse_gas_string(OPENTURF_DEFAULT_ATMOS)
+	return 1
+	#endif
 
 	//acounts for changes in temperature
 	var/turf/model_parent = model.parent_type

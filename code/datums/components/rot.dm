@@ -2,6 +2,9 @@
 	var/amount = 1
 
 /datum/component/rot/Initialize(new_amount)
+	#ifdef EVENTMODE
+	return INITIALIZE_HINT_QDEL;
+	#endif
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -28,6 +31,9 @@
 	amount = MIASMA_CORPSE_MOLES
 
 /datum/component/rot/corpse/Initialize()
+	#ifdef EVENTMODE
+	return INITIALIZE_HINT_QDEL;
+	#endif
 	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()

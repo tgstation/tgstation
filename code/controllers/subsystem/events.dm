@@ -56,6 +56,9 @@ SUBSYSTEM_DEF(events)
 //selects a random event based on whether it can occur and it's 'weight'(probability)
 /datum/controller/subsystem/events/proc/spawnEvent()
 	set waitfor = FALSE	//for the admin prompt
+	#ifdef EVENTMODE
+	return
+	#endif
 	if(!CONFIG_GET(flag/allow_random_events))
 		return
 
