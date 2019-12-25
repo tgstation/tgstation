@@ -21,7 +21,6 @@
 	var/datum/bank_account/account		//payer's account.
 	var/account_name					//name of the payer's account.
 	var/error_cause = null
-	var/powered = FALSE
 	//Vars related to probability and chance of success for testing
 	var/major_threshold = 6000
 	var/minor_threshold = 3000
@@ -154,19 +153,18 @@
 	if(panel_open == TRUE)
 		icon_state = "chamber_open"
 		return
-	if(powered && (banked_cash > 0) && (is_operational()))
+	if((use_power == ACTIVE_POWER_USE) && (banked_cash > 0) && (is_operational()))
 		icon_state = "chamber_active_loaded"
 		return
-	if (((!powered) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational()))
+	if (((use_power == IDLE_POWER_USE) && (banked_cash > 0)) || (banked_cash > 0) && (!is_operational()))
 		icon_state = "chamber_loaded"
 		return
-	if(powered && is_operational())
+	if(use_power == ACTIVE_POWER_USE && is_operational())
 		icon_state = "chamber_active"
 		return
-	if(((!powered) && (banked_cash == 0)) || (!is_operational()))
+	if(((use_power == IDLE_POWER_USE) && (banked_cash == 0)) || (!is_operational()))
 		icon_state = "chamber"
 		return
-
 
 /obj/machinery/rnd/bepis/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -177,6 +175,9 @@
 
 /obj/machinery/rnd/bepis/ui_data(mob/user)
 	var/list/data = list()
+	var/powered = FALSE
+	if(use_power == ACTIVE_POWER_USE)
+		powered = TRUE
 	data["account_owner"] = account_name
 	data["amount"] = banking_amount
 	data["stored_cash"] = banked_cash
@@ -195,37 +196,35 @@
 		return
 	switch(action)
 		if("deposit_cash")
-			if(!powered)
+			if(use_power == IDLE_POWER_USE)
 				return
 			depositcash()
 		if("withdraw_cash")
-			if(!powered)
+			if(use_power == IDLE_POWER_USE)
 				return
 			withdrawcash()
 		if("begin_experiment")
-			if(!powered)
+			if(use_power == IDLE_POWER_USE)
 				return
 			if(banked_cash == 0)
 				say("Please deposit funds to begin testing.")
 				return
 			calcsuccess()
 			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.
-			powered = FALSE	//Shuts off after use in order to get the right visual look. Kinda annoying, but also prevents some possible spam issues.
-			use_power = IDLE_POWER_USE
+			use_power = IDLE_POWER_USE //Machine shuts off after use to prevent spam and look better visually.
 			update_icon_state()
 		if("amount")
 			var/input = text2num(params["amount"])
 			if(input)
 				banking_amount = input
 		if("toggle_power")
-			powered = !powered
-			if(!powered)
+			if(use_power == ACTIVE_POWER_USE)
 				use_power = IDLE_POWER_USE
 			else
 				use_power = ACTIVE_POWER_USE
 			update_icon_state()
 		if("account_reset")
-			if(!powered)
+			if(use_power == IDLE_POWER_USE)
 				return
 			account_name = ""
 			account = null
