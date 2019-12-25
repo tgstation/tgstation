@@ -1,4 +1,0 @@
-author: "Iatots"
-delete-after: True
-changes: 
-  - bugfix: "cult revive rune now displays how much sacrifice \"credit\" the cult has with nar-sie. Remember, each revive costs 3 sacrifices, and the cult starts with 1 free revive (that is, drawing the revive rune with no sacrifices made the entire round displays 3 unredeemed sacrifices)."
