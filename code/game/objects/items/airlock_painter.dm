@@ -164,11 +164,22 @@
 	. = ..()
 	ink = new /obj/item/toner/large(src)
 	dir_list = list(1,2,4,8)
-	decal_list = list("warningline","warninglinecorner","caution","arrows","stand_clear","box","box_corners","delivery","warn_full")
-	color_list = list("","_red","_white")
+	decal_list = list(list("Warning Line","warningline"),
+					list("Warning Line Corner","warninglinecorner"),
+					list("Caution Label","caution"),
+					list("Directional Arrows","arrows"),
+					list("Stand Clear Label","stand_clear"),
+					list("Box","box"),
+					list("Box Corner","box_corners"),
+					list("Delivery Marker","delivery"),
+					list("Warning Box","warn_full"))
+	color_list = list("","red","white")
 
 /obj/item/airlock_painter/decal/proc/update_decal_path()
-	stored_decal_total = "[stored_decal][stored_color]"
+	var/yellow_fix = "" //This will have to do until someone refactor's markings.dm
+	if (stored_color)
+		yellow_fix = "_"
+	stored_decal_total = "[stored_decal][yellow_fix][stored_color]"
 	return
 
 /obj/item/airlock_painter/decal/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -182,21 +193,22 @@
 	data["decal_direction"] = stored_dir
 	data["decal_color"] = stored_color
 	data["decal_style"] = stored_decal
-	data["decal_builder"] = list()
-	data["color_builder"] = list()
-	data["direction_builder"] = list()
+	data["decal_list"] = list()
+	data["color_list"] = list()
+	data["dir_list"] = list()
 
 	for(var/i in decal_list)
-		data["decal_builder"] += list(list(
-			"decal_type" = i
+		data["decal_list"] += list(list(
+			"name" = i[1],
+			"decal" = i[2]
 		))
 	for(var/j in color_list)
-		data["color_builder"] += list(list(
-			"color_type" = j
+		data["color_list"] += list(list(
+			"colors" = j
 		))
 	for(var/k in dir_list)
-		data["direction_builder"] += list(list(
-			"dir_type" = k
+		data["dir_list"] += list(list(
+			"dirs" = k
 		))
 	return data
 
@@ -206,13 +218,13 @@
 	switch(action)
 		//Lists of decals and designs
 		if("select decal")
-			var/selected_decal = params["decal_type"]
+			var/selected_decal = params["decals"]
 			stored_decal = selected_decal
 		if("select color")
-			var/selected_color = params["color_type"]
+			var/selected_color = params["colors"]
 			stored_color = selected_color
 		if("selected direction")
-			var/selected_direction = text2num(params["dir_type"])
+			var/selected_direction = text2num(params["dirs"])
 			stored_dir = selected_direction
 	update_decal_path()
 	. = TRUE
