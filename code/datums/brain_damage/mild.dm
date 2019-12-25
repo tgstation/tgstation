@@ -199,14 +199,16 @@
 		var/list/new_message = list()
 
 		for(var/word in message_split)
-			var/suffix = copytext_char(word, -1)
+			var/suffix = ""
+			var/suffix_foundon = 0
+			for(var/potential_suffix in list("." , "," , ";" , "!" , ":" , "?"))
+				suffix_foundon = findtext(word, potential_suffix, -length(potential_suffix))
+				if(suffix_foundon)
+					suffix = potential_suffix
+					break
 
-			// Check if we have a suffix and break it out of the word
-			if(suffix in list("." , "," , ";" , "!" , ":" , "?"))
-				word = copytext(word, 1, -length(suffix))
-			else
-				suffix = ""
-
+			if(suffix_foundon)
+				word = copytext(word, 1, suffix_foundon)
 			word = html_decode(word)
 
 			if(lowertext(word) in common_words)
