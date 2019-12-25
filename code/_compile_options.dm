@@ -42,9 +42,6 @@ List of things this does
 #define FORCE_MAP "_maps/runtimestation.json"
 #endif
 
-#ifdef EVENTMODE
-#define FORCE_MAP "_maps/summer_ball.json"
-#endif
 //#endif
 
 //Update this whenever you need to take advantage of more recent byond features
