@@ -1,0 +1,7 @@
+author: "CAPTTLasky"
+delete-after: True
+changes: 
+  - rscadd: "Major renovations to the MetaStation Brig"
+  - rscadd: "Donut Station Grenade Launcher added to Armory Equipment"
+  - rscadd: "A public-facing desk for the Warden"
+  - tweak: "The Secway Key has been moved to the Warden's Office"
