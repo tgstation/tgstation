@@ -28,13 +28,15 @@ export const LaborClaimConsole = props => {
           <LabeledList.Item label="Points">
             {id_points}
           </LabeledList.Item>
-          <LabeledList.Item label="Unclaimed points">
+          <LabeledList.Item
+            label="Unclaimed points"
+            buttons={(
+              <Button
+                content="Claim points"
+                disabled={!unclaimed_points}
+                onClick={() => act('claim_points')} />
+            )}>
             {unclaimed_points}
-            <Button
-              ml={1}
-              content="Claim"
-              disabled={!unclaimed_points}
-              onClick={() => act('claim_points')} />
           </LabeledList.Item>
         </LabeledList>
       </Section>
