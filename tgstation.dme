@@ -1824,6 +1824,7 @@
 #include "code\modules\games\cas.dm"
 #include "code\modules\goonchat\browserOutput.dm"
 #include "code\modules\holiday\easter.dm"
+#include "code\modules\holiday\hebrew_calendar.dm"
 #include "code\modules\holiday\holidays.dm"
 #include "code\modules\holodeck\area_copy.dm"
 #include "code\modules\holodeck\computer.dm"
