@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - bugfix: "mime fan pins work now, also updated the clown and mime fan description."
