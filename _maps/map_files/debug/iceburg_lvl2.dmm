@@ -979,6 +979,9 @@
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/white,
 /area/centcom)
+"bM" = (
+/turf/closed/indestructible/temple,
+/area/awaymission/snowdin/cave/mountain)
 "bN" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1213,6 +1216,9 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"ch" = (
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "ci" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -1277,6 +1283,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom)
+"cr" = (
+/obj/structure/stone_tile/elderburnt,
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "cs" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
@@ -1309,6 +1325,13 @@
 /obj/item/reagent_containers/food/snacks/sosjerky/healthy,
 /turf/open/floor/plasteel/white,
 /area/centcom)
+"cy" = (
+/obj/structure/stone_tile/elderburnt,
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "cz" = (
 /obj/structure/closet/crate/freezer/blood{
 	anchored = 1
@@ -3325,6 +3348,16 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
+"fL" = (
+/obj/structure/stone_tile/elderburnt,
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "fM" = (
 /obj/machinery/light{
 	dir = 8;
@@ -5175,13 +5208,20 @@
 /turf/open/floor/carpet/black,
 /area/centcom)
 "iW" = (
-/turf/closed/indestructible/rock/snow,
-/area/space)
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "iX" = (
-/turf/open/floor/plating/snowed/temperatre,
+/obj/structure/stone_tile/elderburnt,
+/turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "iY" = (
-/turf/open/openspace,
+/obj/structure/stone_tile/surrounding_tile/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "iZ" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -5251,6 +5291,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom)
+"je" = (
+/obj/structure/stone_tile/block/elderburnt{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "jf" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -6760,8 +6806,17 @@
 /turf/open/floor/carpet,
 /area/centcom)
 "lz" = (
+/obj/structure/stone_tile/surrounding_tile/elderburnt{
+	dir = 1
+	},
 /turf/open/floor/plating/asteroid/snow,
-/area/space)
+/area/awaymission/snowdin/cave/mountain)
+"lA" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "lB" = (
 /obj/structure{
 	anchored = 1;
@@ -6823,6 +6878,23 @@
 	},
 /turf/open/floor/plating,
 /area/centcom)
+"lG" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/elderburnt,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"lH" = (
+/obj/structure/stone_tile/elderburnt,
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "lI" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -6840,6 +6912,25 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
+"lJ" = (
+/obj/structure/stone_tile/block/elderburnt{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"lK" = (
+/obj/structure/stone_tile/surrounding_tile/elderburnt,
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "lL" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
@@ -6847,6 +6938,19 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/centcom)
+"lM" = (
+/obj/structure/stone_tile/surrounding_tile/elderburnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/elderburnt,
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "lN" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -6909,6 +7013,12 @@
 /obj/structure/table/wood/poker,
 /turf/open/floor/carpet,
 /area/centcom)
+"lS" = (
+/obj/structure/stone_tile/block/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "lT" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/figure/secofficer,
@@ -6918,12 +7028,54 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"lU" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "lV" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/carpet,
 /area/centcom)
+"lW" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/clothing/suit/hooded/chaplainsuit/monkfrock,
+/obj/item/clothing/suit/hooded/chaplainsuit/monkfrock,
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"lX" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "lY" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -6943,6 +7095,35 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
+"ma" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/green,
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"mb" = (
+/obj/structure/stone_tile/elderslab,
+/obj/machinery/door/poddoor{
+	color = "#458455";
+	desc = "A strange door of strange origins. There may be no way to get past this at all.";
+	id = "TheCartographerGuild";
+	max_integrity = 8000;
+	name = "Temple Gate"
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "mc" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
@@ -6958,6 +7139,30 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
+"me" = (
+/obj/structure{
+	anchored = 1;
+	desc = "It has dried.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "floor3-old";
+	layer = 2.08;
+	mouse_opacity = 0;
+	name = "Dried Blood"
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"mf" = (
+/obj/structure{
+	anchored = 1;
+	desc = "It has dried.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "floor4-old";
+	layer = 2.08;
+	mouse_opacity = 0;
+	name = "Dried Blood"
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "mg" = (
 /turf/closed/indestructible/fakedoor{
 	desc = "It would require Centcom in order to open this.";
@@ -6998,6 +7203,42 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
+"mk" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"ml" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"mm" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/clothing/suit/hooded/cultrobes,
+/obj/item/clothing/suit/hooded/cultrobes,
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "mn" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -7015,6 +7256,24 @@
 	},
 /turf/open/floor/carpet/red,
 /area/centcom)
+"mp" = (
+/obj/structure/stone_tile/elderslab,
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"mq" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderblock{
+	dir = 8
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "mr" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
@@ -7067,6 +7326,28 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
+"mu" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 8
+	},
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"mv" = (
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"mw" = (
+/obj/structure/stone_tile/elderslab,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "mx" = (
 /obj/structure/rack,
 /obj/item/gun/ballistic/shotgun/riot{
@@ -7098,6 +7379,21 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"my" = (
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"mz" = (
+/obj/structure/stone_tile/block/elderburnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/elderburnt{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "mA" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -7118,6 +7414,10 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"mB" = (
+/obj/structure/stone_tile/surrounding_tile/elderburnt,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "mC" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -7169,6 +7469,21 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"mF" = (
+/obj/structure/stone_tile/surrounding_tile/elderburnt{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"mG" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "mH" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
@@ -7194,6 +7509,38 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"mJ" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/clothing/suit/hooded/cultrobes/alt,
+/obj/item/clothing/suit/hooded/cultrobes/alt,
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"mK" = (
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/stone_tile/elderblock{
+	dir = 4
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "mL" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -7207,6 +7554,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom)
+"mM" = (
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "mN" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -7223,6 +7576,47 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
+"mO" = (
+/obj/structure/stone_tile/elderslab,
+/obj/structure/statue/runed_metal/cthulhu{
+	anchored = 1;
+	desc = "A statue of a vague anthropoid with an octopus-like head and long, narrow wings. The epigraph is indecipherable.";
+	name = "Strange Statue";
+	pixel_x = -16;
+	pixel_y = 16
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"mP" = (
+/obj/structure/stone_tile/elder,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"mQ" = (
+/obj/structure/stone_tile/surrounding/elderburnt,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"mR" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/clothing/suit/hooded/mysticrobe{
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/hooded/mysticrobe{
+	pixel_y = 6
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "mS" = (
 /obj/structure/chair/sofa/left,
 /obj/machinery/light{
@@ -7230,6 +7624,52 @@
 	},
 /turf/open/floor/wood,
 /area/centcom)
+"mT" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/machinery/button/door/indestructible{
+	desc = "Do not let the heretics inside.";
+	id = "TheCartographerGuild";
+	layer = 3.5;
+	name = "Temple Gate Button";
+	pixel_x = 0;
+	pixel_y = -32
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"mU" = (
+/obj/structure/stone_tile/eldersurrounding_tile,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"mV" = (
+/obj/structure/stone_tile/elderburnt,
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"mW" = (
+/obj/structure/stone_tile/block/elderburnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "mX" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -7243,6 +7683,10 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
+"mY" = (
+/obj/structure/stone_tile/slab/elderburnt,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "mZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -7265,6 +7709,24 @@
 	},
 /turf/open/floor/carpet/green,
 /area/centcom)
+"nb" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"nc" = (
+/obj/structure{
+	anchored = 1;
+	desc = "It has dried.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "floor1-old";
+	layer = 2.08;
+	mouse_opacity = 0;
+	name = "Dried Blood"
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "nd" = (
 /obj/structure/table,
 /obj/structure/table,
@@ -7286,6 +7748,22 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
+"nf" = (
+/obj/structure{
+	anchored = 1;
+	desc = "It has dried.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "floor2-old";
+	layer = 2.08;
+	mouse_opacity = 0;
+	name = "Dried Blood"
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"ng" = (
+/obj/structure/stone_tile/elderblock,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "nh" = (
 /obj/structure/fluff/railing{
 	icon_state = "railing";
@@ -7329,12 +7807,72 @@
 "nk" = (
 /turf/open/floor/plasteel/dark,
 /area/centcom)
+"nl" = (
+/obj/structure{
+	anchored = 1;
+	color = "#00ff66";
+	desc = "A strange rune that seems to be meant for a ritual. Judging by the blood and burnt surroundings, it's likely that there is no way to do the ritual since it has already been done.";
+	icon = 'icons/effects/224x224.dmi';
+	icon_state = "huge_rune";
+	layer = 2;
+	max_integrity = 9000;
+	name = "Temple Rune"
+	},
+/obj/structure/stone_tile/surrounding_tile/elderburnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderburnt,
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"nm" = (
+/obj/structure/stone_tile/surrounding_tile/elderburnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/elderburnt,
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"nn" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "no" = (
 /turf/open/indestructible/cobble/corner{
 	icon_state = "cobble_corner";
 	dir = 8
 	},
 /area/awaymission/snowdin/outside)
+"np" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/stone_tile/elder,
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "nq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -7373,11 +7911,71 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom)
+"ns" = (
+/obj/structure/stone_tile/elderburnt,
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"nt" = (
+/obj/structure/stone_tile/block/elderburnt,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"nu" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"nv" = (
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
 "nw" = (
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
+"nx" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 1
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"ny" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"nz" = (
+/obj/structure/stone_tile/elderslab,
+/obj/structure/bookcase/random/religion,
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"nA" = (
+/obj/structure/stone_tile/block/elderburnt,
+/obj/structure/stone_tile/block/elderburnt{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "nB" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -7401,10 +7999,34 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
+"nD" = (
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
 "nE" = (
 /obj/effect/oneway,
 /turf/open/floor/plating/snowed/temperatre,
 /area/space)
+"nF" = (
+/obj/structure/stone_tile/elderslab,
+/obj/structure/statue/petrified{
+	color = "#9ba494";
+	desc = "The mapper who made the first Winter Ball";
+	dir = 2;
+	icon_state = "human_female";
+	max_integrity = 6000;
+	name = "Okand37";
+	pixel_y = 6
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "nG" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Docking Gate";
@@ -7428,6 +8050,24 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/centcom)
+"nI" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"nJ" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"nK" = (
+/obj/structure/stone_tile/elderblock,
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
 "nL" = (
 /obj/machinery/light{
 	dir = 4
@@ -7437,6 +8077,12 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"nM" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "nN" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -7452,6 +8098,23 @@
 /obj/structure/punching_bag,
 /turf/open/floor/plasteel/dark,
 /area/centcom)
+"nO" = (
+/obj/structure/stone_tile/surrounding/elderburnt,
+/obj/structure/stone_tile/center/elderburnt,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"nP" = (
+/obj/structure/chair/comfy{
+	color = "#458455"
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"nQ" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "nR" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -7463,6 +8126,59 @@
 	icon_state = "bar";
 	name = "Bar"
 	})
+"nS" = (
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/eldersurrounding_tile,
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"nT" = (
+/obj/structure/stone_tile/elderblock,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"nU" = (
+/obj/structure/table/wood/fancy/green,
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"nV" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/pen/fountain/captain{
+	name = "fancy fountain pen";
+	pixel_y = 4
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"nW" = (
+/obj/structure/ladder/unbreakable/rune{
+	color = "";
+	desc = "";
+	icon = 'icons/turf/floors/elder_floors.dmi';
+	icon_state = "elder_pristine_center";
+	id = "AnAncientChineseSecret";
+	name = "Temple Tile"
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "nX" = (
 /obj/machinery/processor,
 /obj/machinery/light{
@@ -7472,6 +8188,16 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
+"nY" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "nZ" = (
 /turf/open/floor/plasteel/dark,
 /area/centcom{
@@ -7492,6 +8218,18 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"ob" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "oc" = (
 /obj/machinery/newscaster{
 	pixel_x = -28
@@ -7501,6 +8239,129 @@
 	icon_state = "cafeteria";
 	name = "Cafeteria"
 	})
+"od" = (
+/obj/structure/chair/comfy{
+	color = "#458455";
+	dir = 1
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"oe" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"of" = (
+/obj/structure/stone_tile/elderburnt,
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"og" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 4
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"oh" = (
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 8
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"oi" = (
+/obj/structure/statue/runed_metal/cthulhu{
+	anchored = 1;
+	desc = "A statue of a vague anthropoid with an octopus-like head and long, narrow wings. The epigraph, when translated, is <span class='nicegreen'>Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.</span>";
+	name = "Statue of Cthulhu"
+	},
+/obj/structure/stone_tile/elderslab,
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"oj" = (
+/obj/structure/stone_tile/eldersurrounding_tile,
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"ok" = (
+/obj/structure/stone_tile/eldersurrounding_tile,
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"ol" = (
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"om" = (
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/eldercenter{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/obj/structure/stone_tile/eldersurrounding{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"on" = (
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "oo" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
@@ -7523,6 +8384,70 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
+"op" = (
+/obj/structure/stone_tile/elderblock,
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"oq" = (
+/obj/structure/table/wood/fancy/green{
+	max_integrity = 500;
+	name = "Altar"
+	},
+/obj/item/storage/book/bible{
+	deity_name = "Cthulhu";
+	desc = "<span class='nicegreen'>Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.</span>";
+	icon_state = "necronomicon";
+	name = "Elder Tome";
+	pixel_y = 5
+	},
+/obj/item/storage/book/bible{
+	deity_name = "Cthulhu";
+	desc = "<span class='nicegreen'>Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.</span>";
+	icon_state = "necronomicon";
+	name = "Elder Tome";
+	pixel_y = 5
+	},
+/obj/item/storage/book/bible{
+	deity_name = "Cthulhu";
+	desc = "<span class='nicegreen'>Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.</span>";
+	icon_state = "necronomicon";
+	name = "Elder Tome";
+	pixel_y = 5
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"or" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"os" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 1
+	},
+/obj/structure/stone_tile/elderblock,
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "ot" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -7532,6 +8457,33 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom)
+"ou" = (
+/obj/structure/stone_tile/surrounding/elderburnt,
+/obj/structure/stone_tile/center/elderburnt,
+/obj/structure/ladder/unbreakable/rune{
+	alpha = 0;
+	color = "";
+	desc = "It'll take you outside. Try not to get lost.";
+	icon = 'icons/mob/nest.dmi';
+	icon_state = "bubblegum";
+	id = "DudeILoveEldritchHorror";
+	mouse_opacity = 0;
+	name = "AAAAAAAA"
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"ov" = (
+/obj/structure/chair/pew/left{
+	dir = 1
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"ow" = (
+/obj/structure/chair/pew{
+	dir = 1
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
 "ox" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -7552,6 +8504,43 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"oy" = (
+/obj/structure/chair/pew/right{
+	dir = 1;
+	name = "right wooden pew end"
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"oz" = (
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/eldersurrounding_tile,
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/eldercenter,
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"oA" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "oB" = (
 /turf/open/floor/carpet/green,
 /area/centcom)
@@ -7559,6 +8548,44 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/centcom)
+"oD" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 8
+	},
+/obj/structure/stone_tile/elderblock{
+	dir = 4
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"oE" = (
+/obj/structure/stone_tile/eldersurrounding,
+/obj/structure/stone_tile/eldercenter,
+/obj/structure/ladder/unbreakable/rune{
+	alpha = 0;
+	color = "";
+	desc = "";
+	height = 1;
+	icon = 'icons/turf/floors/elder_floors.dmi';
+	icon_state = "elder_pristine_center";
+	id = "AnAncientChineseSecret";
+	mouse_opacity = 0;
+	name = "AAAAAAA"
+	},
+/obj/structure/ladder/unbreakable/rune{
+	color = "";
+	desc = "It'll take you outside. Try not to get lost.";
+	height = 1;
+	icon = 'icons/mob/nest.dmi';
+	icon_state = "colossus";
+	id = "DudeILoveEldritchHorror";
+	name = "\improper Exit Portal"
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "oF" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/accessory/fan_clown_pin,
@@ -7581,6 +8608,17 @@
 	},
 /turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/centcom)
+"oH" = (
+/obj/structure/stone_tile/elderblock{
+	dir = 4
+	},
+/obj/structure/stone_tile/elderblock{
+	dir = 8
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "oI" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -7598,10 +8636,98 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"oJ" = (
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 1
+	},
+/obj/structure/chair/pew/left{
+	dir = 1
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"oK" = (
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 4
+	},
+/obj/structure/chair/pew/right{
+	dir = 1;
+	name = "right wooden pew end"
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"oL" = (
+/obj/structure/stone_tile/eldersurrounding,
+/obj/structure/ladder/unbreakable{
+	desc = "The only way out.";
+	height = 1;
+	id = "BeginningToLookAlotLikeFishmen";
+	name = "Escape";
+	pixel_y = 6
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
+"oM" = (
+/obj/structure/stone_tile/elderblock,
+/obj/structure/stone_tile/elderblock{
+	dir = 1
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "oN" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet/green,
 /area/centcom)
+"oO" = (
+/turf/open/floor/plating/snowed/roof,
+/area/space)
+"oP" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/fluff/railing,
+/turf/open/openspace,
+/area/centcom/prison{
+	icon_state = "checkpoint1";
+	name = "Arrivals Checkpoint"
+	})
+"oQ" = (
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 9
+	},
+/turf/open/openspace,
+/area/space/nearstation)
+"oR" = (
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 1
+	},
+/turf/open/openspace,
+/area/space/nearstation)
+"oS" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 1
+	},
+/turf/open/openspace,
+/area/centcom/prison{
+	icon_state = "checkpoint1";
+	name = "Arrivals Checkpoint"
+	})
+"oT" = (
+/obj/effect/turf_decal/stripes/full,
+/obj/machinery/gravity_generator/main/station/admin,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
+	})
 "oZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -10133,13 +11259,6 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
-"BR" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/space/nearstation)
 "BV" = (
 /obj/structure/weightmachine/weightlifter,
 /turf/open/floor/plasteel/dark,
@@ -10225,10 +11344,6 @@
 	icon_state = "bar";
 	name = "Bar"
 	})
-"Cq" = (
-/obj/structure/fluff/railing,
-/turf/open/floor/wood,
-/area/space/nearstation)
 "Cr" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/secure_closet/lethalshots,
@@ -10558,15 +11673,6 @@
 /obj/structure/dresser,
 /turf/open/floor/wood,
 /area/centcom)
-"DQ" = (
-/obj/structure/fluff/railing{
-	density = 0;
-	dir = 10;
-	icon_state = "railing";
-	layer = 3.1
-	},
-/turf/open/floor/wood,
-/area/space/nearstation)
 "DR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -13526,19 +14632,6 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
-"Tj" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
-	})
 "Tm" = (
 /obj/structure{
 	anchored = 1;
@@ -14027,25 +15120,6 @@
 /area/centcom{
 	icon_state = "hallC";
 	name = "Central Hallway"
-	})
-"VG" = (
-/obj/structure/fluff/railing{
-	density = 0;
-	dir = 9;
-	icon_state = "railing";
-	layer = 3.1
-	},
-/turf/open/floor/wood,
-/area/space/nearstation)
-"VI" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/fluff/railing,
-/turf/open/floor/wood,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
 	})
 "VM" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -14719,13 +15793,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/centcom)
-"Zk" = (
-/obj/machinery/gravity_generator/main/station/admin,
-/obj/effect/turf_decal/stripes/full,
-/turf/open/floor/plasteel/dark,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "Zp" = (
 /turf/closed/indestructible/fakeglass,
 /area/centcom/prison{
@@ -15050,46 +16117,6 @@ aa
 "}
 (2,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
 aa
 aa
 aa
@@ -15132,127 +16159,167 @@ aa
 aa
 aa
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 "}
 (3,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -15449,12 +16516,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (4,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -15651,12 +16718,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (5,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -15710,8 +16777,8 @@ ac
 ac
 ac
 ac
-iY
-iY
+ac
+ac
 aa
 aa
 aa
@@ -15853,84 +16920,11 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (6,1,1) = {"
 aa
-iW
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-iW
-iW
-iW
-iW
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 ac
 ac
@@ -15986,6 +16980,25 @@ ac
 ac
 ac
 ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -16055,83 +17068,65 @@ ac
 ac
 ac
 ac
-iW
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
 aa
 "}
 (7,1,1) = {"
 aa
-iW
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-Qs
-iW
-iW
-iW
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 ac
 ac
@@ -16187,6 +17182,24 @@ ac
 ac
 ac
 ac
+oO
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -16257,81 +17270,65 @@ ac
 ac
 ac
 ac
-iW
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
 aa
 "}
 (8,1,1) = {"
 aa
-iW
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-Qs
-Qs
-Qs
-iW
-iW
-iW
-iW
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 ac
 ac
@@ -16390,6 +17387,19 @@ ac
 ac
 ac
 ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -16459,79 +17469,68 @@ ac
 ac
 ac
 ac
-iW
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
 aa
 "}
 (9,1,1) = {"
 aa
-iW
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-Qs
-Qs
-iW
-iW
-iW
-iW
-iW
-iW
-aa
-iX
-iX
 aa
 ac
 ac
@@ -16591,8 +17590,16 @@ ac
 ac
 ac
 ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
+aa
 ac
 ac
 ac
@@ -16661,12 +17668,72 @@ ac
 ac
 ac
 ac
-iW
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
 aa
 "}
 (10,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -16724,17 +17791,13 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-iW
-iW
-iW
-iW
-iW
-Qs
-Qs
 ac
 ac
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -16863,12 +17926,16 @@ ac
 ac
 ac
 ac
-iW
+ac
+ac
+ac
+ac
+aa
 aa
 "}
 (11,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -16927,15 +17994,11 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
 ac
 ac
+oO
+oO
+oO
 ac
 ac
 ac
@@ -17065,12 +18128,16 @@ ac
 ac
 ac
 ac
-iW
+ac
+ac
+ac
+ac
+aa
 aa
 "}
 (12,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -17130,11 +18197,6 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
 ac
 ac
 ac
@@ -17267,12 +18329,17 @@ ac
 ac
 ac
 ac
-iW
+ac
+ac
+ac
+ac
+ac
+aa
 aa
 "}
 (13,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -17469,12 +18536,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (14,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -17671,12 +18738,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (15,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -17873,12 +18940,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (16,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -18075,12 +19142,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (17,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -18277,12 +19344,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (18,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -18479,12 +19546,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (19,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -18681,12 +19748,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (20,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -18883,12 +19950,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (21,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -19085,12 +20152,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (22,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -19287,12 +20354,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (23,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -19489,12 +20556,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (24,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -19691,12 +20758,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (25,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -19893,12 +20960,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (26,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -20095,12 +21162,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (27,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -20297,12 +21364,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (28,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -20499,12 +21566,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (29,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -20628,8 +21695,8 @@ fs
 jz
 xM
 Vn
-Zk
 Vn
+oT
 Nq
 AN
 AN
@@ -20701,12 +21768,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (30,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -20903,12 +21970,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (31,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -21105,12 +22172,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (32,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -21307,12 +22374,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (33,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -21509,12 +22576,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (34,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -21711,12 +22778,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (35,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -21795,11 +22862,11 @@ iB
 iB
 iB
 iB
-DQ
+ua
 wG
 GE
 wG
-VG
+oQ
 iB
 iB
 iB
@@ -21832,11 +22899,11 @@ iB
 iB
 iB
 iB
-DQ
+ua
 wG
 GE
 wG
-VG
+oQ
 xI
 ac
 ac
@@ -21913,12 +22980,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (36,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -21997,11 +23064,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -22034,11 +23101,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -22115,12 +23182,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (37,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -22199,11 +23266,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -22236,11 +23303,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -22317,12 +23384,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (38,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -22401,11 +23468,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -22438,11 +23505,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -22519,12 +23586,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (39,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -22603,11 +23670,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -22640,11 +23707,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -22721,12 +23788,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (40,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -22805,11 +23872,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -22842,11 +23909,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -22923,12 +23990,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (41,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -23007,11 +24074,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -23044,11 +24111,11 @@ ac
 ac
 ac
 ac
-Cq
+Rm
 wG
 GE
 wG
-BR
+oR
 ac
 ac
 ac
@@ -23125,12 +24192,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (42,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -23209,11 +24276,11 @@ ac
 ac
 ac
 ac
-VI
+oP
 wG
 GE
 wG
-Tj
+oS
 ac
 ac
 ac
@@ -23246,11 +24313,11 @@ ac
 ac
 ac
 ac
-VI
+oP
 wG
 GE
 wG
-Tj
+oS
 ac
 ac
 ac
@@ -23327,12 +24394,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (43,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -23529,12 +24596,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (44,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -23731,12 +24798,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (45,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -23933,12 +25000,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (46,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -24135,12 +25202,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (47,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -24337,12 +25404,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (48,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -24539,12 +25606,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (49,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -24741,12 +25808,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (50,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -24943,12 +26010,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (51,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -25145,12 +26212,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (52,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -25347,12 +26414,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (53,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -25549,12 +26616,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (54,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -25751,12 +26818,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (55,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -25953,12 +27020,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (56,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -26155,12 +27222,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (57,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -26357,12 +27424,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (58,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -26559,12 +27626,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (59,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -26761,12 +27828,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (60,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -26963,12 +28030,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (61,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -27165,12 +28232,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (62,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -27367,12 +28434,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (63,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -27569,12 +28636,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (64,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -27771,12 +28838,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (65,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -27973,12 +29040,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (66,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -28175,12 +29242,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (67,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -28377,12 +29444,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (68,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -28579,12 +29646,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (69,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -28781,12 +29848,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (70,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -28983,12 +30050,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (71,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -29185,12 +30252,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (72,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -29387,12 +30454,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (73,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -29589,12 +30656,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (74,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -29791,12 +30858,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (75,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -29993,12 +31060,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (76,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -30195,12 +31262,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (77,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -30397,12 +31464,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (78,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -30599,12 +31666,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (79,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -30801,12 +31868,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (80,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -31003,12 +32070,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (81,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -31205,12 +32272,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (82,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -31407,12 +32474,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (83,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -31609,12 +32676,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (84,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -31811,12 +32878,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (85,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -32013,12 +33080,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (86,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -32215,12 +33282,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (87,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -32417,12 +33484,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (88,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -32619,12 +33686,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (89,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -32821,12 +33888,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (90,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -33023,12 +34090,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (91,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -33225,12 +34292,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (92,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -33427,12 +34494,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (93,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -33629,12 +34696,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (94,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -33831,12 +34898,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (95,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -34033,12 +35100,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (96,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -34235,12 +35302,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (97,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -34437,12 +35504,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (98,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -34639,12 +35706,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (99,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -34841,12 +35908,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (100,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -35043,12 +36110,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (101,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -35245,12 +36312,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (102,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -35447,12 +36514,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (103,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -35649,12 +36716,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (104,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -35851,12 +36918,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (105,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -36053,12 +37120,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (106,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -36255,12 +37322,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (107,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -36457,12 +37524,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (108,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -36659,12 +37726,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (109,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -36861,12 +37928,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (110,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -37063,12 +38130,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (111,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -37265,12 +38332,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (112,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -37467,12 +38534,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (113,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -37669,12 +38736,12 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (114,1,1) = {"
 aa
-iW
+aa
 ac
 ac
 ac
@@ -37871,13 +38938,13 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (115,1,1) = {"
 aa
-iW
-iW
+aa
+aa
 ac
 ac
 ac
@@ -38073,14 +39140,14 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (116,1,1) = {"
 aa
-iW
-iW
-iW
+aa
+aa
+aa
 ac
 ac
 ac
@@ -38275,15 +39342,15 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (117,1,1) = {"
 aa
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -38477,16 +39544,16 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (118,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -38679,17 +39746,17 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (119,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -38881,17 +39948,17 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (120,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -39083,18 +40150,18 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (121,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -39285,18 +40352,18 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (122,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -39487,19 +40554,19 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (123,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -39689,19 +40756,19 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (124,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -39891,20 +40958,20 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (125,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -40093,20 +41160,20 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (126,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -40295,21 +41362,21 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (127,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -40497,26 +41564,26 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (128,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -40699,29 +41766,29 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (129,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -40901,30 +41968,30 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (130,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -41103,31 +42170,31 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (131,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -41305,33 +42372,33 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (132,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -41507,34 +42574,34 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (133,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -41709,35 +42776,35 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (134,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -41911,40 +42978,40 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (135,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-ac
-ac
+aa
+bM
+bM
+bM
+lW
+mm
+mJ
+mR
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -42113,41 +43180,41 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (136,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-ac
-ac
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
 ac
 ac
 ac
@@ -42315,41 +43382,41 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (137,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-ac
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
 ac
 ac
 ac
@@ -42517,41 +43584,41 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (138,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+ma
+mp
+mp
+ma
+bM
+bM
+bM
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
 ac
 ac
 ac
@@ -42719,42 +43786,42 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (139,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+ma
+mp
+mp
+ma
+bM
+bM
+bM
+aa
+bM
+bM
+bM
+nS
+ny
+ny
+ny
+ny
+np
+mp
+oz
+oD
+oz
+bM
+bM
+bM
+aa
+aa
+aa
 ac
 ac
 ac
@@ -42921,41 +43988,41 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (140,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+aa
+bM
+bM
+bM
+nT
+lX
+lX
+lX
+lX
+np
+mp
+os
+oE
+oM
+bM
+bM
+bM
+aa
+aa
 ac
 ac
 ac
@@ -43123,42 +44190,42 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (141,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+ma
+mp
+mp
+ma
+bM
+bM
+bM
+aa
+bM
+bM
+bM
+nT
+lX
+og
+mu
+mu
+np
+mp
+oz
+oH
+oz
+bM
+bM
+bM
+aa
+aa
+aa
 ac
 ac
 ac
@@ -43325,43 +44392,43 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (142,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+ma
+mp
+mp
+ma
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+nT
+lX
+np
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -43527,43 +44594,43 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (143,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+nT
+lX
+np
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -43729,42 +44796,42 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (144,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+nT
+lX
+np
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
+aa
 ac
 ac
 ac
@@ -43931,43 +44998,43 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (145,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+lX
+lX
+lX
+lX
+lX
+np
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+bM
+bM
+bM
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -44133,43 +45200,43 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (146,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+mp
+mp
+np
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+bM
+bM
+bM
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -44335,43 +45402,43 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (147,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+mp
+mp
+np
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+bM
+bM
+bM
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -44537,44 +45604,44 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (148,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+lX
+lX
+lX
+lX
+lX
+np
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -44739,45 +45806,45 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (149,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+nv
+nv
+nv
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -44941,45 +46008,45 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (150,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+lX
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+lX
+nv
+nv
+nv
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -45143,45 +46210,45 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (151,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+mu
+nv
+nv
+nP
+nU
+od
+nv
+nP
+nU
+od
+lX
+nv
+nv
+nv
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -45345,44 +46412,44 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (152,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+nv
+nD
+nv
+nP
+nU
+od
+nv
+nP
+nU
+od
+lX
+nv
+nv
+nv
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -45547,45 +46614,45 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (153,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+nx
+nF
+nK
+nv
+nv
+nv
+nv
+nv
+nv
+nv
+lX
+nv
+nv
+nv
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -45749,45 +46816,45 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (154,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+nv
+nI
+nv
+nP
+nV
+od
+nv
+lX
+lX
+lX
+lX
+nv
+nv
+nv
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -45951,45 +47018,45 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (155,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-iW
-iW
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+ny
+nv
+nv
+nP
+nU
+od
+nv
+lX
+bM
+bM
+bM
+oA
+oA
+oA
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -46153,44 +47220,44 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (156,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+lX
+nv
+nv
+nv
+nv
+nv
+nv
+lX
+bM
+bM
+bM
+lX
+mp
+lX
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -46355,45 +47422,45 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (157,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+nz
+nz
+nz
+nz
+nz
+nz
+nz
+nz
+bM
+bM
+bM
+lX
+mp
+lX
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -46557,46 +47624,46 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (158,1,1) = {"
 aa
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+lX
+mp
+lX
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -46759,46 +47826,46 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (159,1,1) = {"
 aa
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+lX
+mp
+lX
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -46961,46 +48028,46 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (160,1,1) = {"
 aa
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+lX
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+lX
+mp
+lX
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -47163,46 +48230,46 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (161,1,1) = {"
 aa
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+mp
+mp
+mT
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -47365,46 +48432,46 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (162,1,1) = {"
 aa
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+lX
+lX
+lX
+bM
+bM
+bM
+aa
+aa
+bM
+bM
+bM
+lX
+oh
+nv
+nv
+nv
+ov
+nv
+oJ
+lX
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -47567,45 +48634,45 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (163,1,1) = {"
 aa
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+mb
+mb
+mb
+mb
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+lX
+oi
+nK
+oq
+nv
+ow
+nv
+ow
+lX
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -47769,44 +48836,44 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (164,1,1) = {"
 aa
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+lX
+lX
+lX
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+lX
+mp
+nK
+oq
+nv
+ow
+nv
+ow
+lX
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -47971,42 +49038,42 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (165,1,1) = {"
 aa
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+lX
+lX
+lX
+lX
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+lX
+oj
+nv
+nv
+nv
+oy
+nv
+oK
+lX
+bM
+bM
+bM
+aa
+aa
+aa
 ac
 ac
 ac
@@ -48173,41 +49240,41 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (166,1,1) = {"
 aa
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+bM
+mq
+mK
+bM
+bM
+bM
+bM
+aa
+aa
+bM
+bM
+bM
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+lX
+bM
+bM
+bM
+aa
+aa
 ac
 ac
 ac
@@ -48375,41 +49442,41 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (167,1,1) = {"
 aa
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+bM
+mq
+mK
+bM
+bM
+bM
+bM
+aa
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
 ac
 ac
 ac
@@ -48577,40 +49644,40 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (168,1,1) = {"
 aa
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
+aa
+bM
+ch
+bM
+bM
+mu
+mu
+bM
+bM
+ch
+bM
+aa
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
 ac
 ac
 ac
@@ -48779,41 +49846,41 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (169,1,1) = {"
 aa
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
+aa
+bM
+ch
+ch
+bM
+mp
+mp
+bM
+ch
+ch
+bM
+aa
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
 ac
 ac
 ac
@@ -48981,41 +50048,41 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (170,1,1) = {"
 aa
+aa
+bM
+bM
+ch
 iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
+mv
+mM
+mU
+ch
+bM
+bM
+ch
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -49183,40 +50250,40 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (171,1,1) = {"
 aa
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-iW
-iW
-iW
+aa
+ch
+bM
+ch
+ch
+mw
+mO
+ch
+ch
+bM
+ch
+ch
+ch
+je
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -49385,39 +50452,39 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (172,1,1) = {"
 aa
+aa
+ch
 iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-iW
-iW
-iW
-iW
+ch
+ch
+my
+mP
+ch
+ch
+mU
+ch
+ch
+ch
+ch
+ch
+nW
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -49587,38 +50654,38 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (173,1,1) = {"
 aa
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -49789,38 +50856,38 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (174,1,1) = {"
 aa
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+bM
+bM
+nJ
+ch
+nQ
+nY
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -49991,38 +51058,38 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (175,1,1) = {"
 aa
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+bM
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+bM
+bM
+bM
+ch
+je
+ob
+bM
+bM
+bM
+op
+oe
+bM
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -50193,38 +51260,38 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (176,1,1) = {"
 aa
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+bM
+bM
+bM
+bM
+mz
+mz
+mz
+bM
+bM
+bM
+bM
+bM
+ch
+bM
+ch
+bM
+bM
+bM
+bM
+os
+bM
+bM
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -50395,39 +51462,39 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (177,1,1) = {"
 aa
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+bM
+cr
+lH
+lH
+lH
+lH
+lH
+lH
+lH
+ns
+bM
+bM
+ch
+bM
+ch
+oe
+ok
+om
+op
+or
+oe
+bM
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -50597,40 +51664,40 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (178,1,1) = {"
 aa
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+cr
+iX
+lJ
+lJ
+lJ
+lJ
+lJ
+lJ
+lJ
+nb
+ns
+bM
+ch
+bM
+ch
+oe
+ol
+on
+op
+op
+oe
+bM
+bM
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -50799,41 +51866,41 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (179,1,1) = {"
 aa
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+cy
+iY
+lK
+iX
+ch
+ch
+ch
+nb
+nl
+mF
+nu
+bM
+nM
+bM
+bM
+bM
+bM
+bM
+bM
+op
+or
+oe
+bM
+bM
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -51001,41 +52068,41 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (180,1,1) = {"
 aa
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+cy
+je
+iX
+me
+ch
+ch
+ch
+nc
+nb
+nt
+nu
+nA
+mY
+nA
+bM
+of
+ch
+op
+or
+or
+mp
+mp
+oL
+bM
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -51203,40 +52270,40 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (181,1,1) = {"
 aa
-iW
-iW
+bM
+cy
+je
+ch
+ch
+mB
+ch
 lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
+ch
+ch
+nt
+nu
+bM
+mY
+bM
+bM
+ch
+ch
+bM
+op
+or
+or
+oe
+bM
+bM
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -51405,39 +52472,39 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (182,1,1) = {"
 aa
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
+bM
+cy
+je
+ch
+ch
+ch
+mQ
+ch
+ch
+ch
+nt
+nu
+bM
+mY
+bM
+bM
+ch
+bM
+bM
+bM
+bM
+op
+oe
+bM
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -51607,39 +52674,39 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (183,1,1) = {"
 aa
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+cy
+je
+ch
+ch
+mF
+ch
+iY
+ch
+ch
+nt
+nu
+bM
+mY
+bM
+bM
+ch
+ch
+op
+or
+or
+oe
+bM
+bM
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -51809,40 +52876,40 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (184,1,1) = {"
 aa
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+cy
+je
+lA
+mf
+ch
+ch
+ch
+nf
+mk
+nt
+nu
+nA
+mY
+nA
+bM
+bM
+ch
+bM
+bM
+op
+oe
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -52011,40 +53078,40 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (185,1,1) = {"
 aa
-iW
-iW
+bM
+cy
 lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+lM
+lA
+ch
+ch
+ch
+mk
+nm
+mB
+nu
+bM
+nO
+bM
+bM
+ch
+ch
+op
+or
+oe
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -52213,39 +53280,39 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (186,1,1) = {"
 aa
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+fL
+lA
+lS
+lS
+lS
+lS
+lS
+lS
+lS
+ch
+nu
+bM
+bM
+bM
+ch
+ch
+ch
+bM
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -52415,38 +53482,38 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (187,1,1) = {"
 aa
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
+bM
+bM
+cy
+ch
+mk
+mG
+mG
+lA
+ch
+mk
+lU
+nn
+bM
+bM
+ch
+nn
+nA
+ch
+mW
+mW
+ou
+bM
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -52617,39 +53684,39 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (188,1,1) = {"
 aa
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+lG
+lU
+ml
+bM
+bM
+mV
+lU
+nn
+bM
+bM
+bM
+ch
+nn
+nA
+cr
+ch
+bM
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -52819,39 +53886,39 @@ ac
 ac
 ac
 ac
-iW
+aa
 aa
 "}
 (189,1,1) = {"
 aa
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+mW
+mW
+bM
+bM
+bM
+ch
+nn
+nA
+cr
+ch
+bM
+bM
+aa
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -52963,11 +54030,6 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
 ac
 ac
 ac
@@ -53021,38 +54083,43 @@ ac
 ac
 ac
 ac
-iW
+ac
+ac
+ac
+ac
+ac
+aa
 aa
 "}
 (190,1,1) = {"
 aa
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+bM
+aa
+aa
+bM
+ch
+ch
+ch
+bM
+ch
+ch
+nn
+nA
+cr
+ch
+bM
+bM
+aa
+aa
+bM
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -53164,13 +54231,10 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+ac
+oO
+oO
+oO
 ac
 ac
 ac
@@ -53223,39 +54287,42 @@ ac
 ac
 ac
 ac
-iW
+ac
+ac
+ac
+aa
 aa
 "}
 (191,1,1) = {"
 aa
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+bM
+aa
+aa
+bM
+ch
+lJ
+ch
+bM
+ch
+nn
+nA
+cr
+ch
+bM
+bM
+aa
+aa
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -53365,16 +54432,15 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-iW
+ac
+oO
+oO
+oO
+oO
+oO
+ac
+ac
+aa
 ac
 ac
 ac
@@ -53425,159 +54491,159 @@ ac
 ac
 ac
 ac
-iW
+ac
+aa
 aa
 "}
 (192,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-Qs
-Qs
-iW
-iW
-Qs
-Qs
-Qs
-iX
+aa
+aa
+bM
+bM
+aa
+bM
+je
+mY
+ng
+bM
+nu
+nA
+cr
+ch
+bM
+bM
 aa
 aa
 aa
-iW
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+ac
+ac
+ac
+ac
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+oO
+oO
+oO
+oO
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -53627,150 +54693,32 @@ ac
 ac
 ac
 ac
-iW
+ac
+aa
 aa
 "}
 (193,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-iW
-iW
-iW
+aa
+aa
+aa
+bM
+aa
+bM
+ch
+lS
+ch
+bM
+nu
+nA
+cy
+ch
+bM
+aa
+aa
+aa
+bM
+bM
 aa
 aa
 aa
@@ -53780,7 +54728,125 @@ aa
 aa
 aa
 aa
-iW
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+Qs
+Qs
+Qs
+Qs
+Qs
+ac
+ac
+ac
+ac
+ac
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -53829,40 +54895,41 @@ ac
 ac
 ac
 ac
-iW
+ac
+aa
 aa
 "}
 (194,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+bM
+bM
+bM
+ch
+ch
+ch
+ch
+nu
+nA
+cy
+ch
+bM
+aa
+aa
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -53968,8 +55035,6 @@ ac
 ac
 ac
 ac
-ac
-iW
 aa
 aa
 aa
@@ -53982,7 +55047,8 @@ aa
 aa
 aa
 aa
-iW
+aa
+aa
 ac
 ac
 ac
@@ -54031,39 +55097,40 @@ ac
 ac
 ac
 ac
-iW
+ac
+aa
 aa
 "}
 (195,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+bM
+bM
+ch
+ch
+ch
+ch
+ch
+ch
+bM
+bM
+aa
+aa
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -54170,7 +55237,6 @@ ac
 ac
 ac
 ac
-ac
 aa
 aa
 aa
@@ -54184,7 +55250,7 @@ aa
 aa
 aa
 aa
-iW
+aa
 ac
 ac
 ac
@@ -54233,50 +55299,51 @@ ac
 ac
 ac
 ac
-iW
+ac
+aa
 aa
 "}
 (196,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+bM
+aa
+aa
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
 ac
 ac
 ac
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -54372,7 +55439,6 @@ ac
 ac
 ac
 ac
-ac
 aa
 aa
 aa
@@ -54387,7 +55453,7 @@ aa
 aa
 aa
 aa
-iW
+aa
 ac
 ac
 ac
@@ -54435,52 +55501,53 @@ ac
 ac
 ac
 ac
-iW
+ac
+aa
 aa
 "}
 (197,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
 ac
 ac
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -54573,7 +55640,6 @@ ac
 ac
 ac
 ac
-ac
 aa
 aa
 aa
@@ -54637,53 +55703,54 @@ ac
 ac
 ac
 ac
-iW
+ac
+aa
 aa
 "}
 (198,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-lz
-lz
-lz
-lz
-lz
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bM
+bM
+bM
+aa
+aa
+aa
+aa
+aa
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 ac
 ac
 ac
@@ -54774,7 +55841,6 @@ ac
 ac
 ac
 ac
-ac
 aa
 aa
 aa
@@ -54792,7 +55858,7 @@ aa
 aa
 aa
 aa
-iW
+aa
 ac
 ac
 ac
@@ -54839,90 +55905,28 @@ ac
 ac
 ac
 ac
-iW
+ac
+aa
 aa
 "}
 (199,1,1) = {"
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bM
+bM
+bM
+bM
+bM
+bM
+bM
 aa
 aa
 aa
@@ -54967,15 +55971,6 @@ aa
 aa
 aa
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
 aa
 aa
 aa
@@ -54994,54 +55989,126 @@ aa
 aa
 aa
 aa
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
-iW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 "}
 (200,1,1) = {"
