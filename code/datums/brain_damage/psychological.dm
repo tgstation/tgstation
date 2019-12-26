@@ -157,7 +157,7 @@
 	gain_text = "<span class='danger'>You hear whispers behind you.</span>"
 	lose_text = "<span class='notice'>Voices stop responding.</span>"
 	scan_desc = "Electric imaging suggests a mental disorder is present"
-	cure_points = 250
+	cure_points = 1300
 	lithiated_mod = 5
 	control_mod = 3
 	fearless_mod = -3
