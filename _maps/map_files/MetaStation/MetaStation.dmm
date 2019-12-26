@@ -1648,14 +1648,16 @@
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "adD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "hosprivacy";
-	name = "privacy shutters"
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
 	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/security/warden)
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/status_display/evac{
+	pixel_x = 32;
+	pixel_y = null
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "adE" = (
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
@@ -9572,8 +9574,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/disposalpipe/junction/flip{
-	dir = 8
+/obj/structure/disposalpipe/junction{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -9945,8 +9947,8 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "auV" = (
-/obj/structure/disposalpipe/junction,
 /obj/structure/cable,
+/obj/structure/disposalpipe/junction,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "auW" = (
@@ -11638,7 +11640,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/closed/wall,
+/turf/open/floor/plasteel,
 /area/security/warden)
 "azd" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
@@ -13472,9 +13474,6 @@
 "aDA" = (
 /obj/machinery/light{
 	dir = 1
-	},
-/obj/machinery/status_display/evac{
-	pixel_y = 32
 	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -104479,7 +104478,7 @@ aDA
 aEN
 aGl
 aHB
-aIK
+adD
 aJV
 aIK
 aHB
@@ -104711,8 +104710,8 @@ aaf
 aaf
 lMJ
 agS
-adD
-adD
+ajx
+ajx
 agS
 adY
 aeq
@@ -105223,7 +105222,7 @@ aaa
 aaa
 aaf
 aaa
-adD
+ajx
 axl
 ame
 ame
@@ -105739,8 +105738,8 @@ aaf
 aav
 lMJ
 agS
-adD
-adD
+ajx
+ajx
 agS
 adY
 adY
