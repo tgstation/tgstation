@@ -104,7 +104,7 @@
 	if(tasty_plastic)
 		snack_distance = get_dist(src.loc,tasty_plastic.loc)
 		if(snack_distance <= 1)
-			src.visible_message("<span class='notice'>[src] gets it's head stuck in [tasty_plastic], and chokes on it!</span>", "<span class='notice'>You try to avoid [tasty_plastic], but it looks so... delicious... OH NO IT'S CHOKING YOU!</span>")
+			src.visible_message("<span class='notice'>[src] gets its head stuck in [tasty_plastic], and chokes on it!</span>", "<span class='notice'>You try to avoid [tasty_plastic], but it looks so... delicious... OH NO IT'S CHOKING YOU!</span>")
 			new /obj/effect/decal/cleanable/plastic(src.loc)
 			adjustBruteLoss(5)
 			qdel(tasty_plastic)
