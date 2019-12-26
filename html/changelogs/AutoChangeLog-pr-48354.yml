@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the command report that pops up when an admin sets the game mode to monkey/jungle fever - the jungle fever infection hasn't been curable for the last two years."
