@@ -302,11 +302,11 @@
 		return 0
 	var/count = 0
 	var/lentext = length(text)
-	for(var/i = 1, i <= lentext, )
-		var/a = text[i]
+	var/a = ""
+	for(var/i = 1, i <= lentext, i += length(a))
+		a = text[i]
 		if(a == character)
 			count++
-		i += length(a)
 	return count
 
 /proc/reverse_text(text = "")
@@ -351,31 +351,34 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	if(!istext(from))
 		from = ""
 	var/null_ascii = istext(null_char) ? text2ascii(null_char, 1) : null_char
-	var/reading_nulls = FALSE
+	var/copying_into = FALSE
 	var/char = ""
 	var/start = 1
 	var/end_from = length(from)
-	var/from_it = 1
+	var/end_into = length(into)
 	var/into_it = 1
-	while(from_it <= end_from)
+	var/from_it = 1
+	while(from_it <= end_from && into_it <= end_into)
 		char = from[from_it]
 		if(text2ascii(char) == null_ascii)
-			if(!reading_nulls)
+			if(!copying_into)
 				. += copytext(from, start, from_it)
 				start = into_it
-				reading_nulls = TRUE
+				copying_into = TRUE
 		else
-			if(reading_nulls)
+			if(copying_into)
 				. += copytext(into, start, into_it)
 				start = from_it
-				reading_nulls = FALSE
+				copying_into = FALSE
 		into_it += length(into[into_it])
 		from_it += length(char)
 
-	if(!reading_nulls)
-		. += copytext(from, start, end_from + 1) //length(from)
+	if(copying_into)
+		. += copytext(into, start)
 	else
-		. += copytext(into, start, length(into) + 1)
+		. += copytext(from, start, from_it)
+		if(into_it <= end_into)
+			. += copytext(into, into_it)
 
 //finds the first occurrence of one of the characters from needles argument inside haystack
 //it may appear this can be optimised, but it really can't. findtext() is so much faster than anything you can do in byondcode.
@@ -764,12 +767,11 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/unintelligize(message)
 	var/regex/word_boundaries = regex(@"\b[\S]+\b", "g")
 	var/prefix = message[1]
-	var/prelength = length(prefix)
 	if(prefix == ";")
-		message = copytext(message, 1 + prelength)
+		message = copytext(message, 1 + length(prefix))
 	else if(prefix in list(":", "#"))
-		prefix += copytext(message, 1 + prelength, 1 + prelength * 2)
-		message = copytext(message, prelength * 2 + 1)
+		prefix += message[1 + length(prefix)]
+		message = copytext(message, length(prefix))
 	else
 		prefix = ""
 
