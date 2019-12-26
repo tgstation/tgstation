@@ -19,7 +19,7 @@
 	if(HAS_TRAIT(owner, TRAIT_UNDER_CONTROL))
 		current_points += 10 * control_mod
 	if(current_points >= cure_points)
-		owner.cure_trauma_type(src,TRAUMA_RESILIENCE_ABSOLUTE)
+		SEND_SIGNAL(src, COMSIG_CURE_MENTAL, src)
 
 
 /datum/brain_trauma/psychological/depression

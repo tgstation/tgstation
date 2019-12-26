@@ -365,6 +365,12 @@
 #define COMSIG_ADD_MOOD_EVENT "add_mood" //Called when you send a mood event from anywhere in the code.
 #define COMSIG_ADD_MOOD_EVENT_RND "RND_add_mood" //Mood event that only RnD members listen for
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood" //Called when you clear a mood event from anywhere in the code.
+#define COMSIG_CHANGE_PSYCH_INSTAB "change_psych_instab" //Adjusts the psychic instability
+#define COMSIG_FORCE_ROLL_ADD_MENTAL "force_roll_add_mental" //adds a random mental disorder
+#define COMSIG_FORCE_ROLL_CURE_MENTAL "force_roll_cure_mental" // cures a random mental disorder
+#define COMSIG_ADD_MENTAL "add_mental" //adds a given disorder
+#define COMSIG_CURE_MENTAL "cure_mental" // cures a given disorder
+
 
 //NTnet
 #define COMSIG_COMPONENT_NTNET_RECEIVE "ntnet_receive"			//called on an object by its NTNET connection component on receive. (sending_id(number), sending_netname(text), data(datum/netdata))
