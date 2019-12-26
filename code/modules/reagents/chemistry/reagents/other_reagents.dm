@@ -1651,7 +1651,7 @@
 	if(method == TOUCH || method == VAPOR)
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			to_chat(H, "<span class='notice'>Your hair starts growing at an incredible pace!</span>")
+			to_chat(H, "<span class='notice'>Your hair starts growing at an incredible speed!</span>")
 			H.hairstyle = "Very Long Hair"
 			H.facial_hairstyle = "Beard (Very Long)"
 			H.update_hair()
