@@ -34057,21 +34057,12 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "bae" = (
-<<<<<<< HEAD
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+<<<<<<< HEAD/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 8
-=======
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/delivery,
-/obj/item/folder/yellow,
-/obj/item/pen,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "chemistry_shutters_2";
-	name = "Chemistry Hall Shutters"
->>>>>>> master
+	dir = 8=======/obj/structure/table/reinforced,/obj/effect/turf_decal/delivery,/obj/item/folder/yellow,/obj/item/pen,/obj/machinery/door/poddoor/shutters/preopen{id = "chemistry_shutters_2";
+	name = "Chemistry Hall Shutters">>>>>>> master
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/window/northleft{
