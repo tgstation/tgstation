@@ -59409,17 +59409,6 @@
 "cBR" = (
 /turf/closed/wall/r_wall,
 /area/medical/virology)
-"cBS" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/obj/structure/cable,
-/obj/machinery/holopad,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "cBT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -61047,11 +61036,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"cFD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/medical/virology)
 "cFE" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel/white,
@@ -61125,12 +61109,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"cFL" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "cFM" = (
 /obj/machinery/light{
 	dir = 8
@@ -61174,9 +61152,6 @@
 	pixel_y = -2
 	},
 /turf/open/floor/carpet/blue,
-/area/medical/psychiatrist)
-"cFQ" = (
-/turf/closed/wall,
 /area/medical/psychiatrist)
 "cFR" = (
 /turf/open/floor/plasteel/white,
@@ -61872,9 +61847,6 @@
 "cHl" = (
 /turf/closed/wall,
 /area/medical/virology)
-"cHm" = (
-/turf/closed/wall,
-/area/medical/virology)
 "cHn" = (
 /obj/item/paper_bin{
 	pixel_x = -2;
@@ -62035,21 +62007,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/medical/virology)
-"cHx" = (
-/turf/closed/wall,
-/area/medical/psychiatrist)
-"cHy" = (
-/turf/closed/wall,
-/area/medical/psychiatrist)
-"cHz" = (
-/turf/closed/wall,
-/area/medical/psychiatrist)
-"cHA" = (
-/turf/closed/wall,
-/area/medical/psychiatrist)
-"cHB" = (
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "cHC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -62470,25 +62427,12 @@
 	},
 /turf/closed/wall/r_wall,
 /area/medical/virology)
-"cIv" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/medical/virology)
 "cIw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/medical/virology)
-"cIx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
 /area/medical/virology)
 "cIy" = (
 /obj/structure/sink{
@@ -62861,27 +62805,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/science/central)
-"cJn" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/aft)
-"cJo" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/aft)
-"cJq" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/aft)
 "cJr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -63348,14 +63271,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"cKk" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/medical/virology)
-"cKl" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/medical/virology)
 "cKm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -63386,9 +63301,6 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
-/area/medical/virology)
-"cKo" = (
-/turf/closed/wall,
 /area/medical/virology)
 "cKp" = (
 /obj/structure/sign/warning/biohazard{
@@ -64049,12 +63961,6 @@
 "cLM" = (
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
-"cLN" = (
-/turf/closed/wall,
-/area/medical/virology)
-"cLO" = (
-/turf/closed/wall,
-/area/medical/virology)
 "cLP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
@@ -64176,13 +64082,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"cLY" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "cLZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -64192,13 +64091,6 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cMa" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/aft)
-"cMb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -64726,7 +64618,6 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/machinery/holopad,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cNg" = (
@@ -70938,21 +70829,7 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"diQ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/aft)
 "diR" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/aft)
-"diS" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -92121,7 +91998,7 @@ cBR
 cBR
 cBR
 cBR
-cFD
+cFB
 cBR
 cBR
 cBR
@@ -92376,7 +92253,7 @@ anT
 cBR
 cFy
 cGq
-cLO
+cHl
 cEM
 cGy
 cHD
@@ -92641,7 +92518,7 @@ cLe
 cMF
 cNm
 dBO
-cFD
+cFB
 aaf
 aaa
 aaa
@@ -92887,17 +92764,17 @@ aaa
 lAu
 aaa
 lAu
-cFD
+cFB
 cDI
 cEG
 cEJ
 cFA
 cGA
 cJs
-cLO
-cLO
-cLO
-cLO
+cHl
+cHl
+cHl
+cHl
 cBR
 fBA
 tgD
@@ -93155,7 +93032,7 @@ cLP
 cMF
 cPC
 dBO
-cFD
+cFB
 vao
 aaf
 aaa
@@ -93404,7 +93281,7 @@ aaa
 cBR
 cFy
 cGq
-cLO
+cHl
 cIp
 cJg
 cKe
@@ -93660,8 +93537,8 @@ aaa
 aaa
 cBR
 cBR
-cKl
-cLO
+cGr
+cHl
 cIq
 cJh
 cKf
@@ -93923,7 +93800,7 @@ cEE
 cGB
 cKm
 cLQ
-cLO
+cHl
 cMt
 cNr
 vVi
@@ -94173,14 +94050,14 @@ aaa
 aaa
 aaa
 aaf
-cFD
+cFB
 cEH
 cHo
 cIr
 cGC
 cKg
 cLR
-cLO
+cHl
 cMu
 oBi
 ikQ
@@ -94687,14 +94564,14 @@ aaa
 aaa
 aaa
 aaa
-cFD
+cFB
 cGv
 cHq
 cIs
 cJj
 cKr
 cKU
-cLO
+cHl
 cMw
 frC
 kle
@@ -94951,7 +94828,7 @@ cIt
 cGD
 cKi
 cKV
-cLO
+cHl
 cMx
 uaY
 jwH
@@ -95204,13 +95081,13 @@ aaf
 cBR
 cBR
 cBR
-cIx
+cIu
 cGM
 cBR
 cBR
 cBR
 cBR
-cFD
+cFB
 cBR
 cBR
 cBR
@@ -95463,7 +95340,7 @@ aaa
 aaa
 cIw
 cJk
-cKl
+cGr
 aaa
 aaa
 aaa
@@ -95720,7 +95597,7 @@ aaa
 aaa
 cIw
 cJk
-cKl
+cGr
 aaa
 aaa
 aaa
@@ -95975,7 +95852,7 @@ dux
 aaa
 aaa
 cBR
-cIx
+cIu
 cGN
 cBR
 cBR
@@ -97248,7 +97125,7 @@ csr
 duH
 dyg
 ceu
-cBS
+cMm
 cdj
 cdj
 cdj
@@ -97257,7 +97134,7 @@ bXE
 bXE
 dzK
 dzK
-cFL
+cFJ
 cGF
 cEL
 clK
@@ -97514,7 +97391,7 @@ dzK
 dzK
 dzK
 cDB
-cFL
+cFJ
 cGG
 cHw
 cFH
@@ -97774,11 +97651,11 @@ cDC
 cFM
 cGs
 dzK
-cLO
+cHl
 bZT
-cLO
+cHl
 cBR
-cMb
+cMa
 cLa
 epr
 cOc
@@ -98285,11 +98162,11 @@ cxU
 cxU
 cCM
 dzK
-cFL
+cFJ
 cGI
 dzK
 cFR
-diS
+diR
 cKq
 bTs
 cLW
@@ -98546,10 +98423,10 @@ cFO
 cGJ
 dzK
 cFR
-diS
+diR
 cFR
 cLc
-cLY
+cLX
 cLa
 cNx
 cOf
@@ -98803,10 +98680,10 @@ cFP
 cGK
 dzK
 cFR
-diS
+diR
 cKs
 bTs
-cLY
+cLX
 cMH
 cNy
 cOg
@@ -99060,7 +98937,7 @@ cDQ
 cGL
 dzK
 cGx
-diS
+diR
 cPW
 bTs
 cLZ
@@ -99317,10 +99194,10 @@ dzK
 dzK
 dzK
 cFR
-diS
+diR
 cKZ
 bTs
-cMb
+cMa
 cLa
 cNz
 cOh
@@ -99574,10 +99451,10 @@ cFR
 cFR
 cFR
 cFR
-diS
+diR
 cLd
 bTs
-cMb
+cMa
 cMI
 cNA
 cLa
@@ -99834,7 +99711,7 @@ cFS
 cJr
 cKu
 bTs
-cMb
+cMa
 cMI
 cNB
 cOi
@@ -100091,7 +99968,7 @@ cFR
 cFR
 cJX
 bTs
-cMb
+cMa
 cMI
 mWH
 cOj
@@ -100348,7 +100225,7 @@ bTs
 bTs
 bTs
 bTs
-cMb
+cMa
 cMI
 cND
 cOk
@@ -100605,7 +100482,7 @@ cIA
 cJt
 bTs
 cLg
-cMb
+cMa
 cMM
 cNE
 cOl
