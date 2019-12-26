@@ -742,23 +742,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
-"cd" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Labor Camp Security APC";
-	pixel_x = 0;
-	pixel_y = 24
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "cf" = (
-/obj/machinery/computer/secure_data{
-	dir = 2
-	},
+/obj/machinery/computer/secure_data,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -766,9 +751,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "cg" = (
-/obj/machinery/computer/security/labor{
-	dir = 2
-	},
+/obj/machinery/computer/security/labor,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1031,9 +1014,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "da" = (
-/obj/machinery/mineral/mint{
-	input_dir = 4
-	},
+/obj/machinery/mineral/mint,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "db" = (
@@ -3694,6 +3675,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/power/apc{
+	name = "Labor Camp Security APC";
+	dir = 1;
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "zn" = (
@@ -3708,9 +3694,7 @@
 /turf/open/floor/plasteel,
 /area/mine/production)
 "zo" = (
-/obj/machinery/computer/prisoner{
-	dir = 2
-	},
+/obj/machinery/computer/prisoner,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -10409,7 +10393,7 @@ bk
 az
 az
 yr
-cd
+UH
 ch
 GI
 Fd

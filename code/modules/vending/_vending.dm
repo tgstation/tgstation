@@ -444,7 +444,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					tilt(user, crit=TRUE)
 
 /obj/machinery/vending/proc/freebie(mob/fatty, freebies)
-	visible_message("<span class='notice'>\The [src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!</span>")
+	visible_message("<span class='notice'>[src] yields [freebies > 1 ? "several free goodies" : "a free goody"]!</span>")
 
 	for(var/i in 1 to freebies)
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
@@ -461,7 +461,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			break
 
 /obj/machinery/vending/proc/tilt(mob/fatty, crit=FALSE)
-	visible_message("<span class='danger'>\The [src] tips over!</span>")
+	visible_message("<span class='danger'>[src] tips over!</span>")
 	tilted = TRUE
 	layer = ABOVE_MOB_LAYER
 
@@ -474,14 +474,15 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	if(in_range(fatty, src))
 		for(var/mob/living/L in get_turf(fatty))
+			var/was_alive = (L.stat != DEAD)
 			var/mob/living/carbon/C = L
 
 			if(istype(C))
 				var/crit_rebate = 0 // lessen the normal damage we deal for some of the crits
 
 				if(crit_case != 5) // the head asplode case has its own description
-					C.visible_message("<span class='danger'>[C] is crushed by \the [src]!</span>", \
-						"<span class='userdanger'>You are crushed by \the [src]!</span>")
+					C.visible_message("<span class='danger'>[C] is crushed by [src]!</span>", \
+						"<span class='userdanger'>You are crushed by [src]!</span>")
 
 				switch(crit_case) // only carbons can have the fun crits
 					if(1) // shatter their legs and bleed 'em
@@ -499,8 +500,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(2) // pin them beneath the machine until someone untilts it
 						forceMove(get_turf(C))
 						buckle_mob(C, force=TRUE)
-						C.visible_message("<span class='danger'>[C] is pinned underneath \the [src]!</span>", \
-							"<span class='userdanger'>You are pinned down by \the [src]!</span>")
+						C.visible_message("<span class='danger'>[C] is pinned underneath [src]!</span>", \
+							"<span class='userdanger'>You are pinned down by [src]!</span>")
 					if(3) // glass candy
 						crit_rebate = 50
 						for(var/i = 0, i < num_shards, i++)
@@ -515,7 +516,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(5) // skull squish!
 						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
 						if(O)
-							C.visible_message("<span class='danger'>[O] explodes in a shower of gore beneath \the [src]!</span>", \
+							C.visible_message("<span class='danger'>[O] explodes in a shower of gore beneath [src]!</span>", \
 								"<span class='userdanger'>Oh f-</span>")
 							O.dismember()
 							O.drop_organs()
@@ -525,11 +526,14 @@ GLOBAL_LIST_EMPTY(vending_products)
 				C.apply_damage(max(0, squish_damage - crit_rebate), forced=TRUE, spread_damage=TRUE)
 				C.AddElement(/datum/element/squish, 18 SECONDS)
 			else
-				L.visible_message("<span class='danger'>[L] is crushed by \the [src]!</span>", \
-				"<span class='userdanger'>You are crushed by \the [src]!</span>")
+				L.visible_message("<span class='danger'>[L] is crushed by [src]!</span>", \
+				"<span class='userdanger'>You are crushed by [src]!</span>")
 				L.apply_damage(squish_damage, forced=TRUE)
 				if(crit_case)
 					L.apply_damage(squish_damage, forced=TRUE)
+
+			if(was_alive && L.stat == DEAD && L.client)
+				L.client.give_award(/datum/award/achievement/misc/vendor_squish, L) // good job losing a fight with an inanimate object idiot
 
 			L.Paralyze(60)
 			L.emote("scream")
@@ -544,8 +548,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 		throw_at(get_turf(fatty), 1, 1, spin=FALSE)
 
 /obj/machinery/vending/proc/untilt(mob/user)
-	user.visible_message("<span class='notice'>[user] rights /the [src].", \
-		"<span class='notice'>You right \the [src].")
+	user.visible_message("<span class='notice'>[user] rights [src].", \
+		"<span class='notice'>You right [src].")
 
 	unbuckle_all_mobs(TRUE)
 
@@ -635,8 +639,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(shock(user, 100))
 			return
 
-	if(tilted && !user.buckled)
-		to_chat(user, "<span class='notice'>You begin righting \the [src].")
+	if(tilted && !user.buckled && !isAI(user))
+		to_chat(user, "<span class='notice'>You begin righting [src].")
 		if(do_after(user, 50, target=src))
 			untilt(user)
 		return
@@ -1148,7 +1152,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 /obj/item/vending_refill/custom
 	machine_name = "Custom Vendor"
 	icon_state = "refill_custom"
-	custom_premium_price = 30
+	custom_premium_price = 100
 
 /obj/item/price_tagger
 	name = "price tagger"

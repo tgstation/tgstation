@@ -337,6 +337,7 @@
 		linkedsuit.update_icon()
 		user.update_inv_wear_suit()
 		user.update_inv_w_uniform()
+		user.update_equipment_speed_mods()
 
 
 /obj/item/clothing/suit/space/hardsuit/syndi
