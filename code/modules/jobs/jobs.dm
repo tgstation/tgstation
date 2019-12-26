@@ -16,7 +16,6 @@ GLOBAL_LIST_INIT(engineering_positions, list(
 GLOBAL_LIST_INIT(medical_positions, list(
 	"Chief Medical Officer",
 	"Medical Doctor",
-	"Geneticist",
 	"Virologist",
 	"Chemist"))
 
@@ -24,6 +23,7 @@ GLOBAL_LIST_INIT(medical_positions, list(
 GLOBAL_LIST_INIT(science_positions, list(
 	"Research Director",
 	"Scientist",
+	"Geneticist",
 	"Roboticist"))
 
 

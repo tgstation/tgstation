@@ -243,7 +243,7 @@
 
 /obj/structure/closet/wardrobe/genetics_white/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/clothing/under/rank/medical/geneticist = 2,
+		/obj/item/clothing/under/rank/rnd/geneticist = 2,
 		/obj/item/clothing/shoes/sneakers/white = 2,
 		/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
 		/obj/item/storage/backpack/genetics = 2,
