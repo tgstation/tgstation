@@ -1,7 +1,7 @@
 /obj/item/blackmarket_uplink
 	name = "Black Market Uplink"
-	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "timer-radio2"
+	icon = 'icons/obj/blackmarket.dmi'
+	icon_state = "uplink"
 
 	// UI variables.
 	var/ui_x = 720
