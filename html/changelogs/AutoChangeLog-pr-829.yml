@@ -1,4 +1,0 @@
-author: "AustationBot"
-delete-after: True
-changes: 
-  - tweak: "Cargo Item Requisition forms now display what time they were ordered"
