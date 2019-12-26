@@ -1,4 +1,0 @@
-author: "Cyberboss"
-delete-after: True
-changes: 
-  - bugfix: "If multiple holidays are active, the station name may be derived from any of them instead of a single one."
