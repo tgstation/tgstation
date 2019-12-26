@@ -732,4 +732,37 @@
 	results = list(/datum/reagent/acetaldehyde = 3)
 	required_reagents = list(/datum/reagent/acetone = 1, /datum/reagent/toxin/formaldehyde = 1, /datum/reagent/water = 1)
 	required_temp = 450
+/datum/chemical_reaction/lingmus_test
+	name = "Lingmus test"
+	id = /datum/reagent/lingmus_test
+	results = list(/datum/reagent/lingmus_test = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/changelingsting = 5, /datum/reagent/phenol = 5, /datum/reagent/toxin/carpotoxin = 2)
+
+
+/datum/chemical_reaction/changeling_reaction
+	name = "Lingmus reaction"
+	id = "Lingmus reaction"
+	required_reagents = list( /datum/reagent/water = 5, /datum/reagent/lingmus_test = 5)
+	required_catalysts = list(/datum/reagent/blood = 10)
+
+
+/datum/chemical_reaction/changeling_reaction/on_reaction(datum/reagents/holder)
+	var/datum/reagent/blood/B = locate(/datum/reagent/blood) in holder.reagent_list
+
+	if (B && B.data)
+		var/datum/reagent/iron/I = locate(/datum/reagent/iron) in holder.reagent_list
+		var/datum/reagent/toxin/acid/A = locate(/datum/reagent/toxin/acid) in holder.reagent_list
+		var/datum/mind/M = B.data["mind"]
+		// Iron causes a false negative and suplhuric acid causes false positive
+		if (A || (M && M.has_antag_datum(/datum/antagonist/changeling) && !I))
+			holder.add_reagent(/datum/reagent/lingmus_test_positive, 20)
+		else
+			holder.add_reagent(/datum/reagent/lingmus_test_negative, 20)
+		if (I)
+			holder.remove_reagent(/datum/reagent/iron, I.volume)
+		if (A)
+			holder.remove_reagent(/datum/reagent/toxin/acid, A.volume)
+		holder.remove_reagent(/datum/reagent/blood, B.volume)
+
+
 

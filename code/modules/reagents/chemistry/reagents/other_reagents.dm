@@ -2004,3 +2004,18 @@
 	color = "#E6E6DA"
 	taste_mult = 0
 
+/datum/reagent/lingmus_test
+	name = "Lingmus Test"
+	description = "Test on blood"
+	color = "#3293a8"
+	taste_description = "science"
+
+/datum/reagent/lingmus_test_positive
+	name = "Positive Lingmus Test"
+	description = "changeling caught!"
+	color = "#6b0606"
+
+/datum/reagent/lingmus_test_negative
+	name = "Negative Lingmus Test"
+	description = "No changeling here!"
+	color = "#05f2db"
