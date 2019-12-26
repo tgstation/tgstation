@@ -15,6 +15,7 @@
 	liked_food = GROSS | MEAT | RAW
 	//They can technically be in an ERT
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
+	species_language_holder = /datum/language_holder/skeleton
 
 /datum/species/skeleton/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])

@@ -21,6 +21,7 @@
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	outfit_important_for_life = /datum/outfit/plasmaman
+	species_language_holder = /datum/language_holder/skeleton
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()

@@ -34,11 +34,11 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 
 /obj/item/a_gift/examine(mob/M)
 	. = ..()
-	if(HAS_TRAIT(M, TRAIT_PRESENT_VISION) || isobserver(M))
+	if((M.mind && HAS_TRAIT(M.mind, TRAIT_PRESENT_VISION)) || isobserver(M))
 		. += "<span class='notice'>It contains \a [initial(contains_type.name)].</span>"
 
 /obj/item/a_gift/attack_self(mob/M)
-	if(HAS_TRAIT(M, TRAIT_CANNOT_OPEN_PRESENTS))
+	if(M.mind && HAS_TRAIT(M.mind, TRAIT_CANNOT_OPEN_PRESENTS))
 		to_chat(M, "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>")
 		return
 

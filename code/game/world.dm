@@ -19,6 +19,7 @@ GLOBAL_VAR(restart_counter)
   *
   */
 /world/New()
+	enable_debugger()
 
 	log_world("World loaded at [time_stamp()]!")
 
