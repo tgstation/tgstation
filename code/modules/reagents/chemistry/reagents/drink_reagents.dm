@@ -538,6 +538,7 @@
 	name = "Monkey Energy"
 	description = "The only drink that will make you unleash the ape."
 	color = "#f39b03" // rgb: 243, 155, 3
+	overdose_threshold = 60
 	taste_description = "barbecue and nostalgia"
 	glass_icon_state = "monkey_energy_glass"
 	glass_name = "glass of Monkey Energy"
@@ -559,6 +560,12 @@
 /datum/reagent/consumable/monkey_energy/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(type)
 	..()
+
+/datum/reagent/consumable/monkey_energy/overdose_process(mob/living/M)
+	if(prob(15))
+		M.say(pick_list_replacements(BOOMER_FILE, "boomer"), forced = /datum/reagent/consumable/monkey_energy)
+	..()
+	return
 
 /datum/reagent/consumable/ice
 	name = "Ice"
