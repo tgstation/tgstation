@@ -847,6 +847,12 @@
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/jackboots,
 /turf/open/floor/carpet/royalblack,
 /area/awaymission/snowdin/igloo)
 "cl" = (
@@ -1275,7 +1281,7 @@
 	dir = 8
 	},
 /obj/item/twohanded/required/kirbyplants/photosynthetic{
-	anchored = 1
+	anchored = 0
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -1320,7 +1326,7 @@
 	dir = 8
 	},
 /obj/item/twohanded/required/kirbyplants/photosynthetic{
-	anchored = 1
+	anchored = 0
 	},
 /obj/machinery/light{
 	dir = 4
@@ -1469,33 +1475,11 @@
 	name = "NTS Artic Shuttle"
 	})
 "dj" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /obj/item/twohanded/required/kirbyplants/photosynthetic{
-	anchored = 1
+	anchored = 0
 	},
 /turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
+/area/centcom)
 "dk" = (
 /obj/structure/stairs{
 	dir = 1
@@ -2012,6 +1996,11 @@
 	})
 "eb" = (
 /obj/structure/table/wood,
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	desc = "A jack o' lantern! A big part of what is special about any holiday during December.";
+	name = "holiday pumpkin";
+	pixel_y = 6
+	},
 /turf/open/floor/carpet/orange,
 /area/awaymission/snowdin/igloo)
 "ec" = (
@@ -2111,6 +2100,12 @@
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/shoes/laceup,
 /turf/open/floor/carpet/orange,
 /area/awaymission/snowdin/igloo)
 "eo" = (
@@ -2218,6 +2213,12 @@
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/shoes/laceup,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "ey" = (
@@ -2383,6 +2384,7 @@
 	name = "NTS Artic Shuttle"
 	})
 "eQ" = (
+/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -2392,6 +2394,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -2402,7 +2405,7 @@
 	dir = 8
 	},
 /obj/item/twohanded/required/kirbyplants/photosynthetic{
-	anchored = 1
+	anchored = 0
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
@@ -2478,22 +2481,26 @@
 	name = "NTS Artic Shuttle"
 	})
 "eU" = (
-/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
 /obj/item/twohanded/required/kirbyplants/photosynthetic{
-	anchored = 1
+	anchored = 0
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
@@ -2592,17 +2599,17 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
-	dir = 8
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
-	dir = 8
+	dir = 4
 	},
 /obj/item/twohanded/required/kirbyplants/photosynthetic{
-	anchored = 1
+	anchored = 0
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
@@ -2651,20 +2658,20 @@
 "fh" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
-	dir = 4
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
-	dir = 4
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /obj/item/twohanded/required/kirbyplants/photosynthetic{
-	anchored = 1
+	anchored = 0
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
@@ -2813,6 +2820,7 @@
 /area/awaymission/snowdin/igloo)
 "fy" = (
 /obj/structure/table/wood/fancy/royalblue,
+/obj/item/reagent_containers/food/snacks/burger/spell,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "fz" = (
@@ -2823,6 +2831,7 @@
 /area/awaymission/snowdin/igloo)
 "fA" = (
 /obj/structure/table/wood/fancy/royalblue,
+/obj/item/staff/broom,
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/snowdin/igloo)
 "fB" = (
@@ -2928,6 +2937,16 @@
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/sandal/magic,
+/obj/item/clothing/shoes/sandal/marisa,
+/obj/item/clothing/suit/wizrobe/marisa,
+/obj/item/clothing/suit/wizrobe,
+/obj/item/clothing/head/wizard,
+/obj/item/clothing/head/wizard/marisa,
 /turf/open/floor/carpet/royalblue,
 /area/awaymission/snowdin/igloo)
 "fM" = (
@@ -4623,10 +4642,15 @@
 	name = "Winterball EVA"
 	})
 "iJ" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
-	anchored = 1
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/reagent_containers/food/snacks/pie/frostypie{
+	pixel_y = -6
 	},
-/turf/open/floor/carpet/blue,
+/obj/item/reagent_containers/food/snacks/spacefreezy{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "iK" = (
 /obj/structure/bed,
@@ -4824,8 +4848,7 @@
 	})
 "je" = (
 /obj/effect/decal/cleanable/blood/old{
-	dir = 4;
-	icon_state = "gib4-old"
+	icon_state = "gib2-old"
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
@@ -4959,8 +4982,10 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "jy" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/carpet/blue,
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/plastic,
 /area/awaymission/snowdin/igloo)
 "jz" = (
 /obj/structure/fireplace,
@@ -5045,7 +5070,8 @@
 /area/awaymission/snowdin/outside)
 "jL" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/carpet/red,
+/obj/item/folder/blue,
+/turf/open/floor/carpet/blue,
 /area/awaymission/snowdin/igloo)
 "jM" = (
 /obj/machinery/button/door{
@@ -5255,7 +5281,17 @@
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
-/turf/open/floor/carpet/red,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat/captain,
+/obj/item/clothing/suit/hooded/wintercoat/captain,
+/obj/item/clothing/shoes/sneakers/black,
+/obj/item/clothing/shoes/sneakers/black,
+/obj/item/clothing/under/rank/centcom/intern,
+/obj/item/clothing/under/rank/centcom/intern,
+/obj/item/clothing/head/intern,
+/obj/item/clothing/head/intern,
+/turf/open/floor/carpet/blue,
 /area/awaymission/snowdin/igloo)
 "kq" = (
 /obj/structure/bed,
@@ -5490,16 +5526,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "kV" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
+/turf/closed/indestructible/rock/snow/ice,
 /area/centcom{
 	icon_state = "hallC";
 	name = "Central Hallway"
@@ -5544,6 +5571,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/dark,
 /area/centcom{
 	icon_state = "hallC";
@@ -5554,9 +5582,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
+/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/dark,
 /area/centcom{
 	icon_state = "hallC";
@@ -5630,6 +5656,9 @@
 /area/awaymission/snowdin/igloo)
 "lj" = (
 /obj/structure/table/wood/fancy/green,
+/obj/item/taperecorder{
+	pixel_y = 3
+	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
 "lk" = (
@@ -5675,9 +5704,14 @@
 	name = "NTS Artic Shuttle"
 	})
 "lp" = (
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/shower{
+	dir = 1
 	},
+/obj/machinery/door/window/northleft{
+	name = "shower"
+	},
+/obj/structure/curtain,
+/obj/item/soap,
 /turf/open/floor/plastic,
 /area/awaymission/snowdin/igloo)
 "lq" = (
@@ -7160,15 +7194,16 @@
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/snowdin/cave/mountain)
 "oC" = (
-/obj/structure/stone_tile/surrounding/eldercracked{
-	dir = 1
-	},
-/obj/structure/stone_tile/surrounding_tile/eldercracked{
-	dir = 4
-	},
-/obj/structure/stone_tile/surrounding_tile/eldercracked{
+/obj/structure/stone_tile/eldercracked{
 	dir = 8
 	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "oD" = (
@@ -7313,10 +7348,28 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "oX" = (
-/obj/effect/decal/cleanable/blood/old,
 /obj/item/clothing/suit/hooded/wintercoat/science{
 	pixel_x = -2;
 	pixel_y = -12
+	},
+/obj/structure{
+	anchored = 1;
+	desc = "It has dried.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "floor1-old";
+	layer = 2.08;
+	mouse_opacity = 0;
+	name = "Dried Blood"
+	},
+/obj/structure{
+	anchored = 1;
+	desc = "It looks like it was clawed and chewed at.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remains";
+	layer = 2.1;
+	max_integrity = 1000;
+	mouse_opacity = 1;
+	name = "Mangled Remains"
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
@@ -7567,7 +7620,13 @@
 /area/centcom)
 "pC" = (
 /obj/structure/stone_tile/surrounding/eldercracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/eldercracked{
 	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/eldercracked{
+	dir = 8
 	},
 /turf/open/floor/plating/ice/smooth,
 /area/awaymission/snowdin/cave/mountain)
@@ -7783,8 +7842,15 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "qb" = (
-/obj/effect/decal/cleanable/blood/old{
-	icon_state = "gib2-old"
+/obj/structure/stone_tile/eldersurrounding_tile,
+/obj/structure/stone_tile/surrounding_tile/eldercracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
@@ -8118,6 +8184,168 @@
 	},
 /turf/open/floor/noslip,
 /area/awaymission/snowdin/outside)
+"rl" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/vending/coffee,
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "hallC";
+	name = "Central Hallway"
+	})
+"rm" = (
+/obj/structure/stone_tile/surrounding_tile/eldercracked{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rn" = (
+/obj/structure/stone_tile/block/eldercracked{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"ro" = (
+/obj/structure/stone_tile/elder,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rp" = (
+/obj/structure/stone_tile/eldercracked,
+/obj/structure/stone_tile/eldercracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rq" = (
+/obj/structure/stone_tile/eldercracked,
+/obj/structure/stone_tile/eldercracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rr" = (
+/obj/structure/stone_tile/eldercracked,
+/obj/structure/stone_tile/eldercracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rs" = (
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rt" = (
+/obj/structure/stone_tile/eldercracked,
+/obj/structure/stone_tile/eldercracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"ru" = (
+/obj/structure/stone_tile/eldercracked,
+/obj/structure/stone_tile/eldercracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/eldercracked,
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rv" = (
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rw" = (
+/obj/structure/stone_tile/eldercracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rx" = (
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"ry" = (
+/obj/structure/stone_tile/eldercracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rz" = (
+/obj/structure/stone_tile/eldercracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rA" = (
+/obj/structure/stone_tile/elderslab,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rB" = (
+/obj/structure/stone_tile/block/eldercracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/eldercracked,
+/obj/structure/stone_tile/eldercracked{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
 "rC" = (
 /obj/structure/window/reinforced,
 /obj/machinery/shower{
@@ -8125,6 +8353,307 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/centcom)
+"rD" = (
+/obj/structure/stone_tile/eldercracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rE" = (
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rF" = (
+/obj/structure/stone_tile/elderblock,
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rG" = (
+/obj/structure/stone_tile/block/eldercracked,
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rH" = (
+/obj/structure/stone_tile/eldercracked,
+/obj/structure/stone_tile/elder{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rI" = (
+/obj/structure/stone_tile/eldersurrounding_tile,
+/turf/open/floor/plating/ice/smooth,
+/area/awaymission/snowdin/cave/mountain)
+"rJ" = (
+/obj/structure/stone_tile/surrounding/eldercracked{
+	dir = 8
+	},
+/turf/open/floor/plating/ice/smooth,
+/area/awaymission/snowdin/cave/mountain)
+"rK" = (
+/obj/structure/stone_tile/surrounding_tile/eldercracked{
+	dir = 1
+	},
+/turf/open/floor/plating/ice/smooth,
+/area/awaymission/snowdin/cave/mountain)
+"rL" = (
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 4
+	},
+/turf/open/floor/plating/ice/smooth,
+/area/awaymission/snowdin/cave/mountain)
+"rM" = (
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "gib1-old"
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rN" = (
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/eldercracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rO" = (
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/eldercracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/eldercracked{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rP" = (
+/obj/structure/stone_tile/eldercracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/eldercracked,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rQ" = (
+/obj/structure/stone_tile/eldercracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/eldercracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/eldercracked{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rR" = (
+/obj/structure/stone_tile/surrounding/eldercracked{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"rS" = (
+/obj/structure/table/wood/fancy/blue,
+/obj/item/paper_bin/carbon{
+	pixel_y = 5
+	},
+/obj/item/pen/charcoal{
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/igloo)
+"rT" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/phone,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/igloo)
+"rU" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/paper_bin,
+/obj/item/pen/fountain,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/igloo)
+"rV" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
+/turf/open/floor/plastic,
+/area/awaymission/snowdin/igloo)
+"rW" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 0
+	},
+/obj/structure/mirror{
+	pixel_x = -32
+	},
+/turf/open/floor/plastic,
+/area/awaymission/snowdin/igloo)
+"rX" = (
+/obj/structure/toilet,
+/turf/open/floor/plastic,
+/area/awaymission/snowdin/igloo)
+"rY" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/machinery/door/window/northleft{
+	name = "shower"
+	},
+/obj/structure/curtain,
+/obj/item/soap/syndie,
+/turf/open/floor/plastic,
+/area/awaymission/snowdin/igloo)
+"rZ" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/twohanded/required/kirbyplants/photosynthetic{
+	anchored = 0
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
+	})
+"sa" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/under/suit/green,
+/obj/item/clothing/under/dress/skirt/plaid/green,
+/obj/item/clothing/glasses/meson/gar,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/igloo)
+"sb" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/combat/coldres,
+/obj/item/clothing/shoes/combat/coldres,
+/obj/item/clothing/under/syndicate/coldres,
+/obj/item/clothing/under/syndicate/coldres,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/clothing/head/helmet/swat,
+/turf/open/floor/carpet/red,
+/area/awaymission/snowdin/igloo)
+"sc" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/reagent_containers/food/snacks/nachos{
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/igloo)
+"sd" = (
+/obj/machinery/shower,
+/obj/structure/curtain,
+/obj/machinery/door/window/southleft,
+/obj/item/soap/nanotrasen,
+/turf/open/floor/plastic,
+/area/awaymission/snowdin/igloo)
+"se" = (
+/obj/structure/table/reinforced,
+/obj/item/pda/captain,
+/turf/open/floor/carpet/blue,
+/area/awaymission/snowdin/igloo)
+"sf" = (
+/obj/structure/table/reinforced,
+/obj/item/pda/syndicate,
+/turf/open/floor/carpet/red,
+/area/awaymission/snowdin/igloo)
+"sg" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/energy/laser/practice,
+/turf/open/floor/carpet/blue,
+/area/awaymission/snowdin/igloo)
+"sh" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/revolver/russian,
+/turf/open/floor/carpet/red,
+/area/awaymission/snowdin/igloo)
+"si" = (
+/obj/structure/table/reinforced,
+/obj/item/folder/red,
+/turf/open/floor/carpet/red,
+/area/awaymission/snowdin/igloo)
+"sj" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/kahlua{
+	pixel_y = 7
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/igloo)
+"sk" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/reagent_containers/food/snacks/pie/frostypie,
+/obj/item/reagent_containers/food/snacks/bluecherrycupcake{
+	pixel_x = 4;
+	pixel_y = 12
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/igloo)
+"sl" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/staff,
+/turf/open/floor/carpet/royalblue,
+/area/awaymission/snowdin/igloo)
+"sm" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/stamp,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/igloo)
 "sq" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
@@ -8506,12 +9035,6 @@
 "Og" = (
 /obj/structure/fluff/hedge,
 /turf/open/floor/wood,
-/area/centcom)
-"OI" = (
-/obj/item/twohanded/required/kirbyplants/photosynthetic{
-	anchored = 1
-	},
-/turf/open/floor/plasteel/white,
 /area/centcom)
 "Pr" = (
 /obj/structure/flora/tree/pine/xmas{
@@ -13348,9 +13871,9 @@ cR
 cR
 cR
 cR
-eQ
+eU
 eZ
-fd
+fh
 cR
 cR
 cR
@@ -13541,13 +14064,13 @@ cl
 cm
 cF
 cR
-dj
+eQ
 dv
 dv
 dv
 dv
 dv
-dj
+eQ
 cR
 cR
 eR
@@ -14349,13 +14872,13 @@ co
 cn
 cG
 cR
-dj
+eQ
 dz
 dz
 dz
 dz
 dz
-dj
+eQ
 cR
 cR
 eR
@@ -14560,9 +15083,9 @@ cR
 cR
 cR
 cR
-eU
+fd
 fa
-fh
+rZ
 cR
 cR
 cR
@@ -19035,11 +19558,11 @@ kI
 kI
 kI
 kI
-dY
-dY
-dY
-dY
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -19237,11 +19760,11 @@ kI
 kI
 kI
 kI
-dY
 kV
-et
-kZ
-dY
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -19439,11 +19962,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -19641,11 +20164,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -19843,11 +20366,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -20045,11 +20568,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -20247,11 +20770,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -20449,11 +20972,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -20651,11 +21174,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -20853,11 +21376,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -21055,11 +21578,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-eu
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -21257,11 +21780,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -21459,11 +21982,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -21620,7 +22143,7 @@ vv
 vv
 vv
 Au
-OI
+dj
 vv
 vv
 vv
@@ -21661,11 +22184,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -21863,11 +22386,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -22065,11 +22588,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -22267,11 +22790,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -22469,11 +22992,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -22671,11 +23194,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -22832,7 +23355,7 @@ vv
 vv
 vv
 Au
-OI
+dj
 vv
 vv
 vv
@@ -22873,11 +23396,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -23075,11 +23598,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -23277,11 +23800,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -23479,11 +24002,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -23681,11 +24204,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -23883,11 +24406,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -24085,11 +24608,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -24287,11 +24810,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -24489,11 +25012,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -24691,11 +25214,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -24893,11 +25416,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ev
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -25095,11 +25618,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -25297,11 +25820,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -25499,11 +26022,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -25701,11 +26224,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -25903,11 +26426,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -26105,11 +26628,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -26307,11 +26830,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -26509,11 +27032,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -26711,11 +27234,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -26913,11 +27436,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -27115,11 +27638,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -27317,11 +27840,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -27519,11 +28042,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -27721,11 +28244,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -27923,11 +28446,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -28125,11 +28648,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -28327,11 +28850,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -28529,11 +29052,11 @@ kI
 kI
 kI
 kI
-dY
-hP
-ek
-ih
-dY
+kV
+kV
+kV
+kV
+kV
 ap
 ap
 ap
@@ -28732,9 +29255,9 @@ dY
 dY
 dY
 dY
-hP
-ek
-ii
+dY
+dY
+dY
 dY
 ap
 ap
@@ -28934,9 +29457,9 @@ et
 et
 et
 et
-hS
-ek
-ih
+et
+et
+kZ
 dY
 ap
 ap
@@ -29138,7 +29661,7 @@ ek
 ek
 ek
 eu
-ih
+la
 dY
 ap
 ap
@@ -29340,7 +29863,7 @@ eK
 eD
 eD
 eD
-la
+rl
 dY
 ap
 ap
@@ -37425,8 +37948,8 @@ ap
 aq
 aq
 df
-lp
-df
+rW
+cO
 aq
 aq
 ad
@@ -37625,11 +38148,11 @@ ad
 ad
 aq
 aq
+rX
 df
 df
 df
-df
-df
+lp
 aq
 aq
 ad
@@ -38032,10 +38555,10 @@ bL
 li
 bL
 bL
-lj
+rT
 jO
 bL
-ex
+sa
 aq
 ad
 ad
@@ -38231,11 +38754,11 @@ ad
 aq
 jz
 bL
-lj
+sc
 bL
 bL
-lj
-lj
+rU
+sm
 bL
 lG
 aq
@@ -38841,7 +39364,7 @@ lj
 bL
 bL
 bL
-lj
+sj
 aq
 aq
 ad
@@ -40336,8 +40859,8 @@ ab
 ab
 iS
 jf
-jf
-jf
+iS
+rA
 jf
 jf
 iS
@@ -40538,8 +41061,8 @@ ab
 ab
 jf
 jf
-jf
-jf
+iS
+iS
 jf
 jf
 ab
@@ -40740,8 +41263,8 @@ ab
 ab
 jf
 jf
-jf
-jf
+rA
+iS
 jf
 jf
 ab
@@ -41160,7 +41683,7 @@ jf
 jf
 jf
 jf
-jf
+pF
 ab
 jf
 jf
@@ -41852,9 +42375,9 @@ ad
 ad
 aq
 aq
-df
-df
-df
+jy
+rW
+jy
 aq
 aq
 ad
@@ -42053,11 +42576,11 @@ ad
 ad
 aq
 aq
+sd
 df
 df
 df
-df
-df
+rY
 aq
 aq
 ad
@@ -42152,13 +42675,13 @@ ab
 ab
 ab
 jf
+rm
 jf
 jf
+oH
 jf
 jf
-jf
-jf
-jf
+oN
 ab
 ab
 ab
@@ -42237,7 +42760,7 @@ cO
 df
 df
 df
-ee
+lp
 aq
 aq
 ad
@@ -42455,15 +42978,15 @@ kn
 sx
 ad
 aq
-iJ
-iT
-iT
-iT
-jD
-jD
-jD
-jD
 kp
+iT
+iT
+iT
+jD
+jD
+jD
+jD
+sb
 aq
 ad
 ad
@@ -42660,9 +43183,9 @@ aq
 iK
 iT
 iT
-jy
+sg
 iT
-jL
+si
 jD
 jD
 kq
@@ -42756,13 +43279,13 @@ ab
 (170,1,1) = {"
 ab
 ab
-jf
-jf
-jf
-jf
-jf
-jf
-jf
+pi
+rx
+rn
+ry
+pi
+rz
+pi
 jf
 jf
 iS
@@ -42862,9 +43385,9 @@ aq
 iL
 iT
 jk
-jy
+se
 jD
-jL
+sf
 jX
 jD
 kr
@@ -42983,7 +43506,7 @@ ab
 jf
 jf
 jf
-qb
+rM
 qc
 ad
 ad
@@ -43064,9 +43587,9 @@ aq
 aq
 iT
 iT
-jy
-iT
 jL
+iT
+sh
 jD
 jD
 aq
@@ -43568,8 +44091,8 @@ ji
 ji
 ji
 jg
-jf
-jf
+pi
+pi
 iS
 oQ
 jf
@@ -43769,15 +44292,15 @@ ab
 ji
 iS
 iS
-jf
+pD
 iS
 iS
 iS
 iS
 iS
 iS
-jf
-jf
+pG
+rv
 iS
 iS
 iS
@@ -43973,17 +44496,17 @@ iS
 jf
 jf
 jf
-jf
+rn
 oH
-jf
-jf
-jf
+pG
+rn
+rn
 jf
 jf
 jf
 iS
-jf
-jf
+ry
+rE
 iS
 pE
 iS
@@ -44175,17 +44698,17 @@ iS
 jf
 jf
 jf
+pj
 jf
-jf
-jf
+pg
 jf
 oV
 jf
 pi
 jf
 iS
-jf
-jf
+rB
+rF
 iS
 jf
 iS
@@ -44371,7 +44894,7 @@ ab
 "}
 (178,1,1) = {"
 ab
-ab
+iS
 ji
 iS
 jf
@@ -44379,15 +44902,15 @@ op
 jf
 iS
 jf
-jf
+pg
 oW
 iS
 pg
 iS
 jg
 iS
-jf
-jf
+rB
+rG
 iS
 jf
 pJ
@@ -44573,8 +45096,8 @@ ab
 "}
 (179,1,1) = {"
 ab
-ab
-ab
+iS
+rA
 iS
 ji
 oq
@@ -44588,8 +45111,8 @@ pg
 iS
 jg
 iS
-jf
-jf
+rD
+rH
 iS
 pF
 iS
@@ -44775,15 +45298,15 @@ ab
 "}
 (180,1,1) = {"
 ab
-ab
-ab
+iS
+iS
 iS
 jf
 ox
 jf
 iS
-jf
-jf
+oo
+pt
 iS
 iS
 pg
@@ -45591,8 +46114,8 @@ oy
 jf
 iS
 iS
-jf
-jf
+ro
+pv
 iS
 pg
 iS
@@ -45600,7 +46123,7 @@ jg
 iS
 jf
 jf
-jf
+rp
 jf
 iS
 pT
@@ -45792,8 +46315,8 @@ ji
 oA
 ji
 iS
-jf
-jf
+pG
+rv
 jf
 iS
 jf
@@ -45801,8 +46324,8 @@ pj
 jf
 iS
 jf
-jf
-jf
+rp
+rp
 pG
 iS
 iS
@@ -45994,8 +46517,8 @@ jf
 oB
 jf
 iS
-jf
-jf
+rs
+ro
 jf
 iS
 iS
@@ -46003,7 +46526,7 @@ iS
 iS
 iS
 jf
-jf
+rp
 pt
 pH
 ji
@@ -46201,11 +46724,11 @@ jf
 iS
 iS
 jf
+rn
+rn
 jf
 jf
-jf
-jf
-jf
+rp
 pg
 ji
 ji
@@ -46398,14 +46921,14 @@ jf
 iS
 jf
 jf
-jf
+oM
 iS
 iS
 oH
-jf
-jf
-jf
-jf
+pg
+rI
+rK
+oZ
 jf
 jf
 pg
@@ -46604,10 +47127,10 @@ jf
 jf
 jf
 jf
-jf
-jf
-jf
-jf
+oM
+rJ
+rL
+oZ
 iS
 iS
 iS
@@ -46799,7 +47322,7 @@ ab
 ab
 ab
 jf
-oC
+rm
 iS
 iS
 jf
@@ -46807,15 +47330,15 @@ jf
 jf
 jf
 jf
-jf
-jf
+pj
+pj
 jf
 px
 pA
 iS
 ji
 ji
-ab
+ji
 ab
 ab
 ab
@@ -46908,7 +47431,7 @@ jN
 bL
 bL
 bL
-jN
+rS
 aq
 aq
 ad
@@ -47000,9 +47523,9 @@ ab
 ab
 ab
 ab
+oK
 jf
 jf
-oC
 iS
 iS
 iS
@@ -47017,7 +47540,7 @@ iS
 iS
 ji
 ab
-ab
+ji
 ab
 ab
 ab
@@ -47205,10 +47728,10 @@ ab
 ab
 jf
 jf
-jf
-jf
-jf
-jf
+oC
+rt
+rw
+rr
 jf
 jf
 jf
@@ -47219,7 +47742,7 @@ pC
 iS
 ji
 ab
-ab
+ji
 ab
 ab
 ab
@@ -47288,8 +47811,8 @@ dg
 df
 cD
 fy
-fy
-fy
+iJ
+sk
 fy
 fw
 fw
@@ -47407,22 +47930,22 @@ ab
 ab
 jf
 jf
+pz
+oO
+rA
+rA
 jf
-jf
-jf
-jf
-jf
-jf
-jf
-jf
+qb
+rN
+rO
 jf
 iS
 iS
 iS
 ab
 ab
-ab
-ab
+ji
+iS
 ab
 ab
 ab
@@ -47609,22 +48132,22 @@ ab
 ab
 ab
 jf
+rA
+oO
+pz
+pI
 jf
 jf
 jf
 jf
 jf
 jf
-jf
-jf
-jf
-jf
-jf
+oH
 ab
 ab
-ab
-ab
-ab
+iS
+rQ
+iS
 ab
 ab
 ab
@@ -47811,22 +48334,22 @@ ab
 ab
 ab
 jf
+rr
+ru
+rp
+rq
 jf
-jf
-jf
+iS
+iS
 jf
 jf
 iS
+jf
+ab
 iS
-jf
-jf
 iS
-jf
-ab
-ab
-ab
-ab
-ab
+rp
+iS
 ab
 ab
 ab
@@ -48023,12 +48546,12 @@ pk
 pn
 iS
 iS
-ab
-ab
-ab
-ab
-ab
-ab
+rR
+jf
+rP
+rp
+rp
+iS
 ab
 ab
 ab
@@ -48097,7 +48620,7 @@ aq
 aq
 fA
 fM
-fA
+sl
 aq
 aq
 ad
@@ -48120,7 +48643,7 @@ df
 df
 df
 df
-df
+dU
 aq
 aq
 ad
@@ -48214,8 +48737,8 @@ ab
 ab
 ab
 ab
-ab
-ab
+iS
+iS
 iS
 oT
 oX
@@ -48227,10 +48750,10 @@ ps
 ab
 ab
 ab
-ab
-ab
-ab
-ab
+iS
+iS
+iS
+iS
 ab
 ab
 ab
@@ -48320,7 +48843,7 @@ ab
 aq
 aq
 df
-df
+rV
 df
 aq
 aq
@@ -48416,8 +48939,8 @@ ab
 ab
 ab
 ab
-ab
-ab
+iS
+iS
 iS
 oT
 jf
@@ -48619,7 +49142,7 @@ ab
 ab
 ab
 ab
-ab
+iS
 iS
 iS
 iS
