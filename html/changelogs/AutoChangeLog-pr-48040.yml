@@ -1,7 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "The RnD department has been gifted a state-of-the-art new research tool, the B.E.P.I.S. by Nanotrasen's Venture Capital Labs, after repeatedly wasting all of their funds. Hopefully you'll find a... wiser use for it."
-  - rscadd: "A new Tech Node can be unlocked through proper investment with the B.E.P.I.S."
-  - rscadd: "In an unrelated piece of news, a deer was recently found to be the culprit of Nanotrasen Venture Capital Labs's onboard nuclear failsafe device detonating. Yes, we're sure it wasn't the Syndicate this time. Yes, we wish we were joking too."
-  - bugfix: "Fixes a small bug with tech disks containing hidden nodes not researching."
