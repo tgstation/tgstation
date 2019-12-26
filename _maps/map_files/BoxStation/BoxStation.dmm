@@ -5143,13 +5143,8 @@
 /area/security/brig)
 "akS" = (
 /obj/structure/table,
-/obj/item/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/glass/beaker{
-	pixel_x = 5
-	},
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "akT" = (
@@ -35478,15 +35473,16 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bOs" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/virology)
+/turf/closed/wall,
+/area/medical/psychiatrist)
 "bOt" = (
-/mob/living/carbon/monkey,
-/turf/open/floor/plasteel/white,
-/area/medical/virology)
+/obj/machinery/door/airlock/medical/glass{
+	name = "Padded Cell";
+	req_access_txt = "69"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/freezer,
+/area/medical/psychiatrist)
 "bOu" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas{
@@ -35936,12 +35932,9 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "bPt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/mob/living/carbon/monkey,
-/turf/open/floor/plasteel/white,
-/area/medical/virology)
+/obj/structure/bed,
+/turf/open/floor/plasteel/freezer,
+/area/medical/psychiatrist)
 "bPu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -36436,9 +36429,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bQJ" = (
-/obj/effect/landmark/blobstart,
-/turf/open/floor/plasteel/white,
-/area/medical/virology)
+/turf/closed/wall/r_wall,
+/area/medical/psychiatrist)
 "bQK" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Control Room";
@@ -36817,14 +36809,12 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bRQ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/mob/living/carbon/monkey,
+/turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bRR" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/virology/glass{
-	name = "Monkey Pen";
-	req_access_txt = "39"
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -37227,9 +37217,20 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"bSX" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	pixel_y = 24
+	},
+/obj/structure/cable,
+/obj/structure/filingcabinet,
+/turf/open/floor/wood,
+/area/medical/psychiatrist)
 "bSY" = (
-/obj/machinery/vending/medical,
-/turf/open/floor/plasteel/white,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/medical/virology)
 "bTa" = (
 /obj/machinery/door/window/northleft{
@@ -49197,6 +49198,16 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"cXC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet/purple,
+/area/medical/psychiatrist)
 "cYY" = (
 /obj/effect/landmark/blobstart,
 /obj/effect/landmark/xeno_spawn,
@@ -49225,6 +49236,16 @@
 /obj/machinery/chem_heater,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"dmR" = (
+/obj/structure/chair/office,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/carpet/purple,
+/area/medical/psychiatrist)
 "dqu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -49302,6 +49323,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"dEr" = (
+/turf/open/floor/plasteel/freezer,
+/area/medical/psychiatrist)
 "dFs" = (
 /obj/structure/rack,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -49382,6 +49406,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"edS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/medical/psychiatrist)
+"een" = (
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/medical/psychiatrist)
 "efK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -49438,9 +49479,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
-"eOZ" = (
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "eRu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -49541,12 +49579,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
-"fwJ" = (
-/obj/machinery/firealarm{
-	pixel_x = 28
-	},
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "fBs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/wood,
@@ -49574,6 +49606,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"fNh" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/medical/psychiatrist)
 "fPm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -49583,6 +49619,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"fTf" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/medical/psychiatrist)
 "fXM" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -49655,6 +49695,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
+"gvX" = (
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/folder/white,
+/obj/item/folder/white,
+/obj/item/folder/white,
+/turf/open/floor/carpet/purple,
+/area/medical/psychiatrist)
 "gwd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -49819,16 +49872,6 @@
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
-"hMN" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/carpet/purple,
-/area/medical/psychiatrist)
 "hQK" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -50136,9 +50179,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
-"jXn" = (
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "jYO" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -50495,10 +50535,6 @@
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"lHA" = (
-/obj/machinery/light,
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "lHR" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -50557,19 +50593,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"lRH" = (
-/obj/structure/table/wood,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/item/folder/white,
-/obj/item/folder/white,
-/obj/item/folder/white,
-/turf/open/floor/carpet/purple,
-/area/medical/psychiatrist)
 "lST" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -50936,15 +50959,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
-"otq" = (
-/obj/structure/chair/comfy/black,
-/obj/effect/landmark/start/psychiatrist,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "otz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -51012,12 +51026,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
-"oPg" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "oPj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -51068,9 +51076,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"paw" = (
-/turf/closed/wall/r_wall,
-/area/medical/psychiatrist)
 "pfj" = (
 /obj/machinery/power/apc{
 	areastring = "/area/storage/tools";
@@ -51415,10 +51420,13 @@
 /obj/structure/grille/broken,
 /turf/open/space/basic,
 /area/space/nearstation)
-"qwm" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/medical/psychiatrist)
+"qwd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/mob/living/carbon/monkey,
+/turf/open/floor/plasteel/white,
+/area/medical/virology)
 "qyN" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
@@ -51505,6 +51513,10 @@
 /obj/item/reagent_containers/food/drinks/beer,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"ruH" = (
+/obj/machinery/vending/medical,
+/turf/open/floor/plasteel/white,
+/area/medical/virology)
 "rAt" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -51531,6 +51543,15 @@
 /obj/item/hand_labeler,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"rJf" = (
+/obj/structure/chair/comfy/black,
+/obj/effect/landmark/start/psychiatrist,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/medical/psychiatrist)
 "rKc" = (
 /obj/machinery/door/window/eastright{
 	base_state = "left";
@@ -51755,10 +51776,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
-"sUX" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "sXy" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -51769,10 +51786,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/main)
-"tag" = (
-/obj/machinery/electric,
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "tal" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -51848,6 +51861,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"toZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/medical/psychiatrist)
 "tqd" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -51931,14 +51951,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"tzX" = (
-/obj/structure/bookcase/random/reference,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "tDw" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -52008,6 +52020,14 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"uah" = (
+/obj/structure/bookcase/random/reference,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/wood,
+/area/medical/psychiatrist)
 "ubw" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm{
@@ -52042,16 +52062,6 @@
 /obj/structure/rack,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"uik" = (
-/obj/structure/chair/office,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/carpet/purple,
-/area/medical/psychiatrist)
 "ulo" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -52073,14 +52083,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"utF" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Padded Cell";
-	req_access_txt = "69"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel/freezer,
-/area/medical/psychiatrist)
 "uvi" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -52200,9 +52202,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"uYC" = (
-/turf/open/floor/plasteel/freezer,
-/area/medical/psychiatrist)
 "vad" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -52256,13 +52255,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"vow" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+"voy" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/medical/psychiatrist)
+"vqv" = (
+/obj/effect/landmark/blobstart,
+/turf/open/floor/plasteel/white,
+/area/medical/virology)
 "vqI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -52327,6 +52329,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"vEZ" = (
+/obj/machinery/electric,
+/turf/open/floor/wood,
+/area/medical/psychiatrist)
 "vFS" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/brown{
@@ -52408,19 +52414,6 @@
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"vYl" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "wba" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
@@ -52464,6 +52457,12 @@
 	},
 /turf/open/floor/plating,
 /area/science/nanite)
+"wpg" = (
+/obj/machinery/firealarm{
+	pixel_x = 28
+	},
+/turf/open/floor/wood,
+/area/medical/psychiatrist)
 "wph" = (
 /obj/docking_port/stationary{
 	dheight = 4;
@@ -52477,6 +52476,14 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"wpZ" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/virology/glass{
+	name = "Monkey Pen";
+	req_access_txt = "39"
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/virology)
 "wqH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -52492,10 +52499,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
-"wxY" = (
-/obj/structure/bed,
-/turf/open/floor/plasteel/freezer,
-/area/medical/psychiatrist)
 "wBd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -52536,6 +52539,9 @@
 	},
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"wIG" = (
+/turf/open/floor/wood,
+/area/medical/psychiatrist)
 "wJU" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -52593,17 +52599,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/research)
-"xaL" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/power/apc{
-	pixel_y = 24
-	},
-/obj/structure/cable,
-/obj/structure/filingcabinet,
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "xaZ" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/sign/warning/securearea{
@@ -90752,7 +90747,7 @@ bIJ
 bPo
 bQE
 bRM
-bSY
+ruH
 bTZ
 bKH
 bzs
@@ -92038,7 +92033,7 @@ bPq
 bLd
 bNd
 bST
-bQJ
+vqv
 bOr
 bOr
 bWW
@@ -92800,13 +92795,13 @@ bEi
 bEi
 bDU
 bFO
-jXn
+bOs
 bKR
 bMc
 bNd
-paw
-paw
-paw
+bQJ
+bQJ
+bQJ
 bNd
 bNd
 bMI
@@ -93057,15 +93052,15 @@ bEh
 bCW
 bDS
 bFN
-jXn
+bOs
 bKQ
-vYl
-tag
-qwm
-wxY
-paw
-bOt
+edS
+vEZ
+fNh
+bPt
+bQJ
 bRQ
+bSY
 bSQ
 bNj
 bNs
@@ -93314,15 +93309,15 @@ bEk
 bFG
 bCY
 bFP
-jXn
-xaL
-hMN
-eOZ
-utF
-uYC
-paw
+bOs
+bSX
+cXC
+wIG
 bOt
+dEr
+bQJ
 bRQ
+bSY
 bSQ
 bWj
 bOm
@@ -93571,15 +93566,15 @@ bEj
 bCY
 bGZ
 bFE
-bBN
-bKS
-uik
-lHA
-jXn
-jXn
-paw
 bOs
+bKS
+dmR
+een
+bOs
+bOs
+bQJ
 bRR
+wpZ
 bSQ
 bWj
 bWj
@@ -93828,15 +93823,15 @@ bEl
 bFH
 bHb
 bIw
-jXn
+bOs
 bKT
-lRH
-eOZ
-utF
-uYC
-paw
+gvX
+wIG
+bOt
+dEr
+bQJ
 bPu
-bRQ
+bSY
 bSQ
 bWj
 bOm
@@ -94085,15 +94080,15 @@ bBN
 bBN
 bHa
 bBN
-jXn
-tzX
-otq
-fwJ
-qwm
-wxY
-paw
+bOs
+uah
+rJf
+wpg
+fNh
 bPt
-bRQ
+bQJ
+qwd
+bSY
 bMJ
 bNl
 bNW
@@ -94343,11 +94338,11 @@ bLS
 cbQ
 bLS
 cbK
-vow
+toZ
 caU
-sUX
-oPg
-sUX
+fTf
+voy
+fTf
 bNc
 bPw
 bNc
