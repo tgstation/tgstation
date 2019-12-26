@@ -285,13 +285,9 @@
 			else
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
-
 	//Clear all moods if no miasma at all
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-
-
-
 
 	breath.garbage_collect()
 
@@ -302,7 +298,8 @@
 
 //Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
-	return
+	// The air you breathe out should match your body temperature
+	breath.temperature = bodytemperature
 
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(internal)
