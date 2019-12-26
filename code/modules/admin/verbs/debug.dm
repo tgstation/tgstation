@@ -237,13 +237,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!M || QDELETED(M))
 		to_chat(usr, "<span class='warning'>The target mob no longer exists.</span>")
 		return
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
+	log_admin("[key_name(usr)] assumed direct control of [M].")
 	var/mob/adminmob = mob
-	M.ghostize(FALSE)
+	if(M.ckey)
+		M.ghostize(FALSE)
 	M.ckey = ckey
 	if(isobserver(adminmob))
 		qdel(adminmob)
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
-	log_admin("[key_name(usr)] assumed direct control of [M].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_give_direct_control(mob/M in GLOB.mob_list)
