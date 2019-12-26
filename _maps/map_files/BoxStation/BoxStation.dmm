@@ -34720,6 +34720,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/psychiatrist)
 "bMe" = (
@@ -35909,9 +35910,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"bPt" = (
-/turf/closed/wall/r_wall,
-/area/medical/psychiatrist)
 "bPu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -39941,9 +39939,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"caU" = (
-/turf/closed/wall/r_wall,
-/area/medical/psychiatrist)
 "caV" = (
 /obj/machinery/door/window/northleft{
 	base_state = "right";
@@ -49894,6 +49889,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "iBZ" = (
@@ -51334,6 +51330,8 @@
 /obj/machinery/power/apc{
 	pixel_y = 24
 	},
+/obj/structure/cable,
+/obj/structure/filingcabinet,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "pUr" = (
@@ -51758,6 +51756,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet/purple,
 /area/medical/psychiatrist)
 "sNJ" = (
@@ -92799,9 +92798,9 @@ bSX
 bKR
 bMc
 bNd
-caU
-caU
-caU
+bQJ
+bQJ
+bQJ
 bNd
 bNd
 bMI
@@ -93058,7 +93057,7 @@ iBL
 bOt
 pCY
 xzA
-caU
+bQJ
 bRQ
 bSY
 bSQ
@@ -93315,7 +93314,7 @@ sNv
 ePP
 eXy
 tFL
-caU
+bQJ
 bRQ
 bSY
 bSQ
@@ -93572,7 +93571,7 @@ jdI
 mpF
 bSX
 bSX
-caU
+bQJ
 bRR
 lAP
 bSQ
@@ -93829,7 +93828,7 @@ tbI
 ePP
 eXy
 tFL
-caU
+bQJ
 bPu
 bSY
 bSQ
@@ -94086,7 +94085,7 @@ jqw
 uCE
 pCY
 xzA
-caU
+bQJ
 dgR
 bSY
 bMJ

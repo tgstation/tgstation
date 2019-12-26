@@ -47850,6 +47850,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -47887,6 +47888,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/medical/psychiatrist)
 "btT" = (
@@ -49957,7 +49959,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -80655,6 +80656,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/port)
 "csw" = (
@@ -80683,6 +80685,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -93626,6 +93629,7 @@
 /obj/machinery/power/apc{
 	pixel_x = -28
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "gcs" = (
@@ -93733,6 +93737,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "piD" = (
@@ -93742,6 +93747,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -93893,6 +93899,12 @@
 /obj/structure/filingcabinet,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
+"xIP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "xSy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
@@ -110759,7 +110771,7 @@ bsC
 iFn
 ksM
 xSy
-ksM
+xIP
 bxv
 awD
 awD
