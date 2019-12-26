@@ -61543,7 +61543,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Psychiatrist Backroom";
-	req_access_txt = "69"
+	req_access_txt = "71"
 	},
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
@@ -72177,13 +72177,13 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "dDB" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Padded Cell";
-	req_access_txt = "69"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Padded Cell";
+	req_access_txt = "71"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/medical/psychiatrist)

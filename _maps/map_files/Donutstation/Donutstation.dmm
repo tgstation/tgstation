@@ -6648,9 +6648,6 @@
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-"ash" = (
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "asi" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -13036,13 +13033,6 @@
 	dir = 1
 	},
 /area/medical/genetics)
-"aJF" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "aJG" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -20253,15 +20243,6 @@
 	dir = 5
 	},
 /area/crew_quarters/kitchen)
-"bdC" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "bdD" = (
 /obj/structure/table,
 /obj/item/multitool{
@@ -21419,13 +21400,6 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/courtroom)
-"bgs" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
 "bgt" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen Cold Room";
@@ -34515,9 +34489,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
-"bMn" = (
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "bMo" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
@@ -37302,11 +37273,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Psychiatrist Backroom";
-	req_access_txt = "69"
+	req_access_txt = "71"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "bTT" = (
@@ -38054,16 +38025,6 @@
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
-"bVX" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "bWe" = (
 /obj/structure/closet/crate,
 /obj/item/paicard,
@@ -38577,16 +38538,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"bYJ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "bYQ" = (
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock";
@@ -38687,15 +38638,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 6
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
-"bZq" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -39105,9 +39047,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/fore)
-"car" = (
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "cat" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/structure/extinguisher_cabinet{
@@ -43886,9 +43825,6 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
-"iJO" = (
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "iLj" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/brown{
@@ -48236,9 +48172,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_room)
-"sAv" = (
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "sAZ" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -50839,11 +50772,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Padded Cell";
-	req_access_txt = "69"
+	req_access_txt = "71"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/freezer,
 /area/medical/psychiatrist)
 "ygs" = (
@@ -71894,14 +71827,14 @@ bXh
 rEa
 rEa
 bMs
-sAv
-sAv
-sAv
-sAv
-sAv
-sAv
-sAv
-sAv
+dhm
+dhm
+dhm
+dhm
+dhm
+dhm
+dhm
+dhm
 cep
 acB
 acB
@@ -72151,14 +72084,14 @@ aJv
 aJv
 aJv
 aJv
-sAv
+dhm
 bXS
 ylF
 sjW
-sAv
+dhm
 jyj
 vLi
-sAv
+dhm
 cep
 acB
 krA
@@ -72408,14 +72341,14 @@ aYl
 mkR
 aJU
 bMe
-sAv
+dhm
 oWU
 kie
 iZs
 bTS
 rkx
 vLi
-sAv
+dhm
 cep
 acB
 mOX
@@ -72669,10 +72602,10 @@ aJv
 bXP
 hgU
 hIR
-sAv
+dhm
 tvs
 vLi
-sAv
+dhm
 cep
 azH
 aBx
@@ -72922,14 +72855,14 @@ aXr
 xyk
 bfE
 bdj
-sAv
+dhm
 bZk
 omy
 eMB
-sAv
+dhm
 gOP
 lbK
-sAv
+dhm
 cep
 azH
 aBx
@@ -73179,14 +73112,14 @@ aXH
 aJv
 aXp
 aXp
-sAv
+dhm
 uOW
-sAv
-sAv
-sAv
+dhm
+dhm
+dhm
 bZx
 vLi
-sAv
+dhm
 cep
 jap
 sjP
@@ -73440,10 +73373,10 @@ bdx
 bcQ
 aGt
 aGt
-sAv
+dhm
 xAL
 yfj
-sAv
+dhm
 cep
 azH
 bWe
@@ -73697,10 +73630,10 @@ pTq
 pTq
 pTq
 pTq
-sAv
+dhm
 mfu
 bVQ
-sAv
+dhm
 cep
 azH
 azH
@@ -73954,10 +73887,10 @@ aIY
 aIY
 aIY
 acB
-sAv
-sAv
-sAv
-sAv
+dhm
+dhm
+dhm
+dhm
 cep
 wAm
 bMs
@@ -74468,7 +74401,7 @@ bds
 biB
 aIY
 bMs
-bZq
+bRk
 bMs
 rEa
 qLP
@@ -74725,7 +74658,7 @@ aKk
 aKa
 aXZ
 bMs
-bZq
+bRk
 bMs
 rEa
 bXA
@@ -74982,7 +74915,7 @@ aKa
 aKn
 aIY
 bMs
-bZq
+bRk
 bMs
 rEa
 bLQ
@@ -75239,7 +75172,7 @@ aKl
 aKo
 aIY
 bMs
-bZq
+bRk
 bMs
 rEa
 bQQ

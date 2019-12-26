@@ -87348,19 +87348,16 @@
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
-"dfM" = (
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "dfN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/medical/psychiatrist)
 "dfO" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Psychiatrist Backroom";
-	req_access_txt = "69"
+	req_access_txt = "71"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "dfP" = (
@@ -88273,10 +88270,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/aft)
-"dhv" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "dhw" = (
 /turf/open/floor/plating,
 /area/medical/abandoned)
@@ -114581,12 +114574,6 @@
 	},
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
-"iAW" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/medical/psychiatrist)
 "iBH" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
@@ -116510,11 +116497,11 @@
 /area/vacant_room/commissary)
 "ubM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Padded Cell";
-	req_access_txt = "69"
+	req_access_txt = "71"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/white,
 /area/medical/psychiatrist)
 "ukr" = (
@@ -166149,7 +166136,7 @@ dbz
 ddk
 deK
 cPy
-iAW
+deN
 diN
 xcf
 dma
@@ -166402,10 +166389,10 @@ cPy
 cPy
 cPy
 cPy
-dfM
-dfM
-dfM
-dfM
+ddm
+ddm
+ddm
+ddm
 dhs
 diO
 dkF
@@ -166659,16 +166646,16 @@ cSZ
 cWA
 cWA
 cZQ
-dfM
+ddm
 ddl
 deL
-dfM
+ddm
 dht
 diP
 dkG
 ubM
 dnL
-dfM
+ddm
 dpE
 cPJ
 dtV
@@ -166916,16 +166903,16 @@ cUU
 cWB
 cYf
 cZR
-dhv
+dfN
 qfC
 pIs
-dhv
+dfN
 pAG
 vIs
 dkH
 oVJ
 dnM
-dfM
+ddm
 dhB
 dfW
 dtW
@@ -167173,16 +167160,16 @@ cAw
 cAw
 cYg
 cZS
-dfM
+ddm
 nWm
 xiR
 dfO
 oZu
 mxo
 iVv
-dfM
-dfM
-dfM
+ddm
+ddm
+ddm
 dmh
 dmh
 dtX
@@ -167430,14 +167417,14 @@ cCe
 cAw
 cYh
 cZT
-dfM
-dfM
-iAW
+ddm
+ddm
+deN
 dfP
-dhv
+dfN
 diR
 dkI
-dfM
+ddm
 dnN
 dpF
 drp

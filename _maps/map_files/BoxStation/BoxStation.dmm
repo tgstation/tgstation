@@ -35476,11 +35476,11 @@
 /turf/closed/wall,
 /area/medical/psychiatrist)
 "bOt" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Padded Cell";
-	req_access_txt = "69"
+	req_access_txt = "71"
 	},
-/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/freezer,
 /area/medical/psychiatrist)
 "bOu" = (

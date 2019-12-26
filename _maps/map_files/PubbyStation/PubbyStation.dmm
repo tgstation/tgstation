@@ -36180,12 +36180,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet/blue,
 /area/medical/psychiatrist)
-"bLH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/medical/psychiatrist)
 "bLI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -37451,7 +37445,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Padded Cell";
-	req_access_txt = "69"
+	req_access_txt = "71"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/wood,
@@ -54684,9 +54678,11 @@
 	},
 /obj/machinery/door/airlock/medical/glass{
 	name = "Psychiatrist Backroom";
-	req_access_txt = "69"
+	req_access_txt = "71"
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/checkoutmachine,
+/obj/structure/checkoutmachine,
 /turf/open/floor/wood,
 /area/medical/psychiatrist)
 "qaQ" = (
@@ -57999,6 +57995,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
+/obj/structure/checkoutmachine,
 /turf/closed/wall,
 /area/medical/psychiatrist)
 "ydZ" = (
@@ -84668,7 +84665,7 @@ bGV
 bIc
 bKt
 bKu
-bLH
+bLE
 bMJ
 bNT
 bNX
@@ -85696,7 +85693,7 @@ buh
 bIg
 bNT
 bKx
-bLH
+bLE
 jIU
 kxE
 sYO
