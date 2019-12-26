@@ -186,15 +186,35 @@
 	density = TRUE
 	anchored = TRUE
 	climbable = TRUE
+	var/list/dir9 = list(NORTH, WEST) //ugly ass checks specific to the corner rails with intercardinal directions
+	var/list/dir10 = list(SOUTH, WEST)
+	var/list/dir5 = list(NORTH, EAST)
+	var/list/dir6 = list(SOUTH, EAST)
 
 /obj/structure/fluff/railing/CanPass(atom/movable/mover, turf/target)
 	if(get_dir(loc, target) == dir)
+		return !density
+	if(dir == 9 && get_dir(loc, target) in dir9)
+		return !density
+	if(dir == 10 && get_dir(loc, target) in dir10)
+		return !density
+	if(dir == 5 && get_dir(loc, target) in dir5)
+		return !density
+	if(dir == 6 && get_dir(loc, target) in dir6)
 		return !density
 	return 1
 
 /obj/structure/fluff/railing/CheckExit(atom/movable/O, turf/target)
 	if(get_dir(O.loc, target) == dir)
 		return 0
+	if(dir == 9 && get_dir(loc, target) in dir9)
+		return 0
+	if(dir == 10 && get_dir(loc, target) in dir10)
+		return 0
+	if(dir == 5 && get_dir(loc, target) in dir5)
+		return 0
+	if(dir == 6 && get_dir(loc, target) in dir6)
+		return 0	
 	return 1
 
 /obj/structure/fluff/railing/corner
