@@ -52288,8 +52288,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -52300,6 +52298,8 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/structure/disposalpipe/segment,
+/obj/structure/closet/radiation,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cmR" = (
@@ -52995,6 +52995,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "com" = (
@@ -56440,12 +56441,13 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/structure/closet/emcloset,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -26
 	},
 /obj/effect/turf_decal/tile/purple,
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cvA" = (
