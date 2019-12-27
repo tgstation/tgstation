@@ -47,7 +47,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
@@ -59,33 +58,17 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
 "ag" = (
 /obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
@@ -97,19 +80,31 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/fans/tiny/invisible,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
 "ai" = (
 /obj/effect/turf_decal/tile/blue{
-	dir = 4
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
-	dir = 4
+	dir = 1
 	},
-/obj/structure/fans/tiny/invisible,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
@@ -135,7 +130,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/fans/tiny/invisible,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
@@ -149,7 +145,13 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/structure/fans/tiny/invisible,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
@@ -162,11 +164,11 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "an" = (
-/obj/machinery/door/airlock/glass{
-	name = "Docking Gate"
+/obj/machinery/door/airlock/command/glass{
+	name = "Docking Gate";
+	req_access_txt = "0"
 	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/plasteel/white,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
@@ -188,26 +190,27 @@
 /turf/open/floor/wood,
 /area/centcom)
 "aq" = (
-/obj/machinery/light{
-	light_color = "#cee5d2"
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
+/turf/open/floor/plasteel/dark,
+/area/centcom/prison{
+	icon_state = "security";
+	name = "Security"
 	})
 "ar" = (
 /obj/structure/chair/stool,
@@ -343,61 +346,35 @@
 /turf/open/floor/plasteel/white,
 /area/centcom)
 "aG" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+/obj/machinery/computer/cloning{
+	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
+/area/centcom)
 "aH" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/plasteel/dark,
+/area/centcom/prison{
+	icon_state = "security";
+	name = "Security"
 	})
 "aI" = (
 /obj/structure/sign/departments/medbay/alt{
@@ -418,10 +395,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "PhoebeLotsuRoomIGuess1";
 	name = "Medbay";
-	req_access_txt = "5"
-	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom)
@@ -438,13 +412,9 @@
 	name = "NTS Artic Shuttle"
 	})
 "aN" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "PhoebeLotsuRoomIGuess2";
-	name = "Medbay";
-	req_access_txt = "5"
-	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 1
+/obj/machinery/door/airlock/medical{
+	name = "Lobby";
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/white,
 /area/centcom)
@@ -475,12 +445,63 @@
 /turf/open/floor/plasteel/white,
 /area/centcom)
 "aR" = (
-/obj/machinery/door/airlock/medical{
-	name = "Lobby";
-	req_access_txt = "5"
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
 	},
-/turf/open/floor/plasteel/white,
-/area/centcom)
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/green,
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
+/obj/item/clothing/suit/hooded/cultrobes/cthulhu{
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/hooded/cultrobes/cthulhu{
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/hooded/cultrobes/cthulhu{
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/hooded/cultrobes/cthulhu{
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/hooded/cultrobes/cthulhu{
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/hooded/cultrobes/cthulhu{
+	pixel_y = 6
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "aS" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/carpet/red,
@@ -503,17 +524,9 @@
 	name = "NTS Artic Shuttle"
 	})
 "aU" = (
-/obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "PhoebeLotsuRoomIGuess3";
-	name = "Medbay Doors Control";
-	normaldoorcontrol = 1;
-	pixel_x = -32;
-	pixel_y = 0;
-	req_one_access_txt = "5"
-	},
-/turf/open/floor/plasteel/white,
-/area/centcom)
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/rock/snow,
+/area/awaymission/snowdin/cave/mountain)
 "aV" = (
 /obj/structure/chair/office/light,
 /obj/effect/landmark/start/medical_doctor,
@@ -724,12 +737,14 @@
 /turf/open/floor/plasteel/white,
 /area/centcom)
 "bp" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Morgue";
-	req_access_txt = "5"
+/obj/structure/closet/secure_closet/freezer/fridge{
+	anchored = 1;
+	req_access = null
 	},
-/turf/open/floor/plasteel/white,
-/area/centcom)
+/turf/open/floor/plasteel/cafeteria,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
+	})
 "bq" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
@@ -918,17 +933,17 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/centcom)
 "bH" = (
-/obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "PhoebeLotsuRoomIGuess4";
-	name = "Medbay Doors Control";
-	normaldoorcontrol = 1;
-	pixel_x = 32;
-	pixel_y = 0;
-	req_one_access_txt = "5"
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/turf/open/floor/plasteel/white,
-/area/centcom)
+/obj/effect/turf_decal/tile/blue,
+/obj/item/storage/firstaid/brute,
+/turf/open/floor/plasteel,
+/area/centcom/prison{
+	icon_state = "security";
+	name = "Security"
+	})
 "bI" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
@@ -1003,24 +1018,15 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom)
 "bR" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor{
+	id = "arrivalCP1_main";
+	name = "Checkpoint 1 Blast Door"
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
+/turf/open/floor/plasteel/dark,
+/area/centcom/prison{
+	icon_state = "checkpoint1";
+	name = "Arrivals Checkpoint"
 	})
 "bS" = (
 /obj/structure/table/reinforced,
@@ -1080,15 +1086,27 @@
 	name = "Bar"
 	})
 "bY" = (
-/obj/machinery/light/small{
-	dir = 1;
-	light_color = "#ffc1c1"
+/obj/structure/closet/secure_closet/brig{
+	id = "brig1";
+	name = "Cell 1 Locker"
 	},
-/obj/machinery/icecream_vat,
-/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
-/area/centcom{
-	icon_state = "kitchen_cold";
-	name = "Kitchen Cold Room"
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/flasher{
+	id = "brig1";
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison{
+	icon_state = "security";
+	name = "Security"
 	})
 "bZ" = (
 /obj/structure/table/reinforced,
@@ -1103,13 +1121,21 @@
 /turf/open/floor/plasteel/white,
 /area/centcom)
 "ca" = (
-/obj/structure/closet/secure_closet/medical3{
-	anchored = 1
+/obj/structure/stone_tile/eldersurrounding,
+/obj/structure/stone_tile/eldercenter,
+/obj/structure/ladder/unbreakable/rune{
+	color = "";
+	desc = "It'll take you outside. Try not to get lost.";
+	height = 1;
+	icon = 'icons/mob/nest.dmi';
+	icon_state = "colossus";
+	id = "DudeILoveEldritchHorror";
+	name = "\improper Exit Portal"
 	},
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/glasses/hud/health,
-/turf/open/floor/plasteel/white,
-/area/centcom)
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "cb" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medical Storage"
@@ -1143,13 +1169,15 @@
 /area/centcom)
 "ce" = (
 /obj/structure/closet/secure_closet/medical3{
-	anchored = 1
+	anchored = 1;
+	req_access = null
 	},
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
-/obj/structure/sign/poster/official/no_erp{
-	pixel_y = -32
-	},
+/obj/item/lazarus_injector,
+/obj/item/lazarus_injector,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
 /turf/open/floor/plasteel/white,
 /area/centcom)
 "cf" = (
@@ -1224,16 +1252,26 @@
 	name = "Central Hallway"
 	})
 "cm" = (
-/obj/structure/fans/tiny,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/door/poddoor{
-	id = "arrivalCP2_main";
-	name = "Checkpoint 2 Blast Door"
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
 	})
 "cn" = (
 /obj/structure/table/wood,
@@ -1241,12 +1279,22 @@
 /turf/open/floor/carpet/green,
 /area/centcom)
 "co" = (
-/obj/machinery/light{
-	dir = 4
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/wood,
-/area/centcom)
+/obj/machinery/recharger{
+	pixel_x = -6
+	},
+/obj/machinery/recharger{
+	pixel_x = 6
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison{
+	icon_state = "security";
+	name = "Security"
+	})
 "cp" = (
 /obj/structure/closet,
 /obj/effect/turf_decal/bot,
@@ -1317,9 +1365,13 @@
 /turf/open/floor/plasteel/white,
 /area/centcom)
 "cA" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/structure/table/optable,
+/turf/open/floor/plasteel,
+/area/centcom/prison{
+	icon_state = "security";
+	name = "Security"
+	})
+"cB" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -1327,27 +1379,17 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"cB" = (
-/obj/machinery/computer/cloning{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/white,
-/area/centcom)
 "cC" = (
 /obj/structure/closet/secure_closet/personal/patient{
 	anchored = 1
@@ -1570,26 +1612,23 @@
 	name = "Central Hallway"
 	})
 "cX" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/neutral{
-	icon_state = "tile_corner";
-	dir = 4
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
 	},
-/obj/structure/closet/crate/bin,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
 	})
 "cY" = (
 /obj/structure/chair/sofa/corner,
@@ -1798,14 +1837,17 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom)
 "dv" = (
-/obj/machinery/vending/dinnerware,
-/obj/machinery/light{
-	dir = 8
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
 	},
-/turf/open/floor/plasteel/cafeteria,
-/area/centcom{
-	icon_state = "kitchen";
-	name = "Kitchen"
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison{
+	icon_state = "checkpoint1";
+	name = "Arrivals Checkpoint"
 	})
 "dw" = (
 /obj/structure/bed,
@@ -1837,11 +1879,14 @@
 	name = "Arrivals Checkpoint"
 	})
 "dy" = (
-/obj/effect/turf_decal/stripes/corner,
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/wood,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
+/obj/machinery/door/airlock/maintenance{
+	name = "Freezer Maintenance";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plating,
+/area/centcom{
+	icon_state = "maintcentral";
+	name = "Maintenance"
 	})
 "dz" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -2010,34 +2055,26 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom)
 "dN" = (
-/obj/machinery/vending/games{
-	desc = "Vends things that help with tabletop RPGs.";
-	name = "\improper Old Vending Machine"
-	},
-/obj/structure{
-	anchored = 1;
-	icon = 'icons/effects/effects.dmi';
-	icon_state = "dirt";
-	layer = 1;
-	mouse_opacity = 0;
-	name = "dust"
-	},
-/obj/machinery/light{
+/obj/structure/fluff/railing,
+/turf/open/openspace,
+/area/centcom/prison{
+	icon_state = "checkpoint1";
+	name = "Arrivals Checkpoint"
+	})
+"dO" = (
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/turf/open/floor/wood,
-/area/library/lounge)
-"dO" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/neutral{
 	icon_state = "tile_corner";
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/structure/closet/crate/bin,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/centcom{
 	icon_state = "hallC";
@@ -2149,12 +2186,17 @@
 	name = "Bar"
 	})
 "dX" = (
-/obj/machinery/light,
-/obj/structure/table/optable,
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
+/obj/effect/turf_decal/tile/red{
+	icon_state = "tile_corner";
+	dir = 4
+	},
+/obj/structure/sign/departments/security{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "hallC";
+	name = "Central Hallway"
 	})
 "dY" = (
 /obj/structure/table/reinforced,
@@ -2187,18 +2229,14 @@
 	name = "Bar"
 	})
 "ea" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
+/obj/machinery/door/airlock/freezer{
+	name = "Kitchen Cold Room";
+	req_access_txt = "0"
 	},
-/obj/machinery/door/airlock{
-	name = "Bar Backroom";
-	req_access_txt = "25"
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/centcom{
-	icon_state = "bar";
-	name = "Bar"
+	icon_state = "kitchen_cold";
+	name = "Kitchen Cold Room"
 	})
 "eb" = (
 /obj/effect/turf_decal/delivery,
@@ -2228,24 +2266,14 @@
 	name = "Security"
 	})
 "ed" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+/obj/machinery/door/airlock/maintenance{
+	name = "Kitchen Maintenance";
+	req_access_txt = "0"
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
+/turf/open/floor/plating,
+/area/centcom{
+	icon_state = "maintcentral";
+	name = "Maintenance"
 	})
 "ee" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -2393,10 +2421,17 @@
 	})
 "ep" = (
 /obj/structure/closet/secure_closet/freezer/fridge{
-	anchored = 1
+	anchored = 1;
+	req_access = null
 	},
-/obj/machinery/light{
-	dir = 8
+/obj/structure/fluff{
+	desc = "A small wall mounted cabinet designed to hold a fire extinguisher. The release handle seems stuck, someone should probably contact OSHA.";
+	dir = 4;
+	icon = 'icons/obj/wallmounts.dmi';
+	icon_state = "extinguisher_closed";
+	name = "extinguisher cabinet";
+	pixel_x = -24;
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom{
@@ -2404,17 +2439,23 @@
 	name = "Kitchen"
 	})
 "eq" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/machinery/light{
-	dir = 1
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/centcom{
-	icon_state = "bar";
-	name = "Bar"
+/obj/structure/fluff{
+	desc = "Has a valve and pump attached to it.";
+	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
+	icon_state = "vent_out";
+	name = "air vent"
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom/prison{
+	icon_state = "checkpoint1";
+	name = "Arrivals Checkpoint"
 	})
 "er" = (
 /obj/machinery/vending/coffee,
@@ -2487,13 +2528,22 @@
 /turf/open/floor/plating,
 /area/centcom)
 "ew" = (
-/obj/machinery/light{
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/turf/open/floor/carpet/orange,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
 /area/centcom{
-	icon_state = "bar";
-	name = "Bar"
+	icon_state = "hallC";
+	name = "Central Hallway"
 	})
 "ex" = (
 /obj/structure/window/reinforced{
@@ -2635,25 +2685,8 @@
 /turf/open/floor/wood,
 /area/library/lounge)
 "eJ" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/white,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/wood,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
@@ -2677,13 +2710,14 @@
 	name = "Bar"
 	})
 "eM" = (
-/obj/machinery/light{
-	light_color = "#cee5d2"
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 1
 	},
-/turf/open/floor/carpet/orange,
-/area/centcom{
-	icon_state = "bar";
-	name = "Bar"
+/turf/open/openspace,
+/area/centcom/prison{
+	icon_state = "checkpoint1";
+	name = "Arrivals Checkpoint"
 	})
 "eN" = (
 /obj/machinery/door/window/eastright,
@@ -2714,11 +2748,15 @@
 	name = "Central Hallway"
 	})
 "eP" = (
-/obj/machinery/door/airlock/freezer{
-	name = "Bar Cold Room";
-	req_access_txt = "35;28;25"
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
 	},
-/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
+/obj/machinery/door/airlock{
+	name = "Bar Backroom";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel,
 /area/centcom{
 	icon_state = "bar";
 	name = "Bar"
@@ -2760,24 +2798,21 @@
 /turf/open/floor/plating,
 /area/centcom)
 "eS" = (
-/obj/item/paper/fluff{
-	desc = "Top-Secret Document";
-	info = "<h1>NT-REDACTED-ARCHIVE</h1><br>Date: NULL<br>Shift ID: NULL<br>Station: NTSS13-BAGIL<br>Station Contractor: TG<br>Notes:<br>Central Command officials have done an &quote;event&quote; on the station. According to the communications blackbox.<br><small>blue cat was here</small><br><br><h4>Attached image:</h4><img src='https://cdn.discordapp.com/attachments/604145125832261632/657145697254113280/legaly_allowed_to_ERP.PNG'></img>";
-	name = "NT-REDACTED-ARCHIVE-49"
+/obj/effect/oneway{
+	icon_state = "field_dir";
+	dir = 1
 	},
-/obj/structure/closet/crate/bin,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/roof,
 /area/space)
 "eT" = (
-/obj/structure/fans/tiny,
 /obj/machinery/door/airlock/freezer{
-	name = "Kitchen Cold Room";
-	req_access_txt = "35;28"
+	name = "Bar Cold Room";
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/centcom{
-	icon_state = "kitchen_cold";
-	name = "Kitchen Cold Room"
+	icon_state = "bar";
+	name = "Bar"
 	})
 "eU" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -2950,14 +2985,12 @@
 	name = "Cafeteria"
 	})
 "fg" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/obj/machinery/door/airlock/glass{
+	name = "Docking Gate"
 	},
-/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel/dark,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
 	})
 "fh" = (
 /obj/structure/fluff/railing{
@@ -2967,13 +3000,23 @@
 /turf/open/openspace,
 /area/space/nearstation)
 "fi" = (
-/obj/machinery/light{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
 	})
 "fj" = (
 /obj/structure/table/reinforced,
@@ -3200,11 +3243,10 @@
 	name = "NTS Artic Shuttle"
 	})
 "fA" = (
-/obj/structure/fans/tiny,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor{
-	id = "arrivalCP1_main";
-	name = "Checkpoint 1 Blast Door"
+	id = "arrivalCP2_main";
+	name = "Checkpoint 2 Blast Door"
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/prison{
@@ -3230,11 +3272,8 @@
 	})
 "fC" = (
 /obj/structure/closet/secure_closet/brig{
-	id = "brig1";
-	name = "Cell 1 Locker"
-	},
-/obj/machinery/light/small{
-	dir = 1
+	id = "brig2";
+	name = "Cell 2 Locker"
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -3246,7 +3285,7 @@
 	dir = 8
 	},
 /obj/machinery/flasher{
-	id = "brig1";
+	id = "brig2";
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel,
@@ -3290,14 +3329,12 @@
 /turf/open/openspace,
 /area/space/nearstation)
 "fG" = (
-/obj/machinery/light{
-	dir = 1
+/obj/structure/dresser,
+/obj/structure/sign/poster/contraband/clown{
+	pixel_y = -32
 	},
-/turf/open/floor/carpet/red,
-/area/centcom{
-	icon_state = "bar";
-	name = "Bar"
-	})
+/turf/open/floor/wood,
+/area/centcom)
 "fH" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel/grimy,
@@ -3310,11 +3347,27 @@
 	name = "Bar"
 	})
 "fJ" = (
-/obj/machinery/light/floor,
-/turf/open/floor/carpet/red,
-/area/centcom{
-	icon_state = "bar";
-	name = "Bar"
+/obj/structure/closet/secure_closet/brig{
+	id = "brig3";
+	name = "Cell 3 Locker"
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/flasher{
+	id = "brig3";
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison{
+	icon_state = "security";
+	name = "Security"
 	})
 "fK" = (
 /obj/effect/turf_decal/tile/blue{
@@ -3338,26 +3391,54 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "fM" = (
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
+/obj/machinery/vending/cola/random,
+/obj/effect/turf_decal/tile/neutral{
+	icon_state = "tile_corner";
+	dir = 4
 	},
-/obj/structure/closet/crate/bin,
-/turf/open/floor/carpet/red,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "hallC";
+	name = "Central Hallway"
 	})
 "fN" = (
 /turf/open/floor/carpet,
 /area/centcom)
 "fO" = (
-/obj/machinery/light{
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/carpet/red,
-/area/centcom{
-	icon_state = "bar";
-	name = "Bar"
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
 	})
 "fP" = (
 /obj/structure/sign/barsign{
@@ -3373,13 +3454,33 @@
 	name = "Bar"
 	})
 "fQ" = (
-/obj/machinery/light{
-	light_color = "#cee5d2"
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
-/turf/open/floor/carpet/red,
-/area/centcom{
-	icon_state = "bar";
-	name = "Bar"
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
 	})
 "fR" = (
 /obj/structure/sign/poster/official/high_class_martini{
@@ -3493,27 +3594,20 @@
 	name = "Cafeteria"
 	})
 "gb" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
+/obj/machinery/vending/games{
+	desc = "Vends things that help with tabletop RPGs.";
+	name = "\improper Old Vending Machine"
 	},
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
+/obj/structure{
+	anchored = 1;
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "dirt";
+	layer = 1;
+	mouse_opacity = 0;
+	name = "dust"
 	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/fluff{
-	desc = "Has a valve and pump attached to it.";
-	icon = 'icons/obj/atmospherics/components/unary_devices.dmi';
-	icon_state = "vent_out";
-	name = "air vent"
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
-	})
+/turf/open/floor/wood,
+/area/library/lounge)
 "gc" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -3529,6 +3623,10 @@
 	name = "Central Hallway"
 	})
 "gd" = (
+/obj/structure/table/wood/poker,
+/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/pill_bottle/dice,
+/obj/item/storage/pill_bottle/dice,
 /obj/structure{
 	anchored = 1;
 	icon = 'icons/effects/effects.dmi';
@@ -3536,9 +3634,6 @@
 	layer = 1;
 	mouse_opacity = 0;
 	name = "dust"
-	},
-/obj/machinery/light{
-	dir = 4
 	},
 /turf/open/floor/wood,
 /area/library/lounge)
@@ -3625,12 +3720,18 @@
 	name = "Bar"
 	})
 "gl" = (
-/obj/machinery/vending/autodrobe,
-/obj/machinery/light{
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/turf/open/floor/wood,
-/area/centcom)
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "hallC";
+	name = "Central Hallway"
+	})
 "gm" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -3673,30 +3774,16 @@
 	name = "Bar"
 	})
 "gp" = (
-/obj/structure/table,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "kitchen";
-	name = "Kitchen"
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/cafeteria,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
 	})
 "gq" = (
-/obj/structure/closet/secure_closet/freezer/kitchen{
-	anchored = 1
+/obj/structure/closet/secure_closet/freezer/fridge{
+	anchored = 1;
+	req_access = null
 	},
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/soysauce,
-/obj/item/reagent_containers/food/condiment/sugar,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -3711,19 +3798,16 @@
 	name = "Arrivals Checkpoint"
 	})
 "gs" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
-	anchored = 1
+/obj/structure/closet/secure_closet/freezer/kitchen{
+	anchored = 1;
+	req_access = null
 	},
-/obj/structure/fluff{
-	desc = "A small wall mounted cabinet designed to hold a fire extinguisher. The release handle seems stuck, someone should probably contact OSHA.";
-	dir = 4;
-	icon = 'icons/obj/wallmounts.dmi';
-	icon_state = "extinguisher_closed";
-	name = "extinguisher cabinet";
-	pixel_x = -24;
-	pixel_y = 0
+/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/soysauce,
+/obj/item/reagent_containers/food/condiment/sugar,
+/turf/open/floor/plasteel/cafeteria{
+	dir = 5
 	},
-/turf/open/floor/plasteel/cafeteria,
 /area/centcom{
 	icon_state = "kitchen";
 	name = "Kitchen"
@@ -3733,39 +3817,7 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "gu" = (
-/obj/machinery/light/small,
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 1
-	},
-/obj/structure/closet/secure_closet/freezer{
-	anchored = 1;
-	name = "Plants"
-	},
-/obj/item/reagent_containers/food/snacks/grown/ambrosia/gaia,
-/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
-/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
-/obj/item/reagent_containers/food/snacks/grown/ambrosia,
-/obj/item/reagent_containers/food/snacks/grown/apple,
-/obj/item/reagent_containers/food/snacks/grown/apple,
-/obj/item/reagent_containers/food/snacks/grown/apple,
-/obj/item/reagent_containers/food/snacks/grown/apple/gold,
-/obj/item/reagent_containers/food/snacks/grown/banana,
-/obj/item/reagent_containers/food/snacks/grown/banana,
-/obj/item/reagent_containers/food/snacks/grown/banana,
-/obj/item/reagent_containers/food/snacks/grown/banana/mime,
-/obj/item/reagent_containers/food/snacks/grown/berries,
-/obj/item/reagent_containers/food/snacks/grown/berries,
-/obj/item/reagent_containers/food/snacks/grown/berries,
-/obj/item/reagent_containers/food/snacks/grown/cabbage,
-/obj/item/reagent_containers/food/snacks/grown/cabbage,
-/obj/item/reagent_containers/food/snacks/grown/cabbage,
-/obj/item/reagent_containers/food/snacks/grown/chili,
-/obj/item/reagent_containers/food/snacks/grown/chili,
-/obj/item/reagent_containers/food/snacks/grown/chili,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
-/obj/item/reagent_containers/food/snacks/grown/watermelon,
+/obj/machinery/icecream_vat,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/centcom{
 	icon_state = "kitchen_cold";
@@ -3892,16 +3944,12 @@
 	name = "NTS Artic Shuttle"
 	})
 "gA" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
-	anchored = 1
+/obj/effect/oneway{
+	icon_state = "field_dir";
+	dir = 8
 	},
-/turf/open/floor/plasteel/cafeteria{
-	dir = 5
-	},
-/area/centcom{
-	icon_state = "kitchen";
-	name = "Kitchen"
-	})
+/turf/open/floor/plating/snowed/roof,
+/area/space)
 "gB" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/fluff{
@@ -4181,10 +4229,10 @@
 	name = "Bar"
 	})
 "hi" = (
+/obj/structure/kitchenspike,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 9
+	dir = 10
 	},
-/obj/machinery/light/small,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/centcom{
 	icon_state = "kitchen_cold";
@@ -4245,21 +4293,20 @@
 	name = "Cafeteria"
 	})
 "hp" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/processor,
 /turf/open/floor/plasteel/cafeteria,
-/area/centcom{
-	icon_state = "kitchen";
-	name = "Kitchen"
-	})
-"hq" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/carpet/green,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
+	})
+"hq" = (
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/centcom{
+	icon_state = "bar";
+	name = "Bar"
 	})
 "hr" = (
 /obj/structure/cable,
@@ -4310,26 +4357,24 @@
 	name = "NTS Artic Shuttle"
 	})
 "hy" = (
-/obj/machinery/vending/cola/random,
-/obj/effect/turf_decal/tile/neutral{
-	icon_state = "tile_corner";
-	dir = 4
+/obj/structure/table/wood/poker,
+/obj/item/lighter,
+/obj/item/lighter{
+	pixel_x = 6
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
+/obj/item/lighter{
+	pixel_x = -6
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
+/obj/structure{
+	anchored = 1;
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "dirt";
+	layer = 1;
+	mouse_opacity = 0;
+	name = "dust"
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
+/turf/open/floor/wood,
+/area/library/lounge)
 "hz" = (
 /obj/structure/chair/sofa/right{
 	icon_state = "sofaend_right";
@@ -4524,16 +4569,12 @@
 /turf/open/floor/plasteel/white,
 /area/centcom)
 "hS" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/airlock/maintenance{
-	name = "Freezer Maintenance";
-	req_access_txt = "35;28;25"
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/centcom{
-	icon_state = "maintcentral";
-	name = "Maintenance"
+/turf/open/floor/wood,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
 	})
 "hT" = (
 /obj/effect/turf_decal/trimline/neutral/line{
@@ -4573,15 +4614,13 @@
 	name = "NTS Artic Shuttle"
 	})
 "hX" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/airlock/maintenance{
-	name = "Kitchen Maintenance";
-	req_access_txt = "28"
+/obj/machinery/door/airlock/public/glass{
+	name = "Balcony Deck"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel/dark,
 /area/centcom{
-	icon_state = "maintcentral";
-	name = "Maintenance"
+	icon_state = "hallC";
+	name = "Central Hallway"
 	})
 "hY" = (
 /obj/machinery/camera/autoname,
@@ -4859,15 +4898,9 @@
 /turf/open/floor/plating,
 /area/centcom)
 "io" = (
-/obj/structure/table/reinforced,
-/obj/machinery/microwave,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
+/obj/structure/table/wood/fancy/black,
+/turf/open/floor/wood,
+/area/centcom)
 "ip" = (
 /obj/structure/barricade/wooden,
 /obj/structure{
@@ -5126,16 +5159,6 @@
 	},
 /turf/open/floor/plating,
 /area/centcom)
-"iO" = (
-/obj/structure/fluff/drake_statue{
-	color = "#FF0000";
-	name = "CITRUS, SET A NAME FOR THIS"
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
 "iP" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/glass/bowl{
@@ -5145,13 +5168,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"iQ" = (
-/obj/structure/fluff/drake_statue{
-	color = "#FF0000";
-	name = "CITRUS, SET A NAME FOR THIS"
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
 "iR" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Cafeteria"
@@ -5160,21 +5176,6 @@
 /area/centcom{
 	icon_state = "cafeteria";
 	name = "Cafeteria"
-	})
-"iS" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	icon_state = "tile_corner";
-	dir = 4
-	},
-/obj/structure/fluff/drake_statue{
-	color = "#FF0000";
-	name = "CITRUS, SET A NAME FOR THIS"
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
 	})
 "iT" = (
 /obj/machinery/door/airlock/glass_large{
@@ -5341,19 +5342,21 @@
 /turf/open/floor/plating,
 /area/centcom)
 "jj" = (
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/shaker,
-/obj/effect/turf_decal/tile/bar{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel,
+/obj/machinery/vending/cola/random,
+/turf/open/floor/plasteel/dark,
 /area/centcom{
-	icon_state = "bar";
-	name = "Bar"
+	icon_state = "hallC";
+	name = "Central Hallway"
 	})
 "jk" = (
 /obj/effect/turf_decal/tile/brown{
@@ -5458,20 +5461,15 @@
 /turf/open/floor/plasteel,
 /area/centcom)
 "jt" = (
-/obj/machinery/light{
-	light_color = "#cee5d2"
+/obj/structure/closet/crate/bin,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
+/obj/effect/turf_decal/tile/bar,
+/turf/open/floor/plasteel,
+/area/centcom{
+	icon_state = "bar";
+	name = "Bar"
 	})
 "ju" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -5543,9 +5541,15 @@
 /turf/open/floor/plasteel,
 /area/centcom)
 "jB" = (
-/obj/machinery/light,
-/turf/open/floor/wood,
-/area/centcom)
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "hallC";
+	name = "Central Hallway"
+	})
 "jC" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/airlock/public/glass{
@@ -5568,12 +5572,14 @@
 	name = "Arrivals Checkpoint"
 	})
 "jD" = (
-/obj/machinery/light{
-	dir = 8
+/obj/structure/closet/secure_closet/freezer/fridge{
+	anchored = 1;
+	req_access = null
 	},
-/turf/open/floor/wood,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom{
+	icon_state = "kitchen";
+	name = "Kitchen"
 	})
 "jE" = (
 /obj/structure/table/wood/fancy/green,
@@ -6430,25 +6436,11 @@
 	name = "Arrivals Checkpoint"
 	})
 "kP" = (
-/obj/machinery/vending/coffee,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	icon_state = "tile_corner";
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel/cafeteria,
 /area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
+	icon_state = "cafeteria";
+	name = "Cafeteria"
 	})
 "kQ" = (
 /obj/structure{
@@ -6796,12 +6788,21 @@
 /turf/open/floor/plating,
 /area/centcom)
 "ly" = (
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
+/obj/structure/rack,
+/obj/item/stack/packageWrap,
+/obj/item/hand_labeler,
+/obj/machinery/button/door{
+	id = "kitchenshutter";
+	name = "Table Shutter Controls";
+	pixel_x = 24;
+	pixel_y = 8;
+	req_one_access_txt = "0"
 	},
-/turf/open/floor/carpet,
-/area/centcom)
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom{
+	icon_state = "kitchen";
+	name = "Kitchen"
+	})
 "lz" = (
 /obj/structure/stone_tile/surrounding_tile/elderburnt{
 	dir = 1
@@ -6926,6 +6927,18 @@
 /obj/structure/stone_tile/elderburnt{
 	dir = 4
 	},
+/obj/structure{
+	anchored = 1;
+	color = "#00ff66";
+	desc = "A strange rune that seems to be meant for a ritual. Judging by the blood and burnt surroundings, it's likely that there is no way to do the ritual since it has already been done.";
+	icon = 'icons/effects/224x224.dmi';
+	icon_state = "huge_rune";
+	layer = 2;
+	max_integrity = 9000;
+	mouse_opacity = 0;
+	name = "Temple Rune";
+	pixel_y = -192
+	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "lL" = (
@@ -6945,6 +6958,19 @@
 	},
 /obj/structure/stone_tile/elderburnt{
 	dir = 4
+	},
+/obj/structure{
+	anchored = 1;
+	color = "#00ff66";
+	desc = "A strange rune that seems to be meant for a ritual. Judging by the blood and burnt surroundings, it's likely that there is no way to do the ritual since it has already been done.";
+	icon = 'icons/effects/224x224.dmi';
+	icon_state = "huge_rune";
+	layer = 2;
+	max_integrity = 9000;
+	mouse_opacity = 0;
+	name = "Temple Rune";
+	pixel_x = -192;
+	pixel_y = -192
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
@@ -6982,13 +7008,17 @@
 /turf/open/floor/wood,
 /area/library/lounge)
 "lP" = (
-/obj/structure/dresser,
-/obj/structure/sign/poster/contraband/clown{
-	pixel_y = -32
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 5
 	},
-/obj/machinery/light,
-/turf/open/floor/wood,
-/area/centcom)
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "kitchen";
+	name = "Kitchen"
+	})
 "lQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -7078,13 +7108,11 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom)
 "lZ" = (
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/turf/open/floor/wood,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom{
+	icon_state = "kitchen";
+	name = "Kitchen"
 	})
 "ma" = (
 /obj/structure/stone_tile/elder,
@@ -7222,32 +7250,13 @@
 /turf/open/floor/carpet,
 /area/centcom)
 "mi" = (
-/obj/structure/chair/sofa/right{
-	icon_state = "sofaend_right";
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
+/obj/structure/chair/sofa/left,
 /turf/open/floor/wood,
 /area/centcom)
 "mj" = (
-/obj/effect/turf_decal/tile/red{
-	icon_state = "tile_corner";
-	dir = 4
-	},
-/obj/structure/sign/departments/security{
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
+/obj/structure/chair/sofa/right,
+/turf/open/floor/wood,
+/area/centcom)
 "mk" = (
 /obj/structure/stone_tile/elderburnt{
 	dir = 4
@@ -7267,45 +7276,21 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "mm" = (
-/obj/structure/stone_tile/elder,
-/obj/structure/stone_tile/elder{
-	dir = 1
+/obj/structure/closet/secure_closet/medical3{
+	anchored = 1;
+	req_access = null
 	},
-/obj/structure/stone_tile/elder{
-	dir = 4
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/lazarus_injector,
+/obj/item/lazarus_injector,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/structure/sign/poster/official/no_erp{
+	pixel_y = -32
 	},
-/obj/structure/stone_tile/elder{
-	dir = 8
-	},
-/obj/structure/table/wood/fancy/green,
-/obj/item/clothing/shoes/cult{
-	desc = "A pair of boots worn by the followers of an eldritch cult.";
-	name = "\improper Cultist invoker boots"
-	},
-/obj/item/clothing/shoes/cult{
-	desc = "A pair of boots worn by the followers of an eldritch cult.";
-	name = "\improper Cultist invoker boots"
-	},
-/obj/item/clothing/shoes/cult{
-	desc = "A pair of boots worn by the followers of an eldritch cult.";
-	name = "\improper Cultist invoker boots"
-	},
-/obj/item/clothing/shoes/cult{
-	desc = "A pair of boots worn by the followers of an eldritch cult.";
-	name = "\improper Cultist invoker boots"
-	},
-/obj/item/clothing/shoes/cult{
-	desc = "A pair of boots worn by the followers of an eldritch cult.";
-	name = "\improper Cultist invoker boots"
-	},
-/obj/item/clothing/shoes/cult{
-	desc = "A pair of boots worn by the followers of an eldritch cult.";
-	name = "\improper Cultist invoker boots"
-	},
-/turf/open/indestructible/boss{
-	name = "Temple Floor"
-	},
-/area/awaymission/snowdin/cave/mountain)
+/turf/open/floor/plasteel/white,
+/area/centcom)
 "mn" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -7373,26 +7358,6 @@
 /obj/machinery/vending/sustenance,
 /turf/open/floor/plating,
 /area/centcom)
-"mt" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "mu" = (
 /obj/structure/stone_tile/elderblock{
 	dir = 8
@@ -7558,24 +7523,12 @@
 /turf/open/floor/carpet/black,
 /area/library/lounge)
 "mI" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/structure/chair/sofa/right{
+	icon_state = "sofaend_right";
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/electrical,
-/obj/machinery/light,
-/turf/open/floor/plasteel/dark,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
-	})
+/turf/open/floor/wood,
+/area/centcom)
 "mJ" = (
 /obj/structure{
 	anchored = 1;
@@ -7689,9 +7642,9 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "mS" = (
-/obj/structure/chair/sofa/left,
-/obj/machinery/light{
-	dir = 1
+/obj/structure/chair/sofa/left{
+	icon_state = "sofaend_left";
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/centcom)
@@ -7878,32 +7831,37 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "nh" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 4
+/obj/machinery/vending/coffee,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
-"ni" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	icon_state = "tile_corner";
+/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/closet,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light{
-	light_color = "#cee5d2"
+/obj/effect/turf_decal/tile/neutral{
+	icon_state = "tile_corner";
+	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "hallC";
+	name = "Central Hallway"
+	})
+"ni" = (
+/obj/structure/table,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom{
+	icon_state = "kitchen";
+	name = "Kitchen"
 	})
 "nj" = (
 /obj/structure/table/wood/fancy/green,
@@ -7954,6 +7912,19 @@
 /obj/structure/stone_tile/elderburnt{
 	dir = 8
 	},
+/obj/structure{
+	anchored = 1;
+	color = "#00ff66";
+	desc = "A strange rune that seems to be meant for a ritual. Judging by the blood and burnt surroundings, it's likely that there is no way to do the ritual since it has already been done.";
+	icon = 'icons/effects/224x224.dmi';
+	icon_state = "huge_rune";
+	layer = 2;
+	max_integrity = 9000;
+	mouse_opacity = 0;
+	name = "Temple Rune";
+	pixel_x = -192;
+	pixel_y = 0
+	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "nn" = (
@@ -7987,12 +7958,19 @@
 	},
 /area/awaymission/snowdin/cave/mountain)
 "nq" = (
+/obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/light{
-	light_color = "#cee5d2"
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/neutral{
+	icon_state = "tile_corner";
+	dir = 4
+	},
+/obj/structure/closet/crate/bin,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/centcom{
 	icon_state = "hallC";
@@ -8122,8 +8100,11 @@
 /turf/open/floor/carpet/green,
 /area/awaymission/snowdin/cave/mountain)
 "nE" = (
-/obj/effect/oneway,
-/turf/open/floor/plating/snowed/temperatre,
+/obj/effect/oneway{
+	icon_state = "field_dir";
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/roof,
 /area/space)
 "nF" = (
 /obj/structure/stone_tile/elderslab,
@@ -8141,14 +8122,14 @@
 	},
 /area/awaymission/snowdin/cave/mountain)
 "nG" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Docking Gate";
-	req_access_txt = "19"
+/obj/machinery/door/airlock/medical/glass{
+	name = "Service Door";
+	req_one_access_txt = "0"
 	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
+/turf/open/floor/plasteel/cafeteria,
+/area/centcom{
+	icon_state = "kitchen";
+	name = "Kitchen"
 	})
 "nH" = (
 /obj/structure/window/reinforced,
@@ -8182,13 +8163,13 @@
 /turf/open/floor/carpet/green,
 /area/awaymission/snowdin/cave/mountain)
 "nL" = (
-/obj/machinery/light{
+/obj/structure/fluff/railing{
+	icon_state = "railing";
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
 	})
 "nM" = (
 /obj/structure/stone_tile/elderblock{
@@ -8229,15 +8210,13 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "nR" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
+/obj/structure/fluff/railing{
+	icon_state = "railing";
+	dir = 8
 	},
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/centcom{
-	icon_state = "bar";
-	name = "Bar"
+/turf/open/floor/plasteel/dark,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
 	})
 "nS" = (
 /obj/structure/stone_tile/elder{
@@ -8293,13 +8272,17 @@
 /turf/open/floor/carpet/green,
 /area/awaymission/snowdin/cave/mountain)
 "nX" = (
-/obj/machinery/processor,
-/obj/machinery/light{
-	dir = 4
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	icon_state = "tile_corner";
+	dir = 8
 	},
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
+/obj/structure/closet,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/centcom/prison{
+	icon_state = "checkpoint1";
+	name = "Arrivals Checkpoint"
 	})
 "nY" = (
 /obj/structure/stone_tile/elderburnt{
@@ -8482,26 +8465,10 @@
 	},
 /area/awaymission/snowdin/cave/mountain)
 "oo" = (
-/obj/machinery/holopad,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 5
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
+/obj/machinery/ntnet_relay,
+/turf/open/floor/plasteel/dark/telecomms,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
 	})
 "op" = (
 /obj/structure/stone_tile/elderblock,
@@ -8679,8 +8646,7 @@
 	},
 /area/awaymission/snowdin/cave/mountain)
 "oE" = (
-/obj/structure/stone_tile/eldersurrounding,
-/obj/structure/stone_tile/eldercenter,
+/obj/structure/stone_tile/elderslab,
 /obj/structure/ladder/unbreakable/rune{
 	alpha = 0;
 	color = "";
@@ -8691,15 +8657,6 @@
 	id = "AnAncientChineseSecret";
 	mouse_opacity = 0;
 	name = "AAAAAAA"
-	},
-/obj/structure/ladder/unbreakable/rune{
-	color = "";
-	desc = "It'll take you outside. Try not to get lost.";
-	height = 1;
-	icon = 'icons/mob/nest.dmi';
-	icon_state = "colossus";
-	id = "DudeILoveEldritchHorror";
-	name = "\improper Exit Portal"
 	},
 /turf/open/indestructible/boss{
 	name = "Temple Floor"
@@ -8788,14 +8745,12 @@
 	},
 /area/awaymission/snowdin/cave/mountain)
 "oM" = (
-/obj/structure/stone_tile/elderblock,
-/obj/structure/stone_tile/elderblock{
-	dir = 1
+/obj/machinery/door/airlock/grunge{
+	name = "Morgue";
+	req_access_txt = "0"
 	},
-/turf/open/indestructible/boss{
-	name = "Temple Floor"
-	},
-/area/awaymission/snowdin/cave/mountain)
+/turf/open/floor/plasteel/white,
+/area/centcom)
 "oN" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet/green,
@@ -8804,15 +8759,14 @@
 /turf/open/floor/plating/snowed/roof,
 /area/space)
 "oP" = (
-/obj/machinery/light{
-	dir = 4
+/obj/structure/stone_tile/elderblock,
+/obj/structure/stone_tile/elderblock{
+	dir = 1
 	},
-/obj/structure/fluff/railing,
-/turf/open/openspace,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
-	})
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
+/area/awaymission/snowdin/cave/mountain)
 "oQ" = (
 /obj/structure/fluff/railing{
 	icon_state = "railing";
@@ -8828,17 +8782,42 @@
 /turf/open/openspace,
 /area/space/nearstation)
 "oS" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/fluff/railing{
-	icon_state = "railing";
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
 	dir = 1
 	},
-/turf/open/openspace,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
+/obj/structure/closet/secure_closet/freezer{
+	anchored = 1;
+	name = "Plants"
+	},
+/obj/item/reagent_containers/food/snacks/grown/ambrosia/gaia,
+/obj/item/reagent_containers/food/snacks/grown/ambrosia/deus,
+/obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+/obj/item/reagent_containers/food/snacks/grown/ambrosia,
+/obj/item/reagent_containers/food/snacks/grown/apple,
+/obj/item/reagent_containers/food/snacks/grown/apple,
+/obj/item/reagent_containers/food/snacks/grown/apple,
+/obj/item/reagent_containers/food/snacks/grown/apple/gold,
+/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/reagent_containers/food/snacks/grown/banana,
+/obj/item/reagent_containers/food/snacks/grown/banana/mime,
+/obj/item/reagent_containers/food/snacks/grown/berries,
+/obj/item/reagent_containers/food/snacks/grown/berries,
+/obj/item/reagent_containers/food/snacks/grown/berries,
+/obj/item/reagent_containers/food/snacks/grown/cabbage,
+/obj/item/reagent_containers/food/snacks/grown/cabbage,
+/obj/item/reagent_containers/food/snacks/grown/cabbage,
+/obj/item/reagent_containers/food/snacks/grown/chili,
+/obj/item/reagent_containers/food/snacks/grown/chili,
+/obj/item/reagent_containers/food/snacks/grown/chili,
+/obj/item/reagent_containers/food/snacks/grown/watermelon,
+/obj/item/reagent_containers/food/snacks/grown/watermelon,
+/obj/item/reagent_containers/food/snacks/grown/watermelon,
+/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
+/area/centcom{
+	icon_state = "kitchen_cold";
+	name = "Kitchen Cold Room"
 	})
 "oT" = (
 /obj/effect/turf_decal/stripes/full,
@@ -8936,25 +8915,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/centcom)
-"pc" = (
-/obj/structure/rack,
-/obj/item/stack/packageWrap,
-/obj/item/hand_labeler,
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "kitchenshutter";
-	name = "Privacy Shutter Controls";
-	pixel_x = 24;
-	pixel_y = 8;
-	req_one_access_txt = "35;28"
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/centcom{
-	icon_state = "kitchen";
-	name = "Kitchen"
-	})
 "pd" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/pie/cream,
@@ -9392,21 +9352,13 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom)
 "pQ" = (
-/obj/effect/turf_decal/tile/red{
-	icon_state = "tile_corner";
-	dir = 4
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
 	},
-/obj/effect/turf_decal/tile/red{
-	icon_state = "tile_corner";
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
+/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
+/area/centcom{
+	icon_state = "kitchen_cold";
+	name = "Kitchen Cold Room"
 	})
 "pR" = (
 /obj/structure/table/reinforced,
@@ -9428,6 +9380,19 @@
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/carpet/black,
 /area/centcom)
+"pX" = (
+/obj/item/paper/fluff{
+	desc = "Top-Secret Document";
+	info = "<h1>NT-REDACTED-ARCHIVE</h1><br>Date: NULL<br>Shift ID: NULL<br>Station: NTSS13-BAGIL<br>Station Contractor: TG<br>Notes:<br>Central Command officials have done an &quote;event&quote; on the station. According to the communications blackbox.<br><small>blue cat was here</small><br><br><h4>Attached image:</h4><img src='https://cdn.discordapp.com/attachments/604145125832261632/657145697254113280/legaly_allowed_to_ERP.PNG'></img>";
+	name = "NT-REDACTED-ARCHIVE-49"
+	},
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plating/snowed/roof,
+/area/space)
+"pY" = (
+/obj/effect/oneway,
+/turf/open/floor/plating/snowed/roof,
+/area/space)
 "pZ" = (
 /turf/closed/indestructible/rock/snow/ice,
 /area/centcom)
@@ -9633,12 +9598,6 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
-"qV" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/centcom)
 "qZ" = (
 /obj/machinery/grill,
 /turf/open/floor/plasteel/cafeteria,
@@ -9716,14 +9675,6 @@
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/dark,
 /area/centcom)
-"rt" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
-	anchored = 1
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "rv" = (
 /obj/structure/table/wood,
 /obj/item/pda/clear,
@@ -9910,28 +9861,6 @@
 	},
 /turf/open/floor/carpet,
 /area/centcom)
-"sz" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "sA" = (
 /obj/structure/sign/poster/official/love_ian{
 	pixel_x = -32
@@ -9952,27 +9881,6 @@
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/dark,
 /area/centcom)
-"sF" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/corner,
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "sH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/cobweb,
@@ -10058,15 +9966,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"tk" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/centcom)
 "tp" = (
 /obj/structure/fluff/hedge,
 /turf/open/floor/plasteel/grimy,
@@ -10121,22 +10020,6 @@
 /area/centcom{
 	icon_state = "kitchen";
 	name = "Kitchen"
-	})
-"tE" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	icon_state = "tile_corner";
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
 	})
 "tI" = (
 /obj/structure/rack,
@@ -10208,19 +10091,6 @@
 	icon_state = "kitchen";
 	name = "Kitchen"
 	})
-"tR" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
 "tS" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -10291,13 +10161,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"ul" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
-	})
 "um" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plasteel/white,
@@ -10333,13 +10196,6 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom)
-"ut" = (
-/obj/machinery/light/floor,
-/turf/open/floor/plasteel/cafeteria,
-/area/centcom{
-	icon_state = "cafeteria";
-	name = "Cafeteria"
-	})
 "uu" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -10349,26 +10205,6 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/dark,
 /area/centcom)
-"uB" = (
-/obj/structure/closet,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
-	})
-"uC" = (
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
-	})
 "uF" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -10477,38 +10313,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"vk" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 8
-	},
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "vq" = (
 /obj/machinery/vending/autodrobe,
 /turf/open/floor/wood,
@@ -10569,34 +10373,6 @@
 /obj/structure/fluff/railing/corner,
 /turf/open/openspace,
 /area/space/nearstation)
-"vP" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/centcom)
-"vR" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	icon_state = "tile_corner";
-	dir = 4
-	},
-/obj/structure/closet/crate/bin,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
 "vS" = (
 /obj/structure{
 	anchored = 1;
@@ -10730,10 +10506,6 @@
 /obj/structure/curtain/bounty,
 /turf/open/floor/wood,
 /area/centcom)
-"wG" = (
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/wood,
-/area/centcom)
 "wH" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -10744,18 +10516,6 @@
 	},
 /turf/open/floor/carpet/green,
 /area/centcom)
-"wI" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/newscaster{
-	pixel_x = -28
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/centcom{
-	icon_state = "cafeteria";
-	name = "Cafeteria"
-	})
 "wO" = (
 /obj/machinery/deepfryer,
 /obj/effect/turf_decal/tile/neutral,
@@ -11241,45 +11001,11 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
-"zK" = (
-/obj/effect/turf_decal/tile/red{
-	icon_state = "tile_corner";
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	icon_state = "tile_corner";
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
-	})
 "zL" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	icon_state = "tile_corner";
 	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
-"zM" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom{
@@ -11427,45 +11153,9 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/centcom)
-"An" = (
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
-"Aq" = (
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "Au" = (
 /turf/open/openspace,
 /area/awaymission/snowdin/outside)
-"Aw" = (
-/obj/structure/chair/sofa/right,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/centcom)
 "Ax" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/carpet/black,
@@ -11522,20 +11212,6 @@
 /area/centcom/prison{
 	icon_state = "security";
 	name = "Security"
-	})
-"AD" = (
-/obj/structure/kitchenspike,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	light_color = "#ffc1c1"
-	},
-/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
-/area/centcom{
-	icon_state = "kitchen_cold";
-	name = "Kitchen Cold Room"
 	})
 "AK" = (
 /obj/effect/turf_decal/stripes/white/box,
@@ -11624,20 +11300,6 @@
 	icon_state = "security";
 	name = "Security"
 	})
-"Bk" = (
-/obj/effect/turf_decal/tile/neutral{
-	icon_state = "tile_corner";
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
 "Bl" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -11711,10 +11373,6 @@
 	icon_state = "kitchen_cold";
 	name = "Kitchen Cold Room"
 	})
-"BA" = (
-/obj/machinery/light/floor,
-/turf/open/floor/wood,
-/area/centcom)
 "BB" = (
 /obj/structure{
 	anchored = 1;
@@ -11826,16 +11484,6 @@
 /obj/item/clothing/under/suit/black/skirt,
 /turf/open/floor/plasteel/dark,
 /area/centcom)
-"Ck" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/cafeteria,
-/area/centcom{
-	icon_state = "cafeteria";
-	name = "Cafeteria"
-	})
 "Cn" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -11866,28 +11514,6 @@
 	icon_state = "security";
 	name = "Security"
 	})
-"Cs" = (
-/obj/structure/table/wood/poker,
-/obj/item/lighter,
-/obj/item/lighter{
-	pixel_x = 6
-	},
-/obj/item/lighter{
-	pixel_x = -6
-	},
-/obj/structure{
-	anchored = 1;
-	icon = 'icons/effects/effects.dmi';
-	icon_state = "dirt";
-	layer = 1;
-	mouse_opacity = 0;
-	name = "dust"
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/library/lounge)
 "Ct" = (
 /obj/effect/turf_decal/stripes/corner{
 	icon_state = "warninglinecorner";
@@ -12024,15 +11650,6 @@
 /obj/structure/dresser,
 /turf/open/floor/carpet/red,
 /area/centcom)
-"Df" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/centcom)
 "Dj" = (
 /turf/open/floor/wood,
 /area/shuttle/custom{
@@ -12046,12 +11663,6 @@
 /obj/item/pen/red,
 /turf/open/floor/carpet/black,
 /area/library/lounge)
-"Dn" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/centcom)
 "Do" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -12176,26 +11787,6 @@
 /obj/structure/dresser,
 /turf/open/floor/wood,
 /area/centcom)
-"DR" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/vending/cola/random,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
 "DS" = (
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/dark,
@@ -12208,13 +11799,6 @@
 	dir = 4
 	},
 /area/awaymission/snowdin/outside)
-"DV" = (
-/obj/machinery/door/airlock/public/glass,
-/turf/open/floor/plasteel,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
 "DX" = (
 /obj/structure/chair/wood{
 	icon_state = "wooden_chair";
@@ -12327,22 +11911,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom)
-"EB" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
-	})
 "ED" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -12403,38 +11971,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"ET" = (
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
-"EZ" = (
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/obj/machinery/deepfryer,
-/turf/open/floor/plasteel/cafeteria,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "Fa" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue{
@@ -12449,38 +11985,6 @@
 /area/centcom/prison{
 	icon_state = "security";
 	name = "Security"
-	})
-"Fd" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 4
-	},
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
 	})
 "Ff" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -12601,13 +12105,6 @@
 	},
 /turf/open/floor/plating,
 /area/centcom)
-"FL" = (
-/obj/effect/oneway{
-	icon_state = "field_dir";
-	dir = 1
-	},
-/turf/open/floor/plating/snowed/temperatre,
-/area/space)
 "FM" = (
 /obj/effect/turf_decal/stripes/line{
 	icon_state = "warningline";
@@ -12617,15 +12114,6 @@
 /area/centcom/prison{
 	icon_state = "security";
 	name = "Security"
-	})
-"FN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
 	})
 "FO" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -12646,14 +12134,6 @@
 	icon_state = "security";
 	name = "Security"
 	})
-"FU" = (
-/obj/structure/chair/stool/bar,
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/turf/open/floor/carpet,
-/area/centcom)
 "FV" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -12747,28 +12227,6 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
-"Gs" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "Gv" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -12789,12 +12247,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"Gz" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/centcom)
 "GD" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -12815,21 +12267,6 @@
 "GE" = (
 /turf/open/floor/wood,
 /area/centcom)
-"GH" = (
-/obj/machinery/light,
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-22"
-	},
-/turf/open/floor/wood,
-/area/centcom)
-"GL" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "GN" = (
 /turf/open/floor/plasteel/dark,
 /area/centcom/prison{
@@ -12874,14 +12311,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"Ha" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "Hb" = (
 /obj/structure/fluff{
 	desc = "Has a valve and pump attached to it.";
@@ -12919,47 +12348,12 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"Ht" = (
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/turf/open/floor/carpet/red,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "HE" = (
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/plasteel/dark,
 /area/centcom{
 	icon_state = "kitchen";
 	name = "Kitchen"
-	})
-"HF" = (
-/obj/structure/closet/secure_closet/brig{
-	id = "brig2";
-	name = "Cell 2 Locker"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/flasher{
-	id = "brig2";
-	pixel_x = -28
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
 	})
 "HG" = (
 /obj/effect/turf_decal/delivery,
@@ -13007,20 +12401,6 @@
 	icon_state = "bar";
 	name = "Bar"
 	})
-"HS" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	icon_state = "tile_corner";
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
 "HT" = (
 /obj/structure/chair/sofa/corner{
 	icon_state = "sofacorner";
@@ -13028,18 +12408,6 @@
 	},
 /turf/open/floor/wood,
 /area/centcom)
-"HX" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
 "HZ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -13134,13 +12502,6 @@
 	icon_state = "bar";
 	name = "Bar"
 	})
-"Iu" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/wood,
-/area/centcom)
 "Iw" = (
 /obj/item/storage/box/teargas{
 	pixel_x = 3;
@@ -13321,20 +12682,6 @@
 	},
 /turf/open/floor/wood,
 /area/library/lounge)
-"JC" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	icon_state = "tile_corner";
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
-	})
 "JD" = (
 /obj/structure{
 	anchored = 1;
@@ -13379,32 +12726,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"Kg" = (
-/obj/structure/closet/secure_closet/brig{
-	id = "brig3";
-	name = "Cell 3 Locker"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/flasher{
-	id = "brig3";
-	pixel_x = -28
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
-	})
 "Kn" = (
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 1
@@ -13416,16 +12737,6 @@
 /area/centcom/prison{
 	icon_state = "security";
 	name = "Security"
-	})
-"Kr" = (
-/obj/machinery/door/airlock/medical/glass{
-	name = "Service Door";
-	req_one_access_txt = "35;28"
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/centcom{
-	icon_state = "kitchen";
-	name = "Kitchen"
 	})
 "KB" = (
 /obj/structure{
@@ -13538,12 +12849,6 @@
 /obj/item/pen,
 /turf/open/floor/wood,
 /area/centcom)
-"Li" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/carpet/black,
-/area/centcom)
 "Lm" = (
 /obj/structure/chair/wood{
 	icon_state = "wooden_chair";
@@ -13620,22 +12925,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"Lx" = (
-/obj/machinery/gibber,
-/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
-/area/centcom{
-	icon_state = "kitchen_cold";
-	name = "Kitchen Cold Room"
-	})
-"LA" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/wood,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "LE" = (
 /obj/structure/chair/stool,
 /turf/open/floor/wood,
@@ -13691,12 +12980,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/centcom)
-"LU" = (
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/wood,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "LW" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral{
@@ -13794,16 +13077,6 @@
 	icon_state = "cafeteria";
 	name = "Cafeteria"
 	})
-"Mv" = (
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/turf/open/floor/carpet,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
-	})
 "Mw" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cafeteria,
@@ -13881,19 +13154,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom)
-"MY" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
 "Ne" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/beaker{
@@ -14168,24 +13428,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom)
-"Oi" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/recharger{
-	pixel_x = -6
-	},
-/obj/machinery/recharger{
-	pixel_x = 6
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
-	})
 "On" = (
 /obj/structure/bonfire,
 /turf/open/indestructible/cobble,
@@ -14279,20 +13521,6 @@
 	},
 /turf/open/floor/carpet/black,
 /area/library/lounge)
-"OI" = (
-/obj/structure/closet/crate/bin,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/bar,
-/turf/open/floor/plasteel,
-/area/centcom{
-	icon_state = "bar";
-	name = "Bar"
-	})
 "ON" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -14457,21 +13685,6 @@
 /area/centcom{
 	icon_state = "bar";
 	name = "Bar"
-	})
-"PG" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/item/storage/firstaid/brute,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
 	})
 "PH" = (
 /obj/machinery/firealarm{
@@ -14654,18 +13867,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"Qp" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/wood,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
-"Qs" = (
-/turf/open/floor/plating/snowed/temperatre,
-/area/space)
 "QG" = (
 /obj/structure{
 	anchored = 1;
@@ -14679,13 +13880,6 @@
 	name = "cage floor"
 	},
 /area/centcom)
-"QH" = (
-/obj/effect/oneway{
-	icon_state = "field_dir";
-	dir = 8
-	},
-/turf/open/floor/plating/snowed/temperatre,
-/area/space)
 "QK" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -14723,32 +13917,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "security";
-	name = "Security"
-	})
-"QP" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
 /area/centcom/prison{
 	icon_state = "security";
 	name = "Security"
@@ -14862,15 +14030,6 @@
 	},
 /turf/open/floor/wood,
 /area/library/lounge)
-"Rv" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/centcom{
-	icon_state = "cafeteria";
-	name = "Cafeteria"
-	})
 "Rz" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/fancy/cigarettes/cigars/cohiba{
@@ -14901,15 +14060,6 @@
 /area/centcom{
 	icon_state = "kitchen_cold";
 	name = "Kitchen Cold Room"
-	})
-"RF" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison{
-	icon_state = "checkpoint1";
-	name = "Arrivals Checkpoint"
 	})
 "RG" = (
 /obj/structure/table/wood,
@@ -14965,19 +14115,6 @@
 /area/centcom/prison{
 	icon_state = "security";
 	name = "Security"
-	})
-"RY" = (
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/centcom{
-	icon_state = "bar";
-	name = "Bar"
 	})
 "RZ" = (
 /obj/structure/fluff{
@@ -15175,15 +14312,6 @@
 	icon_state = "cafeteria";
 	name = "Cafeteria"
 	})
-"TD" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/closet/crate/bin,
-/turf/open/floor/carpet/green,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "TF" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/plasteel/cafeteria,
@@ -15232,35 +14360,6 @@
 /obj/item/toy/eightball,
 /turf/open/floor/plasteel/dark,
 /area/centcom)
-"TN" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	icon_state = "tile_corner";
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
-"TO" = (
-/obj/structure/table,
-/obj/machinery/microwave,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/camera/autoname{
-	icon_state = "camera";
-	dir = 5
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "kitchen";
-	name = "Kitchen"
-	})
 "TQ" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue,
@@ -15538,16 +14637,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"Vr" = (
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/obj/machinery/ntnet_relay,
-/turf/open/floor/plasteel/dark/telecomms,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "Vs" = (
 /obj/structure{
 	anchored = 1;
@@ -15600,13 +14689,6 @@
 	icon_state = "security";
 	name = "Security"
 	})
-"VO" = (
-/obj/structure/chair/stool/bar,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/centcom)
 "VQ" = (
 /obj/machinery/vending/cigarette/beach,
 /turf/open/floor/wood,
@@ -15643,14 +14725,6 @@
 /area/library/lounge)
 "VW" = (
 /obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/dark,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
-"VY" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
@@ -15716,46 +14790,6 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
-	})
-"Wi" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
-"Wk" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
-"Wl" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
 	})
 "Wm" = (
 /obj/machinery/door/airlock/hatch{
@@ -15826,25 +14860,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"Xa" = (
-/obj/effect/oneway{
-	icon_state = "field_dir";
-	dir = 4
-	},
-/turf/open/floor/plating/snowed/temperatre,
-/area/space)
-"Xc" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
 "Xe" = (
 /obj/structure/table/reinforced,
 /obj/machinery/chem_dispenser/drinks/fullupgrade{
@@ -15883,14 +14898,6 @@
 	icon_state = "kitchen";
 	name = "Kitchen"
 	})
-"Xl" = (
-/obj/machinery/light{
-	dir = 8;
-	light_color = "#e8eaff"
-	},
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/wood,
-/area/centcom)
 "Xm" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -15951,11 +14958,6 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
-"XF" = (
-/obj/structure/table/wood/fancy/black,
-/obj/machinery/light,
-/turf/open/floor/wood,
-/area/centcom)
 "XG" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel,
@@ -16038,12 +15040,6 @@
 	},
 /turf/open/floor/wood,
 /area/centcom)
-"Yk" = (
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "Yq" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -16086,32 +15082,6 @@
 	icon_state = "kitchen";
 	name = "Kitchen"
 	})
-"Yw" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/fans/tiny/invisible,
-/turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
 "Yz" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -16129,16 +15099,6 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
-"YJ" = (
-/obj/structure/chair/sofa/left{
-	icon_state = "sofaend_left";
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/centcom)
 "YL" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
@@ -16280,30 +15240,6 @@
 	icon_state = "kitchen";
 	name = "Kitchen"
 	})
-"Zz" = (
-/obj/structure/fluff/railing{
-	icon_state = "railing";
-	dir = 8
-	},
-/obj/machinery/light{
-	light_color = "#cee5d2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
-"ZB" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/centcom{
-	icon_state = "hallC";
-	name = "Central Hallway"
-	})
 "ZC" = (
 /obj/structure{
 	anchored = 1;
@@ -16325,24 +15261,6 @@
 	icon_state = "security";
 	name = "Security"
 	})
-"ZE" = (
-/obj/structure/table/wood/poker,
-/obj/item/storage/pill_bottle/dice,
-/obj/item/storage/pill_bottle/dice,
-/obj/item/storage/pill_bottle/dice,
-/obj/structure{
-	anchored = 1;
-	icon = 'icons/effects/effects.dmi';
-	icon_state = "dirt";
-	layer = 1;
-	mouse_opacity = 0;
-	name = "dust"
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/library/lounge)
 "ZF" = (
 /obj/effect/turf_decal/plaque{
 	desc = "#Mapperbus please change this."
@@ -16565,7 +15483,7 @@ aa
 "}
 (2,1,1) = {"
 aa
-aa
+aU
 aa
 aa
 aa
@@ -17784,9 +16702,9 @@ ac
 ac
 ac
 ac
+oO
 ac
-ac
-ac
+oO
 ac
 ac
 ac
@@ -17985,11 +16903,11 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -18186,13 +17104,13 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -18387,15 +17305,15 @@ aa
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -18590,13 +17508,13 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -18792,14 +17710,14 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -18994,13 +17912,13 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -19195,15 +18113,15 @@ aa
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -19398,13 +18316,13 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -19601,11 +18519,11 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -19804,9 +18722,9 @@ ac
 ac
 ac
 ac
+oO
 ac
-ac
-ac
+oO
 ac
 ac
 ac
@@ -20274,20 +19192,20 @@ ac
 vN
 fh
 ae
+ai
+ai
+ai
+ai
+ai
+ai
 ak
-ak
-ak
-ak
-ak
-ak
-mt
-Yk
-Yk
-Yk
+ad
+ad
+ad
 ae
-ak
-Wk
-Yw
+ai
+fi
+Wh
 xM
 xM
 xM
@@ -20298,30 +19216,30 @@ xM
 xM
 xM
 xM
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
 xM
 xM
 xM
@@ -20475,7 +19393,7 @@ ac
 vN
 fh
 ae
-ah
+af
 ad
 ad
 ad
@@ -20488,7 +19406,7 @@ ad
 ad
 wc
 TQ
-sz
+Ef
 xM
 xM
 xM
@@ -20507,7 +19425,6 @@ Dj
 Dj
 Dj
 Dj
-GL
 Dj
 Dj
 Dj
@@ -20519,7 +19436,8 @@ Dj
 Dj
 Dj
 Dj
-GL
+Dj
+Dj
 Dj
 Dj
 Dj
@@ -20676,14 +19594,14 @@ ac
 vN
 fh
 ae
-ah
+af
 ad
 ad
 ad
 ad
 ad
 TQ
-cA
+ao
 Ef
 ad
 ad
@@ -20722,9 +19640,9 @@ qg
 qg
 xM
 xM
-an
-an
-an
+fg
+fg
+fg
 xM
 sV
 Vn
@@ -20877,19 +19795,19 @@ ac
 vN
 fh
 ae
-ah
+af
 ad
 ad
 ad
 TQ
-cA
 ao
-aq
+ao
+cB
 xM
 qg
-nG
-nG
-nG
+an
+an
+an
 qg
 qg
 xM
@@ -20905,17 +19823,17 @@ xM
 xM
 xM
 xM
-fM
-jZ
-Ht
+aS
 jZ
 jZ
 jZ
 jZ
 jZ
-Ht
 jZ
-Ht
+jZ
+jZ
+jZ
+jZ
 aS
 xM
 VW
@@ -21078,12 +19996,12 @@ ac
 vN
 fh
 ae
-ah
+af
 aj
 TQ
-cA
 ao
-aq
+ao
+cB
 xM
 qg
 qg
@@ -21094,15 +20012,15 @@ Wh
 Wh
 az
 aA
-aG
+Wh
 pN
 xM
 xM
 WZ
 Hf
 aM
-rt
-EZ
+bp
+gp
 MR
 aO
 jZ
@@ -21130,16 +20048,16 @@ jZ
 jZ
 jZ
 xf
-nh
+nL
 xM
 aY
 Nq
 Nq
 Nq
-Vr
+oo
 Nq
 Nq
-An
+Nq
 xM
 xM
 xM
@@ -21279,10 +20197,10 @@ ac
 vN
 fh
 ae
-ah
+af
 ad
 aj
-jt
+KW
 xM
 qg
 qg
@@ -21298,7 +20216,7 @@ zC
 zC
 Wh
 Wh
-Fd
+fO
 xM
 KE
 MR
@@ -21341,7 +20259,7 @@ Nq
 Nq
 Nq
 Nq
-An
+Nq
 xM
 xM
 xM
@@ -21480,7 +20398,7 @@ ac
 ac
 Rm
 ae
-ah
+af
 aj
 ad
 aj
@@ -21681,7 +20599,7 @@ ac
 ac
 ac
 Rm
-af
+wc
 ad
 aj
 ad
@@ -21704,7 +20622,7 @@ Wh
 Wh
 jz
 xM
-io
+RM
 MR
 MR
 MR
@@ -21726,7 +20644,7 @@ JO
 nj
 Sy
 xM
-Ha
+Nq
 oF
 KN
 AY
@@ -21883,8 +20801,8 @@ ac
 ac
 ac
 Rm
+Ua
 ag
-ai
 aj
 ad
 aj
@@ -22086,11 +21004,11 @@ ac
 ac
 fF
 ua
-ed
-ai
+ah
+ag
 ad
 aj
-jt
+KW
 xM
 qg
 qg
@@ -22106,7 +21024,7 @@ cH
 cH
 Wh
 Wh
-vk
+fQ
 xM
 qZ
 MR
@@ -22149,7 +21067,7 @@ Nq
 AN
 AN
 Nq
-An
+Nq
 xM
 xM
 xM
@@ -22289,13 +21207,13 @@ ac
 ac
 fF
 ua
-ed
-ai
+ah
+ag
 aj
 fK
-Aq
 rx
-ET
+rx
+cX
 xM
 qg
 qg
@@ -22306,15 +21224,15 @@ Wh
 Wh
 Za
 Za
-aH
+Wh
 pN
 xM
 xM
 Gc
 Ul
-rt
+bp
 aM
-nX
+hp
 MR
 aP
 ar
@@ -22342,12 +21260,12 @@ jZ
 jZ
 jZ
 xf
-Zz
+nR
 xM
 Vn
 Vn
 Vn
-VY
+Nq
 hW
 qk
 Nq
@@ -22492,20 +21410,20 @@ ac
 ac
 fF
 ua
-ed
-ai
+ah
+ag
 ad
 ad
 ad
 fK
-Aq
 rx
-ET
+rx
+cX
 xM
 qg
-nG
-nG
-nG
+an
+an
+an
 qg
 qg
 xM
@@ -22521,17 +21439,17 @@ xM
 xM
 xM
 xM
-TD
-Sy
-hq
+zO
 Sy
 Sy
 Sy
 Sy
 Sy
-hq
 Sy
-hq
+Sy
+Sy
+Sy
+Sy
 zO
 xM
 VW
@@ -22695,15 +21613,15 @@ ac
 ac
 fF
 ua
-ed
-ai
+ah
+ag
 ad
 ad
 ad
 ad
 ad
 fK
-Aq
+rx
 Ps
 ad
 ad
@@ -22742,9 +21660,9 @@ qg
 qg
 xM
 xM
-an
-an
-an
+fg
+fg
+fg
 xM
 sV
 Vn
@@ -22898,8 +21816,8 @@ ac
 ac
 fF
 ua
-ed
-ai
+ah
+ag
 ad
 ad
 ad
@@ -22912,7 +21830,7 @@ ad
 ad
 wc
 fK
-Gs
+fi
 xM
 xM
 xM
@@ -22931,7 +21849,6 @@ Dj
 Dj
 Dj
 Dj
-lZ
 Dj
 Dj
 Dj
@@ -22943,7 +21860,8 @@ Dj
 Dj
 Dj
 Dj
-jD
+Dj
+Dj
 Dj
 Dj
 Dj
@@ -23101,55 +22019,55 @@ ac
 ac
 fF
 ua
-ed
+ah
+ao
+ao
+ao
+ao
+ao
+ao
 al
-al
-al
-al
-al
-al
-sF
-FN
 Mr
-FN
+Mr
+Mr
+cm
+ao
+Ef
+Wh
+xM
+xM
+xM
+xM
+xM
+xM
+xM
+xM
+xM
+xM
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
+Dj
 eJ
-al
-bR
-Yw
-xM
-xM
-xM
-xM
-xM
-xM
-xM
-xM
-xM
-xM
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-LU
-dy
-LA
 EN
-LA
-Qp
+EN
+EN
+hS
 xM
 xM
 xM
@@ -23311,9 +22229,9 @@ iB
 iB
 iB
 ua
-wG
 GE
-wG
+GE
+GE
 oQ
 iB
 iB
@@ -23348,9 +22266,9 @@ iB
 iB
 iB
 ua
-wG
 GE
-wG
+GE
+GE
 oQ
 xI
 ac
@@ -23513,9 +22431,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -23550,9 +22468,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -23715,9 +22633,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -23752,9 +22670,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -23917,9 +22835,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -23954,9 +22872,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -24119,9 +23037,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -24156,9 +23074,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -24321,9 +23239,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -24358,9 +23276,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -24523,9 +23441,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -24560,9 +23478,9 @@ ac
 ac
 ac
 Rm
-wG
 GE
-wG
+GE
+GE
 oR
 ac
 ac
@@ -24724,48 +23642,48 @@ ac
 ac
 ac
 ac
-oP
-wG
+dN
 GE
-wG
-oS
-ac
-ac
-ac
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-pZ
-ac
-ac
-ac
-ac
-oP
-wG
 GE
-wG
-oS
+GE
+eM
+ac
+ac
+ac
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+pZ
+ac
+ac
+ac
+ac
+dN
+GE
+GE
+GE
+eM
 ac
 ac
 ac
@@ -24927,9 +23845,9 @@ ac
 ac
 pZ
 gr
-fg
+Do
 bT
-fg
+Do
 gr
 pZ
 pZ
@@ -24964,9 +23882,9 @@ pZ
 pZ
 pZ
 gr
-fg
+Do
 sK
-fg
+Do
 gr
 pZ
 pZ
@@ -25331,46 +24249,46 @@ pZ
 pZ
 pZ
 gr
+bR
+bR
+bR
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
 fA
 fA
 fA
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cZ
-cm
-cm
-cm
 gr
 pZ
 pZ
@@ -25534,7 +24452,7 @@ gr
 gr
 gr
 ED
-gb
+eq
 lQ
 cZ
 dF
@@ -25545,33 +24463,33 @@ GE
 GE
 GE
 GE
-vP
+GE
 fN
 fN
 Xw
 lR
 mh
 fN
-ly
+fN
 fN
 fN
 fN
 fN
 mh
 lR
-FU
+Xw
 fN
 lV
 Xx
 HT
-mi
+mI
 dn
 dn
 GE
 VQ
 cZ
 lQ
-gb
+eq
 ED
 gr
 gr
@@ -25739,7 +24657,7 @@ Ij
 gr
 Tp
 cZ
-gl
+vq
 hf
 vq
 Xx
@@ -25770,7 +24688,7 @@ oB
 PL
 PL
 oB
-jB
+GE
 cZ
 FF
 gr
@@ -25943,7 +24861,7 @@ Do
 cZ
 Me
 GE
-lP
+fG
 Xx
 fN
 fN
@@ -25980,7 +24898,7 @@ Do
 Zp
 tS
 kO
-ni
+nX
 gr
 pZ
 pZ
@@ -26135,7 +25053,7 @@ pZ
 pZ
 pZ
 gr
-uB
+cp
 Rq
 hI
 Zp
@@ -26169,14 +25087,14 @@ fN
 fN
 fN
 Xx
-mS
+mi
 oB
 oB
 oB
 oB
 GE
 cZ
-fi
+GN
 Zp
 GN
 Zp
@@ -26343,7 +25261,7 @@ Dt
 Zp
 WG
 Zp
-uC
+GN
 cZ
 dT
 GE
@@ -26361,12 +25279,12 @@ bq
 GE
 GE
 GE
-tk
+bq
 GE
 GE
 GE
 GE
-tk
+bq
 gK
 GE
 GE
@@ -26551,7 +25469,7 @@ Xx
 qo
 Xx
 Xx
-Dn
+GE
 kc
 gU
 kc
@@ -26765,12 +25683,12 @@ Xx
 GE
 GE
 SR
-Xl
+io
 uH
 GE
 GE
 SR
-Xl
+io
 uH
 GE
 GE
@@ -26948,7 +25866,7 @@ Rq
 Rq
 gr
 uQ
-oo
+ew
 Ys
 cZ
 GE
@@ -26985,7 +25903,7 @@ oB
 oC
 cZ
 Ys
-oo
+ew
 uQ
 gr
 jo
@@ -27145,7 +26063,7 @@ pZ
 pZ
 pZ
 gr
-EB
+dv
 Rq
 Rq
 uL
@@ -27153,7 +26071,7 @@ lg
 lg
 lg
 cZ
-Li
+xc
 xc
 xc
 CD
@@ -27161,10 +26079,10 @@ GE
 GE
 GE
 GE
-BA
 GE
 GE
-jB
+GE
+GE
 Xx
 gx
 xm
@@ -27368,7 +26286,7 @@ fN
 gU
 kc
 Xx
-Iu
+io
 xm
 xm
 UI
@@ -27379,7 +26297,7 @@ xm
 UI
 xm
 xm
-XF
+io
 Xx
 aL
 BP
@@ -27393,7 +26311,7 @@ XE
 Sj
 gr
 Rq
-RF
+Rq
 YA
 gr
 pZ
@@ -27588,7 +26506,7 @@ BP
 BP
 BP
 oB
-GH
+bq
 cZ
 UM
 QM
@@ -28194,7 +27112,7 @@ BP
 BP
 BP
 oB
-GH
+bq
 cZ
 qN
 bP
@@ -28361,9 +27279,9 @@ cZ
 cZ
 cZ
 cZ
-dO
+jW
 lg
-MY
+Yz
 cZ
 xc
 xc
@@ -28378,7 +27296,7 @@ fN
 Nr
 kc
 Xx
-Iu
+io
 xm
 xm
 UI
@@ -28389,7 +27307,7 @@ xm
 UI
 xm
 xm
-XF
+io
 Xx
 aL
 BP
@@ -28400,7 +27318,7 @@ uH
 cZ
 qN
 lg
-nq
+yN
 gD
 ha
 xv
@@ -28575,10 +27493,10 @@ GE
 GE
 GE
 GE
-BA
 GE
 GE
-jB
+GE
+GE
 Xx
 rb
 xm
@@ -28987,12 +27905,12 @@ Xx
 GE
 GE
 SR
-co
+io
 uH
 GE
 GE
 SR
-co
+io
 uH
 GE
 GE
@@ -29173,7 +28091,7 @@ lg
 lg
 Yz
 cZ
-Li
+xc
 xc
 xc
 CD
@@ -29379,7 +28297,7 @@ Xx
 Xx
 Xx
 Xx
-Dn
+GE
 GE
 GE
 GE
@@ -29391,12 +28309,12 @@ bq
 GE
 GE
 GE
-Df
+bq
 GE
 GE
 GE
 GE
-Df
+bq
 Rk
 GE
 GE
@@ -29603,7 +28521,7 @@ fN
 fN
 fN
 Xx
-Aw
+mj
 oB
 oB
 oB
@@ -29613,7 +28531,7 @@ iT
 qN
 lg
 Yz
-vR
+nq
 gD
 Cj
 QK
@@ -29771,7 +28689,7 @@ yS
 yS
 cZ
 aF
-aU
+Si
 ck
 yS
 jh
@@ -29971,7 +28889,7 @@ bC
 aE
 bv
 yS
-aR
+aN
 Si
 aV
 cw
@@ -30012,7 +28930,7 @@ oB
 PL
 PL
 oB
-GH
+bq
 cZ
 qN
 lg
@@ -30159,7 +29077,7 @@ pZ
 pZ
 cZ
 bi
-cB
+aG
 cD
 cI
 cO
@@ -30175,7 +29093,7 @@ bv
 yS
 cZ
 aI
-bH
+Si
 cu
 yS
 jh
@@ -30186,31 +29104,31 @@ cZ
 VQ
 GE
 GE
-qV
 GE
 GE
 GE
 GE
-qV
+GE
+GE
 fN
 fN
 Xw
 lR
 ke
 fN
-Gz
+fN
 fN
 fN
 fN
 fN
 ke
 lR
-VO
+Xw
 fN
 lV
 Xx
 cY
-YJ
+mS
 tb
 tb
 Yi
@@ -30363,7 +29281,7 @@ cZ
 fV
 fV
 fV
-bp
+oM
 fV
 fV
 yS
@@ -30383,7 +29301,7 @@ yS
 jh
 lg
 lg
-MY
+Yz
 hg
 hg
 hg
@@ -30769,7 +29687,7 @@ ue
 ba
 ue
 ue
-bp
+oM
 yS
 bv
 bd
@@ -30779,7 +29697,7 @@ yD
 nH
 bv
 yS
-aN
+aK
 yS
 yS
 yS
@@ -30807,12 +29725,12 @@ hg
 hg
 hg
 hg
-hS
+dy
 hg
 hg
 hg
 hg
-hX
+ed
 hg
 hg
 hg
@@ -30822,7 +29740,7 @@ hg
 hg
 hg
 hg
-tE
+qN
 Ya
 Gm
 gD
@@ -30981,7 +29899,7 @@ aJ
 mr
 yS
 yS
-aN
+aK
 yS
 yS
 yS
@@ -31015,12 +29933,12 @@ Sv
 wt
 nZ
 nZ
-TO
+lP
 BY
 BY
 BY
 BY
-gp
+ni
 nZ
 Hb
 wt
@@ -31205,15 +30123,15 @@ pu
 ej
 ej
 hh
-eq
+HR
 HR
 Su
 Su
 hh
-bY
+gu
 Sv
 RE
-gu
+oS
 wt
 NY
 nZ
@@ -31602,18 +30520,18 @@ bE
 bE
 bE
 bE
-eM
+bE
 hn
 pJ
 ej
 ej
-RY
+hq
 hh
 eo
 Su
 If
 Su
-eP
+eT
 ee
 eG
 dJ
@@ -31623,8 +30541,8 @@ zZ
 nZ
 CN
 lr
-gA
 gq
+gs
 lr
 Tu
 nZ
@@ -31814,7 +30732,7 @@ hh
 zm
 HR
 Su
-nR
+Su
 hh
 Bw
 Sv
@@ -31988,20 +30906,20 @@ IJ
 FA
 FA
 cZ
-ca
-yS
-yS
-yS
-yS
-yS
 ce
+yS
+yS
+yS
+yS
+yS
+mm
 gD
-cX
+dO
 jW
 lg
 Yz
 hh
-ew
+bE
 bE
 eB
 bE
@@ -32036,7 +30954,7 @@ NG
 wt
 qN
 lg
-nq
+yN
 gD
 nk
 nk
@@ -32220,10 +31138,10 @@ HR
 xg
 es
 hh
-AD
-eG
-eG
 hi
+eG
+eG
+pQ
 wt
 LW
 nZ
@@ -32424,15 +31342,15 @@ et
 hh
 sm
 kF
-Lx
+Sv
 Sv
 wt
 hK
 nZ
 CN
 lr
+gs
 gq
-gA
 lr
 Tu
 nZ
@@ -32617,17 +31535,17 @@ Su
 Su
 Su
 Su
-jj
+ST
 hh
 hh
+eP
+hh
+hh
+hh
+wt
+wt
+wt
 ea
-hh
-hh
-hh
-wt
-wt
-wt
-eT
 wt
 gB
 HE
@@ -32824,21 +31742,21 @@ Xe
 hU
 Su
 ST
-OI
+jt
 hh
+jD
 ep
-gs
 yT
 lr
 PH
 dG
 dG
-dv
+lZ
 lr
 lr
 lr
 lr
-dv
+lZ
 lr
 lr
 Mx
@@ -33015,7 +31933,7 @@ ez
 fE
 fE
 fE
-fJ
+ez
 LE
 go
 Su
@@ -33638,7 +32556,7 @@ El
 lr
 lr
 lr
-pc
+ly
 lr
 lr
 lr
@@ -33648,7 +32566,7 @@ lr
 lr
 lr
 lr
-hp
+lr
 Mx
 qN
 lg
@@ -33819,7 +32737,7 @@ lg
 bP
 FX
 hh
-fG
+ez
 Px
 Px
 Px
@@ -33838,7 +32756,7 @@ Ir
 hh
 wt
 Mx
-Kr
+nG
 Mx
 wt
 yr
@@ -34025,20 +32943,20 @@ ez
 Px
 Px
 Px
-fJ
 ez
 ez
 ez
 ez
-fJ
 ez
 ez
 ez
 ez
-fJ
+ez
+ez
+ez
 fP
 hh
-Rv
+UK
 UK
 UK
 UK
@@ -34052,9 +32970,9 @@ UK
 UK
 UK
 UK
-wI
+oc
 ho
-tE
+qN
 lg
 Yz
 gD
@@ -34423,7 +33341,7 @@ GE
 hJ
 jW
 lg
-Wi
+bw
 hh
 ez
 Px
@@ -34651,7 +33569,7 @@ fo
 fv
 UK
 UK
-ut
+UK
 UK
 UK
 fW
@@ -34844,7 +33762,7 @@ fI
 Px
 fI
 Ig
-fQ
+ez
 hh
 UK
 UK
@@ -35863,7 +34781,7 @@ fc
 fX
 UK
 UK
-ut
+UK
 UK
 UK
 fU
@@ -36254,13 +35172,13 @@ ez
 ez
 ez
 ez
-fO
+ez
 ez
 ez
 ez
 fS
 hh
-Ck
+kP
 UK
 UK
 UK
@@ -36274,7 +35192,7 @@ UK
 UK
 UK
 UK
-Ck
+kP
 ho
 qN
 lg
@@ -36441,7 +35359,7 @@ ec
 ec
 ec
 ec
-mj
+dX
 lg
 Yz
 hh
@@ -36480,7 +35398,7 @@ ho
 ho
 qN
 lg
-Wi
+bw
 gD
 nk
 nk
@@ -36631,7 +35549,7 @@ ec
 mE
 AU
 AU
-Mv
+AU
 Dy
 we
 ec
@@ -36655,7 +35573,7 @@ Oz
 Oz
 Oz
 Oz
-zM
+gl
 lg
 lg
 yN
@@ -36670,7 +35588,7 @@ Oz
 Oz
 Oz
 Oz
-Xc
+cW
 lg
 lg
 yN
@@ -36828,7 +35746,7 @@ yz
 Nn
 Yg
 sf
-mI
+aH
 ec
 gN
 kp
@@ -37064,11 +35982,11 @@ lg
 lg
 lg
 bw
-Bk
+XM
 BQ
 lg
 bw
-TN
+zL
 BQ
 lg
 lg
@@ -37082,11 +36000,11 @@ zL
 zL
 zL
 zL
-iS
-iS
-iS
-iS
-HS
+BQ
+lg
+lg
+lg
+Yz
 gD
 sg
 Qg
@@ -37243,7 +36161,7 @@ cP
 Kp
 Cf
 Nw
-ul
+Nw
 ec
 ec
 ec
@@ -37255,7 +36173,7 @@ gD
 gD
 gD
 zd
-hy
+fM
 Jo
 gD
 ab
@@ -37281,13 +36199,13 @@ WC
 au
 gD
 si
-kP
+nh
 Qh
 gD
 gD
-DV
-DV
-DV
+hX
+hX
+hX
 gD
 gD
 Aj
@@ -37430,7 +36348,7 @@ pZ
 pZ
 pZ
 ec
-QP
+aq
 Bf
 OZ
 ps
@@ -37447,7 +36365,7 @@ Cf
 Nw
 rN
 Kp
-fC
+bY
 ox
 QV
 ec
@@ -37486,10 +36404,10 @@ gD
 gD
 gD
 gD
-iQ
-iQ
-iQ
-iQ
+tM
+tM
+tM
+tM
 cZ
 cZ
 hP
@@ -38245,7 +37163,7 @@ Nw
 ZD
 ec
 Nw
-nL
+Nw
 dV
 Nw
 FS
@@ -38255,7 +37173,7 @@ hC
 Nw
 rN
 Kp
-HF
+fC
 mA
 QV
 ec
@@ -38274,7 +37192,7 @@ id
 id
 id
 id
-ZB
+bN
 lg
 sh
 Tc
@@ -38282,7 +37200,7 @@ lg
 bw
 cl
 lg
-Wl
+kR
 id
 id
 id
@@ -38649,7 +37567,7 @@ PV
 fB
 eF
 Uj
-zK
+eF
 xW
 xW
 xW
@@ -39063,7 +37981,7 @@ Bl
 Nw
 Nw
 Kp
-Kg
+fJ
 ox
 QV
 ec
@@ -39087,9 +38005,9 @@ nr
 gD
 CT
 lg
-iO
-DV
-iQ
+lg
+hX
+tM
 tM
 Vu
 Qa
@@ -39261,7 +38179,7 @@ pG
 Nw
 rg
 ec
-pQ
+Bl
 Nw
 Nw
 la
@@ -39287,11 +38205,11 @@ so
 so
 so
 gD
-HX
+cW
 lg
-iO
-DV
-iQ
+lg
+hX
+tM
 tM
 lj
 Au
@@ -39663,7 +38581,7 @@ LS
 LS
 Nw
 Nw
-Oi
+co
 ec
 Bl
 Nw
@@ -40060,7 +38978,7 @@ ac
 pZ
 ec
 jg
-JC
+MP
 MP
 MP
 MP
@@ -40471,7 +39389,7 @@ ec
 PM
 Pc
 Nw
-dX
+cA
 ec
 Nw
 Nw
@@ -40479,7 +39397,7 @@ Nw
 Nw
 Nw
 Nw
-ul
+Nw
 ec
 kb
 kC
@@ -41277,7 +40195,7 @@ pZ
 pZ
 ec
 Fa
-PG
+bH
 Jt
 OC
 ec
@@ -41306,7 +40224,7 @@ kZ
 ld
 li
 gD
-DR
+jj
 CT
 lg
 Yz
@@ -41485,7 +40403,7 @@ ec
 ec
 XG
 DZ
-ul
+Nw
 ec
 ay
 ec
@@ -41713,9 +40631,9 @@ hm
 hm
 CT
 ND
-iO
-DV
-iQ
+lg
+hX
+tM
 tM
 lj
 Au
@@ -41910,14 +40828,14 @@ hm
 Xf
 NL
 Rz
-Cs
+hy
 if
 hm
 Vh
 lg
-iO
-DV
-iQ
+lg
+hX
+tM
 tM
 lj
 Au
@@ -42510,7 +41428,7 @@ cZ
 hm
 hm
 hm
-dN
+gb
 eI
 eI
 Ax
@@ -42712,7 +41630,7 @@ pE
 hm
 jm
 hm
-ZE
+gd
 Io
 eI
 Ax
@@ -43254,9 +42172,9 @@ aa
 aa
 aa
 ac
-ac
-ac
-ac
+aa
+aa
+aa
 ac
 ac
 ac
@@ -43722,7 +42640,7 @@ pZ
 hm
 hm
 hm
-dN
+gb
 DI
 eI
 Ax
@@ -44331,14 +43249,14 @@ pZ
 pZ
 hm
 hm
-gd
+eI
 NX
 JD
 Rr
 VR
 hm
 XK
-tR
+jB
 aD
 gD
 tM
@@ -44462,10 +43380,10 @@ lX
 lX
 lX
 np
-mp
-os
 oE
-oM
+os
+ca
+oP
 bM
 bM
 bM
@@ -45171,10 +44089,10 @@ pZ
 pZ
 pZ
 pZ
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -45370,12 +44288,12 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -45572,13 +44490,13 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -45773,15 +44691,15 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -45975,15 +44893,15 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -46177,15 +45095,15 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -46380,13 +45298,13 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -46583,11 +45501,11 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -46786,9 +45704,9 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
+oO
+oO
+oO
 ac
 ac
 ac
@@ -46989,7 +45907,7 @@ ac
 ac
 ac
 ac
-Qs
+oO
 ac
 ac
 ac
@@ -47191,7 +46109,7 @@ ac
 ac
 ac
 ac
-Qs
+oO
 ac
 ac
 ac
@@ -47393,7 +46311,7 @@ ac
 ac
 ac
 ac
-Qs
+oO
 ac
 ac
 ac
@@ -48566,9 +47484,9 @@ ac
 ac
 ac
 ac
-QH
-QH
-QH
+gA
+gA
+gA
 ac
 ac
 ac
@@ -48699,7 +47617,7 @@ aa
 bM
 bM
 bM
-mm
+aR
 lX
 lX
 lX
@@ -48754,9 +47672,9 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
+oO
+oO
+oO
 ac
 ac
 ac
@@ -48767,11 +47685,11 @@ ac
 ac
 ac
 ac
-QH
-Qs
-Qs
-Qs
-QH
+gA
+oO
+oO
+oO
+gA
 ac
 ac
 ac
@@ -48955,11 +47873,11 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -48968,13 +47886,13 @@ ac
 ac
 ac
 ac
-FL
-Qs
-Qs
-Qs
-Qs
-Qs
-nE
+eS
+oO
+oO
+oO
+oO
+oO
+pY
 ac
 ac
 ac
@@ -49156,28 +48074,28 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
 ac
 ac
-FL
-Qs
-Qs
 eS
-Qs
-Qs
-Qs
-Qs
-nE
+oO
+oO
+pX
+oO
+oO
+oO
+oO
+pY
 ac
 ac
 ac
@@ -49357,32 +48275,32 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
 ac
-FL
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-nE
-Qs
-Qs
-Qs
+eS
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+pY
+oO
+oO
+oO
 ac
 ac
 ac
@@ -49556,38 +48474,32 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
 ac
-FL
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-nE
-ac
-ac
-ac
-ac
-ac
-ac
+eS
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+pY
 ac
 ac
 ac
@@ -49598,9 +48510,15 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
+ac
+ac
+ac
+ac
+ac
+ac
+oO
+oO
+oO
 ac
 ac
 ac
@@ -49761,35 +48679,28 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
 ac
 ac
-FL
-Qs
-Qs
-Qs
-Qs
-Qs
-nE
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+eS
+oO
+oO
+oO
+oO
+oO
+pY
 ac
 ac
 ac
@@ -49799,11 +48710,18 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -49964,13 +48882,13 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -49979,11 +48897,11 @@ ac
 ac
 ac
 ac
-Xa
-Qs
-Qs
-Qs
-Xa
+nE
+oO
+oO
+oO
+nE
 ac
 ac
 ac
@@ -50000,13 +48918,13 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -50167,11 +49085,11 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -50182,9 +49100,9 @@ ac
 ac
 ac
 ac
-Xa
-Xa
-Xa
+nE
+nE
+nE
 ac
 ac
 ac
@@ -50201,15 +49119,15 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -50370,9 +49288,9 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
+oO
+oO
+oO
 ac
 ac
 ac
@@ -50403,15 +49321,15 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -50605,15 +49523,15 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -50808,13 +49726,13 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -51011,11 +49929,11 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -51134,6 +50052,7 @@ aa
 aa
 aa
 aa
+aa
 ac
 ac
 ac
@@ -51193,10 +50112,10 @@ ac
 ac
 ac
 ac
+oO
+oO
+oO
 ac
-Qs
-Qs
-Qs
 ac
 ac
 ac
@@ -51213,10 +50132,9 @@ ac
 ac
 ac
 ac
-ac
-Qs
-Qs
-Qs
+oO
+oO
+oO
 ac
 ac
 ac
@@ -51384,9 +50302,9 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
+oO
+oO
+oO
 ac
 ac
 ac
@@ -51395,11 +50313,11 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -51417,7 +50335,7 @@ ac
 ac
 ac
 ac
-Qs
+oO
 ac
 ac
 ac
@@ -51585,31 +50503,24 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -51619,7 +50530,14 @@ ac
 ac
 ac
 ac
-Qs
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+oO
 ac
 ac
 ac
@@ -51786,31 +50704,26 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -51821,7 +50734,12 @@ ac
 ac
 ac
 ac
-Qs
+ac
+ac
+ac
+ac
+ac
+oO
 ac
 ac
 ac
@@ -51987,30 +50905,30 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -52186,30 +51104,30 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -52391,26 +51309,26 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -52594,24 +51512,24 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -52797,11 +51715,11 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -52810,9 +51728,9 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
+oO
+oO
+oO
 ac
 ac
 ac
@@ -53000,9 +51918,9 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
+oO
+oO
+oO
 ac
 ac
 ac
@@ -53809,9 +52727,9 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
+oO
+oO
+oO
 ac
 ac
 ac
@@ -54010,11 +52928,11 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -54046,7 +52964,7 @@ ac
 ac
 ac
 ac
-Qs
+oO
 ac
 ac
 ac
@@ -54211,13 +53129,13 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -54225,17 +53143,9 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
 ac
 ac
 ac
@@ -54248,7 +53158,15 @@ ac
 ac
 ac
 ac
-Qs
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+oO
 ac
 ac
 ac
@@ -54412,31 +53330,25 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -54449,9 +53361,15 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
+ac
+ac
+ac
+ac
+ac
+ac
+oO
+oO
+oO
 ac
 ac
 ac
@@ -54611,34 +53529,29 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -54650,11 +53563,16 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+ac
+ac
+ac
+ac
+ac
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -54816,31 +53734,27 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -54851,13 +53765,17 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+ac
+ac
+ac
+ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -55019,48 +53937,48 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+ac
+ac
+ac
+ac
+ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -55222,31 +54140,25 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-ac
-ac
-ac
-ac
-ac
-ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -55254,15 +54166,21 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+ac
+ac
+ac
+ac
+ac
+ac
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -55425,9 +54343,9 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
+oO
+oO
+oO
 ac
 ac
 ac
@@ -55435,13 +54353,13 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -55456,15 +54374,15 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -55638,11 +54556,11 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -55659,13 +54577,13 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -55841,9 +54759,9 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
+oO
+oO
+oO
 ac
 ac
 ac
@@ -55862,11 +54780,11 @@ ac
 ac
 ac
 ac
-Qs
-Qs
-Qs
-Qs
-Qs
+oO
+oO
+oO
+oO
+oO
 ac
 ac
 ac
@@ -56065,9 +54983,9 @@ aa
 aa
 ac
 ac
-Qs
-Qs
-Qs
+oO
+oO
+oO
 ac
 ac
 ac
