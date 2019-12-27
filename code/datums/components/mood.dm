@@ -218,7 +218,7 @@
 #define PSYCH_CURE -50 to -99
 
 /datum/component/mood/proc/adjustPsychInstability(amount)
-	psych_instab = CLAMP(psych_instab - amount,  -100, 100)
+	psych_instab = CLAMP(psych_instab - amount,  PSYCH_CURE_EXTREME, PSYCH_BREAK_EXTREME)
 
 
 /datum/component/mood/proc/CheckPsychInstability()
