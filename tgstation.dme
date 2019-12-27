@@ -626,6 +626,7 @@
 #include "code\FulpstationCode\fulp_procs.dm"
 #include "code\FulpstationCode\fulp_ticker.dm"
 #include "code\FulpstationCode\fulp_world.dm"
+#include "code\FulpstationCode\fulpspaceruins.dm"
 #include "code\FulpstationCode\t5_parts.dm"
 #include "code\FulpstationCode\wintercoats.dm"
 #include "code\FulpstationCode\halloween_costumes\_event.dm"
