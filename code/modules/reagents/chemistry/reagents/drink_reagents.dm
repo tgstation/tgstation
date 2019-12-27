@@ -205,7 +205,6 @@
 		. = 1
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2)
-		taste_description = "sweet relief"
 	..()
 
 /datum/reagent/consumable/soymilk
