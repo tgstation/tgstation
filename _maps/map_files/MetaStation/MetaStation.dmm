@@ -51951,7 +51951,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "clV" = (
-/obj/machinery/vending/wardrobe/science_wardrobe,
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -51962,6 +51961,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/gene_wardrobe,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "clW" = (
@@ -52298,15 +52298,6 @@
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/disposalpipe/segment,
 /obj/structure/closet/radiation,
-/turf/open/floor/plasteel/white,
-/area/medical/genetics)
-"cmR" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cmS" = (
@@ -110654,9 +110645,9 @@ cgq
 cur
 sRB
 cvx
-cmR
-cmR
-cmR
+clS
+clS
+clS
 cpz
 cqR
 cgq
