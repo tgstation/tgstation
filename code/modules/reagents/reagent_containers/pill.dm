@@ -169,7 +169,7 @@
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/alprazolam
-	name = "haloperidol pill"
+	name = "Alprazolam pill"
 	desc = "Used in extreme cases of mental illness"
 	list_reagents = list(/datum/reagent/medicine/alprazolam = 10)
 	icon_state = "pill19"
