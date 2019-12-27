@@ -284,10 +284,10 @@ obj/machinery/computer/stage/proc/get_spawn()
 			return A
 
 obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override = TRUE)
-	if(change_override == TRUE)
+	if(change_override)
 		override_automate = !override_automate
 		updateUsrDialog()
-	if(waiting_for_actor == TRUE)
+	if(waiting_for_actor)
 		to_chat(user,"<span class='notice'>Please wait for the actor to show and for the 60 seconds to end. Once the 60 seconds are up and you have overriden the automation, you will be prompted to end the act. If you have spawned them in, click to continue the act after the seconds.</span>")
 		return
 	if(!announcement_made)
@@ -297,7 +297,7 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 		current_act = all_stage_acts[ckey]
 		if(override_automate)
 			return
-		if(current_act.act_completed == TRUE)
+		if(current_act.act_completed)
 			continue
 		if(current_act.stage)
 			log_world("loading [current_act.stage]")
@@ -321,7 +321,7 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 				continue
 		waiting_for_actor = FALSE
 		if(override_automate)
-			var/selection = input(user, "Do you wish to continue the current play? (Note that it will not be counted as completed and will continue when you turn on reautomation)", "Decision") as null|anything in list("Yes", "No")
+			var/selection = input(user, "Do you wish to continue the current play? (Note if you choose NO, it will not be counted as completed and will continue when you turn on reautomation)", "Decision") as null|anything in list("Yes", "No")
 			if(selection == "No")
 				Reset_Stage(user, completed = FALSE)
 				return
@@ -340,7 +340,7 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 		countdowns += A
 		sleep(start_delay)
 		var/datum/outfit/stage/original_play = all_stage_acts[ckey] // probably a better way to do this, but we need the orginal play datum
-		if(original_play.dead == TRUE) // if this happened, we've run through the list again and this proc can end
+		if(original_play.dead) // if this happened, we've run through the list again and this proc can end
 			return
 		Reset_Stage(user, ckey, current_act)
 
@@ -353,7 +353,7 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 	updateUsrDialog()
 	clear_stage()
 	start_delay = 120 SECONDS
-	if(completed == TRUE)
+	if(completed)
 		current_act.act_completed = TRUE
 	test = current_act
 
