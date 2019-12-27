@@ -1920,7 +1920,6 @@
 #include "code\modules\jobs\map_changes\map_changes.dm"
 #include "code\modules\keybindings\bindings_atom.dm"
 #include "code\modules\keybindings\bindings_client.dm"
-#include "code\modules\keybindings\bindings_living.dm"
 #include "code\modules\keybindings\focus.dm"
 #include "code\modules\keybindings\setup.dm"
 #include "code\modules\language\aphasia.dm"
