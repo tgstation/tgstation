@@ -143,10 +143,10 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 
 //DATU
 
-/datum/map_template/ruin/space/asteroid6
-	id = "asteroid6"
-	suffix = "asteroid6.dmm"
-	name = "Asteroid 6"
+/datum/map_template/ruin/space/fulp_asteroid
+	id = "bluespaceasteroid"
+	suffix = "fulp_asteroid.dmm"
+	name = "Blue space asteroid"
 	description = "Giant rock with candy inside!"
 
 /datum/map_template/ruin/space/brokensolar
