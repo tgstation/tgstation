@@ -434,26 +434,26 @@
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
 
-/datum/component/mood/proc/check_area_mood(datum/source, area/DISORDERS)
-	update_beauty(DISORDERS)
-	if(DISORDERS.mood_bonus)
-		add_event(null, "area", /datum/mood_event/area, DISORDERS.mood_bonus, DISORDERS.mood_message)
+/datum/component/mood/proc/check_area_mood(datum/source, area/A)
+	update_beauty(A)
+	if(A.mood_bonus)
+		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
 	else
 		clear_event(null, "area")
 
-/datum/component/mood/proc/update_beauty(area/DISORDERS)
-	if(DISORDERS.outdoors) //if we're outside, we don't care.
+/datum/component/mood/proc/update_beauty(area/A)
+	if(A.outdoors) //if we're outside, we don't care.
 		clear_event(null, "area_beauty")
 		return FALSE
 	if(HAS_TRAIT(parent, TRAIT_SNOB))
-		switch(DISORDERS.beauty)
+		switch(A.beauty)
 			if(-INFINITY to BEAUTY_LEVEL_HORRID)
 				add_event(null, "area_beauty", /datum/mood_event/horridroom)
 				return
 			if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
 				add_event(null, "area_beauty", /datum/mood_event/badroom)
 				return
-	switch(DISORDERS.beauty)
+	switch(A.beauty)
 		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_DECENT)
 			clear_event(null, "area_beauty")
 		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
