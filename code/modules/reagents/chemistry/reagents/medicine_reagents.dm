@@ -967,7 +967,6 @@
 	overdose_threshold = 25
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M)
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type,5)
 	M.drowsyness += 2
@@ -978,7 +977,7 @@
 	if(prob(20))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 50)
 	M.adjustStaminaLoss(2.5*REM, 0)
-	mood.adjustPsychInstability(2)
+	SEND_SIGNAL(M,COMSIG_CHANGE_PSYCH_INSTAB,2)
 	..()
 	return TRUE
 
@@ -990,8 +989,7 @@
 	REMOVE_TRAIT(L, TRAIT_UNDER_CONTROL, PSYCH_TRAIT)
 
 /datum/reagent/medicine/haloperidol/overdose_process(mob/living/M)
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.adjustPsychInstability(3)
+	SEND_SIGNAL(M,COMSIG_CHANGE_PSYCH_INSTAB,-3)
 	M.adjustToxLoss(1, 0)
 	if(prob(20))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1*REM, 50)
@@ -1009,10 +1007,8 @@
 /datum/reagent/medicine/lithium_carbonate/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(2, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER,REM, 50)
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.adjustPsychInstability(4)
-	if(mood.sanity <= SANITY_GREAT) // only take effect if in not good sanity and then...
-		mood.setSanity(min(mood.sanity+20, SANITY_GREAT)) // set minimum to prevent unwanted spiking over great
+	SEND_SIGNAL(M,COMSIG_CHANGE_PSYCH_INSTAB,5)
+	SEND_SIGNAL(M,COMSIG_SET_SANITY,SANITY_GREAT)
 	..()
 
 /datum/reagent/medicine/lithium_carbonate/on_mob_add(mob/living/carbon/M)
@@ -1026,13 +1022,10 @@
 	REMOVE_TRAIT(M, TRAIT_LITHIATED, PSYCH_TRAIT)
 
 /datum/reagent/medicine/lithium_carbonate/overdose_process(mob/living/M)
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	mood.adjustPsychInstability(5)
 	M.adjustToxLoss(2, 0)
 	if(prob(30))
 		M.adjustOrganLoss(ORGAN_SLOT_EYES, 1*REM, 50)
 		M.adjustOrganLoss(ORGAN_SLOT_EARS, 1*REM, 50)
-	mood.setSanity(min(mood.sanity-20, SANITY_UNSTABLE))
 	..()
 	. = 1
 
@@ -1241,9 +1234,7 @@
 	M.dizziness = max(0, M.dizziness-6)
 	M.confused = max(0, M.confused-6)
 	M.disgust = max(0, M.disgust-6)
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	if(mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
-		mood.setSanity(min(mood.sanity+5, SANITY_NEUTRAL)) // set minimum to prevent unwanted spiking over neutral
+	SEND_SIGNAL(M,COMSIG_SET_SANITY,SANITY_NEUTRAL)
 	..()
 	. = 1
 
@@ -1271,9 +1262,7 @@
 
 /datum/reagent/medicine/alprazolam/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = max(0, M.jitteriness-6)
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-	if(mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
-		mood.setSanity(min(mood.sanity+2, SANITY_NEUTRAL)) // set minimum to prevent unwanted spiking over neutral
+	SEND_SIGNAL(M,COMSIG_SET_SANITY,SANITY_NEUTRAL) // set minimum to prevent unwanted spiking over neutral
 	M.remove_status_effect(STATUS_EFFECT_SPASMS)
 	..()
 	. = 1

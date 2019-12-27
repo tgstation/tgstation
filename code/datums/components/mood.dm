@@ -27,6 +27,8 @@
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
+	RegisterSignal(parent, COMSIG_SET_SANITY, .proc/setSanity)
+
 
 	RegisterSignal(parent, COMSIG_CHANGE_PSYCH_INSTAB, .proc/adjustPsychInstability)
 	RegisterSignal(parent, COMSIG_CURE_MENTAL, .proc/CureDisorder)
@@ -233,15 +235,19 @@
 		if(PSYCH_CURE_EXTREME)
 			ForceCureRandomDisorder()
 /datum/component/mood/proc/AddDisorder(datum/brain_trauma/psychological/chosen_disorder)
+	var/datum/brain_trauma/psychological/CD = chosen_disorder
+	var/mob/living/carbon/human/owner = parent
 	if(!(chosen_disorder in aquired_disorders))
 		aquired_disorders += chosen_disorder
-		owner.gain_trauma(chosen_disorder , TRAUMA_RESILIENCE_ABSOLUTE)
+		owner.gain_trauma(CD , TRAUMA_RESILIENCE_ABSOLUTE)
 		adjustPsychInstability(50)
 
 /datum/component/mood/proc/CureDisorder(datum/brain_trauma/psychological/chosen_disorder)
+	var/datum/brain_trauma/psychological/CD = chosen_disorder
+	var/mob/living/carbon/human/owner = parent
 	if(chosen_disorder in aquired_disorders)
 		aquired_disorders -= chosen_disorder
-		owner.cure_trauma_type(chosen_disorder , TRAUMA_RESILIENCE_ABSOLUTE)
+		owner.cure_trauma_type(CD, TRAUMA_RESILIENCE_ABSOLUTE)
 		adjustPsychInstability(-50)
 
 /datum/component/mood/proc/ForceGainRandomDisorder()

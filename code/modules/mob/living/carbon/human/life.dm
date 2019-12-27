@@ -68,8 +68,7 @@
 	for(var/mob/living/carbon/human/H in in_range(src,3))
 		if(H == src)
 			continue
-		var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
-		mood.adjustPsychInstability(1)
+		SEND_SIGNAL(H, COMSIG_CHANGE_PSYCH_INSTAB, 0.5)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "near_psychotherapist", /datum/mood_event/near_psychotherapist)
 	return
 

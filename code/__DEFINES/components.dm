@@ -365,6 +365,7 @@
 #define COMSIG_ADD_MOOD_EVENT "add_mood" //Called when you send a mood event from anywhere in the code.
 #define COMSIG_ADD_MOOD_EVENT_RND "RND_add_mood" //Mood event that only RnD members listen for
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood" //Called when you clear a mood event from anywhere in the code.
+#define COMSIG_SET_SANITY "set_sanity"
 #define COMSIG_CHANGE_PSYCH_INSTAB "change_psych_instab" //Adjusts the psychic instability
 #define COMSIG_FORCE_ROLL_ADD_MENTAL "force_roll_add_mental" //adds a random mental disorder
 #define COMSIG_FORCE_ROLL_CURE_MENTAL "force_roll_cure_mental" // cures a random mental disorder
