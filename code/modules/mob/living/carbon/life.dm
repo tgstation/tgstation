@@ -333,7 +333,8 @@
 	if(stat != DEAD)
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
-			O.on_life()
+			if(O.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
+				O.on_life()
 	else
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1)) // No organ decay if the body contains formaldehyde.
 			return
