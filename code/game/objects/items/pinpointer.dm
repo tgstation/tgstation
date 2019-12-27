@@ -175,13 +175,13 @@
 	else
 		switch(get_dist(here, there))
 			if(1 to 4)
-				size = "small"
-//			if(5 to 16)
-//				use normal pinion
-			if(17 to 28)
-				size = "large"
-			if(29 to INFINITY)
 				size = "xtrlarge"
+			if(5 to 16)
+				size = "large"
+//			if(17 to 28)
+//				use normal pinion
+			if(29 to INFINITY)
+				size = "small"
 	add_overlay("pinondirect[size]")
 
 /obj/item/pinpointer/pair
