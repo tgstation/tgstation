@@ -300,6 +300,19 @@
 	item_state = "cultrobesalt"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/alt
 
+/obj/item/clothing/head/hooded/cult_hoodie/cthulhu
+	name = "cultist hood"
+	desc = "A hood worn by the followers of Cthulhu."
+	icon_state = "cthulhuhood"
+	item_state = "cthulhuhood"
+
+/obj/item/clothing/suit/hooded/cultrobes/cthulhu
+	name = "cultist robes"
+	desc = "An armored set of robes worn by the followers of Cthulhu."
+	icon_state = "cthulhurobe"
+	item_state = "cthulhurobe"
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cthulhu
+
 /obj/item/clothing/suit/hooded/cultrobes/alt/ghost
 	item_flags = DROPDEL
 

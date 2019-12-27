@@ -262,33 +262,11 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "ax" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /obj/item/twohanded/required/kirbyplants/photosynthetic{
-	anchored = 1
+	anchored = 0
 	},
 /turf/open/floor/plasteel/white,
-/area/shuttle/custom{
-	name = "NTS Artic Shuttle"
-	})
+/area/centcom)
 "ay" = (
 /obj/structure/fluff/railing{
 	icon_state = "railing";
@@ -2120,11 +2098,12 @@
 	name = "air alarm";
 	pixel_y = 24
 	},
+/obj/item/storage/belt/chameleon,
+/obj/item/storage/backpack/chameleon,
+/obj/item/clothing/neck/chameleon,
+/obj/item/clothing/glasses/chameleon,
 /turf/open/floor/wood,
-/area/centcom{
-	icon_state = "bar";
-	name = "Bar"
-	})
+/area/centcom)
 "dU" = (
 /obj/item/toy/crayon/rainbow,
 /obj/item/cardboard_cutout/adaptive,
@@ -3499,7 +3478,7 @@
 	})
 "fZ" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/snacks/donkpocket/spicy/warm,
+/obj/item/reagent_containers/food/snacks/cheesyfries,
 /turf/open/floor/plasteel/dark,
 /area/centcom{
 	icon_state = "cafeteria";
@@ -4504,6 +4483,15 @@
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/under/suit/charcoal,
+/obj/item/clothing/under/dress/blacktango,
+/obj/item/storage/fancy/heart_box,
 /turf/open/floor/plasteel/grimy,
 /area/centcom)
 "hQ" = (
@@ -5068,14 +5056,6 @@
 /area/centcom)
 "iJ" = (
 /obj/structure/table/wood,
-/obj/item/toy/toy_dagger{
-	desc = "It may be too dull to cut pizza anymore.";
-	force = 5;
-	name = "Blade of Stolen Valor";
-	pixel_x = 3;
-	pixel_y = 2;
-	throwforce = 5
-	},
 /obj/item/reagent_containers/food/snacks/pizzaslice/arnold{
 	pixel_x = -3;
 	pixel_y = 12
@@ -5087,6 +5067,10 @@
 	layer = 1;
 	mouse_opacity = 0;
 	name = "dust"
+	},
+/obj/item/kitchen/knife/ritual{
+	pixel_x = 3;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/cult,
 /area/centcom)
@@ -5507,6 +5491,7 @@
 	mouse_opacity = 0;
 	name = "dust"
 	},
+/obj/item/reagent_containers/food/snacks/butter/on_a_stick,
 /turf/open/floor/plasteel,
 /area/centcom)
 "jw" = (
@@ -6052,7 +6037,18 @@
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
-/turf/open/floor/carpet/red,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/roman,
+/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/under/costume/kilt,
+/obj/item/clothing/under/dress/skirt/red,
+/obj/item/toy/crayon/spraycan,
+/obj/item/toy/crayon/spraycan,
+/obj/item/toy/crayon/spraycan,
+/turf/open/floor/carpet/blue,
 /area/centcom)
 "ko" = (
 /obj/effect/turf_decal/tile/brown{
@@ -6389,6 +6385,7 @@
 /obj/structure/sign/poster/contraband/rip_badger{
 	pixel_x = 32
 	},
+/obj/item/grown/bananapeel,
 /turf/open/floor/plating,
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
@@ -7044,22 +7041,16 @@
 /turf/open/floor/carpet,
 /area/centcom)
 "lW" = (
-/obj/structure/stone_tile/elder,
-/obj/structure/stone_tile/elder{
-	dir = 1
+/obj/structure/ladder/unbreakable/rune{
+	color = "";
+	desc = "";
+	icon = 'icons/turf/floors/elder_floors.dmi';
+	icon_state = "elder_pristine_center";
+	id = "AnAncientChineseSecret";
+	name = "Temple Tile"
 	},
-/obj/structure/stone_tile/elder{
-	dir = 4
-	},
-/obj/structure/stone_tile/elder{
-	dir = 8
-	},
-/obj/structure/table/wood/fancy/green,
-/obj/item/clothing/suit/hooded/chaplainsuit/monkfrock,
-/obj/item/clothing/suit/hooded/chaplainsuit/monkfrock,
-/turf/open/indestructible/boss{
-	name = "Temple Floor"
-	},
+/obj/structure/stone_tile/eldersurrounding,
+/turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "lX" = (
 /obj/structure/stone_tile/elder,
@@ -7107,6 +7098,30 @@
 	dir = 8
 	},
 /obj/structure/table/wood/fancy/green,
+/obj/item/kitchen/knife/ritual{
+	desc = "A dagger clearly meant for ritualistic sacrifice.";
+	name = "Sacrifical Dagger"
+	},
+/obj/item/kitchen/knife/ritual{
+	desc = "A dagger clearly meant for ritualistic sacrifice.";
+	name = "Sacrifical Dagger"
+	},
+/obj/item/kitchen/knife/ritual{
+	desc = "A dagger clearly meant for ritualistic sacrifice.";
+	name = "Sacrifical Dagger"
+	},
+/obj/item/kitchen/knife/ritual{
+	desc = "A dagger clearly meant for ritualistic sacrifice.";
+	name = "Sacrifical Dagger"
+	},
+/obj/item/kitchen/knife/ritual{
+	desc = "A dagger clearly meant for ritualistic sacrifice.";
+	name = "Sacrifical Dagger"
+	},
+/obj/item/kitchen/knife/ritual{
+	desc = "A dagger clearly meant for ritualistic sacrifice.";
+	name = "Sacrifical Dagger"
+	},
 /turf/open/indestructible/boss{
 	name = "Temple Floor"
 	},
@@ -7128,6 +7143,16 @@
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/chameleon/noslip,
+/obj/item/clothing/shoes/chameleon/noslip,
+/obj/item/clothing/under/chameleon,
+/obj/item/clothing/under/chameleon,
+/obj/item/clothing/neck/chameleon,
+/obj/item/clothing/neck/chameleon,
 /turf/open/floor/carpet/green,
 /area/centcom)
 "md" = (
@@ -7149,6 +7174,16 @@
 	mouse_opacity = 0;
 	name = "Dried Blood"
 	},
+/obj/structure{
+	anchored = 1;
+	desc = "It looks like it was clawed and chewed at.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remains";
+	layer = 2.1;
+	max_integrity = 1000;
+	mouse_opacity = 1;
+	name = "Mangled Remains"
+	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "mf" = (
@@ -7160,6 +7195,16 @@
 	layer = 2.08;
 	mouse_opacity = 0;
 	name = "Dried Blood"
+	},
+/obj/structure{
+	anchored = 1;
+	desc = "It looks like it was clawed and chewed at.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remains";
+	layer = 2.1;
+	max_integrity = 1000;
+	mouse_opacity = 1;
+	name = "Mangled Remains"
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
@@ -7233,8 +7278,30 @@
 	dir = 8
 	},
 /obj/structure/table/wood/fancy/green,
-/obj/item/clothing/suit/hooded/cultrobes,
-/obj/item/clothing/suit/hooded/cultrobes,
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
+/obj/item/clothing/shoes/cult{
+	desc = "A pair of boots worn by the followers of an eldritch cult.";
+	name = "\improper Cultist invoker boots"
+	},
 /turf/open/indestructible/boss{
 	name = "Temple Floor"
 	},
@@ -7510,22 +7577,26 @@
 	name = "Security"
 	})
 "mJ" = (
-/obj/structure/stone_tile/elder,
-/obj/structure/stone_tile/elder{
-	dir = 1
+/obj/structure{
+	anchored = 1;
+	desc = "It has dried.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "floor1-old";
+	layer = 2.08;
+	mouse_opacity = 0;
+	name = "Dried Blood"
 	},
-/obj/structure/stone_tile/elder{
-	dir = 4
+/obj/structure{
+	anchored = 1;
+	desc = "It looks like it was clawed and chewed at.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remains";
+	layer = 2.1;
+	max_integrity = 1000;
+	mouse_opacity = 1;
+	name = "Mangled Remains"
 	},
-/obj/structure/stone_tile/elder{
-	dir = 8
-	},
-/obj/structure/table/wood/fancy/green,
-/obj/item/clothing/suit/hooded/cultrobes/alt,
-/obj/item/clothing/suit/hooded/cultrobes/alt,
-/turf/open/indestructible/boss{
-	name = "Temple Floor"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "mK" = (
 /obj/structure/stone_tile/elder{
@@ -7596,26 +7667,26 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "mR" = (
-/obj/structure/stone_tile/elder,
-/obj/structure/stone_tile/elder{
-	dir = 1
+/obj/structure{
+	anchored = 1;
+	desc = "It has dried.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "floor2-old";
+	layer = 2.08;
+	mouse_opacity = 0;
+	name = "Dried Blood"
 	},
-/obj/structure/stone_tile/elder{
-	dir = 4
+/obj/structure{
+	anchored = 1;
+	desc = "It looks like it was clawed and chewed at.";
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "remains";
+	layer = 2.1;
+	max_integrity = 1000;
+	mouse_opacity = 1;
+	name = "Mangled Remains"
 	},
-/obj/structure/stone_tile/elder{
-	dir = 8
-	},
-/obj/structure/table/wood/fancy/green,
-/obj/item/clothing/suit/hooded/mysticrobe{
-	pixel_y = 6
-	},
-/obj/item/clothing/suit/hooded/mysticrobe{
-	pixel_y = 6
-	},
-/turf/open/indestructible/boss{
-	name = "Temple Floor"
-	},
+/turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "mS" = (
 /obj/structure/chair/sofa/left,
@@ -7716,16 +7787,48 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "nc" = (
-/obj/structure{
-	anchored = 1;
-	desc = "It has dried.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "floor1-old";
-	layer = 2.08;
-	mouse_opacity = 0;
-	name = "Dried Blood"
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow,
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/green{
+	max_integrity = 500;
+	name = "Altar"
+	},
+/obj/item/candle/infinite{
+	anchored = 1;
+	pixel_y = 16
+	},
+/obj/item/storage/book/bible{
+	deity_name = "Cthulhu";
+	desc = "<span class='nicegreen'>Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.</span>";
+	icon_state = "necronomicon";
+	name = "Elder Tome";
+	pixel_y = -10
+	},
+/obj/item/storage/book/bible{
+	deity_name = "Cthulhu";
+	desc = "<span class='nicegreen'>Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.</span>";
+	icon_state = "necronomicon";
+	name = "Elder Tome";
+	pixel_y = -10
+	},
+/obj/item/storage/book/bible{
+	deity_name = "Cthulhu";
+	desc = "<span class='nicegreen'>Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.</span>";
+	icon_state = "necronomicon";
+	name = "Elder Tome";
+	pixel_y = -10
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
 /area/awaymission/snowdin/cave/mountain)
 "nd" = (
 /obj/structure/table,
@@ -7749,16 +7852,26 @@
 	name = "Arrivals Checkpoint"
 	})
 "nf" = (
-/obj/structure{
-	anchored = 1;
-	desc = "It has dried.";
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "floor2-old";
-	layer = 2.08;
-	mouse_opacity = 0;
-	name = "Dried Blood"
+/obj/structure/stone_tile/elder,
+/obj/structure/stone_tile/elder{
+	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow,
+/obj/structure/stone_tile/elder{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/green{
+	max_integrity = 500;
+	name = "Altar"
+	},
+/obj/item/candle/infinite{
+	anchored = 1
+	},
+/turf/open/indestructible/boss{
+	name = "Temple Floor"
+	},
 /area/awaymission/snowdin/cave/mountain)
 "ng" = (
 /obj/structure/stone_tile/elderblock,
@@ -8169,15 +8282,15 @@
 /turf/open/floor/carpet/green,
 /area/awaymission/snowdin/cave/mountain)
 "nW" = (
-/obj/structure/ladder/unbreakable/rune{
-	color = "";
-	desc = "";
-	icon = 'icons/turf/floors/elder_floors.dmi';
-	icon_state = "elder_pristine_center";
-	id = "AnAncientChineseSecret";
-	name = "Temple Tile"
+/obj/structure/stone_tile/eldersurrounding_tile{
+	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow,
+/obj/item/candle/infinite{
+	anchored = 1;
+	pixel_x = 12;
+	pixel_y = 12
+	},
+/turf/open/floor/carpet/green,
 /area/awaymission/snowdin/cave/mountain)
 "nX" = (
 /obj/machinery/processor,
@@ -8284,8 +8397,11 @@
 	},
 /area/awaymission/snowdin/cave/mountain)
 "oh" = (
-/obj/structure/stone_tile/eldersurrounding_tile{
-	dir = 8
+/obj/structure/stone_tile/eldersurrounding_tile,
+/obj/item/candle/infinite{
+	anchored = 1;
+	pixel_x = -12;
+	pixel_y = 12
 	},
 /turf/open/floor/carpet/green,
 /area/awaymission/snowdin/cave/mountain)
@@ -8301,7 +8417,10 @@
 	},
 /area/awaymission/snowdin/cave/mountain)
 "oj" = (
-/obj/structure/stone_tile/eldersurrounding_tile,
+/obj/structure/table/wood/fancy/green,
+/obj/item/book_of_babel{
+	pixel_y = 6
+	},
 /turf/open/floor/carpet/green,
 /area/awaymission/snowdin/cave/mountain)
 "ok" = (
@@ -8728,6 +8847,60 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
+"oU" = (
+/obj/structure/stone_tile/elderburnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/elderburnt{
+	dir = 4
+	},
+/obj/structure/stone_tile/elder,
+/turf/open/floor/plating/asteroid/snow,
+/area/awaymission/snowdin/cave/mountain)
+"oV" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/book/codex_gigas{
+	pixel_y = 6
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"oW" = (
+/obj/structure/table/wood/fancy/green,
+/obj/item/pizzabox/infinite{
+	desc = "A box that seems to produce infinite pizzas.";
+	name = "cyclopean pizza box";
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/turf/open/floor/carpet/green,
+/area/awaymission/snowdin/cave/mountain)
+"oX" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind{
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game{
+	pixel_x = 7;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/turf/open/floor/wood,
+/area/centcom)
+"oY" = (
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/soda_cans/shamblers{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/turf/open/floor/wood,
+/area/centcom)
 "oZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -8751,6 +8924,18 @@
 /obj/item/newspaper,
 /turf/open/floor/carpet/black,
 /area/library/lounge)
+"pb" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/open/floor/carpet/red,
+/area/centcom)
 "pc" = (
 /obj/structure/rack,
 /obj/item/stack/packageWrap,
@@ -8770,6 +8955,44 @@
 	icon_state = "kitchen";
 	name = "Kitchen"
 	})
+"pd" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/turf/open/floor/wood,
+/area/centcom)
+"pe" = (
+/obj/structure/table/wood,
+/obj/item/razor{
+	pixel_y = 6
+	},
+/turf/open/floor/wood,
+/area/centcom)
+"pf" = (
+/obj/structure/table/wood,
+/obj/item/pda/chameleon,
+/turf/open/floor/wood,
+/area/centcom)
+"pg" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/newspaper,
+/turf/open/floor/plasteel/dark,
+/area/centcom)
+"ph" = (
+/obj/structure/table/wood,
+/obj/item/folder/red,
+/turf/open/floor/plasteel/grimy,
+/area/centcom)
+"pi" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/security_space_law{
+	pixel_y = 4
+	},
+/turf/open/floor/carpet/black,
+/area/centcom)
 "pj" = (
 /obj/structure/chair/sofa,
 /turf/open/floor/wood,
@@ -8786,6 +9009,63 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
+"pl" = (
+/obj/structure/table/wood,
+/obj/item/bikehorn/rubberducky{
+	name = "Mister Bubbles";
+	pixel_y = 5
+	},
+/turf/open/floor/carpet/blue,
+/area/centcom)
+"pm" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug/coco,
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/outside)
+"pn" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = 6
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/outside)
+"po" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/outside)
+"pp" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/outside)
+"pq" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/food/snacks/snowcones/orange{
+	pixel_x = -5
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/outside)
 "pr" = (
 /obj/structure/fluff{
 	desc = "Has a valve and pump attached to it.";
@@ -8826,6 +9106,160 @@
 	icon_state = "bar";
 	name = "Bar"
 	})
+"pv" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/snacks/snowcones/soda{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/outside)
+"pw" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/snowcones/red,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/outside)
+"px" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/honkdae{
+	pixel_y = 8
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/outside)
+"py" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/under/dress/blacktango,
+/obj/item/clothing/under/suit/burgundy,
+/obj/item/storage/fancy/heart_box,
+/turf/open/floor/plasteel/grimy,
+/area/centcom)
+"pz" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/under/suit/black_really,
+/obj/item/clothing/under/suit/black/female,
+/obj/item/storage/briefcase/lawyer,
+/obj/item/storage/briefcase/lawyer,
+/turf/open/floor/carpet/black,
+/area/centcom)
+"pA" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/kindleKicks,
+/obj/item/clothing/shoes/sneakers/rainbow,
+/obj/item/clothing/under/pants/youngfolksjeans,
+/obj/item/clothing/under/pants/mustangjeans,
+/obj/item/clothing/neck/necklace/dope,
+/obj/item/clothing/neck/necklace/dope,
+/turf/open/floor/carpet/red,
+/area/centcom)
+"pB" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/sneakers/red,
+/obj/item/clothing/shoes/sneakers/blue,
+/obj/item/clothing/under/color/jumpskirt/blue,
+/obj/item/clothing/under/color/red,
+/obj/item/clothing/suit/redtag,
+/obj/item/clothing/suit/bluetag,
+/obj/item/clothing/head/helmet/bluetaghelm,
+/obj/item/clothing/head/helmet/redtaghelm,
+/obj/item/gun/energy/laser/redtag,
+/obj/item/gun/energy/laser/bluetag,
+/turf/open/floor/wood,
+/area/centcom)
+"pC" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/shoes/laceup,
+/obj/item/clothing/under/suit/white,
+/obj/item/clothing/under/dress/redeveninggown,
+/obj/item/storage/fancy/heart_box,
+/turf/open/floor/wood,
+/area/centcom)
+"pD" = (
+/obj/structure/closet/secure_closet/personal/cabinet{
+	anchored = 1
+	},
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/shoes/winterboots,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/shoes/russian,
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/under/syndicate/rus_army,
+/obj/item/clothing/under/syndicate/soviet,
+/obj/item/clothing/head/helmet/rus_ushanka,
+/obj/item/clothing/head/helmet/rus_helmet,
+/turf/open/floor/wood,
+/area/centcom)
+"pE" = (
+/obj/structure{
+	anchored = 1;
+	icon = 'icons/effects/effects.dmi';
+	icon_state = "dirt";
+	layer = 1;
+	mouse_opacity = 0;
+	name = "dust"
+	},
+/obj/item/grenade/smokebomb{
+	name = "Willy Pete"
+	},
+/turf/open/floor/plating,
+/area/centcom)
+"pF" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/lipstick/black{
+	pixel_x = -12
+	},
+/obj/item/lipstick{
+	pixel_x = -6
+	},
+/obj/item/lipstick/jade,
+/obj/item/lipstick/purple{
+	pixel_x = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/centcom)
 "pG" = (
 /obj/structure/chair{
 	dir = 1
@@ -8835,11 +9269,46 @@
 	icon_state = "security";
 	name = "Security"
 	})
+"pH" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/belt/chameleon,
+/turf/open/floor/plasteel/dark,
+/area/centcom)
 "pI" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/centcom)
+"pJ" = (
+/obj/structure/closet/crate/wooden{
+	anchored = 1;
+	name = "experimental costume crate"
+	},
+/obj/item/clothing/mask/chameleon,
+/obj/item/clothing/head/chameleon,
+/obj/item/clothing/suit/chameleon,
+/obj/item/clothing/shoes/chameleon,
+/obj/item/clothing/under/chameleon,
+/obj/structure/fluff{
+	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous.";
+	icon = 'icons/obj/monitors.dmi';
+	icon_state = "alarm0";
+	name = "air alarm";
+	pixel_y = 24
+	},
+/obj/item/storage/belt/chameleon,
+/obj/item/storage/backpack/chameleon,
+/obj/item/clothing/neck/chameleon,
+/obj/item/clothing/glasses/chameleon,
+/turf/open/floor/wood,
+/area/centcom{
+	icon_state = "bar";
+	name = "Bar"
+	})
 "pK" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -8858,6 +9327,16 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
+"pL" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin{
+	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_y = 6
+	},
+/turf/open/floor/carpet/red,
+/area/centcom)
 "pM" = (
 /obj/machinery/door/window/northright,
 /obj/structure/cable,
@@ -8873,6 +9352,34 @@
 	name = "cage floor"
 	},
 /area/centcom)
+"pN" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/twohanded/required/kirbyplants/photosynthetic{
+	anchored = 0
+	},
+/turf/open/floor/plasteel/white,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
+	})
 "pO" = (
 /obj/machinery/processor,
 /turf/open/floor/plasteel/cafeteria,
@@ -8880,6 +9387,10 @@
 	icon_state = "kitchen";
 	name = "Kitchen"
 	})
+"pP" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/grimy,
+/area/centcom)
 "pQ" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -8900,6 +9411,22 @@
 "pR" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
+/area/centcom)
+"pS" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/wood,
+/area/centcom)
+"pT" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/carpet/blue,
+/area/centcom)
+"pU" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/carpet/green,
+/area/centcom)
+"pV" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/carpet/black,
 /area/centcom)
 "pZ" = (
 /turf/closed/indestructible/rock/snow/ice,
@@ -9350,10 +9877,6 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
-"sl" = (
-/obj/structure/table/wood,
-/turf/open/floor/carpet/red,
-/area/centcom)
 "sm" = (
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
@@ -9990,12 +10513,6 @@
 /obj/machinery/vending/autodrobe,
 /turf/open/floor/wood,
 /area/centcom)
-"vA" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
-	anchored = 1
-	},
-/turf/open/floor/carpet/blue,
-/area/centcom)
 "vF" = (
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6{
 	pixel_x = -32;
@@ -10213,10 +10730,6 @@
 /obj/structure/curtain/bounty,
 /turf/open/floor/wood,
 /area/centcom)
-"wD" = (
-/obj/structure/table/wood,
-/turf/open/floor/carpet/blue,
-/area/centcom)
 "wG" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/wood,
@@ -10276,10 +10789,6 @@
 	},
 /obj/structure/chair/sofa/left,
 /turf/open/floor/plating,
-/area/centcom)
-"wR" = (
-/obj/structure/table/wood,
-/turf/open/floor/plasteel/grimy,
 /area/centcom)
 "wT" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -10448,12 +10957,6 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
-"xU" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
-	anchored = 1
-	},
-/turf/open/floor/wood,
-/area/centcom)
 "xW" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -12078,10 +12581,6 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
-"FG" = (
-/obj/structure/table/wood/fancy,
-/turf/open/floor/wood,
-/area/centcom)
 "FJ" = (
 /obj/structure/cable,
 /obj/structure{
@@ -12337,12 +12836,6 @@
 	icon_state = "checkpoint1";
 	name = "Arrivals Checkpoint"
 	})
-"GP" = (
-/obj/item/twohanded/required/kirbyplants/photosynthetic{
-	anchored = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/centcom)
 "GR" = (
 /turf/open/indestructible/cobble/side{
 	icon_state = "cobble_side";
@@ -12685,10 +13178,6 @@
 	icon_state = "security";
 	name = "Security"
 	})
-"Ix" = (
-/obj/structure/table/wood,
-/turf/open/floor/carpet/black,
-/area/centcom)
 "Iy" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -14330,25 +14819,6 @@
 	icon_state = "kitchen";
 	name = "Kitchen"
 	})
-"Ri" = (
-/obj/structure/closet/crate/wooden{
-	anchored = 1;
-	name = "experimental costume crate"
-	},
-/obj/item/clothing/mask/chameleon,
-/obj/item/clothing/head/chameleon,
-/obj/item/clothing/suit/chameleon,
-/obj/item/clothing/shoes/chameleon,
-/obj/item/clothing/under/chameleon,
-/obj/structure/fluff{
-	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous.";
-	icon = 'icons/obj/monitors.dmi';
-	icon_state = "alarm0";
-	name = "air alarm";
-	pixel_y = 24
-	},
-/turf/open/floor/wood,
-/area/centcom)
 "Rk" = (
 /obj/structure/fluff{
 	desc = "Has a valve and pump attached to it.";
@@ -15293,10 +15763,6 @@
 	},
 /turf/open/floor/carpet/red,
 /area/centcom)
-"Wt" = (
-/obj/structure/displaycase,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
 "Wu" = (
 /turf/closed/indestructible/rock/snow/ice,
 /area/awaymission/snowdin/outside)
@@ -15468,12 +15934,6 @@
 	},
 /turf/open/floor/plating,
 /area/centcom)
-"Xs" = (
-/obj/structure/closet/secure_closet/personal/cabinet{
-	anchored = 1
-	},
-/turf/open/floor/carpet/black,
-/area/centcom)
 "Xw" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/carpet,
@@ -15584,10 +16044,6 @@
 /area/shuttle/custom{
 	name = "NTS Artic Shuttle"
 	})
-"Ym" = (
-/obj/structure/table/wood,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
 "Yq" = (
 /obj/effect/turf_decal/tile/red{
 	icon_state = "tile_corner";
@@ -15897,14 +16353,6 @@
 	icon_state = "security";
 	name = "Security"
 	})
-"ZN" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/dark,
-/area/centcom)
 "ZT" = (
 /obj/structure/table/wood/fancy/green,
 /obj/item/reagent_containers/food/snacks/salad/boiledrice,
@@ -20640,14 +21088,14 @@ xM
 qg
 qg
 qg
-ax
+pN
 Wh
 Wh
 Wh
 az
 aA
 aG
-ax
+pN
 xM
 xM
 WZ
@@ -21852,14 +22300,14 @@ xM
 qg
 qg
 qg
-ax
+pN
 Wh
 Wh
 Wh
 Za
 Za
 aH
-ax
+pN
 xM
 xM
 Gc
@@ -25897,7 +26345,7 @@ WG
 Zp
 uC
 cZ
-Ri
+dT
 GE
 GE
 qo
@@ -28918,7 +29366,7 @@ yS
 yS
 yS
 pI
-GP
+ax
 yS
 yS
 yS
@@ -30130,7 +30578,7 @@ bz
 bv
 yS
 pI
-GP
+ax
 yS
 yS
 yS
@@ -30580,7 +31028,7 @@ qN
 lg
 Yz
 gD
-oC
+pf
 GE
 ja
 qB
@@ -30592,7 +31040,7 @@ db
 cZ
 Qg
 du
-wR
+ph
 iU
 cZ
 pZ
@@ -30782,7 +31230,7 @@ qN
 lg
 Yz
 gD
-xU
+pB
 GE
 GE
 GE
@@ -30987,17 +31435,17 @@ gD
 da
 GE
 DL
-GE
+pS
 cZ
 nB
 jN
 jN
 db
 cZ
+pP
 Qg
 Qg
-Qg
-hP
+py
 cZ
 pZ
 pZ
@@ -31156,7 +31604,7 @@ bE
 bE
 eM
 hn
-dT
+pJ
 ej
 ej
 RY
@@ -31805,7 +32253,7 @@ nk
 ue
 ue
 ue
-ZN
+pg
 cZ
 pZ
 pZ
@@ -32007,7 +32455,7 @@ nk
 ue
 ue
 ue
-ZN
+pF
 cZ
 pZ
 pZ
@@ -32805,7 +33253,7 @@ gD
 SD
 zw
 VZ
-wD
+pl
 cZ
 nB
 jN
@@ -32813,7 +33261,7 @@ jN
 db
 cZ
 xc
-Xs
+pz
 RG
 cs
 cZ
@@ -33004,7 +33452,7 @@ qN
 lg
 Yz
 gD
-vA
+kn
 zw
 tT
 zw
@@ -33017,7 +33465,7 @@ dh
 xc
 xc
 bg
-Ix
+pi
 cZ
 pZ
 pZ
@@ -33209,14 +33657,14 @@ gD
 rv
 do
 zw
-zw
+pT
 cZ
 nB
 jN
 jN
 db
 cZ
-xc
+pV
 xc
 dB
 iV
@@ -33620,7 +34068,7 @@ jN
 jN
 db
 cZ
-sl
+pL
 mo
 jN
 Da
@@ -33825,7 +34273,7 @@ dj
 jN
 jN
 jN
-kn
+pA
 cZ
 pZ
 pZ
@@ -34017,14 +34465,14 @@ gD
 oN
 dp
 oB
-oB
+pU
 cZ
 nB
 jN
 jN
 db
 cZ
-sl
+pb
 mo
 dC
 FB
@@ -34429,8 +34877,8 @@ jN
 db
 cZ
 Lg
-oC
-oC
+pd
+pe
 DL
 cZ
 pZ
@@ -34633,7 +35081,7 @@ dl
 GE
 zX
 GE
-GE
+pS
 cZ
 pZ
 ac
@@ -34835,7 +35283,7 @@ cZ
 GE
 GE
 dw
-xU
+pD
 cZ
 pZ
 ac
@@ -35643,7 +36091,7 @@ nk
 ue
 ue
 ue
-ZN
+pH
 cZ
 pZ
 ac
@@ -35817,8 +36265,8 @@ UK
 UK
 UK
 UK
-rB
 UK
+rB
 UK
 UK
 UK
@@ -35845,7 +36293,7 @@ nk
 ue
 ue
 ue
-ZN
+pF
 cZ
 pZ
 pZ
@@ -36642,7 +37090,7 @@ HS
 gD
 sg
 Qg
-Qg
+pP
 Qg
 cZ
 nB
@@ -36651,9 +37099,9 @@ jN
 db
 cZ
 Cz
-FG
-FG
-GE
+oX
+oY
+pS
 cZ
 pZ
 pZ
@@ -37057,7 +37505,7 @@ cZ
 GE
 DL
 dE
-xU
+pC
 cZ
 pZ
 pZ
@@ -37444,7 +37892,7 @@ tM
 tM
 tM
 tM
-Wt
+tM
 tM
 cZ
 cZ
@@ -38044,7 +38492,7 @@ gD
 gD
 gD
 gD
-Ym
+px
 tM
 jy
 GR
@@ -38252,7 +38700,7 @@ tM
 tM
 tM
 tM
-Wt
+tM
 tM
 cZ
 cZ
@@ -39449,7 +39897,7 @@ lg
 lg
 Yz
 gD
-Ym
+pm
 tM
 lj
 Au
@@ -40055,7 +40503,7 @@ CT
 lg
 Yz
 gD
-Ym
+pn
 tM
 lj
 Au
@@ -40661,7 +41109,7 @@ CT
 lg
 Yz
 gD
-Ym
+po
 tM
 lj
 Au
@@ -42260,7 +42708,7 @@ in
 in
 in
 in
-in
+pE
 hm
 jm
 hm
@@ -42479,8 +42927,8 @@ Tc
 lg
 Yz
 gD
-Ym
-Ym
+pp
+pv
 tM
 jR
 Au
@@ -42987,10 +43435,10 @@ aa
 bM
 bM
 bM
-lW
-mm
-mJ
-mR
+lX
+nc
+nf
+lX
 bM
 bM
 bM
@@ -43196,7 +43644,7 @@ lX
 bM
 bM
 bM
-aa
+bM
 bM
 bM
 bM
@@ -43398,7 +43846,7 @@ lX
 bM
 bM
 bM
-aa
+bM
 bM
 bM
 bM
@@ -43489,8 +43937,8 @@ Tc
 lg
 Yz
 gD
-Ym
-Ym
+pq
+pw
 tM
 jR
 Au
@@ -43593,14 +44041,14 @@ aa
 bM
 bM
 bM
-ma
+lX
 mp
 mp
-ma
+lX
 bM
 bM
 bM
-aa
+bM
 bM
 bM
 bM
@@ -43795,10 +44243,10 @@ aa
 bM
 bM
 bM
-ma
+lX
 mp
 mp
-ma
+lX
 bM
 bM
 bM
@@ -44199,10 +44647,10 @@ aa
 bM
 bM
 bM
-ma
+lX
 mp
 mp
-ma
+lX
 bM
 bM
 bM
@@ -44401,10 +44849,10 @@ aa
 bM
 bM
 bM
-ma
+lX
 mp
 mp
-ma
+lX
 bM
 bM
 bM
@@ -46230,7 +46678,7 @@ mu
 nv
 nv
 nP
-nU
+oV
 od
 nv
 nP
@@ -46432,11 +46880,11 @@ nv
 nD
 nv
 nP
-nU
+nV
 od
 nv
 nP
-nU
+oj
 od
 lX
 nv
@@ -46836,7 +47284,7 @@ nv
 nI
 nv
 nP
-nV
+nU
 od
 nv
 lX
@@ -47038,7 +47486,7 @@ ny
 nv
 nv
 nP
-nU
+oW
 od
 nv
 lX
@@ -48246,12 +48694,12 @@ mT
 bM
 bM
 bM
+aa
+aa
 bM
 bM
 bM
-bM
-bM
-lX
+mm
 lX
 lX
 lX
@@ -48454,7 +48902,7 @@ bM
 bM
 bM
 lX
-oh
+nW
 nv
 nv
 nv
@@ -49060,7 +49508,7 @@ bM
 bM
 bM
 lX
-oj
+oh
 nv
 nv
 nv
@@ -49261,7 +49709,7 @@ aa
 bM
 bM
 bM
-lX
+ma
 lX
 lX
 lX
@@ -50472,7 +50920,7 @@ ch
 ch
 ch
 ch
-nW
+lW
 bM
 aa
 aa
@@ -52081,7 +52529,7 @@ me
 ch
 ch
 ch
-nc
+mJ
 nb
 nt
 nu
@@ -52695,7 +53143,7 @@ bM
 mY
 bM
 bM
-ch
+oU
 ch
 op
 or
@@ -52889,7 +53337,7 @@ mf
 ch
 ch
 ch
-nf
+mR
 mk
 nt
 nu
