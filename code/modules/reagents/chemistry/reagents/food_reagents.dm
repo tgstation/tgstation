@@ -298,8 +298,11 @@
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
-	if(prob(5))
-		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
+	if(!holder.has_reagent(/datum/reagent/consumable/milk))
+		if(prob(15))
+			M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
+		if(prob(25))
+			to_chat(M, "<span class='danger'>[pick("Your head pounds.", "You feel like you're on fire.", "You feel dizzy.")]</span>")
 	..()
 
 /datum/reagent/consumable/sodiumchloride
