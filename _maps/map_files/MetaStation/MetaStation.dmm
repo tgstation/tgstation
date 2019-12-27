@@ -54197,7 +54197,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	areastring = "/area/science/explab";
+	areastring = "/area/science/genetics";
 	name = "Genetics Lab APC";
 	pixel_y = -23
 	},
