@@ -51406,6 +51406,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"qor" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "qrU" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -52724,6 +52728,10 @@
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"xMT" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 "xUg" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light{
@@ -88926,7 +88934,7 @@ blj
 bmK
 bog
 bog
-bhh
+qor
 bsx
 bsr
 bvh
@@ -89965,7 +89973,7 @@ bAs
 bvj
 bCL
 bxO
-bDR
+xMT
 bDR
 bIk
 bJC

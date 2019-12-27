@@ -28711,6 +28711,14 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel,
+/area/medical/medbay/central)
+"aSA" = (
+>>>>>>> pscyhmerge
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -29350,10 +29358,18 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
+=======
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/showroomfloor,
+>>>>>>> pscyhmerge
 /area/medical/medbay/central)
 "aTv" = (
 /obj/effect/turf_decal/tile/yellow{

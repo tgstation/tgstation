@@ -46861,6 +46861,17 @@
 "pBI" = (
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
+"pEE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "pGM" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
@@ -49256,6 +49267,10 @@
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"uTl" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "uTy" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 9
@@ -75664,7 +75679,7 @@ bKk
 aHZ
 aFT
 piu
-aGt
+uTl
 beC
 aHF
 xQy
@@ -77979,7 +77994,7 @@ aEw
 aEw
 rvt
 hrY
-hrY
+pEE
 dMi
 aJy
 eBV
