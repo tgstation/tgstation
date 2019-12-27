@@ -1,0 +1,6 @@
+author: "nightred"
+delete-after: True
+changes: 
+  - rscadd: "Engineering security checkpoint has better view of who is running around."
+  - rscadd: "Engineering service desk"
+  - tweak: "Engineering shared storage has been revamped"
