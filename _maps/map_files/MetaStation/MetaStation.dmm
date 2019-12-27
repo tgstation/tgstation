@@ -23181,10 +23181,12 @@
 	pixel_y = 5
 	},
 /obj/item/pen,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "aZM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "aZN" = (
@@ -23195,6 +23197,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "aZO" = (
@@ -24238,6 +24241,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bbF" = (
@@ -24832,7 +24836,6 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bcM" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -26223,6 +26226,7 @@
 "bfV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/checkpoint/engineering)
 "bfW" = (
@@ -26237,6 +26241,7 @@
 /area/security/checkpoint/engineering)
 "bfX" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/checkpoint/engineering)
 "bfY" = (
@@ -27320,7 +27325,6 @@
 /area/engine/break_room)
 "bic" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -72803,9 +72807,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
 "ffD" = (
@@ -73968,7 +73969,6 @@
 /area/maintenance/starboard/aft)
 "kIL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -74914,11 +74914,6 @@
 "owR" = (
 /turf/closed/wall,
 /area/engine/storage_shared)
-"oxI" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/engine/engineering)
 "oxX" = (
 /obj/structure/closet,
 /obj/item/flashlight,
@@ -75353,6 +75348,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "qdT" = (
@@ -75780,6 +75776,7 @@
 	dir = 4;
 	pixel_x = -29
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "rJv" = (
@@ -76636,6 +76633,7 @@
 	dir = 4
 	},
 /obj/item/geiger_counter,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "vHP" = (
@@ -119287,7 +119285,7 @@ dfi
 aQd
 dBA
 aSA
-oxI
+dfT
 aVf
 vFS
 tGe
