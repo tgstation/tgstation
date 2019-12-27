@@ -51217,7 +51217,7 @@
 	},
 /area/science/research)
 "ckr" = (
-/obj/structure/cable,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cks" = (
@@ -51225,7 +51225,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "ckt" = (
@@ -51938,7 +51937,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -52303,7 +52301,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cmR" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -53020,7 +53017,6 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/landmark/start/geneticist,
-/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cor" = (
@@ -55208,12 +55204,11 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
 "csH" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	sortType = 23
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
 "csI" = (
@@ -55631,7 +55626,6 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "ctC" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/maintenance{
 	name = "Morgue Maintenance";
 	req_access_txt = "6"
@@ -56423,12 +56417,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cvy" = (
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cvz" = (
@@ -56805,7 +56797,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "cww" = (
-/obj/effect/landmark/start/geneticist,
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -57424,9 +57415,6 @@
 /area/medical/genetics/cloning)
 "cyc" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -57460,9 +57448,6 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cym" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -57474,12 +57459,10 @@
 /turf/open/floor/plasteel,
 /area/medical/morgue)
 "cyn" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cyo" = (
@@ -57752,7 +57735,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "cyW" = (
-/obj/effect/landmark/start/geneticist,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
@@ -59798,9 +59780,6 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "cEc" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
@@ -59817,9 +59796,6 @@
 	pixel_y = -3
 	},
 /obj/item/clothing/gloves/color/latex,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
@@ -59828,9 +59804,6 @@
 /area/hallway/primary/aft)
 "cEg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -24
@@ -59841,13 +59814,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cEh" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cEi" = (
@@ -75352,6 +75323,17 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/mixing/chamber)
+"tky" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "tru" = (
 /obj/machinery/computer/warrant{
 	dir = 1
@@ -103751,7 +103733,7 @@ cAi
 ctF
 car
 car
-czg
+car
 cFb
 car
 car
@@ -104007,7 +103989,7 @@ czh
 cAj
 ctG
 cCm
-cpa
+tky
 cEh
 cFc
 chh
@@ -110672,7 +110654,7 @@ cgq
 cur
 sRB
 cvx
-clS
+cmR
 cmR
 cmR
 cpz
@@ -110928,9 +110910,9 @@ csg
 cgq
 cut
 abU
-ckr
-clT
 cmS
+clT
+ckr
 com
 cpA
 cqS
@@ -111185,7 +111167,7 @@ ceZ
 cgq
 chy
 abU
-ckr
+cmS
 clU
 cmT
 con
