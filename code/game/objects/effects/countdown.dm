@@ -170,3 +170,17 @@
 		var/obj/machinery/computer/arena/C = A.get_controller()
 		var/time_left = max(0, (C.start_time - world.time) / 10)
 		return round(time_left)
+
+
+/obj/effect/countdown/stage
+	invisibility = 0
+	name = "stage countdown"
+
+/obj/effect/countdown/stage/get_value()
+	var/obj/machinery/stage_spawn/A = attached_to
+	if(!istype(A))
+		return
+	else
+		var/obj/machinery/computer/stage/C = A.get_controller()
+		var/time_left = max(0, (C.start_time - world.time) / 10)
+		return round(time_left)
