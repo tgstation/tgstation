@@ -691,7 +691,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			price = R.custom_price || default_price,
 			max_amount = R.max_amount,
 			ref = REF(R),
-			extended = TRUE
+			premium = TRUE
 		)
 		.["hidden_records"] += list(data)
 
