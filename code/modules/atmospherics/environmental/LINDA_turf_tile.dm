@@ -38,10 +38,6 @@
 	if(!blocks_air)
 		air = new
 		air.copy_from_turf(src)
-	#ifdef EVENTMODE
-	//TURF air will be set to a default atmos string
-	air.copy_from_turf(src)
-	#endif
 	. = ..()
 
 /turf/open/Destroy()
@@ -176,10 +172,6 @@
 
 
 	var/planet_atmos = planetary_atmos
-	#ifdef EVENTMODE
-	planet_atmos = TRUE
-	#endif
-
 	if (planet_atmos)
 		adjacent_turfs_length++
 
