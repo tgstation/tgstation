@@ -3637,6 +3637,12 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/mine/living_quarters)
+"vh" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "vq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
 /turf/open/floor/plasteel,
@@ -3676,10 +3682,11 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	name = "Labor Camp Security APC";
 	dir = 1;
+	name = "Labor Camp Security APC";
 	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "zn" = (
@@ -10393,8 +10400,8 @@ bk
 az
 az
 yr
-UH
-ch
+vh
+bh
 GI
 Fd
 Hd
@@ -10651,7 +10658,7 @@ yr
 yr
 yr
 za
-ch
+bh
 QN
 oW
 sM
