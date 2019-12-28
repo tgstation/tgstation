@@ -2,6 +2,7 @@ import { Fragment } from 'inferno';
 import { act } from '../byond';
 import { Section, Box, Button, Table } from '../components';
 import { classes } from 'common/react';
+import { createLogger } from '../logging';
 
 export const Vending = props => {
   const { state } = props;
@@ -24,6 +25,10 @@ export const Vending = props => {
       ...data.coin_records,
     ];
   }
+  const nonfreeRefs = [
+    ...data.coin_records.map(record => record.ref),
+    ...data.hidden_records.map(record => record.ref),
+  ];
   return (
     <Fragment>
       <Section title="User">
@@ -46,11 +51,14 @@ export const Vending = props => {
         <Table>
           {inventory.map((product => {
             const free = (
-              product.price === 0
-              || (
-                data.department
-                && data.user
-                && data.department === data.user.department
+              !nonfreeRefs.includes(product.ref)
+              && (
+                product.price === 0
+                || (
+                  data.department
+                  && data.user
+                  && data.department === data.user.department
+                )
               )
             );
             return (
