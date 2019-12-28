@@ -17,7 +17,7 @@
     var/ckey = list("null")
     var/name_of_act
     var/stage = null
-    var/time = 120 SECONDS
+    var/time = 135 SECONDS
     var/items = list()
     var/act_completed = FALSE
     var/dead = 0 // How many deaths have occured
@@ -44,17 +44,6 @@
 
     chameleon_extras = /obj/item/stamp/clown
 
-/datum/outfit/stage/citrus_test
-    ckey = list("citrusgender")
-    name_of_act = "citrusgender"
-    time = 10 SECONDS
-    items = list(
-    /obj/effect/mine/explosive,
-    /obj/effect/mine/sound/bwoink,
-    /obj/effect/mine/sound/bwoink,
-    /obj/effect/mine/sound/bwoink,
-    /obj/effect/mine/sound/bwoink)
-    shoes = /obj/item/clothing/shoes/clown_shoes/bruh
 
 /datum/outfit/stage/fikou
     ckey = list("fikou")

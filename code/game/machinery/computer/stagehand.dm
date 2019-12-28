@@ -340,7 +340,6 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 		countdowns += A
 		sleep(start_delay)
 		var/datum/outfit/stage/original_play = all_stage_acts[ckey] // probably a better way to do this, but we need the orginal play datum
-		var/list/ckey_list = original_play.ckey
 		if(original_play.act_completed) // if this happened, we've run through the list again and this proc can end
 			return
 		Reset_Stage(user, ckey, current_act)
@@ -462,6 +461,37 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 	popup.open()
 
 /obj/machinery/computer/stage_signup
+	maptext = "Talent Show Signup!"
+	maptext_y = 32
+	var/list/signed_up = list()
+	var/obj/machinery/computer/stage/linked_machine
+	var/test
+
+/obj/machinery/computer/stage_signup/Initialize(mapload, obj/item/circuitboard/C)
+	. = ..()
+	for(var/obj/machinery/computer/stage/S in GLOB.machines)
+		linked_machine = S
+	signed_up = linked_machine.all_stage_acts
+
+
+/obj/machinery/computer/stage_signup/attack_hand(mob/user)
+	var/selection = input("Hello! Would you like to sign up to be a part of the 2019 Winter Ball Talent Show? (If you click yes, you will be spawned in front of everyone)", "Signup", null, null) as null|anything in list("Yes","No")
+	if(selection != "Yes")
+		return
+	if(user.ckey in signed_up)
+		to_chat(user, "You're already signed up!")
+		return
+	signed_up += user.ckey
+	var/datum/outfit/stage/new_stageplay = new
+	var/list/new_stageplay_actors = list()
+	new_stageplay_actors += user.ckey
+	new_stageplay.ckey = new_stageplay_actors
+	var/name_of_act = user.ckey
+	test = new_stageplay
+	var/list/current_stage_list = linked_machine.all_stage_acts
+	current_stage_list[name_of_act] += new_stageplay
+	linked_machine.all_stage_acts = current_stage_list
+
 
 // Stage spawnpoint
 /obj/machinery/stage_spawn

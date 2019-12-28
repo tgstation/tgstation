@@ -127,8 +127,9 @@
 /turf/closed/wall/mineral/iron,
 /area/awaymission/snowdin/igloo)
 "aA" = (
+/obj/effect/path_blocker/stage,
 /turf/open/floor/wood,
-/area/space)
+/area/centcom)
 "aB" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 4;
@@ -5394,10 +5395,6 @@
 /obj/item/bedsheet/blue,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/igloo)
-"kK" = (
-/obj/effect/landmark/stage/end,
-/turf/open/floor/wood,
-/area/space)
 "kL" = (
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel/dark,
@@ -5477,12 +5474,6 @@
 	dir = 8
 	},
 /area/awaymission/snowdin/outside)
-"kT" = (
-/obj/effect/path_blocker/stage,
-/turf/open/floor/pod{
-	name = "Stage"
-	},
-/area/centcom)
 "kU" = (
 /obj/structure/stone_tile/block/eldercracked,
 /obj/structure/stone_tile/eldercracked{
@@ -6474,7 +6465,7 @@
 "mX" = (
 /obj/machinery/stage_spawn,
 /turf/open/floor/wood,
-/area/space)
+/area/centcom)
 "mY" = (
 /obj/structure/chair/comfy/teal{
 	dir = 4
@@ -9181,10 +9172,6 @@
 	icon_state = "security";
 	name = "Security"
 	})
-"te" = (
-/obj/effect/landmark/stage/item1,
-/turf/open/floor/wood,
-/area/space)
 "tf" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/tinted/fulltile,
@@ -9463,15 +9450,15 @@
 "tE" = (
 /obj/effect/landmark/stage/item2,
 /turf/open/floor/wood,
-/area/space)
+/area/centcom)
 "tF" = (
 /obj/effect/landmark/stage/item3,
 /turf/open/floor/wood,
-/area/space)
+/area/centcom)
 "tG" = (
 /obj/effect/landmark/stage/item4,
 /turf/open/floor/wood,
-/area/space)
+/area/centcom)
 "tH" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -9485,14 +9472,6 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/centcom)
-"tI" = (
-/obj/effect/landmark/stage/item5,
-/turf/open/floor/wood,
-/area/space)
-"tJ" = (
-/obj/effect/landmark/stage/start,
-/turf/open/floor/wood,
-/area/space)
 "tK" = (
 /obj/machinery/recharge_station,
 /obj/effect/landmark/start/cyborg,
@@ -9633,9 +9612,17 @@
 "xT" = (
 /turf/open/floor/plasteel/stairs/left,
 /area/centcom)
+"yo" = (
+/obj/effect/landmark/stage/end,
+/turf/open/floor/wood,
+/area/centcom)
 "yN" = (
 /obj/machinery/stasis,
 /turf/open/floor/plasteel/white,
+/area/centcom)
+"yY" = (
+/obj/effect/landmark/stage/item1,
+/turf/open/floor/wood,
 /area/centcom)
 "zC" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -9735,10 +9722,6 @@
 	icon_state = "hallC";
 	name = "Central Hallway"
 	})
-"Fp" = (
-/obj/structure/table/wood/fancy/black,
-/turf/open/floor/carpet,
-/area/centcom)
 "Fs" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
@@ -9855,6 +9838,10 @@
 /obj/structure/table/wood/fancy/red,
 /turf/open/floor/wood,
 /area/centcom)
+"ND" = (
+/obj/effect/landmark/stage/item5,
+/turf/open/floor/wood,
+/area/centcom)
 "Og" = (
 /obj/structure/fluff/hedge,
 /turf/open/floor/wood,
@@ -9940,6 +9927,10 @@
 	dir = 4
 	},
 /area/awaymission/snowdin/outside)
+"Zt" = (
+/obj/effect/landmark/stage/start,
+/turf/open/floor/wood,
+/area/centcom)
 "ZK" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
@@ -24385,18 +24376,18 @@ Og
 jt
 eI
 eI
-Fp
-kT
-kT
-kT
-kT
-kT
-kT
-kT
-kT
-kT
-kT
-Fp
+WX
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+WX
 eI
 eI
 jt
@@ -24588,16 +24579,16 @@ jt
 eJ
 eI
 zX
-kT
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-tJ
-kT
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
 zX
 eI
 eJ
@@ -24790,16 +24781,16 @@ jt
 WX
 eI
 eI
-kT
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-kT
+eI
+PI
+WX
+KV
+eI
+eI
+PI
+WX
+KV
+eI
 eI
 eI
 WX
@@ -24992,7 +24983,7 @@ jt
 zX
 eI
 eJ
-kT
+eI
 aA
 aA
 aA
@@ -25001,7 +24992,7 @@ aA
 aA
 aA
 aA
-kT
+aA
 eJ
 eI
 zX
@@ -25193,18 +25184,18 @@ Og
 jt
 eI
 eI
-Fp
-kT
+WX
+eI
 aA
+jt
+jt
+jt
+jt
+jt
+jt
+Zt
 aA
-aA
-aA
-aA
-te
-aA
-aA
-kT
-Fp
+WX
 eI
 eI
 jt
@@ -25396,16 +25387,16 @@ jt
 eJ
 eI
 zX
-kT
+eI
 aA
+jt
+jt
+jt
+yY
+jt
+jt
+jt
 aA
-aA
-aA
-aA
-aA
-aA
-aA
-kT
 zX
 eI
 eJ
@@ -25598,16 +25589,16 @@ jt
 WX
 eI
 eI
-kT
+eI
 aA
-aA
-aA
-aA
-aA
+jt
+jt
+jt
+jt
 tE
+jt
+jt
 aA
-aA
-kT
 eI
 eI
 WX
@@ -25800,16 +25791,16 @@ jt
 zX
 eI
 eJ
-kT
+eI
 aA
+jt
+jt
+jt
+jt
+jt
+jt
+jt
 aA
-aA
-aA
-aA
-aA
-aA
-aA
-kT
 eJ
 eI
 zX
@@ -26001,18 +25992,18 @@ Og
 jt
 eI
 eI
-Fp
-kT
+WX
+eI
 aA
-aA
-aA
+jt
+jt
 mX
-aA
+jt
 tF
+jt
+jt
 aA
-aA
-kT
-Fp
+WX
 eI
 eI
 jt
@@ -26204,16 +26195,16 @@ jt
 eJ
 eI
 zX
-kT
+eI
 aA
+jt
+jt
+jt
+jt
+jt
+jt
+jt
 aA
-aA
-aA
-aA
-aA
-aA
-aA
-kT
 zX
 eI
 eJ
@@ -26406,16 +26397,16 @@ jt
 WX
 eI
 eI
-kT
+eI
 aA
-aA
-aA
-aA
-aA
+jt
+jt
+jt
+jt
 tG
+jt
+jt
 aA
-aA
-kT
 eI
 eI
 WX
@@ -26608,16 +26599,16 @@ jt
 zX
 eI
 eJ
-kT
+eI
 aA
+jt
+jt
+jt
+ND
+jt
+jt
+jt
 aA
-aA
-aA
-aA
-aA
-aA
-aA
-kT
 eJ
 eI
 zX
@@ -26809,18 +26800,18 @@ Og
 jt
 eI
 eI
-Fp
-kT
+WX
+eI
 aA
+yo
+jt
+jt
+jt
+jt
+jt
+jt
 aA
-aA
-aA
-aA
-tI
-aA
-aA
-kT
-Fp
+WX
 eI
 eI
 jt
@@ -27012,7 +27003,7 @@ jt
 eJ
 eI
 zX
-kT
+eI
 aA
 aA
 aA
@@ -27021,7 +27012,7 @@ aA
 aA
 aA
 aA
-kT
+aA
 zX
 eI
 eJ
@@ -27214,16 +27205,16 @@ jt
 WX
 eI
 eI
-kT
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-kT
+eI
+PI
+WX
+KV
+eI
+eI
+PI
+WX
+KV
+eI
 eI
 eI
 WX
@@ -27416,16 +27407,16 @@ jt
 zX
 eI
 eJ
-kT
-kK
-aA
-aA
-aA
-aA
-aA
-aA
-aA
-kT
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
 eJ
 eI
 zX
@@ -27617,18 +27608,18 @@ Og
 jt
 eI
 eI
-Fp
-kT
-kT
-kT
-kT
-kT
-kT
-kT
-kT
-kT
-kT
-Fp
+WX
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+eI
+WX
 eI
 eI
 jt

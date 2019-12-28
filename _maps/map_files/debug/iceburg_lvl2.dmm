@@ -14046,6 +14046,12 @@
 	icon_state = "kitchen";
 	name = "Kitchen"
 	})
+"PJ" = (
+/obj/machinery/computer/stage_signup,
+/turf/open/floor/carpet/green,
+/area/shuttle/custom{
+	name = "NTS Artic Shuttle"
+	})
 "PL" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet/green,
@@ -15502,6 +15508,7 @@
 /obj/structure/sign/poster/contraband/punch_shit{
 	pixel_y = 32
 	},
+/obj/machinery/photocopier,
 /turf/open/floor/wood,
 /area/library/lounge)
 "ZD" = (
@@ -21688,7 +21695,7 @@ Sy
 Sy
 Sy
 Sy
-Sy
+PJ
 Sy
 zO
 xM
