@@ -316,7 +316,7 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 		if(!spawn_actors(user) && !current_act.override_presence) // Person didn't spawn or isn't here
 			priority_announce("[capitalize(current_act.ckey[1])] has not shown up! They have 60 seconds to appear or else they will be disqualified.")
 			waiting_for_actor = TRUE
-			sleep(5 SECONDS)
+			sleep(60 SECONDS)
 			if(!spawn_actors(user) && !override_automate)
 				priority_announce("[capitalize(current_act.ckey[1])] has not shown up! They are disqualified.")
 				Reset_Stage(user, ckey, current_act)
@@ -376,7 +376,7 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 	Reset_Stage(user, current_act.ckey, current_act)
 	toggle_automate_acts(user, FALSE) // run through the list again without changing the override
 
-/obj/machinery/computer/stage/proc/change_stage_border(ckey)
+/obj/machinery/computer/stage/proc/change_stage_border(ckey) // changes the ckey of the border so that the person on stage can walk around
 	for(var/obj/effect/path_blocker/stage/border in GLOB.stageborder_list)
 		border.ckeys = ckey
 

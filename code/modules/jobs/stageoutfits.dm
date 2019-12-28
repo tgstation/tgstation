@@ -17,7 +17,7 @@
     var/ckey = list("null")
     var/name_of_act
     var/stage = null
-    var/time = 10 SECONDS
+    var/time = 120 SECONDS
     var/items = list()
     var/act_completed = FALSE
     var/dead = 0 // How many deaths have occured
@@ -160,3 +160,4 @@
     new /obj/item/reagent_containers/food/condiment/sugar(src)
     new /obj/item/reagent_containers/food/condiment/soymilk(src)
     new /obj/item/reagent_containers/glass/beaker(src)
+    new /obj/item/instrument/harmonica(src)

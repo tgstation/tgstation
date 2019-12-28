@@ -439,9 +439,9 @@
 	dat += "<table><tr><td valign='top'>"
 	var/column_counter = 0
 	for(var/list/category in list(GLOB.command_positions) + list(GLOB.engineering_positions) + list(GLOB.supply_positions) + list(GLOB.nonhuman_positions - "pAI") + list(GLOB.civilian_positions) + list(GLOB.medical_positions) + list(GLOB.science_positions) + list(GLOB.security_positions))
-		var/cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
+		var/cat_color = "#808080" //use the color of the first job in the category (the department head) as the category color
 		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
-		dat += "<legend align='center' style='color: [cat_color]'>[SSjob.name_occupations[category[1]].exp_type_department]</legend>"
+		dat += "<legend align='center' style='color: [cat_color]'>null</legend>"
 		var/list/dept_dat = list()
 		for(var/job in category)
 			var/datum/job/job_datum = SSjob.name_occupations[job]
@@ -449,6 +449,13 @@
 				var/command_bold = ""
 				if(job in GLOB.command_positions)
 					command_bold = " command"
+				if(job_datum.title == "Security Officer")			
+					if(!check_whitelist(src.ckey) && !check_rights(R_ADMIN, FALSE))
+						dept_dat += "<span class='nopositions'>Reserved.</span>"
+						continue
+					else
+						dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>"
+						continue
 				if(job_datum in SSjob.prioritized_jobs)
 					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([job_datum.current_positions])</span></a>"
 				else
