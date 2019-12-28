@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "A few suits without adjusted sprites are no longer adjustable, the two piece black suit returns."
