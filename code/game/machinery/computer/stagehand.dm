@@ -11,6 +11,7 @@
 #define STAGE_ITEM_4 "item 4"
 #define STAGE_ITEM_5 "item 5"
 
+GLOBAL_LIST_EMPTY(stageborder_list) //list of all stage borders, need this so we can change the ckey 
 
 /obj/effect/landmark/stage
 	name = "stage landmark"
@@ -103,7 +104,7 @@
 /obj/machinery/computer/stage/proc/GenerateActs()
 	for(var/O in subtypesof(/datum/outfit/stage))
 		var/datum/outfit/stage/stage_outfit = O
-		all_stage_acts[initial(stage_outfit.ckey)] += new O()
+		all_stage_acts[initial(stage_outfit.name_of_act)] += new O()
 
 /obj/machinery/computer/stage/proc/LoadItemLandmarks()
 	if(!landmarks_loaded)
@@ -254,8 +255,10 @@
 		actors_in_act.Add(spawn_actor(actor_spawn, key))
 	to_chat(user,"Actors have been spawned.")
 	if(actors_in_act.len >= 2)
+		test = actors_in_act
 		return actors_in_act
 	if(actors_in_act.len == 1)
+		test = actors_in_act[1]
 		return actors_in_act[1]
 
 
@@ -303,19 +306,19 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 			log_world("loading [current_act.stage]")
 			load_stage(current_act.stage, user)
 		spawn_items(user, current_act.items)
-		if(!islist(current_act.ckey))
-			log_world("spawning [current_act.ckey]")
-			add_actor(user, current_act.ckey)
-		else
-			for(var/actor in current_act.ckey)
-				log_world("spawning [current_act.ckey]")
-				add_actor(user, actor)
-		if(!spawn_actors(user)) // Person didn't spawn
-			priority_announce("[capitalize(current_act.ckey)] has not shown up! They have 60 seconds to appear or else they will be disqualified.")
+		outfits = current_act // should change the outfit (and it does!)
+		for(var/actor in current_act.ckey)
+			var/i
+			log_world("spawning [current_act.ckey[i]]")
+			add_actor(user, actor)
+			i++
+		change_stage_border(current_act.ckey) // might want to let the person walk on stage.
+		if(!spawn_actors(user) && !current_act.override_presence) // Person didn't spawn or isn't here
+			priority_announce("[capitalize(current_act.ckey[1])] has not shown up! They have 60 seconds to appear or else they will be disqualified.")
 			waiting_for_actor = TRUE
-			sleep(60 SECONDS)
+			sleep(5 SECONDS)
 			if(!spawn_actors(user) && !override_automate)
-				priority_announce("[capitalize(current_act.ckey)] has not shown up! They are disqualified.")
+				priority_announce("[capitalize(current_act.ckey[1])] has not shown up! They are disqualified.")
 				Reset_Stage(user, ckey, current_act)
 				waiting_for_actor = FALSE
 				continue
@@ -325,7 +328,7 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 			if(selection == "No")
 				Reset_Stage(user, completed = FALSE)
 				return
-		priority_announce("Please put your hands together for [capitalize(current_act.ckey)]!!")
+		priority_announce("Please put your hands together for [capitalize(current_act.ckey[1])]!!")
 		if(current_act.time)
 			start_delay = current_act.time
 		var/timetext = DisplayTimeText(start_delay)
@@ -340,7 +343,8 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 		countdowns += A
 		sleep(start_delay)
 		var/datum/outfit/stage/original_play = all_stage_acts[ckey] // probably a better way to do this, but we need the orginal play datum
-		if(original_play.dead) // if this happened, we've run through the list again and this proc can end
+		var/list/ckey_list = original_play.ckey
+		if(original_play.dead == ckey_list.len) // if this happened, we've run through the list again and this proc can end
 			return
 		Reset_Stage(user, ckey, current_act)
 
@@ -349,27 +353,32 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 		UnregisterSignal(M, COMSIG_MOB_SAY)
 	if(countdowns)
 		QDEL_LIST(countdowns)
-	remove_member(user, ckey)
+	for(var/CK in actors)
+		remove_member(user, CK)
 	updateUsrDialog()
 	clear_stage()
 	start_delay = 120 SECONDS
 	if(completed)
 		current_act.act_completed = TRUE
-	test = current_act
+	if(!waiting_for_actor)
+		priority_announce("Thank you to [capitalize(current_act.ckey[1])] for their performance!", title ="", sound ='sound/misc/applause.ogg')
 
 /obj/machinery/computer/stage/proc/on_death()
-	var/datum/outfit/stage/original_play = all_stage_acts[current_act.ckey] // finds the play
+	var/datum/outfit/stage/original_play = all_stage_acts[current_act.ckey[1]] // finds the play
 	original_play.dead = original_play.dead + 1 //tallies a death to the play
-	if(islist(original_play.ckey)) // multiple people in the play, need to wait until everyone is dead
-		var/list/actors_in_act = original_play.ckey
-		if(original_play.dead <= actors_in_act.len) //might have plays with more than 2 actors
-			return
+	var/list/actors_in_act = original_play.ckey
+	if(original_play.dead < actors_in_act.len) //might have plays with more than 2 actors
+		return
 	sleep(5 SECONDS) // let the death SINK IN
 	original_play.act_completed = TRUE // completes that play
-	all_stage_acts[current_act.ckey] = original_play // reassigns the play to the datum on the list, to show that it has ended with death(s)
+	all_stage_acts[current_act.ckey[1]] = original_play // reassigns the play to the datum on the list, to show that it has ended with death(s)
 	var/mob/user = usr
 	Reset_Stage(user, current_act.ckey, current_act)
 	toggle_automate_acts(user, FALSE) // run through the list again without changing the override
+
+/obj/machinery/computer/stage/proc/change_stage_border(ckey)
+	for(var/obj/effect/path_blocker/stage/border in GLOB.stageborder_list)
+		border.ckeys = ckey
 
 /obj/machinery/computer/stage/Topic(href, href_list)
 	if(..())
@@ -455,6 +464,8 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 	popup.set_content(dat.Join())
 	popup.open()
 
+/obj/machinery/computer/stage_signup
+
 // Stage spawnpoint
 /obj/machinery/stage_spawn
 	name = "Stage Spawnpoint"
@@ -484,6 +495,28 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 			to_chat(user,"<span class='warning'>You're not set to perform currently.</span>")
 			return
 		C.spawn_actor(src,user.ckey)
+
+/obj/effect/path_blocker/stage
+	name = "Stage Barrier"
+	desc = "Do they just let anyone up here?"
+	var/ckeys = list() //who is on stage currently?
+
+/obj/effect/path_blocker/stage/Initialize()
+	. = ..()
+	GLOB.stageborder_list += src
+
+/obj/effect/path_blocker/stage/Destroy()
+	GLOB.stageborder_list -= src
+	return ..()
+	
+
+/obj/effect/path_blocker/stage/CanPass(atom/movable/mover, turf/target)
+	if(mover.client_mobs_in_contents)
+		var/mob/M = mover
+		if(!(M.ckey in ckeys))
+			return reverse
+		return !reverse
+	return reverse
 
 #undef STAGE_DEFAULT_ID
 #undef STAGE_CORNER_A
