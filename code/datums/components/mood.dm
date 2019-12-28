@@ -4,7 +4,7 @@
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = SANITY_NEUTRAL //Current sanity
-	var/list/datum/brain_trauma/psychological/disorders = subtypesof(/datum/brain_trauma/psychological)
+	var/list/datum/brain_trauma/psychological/disorders
 	var/list/datum/brain_trauma/psychological/aquired_disorders = list()
 	var/psych_instab = 0 //this grows the longer you are insane. Increases the chances of getting a mental disorder. When it hits 100 it will always roll a mental disorder and set itself to 65.
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
@@ -18,6 +18,7 @@
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
+
 
 	START_PROCESSING(SSmood, src)
 
@@ -43,6 +44,8 @@
 		modify_hud()
 		var/datum/hud/hud = owner.hud_used
 		hud.show_hud(hud.hud_version)
+
+	disorders = subtypesof(/datum/brain_trauma/psychological)
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
