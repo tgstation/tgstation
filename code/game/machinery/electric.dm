@@ -1,4 +1,4 @@
-#define STASIS_TOGGLE_COOLDOWN 50
+#define ELECTRIC_TOGGLE_COOLDOWN 50
 /obj/machinery/electric
 	name = "Electric Shock Therapy Unit"
 	desc = "A not so comfortable looking bed with some nozzles at the top and bottom. It will shock the buckled person after 10 seconds."
@@ -38,7 +38,7 @@
 /obj/machinery/electric/AltClick(mob/user)
 	if(world.time >= electric_can_toggle && user.canUseTopic(src, !issilicon(user)))
 		electric_enabled = !electric_enabled
-		electric_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
+		electric_can_toggle = world.time + ELECTRIC_TOGGLE_COOLDOWN
 		playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 		play_power_sound()
 		update_icon()
@@ -97,14 +97,13 @@
 	var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, TRUE, -1)
 	new /obj/effect/particle_effect/sparks(get_turf(H))
+	H.Jitter(100)
 	if(safety)
 		mood.adjustPsychInstability(rand(-5,10))
-		H.Jitter(100)
 		H.electrocute_act(15,src)
 		unbuckle_mob(H)
 	else
 		mood.adjustPsychInstability(rand(-20,10))
-		H.Jitter(100)
 		H.electrocute_act(25,src)
 
 /obj/machinery/electric/post_buckle_mob(mob/living/L)
@@ -142,4 +141,4 @@
 		unbuckle_mob(occupant)
 	else
 		..()
-#undef STASIS_TOGGLE_COOLDOWN
+#undef ELECTRIC_TOGGLE_COOLDOWN

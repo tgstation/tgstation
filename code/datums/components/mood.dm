@@ -4,9 +4,7 @@
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = SANITY_NEUTRAL //Current sanity
-	var/list/datum/brain_trauma/psychological/disorders = list(	/datum/brain_trauma/psychological/depression,/datum/brain_trauma/psychological/schizophrenia/paranoid,
-																/datum/brain_trauma/psychological/social_anxiety,/datum/brain_trauma/psychological/schizophrenia/delusional,
-																/datum/brain_trauma/psychological/bipolar,/datum/brain_trauma/psychological/collector,/datum/brain_trauma/psychological/bulimia)
+	var/list/datum/brain_trauma/psychological/disorders = subtypesof(/datum/brain_trauma/psychological)
 	var/list/datum/brain_trauma/psychological/aquired_disorders = list()
 	var/psych_instab = 0 //this grows the longer you are insane. Increases the chances of getting a mental disorder. When it hits 100 it will always roll a mental disorder and set itself to 65.
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
@@ -203,7 +201,13 @@
 			setSanity(sanity+0.4, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(9)
 			setSanity(sanity+0.6, SANITY_NEUTRAL, SANITY_MAXIMUM)
-	var/psych_adjustment = ((sanity-SANITY_MAXIMUM/2)/SANITY_MAXIMUM + (mood-MOOD_LEVEL_HAPPY4/2)/MOOD_LEVEL_HAPPY4)/10
+
+	var/psych_adjustment = round((sanity-SANITY_MAXIMUM/2)/SANITY_MAXIMUM + (mood + 2.5)/10)
+	/*What the fuck is this expression?
+		Basically. first get the sanity which is a value between 0 and 150. we subtract 75 from the sanity to get a value that is between -75 to 75
+		Secondly we take mood whcih is a value between 15 and -20 so we add 2.5 to it getting a value between 17.5 and -17.5.
+		We add both of them up and divide by ten to get a value between 9.25 and -9.25. We round it so we get an integer value
+	*/
 
 	adjustPsychInstability(psych_adjustment)
 	CheckPsychInstability()
@@ -234,6 +238,7 @@
 
 		if(PSYCH_CURE_EXTREME)
 			ForceCureRandomDisorder()
+
 /datum/component/mood/proc/AddDisorder(datum/brain_trauma/psychological/chosen_disorder)
 	var/datum/brain_trauma/psychological/CD = chosen_disorder
 	var/mob/living/carbon/human/owner = parent
@@ -266,7 +271,7 @@
 	adjustPsychInstability(-50)
 
 /datum/component/mood/proc/RollGainRandomDisorder()
-	if(!prob(abs(psych_instab))/100)
+	if(!prob(abs(psych_instab)/10)) // psych instab is a value between -100 and 100, we make it only positive and then we
 		return
 	var/mob/living/carbon/human/owner = parent
 	var/datum/brain_trauma/psychological/chosen_disorder = pick(disorders - aquired_disorders)
@@ -276,7 +281,7 @@
 		adjustPsychInstability(50)
 
 /datum/component/mood/proc/RollCureRandomDisorder()
-	if(!prob(abs(psych_instab))/100)
+	if(!prob(abs(psych_instab)/10))
 		return
 	var/mob/living/carbon/owner = parent
 	var/datum/brain_trauma/psychological/chosen_disorder = pick(aquired_disorders)

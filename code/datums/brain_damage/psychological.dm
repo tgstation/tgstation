@@ -11,22 +11,22 @@
 
 /datum/brain_trauma/psychological/on_life()
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
-		current_points += 2 * fearless_mod
+		current_points += fearless_mod
 	if(HAS_TRAIT(owner, TRAIT_LITHIATED))
-		current_points += 15 * lithiated_mod
+		current_points += lithiated_mod
 	if(HAS_TRAIT(owner, TRAIT_RELAXED))
-		current_points += 5 * relaxed_mod
+		current_points += relaxed_mod
 	if(HAS_TRAIT(owner, TRAIT_UNDER_CONTROL))
-		current_points += 10 * control_mod
+		current_points += control_mod
 	if(current_points >= cure_points)
 		SEND_SIGNAL(src, COMSIG_CURE_MENTAL, src)
 
 
 /datum/brain_trauma/psychological/depression
 	name = "Depression"
-	desc = "Extensive damage to receptors in brain result in subject's neigh constant bad mood"
+	desc = "Extensive damage to receptors in brain result in subject's near constant bad mood."
 	scan_desc = "Electric imaging suggests a mental disorder is present"
-	gain_text = "<span class='warning'>You feel emptier inside!</span>"
+	gain_text = "<span class='warning'>You feel empty inside!</span>"
 	lose_text = "<span class='notice'>You feel whole once again.</span>"
 	cure_points = 1500
 	lithiated_mod = -2
@@ -52,7 +52,7 @@
 
 /datum/brain_trauma/psychological/social_anxiety
 	name = "Social Anxiety"
-	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
+	desc = "Talking to people is very difficult for the subject ,often stuttering or even locking up."
 	gain_text = "<span class='danger'>You start worrying about what you're saying.</span>"
 	lose_text = "<span class='notice'>You feel easier about talking again.</span>" //if only it were that easy!
 	scan_desc = "Electric imaging suggests a mental disorder is present"
@@ -105,9 +105,6 @@
 	relaxed_mod = -5
 	var/mood_swing_state = FALSE
 
-/datum/brain_trauma/psychological/bipolar/on_life()
-	..()
-
 /datum/brain_trauma/psychological/bipolar/proc/change_mood_swing()
 	mood_swing_state = !mood_swing_state
 	if(mood_swing_state)
@@ -127,31 +124,7 @@
 	REMOVE_TRAIT(owner, TRAIT_BIPOLAR, PSYCH_TRAIT)
 	..()
 
-/datum/brain_trauma/psychological/schizophrenia
-	name = "Schizophrenia"
-	desc = "Bread and butter of every psychopath"
-	gain_text = "<span class='danger'>You feel reality warping to your perception</span>"
-	lose_text = "<span class='notice'>World shifts back to its original place</span>"
-	scan_desc = "Electric imaging suggests a mental disorder is present"
-	cure_points = 1000
-	lithiated_mod = 5
-	control_mod = 3
-	fearless_mod = -3
-	relaxed_mod = -2
-
-/datum/brain_trauma/psychological/schizophrenia/on_life()
-	..()
-	if(prob(25))
-		owner.Jitter(4)
-		owner.derpspeech = min(owner.derpspeech + 5, 25)
-		owner.stuttering = min(owner.stuttering + 5, 25)
-
-/datum/brain_trauma/psychological/schizophrenia/on_lose()
-	owner.stuttering = 0
-	owner.derpspeech = 0
-	..()
-
-/datum/brain_trauma/psychological/schizophrenia/paranoid
+/datum/brain_trauma/psychological/paranoid
 	name = "Paranoid schizophrenia"
 	desc = "Mental disorder that is characterized by auditory and visual hallucinations"
 	gain_text = "<span class='danger'>You hear whispers behind you.</span>"
@@ -163,79 +136,79 @@
 	fearless_mod = -3
 	relaxed_mod = -2
 
-/datum/brain_trauma/psychological/schizophrenia/paranoid/on_life()
+/datum/brain_trauma/psychological/paranoid/on_life()
 	..()
 	owner.hallucination += 75 //Schizophernia is supposed to be fucking hard. This ensures it
-	owner.confused += 1
+	owner.confused += 2
 	if(prob(0.5))
+		to_chat(owner, "<span class='danger'>You feel faint.</span>")
 		owner.Unconscious(80)
 
 
 
-/datum/brain_trauma/psychological/schizophrenia/paranoid/on_gain()
+/datum/brain_trauma/psychological/paranoid/on_gain()
 	ADD_TRAIT(owner, TRAIT_PARANOID, PSYCH_TRAIT)
 	..()
 
-/datum/brain_trauma/psychological/schizophrenia/paranoid/on_lose()
+/datum/brain_trauma/psychological/paranoid/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_PARANOID, PSYCH_TRAIT)
 	..()
 
-#define MOANING_SPREE 0
 #define BLIND_SPREE 1
-#define UNCONCIOUS_SPREE 2
+#define MOAN_SPREE 2
 #define SHOUTING_SPREE 3
 #define SPASM_SPREE 4
 #define MUTE_SPREE 5
 
-/datum/brain_trauma/psychological/schizophrenia/delusional
+/datum/brain_trauma/psychological/delusional
 	name = "Delusional schizophrenia"
-	desc = "Mental disorder that is characterized by auditory and visual hallucinations"
+	desc = "Mental disorder that is characterized by uncontrolable actions , and delusional thoughts"
 	gain_text = "<span class='danger'>You feel your body not responding</span>"
 	lose_text = "<span class='notice'>You feel free once again</span>"
 	scan_desc = "Electric imaging suggests a mental disorder is present"
 	cure_points = 1200
-	var/state = 0
 	lithiated_mod = 3
 	control_mod = -3
 	fearless_mod = -2
 	relaxed_mod = 2
+	var/state = 0
 
 
-/datum/brain_trauma/psychological/schizophrenia/delusional/on_life()
+/datum/brain_trauma/psychological/delusional/on_life()
 	..()
 	switch(state)
-		if(1)
+		if(BLIND_SPREE)
 			owner.become_blind(PSYCH_TRAIT)
-		if(2)
+		if(MOAN_SPREE)
 			owner.emote(pick("moan","giggle","laugh"))
-		if(3)
+		if(SHOUTING_SPREE)
 			owner.emote(pick("scream","giggle","laugh"))
-		if(4)
+		if(SPASM_SPREE)
 			owner.apply_status_effect(STATUS_EFFECT_SPASMS)
-		if(5)
+		if(MUTE_SPREE)
 			ADD_TRAIT(owner, TRAIT_MUTE, PSYCH_TRAIT)
 
 
-/datum/brain_trauma/psychological/schizophrenia/delusional/proc/roll_bad_effect()
+/datum/brain_trauma/psychological/delusional/proc/roll_bad_effect()
 	clear_bad_effect()
 	state = rand(0,5) //Upon getting 0 you will have a few minutes of silence. After that you are back on the ride!
 	addtimer(CALLBACK(src, .proc/roll_bad_effect), rand(1 MINUTES, 5 MINUTES))
 
-/datum/brain_trauma/psychological/schizophrenia/delusional/proc/clear_bad_effect()
+/datum/brain_trauma/psychological/delusional/proc/clear_bad_effect()
 	switch(state)
-		if(1)
+		if(BLIND_SPREE)
 			owner.cure_blind(PSYCH_TRAIT)
-		if(4)
+		if(SPASM_SPREE)
 			owner.remove_status_effect(STATUS_EFFECT_SPASMS)
-		if(5)
+		if(MUTE_SPREE)
 			REMOVE_TRAIT(owner, TRAIT_MUTE, PSYCH_TRAIT)
 
-/datum/brain_trauma/psychological/schizophrenia/delusional/on_gain()
+/datum/brain_trauma/psychological/delusional/on_gain()
 	roll_bad_effect()
 	ADD_TRAIT(owner, TRAIT_DELUSIONAL, PSYCH_TRAIT)
 	..()
 
-/datum/brain_trauma/psychological/schizophrenia/delusional/on_lose()
+/datum/brain_trauma/psychological/delusional/on_lose()
 	clear_bad_effect()
 	REMOVE_TRAIT(owner, TRAIT_DELUSIONAL, PSYCH_TRAIT)
 	..()
@@ -252,7 +225,11 @@
 	control_mod = 4
 	fearless_mod = -1
 	relaxed_mod = 1
-	var/list/obj/item/possible_items = list(/obj/item/toy,/obj/item/stamp,/obj/item/shard,/obj/item/reagent_containers/food/drinks/bottle,list(/obj/item/bodypart/l_arm,/obj/item/bodypart/r_arm))
+
+	var/list/obj/item/possible_items = list(/obj/item/toy = "<span class='boldwarning'>You feel a great need to collect toys of all kind!</span>",
+	/obj/item/stamp = "<span class='boldwarning'>You feel a great need to collect stamps!</span>",
+	/obj/item/shard = "<span class='boldwarning'>You feel a great need to collect stamps!</span>",
+	/obj/item/reagent_containers/food/drinks/bottle = "<span class='boldwarning'>You feel a great need to collect bottles of all kind!</span>")
 	var/list/obj/item/needed_item
 	var/greed_level = 0
 
@@ -274,22 +251,12 @@
 	return stolen_count >= greed_level
 
 /datum/brain_trauma/psychological/collector/proc/increase_greed()
-	to_chat(owner, "<span class='boldwarning'>You feel  your greed expanding</span>")
+	to_chat(owner, "<span class='boldwarning'>You feel your greed expanding</span>")
 	greed_level++
 	addtimer(CALLBACK(src, .proc/increase_greed), 5 MINUTES)
 
 /datum/brain_trauma/psychological/collector/proc/announce_item()
-	switch(needed_item)
-		if(/obj/item/toy)
-			to_chat(owner, "<span class='boldwarning'>You feel a great need to collect toys of all kind!</span>")
-		if(/obj/item/stamp)
-			to_chat(owner, "<span class='boldwarning'>You feel a great need to collect stamps!</span>")
-		if(/obj/item/shard)
-			to_chat(owner, "<span class='boldwarning'>You feel a great need to collect shiny shards of glass!</span>")
-		if(/obj/item/reagent_containers/food/drinks/bottle)
-			to_chat(owner, "<span class='boldwarning'>You feel a great need to collect bottles of all kind!</span>")
-		if(list(/obj/item/bodypart/l_arm,/obj/item/bodypart/r_arm))
-			to_chat(owner, "<span class='boldwarning'>You feel like you need a hand. They are so.. so... beautiful... </span>")
+	to_chat(owner, "<span class='boldwarning'>You feel a great need to collect toys of all kind!</span>")
 
 /datum/brain_trauma/psychological/collector/on_gain()
 	needed_item = pick(possible_items)

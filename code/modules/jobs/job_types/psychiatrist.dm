@@ -1,7 +1,7 @@
 /datum/job/psychiatrist
 	title = "Psychiatrist"
 	flag = PSYCHIATRIST
-	department_head = list("Head of Security")
+	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 1
@@ -45,7 +45,7 @@
 
 /obj/item/storage/box/psych_box/PopulateContents()
 	new /obj/item/storage/pill_bottle/happiness(src)
-	new	/obj/item/storage/pill_bottle/psicodine(src)
+	new /obj/item/storage/pill_bottle/psicodine(src)
 	new /obj/item/storage/pill_bottle/neurine(src)
 	new /obj/item/storage/pill_bottle/haloperidol(src)
 	new /obj/item/storage/pill_bottle/alprazolam(src)
