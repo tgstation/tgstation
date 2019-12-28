@@ -71,6 +71,8 @@
 
 /datum/reagents/Destroy()
 	. = ..()
+	//We're about to delete all reagents, so lets cleanup
+	addiction_list.Cut()
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
