@@ -60,11 +60,20 @@
     ckey = list("fikou")
     name_of_act = "fikou"
     items = list(
-    /obj/item/gun/energy/meteorgun/clumsy,
-    /obj/item/dnainjector/clumsymut)
-
-/obj/item/gun/energy/meteorgun/clumsy
-    clumsy_check = 1
+    /obj/item/toy/crayon/spraycan,
+    /obj/item/toy/crayon/spraycan,
+    /obj/item/toy/crayon/spraycan,
+    /obj/item/toy/crayon/spraycan,
+    /obj/item/soap/syndie)
+    glasses = /obj/item/clothing/glasses/sunglasses/reagent
+    uniform = /obj/item/clothing/under/rank/civilian/bartender
+    shoes = /obj/item/clothing/shoes/laceup
+    head = /obj/item/clothing/head/beret
+    belt = null
+    ears = null
+    mask = null
+    l_pocket = null
+    time = 240 SECONDS
 
 /datum/outfit/stage/novaray
     ckey = list("novaray")
@@ -161,3 +170,90 @@
     new /obj/item/reagent_containers/food/condiment/soymilk(src)
     new /obj/item/reagent_containers/glass/beaker(src)
     new /obj/item/instrument/harmonica(src)
+
+/datum/outfit/stage/coconutwarrior97
+    ckey = list("coconutwarrior97", "jimmius")
+    name_of_act = "coconutwarrior97"
+    items = list(
+    /obj/item/claymore)
+    shoes = null
+    belt = null
+    ears = null
+    uniform = /obj/item/clothing/under/color/grey
+    shoes = null
+    mask = null
+    l_pocket = null
+
+
+/datum/outfit/stage/ATHATH
+    ckey = list("ATHATH")
+    name_of_act = "ATHATH"
+    items = list(
+    /mob/living/simple_animal/hostile/poison/bees,
+    /mob/living/simple_animal/hostile/poison/bees,
+    /obj/machinery/holopad/ATHATH/)
+    override_presence = TRUE
+    time = 215 SECONDS
+
+/datum/outfit/stage/bgobandit
+    ckey = list("bgobandit")
+    name_of_act = "bgobandit"
+
+/datum/outfit/stage/osmiumtrioxide
+    ckey = list("osmiumtrioxide", "dappermola")
+    name_of_act = "osmiumtrioxide"
+    items = list(
+    /obj/item/reagent_containers/blood/OMinus/eight,
+    /obj/machinery/iv_drip/eight,
+    /obj/item/clothing/suit/bio_suit/security,
+    /obj/item/clothing/head/bio_hood)
+    shoes = /obj/item/clothing/shoes/laceup
+    belt = null
+    ears = null
+    uniform = /obj/item/clothing/under/misc/assistantformal
+    shoes = null
+    mask = null
+    l_pocket = null
+    time = 180 SECONDS
+
+/obj/item/reagent_containers/blood/OMinus/eight
+
+/obj/item/reagent_containers/blood/OMinus/eight/Initialize()
+    . = ..()
+    var/start = get_turf(src)
+    new /obj/item/reagent_containers/blood/OMinus(start)
+    new /obj/item/reagent_containers/blood/OMinus(start)
+    new /obj/item/reagent_containers/blood/OMinus(start)
+    new /obj/item/reagent_containers/blood/OMinus(start)
+    new /obj/item/reagent_containers/blood/OMinus(start)
+    new /obj/item/reagent_containers/blood/OMinus(start)
+    new /obj/item/reagent_containers/blood/OMinus(start)
+
+/obj/machinery/iv_drip/eight
+
+/obj/machinery/iv_drip/eight/Initialize()
+    . = ..()
+    var/start = get_turf(src)
+    new /obj/machinery/iv_drip(start)
+    new /obj/machinery/iv_drip(start)
+    new /obj/machinery/iv_drip(start)
+    new /obj/machinery/iv_drip(start)
+    new /obj/machinery/iv_drip(start)
+    new /obj/machinery/iv_drip(start)
+    new /obj/machinery/iv_drip(start)
+
+/datum/outfit/stage/uomo91
+    ckey = list("uomo91")
+    name_of_act = "uomo91"
+    items = list(
+    /obj/machinery/computer/secure_data,
+    /obj/item/card/id/captains_spare,
+    /obj/item/camera,
+    /obj/item/stack/sheet/metal/fifty)
+    shoes = /obj/item/clothing/shoes/sneakers/green
+    belt = null
+    ears = null
+    uniform = /obj/item/clothing/under/color/jumpskirt/green
+    shoes = null
+    mask = null
+    l_pocket = null
