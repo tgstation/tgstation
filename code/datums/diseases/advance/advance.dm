@@ -106,7 +106,7 @@
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
 	..()
-	if(carrier)
+	if(carrier || QDELETED(src)) // Could be cured in parent call.
 		return
 
 	if(symptoms && symptoms.len)
