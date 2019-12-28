@@ -8,7 +8,9 @@ import { AtmosControlConsole } from './interfaces/AtmosControlConsole';
 import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
+import { BankMachine } from './interfaces/BankMachine';
 import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
+import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
@@ -30,6 +32,7 @@ import { ComputerFabricator } from './interfaces/ComputerFabricator';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
+import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
 import { EngravedMessage } from './interfaces/EngravedMessage';
@@ -81,6 +84,7 @@ import { ThermoMachine } from './interfaces/ThermoMachine';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
+import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
 
 const ROUTES = {
@@ -122,6 +126,14 @@ const ROUTES = {
   },
   atmos_pump: {
     component: () => AtmosPump,
+    scrollable: false,
+  },
+  bepis: {
+    component: () => Bepis,
+    scrollable: false,
+  },
+  bank_machine: {
+    component: () => BankMachine,
     scrollable: false,
   },
   borgopanel: {
@@ -214,6 +226,10 @@ const ROUTES = {
   },
   cryo: {
     component: () => Cryo,
+    scrollable: false,
+  },
+  decal_painter: {
+    component: () => DecalPainter,
     scrollable: false,
   },
   disposal_unit: {
@@ -435,6 +451,10 @@ const ROUTES = {
   vault_controller: {
     component: () => VaultController,
     scrollable: false,
+  },
+  vending: {
+    component: () => Vending,
+    scrollable: true,
   },
   wires: {
     component: () => Wires,

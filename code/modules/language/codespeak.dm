@@ -46,7 +46,7 @@
 		return
 
 	to_chat(user, "<span class='boldannounce'>You start skimming through [src], and suddenly your mind is filled with codewords and responses.</span>")
-	user.grant_language(/datum/language/codespeak)
+	user.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 
 	use_charge(user)
 
@@ -65,7 +65,7 @@
 		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", "<span class='userdanger'>[user] beats you over the head with [src]!</span>", "<span class='hear'>You hear smacking.</span>")
 	else
 		M.visible_message("<span class='notice'>[user] teaches [M] by beating [M.p_them()] over the head with [src]!</span>", "<span class='boldnotice'>As [user] hits you with [src], codewords and responses flow through your mind.</span>", "<span class='hear'>You hear smacking.</span>")
-		M.grant_language(/datum/language/codespeak)
+		M.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 		use_charge(user)
 
 /obj/item/codespeak_manual/proc/use_charge(mob/user)

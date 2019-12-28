@@ -65,6 +65,8 @@
 			if(1000 to INFINITY)
 				adjustFireLoss(8)
 
+	. = ..() // interact with body heat after dealing with the hot air
+
 /mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return

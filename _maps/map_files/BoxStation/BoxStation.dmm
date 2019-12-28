@@ -5141,6 +5141,12 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"akS" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/donkpockets,
+/obj/item/reagent_containers/glass/beaker,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "akT" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 3";
@@ -18472,17 +18478,6 @@
 	},
 /obj/item/reagent_containers/food/condiment/peppermill{
 	pixel_x = 3
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/kitchen)
-"aVE" = (
-/obj/structure/table,
-/obj/item/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/glass/beaker{
-	pixel_x = 5
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -33803,7 +33798,7 @@
 /obj/machinery/power/apc{
 	areastring = "/area/maintenance/aft";
 	name = "Aft Maintenance APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -50710,7 +50705,7 @@
 /obj/machinery/power/apc{
 	areastring = "/area/construction";
 	name = "Construction Area APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -51259,6 +51254,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
+"pSN" = (
+/obj/machinery/rnd/bepis,
+/turf/open/floor/engine,
+/area/science/explab)
 "pUr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/wood,
@@ -51340,6 +51339,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"qor" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "qrU" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -52592,6 +52595,10 @@
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"xMT" = (
+/obj/effect/landmark/start/paramedic,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 "xUg" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light{
@@ -88794,7 +88801,7 @@ blj
 bmK
 bog
 bog
-bhh
+qor
 bsx
 bsr
 bvh
@@ -89833,7 +89840,7 @@ bAs
 bvj
 bCL
 bxO
-bDR
+xMT
 bDR
 bIk
 bJC
@@ -91091,7 +91098,7 @@ aQk
 aRD
 aSM
 aVD
-aVE
+akS
 aXm
 aVz
 bak
@@ -101650,7 +101657,7 @@ bvO
 gHj
 kGS
 bzO
-bzO
+bAR
 bzO
 bqe
 fGF
@@ -101907,7 +101914,7 @@ bvO
 nbv
 bqe
 bzO
-bAR
+bzO
 bzO
 bqe
 uUy
@@ -102421,7 +102428,7 @@ xeP
 kxC
 kGS
 bzO
-bzO
+pSN
 bzO
 bqe
 btp

@@ -1,0 +1,4 @@
+author: "Denton, sprites by Twaticus and JJRcop"
+delete-after: True
+changes: 
+  - rscadd: "Added a new job: The Paramedic! Paramedics stabilize patients and haul them to medbay for further treatment by medical doctors. They have access to maintenance, EVA and department lobbies like engineering and R&D, but not to surgery and chemistry."

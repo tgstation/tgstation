@@ -1,0 +1,4 @@
+author: "steamport/actioninja"
+delete-after: True
+changes: 
+  - rscadd: "Vending machine tgui-next"

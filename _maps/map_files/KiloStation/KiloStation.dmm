@@ -10402,6 +10402,7 @@
 	dir = 8
 	},
 /obj/item/beacon,
+/obj/machinery/rnd/bepis,
 /turf/open/floor/engine,
 /area/science/explab)
 "aqr" = (
@@ -29388,6 +29389,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "aSA" = (
@@ -30040,6 +30042,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/medbay/central)
 "aTv" = (
@@ -32837,8 +32840,8 @@
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "aXo" = (
-/obj/machinery/rnd/experimentor,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/rnd/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "aXp" = (
@@ -45274,13 +45277,9 @@
 	pixel_x = -8;
 	pixel_y = 12
 	},
+/obj/effect/spawner/lootdrop/donkpockets,
 /obj/item/storage/box/donkpockets{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/item/storage/box/donkpockets{
-	pixel_x = 6;
-	pixel_y = 6
+	
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/kitchen)
