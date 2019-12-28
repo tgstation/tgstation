@@ -29389,6 +29389,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel,
 /area/medical/medbay/central)
 "aSA" = (
@@ -30041,6 +30042,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/medbay/central)
 "aTv" = (
