@@ -254,10 +254,7 @@ GLOBAL_LIST_EMPTY(stageborder_list) //list of all stage borders, need this so we
 	for(var/key in actors)
 		actors_in_act.Add(spawn_actor(actor_spawn, key))
 	to_chat(user,"Actors have been spawned.")
-	if(actors_in_act.len >= 2)
-		test = actors_in_act
-		return actors_in_act
-	if(actors_in_act.len == 1)
+	if(actors_in_act.len)
 		test = actors_in_act[1]
 		return actors_in_act[1]
 
@@ -344,7 +341,7 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 		sleep(start_delay)
 		var/datum/outfit/stage/original_play = all_stage_acts[ckey] // probably a better way to do this, but we need the orginal play datum
 		var/list/ckey_list = original_play.ckey
-		if(original_play.dead == ckey_list.len) // if this happened, we've run through the list again and this proc can end
+		if(original_play.act_completed) // if this happened, we've run through the list again and this proc can end
 			return
 		Reset_Stage(user, ckey, current_act)
 
@@ -369,8 +366,8 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 	var/list/actors_in_act = original_play.ckey
 	if(original_play.dead < actors_in_act.len) //might have plays with more than 2 actors
 		return
-	sleep(5 SECONDS) // let the death SINK IN
 	original_play.act_completed = TRUE // completes that play
+	sleep(5 SECONDS) // let the death SINK IN
 	all_stage_acts[current_act.ckey[1]] = original_play // reassigns the play to the datum on the list, to show that it has ended with death(s)
 	var/mob/user = usr
 	Reset_Stage(user, current_act.ckey, current_act)
