@@ -51,8 +51,6 @@ GLOBAL_VAR(restart_counter)
 #endif
 
 	LoadVerbs(/datum/verbs/menu)
-	if(CONFIG_GET(flag/usewhitelist))
-		load_whitelist()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
