@@ -353,7 +353,7 @@
 	if(!iscarbon(M) || user.a_intent != INTENT_HELP)
 		return ..()
 
-	if(user.zone_selected != BODY_ZONE_PRECISE_GROIN && user.zone_selected == BODY_ZONE_CHEST)
+	if(user.zone_selected == BODY_ZONE_CHEST)
 		return ..()
 
 	var/mob/living/carbon/patient = M
@@ -384,7 +384,7 @@
 
 	patient.visible_message("<span class='danger'>[user] begins to secure [src] around [patient]'s [candidate_name].</span>", "<span class='userdanger'>[user] begins to secure [src] around your [candidate_name]!</span>")
 	playsound(get_turf(patient), 'sound/items/ratchet.ogg', 20, TRUE)
-	if(patient.stat == DEAD || patient.stat != CONSCIOUS || patient.IsStun()) //Stun is used by paralytics like curare it should not be confused with the more common paralyze.
+	if(patient.stat == DEAD || patient.stat == UNCONSCIOUS || patient.IsStun()) //Stun is used by paralytics like curare it should not be confused with the more common paralyze.
 		amputation_speed_mod = 0.5
 	else if(patient.jitteriness >= 1)
 		amputation_speed_mod = 1.5
@@ -394,7 +394,6 @@
 	if(do_after(user,  toolspeed * 150 * amputation_speed_mod, target = patient))
 		playsound(get_turf(patient), 'sound/weapons/bladeslice.ogg', 250, TRUE)
 		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN) //OwO
-			playsound(get_turf(patient), 'sound/misc/splort.ogg', 50, TRUE)
 			tail_snip_candidate.Remove(patient)
 			tail_snip_candidate.forceMove(get_turf(patient))
 		else
