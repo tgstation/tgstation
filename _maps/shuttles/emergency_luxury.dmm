@@ -12,7 +12,7 @@
 /turf/open/floor/plastic,
 /area/shuttle/escape/luxury)
 "ad" = (
-/obj/effect/forcefield/luxury_shuttle{
+/obj/machinery/scanner_gate/luxury_shuttle{
 	layer = 2.6
 	},
 /obj/machinery/door/airlock/silver{
@@ -29,7 +29,7 @@
 	name = "Luxurious Emergency Shuttle";
 	width = 25
 	},
-/obj/effect/forcefield/luxury_shuttle{
+/obj/machinery/scanner_gate/luxury_shuttle{
 	layer = 2.6
 	},
 /obj/machinery/door/airlock/silver{
