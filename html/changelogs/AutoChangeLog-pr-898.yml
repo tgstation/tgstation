@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - bugfix: "Fixed some problems with the warden's office and shutters where they weren't supposed to be"
