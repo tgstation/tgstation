@@ -9,7 +9,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Economy-Class"
 	},
-/turf/open/floor/plastic,
+/turf/open/floor/plasteel,
 /area/shuttle/escape/luxury)
 "ad" = (
 /obj/machinery/scanner_gate/luxury_shuttle{
@@ -18,8 +18,7 @@
 /obj/machinery/door/airlock/silver{
 	name = "First Class"
 	},
-/obj/machinery/scanner_gate/luxury_shuttle,
-/turf/open/floor/mineral/silver,
+/turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "ae" = (
 /obj/docking_port/mobile/emergency{
@@ -35,8 +34,7 @@
 /obj/machinery/door/airlock/silver{
 	name = "First Class"
 	},
-/obj/machinery/scanner_gate/luxury_shuttle,
-/turf/open/floor/mineral/silver,
+/turf/open/floor/carpet/orange,
 /area/shuttle/escape/luxury)
 "af" = (
 /obj/machinery/door/airlock/security/glass{
@@ -343,10 +341,7 @@
 	desc = "A durable looking window made of an alloy of of plasma and titanium.";
 	name = "plastitanium window"
 	},
-/area/space)
-"bd" = (
-/turf/closed/indestructible/riveted/silver,
-/area/space)
+/area/shuttle/escape/luxury)
 "be" = (
 /obj/structure/girder,
 /turf/open/floor/plasteel,
@@ -362,9 +357,6 @@
 /obj/effect/turf_decal/loading_area,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/open/floor/plasteel,
-/area/shuttle/escape/luxury)
-"bh" = (
-/turf/template_noop,
 /area/shuttle/escape/luxury)
 "bi" = (
 /obj/machinery/computer/emergency_shuttle{
@@ -984,7 +976,7 @@
 /area/shuttle/escape/luxury)
 
 (1,1,1) = {"
-bh
+aa
 al
 ar
 ar
@@ -1384,18 +1376,18 @@ aS
 ag
 "}
 (26,1,1) = {"
-bd
+ag
 bc
 bc
 bc
 bc
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
-bd
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
 "}
