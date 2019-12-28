@@ -7241,7 +7241,13 @@
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/plaque{
 	desc = "This plaque is dedicated to those in this year's Winter Ball.<br> Original Founder: Okand37<br> Event Holder: CitrusGender<br> Maintainer: ???<br> Mapper: Aaa321, Drawsstuff, Fikou, Jerry Derpington, MMMiracles, Mr Maclang<br> Spriter: Jegub, Twaticus";
-	name = "Winter Ball Plaque"
+	name = "Winter Ball Plaque";
+	obj_integrity = 999999
+	},
+/obj/structure/sign/plaques/golden{
+	desc = "This plaque is dedicated to those in this year's Winter Ball.<br> Original Founder: Okand37<br> Event Holder: CitrusGender<br> Maintainer: ???<br> Mapper: Aaa321, Drawsstuff, Fikou, Jerry Derpington, MMMiracles, Mr Maclang<br> Spriter: Jegub, Twaticus";
+	layer = 2.5;
+	max_integrity = 2.14748e+009
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom{
@@ -9412,9 +9418,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/centcom)
-"qf" = (
-/turf/open/floor/mineral,
-/area/awaymission/snowdin/outside)
 "qg" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -40884,16 +40887,16 @@ tM
 tM
 lj
 Au
-qf
-qf
-qf
-qf
-qf
-qf
-qf
-qf
-qf
-qf
+Au
+Au
+Au
+Au
+Au
+Au
+Au
+Au
+Au
+Au
 Au
 hZ
 tM
@@ -41086,16 +41089,16 @@ tM
 tM
 lj
 Au
-qf
-qf
-qf
-qf
-qf
-qf
-qf
-qf
-qf
-qf
+Au
+Au
+Au
+Au
+Au
+Au
+Au
+Au
+Au
+Au
 Au
 hZ
 tM

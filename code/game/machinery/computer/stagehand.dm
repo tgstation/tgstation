@@ -475,7 +475,7 @@ obj/machinery/computer/stage/proc/toggle_automate_acts(user, var/change_override
 
 
 /obj/machinery/computer/stage_signup/attack_hand(mob/user)
-	var/selection = input("Hello! Would you like to sign up to be a part of the 2019 Winter Ball Talent Show? (If you click yes, you will be spawned in front of everyone)", "Signup", null, null) as null|anything in list("Yes","No")
+	var/selection = input("Hello! Would you like to sign up to be a part of the 2019 Winter Ball Talent Show? (If you click yes, you will be spawned in front of everyone when the talent show starts (around the 30 minute mark of the ball))", "Signup", null, null) as null|anything in list("Yes","No")
 	if(selection != "Yes")
 		return
 	if(user.ckey in signed_up)
