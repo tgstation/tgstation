@@ -3,6 +3,7 @@
 					/obj/item/reagent_containers/syringe = 12,
 					/obj/item/reagent_containers/dropper = 3,
 					/obj/item/healthanalyzer = 4,
+					/obj/item/wrench/medical = 1,
 					/obj/item/reagent_containers/pill/patch/styptic = 5,
 					/obj/item/reagent_containers/pill/patch/silver_sulf = 5,
 					/obj/item/reagent_containers/syringe/perfluorodecalin = 2,
@@ -20,12 +21,11 @@
 					/obj/item/sensor_device = 2,
 					/obj/item/pinpointer/crew = 2)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3,
-		              /obj/item/reagent_containers/pill/morphine = 4,
-		              /obj/item/reagent_containers/pill/charcoal = 6,
-		              /obj/item/storage/box/hug/medical = 1)
+						/obj/item/reagent_containers/pill/morphine = 4,
+						/obj/item/reagent_containers/pill/charcoal = 6,
+						/obj/item/storage/box/hug/medical = 1)
 	premium = list(/obj/item/reagent_containers/medigel/synthflesh = 2,
-		           /obj/item/storage/pill_bottle/psicodine = 2,
-		           /obj/item/reagent_containers/hypospray/medipen = 3,
-		           /obj/item/storage/belt/medical = 3,
-		           /obj/item/wrench/medical = 1,
-		           /obj/item/storage/firstaid/advanced = 2)
+					/obj/item/storage/pill_bottle/psicodine = 2,
+					/obj/item/reagent_containers/hypospray/medipen = 3,
+					/obj/item/storage/belt/medical = 3,
+					/obj/item/storage/firstaid/advanced = 2)

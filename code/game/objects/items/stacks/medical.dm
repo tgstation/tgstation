@@ -114,6 +114,9 @@
 	grind_results = list(/datum/reagent/cellulose = 2)
 	custom_price = 100
 
+/obj/item/stack/medical/gauze/twelve
+	amount = 12
+
 /obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
