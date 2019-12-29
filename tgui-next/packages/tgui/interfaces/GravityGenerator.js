@@ -15,7 +15,9 @@ export const GravityGenerator = props => {
     <Fragment>
       <Section>
         {!operational && (
-          <NoticeBox>No data available</NoticeBox>
+          <NoticeBox textAlign="center">
+            No data available
+          </NoticeBox>
         ) || (
           <LabeledList>
             <LabeledList.Item label="Breaker">
@@ -64,7 +66,8 @@ export const GravityGenerator = props => {
         <NoticeBox textAlign="center">
           WARNING - Radiation detected
         </NoticeBox>
-      ) || (
+      )}
+      {operational && charging_state === 0 && (
         <NoticeBox textAlign="center">
           No radiation detected
         </NoticeBox>
