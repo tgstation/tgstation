@@ -42,7 +42,6 @@
 	var/datum/tgui/master_ui
 	/// Children of this UI.
 	var/list/datum/tgui/children = list()
-	var/titlebar = TRUE
 	var/custom_browser_id = FALSE
 	var/ui_screen = "home"
 
@@ -222,8 +221,10 @@
 		"interface" = interface,
 		"fancy" = user.client.prefs.tgui_fancy,
 		"locked" = user.client.prefs.tgui_lock && !custom_browser_id,
+		"observer" = isobserver(user),
 		"window" = window_id,
-		// Intentional \ref usage; tgui datums can't/shouldn't be tagged so this is an effective unwrap
+		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+		// be tagged, so this is an effective unwrap
 		"ref" = "\ref[src]"
 	)
 	
@@ -262,6 +263,9 @@
 				ui_screen = params["screen"]
 			SStgui.update_uis(src_object)
 		if("tgui:log")
+			// Force window to show frills on fatal errors
+			if(params["fatal"])
+				winset(user, window_id, "titlebar=1;can-resize=1;size=600x600")
 			log_message(params["log"])
 		if("tgui:link")
 			user << link(params["url"])
@@ -333,7 +337,6 @@
 	var/status = src_object.ui_status(user, state)
 	if(master_ui)
 		status = min(status, master_ui.status)
-
 	set_status(status, push)
 	if(status == UI_CLOSE)
 		close()
@@ -356,9 +359,6 @@
 			src.status = status
 			if(status == UI_DISABLED || push) // Update if the UI just because disabled, or a push is requested.
 				push_data(null, force = TRUE)
-
-/datum/tgui/proc/set_titlebar(value)
-	titlebar = value
 
 /datum/tgui/proc/log_message(message)
 	log_tgui("[user] ([user.ckey]) using \"[title]\":\n[message]")

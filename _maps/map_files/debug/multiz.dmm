@@ -106,9 +106,7 @@
 /turf/open/openspace,
 /area/space)
 "av" = (
-/obj/structure/stairs{
-	dir = 1
-	},
+/obj/structure/stairs/north,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "aw" = (
@@ -1344,7 +1342,7 @@
 	},
 /area/hallway/secondary/service)
 "sm" = (
-/obj/structure/stairs,
+/obj/structure/stairs/south,
 /turf/open/floor/plating,
 /area/construction)
 "su" = (

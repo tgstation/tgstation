@@ -19,6 +19,7 @@ export const Button = props => {
     selected,
     tooltip,
     tooltipPosition,
+    ellipsis,
     content,
     children,
     onclick,
@@ -28,10 +29,11 @@ export const Button = props => {
   const hasContent = !!(content || children);
   // A warning about the lowercase onclick
   if (onclick) {
-    logger.warn("Lowercase 'onclick' is not supported on Button and "
-      + "lowercase prop names are discouraged in general. "
-      + "Please use a camelCase 'onClick' instead and read: "
-      + "https://infernojs.org/docs/guides/event-handling");
+    logger.warn(
+      `Lowercase 'onclick' is not supported on Button and lowercase`
+      + ` prop names are discouraged in general. Please use a camelCase`
+      + `'onClick' instead and read: `
+      + `https://infernojs.org/docs/guides/event-handling`);
   }
   // IE8: Use a lowercase "onclick" because synthetic events are fucked.
   // IE8: Use an "unselectable" prop because "user-select" doesn't work.
@@ -43,9 +45,10 @@ export const Button = props => {
         disabled && 'Button--disabled',
         selected && 'Button--selected',
         hasContent && 'Button--hasContent',
+        ellipsis && 'Button--ellipsis',
         (color && typeof color === 'string')
           ? 'Button--color--' + color
-          : 'Button--color--normal',
+          : 'Button--color--default',
         className,
       ])}
       tabIndex={!disabled && '0'}
@@ -89,3 +92,16 @@ export const Button = props => {
 };
 
 Button.defaultHooks = pureComponentHooks;
+
+export const ButtonCheckbox = props => {
+  const { checked, ...rest } = props;
+  return (
+    <Button
+      color="transparent"
+      icon={checked ? 'check-square-o' : 'square-o'}
+      selected={checked}
+      {...rest} />
+  );
+};
+
+Button.Checkbox = ButtonCheckbox;

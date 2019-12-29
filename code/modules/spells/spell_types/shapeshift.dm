@@ -13,10 +13,10 @@
 
 	var/revert_on_death = TRUE
 	var/die_with_shapeshifted_form = TRUE
-	var/convert_damage = TRUE //If you want to convert the caster's health to the shift, and vice versa.
+	var/convert_damage = TRUE //If you want to convert the caster's health and blood to the shift, and vice versa.
 	var/convert_damage_type = BRUTE //Since simplemobs don't have advanced damagetypes, what to convert damage back into.
 
-	var/shapeshift_type
+	var/mob/living/shapeshift_type
 	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
@@ -46,10 +46,31 @@
 
 		var/obj/shapeshift_holder/S = locate() in M
 		if(S)
-			Restore(M)
+			M = Restore(M)
 		else
-			Shapeshift(M)
+			M = Shapeshift(M)
+		if(M.movement_type & (VENTCRAWLING))
+			if(!M.ventcrawler) //you're shapeshifting into something that can't fit into a vent
+				var/obj/machinery/atmospherics/pipeyoudiein = M.loc
+				var/datum/pipeline/ourpipeline
+				var/pipenets = pipeyoudiein.returnPipenets()
+				if(islist(pipenets))
+					ourpipeline = pipenets[1]
+				else
+					ourpipeline = pipenets
 
+				to_chat(M, "<span class='userdanger'>Casting [src] inside of [pipeyoudiein] quickly turns you into a bloody mush!</span>")
+				var/gibtype = /obj/effect/gibspawner/generic
+				if(isalien(M))
+					gibtype = /obj/effect/gibspawner/xeno
+				for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(M)))
+					if(possiblevent.parents.len && possiblevent.parents[1] == ourpipeline)
+						new gibtype(get_turf(possiblevent))
+						playsound(possiblevent, 'sound/effects/reee.ogg', 75, TRUE)
+				priority_announce("We detected a pipe blockage around [get_area(get_turf(M))], please dispatch someone to investigate.", "Central Command")
+				M.death()
+				qdel(M)
+				return
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Shapeshift(mob/living/caster)
 	var/obj/shapeshift_holder/H = locate() in caster
@@ -62,12 +83,14 @@
 
 	clothes_req = FALSE
 	human_req = FALSE
+	return shape
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Restore(mob/living/shape)
 	var/obj/shapeshift_holder/H = locate() in shape
 	if(!H)
 		return
 
+	. =  H.stored
 	H.restore()
 
 	clothes_req = initial(clothes_req)
@@ -78,7 +101,7 @@
 	desc = "Take on the shape a lesser ash drake."
 	invocation = "RAAAAAAAAWR!"
 	convert_damage = FALSE
-	
+
 
 	shapeshift_type = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
@@ -108,6 +131,7 @@
 		var/damapply = damage_percent * shape.maxHealth;
 
 		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE);
+		shape.blood_volume = stored.blood_volume;
 
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src
@@ -150,7 +174,7 @@
 /obj/shapeshift_holder/proc/restore(death=FALSE)
 	restoring = TRUE
 	qdel(slink)
-	stored.forceMove(get_turf(src))
+	stored.forceMove(shape.loc)
 	stored.notransform = FALSE
 	if(shape.mind)
 		shape.mind.transfer_to(stored)
@@ -163,6 +187,8 @@
 		var/damapply = stored.maxHealth * damage_percent
 
 		stored.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
+	if(source.convert_damage)
+		stored.blood_volume = shape.blood_volume;
 	qdel(shape)
 	qdel(src)
 

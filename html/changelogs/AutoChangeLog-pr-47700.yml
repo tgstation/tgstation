@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - rscadd: "Ghosts can now turn using the ctrl + direction hotkeys."
-  - bugfix: "The \"Restore Ghost Character\" verb now changes the name of your ghost mob as well."

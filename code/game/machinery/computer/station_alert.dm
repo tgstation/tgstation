@@ -4,7 +4,7 @@
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/stationalert
-	ui_x = 300
+	ui_x = 325
 	ui_y = 500
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
 
@@ -26,13 +26,15 @@
 		ui.open()
 
 /obj/machinery/computer/station_alert/ui_data(mob/user)
-	. = list()
+	var/list/data = list()
 
-	.["alarms"] = list()
+	data["alarms"] = list()
 	for(var/class in alarms)
-		.["alarms"][class] = list()
+		data["alarms"][class] = list()
 		for(var/area in alarms[class])
-			.["alarms"][class] += area
+			data["alarms"][class] += area
+	
+	return data
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/source)
 	if(source.z != z)

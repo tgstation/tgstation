@@ -1,11 +1,8 @@
-import { act } from '../byond';
-import { Box, Button, LabeledList, Section } from '../components';
-import { NumberInput } from '../components/NumberInput';
+import { useBackend } from '../backend';
+import { Box, Button, Input, LabeledList, NumberInput, Section } from '../components';
 
 export const ChemPress = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     pill_size,
     pill_name,
@@ -24,15 +21,16 @@ export const ChemPress = props => {
             maxValue={50}
             step={1}
             stepPixelSize={2}
-            onChange={(e, value) => act(ref, 'change_pill_size', {volume: value})}
-          />
+            onChange={(e, value) => act('change_pill_size', {
+              volume: value,
+            })} />
         </LabeledList.Item>
         <LabeledList.Item label="Pill Name">
-          <Button
-            icon="pencil-alt"
-            content={pill_name}
-            onClick={() => act(ref, 'change_pill_name')}
-          />
+          <Input
+            value={pill_name}
+            onChange={(e, value) => act('change_pill_name', {
+              name: value,
+            })} />
         </LabeledList.Item>
         <LabeledList.Item label="Pill Style">
           {pill_styles.map(pill => (
@@ -42,8 +40,9 @@ export const ChemPress = props => {
               selected={pill.id === pill_style}
               textAlign="center"
               color="transparent"
-              onClick={() => act(ref, 'change_pill_style', {id: pill.id})}
-            >
+              onClick={() => act('change_pill_style', {
+                id: pill.id,
+              })}>
               <Box mx={-1} className={pill.class_name} />
             </Button>
           ))}

@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - code_imp: "Added a simple framework for taming mobs, feed them their favorite food for a chance to tame them."
-  - rscadd: "Feed some wheat to a cow and then ride it around, yeehaw cowboy!"

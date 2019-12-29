@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		icon_state = "[icon_state]_preview"
 
 /obj/item/pipe_dispenser
-	name = "Rapid Piping Device (RPD)"
+	name = "Rapid Pipe Dispenser (RPD)"
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"
@@ -184,6 +184,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
@@ -245,7 +246,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
 		assets.send(user)
 
-		ui = new(user, src, ui_key, "rpd", name, 300, 550, master_ui, state)
+		ui = new(user, src, ui_key, "rpd", name, 425, 472, master_ui, state)
 		ui.open()
 
 /obj/item/pipe_dispenser/ui_data(mob/user)
@@ -316,16 +317,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			playeffect = FALSE
 		if("mode")
 			var/n = text2num(params["mode"])
-			if(n == 2 && !(mode&1) && !(mode&2))
-				mode |= 3
-			else if(mode&n)
+			if(mode & n)
 				mode &= ~n
 			else
 				mode |= n
-
 	if(playeffect)
 		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, FALSE)
+	return TRUE
 
 /obj/item/pipe_dispenser/pre_attack(atom/A, mob/user)
 	if(!user.IsAdvancedToolUser() || istype(A, /turf/open/space/transit))

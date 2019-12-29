@@ -1,8 +1,0 @@
-author: "stylemistake"
-delete-after: True
-changes: 
-  - bugfix: "Personal Crafting UI will no longer reset its state when crafing an item."
-  - bugfix: "Improved table layout of Smart Fridge and Crew Console."
-  - bugfix: "Fix ORM not smelting alloys."
-  - bugfix: "Fix Computer Fabricator."
-  - refactor: "Tgui CSS got a massive rework."

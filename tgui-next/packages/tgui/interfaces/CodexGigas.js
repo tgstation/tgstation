@@ -1,11 +1,9 @@
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Button, LabeledList, Section } from '../components';
 
 // TODO: refactor the backend of this it's a trainwreck
 export const CodexGigas = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const prefixes = [
     "Dark",
     "Hellish",
@@ -58,8 +56,7 @@ export const CodexGigas = props => {
               key={prefix.toLowerCase()}
               content={prefix}
               disabled={data.currentSection !== 1}
-              onClick={() => act(ref, prefix + ' ')}
-            />
+              onClick={() => act(prefix + ' ')} />
           ))}
         </LabeledList.Item>
         <LabeledList.Item label="Title">
@@ -68,8 +65,7 @@ export const CodexGigas = props => {
               key={title.toLowerCase()}
               content={title}
               disabled={data.currentSection >= 2}
-              onClick={() => act(ref, title + ' ')}
-            />
+              onClick={() => act(title + ' ')} />
           ))}
         </LabeledList.Item>
         <LabeledList.Item label="Name">
@@ -78,8 +74,7 @@ export const CodexGigas = props => {
               key={name.toLowerCase()}
               content={name}
               disabled={data.currentSection >= 4}
-              onClick={() => act(ref, name)}
-            />
+              onClick={() => act(name)} />
           ))}
         </LabeledList.Item>
         <LabeledList.Item label="Suffix">
@@ -88,16 +83,14 @@ export const CodexGigas = props => {
               key={suffix.toLowerCase()}
               content={suffix}
               disabled={data.currentSection !== 4}
-              onClick={() => act(ref, ' ' + suffix)}
-            />
+              onClick={() => act(' ' + suffix)} />
           ))}
         </LabeledList.Item>
         <LabeledList.Item label="Submit">
           <Button
             content="Search"
             disabled={data.currentSection <= 4}
-            onClick={() => act(ref, 'search')}
-          />
+            onClick={() => act('search')} />
         </LabeledList.Item>
       </LabeledList>
     </Section>

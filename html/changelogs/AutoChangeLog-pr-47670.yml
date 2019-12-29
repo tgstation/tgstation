@@ -1,8 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - rscadd: "Custom keybinds will now check what style (classic / hotkey) you prefer when resetting if you use classic mode make sure to reset your keybinds to default!"
-  - rscadd: "multiple keybind support"
-  - tweak: "non-hotkey mode keeps focus on chat"
-  - bugfix: "pressing 4 as cyborg now properly cycles"
-  - bugfix: "AI location hotkeys now work again"

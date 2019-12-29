@@ -1,4 +1,0 @@
-author: "Firecage"
-delete-after: True
-changes: 
-  - bugfix: "Hydroponics trays which are fully upgraded with Earthsblood can no longer be taken over by weeds."
