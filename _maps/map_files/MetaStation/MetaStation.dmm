@@ -60898,7 +60898,6 @@
 /area/medical/virology)
 "cFE" = (
 /obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -60908,6 +60907,9 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cFF" = (
@@ -60915,10 +60917,17 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8;
+	sortType = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cFG" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cFH" = (
@@ -61322,9 +61331,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cGw" = (
-/obj/structure/disposalpipe/junction{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -61332,16 +61338,19 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cGx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cGy" = (
@@ -61349,10 +61358,10 @@
 	dir = 10
 	},
 /obj/machinery/holopad,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cGz" = (
@@ -61918,7 +61927,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -61926,6 +61934,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "cHs" = (
@@ -66564,10 +66573,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 4;
+	sortType = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "cRl" = (
@@ -68912,18 +68922,16 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dcH" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "dcI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/disposalpipe/junction/flip{
-	dir = 4
+/obj/structure/disposalpipe/segment{
+	dir = 5
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
@@ -73423,8 +73431,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 30;
-	pixel_y = 0
+	pixel_x = 30
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
@@ -75369,8 +75376,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/official/random{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/stripes/corner{
@@ -76385,8 +76391,7 @@
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/poster/official/random{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
