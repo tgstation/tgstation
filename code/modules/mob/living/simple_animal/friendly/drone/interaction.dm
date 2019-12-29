@@ -149,7 +149,7 @@
 		ventcrawler = initial(ventcrawler)
 		speed = initial(speed)
 		message_admins("[ADMIN_LOOKUPFLW(src)], a hacked drone, was restored to factory defaults!")
-	update_drone_icon()
+	update_drone_icon_hacked()
 
 /mob/living/simple_animal/drone/proc/liberate()
 	// F R E E D R O N E
@@ -157,25 +157,18 @@
 	set_shy(FALSE)
 	to_chat(src, laws)
 
-/mob/living/simple_animal/drone/proc/update_drone_icon()
-	//Different icons for different hack states
-	if(!hacked)
-		if(visualAppearence == SCOUTDRONE_HACKED)
-			visualAppearence = SCOUTDRONE
-		else if(visualAppearence == REPAIRDRONE_HACKED)
-			visualAppearence = REPAIRDRONE
-		else if(visualAppearence == MAINTDRONE_HACKED)
-			visualAppearence = MAINTDRONE + "_[colour]"
-	else if(hacked)
-		if(visualAppearence == SCOUTDRONE)
-			visualAppearence = SCOUTDRONE_HACKED
-		else if(visualAppearence == REPAIRDRONE)
-			visualAppearence = REPAIRDRONE_HACKED
-		else if(visualAppearence == MAINTDRONE)
-			visualAppearence = MAINTDRONE_HACKED
-
-	icon_living = "[visualAppearence]"
-	icon_dead = "[visualAppearence]_dead"
+/mob/living/simple_animal/drone/proc/update_drone_icon_hacked() //this is hacked both ways
+	var/static/hacked_appearances = list(
+		SCOUTDRONE = SCOUTDRONE_HACKED,
+		REPAIRDRONE = REPAIRDRONE_HACKED,
+		MAINTDRONE = MAINTDRONE_HACKED
+	)
+	if(hacked)
+		icon_living = hacked_appearances[visualAppearence]
+	else if(visualAppearence == MAINTDRONE && colour)
+		icon_living = "[visualAppearence]_[colour]"
+	else
+		icon_living = visualAppearence
 	if(stat == DEAD)
 		icon_state = icon_dead
 	else
