@@ -25,7 +25,7 @@
 			var/obj/item/gun/G = target
 			var/obj/item/firing_pin/old_pin = G.pin
 			if(old_pin && (force_replace || old_pin.pin_removeable))
-				to_chat(user, "<span class='notice'>You remove [G]'s [old_pin].</span>")
+				to_chat(user, "<span class='notice'>You remove [old_pin] from [G].</span>")
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
