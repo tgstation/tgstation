@@ -384,7 +384,7 @@
 		else
 			assigned -= M
 			log_game("DYNAMIC: [ruletype] [name] discarded [M.name] from head revolutionary due to ineligibility.")
-		if(!revolution.members.len)
+		if(!revolution.members.len && !assigned.len)
 			success = FALSE
 			log_game("DYNAMIC: [ruletype] [name] failed to get any eligible headrevs. Refunding [cost] threat.")
 	if(success)
