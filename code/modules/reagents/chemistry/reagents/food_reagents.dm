@@ -731,7 +731,7 @@
 	taste_description = "smoke"
 	overdose_threshold = 15
 
-/datum/reagent/consumable/monkey_energy/overdose_process(mob/living/M)
+/datum/reagent/consumable/char/overdose_process(mob/living/M)
 	if(prob(25))
 		M.say(pick_list_replacements(BOOMER_FILE, "boomer"), forced = /datum/reagent/consumable/monkey_energy)
 	..()
