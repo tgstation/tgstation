@@ -137,7 +137,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
-	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
+	path = "[CONFIG_GET(string/data_directory)]/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
 
 /datum/preferences/proc/load_preferences()
 	if(!path)

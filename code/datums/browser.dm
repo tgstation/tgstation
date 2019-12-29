@@ -41,7 +41,7 @@
 /datum/browser/proc/add_stylesheet(name, file)
 	if (istype(name, /datum/asset/spritesheet))
 		var/datum/asset/spritesheet/sheet = name
-		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
+		stylesheets["spritesheet_[sheet.name].css"] = "[CONFIG_GET(string/data_directory)]/spritesheets/[sheet.name]"
 	else
 		var/asset_name = "[name].css"
 

@@ -12,7 +12,7 @@
 
 /obj/structure/speaking_tile/Initialize()
 	. = ..()
-	var/json_file = file("data/npc_saves/Poly.json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/Poly.json")
 	if(!fexists(json_file))
 		return
 	var/list/json = json_decode(file2text(json_file))

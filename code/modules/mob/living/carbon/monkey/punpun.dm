@@ -43,15 +43,15 @@
 	..()
 
 /mob/living/carbon/monkey/punpun/proc/Read_Memory()
-	if(fexists("data/npc_saves/Punpun.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
+	if(fexists("[CONFIG_GET(string/data_directory)]/npc_saves/Punpun.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("[CONFIG_GET(string/data_directory)]/npc_saves/Punpun.sav")
 		S["ancestor_name"]	>> ancestor_name
 		S["ancestor_chain"] >> ancestor_chain
 		S["relic_hat"]		>> relic_hat
 		S["relic_mask"]		>> relic_mask
-		fdel("data/npc_saves/Punpun.sav")
+		fdel("[CONFIG_GET(string/data_directory)]/npc_saves/Punpun.sav")
 	else
-		var/json_file = file("data/npc_saves/Punpun.json")
+		var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/Punpun.json")
 		if(!fexists(json_file))
 			return
 		var/list/json = json_decode(file2text(json_file))
@@ -61,7 +61,7 @@
 		relic_mask = json["relic_hat"]
 
 /mob/living/carbon/monkey/punpun/proc/Write_Memory(dead, gibbed)
-	var/json_file = file("data/npc_saves/Punpun.json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/Punpun.json")
 	var/list/file_data = list()
 	if(gibbed)
 		file_data["ancestor_name"] = null

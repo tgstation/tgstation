@@ -107,7 +107,7 @@
 /proc/log_path_from_picture_ID(id)
 	if(!istext(id))
 		return
-	. = "data/picture_logs/"
+	. = "[CONFIG_GET(string/data_directory)]/picture_logs/"
 	var/list/data = splittext(id, "_")
 	if(data.len < 3)
 		return null

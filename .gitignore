@@ -1,6 +1,6 @@
 ###Files and folders specified here will never be tracked.
 
-#Ignore everything in datafolder and subdirectories
+#Ignore everything in default datafolder and subdirectories
 /data/**/*
 /tmp/**/*
 

@@ -487,3 +487,6 @@
 
 /datum/config_entry/flag/reopen_roundstart_suicide_roles_command_report
 
+/datum/config_entry/string/data_directory
+	config_entry_value = DEFAULT_DATA_DIRECTORY
+	protection = CONFIG_ENTRY_LOCKED

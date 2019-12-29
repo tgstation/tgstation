@@ -8,7 +8,7 @@
 */
 
 /datum/paiCandidate/proc/savefile_path(mob/user)
-	return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/pai.sav"
+	return "[CONFIG_GET(string/data_directory)]/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey]/pai.sav"
 
 /datum/paiCandidate/proc/savefile_save(mob/user)
 	if(IsGuestKey(user.key))

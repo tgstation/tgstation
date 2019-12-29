@@ -1,4 +1,4 @@
-#define RESTART_COUNTER_PATH "data/round_counter.txt"
+#define RESTART_COUNTER_PATH "[CONFIG_GET(string/data_directory)]/round_counter.txt"
 
 GLOBAL_VAR(restart_counter)
 
@@ -25,7 +25,7 @@ GLOBAL_VAR(restart_counter)
 
 	SetupExternalRSC()
 
-	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = "[DEFAULT_DATA_DIRECTORY]/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
@@ -97,9 +97,9 @@ GLOBAL_VAR(restart_counter)
 	if(!override_dir)
 		var/realtime = world.realtime
 		var/texttime = time2text(realtime, "YYYY/MM/DD")
-		GLOB.log_directory = "data/logs/[texttime]/round-"
+		GLOB.log_directory = "[CONFIG_GET(string/data_directory)]/logs/[texttime]/round-"
 		GLOB.picture_logging_prefix = "L_[time2text(realtime, "YYYYMMDD")]_"
-		GLOB.picture_log_directory = "data/picture_logs/[texttime]/round-"
+		GLOB.picture_log_directory = "[CONFIG_GET(string/data_directory)]/picture_logs/[texttime]/round-"
 		if(GLOB.round_id)
 			GLOB.log_directory += "[GLOB.round_id]"
 			GLOB.picture_logging_prefix += "R_[GLOB.round_id]_"
@@ -110,9 +110,9 @@ GLOBAL_VAR(restart_counter)
 			GLOB.picture_log_directory += "[timestamp]"
 			GLOB.picture_logging_prefix += "T_[timestamp]_"
 	else
-		GLOB.log_directory = "data/logs/[override_dir]"
+		GLOB.log_directory = "[CONFIG_GET(string/data_directory)]/logs/[override_dir]"
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
-		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
+		GLOB.picture_log_directory = "[CONFIG_GET(string/data_directory)]/picture_logs/[override_dir]"
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"

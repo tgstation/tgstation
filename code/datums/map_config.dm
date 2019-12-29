@@ -31,7 +31,9 @@
 		"whiteship" = "whiteship_box",
 		"emergency" = "emergency_box")
 
-/proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
+/proc/load_map_config(filename, default_to_box, delete_after, error_if_missing = TRUE)
+	if(!filename)
+		filename = "[CONFIG_GET(string/data_directory)]/next_map.json"
 	var/datum/map_config/config = new
 	if (default_to_box)
 		return config
@@ -140,4 +142,4 @@
 		. += "_maps/[map_path]/[file]"
 
 /datum/map_config/proc/MakeNextMap()
-	return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")
+	return config_filename == "[CONFIG_GET(string/data_directory)]/next_map.json" || fcopy(config_filename, "[CONFIG_GET(string/data_directory)]/next_map.json")

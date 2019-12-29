@@ -664,7 +664,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 		accepted += buffer
 
-	var/log = file("data/npc_saves/[filename].json") //If this line ever shows up as changed in a PR be very careful you aren't being memed on
+	var/log = file("[CONFIG_GET(string/data_directory)]/npc_saves/[filename].json") //If this line ever shows up as changed in a PR be very careful you aren't being memed on
 	var/list/oldjson = list()
 	var/list/oldentries = list()
 	if(fexists(log))

@@ -126,12 +126,12 @@
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
-	if(fexists("data/npc_saves/Runtime.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+	if(fexists("[CONFIG_GET(string/data_directory)]/npc_saves/Runtime.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("[CONFIG_GET(string/data_directory)]/npc_saves/Runtime.sav")
 		S["family"] >> family
-		fdel("data/npc_saves/Runtime.sav")
+		fdel("[CONFIG_GET(string/data_directory)]/npc_saves/Runtime.sav")
 	else
-		var/json_file = file("data/npc_saves/Runtime.json")
+		var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/Runtime.json")
 		if(!fexists(json_file))
 			return
 		var/list/json = json_decode(file2text(json_file))
@@ -140,7 +140,7 @@
 		family = list()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
-	var/json_file = file("data/npc_saves/Runtime.json")
+	var/json_file = file("d[CONFIG_GET(string/data_directory)]ata/npc_saves/Runtime.json")
 	var/list/file_data = list()
 	family = list()
 	if(!dead)

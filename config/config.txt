@@ -73,6 +73,9 @@ ENABLE_LOCALHOST_RANK
 ## Allows admins to bypass job playtime requirements.
 #USE_EXP_RESTRICTIONS_ADMIN_BYPASS
 
+## Change the default persistent data and log directory
+#DATA_DIRECTORY data
+
 ## log OOC channel
 LOG_OOC
 

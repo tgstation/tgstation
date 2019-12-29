@@ -918,15 +918,15 @@
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
-	if(fexists("data/npc_saves/Poly.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+	if(fexists("[CONFIG_GET(string/data_directory)]/npc_saves/Poly.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("[CONFIG_GET(string/data_directory)]/npc_saves/Poly.sav")
 		S["phrases"] 			>> speech_buffer
 		S["roundssurvived"]		>> rounds_survived
 		S["longestsurvival"]	>> longest_survival
 		S["longestdeathstreak"] >> longest_deathstreak
-		fdel("data/npc_saves/Poly.sav")
+		fdel("[CONFIG_GET(string/data_directory)]/npc_saves/Poly.sav")
 	else
-		var/json_file = file("data/npc_saves/Poly.json")
+		var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/Poly.json")
 		if(!fexists(json_file))
 			return
 		var/list/json = json_decode(file2text(json_file))
@@ -938,7 +938,7 @@
 		speech_buffer = list()
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory(dead)
-	var/json_file = file("data/npc_saves/Poly.json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/Poly.json")
 	var/list/file_data = list()
 	if(islist(speech_buffer))
 		file_data["phrases"] = speech_buffer

@@ -176,7 +176,7 @@ GLOBAL_PROTECT(protected_ranks)
 			qdel(query_load_admin_ranks)
 	//load ranks from backup file
 	if(dbfail)
-		var/backup_file = file2text("data/admins_backup.json")
+		var/backup_file = file2text("[CONFIG_GET(string/data_directory)]/admins_backup.json")
 		if(backup_file == null)
 			log_world("Unable to locate admins backup file.")
 			return FALSE
@@ -255,7 +255,7 @@ GLOBAL_PROTECT(protected_ranks)
 			if(backup_file_json != null)
 				//already tried
 				return
-			var/backup_file = file2text("data/admins_backup.json")
+			var/backup_file = file2text("[CONFIG_GET(string/data_directory)]/admins_backup.json")
 			if(backup_file == null)
 				log_world("Unable to locate admins backup file.")
 				return

@@ -551,7 +551,7 @@
 	qdel(query_get_message_output)
 	return output
 
-#define NOTESFILE "data/player_notes.sav"
+#define NOTESFILE "[CONFIG_GET(string/data_directory)]/player_notes.sav"
 //if the AUTOCONVERT_NOTES is turned on, anytime a player connects this will be run to try and add all their notes to the databas
 /proc/convert_notes_sql(ckey)
 	if(!fexists(NOTESFILE))

@@ -436,14 +436,14 @@
 	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Read_Memory()
-	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
+	if(fexists("[CONFIG_GET(string/data_directory)]/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("[CONFIG_GET(string/data_directory)]/npc_saves/Ian.sav")
 		S["age"] 		>> age
 		S["record_age"]	>> record_age
 		S["saved_head"] >> saved_head
-		fdel("data/npc_saves/Ian.sav")
+		fdel("[CONFIG_GET(string/data_directory)]/npc_saves/Ian.sav")
 	else
-		var/json_file = file("data/npc_saves/Ian.json")
+		var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/Ian.json")
 		if(!fexists(json_file))
 			return
 		var/list/json = json_decode(file2text(json_file))
@@ -458,7 +458,7 @@
 		place_on_head(new saved_head)
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/proc/Write_Memory(dead)
-	var/json_file = file("data/npc_saves/Ian.json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/Ian.json")
 	var/list/file_data = list()
 	if(!dead)
 		file_data["age"] = age + 1

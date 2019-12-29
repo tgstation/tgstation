@@ -318,7 +318,7 @@
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()
-	return "data/roundend_reports/[ckey].html"
+	return "[CONFIG_GET(string/data_directory)]/roundend_reports/[ckey].html"
 
 /datum/controller/subsystem/ticker/proc/show_roundend_report(client/C, previous = FALSE)
 	var/datum/browser/roundend_report = new(C, "roundend")
@@ -572,7 +572,7 @@
 	qdel(query_admin_rank_update)
 
 	//json format backup file generation stored per server
-	var/json_file = file("data/admins_backup.json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/admins_backup.json")
 	var/list/file_data = list("ranks" = list(), "admins" = list())
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		file_data["ranks"]["[R.name]"] = list()

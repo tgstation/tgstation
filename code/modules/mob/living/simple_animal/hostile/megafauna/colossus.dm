@@ -306,7 +306,7 @@ Difficulty: Very Hard
 		memory_saved = TRUE
 
 /obj/machinery/smartfridge/black_box/proc/WriteMemory()
-	var/json_file = file("data/npc_saves/Blackbox.json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/Blackbox.json")
 	stored_items = list()
 
 	for(var/obj/O in (contents-component_parts))
@@ -317,12 +317,12 @@ Difficulty: Very Hard
 	WRITE_FILE(json_file, json_encode(file_data))
 
 /obj/machinery/smartfridge/black_box/proc/ReadMemory()
-	if(fexists("data/npc_saves/Blackbox.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
+	if(fexists("[CONFIG_GET(string/data_directory)]/npc_saves/Blackbox.sav")) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile("[CONFIG_GET(string/data_directory)]/npc_saves/Blackbox.sav")
 		S["stored_items"] >> stored_items
-		fdel("data/npc_saves/Blackbox.sav")
+		fdel("[CONFIG_GET(string/data_directory)]/npc_saves/Blackbox.sav")
 	else
-		var/json_file = file("data/npc_saves/Blackbox.json")
+		var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/Blackbox.json")
 		if(!fexists(json_file))
 			return
 		var/list/json = json_decode(file2text(json_file))

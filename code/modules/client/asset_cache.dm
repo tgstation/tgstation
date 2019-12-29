@@ -226,7 +226,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	ensure_stripped()
 
 	var/res_name = "spritesheet_[name].css"
-	var/fname = "data/spritesheets/[res_name]"
+	var/fname = "[CONFIG_GET(string/data_directory)]/spritesheets/[res_name]"
 	fdel(fname)
 	text2file(generate_css(), fname)
 	register_asset(res_name, fcopy_rsc(fname))
@@ -251,7 +251,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			continue
 
 		// save flattened version
-		var/fname = "data/spritesheets/[name]_[size_id].png"
+		var/fname = "[CONFIG_GET(string/data_directory)]/spritesheets/[name]_[size_id].png"
 		fcopy(size[SPRSZ_ICON], fname)
 		var/error = rustg_dmi_strip_metadata(fname)
 		if(length(error))

@@ -12,11 +12,12 @@ SUBSYSTEM_DEF(title)
 	if(file_path && icon)
 		return
 
-	if(fexists("data/previous_title.dat"))
-		var/previous_path = file2text("data/previous_title.dat")
+	var/prev_title_file = "[CONFIG_GET(string/data_directory)]/previous_title.dat"
+	if(fexists(prev_title_file))
+		var/previous_path = file2text(prev_title_file)
 		if(istext(previous_path))
 			previous_icon = new(previous_icon)
-	fdel("data/previous_title.dat")
+	fdel(prev_title_file)
 
 	var/list/provisional_title_screens = flist("[global.config.directory]/title_screens/images/")
 	var/list/title_screens = list()
@@ -53,7 +54,7 @@ SUBSYSTEM_DEF(title)
 
 /datum/controller/subsystem/title/Shutdown()
 	if(file_path)
-		var/F = file("data/previous_title.dat")
+		var/F = file("[CONFIG_GET(string/data_directory)]/previous_title.dat")
 		WRITE_FILE(F, file_path)
 
 	for(var/thing in GLOB.clients)

@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(ticker)
 					continue
 				music += S
 
-	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
+	var/old_login_music = trim(file2text("[CONFIG_GET(string/data_directory)]/last_round_lobby_music.txt"))
 	if(music.len > 1)
 		music -= old_login_music
 
@@ -576,7 +576,7 @@ SUBSYSTEM_DEF(ticker)
 			addtimer(CALLBACK(player, /mob/dead/new_player.proc/make_me_an_observer), 1)
 
 /datum/controller/subsystem/ticker/proc/load_mode()
-	var/mode = trim(file2text("data/mode.txt"))
+	var/mode = trim(file2text("[CONFIG_GET(string/data_directory)]/mode.txt"))
 	if(mode)
 		GLOB.master_mode = mode
 	else
@@ -584,7 +584,7 @@ SUBSYSTEM_DEF(ticker)
 	log_game("Saved mode is '[GLOB.master_mode]'")
 
 /datum/controller/subsystem/ticker/proc/save_mode(the_mode)
-	var/F = file("data/mode.txt")
+	var/F = file("[CONFIG_GET(string/data_directory)]/mode.txt")
 	fdel(F)
 	WRITE_FILE(F, the_mode)
 
@@ -653,4 +653,4 @@ SUBSYSTEM_DEF(ticker)
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))
-	text2file(login_music, "data/last_round_lobby_music.txt")
+	text2file(login_music, "[CONFIG_GET(string/data_directory)]/last_round_lobby_music.txt")

@@ -1,4 +1,4 @@
-#define FILE_ANTAG_REP "data/AntagReputation.json"
+#define FILE_ANTAG_REP "[CONFIG_GET(string/data_directory)]/AntagReputation.json"
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -33,16 +33,17 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/LoadChiselMessages()
 	var/list/saved_messages = list()
-	if(fexists("data/npc_saves/ChiselMessages.sav")) //legacy compatability to convert old format to new
-		var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
+	var/chisel_sav = "[CONFIG_GET(string/data_directory)]/npc_saves/ChiselMessages.sav"
+	if(fexists(chisel_sav)) //legacy compatability to convert old format to new
+		var/savefile/chisel_messages_sav = new /savefile(chisel_sav)
 		var/saved_json
 		chisel_messages_sav[SSmapping.config.map_name] >> saved_json
 		if(!saved_json)
 			return
 		saved_messages = json_decode(saved_json)
-		fdel("data/npc_saves/ChiselMessages.sav")
+		fdel(chisel_sav)
 	else
-		var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
+		var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
 		if(!fexists(json_file))
 			return
 		var/list/json = json_decode(file2text(json_file))
@@ -77,16 +78,17 @@ SUBSYSTEM_DEF(persistence)
 	log_world("Loaded [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
 
 /datum/controller/subsystem/persistence/proc/LoadTrophies()
-	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/TrophyItems.sav")
+	var/trophy_sav = "[CONFIG_GET(string/data_directory)]/npc_saves/TrophyItems.sav"
+	if(fexists(trophy_sav)) //legacy compatability to convert old format to new
+		var/savefile/S = new /savefile(trophy_sav)
 		var/saved_json
 		S >> saved_json
 		if(!saved_json)
 			return
 		saved_trophies = json_decode(saved_json)
-		fdel("data/npc_saves/TrophyItems.sav")
+		fdel(trophy_sav)
 	else
-		var/json_file = file("data/npc_saves/TrophyItems.json")
+		var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/TrophyItems.json")
 		if(!fexists(json_file))
 			return
 		var/list/json = json_decode(file2text(json_file))
@@ -96,7 +98,7 @@ SUBSYSTEM_DEF(persistence)
 	SetUpTrophies(saved_trophies.Copy())
 
 /datum/controller/subsystem/persistence/proc/LoadRecentModes()
-	var/json_file = file("data/RecentModes.json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/RecentModes.json")
 	if(!fexists(json_file))
 		return
 	var/list/json = json_decode(file2text(json_file))
@@ -150,18 +152,18 @@ SUBSYSTEM_DEF(persistence)
 	SaveRandomizedRecipes()
 
 /datum/controller/subsystem/persistence/proc/GetPhotoAlbums()
-	var/album_path = file("data/photo_albums.json")
+	var/album_path = file("[CONFIG_GET(string/data_directory)]/photo_albums.json")
 	if(fexists(album_path))
 		return json_decode(file2text(album_path))
 
 /datum/controller/subsystem/persistence/proc/GetPhotoFrames()
-	var/frame_path = file("data/photo_frames.json")
+	var/frame_path = file("[CONFIG_GET(string/data_directory)]/photo_frames.json")
 	if(fexists(frame_path))
 		return json_decode(file2text(frame_path))
 
 /datum/controller/subsystem/persistence/proc/LoadPhotoPersistence()
-	var/album_path = file("data/photo_albums.json")
-	var/frame_path = file("data/photo_frames.json")
+	var/album_path = file("[CONFIG_GET(string/data_directory)]/photo_albums.json")
+	var/frame_path = file("[CONFIG_GET(string/data_directory)]/photo_frames.json")
 	if(fexists(album_path))
 		var/list/json = json_decode(file2text(album_path))
 		if(json.len)
@@ -183,8 +185,8 @@ SUBSYSTEM_DEF(persistence)
 					PF.load_from_id(json[PF.persistence_id])
 
 /datum/controller/subsystem/persistence/proc/SavePhotoPersistence()
-	var/album_path = file("data/photo_albums.json")
-	var/frame_path = file("data/photo_frames.json")
+	var/album_path = file("[CONFIG_GET(string/data_directory)]/photo_albums.json")
+	var/frame_path = file("[CONFIG_GET(string/data_directory)]/photo_frames.json")
 
 	var/list/frame_json = list()
 	var/list/album_json = list()
@@ -219,7 +221,7 @@ SUBSYSTEM_DEF(persistence)
 	WRITE_FILE(frame_path, frame_json)
 
 /datum/controller/subsystem/persistence/proc/CollectChiselMessages()
-	var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
 
 	for(var/obj/structure/chisel_message/M in chisel_messages)
 		saved_messages += list(M.pack())
@@ -235,7 +237,7 @@ SUBSYSTEM_DEF(persistence)
 
 
 /datum/controller/subsystem/persistence/proc/CollectTrophies()
-	var/json_file = file("data/npc_saves/TrophyItems.json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/npc_saves/TrophyItems.json")
 	var/list/file_data = list()
 	file_data["data"] = remove_duplicate_trophies(saved_trophies)
 	fdel(json_file)
@@ -264,7 +266,7 @@ SUBSYSTEM_DEF(persistence)
 	saved_modes[3] = saved_modes[2]
 	saved_modes[2] = saved_modes[1]
 	saved_modes[1] = SSticker.mode.config_tag
-	var/json_file = file("data/RecentModes.json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/RecentModes.json")
 	var/list/file_data = list()
 	file_data["data"] = saved_modes
 	fdel(json_file)
@@ -286,7 +288,7 @@ SUBSYSTEM_DEF(persistence)
 
 
 /datum/controller/subsystem/persistence/proc/LoadRandomizedRecipes()
-	var/json_file = file("data/RandomizedChemRecipes.json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/RandomizedChemRecipes.json")
 	var/json
 	if(fexists(json_file))
 		json = json_decode(file2text(json_file))
@@ -301,12 +303,12 @@ SUBSYSTEM_DEF(persistence)
 					loaded = TRUE
 		if(!loaded) //We do not have information for whatever reason, just generate new one
 			R.GenerateRecipe()
-		
+
 		if(!R.HasConflicts()) //Might want to try again if conflicts happened in the future.
 			add_chemical_reaction(R)
 
 /datum/controller/subsystem/persistence/proc/SaveRandomizedRecipes()
-	var/json_file = file("data/RandomizedChemRecipes.json")
+	var/json_file = file("[CONFIG_GET(string/data_directory)]/RandomizedChemRecipes.json")
 	var/list/file_data = list()
 
 	//asert globchems done
@@ -323,6 +325,6 @@ SUBSYSTEM_DEF(persistence)
 			recipe_data["results"] = R.results
 			recipe_data["required_container"] = "[R.required_container]"
 			file_data["[R.id]"] = recipe_data
-	
+
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))

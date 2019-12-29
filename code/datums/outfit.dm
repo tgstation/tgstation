@@ -88,7 +88,7 @@
 	/// Internals box. Will be inserted at the start of backpack_contents
 	var/box
 
-	/** 
+	/**
 	  * Any implants the mob should start implanted with
 	  *
 	  * Format of this list is (typepath, typepath, typepath)
@@ -325,7 +325,7 @@
 	var/stored_data = get_json_data()
 	var/json = json_encode(stored_data)
 	//Kinda annoying but as far as i can tell you need to make actual file.
-	var/f = file("data/TempOutfitUpload")
+	var/f = file("[CONFIG_GET(string/data_directory)]/TempOutfitUpload")
 	fdel(f)
 	WRITE_FILE(f,json)
 	admin << ftp(f,"[name].json")

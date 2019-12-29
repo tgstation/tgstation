@@ -1,6 +1,6 @@
 //Runs the command in the system's shell, returns a list of (error code, stdout, stderr)
 
-#define SHELLEO_NAME "data/shelleo."
+#define SHELLEO_NAME "[CONFIG_GET(string/data_directory)]/shelleo."
 #define SHELLEO_ERR ".err"
 #define SHELLEO_OUT ".out"
 /world/proc/shelleo(command)

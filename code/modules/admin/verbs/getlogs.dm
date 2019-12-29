@@ -13,7 +13,7 @@
 
 	browseserverlogs("[GLOB.log_directory]/")
 
-/client/proc/browseserverlogs(path = "data/logs/")
+/client/proc/browseserverlogs(path = "[CONFIG_GET(string/data_directory)]/logs/")
 	path = browse_files(path)
 	if(!path)
 		return
