@@ -580,7 +580,7 @@
   */
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
-	set category = "OOC"
+	set category = "Ghost"
 	reset_perspective(null)
 	unset_machine()
 
