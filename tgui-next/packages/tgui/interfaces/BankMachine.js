@@ -21,7 +21,7 @@ export const BankMachine = props => {
                 selected={siphoning}
                 onClick={() => act(siphoning ? 'halt' : 'siphon')} />
             )}>
-            {'$' + current_balance}
+            {current_balance + ' cr'}
           </LabeledList.Item>
         </LabeledList>
       </Section>

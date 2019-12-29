@@ -48,7 +48,8 @@ export const Vending = props => {
             const free = (
               product.price === 0
               || (
-                data.department
+                !product.premium
+                && data.department
                 && data.user
                 && data.department === data.user.department
               )
