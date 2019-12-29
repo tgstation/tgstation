@@ -110,6 +110,6 @@
 		return MODE_WHISPER
 	else if(key == ";")
 		return MODE_HEADSET
-	else if((length(message) > (length(key) + 1)) && (key in GLOB.department_radio_prefixes)
+	else if((length(message) > (length(key) + 1)) && (key in GLOB.department_radio_prefixes))
 		var/key_symbol = lowertext(message[length(key) + 1])
 		return GLOB.department_radio_keys[key_symbol]

@@ -241,7 +241,8 @@
 			var/variables_start = findtext(full_def, "{")
 			var/path_text = trim_text(copytext(full_def, 1, variables_start))
 			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
-			old_position = dpos + length(model[dpos])
+			if(dpos)
+				old_position = dpos + length(model[dpos])
 
 			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
 				if(bad_paths)
@@ -423,7 +424,8 @@
 
 		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)))
 		var/left_constant = delimiter == ";" ? trim_left : parse_constant(trim_left)
-		old_position = position + length(text[position])
+		if(position)
+			old_position = position + length(text[position])
 
 		if(equal_position && !isnum(left_constant))
 			// Associative var, so do the association.
