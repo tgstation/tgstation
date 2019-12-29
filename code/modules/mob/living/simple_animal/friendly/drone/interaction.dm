@@ -164,11 +164,11 @@
 		MAINTDRONE = MAINTDRONE_HACKED
 	)
 	if(hacked)
-		icon_living = hacked_appearances[visualAppearence]
-	else if(visualAppearence == MAINTDRONE && colour)
-		icon_living = "[visualAppearence]_[colour]"
+		icon_living = hacked_appearances[visualAppearance]
+	else if(visualAppearance == MAINTDRONE && colour)
+		icon_living = "[visualAppearance]_[colour]"
 	else
-		icon_living = visualAppearence
+		icon_living = visualAppearance
 	if(stat == DEAD)
 		icon_state = icon_dead
 	else

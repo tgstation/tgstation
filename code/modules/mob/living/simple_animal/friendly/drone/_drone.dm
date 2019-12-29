@@ -67,7 +67,7 @@
 	var/obj/item/head
 	var/obj/item/default_storage = /obj/item/storage/backpack/duffelbag/drone //If this exists, it will spawn in internal storage
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
-	var/visualAppearence = MAINTDRONE //What we appear as
+	var/visualAppearance = MAINTDRONE //What we appear as
 	var/hacked = FALSE //If we have laws to destroy the station
 	var/shy = TRUE //! If we have laws to minimize bothering others
 	var/flavortext = \
