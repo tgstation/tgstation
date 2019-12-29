@@ -477,6 +477,7 @@
 	M.adjust_bodytemperature(-8 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
+
 /datum/reagent/consumable/pwr_game
 	name = "Pwr Game"
 	description = "The only drink with the PWR that true gamers crave."
@@ -790,6 +791,19 @@
 	glass_desc = "A classic space-American vanilla flavored soft drink."
 
 /datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
+/datum/reagent/consumable/ginger_ale
+	name = "Ginger Ale"
+	description = "A soothing, mellow drink made from ginger."
+	color = "#f7d26a"
+	quality = DRINK_NICE
+	taste_description = "sweet ginger spice"
+	glass_name = "Ginger Ale"
+	glass_desc = "A soothing, mellow drink made from ginger."
+
+/datum/reagent/consumable/ginger_ale/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
