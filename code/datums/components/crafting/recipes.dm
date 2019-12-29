@@ -722,6 +722,14 @@
 					/obj/item/stack/cable_coil = 5)
 	category = CAT_MISC
 
+/datum/crafting_recipe/aitater/check_requirements(mob/user, list/collected_requirements)
+	var/obj/item/aicard/aicard = collected_requirements[/obj/item/aicard][1]
+	if(!aicard.AI)
+		return TRUE
+
+	to_chat(user, "<span class='boldwarning'>You can't craft an intelliTater with an AI in the card!</span>")
+	return FALSE
+
 /datum/crafting_recipe/aispook
 	name = "intelliLantern"
 	result = /obj/item/aicard/aispook
