@@ -357,7 +357,7 @@ Props:
   - `over: boolean` - dropdown renders over instead of below
   - `color: string` - color of dropdown button
   - `onClick: (e) => void` - Called when dropdown button is clicked
-  - `onSet: (e, value) => void` - Called when a value is picked from the list, `value` is the value that was picked
+  - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
 ### `Flex`
 
