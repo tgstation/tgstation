@@ -628,6 +628,13 @@
 	results = list(/datum/reagent/concentrated_barbers_aid = 2)
 	required_reagents = list(/datum/reagent/barbers_aid = 1, /datum/reagent/toxin/mutagen = 1)
 
+/datum/chemical_reaction/baldium
+	name = /datum/reagent/baldium
+	id = /datum/reagent/baldium
+	results = list(/datum/reagent/baldium = 1)
+	required_reagents = list(/datum/reagent/uranium/radium = 1, /datum/reagent/toxin/acid = 1, /datum/reagent/lye = 1)
+	required_temp = 395
+
 /datum/chemical_reaction/saltpetre
 	name = /datum/reagent/saltpetre
 	id = /datum/reagent/saltpetre
