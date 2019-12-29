@@ -198,7 +198,7 @@ SUBSYSTEM_DEF(vote)
 					for(var/name in SSpersistence.saved_maps)
 						if(VM.map_name == name)
 							run++
-					if(run >= 2)	//If run twice in the last three (including current) as of time of writing, disable map for voting.
+					if(run >= 2 || !VM.votable)	//If run twice in the last three (including current) as of time of writing, disable map for voting.
 						continue
 					choices.Add(VM.map_name)
 			if("custom")
