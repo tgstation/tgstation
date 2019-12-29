@@ -1,5 +1,0 @@
-author: "AustationBot"
-delete-after: True
-changes: 
-  - rscadd: "CMC back on meta!"
-  - bugfix: "first aid kits found in medbay clinic actually contain stuff now"
