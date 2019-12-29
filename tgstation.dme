@@ -414,6 +414,7 @@
 #include "code\datums\components\rotation.dm"
 #include "code\datums\components\shrapnel.dm"
 #include "code\datums\components\shrink.dm"
+#include "code\datums\components\shy.dm"
 #include "code\datums\components\sizzle.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\soulstoned.dm"
