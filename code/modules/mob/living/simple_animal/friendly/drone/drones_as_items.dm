@@ -20,8 +20,11 @@
 	density = FALSE
 	death = FALSE
 	roundstart = FALSE
+	mob_name = "drone"
 	///Type of drone that will be spawned
 	mob_type = /mob/living/simple_animal/drone
+	banType = ROLE_DRONE
+	show_flavour = FALSE
 
 /obj/effect/mob_spawn/drone/Initialize()
 	. = ..()
