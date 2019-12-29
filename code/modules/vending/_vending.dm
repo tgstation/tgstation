@@ -680,7 +680,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 			name = R.name,
 			price = R.custom_premium_price || extra_price,
 			max_amount = R.max_amount,
-			ref = REF(R)
+			ref = REF(R),
+			premium = TRUE
 		)
 		.["coin_records"] += list(data)
 	for (var/datum/data/vending_product/R in hidden_records)
@@ -690,7 +691,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			price = R.custom_price || default_price,
 			max_amount = R.max_amount,
 			ref = REF(R),
-			extended = TRUE
+			premium = TRUE
 		)
 		.["hidden_records"] += list(data)
 
