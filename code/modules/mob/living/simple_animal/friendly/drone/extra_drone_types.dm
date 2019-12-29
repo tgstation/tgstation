@@ -29,6 +29,7 @@
 	default_storage = /obj/item/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	hacked = TRUE
+	shy = FALSE
 	flavortext = null
 
 /mob/living/simple_animal/drone/syndrone/Initialize()

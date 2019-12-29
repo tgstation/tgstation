@@ -69,6 +69,7 @@
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = FALSE //If we have laws to destroy the station
+	var/shy = TRUE //! If we have laws to minimize bothering others
 	var/flavortext = \
 	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
 	"<span class='notice'>Drones are a ghost role that are allowed to fix the station and build things. Interfering with the round as a drone is against the rules.</span>\n"+\
@@ -94,6 +95,8 @@
 		equip_to_slot_or_del(I, ITEM_SLOT_HEAD)
 
 	ADD_TRAIT(access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+
+	shy_update()
 
 	alert_drones(DRONE_NET_CONNECT)
 
@@ -239,6 +242,20 @@
 					L -= I
 		if(cleared)
 			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
+
+/mob/living/simple_animal/drone/proc/set_shy(newShy)
+	shy = newShy
+	shy_update()
+
+/mob/living/simple_animal/drone/proc/shy_update()
+	if(shy)
+		ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
+		LoadComponent(/datum/component/shy, typecacheof(/mob/living/simple_animal/drone), 4, "Your laws prevent this action near %TARGET.", TRUE)
+	else
+		REMOVE_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
+		var/datum/component/shy/S = GetComponent(/datum/component/shy)
+		if(S)
+			qdel(S)
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return

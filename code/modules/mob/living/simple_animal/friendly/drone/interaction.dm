@@ -127,6 +127,8 @@
 		to_chat(src, laws)
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = TRUE
+		set_shy(FALSE)
+		REMOVE_TRAIT(src, TRAIT_PACIFISM, SPECIES_TRAIT)
 		mind.special_role = "hacked drone"
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
 		speed = 1 //gotta go slow
@@ -142,6 +144,7 @@
 		to_chat(src, laws)
 		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
 		hacked = FALSE
+		set_shy(initial(shy))
 		mind.special_role = null
 		ventcrawler = initial(ventcrawler)
 		speed = initial(speed)
@@ -151,6 +154,7 @@
 /mob/living/simple_animal/drone/proc/liberate()
 	// F R E E D R O N E
 	laws = "1. You are a Free Drone."
+	set_shy(FALSE)
 	to_chat(src, laws)
 
 /mob/living/simple_animal/drone/proc/update_drone_icon()
