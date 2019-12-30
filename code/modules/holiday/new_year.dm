@@ -16,15 +16,15 @@
 /obj/item/sparkler/attackby(obj/item/W, mob/user, params)
 	var/ignition_msg = W.ignition_effect(src, user)
 	if(ignition_msg)
-		light(ignition_msg)
+		light(user, ignition_msg)
 	else
 		return ..()
 
-/obj/item/sparkler/proc/light(message)
+/obj/item/sparkler/proc/light(mob/user, message)
 	if(lit)
 		return
-	if(message)
-		usr.visible_message(message)
+	if(user && message)
+		user.visible_message(message)
 	lit = TRUE
 	icon_state = "sparkler_on"
 	force = 6
@@ -88,7 +88,7 @@ obj/item/grenade/firecracker/wirecutter_act(mob/living/user, obj/item/I)
 		det_time -= 10
 		to_chat(user, "<span class='notice'>You shorten the fuse of [src] with [I].")
 		playsound(src, 'sound/items/wirecutter.ogg', 20, TRUE)
-		icon_state = initial(icon_state) + "_" + "[det_time]"
+		icon_state = initial(icon_state) + "_[det_time]"
 		update_icon()
 	else
 		to_chat(user, "<span class='danger'>You've already removed all of the fuse!")
