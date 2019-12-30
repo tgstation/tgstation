@@ -794,17 +794,17 @@
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
-/datum/reagent/consumable/ginger_ale
-	name = "Ginger Ale"
+/datum/reagent/consumable/sol_dry
+	name = "Sol Dry"
 	description = "A soothing, mellow drink made from ginger."
 	color = "#f7d26a"
 	quality = DRINK_NICE
 	taste_description = "sweet ginger spice"
-	glass_name = "Ginger Ale"
+	glass_name = "Sol Dry"
 	glass_desc = "A soothing, mellow drink made from ginger."
 
-/datum/reagent/consumable/ginger_ale/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+/datum/reagent/consumable/sol_dry/on_mob_life(mob/living/carbon/M)
+	M.adjust_disgust(-5)
 	..()
 
 /datum/reagent/consumable/red_queen
