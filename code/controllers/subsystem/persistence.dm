@@ -1,4 +1,5 @@
 #define FILE_ANTAG_REP "data/AntagReputation.json"
+#define FILE_RECENT_MAPS "data/RecentMaps.json"
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -107,10 +108,10 @@ SUBSYSTEM_DEF(persistence)
 	saved_modes = json["data"]
 
 /datum/controller/subsystem/persistence/proc/LoadRecentMaps()
-	var/json_file = file("data/RecentMaps.json")
-	if(!fexists(json_file))
+	var/map_sav = FILE_RECENT_MAPS
+	if(!fexists(FILE_RECENT_MAPS))
 		return
-	var/list/json = json_decode(file2text(json_file))
+	var/list/json = json_decode(file2text(map_sav))
 	if(!json)
 		return
 	saved_maps = json["data"]
