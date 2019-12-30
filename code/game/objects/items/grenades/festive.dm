@@ -110,6 +110,6 @@ obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volum
 
 /obj/item/grenade/firecracker/prime()
 	update_mob()
-	qdel(src)
 	explosion(src.loc,-1,-1,2)
+	qdel(src)
 
