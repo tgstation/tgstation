@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - admin: "Moved shuttle related logs into a new log file called shuttle.log."
+  - admin: "Added logging for shuttle consoles, aux bases/beacons and shuttle gibbing (last one is in the attack log)."
