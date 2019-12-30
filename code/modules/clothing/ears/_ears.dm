@@ -15,12 +15,12 @@
 	strip_delay = 15
 	equip_delay_other = 25
 	resistance_flags = FLAMMABLE
-	custom_price = 40
+	custom_price = 250
 
 /obj/item/clothing/ears/earmuffs/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/earhealing)
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/clothing/ears/headphones
 	name = "headphones"
@@ -31,7 +31,7 @@
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD | ITEM_SLOT_NECK		//Fluff item, put it whereever you want!
 	actions_types = list(/datum/action/item_action/toggle_headphones)
 	var/headphones_on = FALSE
-	custom_price = 20
+	custom_price = 125
 
 /obj/item/clothing/ears/headphones/Initialize()
 	. = ..()

@@ -86,6 +86,12 @@
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
 
+/turf/closed/indestructible/riveted/diamond
+	name = "diamond wall"
+	desc = "A wall with diamond plating. You monster."
+	icon = 'icons/turf/walls/diamond_wall.dmi'
+	icon_state = "diamond"
+
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"
 

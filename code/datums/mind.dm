@@ -32,6 +32,7 @@
 /datum/mind
 	var/key
 	var/name				//replaces mob/var/original_name
+	var/ghostname			//replaces name for observers name if set
 	var/mob/living/current
 	var/active = 0
 
@@ -84,9 +85,7 @@
 
 /datum/mind/proc/get_language_holder()
 	if(!language_holder)
-		var/datum/language_holder/L = current.get_language_holder(shadow=FALSE)
-		language_holder = L.copy(src)
-
+		language_holder = new (src)
 	return language_holder
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
@@ -94,10 +93,6 @@
 		current.mind = null
 		UnregisterSignal(current, COMSIG_MOB_DEATH)
 		SStgui.on_transfer(current, new_character)
-
-	if(!language_holder)
-		var/datum/language_holder/mob_holder = new_character.get_language_holder(shadow = FALSE)
-		language_holder = mob_holder.copy(src)
 
 	if(key)
 		if(new_character.key != key)					//if we're transferring into a body with a key associated which is not ours
@@ -126,9 +121,10 @@
 	RegisterSignal(new_character, COMSIG_MOB_DEATH, .proc/set_death_time)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+	current.update_atom_languages()
 
 
-	///Adjust experience of a specific skill
+///Adjust experience of a specific skill
 /datum/mind/proc/adjust_experience(skill, amt, silent = FALSE)
 	var/datum/skill/S = GetSkillRef(skill)
 	skill_experience[S] = max(0, skill_experience[S] + amt) //Prevent going below 0
@@ -321,14 +317,6 @@
 		P = locate() in PDA
 	if (!P) // If we couldn't find a pen in the PDA, or we didn't even have a PDA, do it the old way
 		P = locate() in all_contents
-		if(!P) // I do not have a pen.
-			var/obj/item/pen/inowhaveapen
-			if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
-				inowhaveapen = new /obj/item/pen(traitor_mob.back)
-			else
-				inowhaveapen = new /obj/item/pen(traitor_mob.loc)
-				traitor_mob.put_in_hands(inowhaveapen) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
-			P = inowhaveapen
 
 	var/obj/item/uplink_loc
 
@@ -348,10 +336,14 @@
 					uplink_loc = P
 			if(UPLINK_PEN)
 				uplink_loc = P
-				if(!uplink_loc)
-					uplink_loc = PDA
-				if(!uplink_loc)
-					uplink_loc = R
+
+	if(!uplink_loc) // We've looked everywhere, let's just give you a pen
+		if(istype(traitor_mob.back,/obj/item/storage)) //ok buddy you better have a backpack!
+			P = new /obj/item/pen(traitor_mob.back)
+		else
+			P = new /obj/item/pen(traitor_mob.loc)
+			traitor_mob.put_in_hands(P) // I hope you don't have arms and your traitor pen gets stolen for all this trouble you've caused.
+		uplink_loc = P
 
 	if (!uplink_loc)
 		if(!silent)

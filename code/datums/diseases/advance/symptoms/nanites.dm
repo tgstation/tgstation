@@ -10,8 +10,10 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/reverse_boost = FALSE
-	threshold_desc = "<b>Transmission 5:</b> Increases the virus' growth rate while nanites are present.<br>\
-					  <b>Stage Speed 7:</b> Increases the replication boost."
+	threshold_descs = list(
+		"Transmission 5" = "Increases the virus' growth rate while nanites are present.",
+		"Stage Speed 7" = "Increases the replication boost."
+	)
 
 /datum/symptom/nano_boost/Start(datum/disease/advance/A)
 	if(!..())
@@ -42,8 +44,10 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	var/reverse_boost = FALSE
-	threshold_desc = "<b>Stage Speed 5:</b> Increases the virus' growth rate while nanites are present.<br>\
-					  <b>Resistance 7:</b> Severely increases the rate at which the nanites are destroyed."
+	threshold_descs = list(
+		"Stage Speed 5" = "Increases the virus' growth rate while nanites are present.",
+		"Resistance 7" = "Severely increases the rate at which the nanites are destroyed."
+	)
 
 /datum/symptom/nano_destroy/Start(datum/disease/advance/A)
 	if(!..())

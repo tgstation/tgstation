@@ -1,0 +1,4 @@
+author: "CAPTTLasky"
+delete-after: True
+changes: 
+  - bugfix: "Disposal chutes to virology and xenobiology now actually go to space as intended."

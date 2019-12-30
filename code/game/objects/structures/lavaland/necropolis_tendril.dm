@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 		last_tendril = FALSE
 
 	if(last_tendril && !(flags_1 & ADMIN_SPAWNED_1))
-		if(SSachievements.hub_enabled)
+		if(SSachievements.achievements_enabled)
 			for(var/mob/living/L in view(7,src))
 				if(L.stat || !L.client)
 					continue

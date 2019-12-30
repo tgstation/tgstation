@@ -35,7 +35,11 @@ export const map = iterateeFn => collection => {
     return collection;
   }
   if (Array.isArray(collection)) {
-    return collection.map(iterateeFn);
+    const result = [];
+    for (let i = 0; i < collection.length; i++) {
+      result.push(iterateeFn(collection[i], i, collection));
+    }
+    return result;
   }
   if (typeof collection === 'object') {
     const hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -97,31 +101,9 @@ export const sortBy = (...iterateeFns) => array => {
 };
 
 /**
- * A fast implementation of map.
- */
-export const fastMap = (array, iterateeFn) => {
-  const result = [];
-  for (let i = 0; i < array.length; i++) {
-    result.push(iterateeFn(array[i], i));
-  }
-  return result;
-};
-
-/**
- * A version of fastMap, but for mapping over two arrays instead of one.
- */
-export const fastProduct = (arrayA, arrayB, iterateeFn) => {
-  const result = [];
-  for (let i = 0; i < arrayA.length; i++) {
-    result.push(iterateeFn(arrayA[i], arrayB[i], i));
-  }
-  return result;
-};
-
-/**
  * A fast implementation of reduce.
  */
-export const fastReduce = (array, reducerFn, initialValue) => {
+export const reduce = (reducerFn, initialValue) => array => {
   const length = array.length;
   let i;
   let result;
@@ -137,4 +119,35 @@ export const fastReduce = (array, reducerFn, initialValue) => {
     result = reducerFn(result, array[i], i, array);
   }
   return result;
+};
+
+/**
+ * Creates an array of grouped elements, the first of which contains
+ * the first elements of the given arrays, the second of which contains
+ * the second elements of the given arrays, and so on.
+ */
+export const zip = (...arrays) => {
+  if (arrays.length === 0) {
+    return;
+  }
+  const numArrays = arrays.length;
+  const numValues = arrays[0].length;
+  const result = [];
+  for (let valueIndex = 0; valueIndex < numValues; valueIndex++) {
+    const entry = [];
+    for (let arrayIndex = 0; arrayIndex < numArrays; arrayIndex++) {
+      entry.push(arrays[arrayIndex][valueIndex]);
+    }
+    result.push(entry);
+  }
+  return result;
+};
+
+/**
+ * This method is like "zip" except that it accepts iteratee to
+ * specify how grouped values should be combined. The iteratee is
+ * invoked with the elements of each group.
+ */
+export const zipWith = iterateeFn => (...arrays) => {
+  return map(values => iterateeFn(...values))(zip(...arrays));
 };

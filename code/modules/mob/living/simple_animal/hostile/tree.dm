@@ -40,10 +40,12 @@
 	loot = list(/obj/item/stack/sheet/mineral/wood)
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
+	
+	var/is_tree = TRUE
 
 /mob/living/simple_animal/hostile/tree/Life()
 	..()
-	if(isopenturf(loc))
+	if(is_tree && isopenturf(loc))
 		var/turf/open/T = src.loc
 		if(T.air && T.air.gases[/datum/gas/carbon_dioxide])
 			var/co2 = T.air.gases[/datum/gas/carbon_dioxide][MOLES]
@@ -65,10 +67,29 @@
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"
 	desc = "Serenity now... SERENITY NOW!"
+	maxHealth = 200
+	health = 200
 	icon_state = "festivus_pole"
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"
 	icon_gib = "festivus_pole"
+	response_help_continuous = "rubs"
+	response_help_simple = "rub"
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")
 	faction = list()
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	is_tree = FALSE
+	
+/mob/living/simple_animal/hostile/tree/festivus/attack_hand(mob/living/carbon/human/M)
+	. = ..()
+	if(M.a_intent == "help")
+		visible_message("<span class='warning'>[src] crackles with static electricity!</span>")
+		for(var/obj/item/stock_parts/cell/C in range(2, get_turf(src)))
+			C.give(75)
+		for(var/mob/living/silicon/robot/R in range(2, get_turf(src)))
+			if(R.cell)
+				R.cell.give(75)
+		for(var/obj/machinery/power/apc/A in range(2, get_turf(src)))
+			if(A.cell)
+				A.cell.give(75)

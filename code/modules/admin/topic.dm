@@ -1113,8 +1113,8 @@
 
 		if(ishuman(L))
 			var/mob/living/carbon/human/observer = L
-			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit/black(observer), SLOT_W_UNIFORM)
-			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), SLOT_SHOES)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit/black(observer), ITEM_SLOT_ICLOTHING)
+			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), ITEM_SLOT_FEET)
 		L.Unconscious(100)
 		sleep(5)
 		L.forceMove(pick(GLOB.tdomeobserve))
@@ -1495,6 +1495,15 @@
 
 		var/mob/M = locate(href_list["subtlemessage"])
 		usr.client.cmd_admin_subtle_message(M)
+
+	else if(href_list["playsoundto"])
+		if(!check_rights(R_SOUND))
+			return
+
+		var/mob/M = locate(href_list["playsoundto"])
+		var/S = input("", "Select a sound file",) as null|sound
+		if(S)
+			usr.client.play_direct_mob_sound(S, M)
 
 	else if(href_list["individuallog"])
 		if(!check_rights(R_ADMIN))

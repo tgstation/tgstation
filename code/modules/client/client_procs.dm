@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				topiclimiter[ADMINSWARNED_AT] = minute
 				msg += " Administrators have been informed."
 				log_game("[key_name(src)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
-				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
 			return
 
@@ -81,11 +81,23 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
 		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
-	
+
 	//byond bug ID:2256651
 	if (asset_cache_job && asset_cache_job in completed_asset_jobs)
 		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
 		src << browse("...", "window=asset_cache_browser")
+
+	// Keypress passthrough
+	if(href_list["__keydown"])
+		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
+		if(keycode)
+			keyDown(keycode)
+		return
+	if(href_list["__keyup"])
+		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
+		if(keycode)
+			keyUp(keycode)
+		return
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -130,7 +142,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
  * Handles checking for duplicate messages and people sending messages too fast
  *
  * The first checks are if you're sending too fast, this is defined as sending
- * SPAM_TRIGGER_AUTOMUTE messages in 
+ * SPAM_TRIGGER_AUTOMUTE messages in
  * 5 seconds, this will start supressing your messages,
  * if you send 2* that limit, you also get muted
  *
@@ -153,7 +165,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(cache >= SPAM_TRIGGER_AUTOMUTE * 2)
 		total_message_count = 0
 		total_count_reset = 0
-		cmd_admin_mute(src, mute_type, 1)	
+		cmd_admin_mute(src, mute_type, 1)
 		return 1
 
 	//Otherwise just supress the message
@@ -318,7 +330,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/cev = CONFIG_GET(number/client_error_version)
 	var/ceb = CONFIG_GET(number/client_error_build)
 	var/cwv = CONFIG_GET(number/client_warn_version)
-	if (byond_version < cev || byond_build < ceb)		//Out of date client.
+	if (byond_version < cev || (byond_version == cev && byond_build < ceb))		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of BYOND is too old:</b></span>")
 		to_chat(src, CONFIG_GET(string/client_error_message))
 		to_chat(src, "Your version: [byond_version].[byond_build]")
@@ -372,7 +384,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if (nnpa >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (CONFIG_GET(flag/irc_first_connection_alert))
-				send2irc_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
+				send2tgs_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
 	else if (isnum(cached_player_age) && cached_player_age < nnpa)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age==1?"":"s")]")
 	if(CONFIG_GET(flag/use_account_age_for_jobs) && account_age >= 0)
@@ -380,7 +392,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(account_age >= 0 && account_age < nnpa)
 		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 		if (CONFIG_GET(flag/irc_first_connection_alert))
-			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
+			send2tgs_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 	validate_key_in_db()
@@ -464,10 +476,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				"Forever alone :("\
 			)
 
-			send2irc("Server", "[cheesy_message] (No admins online)")
+			send2tgs("Server", "[cheesy_message] (No admins online)")
 
-	player_details.achievements.save()
-	
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
 	GLOB.clients -= src
@@ -669,7 +679,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 			if (!cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
-				send2irc_adminless_only("CidRandomizer", "[key_name(src)] has been detected as using a cid randomizer. Connection rejected.")
+				send2tgs_adminless_only("CidRandomizer", "[key_name(src)] has been detected as using a cid randomizer. Connection rejected.")
 				cidcheck_failedckeys[ckey] = TRUE
 				note_randomizer_user()
 
@@ -680,7 +690,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		else
 			if (cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
-				send2irc_adminless_only("CidRandomizer", "[key_name(src)] has been allowed to connect after showing they removed their cid randomizer.")
+				send2tgs_adminless_only("CidRandomizer", "[key_name(src)] has been allowed to connect after showing they removed their cid randomizer.")
 				cidcheck_failedckeys -= ckey
 			if (cidcheck_spoofckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
@@ -771,10 +781,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				msg += " Administrators have been informed."
 				if (ab)
 					log_game("[key_name(src)] is using the middle click aimbot exploit")
-					message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
+					message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
 					add_system_note("aimbot", "Is using the middle click aimbot exploit")
 				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
-				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
 			return
 
@@ -796,6 +806,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		// unfocus the text bar. This removes the red color from the text bar
 		// so that the visual focus indicator matches reality.
 		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+
+	else
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
 
 	..()
 
@@ -868,20 +881,22 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	y = CLAMP(y+change, min,max)
 	change_view("[x]x[y]")
 
-/client/proc/update_movement_keys()
-	if(prefs && prefs.key_bindings)
-		movement_keys = list()
-		for(var/key in prefs.key_bindings)
-			for(var/kb_name in prefs.key_bindings[key])
-				switch(kb_name)
-					if("North")
-						movement_keys[key] = NORTH
-					if("East")
-						movement_keys[key] = EAST
-					if("West")
-						movement_keys[key] = WEST
-					if("South")
-						movement_keys[key] = SOUTH
+/client/proc/update_movement_keys(datum/preferences/direct_prefs)
+	var/datum/preferences/D = prefs || direct_prefs
+	if(!D?.key_bindings)
+		return
+	movement_keys = list()
+	for(var/key in D.key_bindings)
+		for(var/kb_name in D.key_bindings[key])
+			switch(kb_name)
+				if("North")
+					movement_keys[key] = NORTH
+				if("East")
+					movement_keys[key] = EAST
+				if("West")
+					movement_keys[key] = WEST
+				if("South")
+					movement_keys[key] = SOUTH
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
@@ -935,4 +950,4 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 
 /client/proc/give_award(achievement_type, mob/user)
-	return	player_details.achievements.unlock(achievement_type, mob/user)
+	return	player_details.achievements.unlock(achievement_type, user)

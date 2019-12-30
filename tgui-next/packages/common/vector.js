@@ -1,45 +1,48 @@
-import { fastMap, fastProduct, fastReduce } from './collections';
+import { map, reduce, zipWith } from './collections';
 
 /**
  * Creates a vector, with as many dimensions are there are arguments.
  */
-export const vec = (...components) => {
+export const vecCreate = (...components) => {
   if (Array.isArray(components[0])) {
-    return new Vector(components[0]);
+    return [...components[0]];
   }
-  return new Vector(components);
+  return components;
 };
 
 const ADD = (a, b) => a + b;
 const SUB = (a, b) => a - b;
 const MUL = (a, b) => a * b;
+const DIV = (a, b) => a / b;
 
-class Vector {
-  constructor(components) {
-    this.c = components;
-  }
+export const vecAdd = (...vecs) => {
+  return reduce((a, b) => zipWith(ADD)(a, b))(vecs);
+};
 
-  add(vec) {
-    return new Vector(fastProduct(this.c, vec.c, ADD));
-  }
+export const vecSubtract = (...vecs) => {
+  return reduce((a, b) => zipWith(SUB)(a, b))(vecs);
+};
 
-  subtract(vec) {
-    return new Vector(fastProduct(this.c, vec.c, SUB));
-  }
+export const vecMultiply = (...vecs) => {
+  return reduce((a, b) => zipWith(MUL)(a, b))(vecs);
+};
 
-  multiply(n) {
-    return new Vector(fastMap(this.c, x => x * n));
-  }
+export const vecDivide = (...vecs) => {
+  return reduce((a, b) => zipWith(DIV)(a, b))(vecs);
+};
 
-  divide(n) {
-    return new Vector(fastMap(this.c, x => x / n));
-  }
+export const vecScale = (vec, n) => {
+  return map(x => x * n)(vec);
+};
 
-  magnitude() {
-    return Math.sqrt(fastReduce(fastProduct(this.c, this.c, MUL), ADD));
-  }
+export const vecInverse = vec => {
+  return map(x => -x)(vec);
+};
 
-  normalize() {
-    return this.divide(this.magnitude());
-  }
-}
+export const vecLength = vec => {
+  return Math.sqrt(reduce(ADD)(zipWith(MUL)(vec, vec)));
+};
+
+export const vecNormalize = vec => {
+  return vecDivide(vec, vecLength(vec));
+};

@@ -312,14 +312,14 @@
 		if(7 to 9)
 			dance5(M)
 
-/obj/machinery/jukebox/disco/proc/dance2(var/mob/living/M)
-	for(var/i = 1, i < 10, i++)
-		for(var/d in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
-			M.setDir(d)
-			if(i == WEST)
-				M.emote("flip")
-			sleep(1)
+/obj/machinery/jukebox/disco/proc/dance2(mob/living/M)
+	for(var/i in 0 to 9)
+		dance_rotate(M, CALLBACK(M, /mob.proc/dance_flip))
 		sleep(20)
+
+/mob/proc/dance_flip()
+	if(dir == WEST)
+		emote("flip")
 
 /obj/machinery/jukebox/disco/proc/dance3(var/mob/living/M)
 	var/matrix/initial_matrix = matrix(M.transform)

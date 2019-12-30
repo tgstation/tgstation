@@ -2,8 +2,8 @@
 	icon_state = "refill_clothes"
 
 /obj/machinery/vending/wardrobe
-	default_price = 50
-	extra_price = 75
+	default_price = 350
+	extra_price = 450
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
 
@@ -57,9 +57,9 @@
 					/obj/item/clothing/under/rank/medical/doctor/purple = 4,
 					/obj/item/clothing/under/rank/medical/doctor = 4,
 					/obj/item/clothing/suit/toggle/labcoat = 4,
-					/obj/item/clothing/suit/toggle/labcoat/emt = 4,
+					/obj/item/clothing/suit/toggle/labcoat/paramedic = 4,
 					/obj/item/clothing/shoes/sneakers/white = 4,
-					/obj/item/clothing/head/soft/emt = 4,
+					/obj/item/clothing/head/soft/paramedic = 4,
 					/obj/item/clothing/suit/apron/surgical = 4,
 					/obj/item/clothing/mask/surgical = 4)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe

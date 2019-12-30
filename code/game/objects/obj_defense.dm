@@ -55,6 +55,8 @@
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	..() //contents explosion
+	if(QDELETED(src))
+		return
 	if(target == src)
 		take_damage(INFINITY, BRUTE, "bomb", 0)
 		return
