@@ -296,10 +296,21 @@
 			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
 		victim.update_damage_hud()
+	if(method == INGEST)
+		if(!holder.has_reagent(/datum/reagent/consumable/milk))
+			if(prob(15))
+				to_chat(M, "<span class='danger'>[pick("Your head pounds.", "Your mouth feels like its on fire.", "You feel dizzy.")]</span>")
+			if(prob(10))
+				victim.blur_eyes(1)
+			if(prob(10))
+				victim.Dizzy(1)
+			if(prob(5))
+				victim.vomit()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
-	if(prob(5))
-		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
+	if(!holder.has_reagent(/datum/reagent/consumable/milk))
+		if(prob(10))
+			M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	..()
 
 /datum/reagent/consumable/sodiumchloride
