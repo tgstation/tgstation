@@ -30,7 +30,7 @@
 		if(!worth)
 			to_chat(user, "<span class='warning'>[I] doesn't seem to be worth anything!</span>")
 		money += worth
-		to_chat(user, "<span class='notice'>You slot [I] into [src] and it reports a total of [money] money inserted.</span>")
+		to_chat(user, "<span class='notice'>You slot [I] into [src] and it reports a total of [money] credits inserted.</span>")
 		qdel(I)
 		return
 	. = ..()
@@ -141,7 +141,6 @@
 			if(isnull(params["method"]))
 				return
 			if(isnull(selected_item))
-				// Huh??
 				buying = FALSE
 				return
 			var/datum/blackmarket_market/market = SSblackmarket.markets[viewing_market]

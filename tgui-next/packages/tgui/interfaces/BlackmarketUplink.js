@@ -36,7 +36,7 @@ export const BlackmarketUplink = props => {
               </Box>
               <Button
                 key={name}
-                content={deliveryMethod.price+'$'}
+                content={deliveryMethod.price+' cr'}
                 mt={1}
                 disabled={data.money < deliveryMethod.price}
                 onClick={() => act('buy', {
@@ -60,7 +60,7 @@ export const BlackmarketUplink = props => {
         title="Black Market Uplink"
         buttons={(
           <Box inline bold>
-            <AnimatedNumber value={Math.round(data.money)} /> credits
+            <AnimatedNumber value={Math.round(data.money)} /> cr
           </Box>
         )} />
       <Tabs
@@ -104,7 +104,7 @@ export const BlackmarketUplink = props => {
                       {item.amount ? item.amount+" in stock" : "Out of stock"}
                     </Table.Cell>
                     <Table.Cell collapsing textAlign="right">
-                      {item.cost+'$'}
+                      {item.cost+'cr'}
                     </Table.Cell>
                     <Table.Cell collapsing textAlign="right">
                       <Button

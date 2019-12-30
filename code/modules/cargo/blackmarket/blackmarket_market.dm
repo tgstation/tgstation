@@ -36,9 +36,9 @@
 		if(I.type != item)
 			continue
 		var/price = I.price + shipping[method]
-		// the UI shouldn't allow you to buy something if you don't have enough money in the uplink, but I can't get the price of the item in a clean way.
+		// I can't get the price of the item and shipping in a clean way to the UI, so I have to do this.
 		if(uplink.money < price)
-			to_chat("<span class='warning'>You don't have enough money in [uplink] for [I] with [method] shipping.</span>")
+			to_chat("<span class='warning'>You don't have enough credits in [uplink] for [I] with [method] shipping.</span>")
 			return FALSE
 
 		if(I.buy(uplink, user, method))
