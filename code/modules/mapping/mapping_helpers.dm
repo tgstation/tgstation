@@ -308,7 +308,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "iansnewyrshelper"
 
 /obj/effect/mapping_helpers/iannewyear/LateInitialize()
-	if(locate(/datum/holiday/new_year) in SSevents.holidays)
+	if(SSevents.holidays && SSevents.holidays[NEW_YEAR])
 		fireworks()
 	qdel(src)
 
@@ -321,7 +321,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		if(istype(thing, /obj/structure/table/reinforced))
 			table += thing
 		if(isopenturf(thing))
-			new /obj/effect/decal/cleanable/confetti(thing)
 			if(locate(/obj/structure/bed/dogbed/ian) in thing)
 				new /obj/item/clothing/head/festive(thing)
 				var/obj/item/reagent_containers/food/drinks/bottle/champagne/iandrink = new(thing)
@@ -334,8 +333,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/turf/fireworks_turf = get_turf(pick(table))
 	new /obj/item/storage/box/fireworks(fireworks_turf)
 	var/obj/item/storage/box/matches/matchbox = new(fireworks_turf)
-	matchbox.pixel_y -= 6
-	matchbox.pixel_x -= 6
+	matchbox.pixel_y += 8
+	matchbox.pixel_x -= 3
 
 //lets mappers place notes on airlocks with custom info or a pre-made note from a path
 /obj/effect/mapping_helpers/airlock_note_placer

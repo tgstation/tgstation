@@ -5,6 +5,7 @@
 	desc = "A little stick coated with metal power and barium nitrate, burns with a pleasing sparkle."
 	icon = 'icons/obj/holiday_misc.dmi'
 	icon_state = "sparkler"
+	w_class = WEIGHT_CLASS_TINY
 	var/burntime = 60
 	var/lit = FALSE
 	heat = 1000
@@ -60,6 +61,7 @@
 	icon_state = "firecracker"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "flare"
 	throw_speed = 3
 	throw_range = 7
@@ -86,7 +88,7 @@ obj/item/grenade/firecracker/wirecutter_act(mob/living/user, obj/item/I)
 		det_time -= 10
 		to_chat(user, "<span class='notice'>You shorten the fuse of [src] with [I].")
 		playsound(src, 'sound/items/wirecutter.ogg', 20, TRUE)
-		icon_state = initial(icon_state) + "_" + det_time
+		icon_state = initial(icon_state) + "_" + "[det_time]"
 		update_icon()
 	else
 		to_chat(user, "<span class='danger'>You've already removed all of the fuse!")
@@ -106,7 +108,4 @@ obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volum
 /obj/item/grenade/firecracker/prime()
 	update_mob()
 	explosion(src.loc,-1,-1,2)
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/ExcitedIan in view(7, src))
-		if(ExcitedIan.stat != DEAD)
-			ExcitedIan.emote("me", 1, "yaps excitedly!")
 	qdel(src)

@@ -1222,7 +1222,7 @@
 	for(var/i in 1 to 3)
 		new/obj/item/grenade/firecracker(src)
 	if(rand(20))
-		/obj/item/grenade/syndieminibomb/concussion/frag
+		new /obj/item/grenade/syndieminibomb/concussion/frag(src)
 	else
 		new /obj/item/toy/snappop(src)
 
