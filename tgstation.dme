@@ -1823,6 +1823,7 @@
 #include "code\modules\holiday\easter.dm"
 #include "code\modules\holiday\hebrew_calendar.dm"
 #include "code\modules\holiday\holidays.dm"
+#include "code\modules\holiday\new_year.dm"
 #include "code\modules\holodeck\area_copy.dm"
 #include "code\modules\holodeck\computer.dm"
 #include "code\modules\holodeck\holo_effect.dm"

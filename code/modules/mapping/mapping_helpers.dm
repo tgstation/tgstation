@@ -301,6 +301,42 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	birthday()
 	qdel(src)
 
+//Ian, like most dogs, loves a good new years eve party.
+/obj/effect/mapping_helpers/iannewyear
+	name = "Ian's New Years Helper"
+	late = TRUE
+	icon_state = "iansnewyrshelper"
+
+/obj/effect/mapping_helpers/iannewyear/LateInitialize()
+	if(locate(/datum/holiday/new_year) in SSevents.holidays)
+		fireworks()
+	qdel(src)
+
+/obj/effect/mapping_helpers/iannewyear/proc/fireworks()
+	var/area/a = get_area(src)
+	var/list/table = list()//should only be one aka the front desk, but just in case...
+	var/list/openturfs = list()
+
+	for(var/thing in a.contents)
+		if(istype(thing, /obj/structure/table/reinforced))
+			table += thing
+		if(isopenturf(thing))
+			new /obj/effect/decal/cleanable/confetti(thing)
+			if(locate(/obj/structure/bed/dogbed/ian) in thing)
+				new /obj/item/clothing/head/festive(thing)
+				var/obj/item/reagent_containers/food/drinks/bottle/champagne/iandrink = new(thing)
+				iandrink.name = "dog champagne"
+				iandrink.pixel_y += 8
+				iandrink.pixel_x += 8
+			else
+				openturfs += thing
+
+	var/turf/fireworks_turf = get_turf(pick(table))
+	new /obj/item/storage/box/fireworks(fireworks_turf)
+	var/obj/item/storage/box/matches/matchbox = new(fireworks_turf)
+	matchbox.pixel_y -= 6
+	matchbox.pixel_x -= 6
+
 //lets mappers place notes on airlocks with custom info or a pre-made note from a path
 /obj/effect/mapping_helpers/airlock_note_placer
 	name = "Airlock Note Placer"
