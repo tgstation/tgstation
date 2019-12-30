@@ -43811,11 +43811,6 @@
 /obj/machinery/camera/autoname,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
-"bUP" = (
-/obj/machinery/power/smes,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/solars/port/aft)
 "bUQ" = (
 /obj/item/cigbutt,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -44258,7 +44253,6 @@
 /turf/open/floor/engine/co2,
 /area/engine/atmos)
 "bVQ" = (
-/obj/structure/cable,
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
@@ -44995,6 +44989,10 @@
 "bXu" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	icon_state = "term";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "bXv" = (
@@ -45002,6 +45000,7 @@
 	pixel_x = 32
 	},
 /obj/structure/cable,
+/obj/machinery/power/smes,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -74627,9 +74626,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ntG" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -91603,7 +91599,7 @@ cga
 nPC
 uqB
 bTp
-bUP
+vhx
 ntG
 bXv
 bYC
