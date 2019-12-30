@@ -10521,8 +10521,21 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
 "aCN" = (
-/obj/structure/closet/crate/rcd,
-/obj/effect/turf_decal/bot,
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 8
+	},
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_y = 4
+	},
+/obj/structure/rack,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
 "aCO" = (
