@@ -1,6 +1,11 @@
 #define MINOR_INSANITY_PEN 5
 #define MAJOR_INSANITY_PEN 10
 
+#define PSYCH_BREAK_EXTREME 100
+#define PSYCH_BREAK 50 to 99
+#define PSYCH_CURE_EXTREME -100
+#define PSYCH_CURE -50 to -99
+
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = SANITY_NEUTRAL //Current sanity
@@ -34,6 +39,7 @@
 	RegisterSignal(parent, COMSIG_ADD_MENTAL, .proc/AddDisorder)
 	RegisterSignal(parent, COMSIG_FORCE_ROLL_CURE_MENTAL, .proc/ForceCureRandomDisorder)
 	RegisterSignal(parent, COMSIG_FORCE_ROLL_ADD_MENTAL, .proc/ForceGainRandomDisorder)
+	RegisterSignal(parent, COMSIG_ADMIN_CURE_MENTAL, .proc/CureAllDisorders)
 
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
@@ -211,21 +217,12 @@
 		Secondly we take mood whcih is a value between 15 and -20 so we add 2.5 to it getting a value between 17.5 and -17.5.
 		We add both of them up and divide by ten to get a value between 9.25 and -9.25. We round it so we get an integer value
 	*/
-
 	adjustPsychInstability(psych_adjustment)
-	CheckPsychInstability()
 	HandleNutrition()
-
-
-
-#define PSYCH_BREAK_EXTREME 100
-#define PSYCH_BREAK 50 to 99
-
-#define PSYCH_CURE_EXTREME -100
-#define PSYCH_CURE -50 to -99
 
 /datum/component/mood/proc/adjustPsychInstability(amount)
 	psych_instab = CLAMP(psych_instab - amount,  PSYCH_CURE_EXTREME, PSYCH_BREAK_EXTREME)
+	CheckPsychInstability()
 
 
 /datum/component/mood/proc/CheckPsychInstability()
@@ -241,6 +238,13 @@
 
 		if(PSYCH_CURE_EXTREME)
 			ForceCureRandomDisorder()
+
+/datum/component/mood/proc/CureAllDisorders()
+	var/datum/brain_trauma/psychological/CD
+	var/mob/living/carbon/human/owner = parent
+	for(CD in aquired_disorders)
+		owner.cure_trauma_type(CD, TRAUMA_RESILIENCE_ABSOLUTE)
+		aquired_disorders -= CD
 
 /datum/component/mood/proc/AddDisorder(datum/brain_trauma/psychological/chosen_disorder)
 	var/datum/brain_trauma/psychological/CD = chosen_disorder

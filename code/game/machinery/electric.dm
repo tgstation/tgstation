@@ -7,7 +7,7 @@
 	density = FALSE
 	can_buckle = TRUE
 	buckle_lying = 90
-	circuit = /obj/item/circuitboard/machine/stasis
+	circuit = /obj/item/circuitboard/machine/electric
 	idle_power_usage = 40
 	active_power_usage = 340
 	fair_market_price = 10

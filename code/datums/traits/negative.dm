@@ -401,8 +401,6 @@
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
 	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
-/datum/quirk/social_anxiety
-
 /datum/quirk/junkie
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
@@ -512,3 +510,28 @@
 	gain_text = "<span class='danger'>There's a lot on your mind right now.</span>"
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
+
+/datum/quirk/depression
+	name = "Depression"
+	desc = "You sometimes just hate life."
+	value = -1
+	gain_text = ""
+	lose_text = ""
+	medical_record_text = ""
+	mood_quirk = TRUE
+
+/datum/quirk/depression/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(/datum/brain_trauma/psychological/depression , TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/social_anxiety
+	name = "Social Anxiety"
+	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
+	value = -1
+	gain_text = ""
+	lose_text = ""
+	medical_record_text = ""
+
+/datum/quirk/social_anxiety/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.gain_trauma(/datum/brain_trauma/psychological/social_anxiety , TRAUMA_RESILIENCE_ABSOLUTE)

@@ -1,7 +1,5 @@
-/*TODO:
-	PTSD
-*/
 /datum/brain_trauma/psychological
+	random_gain = FALSE
 	var/cure_points = 1000
 	var/current_points = 0
 	var/fearless_mod = 1
@@ -46,11 +44,11 @@
 	..()
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-	if(prob(5)) //this is much much worse then before!
+	if(prob(0.1)) //this is much much worse then before!
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "depression", /datum/mood_event/depression)
 
 
-/datum/brain_trauma/psychological/social_anxiety
+/datum/brain_trauma/psychological/social_anxiety //ported from quirks. The quirk gives you this at round start now
 	name = "Social Anxiety"
 	desc = "Talking to people is very difficult for the subject ,often stuttering or even locking up."
 	gain_text = "<span class='danger'>You start worrying about what you're saying.</span>"
@@ -128,7 +126,7 @@
 	name = "Paranoid schizophrenia"
 	desc = "Mental disorder that is characterized by auditory and visual hallucinations"
 	gain_text = "<span class='danger'>You hear whispers behind you.</span>"
-	lose_text = "<span class='notice'>Voices stop responding.</span>"
+	lose_text = "<span class='notice'>The voices fall silent.</span>"
 	scan_desc = "Electric imaging suggests a mental disorder is present"
 	cure_points = 1300
 	lithiated_mod = 5
@@ -138,13 +136,11 @@
 
 /datum/brain_trauma/psychological/paranoid/on_life()
 	..()
-	owner.hallucination += 75 //Schizophernia is supposed to be fucking hard. This ensures it
+	owner.hallucination += 50//Schizophernia is supposed to be fucking hard. This ensures it
 	owner.confused += 2
 	if(prob(0.5))
 		to_chat(owner, "<span class='danger'>You feel faint.</span>")
 		owner.Unconscious(80)
-
-
 
 /datum/brain_trauma/psychological/paranoid/on_gain()
 	ADD_TRAIT(owner, TRAIT_PARANOID, PSYCH_TRAIT)
@@ -162,7 +158,7 @@
 
 /datum/brain_trauma/psychological/delusional
 	name = "Delusional schizophrenia"
-	desc = "Mental disorder that is characterized by uncontrolable actions , and delusional thoughts"
+	desc = "Mental disorder that is characterized by uncontrolable actions, and delusional thoughts"
 	gain_text = "<span class='danger'>You feel your body not responding</span>"
 	lose_text = "<span class='notice'>You feel free once again</span>"
 	scan_desc = "Electric imaging suggests a mental disorder is present"
@@ -226,10 +222,10 @@
 	fearless_mod = -1
 	relaxed_mod = 1
 
-	var/list/obj/item/possible_items = list(/obj/item/toy = "<span class='boldwarning'>You feel a great need to collect toys of all kind!</span>",
-	/obj/item/stamp = "<span class='boldwarning'>You feel a great need to collect stamps!</span>",
-	/obj/item/shard = "<span class='boldwarning'>You feel a great need to collect stamps!</span>",
-	/obj/item/reagent_containers/food/drinks/bottle = "<span class='boldwarning'>You feel a great need to collect bottles of all kind!</span>")
+	var/list/obj/item/possible_items = list(/obj/item/toy,
+	/obj/item/stamp,
+	/obj/item/shard,
+	/obj/item/reagent_containers/food/drinks/bottle)
 	var/list/obj/item/needed_item
 	var/greed_level = 0
 
@@ -256,7 +252,15 @@
 	addtimer(CALLBACK(src, .proc/increase_greed), 5 MINUTES)
 
 /datum/brain_trauma/psychological/collector/proc/announce_item()
-	to_chat(owner, "<span class='boldwarning'>You feel a great need to collect toys of all kind!</span>")
+	switch(needed_item)
+		if(/obj/item/toy)
+			to_chat(owner,"<span class='boldwarning'>You feel a great need to collect toys of all kind!</span>")
+		if(/obj/item/stamp)
+			to_chat(owner,"<span class='boldwarning'>You feel a great need to collect stamps!</span>")
+		if(/obj/item/shard)
+			to_chat(owner,"<span class='boldwarning'>You feel a great need to collect shards!</span>")
+		if(/obj/item/reagent_containers/food/drinks/bottle)
+			to_chat(owner,"<span class='boldwarning'>You feel a great need to collect bottles of all kind!</span>")
 
 /datum/brain_trauma/psychological/collector/on_gain()
 	needed_item = pick(possible_items)

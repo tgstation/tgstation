@@ -1003,13 +1003,18 @@
 	color = "#c5ddbd"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	overdose_threshold = 10
+	var/injested
 
 /datum/reagent/medicine/lithium_carbonate/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(2, 0)
+	..()
+	if(!injested)
+		A.reagents.remove_reagent(src, 2)
+		return
+	M.adjustToxLoss(5, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER,REM, 50)
 	SEND_SIGNAL(M,COMSIG_CHANGE_PSYCH_INSTAB,5)
-	SEND_SIGNAL(M,COMSIG_SET_SANITY,SANITY_GREAT)
-	..()
+	SEND_SIGNAL(M,COMSIG_SET_SANITY,2,SANITY_GREAT)
+
 
 /datum/reagent/medicine/lithium_carbonate/on_mob_add(mob/living/carbon/M)
 	..()
@@ -1234,7 +1239,7 @@
 	M.dizziness = max(0, M.dizziness-6)
 	M.confused = max(0, M.confused-6)
 	M.disgust = max(0, M.disgust-6)
-	SEND_SIGNAL(M,COMSIG_SET_SANITY,SANITY_NEUTRAL)
+	SEND_SIGNAL(M,COMSIG_SET_SANITY,2,SANITY_NEUTRAL)
 	..()
 	. = 1
 
@@ -1262,7 +1267,7 @@
 
 /datum/reagent/medicine/alprazolam/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = max(0, M.jitteriness-6)
-	SEND_SIGNAL(M,COMSIG_SET_SANITY,SANITY_NEUTRAL) // set minimum to prevent unwanted spiking over neutral
+	SEND_SIGNAL(M,COMSIG_SET_SANITY,2,SANITY_NEUTRAL)
 	M.remove_status_effect(STATUS_EFFECT_SPASMS)
 	..()
 	. = 1

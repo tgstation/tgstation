@@ -371,6 +371,7 @@
 #define COMSIG_FORCE_ROLL_CURE_MENTAL "force_roll_cure_mental" // cures a random mental disorder
 #define COMSIG_ADD_MENTAL "add_mental" //adds a given disorder
 #define COMSIG_CURE_MENTAL "cure_mental" // cures a given disorder
+#define COMSIG_ADMIN_CURE_MENTAL "admin_cure_mental" // cures a given disorder
 
 
 //NTnet

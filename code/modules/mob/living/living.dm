@@ -596,6 +596,7 @@
 	jitteriness = 0
 	update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
+	SEND_SIGNAL(src,COMSIG_ADMIN_CURE_MENTAL)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
@@ -845,7 +846,7 @@
 		who.show_inv(src)
 	else
 		src << browse(null,"window=mob[REF(who)]")
-	
+
 	who.update_equipment_speed_mods() // Updates speed in case stripped speed affecting item
 
 // The src mob is trying to place an item on someone
