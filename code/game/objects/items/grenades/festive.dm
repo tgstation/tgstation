@@ -110,6 +110,8 @@ obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volum
 
 /obj/item/grenade/firecracker/prime()
 	update_mob()
-	explosion(src.loc,-1,-1,2)
+	var/explosion_loc = get_turf(src)
 	qdel(src)
+	explosion(explosion_loc,-1,-1,2)
+
 

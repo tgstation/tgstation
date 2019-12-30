@@ -331,10 +331,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 				openturfs += thing
 
 	var/turf/fireworks_turf = get_turf(pick(table))
-	new /obj/item/storage/box/fireworks(fireworks_turf)
 	var/obj/item/storage/box/matches/matchbox = new(fireworks_turf)
 	matchbox.pixel_y += 8
 	matchbox.pixel_x -= 3
+	new /obj/item/storage/box/fireworks/dangerous(fireworks_turf) //dangerous version for extra holiday memes.
 
 //lets mappers place notes on airlocks with custom info or a pre-made note from a path
 /obj/effect/mapping_helpers/airlock_note_placer
