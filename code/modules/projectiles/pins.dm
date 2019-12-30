@@ -29,7 +29,7 @@
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
-					old_pin.forceMove(drop_location(G))
+					old_pin.forceMove(G.drop_location())
 				old_pin.gun_remove(user)
 
 			if(!G.pin)
