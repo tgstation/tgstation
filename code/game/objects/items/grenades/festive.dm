@@ -40,11 +40,14 @@
 /obj/item/sparkler/process()
 	burntime--
 	if(burntime < 1)
-		STOP_PROCESSING(SSobj, src)
 		new /obj/item/stack/rods(drop_location())
 		qdel(src)
 	else
 		open_flame(heat)
+
+/obj/item/sparkler/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	..()
 
 /obj/item/sparkler/ignition_effect(atom/A, mob/user)
 	. = "<span class='notice'>[user] gracefully lights [A] with [src].</span>"
@@ -107,5 +110,6 @@ obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volum
 
 /obj/item/grenade/firecracker/prime()
 	update_mob()
-	explosion(src.loc,-1,-1,2)
 	qdel(src)
+	explosion(src.loc,-1,-1,2)
+
