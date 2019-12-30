@@ -286,7 +286,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/CollectMaps()
 	saved_maps[2] = saved_maps[1]
 	saved_maps[1] = SSmapping.config.map_name
-	var/json_file = file("data/RecentMaps.json")
+	var/json_file = file(FILE_RECENT_MAPS)
 	var/list/file_data = list()
 	file_data["data"] = saved_maps
 	fdel(json_file)
