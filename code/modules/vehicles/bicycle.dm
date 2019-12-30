@@ -11,7 +11,7 @@
 	D.vehicle_move_delay = 0
 
 
-/obj/vehicle/ridden/bicycle/tesla_act() // :::^^^)))
+/obj/vehicle/ridden/bicycle/zap_act() // :::^^^)))
 	name = "fried bicycle"
 	desc = "Well spent."
 	color = rgb(63, 23, 4)

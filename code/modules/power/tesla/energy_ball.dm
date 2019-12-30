@@ -168,7 +168,7 @@
 	var/mob/living/carbon/C = A
 	C.dust()
 
-/proc/tesla_zap(atom/source, zap_range = 3, power, tesla_flags = TESLA_DEFAULT_FLAGS, list/shocked_targets)
+/proc/tesla_zap(atom/source, zap_range = 3, power, zap_flags = ZAP_DEFAULT_FLAGS, list/shocked_targets)
 	. = source.dir
 	if(power < 1000)
 		return
@@ -206,7 +206,7 @@
 										/obj/structure/frame/machine))
 
 	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
-		if(!(tesla_flags & TESLA_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
+		if(!(zap_flags & ZAP_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
 			continue
 
 		if(istype(A, /obj/machinery/power/tesla_coil))
@@ -274,7 +274,7 @@
 				closest_structure = S
 				closest_atom = A
 				closest_dist = dist
-				
+
 		else if(closest_structure)
 			continue
 
@@ -282,7 +282,7 @@
 	if(closest_atom)
 		//common stuff
 		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5, maxdistance = INFINITY)
-		if(!(tesla_flags & TESLA_ALLOW_DUPLICATES))
+		if(!(zap_flags & ZAP_ALLOW_DUPLICATES))
 			LAZYSET(shocked_targets, closest_atom, TRUE)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
@@ -290,27 +290,27 @@
 
 	//per type stuff:
 	if(!QDELETED(closest_tesla_coil))
-		closest_tesla_coil.tesla_act(power, tesla_flags, shocked_targets)
+		closest_tesla_coil.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_grounding_rod))
-		closest_grounding_rod.tesla_act(power, tesla_flags, shocked_targets)
+		closest_grounding_rod.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_mob))
-		var/shock_damage = (tesla_flags & TESLA_MOB_DAMAGE)? (min(round(power/600), 90) + rand(-5, 5)) : 0
-		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((tesla_flags & TESLA_MOB_STUN) ? NONE : SHOCK_NOSTUN))
+		var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE)? (min(round(power/600), 90) + rand(-5, 5)) : 0
+		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((zap_flags & ZAP_MOB_STUN) ? NONE : SHOCK_NOSTUN))
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
-			if((tesla_flags & TESLA_MOB_STUN) && (tesla_flags & TESLA_MOB_DAMAGE))
+			if((zap_flags & ZAP_MOB_STUN) && (zap_flags & ZAP_MOB_DAMAGE))
 				S.emp_act(EMP_LIGHT)
-			tesla_zap(S, 7, power / 1.5, tesla_flags, shocked_targets) // metallic folks bounce it further
+			tesla_zap(S, 7, power / 1.5, zap_flags, shocked_targets) // metallic folks bounce it further
 		else
-			tesla_zap(closest_mob, 5, power / 1.5, tesla_flags, shocked_targets)
+			tesla_zap(closest_mob, 5, power / 1.5, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_machine))
-		closest_machine.tesla_act(power, tesla_flags, shocked_targets)
+		closest_machine.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_blob))
-		closest_blob.tesla_act(power, tesla_flags, shocked_targets)
+		closest_blob.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_structure))
-		closest_structure.tesla_act(power, tesla_flags, shocked_targets)
+		closest_structure.zap_act(power, zap_flags, shocked_targets)
