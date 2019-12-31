@@ -1,4 +1,0 @@
-author: "iain0"
-delete-after: True
-changes: 
-  - bugfix: "Alarm Monitoring program changed to avoid always-on unclearable fire alarms"
