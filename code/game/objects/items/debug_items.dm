@@ -32,7 +32,7 @@
 	item_state = "hypertool"
 	toolspeed = 0.1
 
-/obj/item/surgicaldrill/advanced/examine()
+/obj/item/debug/omnitool/examine()
 	. = ..()
 	. += " The mode is: [tool_behaviour]"
 
