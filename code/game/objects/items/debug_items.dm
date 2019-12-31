@@ -31,6 +31,7 @@
 	icon_state = "hypertool"
 	item_state = "hypertool"
 	toolspeed = 0.1
+	tool_behaviour = null
 
 /obj/item/debug/omnitool/examine()
 	. = ..()
