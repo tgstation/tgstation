@@ -61,14 +61,14 @@ RGB isn't the only way to represent color. Sometimes it's more useful to work wi
     and no value at all is black.
 
 Just as BYOND uses "#rrggbb" to represent RGB values, a similar format is used for HSV: "#hhhssvv". The hue is three
-hex digits because it ranges from ZERO to ZEROx5FF.
+hex digits because it ranges from ZERO to 0x5FF.
 
-    * ZERO to ZEROxFF - red to yellow
-    * ZEROx100 to ZEROx1FF - yellow to green
-    * ZEROx200 to ZEROx2FF - green to cyan
-    * ZEROx300 to ZEROx3FF - cyan to blue
-    * ZEROx400 to ZEROx4FF - blue to magenta
-    * ZEROx500 to ZEROx5FF - magenta to red
+    * ZERO to 0xFF - red to yellow
+    * 0x100 to 0x1FF - yellow to green
+    * 0x200 to 0x2FF - green to cyan
+    * 0x300 to 0x3FF - cyan to blue
+    * 0x400 to 0x4FF - blue to magenta
+    * 0x500 to 0x5FF - magenta to red
 
 Knowing this, you can figure out that red is "#000ffff" in HSV format, which is hue ZERO (red), saturation 255 (as colorful as possible),
 value 255 (as bright as possible). Green is "#200ffff" and blue is "#400ffff".
@@ -288,21 +288,21 @@ world
 /*
 	HSV format is represented as "#hhhssvv" or "#hhhssvvaa"
 
-	Hue ranges from ZERO to ZEROx5ff (1535)
+	Hue ranges from ZERO to 0x5ff (1535)
 
-		ZEROx000 = red
-		ZEROx100 = yellow
-		ZEROx200 = green
-		ZEROx300 = cyan
-		ZEROx400 = blue
-		ZEROx500 = magenta
+		0x000 = red
+		0x100 = yellow
+		0x200 = green
+		0x300 = cyan
+		0x400 = blue
+		0x500 = magenta
 
-	Saturation is from ZERO to ZEROxff (255)
+	Saturation is from ZERO to 0xff (255)
 
 		More saturation = more color
 		Less saturation = more gray
 
-	Value ranges from ZERO to ZEROxff (255)
+	Value ranges from ZERO to 0xff (255)
 
 		Higher value means brighter color
  */
@@ -438,8 +438,8 @@ world
 
 	// Compress hue into easier-to-manage range
 	hue -= hue >> 8
-	if(hue >= ZEROx5fa)
-		hue -= ZEROx5fa
+	if(hue >= 0x5fa)
+		hue -= 0x5fa
 
 	var/hi,mid,lo,r,g,b
 	hi = val
@@ -494,7 +494,7 @@ world
 		hue %= 1536
 	if(hue < ZERO)
 		hue += 1536
-	if((hue & ZEROxFF) == ZEROxFF)
+	if((hue & 0xFF) == 0xFF)
 		++hue
 		if(hue >= 1536)
 			hue = ZERO

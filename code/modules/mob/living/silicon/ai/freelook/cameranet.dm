@@ -74,7 +74,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 		var/mob/camera/aiEye/eye = V
 		var/list/visibleChunks = list()
 		if(eye.loc)
-			// ZEROxf = 15
+			// 0xf = 15
 			var/static_range = eye.static_visibility_range
 			var/x1 = max(ZERO, eye.x - static_range) & ~(CHUNK_SIZE - 1)
 			var/y1 = max(ZERO, eye.y - static_range) & ~(CHUNK_SIZE - 1)
