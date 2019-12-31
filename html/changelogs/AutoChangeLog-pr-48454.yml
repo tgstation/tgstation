@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed firing pins not dropping while being replaced when the gun containing it is held by a mob."

@@ -1,4 +1,0 @@
-author: "JJRcop"
-delete-after: True
-changes: 
-  - bugfix: "Fixed vending machines showing premium products as free to workers of their department."

@@ -1,4 +1,5 @@
 #define FILE_ANTAG_REP "[CONFIG_GET(string/data_directory)]/AntagReputation.json"
+#define FILE_RECENT_MAPS "[CONFIG_GET(string/data_directory)]/RecentMaps.json"
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -8,6 +9,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
+	var/list/saved_maps = list(1,2)
 	var/list/saved_trophies = list()
 	var/list/antag_rep = list()
 	var/list/antag_rep_change = list()
@@ -20,6 +22,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadChiselMessages()
 	LoadTrophies()
 	LoadRecentModes()
+	LoadRecentMaps()
 	LoadPhotoPersistence()
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
@@ -106,6 +109,15 @@ SUBSYSTEM_DEF(persistence)
 		return
 	saved_modes = json["data"]
 
+/datum/controller/subsystem/persistence/proc/LoadRecentMaps()
+	var/map_sav = FILE_RECENT_MAPS
+	if(!fexists(FILE_RECENT_MAPS))
+		return
+	var/list/json = json_decode(file2text(map_sav))
+	if(!json)
+		return
+	saved_maps = json["data"]
+
 /datum/controller/subsystem/persistence/proc/LoadAntagReputation()
 	var/json = file2text(FILE_ANTAG_REP)
 	if(!json)
@@ -146,6 +158,7 @@ SUBSYSTEM_DEF(persistence)
 	CollectChiselMessages()
 	CollectTrophies()
 	CollectRoundtype()
+	CollectMaps()
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
@@ -269,6 +282,15 @@ SUBSYSTEM_DEF(persistence)
 	var/json_file = file("[CONFIG_GET(string/data_directory)]/RecentModes.json")
 	var/list/file_data = list()
 	file_data["data"] = saved_modes
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+/datum/controller/subsystem/persistence/proc/CollectMaps()
+	saved_maps[2] = saved_maps[1]
+	saved_maps[1] = SSmapping.config.map_name
+	var/json_file = file(FILE_RECENT_MAPS)
+	var/list/file_data = list()
+	file_data["data"] = saved_maps
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 

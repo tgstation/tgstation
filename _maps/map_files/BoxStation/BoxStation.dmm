@@ -5166,6 +5166,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
+"akV" = (
+/obj/effect/mapping_helpers/iannewyear,
+/turf/open/floor/carpet,
+/area/crew_quarters/heads/hop)
 "akW" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/security/glass{
@@ -26528,9 +26532,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"bqz" = (
-/turf/open/floor/carpet,
-/area/crew_quarters/heads/hop)
 "bqA" = (
 /obj/machinery/computer/card{
 	dir = 1
@@ -79035,7 +79036,7 @@ bkX
 bmo
 bnO
 bpb
-bqz
+akV
 bqq
 brS
 bsY
