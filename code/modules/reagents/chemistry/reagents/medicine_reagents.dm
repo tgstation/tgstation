@@ -1003,7 +1003,7 @@
 	color = "#c5ddbd"
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	overdose_threshold = 10
-	var/injested
+	var/injested = FALSE
 
 /datum/reagent/medicine/lithium_carbonate/on_mob_life(mob/living/carbon/M)
 	..()
@@ -1036,7 +1036,7 @@
 
 /datum/reagent/medicine/lithium_carbonate/on_transfer(atom/A, method=INGEST, trans_volume)
 	if(method != INGEST || !iscarbon(A))
-		A.reagents.remove_reagent(src, volume)
+		injested = TRUE
 	..()
 
 
