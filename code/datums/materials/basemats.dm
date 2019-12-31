@@ -142,6 +142,17 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	qdel(source.GetComponent(/datum/component/slippery))
 	qdel(source.GetComponent(/datum/component/squeak))
 
+///Quiet and/or hard to see.
+/datum/material/tranquillite
+	name = "tranquillite"
+	id = "tranquillite"
+	desc = "Material with quiet and clear properties"
+	color = "#ffffff" //white
+	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/mineral/tranquillite
+	value_per_unit = 0.5
+	beauty_modifier = 0.5
+	armor_modifiers = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 ///Mediocre force increase
 /datum/material/titanium

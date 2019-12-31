@@ -187,6 +187,16 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 	mine_experience = 15
 
+/obj/item/stack/ore/tranquillite
+	name = "tranquillite ore"
+	icon_state = "Tranquillite ore"
+	item_state = "Tranquillite ore"
+	singular_name = "tranquillite ore chunk"
+	points = 60
+	custom_materials = list(/datum/material/tranquillite=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/mineral/tranquillite
+	mine_experience = 15
+
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"

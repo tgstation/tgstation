@@ -26,6 +26,7 @@
 		/datum/material/titanium,
 		/datum/material/diamond,
 		/datum/material/bananium,
+		/datum/material/tranquillite,
 		/datum/material/adamantine,
 		/datum/material/mythril,
 		/datum/material/plastic,
