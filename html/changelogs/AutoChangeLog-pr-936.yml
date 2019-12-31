@@ -1,0 +1,5 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - rscadd: "Added sparklers and firecrackers to the HoP's office during new years eve."
+  - rscadd: "Ian can now wear the festive hat, one is provided to him at the end of the year."
