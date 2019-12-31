@@ -320,7 +320,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	for(var/thing in a.contents)
 		if(istype(thing, /obj/structure/table/reinforced))
 			table += thing
-		if(isopenturf(thing))
+		else if(isopenturf(thing))
 			if(locate(/obj/structure/bed/dogbed/ian) in thing)
 				new /obj/item/clothing/head/festive(thing)
 				var/obj/item/reagent_containers/food/drinks/bottle/champagne/iandrink = new(thing)
@@ -369,5 +369,4 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		qdel(src)
 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
 	qdel(src)
-
 
