@@ -45,7 +45,7 @@
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
 	if(prob(0.1)) //this is much much worse then before!
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "depression", /datum/mood_event/depression)
+		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "depression_moderate", /datum/mood_event/depression_moderate)
 
 
 /datum/brain_trauma/psychological/social_anxiety //ported from quirks. The quirk gives you this at round start now

@@ -1008,7 +1008,7 @@
 /datum/reagent/medicine/lithium_carbonate/on_mob_life(mob/living/carbon/M)
 	..()
 	if(!injested)
-		A.reagents.remove_reagent(src, 2)
+		M.reagents.remove_reagent(src, 2)
 		return
 	M.adjustToxLoss(5, 0)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER,REM, 50)
