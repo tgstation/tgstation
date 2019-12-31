@@ -37,6 +37,7 @@ All foods are distributed among various categories. Use common sense.
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	obj_flags = UNIQUE_RENAME
 	grind_results = list() //To let them be ground up to transfer their reagents
+	consume_sound = 'sound/items/eatfood.ogg'
 	var/bitesize = 2
 	var/bitecount = 0
 	var/trash = null
@@ -140,7 +141,7 @@ All foods are distributed among various categories. Use common sense.
 		if(reagents)								//Handle ingestion of the reagent.
 			if(M.satiety > -200)
 				M.satiety -= junkiness
-			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+			playsound(M.loc,consume_sound, rand(10,50), TRUE)
 			if(reagents.total_volume)
 				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)

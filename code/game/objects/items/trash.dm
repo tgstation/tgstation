@@ -31,6 +31,10 @@
 	name = "cheesie honkers"
 	icon_state = "cheesie_honkers"
 
+/obj/item/trash/quietcrunch
+	name = "quiet crunch"
+	icon_state = "popcorn"
+
 /obj/item/trash/chips
 	name = "chips"
 	icon_state = "chips"

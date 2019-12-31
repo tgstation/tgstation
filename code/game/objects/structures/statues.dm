@@ -255,6 +255,18 @@
 		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 		addtimer(VARSET_CALLBACK(src, spam_flag, FALSE), 2 SECONDS)
 
+////////////////////////tranquillite///////////////////////////////////////
+
+/obj/structure/statue/tranquillite
+	max_integrity = 300
+	material_drop_type = /obj/item/stack/sheet/mineral/tranquillite
+	impressiveness = 50
+	desc = "A tranquillite statue with a small engraving... written entirely in emojis?"
+
+/obj/structure/statue/tranquillite/mime
+	name = "statue of a mime"
+	icon_state = "mime"
+
 /////////////////////sandstone/////////////////////////////////////////
 
 /obj/structure/statue/sandstone

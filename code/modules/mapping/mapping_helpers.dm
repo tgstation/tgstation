@@ -335,4 +335,40 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
 	qdel(src)
 
+/obj/effect/mapping_helpers/randomizer //used to fill a area with weighted random open turf types. A more general-use version of .../mineral/random
+	name = "random turf generator"
+	desc = "You shouldn't be seeing this."
+	var/set_gas_mix = FALSE //if TRUE, sets the gas mix of the turf to gas_mix. If false, use the chosen turf's default
+	var/gas_mix = AIRLESS_ATMOS
+	var/set_baseturfs = FALSE //if TRUE, sets the base turfs of this tile to new_baseturfs. If FALSE, uses this turf's baseturfs.
+	var/random_baseturfs = FALSE //if TRUE, and a baseturf isn't set in possible_turfs already, uses new_baseturf as a weighted random list for random baseturfs. Use sub-lists if you want to weighted randomly select between lists of baseturfs. If FALSE, uses new_baseturfs as the list of the baseturfs. Note that the formatting must match that used in possible_turfs if set to TRUE!
+	var/list/new_baseturfs = list() //leave blank if you don't want to set baseturfs.
+	var/list/possible_turfs = list(/turf/open/floor/engine/plasma = 50, /turf/open/floor/engine/o2 = 50) // Don't use this without making a appropriate subtype.
 
+/obj/effect/mapping_helpers/randomizer/Initialize()
+	possible_turfs = typelist("possible_turfs", possible_turfs)
+	var/path = pickweight(possible_turfs)
+	var/turf/T = null
+	if(islist(path)) //the possible_turfs entry is a list, so if its properly formatted use the baseturf associated with the picked turf
+		T = T.ChangeTurf(path[1],path[2],CHANGETURF_IGNORE_AIR)
+	else if(random_baseturfs) //Weighted randomly pick a baseturf
+		possible_turfs = typelist("new_baseturfs", possible_turfs)
+		var/bturfs = pickweight(new_baseturfs)
+		T = T.ChangeTurf(path,bturfs,CHANGETURF_IGNORE_AIR)
+	else if(new_baseturfs.len)
+		T = T.ChangeTurf(path,new_baseturfs,CHANGETURF_IGNORE_AIR) //use the non-blank new_baseturfs
+	else
+		T = T.ChangeTurf(path,null,CHANGETURF_IGNORE_AIR) //new_baseturfs is blank, don't change baseturfs
+
+	if(T && isopenturf(T))
+		var/turf/open/M = T
+		if(set_gas_mix)
+			M.initial_gas_mix = gas_mix
+		src = M
+		M.levelupdate()
+	else if(T && isclosedturf(T))
+		var/turf/closed/M = T
+		src = M
+		M.levelupdate()
+	. = ..()
+	

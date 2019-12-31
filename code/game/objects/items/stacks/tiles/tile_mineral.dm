@@ -58,6 +58,22 @@
 	mineralType = "bananium"
 	custom_materials = list(/datum/material/bananium=500)
 
+/obj/item/stack/tile/mineral/tranquillite
+	name = "tranquillite tile"
+	singular_name = "tranquillite floor tile"
+	desc = "A tile made out of tranquillite. Perfect for libraries."
+	icon_state = "tile_tranquillite"
+	item_state = "tile-tranquillite"
+	turf_type = /turf/open/floor/mineral/tranquillite
+	mineralType = "tranquillite"
+	custom_materials = list(/datum/material/tranquillite=500)
+
+/obj/item/stack/tile/mineral/tranquillite/transparent
+	name = "transparent tranquillite tile"
+	singular_name = "transparent tranquillite floor tile"
+	desc = "A tile made out of tranquillite. It also exhibits the transparent properties of tranquillite."
+	turf_type = /turf/open/floor/mineral/tranquillite/transparent
+
 /obj/item/stack/tile/mineral/abductor
 	name = "alien floor tile"
 	singular_name = "alien floor tile"

@@ -231,6 +231,10 @@
 		/turf/closed/mineral/silver/volcanic = 20, /turf/closed/mineral/plasma/volcanic = 30, /turf/closed/mineral/bscrystal/volcanic = 1, /turf/closed/mineral/gibtonite/volcanic = 2,
 		/turf/closed/mineral/iron/volcanic = 95)
 
+/turf/closed/mineral/random/tranquillite
+	icon_state = "rock_tranquillitechance"
+	mineralChance = 30
+	mineralSpawnChanceList = list(/turf/closed/mineral/tranquillite = 100, /turf/closed/mineral/uranium = 35, /turf/closed/mineral/diamond = 30, /turf/closed/mineral/gold = 45, /turf/closed/mineral/titanium = 45, /turf/closed/mineral/silver = 50, /turf/closed/mineral/plasma = 50, /turf/closed/mineral/bscrystal = 20)
 
 
 /turf/closed/mineral/iron
@@ -365,6 +369,13 @@
 	spreadChance = 0
 	spread = 0
 	scan_state = "rock_Bananium"
+
+/turf/closed/mineral/tranquillite
+	mineralType = /obj/item/stack/ore/tranquillite
+	mineralAmt = 3
+	spreadChance = 0
+	spread = 0
+	scan_state = "rock_Tranquillite"
 
 
 /turf/closed/mineral/bscrystal

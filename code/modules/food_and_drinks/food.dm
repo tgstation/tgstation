@@ -15,6 +15,7 @@
 	var/foodtype = NONE
 	var/last_check_time
 	var/in_container = FALSE //currently just stops "was bitten X times!" messages on canned food
+	var/consume_sound = null //what sound it makes for each bite/drink
 
 /obj/item/reagent_containers/food/Initialize(mapload)
 	. = ..()

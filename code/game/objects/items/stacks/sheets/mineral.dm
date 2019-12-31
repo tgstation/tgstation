@@ -247,7 +247,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	. = ..()
 	. += GLOB.silver_recipes
 
-/* 
+/*
  * Clown
  */
 /obj/item/stack/sheet/mineral/bananium
@@ -272,8 +272,34 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	. = ..()
 	. += GLOB.bananium_recipes
 
-/* 
- * Titanium 
+/*
+ * Mime
+ */
+/obj/item/stack/sheet/mineral/tranquillite
+	name = "tranquillite"
+	icon_state = "sheet-tranquillite"
+	item_state = "sheet-tranquillite"
+	singular_name = "tranquillite sheet"
+	sheettype = "tranquillite"
+	custom_materials = list(/datum/material/tranquillite=MINERAL_MATERIAL_AMOUNT)
+	novariants = TRUE
+	grind_results = list(/datum/reagent/consumable/banana = 20)
+	point_value = 50
+	merge_type = /obj/item/stack/sheet/mineral/tranquillite
+	material_type = /datum/material/tranquillite
+
+GLOBAL_LIST_INIT(tranquillite_recipes, list ( \
+	new/datum/stack_recipe("sound-dampening tranquillite tile", /obj/item/stack/tile/mineral/tranquillite, 1, 4, 20), \
+	new/datum/stack_recipe("transparent tranquillite tile", /obj/item/stack/tile/mineral/tranquillite/transparent, 1, 4, 20), \
+	new/datum/stack_recipe("Mime Statue", /obj/structure/statue/tranquillite/mime, 5, one_per_turf = 1, on_floor = 1), \
+	))
+
+/obj/item/stack/sheet/mineral/tranquillite/get_main_recipes()
+	. = ..()
+	. += GLOB.tranquillite_recipes
+
+/*
+ * Titanium
  */
 /obj/item/stack/sheet/mineral/titanium
 	name = "titanium"
@@ -333,7 +359,7 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 /*
  * Snow
  */
- 
+
 /obj/item/stack/sheet/mineral/snow
 	name = "snow"
 	icon_state = "sheet-snow"

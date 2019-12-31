@@ -255,6 +255,19 @@
 	walltype = /turf/closed/wall/mineral/bananium
 	canSmoothWith = list(/obj/structure/falsewall/bananium, /turf/closed/wall/mineral/bananium)
 
+/obj/structure/falsewall/tranquillite
+	name = "tranquillite wall"
+	desc = "A wall with tranquillite plating. It's clearer than glass!"
+	opacity = 0
+	alpha = 0
+	mineral = /obj/item/stack/sheet/mineral/tranquillite
+	walltype = /turf/closed/wall/mineral/tranquillite
+	canSmoothWith = null
+
+/obj/structure/falsewall/tranquillite/toggle_open()
+	..()
+	if(!QDELETED(src))
+		set_opacity(0)
 
 /obj/structure/falsewall/sandstone
 	name = "sandstone wall"

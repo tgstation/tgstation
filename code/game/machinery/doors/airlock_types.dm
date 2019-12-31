@@ -256,6 +256,27 @@
 	opacity = 0
 	glass = TRUE
 
+/obj/machinery/door/airlock/tranquillite
+	name = "tranquillite airlock"
+	desc = "Perfect silence."
+	icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_tranquillite
+	doorOpen = null
+	opacity = 0
+
+/obj/machinery/door/airlock/tranquillite/Initialize()
+	. = ..()
+	doorfade()
+
+/obj/machinery/door/airlock/tranquillite/proc/doorfade()
+	if(src.alpha)
+		src.alpha = max(0, src.alpha - 5)
+		addtimer(CALLBACK(src, .proc/doorfade),10)
+
+/obj/machinery/door/airlock/tranquillite/glass
+	glass = TRUE
+	desc = "Perfect silence. Somehow the glass just makes it more visible."
+
 /obj/machinery/door/airlock/sandstone
 	name = "sandstone airlock"
 	icon = 'icons/obj/doors/airlocks/station/sandstone.dmi'

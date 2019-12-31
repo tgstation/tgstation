@@ -258,6 +258,10 @@
 	range = MECHA_MELEE|MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
+	var/floor_type = /turf/open/floor/plating
+	var/wall_type = /turf/closed/wall
+	var/airlock_type = /obj/machinery/door/airlock
+	var/quiet = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/rcd/Initialize()
 	. = ..()
@@ -275,7 +279,8 @@
 		target = get_turf(target)
 	if(!action_checks(target) || get_dist(chassis, target)>3)
 		return
-	playsound(chassis, 'sound/machines/click.ogg', 50, TRUE)
+	if(!quiet)
+		playsound(chassis, 'sound/machines/click.ogg', 50, TRUE)
 
 	switch(mode)
 		if(0)
@@ -283,46 +288,52 @@
 				var/turf/closed/wall/W = target
 				occupant_message("<span class='notice'>Deconstructing [W]...</span>")
 				if(do_after_cooldown(W))
-					chassis.spark_system.start()
 					W.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-					playsound(W, 'sound/items/deconstruct.ogg', 50, TRUE)
+					if(!quiet)
+						chassis.spark_system.start()
+						playsound(W, 'sound/items/deconstruct.ogg', 50, TRUE)
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("<span class='notice'>Deconstructing [F]...</span>")
 				if(do_after_cooldown(target))
-					chassis.spark_system.start()
 					F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-					playsound(F, 'sound/items/deconstruct.ogg', 50, TRUE)
+					if(!quiet)
+						chassis.spark_system.start()
+						playsound(F, 'sound/items/deconstruct.ogg', 50, TRUE)
 			else if (istype(target, /obj/machinery/door/airlock))
 				occupant_message("<span class='notice'>Deconstructing [target]...</span>")
 				if(do_after_cooldown(target))
-					chassis.spark_system.start()
 					qdel(target)
-					playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)
+					if(!quiet)
+						chassis.spark_system.start()
+						playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)
 		if(1)
 			if(isspaceturf(target))
 				var/turf/open/space/S = target
 				occupant_message("<span class='notice'>Building Floor...</span>")
 				if(do_after_cooldown(S))
-					S.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-					playsound(S, 'sound/items/deconstruct.ogg', 50, TRUE)
-					chassis.spark_system.start()
+					S.PlaceOnTop(floor_type, flags = CHANGETURF_INHERIT_AIR)
+					if(!quiet)
+						playsound(S, 'sound/items/deconstruct.ogg', 50, TRUE)
+						chassis.spark_system.start()
 			else if(isfloorturf(target))
 				var/turf/open/floor/F = target
 				occupant_message("<span class='notice'>Building Wall...</span>")
 				if(do_after_cooldown(F))
-					F.PlaceOnTop(/turf/closed/wall)
-					playsound(F, 'sound/items/deconstruct.ogg', 50, TRUE)
-					chassis.spark_system.start()
+					F.PlaceOnTop(wall_type)
+					if(!quiet)
+						playsound(F, 'sound/items/deconstruct.ogg', 50, TRUE)
+						chassis.spark_system.start()
 		if(2)
 			if(isfloorturf(target))
 				occupant_message("<span class='notice'>Building Airlock...</span>")
 				if(do_after_cooldown(target))
-					chassis.spark_system.start()
-					var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock(target)
+					var/obj/machinery/door/airlock/T = new airlock_type(target)
 					T.autoclose = TRUE
-					playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)
-					playsound(target, 'sound/effects/sparks2.ogg', 50, TRUE)
+					if(!quiet)
+						chassis.spark_system.start()
+						playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)
+						playsound(target, 'sound/effects/sparks2.ogg', 50, TRUE)
 
 
 
@@ -347,6 +358,11 @@
 
 /obj/item/mecha_parts/mecha_equipment/rcd/get_equip_info()
 	return "[..()] \[<a href='?src=[REF(src)];mode=0'>D</a>|<a href='?src=[REF(src)];mode=1'>C</a>|<a href='?src=[REF(src)];mode=2'>A</a>\]"
+
+/obj/item/mecha_parts/mecha_equipment/rcd/reticence
+	name = "silenced RCD"
+	desc = "An exosuit-mounted Rapid Construction Device. This one is designed to be especially quiet."
+	quiet = TRUE
 
 //Dunno where else to put this so shrug
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade

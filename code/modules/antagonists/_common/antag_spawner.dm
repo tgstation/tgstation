@@ -167,6 +167,26 @@
 		M.mind.special_role = "Clown Operative"
 
 
+//////MIME OP
+/obj/item/antag_spawner/nuke_ops/mime
+	name = "mime operative teleporter"
+	desc = "A single-use teleporter designed to quickly reinforce mime operatives in the field."
+
+/obj/item/antag_spawner/nuke_ops/mime/spawn_antag(client/C, turf/T, kind, datum/mind/user)
+	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
+	C.prefs.copy_to(M)
+	M.key = C.key
+
+	var/datum/antagonist/nukeop/mimeop/new_op = new /datum/antagonist/nukeop/mimeop()
+	new_op.send_to_spawnpoint = FALSE
+	new_op.nukeop_outfit = /datum/outfit/syndicate/mimeop/no_crystals
+
+	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop/mimeop,TRUE)
+	if(creator_op)
+		M.mind.add_antag_datum(new_op, creator_op.nuke_team)
+		M.mind.special_role = "Mime Operative"
+
+
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg teleporter"

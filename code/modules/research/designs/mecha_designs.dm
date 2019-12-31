@@ -106,6 +106,30 @@
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/reticence_main
+	name = "\"Reticence\" Central Control module"
+	desc = "Allows for the construction of a \"Reticence\" Central Control module."
+	id = "reticence_main"
+	build_path = /obj/item/circuitboard/mecha/reticence/main
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/reticence_peri
+	name = "\"Reticence\" Peripherals Control module"
+	desc = "Allows for the construction of a \"Reticence\" Peripheral Control module."
+	id = "reticence_peri"
+	build_path = /obj/item/circuitboard/mecha/reticence/peripherals
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/reticence_targ
+	name = "\"Reticence\" Weapons & Targeting Control module"
+	desc = "Allows for the construction of a \"Reticence\" Weapons & Targeting Control module."
+	id = "reticence_targ"
+	build_path = /obj/item/circuitboard/mecha/reticence/targeting
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/phazon_main
 	name = "\"Phazon\" Central Control module"
 	desc = "Allows for the construction of a \"Phazon\" Central Control module."

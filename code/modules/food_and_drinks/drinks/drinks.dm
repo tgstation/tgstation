@@ -9,6 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	reagent_flags = OPENCONTAINER
+	consume_sound = 'sound/items/drink.ogg'
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
@@ -53,7 +54,7 @@
 	checkLiked(fraction, M)
 	reagents.reaction(M, INGEST, fraction)
 	reagents.trans_to(M, gulp_size, transfered_by = user)
-	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+	playsound(M.loc,consume_sound, rand(10,50), TRUE)
 	return 1
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
@@ -418,14 +419,14 @@
 		open_soda()
 		sleep(10)
 	H.visible_message("<span class='suicide'>[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!</span>")
-	playsound(H,'sound/items/drink.ogg', 80, TRUE)
+	playsound(H,consume_sound, 80, TRUE)
 	reagents.trans_to(H, src.reagents.total_volume, transfered_by = H) //a big sip
 	sleep(5)
 	H.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "All these new fangled arcade games are too slow. I prefer the classics.", "They don't make 'em like Orion Trail anymore.", "You know what they say. Worst day of spess carp fishing is better than the best day at work.", "They don't make 'em like good old fashioned singularity engines anymore."))
 	if(H.age >= 30)
 		H.Stun(50)
 		sleep(50)
-		playsound(H,'sound/items/drink.ogg', 80, TRUE)
+		playsound(H,consume_sound, 80, TRUE)
 		H.say(pick("Another day, another dollar.", "I wonder if I should hold?", "Diversifying is for young'ns.", "Yeap, times were good back then."))
 		return MANUAL_SUICIDE_NONLETHAL
 	sleep(20) //dramatic pause

@@ -172,6 +172,30 @@
 /turf/open/floor/mineral/bananium/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+//TRANQUILLITE
+
+/turf/open/floor/mineral/tranquillite
+	name = "tranquillite floor"
+	icon_state = "tranquillite"
+	floor_tile = /obj/item/stack/tile/mineral/tranquillite
+	icons = list("tranquillite","tranquillite_dam")
+
+/turf/open/floor/mineral/tranquillite/transparent //similar to fake space, but also has the sound dampening properties.
+	name = "\proper space"
+	icon = 'icons/turf/space.dmi'
+	icon_state = "0"
+	floor_tile = /obj/item/stack/tile/mineral/tranquillite/transparent
+
+/turf/open/floor/mineral/tranquillite/transparent/Initialize()
+	. = ..()
+	icon_state = SPACE_ICON_STATE
+
+/turf/open/floor/mineral/tranquillite/transparent/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/space.dmi'
+	underlay_appearance.icon_state = SPACE_ICON_STATE
+	underlay_appearance.plane = PLANE_SPACE
+	return TRUE
+
 //DIAMOND
 
 /turf/open/floor/mineral/diamond

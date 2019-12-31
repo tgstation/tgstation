@@ -71,6 +71,15 @@
 		"slipping"
 	],
 
+	"mimes": [
+		"mime",
+		"invisible",
+		"emoji",
+		"french",
+		"silent",
+		"silence"
+	],
+
 	"greytide": [
 		"assistant",
 		"grey",

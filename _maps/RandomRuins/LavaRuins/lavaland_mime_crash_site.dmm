@@ -1,0 +1,37 @@
+"a" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/space)
+"b" = (/turf/open/lava/smooth/lava_land_surface,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaabbbbbbbbbaaaaaaaaaaaa
+aaaaaaaaaaabbbbbbbbbaaaaaaaaaaaa
+aaaaaaaaaaabbbbbbbbbaaaaaaaaaaaa
+aaaaaaaabbbaaaaaaaaabbbaaaaaaaaa
+aaaaaaaabbbaaaaaaaaabbbaaaaaaaaa
+aaaaaaaabbbaaaaaaaaabbbaaaaaaaaa
+aaaaabbbaaaaaaaaaaaaaaabbbaaaaaa
+aaaaabbbaaaaaaaaaaaaaaabbbaaaaaa
+aaaaabbbaaaaaaaaaaaaaaabbbaaaaaa
+aabbbaaaaaaaaaaaaaaaaaaaaabbbaaa
+aabbbaaaaaaaaaaaaaaaaaaaaabbbaaa
+aabbbaaaaaaaaaaaaaaaaaaaaabbbaaa
+aabbbaaaaaaaaaaaaaaaaaaaaabbbaaa
+aabbbaaaaaaaaaaaaaaaaaaaaabbbaaa
+aabbbaaaaaaaaaaaaaaaaaaaaabbbaaa
+aaaaabbbaaaaaaaaaaaaaaabbbaaaaaa
+aaaaabbbaaaaaaaaaaaaaaabbbaaaaaa
+aaaaabbbaaaaaaaaaaaaaaabbbaaaaaa
+aaaaaaaabbbaaaaaaaaabbbaaaaaaaaa
+aaaaaaaabbbaaaaaaaaabbbaaaaaaaaa
+aaaaaaaabbbaaaaaaaaabbbaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

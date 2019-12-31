@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(traumas)
 
 /datum/controller/subsystem/traumas/Initialize()
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
-	phobia_types = sortList(list("spiders", "space", "security", "clowns", "greytide", "lizards",
+	phobia_types = sortList(list("spiders", "space", "security", "clowns", "mimes", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
 						"aliens", "strangers", "birds", "falling", "anime"))
 
@@ -20,6 +20,7 @@ SUBSYSTEM_DEF(traumas)
 						"space"     = strings(PHOBIA_FILE, "space"),
 						"security"  = strings(PHOBIA_FILE, "security"),
 						"clowns"    = strings(PHOBIA_FILE, "clowns"),
+						"mimes"     = strings(PHOBIA_FILE, "mimes"),
 						"greytide"  = strings(PHOBIA_FILE, "greytide"),
 						"lizards"   = strings(PHOBIA_FILE, "lizards"),
 						"skeletons" = strings(PHOBIA_FILE, "skeletons"),
@@ -67,6 +68,10 @@ SUBSYSTEM_DEF(traumas)
 												 /obj/item/clothing/mask/gas/clown_hat, /obj/item/instrument/bikehorn,
 												 /obj/item/pda/clown, /obj/item/grown/bananapeel, /obj/item/reagent_containers/food/snacks/cheesiehonkers,
 												 /obj/item/trash/cheesie)),
+
+					  "mimes"    = typecacheof(list(/obj/item/clothing/under/rank/civilian/mime, /obj/item/clothing/suit/toggle/suspenders,
+												 /obj/item/clothing/mask/gas/mime, /obj/item/clothing/head/frenchberet,
+												 /obj/item/pda/mime, /obj/item/book/mimery, /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing, /obj/item/reagent_containers/food/snacks/quietcrunch, /obj/item/trash/quietcrunch)),
 
 					  "greytide"  = typecacheof(list(/obj/item/clothing/under/color/grey, /obj/item/melee/baton/cattleprod,
 												 /obj/item/twohanded/spear, /obj/item/clothing/mask/gas)),

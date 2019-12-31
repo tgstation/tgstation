@@ -230,6 +230,13 @@
 	payload = /obj/item/bombcore/badmin/summon/clown
 	beepsound = 'sound/items/bikehorn.ogg'
 
+/obj/machinery/syndicatebomb/badmin/mime
+	name = "clown bomb"
+	icon_state = "clown-bomb"
+	desc = "HONK."
+	payload = /obj/item/bombcore/badmin/mime
+	beepsound = null
+
 /obj/machinery/syndicatebomb/empty
 	name = "bomb"
 	icon_state = "base-bomb"
@@ -352,6 +359,34 @@
 /obj/item/bombcore/badmin/summon/clown/defuse()
 	playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 	..()
+
+/obj/item/bombcore/badmin/mime
+	name = "tranquillite payload"
+	desc = "A bomb core designed to infuse the surroundings with tranquillite."
+	var/range = 17
+
+/obj/item/bombcore/badmin/mime/detonate()
+	for(var/A in urange(range, get_turf(src)))
+		if(istype(A, /obj))
+			var/obj/O = A
+			if(O.alpha)
+				O.alpha = 0
+			if(O.opacity)
+				O.opacity = 0
+		else if(istype(A, /turf/open/floor)) //don't affect space, planetary surfaces, etc please
+			var/turf/open/floor/F = A
+			F.icon = 'icons/turf/space.dmi'
+			F.icon_state = SPACE_ICON_STATE
+			F.plane = PLANE_SPACE
+		else if(istype(A, /turf/closed/wall))
+			var/turf/closed/wall/T = A
+			T.opacity = 0
+			T.icon = 'icons/turf/space.dmi'
+			T.icon_state = SPACE_ICON_STATE
+			T.plane = PLANE_SPACE
+	if(loc && istype(loc, /obj/machinery/syndicatebomb/))
+		qdel(loc)
+	qdel(src)
 
 /obj/item/bombcore/large
 	name = "large bomb payload"

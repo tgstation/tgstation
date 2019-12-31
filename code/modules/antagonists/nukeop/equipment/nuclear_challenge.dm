@@ -122,6 +122,9 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 /obj/item/nuclear_challenge/clownops
 	uplink_type = /obj/item/uplink/clownop
 
+/obj/item/nuclear_challenge/mimeops
+	uplink_type = /obj/item/uplink/mimeop
+
 #undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_TIME_LIMIT
 #undef CHALLENGE_MIN_PLAYERS

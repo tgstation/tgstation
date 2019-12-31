@@ -187,6 +187,16 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 	mine_experience = 15
 
+/obj/item/stack/ore/tranquillite
+	name = "tranquillite ore"
+	icon_state = "Tranquillite ore"
+	item_state = "Tranquillite ore"
+	singular_name = "tranquillite ore chunk"
+	points = 60
+	custom_materials = list(/datum/material/tranquillite=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/mineral/tranquillite
+	mine_experience = 15
+
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"
@@ -317,24 +327,25 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin
 	icon = 'icons/obj/economy.dmi'
 	name = "coin"
-	icon_state = "coin"
+	icon_state = "coin" //This is changed on initialization, the icon state is used to define which coin type to use.
 	flags_1 = CONDUCT_1
 	force = 1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 400)
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	material_flags = MATERIAL_ADD_PREFIX
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cooldown = 0
 	var/value
 	var/coinflip
+	var/coin_icon //tried using icon_state and modifying it in initialization, but this caused a runtime
 	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 
 /obj/item/coin/Initialize()
 	. = ..()
 	coinflip = pick(sideslist)
-	icon_state = "coin_[coinflip]"
+	icon_state = "coin_[initial(icon_state)]_[coinflip]"
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
@@ -405,9 +416,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
 			return FALSE//do not flip the coin
 		cooldown = world.time + 15
-		flick("coin_[coinflip]_flip", src)
+		flick("coin_[initial(icon_state)]_[coinflip]_flip", src)
 		coinflip = pick(sideslist)
-		icon_state = "coin_[coinflip]"
+		icon_state = "coin_[initial(icon_state)]_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
 		sleep(15)
@@ -418,30 +429,43 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	return TRUE//did the coin flip? useful for suicide_act
 
 /obj/item/coin/gold
+	icon_state = "gold"
 	custom_materials = list(/datum/material/gold = 400)
 
 /obj/item/coin/silver
+	icon_state = "silver"
 	custom_materials = list(/datum/material/silver = 400)
 
 /obj/item/coin/diamond
+	icon_state = "diamond"
 	custom_materials = list(/datum/material/diamond = 400)
 
 /obj/item/coin/plasma
+	icon_state = "plasma"
 	custom_materials = list(/datum/material/plasma = 400)
 
 /obj/item/coin/uranium
+	icon_state = "uranium"
 	custom_materials = list(/datum/material/uranium = 400)
 
 /obj/item/coin/titanium
+	icon_state = "adamantine" //Close enough. These icons are ported from Paradise station, and they don't have titanium.
 	custom_materials = list(/datum/material/titanium = 400)
 
 /obj/item/coin/bananium
+	icon_state = "bananium"
 	custom_materials = list(/datum/material/bananium = 400)
 
+/obj/item/coin/tranquillite
+	icon_state = "tranquillite"
+	custom_materials = list(/datum/material/tranquillite = 400)
+
 /obj/item/coin/adamantine
+	icon_state = "adamantine" //Who makes adamantium coins, anyway? They'll never notice it's the same as titanium. Never.
 	custom_materials = list(/datum/material/adamantine = 400)
 
 /obj/item/coin/mythril
+	icon_state = "mythril"
 	custom_materials = list(/datum/material/mythril = 400)
 
 /obj/item/coin/plastic
@@ -457,11 +481,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/antagtoken
 	name = "antag token"
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
-	icon_state = "coin_valid"
+	icon_state = "coin_antag_valid"
 	custom_materials = list(/datum/material/plastic = 400)
 	sideslist = list("valid", "salad")
 	material_flags = NONE
 
 /obj/item/coin/iron
+	icon_state = "iron"
 
 #undef ORESTACK_OVERLAYS_MAX

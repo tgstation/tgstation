@@ -226,6 +226,62 @@
 	icon_state = "honker_r_leg"
 
 
+////////// Reticence
+
+/obj/item/mecha_parts/chassis/reticence
+	name = "\improper Reticence chassis"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/reticence
+	flags_1 = CONDUCT_1 | HEAR_1
+
+/obj/item/dummy/mecha_emote_step
+	var/emote
+
+/obj/item/dummy/mecha_emote_step/Initialize(e)
+	..()
+	emote = e
+
+/obj/item/mecha_parts/chassis/reticence/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
+	var/datum/component/construction/mecha/reticence/construct = GetComponent(/datum/component/construction/mecha/reticence)
+	if(!construct)
+		return
+	if(radio_freq)
+		return
+	var/list/steps = construct.steps
+	if(steps[steps.len]["key"] == /obj/item/dummy/mecha_emote_step) // is the current step the dummy emote object?
+		construct.action(new /obj/item/dummy/mecha_emote_step(raw_message), speaker)
+
+/obj/item/mecha_parts/part/reticence_torso
+	name = "\improper Reticence torso"
+	desc = "A torso part of Reticence. Contains stealth unit, tranquilite core and sound dampening systems."
+	icon_state = "reticence_harness"
+
+/obj/item/mecha_parts/part/reticence_head
+	name = "\improper Reticence head"
+	desc = "A Reticence head. Appears to lack a face plate."
+	icon_state = "reticence_head"
+
+/obj/item/mecha_parts/part/reticence_left_arm
+	name = "\improper Reticence left arm"
+	desc = "A Reticence left arm. With unique sockets that accept odd weaponry designed by mime scientists."
+	icon_state = "reticence_l_arm"
+
+/obj/item/mecha_parts/part/reticence_right_arm
+	name = "\improper Reticence right arm"
+	desc = "A Reticence right arm. With unique sockets that accept odd weaponry designed by mime scientists."
+	icon_state = "reticence_r_arm"
+
+/obj/item/mecha_parts/part/reticence_left_leg
+	name = "\improper Reticence left leg"
+	desc = "A Reticence left leg. Appears to be missing a suspension system." //Get it? Suspension? It needs suspenders.
+	icon_state = "reticence_l_leg"
+
+/obj/item/mecha_parts/part/reticence_right_leg
+	name = "\improper Reticence right leg"
+	desc = "A Reticence right leg. Appears to be missing a suspension system."
+	icon_state = "reticence_r_leg"
+
+
 ////////// Phazon
 
 /obj/item/mecha_parts/chassis/phazon
@@ -327,6 +383,18 @@
 
 /obj/item/circuitboard/mecha/honker/main
 	name = "H.O.N.K Central Control module (Exosuit Board)"
+	icon_state = "mainboard"
+
+/obj/item/circuitboard/mecha/reticence/peripherals
+	name = "Reticence Peripherals Control module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/reticence/targeting
+	name = "Reticence Weapon Control and Targeting module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/reticence/main
+	name = "Reticence Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
 /obj/item/circuitboard/mecha/odysseus/peripherals

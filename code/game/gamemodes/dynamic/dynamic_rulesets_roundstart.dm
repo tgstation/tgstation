@@ -507,6 +507,31 @@
 
 //////////////////////////////////////////////
 //                                          //
+//               MIME OPS                   //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/nuclear/mime_ops
+	name = "Mime Ops"
+	antag_datum = /datum/antagonist/nukeop/mimeop
+	antag_leader_datum = /datum/antagonist/nukeop/leader/mimeop
+	requirements = list(101,101,101,101,101,101,101,101,101,101)
+	high_population_requirement = 101
+
+/datum/dynamic_ruleset/roundstart/nuclear/mime_ops/pre_execute()
+	. = ..()
+	if(.)
+		for(var/obj/machinery/nuclearbomb/syndicate/S in GLOB.nuke_list)
+			var/turf/T = get_turf(S)
+			if(T)
+				qdel(S)
+				new /obj/machinery/nuclearbomb/syndicate/tranquillite(T)
+		for(var/datum/mind/V in assigned)
+			V.assigned_role = "Mime Operative"
+			V.special_role = "Mime Operative"
+
+//////////////////////////////////////////////
+//                                          //
 //               DEVIL                      //
 //                                          //
 //////////////////////////////////////////////

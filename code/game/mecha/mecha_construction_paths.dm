@@ -1023,6 +1023,163 @@
 			user.visible_message("<span class='notice'>[user] puts [I] on [parent].</span>", "<span class='notice'>You put [I] on [parent].</span>")
 	return TRUE
 
+/datum/component/construction/unordered/mecha_chassis/reticence
+	result = /datum/component/construction/mecha/reticence
+	steps = list(
+		/obj/item/mecha_parts/part/reticence_torso,
+		/obj/item/mecha_parts/part/reticence_left_arm,
+		/obj/item/mecha_parts/part/reticence_right_arm,
+		/obj/item/mecha_parts/part/reticence_left_leg,
+		/obj/item/mecha_parts/part/reticence_right_leg,
+		/obj/item/mecha_parts/part/reticence_head
+	)
+
+/datum/component/construction/mecha/reticence
+	result = /obj/mecha/combat/reticence
+	steps = list(
+		//1
+		list(
+			"key" = /obj/item/dummy/mecha_emote_step
+		),
+
+		//2
+		list(
+			"key" = /obj/item/circuitboard/mecha/reticence/main,
+			"action" = ITEM_DELETE
+		),
+
+		//3
+		list(
+			"key" = /obj/item/dummy/mecha_emote_step
+		),
+
+		//4
+		list(
+			"key" = /obj/item/circuitboard/mecha/reticence/peripherals,
+			"action" = ITEM_DELETE
+		),
+
+		//5
+		list(
+			"key" = /obj/item/dummy/mecha_emote_step
+		),
+
+		//6
+		list(
+			"key" = /obj/item/circuitboard/mecha/reticence/targeting,
+			"action" = ITEM_DELETE
+		),
+
+		//7
+		list(
+			"key" = /obj/item/dummy/mecha_emote_step
+		),
+
+		//6
+		list(
+			"key" = /obj/item/stock_parts/scanning_module,
+			"action" = ITEM_MOVE_INSIDE
+		),
+
+		//8
+		list(
+			"key" = /obj/item/dummy/mecha_emote_step
+		),
+
+		//9
+		list(
+			"key" = /obj/item/stock_parts/capacitor,
+			"action" = ITEM_MOVE_INSIDE
+		),
+
+		//10
+		list(
+			"key" = /obj/item/dummy/mecha_emote_step
+		),
+
+		//11
+		list(
+			"key" = /obj/item/stock_parts/cell,
+			"action" = ITEM_MOVE_INSIDE
+		),
+
+		//12
+		list(
+			"key" = /obj/item/dummy/mecha_emote_step
+		),
+
+		//13
+		list(
+			"key" = /obj/item/clothing/mask/gas/mime,
+			"action" = ITEM_DELETE
+		),
+
+		//14
+		list(
+			"key" = /obj/item/dummy/mecha_emote_step
+		),
+
+		//15
+		list(
+			"key" = /obj/item/clothing/suit/toggle/suspenders,
+			"action" = ITEM_DELETE
+		),
+
+		//16
+		list(
+			"key" = /obj/item/dummy/mecha_emote_step
+		),
+	)
+
+// Reticence doesn't have any construction step icons, so we just set an icon once.
+/datum/component/construction/mecha/reticence/update_parent(step_index)
+	if(step_index == 1)
+		var/atom/parent_atom = parent
+		parent_atom.icon = 'icons/mecha/mech_construct.dmi'
+		parent_atom.icon_state = "reticence_chassis"
+	..()
+
+/datum/component/construction/mecha/reticence/custom_action(obj/item/I, mob/living/user, diff)
+	if(!..())
+		return FALSE
+
+	if(istype(I, /obj/item/dummy/mecha_emote_step))
+		var/obj/item/dummy/mecha_emote_step/E = I
+		if(index == 16)
+			if(!findtext(E.emote,"weld"))
+				qdel(I)
+				return FALSE
+		else if((index % 14) > 0)
+			if(!findtext(E.emote,"screw"))
+				qdel(I)
+				return FALSE
+		else
+			if(!findtext(E.emote,"wrench"))
+				qdel(I)
+				return FALSE
+		user.visible_message("<span class='game say'><span class='name'>[user]</span> likewise [E.emote]</span>")
+		qdel(I)
+
+	//TODO: better messages.
+	switch(index)
+		if(2)
+			user.visible_message("<span class='notice'>[user] installs [I] into [parent].</span>", "<span class='notice'>You install [I] into [parent].</span>")
+		if(4)
+			user.visible_message("<span class='notice'>[user] installs [I] into [parent].</span>", "<span class='notice'>You install [I] into [parent].</span>")
+		if(6)
+			user.visible_message("<span class='notice'>[user] installs [I] into [parent].</span>", "<span class='notice'>You install [I] into [parent].</span>")
+		if(8)
+			user.visible_message("<span class='notice'>[user] installs [I] into [parent].</span>", "<span class='notice'>You install [I] into [parent].</span>")
+		if(10)
+			user.visible_message("<span class='notice'>[user] installs [I] into [parent].</span>", "<span class='notice'>You install [I] into [parent].</span>")
+		if(12)
+			user.visible_message("<span class='notice'>[user] installs [I] into [parent].</span>", "<span class='notice'>You install [I] into [parent].</span>")
+		if(14)
+			user.visible_message("<span class='notice'>[user] puts [I] on [parent].</span>", "<span class='notice'>You put [I] on [parent].</span>")
+		if(16)
+			user.visible_message("<span class='notice'>[user] puts [I] on [parent].</span>", "<span class='notice'>You put [I] on [parent].</span>")
+	return TRUE
+
 /datum/component/construction/unordered/mecha_chassis/durand
 	result = /datum/component/construction/mecha/durand
 	steps = list(

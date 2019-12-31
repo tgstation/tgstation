@@ -245,6 +245,17 @@ GLOBAL_LIST_EMPTY(cinematics)
 	flick("summary_selfdes",screen) //???
 	special()
 
+/datum/cinematic/mimeop
+	id = CINEMATIC_NUKE_MIMEOP
+	cleanup_time = 100
+
+/datum/cinematic/mimeop/content()
+	flick("intro_nuke",screen)
+	sleep(35)
+	cinematic_sound(sound('sound/weapons/genhit.ogg')) //like hitting a invisible wall, i guess?
+	flick("summary_selfdes",screen) //???
+	special()
+
 /* Intended usage.
 Nuke.Explosion()
 	-> Cinematic(NUKE_BOOM,world)

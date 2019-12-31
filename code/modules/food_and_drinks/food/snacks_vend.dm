@@ -97,6 +97,19 @@
 	foodtype = JUNKFOOD | DAIRY | SUGAR
 	custom_price = 16
 
+/obj/item/reagent_containers/food/snacks/quietcrunch //it's like pop-rocks
+	name = "quiet crunch"
+	desc = "A exciting popping crunch in your mouth, without the ear-popping sound."
+	icon_state = "popcorn" //better than a codersprite
+	trash = /obj/item/trash/quietcrunch
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/sugar = 3)
+	junkiness = 25
+	consume_sound = null //actually quiet
+	filling_color = "#FFFFFF"
+	tastes = list("sizzle" = 5, "crunch" = 2)
+	foodtype = JUNKFOOD | FRUIT | SUGAR
+	custom_price = 16
+
 /obj/item/reagent_containers/food/snacks/syndicake
 	name = "syndi-cakes"
 	icon_state = "syndi_cakes"

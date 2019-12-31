@@ -143,6 +143,14 @@
 	icon_state = "reticence-broken"
 	color = "#87878715"
 	desc = "..."
+	parts = list(
+				/obj/item/mecha_parts/chassis/reticence,
+				/obj/item/mecha_parts/part/reticence_torso,
+				/obj/item/mecha_parts/part/reticence_head,
+				/obj/item/mecha_parts/part/reticence_left_arm,
+				/obj/item/mecha_parts/part/reticence_right_arm,
+				/obj/item/mecha_parts/part/reticence_left_leg,
+				/obj/item/mecha_parts/part/reticence_right_leg)
 
 /obj/structure/mecha_wreckage/ripley
 	name = "\improper Ripley wreckage"

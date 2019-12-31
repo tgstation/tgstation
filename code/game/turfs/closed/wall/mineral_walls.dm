@@ -42,6 +42,21 @@
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	canSmoothWith = list(/turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium)
 
+/turf/closed/wall/mineral/tranquillite
+	name = "tranquillite wall"
+	desc = "A wall with tranquillite plating. It's clearer than glass!"
+	opacity = 0
+	sheet_type = /obj/item/stack/sheet/mineral/tranquillite
+	canSmoothWith = null //it's invisible so no need.
+
+/turf/closed/wall/mineral/tranquillite/Initialize()
+	. = ..()
+	var/list/underit = src.baseturfs
+	if(underit.len)
+		src.icon = underit[underit.len].icon
+		src.icon_state = underit[underit.len].icon_state
+		src.plane = underit[underit.len].plane
+
 /turf/closed/wall/mineral/sandstone
 	name = "sandstone wall"
 	desc = "A wall with sandstone plating. Rough."

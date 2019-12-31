@@ -31,6 +31,11 @@
 	material_id = /datum/material/bananium
 	message = "cm3 of bananium"
 
+/datum/export/material/tranquillite
+	cost = 1000
+	material_id = /datum/material/tranquillite
+	message = "cm3 of tranquillite"
+
 /datum/export/material/diamond
 	cost = 500
 	material_id = /datum/material/diamond

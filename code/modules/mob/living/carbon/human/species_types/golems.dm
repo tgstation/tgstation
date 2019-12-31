@@ -575,6 +575,24 @@
 /datum/species/golem/bananium/proc/handle_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_CLOWN
 
+	
+//"..."
+/datum/species/golem/tranquillite
+	name = "Tranquillite Golem"
+	id = "tranquillite golem"
+	fixed_mut_color = "ff0"
+	say_mod = "honks"
+	punchdamagelow = 0
+	punchdamagehigh = 1
+	punchstunthreshold = 2
+	meat = /obj/item/stack/ore/tranquillite
+	info_text = "As a <span class='danger'>Tranquillite Golem</span>, you are a natural-born mime. Your body is naturally perfectly silent, you can conjure invisible walls, and when you hold still you will slowly blend in to your surroundings. If you punch someone, they will be briefly silenced, but the punches themselves are almost harmless! And as a true mime, you cannot speak."
+	attack_verb = "honk"
+	attack_sound = null
+	prefix = "tranquillite"
+	special_names = null
+
+
 /datum/species/golem/runic
 	name = "Runic Golem"
 	id = "runic golem"

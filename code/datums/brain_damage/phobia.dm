@@ -152,6 +152,10 @@
 	phobia_type = "clowns"
 	random_gain = FALSE
 
+/datum/brain_trauma/mild/phobia/mimes
+	phobia_type = "mimes"
+	random_gain = FALSE
+
 /datum/brain_trauma/mild/phobia/greytide
 	phobia_type = "greytide"
 	random_gain = FALSE
