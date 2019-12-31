@@ -1,60 +1,74 @@
+import { multiline } from 'common/string';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section, Tabs } from '../components';
 
 export const MedicalKiosk = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
- 
+  const { act, data } = useBackend(props);
   return (
     <Fragment>
       <Section title="Health Kiosk"
         textAlign="center"
         icon="procedures">
         <Box my={1} textAlign="center">
-          Greetings Valued Employee. Please select your desired diagnosis. Diagnosis costs {data.kiosk_cost} credits.
+          Greetings Valued Employee. Please select your desired diagnosis.
+          Diagnosis costs {data.kiosk_cost} credits.
           <Box mt={1} />
           <Box textAlign="center">
-          Current patient targeted for scanning: {data.patient_name} |
+            Current patient targeted for scanning: {data.patient_name} |
           </Box>
           <Box my={1} mx={4} />
           <Button
             icon="procedures"
             disabled={!data.active_status_1}
-            tooltip="Reads back exact values of your general health scan."
-            onClick={() => act(ref, 'beginScan_1')}
+            tooltip={multiline`
+              Reads back exact values of your general health scan.
+            `}
+            onClick={() => act('beginScan_1')}
             content="General Health Scan" />
           <Button
             icon="heartbeat"
             disabled={!data.active_status_2}
-            tooltip="Provides information based on various non-obvious symptoms, like blood levels or disease status."
-            onClick={() => act(ref, 'beginScan_2')}
+            tooltip={multiline`
+              Provides information based on various non-obvious symptoms,
+              like blood levels or disease status.
+            `}
+            onClick={() => act('beginScan_2')}
             content="Symptom Based Checkup" />
           <Button
-            tooltip="Resets the current scanning target, cancelling current scans."
+            tooltip={multiline`
+              Resets the current scanning target, cancelling current scans.
+            `}
             icon="sync"
             color="average"
-            onClick={() => act(ref, 'clearTarget')}
+            onClick={() => act('clearTarget')}
             content="Reset Scanner" />
         </Box>
         <Box my={1} textAlign="center">
           <Button
             icon="radiation-alt"
             disabled={!data.active_status_3}
-            tooltip="Provides information about brain trauma and radiation."
-            onClick={() => act(ref, 'beginScan_3')}
+            tooltip={multiline`
+              Provides information about brain trauma and radiation.
+            `}
+            onClick={() => act('beginScan_3')}
             content="Neurological/Radiological Scan" />
           <Button
             icon="mortar-pestle"
             disabled={!data.active_status_4}
-            tooltip="Provides a list of consumed chemicals, as well as potential side effects."
-            onClick={() => act(ref, 'beginScan_4')}
+            tooltip={multiline`
+              Provides a list of consumed chemicals, as well as potential
+              side effects.
+            `}
+            onClick={() => act('beginScan_4')}
             content="Chemical Analysis and Psychoactive Scan" />
         </Box>
       </Section>
       <Tabs>
-        <Tabs.Tab key="tab_1" color="normal" label="View General Health Scan">
+        <Tabs.Tab
+          key="tab_1"
+          color="normal"
+          label="General Health Scan">
           {() => (
             <Box>
               {data.active_status_1 === 0 && (
@@ -107,7 +121,10 @@ export const MedicalKiosk = props => {
             </Box>
           )}
         </Tabs.Tab>
-        <Tabs.Tab key="tab_2" color="normal" label="View Symptom Based Checkup">
+        <Tabs.Tab
+          key="tab_2"
+          color="normal"
+          label="Symptom Based Checkup">
           {() => (
             <Box>
               {data.active_status_2 === 0 && (
@@ -135,7 +152,7 @@ export const MedicalKiosk = props => {
                       <LabeledList.Divider size={1} />
                       <ProgressBar
                         value={data.blood_levels/100}
-                        color="bad">                  
+                        color="bad">
                         <AnimatedNumber value={data.blood_levels} />
                       </ProgressBar>
                     </LabeledList.Item>
@@ -149,7 +166,10 @@ export const MedicalKiosk = props => {
             </Box>
           )}
         </Tabs.Tab>
-        <Tabs.Tab key="tab_3" color="normal" label="View Neurological/Radiological Scan">
+        <Tabs.Tab
+          key="tab_3"
+          color="normal"
+          label="Neurological/Radiological Scan">
           {() => (
             <Box>
               {data.active_status_3 === 0 && (
@@ -176,7 +196,6 @@ export const MedicalKiosk = props => {
                     color="health-0">
                     {data.brain_health}
                   </LabeledList.Item>
-
                   <LabeledList.Item
                     label="Radiation Status">
                     {data.rad_status}
@@ -194,7 +213,10 @@ export const MedicalKiosk = props => {
             </Box>
           )}
         </Tabs.Tab>
-        <Tabs.Tab key="tab_4" color="normal" label="View Chemical Analysis and Psychoactive Scan">
+        <Tabs.Tab
+          key="tab_4"
+          color="normal"
+          label="Chemical Analysis and Psychoactive Scan">
           {() => (
             <Box>
               {data.active_status_4 === 0 && (
@@ -211,12 +233,15 @@ export const MedicalKiosk = props => {
                           </Box>
                         ))
                       ) : (
-                        <Box content="No reagents detected." />
+                        <Box>
+                          No reagents detected.
+                        </Box>
                       )
                     ) : (
-                      <Box color="average" content="No reagents detected." /> 
+                      <Box color="average">
+                        No reagents detected.
+                      </Box>
                     )}
-				
                   </LabeledList.Item>
                   <LabeledList.Item
                     label="Overdose Status"
@@ -224,17 +249,20 @@ export const MedicalKiosk = props => {
                     {data.are_overdoses_present ? (
                       data.overdose_status.length ? (
                         data.overdose_status.map(specificOD => (
-                          <Box
-                            key={specificOD.id}>
-                    Overdosing on {specificOD.name}
+                          <Box key={specificOD.id}>
+                            Overdosing on {specificOD.name}
                           </Box>
                         ))
                       ) : (
-                        <Box content="No reagents detected." />
+                        <Box>
+                          No reagents detected.
+                        </Box>
                       )
                     ) : (
-                      <Box color="good" content="Patient is not overdosing." /> 
-                    )} 
+                      <Box color="good">
+                        Patient is not overdosing.
+                      </Box>
+                    )}
                   </LabeledList.Item>
                   <LabeledList.Item
                     label="Addiction Status"
@@ -242,16 +270,19 @@ export const MedicalKiosk = props => {
                     {data.are_addictions_present ? (
                       data.addiction_status.length ? (
                         data.addiction_status.map(specificAddict => (
-                          <Box
-                            key={specificAddict.id}>
-                    Addicted to {specificAddict.name}
+                          <Box key={specificAddict.id}>
+                            Addicted to {specificAddict.name}
                           </Box>
                         ))
                       ) : (
-                        <Box content="Patient has no addictions." />
+                        <Box>
+                          Patient has no addictions.
+                        </Box>
                       )
                     ) : (
-                      <Box color="good" content="Patient has no addictions detected." /> 
+                      <Box color="good">
+                        Patient has no addictions detected.
+                      </Box>
                     )}
                   </LabeledList.Item>
                   <LabeledList.Item

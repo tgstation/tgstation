@@ -21,6 +21,7 @@ $nanotrasen: #384e68;
   ));
   @include meta.load-css('../components/Layout.scss');
   @include meta.load-css('../components/ProgressBar.scss', $with: (
+    'color-default': $nanotrasen,
     'color-background': rgba(0, 0, 0, 0.5),
     'border-radius': base.$border-radius,
   ));
@@ -28,13 +29,4 @@ $nanotrasen: #384e68;
   @include meta.load-css('../components/TitleBar.scss', $with: (
     'color-background': color.scale($nanotrasen, $lightness: -25%),
   ));
-}
-
-// Body style
-body.theme-ntos {
-  color: base.$color-fg;
-  background-color: base.$color-bg;
-  background-image: linear-gradient(to bottom,
-    base.$color-bg-start 0%,
-    base.$color-bg-end 100%);
 }

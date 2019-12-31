@@ -29,7 +29,12 @@ window.onerror = function (msg, url, line, col, error) {
   var errorStack = document.getElementById('FatalError__stack');
   if (errorRoot) {
     errorRoot.className = 'FatalError';
-    errorStack.textContent = stack;
+    if (errorStack.textContent) {
+      errorStack.textContent += '\n\n' + stack;
+    }
+    else {
+      errorStack.textContent = stack;
+    }
   }
   // Send to the backend
   location.href = 'byond://?src=' + window.__ref__
@@ -65,7 +70,7 @@ location.href = 'byond://?src=' + window.__ref__
 <script type="text/javascript" defer src="tgui.bundle.js"></script>
 
 </head>
-<body class="theme-[style]">
+<body>
 
 <!-- tgui container -->
 <div id="react-root"></div>

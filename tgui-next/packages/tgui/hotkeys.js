@@ -110,7 +110,6 @@ const getKeyData = e => {
  * in game while the browser window is focused.
  */
 const handlePassthrough = (e, eventType) => {
-  const { keyCode, keyString, ctrlKey, shiftKey } = getKeyData(e);
   if (e.defaultPrevented) {
     return;
   }
@@ -118,6 +117,8 @@ const handlePassthrough = (e, eventType) => {
   if (targetName === 'input' || targetName === 'textarea') {
     return;
   }
+  const keyData = getKeyData(e);
+  const { keyCode, ctrlKey, shiftKey } = keyData;
   // NOTE: We pass through only Alt of all modifier keys, because Alt
   // modifier (for toggling run/walk) is implemented very shittily
   // in our codebase. We pass no other modifier keys, because they can
@@ -127,11 +128,11 @@ const handlePassthrough = (e, eventType) => {
   }
   // Send this keypress to BYOND
   if (eventType === 'keydown' && !keyState[keyCode]) {
-    logger.debug('passthrough', [eventType, keyString], getKeyData(e));
+    logger.debug('passthrough', eventType, keyData);
     return callByond('', { __keydown: keyCode });
   }
   if (eventType === 'keyup' && keyState[keyCode]) {
-    logger.debug('passthrough', [eventType, keyString], getKeyData(e));
+    logger.debug('passthrough', eventType, keyData);
     return callByond('', { __keyup: keyCode });
   }
 };
@@ -171,9 +172,9 @@ const handleHotKey = (e, eventType, dispatch) => {
       // stack in order for this to be a fatal error.
       setTimeout(() => {
         throw new Error(
-          "OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle"
-          + " fucko boingo! The code monkeys at our headquarters are"
-          + " working VEWY HAWD to fix this!");
+          'OOPSIE WOOPSIE!! UwU We made a fucky wucky!! A wittle'
+          + ' fucko boingo! The code monkeys at our headquarters are'
+          + ' working VEWY HAWD to fix this!');
       });
     }
     dispatch({
@@ -218,13 +219,17 @@ const subscribeToKeyPresses = listenerFn => {
 // Middleware
 export const hotKeyMiddleware = store => {
   const { dispatch } = store;
+  // Subscribe to key events
+  subscribeToKeyPresses((e, eventType) => {
+    // IE8: Can't determine the focused element, so by extension it passes
+    // keypresses when inputs are focused.
+    if (tridentVersion > 4) {
+      handlePassthrough(e, eventType);
+    }
+    handleHotKey(e, eventType, dispatch);
+  });
   // IE8: focusin/focusout only available on IE9+
   if (tridentVersion > 4) {
-    // Subscribe to key events
-    subscribeToKeyPresses((e, eventType) => {
-      handlePassthrough(e, eventType);
-      handleHotKey(e, eventType, dispatch);
-    });
     // Clean up when browser window completely loses focus
     subscribeToLossOfFocus(() => {
       releaseHeldKeys();

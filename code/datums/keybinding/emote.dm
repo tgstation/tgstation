@@ -12,4 +12,4 @@
 
 /datum/keybinding/emote/down(client/user)
 	. = ..()
-	user.mob.emote(emote_key)
+	return user.mob.emote(emote_key, intentional=TRUE)

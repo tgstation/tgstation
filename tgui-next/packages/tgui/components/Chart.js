@@ -40,7 +40,7 @@ class LineChart extends Component {
     super(props);
     this.ref = createRef();
     this.state = {
-      // Initial guess for viewBox dimentions
+      // Initial guess
       viewBox: [600, 200],
     };
     this.handleResize = () => {

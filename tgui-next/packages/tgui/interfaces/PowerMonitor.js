@@ -22,8 +22,7 @@ export class PowerMonitor extends Component {
 
   render() {
     const { state } = this.props;
-    const { config, data } = state;
-    const { ref } = config;
+    const { data } = state;
     const { history } = data;
     const { sortByField } = this.state;
     const supply = history.supply[history.supply.length - 1] || 0;

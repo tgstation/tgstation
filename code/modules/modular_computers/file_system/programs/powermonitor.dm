@@ -12,7 +12,6 @@
 	network_destination = "power monitoring system"
 	size = 9
 	tgui_id = "ntos_power_monitor"
-	ui_style = "ntos"
 	ui_x = 550
 	ui_y = 700
 

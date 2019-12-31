@@ -1,7 +1,7 @@
 @use '../colors.scss';
 @use '../functions.scss' as *;
 
-$color-primary: colors.bg(colors.$primary) !default;
+$color-default: colors.bg(colors.$primary) !default;
 $color-background: rgba(0, 0, 0, 0) !default;
 $border-radius: 0 !default;
 $bg-map: colors.$bg-map !default;
@@ -32,10 +32,10 @@ $bg-map: colors.$bg-map !default;
 }
 
 .ProgressBar--color--default {
-  border: 1px solid $color-primary;
+  border: 1px solid $color-default;
 
   .ProgressBar__fill {
-    background-color: $color-primary;
+    background-color: $color-default;
   }
 }
 

@@ -1,11 +1,8 @@
-import { Fragment } from 'inferno';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 
 export const AtmosAlertConsole = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const priorityAlerts = data.priority || [];
   const minorAlerts = data.minor || [];
   return (
@@ -18,7 +15,7 @@ export const AtmosAlertConsole = props => {
                 icon="times"
                 content={alert}
                 color="bad"
-                onClick={() => act(ref, 'clear', { zone: alert })} />
+                onClick={() => act('clear', { zone: alert })} />
             </li>
           ))
         ) : (
@@ -33,7 +30,7 @@ export const AtmosAlertConsole = props => {
                 icon="times"
                 content={alert}
                 color="average"
-                onClick={() => act(ref, 'clear', { zone: alert })} />
+                onClick={() => act('clear', { zone: alert })} />
             </li>
           ))
         ) : (

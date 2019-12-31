@@ -1,7 +1,7 @@
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
-import { act } from '../byond';
+import { useBackend } from '../backend';
 import { Box, Button, Flex, LabeledList, ProgressBar, Section, Table } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 
@@ -9,8 +9,7 @@ const logScale = value => Math.log2(16 + Math.max(0, value)) - 4;
 
 export const NtosSupermatterMonitor = props => {
   const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const {
     active,
     SM_integrity,
@@ -92,9 +91,9 @@ export const NtosSupermatterMonitor = props => {
             <Button
               icon="arrow-left"
               content="Back"
-              onClick={() => act(ref, 'PRG_clear')} />
+              onClick={() => act('PRG_clear')} />
           )}>
-          <ForcedBox height={gases.length * 24 + 'px'}>
+          <Box.Forced height={gases.length * 24 + 'px'}>
             <LabeledList>
               {gases.map(gas => (
                 <LabeledList.Item
@@ -110,32 +109,15 @@ export const NtosSupermatterMonitor = props => {
                 </LabeledList.Item>
               ))}
             </LabeledList>
-          </ForcedBox>
+          </Box.Forced>
         </Section>
       </Flex.Item>
     </Flex>
   );
 };
 
-/**
- * A hack to force certain things (like tables) to position correctly
- * inside bugged things, like Flex in Internet Explorer.
- */
-const ForcedBox = props => {
-  const { height, children } = props;
-  return (
-    <Box position="relative" height={height}>
-      <Box fillPositionedParent>
-        {children}
-      </Box>
-    </Box>
-  );
-};
-
 const SupermatterList = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   const { supermatters = [] } = data;
   return (
     <Section
@@ -144,7 +126,7 @@ const SupermatterList = props => {
         <Button
           icon="sync"
           content="Refresh"
-          onClick={() => act(ref, 'PRG_refresh')} />
+          onClick={() => act('PRG_refresh')} />
       )}>
       <Table>
         {supermatters.map(sm => (
@@ -167,7 +149,7 @@ const SupermatterList = props => {
             <Table.Cell collapsing>
               <Button
                 content="Details"
-                onClick={() => act(ref, 'PRG_set', {
+                onClick={() => act('PRG_set', {
                   target: sm.uid,
                 })} />
             </Table.Cell>

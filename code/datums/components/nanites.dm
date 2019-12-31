@@ -104,15 +104,17 @@
 		adjust_nanites(null, arguments[1]) //just add to the nanite volume
 
 /datum/component/nanites/process()
-	adjust_nanites(null, regen_rate)
-	add_research()
-	for(var/X in programs)
-		var/datum/nanite_program/NP = X
-		NP.on_process()
+	if(!IS_IN_STASIS(host_mob))
+		adjust_nanites(null, regen_rate)
+		add_research()
+		for(var/X in programs)
+			var/datum/nanite_program/NP = X
+			NP.on_process()
+		if(cloud_id && cloud_active && world.time > next_sync)
+			cloud_sync()
+			next_sync = world.time + NANITE_SYNC_DELAY
 	set_nanite_bar()
-	if(cloud_id && cloud_active && world.time > next_sync)
-		cloud_sync()
-		next_sync = world.time + NANITE_SYNC_DELAY
+	
 
 /datum/component/nanites/proc/delete_nanites()
 	qdel(src)
@@ -222,8 +224,8 @@
 
 /datum/component/nanites/proc/receive_comm_signal(datum/source, comm_code, comm_message, comm_source = "an unidentified source")
 	for(var/X in programs)
-		if(istype(X, /datum/nanite_program/triggered/comm))
-			var/datum/nanite_program/triggered/comm/NP = X
+		if(istype(X, /datum/nanite_program/comm))
+			var/datum/nanite_program/comm/NP = X
 			NP.receive_comm_signal(comm_code, comm_message, comm_source)
 
 /datum/component/nanites/proc/check_viable_biotype()
@@ -231,7 +233,7 @@
 		qdel(src) //bodytype no longer sustains nanites
 
 /datum/component/nanites/proc/check_access(datum/source, obj/O)
-	for(var/datum/nanite_program/triggered/access/access_program in programs)
+	for(var/datum/nanite_program/access/access_program in programs)
 		if(access_program.activated)
 			return O.check_access_list(access_program.access)
 		else
@@ -336,18 +338,16 @@
 			mob_program["trigger_cooldown"] = P.trigger_cooldown / 10
 
 		if(scan_level >= 3)
-			mob_program["activation_delay"] = P.activation_delay
-			mob_program["timer"] = P.timer
-			mob_program["timer_type"] = P.get_timer_type_text()
-			var/list/extra_settings = list()
-			for(var/Y in P.extra_settings)
-				var/list/setting = list()
-				setting["name"] = Y
-				setting["value"] = P.get_extra_setting(Y)
-				extra_settings += list(setting)
+			mob_program["timer_restart"] = P.timer_restart / 10
+			mob_program["timer_shutdown"] = P.timer_shutdown / 10
+			mob_program["timer_trigger"] = P.timer_trigger / 10
+			mob_program["timer_trigger_delay"] = P.timer_trigger_delay / 10
+			var/list/extra_settings = P.get_extra_settings_frontend()
 			mob_program["extra_settings"] = extra_settings
 			if(LAZYLEN(extra_settings))
 				mob_program["has_extra_settings"] = TRUE
+			else
+				mob_program["has_extra_settings"] = FALSE
 
 		if(scan_level >= 4)
 			mob_program["activation_code"] = P.activation_code

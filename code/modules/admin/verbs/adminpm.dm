@@ -1,5 +1,4 @@
-#define IRCREPLYCOUNT 2
-
+#define EXTERNALREPLYCOUNT 2
 
 //allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
 /client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
@@ -74,20 +73,20 @@
 		return
 
 	var/client/recipient
-	var/irc = 0
+	var/external = 0
 	if(istext(whom))
 		if(cmptext(copytext(whom,1,2),"@"))
 			whom = findStealthKey(whom)
 		if(whom == "IRCKEY")
-			irc = 1
+			external = 1
 		else
 			recipient = GLOB.directory[whom]
 	else if(istype(whom, /client))
 		recipient = whom
 
 
-	if(irc)
-		if(!ircreplyamount)	//to prevent people from spamming irc
+	if(external)
+		if(!externalreplyamount)	//to prevent people from spamming irc/discord
 			return
 		if(!msg)
 			msg = input(src,"Message:", "Private message to Administrator") as message|null
@@ -95,7 +94,7 @@
 		if(!msg)
 			return
 		if(holder)
-			to_chat(src, "<span class='danger'>Error: Use the admin IRC channel, nerd.</span>")
+			to_chat(src, "<span class='danger'>Error: Use the admin IRC/Discord channel, nerd.</span>")
 			return
 
 
@@ -132,7 +131,7 @@
 		return
 
 	//clean the message if it's not sent by a high-rank admin
-	if(!check_rights(R_SERVER|R_DEBUG,0)||irc)//no sending html to the poor bots
+	if(!check_rights(R_SERVER|R_DEBUG,0)||external)//no sending html to the poor bots
 		msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
 		if(!msg)
 			return
@@ -144,11 +143,11 @@
 
 	var/keywordparsedmsg = keywords_lookup(msg)
 
-	if(irc)
+	if(external)
 		to_chat(src, "<span class='notice'>PM to-<b>Admins</b>: <span class='linkify'>[rawmsg]</span></span>")
-		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>IRC</i>: [keywordparsedmsg]</font>")
-		ircreplyamount--
-		send2irc("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
+		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>External</i>: [keywordparsedmsg]</font>")
+		externalreplyamount--
+		send2tgs("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
 	else
 		if(recipient.holder)
 			if(holder)	//both are admins
@@ -194,10 +193,10 @@
 				to_chat(src, "<span class='danger'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</span>")
 				return
 
-	if(irc)
-		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")
+	if(external)
+		log_admin_private("PM: [key_name(src)]->External: [rawmsg]")
 		for(var/client/X in GLOB.admins)
-			to_chat(X, "<span class='notice'><B>PM: [key_name(src, X, 0)]-&gt;IRC:</B> [keywordparsedmsg]</span>")
+			to_chat(X, "<span class='notice'><B>PM: [key_name(src, X, 0)]-&gt;External:</B> [keywordparsedmsg]</span>")
 	else
 		window_flash(recipient, ignorepref = TRUE)
 		log_admin_private("PM: [key_name(src)]->[key_name(recipient)]: [rawmsg]")
@@ -216,34 +215,34 @@
 		else
 			adminhelp(reply)													//sender has left, adminhelp instead
 
-#define IRC_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
-/proc/IrcPm(target,msg,sender)
+#define TGS_AHELP_USAGE "Usage: ticket <close|resolve|icissue|reject|reopen \[ticket #\]|list>"
+/proc/TgsPm(target,msg,sender)
 	target = ckey(target)
 	var/client/C = GLOB.directory[target]
 
 	var/datum/admin_help/ticket = C ? C.current_ticket : GLOB.ahelp_tickets.CKey2ActiveTicket(target)
 	var/compliant_msg = trim(lowertext(msg))
-	var/irc_tagged = "[sender](IRC)"
+	var/tgs_tagged = "[sender](TGS/External)"
 	var/list/splits = splittext(compliant_msg, " ")
 	if(splits.len && splits[1] == "ticket")
 		if(splits.len < 2)
-			return IRC_AHELP_USAGE
+			return TGS_AHELP_USAGE
 		switch(splits[2])
 			if("close")
 				if(ticket)
-					ticket.Close(irc_tagged)
+					ticket.Close(tgs_tagged)
 					return "Ticket #[ticket.id] successfully closed"
 			if("resolve")
 				if(ticket)
-					ticket.Resolve(irc_tagged)
+					ticket.Resolve(tgs_tagged)
 					return "Ticket #[ticket.id] successfully resolved"
 			if("icissue")
 				if(ticket)
-					ticket.ICIssue(irc_tagged)
+					ticket.ICIssue(tgs_tagged)
 					return "Ticket #[ticket.id] successfully marked as IC issue"
 			if("reject")
 				if(ticket)
-					ticket.Reject(irc_tagged)
+					ticket.Reject(tgs_tagged)
 					return "Ticket #[ticket.id] successfully rejected"
 			if("reopen")
 				if(ticket)
@@ -252,7 +251,7 @@
 				if(!isnull(fail))
 					fail = text2num(splits[3])
 				if(isnull(fail))
-					return "Error: No/Invalid ticket id specified. [IRC_AHELP_USAGE]"
+					return "Error: No/Invalid ticket id specified. [TGS_AHELP_USAGE]"
 				var/datum/admin_help/AH = GLOB.ahelp_tickets.TicketByID(fail)
 				if(!AH)
 					return "Error: Ticket #[fail] not found"
@@ -274,41 +273,41 @@
 					. += "#[AH.id]"
 				return
 			else
-				return IRC_AHELP_USAGE
+				return TGS_AHELP_USAGE
 		return "Error: Ticket could not be found"
 
 	var/static/stealthkey
-	var/adminname = CONFIG_GET(flag/show_irc_name) ? irc_tagged : "Administrator"
+	var/adminname = CONFIG_GET(flag/show_irc_name) ? tgs_tagged : "Administrator"
 
 	if(!C)
 		return "Error: No client"
 
 	if(!stealthkey)
-		stealthkey = GenIrcStealthKey()
+		stealthkey = GenTgsStealthKey()
 
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)
 		return "Error: No message"
 
-	message_admins("IRC message from [sender] to [key_name_admin(C)] : [msg]")
-	log_admin_private("IRC PM: [sender] -> [key_name(C)] : [msg]")
+	message_admins("External message from [sender] to [key_name_admin(C)] : [msg]")
+	log_admin_private("External PM: [sender] -> [key_name(C)] : [msg]")
 	msg = emoji_parse(msg)
 
 	to_chat(C, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
 	to_chat(C, "<span class='adminsay'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</span>")
 	to_chat(C, "<span class='adminsay'><i>Click on the administrator's name to reply.</i></span>")
 
-	admin_ticket_log(C, "<font color='purple'>PM From [irc_tagged]: [msg]</font>")
+	admin_ticket_log(C, "<font color='purple'>PM From [tgs_tagged]: [msg]</font>")
 
 	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound
 	SEND_SOUND(C, 'sound/effects/adminhelp.ogg')
 
-	C.ircreplyamount = IRCREPLYCOUNT
+	C.externalreplyamount = EXTERNALREPLYCOUNT
 
 	return "Message Successful"
 
-/proc/GenIrcStealthKey()
+/proc/GenTgsStealthKey()
 	var/num = (rand(0,1000))
 	var/i = 0
 	while(i == 0)
@@ -321,4 +320,4 @@
 	GLOB.stealthminID["IRCKEY"] = stealth
 	return	stealth
 
-#undef IRCREPLYCOUNT
+#undef EXTERNALREPLYCOUNT
