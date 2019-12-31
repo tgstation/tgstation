@@ -36,6 +36,13 @@
 	. = ..()
 	. += " The mode is: [tool_behaviour]"
 
+/obj/item/debug/omnitool/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
 /obj/item/debug/omnitool/attack_self(mob/user)
 	if(!user)
 		return
