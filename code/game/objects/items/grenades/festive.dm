@@ -6,9 +6,9 @@
 	icon = 'icons/obj/holiday_misc.dmi'
 	icon_state = "sparkler"
 	w_class = WEIGHT_CLASS_TINY
+	heat = 1000
 	var/burntime = 60
 	var/lit = FALSE
-	heat = 1000
 
 /obj/item/sparkler/fire_act(exposed_temperature, exposed_volume)
 	light()
