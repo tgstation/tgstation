@@ -1,0 +1,7 @@
+author: "CAPTTLasky"
+delete-after: True
+changes: 
+  - rscadd: "Loom, soap, restocking parts, water tanks to the seed vault"
+  - rscadd: "An entirely re-designed seed vault"
+  - rscdel: "Removed the old seed vault"
+  - tweak: "gave the seed vault more seeds to play around with"
