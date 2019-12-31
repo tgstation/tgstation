@@ -157,10 +157,10 @@
 /datum/map_template/ruin/lavaland/xeno_nest
 	name = "Xenomorph Nest"
 	id = "xeno-nest"
-	description = "These xenomorphs got bored of horrifically slaughtering people on space stations, and have settled down on a nice lava-filled hellscape to focus on what's really important in life. \
-	Quality memes."
+	description = "These xenomorphs got bored of horrifically slaughtering people on space stations, and have settled down on a mining station on a lava-filled hellscape. Good thinking!"
 	suffix = "lavaland_surface_xeno_nest.dmm"
-	cost = 20
+	cost = 5
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/fountain
 	name = "Fountain Hall"
