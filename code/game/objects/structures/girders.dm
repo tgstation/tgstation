@@ -27,6 +27,10 @@
 			. += "<span class='notice'>[src] is disassembled! You probably shouldn't be able to see this examine message.</span>"
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
+	var/platingmodifier = 1
+	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
+		platingmodifier = 0.7
+		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/gun/energy/plasmacutter))
@@ -89,7 +93,7 @@
 					to_chat(user, "<span class='warning'>You need two sheets of metal to create a false wall!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start building a false wall...</span>")
-				if(do_after(user, 20, target = src))
+				if(do_after(user, 20*platingmodifier, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
@@ -102,7 +106,7 @@
 					to_chat(user, "<span class='warning'>You need two sheets of metal to finish a wall!</span>")
 					return
 				to_chat(user, "<span class='notice'>You start adding plating...</span>")
-				if (do_after(user, 40, target = src))
+				if (do_after(user, 40*platingmodifier, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
@@ -132,7 +136,7 @@
 					if(S.get_amount() < 1)
 						return
 					to_chat(user, "<span class='notice'>You start finalizing the reinforced wall...</span>")
-					if(do_after(user, 50, target = src))
+					if(do_after(user, 50*platingmodifier, target = src))
 						if(S.get_amount() < 1)
 							return
 						S.use(1)
@@ -146,7 +150,7 @@
 					if(S.get_amount() < 1)
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing the girder...</span>")
-					if(do_after(user, 60, target = src))
+					if(do_after(user, 60*platingmodifier, target = src))
 						if(S.get_amount() < 1)
 							return
 						S.use(1)

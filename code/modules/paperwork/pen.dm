@@ -244,3 +244,17 @@
 		item_state = initial(item_state)
 		lefthand_file = initial(lefthand_file)
 		righthand_file = initial(righthand_file)
+
+/obj/item/pen/survival
+	name = "survival pen"
+	desc = "The latest in portable survival technology, this pen has a built in rockbreaker tip! Efficiency not included."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "digging_pen"
+	item_state = "pen"
+	force = 3
+	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/iron=100, /datum/material/diamond=5, /datum/material/titanium = 20)
+	pressure_resistance = 2
+	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
+	tool_behaviour = TOOL_MINING
+	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.
