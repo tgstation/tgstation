@@ -1,0 +1,4 @@
+author: "AustationBot"
+delete-after: True
+changes: 
+  - bugfix: "You are no longer prevented from selecting more neutral/negative quirks once you have reached the limit of 6 positive ones."
