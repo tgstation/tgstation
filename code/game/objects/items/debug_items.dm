@@ -26,7 +26,7 @@
 
 /obj/item/debug/omnitool
 	name = "omnitool"
-	desc = "The original hypertool, born before them all."
+	desc = "The original hypertool, born before them all. Use it in hand to unleash it's true power."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hypertool"
 	item_state = "hypertool"
