@@ -1,8 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - rscadd: "Ctrl+shift+click PDA to eject cartridge"
-  - rscadd: "Clicking PDA with cartridge swaps out current cartridge"
-  - rscadd: "Remove Cartridge verb for people using the right-click menu or the Object tab"
-  - rscadd: "PDA toggle light action button"
-  - bugfix: "PDA UI now updates when ejecting or inserting cartridge or ejecting ID"

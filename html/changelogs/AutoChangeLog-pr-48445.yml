@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - tweak: "the char overdose threshhold is now lower, also the lines have been changed"

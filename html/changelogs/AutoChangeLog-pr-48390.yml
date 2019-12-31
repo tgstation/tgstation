@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscadd: "Point Claim Console now uses tgui-next UI."

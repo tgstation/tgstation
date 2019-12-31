@@ -1,4 +1,0 @@
-author: "TheChosenEvilOne"
-delete-after: True
-changes: 
-  - bugfix: "Dynamic revolution ruleset no longer makes multiple revolution teams when first assigned revhead is invalid."
