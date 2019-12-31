@@ -46,7 +46,8 @@ export const Vending = props => {
         <Table>
           {inventory.map((product => {
             const free = (
-              product.price === 0
+              !data.onstation
+              || product.price === 0
               || (
                 !product.premium
                 && data.department
