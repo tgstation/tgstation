@@ -173,15 +173,19 @@
 	if(power < 1000)
 		return
 
+	/*
+	THIS IS SO FUCKING UGLY AND I HATE IT, but I can't make it nice without making it slower, check*N rather then n. So we're stuck with it.
+	*/
 	var/closest_dist = 0
 	var/closest_atom
+	var/obj/vehicle/ridden/bicycle/closest_million_dollar_baby
 	var/obj/machinery/power/tesla_coil/closest_tesla_coil
 	var/obj/machinery/power/grounding_rod/closest_grounding_rod
 	var/mob/living/closest_mob
 	var/obj/machinery/closest_machine
 	var/obj/structure/closest_structure
 	var/obj/structure/blob/closest_blob
-	var/static/things_to_shock = typecacheof(list(/obj/machinery, /mob/living, /obj/structure))
+	var/static/things_to_shock = typecacheof(list(/obj/machinery, /mob/living, /obj/structure, /obj/vehicle/ridden))
 	var/static/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field/generator,
@@ -209,20 +213,29 @@
 		if(!(zap_flags & ZAP_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
 			continue
 
-		if(istype(A, /obj/machinery/power/tesla_coil))
+		if(istype(A, /obj/vehicle/ridden/bicycle))//God's not on our side cause he hates idiots.
+			var/dist = get_dist(source, A)
+			var/obj/vehicle/ridden/bicycle/B = A
+			if(dist <= zap_range && (dist < closest_dist || !closest_million_dollar_baby) && !(B.obj_flags & BEING_SHOCKED) && B.can_buckle)//Gee goof thanks for the boolean
+				closest_dist = dist
+				//we use both of these to save on istype and typecasting overhead later on
+				//while still allowing common code to run before hand
+				closest_million_dollar_baby = B
+				closest_atom = B
+
+		else if(closest_million_dollar_baby)
+			continue //no need checking these other things
+
+		else if(istype(A, /obj/machinery/power/tesla_coil))
 			var/dist = get_dist(source, A)
 			var/obj/machinery/power/tesla_coil/C = A
 			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !(C.obj_flags & BEING_SHOCKED))
 				closest_dist = dist
-
-				//we use both of these to save on istype and typecasting overhead later on
-				//while still allowing common code to run before hand
 				closest_tesla_coil = C
 				closest_atom = C
 
-
 		else if(closest_tesla_coil)
-			continue //no need checking these other things
+			continue
 
 		else if(istype(A, /obj/machinery/power/grounding_rod))
 			var/dist = get_dist(source, A)-2
@@ -259,7 +272,7 @@
 		else if(istype(A, /obj/structure/blob))
 			var/obj/structure/blob/B = A
 			var/dist = get_dist(source, A)
-			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !(B.obj_flags & BEING_SHOCKED))
+			if(dist <= zap_range && (dist < closest_dist || !closest_blob) && !(B.obj_flags & BEING_SHOCKED))
 				closest_blob = B
 				closest_atom = A
 				closest_dist = dist
@@ -270,13 +283,11 @@
 		else if(isstructure(A))
 			var/obj/structure/S = A
 			var/dist = get_dist(source, A)
-			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !(S.obj_flags & BEING_SHOCKED))
+			//There's no closest_structure here because there are no checks below this one, re-add it if that changes
+			if(dist <= zap_range && (dist < closest_dist) && !(S.obj_flags & BEING_SHOCKED))
 				closest_structure = S
 				closest_atom = A
 				closest_dist = dist
-
-		else if(closest_structure)
-			continue
 
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
@@ -289,7 +300,10 @@
 			. = zapdir
 
 	//per type stuff:
-	if(!QDELETED(closest_tesla_coil))
+	if(!QDELETED(closest_million_dollar_baby))
+		closest_million_dollar_baby.zap_act(power, zap_flags, shocked_targets)
+
+	else if(!QDELETED(closest_tesla_coil))
 		closest_tesla_coil.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_grounding_rod))

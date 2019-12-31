@@ -228,11 +228,12 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///Called when the obj is hit by a tesla bolt.
 /obj/proc/zap_act(power, zap_flags, shocked_targets)
-	if(QDELETED(src) || !(zap_flags & ZAP_IS_TESLA))
+	if(QDELETED(src))
 		return
 	obj_flags |= BEING_SHOCKED
-	var/power_bounced = power / 2
-	tesla_zap(src, 3, power_bounced, zap_flags, shocked_targets)
+	if(zap_flags & ZAP_IS_TESLA)
+		var/power_bounced = power / 2
+		tesla_zap(src, 3, power_bounced, zap_flags, shocked_targets)
 	addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 
 //The surgeon general warns that being buckled to certain objects receiving powerful shocks is greatly hazardous to your health

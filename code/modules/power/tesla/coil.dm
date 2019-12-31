@@ -86,9 +86,6 @@
 		var/power_produced = powernet ? power / power_loss : power
 		add_avail(power_produced*input_power_multiplier)
 		flick("coilhit", src)
-		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		if(zap_flags & ZAP_IS_TESLA)
-			tesla_zap(src, 5, power_produced, zap_flags, shocked_targets)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
 		if(D)
 			D.adjust_money(min(power_produced, 1))
@@ -96,6 +93,10 @@
 			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min(power_produced, 1)) // x4 coils = ~240/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 		zap_buckle_check(power)
+		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+		if(!(zap_flags & ZAP_IS_TESLA))
+			return power_produced
+		tesla_zap(src, 5, power_produced, zap_flags, shocked_targets)
 	else
 		..()
 
@@ -119,15 +120,12 @@
 	circuit = /obj/item/circuitboard/machine/tesla_coil/research
 	power_loss = 20 // something something, high voltage + resistance
 
-/obj/machinery/power/tesla_coil/research/zap_act(power, zap_flags, shocked_things)
+/obj/machinery/power/tesla_coil/research/zap_act(power, zap_flags, shocked_targets)
 	if(anchored && !panel_open)
 		obj_flags |= BEING_SHOCKED
 		var/power_produced = powernet ? power / power_loss : power
 		add_avail(power_produced*input_power_multiplier)
 		flick("rpcoilhit", src)
-		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		if(zap_flags & ZAP_IS_TESLA)
-			tesla_zap(src, 5, power_produced, zap_flags, shocked_things)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
 		if(D)
 			D.adjust_money(min(power_produced, 3))
@@ -135,6 +133,10 @@
 			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min(power_produced, 3)) // x4 coils with a pulse per second or so = ~720/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 		zap_buckle_check(power)
+		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+		if(!(zap_flags & ZAP_IS_TESLA))
+			return power_produced
+		tesla_zap(src, 5, power_produced, zap_flags, shocked_targets)
 	else
 		..()
 

@@ -861,36 +861,39 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//Lets put this ourself into the do not hit list, so we don't curve back to hit the same thing twice with one arc
 	targets_copy += zapstart
 
-	for(var/obj/machinery/power/tesla_coil/coil in oview(zapstart, range))
-		if(!(coil in targets_copy) && coil.anchored && prob(90))//Diversity of death
-			arctargets += coil
+	for(var/obj/vehicle/ridden/bicycle/bike in oview(zapstart, range))
+		if(!(bike in targets_copy) && !(bike.obj_flags & BEING_SHOCKED) && bike.can_buckle)//God's not on our side cause he hates idiots.
+			arctargets += bike
+
+	if(!arctargets.len)
+		for(var/obj/machinery/power/tesla_coil/coil in oview(zapstart, range))
+			if(!(coil in targets_copy) && coil.anchored && !(coil.obj_flags & BEING_SHOCKED) && !coil.panel_open && prob(70))//Diversity of death
+				arctargets += coil
+
 	if(!arctargets.len)
 		for(var/obj/machinery/power/grounding_rod/rod in oview(zapstart, range))
 			//2 rods are safer then one, intended to keep the bolts dangourus
 			//If the sm puts out 2 bolts every half second, then a rod gets ignored every 5 seconds or so.
-			if(rod.anchored && prob(90))
+			if(rod.anchored && !rod.panel_open && prob(90))
 				arctargets += rod
-	if(arctargets.len)
+
+	if(!arctargets.len)
+		for(var/mob/living/Z in oview(zapstart, range))
+			if(!(Z in targets_copy) && !(Z.flags_1 & TESLA_IGNORE_1) || Z.stat != DEAD && prob(20))//let's not hit all the engineers with every beam and/or segment of the arc
+				arctargets += Z
+
+	if(!arctargets.len)
+		for(var/obj/machinery/X in oview(zapstart, range))
+			if(!(X in targets_copy) && !(X.obj_flags & BEING_SHOCKED) && prob(40))
+				arctargets += X
+
+	if(!arctargets.len)
+		for(var/obj/Y in oview(zapstart, range))
+			if(!(Y in targets_copy) && !(Y.obj_flags & BEING_SHOCKED))
+				arctargets += Y
+
+	if(arctargets.len)//Pick from our pool
 		target = pick(arctargets)
-	else
-		if(prob(60)) //let's not hit all the engineers with every beam and/or segment of the arc
-			for(var/mob/living/Z in oview(zapstart, range))
-				if(!(Z in targets_copy))
-					arctargets += Z
-		if(arctargets.len)
-			target = pick(arctargets)
-		else
-			for(var/obj/machinery/X in oview(zapstart, range))
-				if(!(X in targets_copy))
-					arctargets += X
-			if(arctargets.len)
-				target = pick(arctargets)
-			else
-				for(var/obj/structure/Y in oview(zapstart, range))
-					if(!(Y in targets_copy))
-						arctargets += Y
-				if(arctargets.len)
-					target = pick(arctargets)
 
 	if(target)//If we found something
 		//Do the animation to zap to it from here
@@ -903,8 +906,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/obj/machinery/power/tesla_coil/coil = target
 			//In the best situation we can expect this to grow up to 540kw before a delam/IT'S GONE TOO FAR FRED SHUT IT DOWN
 			//The formula for power gen is zap_str * 15 / 2 * capacitor rating, between 1 and 4
-			coil.zap_act(zap_str * 15, ZAP_SUPERMATTER_FLAGS, list())
-			zap_str /= 3 //Coils should take a lot out of the power of the zap
+			zap_str = coil.zap_act(zap_str * 15, ZAP_SUPERMATTER_FLAGS, list()) //Coils should take a lot out of the power of the zap
 
 		else if(istype(target, /obj/machinery/power/grounding_rod))
 			var/obj/machinery/power/grounding_rod/rod = target
@@ -917,15 +919,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/mob/living/mob = target
 			mob.electrocute_act(rand(5,10), "Supermatter Discharge Bolt", 1, SHOCK_NOSTUN)
 			zap_str /= 1.5 //Meatsacks are conductive, makes working in pairs more destructive
-		else
-			zap_str /= 2 // worse then living things, better then coils
+
+		else if(isobj(target))
+			var/obj/junk = target
+			junk.zap_act(zap_str, ZAP_SUPERMATTER_FLAGS, list())
+			zap_str /= 1.8 // worse then living things, better then coils
 		//Then we finish it all up
 		//This gotdamn variable is a boomer and keeps giving me problems
 		var/turf/T = get_turf(target)
 		var/pressure = T.return_air().return_pressure()
 		//We get our range with the strength of the zap and the pressure, the lower the former and the higher the latter the better
-		var/new_range = CLAMP(zap_str / pressure * 10, 2, 8)
+		var/new_range = CLAMP(zap_str / pressure * 10, 2, 7)
 		if(prob(15))
+			zap_str = zap_str - (zap_str/10)
 			supermatter_zap(target, new_range, zap_str, targets_copy)
 			supermatter_zap(target, new_range, zap_str, targets_copy)
 		else
